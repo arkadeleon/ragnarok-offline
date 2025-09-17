@@ -7,7 +7,7 @@
 
 import XCTest
 import rAthenaResources
-@testable import RODatabase
+@testable import DatabaseCore
 
 final class MonsterSummonDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {

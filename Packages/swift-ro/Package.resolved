@@ -1,5 +1,5 @@
 {
-  "originHash" : "010ff0bff3b531c8795f29334111730e02dc5fe31ebc139a578dfe6310b11a91",
+  "originHash" : "821579995d408395212f5d84fe750f5ed9982c680b8fd5dc6015c2321833b2b2",
   "pins" : [
     {
       "identity" : "swift-async-algorithms",
@@ -26,15 +26,6 @@
       "state" : {
         "branch" : "master",
         "revision" : "06ee34fc258592f582e8a8fe4562ec2801023efc"
-      }
-    },
-    {
-      "identity" : "swift-rapidyaml",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/swift-rapidyaml.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "158b97c898f6721c5c99ad72c651ea6baa055580"
       }
     }
   ],

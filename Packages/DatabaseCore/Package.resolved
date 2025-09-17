@@ -1,0 +1,15 @@
+{
+  "originHash" : "b30280a838dc1d5b1bd97688cb5e7eec1fec0ece3f8b328998c637dd327c539b",
+  "pins" : [
+    {
+      "identity" : "swift-rapidyaml",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/swift-rapidyaml.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "242881052e084f37fa32b053a78f14fbd2121510"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		353112092E7A90BB0043F263 /* DatabaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 353112082E7A90BB0043F263 /* DatabaseCore */; };
 		353725ED2D83FDF2008590F6 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 353725EC2D83FDF2008590F6 /* Highlight */; };
-		353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 353AFBDB2BC779BE00F613A8 /* RODatabase */; };
 		3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */; };
 		3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3B12DFC22EA0038DFC3 /* rAthenaChar */; };
 		3558A3B32DFC22EA0038DFC3 /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3B12DFC22EA0038DFC3 /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -122,6 +122,7 @@
 			membershipExceptions = (
 				BinaryIO,
 				Constants,
+				DatabaseCore,
 				DataCompression,
 				FileFormats,
 				GRF,
@@ -176,8 +177,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3558A3B52DFC22EA0038DFC3 /* rAthenaLogin in Frameworks */,
-				353AFBDC2BC779BE00F613A8 /* RODatabase in Frameworks */,
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
+				353112092E7A90BB0043F263 /* DatabaseCore in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
 				3558A3BB2DFC22EA0038DFC3 /* rAthenaWeb in Frameworks */,
@@ -297,7 +298,6 @@
 			);
 			name = RagnarokOffline;
 			packageProductDependencies = (
-				353AFBDB2BC779BE00F613A8 /* RODatabase */,
 				357960A92D356D26003D9CEF /* ROGame */,
 				353725EC2D83FDF2008590F6 /* Highlight */,
 				3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */,
@@ -306,6 +306,7 @@
 				3558A3B72DFC22EA0038DFC3 /* rAthenaMap */,
 				3558A3BA2DFC22EA0038DFC3 /* rAthenaWeb */,
 				3558A3E12DFC28960038DFC3 /* rAthenaCommon */,
+				353112082E7A90BB0043F263 /* DatabaseCore */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -831,14 +832,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		353112082E7A90BB0043F263 /* DatabaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DatabaseCore;
+		};
 		353725EC2D83FDF2008590F6 /* Highlight */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */;
 			productName = Highlight;
-		};
-		353AFBDB2BC779BE00F613A8 /* RODatabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RODatabase;
 		};
 		3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */ = {
 			isa = XCSwiftPackageProductDependency;

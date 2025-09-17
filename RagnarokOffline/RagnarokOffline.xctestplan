@@ -14,51 +14,9 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "ROResourcesTests",
-        "name" : "ROResourcesTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "ROFileFormatsTests",
-        "name" : "ROFileFormatsTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:RagnarokOffline.xcodeproj",
         "identifier" : "3558A3C02DFC25AD0038DFC3",
         "name" : "RagnarokOfflineTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "ROPacketsTests",
-        "name" : "ROPacketsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "RONetworkTests",
-        "name" : "RONetworkTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "RODatabaseTests",
-        "name" : "RODatabaseTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/swift-ro",
-        "identifier" : "RORenderingTests",
-        "name" : "RORenderingTests"
       }
     }
   ],

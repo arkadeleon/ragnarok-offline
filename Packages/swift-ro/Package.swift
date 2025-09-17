@@ -13,16 +13,11 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "RODatabase",
-            targets: ["RODatabase"]),
-        .library(
             name: "ROGame",
             targets: ["ROGame"]),
     ],
     dependencies: [
-        .package(path: "../BinaryIO"),
         .package(path: "../Constants"),
-        .package(path: "../DataCompression"),
         .package(path: "../FileFormats"),
         .package(path: "../ImageRendering"),
         .package(path: "../MetalRenderers"),
@@ -32,23 +27,8 @@ let package = Package(
         .package(path: "../SGLMath"),
         .package(path: "../SpriteRendering"),
         .package(path: "../WorldRendering"),
-        .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
     targets: [
-        .target(
-            name: "RODatabase",
-            dependencies: [
-                "BinaryIO",
-                "Constants",
-                "DataCompression",
-                "PerformanceMetric",
-                .product(name: "RapidYAML", package: "swift-rapidyaml"),
-            ]),
-        .testTarget(
-            name: "RODatabaseTests",
-            dependencies: [
-                "RODatabase",
-            ]),
         .target(
             name: "ROGame",
             dependencies: [

@@ -6,8 +6,8 @@
 //
 
 import Constants
+import DatabaseCore
 import Foundation
-import RODatabase
 import rAthenaResources
 
 struct DropItem: Identifiable {

@@ -7,9 +7,9 @@
 
 import Constants
 import CoreGraphics
+import DatabaseCore
 import Observation
 import rAthenaCommon
-import RODatabase
 import ResourceManagement
 import SpriteRendering
 

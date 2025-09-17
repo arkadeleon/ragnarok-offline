@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/5/8.
 //
 
+import DatabaseCore
 import Observation
-import RODatabase
 
 @Observable
 @dynamicMemberLookup

@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/5/9.
 //
 
+import DatabaseCore
 import SwiftUI
-import RODatabase
 
 struct MonsterSummonDatabaseView: View {
     @Environment(DatabaseModel.self) private var database
