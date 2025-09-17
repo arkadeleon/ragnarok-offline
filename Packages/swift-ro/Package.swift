@@ -30,7 +30,7 @@ let package = Package(
         .package(path: "../ResourceManagement"),
         .package(path: "../SGLMath"),
         .package(path: "../SpriteRendering"),
-        .package(path: "../TextEncoding"),
+        .package(path: "../WorldRendering"),
         .package(url: "https://github.com/arkadeleon/swift-gzip.git", branch: "main"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
@@ -61,7 +61,7 @@ let package = Package(
                 "SpriteRendering",
                 "ResourceManagement",
                 "SGLMath",
-                "TextEncoding",
+                "WorldRendering",
             ]),
     ]
 )

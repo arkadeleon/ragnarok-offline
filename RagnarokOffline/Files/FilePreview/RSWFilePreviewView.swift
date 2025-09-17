@@ -6,11 +6,11 @@
 //
 
 import FileFormats
-import ROGame
 import RealityKit
 import ResourceManagement
 import SGLMath
 import SwiftUI
+import WorldRendering
 
 struct RSWFilePreviewView: View {
     var file: File

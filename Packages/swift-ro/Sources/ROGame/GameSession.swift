@@ -11,6 +11,7 @@ import Observation
 import NetworkClient
 import NetworkPackets
 import ResourceManagement
+import WorldRendering
 
 @MainActor
 @Observable
