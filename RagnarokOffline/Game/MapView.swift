@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/3/30.
 //
 
+import GameCore
 import RealityKit
-import ROGame
 import SwiftUI
 
 struct MapView: View {

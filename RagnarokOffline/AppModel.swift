@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/7/3.
 //
 
+import GameCore
 import Observation
-import ROGame
 import ResourceManagement
 import rAthenaLogin
 import rAthenaChar

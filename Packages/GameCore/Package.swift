@@ -4,8 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-ro",
-    defaultLocalization: "en",
+    name: "GameCore",
     platforms: [
         .macOS(.v15),
         .iOS(.v18),
@@ -13,35 +12,41 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ROGame",
-            targets: ["ROGame"]),
+            name: "GameCore",
+            targets: ["GameCore"]
+        ),
     ],
     dependencies: [
         .package(path: "../Constants"),
         .package(path: "../FileFormats"),
         .package(path: "../ImageRendering"),
-        .package(path: "../MetalRenderers"),
         .package(path: "../NetworkClient"),
         .package(path: "../PerformanceMetric"),
         .package(path: "../ResourceManagement"),
         .package(path: "../SGLMath"),
         .package(path: "../SpriteRendering"),
+        .package(path: "../WorldCamera"),
         .package(path: "../WorldRendering"),
     ],
     targets: [
         .target(
-            name: "ROGame",
+            name: "GameCore",
             dependencies: [
                 "Constants",
                 "FileFormats",
                 "ImageRendering",
-                "MetalRenderers",
                 "NetworkClient",
                 "PerformanceMetric",
                 "ResourceManagement",
                 "SGLMath",
                 "SpriteRendering",
+                "WorldCamera",
                 "WorldRendering",
-            ]),
+            ]
+        ),
+        .testTarget(
+            name: "GameCoreTests",
+            dependencies: ["GameCore"]
+        ),
     ]
 )

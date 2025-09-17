@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/12/16.
 //
 
+import GameCore
 import NetworkClient
-import ROGame
 import SwiftUI
 
 struct NPCDialogOverlayView: View {

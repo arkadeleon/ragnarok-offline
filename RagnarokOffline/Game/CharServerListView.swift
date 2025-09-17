@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
+import GameCore
 import NetworkClient
-import ROGame
 import SwiftUI
 
 struct CharServerListView: View {

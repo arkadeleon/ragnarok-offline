@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/9/5.
 //
 
-import ROGame
+import GameCore
 import SwiftUI
 
 struct GameView: View {

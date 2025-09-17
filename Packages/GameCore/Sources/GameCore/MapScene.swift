@@ -13,6 +13,7 @@ import SGLMath
 import Spatial
 import SpriteRendering
 import SwiftUI
+import WorldCamera
 import WorldRendering
 
 @MainActor

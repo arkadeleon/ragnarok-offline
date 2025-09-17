@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/4/10.
 //
 
+import GameCore
 import NetworkClient
-import ROGame
 import SwiftUI
 
 struct InventoryView: View {

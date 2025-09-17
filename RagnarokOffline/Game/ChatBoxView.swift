@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/16.
 //
 
-import ROGame
+import GameCore
 import SwiftUI
 
 struct ChatBoxView: View {
