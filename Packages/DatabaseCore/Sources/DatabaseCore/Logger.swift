@@ -8,5 +8,5 @@
 import OSLog
 import PerformanceMetric
 
-let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "database")
+let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "DatabaseCore")
 let metric = PerformanceMetric(logger: logger)

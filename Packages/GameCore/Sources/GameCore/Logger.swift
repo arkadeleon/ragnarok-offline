@@ -8,5 +8,5 @@
 import OSLog
 import PerformanceMetric
 
-let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "game")
+let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "GameCore")
 let metric = PerformanceMetric(logger: logger)

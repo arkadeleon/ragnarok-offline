@@ -8,16 +8,8 @@
 import BinaryIO
 import Foundation
 
-#if canImport(OSLog)
-import OSLog
-#endif
-
 public actor GRFArchive {
     nonisolated public let url: URL
-
-    #if canImport(OSLog)
-    private let logger = Logger(subsystem: "grf", category: "grf")
-    #endif
 
     private lazy var grf: GRF? = {
         #if canImport(OSLog)

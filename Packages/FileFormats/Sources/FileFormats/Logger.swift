@@ -8,5 +8,5 @@
 import OSLog
 import PerformanceMetric
 
-let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "file-formats")
+let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "FileFormats")
 let metric = PerformanceMetric(logger: logger)
