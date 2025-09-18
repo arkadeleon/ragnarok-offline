@@ -15,8 +15,9 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 WORKDIR /build
 
 # Copy the local packages
-COPY ./Packages/swift-binary-io ./Packages/swift-binary-io
-COPY ./Packages/swift-grf ./Packages/swift-grf
+COPY ./Packages/BinaryIO ./Packages/BinaryIO
+COPY ./Packages/DataCompression ./Packages/DataCompression
+COPY ./Packages/GRF ./Packages/GRF
 
 # First just resolve dependencies.
 # This creates a cached layer that can be reused
