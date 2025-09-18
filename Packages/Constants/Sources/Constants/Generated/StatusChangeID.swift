@@ -1026,6 +1026,7 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case contents_19 = 1036
     case contents_20 = 1037
     case overcoming_crisis = 1038
+    case chasing = 1039
 }
 
 extension StatusChangeID: CodingKey {
@@ -2050,6 +2051,7 @@ extension StatusChangeID: CodingKey {
         case .contents_19: "CONTENTS_19"
         case .contents_20: "CONTENTS_20"
         case .overcoming_crisis: "OVERCOMING_CRISIS"
+        case .chasing: "CHASING"
         }
     }
 
@@ -3074,6 +3076,7 @@ extension StatusChangeID: CodingKey {
         case "CONTENTS_19": self = .contents_19
         case "CONTENTS_20": self = .contents_20
         case "OVERCOMING_CRISIS": self = .overcoming_crisis
+        case "CHASING": self = .chasing
         default: return nil
         }
     }
