@@ -1,6 +1,6 @@
 //
 //  Language+Encoding.swift
-//  RagnarokOffline
+//  TextEncoding
 //
 //  Created by Leon Li on 2024/5/26.
 //

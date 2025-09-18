@@ -1,6 +1,6 @@
 //
 //  ItemInfoTable.swift
-//  RagnarokOffline
+//  ResourceManagement
 //
 //  Created by Leon Li on 2024/5/28.
 //

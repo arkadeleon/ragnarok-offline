@@ -1,6 +1,6 @@
 //
 //  Renderer.swift
-//  RagnarokOffline
+//  MetalRenderers
 //
 //  Created by Leon Li on 2023/5/23.
 //

@@ -1,6 +1,6 @@
 //
 //  PACKET_ZC_FRIENDS_LIST.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/8/22.
 //

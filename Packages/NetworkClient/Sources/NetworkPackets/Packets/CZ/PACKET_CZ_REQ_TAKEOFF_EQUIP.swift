@@ -1,6 +1,6 @@
 //
 //  PACKET_CZ_REQ_TAKEOFF_EQUIP.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2025/4/15.
 //

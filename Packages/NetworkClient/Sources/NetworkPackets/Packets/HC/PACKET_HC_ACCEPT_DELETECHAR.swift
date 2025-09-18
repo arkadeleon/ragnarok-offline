@@ -1,6 +1,6 @@
 //
 //  PACKET_HC_ACCEPT_DELETECHAR.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/4/8.
 //

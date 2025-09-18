@@ -1,6 +1,6 @@
 //
 //  OptionSetSequence.swift
-//  RagnarokOffline
+//  DatabaseCore
 //
 //  Created by Leon Li on 2024/10/8.
 //

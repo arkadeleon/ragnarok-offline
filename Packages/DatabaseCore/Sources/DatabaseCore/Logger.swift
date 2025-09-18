@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  RagnarokOffline
+//  DatabaseCore
 //
 //  Created by Leon Li on 2025/2/27.
 //

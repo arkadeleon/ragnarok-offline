@@ -1,6 +1,6 @@
 //
 //  ModelShaderTypes.h
-//  RagnarokOffline
+//  MetalShaders
 //
 //  Created by Leon Li on 2020/6/9.
 //

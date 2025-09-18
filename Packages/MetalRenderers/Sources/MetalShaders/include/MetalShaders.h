@@ -1,6 +1,6 @@
 //
 //  MetalShaders.h
-//  RagnarokOffline
+//  MetalShaders
 //
 //  Created by Leon Li on 2024/4/10.
 //

@@ -1,6 +1,6 @@
 //
 //  GameSession.swift
-//  RagnarokOffline
+//  GameCore
 //
 //  Created by Leon Li on 2024/9/5.
 //

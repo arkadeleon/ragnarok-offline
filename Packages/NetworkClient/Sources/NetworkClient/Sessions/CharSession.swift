@@ -1,6 +1,6 @@
 //
 //  CharSession.swift
-//  RagnarokOffline
+//  NetworkClient
 //
 //  Created by Leon Li on 2024/8/8.
 //

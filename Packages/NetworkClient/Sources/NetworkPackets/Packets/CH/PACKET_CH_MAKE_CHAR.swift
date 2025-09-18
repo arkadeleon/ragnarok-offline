@@ -1,6 +1,6 @@
 //
 //  PACKET_CH_MAKE_CHAR.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2021/7/6.
 //

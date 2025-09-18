@@ -1,6 +1,6 @@
 //
 //  PACKET_AC_REFUSE_LOGIN.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2021/7/6.
 //

@@ -1,6 +1,6 @@
 //
 //  UnequippedItem.swift
-//  RagnarokOffline
+//  NetworkClient
 //
 //  Created by Leon Li on 2025/6/30.
 //

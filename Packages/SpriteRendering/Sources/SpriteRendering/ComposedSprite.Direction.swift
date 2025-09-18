@@ -1,6 +1,6 @@
 //
 //  ComposedSprite.Direction.swift
-//  RagnarokOffline
+//  SpriteRendering
 //
 //  Created by Leon Li on 2025/5/7.
 //

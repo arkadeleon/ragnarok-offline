@@ -1,6 +1,6 @@
 //
 //  WaterRenderer.swift
-//  RagnarokOffline
+//  MetalRenderers
 //
 //  Created by Leon Li on 2020/7/15.
 //

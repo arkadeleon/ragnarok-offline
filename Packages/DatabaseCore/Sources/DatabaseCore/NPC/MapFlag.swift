@@ -1,6 +1,6 @@
 //
 //  MapFlag.swift
-//  RagnarokOffline
+//  DatabaseCore
 //
 //  Created by Leon Li on 2024/3/8.
 //

@@ -1,6 +1,6 @@
 //
 //  ScriptContext.swift
-//  RagnarokOffline
+//  ResourceManagement
 //
 //  Created by Leon Li on 2025/3/3.
 //

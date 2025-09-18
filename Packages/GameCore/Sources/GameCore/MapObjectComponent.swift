@@ -1,6 +1,6 @@
 //
 //  MapObjectComponent.swift
-//  RagnarokOffline
+//  GameCore
 //
 //  Created by Leon Li on 2025/4/2.
 //

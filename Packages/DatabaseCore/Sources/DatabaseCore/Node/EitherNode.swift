@@ -1,6 +1,6 @@
 //
 //  EitherNode.swift
-//  RagnarokOffline
+//  DatabaseCore
 //
 //  Created by Leon Li on 2024/1/12.
 //

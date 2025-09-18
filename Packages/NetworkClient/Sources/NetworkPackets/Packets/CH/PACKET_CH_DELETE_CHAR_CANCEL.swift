@@ -1,6 +1,6 @@
 //
 //  PACKET_CH_DELETE_CHAR_CANCEL.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/4/8.
 //

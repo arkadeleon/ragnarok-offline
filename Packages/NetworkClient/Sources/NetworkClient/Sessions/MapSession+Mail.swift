@@ -1,6 +1,6 @@
 //
 //  MapSession+Mail.swift
-//  RagnarokOffline
+//  NetworkClient
 //
 //  Created by Leon Li on 2025/4/3.
 //

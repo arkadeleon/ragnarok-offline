@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2025/4/13.
 //

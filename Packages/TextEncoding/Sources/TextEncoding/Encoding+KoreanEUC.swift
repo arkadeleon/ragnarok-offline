@@ -1,6 +1,6 @@
 //
 //  Encoding+KoreanEUC.swift
-//  RagnarokOffline
+//  TextEncoding
 //
 //  Created by Leon Li on 2023/4/8.
 //

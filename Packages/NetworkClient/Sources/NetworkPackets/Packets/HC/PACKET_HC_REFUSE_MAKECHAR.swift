@@ -1,6 +1,6 @@
 //
 //  PACKET_HC_REFUSE_MAKECHAR.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/4/8.
 //

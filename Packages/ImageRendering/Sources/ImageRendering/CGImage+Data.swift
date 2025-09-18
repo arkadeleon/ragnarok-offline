@@ -1,6 +1,6 @@
 //
 //  CGImage+Data.swift
-//  RagnarokOffline
+//  ImageRendering
 //
 //  Created by Leon Li on 2024/2/23.
 //

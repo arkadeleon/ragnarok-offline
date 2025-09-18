@@ -1,6 +1,6 @@
 //
 //  Race+Localized.swift
-//  RagnarokOffline
+//  Constants
 //
 //  Created by Leon Li on 2024/1/9.
 //

@@ -1,6 +1,6 @@
 //
 //  PACKET_ZC_SPRITE_CHANGE.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/8/28.
 //

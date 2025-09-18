@@ -1,6 +1,6 @@
 //
 //  PACKET_CZ_REQUEST_ACT.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/8/23.
 //

@@ -1,6 +1,6 @@
 //
 //  UniformJob.swift
-//  RagnarokOffline
+//  SpriteRendering
 //
 //  Created by Leon Li on 2025/2/12.
 //

@@ -1,6 +1,6 @@
 //
 //  PAL+Image.swift
-//  RagnarokOffline
+//  FileFormats
 //
 //  Created by Leon Li on 2023/12/7.
 //

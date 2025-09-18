@@ -1,6 +1,6 @@
 //
 //  MonsterNameTableTests.swift
-//  RagnarokOfflineTests
+//  ResourceManagementTests
 //
 //  Created by Leon Li on 2024/5/29.
 //

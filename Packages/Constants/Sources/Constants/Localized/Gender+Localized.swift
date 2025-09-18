@@ -1,6 +1,6 @@
 //
 //  Gender+Localized.swift
-//  RagnarokOffline
+//  Constants
 //
 //  Created by Leon Li on 2025/7/9.
 //

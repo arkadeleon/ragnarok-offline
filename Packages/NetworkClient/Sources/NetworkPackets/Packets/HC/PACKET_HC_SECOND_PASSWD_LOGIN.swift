@@ -1,6 +1,6 @@
 //
 //  PACKET_HC_SECOND_PASSWD_LOGIN.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/8/12.
 //

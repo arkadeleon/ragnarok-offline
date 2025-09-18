@@ -1,6 +1,6 @@
 //
 //  AccessibleMapInfo.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/9/25.
 //

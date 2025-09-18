@@ -1,6 +1,6 @@
 //
 //  PACKET_SC_NOTIFY_BAN.swift
-//  RagnarokOffline
+//  NetworkPackets
 //
 //  Created by Leon Li on 2024/3/27.
 //

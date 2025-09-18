@@ -1,6 +1,6 @@
 //
 //  SGLMath+Calculate.swift
-//  RagnarokOffline
+//  SGLMath
 //
 //  Created by Leon Li on 2020/6/16.
 //
