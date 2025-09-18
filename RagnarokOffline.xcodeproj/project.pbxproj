@@ -134,7 +134,6 @@
 				ResourceManagement,
 				SGLMath,
 				SpriteRendering,
-				"swift-ro-tools",
 				TextEncoding,
 				WorldCamera,
 				WorldRendering,

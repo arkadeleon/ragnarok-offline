@@ -4,23 +4,23 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-ro-tools",
+    name: "RagnarokOfflineGenerator",
     platforms: [
-        .macOS(.v15),
+        .macOS(.v13),
     ],
     products: [
         .executable(
-            name: "code-generator",
-            targets: ["ROCodeGenerator"]
+            name: "ragnarok-offline-generator",
+            targets: ["RagnarokOfflineGenerator"]
         ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0"),
     ],
     targets: [
         .executableTarget(
-            name: "ROCodeGenerator",
+            name: "RagnarokOfflineGenerator",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SwiftSyntax", package: "swift-syntax"),

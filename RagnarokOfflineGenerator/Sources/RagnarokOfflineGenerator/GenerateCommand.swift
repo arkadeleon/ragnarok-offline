@@ -1,6 +1,6 @@
 //
-//  CodeGenerator.swift
-//  ROTools
+//  GenerateCommand.swift
+//  RagnarokOfflineGenerator
 //
 //  Created by Leon Li on 2024/10/18.
 //
@@ -8,10 +8,10 @@
 import ArgumentParser
 
 @main
-struct CodeGenerator: ParsableCommand {
+struct GenerateCommand: ParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "code-generator",
-        abstract: "Generate Swift code from rAthena",
+        commandName: "ragnarok-offline-generator",
+        abstract: "Generate Swift code for Ragnarok Offline from rAthena",
         subcommands: [
             GenerateConstantsCommand.self,
             GeneratePacketsCommand.self,
