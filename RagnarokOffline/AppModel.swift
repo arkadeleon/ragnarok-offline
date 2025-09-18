@@ -27,8 +27,9 @@ final class AppModel {
 
     let fileSystem = FileSystem()
 
-    let clientDirectory = File(node: .directory(localClientURL))
-    let clientCachesDirectory = File(node: .directory(remoteClientCachesURL))
+    let clientLocalDirectory = File(node: .directory(localClientURL))
+    var clientSyncedDirectory: File?
+    let clientCachedDirectory = File(node: .directory(remoteClientCachesURL))
 
     let serverDirectory = File(node: .directory(ServerResourceManager.shared.workingDirectoryURL))
     let loginServer = ServerModel(server: LoginServer.shared)
@@ -54,6 +55,22 @@ final class AppModel {
             serverPort: settings.serverPort,
             resourceManager: .shared
         )
+
+        Task.detached {
+            let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)
+            guard let containerURL else {
+                return
+            }
+
+            let documentsURL = containerURL.appending(component: "Documents")
+            let dataURL = documentsURL.appending(component: "data")
+
+            try? FileManager.default.createDirectory(at: dataURL, withIntermediateDirectories: true)
+
+            Task { @MainActor in
+                self.clientSyncedDirectory = File(node: .directory(documentsURL))
+            }
+        }
     }
 }
 

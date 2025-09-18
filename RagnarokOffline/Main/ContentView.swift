@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @Environment(AppModel.self) private var appModel
 
-    @State private var selectedItem: SidebarItem? = .clientFiles
+    @State private var selectedItem: SidebarItem? = .clientLocalFiles
     @State private var incomingFile: File?
 
     var body: some View {
@@ -52,11 +52,14 @@ struct ContentView: View {
     @ViewBuilder
     private func detailView(for item: SidebarItem) -> some View {
         switch item {
-        case .clientFiles:
-            FilesView("Local Files", directory: appModel.clientDirectory)
+        case .clientLocalFiles:
+            FilesView("Local Files", directory: appModel.clientLocalDirectory)
+                .environment(appModel.fileSystem)
+        case .clientSyncedFiles(let directory):
+            FilesView("Synced Files", directory: directory)
                 .environment(appModel.fileSystem)
         case .clientCachedFiles:
-            FilesView("Cached Files", directory: appModel.clientCachesDirectory)
+            FilesView("Cached Files", directory: appModel.clientCachedDirectory)
                 .environment(appModel.fileSystem)
         case .serverFiles:
             FilesView("Server Files", directory: appModel.serverDirectory)

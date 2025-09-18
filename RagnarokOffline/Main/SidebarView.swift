@@ -9,7 +9,8 @@ import rAthenaResources
 import SwiftUI
 
 enum SidebarItem: Hashable {
-    case clientFiles
+    case clientLocalFiles
+    case clientSyncedFiles(File)
     case clientCachedFiles
 
     case serverFiles
@@ -49,8 +50,14 @@ struct SidebarView: View {
     var body: some View {
         List(selection: selection) {
             Section(isExpanded: $isClientSectionExpanded) {
-                NavigationLink(value: SidebarItem.clientFiles) {
+                NavigationLink(value: SidebarItem.clientLocalFiles) {
                     Label("Local Files", systemImage: "folder")
+                }
+
+                if let clientSyncedDirectory = appModel.clientSyncedDirectory {
+                    NavigationLink(value: SidebarItem.clientSyncedFiles(clientSyncedDirectory)) {
+                        Label("Synced Files", systemImage: "folder")
+                    }
                 }
 
                 NavigationLink(value: SidebarItem.clientCachedFiles) {
