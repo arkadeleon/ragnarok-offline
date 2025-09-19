@@ -12,22 +12,12 @@ extension File {
         var order: SortOrder = .forward
 
         func compare(_ lhs: File, _ rhs: File) -> ComparisonResult {
-            let lhsRank = switch lhs.node {
-            case .directory, .grfArchiveDirectory: 0
-            case .grfArchive: 1
-            case .regularFile, .grfArchiveEntry: 2
-            }
-
-            let rhsRank = switch rhs.node {
-            case .directory, .grfArchiveDirectory: 0
-            case .grfArchive: 1
-            case .regularFile, .grfArchiveEntry: 2
-            }
-
-            if lhsRank == rhsRank {
-                return lhs.name.localizedStandardCompare(rhs.name)
+            if (lhs.rank, lhs.name) < (rhs.rank, rhs.name) {
+                .orderedAscending
+            } else if (lhs.rank, lhs.name) > (rhs.rank, rhs.name) {
+                .orderedDescending
             } else {
-                return NSNumber(integerLiteral: lhsRank).compare(NSNumber(integerLiteral: rhsRank))
+                .orderedSame
             }
         }
     }
@@ -35,22 +25,17 @@ extension File {
 
 extension File: Comparable {
     static func < (lhs: File, rhs: File) -> Bool {
-        let lhsRank = switch lhs.node {
+        (lhs.rank, lhs.name) < (rhs.rank, rhs.name)
+    }
+}
+
+extension File {
+    @inlinable
+    var rank: Int {
+        switch node {
         case .directory, .grfArchiveDirectory: 0
         case .grfArchive: 1
         case .regularFile, .grfArchiveEntry: 2
-        }
-
-        let rhsRank = switch rhs.node {
-        case .directory, .grfArchiveDirectory: 0
-        case .grfArchive: 1
-        case .regularFile, .grfArchiveEntry: 2
-        }
-
-        if lhsRank == rhsRank {
-            return lhs.name.localizedStandardCompare(rhs.name) == .orderedAscending
-        } else {
-            return lhsRank < rhsRank
         }
     }
 }
