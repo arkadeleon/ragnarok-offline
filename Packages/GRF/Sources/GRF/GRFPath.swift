@@ -5,24 +5,13 @@
 //  Created by Leon Li on 2025/2/28.
 //
 
-import Synchronization
-
-final public class GRFPath: Hashable, Sendable {
-    public static func == (lhs: GRFPath, rhs: GRFPath) -> Bool {
-        lhs.string == rhs.string
-    }
-
+@GRFActor
+public class GRFPath {
     /// A string representation of the path.
-    public let string: String
-
-    private let _parent = AtomicLazyReference<GRFPath>()
+    nonisolated public let string: String
 
     /// The parent path.
-    public var parent: GRFPath {
-        if let parent = _parent.load() {
-            return parent
-        }
-
+    lazy var parent: GRFPath = {
         let parent: GRFPath
         let startIndex = string.startIndex
         if let endIndex = string.lastIndex(of: "\\") {
@@ -31,49 +20,59 @@ final public class GRFPath: Hashable, Sendable {
         } else {
             parent = GRFPath(string: "")
         }
-
-        return _parent.storeIfNil(parent)
-    }
+        return parent
+    }()
 
     /// The components.
-    public var components: [String] {
+    nonisolated public var components: [String] {
         string.split(separator: "\\").map(String.init)
     }
 
     /// The last path component (including any extension).
-    public var lastComponent: String {
+    nonisolated public var lastComponent: String {
         string.split(separator: "\\").last.map(String.init) ?? ""
     }
 
     /// The last path component (without any extension).
-    public var stem: String {
+    nonisolated public var stem: String {
         lastComponent.split(separator: ".").dropLast().joined(separator: ".")
     }
 
     /// The filename extension (without any leading dot).
-    public var `extension`: String {
+    nonisolated public var `extension`: String {
         lastComponent.split(separator: ".").last.map(String.init) ?? ""
     }
 
-    init(string: String) {
+    nonisolated init(string: String) {
         self.string = string
     }
 
-    public init(components: [String]) {
+    nonisolated public init(components: [String]) {
         self.string = components.joined(separator: "\\")
     }
 
-    public func appending(_ components: [String]) -> GRFPath {
-        GRFPath(string: ([string] + components).joined(separator: "\\"))
-    }
-
     /// The result of replacing with the new extension.
-    public func replacingExtension(_ newExtension: String) -> GRFPath {
+    nonisolated public func replacingExtension(_ newExtension: String) -> GRFPath {
         let newLastComponent = stem + "." + newExtension
-        let newString = parent.string + "\\" + newLastComponent
-        return GRFPath(string: newString)
+        return replacingLastComponent(newLastComponent)
     }
 
+    /// The result of replacing with the new last component.
+    nonisolated public func replacingLastComponent(_ newLastComponent: String) -> GRFPath {
+        var newComponents = components
+        newComponents.removeLast()
+        newComponents.append(newLastComponent)
+        return GRFPath(components: newComponents)
+    }
+}
+
+extension GRFPath: @GRFActor Equatable {
+    public static func == (lhs: GRFPath, rhs: GRFPath) -> Bool {
+        lhs.string == rhs.string
+    }
+}
+
+extension GRFPath: @GRFActor Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(string)
     }

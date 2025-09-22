@@ -8,7 +8,13 @@
 import BinaryIO
 import Foundation
 
-public actor GRFArchive {
+@globalActor
+public actor GRFActor {
+    public static let shared = GRFActor()
+}
+
+@GRFActor
+public class GRFArchive {
     nonisolated public let url: URL
 
     private lazy var grf: GRF? = {
@@ -77,7 +83,7 @@ public actor GRFArchive {
         return entries
     }()
 
-    public init(url: URL) {
+    nonisolated public init(url: URL) {
         self.url = url
     }
 

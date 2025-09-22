@@ -56,7 +56,7 @@ struct STRFilePreviewView: View {
                     continue
                 }
 
-                let texturePath = entry.path.parent.appending([textureName])
+                let texturePath = entry.path.replacingLastComponent(textureName)
                 guard let data = try? await grfArchive.contentsOfEntry(at: texturePath) else {
                     continue
                 }
