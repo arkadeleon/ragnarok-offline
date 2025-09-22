@@ -10,10 +10,17 @@ import FileFormats
 import Foundation
 import ImageIO
 
+enum FileThumbnailError: Error {
+    case unsupportedFileFormat
+    case cannotCreateImageSource
+    case cannotCreateThumbnail
+    case cannotCreateImage
+}
+
 final class FileThumbnailGenerator: Sendable {
-    func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
+    func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail {
         guard let utType = request.file.utType else {
-            return nil
+            throw FileThumbnailError.unsupportedFileFormat
         }
 
         switch utType {
@@ -21,7 +28,7 @@ final class FileThumbnailGenerator: Sendable {
             let data = try await request.file.contents()
 
             guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
-                return nil
+                throw FileThumbnailError.cannotCreateImageSource
             }
 
             let options: [CFString : Any] = [
@@ -31,7 +38,7 @@ final class FileThumbnailGenerator: Sendable {
                 kCGImageSourceThumbnailMaxPixelSize: 40 * request.scale
             ]
             guard let thumbnail = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) else {
-                return nil
+                throw FileThumbnailError.cannotCreateThumbnail
             }
 
             return FileThumbnail(cgImage: thumbnail)
@@ -42,11 +49,11 @@ final class FileThumbnailGenerator: Sendable {
             let decompressedData = try await decompressor.unzip(data: data)
 
             guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil) else {
-                return nil
+                throw FileThumbnailError.cannotCreateImageSource
             }
 
             guard let thumbnail = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
-                return nil
+                throw FileThumbnailError.cannotCreateImage
             }
 
             return FileThumbnail(cgImage: thumbnail)
@@ -55,7 +62,7 @@ final class FileThumbnailGenerator: Sendable {
             let gat = try GAT(data: data)
 
             guard let image = gat.image() else {
-                return nil
+                throw FileThumbnailError.cannotCreateImage
             }
 
             return FileThumbnail(cgImage: image)
@@ -65,7 +72,7 @@ final class FileThumbnailGenerator: Sendable {
 
             let size = CGSize(width: 32 * request.scale, height: 32 * request.scale)
             guard let image = pal.image(at: size) else {
-                return nil
+                throw FileThumbnailError.cannotCreateImage
             }
 
             return FileThumbnail(cgImage: image)
@@ -74,12 +81,12 @@ final class FileThumbnailGenerator: Sendable {
             let spr = try SPR(data: data)
 
             guard let image = spr.imageForSprite(at: 0) else {
-                return nil
+                throw FileThumbnailError.cannotCreateImage
             }
 
             return FileThumbnail(cgImage: image)
         default:
-            return nil
+            throw FileThumbnailError.unsupportedFileFormat
         }
     }
 }

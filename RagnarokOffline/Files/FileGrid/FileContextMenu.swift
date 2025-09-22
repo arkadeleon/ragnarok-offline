@@ -11,7 +11,7 @@ struct FileContextMenu: ViewModifier {
     var file: File
     var onDelete: ((File) -> Void)?
 
-    @Environment(FileSystem.self) private var fileSystem
+    @Environment(\.fileSystem) private var fileSystem
 
     @State private var isJSONViewerPresented = false
     @State private var isReferencesPresented = false
@@ -40,7 +40,6 @@ struct FileContextMenu: ViewModifier {
                 Section {
                     if fileSystem.canExtractFile(file) {
                         Button {
-                            let fileSystem = fileSystem
                             Task {
                                 do {
                                     try await fileSystem.extractFile(file)
@@ -104,5 +103,4 @@ extension View {
             .fileContextMenu(file: file)
     }
     .frame(width: 100, height: 50)
-    .environment(FileSystem())
 }

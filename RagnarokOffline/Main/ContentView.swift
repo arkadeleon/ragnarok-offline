@@ -54,16 +54,12 @@ struct ContentView: View {
         switch item {
         case .clientLocalFiles:
             FilesView("Local Files", directory: appModel.clientLocalDirectory)
-                .environment(appModel.fileSystem)
         case .clientSyncedFiles(let directory):
             FilesView("Synced Files", directory: directory)
-                .environment(appModel.fileSystem)
         case .clientCachedFiles:
             FilesView("Cached Files", directory: appModel.clientCachedDirectory)
-                .environment(appModel.fileSystem)
         case .serverFiles:
             FilesView("Server Files", directory: appModel.serverDirectory)
-                .environment(appModel.fileSystem)
         case .loginServer:
             ServerView(server: appModel.loginServer)
         case .charServer:
@@ -117,7 +113,6 @@ extension View {
         self
             .navigationDestination(for: File.self) { file in
                 FilesView(directory: file)
-                    .environment(appModel.fileSystem)
             }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)

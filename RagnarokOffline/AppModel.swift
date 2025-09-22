@@ -25,8 +25,6 @@ final class AppModel {
 
     let settings = SettingsModel()
 
-    let fileSystem = FileSystem()
-
     let clientLocalDirectory = File(node: .directory(localClientURL))
     var clientSyncedDirectory: File?
     let clientCachedDirectory = File(node: .directory(remoteClientCachesURL))

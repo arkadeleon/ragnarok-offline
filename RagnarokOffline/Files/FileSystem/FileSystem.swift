@@ -6,14 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
 import TextEncoding
 
-@Observable
-final class FileSystem {
+actor FileSystem {
     let thumbnailGenerator = FileThumbnailGenerator()
-    let thumbnailCache = NSCache<NSURL, FileThumbnail>()
+    var thumbnails: [URL : FileThumbnailPhase] = [:]
 
-    func canExtractFile(_ file: File) -> Bool {
+    nonisolated func canExtractFile(_ file: File) -> Bool {
         switch file.node {
         case .grfArchiveEntry:
             true
@@ -22,7 +22,7 @@ final class FileSystem {
         }
     }
 
-    func extractFile(_ file: File) async throws {
+    nonisolated func extractFile(_ file: File) async throws {
         guard case .grfArchiveEntry(let grfArchive, let entry) = file.node else {
             return
         }
@@ -37,7 +37,7 @@ final class FileSystem {
         try contents.write(to: url)
     }
 
-    func canDeleteFile(_ file: File) -> Bool {
+    nonisolated func canDeleteFile(_ file: File) -> Bool {
         switch file.node {
         case .directory, .regularFile, .grfArchive:
             true
@@ -46,7 +46,7 @@ final class FileSystem {
         }
     }
 
-    func deleteFile(_ file: File) throws {
+    nonisolated func deleteFile(_ file: File) throws {
         switch file.node {
         case .directory, .regularFile, .grfArchive:
             try FileManager.default.removeItem(at: file.url)
@@ -55,24 +55,36 @@ final class FileSystem {
         }
     }
 
-    @MainActor
-    func thumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail? {
-        try Task.checkCancellation()
+    func thumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail {
+        if let phase = thumbnails[request.file.url] {
+            switch phase {
+            case .inProgress(let task):
+                return try await task.value
+            case .success(let thumbnail):
+                return thumbnail
+            case .failure(let error):
+                throw error
+            }
+        }
 
-        if let thumbnail = thumbnailCache.object(forKey: request.file.url as NSURL) {
+        let task = Task {
+            try await thumbnailGenerator.generateThumbnail(for: request)
+        }
+        thumbnails[request.file.url] = .inProgress(task)
+
+        do {
+            let thumbnail = try await task.value
+            thumbnails[request.file.url] = .success(thumbnail)
+
             return thumbnail
+        } catch {
+            thumbnails[request.file.url] = .failure(error)
+
+            throw error
         }
-
-        try Task.checkCancellation()
-
-        let thumbnail = try await thumbnailGenerator.generateThumbnail(for: request)
-
-        if let thumbnail {
-            thumbnailCache.setObject(thumbnail, forKey: request.file.url as NSURL)
-        }
-
-        try Task.checkCancellation()
-
-        return thumbnail
     }
+}
+
+extension EnvironmentValues {
+    @Entry var fileSystem = FileSystem()
 }

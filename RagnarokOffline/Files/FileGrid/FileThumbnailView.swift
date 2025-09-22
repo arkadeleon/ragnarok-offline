@@ -11,7 +11,7 @@ struct FileThumbnailView: View {
     var file: File
 
     @Environment(\.displayScale) private var displayScale
-    @Environment(FileSystem.self) private var fileSystem
+    @Environment(\.fileSystem) private var fileSystem
 
     @State private var thumbnail: FileThumbnail?
 
@@ -67,5 +67,4 @@ struct FileThumbnailView: View {
         }
     }
     .frame(width: 400, height: 100)
-    .environment(FileSystem())
 }
