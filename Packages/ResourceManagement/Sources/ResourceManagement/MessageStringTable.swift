@@ -344,13 +344,13 @@ final public class MessageStringTable: Resource {
 extension ResourceManager {
     public func messageStringTable(for locale: Locale) async -> MessageStringTable {
         let localeIdentifier = locale.identifier(.bcp47)
-        let taskIdentifier = "MessageStringTable-\(localeIdentifier)"
+        let resourceIdentifier = "MessageStringTable-\(localeIdentifier)"
 
-        if let task = tasks.withLock({ $0[taskIdentifier] }) {
-            return await task.value as! MessageStringTable
+        if let phase = resources[resourceIdentifier] {
+            return await phase.resource as! MessageStringTable
         }
 
-        let task = Task<any Resource, Never> {
+        let task = ResourceTask {
             if let url = Bundle.module.url(forResource: "MessageString", withExtension: "json", locale: locale),
                let messageStringTable = try? MessageStringTable(contentsOf: url) {
                 return messageStringTable
@@ -359,10 +359,12 @@ extension ResourceManager {
             }
         }
 
-        tasks.withLock {
-            $0[taskIdentifier] = task
-        }
+        resources[resourceIdentifier] = .inProgress(task)
 
-        return await task.value as! MessageStringTable
+        let messageStringTable = await task.value as! MessageStringTable
+
+        resources[resourceIdentifier] = .loaded(messageStringTable)
+
+        return messageStringTable
     }
 }

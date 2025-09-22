@@ -10,7 +10,7 @@ import OSLog
 final public class PerformanceMetric: Sendable {
     let logger: Logger
 
-    private let records = OSAllocatedUnfairLock(initialState: [String : Double]())
+    private let records = OSAllocatedUnfairLock<[String : Double]>(initialState: [:])
 
     public init(logger: Logger) {
         self.logger = logger

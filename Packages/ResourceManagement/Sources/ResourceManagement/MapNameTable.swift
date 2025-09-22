@@ -28,13 +28,13 @@ final public class MapNameTable: Resource {
 extension ResourceManager {
     public func mapNameTable(for locale: Locale) async -> MapNameTable {
         let localeIdentifier = locale.identifier(.bcp47)
-        let taskIdentifier = "MapNameTable-\(localeIdentifier)"
+        let resourceIdentifier = "MapNameTable-\(localeIdentifier)"
 
-        if let task = tasks.withLock({ $0[taskIdentifier] }) {
-            return await task.value as! MapNameTable
+        if let phase = resources[resourceIdentifier] {
+            return await phase.resource as! MapNameTable
         }
 
-        let task = Task<any Resource, Never> {
+        let task = ResourceTask {
             if let url = Bundle.module.url(forResource: "MapName", withExtension: "json", locale: locale),
                let mapNameTable = try? MapNameTable(contentsOf: url) {
                 return mapNameTable
@@ -43,10 +43,12 @@ extension ResourceManager {
             }
         }
 
-        tasks.withLock {
-            $0[taskIdentifier] = task
-        }
+        resources[resourceIdentifier] = .inProgress(task)
 
-        return await task.value as! MapNameTable
+        let mapNameTable = await task.value as! MapNameTable
+
+        resources[resourceIdentifier] = .loaded(mapNameTable)
+
+        return mapNameTable
     }
 }

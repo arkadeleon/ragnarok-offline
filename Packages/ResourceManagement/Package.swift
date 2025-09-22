@@ -7,9 +7,9 @@ let package = Package(
     name: "ResourceManagement",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v15),
-        .iOS(.v18),
-        .visionOS(.v2),
+        .macOS(.v13),
+        .iOS(.v16),
+        .visionOS(.v1),
     ],
     products: [
         .library(

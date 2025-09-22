@@ -7,10 +7,6 @@
 
 import Foundation
 import GRF
-import Synchronization
-
-public protocol Resource: Sendable {
-}
 
 enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)
@@ -28,14 +24,14 @@ public enum ResourceLocator: Sendable {
     case grfArchiveEntry(GRFArchive, GRFEntryNode)
 }
 
-final public class ResourceManager: Sendable {
-    public let localURL: URL
-    public let remoteURL: URL?
-    public let cachesURL: URL?
+public actor ResourceManager {
+    nonisolated public let localURL: URL
+    nonisolated public let remoteURL: URL?
+    nonisolated public let cachesURL: URL?
 
-    let tasks = Mutex<[String : Task<any Resource, Never>]>([:])
+    var resources: [String : ResourcePhase] = [:]
 
-    private let localGRFArchives: [GRFArchive]
+    nonisolated private let localGRFArchives: [GRFArchive]
 
     public init(localURL: URL, remoteURL: URL? = nil, cachesURL: URL? = nil) {
         self.localURL = localURL
@@ -48,7 +44,7 @@ final public class ResourceManager: Sendable {
         ]
     }
 
-    public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
+    nonisolated public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
         let fileURL = localURL.absoluteURL.appending(path: L2K(path))
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             return .url(fileURL)
@@ -64,7 +60,7 @@ final public class ResourceManager: Sendable {
         throw ResourceError.resourceNotFound(path)
     }
 
-    public func contentsOfResource(at path: ResourcePath) async throws -> Data {
+    nonisolated public func contentsOfResource(at path: ResourcePath) async throws -> Data {
         let fileURL = localURL.absoluteURL.appending(path: L2K(path))
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             let data = try Data(contentsOf: fileURL)

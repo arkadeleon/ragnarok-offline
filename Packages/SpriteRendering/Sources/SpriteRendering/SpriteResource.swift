@@ -77,7 +77,7 @@ final public class SpriteResource: @unchecked Sendable {
 }
 
 extension ResourceManager {
-    public func sprite(at path: ResourcePath) async throws -> SpriteResource {
+    nonisolated public func sprite(at path: ResourcePath) async throws -> SpriteResource {
         let actPath = path.appendingPathExtension("act")
         async let actData = contentsOfResource(at: actPath)
 

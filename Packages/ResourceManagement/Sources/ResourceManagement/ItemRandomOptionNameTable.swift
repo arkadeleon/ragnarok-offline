@@ -28,13 +28,13 @@ final public class ItemRandomOptionNameTable: Resource {
 extension ResourceManager {
     public func itemRandomOptionNameTable(for locale: Locale) async -> ItemRandomOptionNameTable {
         let localeIdentifier = locale.identifier(.bcp47)
-        let taskIdentifier = "ItemRandomOptionNameTable-\(localeIdentifier)"
+        let resourceIdentifier = "ItemRandomOptionNameTable-\(localeIdentifier)"
 
-        if let task = tasks.withLock({ $0[taskIdentifier] }) {
-            return await task.value as! ItemRandomOptionNameTable
+        if let phase = resources[resourceIdentifier] {
+            return await phase.resource as! ItemRandomOptionNameTable
         }
 
-        let task = Task<any Resource, Never> {
+        let task = ResourceTask {
             if let url = Bundle.module.url(forResource: "ItemRandomOptionName", withExtension: "json", locale: locale),
                let itemRandomOptionNameTable = try? ItemRandomOptionNameTable(contentsOf: url) {
                 return itemRandomOptionNameTable
@@ -43,10 +43,12 @@ extension ResourceManager {
             }
         }
 
-        tasks.withLock {
-            $0[taskIdentifier] = task
-        }
+        resources[resourceIdentifier] = .inProgress(task)
 
-        return await task.value as! ItemRandomOptionNameTable
+        let itemRandomOptionNameTable = await task.value as! ItemRandomOptionNameTable
+
+        resources[resourceIdentifier] = .loaded(itemRandomOptionNameTable)
+
+        return itemRandomOptionNameTable
     }
 }

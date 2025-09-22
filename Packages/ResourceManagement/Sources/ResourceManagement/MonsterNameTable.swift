@@ -28,13 +28,13 @@ final public class MonsterNameTable: Resource {
 extension ResourceManager {
     public func monsterNameTable(for locale: Locale) async -> MonsterNameTable {
         let localeIdentifier = locale.identifier(.bcp47)
-        let taskIdentifier = "MonsterNameTable-\(localeIdentifier)"
+        let resourceIdentifier = "MonsterNameTable-\(localeIdentifier)"
 
-        if let task = tasks.withLock({ $0[taskIdentifier] }) {
-            return await task.value as! MonsterNameTable
+        if let phase = resources[resourceIdentifier] {
+            return await phase.resource as! MonsterNameTable
         }
 
-        let task = Task<any Resource, Never> {
+        let task = ResourceTask {
             if let url = Bundle.module.url(forResource: "MonsterName", withExtension: "json", locale: locale),
                let monsterNameTable = try? MonsterNameTable(contentsOf: url) {
                 return monsterNameTable
@@ -43,10 +43,12 @@ extension ResourceManager {
             }
         }
 
-        tasks.withLock {
-            $0[taskIdentifier] = task
-        }
+        resources[resourceIdentifier] = .inProgress(task)
 
-        return await task.value as! MonsterNameTable
+        let monsterNameTable = await task.value as! MonsterNameTable
+
+        resources[resourceIdentifier] = .loaded(monsterNameTable)
+
+        return monsterNameTable
     }
 }

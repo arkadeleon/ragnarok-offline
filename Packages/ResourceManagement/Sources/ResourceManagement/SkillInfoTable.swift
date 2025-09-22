@@ -37,13 +37,13 @@ final public class SkillInfoTable: Resource {
 extension ResourceManager {
     public func skillInfoTable(for locale: Locale) async -> SkillInfoTable {
         let localeIdentifier = locale.identifier(.bcp47)
-        let taskIdentifier = "SkillInfoTable-\(localeIdentifier)"
+        let resourceIdentifier = "SkillInfoTable-\(localeIdentifier)"
 
-        if let task = tasks.withLock({ $0[taskIdentifier] }) {
-            return await task.value as! SkillInfoTable
+        if let phase = resources[resourceIdentifier] {
+            return await phase.resource as! SkillInfoTable
         }
 
-        let task = Task<any Resource, Never> {
+        let task = ResourceTask {
             if let url = Bundle.module.url(forResource: "SkillInfo", withExtension: "json", locale: locale),
                let skillInfoTable = try? SkillInfoTable(contentsOf: url) {
                 return skillInfoTable
@@ -52,10 +52,12 @@ extension ResourceManager {
             }
         }
 
-        tasks.withLock {
-            $0[taskIdentifier] = task
-        }
+        resources[resourceIdentifier] = .inProgress(task)
 
-        return await task.value as! SkillInfoTable
+        let skillInfoTable = await task.value as! SkillInfoTable
+
+        resources[resourceIdentifier] = .loaded(skillInfoTable)
+
+        return skillInfoTable
     }
 }

@@ -6,15 +6,16 @@
 //
 
 @preconcurrency import Lua
-import Synchronization
 
 final public class ScriptContext: Resource {
     let locale: Locale
-    let context: Mutex<LuaContext>
+    let context: LuaContext
+    let contextQueue: DispatchQueue
 
     init(locale: Locale, context: LuaContext) {
         self.locale = locale
-        self.context = Mutex(context)
+        self.context = context
+        self.contextQueue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.script-context")
     }
 
     public func identifiedItemResourceName(forItemID itemID: Int) -> String? {
@@ -68,9 +69,9 @@ final public class ScriptContext: Resource {
     }
 
     private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) -> T? {
-        context.withLock {
+        contextQueue.sync {
             do {
-                let result = try $0.call(name, with: args)
+                let result = try context.call(name, with: args)
                 return result as? T
             } catch {
                 logger.warning("\(error.localizedDescription)")
@@ -83,13 +84,13 @@ final public class ScriptContext: Resource {
 extension ResourceManager {
     public func scriptContext(for locale: Locale) async -> ScriptContext {
         let localeIdentifier = locale.identifier(.bcp47)
-        let taskIdentifier = "ScriptContext-\(localeIdentifier)"
+        let resourceIdentifier = "ScriptContext-\(localeIdentifier)"
 
-        if let task = tasks.withLock({ $0[taskIdentifier] }) {
-            return await task.value as! ScriptContext
+        if let phase = resources[resourceIdentifier] {
+            return await phase.resource as! ScriptContext
         }
 
-        let task = Task<any Resource, Never> {
+        let task = ResourceTask {
             let context = LuaContext()
 
             async let itemInfo = itemInfoScript()
@@ -236,11 +237,13 @@ extension ResourceManager {
             return ScriptContext(locale: locale, context: context)
         }
 
-        tasks.withLock {
-            $0[taskIdentifier] = task
-        }
+        resources[resourceIdentifier] = .inProgress(task)
 
-        return await task.value as! ScriptContext
+        let scriptContext = await task.value as! ScriptContext
+
+        resources[resourceIdentifier] = .loaded(scriptContext)
+
+        return scriptContext
     }
 
     private func itemInfoScript() async -> Result<Data, any Error> {

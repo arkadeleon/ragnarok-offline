@@ -17,7 +17,7 @@ final public class ModelResource: Sendable {
 }
 
 extension ResourceManager {
-    public func model(at path: ResourcePath) async throws -> ModelResource {
+    nonisolated public func model(at path: ResourcePath) async throws -> ModelResource {
         let data = try await contentsOfResource(at: path)
         let rsm = try RSM(data: data)
 

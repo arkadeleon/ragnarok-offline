@@ -17,7 +17,7 @@ final public class PaletteResource: Sendable {
 }
 
 extension ResourceManager {
-    public func palette(at path: ResourcePath) async throws -> PaletteResource {
+    nonisolated public func palette(at path: ResourcePath) async throws -> PaletteResource {
         let palPath = path.appendingPathExtension("pal")
         let palData = try await contentsOfResource(at: palPath)
         let pal = try PAL(data: palData)

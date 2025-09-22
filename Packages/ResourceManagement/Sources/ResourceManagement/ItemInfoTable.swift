@@ -39,13 +39,13 @@ final public class ItemInfoTable: Resource {
 extension ResourceManager {
     public func itemInfoTable(for locale: Locale) async -> ItemInfoTable {
         let localeIdentifier = locale.identifier(.bcp47)
-        let taskIdentifier = "ItemInfoTable-\(localeIdentifier)"
+        let resourceIdentifier = "ItemInfoTable-\(localeIdentifier)"
 
-        if let task = tasks.withLock({ $0[taskIdentifier] }) {
-            return await task.value as! ItemInfoTable
+        if let phase = resources[resourceIdentifier] {
+            return await phase.resource as! ItemInfoTable
         }
 
-        let task = Task<any Resource, Never> {
+        let task = ResourceTask {
             if let url = Bundle.module.url(forResource: "ItemInfo", withExtension: "json", locale: locale),
                let itemInfoTable = try? ItemInfoTable(contentsOf: url) {
                 return itemInfoTable
@@ -54,10 +54,12 @@ extension ResourceManager {
             }
         }
 
-        tasks.withLock {
-            $0[taskIdentifier] = task
-        }
+        resources[resourceIdentifier] = .inProgress(task)
 
-        return await task.value as! ItemInfoTable
+        let itemInfoTable = await task.value as! ItemInfoTable
+
+        resources[resourceIdentifier] = .loaded(itemInfoTable)
+
+        return itemInfoTable
     }
 }
