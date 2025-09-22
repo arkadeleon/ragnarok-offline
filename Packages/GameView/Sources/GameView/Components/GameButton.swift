@@ -1,10 +1,11 @@
 //
 //  GameButton.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2024/9/9.
 //
 
+import GameCore
 import SwiftUI
 
 struct GameButton: View {
@@ -51,4 +52,5 @@ extension ButtonStyle where Self == GameButtonStyle {
 #Preview {
     GameButton("btn_ok.bmp") {
     }
+    .environment(GameSession.previewing)
 }

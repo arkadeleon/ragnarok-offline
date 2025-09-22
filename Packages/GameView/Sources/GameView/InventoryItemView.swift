@@ -1,10 +1,11 @@
 //
 //  InventoryItemView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/4/11.
 //
 
+import GameCore
 import NetworkClient
 import ResourceManagement
 import SwiftUI
@@ -12,6 +13,8 @@ import SwiftUI
 struct InventoryItemView<Actions>: View where Actions: View {
     var item: InventoryItem
     var actions: () -> Actions
+
+    @Environment(GameSession.self) private var gameSession
 
     @State private var iconImage: CGImage?
 
@@ -30,10 +33,11 @@ struct InventoryItemView<Actions>: View where Actions: View {
         }
         .buttonStyle(.borderless)
         .task {
-            let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
+            let resourceManager = gameSession.resourceManager
+            let scriptContext = await resourceManager.scriptContext(for: .current)
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             if let path = pathGenerator.generateItemIconImagePath(itemID: item.itemID) {
-                iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
+                iconImage = try? await resourceManager.image(at: path, removesMagentaPixels: true)
             }
         }
     }
@@ -56,4 +60,5 @@ struct InventoryItemView<Actions>: View where Actions: View {
         Text(verbatim: "Use")
     }
     .padding()
+    .environment(GameSession.previewing)
 }

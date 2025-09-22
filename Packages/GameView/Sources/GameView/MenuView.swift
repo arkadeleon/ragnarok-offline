@@ -1,10 +1,11 @@
 //
 //  MenuView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/4/8.
 //
 
+import GameCore
 import SwiftUI
 
 enum MenuItem {
@@ -113,4 +114,5 @@ struct MenuView: View {
     MenuView { item in
         // Perform action.
     }
+    .environment(GameSession.previewing)
 }

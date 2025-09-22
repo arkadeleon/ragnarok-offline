@@ -17,10 +17,4 @@ final class SettingsModel {
 
     @ObservationIgnored
     @SettingsItem("client.server_port", defaultValue: "6900") var serverPort: String
-
-    @ObservationIgnored
-    @SettingsItem("client.username", defaultValue: "") var username: String
-
-    @ObservationIgnored
-    @SettingsItem("client.password", defaultValue: "") var password: String
 }

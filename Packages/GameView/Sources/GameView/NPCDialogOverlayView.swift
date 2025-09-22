@@ -1,6 +1,6 @@
 //
 //  NPCDialogOverlayView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2024/12/16.
 //

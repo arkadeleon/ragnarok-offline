@@ -1,11 +1,12 @@
 //
 //  BasicInfoView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/4/6.
 //
 
 import Constants
+import GameCore
 import NetworkClient
 import NetworkPackets
 import SwiftUI
@@ -71,4 +72,5 @@ struct BasicInfoView: View {
 #Preview {
     BasicInfoView(char: CharInfo(), status: CharacterStatus())
         .padding()
+        .environment(GameSession.previewing)
 }

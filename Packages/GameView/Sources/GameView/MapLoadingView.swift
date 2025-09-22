@@ -1,10 +1,11 @@
 //
 //  MapLoadingView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/7/8.
 //
 
+import GameCore
 import SwiftUI
 
 struct MapLoadingView: View {
@@ -34,4 +35,5 @@ struct MapLoadingView: View {
 #Preview {
     MapLoadingView(progress: 0.5)
         .frame(width: 400, height: 300)
+        .environment(GameSession.previewing)
 }

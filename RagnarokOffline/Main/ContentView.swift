@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2023/1/13.
 //
 
+import GameView
 import SwiftUI
 
 struct ContentView: View {
@@ -100,8 +101,7 @@ struct ContentView: View {
             ChatView()
                 .environment(appModel.chatSession)
         case .game:
-            GameView()
-                .environment(appModel.gameSession)
+            GameView(gameSession: appModel.gameSession)
         case .cube:
             CubeView()
         }

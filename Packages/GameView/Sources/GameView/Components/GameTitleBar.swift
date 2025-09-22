@@ -1,10 +1,11 @@
 //
 //  GameTitleBar.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/4/11.
 //
 
+import GameCore
 import SwiftUI
 
 struct GameTitleBar: View {
@@ -26,4 +27,5 @@ struct GameTitleBar: View {
     GameTitleBar()
         .frame(width: 280)
         .padding()
+        .environment(GameSession.previewing)
 }

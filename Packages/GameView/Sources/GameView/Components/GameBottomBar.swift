@@ -1,10 +1,11 @@
 //
 //  GameBottomBar.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/4/16.
 //
 
+import GameCore
 import SwiftUI
 
 struct GameBottomBar: View {
@@ -26,4 +27,5 @@ struct GameBottomBar: View {
     GameBottomBar()
         .frame(width: 280)
         .padding()
+        .environment(GameSession.previewing)
 }

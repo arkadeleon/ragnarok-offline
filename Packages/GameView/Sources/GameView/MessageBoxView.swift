@@ -1,11 +1,11 @@
 //
 //  MessageBoxView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2024/9/9.
 //
 
-import ResourceManagement
+import GameCore
 import SwiftUI
 
 struct MessageBoxView: View {
@@ -29,4 +29,5 @@ struct MessageBoxView: View {
 #Preview {
     MessageBoxView("Please wait...")
         .padding()
+        .environment(GameSession.previewing)
 }

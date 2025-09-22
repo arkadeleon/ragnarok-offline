@@ -1,6 +1,6 @@
 //
 //  LoginView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2024/9/4.
 //
@@ -9,11 +9,10 @@ import GameCore
 import SwiftUI
 
 struct LoginView: View {
-    @Environment(AppModel.self) private var appModel
     @Environment(GameSession.self) private var gameSession
 
-    @State private var username = ""
-    @State private var password = ""
+    @AppStorage("game.username") private var username = ""
+    @AppStorage("game.password") private var password = ""
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -58,9 +57,6 @@ struct LoginView: View {
                             username: username,
                             password: password
                         )
-
-                        appModel.settings.username = username
-                        appModel.settings.password = password
                     }
 
                     GameButton("login_interface/btn_exit.bmp") {
@@ -71,16 +67,11 @@ struct LoginView: View {
             }
         }
         .frame(width: 280, height: 120)
-        .onAppear {
-            username = appModel.settings.username
-            password = appModel.settings.password
-        }
     }
 }
 
 #Preview {
     LoginView()
         .padding()
-        .environment(AppModel())
         .environment(GameSession.previewing)
 }

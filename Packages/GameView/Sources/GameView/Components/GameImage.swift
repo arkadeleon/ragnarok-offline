@@ -1,16 +1,19 @@
 //
 //  GameImage.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2024/9/9.
 //
 
+import GameCore
 import ResourceManagement
 import SwiftUI
 
 struct GameImage<Content>: View where Content: View {
     var name: String
     var content: (CGImage) -> Content
+
+    @Environment(GameSession.self) private var gameSession
 
     @State private var image: CGImage?
 
@@ -19,7 +22,7 @@ struct GameImage<Content>: View where Content: View {
             .task {
                 let components = name.split(separator: "/").map(String.init)
                 let path = ResourcePath.userInterfaceDirectory.appending(components)
-                image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
+                image = try? await gameSession.resourceManager.image(at: path, removesMagentaPixels: true)
             }
     }
 
@@ -50,4 +53,5 @@ struct GameImage<Content>: View where Content: View {
     GameImage("win_msgbox.bmp")
         .frame(width: 280, height: 120)
         .padding()
+        .environment(GameSession.previewing)
 }

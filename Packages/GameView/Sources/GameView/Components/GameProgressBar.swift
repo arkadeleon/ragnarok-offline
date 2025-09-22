@@ -1,6 +1,6 @@
 //
 //  GameProgressBar.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/7/9.
 //

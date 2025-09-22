@@ -1,6 +1,6 @@
 //
 //  InventoryView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/4/10.
 //

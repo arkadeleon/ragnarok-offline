@@ -18,9 +18,9 @@ import WorldRendering
 final public class GameSession {
     public let immersiveSpaceID = "Game"
 
-    let serverAddress: String
-    let serverPort: String
-    let resourceManager: ResourceManager
+    public let serverAddress: String
+    public let serverPort: String
+    public let resourceManager: ResourceManager
 
     public enum Phase {
         case login

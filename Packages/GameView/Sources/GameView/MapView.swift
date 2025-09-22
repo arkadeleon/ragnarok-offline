@@ -1,6 +1,6 @@
 //
 //  MapView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2025/3/30.
 //

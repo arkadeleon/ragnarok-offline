@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3522886D2E8146E1002B9466 /* GameView in Frameworks */ = {isa = PBXBuildFile; productRef = 3522886C2E8146E1002B9466 /* GameView */; };
 		353112092E7A90BB0043F263 /* DatabaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 353112082E7A90BB0043F263 /* DatabaseCore */; };
 		353725ED2D83FDF2008590F6 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 353725EC2D83FDF2008590F6 /* Highlight */; };
 		3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */; };
@@ -126,6 +127,7 @@
 				DataCompression,
 				FileFormats,
 				GameCore,
+				GameView,
 				GRF,
 				ImageRendering,
 				MetalRenderers,
@@ -183,6 +185,7 @@
 				359152902E7AA0E800BBA7A6 /* GameCore in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
 				3558A3BB2DFC22EA0038DFC3 /* rAthenaWeb in Frameworks */,
+				3522886D2E8146E1002B9466 /* GameView in Frameworks */,
 				3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */,
 				353725ED2D83FDF2008590F6 /* Highlight in Frameworks */,
 			);
@@ -307,6 +310,7 @@
 				3558A3E12DFC28960038DFC3 /* rAthenaCommon */,
 				353112082E7A90BB0043F263 /* DatabaseCore */,
 				3591528F2E7AA0E800BBA7A6 /* GameCore */,
+				3522886C2E8146E1002B9466 /* GameView */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -832,6 +836,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3522886C2E8146E1002B9466 /* GameView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GameView;
+		};
 		353112082E7A90BB0043F263 /* DatabaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DatabaseCore;

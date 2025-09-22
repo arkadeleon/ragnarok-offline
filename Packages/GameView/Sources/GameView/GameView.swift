@@ -1,6 +1,6 @@
 //
 //  GameView.swift
-//  RagnarokOffline
+//  GameView
 //
 //  Created by Leon Li on 2024/9/5.
 //
@@ -8,11 +8,11 @@
 import GameCore
 import SwiftUI
 
-struct GameView: View {
-    @Environment(GameSession.self) private var gameSession
+public struct GameView: View {
+    public var gameSession: GameSession
 
-    var body: some View {
-        ZStack {
+    public var body: some View {
+        Group {
             switch gameSession.phase {
             case .login:
                 LoginView()
@@ -28,10 +28,14 @@ struct GameView: View {
                 MapView(scene: scene)
             }
         }
+        .environment(gameSession)
+    }
+
+    public init(gameSession: GameSession) {
+        self.gameSession = gameSession
     }
 }
 
 #Preview {
-    GameView()
-        .environment(GameSession.previewing)
+    GameView(gameSession: .previewing)
 }
