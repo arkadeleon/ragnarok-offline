@@ -121,7 +121,7 @@ final class Client: Sendable {
                             packetContinuation.yield(packet)
                         }
                     } catch {
-                        logger.warning("\(error.localizedDescription)")
+                        logger.warning("\(error)")
                         self.errorContinuation.yield(.decoding(error))
                     }
                 }
@@ -151,7 +151,7 @@ final class Client: Sendable {
                         packetContinuation.yield(packet)
                     }
                 } catch {
-                    logger.warning("\(error.localizedDescription)")
+                    logger.warning("\(error)")
                     self.errorContinuation.yield(.decoding(error))
                 }
             }

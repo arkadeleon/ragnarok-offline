@@ -127,7 +127,7 @@ extension Entity {
 //                let drawableQueue = try TextureResource.DrawableQueue(descriptor)
 //                destinationTexture.replace(withDrawables: drawableQueue)
 //            } catch {
-//                logger.warning("\(error.localizedDescription)")
+//                logger.warning("\(error)")
 //            }
 //        }
 //    }

@@ -146,7 +146,7 @@ public class MapScene {
             let spriteComponent = SpriteComponent(animations: animations)
             playerEntity.components.set(spriteComponent)
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            logger.warning("\(error)")
         }
 
         playerEntity.name = "\(player.objectID)"

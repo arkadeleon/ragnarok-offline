@@ -46,7 +46,7 @@ extension Entity {
                     modelEntitiesByName[modelEntity.name] = modelEntity
                 }
             } catch {
-                logger.warning("\(error.localizedDescription)")
+                logger.warning("\(error)")
             }
 
             return modelEntitiesByName

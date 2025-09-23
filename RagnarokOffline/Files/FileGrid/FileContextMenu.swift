@@ -44,7 +44,7 @@ struct FileContextMenu: ViewModifier {
                                 do {
                                     try await fileSystem.extractFile(file)
                                 } catch {
-                                    logger.warning("\(error.localizedDescription)")
+                                    logger.warning("\(error)")
                                 }
                             }
                         } label: {

@@ -48,7 +48,7 @@ class SpriteEntity: Entity {
             let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
             playAnimation(actionAnimation)
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            logger.warning("\(error)")
         }
     }
 
@@ -66,7 +66,7 @@ class SpriteEntity: Entity {
             let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
             playAnimation(actionAnimation)
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            logger.warning("\(error)")
         }
     }
 
@@ -152,7 +152,7 @@ class SpriteEntity: Entity {
             let animationResource = try AnimationResource.sequence(with: animationSequence)
             playAnimation(animationResource)
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            logger.warning("\(error)")
         }
     }
 

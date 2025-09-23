@@ -39,7 +39,7 @@ extension File: Transferable {
                 try data.write(to: temporaryURL)
                 return temporaryURL
             } catch {
-                logger.warning("\(error.localizedDescription)")
+                logger.warning("\(error)")
                 return nil
             }
         }

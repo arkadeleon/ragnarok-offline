@@ -33,7 +33,7 @@ extension ResourceManager {
             do {
                 data = try await contentsOfResource(at: ["data", "mp3nametable.txt"])
             } catch {
-                logger.warning("\(error.localizedDescription)")
+                logger.warning("\(error)")
                 return MP3NameTable()
             }
 

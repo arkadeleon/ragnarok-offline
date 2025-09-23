@@ -74,7 +74,7 @@ final public class ScriptContext: Resource {
                 let result = try context.call(name, with: args)
                 return result as? T
             } catch {
-                logger.warning("\(error.localizedDescription)")
+                logger.warning("\(error)")
                 return nil
             }
         }
@@ -188,7 +188,7 @@ extension ResourceManager {
                 end
                 """)
             } catch {
-                logger.warning("\(error.localizedDescription)")
+                logger.warning("\(error)")
             }
 
             do {
@@ -201,7 +201,7 @@ extension ResourceManager {
                 end
                 """)
             } catch {
-                logger.warning("\(error.localizedDescription)")
+                logger.warning("\(error)")
             }
 
             do {
@@ -231,7 +231,7 @@ extension ResourceManager {
                 end
                 """)
             } catch {
-                logger.warning("\(error.localizedDescription)")
+                logger.warning("\(error)")
             }
 
             return ScriptContext(locale: locale, context: context)
@@ -252,7 +252,7 @@ extension ResourceManager {
             let data = try await contentsOfResource(at: path)
             return .success(data)
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            logger.warning("\(error)")
             return .failure(error)
         }
     }
@@ -263,7 +263,7 @@ extension ResourceManager {
             let data = try await contentsOfResource(at: path)
             return .success(data)
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            logger.warning("\(error)")
             return .failure(error)
         }
     }
@@ -276,7 +276,7 @@ extension ResourceManager {
         do {
             try context.load(data)
         } catch {
-            logger.warning("\(error.localizedDescription)")
+            logger.warning("\(error)")
         }
     }
 }
