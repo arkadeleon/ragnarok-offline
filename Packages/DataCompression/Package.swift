@@ -6,9 +6,8 @@ import PackageDescription
 let package = Package(
     name: "DataCompression",
     platforms: [
-        .macOS(.v13),
-        .iOS(.v16),
-        .visionOS(.v1),
+        .macOS(.v10_15),
+        .iOS(.v13),
     ],
     products: [
         .library(
