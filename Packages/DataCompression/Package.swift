@@ -18,7 +18,6 @@ let package = Package(
     targets: [
         .systemLibrary(
             name: "CZlib",
-            pkgConfig: "libz",
             providers: [
                 .apt(["libz-dev"])
             ]

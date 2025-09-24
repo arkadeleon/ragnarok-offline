@@ -66,13 +66,13 @@ public class GRFPath {
     }
 }
 
-extension GRFPath: @GRFActor Equatable {
+extension GRFPath: @preconcurrency Equatable {
     public static func == (lhs: GRFPath, rhs: GRFPath) -> Bool {
         lhs.string == rhs.string
     }
 }
 
-extension GRFPath: @GRFActor Hashable {
+extension GRFPath: @preconcurrency Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(string)
     }
