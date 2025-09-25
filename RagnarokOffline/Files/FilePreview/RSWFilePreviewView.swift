@@ -39,12 +39,12 @@ struct RSWFilePreviewView: View {
 
             let gndURL = url.deletingPathExtension().appendingPathExtension("gnd")
             gndData = try Data(contentsOf: gndURL)
-        case .grfArchiveEntry(let grfArchive, let entry):
-            let gatPath = entry.path.replacingExtension("gat")
-            gatData = try await grfArchive.contentsOfEntry(at: gatPath)
+        case .grfArchiveNode(let grfArchive, let node) where !node.isDirectory:
+            let gatPath = node.path.replacingExtension("gat")
+            gatData = try await grfArchive.contentsOfEntryNode(at: gatPath)
 
-            let gndPath = entry.path.replacingExtension("gnd")
-            gndData = try await grfArchive.contentsOfEntry(at: gndPath)
+            let gndPath = node.path.replacingExtension("gnd")
+            gndData = try await grfArchive.contentsOfEntryNode(at: gndPath)
         default:
             throw FileError.fileIsDirectory
         }

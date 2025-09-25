@@ -33,9 +33,10 @@ extension File {
     @inlinable
     var rank: Int {
         switch node {
-        case .directory, .grfArchiveDirectory: 0
+        case .directory: 0
         case .grfArchive: 1
-        case .regularFile, .grfArchiveEntry: 2
+        case .regularFile: 2
+        case .grfArchiveNode(_, let node): node.isDirectory ? 0 : 2
         }
     }
 }

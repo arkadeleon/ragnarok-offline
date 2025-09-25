@@ -15,7 +15,7 @@ actor FileSystem {
 
     nonisolated func canExtractFile(_ file: File) -> Bool {
         switch file.node {
-        case .grfArchiveEntry:
+        case .grfArchiveNode(_, let node) where !node.isDirectory:
             true
         default:
             false
@@ -23,13 +23,13 @@ actor FileSystem {
     }
 
     nonisolated func extractFile(_ file: File) async throws {
-        guard case .grfArchiveEntry(let grfArchive, let entry) = file.node else {
+        guard case .grfArchiveNode(let grfArchive, let node) = file.node, !node.isDirectory else {
             return
         }
 
-        let contents = try await grfArchive.contentsOfEntry(at: entry.path)
+        let contents = try await grfArchive.contentsOfEntryNode(at: node.path)
 
-        let path = entry.path.components.map(L2K).joined(separator: "/")
+        let path = node.path.components.map(L2K).joined(separator: "/")
         let url = grfArchive.url.deletingLastPathComponent().appending(path: path)
         let directory = url.deletingLastPathComponent()
 

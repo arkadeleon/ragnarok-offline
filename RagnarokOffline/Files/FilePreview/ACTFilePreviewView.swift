@@ -55,9 +55,9 @@ struct ACTFilePreviewView: View {
         case .regularFile(let url):
             let sprURL = url.deletingPathExtension().appendingPathExtension("spr")
             sprData = try Data(contentsOf: sprURL)
-        case .grfArchiveEntry(let grfArchive, let entry):
-            let sprPath = entry.path.replacingExtension("spr")
-            sprData = try await grfArchive.contentsOfEntry(at: sprPath)
+        case .grfArchiveNode(let grfArchive, let node) where !node.isDirectory:
+            let sprPath = node.path.replacingExtension("spr")
+            sprData = try await grfArchive.contentsOfEntryNode(at: sprPath)
         default:
             throw FileError.fileIsDirectory
         }

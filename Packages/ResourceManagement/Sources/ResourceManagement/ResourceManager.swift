@@ -21,7 +21,7 @@ enum ResourceError: LocalizedError {
 
 public enum ResourceLocator: Sendable {
     case url(URL)
-    case grfArchiveEntry(GRFArchive, GRFEntryNode)
+    case grfArchiveNode(GRFArchive, GRFNode)
 }
 
 public actor ResourceManager {
@@ -52,8 +52,8 @@ public actor ResourceManager {
 
         let grfPath = GRFPath(components: path.components)
         for grfArchive in localGRFArchives {
-            if let entry = await grfArchive.entry(at: grfPath) {
-                return .grfArchiveEntry(grfArchive, entry)
+            if let entryNode = await grfArchive.entryNode(at: grfPath) {
+                return .grfArchiveNode(grfArchive, entryNode)
             }
         }
 
@@ -69,8 +69,8 @@ public actor ResourceManager {
 
         let grfPath = GRFPath(components: path.components)
         for grfArchive in localGRFArchives {
-            if let entry = await grfArchive.entry(at: grfPath) {
-                let data = try await grfArchive.contentsOfEntry(at: entry.path)
+            if let entryNode = await grfArchive.entryNode(at: grfPath) {
+                let data = try await grfArchive.contentsOfEntryNode(at: entryNode.path)
                 return data
             }
         }

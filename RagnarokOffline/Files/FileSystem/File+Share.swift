@@ -17,20 +17,22 @@ extension File: Transferable {
 
     var canShare: Bool {
         switch node {
-        case .regularFile, .grfArchive, .grfArchiveEntry:
+        case .regularFile, .grfArchive:
             true
-        case .directory, .grfArchiveDirectory:
+        case .directory:
             false
+        case .grfArchiveNode(_, let node):
+            !node.isDirectory
         }
     }
 
     func shareURL() async -> URL? {
         switch node {
-        case .directory, .grfArchiveDirectory:
+        case .directory:
             return nil
         case .regularFile, .grfArchive:
             return url
-        case .grfArchiveEntry:
+        case .grfArchiveNode:
             guard let data = try? await contents() else {
                 return nil
             }

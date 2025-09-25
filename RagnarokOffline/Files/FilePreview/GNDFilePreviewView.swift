@@ -31,9 +31,9 @@ struct GNDFilePreviewView: View {
         case .regularFile(let url):
             let gatURL = url.deletingPathExtension().appendingPathExtension("gat")
             gatData = try Data(contentsOf: gatURL)
-        case .grfArchiveEntry(let grfArchive, let entry):
-            let gatPath = entry.path.replacingExtension("gat")
-            gatData = try await grfArchive.contentsOfEntry(at: gatPath)
+        case .grfArchiveNode(let grfArchive, let node) where !node.isDirectory:
+            let gatPath = node.path.replacingExtension("gat")
+            gatData = try await grfArchive.contentsOfEntryNode(at: gatPath)
         default:
             throw FileError.fileIsDirectory
         }

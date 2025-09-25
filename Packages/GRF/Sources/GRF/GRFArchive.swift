@@ -87,9 +87,13 @@ public class GRFArchive {
         self.url = url
     }
 
-    public func directory(at path: GRFPath) -> GRFDirectoryNode? {
+    public func directoryNode(at path: GRFPath) -> GRFNode? {
+        directories.contains(path) ? GRFNode(path: path, isDirectory: true) : nil
+    }
+
+    public func contentsOfDirectoryNode(at path: GRFPath) -> [GRFNode] {
         guard let grf else {
-            return nil
+            return []
         }
 
         #if canImport(OSLog)
@@ -97,14 +101,14 @@ public class GRFArchive {
         logger.info("GRF: Begin loading directory at \(path.string)")
         #endif
 
-        let subdirectories = directories
-            .filter { $0.parent == path }
-            .map(GRFSubdirectoryNode.init)
+        let subdirectoryNodes = directories
+            .filter({ $0.parent == path })
+            .map({ GRFNode(path: $0, isDirectory: true) })
             .sorted(using: KeyPathComparator(\.path.string))
 
-        let entries = grf.table.entries
-            .filter { $0.path.parent == path }
-            .map(GRFEntryNode.init)
+        let entryNodes = grf.table.entries
+            .filter({ $0.path.parent == path })
+            .map({ GRFNode(path: $0.path, isDirectory: false) })
             .sorted(using: KeyPathComparator(\.path.string))
 
         #if canImport(OSLog)
@@ -112,14 +116,18 @@ public class GRFArchive {
         logger.info("GRF: End loading directory at \(path.string) (\(endTime - beginTime)s)")
         #endif
 
-        return GRFDirectoryNode(subdirectories: subdirectories, entries: entries)
+        return subdirectoryNodes + entryNodes
     }
 
-    public func entry(at path: GRFPath) -> GRFEntryNode? {
-        entriesByPath[path.string.uppercased()].flatMap(GRFEntryNode.init)
+    public func entryNode(at path: GRFPath) -> GRFNode? {
+        entriesByPath[path.string.uppercased()].flatMap({ GRFNode(path: $0.path, isDirectory: false) })
     }
 
-    public func contentsOfEntry(at path: GRFPath) throws -> Data {
+    public func sizeOfEntryNode(at path: GRFPath) -> Int? {
+        entriesByPath[path.string.uppercased()].flatMap({ Int($0.size) })
+    }
+
+    public func contentsOfEntryNode(at path: GRFPath) throws -> Data {
         guard let entry = entriesByPath[path.string.uppercased()] else {
             throw GRFError.invalidEntryPath(path.string)
         }
