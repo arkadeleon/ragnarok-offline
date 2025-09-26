@@ -49,7 +49,7 @@ final class StatusChangeModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
+            let scriptContext = await ResourceManager.shared.scriptContext()
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             if let path = pathGenerator.generateStatusIconImagePath(statusID: statusChange.icon.rawValue) {
                 iconImage = try? await ResourceManager.shared.image(at: path)

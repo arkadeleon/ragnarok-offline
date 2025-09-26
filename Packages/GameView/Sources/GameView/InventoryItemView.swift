@@ -34,7 +34,7 @@ struct InventoryItemView<Actions>: View where Actions: View {
         .buttonStyle(.borderless)
         .task {
             let resourceManager = gameSession.resourceManager
-            let scriptContext = await resourceManager.scriptContext(for: .current)
+            let scriptContext = await resourceManager.scriptContext()
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             if let path = pathGenerator.generateItemIconImagePath(itemID: item.itemID) {
                 iconImage = try? await resourceManager.image(at: path, removesMagentaPixels: true)

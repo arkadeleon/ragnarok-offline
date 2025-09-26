@@ -135,7 +135,7 @@ final class ItemModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
+            let scriptContext = await ResourceManager.shared.scriptContext()
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             if let path = pathGenerator.generateItemIconImagePath(itemID: item.id) {
                 iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
@@ -145,7 +145,7 @@ final class ItemModel {
 
     @MainActor
     func fetchDetail() async {
-        let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
+        let scriptContext = await ResourceManager.shared.scriptContext()
         let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
         if let previewImagePath = pathGenerator.generateItemPreviewImagePath(itemID: item.id) {
             previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)

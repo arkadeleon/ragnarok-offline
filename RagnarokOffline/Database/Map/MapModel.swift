@@ -41,7 +41,7 @@ final class MapModel {
     @MainActor
     func fetchImage() async {
         if image == nil {
-            let scriptContext = await ResourceManager.shared.scriptContext(for: .current)
+            let scriptContext = await ResourceManager.shared.scriptContext()
             let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
             let path = pathGenerator.generateMapImagePath(mapName: map.name)
             image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)

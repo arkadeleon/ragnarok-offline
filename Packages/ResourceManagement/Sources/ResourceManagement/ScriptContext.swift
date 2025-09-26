@@ -8,12 +8,10 @@
 @preconcurrency import Lua
 
 final public class ScriptContext: Resource {
-    let locale: Locale
     let context: LuaContext
     let contextQueue: DispatchQueue
 
-    init(locale: Locale, context: LuaContext) {
-        self.locale = locale
+    init(context: LuaContext) {
         self.context = context
         self.contextQueue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.script-context")
     }
@@ -82,9 +80,8 @@ final public class ScriptContext: Resource {
 }
 
 extension ResourceManager {
-    public func scriptContext(for locale: Locale) async -> ScriptContext {
-        let localeIdentifier = locale.identifier(.bcp47)
-        let resourceIdentifier = "ScriptContext-\(localeIdentifier)"
+    public func scriptContext() async -> ScriptContext {
+        let resourceIdentifier = "ScriptContext"
 
         if let phase = resources[resourceIdentifier] {
             return await phase.resource as! ScriptContext
@@ -234,7 +231,7 @@ extension ResourceManager {
                 logger.warning("\(error)")
             }
 
-            return ScriptContext(locale: locale, context: context)
+            return ScriptContext(context: context)
         }
 
         resources[resourceIdentifier] = .inProgress(task)
@@ -246,35 +243,35 @@ extension ResourceManager {
         return scriptContext
     }
 
-    private func itemInfoScript() async -> Result<Data, any Error> {
+    private func itemInfoScript() async -> Data? {
         do {
             let path = ResourcePath(components: ["System", "itemInfo.lub"])
             let data = try await contentsOfResource(at: path)
-            return .success(data)
+            return data
         } catch {
             logger.warning("\(error)")
-            return .failure(error)
+            return nil
         }
     }
 
-    private func script(at path: ResourcePath) async -> Result<Data, any Error> {
+    private func script(at path: ResourcePath) async -> Data? {
         do {
             let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
             let data = try await contentsOfResource(at: path)
-            return .success(data)
+            return data
         } catch {
             logger.warning("\(error)")
-            return .failure(error)
+            return nil
         }
     }
 
-    private func loadScript(_ script: Result<Data, any Error>, in context: LuaContext) async {
-        guard case .success(let data) = script else {
+    private func loadScript(_ script: Data?, in context: LuaContext) {
+        guard let script else {
             return
         }
 
         do {
-            try context.load(data)
+            try context.load(script)
         } catch {
             logger.warning("\(error)")
         }

@@ -14,7 +14,7 @@ final class ScriptContextTests: XCTestCase {
 
     var scriptContext: ScriptContext {
         get async {
-            await resourceManager.scriptContext(for: .korean)
+            await resourceManager.scriptContext()
         }
     }
 

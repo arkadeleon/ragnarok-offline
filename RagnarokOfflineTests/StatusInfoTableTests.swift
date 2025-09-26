@@ -13,7 +13,7 @@ final class StatusInfoTableTests: XCTestCase {
     let resourceManager = ResourceManager.testing
 
     func testIconName() async throws {
-        let scriptContext = await resourceManager.scriptContext(for: .current)
+        let scriptContext = await resourceManager.scriptContext()
         let swordclan = scriptContext.statusIconName(forStatusID: OfficialStatusChangeID.efst_swordclan.rawValue)
         XCTAssertEqual(swordclan, "SWORDCLAN.TGA")
     }
