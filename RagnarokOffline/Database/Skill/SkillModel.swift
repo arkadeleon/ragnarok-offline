@@ -69,9 +69,7 @@ final class SkillModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let scriptContext = await ResourceManager.shared.scriptContext()
-            let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
-            let path = pathGenerator.generateSkillIconImagePath(skillAegisName: skill.aegisName)
+            let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skill.aegisName)
             iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }
     }

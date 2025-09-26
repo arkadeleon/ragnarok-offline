@@ -31,7 +31,7 @@ final public class ComposedSprite: Sendable {
             parts = try await composer.composePlayerSprite()
 
             let scriptContext = await resourceManager.scriptContext()
-            let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+            let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
             if let imfPath = pathGenerator.generateIMFPath(job: configuration.job, gender: configuration.gender) {
                 let imfPath = imfPath.appendingPathExtension("imf")

@@ -366,8 +366,7 @@ extension MapScene: MapEventHandlerProtocol {
     func onItemSpawned(_ event: ItemEvents.Spawned) {
         Task {
             let scriptContext = await resourceManager.scriptContext()
-            let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
-            guard let path = pathGenerator.generateItemSpritePath(itemID: Int(event.item.itemID)) else {
+            guard let path = ResourcePath.generateItemSpritePath(itemID: Int(event.item.itemID), scriptContext: scriptContext) else {
                 return
             }
 

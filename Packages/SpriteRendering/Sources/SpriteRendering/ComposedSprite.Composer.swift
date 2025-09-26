@@ -122,7 +122,7 @@ extension ComposedSprite {
                 // Body
                 taskGroup.addTask {
                     let scriptContext = await resourceManager.scriptContext()
-                    let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+                    let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
                     guard let bodySpritePath = pathGenerator.generateNonPlayerSpritePath(job: configuration.job) else {
                         return nil
@@ -165,7 +165,7 @@ extension ComposedSprite.Part {
         let madoType = configuration.madoType
 
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         var bodySprite: SpriteResource?
         var bodyPalette: PaletteResource?
@@ -220,7 +220,7 @@ extension ComposedSprite.Part {
         let hairColor = configuration.hairColor
 
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         guard let spritePath = pathGenerator.generatePlayerHeadSpritePath(job: job, hairStyle: hairStyle, gender: gender) else {
             return nil
@@ -258,7 +258,7 @@ extension ComposedSprite.Part {
         }
 
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         guard let spritePath = pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: false, gender: gender, madoType: madoType) else {
             return nil
@@ -284,7 +284,7 @@ extension ComposedSprite.Part {
         }
 
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         guard let spritePath = pathGenerator.generateWeaponSpritePath(job: job, weapon: weapon, isSlash: true, gender: gender, madoType: madoType) else {
             return nil
@@ -309,7 +309,7 @@ extension ComposedSprite.Part {
         }
 
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         guard let spritePath = pathGenerator.generateShieldSpritePath(job: job, shield: shield, gender: gender) else {
             return nil
@@ -334,7 +334,7 @@ extension ComposedSprite.Part {
         }
 
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         guard let spritePath = pathGenerator.generateHeadgearSpritePath(headgear: headgear, gender: gender) else {
             return nil
@@ -361,7 +361,7 @@ extension ComposedSprite.Part {
         }
 
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         guard let spritePath = pathGenerator.generateGarmentSpritePath(job: job, garment: garment, gender: gender) else {
             return nil
@@ -378,7 +378,7 @@ extension ComposedSprite.Part {
         resourceManager: ResourceManager
     ) async throws -> ComposedSprite.Part {
         let scriptContext = await resourceManager.scriptContext()
-        let pathGenerator = ResourcePathGenerator(scriptContext: scriptContext)
+        let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         let spritePath = pathGenerator.generateShadowSpritePath()
         let shadowSprite = try await resourceManager.sprite(at: spritePath)

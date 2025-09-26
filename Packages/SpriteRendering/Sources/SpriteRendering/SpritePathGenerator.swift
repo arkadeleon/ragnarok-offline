@@ -1,5 +1,5 @@
 //
-//  ResourcePathGenerator+Sprite.swift
+//  SpritePathGenerator.swift
 //  SpriteRendering
 //
 //  Created by Leon Li on 2025/5/8.
@@ -9,7 +9,13 @@ import Constants
 import ResourceManagement
 import TextEncoding
 
-extension ResourcePathGenerator {
+class SpritePathGenerator {
+    let scriptContext: ScriptContext
+
+    init(scriptContext: ScriptContext) {
+        self.scriptContext = scriptContext
+    }
+
     func generateShadowSpritePath() -> ResourcePath {
         ResourcePath.spriteDirectory.appending("shadow")
     }
