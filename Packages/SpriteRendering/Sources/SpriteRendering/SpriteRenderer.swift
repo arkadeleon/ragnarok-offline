@@ -86,7 +86,7 @@ final public class SpriteRenderer: Sendable {
 
     public func render(
         composedSprite: ComposedSprite,
-        actionType: ComposedSprite.ActionType,
+        actionType: CharacterActionType,
         direction: CharacterDirection,
         headDirection: CharacterHeadDirection
     ) async -> SpriteRenderer.Animation {

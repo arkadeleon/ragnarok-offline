@@ -29,7 +29,7 @@ class SpriteEntity: Entity {
         components.set(spriteComponent)
     }
 
-    func playSpriteAnimation(_ actionType: ComposedSprite.ActionType, direction: CharacterDirection, repeats: Bool) {
+    func playSpriteAnimation(_ actionType: CharacterActionType, direction: CharacterDirection, repeats: Bool) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
@@ -115,7 +115,7 @@ class SpriteEntity: Entity {
                     duration = speed
                 }
 
-                let animationIndex = ComposedSprite.ActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
+                let animationIndex = CharacterActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
                 let animation = animations[animationIndex]
                 let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration) {
                     self.components[MapObjectComponent.self]?.position = targetPosition

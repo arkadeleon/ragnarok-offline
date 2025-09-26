@@ -25,7 +25,7 @@ final class CharacterSimulator {
         var headBottom: ItemModel?
         var garment: ItemModel?
 
-        var actionType: ComposedSprite.ActionType
+        var actionType: CharacterActionType
         var direction: CharacterDirection
         var headDirection: CharacterHeadDirection
 

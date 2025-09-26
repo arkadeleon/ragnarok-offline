@@ -67,7 +67,7 @@ extension SpriteAnimation {
 
         let spriteRenderer = SpriteRenderer()
 
-        let availableActionTypes = ComposedSprite.ActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
+        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
 
         for actionType in availableActionTypes {
             for direction in CharacterDirection.allCases {

@@ -109,7 +109,7 @@ struct CharacterConfigurationView: View {
 
             Section {
                 Picker("Action", selection: $characterSimulator.configuration.actionType) {
-                    ForEach(ComposedSprite.ActionType.availableActionTypes(forJobID: characterSimulator.configuration.jobID.rawValue), id: \.rawValue) { actionType in
+                    ForEach(CharacterActionType.availableActionTypes(forJobID: characterSimulator.configuration.jobID.rawValue), id: \.rawValue) { actionType in
                         Text(actionType.description).tag(actionType)
                     }
                 }
