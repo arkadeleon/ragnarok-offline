@@ -1,5 +1,5 @@
 //
-//  Encoding+KoreanEUC.swift
+//  String.Encoding+KoreanEUC.swift
 //  TextEncoding
 //
 //  Created by Leon Li on 2023/4/8.
