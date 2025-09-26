@@ -26,7 +26,7 @@ final class CharacterSimulator {
         var garment: ItemModel?
 
         var actionType: ComposedSprite.ActionType
-        var direction: ComposedSprite.Direction
+        var direction: CharacterDirection
         var headDirection: ComposedSprite.HeadDirection
 
         var headgears: [Int] {
@@ -54,15 +54,15 @@ final class CharacterSimulator {
         }
 
         mutating func rotateClockwise() {
-            let count = ComposedSprite.Direction.allCases.count
+            let count = CharacterDirection.allCases.count
             let rawValue = (direction.rawValue + 1) % count
-            direction = ComposedSprite.Direction(rawValue: rawValue)!
+            direction = CharacterDirection(rawValue: rawValue)!
         }
 
         mutating func rotateCounterClockwise() {
-            let count = ComposedSprite.Direction.allCases.count
+            let count = CharacterDirection.allCases.count
             let rawValue = (direction.rawValue + count - 1) % count
-            direction = ComposedSprite.Direction(rawValue: rawValue)!
+            direction = CharacterDirection(rawValue: rawValue)!
         }
     }
 

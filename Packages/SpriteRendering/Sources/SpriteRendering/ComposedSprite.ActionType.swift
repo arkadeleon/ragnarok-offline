@@ -70,13 +70,13 @@ extension ComposedSprite.ActionType {
 }
 
 extension ComposedSprite.ActionType {
-    public func calculateActionIndex(forJobID jobID: Int, direction: ComposedSprite.Direction) -> Int {
+    public func calculateActionIndex(forJobID jobID: Int, direction: CharacterDirection) -> Int {
         let availableActionTypes = ComposedSprite.ActionType.availableActionTypes(forJobID: jobID)
         guard let index = availableActionTypes.firstIndex(of: self) else {
             return -1
         }
 
-        let actionIndex = index * ComposedSprite.Direction.allCases.count + direction.rawValue
+        let actionIndex = index * CharacterDirection.allCases.count + direction.rawValue
         return actionIndex
     }
 }

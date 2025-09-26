@@ -87,7 +87,7 @@ final public class SpriteRenderer: Sendable {
     public func render(
         composedSprite: ComposedSprite,
         actionType: ComposedSprite.ActionType,
-        direction: ComposedSprite.Direction,
+        direction: CharacterDirection,
         headDirection: ComposedSprite.HeadDirection
     ) async -> SpriteRenderer.Animation {
         let actionIndex = actionType.calculateActionIndex(
@@ -148,7 +148,7 @@ final public class SpriteRenderer: Sendable {
         composedSprite: ComposedSprite,
         actionIndex: Int,
         actionNodes: [(SpriteRenderNode, ComposedSprite.Part)],
-        direction: ComposedSprite.Direction
+        direction: CharacterDirection
     ) async -> (frames: [CGImage?], bounds: CGRect) {
         var bounds: CGRect = .null
         var frameCount = 0
@@ -194,7 +194,7 @@ final public class SpriteRenderer: Sendable {
     private func zIndex(
         forComposedSprite composedSprite: ComposedSprite,
         part: ComposedSprite.Part,
-        direction: ComposedSprite.Direction,
+        direction: CharacterDirection,
         actionIndex: Int,
         frameIndex: Int
     ) async -> Int {

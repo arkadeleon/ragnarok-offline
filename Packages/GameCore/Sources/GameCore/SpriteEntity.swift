@@ -29,7 +29,7 @@ class SpriteEntity: Entity {
         components.set(spriteComponent)
     }
 
-    func playSpriteAnimation(_ actionType: ComposedSprite.ActionType, direction: ComposedSprite.Direction, repeats: Bool) {
+    func playSpriteAnimation(_ actionType: ComposedSprite.ActionType, direction: CharacterDirection, repeats: Bool) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
@@ -86,7 +86,7 @@ class SpriteEntity: Entity {
                 let sourcePosition = path[i - 1].position
                 let targetPosition = path[i].position
 
-                let direction: ComposedSprite.Direction
+                let direction: CharacterDirection
                 let duration: TimeInterval
                 switch (targetPosition &- sourcePosition) {
                 case [-1, -1]:
