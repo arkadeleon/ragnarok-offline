@@ -158,18 +158,21 @@ final public class SpriteRenderer: Sendable {
             frameCount = max(frameCount, actionNode.0.children.count)
         }
 
+        let scriptContext = await composedSprite.resourceManager.scriptContext()
+
         var frames: [CGImage?] = []
 
         for frameIndex in 0..<frameCount {
             // Sort action nodes.
             var sortedActionNodes: [(SpriteRenderNode, zIndex: Int)] = []
             for (actionNode, part) in actionNodes {
-                let zIndex = await zIndex(
+                let zIndex = zIndex(
                     forComposedSprite: composedSprite,
                     part: part,
                     direction: direction,
                     actionIndex: actionIndex,
-                    frameIndex: frameIndex
+                    frameIndex: frameIndex,
+                    scriptContext: scriptContext
                 )
                 sortedActionNodes.append((actionNode, zIndex))
             }
@@ -196,14 +199,14 @@ final public class SpriteRenderer: Sendable {
         part: ComposedSprite.Part,
         direction: CharacterDirection,
         actionIndex: Int,
-        frameIndex: Int
-    ) async -> Int {
+        frameIndex: Int,
+        scriptContext: ScriptContext
+    ) -> Int {
         if part.semantic == .shadow {
             return -1
         }
 
         let configuration = composedSprite.configuration
-        let scriptContext = await composedSprite.resourceManager.scriptContext()
         let imf = composedSprite.imf
 
         let isNorth = switch direction {
@@ -211,7 +214,7 @@ final public class SpriteRenderer: Sendable {
         case .south, .southwest, .east, .southeast: false
         }
 
-        let zIndexForGarment: () async -> Int = {
+        let zIndexForGarment: () -> Int = {
             let drawOnTop = scriptContext.drawOnTop(
                 forRobeID: configuration.garment,
                 genderID: configuration.gender.rawValue,
@@ -248,7 +251,7 @@ final public class SpriteRenderer: Sendable {
             case .headgear:
                 return 25 - (3 - part.orderBySemantic)
             case .garment:
-                return await zIndexForGarment()
+                return zIndexForGarment()
             default:
                 return 0
             }
@@ -269,7 +272,7 @@ final public class SpriteRenderer: Sendable {
             case .headgear:
                 return 20 - (3 - part.orderBySemantic)
             case .garment:
-                return await zIndexForGarment()
+                return zIndexForGarment()
             default:
                 return 0
             }

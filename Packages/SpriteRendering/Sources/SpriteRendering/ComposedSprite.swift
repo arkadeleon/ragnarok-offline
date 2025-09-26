@@ -10,7 +10,7 @@ import ResourceManagement
 
 final public class ComposedSprite: Sendable {
     public let configuration: ComposedSprite.Configuration
-    package let resourceManager: ResourceManager
+    let resourceManager: ResourceManager
 
     let parts: [ComposedSprite.Part]
     let imf: IMF?
