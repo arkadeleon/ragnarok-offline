@@ -115,7 +115,7 @@ struct CharacterConfigurationView: View {
                 }
 
                 Picker("Head Direction", selection: $characterSimulator.configuration.headDirection) {
-                    ForEach(ComposedSprite.HeadDirection.allCases, id: \.rawValue) { headDirection in
+                    ForEach(CharacterHeadDirection.allCases, id: \.rawValue) { headDirection in
                         Text(headDirection.description).tag(headDirection)
                     }
                 }

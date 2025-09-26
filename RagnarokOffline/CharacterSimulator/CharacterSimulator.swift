@@ -27,7 +27,7 @@ final class CharacterSimulator {
 
         var actionType: ComposedSprite.ActionType
         var direction: CharacterDirection
-        var headDirection: ComposedSprite.HeadDirection
+        var headDirection: CharacterHeadDirection
 
         var headgears: [Int] {
             [headTop, headMid, headBottom].map {

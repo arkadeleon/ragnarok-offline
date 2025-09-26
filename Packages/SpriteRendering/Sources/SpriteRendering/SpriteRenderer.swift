@@ -88,7 +88,7 @@ final public class SpriteRenderer: Sendable {
         composedSprite: ComposedSprite,
         actionType: ComposedSprite.ActionType,
         direction: CharacterDirection,
-        headDirection: ComposedSprite.HeadDirection
+        headDirection: CharacterHeadDirection
     ) async -> SpriteRenderer.Animation {
         let actionIndex = actionType.calculateActionIndex(
             forJobID: composedSprite.configuration.job.rawValue,

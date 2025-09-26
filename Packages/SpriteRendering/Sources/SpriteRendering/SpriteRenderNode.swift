@@ -52,7 +52,7 @@ extension SpriteRenderNode {
         self = SpriteRenderNode(bounds: bounds, children: children)
     }
 
-    init(actionNodeWithPart part: ComposedSprite.Part, actionType: ComposedSprite.ActionType, actionIndex: Int, headDirection: ComposedSprite.HeadDirection, scale: CGFloat) {
+    init(actionNodeWithPart part: ComposedSprite.Part, actionType: ComposedSprite.ActionType, actionIndex: Int, headDirection: CharacterHeadDirection, scale: CGFloat) {
         guard let action = part.sprite.act.action(at: actionIndex) else {
             self = .null
             return
