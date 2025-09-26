@@ -9,7 +9,7 @@ import Constants
 
 extension ComposedSprite {
     public struct Configuration: Equatable, Sendable {
-        public let job: UniformJob
+        public let job: CharacterJob
         public var gender: Gender
         public var hairStyle: Int
         public var hairColor: Int
@@ -22,7 +22,7 @@ extension ComposedSprite {
         public var madoType: MadoType
 
         public init(jobID: Int) {
-            self.job = UniformJob(rawValue: jobID)
+            self.job = CharacterJob(rawValue: jobID)
             self.gender = .male
             self.hairStyle = 1
             self.hairColor = -1

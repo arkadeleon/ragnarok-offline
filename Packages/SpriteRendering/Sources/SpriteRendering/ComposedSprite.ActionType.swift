@@ -56,7 +56,7 @@ extension ComposedSprite {
 
 extension ComposedSprite.ActionType {
     public static func availableActionTypes(forJobID jobID: Int) -> [ComposedSprite.ActionType] {
-        let job = UniformJob(rawValue: jobID)
+        let job = CharacterJob(rawValue: jobID)
 
         if job.isPlayer {
             return [.idle, .walk, .sit, .pickup, .attackWait, .attack, .hurt, .freeze, .die, .freeze2, .attack2, .attack3, .skill]

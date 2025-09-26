@@ -46,7 +46,7 @@ final class SpriteEntityManager {
 
 extension ComposedSprite.Configuration {
     init(mapObject: MapObject) {
-        let job = UniformJob(rawValue: mapObject.job)
+        let job = CharacterJob(rawValue: mapObject.job)
 
         let hairStyles: [Int] = if job.isDoram {
             switch mapObject.gender {

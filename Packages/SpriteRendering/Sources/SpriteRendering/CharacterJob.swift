@@ -1,11 +1,11 @@
 //
-//  UniformJob.swift
+//  CharacterJob.swift
 //  SpriteRendering
 //
 //  Created by Leon Li on 2025/2/12.
 //
 
-public struct UniformJob: RawRepresentable, ExpressibleByIntegerLiteral, Hashable, Sendable {
+public struct CharacterJob: RawRepresentable, ExpressibleByIntegerLiteral, Hashable, Sendable {
     public let rawValue: Int
 
     public init(rawValue: Int) {
@@ -17,7 +17,7 @@ public struct UniformJob: RawRepresentable, ExpressibleByIntegerLiteral, Hashabl
     }
 }
 
-extension UniformJob {
+extension CharacterJob {
     public var isPlayer: Bool {
         switch rawValue {
         case 0..<45: true
