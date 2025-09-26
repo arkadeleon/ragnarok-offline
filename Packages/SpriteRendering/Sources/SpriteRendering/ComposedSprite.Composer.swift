@@ -168,43 +168,32 @@ extension ComposedSprite.Part {
         let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
         var bodySprite: SpriteResource?
-        var bodyPalette: PaletteResource?
 
         if outfit > 0 {
+            var palettePath: ResourcePath?
+            if clothesColor > -1 {
+                palettePath = pathGenerator.generateAlternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType)
+            }
+
             if let spritePath = pathGenerator.generateAlternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
-                bodySprite = try await resourceManager.sprite(at: spritePath)
+                bodySprite = try await resourceManager.sprite(with: (spritePath, palettePath))
             }
 
-            if clothesColor > -1 {
-                if let palettePath = pathGenerator.generateAlternatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, costumeID: outfit, madoType: madoType) {
-                    do {
-                        bodyPalette = try await resourceManager.palette(at: palettePath)
-                    } catch {
-                        logger.warning("Body sprite palette error: \(error)")
-                    }
-                }
-            }
+
         } else {
-            if let spritePath = pathGenerator.generatePlayerBodySpritePath(job: job, gender: gender, madoType: madoType) {
-                bodySprite = try await resourceManager.sprite(at: spritePath)
+            var palettePath: ResourcePath?
+            if clothesColor > -1 {
+                palettePath = pathGenerator.generatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType)
             }
 
-            if clothesColor > -1 {
-                if let palettePath = pathGenerator.generatePlayerBodyPalettePath(job: job, clothesColor: clothesColor, gender: gender, madoType: madoType) {
-                    do {
-                        bodyPalette = try await resourceManager.palette(at: palettePath)
-                    } catch {
-                        logger.warning("Body sprite palette error: \(error)")
-                    }
-                }
+            if let spritePath = pathGenerator.generatePlayerBodySpritePath(job: job, gender: gender, madoType: madoType) {
+                bodySprite = try await resourceManager.sprite(with: (spritePath, palettePath))
             }
         }
 
         guard let bodySprite else {
             return nil
         }
-
-        bodySprite.palette = bodyPalette
 
         let bodyPart = ComposedSprite.Part(sprite: bodySprite, semantic: .playerBody)
         return bodyPart
@@ -226,20 +215,12 @@ extension ComposedSprite.Part {
             return nil
         }
 
-        var headPalette: PaletteResource?
+        var palettePath: ResourcePath?
         if hairColor > -1 {
-            if let palettePath = pathGenerator.generatePlayerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender) {
-                do {
-                    headPalette = try await resourceManager.palette(at: palettePath)
-                } catch {
-                    logger.warning("Head palette error: \(error)")
-                }
-            }
+            palettePath = pathGenerator.generatePlayerHeadPalettePath(job: job, hairStyle: hairStyle, hairColor: hairColor, gender: gender)
         }
 
-        let headSprite = try await resourceManager.sprite(at: spritePath)
-        headSprite.palette = headPalette
-
+        let headSprite = try await resourceManager.sprite(with: (spritePath, palettePath))
         let headPart = ComposedSprite.Part(sprite: headSprite, semantic: .playerHead)
         return headPart
     }

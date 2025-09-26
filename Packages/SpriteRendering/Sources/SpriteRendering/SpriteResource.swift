@@ -13,17 +13,17 @@ import ResourceManagement
 final public class SpriteResource: @unchecked Sendable {
     public let act: ACT
     public let spr: SPR
-
-    var palette: PaletteResource?
+    public let pal: PAL?
 
     var scaleFactor: CGFloat = 1
 
     private var indexedSpriteImages: [CGImage?]
     private var rgbaSpriteImages: [CGImage?]
 
-    public init(act: ACT, spr: SPR) {
+    public init(act: ACT, spr: SPR, pal: PAL? = nil) {
         self.act = act
         self.spr = spr
+        self.pal = pal
 
         indexedSpriteImages = Array(repeating: nil, count: Int(spr.indexedSpriteCount))
         rgbaSpriteImages = Array(repeating: nil, count: Int(spr.rgbaSpriteCount))
@@ -54,7 +54,7 @@ final public class SpriteResource: @unchecked Sendable {
             }
 
             let index = spriteIndex
-            let image = spr.imageForSprite(at: index, palette: palette?.pal)
+            let image = spr.imageForSprite(at: index, palette: pal)
             indexedSpriteImages[spriteIndex] = image
 
             return image
@@ -68,7 +68,7 @@ final public class SpriteResource: @unchecked Sendable {
             }
 
             let index = indexedSpriteCount + spriteIndex
-            let image = spr.imageForSprite(at: index, palette: palette?.pal)
+            let image = spr.imageForSprite(at: index, palette: pal)
             rgbaSpriteImages[spriteIndex] = image
 
             return image
@@ -77,6 +77,8 @@ final public class SpriteResource: @unchecked Sendable {
 }
 
 extension ResourceManager {
+    public typealias SpriteAndPalettePath = (spritePath: ResourcePath, palettePath: ResourcePath?)
+
     nonisolated public func sprite(at path: ResourcePath) async throws -> SpriteResource {
         let actPath = path.appendingPathExtension("act")
         async let actData = contentsOfResource(at: actPath)
@@ -88,6 +90,31 @@ extension ResourceManager {
         let spr = try await SPR(data: sprData)
 
         let sprite = SpriteResource(act: act, spr: spr)
+        return sprite
+    }
+
+    nonisolated public func sprite(with path: SpriteAndPalettePath) async throws -> SpriteResource {
+        let actPath = path.spritePath.appendingPathExtension("act")
+        async let actData = contentsOfResource(at: actPath)
+
+        let sprPath = path.spritePath.appendingPathExtension("spr")
+        async let sprData = contentsOfResource(at: sprPath)
+
+        let act = try await ACT(data: actData)
+        let spr = try await SPR(data: sprData)
+
+        var pal: PAL?
+        if let palettePath = path.palettePath {
+            do {
+                let palPath = palettePath.appendingPathExtension("pal")
+                let palData = try await contentsOfResource(at: palPath)
+                pal = try PAL(data: palData)
+            } catch {
+                logger.warning("Palette error: \(error)")
+            }
+        }
+
+        let sprite = SpriteResource(act: act, spr: spr, pal: pal)
         return sprite
     }
 }
