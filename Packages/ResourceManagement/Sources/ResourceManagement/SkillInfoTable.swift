@@ -12,7 +12,7 @@ struct SkillInfo: Decodable {
     var skillDescription: String?
 }
 
-final public class SkillInfoTable: Resource {
+final public class SkillInfoTable: LocalizedResource {
     let skillInfosByID: [Int : SkillInfo]
 
     init() {

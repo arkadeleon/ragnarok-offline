@@ -7,7 +7,7 @@
 
 import Foundation
 
-final public class MonsterNameTable: Resource {
+final public class MonsterNameTable: LocalizedResource {
     let monsterNamesByID: [Int : String]
 
     init() {

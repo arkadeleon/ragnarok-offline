@@ -7,7 +7,7 @@
 
 import Foundation
 
-final public class MapNameTable: Resource {
+final public class MapNameTable: LocalizedResource {
     let mapNamesByRSW: [String : String]
 
     init() {

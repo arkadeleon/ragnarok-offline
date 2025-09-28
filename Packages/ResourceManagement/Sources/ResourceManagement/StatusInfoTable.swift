@@ -11,7 +11,7 @@ struct StatusInfo: Decodable {
     var statusDescription: String
 }
 
-final public class StatusInfoTable: Resource {
+final public class StatusInfoTable: LocalizedResource {
     let statusInfosByID: [Int : StatusInfo]
 
     init() {

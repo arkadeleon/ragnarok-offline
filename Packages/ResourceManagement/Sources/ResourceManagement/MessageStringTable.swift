@@ -7,7 +7,7 @@
 
 import Foundation
 
-final public class MessageStringTable: Resource {
+final public class MessageStringTable: LocalizedResource {
     let messageStringsByID: [Int : String]
 
     init() {

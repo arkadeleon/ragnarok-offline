@@ -14,7 +14,7 @@ struct ItemInfo: Decodable {
     var identifiedItemDescription: String?
 }
 
-final public class ItemInfoTable: Resource {
+final public class ItemInfoTable: LocalizedResource {
     let itemInfosByID: [Int : ItemInfo]
 
     init() {

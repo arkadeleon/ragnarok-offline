@@ -7,7 +7,7 @@
 
 import Foundation
 
-final public class ItemRandomOptionNameTable: Resource {
+final public class ItemRandomOptionNameTable: LocalizedResource {
     let itemRandomOptionNamesByID: [Int : String]
 
     init() {
