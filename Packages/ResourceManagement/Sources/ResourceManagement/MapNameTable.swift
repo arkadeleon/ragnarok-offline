@@ -30,11 +30,7 @@ extension ResourceManager {
         let localeIdentifier = locale.identifier(.bcp47)
         let resourceIdentifier = "MapNameTable-\(localeIdentifier)"
 
-        if let phase = resources[resourceIdentifier] {
-            return await phase.resource as! MapNameTable
-        }
-
-        let task = ResourceTask {
+        return await cache.resource(forIdentifier: resourceIdentifier) {
             if let url = Bundle.module.url(forResource: "MapName", withExtension: "json", locale: locale),
                let mapNameTable = try? MapNameTable(contentsOf: url) {
                 return mapNameTable
@@ -42,13 +38,5 @@ extension ResourceManager {
                 return MapNameTable()
             }
         }
-
-        resources[resourceIdentifier] = .inProgress(task)
-
-        let mapNameTable = await task.value as! MapNameTable
-
-        resources[resourceIdentifier] = .loaded(mapNameTable)
-
-        return mapNameTable
     }
 }

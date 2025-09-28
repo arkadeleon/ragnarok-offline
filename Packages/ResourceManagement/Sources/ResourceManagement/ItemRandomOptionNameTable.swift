@@ -30,11 +30,7 @@ extension ResourceManager {
         let localeIdentifier = locale.identifier(.bcp47)
         let resourceIdentifier = "ItemRandomOptionNameTable-\(localeIdentifier)"
 
-        if let phase = resources[resourceIdentifier] {
-            return await phase.resource as! ItemRandomOptionNameTable
-        }
-
-        let task = ResourceTask {
+        return await cache.resource(forIdentifier: resourceIdentifier) {
             if let url = Bundle.module.url(forResource: "ItemRandomOptionName", withExtension: "json", locale: locale),
                let itemRandomOptionNameTable = try? ItemRandomOptionNameTable(contentsOf: url) {
                 return itemRandomOptionNameTable
@@ -42,13 +38,5 @@ extension ResourceManager {
                 return ItemRandomOptionNameTable()
             }
         }
-
-        resources[resourceIdentifier] = .inProgress(task)
-
-        let itemRandomOptionNameTable = await task.value as! ItemRandomOptionNameTable
-
-        resources[resourceIdentifier] = .loaded(itemRandomOptionNameTable)
-
-        return itemRandomOptionNameTable
     }
 }

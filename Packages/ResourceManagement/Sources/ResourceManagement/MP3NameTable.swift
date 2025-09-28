@@ -22,13 +22,7 @@ final public class MP3NameTable: Resource {
 
 extension ResourceManager {
     public func mp3NameTable() async -> MP3NameTable {
-        let resourceIdentifier = "MP3NameTable"
-
-        if let phase = resources[resourceIdentifier] {
-            return await phase.resource as! MP3NameTable
-        }
-
-        let task = ResourceTask {
+        await cache.resource(forIdentifier: "MP3NameTable") { [self] in
             let data: Data
             do {
                 data = try await contentsOfResource(at: ["data", "mp3nametable.txt"])
@@ -64,13 +58,5 @@ extension ResourceManager {
 
             return MP3NameTable(mp3NamesByRSW: mp3NamesByRSW)
         }
-
-        resources[resourceIdentifier] = .inProgress(task)
-
-        let mp3NameTable = await task.value as! MP3NameTable
-
-        resources[resourceIdentifier] = .loaded(mp3NameTable)
-
-        return mp3NameTable
     }
 }

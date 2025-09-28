@@ -14,7 +14,7 @@ enum ImageResourceError: Error {
 }
 
 extension ResourceManager {
-    nonisolated public func image(at path: ResourcePath, removesMagentaPixels: Bool = false) async throws -> CGImage {
+    public func image(at path: ResourcePath, removesMagentaPixels: Bool = false) async throws -> CGImage {
         let data = try await contentsOfResource(at: path)
 
         var image = CGImageCreateWithData(data)

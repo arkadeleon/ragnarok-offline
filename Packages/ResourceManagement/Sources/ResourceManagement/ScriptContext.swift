@@ -81,13 +81,7 @@ final public class ScriptContext: Resource {
 
 extension ResourceManager {
     public func scriptContext() async -> ScriptContext {
-        let resourceIdentifier = "ScriptContext"
-
-        if let phase = resources[resourceIdentifier] {
-            return await phase.resource as! ScriptContext
-        }
-
-        let task = ResourceTask {
+        await cache.resource(forIdentifier: "ScriptContext") { [self] in
             let context = LuaContext()
 
             async let itemInfo = itemInfoScript()
@@ -233,14 +227,6 @@ extension ResourceManager {
 
             return ScriptContext(context: context)
         }
-
-        resources[resourceIdentifier] = .inProgress(task)
-
-        let scriptContext = await task.value as! ScriptContext
-
-        resources[resourceIdentifier] = .loaded(scriptContext)
-
-        return scriptContext
     }
 
     private func itemInfoScript() async -> Data? {

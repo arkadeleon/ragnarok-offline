@@ -79,7 +79,7 @@ final public class SpriteResource: @unchecked Sendable {
 extension ResourceManager {
     public typealias SpriteAndPalettePath = (spritePath: ResourcePath, palettePath: ResourcePath?)
 
-    nonisolated public func sprite(at path: ResourcePath) async throws -> SpriteResource {
+    public func sprite(at path: ResourcePath) async throws -> SpriteResource {
         let actPath = path.appendingPathExtension("act")
         async let actData = contentsOfResource(at: actPath)
 
@@ -93,7 +93,7 @@ extension ResourceManager {
         return sprite
     }
 
-    nonisolated public func sprite(with path: SpriteAndPalettePath) async throws -> SpriteResource {
+    public func sprite(with path: SpriteAndPalettePath) async throws -> SpriteResource {
         let actPath = path.spritePath.appendingPathExtension("act")
         async let actData = contentsOfResource(at: actPath)
 

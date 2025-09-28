@@ -24,19 +24,19 @@ public enum ResourceLocator: Sendable {
     case grfArchiveNode(GRFArchive, GRFNode)
 }
 
-public actor ResourceManager {
-    nonisolated public let localURL: URL
-    nonisolated public let remoteURL: URL?
-    nonisolated public let cachesURL: URL?
+final public class ResourceManager: Sendable {
+    public let localURL: URL
+    public let remoteURL: URL?
+    public let remoteCacheURL: URL?
 
-    var resources: [String : ResourcePhase] = [:]
+    let cache = ResourceCache()
 
-    nonisolated private let localGRFArchives: [GRFArchive]
+    private let localGRFArchives: [GRFArchive]
 
-    public init(localURL: URL, remoteURL: URL? = nil, cachesURL: URL? = nil) {
+    public init(localURL: URL, remoteURL: URL? = nil, remoteCacheURL: URL? = nil) {
         self.localURL = localURL
         self.remoteURL = remoteURL
-        self.cachesURL = cachesURL
+        self.remoteCacheURL = remoteCacheURL
 
         let dataGRFURL = localURL.appending(path: "data.grf")
         localGRFArchives = [
@@ -44,7 +44,7 @@ public actor ResourceManager {
         ]
     }
 
-    nonisolated public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
+    public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
         let fileURL = localURL.absoluteURL.appending(path: L2K(path))
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             return .url(fileURL)
@@ -60,7 +60,7 @@ public actor ResourceManager {
         throw ResourceError.resourceNotFound(path)
     }
 
-    nonisolated public func contentsOfResource(at path: ResourcePath) async throws -> Data {
+    public func contentsOfResource(at path: ResourcePath) async throws -> Data {
         let fileURL = localURL.absoluteURL.appending(path: L2K(path))
         if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
             let data = try Data(contentsOf: fileURL)
@@ -75,8 +75,8 @@ public actor ResourceManager {
             }
         }
 
-        if let cachesURL {
-            let cachedFileURL = cachesURL.absoluteURL.appending(path: L2K(path))
+        if let remoteCacheURL {
+            let cachedFileURL = remoteCacheURL.absoluteURL.appending(path: L2K(path))
             if FileManager.default.fileExists(atPath: cachedFileURL.path(percentEncoded: false)) {
                 let data = try Data(contentsOf: cachedFileURL)
                 return data
@@ -94,8 +94,8 @@ public actor ResourceManager {
                 throw ResourceError.resourceNotFound(path)
             }
 
-            if let cachesURL {
-                let cachedFileURL = cachesURL.appending(path: L2K(path))
+            if let remoteCacheURL {
+                let cachedFileURL = remoteCacheURL.appending(path: L2K(path))
                 try? FileManager.default.createDirectory(at: cachedFileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
                 try? data.write(to: cachedFileURL)
             }

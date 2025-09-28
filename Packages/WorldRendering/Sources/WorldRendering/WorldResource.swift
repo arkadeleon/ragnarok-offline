@@ -21,7 +21,7 @@ final public class WorldResource: Sendable {
 }
 
 extension ResourceManager {
-    nonisolated public func world(at path: ResourcePath) async throws -> WorldResource {
+    public func world(at path: ResourcePath) async throws -> WorldResource {
         let gatPath = path.appendingPathExtension("gat")
         async let gatData = contentsOfResource(at: gatPath)
 

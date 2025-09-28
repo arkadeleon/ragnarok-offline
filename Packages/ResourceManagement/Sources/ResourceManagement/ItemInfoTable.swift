@@ -41,11 +41,7 @@ extension ResourceManager {
         let localeIdentifier = locale.identifier(.bcp47)
         let resourceIdentifier = "ItemInfoTable-\(localeIdentifier)"
 
-        if let phase = resources[resourceIdentifier] {
-            return await phase.resource as! ItemInfoTable
-        }
-
-        let task = ResourceTask {
+        return await cache.resource(forIdentifier: resourceIdentifier) {
             if let url = Bundle.module.url(forResource: "ItemInfo", withExtension: "json", locale: locale),
                let itemInfoTable = try? ItemInfoTable(contentsOf: url) {
                 return itemInfoTable
@@ -53,13 +49,5 @@ extension ResourceManager {
                 return ItemInfoTable()
             }
         }
-
-        resources[resourceIdentifier] = .inProgress(task)
-
-        let itemInfoTable = await task.value as! ItemInfoTable
-
-        resources[resourceIdentifier] = .loaded(itemInfoTable)
-
-        return itemInfoTable
     }
 }

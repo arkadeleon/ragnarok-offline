@@ -30,11 +30,7 @@ extension ResourceManager {
         let localeIdentifier = locale.identifier(.bcp47)
         let resourceIdentifier = "MessageStringTable-\(localeIdentifier)"
 
-        if let phase = resources[resourceIdentifier] {
-            return await phase.resource as! MessageStringTable
-        }
-
-        let task = ResourceTask {
+        return await cache.resource(forIdentifier: resourceIdentifier) {
             if let url = Bundle.module.url(forResource: "MessageString", withExtension: "json", locale: locale),
                let messageStringTable = try? MessageStringTable(contentsOf: url) {
                 return messageStringTable
@@ -42,13 +38,5 @@ extension ResourceManager {
                 return MessageStringTable()
             }
         }
-
-        resources[resourceIdentifier] = .inProgress(task)
-
-        let messageStringTable = await task.value as! MessageStringTable
-
-        resources[resourceIdentifier] = .loaded(messageStringTable)
-
-        return messageStringTable
     }
 }
