@@ -8,6 +8,7 @@
 import FileFormats
 import MetalRenderers
 import RealityKit
+import ResourceManagement
 import SwiftUI
 
 struct RSMFilePreviewView: View {
@@ -33,7 +34,13 @@ struct RSMFilePreviewView: View {
             height: 0
         )
 
-        let entity = try await Entity.modelEntity(rsm: rsm, instance: instance, resourceManager: .shared)
+        var textureNames: Set<String> = []
+        for node in rsm.nodes {
+            textureNames.formUnion(node.textures)
+        }
+        let textures = await ResourceManager.shared.textures(forNames: textureNames, removesMagentaPixels: true)
+
+        let entity = try await Entity.modelEntity(rsm: rsm, instance: instance, textures: textures)
         return entity
     }
 }

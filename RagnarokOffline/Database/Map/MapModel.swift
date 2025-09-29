@@ -42,7 +42,8 @@ final class MapModel {
     func fetchImage() async {
         if image == nil {
             let path = ResourcePath.generateMapImagePath(mapName: map.name)
-            image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
+            let image = try? await ResourceManager.shared.image(at: path)
+            self.image = image?.removingMagentaPixels()
         }
     }
 }
