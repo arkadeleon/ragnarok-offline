@@ -187,6 +187,17 @@ final public class SpriteRenderer: Sendable {
                     let frameNode = actionNode.children[frameIndex]
                     render(frameNode: frameNode, bounds: bounds, in: cgContext)
                 }
+
+                #if DEBUG
+                cgContext.saveGState()
+                cgContext.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
+                cgContext.setFillColor(CGColor(gray: 1, alpha: 1))
+                cgContext.fill([
+                    CGRectMake(-10, -2, 20, 4),
+                    CGRectMake(-2, -10, 4, 20),
+                ])
+                cgContext.restoreGState()
+                #endif
             }
             frames.append(image)
         }
