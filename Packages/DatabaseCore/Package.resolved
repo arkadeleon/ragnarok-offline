@@ -1,5 +1,5 @@
 {
-  "originHash" : "b30280a838dc1d5b1bd97688cb5e7eec1fec0ece3f8b328998c637dd327c539b",
+  "originHash" : "731ad29fb74001465bbac2af63f71b1e7f1e3b0cc1db9bf399cb6601beb491ba",
   "pins" : [
     {
       "identity" : "swift-rapidyaml",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/arkadeleon/swift-rapidyaml.git",
       "state" : {
         "branch" : "master",
-        "revision" : "242881052e084f37fa32b053a78f14fbd2121510"
+        "revision" : "9e92115ed1da77bdb2396e90f15f5eb42584b824"
       }
     }
   ],

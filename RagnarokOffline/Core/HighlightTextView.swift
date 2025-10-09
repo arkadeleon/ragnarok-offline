@@ -32,7 +32,7 @@ struct HighlightTextView: NSViewRepresentable {
     }
 
     func updateNSView(_ webView: WKWebView, context: Context) {
-        webView.highlightText(text, style: style)
+        webView.highlightCode(text, style: style)
     }
 }
 
@@ -59,7 +59,7 @@ struct HighlightTextView: UIViewRepresentable {
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {
-        webView.highlightText(text, style: style)
+        webView.highlightCode(text, style: style)
     }
 }
 

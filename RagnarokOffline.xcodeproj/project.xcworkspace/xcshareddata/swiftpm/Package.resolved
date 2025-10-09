@@ -1,5 +1,5 @@
 {
-  "originHash" : "8d24bfdbd89abbbd6606a67cfb270d3915b1bd9e7932cab12ddb0d175c9e4944",
+  "originHash" : "31abe200e2063afb63f6109f18936499b654ebe31f6e857609db639481b9c45b",
   "pins" : [
     {
       "identity" : "swift-async-algorithms",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "8c0c0a8b49e080e54e5e328cc552821ff07cd341",
-        "version" : "1.2.1"
+        "revision" : "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+        "version" : "1.3.0"
       }
     },
     {
@@ -25,7 +25,7 @@
       "location" : "https://github.com/arkadeleon/swift-highlight.git",
       "state" : {
         "branch" : "master",
-        "revision" : "06bde82d173339e68f4ae346c61fb7be0bc8caa3"
+        "revision" : "9845457449b2fd24ff9dedbb9aa71320cf6c7831"
       }
     },
     {
@@ -43,7 +43,7 @@
       "location" : "https://github.com/arkadeleon/swift-rapidyaml.git",
       "state" : {
         "branch" : "master",
-        "revision" : "158b97c898f6721c5c99ad72c651ea6baa055580"
+        "revision" : "9e92115ed1da77bdb2396e90f15f5eb42584b824"
       }
     }
   ],
