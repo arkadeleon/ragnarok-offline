@@ -18,6 +18,7 @@ final class SpriteAnimation: Sendable {
     let frameWidth: Float
     let frameHeight: Float
     let frameInterval: TimeInterval
+    let pivot: SIMD2<Float>
 
     var duration: TimeInterval {
         frameInterval * TimeInterval(frameCount)
@@ -58,6 +59,7 @@ final class SpriteAnimation: Sendable {
         self.frameWidth = Float(frameWidth)
         self.frameHeight = Float(frameHeight)
         self.frameInterval = animation.frameInterval
+        self.pivot = [Float(animation.pivot.x), Float(animation.pivot.y)]
     }
 }
 

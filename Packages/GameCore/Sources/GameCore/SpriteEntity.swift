@@ -10,8 +10,6 @@ import RealityKit
 import SpriteRendering
 
 class SpriteEntity: Entity {
-    static let pivot: SIMD3<Float> = [0.5, 2, 0]
-
     required init() {
         super.init()
 
@@ -30,7 +28,9 @@ class SpriteEntity: Entity {
     }
 
     func playSpriteAnimation(_ actionType: CharacterActionType, direction: CharacterDirection, repeats: Bool) {
-        guard let mapObject = components[MapObjectComponent.self]?.mapObject,
+        guard let gridPosition = components[GridPositionComponent.self]?.gridPosition,
+              let mapGrid = components[MapGridComponent.self]?.mapGrid,
+              let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
         }
@@ -42,8 +42,16 @@ class SpriteEntity: Entity {
 
         stopAllAnimations()
 
+        let animation = animations[animationIndex]
+        let altitude = mapGrid[gridPosition].altitude
+
+        self.position = [
+            Float(gridPosition.x) + 0.5 - animation.pivot.x / 32,
+            -altitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
+            -Float(gridPosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
+        ]
+
         do {
-            let animation = animations[animationIndex]
             let duration = (repeats ? .infinity : animation.duration)
             let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
             playAnimation(actionAnimation)
@@ -53,15 +61,25 @@ class SpriteEntity: Entity {
     }
 
     func playSpriteAnimation(at animationIndex: Int, repeats: Bool) {
-        guard let animations = components[SpriteComponent.self]?.animations,
+        guard let gridPosition = components[GridPositionComponent.self]?.gridPosition,
+              let mapGrid = components[MapGridComponent.self]?.mapGrid,
+              let animations = components[SpriteComponent.self]?.animations,
               animationIndex < animations.count else {
             return
         }
 
         stopAllAnimations()
 
+        let animation = animations[animationIndex]
+        let altitude = mapGrid[gridPosition].altitude
+
+        self.position = [
+            Float(gridPosition.x) + 0.5 - animation.pivot.x / 32,
+            -altitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
+            -Float(gridPosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
+        ]
+
         do {
-            let animation = animations[animationIndex]
             let duration = (repeats ? .infinity : animation.duration)
             let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
             playAnimation(actionAnimation)
@@ -70,8 +88,9 @@ class SpriteEntity: Entity {
         }
     }
 
-    func walk(through path: [(position: SIMD2<Int>, altitude: Float)], scale: SIMD3<Float>) {
-        guard let mapObject = components[MapObjectComponent.self]?.mapObject,
+    func walk(through path: [SIMD2<Int>]) {
+        guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
+              let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
         }
@@ -83,8 +102,8 @@ class SpriteEntity: Entity {
 
             var animationSequence: [AnimationResource] = []
             for i in 1..<path.count {
-                let sourcePosition = path[i - 1].position
-                let targetPosition = path[i].position
+                let sourcePosition = path[i - 1]
+                let targetPosition = path[i]
 
                 let direction: CharacterDirection
                 let duration: TimeInterval
@@ -118,29 +137,25 @@ class SpriteEntity: Entity {
                 let animationIndex = CharacterActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
                 let animation = animations[animationIndex]
                 let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration) {
-                    self.components[MapObjectComponent.self]?.position = targetPosition
+                    self.components[GridPositionComponent.self]?.gridPosition = targetPosition
                 }
 
-                let sourceAltitude = path[i - 1].altitude
-                let targetAltitude = path[i].altitude
+                let sourceAltitude = mapGrid[sourcePosition].altitude
+                let targetAltitude = mapGrid[targetPosition].altitude
 
-                let sourceTransform = Transform(
-                    scale: scale,
-                    translation: [
-                        Float(sourcePosition.x),
-                        -sourceAltitude / 5,
-                        -Float(sourcePosition.y)
-                    ] + SpriteEntity.pivot
-                )
+                var sourceTransform = transform
+                sourceTransform.translation = [
+                    Float(sourcePosition.x) + 0.5 - animation.pivot.x / 32,
+                    -sourceAltitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
+                    -Float(sourcePosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
+                ]
 
-                let targetTransform = Transform(
-                    scale: scale,
-                    translation: [
-                        Float(targetPosition.x),
-                        -targetAltitude / 5,
-                        -Float(targetPosition.y)
-                    ] + SpriteEntity.pivot
-                )
+                var targetTransform = transform
+                targetTransform.translation = [
+                    Float(targetPosition.x) + 0.5 - animation.pivot.x / 32,
+                    -targetAltitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
+                    -Float(targetPosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
+                ]
 
                 let moveAction = FromToByAction(from: sourceTransform, to: targetTransform, mode: .parent, timing: .linear)
                 let moveAnimation = try AnimationResource.makeActionAnimation(for: moveAction, duration: duration, bindTarget: .transform)

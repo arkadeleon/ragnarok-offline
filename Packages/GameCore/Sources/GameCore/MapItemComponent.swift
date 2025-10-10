@@ -10,5 +10,4 @@ import RealityKit
 
 struct MapItemComponent: Component {
     var mapItem: MapItem
-    var position: SIMD2<Int>
 }

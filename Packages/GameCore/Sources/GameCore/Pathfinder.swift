@@ -5,18 +5,13 @@
 //  Created by Leon Li on 2025/6/17.
 //
 
-import FileFormats
 import Foundation
 
 final class Pathfinder {
-    let gat: GAT
-    let width: Int
-    let height: Int
+    let mapGrid: MapGrid
 
-    init(gat: GAT) {
-        self.gat = gat
-        self.width = Int(gat.width)
-        self.height = Int(gat.height)
+    init(mapGrid: MapGrid) {
+        self.mapGrid = mapGrid
     }
 
     func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
@@ -119,8 +114,8 @@ final class Pathfinder {
     }
 
     private func isInBounds(position: SIMD2<Int>) -> Bool {
-        return position.x >= 0 && position.x < width &&
-               position.y >= 0 && position.y < height
+        return position.x >= 0 && position.x < mapGrid.width &&
+               position.y >= 0 && position.y < mapGrid.height
     }
 
     private func isValidAndWalkable(position: SIMD2<Int>) -> Bool {
@@ -128,8 +123,7 @@ final class Pathfinder {
             return false
         }
 
-        let tile = gat.tileAt(x: position.x, y: position.y)
-        return tile.isWalkable
+        return mapGrid[position].isWalkable
     }
 
     private func heuristic(from start: SIMD2<Int>, to end: SIMD2<Int>) -> Float {

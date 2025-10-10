@@ -32,6 +32,8 @@ public class MapScene {
     let player: MapObject
     let playerPosition: SIMD2<Int>
 
+    let mapGrid: MapGrid
+
     let resourceManager: ResourceManager
 
     public let rootEntity = Entity()
@@ -93,13 +95,17 @@ public class MapScene {
         self.player = player
         self.playerPosition = playerPosition
 
+        self.mapGrid = MapGrid(gat: world.gat)
+
         self.resourceManager = resourceManager
 
         self.tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
         self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager)
 
-        self.pathfinder = Pathfinder(gat: world.gat)
+        self.pathfinder = Pathfinder(mapGrid: mapGrid)
 
+        GridPositionComponent.registerComponent()
+        MapGridComponent.registerComponent()
         MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
         SpriteComponent.registerComponent()
@@ -118,11 +124,8 @@ public class MapScene {
     }
 
     func load() async {
-        let group = ModelSortGroup()
-
         if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: resourceManager) {
             worldEntity.name = mapName
-            worldEntity.components.set(ModelSortGroupComponent(group: group, order: 0))
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
 
             if let audioResource = await audioResource(forMapName: mapName) {
@@ -150,8 +153,13 @@ public class MapScene {
         }
 
         playerEntity.name = "\(player.objectID)"
+        playerEntity.scale = [1, 1 / cosf(elevation), 1]
         playerEntity.transform = transform(for: playerPosition)
-        playerEntity.components.set(MapObjectComponent(mapObject: player, position: playerPosition))
+        playerEntity.components.set([
+            GridPositionComponent(gridPosition: playerPosition),
+            MapGridComponent(mapGrid: mapGrid),
+            MapObjectComponent(mapObject: player),
+        ])
         playerEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
 
         rootEntity.addChild(playerEntity)
@@ -206,22 +214,22 @@ public class MapScene {
         return worldCamera
     }
 
-    private func transform(for position2D: SIMD2<Int>) -> Transform {
+    private func transform(for gridPosition: SIMD2<Int>) -> Transform {
         let scale: SIMD3<Float> = [1, 1 / cosf(elevation), 1]
         let rotation = simd_quatf(angle: radians(0), axis: [1, 0, 0])
-        let translation = position3D(for: position2D)
+        let translation = position(for: gridPosition)
         let transform = Transform(scale: scale, rotation: rotation, translation: translation)
         return transform
     }
 
-    private func position3D(for position2D: SIMD2<Int>) -> SIMD3<Float> {
-        let altitude = world.gat.tileAt(x: position2D.x, y: position2D.y).averageAltitude
+    private func position(for gridPosition: SIMD2<Int>) -> SIMD3<Float> {
+        let altitude = mapGrid[gridPosition].altitude
         let position: SIMD3<Float> = [
-            Float(position2D.x),
+            Float(gridPosition.x) + 0.5,
             -altitude / 5,
-            -Float(position2D.y),
+            -Float(gridPosition.y) - 0.5,
         ]
-        return position + SpriteEntity.pivot
+        return position
     }
 
     private func audioResource(forMapName mapName: String) async -> AudioResource? {
@@ -275,13 +283,10 @@ public class MapScene {
 
 extension MapScene: MapEventHandlerProtocol {
     func onPlayerMoved(_ event: PlayerEvents.Moved) {
-        let startPosition = playerEntity.components[MapObjectComponent.self]?.position ?? event.startPosition
+        let startPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition ?? event.startPosition
         let endPosition = event.endPosition
-        let path = pathfinder.findPath(from: startPosition, to: endPosition).map { position in
-            (position, world.gat.tileAt(x: position.x, y: position.y).averageAltitude)
-        }
-
-        playerEntity.walk(through: path, scale: [1, 1 / cosf(elevation), 1])
+        let path = pathfinder.findPath(from: startPosition, to: endPosition)
+        playerEntity.walk(through: path)
 
         tileEntityManager.updateTileEntities(forPosition: event.endPosition)
     }
@@ -290,14 +295,19 @@ extension MapScene: MapEventHandlerProtocol {
         if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
             let transform = transform(for: event.position)
             entity.transform = transform
-            entity.components[MapObjectComponent.self]?.position = event.position
+            entity.components[GridPositionComponent.self]?.gridPosition = event.position
         } else {
             Task {
                 if let entity = try? await spriteEntityManager.entity(for: event.object) {
                     entity.name = "\(event.object.objectID)"
+                    entity.scale = [1, 1 / cosf(elevation), 1]
                     entity.transform = transform(for: event.position)
                     entity.isEnabled = (event.object.effectState != .cloak)
-                    entity.components.set(MapObjectComponent(mapObject: event.object, position: event.position))
+                    entity.components.set([
+                        GridPositionComponent(gridPosition: event.position),
+                        MapGridComponent(mapGrid: mapGrid),
+                        MapObjectComponent(mapObject: event.object),
+                    ])
                     entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(entity)
                 }
@@ -307,19 +317,22 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
         if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
-            let startPosition = entity.components[MapObjectComponent.self]?.position ?? event.startPosition
+            let startPosition = entity.components[GridPositionComponent.self]?.gridPosition ?? event.startPosition
             let endPosition = event.endPosition
-            let path = pathfinder.findPath(from: startPosition, to: endPosition).map { position in
-                (position, world.gat.tileAt(x: position.x, y: position.y).averageAltitude)
-            }
-            entity.walk(through: path, scale: [1, 1 / cosf(elevation), 1])
+            let path = pathfinder.findPath(from: startPosition, to: endPosition)
+            entity.walk(through: path)
         } else {
             Task {
                 if let entity = try? await spriteEntityManager.entity(for: event.object) {
                     entity.name = "\(event.object.objectID)"
+                    entity.scale = [1, 1 / cosf(elevation), 1]
                     entity.transform = transform(for: event.endPosition)
                     entity.isEnabled = (event.object.effectState != .cloak)
-                    entity.components.set(MapObjectComponent(mapObject: event.object, position: event.endPosition))
+                    entity.components.set([
+                        GridPositionComponent(gridPosition: event.endPosition),
+                        MapGridComponent(mapGrid: mapGrid),
+                        MapObjectComponent(mapObject: event.object),
+                    ])
                     entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(entity)
                 }
@@ -375,8 +388,13 @@ extension MapScene: MapEventHandlerProtocol {
 
             let entity = SpriteEntity(animations: [animation])
             entity.name = "\(event.item.objectID)"
+            entity.scale = [1, 1 / cosf(elevation), 1]
             entity.transform = transform(for: event.position)
-            entity.components.set(MapItemComponent(mapItem: event.item, position: event.position))
+            entity.components.set([
+                GridPositionComponent(gridPosition: event.position),
+                MapGridComponent(mapGrid: mapGrid),
+                MapItemComponent(mapItem: event.item),
+            ])
             entity.playSpriteAnimation(at: 0, repeats: true)
             rootEntity.addChild(entity)
         }
