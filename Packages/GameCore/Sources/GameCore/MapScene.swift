@@ -164,6 +164,7 @@ public class MapScene {
 
         rootEntity.addChild(playerEntity)
 
+        setupLight()
         _ = setupWorldCamera(target: playerEntity)
 
         mapSceneDelegate?.mapSceneDidFinishLoading(self)
@@ -173,6 +174,25 @@ public class MapScene {
         if let worldEntity = rootEntity.findEntity(named: mapName) {
             worldEntity.stopAllAudio()
         }
+    }
+
+    private func setupLight() {
+        let lightEntity = DirectionalLight()
+
+        lightEntity.shadow = DirectionalLightComponent.Shadow(maximumDistance: 100)
+
+        let target: SIMD3<Float> = [Float(mapGrid.width / 2), 0, -Float(mapGrid.height / 2)]
+        var position: SIMD3<Float> = [Float(mapGrid.width / 2), 80, -Float(mapGrid.height / 2)]
+        var point = Point3D(position)
+        point = point.rotated(
+            by: simd_quatd(angle: radians(25), axis: [1, 0, 1]),
+            around: Point3D(target)
+        )
+        position = SIMD3(point)
+
+        lightEntity.look(at: target, from: position, relativeTo: nil)
+
+        rootEntity.addChild(lightEntity)
     }
 
     /// Performs any necessary setup of the world camera.

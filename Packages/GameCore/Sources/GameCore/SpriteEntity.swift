@@ -15,6 +15,9 @@ class SpriteEntity: Entity {
 
         let inputTargetComponent = InputTargetComponent()
         components.set(inputTargetComponent)
+
+        let shadowComponent = DynamicLightShadowComponent(castsShadow: false)
+        components.set(shadowComponent)
     }
 
     init(animations: [SpriteAnimation]) {
@@ -22,6 +25,9 @@ class SpriteEntity: Entity {
 
         let inputTargetComponent = InputTargetComponent()
         components.set(inputTargetComponent)
+
+        let shadowComponent = DynamicLightShadowComponent(castsShadow: false)
+        components.set(shadowComponent)
 
         let spriteComponent = SpriteComponent(animations: animations)
         components.set(spriteComponent)
