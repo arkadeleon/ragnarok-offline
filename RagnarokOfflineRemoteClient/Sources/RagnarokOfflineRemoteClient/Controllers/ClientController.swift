@@ -11,35 +11,16 @@ import Vapor
 struct ClientController: RouteCollection {
     let resourcesDirectory: URL
 
-    private let locales: [String]
-    private let grfArchivesByLocale: [String : [GRFArchive]]
+    private let grfArchives: [GRFArchive]
 
     init(resourcesDirectory: String) {
         let resourcesDirectory = URL(fileURLWithPath: resourcesDirectory)
 
         self.resourcesDirectory = resourcesDirectory
 
-        self.locales = [
-            "de",
-            "en",
-            "es",
-            "fr",
-            "id",
-            "it",
-            "ja",
-            "ko",
-            "pt-BR",
-            "ru",
-            "th",
-            "tr",
-            "zh-Hans",
-            "zh-Hant",
-        ]
-
-        self.grfArchivesByLocale = [
-            "ko": [
-                GRFArchive(url: resourcesDirectory.appending(components: "ko", "data.grf")),
-            ],
+        self.grfArchives = [
+            GRFArchive(url: resourcesDirectory.appending(path: "rdata.grf")),
+            GRFArchive(url: resourcesDirectory.appending(path: "data.grf")),
         ]
     }
 
@@ -61,24 +42,17 @@ struct ClientController: RouteCollection {
             throw Abort(.badRequest)
         }
 
-        var locale = "ko"
-        if let l = req.headers.first(name: "RO-Locale"), locales.contains(l) {
-            locale = l
-        }
-
-        let fileURL = resourcesDirectory.appending(path: locale).appending(path: path)
+        let fileURL = resourcesDirectory.appending(path: path)
         let filePath = fileURL.path(percentEncoded: false)
         if FileManager.default.fileExists(atPath: filePath) {
             return try await req.fileio.asyncStreamFile(at: filePath)
         }
 
-        if let grfArchives = grfArchivesByLocale[locale] {
-            let grfPath = GRFPath(components: components)
-            for grfArchive in grfArchives {
-                if let _ = await grfArchive.entry(at: grfPath) {
-                    let data = try await grfArchive.contentsOfEntry(at: grfPath)
-                    return Response(body: .init(data: data))
-                }
+        let grfPath = GRFPath(components: components)
+        for grfArchive in grfArchives {
+            if let entryNode = await grfArchive.entryNode(at: grfPath) {
+                let data = try await grfArchive.contentsOfEntryNode(at: entryNode.path)
+                return Response(body: .init(data: data))
             }
         }
 
