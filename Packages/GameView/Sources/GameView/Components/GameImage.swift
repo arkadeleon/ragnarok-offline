@@ -31,7 +31,7 @@ struct GameImage<Content>: View where Content: View {
         if let image {
             content(image)
         } else {
-            Image(decorative: "")
+            Color.clear
         }
     }
 

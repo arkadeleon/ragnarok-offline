@@ -64,14 +64,20 @@ struct MapView: View {
         .overlay(alignment: .bottomLeading) {
             ChatBoxView()
         }
-        .overlay(alignment: .bottomTrailing) {
-            Slider(value: $distance, in: 3...100)
-                .onChange(of: distance) {
-                    scene.distance = distance
-                }
-        }
         .overlay {
             NPCDialogOverlayView()
         }
+        .gesture(
+            MagnifyGesture()
+                .onChanged { value in
+                    var distance = distance * Float(1 / value.magnification)
+                    distance = max(distance, 3)
+                    distance = min(distance, 100)
+                    scene.distance = distance
+                }
+                .onEnded { value in
+                    distance = scene.distance
+                }
+        )
     }
 }

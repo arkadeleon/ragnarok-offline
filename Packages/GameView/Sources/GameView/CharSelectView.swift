@@ -45,32 +45,50 @@ struct CharSelectView: View {
                 Button {
                     selectedSlot = 0
                 } label: {
-                    Text(slot1?.name ?? "Empty")
-                        .gameText()
+                    ZStack {
+                        if selectedSlot == 0 {
+                            GameImage("login_interface/box_select.bmp")
+                        }
+
+                        Text(slot1?.name ?? "Empty")
+                            .gameText()
+                    }
+                    .frame(width: 139, height: 144)
                 }
                 .buttonStyle(.borderless)
-                .frame(width: 139, height: 144)
-                .offset(x: 60, y: 44)
+                .offset(x: 56, y: 40)
 
                 Button {
                     selectedSlot = 1
                 } label: {
-                    Text(slot2?.name ?? "Empty")
-                        .gameText()
+                    ZStack {
+                        if selectedSlot == 1 {
+                            GameImage("login_interface/box_select.bmp")
+                        }
+
+                        Text(slot2?.name ?? "Empty")
+                            .gameText()
+                    }
+                    .frame(width: 139, height: 144)
                 }
                 .buttonStyle(.borderless)
-                .frame(width: 139, height: 144)
-                .offset(x: 224, y: 44)
+                .offset(x: 220, y: 40)
 
                 Button {
                     selectedSlot = 2
                 } label: {
-                    Text(slot3?.name ?? "Empty")
-                        .gameText()
+                    ZStack {
+                        if selectedSlot == 2 {
+                            GameImage("login_interface/box_select.bmp")
+                        }
+
+                        Text(slot3?.name ?? "Empty")
+                            .gameText()
+                    }
+                    .frame(width: 139, height: 144)
                 }
                 .buttonStyle(.borderless)
-                .frame(width: 139, height: 144)
-                .offset(x: 386, y: 44)
+                .offset(x: 382, y: 40)
 
                 if let selectedChar {
                     VStack(spacing: 1) {

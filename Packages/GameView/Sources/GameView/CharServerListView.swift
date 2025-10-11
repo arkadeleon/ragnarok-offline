@@ -21,7 +21,11 @@ struct CharServerListView: View {
             ForEach(charServers, id: \.name) { charServer in
                 Text(charServer.name)
                     .gameText()
+                    .frame(width: 260)
+                    .background(Color(#colorLiteral(red: 0.8039215686, green: 0.8784313725, blue: 1, alpha: 1)))
             }
+            .padding(.top, 17)
+            .padding(.bottom, 21)
 
             VStack {
                 Spacer()
@@ -41,10 +45,6 @@ struct CharServerListView: View {
             }
         }
         .frame(width: 280, height: 120)
-    }
-
-    init(charServers: [CharServerInfo]) {
-        self.charServers = charServers
     }
 }
 

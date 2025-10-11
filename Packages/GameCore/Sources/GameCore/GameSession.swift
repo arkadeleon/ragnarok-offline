@@ -94,6 +94,10 @@ final public class GameSession {
         }
     }
 
+    public func cancelMakeChar() {
+        phase = .charSelect(chars)
+    }
+
     public func incrementStatusProperty(_ sp: StatusProperty) {
         if let mapSession {
             mapSession.incrementStatusProperty(sp, by: 1)

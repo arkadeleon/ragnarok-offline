@@ -56,8 +56,10 @@ struct CharMakeView: View {
 
                             gameSession.makeChar(char: char)
                         }
+                        .disabled(name.isEmpty)
 
                         GameButton("btn_cancel.bmp") {
+                            gameSession.cancelMakeChar()
                         }
                     }
                     .padding(.horizontal, 5)
