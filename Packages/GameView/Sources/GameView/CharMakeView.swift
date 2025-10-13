@@ -23,51 +23,49 @@ struct CharMakeView: View {
     @State private var luk: UInt8 = 1
 
     var body: some View {
-        ScrollView([.horizontal, .vertical]) {
-            ZStack(alignment: .topLeading) {
-                GameImage("login_interface/win_make.bmp")
+        ZStack(alignment: .topLeading) {
+            GameImage("login_interface/win_make.bmp")
 
-                TextField(String(), text: $name)
-                    .textFieldStyle(.plain)
-                    #if !os(macOS)
-                    .textInputAutocapitalization(.never)
-                    #endif
-                    .disableAutocorrection(true)
-                    .gameText()
-                    .frame(width: 101, height: 18)
-                    .offset(x: 61, y: 244)
+            TextField(String(), text: $name)
+                .textFieldStyle(.plain)
+                #if !os(macOS)
+                .textInputAutocapitalization(.never)
+                #endif
+                .disableAutocorrection(true)
+                .gameText()
+                .frame(width: 101, height: 18)
+                .offset(x: 61, y: 244)
 
-                VStack {
+            VStack {
+                Spacer()
+
+                HStack(spacing: 3) {
                     Spacer()
 
-                    HStack(spacing: 3) {
-                        Spacer()
+                    GameButton("btn_make.bmp") {
+                        var char = CharInfo()
+                        char.name = name
+                        char.str = str
+                        char.agi = agi
+                        char.vit = vit
+                        char.int = int
+                        char.dex = dex
+                        char.luk = luk
+                        char.slot = slot
 
-                        GameButton("btn_make.bmp") {
-                            var char = CharInfo()
-                            char.name = name
-                            char.str = str
-                            char.agi = agi
-                            char.vit = vit
-                            char.int = int
-                            char.dex = dex
-                            char.luk = luk
-                            char.slot = slot
-
-                            gameSession.makeChar(char: char)
-                        }
-                        .disabled(name.isEmpty)
-
-                        GameButton("btn_cancel.bmp") {
-                            gameSession.cancelMakeChar()
-                        }
+                        gameSession.makeChar(char: char)
                     }
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 4)
+                    .disabled(name.isEmpty)
+
+                    GameButton("btn_cancel.bmp") {
+                        gameSession.cancelMakeChar()
+                    }
                 }
+                .padding(.horizontal, 5)
+                .padding(.vertical, 4)
             }
-            .frame(width: 576, height: 342)
         }
+        .frame(width: 576, height: 342)
     }
 }
 

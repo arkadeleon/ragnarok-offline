@@ -38,120 +38,118 @@ struct CharSelectView: View {
     }
 
     var body: some View {
-        ScrollView([.horizontal, .vertical]) {
-            ZStack(alignment: .topLeading) {
-                GameImage("login_interface/win_select.bmp")
+        ZStack(alignment: .topLeading) {
+            GameImage("login_interface/win_select.bmp")
 
-                Button {
-                    selectedSlot = 0
-                } label: {
-                    ZStack {
-                        if selectedSlot == 0 {
-                            GameImage("login_interface/box_select.bmp")
-                        }
-
-                        Text(slot1?.name ?? "Empty")
-                            .gameText()
+            Button {
+                selectedSlot = 0
+            } label: {
+                ZStack {
+                    if selectedSlot == 0 {
+                        GameImage("login_interface/box_select.bmp")
                     }
-                    .frame(width: 139, height: 144)
-                }
-                .buttonStyle(.borderless)
-                .offset(x: 56, y: 40)
 
-                Button {
-                    selectedSlot = 1
-                } label: {
-                    ZStack {
-                        if selectedSlot == 1 {
-                            GameImage("login_interface/box_select.bmp")
-                        }
-
-                        Text(slot2?.name ?? "Empty")
-                            .gameText()
-                    }
-                    .frame(width: 139, height: 144)
-                }
-                .buttonStyle(.borderless)
-                .offset(x: 220, y: 40)
-
-                Button {
-                    selectedSlot = 2
-                } label: {
-                    ZStack {
-                        if selectedSlot == 2 {
-                            GameImage("login_interface/box_select.bmp")
-                        }
-
-                        Text(slot3?.name ?? "Empty")
-                            .gameText()
-                    }
-                    .frame(width: 139, height: 144)
-                }
-                .buttonStyle(.borderless)
-                .offset(x: 382, y: 40)
-
-                if let selectedChar {
-                    VStack(spacing: 1) {
-                        Group {
-                            Text(selectedChar.name)
-                            Text(selectedChar.job.formatted())
-                            Text(selectedChar.baseLevel.formatted())
-                            Text(selectedChar.baseExp.formatted())
-                            Text(selectedChar.hp.formatted())
-                            Text(selectedChar.sp.formatted())
-                        }
+                    Text(slot1?.name ?? "Empty")
                         .gameText()
-                        .frame(width: 95, height: 15)
-                    }
-                    .offset(x: 65, y: 204)
-
-                    VStack(spacing: 1) {
-                        Group {
-                            Text(selectedChar.str.formatted())
-                            Text(selectedChar.agi.formatted())
-                            Text(selectedChar.vit.formatted())
-                            Text(selectedChar.int.formatted())
-                            Text(selectedChar.dex.formatted())
-                            Text(selectedChar.luk.formatted())
-                        }
-                        .gameText()
-                        .frame(width: 95, height: 15)
-                    }
-                    .offset(x: 209, y: 204)
                 }
+                .frame(width: 139, height: 144)
+            }
+            .buttonStyle(.borderless)
+            .offset(x: 56, y: 40)
 
-                VStack {
+            Button {
+                selectedSlot = 1
+            } label: {
+                ZStack {
+                    if selectedSlot == 1 {
+                        GameImage("login_interface/box_select.bmp")
+                    }
+
+                    Text(slot2?.name ?? "Empty")
+                        .gameText()
+                }
+                .frame(width: 139, height: 144)
+            }
+            .buttonStyle(.borderless)
+            .offset(x: 220, y: 40)
+
+            Button {
+                selectedSlot = 2
+            } label: {
+                ZStack {
+                    if selectedSlot == 2 {
+                        GameImage("login_interface/box_select.bmp")
+                    }
+
+                    Text(slot3?.name ?? "Empty")
+                        .gameText()
+                }
+                .frame(width: 139, height: 144)
+            }
+            .buttonStyle(.borderless)
+            .offset(x: 382, y: 40)
+
+            if let selectedChar {
+                VStack(spacing: 1) {
+                    Group {
+                        Text(selectedChar.name)
+                        Text(selectedChar.job.formatted())
+                        Text(selectedChar.baseLevel.formatted())
+                        Text(selectedChar.baseExp.formatted())
+                        Text(selectedChar.hp.formatted())
+                        Text(selectedChar.sp.formatted())
+                    }
+                    .gameText()
+                    .frame(width: 95, height: 15)
+                }
+                .offset(x: 65, y: 204)
+
+                VStack(spacing: 1) {
+                    Group {
+                        Text(selectedChar.str.formatted())
+                        Text(selectedChar.agi.formatted())
+                        Text(selectedChar.vit.formatted())
+                        Text(selectedChar.int.formatted())
+                        Text(selectedChar.dex.formatted())
+                        Text(selectedChar.luk.formatted())
+                    }
+                    .gameText()
+                    .frame(width: 95, height: 15)
+                }
+                .offset(x: 209, y: 204)
+            }
+
+            VStack {
+                Spacer()
+
+                HStack(spacing: 3) {
+                    if let selectedChar {
+                        GameButton("btn_del.bmp") {
+                        }
+                    }
+
                     Spacer()
 
-                    HStack(spacing: 3) {
-                        if let selectedChar {
-                            GameButton("btn_del.bmp") {
-                            }
-                        }
-
-                        Spacer()
-
-                        if let selectedSlot, selectedChar == nil {
-                            GameButton("btn_make.bmp") {
-                                gameSession.makeChar(slot: selectedSlot)
-                            }
-                        }
-
-                        if let selectedChar {
-                            GameButton("btn_ok.bmp") {
-                                gameSession.selectChar(char: selectedChar)
-                            }
-                        }
-
-                        GameButton("btn_cancel.bmp") {
+                    if let selectedSlot, selectedChar == nil {
+                        GameButton("btn_make.bmp") {
+                            gameSession.makeChar(slot: selectedSlot)
                         }
                     }
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 4)
+
+                    if let selectedChar {
+                        GameButton("btn_ok.bmp") {
+                            gameSession.selectChar(char: selectedChar)
+                        }
+                    }
+
+                    GameButton("btn_cancel.bmp") {
+                    }
                 }
+                .padding(.horizontal, 5)
+                .padding(.vertical, 4)
             }
-            .frame(width: 576, height: 342)
         }
+        .frame(width: 576, height: 342)
         .task {
             slot1 = chars.count > 0 ? chars[0] : nil
             slot2 = chars.count > 1 ? chars[1] : nil
