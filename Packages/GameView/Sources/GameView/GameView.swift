@@ -10,12 +10,13 @@ import SwiftUI
 
 public struct GameView: View {
     public var gameSession: GameSession
+    public var onExit: () -> Void
 
     public var body: some View {
         Group {
             switch gameSession.phase {
             case .login:
-                LoginView()
+                LoginView(onExit: onExit)
             case .charServerList(let charServers):
                 CharServerListView(charServers: charServers)
             case .charSelect(let chars):
@@ -31,11 +32,13 @@ public struct GameView: View {
         .environment(gameSession)
     }
 
-    public init(gameSession: GameSession) {
+    public init(gameSession: GameSession, onExit: @escaping () -> Void) {
         self.gameSession = gameSession
+        self.onExit = onExit
     }
 }
 
 #Preview {
-    GameView(gameSession: .previewing)
+    GameView(gameSession: .previewing) {
+    }
 }

@@ -97,11 +97,12 @@ struct ContentView: View {
             CharacterSimulatorView()
                 .environment(appModel.characterSimulator)
                 .environment(appModel.database)
+        case .walkingSimulator:
+            WalkingSimulatorView()
+                .environment(appModel.gameSession)
         case .chat:
             ChatView()
                 .environment(appModel.chatSession)
-        case .game:
-            GameView(gameSession: appModel.gameSession)
         case .cube:
             CubeView()
         }

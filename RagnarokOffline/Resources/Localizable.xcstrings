@@ -4,6 +4,9 @@
     "%lld monsters" : {
 
     },
+    "Account Registration" : {
+
+    },
     "Action" : {
 
     },
@@ -1085,6 +1088,9 @@
     "Magic Resistance" : {
 
     },
+    "Make sure all the servers are running before starting the walking simulator." : {
+
+    },
     "Map Database" : {
 
     },
@@ -1471,6 +1477,9 @@
 
     },
     "Race Groups" : {
+
+    },
+    "Ragnarok Offline" : {
 
     },
     "References" : {
@@ -1938,6 +1947,9 @@
 
     },
     "Special Performance" : {
+
+    },
+    "Start" : {
 
     },
     "Start All Servers" : {
@@ -2456,6 +2468,9 @@
     "Unequip Script" : {
 
     },
+    "Use _M/_F to register new accounts on the server." : {
+
+    },
     "View" : {
 
     },
@@ -2463,6 +2478,9 @@
 
     },
     "Walk Speed" : {
+
+    },
+    "Walking Simulator" : {
 
     },
     "Weapon Level" : {

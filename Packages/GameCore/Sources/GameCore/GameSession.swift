@@ -16,6 +16,7 @@ import WorldRendering
 @MainActor
 @Observable
 final public class GameSession {
+    public let windowID = "Game"
     public let immersiveSpaceID = "Game"
 
     public let serverAddress: String

@@ -29,8 +29,8 @@ enum SidebarItem: Hashable {
     case statusChangeDatabase
 
     case characterSimulator
+    case walkingSimulator
     case chat
-    case game
     case cube
 }
 
@@ -156,12 +156,12 @@ struct SidebarView: View {
                 }
 
                 #if DEBUG
-                NavigationLink(value: SidebarItem.chat) {
-                    Label("Chat", systemImage: "message")
+                NavigationLink(value: SidebarItem.walkingSimulator) {
+                    Label("Walking Simulator", systemImage: "macwindow")
                 }
 
-                NavigationLink(value: SidebarItem.game) {
-                    Label("Game", systemImage: "macwindow")
+                NavigationLink(value: SidebarItem.chat) {
+                    Label("Chat", systemImage: "message")
                 }
 
                 NavigationLink(value: SidebarItem.cube) {

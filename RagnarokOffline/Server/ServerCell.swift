@@ -13,7 +13,7 @@ struct ServerCell: View {
 
     var body: some View {
         HStack {
-            Label(server.name, systemImage: "terminal")
+            Label(server.name, systemImage: "server.rack")
 
             Spacer()
 

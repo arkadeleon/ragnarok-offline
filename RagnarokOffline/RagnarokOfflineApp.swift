@@ -7,9 +7,14 @@
 
 import GameView
 import SwiftUI
+import TipKit
 
 @main
 struct RagnarokOfflineApp: App {
+    #if os(macOS)
+    @Environment(\.dismissWindow) private var dismissWindow
+    #endif
+
     @State private var appModel = AppModel()
 
     #if os(visionOS)
@@ -21,6 +26,14 @@ struct RagnarokOfflineApp: App {
             ContentView()
                 .environment(appModel)
         }
+
+        #if os(macOS)
+        Window("Game", id: appModel.gameSession.windowID) {
+            GameView(gameSession: appModel.gameSession) {
+                dismissWindow(id: appModel.gameSession.windowID)
+            }
+        }
+        #endif
 
         #if os(visionOS)
         ImmersiveSpace(id: appModel.gameSession.immersiveSpaceID) {
@@ -37,5 +50,20 @@ struct RagnarokOfflineApp: App {
             }
         }
         #endif
+    }
+
+    init() {
+        do {
+            #if DEBUG
+            Tips.showAllTipsForTesting()
+            #endif
+
+            try Tips.configure([
+                .displayFrequency(.immediate),
+                .datastoreLocation(.applicationDefault)
+            ])
+        } catch {
+            logger.warning("TipKit error: \(error)")
+        }
     }
 }
