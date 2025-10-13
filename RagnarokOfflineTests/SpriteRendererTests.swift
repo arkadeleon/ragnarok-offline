@@ -20,7 +20,7 @@ final class SpriteRendererTests: XCTestCase {
             composedSprite: composedSprite,
             actionType: .walk,
             direction: .south,
-            headDirection: .straight
+            headDirection: .lookForward
         )
         XCTAssertEqual(animation.frames.count, 8)
         XCTAssertEqual(animation.frameWidth, 40)

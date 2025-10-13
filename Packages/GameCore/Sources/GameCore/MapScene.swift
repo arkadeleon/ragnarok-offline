@@ -115,12 +115,6 @@ public class MapScene {
         PlaySpriteAnimationActionHandler.register { _ in
             PlaySpriteAnimationActionHandler()
         }
-
-        FromToByAction<Transform>.subscribe(to: .terminated) { event in
-            if let spriteEntity = event.targetEntity as? SpriteEntity {
-                spriteEntity.playSpriteAnimation(at: 0, repeats: true)
-            }
-        }
     }
 
     func load() async {
@@ -328,7 +322,7 @@ extension MapScene: MapEventHandlerProtocol {
                         MapGridComponent(mapGrid: mapGrid),
                         MapObjectComponent(mapObject: event.object),
                     ])
-                    entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                    entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: event.direction), repeats: true)
                     rootEntity.addChild(entity)
                 }
             }

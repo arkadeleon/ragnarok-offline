@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2025/5/7.
 //
 
+import Constants
+
 public enum CharacterDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
     case south
     case southwest
@@ -14,6 +16,27 @@ public enum CharacterDirection: Int, CaseIterable, CustomStringConvertible, Send
     case northeast
     case east
     case southeast
+
+    public init(direction: Direction) {
+        switch direction {
+        case .north:
+            self = .north
+        case .northwest:
+            self = .northwest
+        case .west:
+            self = .west
+        case .southwest:
+            self = .southwest
+        case .south:
+            self = .south
+        case .southeast:
+            self = .southeast
+        case .east:
+            self = .east
+        case .northeast:
+            self = .northeast
+        }
+    }
 
     public var description: String {
         switch self {

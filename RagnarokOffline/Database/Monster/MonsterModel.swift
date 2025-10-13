@@ -135,7 +135,7 @@ final class MonsterModel {
             composedSprite: composedSprite,
             actionType: .idle,
             direction: .south,
-            headDirection: .straight
+            headDirection: .lookForward
         )
         animatedImage = AnimatedImage(animation: animation)
     }

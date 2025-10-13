@@ -77,7 +77,7 @@ extension SpriteAnimation {
                     composedSprite: composedSprite,
                     actionType: actionType,
                     direction: direction,
-                    headDirection: .straight
+                    headDirection: .lookForward
                 )
                 let animation = try await SpriteAnimation(animation: anim)
                 animations.append(animation)

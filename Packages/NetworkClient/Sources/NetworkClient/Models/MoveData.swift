@@ -7,12 +7,20 @@
 
 // See `WBUFPOS2`
 struct MoveData {
-    let x0: Int16
-    let y0: Int16
-    let x1: Int16
-    let y1: Int16
-    let sx0: UInt8
-    let sy0: UInt8
+    private let x0: Int16
+    private let y0: Int16
+    private let x1: Int16
+    private let y1: Int16
+    private let sx0: UInt8
+    private let sy0: UInt8
+
+    var startPosition: SIMD2<Int> {
+        SIMD2(x: Int(x0), y: Int(y0))
+    }
+
+    var endPosition: SIMD2<Int> {
+        SIMD2(x: Int(x1), y: Int(y1))
+    }
 
     init(data: [UInt8]) {
         let a = data[0]

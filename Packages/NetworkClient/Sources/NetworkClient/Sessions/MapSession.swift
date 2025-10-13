@@ -174,34 +174,41 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_spawn_unit`
         subscription.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-
             let posDir = PosDir(data: packet.PosDir)
-            let position = SIMD2(x: Int(posDir.x), y: Int(posDir.y))
+            let direction = Direction(rawValue: posDir.direction) ?? .north
+            let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
 
-            let event = MapObjectEvents.Spawned(object: object, position: position)
+            let event = MapObjectEvents.Spawned(
+                object: object,
+                position: posDir.position,
+                direction: direction,
+                headDirection: headDirection
+            )
             self.postEvent(event)
         }
 
         // See `clif_set_unit_idle`
         subscription.subscribe(to: packet_idle_unit.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-
             let posDir = PosDir(data: packet.PosDir)
-            let position = SIMD2(x: Int(posDir.x), y: Int(posDir.y))
+            let direction = Direction(rawValue: posDir.direction) ?? .north
+            let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
 
-            let event = MapObjectEvents.Spawned(object: object, position: position)
+            let event = MapObjectEvents.Spawned(
+                object: object,
+                position: posDir.position,
+                direction: direction,
+                headDirection: headDirection
+            )
             self.postEvent(event)
         }
 
         // See `clif_set_unit_walking`
         subscription.subscribe(to: packet_unit_walking.self) { [unowned self] packet in
             let object = MapObject(packet: packet)
-
             let moveData = MoveData(data: packet.MoveData)
-            let startPosition = SIMD2(x: Int(moveData.x0), y: Int(moveData.y0))
-            let endPosition = SIMD2(x: Int(moveData.x1), y: Int(moveData.y1))
 
-            let event = MapObjectEvents.Moved(object: object, startPosition: startPosition, endPosition: endPosition)
+            let event = MapObjectEvents.Moved(object: object, startPosition: moveData.startPosition, endPosition: moveData.endPosition)
             self.postEvent(event)
         }
 
@@ -222,10 +229,13 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_changed_dir`
         subscription.subscribe(to: PACKET_ZC_CHANGE_DIRECTION.self) { [unowned self] packet in
+            let direction = Direction(rawValue: Int(packet.dir)) ?? .north
+            let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
+
             let event = MapObjectEvents.DirectionChanged(
                 objectID: packet.srcId,
-                headDirection: packet.headDir,
-                direction: packet.dir
+                direction: direction,
+                headDirection: headDirection
             )
             self.postEvent(event)
         }

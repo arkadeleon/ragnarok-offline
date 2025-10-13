@@ -139,7 +139,7 @@ final class JobModel {
             composedSprite: composedSprite,
             actionType: .idle,
             direction: .south,
-            headDirection: .straight
+            headDirection: .lookForward
         )
         animatedImage = AnimatedImage(animation: animation)
     }

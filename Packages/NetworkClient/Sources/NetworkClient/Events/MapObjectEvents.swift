@@ -11,6 +11,8 @@ public enum MapObjectEvents {
     public struct Spawned: Event {
         public let object: MapObject
         public let position: SIMD2<Int>
+        public let direction: Direction
+        public let headDirection: HeadDirection
     }
 
     public struct Moved: Event {
@@ -30,8 +32,8 @@ public enum MapObjectEvents {
 
     public struct DirectionChanged: Event {
         public let objectID: UInt32
-        public let headDirection: UInt16
-        public let direction: UInt8
+        public let direction: Direction
+        public let headDirection: HeadDirection
     }
 
     public struct SpriteChanged: Event {
