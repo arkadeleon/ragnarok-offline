@@ -46,6 +46,7 @@ struct SidebarView: View {
 
     @State private var isHelpPresented = false
     @State private var isSettingsPresented = false
+    @State private var betaLink: URL?
 
     var body: some View {
         List(selection: selection) {
@@ -186,6 +187,18 @@ struct SidebarView: View {
                     Label("Help", systemImage: "questionmark.circle")
                 }
 
+                if let betaLink {
+                    Button {
+                        #if os(macOS)
+                        NSWorkspace.shared.open(betaLink)
+                        #else
+                        UIApplication.shared.open(betaLink)
+                        #endif
+                    } label: {
+                        Label("Join Beta", systemImage: "testtube.2")
+                    }
+                }
+
                 #if DEBUG
                 Button {
                     isSettingsPresented.toggle()
@@ -210,6 +223,16 @@ struct SidebarView: View {
                     isSettingsPresented.toggle()
                 }
                 .environment(appModel.settings)
+            }
+        }
+        .task {
+            do {
+                let fetchURL = URL(string: "https://raw.githubusercontent.com/arkadeleon/ragnarok-offline/master/beta-link.json")!
+                let (data, _) = try await URLSession.shared.data(from: fetchURL)
+                let json = try JSONDecoder().decode([String : String].self, from: data)
+                betaLink = json["link"].flatMap(URL.init)
+            } catch {
+                logger.warning("Fetch beta link error: \(error)")
             }
         }
     }
