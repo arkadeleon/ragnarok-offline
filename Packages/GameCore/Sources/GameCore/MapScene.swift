@@ -36,11 +36,11 @@ public class MapScene {
 
     let resourceManager: ResourceManager
 
-    public let rootEntity = Entity()
+    let rootEntity = Entity()
 
     weak var mapSceneDelegate: (any MapSceneDelegate)?
 
-    public var distance: Float = 80 {
+    var distance: Float = 80 {
         didSet {
             rootEntity.findEntity(named: "camera")?.components[WorldCameraComponent.self]?.radius = distance
         }
@@ -59,7 +59,7 @@ public class MapScene {
     let elevation: Float = radians(45)
     #endif
 
-    public var tileTapGesture: some Gesture {
+    var tileTapGesture: some Gesture {
         SpatialTapGesture()
             .targetedToEntity(where: .has(TileComponent.self))
             .onEnded { [unowned self] event in
@@ -69,7 +69,7 @@ public class MapScene {
             }
     }
 
-    public var mapObjectTapGesture: some Gesture {
+    var mapObjectTapGesture: some Gesture {
         SpatialTapGesture()
             .targetedToEntity(where: .has(MapObjectComponent.self))
             .onEnded { [unowned self] event in
@@ -79,7 +79,7 @@ public class MapScene {
             }
     }
 
-    public var mapItemTapGesture: some Gesture {
+    var mapItemTapGesture: some Gesture {
         SpatialTapGesture()
             .targetedToEntity(where: .has(MapItemComponent.self))
             .onEnded { [unowned self] event in

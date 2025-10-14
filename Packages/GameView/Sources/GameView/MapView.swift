@@ -18,7 +18,6 @@ struct MapView: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     #endif
 
-    @State private var distance: Float = 80
     @State private var presentedMenuItem: MenuItem?
 
     var body: some View {
@@ -67,17 +66,5 @@ struct MapView: View {
         .overlay {
             NPCDialogOverlayView()
         }
-        .gesture(
-            MagnifyGesture()
-                .onChanged { value in
-                    var distance = distance * Float(1 / value.magnification)
-                    distance = max(distance, 3)
-                    distance = min(distance, 100)
-                    scene.distance = distance
-                }
-                .onEnded { value in
-                    distance = scene.distance
-                }
-        )
     }
 }
