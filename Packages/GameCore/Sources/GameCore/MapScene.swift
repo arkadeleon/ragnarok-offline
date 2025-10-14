@@ -158,7 +158,7 @@ public class MapScene {
 
         rootEntity.addChild(playerEntity)
 
-        setupLight()
+        setupLighting()
         _ = setupWorldCamera(target: playerEntity)
 
         mapSceneDelegate?.mapSceneDidFinishLoading(self)
@@ -170,16 +170,39 @@ public class MapScene {
         }
     }
 
-    private func setupLight() {
-        let lightEntity = DirectionalLight()
+    private func setupLighting() {
+        let lightEntity = Entity()
 
-        lightEntity.shadow = DirectionalLightComponent.Shadow(maximumDistance: 100)
+        let diffuse = [
+            world.rsw.light.diffuseRed,
+            world.rsw.light.diffuseGreen,
+            world.rsw.light.diffuseBlue,
+        ]
+        let lightColor = DirectionalLightComponent.Color(
+            red: CGFloat(diffuse[0]),
+            green: CGFloat(diffuse[1]),
+            blue: CGFloat(diffuse[2]),
+            alpha: 1
+        )
+        let lightComponent = DirectionalLightComponent(color: lightColor)
 
-        let target: SIMD3<Float> = [Float(mapGrid.width / 2), 0, -Float(mapGrid.height / 2)]
-        var position: SIMD3<Float> = [Float(mapGrid.width / 2), 80, -Float(mapGrid.height / 2)]
+        let lightShadowComponent = DirectionalLightComponent.Shadow(maximumDistance: 100)
+
+        lightEntity.components.set([lightComponent, lightShadowComponent])
+
+        // Default longitude(45), latitude(45) makes shadow too long.
+        let longitude = radians(Double(world.rsw.light.longitude)) / 2
+        let latitude = radians(Double(world.rsw.light.latitude)) / 2
+
+        let target: SIMD3<Float> = [0, 0, 0]
+        var position: SIMD3<Float> = [0, 1, 0]
         var point = Point3D(position)
         point = point.rotated(
-            by: simd_quatd(angle: radians(25), axis: [1, 0, 1]),
+            by: simd_quatd(angle: latitude, axis: [1, 0, 0]),
+            around: Point3D(target)
+        )
+        point = point.rotated(
+            by: simd_quatd(angle: longitude, axis: [0, 0, 1]),
             around: Point3D(target)
         )
         position = SIMD3(point)
