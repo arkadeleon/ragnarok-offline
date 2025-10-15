@@ -30,7 +30,7 @@ final class TileEntityManager {
                 let tileEntity = ModelEntity()
                 tileEntity.name = "tile"
 
-                let mesh = MeshResource.generatePlane(width: 1, depth: 1)
+                let mesh = MeshResource.generatePlane(width: 1, height: 1)
 
                 var material = SimpleMaterial()
                 material.color = SimpleMaterial.BaseColor(tint: .yellow)
@@ -38,7 +38,7 @@ final class TileEntityManager {
 
                 tileEntity.components.set(ModelComponent(mesh: mesh, materials: [material]))
                 tileEntity.components.set(CollisionComponent(shapes: [
-                    .generateBox(width: 1, height: 0, depth: 1)
+                    .generateBox(width: 1, height: 1, depth: 0)
                 ]))
                 tileEntity.components.set(InputTargetComponent())
                 tileEntity.components.set(TileComponent(position: SIMD2(x: x, y: y)))
@@ -46,7 +46,11 @@ final class TileEntityManager {
                 if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
                     let tile = gat.tileAt(x: x, y: y)
                     let altitude = tile.averageAltitude / 5
-                    tileEntity.position = [Float(x) + 0.5, -altitude, -(Float(y) + 0.5)]
+                    tileEntity.position = [
+                        Float(x) + 0.5,
+                        Float(y) + 0.5,
+                        -altitude,
+                    ]
 
                     if tile.isWalkable {
                         tileEntity.isEnabled = true
@@ -54,7 +58,11 @@ final class TileEntityManager {
                         tileEntity.isEnabled = false
                     }
                 } else {
-                    tileEntity.position = [Float(x) + 0.5, 0, -(Float(y) + 0.5)]
+                    tileEntity.position = [
+                        Float(x) + 0.5,
+                        Float(y) + 0.5,
+                        0,
+                    ]
                     tileEntity.isEnabled = false
                 }
 
@@ -78,7 +86,11 @@ final class TileEntityManager {
                 if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
                     let tile = gat.tileAt(x: x, y: y)
                     let altitude = tile.averageAltitude / 5
-                    tileEntity.position = [Float(x) + 0.5, -altitude, -(Float(y) + 0.5)]
+                    tileEntity.position = [
+                        Float(x) + 0.5,
+                        Float(y) + 0.5,
+                        -altitude,
+                    ]
 
                     if tile.isWalkable {
                         tileEntity.isEnabled = true
@@ -86,7 +98,11 @@ final class TileEntityManager {
                         tileEntity.isEnabled = false
                     }
                 } else {
-                    tileEntity.position = [Float(x) + 0.5, 0, -(Float(y) + 0.5)]
+                    tileEntity.position = [
+                        Float(x) + 0.5,
+                        Float(y) + 0.5,
+                        0,
+                    ]
                     tileEntity.isEnabled = false
                 }
             }

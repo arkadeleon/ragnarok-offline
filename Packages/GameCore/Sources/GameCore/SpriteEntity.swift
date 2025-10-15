@@ -53,8 +53,8 @@ class SpriteEntity: Entity {
 
         self.position = [
             Float(gridPosition.x) + 0.5 - animation.pivot.x / 32,
+            Float(gridPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
             -altitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
-            -Float(gridPosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
         ]
 
         do {
@@ -81,8 +81,8 @@ class SpriteEntity: Entity {
 
         self.position = [
             Float(gridPosition.x) + 0.5 - animation.pivot.x / 32,
+            Float(gridPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
             -altitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
-            -Float(gridPosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
         ]
 
         do {
@@ -155,15 +155,15 @@ class SpriteEntity: Entity {
                 var sourceTransform = transform
                 sourceTransform.translation = [
                     Float(sourcePosition.x) + 0.5 - animation.pivot.x / 32,
+                    Float(sourcePosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
                     -sourceAltitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
-                    -Float(sourcePosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
                 ]
 
                 var targetTransform = transform
                 targetTransform.translation = [
                     Float(targetPosition.x) + 0.5 - animation.pivot.x / 32,
+                    Float(targetPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
                     -targetAltitude / 5 + animation.frameHeight / 2 / 32 * scale.y,
-                    -Float(targetPosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32
                 ]
 
                 let moveAction = FromToByAction(from: sourceTransform, to: targetTransform, mode: .parent, timing: .linear)
