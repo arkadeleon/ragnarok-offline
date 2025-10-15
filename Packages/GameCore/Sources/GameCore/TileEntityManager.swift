@@ -5,29 +5,28 @@
 //  Created by Leon Li on 2025/3/20.
 //
 
-import FileFormats
 import RealityKit
 
 @MainActor
 final class TileEntityManager {
-    let gat: GAT
+    let mapGrid: MapGrid
     let rootEntity: Entity
 
     private let range: Int = 17
-    private var tileEntities: [SIMD2<Int> : ModelEntity] = [:]
+    private var tileEntities: [SIMD2<Int> : Entity] = [:]
 
-    init(gat: GAT, rootEntity: Entity) {
-        self.gat = gat
+    init(mapGrid: MapGrid, rootEntity: Entity) {
+        self.mapGrid = mapGrid
         self.rootEntity = rootEntity
     }
 
-    func addTileEntities(forPosition position: SIMD2<Int>) {
-        for relativeX in (-range)...(range) {
-            for relativeY in (-range)...(range) {
-                let x = position.x + relativeX
-                let y = position.y + relativeY
+    func addTileEntities(forCenter center: SIMD2<Int>) {
+        for offsetX in (-range)...(range) {
+            for offsetY in (-range)...(range) {
+                let x = center.x + offsetX
+                let y = center.y + offsetY
 
-                let tileEntity = ModelEntity()
+                let tileEntity = Entity()
                 tileEntity.name = "tile"
 
                 let mesh = MeshResource.generatePlane(width: 1, height: 1)
@@ -41,18 +40,19 @@ final class TileEntityManager {
                     .generateBox(width: 1, height: 1, depth: 0)
                 ]))
                 tileEntity.components.set(InputTargetComponent())
-                tileEntity.components.set(TileComponent(position: SIMD2(x: x, y: y)))
+                tileEntity.components.set(TileComponent(position: [x, y]))
+                tileEntity.components.set(OpacityComponent(opacity: 0))
 
-                if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
-                    let tile = gat.tileAt(x: x, y: y)
-                    let altitude = tile.averageAltitude / 5
+                if 0..<mapGrid.width ~= x && 0..<mapGrid.height ~= y {
+                    let cell = mapGrid[[x, y]]
+                    let altitude = cell.altitude / 5
                     tileEntity.position = [
                         Float(x) + 0.5,
                         Float(y) + 0.5,
-                        -altitude,
+                        -altitude - 0.0001,
                     ]
 
-                    if tile.isWalkable {
+                    if cell.isWalkable {
                         tileEntity.isEnabled = true
                     } else {
                         tileEntity.isEnabled = false
@@ -66,33 +66,33 @@ final class TileEntityManager {
                     tileEntity.isEnabled = false
                 }
 
-                tileEntities[SIMD2(x: relativeX, y: relativeY)] = tileEntity
+                tileEntities[[offsetX, offsetY]] = tileEntity
 
                 rootEntity.addChild(tileEntity)
             }
         }
     }
 
-    func updateTileEntities(forPosition position: SIMD2<Int>) {
-        for relativeX in (-range)...(range) {
-            for relativeY in (-range)...(range) {
-                let x = position.x + relativeX
-                let y = position.y + relativeY
+    func updateTileEntities(forCenter center: SIMD2<Int>) {
+        for offsetX in (-range)...(range) {
+            for offsetY in (-range)...(range) {
+                let x = center.x + offsetX
+                let y = center.y + offsetY
 
-                let tileEntity = tileEntities[SIMD2(x: relativeX, y: relativeY)]!
+                let tileEntity = tileEntities[[offsetX, offsetY]]!
 
-                tileEntity.components.set(TileComponent(position: SIMD2(x: x, y: y)))
+                tileEntity.components.set(TileComponent(position: [x, y]))
 
-                if 0..<Int(gat.width) ~= x && 0..<Int(gat.height) ~= y {
-                    let tile = gat.tileAt(x: x, y: y)
-                    let altitude = tile.averageAltitude / 5
+                if 0..<mapGrid.width ~= x && 0..<mapGrid.height ~= y {
+                    let cell = mapGrid[[x, y]]
+                    let altitude = cell.altitude / 5
                     tileEntity.position = [
                         Float(x) + 0.5,
                         Float(y) + 0.5,
-                        -altitude,
+                        -altitude - 0.0001,
                     ]
 
-                    if tile.isWalkable {
+                    if cell.isWalkable {
                         tileEntity.isEnabled = true
                     } else {
                         tileEntity.isEnabled = false

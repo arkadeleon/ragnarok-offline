@@ -99,7 +99,7 @@ public class MapScene {
 
         self.resourceManager = resourceManager
 
-        self.tileEntityManager = TileEntityManager(gat: world.gat, rootEntity: rootEntity)
+        self.tileEntityManager = TileEntityManager(mapGrid: mapGrid, rootEntity: rootEntity)
         self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager)
 
         self.pathfinder = Pathfinder(mapGrid: mapGrid)
@@ -133,7 +133,7 @@ public class MapScene {
             rootEntity.addChild(worldEntity)
         }
 
-        tileEntityManager.addTileEntities(forPosition: playerPosition)
+        tileEntityManager.addTileEntities(forCenter: playerPosition)
 
         do {
             let configuration = ComposedSprite.Configuration(mapObject: player)
@@ -328,7 +328,7 @@ extension MapScene: MapEventHandlerProtocol {
         let path = pathfinder.findPath(from: startPosition, to: endPosition)
         playerEntity.walk(through: path)
 
-        tileEntityManager.updateTileEntities(forPosition: event.endPosition)
+        tileEntityManager.updateTileEntities(forCenter: event.endPosition)
     }
 
     func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
