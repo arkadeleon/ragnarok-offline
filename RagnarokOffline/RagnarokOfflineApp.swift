@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2023/1/13.
 //
 
+import GameCore
 import GameView
 import SwiftUI
 import TipKit

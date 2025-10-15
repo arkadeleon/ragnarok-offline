@@ -246,8 +246,12 @@ public class MapScene {
         worldCamera.addChild(Entity(components: PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)))
         #endif
 
-        let simulationParent = PhysicsSimulationComponent.nearestSimulationEntity(for: target)
-        worldCamera.setParent(simulationParent ?? target.parent)
+        let simulationEntity = PhysicsSimulationComponent.nearestSimulationEntity(for: target)
+        let parentEntity = simulationEntity ?? target.parent
+        worldCamera.setParent(parentEntity)
+
+        worldCamera.position = target.position(relativeTo: parentEntity)
+
         return worldCamera
     }
 
