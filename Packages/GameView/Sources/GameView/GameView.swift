@@ -35,6 +35,7 @@ public struct GameView: View {
         .environment(gameSession)
         .environment(\.exitGame, ExitGameAction(action: onExit))
         #if os(iOS)
+        .statusBarHidden()
         .onAppear {
             UIApplication.shared.isIdleTimerDisabled = true
         }
