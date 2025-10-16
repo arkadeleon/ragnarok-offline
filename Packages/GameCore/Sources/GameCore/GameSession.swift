@@ -176,7 +176,12 @@ final public class GameSession {
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
             self.account = event.account
-            self.phase = .charServerList(event.charServers)
+
+            if event.charServers.count == 1 {
+                self.selectCharServer(event.charServers[0])
+            } else if event.charServers.count > 1 {
+                self.phase = .charServerList(event.charServers)
+            }
         }
         .store(in: &subscriptions)
 
