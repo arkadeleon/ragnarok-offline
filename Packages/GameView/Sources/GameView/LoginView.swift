@@ -9,9 +9,8 @@ import GameCore
 import SwiftUI
 
 struct LoginView: View {
-    var onExit: () -> Void
-
     @Environment(GameSession.self) private var gameSession
+    @Environment(\.exitGame) private var exitGame
 
     @AppStorage("game.username") private var username = ""
     @AppStorage("game.password") private var password = ""
@@ -62,7 +61,7 @@ struct LoginView: View {
                     }
 
                     GameButton("login_interface/btn_exit.bmp") {
-                        onExit()
+                        exitGame()
                     }
                 }
                 .padding(.horizontal, 5)
@@ -74,8 +73,7 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView() {
-    }
-    .padding()
-    .environment(GameSession.previewing)
+    LoginView()
+        .padding()
+        .environment(GameSession.previewing)
 }

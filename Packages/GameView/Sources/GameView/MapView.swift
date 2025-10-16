@@ -55,6 +55,8 @@ struct MapView: View {
                             StatusView(status: status)
                         case .inventory:
                             InventoryView(inventory: gameSession.inventory)
+                        case .options:
+                            OptionsView()
                         }
                     }
                 }

@@ -145,6 +145,22 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let event = MapConnectionEvents.Accepted()
             self.postEvent(event)
         }
+
+        // See `clif_charselectok`
+        subscription.subscribe(to: PACKET_ZC_RESTART_ACK.self) { [unowned self] packet in
+            if packet.type == 1 {
+                let event = MapConnectionEvents.Disconnected()
+                self.postEvent(event)
+            }
+        }
+
+        // See `clif_disconnect_ack`
+        subscription.subscribe(to: PACKET_ZC_ACK_REQ_DISCONNECT.self) { [unowned self] packet in
+            if packet.result == 0 {
+                let event = MapConnectionEvents.Disconnected()
+                self.postEvent(event)
+            }
+        }
     }
 
     private func subscribeToMapPackets(with subscription: inout ClientSubscription) {
@@ -392,6 +408,26 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
             client.sendPacket(packet)
         }
+    }
+
+    public func returnToLastSavePoint() {
+        var packet = PACKET_CZ_RESTART()
+        packet.type = 0
+
+        client.sendPacket(packet)
+    }
+
+    public func returnToCharacterSelect() {
+        var packet = PACKET_CZ_RESTART()
+        packet.type = 1
+
+        client.sendPacket(packet)
+    }
+
+    public func requestExit() {
+        let packet = PACKET_CZ_REQUEST_QUIT()
+
+        client.sendPacket(packet)
     }
 
     func postEvent(_ event: some Event) {

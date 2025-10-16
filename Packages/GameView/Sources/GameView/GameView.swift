@@ -33,6 +33,7 @@ public struct GameView: View {
         }
         .ignoresSafeArea()
         .environment(gameSession)
+        .environment(\.exitGame, ExitGameAction(action: onExit))
         #if os(iOS)
         .onAppear {
             UIApplication.shared.isIdleTimerDisabled = true
@@ -55,7 +56,7 @@ public struct GameView: View {
     @ViewBuilder private var contentView: some View {
         switch gameSession.phase {
         case .login:
-            LoginView(onExit: onExit)
+            LoginView()
         case .charServerList(let charServers):
             CharServerListView(charServers: charServers)
         case .charSelect(let chars):

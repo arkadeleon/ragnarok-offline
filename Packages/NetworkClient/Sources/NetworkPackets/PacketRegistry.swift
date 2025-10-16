@@ -193,7 +193,7 @@ let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
 //    ZC_ADD_RELATED_GUILD,                                           // 0x185
     HEADER_ZC_ACK_ITEMREFINING: PACKET_ZC_ACK_ITEMREFINING.self,    // 0x188
     HEADER_ZC_NOTIFY_MAPINFO: PACKET_ZC_NOTIFY_MAPINFO.self,        // 0x189
-//    ZC_ACK_REQ_DISCONNECT,                                          // 0x18b
+    HEADER_ZC_ACK_REQ_DISCONNECT: PACKET_ZC_ACK_REQ_DISCONNECT.self,// 0x18b
     HEADER_ZC_MONSTER_INFO: PACKET_ZC_MONSTER_INFO.self,            // 0x18c
     HEADER_ZC_MAKABLEITEMLIST: PACKET_ZC_MAKABLEITEMLIST.self,      // 0x18d
     HEADER_ZC_ACK_REQMAKINGITEM: PACKET_ZC_ACK_REQMAKINGITEM.self,  // 0x18f

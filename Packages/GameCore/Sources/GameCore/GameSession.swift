@@ -124,6 +124,26 @@ final public class GameSession {
         }
     }
 
+    public func returnToLastSavePoint() {
+        mapSession?.returnToLastSavePoint()
+    }
+
+    public func returnToCharacterSelect() {
+        mapSession?.returnToCharacterSelect()
+    }
+
+    public func requestExit() {
+        mapSession?.requestExit()
+        mapSession?.stop()
+        mapSession = nil
+
+        charSession?.stop()
+        charSession = nil
+
+        loginSession?.stop()
+        loginSession = nil
+    }
+
     // MARK: - NPC
 
     public func requestNextMessage() {
@@ -291,6 +311,14 @@ final public class GameSession {
 
                 self.phase = .map(scene)
             }
+        }
+        .store(in: &subscriptions)
+
+        mapSession.subscribe(to: MapConnectionEvents.Disconnected.self) { [unowned self] event in
+            self.mapSession?.stop()
+            self.mapSession = nil
+
+            phase = .charSelect(chars)
         }
         .store(in: &subscriptions)
 

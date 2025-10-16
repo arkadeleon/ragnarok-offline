@@ -11,6 +11,7 @@ import SwiftUI
 enum MenuItem {
     case status
     case inventory
+    case options
 }
 
 struct MenuView: View {
@@ -70,18 +71,22 @@ struct MenuView: View {
 
                     GridRow {
                         GameButton("menu_icon/bt_option.bmp") {
+                            action(.options)
                         }
                         GameButton("menu_icon/bt_bank.bmp") {
                         }
+                        .disabled(true)
                         GameButton("menu_icon/bt_rec.bmp") {
                         }
+                        .disabled(true)
                         GameButton("menu_icon/bt_mail.bmp") {
                         }
+                        .disabled(true)
                         GameButton("menu_icon/bt_achievement.bmp") {
                         }
+                        .disabled(true)
                     }
                     .frame(width: 32, height: 34)
-                    .disabled(true)
 
                     GridRow {
                         GameButton("menu_icon/bt_tip.bmp") {

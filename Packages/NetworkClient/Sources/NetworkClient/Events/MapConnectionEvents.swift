@@ -8,4 +8,7 @@
 public enum MapConnectionEvents {
     public struct Accepted: Event {
     }
+
+    public struct Disconnected: Event {
+    }
 }
