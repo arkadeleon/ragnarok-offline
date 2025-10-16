@@ -185,6 +185,22 @@ class SpriteEntity: Entity {
         }
     }
 
+    func attack(direction: CharacterDirection) {
+        guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
+            return
+        }
+
+        let attackActionType = CharacterActionType.attackActionType(
+            forJobID: mapObject.job,
+            gender: mapObject.gender,
+            weapon: mapObject.weapon
+        )
+
+        playSpriteAnimation(attackActionType, direction: direction, repeats: false) {
+            self.playSpriteAnimation(.readyToAttack, direction: direction, repeats: true)
+        }
+    }
+
     @available(*, deprecated)
     private func generateModelForAnimation(at animationIndex: Int) {
         guard let animations = components[SpriteComponent.self]?.animations,

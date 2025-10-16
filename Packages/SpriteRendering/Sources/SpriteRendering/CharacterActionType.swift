@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2025/5/6.
 //
 
+import Constants
+
 public enum CharacterActionType: String, CaseIterable, CustomStringConvertible, Sendable {
     case idle
     case walk
@@ -76,5 +78,40 @@ extension CharacterActionType {
 
         let actionIndex = index * CharacterDirection.allCases.count + direction.rawValue
         return actionIndex
+    }
+}
+
+extension CharacterActionType {
+    static func attackActionType(for baseJobID: JobID, gender: Gender, weaponType: WeaponType) -> CharacterActionType {
+        switch (baseJobID, gender) {
+        case (.novice, .female):
+            switch weaponType {
+            case .w_fist: .attack1
+            case .w_dagger: .attack3
+            default: .attack2
+            }
+        case (.novice, .male):
+            switch weaponType {
+            case .w_fist: .attack1
+            case .w_dagger: .attack2
+            default: .attack3
+            }
+        default:
+            .attack1
+        }
+    }
+
+    public static func attackActionType(forJobID jobID: Int, gender: Gender, weapon: Int) -> CharacterActionType {
+        guard let jobID = JobID(rawValue: jobID), let weaponType = WeaponType(rawValue: weapon) else {
+            return .attack1
+        }
+
+        let baseJobID: JobID = switch jobID {
+        case .novice, .novice_high, .baby: .novice
+        default: .novice
+        }
+
+        let attackActionType = attackActionType(for: baseJobID, gender: gender, weaponType: weaponType)
+        return attackActionType
     }
 }
