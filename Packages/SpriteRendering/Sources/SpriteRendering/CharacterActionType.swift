@@ -10,8 +10,8 @@ public enum CharacterActionType: String, CaseIterable, CustomStringConvertible, 
     case walk
     case sit
     case pickup
-    case attackWait
-    case attack
+    case readyToAttack
+    case attack1
     case hurt
     case freeze
     case die
@@ -30,10 +30,10 @@ public enum CharacterActionType: String, CaseIterable, CustomStringConvertible, 
             "Sit"
         case .pickup:
             "Pickup"
-        case .attackWait:
-            "Attack Wait"
-        case .attack:
-            "Attack"
+        case .readyToAttack:
+            "Ready to Attack"
+        case .attack1:
+            "Attack 1"
         case .hurt:
             "Hurt"
         case .freeze:
@@ -43,9 +43,9 @@ public enum CharacterActionType: String, CaseIterable, CustomStringConvertible, 
         case .freeze2:
             "Freeze"
         case .attack2:
-            "Attack"
+            "Attack 2"
         case .attack3:
-            "Attack"
+            "Attack 3"
         case .skill:
             "Skill"
         }
@@ -57,10 +57,10 @@ extension CharacterActionType {
         let job = CharacterJob(rawValue: jobID)
 
         if job.isPlayer {
-            return [.idle, .walk, .sit, .pickup, .attackWait, .attack, .hurt, .freeze, .die, .freeze2, .attack2, .attack3, .skill]
+            return [.idle, .walk, .sit, .pickup, .readyToAttack, .attack1, .hurt, .freeze, .die, .freeze2, .attack2, .attack3, .skill]
         } else if job.isMonster {
             // It seems that die action type is a little bit different.
-            return [.idle, .walk, .attack, .hurt, /*.die*/]
+            return [.idle, .walk, .attack1, .hurt, /*.die*/]
         } else {
             return [.idle]
         }

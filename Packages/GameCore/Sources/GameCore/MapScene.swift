@@ -382,6 +382,7 @@ extension MapScene: MapEventHandlerProtocol {
         if let entity = rootEntity.findEntity(named: "\(event.objectID)") as? SpriteEntity {
             let transform = transform(for: event.position)
             entity.transform = transform
+            entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
         }
     }
 
@@ -401,7 +402,9 @@ extension MapScene: MapEventHandlerProtocol {
         if let entity = rootEntity.findEntity(named: "\(event.sourceObjectID)") as? SpriteEntity {
             switch event.actionType {
             case .normal, .endure, .multi_hit, .multi_hit_endure, .critical, .lucy_dodge, .multi_hit_critical:
-                entity.playSpriteAnimation(.attack, direction: .south, repeats: false)
+                entity.playSpriteAnimation(.attack1, direction: .south, repeats: false) {
+                    entity.playSpriteAnimation(.readyToAttack, direction: .south, repeats: true)
+                }
             case .pickup_item:
                 entity.playSpriteAnimation(.pickup, direction: .south, repeats: false)
             case .sit_down:
@@ -432,7 +435,7 @@ extension MapScene: MapEventHandlerProtocol {
                 MapGridComponent(mapGrid: mapGrid),
                 MapItemComponent(mapItem: event.item),
             ])
-            entity.playSpriteAnimation(at: 0, repeats: true)
+            entity.playSpriteAnimation(atIndex: 0, repeats: true)
             rootEntity.addChild(entity)
         }
     }

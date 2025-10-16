@@ -33,7 +33,12 @@ class SpriteEntity: Entity {
         components.set(spriteComponent)
     }
 
-    func playSpriteAnimation(_ actionType: CharacterActionType, direction: CharacterDirection, repeats: Bool) {
+    func playSpriteAnimation(
+        _ actionType: CharacterActionType,
+        direction: CharacterDirection,
+        repeats: Bool,
+        actionEnded: (() -> Void)? = nil
+    ) {
         guard let gridPosition = components[GridPositionComponent.self]?.gridPosition,
               let mapGrid = components[MapGridComponent.self]?.mapGrid,
               let mapObject = components[MapObjectComponent.self]?.mapObject,
@@ -42,7 +47,7 @@ class SpriteEntity: Entity {
         }
 
         let animationIndex = actionType.calculateActionIndex(forJobID: mapObject.job, direction: direction)
-        guard animationIndex < animations.count else {
+        guard 0..<animations.count ~= animationIndex else {
             return
         }
 
@@ -59,18 +64,18 @@ class SpriteEntity: Entity {
 
         do {
             let duration = (repeats ? .infinity : animation.duration)
-            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
+            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: actionEnded)
             playAnimation(actionAnimation)
         } catch {
             logger.warning("\(error)")
         }
     }
 
-    func playSpriteAnimation(at animationIndex: Int, repeats: Bool) {
+    func playSpriteAnimation(atIndex animationIndex: Int, repeats: Bool) {
         guard let gridPosition = components[GridPositionComponent.self]?.gridPosition,
               let mapGrid = components[MapGridComponent.self]?.mapGrid,
               let animations = components[SpriteComponent.self]?.animations,
-              animationIndex < animations.count else {
+              0..<animations.count ~= animationIndex else {
             return
         }
 
@@ -183,7 +188,7 @@ class SpriteEntity: Entity {
     @available(*, deprecated)
     private func generateModelForAnimation(at animationIndex: Int) {
         guard let animations = components[SpriteComponent.self]?.animations,
-              animationIndex < animations.count else {
+              0..<animations.count ~= animationIndex else {
             return
         }
 
