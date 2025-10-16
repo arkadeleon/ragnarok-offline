@@ -13,25 +13,27 @@ public struct GameView: View {
     public var onExit: () -> Void
 
     public var body: some View {
-        GeometryReader { proxy in
+        Group {
             if showsBackground {
-                ScrollView([.horizontal, .vertical]) {
-                    ZStack {
-                        GameImage("bgi_temp.bmp") { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: proxy.size.width, height: proxy.size.height)
-                        }
+                GeometryReader { proxy in
+                    ScrollView([.horizontal, .vertical]) {
+                        ZStack {
+                            GameImage("bgi_temp.bmp") { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: proxy.size.width, height: proxy.size.height)
+                            }
 
-                        contentView
+                            contentView
+                        }
                     }
                 }
+                .ignoresSafeArea()
             } else {
                 contentView
             }
         }
-        .ignoresSafeArea()
         .environment(gameSession)
         .environment(\.exitGame, ExitGameAction(action: onExit))
         #if os(iOS)
