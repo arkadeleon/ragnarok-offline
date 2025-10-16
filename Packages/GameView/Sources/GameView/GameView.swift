@@ -33,6 +33,14 @@ public struct GameView: View {
         }
         .ignoresSafeArea()
         .environment(gameSession)
+        #if os(iOS)
+        .onAppear {
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
+        .onDisappear {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+        #endif
     }
 
     private var showsBackground: Bool {
