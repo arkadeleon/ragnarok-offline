@@ -38,5 +38,6 @@ struct ChatBoxView: View {
 
 #Preview {
     ChatBoxView()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.previewing)
 }

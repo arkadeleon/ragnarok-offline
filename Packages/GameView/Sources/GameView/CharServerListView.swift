@@ -26,38 +26,27 @@ struct CharServerListView: View {
             }
             .padding(.top, 17)
             .padding(.bottom, 21)
-
-            VStack {
-                Spacer()
-
-                HStack(spacing: 3) {
-                    Spacer()
-
-                    GameButton("btn_ok.bmp") {
-                        gameSession.selectCharServer(charServers[0])
-                    }
-
-                    GameButton("btn_cancel.bmp") {
-                    }
-                }
-                .padding(.horizontal, 5)
-                .padding(.vertical, 4)
-            }
         }
         .frame(width: 280, height: 120)
+        .overlay(alignment: .bottomTrailing) {
+            HStack(spacing: 3) {
+                Spacer()
+
+                GameButton("btn_ok.bmp") {
+                    gameSession.selectCharServer(charServers[0])
+                }
+
+                GameButton("btn_cancel.bmp") {
+                }
+            }
+            .padding(.horizontal, 5)
+            .padding(.vertical, 4)
+        }
     }
 }
 
 #Preview {
-    ZStack {
-        GameImage("bgi_temp.bmp") { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        }
-        .ignoresSafeArea()
-
-        CharServerListView(charServers: [])
-    }
-    .environment(GameSession.previewing)
+    CharServerListView(charServers: [])
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(GameSession.previewing)
 }

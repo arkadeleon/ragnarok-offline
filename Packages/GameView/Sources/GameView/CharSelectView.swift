@@ -57,6 +57,7 @@ struct CharSelectView: View {
 
                     if let image = characterAnimation1?.firstFrame {
                         Image(decorative: image, scale: 2)
+                            .offset(y: 10)
                     }
                 }
                 .frame(width: 139, height: 144)
@@ -74,6 +75,7 @@ struct CharSelectView: View {
 
                     if let image = characterAnimation2?.firstFrame {
                         Image(decorative: image, scale: 2)
+                            .offset(y: 10)
                     }
                 }
                 .frame(width: 139, height: 144)
@@ -91,6 +93,7 @@ struct CharSelectView: View {
 
                     if let image = characterAnimation3?.firstFrame {
                         Image(decorative: image, scale: 2)
+                            .offset(y: 10)
                     }
                 }
                 .frame(width: 139, height: 144)
@@ -127,39 +130,39 @@ struct CharSelectView: View {
                 }
                 .offset(x: 209, y: 204)
             }
-
-            VStack {
-                Spacer()
-
-                HStack(spacing: 3) {
-                    if let selectedCharacter {
-                        GameButton("btn_del.bmp") {
-                        }
-                        .disabled(true)
-                    }
-
-                    Spacer()
-
-                    if let selectedSlot, selectedCharacter == nil {
-                        GameButton("btn_make.bmp") {
-                            gameSession.makeChar(slot: selectedSlot)
-                        }
-                    }
-
-                    if let selectedCharacter {
-                        GameButton("btn_ok.bmp") {
-                            gameSession.selectChar(char: selectedCharacter)
-                        }
-                    }
-
-                    GameButton("btn_cancel.bmp") {
-                    }
-                }
-                .padding(.horizontal, 5)
-                .padding(.vertical, 4)
-            }
         }
         .frame(width: 576, height: 342)
+        .overlay(alignment: .bottomLeading) {
+            HStack(spacing: 3) {
+                if let selectedCharacter {
+                    GameButton("btn_del.bmp") {
+                    }
+                    .disabled(true)
+                }
+            }
+            .padding(.horizontal, 5)
+            .padding(.vertical, 4)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            HStack(spacing: 3) {
+                if let selectedSlot, selectedCharacter == nil {
+                    GameButton("btn_make.bmp") {
+                        gameSession.makeChar(slot: selectedSlot)
+                    }
+                }
+
+                if let selectedCharacter {
+                    GameButton("btn_ok.bmp") {
+                        gameSession.selectChar(char: selectedCharacter)
+                    }
+                }
+
+                GameButton("btn_cancel.bmp") {
+                }
+            }
+            .padding(.horizontal, 5)
+            .padding(.vertical, 4)
+        }
         .task {
             character1 = chars.count > 0 ? chars[0] : nil
             characterAnimation1 = await gameSession.characterAnimation(forSlot: 0)
@@ -188,15 +191,7 @@ struct CharSelectView: View {
         return char
     }()
 
-    ZStack {
-        GameImage("bgi_temp.bmp") { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        }
-        .ignoresSafeArea()
-
-        CharSelectView(chars: [char])
-    }
-    .environment(GameSession.previewing)
+    CharSelectView(chars: [char])
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(GameSession.previewing)
 }

@@ -119,5 +119,6 @@ struct MenuView: View {
     MenuView { item in
         // Perform action.
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(GameSession.previewing)
 }

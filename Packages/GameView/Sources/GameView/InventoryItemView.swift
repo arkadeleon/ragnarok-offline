@@ -31,7 +31,8 @@ struct InventoryItemView<Actions>: View where Actions: View {
             }
             .frame(width: 32, height: 32)
         }
-        .buttonStyle(.borderless)
+        .menuStyle(.button)
+        .buttonStyle(.plain)
         .task {
             let resourceManager = gameSession.resourceManager
             let scriptContext = await resourceManager.scriptContext()
@@ -59,5 +60,6 @@ struct InventoryItemView<Actions>: View where Actions: View {
     InventoryItemView(item: item) {
         Text(verbatim: "Use")
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(GameSession.previewing)
 }

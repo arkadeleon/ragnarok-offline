@@ -29,8 +29,8 @@ struct CharMakeView: View {
                 #endif
                 .disableAutocorrection(true)
                 .gameText()
-                .frame(width: 101, height: 18)
-                .offset(x: 61, y: 244)
+                .frame(width: 97, height: 18)
+                .offset(x: 63, y: 244)
 
             Group {
                 GameButton("scroll0up.bmp") {
@@ -198,15 +198,7 @@ struct CharMakeView: View {
 }
 
 #Preview {
-    ZStack {
-        GameImage("bgi_temp.bmp") { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        }
-        .ignoresSafeArea()
-
-        CharMakeView(slot: 0)
-    }
-    .environment(GameSession.previewing)
+    CharMakeView(slot: 0)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(GameSession.previewing)
 }

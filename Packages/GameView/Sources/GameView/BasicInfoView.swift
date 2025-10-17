@@ -71,5 +71,6 @@ struct BasicInfoView: View {
 
 #Preview {
     BasicInfoView(char: CharInfo(), status: CharacterStatus())
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.previewing)
 }

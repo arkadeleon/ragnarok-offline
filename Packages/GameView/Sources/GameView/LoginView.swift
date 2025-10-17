@@ -26,8 +26,8 @@ struct LoginView: View {
                 #endif
                 .disableAutocorrection(true)
                 .gameText()
-                .frame(width: 127, height: 18)
-                .offset(x: 91, y: 29)
+                .frame(width: 123, height: 18)
+                .offset(x: 93, y: 29)
 
             TextField(String(), text: $password)
                 .textFieldStyle(.plain)
@@ -36,8 +36,8 @@ struct LoginView: View {
                 #endif
                 .disableAutocorrection(true)
                 .gameText()
-                .frame(width: 127, height: 18)
-                .offset(x: 91, y: 61)
+                .frame(width: 123, height: 18)
+                .offset(x: 93, y: 61)
 
             Button {
             } label: {
@@ -46,42 +46,31 @@ struct LoginView: View {
             .buttonStyle(.borderless)
             .frame(width: 38, height: 10)
             .offset(x: 232, y: 32)
-
-            VStack {
-                Spacer()
-
-                HStack(spacing: 3) {
-                    Spacer()
-
-                    GameButton("login_interface/btn_connect.bmp") {
-                        gameSession.login(
-                            username: username,
-                            password: password
-                        )
-                    }
-
-                    GameButton("login_interface/btn_exit.bmp") {
-                        exitGame()
-                    }
-                }
-                .padding(.horizontal, 5)
-                .padding(.vertical, 4)
-            }
         }
         .frame(width: 280, height: 120)
+        .overlay(alignment: .bottomTrailing) {
+            HStack(spacing: 3) {
+                Spacer()
+
+                GameButton("login_interface/btn_connect.bmp") {
+                    gameSession.login(
+                        username: username,
+                        password: password
+                    )
+                }
+
+                GameButton("login_interface/btn_exit.bmp") {
+                    exitGame()
+                }
+            }
+            .padding(.horizontal, 5)
+            .padding(.vertical, 4)
+        }
     }
 }
 
 #Preview {
-    ZStack {
-        GameImage("bgi_temp.bmp") { image in
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        }
-        .ignoresSafeArea()
-
-        LoginView()
-    }
-    .environment(GameSession.previewing)
+    LoginView()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(GameSession.previewing)
 }
