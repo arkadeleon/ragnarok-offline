@@ -26,6 +26,10 @@ final public class SpriteRenderer: Sendable {
 
         /// The pivot point represents the offset to the center point.
         public let pivot: CGPoint
+
+        public var firstFrame: CGImage? {
+            frames.first ?? nil
+        }
     }
 
     // MARK: - Render Sprite
@@ -87,8 +91,9 @@ final public class SpriteRenderer: Sendable {
     public func render(
         composedSprite: ComposedSprite,
         actionType: CharacterActionType,
-        direction: CharacterDirection,
-        headDirection: CharacterHeadDirection
+        direction: CharacterDirection = .south,
+        headDirection: CharacterHeadDirection = .lookForward,
+        rendersShadow: Bool = true
     ) async -> SpriteRenderer.Animation {
         let actionIndex = actionType.calculateActionIndex(
             forJobID: composedSprite.configuration.job.rawValue,
@@ -98,6 +103,10 @@ final public class SpriteRenderer: Sendable {
         var actionNodes: [(SpriteRenderNode, ComposedSprite.Part)] = []
 
         for part in composedSprite.parts {
+            if part.semantic == .shadow && !rendersShadow {
+                continue
+            }
+
             let actionIndex = (part.semantic == .shadow ? 0 : actionIndex)
             let scale = self.scale * part.sprite.scaleFactor
 

@@ -7,10 +7,11 @@
 
 import Combine
 import Constants
-import Observation
 import NetworkClient
 import NetworkPackets
+import Observation
 import ResourceManagement
+import SpriteRendering
 import WorldRendering
 
 @MainActor
@@ -183,6 +184,34 @@ final public class GameSession {
         }
 
         self.dialog = nil
+    }
+
+    // MARK: - Character Sprite
+
+    public func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
+        guard let account, 0..<chars.count ~= slot else {
+            return nil
+        }
+
+        do {
+            let mapObject = MapObject(account: account, char: chars[slot])
+            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
+            let composedSprite = try await ComposedSprite(
+                configuration: configuration,
+                resourceManager: resourceManager
+            )
+
+            let spriteRenderer = SpriteRenderer()
+            let animation = await spriteRenderer.render(
+                composedSprite: composedSprite,
+                actionType: .idle,
+                rendersShadow: false
+            )
+            return animation
+        } catch {
+            logger.warning("\(error)")
+            return nil
+        }
     }
 
     // MARK: - Private

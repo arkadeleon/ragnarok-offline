@@ -46,6 +46,19 @@ final class SpriteEntityManager {
 
 extension ComposedSprite.Configuration {
     init(mapObject: MapObject) {
+        self.init(jobID: mapObject.job)
+        self.setHairStyle(from: mapObject)
+
+        self.gender = mapObject.gender
+        self.hairColor = mapObject.hairColor
+        self.clothesColor = mapObject.clothesColor
+        self.weapon = mapObject.weapon
+        self.shield = mapObject.shield
+        self.headgears = [mapObject.headTop, mapObject.headMid, mapObject.headBottom]
+        self.garment = mapObject.garment
+    }
+
+    mutating func setHairStyle(from mapObject: MapObject) {
         let job = CharacterJob(rawValue: mapObject.job)
 
         let hairStyles: [Int] = if job.isDoram {
@@ -62,20 +75,10 @@ extension ComposedSprite.Configuration {
             }
         }
 
-        let hairStyle = if 0..<hairStyles.count ~= mapObject.hairStyle {
+        self.hairStyle = if 0..<hairStyles.count ~= mapObject.hairStyle {
             hairStyles[mapObject.hairStyle]
         } else {
             mapObject.hairStyle
         }
-
-        self.init(jobID: mapObject.job)
-        self.gender = mapObject.gender
-        self.hairStyle = hairStyle
-        self.hairColor = mapObject.hairColor
-        self.clothesColor = mapObject.clothesColor
-        self.weapon = mapObject.weapon
-        self.shield = mapObject.shield
-        self.headgears = [mapObject.headTop, mapObject.headMid, mapObject.headBottom]
-        self.garment = mapObject.garment
     }
 }

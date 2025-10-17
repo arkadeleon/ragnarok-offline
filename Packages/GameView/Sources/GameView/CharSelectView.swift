@@ -7,6 +7,7 @@
 
 import GameCore
 import NetworkPackets
+import SpriteRendering
 import SwiftUI
 
 struct CharSelectView: View {
@@ -14,24 +15,29 @@ struct CharSelectView: View {
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var slot1: CharInfo?
-    @State private var slot2: CharInfo?
-    @State private var slot3: CharInfo?
+    @State private var character1: CharInfo?
+    @State private var characterAnimation1: SpriteRenderer.Animation?
+
+    @State private var character2: CharInfo?
+    @State private var characterAnimation2: SpriteRenderer.Animation?
+
+    @State private var character3: CharInfo?
+    @State private var characterAnimation3: SpriteRenderer.Animation?
 
     @State private var selectedSlot: UInt8?
 
-    private var selectedChar: CharInfo? {
+    private var selectedCharacter: CharInfo? {
         guard let selectedSlot else {
             return nil
         }
 
         switch selectedSlot {
         case 0:
-            return slot1
+            return character1
         case 1:
-            return slot2
+            return character2
         case 2:
-            return slot3
+            return character3
         default:
             return nil
         }
@@ -49,8 +55,9 @@ struct CharSelectView: View {
                         GameImage("login_interface/box_select.bmp")
                     }
 
-                    Text(slot1?.name ?? "Empty")
-                        .gameText()
+                    if let image = characterAnimation1?.firstFrame {
+                        Image(decorative: image, scale: 2)
+                    }
                 }
                 .frame(width: 139, height: 144)
             }
@@ -65,8 +72,9 @@ struct CharSelectView: View {
                         GameImage("login_interface/box_select.bmp")
                     }
 
-                    Text(slot2?.name ?? "Empty")
-                        .gameText()
+                    if let image = characterAnimation2?.firstFrame {
+                        Image(decorative: image, scale: 2)
+                    }
                 }
                 .frame(width: 139, height: 144)
             }
@@ -81,23 +89,24 @@ struct CharSelectView: View {
                         GameImage("login_interface/box_select.bmp")
                     }
 
-                    Text(slot3?.name ?? "Empty")
-                        .gameText()
+                    if let image = characterAnimation3?.firstFrame {
+                        Image(decorative: image, scale: 2)
+                    }
                 }
                 .frame(width: 139, height: 144)
             }
             .buttonStyle(.borderless)
             .offset(x: 382, y: 40)
 
-            if let selectedChar {
+            if let selectedCharacter {
                 VStack(spacing: 1) {
                     Group {
-                        Text(selectedChar.name)
-                        Text(selectedChar.job.formatted())
-                        Text(selectedChar.baseLevel.formatted())
-                        Text(selectedChar.baseExp.formatted())
-                        Text(selectedChar.hp.formatted())
-                        Text(selectedChar.sp.formatted())
+                        Text(selectedCharacter.name)
+                        Text(selectedCharacter.job.formatted())
+                        Text(selectedCharacter.baseLevel.formatted())
+                        Text(selectedCharacter.baseExp.formatted())
+                        Text(selectedCharacter.hp.formatted())
+                        Text(selectedCharacter.sp.formatted())
                     }
                     .gameText()
                     .frame(width: 95, height: 15)
@@ -106,12 +115,12 @@ struct CharSelectView: View {
 
                 VStack(spacing: 1) {
                     Group {
-                        Text(selectedChar.str.formatted())
-                        Text(selectedChar.agi.formatted())
-                        Text(selectedChar.vit.formatted())
-                        Text(selectedChar.int.formatted())
-                        Text(selectedChar.dex.formatted())
-                        Text(selectedChar.luk.formatted())
+                        Text(selectedCharacter.str.formatted())
+                        Text(selectedCharacter.agi.formatted())
+                        Text(selectedCharacter.vit.formatted())
+                        Text(selectedCharacter.int.formatted())
+                        Text(selectedCharacter.dex.formatted())
+                        Text(selectedCharacter.luk.formatted())
                     }
                     .gameText()
                     .frame(width: 95, height: 15)
@@ -123,22 +132,23 @@ struct CharSelectView: View {
                 Spacer()
 
                 HStack(spacing: 3) {
-                    if let selectedChar {
+                    if let selectedCharacter {
                         GameButton("btn_del.bmp") {
                         }
+                        .disabled(true)
                     }
 
                     Spacer()
 
-                    if let selectedSlot, selectedChar == nil {
+                    if let selectedSlot, selectedCharacter == nil {
                         GameButton("btn_make.bmp") {
                             gameSession.makeChar(slot: selectedSlot)
                         }
                     }
 
-                    if let selectedChar {
+                    if let selectedCharacter {
                         GameButton("btn_ok.bmp") {
-                            gameSession.selectChar(char: selectedChar)
+                            gameSession.selectChar(char: selectedCharacter)
                         }
                     }
 
@@ -151,9 +161,16 @@ struct CharSelectView: View {
         }
         .frame(width: 576, height: 342)
         .task {
-            slot1 = chars.count > 0 ? chars[0] : nil
-            slot2 = chars.count > 1 ? chars[1] : nil
-            slot3 = chars.count > 2 ? chars[2] : nil
+            character1 = chars.count > 0 ? chars[0] : nil
+            characterAnimation1 = await gameSession.characterAnimation(forSlot: 0)
+        }
+        .task {
+            character2 = chars.count > 1 ? chars[1] : nil
+            characterAnimation2 = await gameSession.characterAnimation(forSlot: 1)
+        }
+        .task {
+            character3 = chars.count > 2 ? chars[2] : nil
+            characterAnimation3 = await gameSession.characterAnimation(forSlot: 2)
         }
     }
 }

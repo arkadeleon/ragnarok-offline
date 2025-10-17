@@ -133,9 +133,7 @@ final class MonsterModel {
         let spriteRenderer = SpriteRenderer()
         let animation = await spriteRenderer.render(
             composedSprite: composedSprite,
-            actionType: .idle,
-            direction: .south,
-            headDirection: .lookForward
+            actionType: .idle
         )
         animatedImage = AnimatedImage(animation: animation)
     }
