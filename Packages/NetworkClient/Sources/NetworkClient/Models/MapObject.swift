@@ -57,15 +57,15 @@ public struct MapObject: Sendable {
 
         self.job = Int(char.job)
         self.gender = Gender(rawValue: Int(char.sex)) ?? .female
-        self.hairStyle = Int(char.hair)
-        self.hairColor = Int(char.hairColor)
-        self.clothesColor = Int(char.clothesColor)
+        self.hairStyle = Int(char.head)
+        self.hairColor = Int(char.headPalette)
+        self.clothesColor = Int(char.bodyPalette)
         self.weapon = Int(char.weapon)
         self.shield = Int(char.shield)
-        self.headTop = Int(char.headTop)
-        self.headMid = Int(char.headMiddle)
-        self.headBottom = Int(char.headBottom)
-        self.garment = Int(char.robe)
+        self.headTop = Int(char.accessory2)
+        self.headMid = Int(char.accessory3)
+        self.headBottom = Int(char.accessory)
+        self.garment = Int(char.robePalette)
 
         self.bodyState = StatusChangeOption1(rawValue: Int(char.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(char.healthState)) ?? .none

@@ -218,9 +218,9 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         packet.int = char.int
         packet.dex = char.dex
         packet.luk = char.luk
-        packet.slot = char.slot
-        packet.hairColor = char.hairColor
-        packet.hairStyle = char.hair
+        packet.slot = char.charNum
+        packet.hairColor = char.headPalette
+        packet.hairStyle = char.head
         packet.job = char.job
         packet.sex = char.sex
 

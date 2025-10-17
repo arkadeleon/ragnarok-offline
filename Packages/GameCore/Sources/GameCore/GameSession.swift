@@ -82,7 +82,7 @@ final public class GameSession {
 
     public func selectChar(char: CharInfo) {
         if let charSession {
-            charSession.selectChar(slot: char.slot)
+            charSession.selectChar(slot: char.charNum)
         }
     }
 
@@ -189,13 +189,16 @@ final public class GameSession {
     // MARK: - Character Sprite
 
     public func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
-        guard let account, 0..<chars.count ~= slot else {
+        guard 0..<chars.count ~= slot else {
             return nil
         }
 
+        return await characterAnimation(for: chars[slot])
+    }
+
+    public func characterAnimation(for char: CharInfo) async -> SpriteRenderer.Animation? {
         do {
-            let mapObject = MapObject(account: account, char: chars[slot])
-            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
+            let configuration = ComposedSprite.Configuration(char: char)
             let composedSprite = try await ComposedSprite(
                 configuration: configuration,
                 resourceManager: resourceManager

@@ -103,8 +103,8 @@ struct CharSelectView: View {
                     Group {
                         Text(selectedCharacter.name)
                         Text(selectedCharacter.job.formatted())
-                        Text(selectedCharacter.baseLevel.formatted())
-                        Text(selectedCharacter.baseExp.formatted())
+                        Text(selectedCharacter.level.formatted())
+                        Text(selectedCharacter.exp.formatted())
                         Text(selectedCharacter.hp.formatted())
                         Text(selectedCharacter.sp.formatted())
                     }

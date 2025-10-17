@@ -104,7 +104,7 @@ final class ChatSession {
             char.int = UInt8(parameters[4]) ?? 1
             char.dex = UInt8(parameters[5]) ?? 1
             char.luk = UInt8(parameters[6]) ?? 1
-            char.slot = UInt8(parameters[7]) ?? 0
+            char.charNum = UInt8(parameters[7]) ?? 0
 
             charSession?.makeChar(char: char)
         case .deleteChar:
@@ -214,7 +214,7 @@ final class ChatSession {
                 Int: \(char.int)
                 Dex: \(char.dex)
                 Luk: \(char.luk)
-                Slot: \(char.slot)
+                Slot: \(char.charNum)
                 """
                 self.messages.append(.serverText(message))
             }

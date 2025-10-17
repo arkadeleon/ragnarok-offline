@@ -9,33 +9,33 @@ import BinaryIO
 
 public struct CharInfo: BinaryDecodable, Sendable {
     public var charID: UInt32
-    public var baseExp: UInt64
-    public var zeny: UInt32
+    public var exp: UInt64
+    public var money: UInt32
     public var jobExp: UInt64
     public var jobLevel: UInt32
     public var bodyState: UInt32
     public var healthState: UInt32
     public var effectState: UInt32
-    public var karma: UInt32
-    public var manner: UInt32
-    public var statusPoint: UInt16
+    public var virtue: UInt32
+    public var honor: UInt32
+    public var jobPoint: UInt16
     public var hp: UInt64
     public var maxHp: UInt64
     public var sp: UInt64
     public var maxSp: UInt64
     public var speed: UInt16
     public var job: UInt16
-    public var hair: UInt16
+    public var head: UInt16
     public var body: UInt16
     public var weapon: UInt16
-    public var baseLevel: UInt16
-    public var skillPoint: UInt16
-    public var headBottom: UInt16
+    public var level: UInt16
+    public var spPoint: UInt16
+    public var accessory: UInt16
     public var shield: UInt16
-    public var headTop: UInt16
-    public var headMiddle: UInt16
-    public var hairColor: UInt16
-    public var clothesColor: UInt16
+    public var accessory2: UInt16
+    public var accessory3: UInt16
+    public var headPalette: UInt16
+    public var bodyPalette: UInt16
     public var name: String
     public var str: UInt8
     public var agi: UInt8
@@ -43,45 +43,45 @@ public struct CharInfo: BinaryDecodable, Sendable {
     public var int: UInt8
     public var dex: UInt8
     public var luk: UInt8
-    public var slot: UInt8
-    public var hairColor2: UInt8
-    public var isRenamed: UInt16
+    public var charNum: UInt8
+    public var hairColor: UInt8
+    public var bIsChangedCharName: UInt16
     public var mapName: String
-    public var deletionDate: UInt32
-    public var robe: UInt32
+    public var delRevDate: UInt32
+    public var robePalette: UInt32
     public var charSlotChangeCount: UInt32
     public var charNameChangeCount: UInt32
     public var sex: UInt8
 
     public init() {
         charID = 0
-        baseExp = 0
-        zeny = 0
+        exp = 0
+        money = 0
         jobExp = 0
         jobLevel = 0
         bodyState = 0
         healthState = 0
         effectState = 0
-        karma = 0
-        manner = 0
-        statusPoint = 0
+        virtue = 0
+        honor = 0
+        jobPoint = 0
         hp = 0
         maxHp = 0
         sp = 0
         maxSp = 0
         speed = 0
         job = 0
-        hair = 0
+        head = 0
         body = 0
         weapon = 0
-        baseLevel = 0
-        skillPoint = 0
-        headBottom = 0
+        level = 0
+        spPoint = 0
+        accessory = 0
         shield = 0
-        headTop = 0
-        headMiddle = 0
-        hairColor = 0
-        clothesColor = 0
+        accessory2 = 0
+        accessory3 = 0
+        headPalette = 0
+        bodyPalette = 0
         name = ""
         str = 0
         agi = 0
@@ -89,12 +89,12 @@ public struct CharInfo: BinaryDecodable, Sendable {
         int = 0
         dex = 0
         luk = 0
-        slot = 0
-        hairColor2 = 0
-        isRenamed = 0
+        charNum = 0
+        hairColor = 0
+        bIsChangedCharName = 0
         mapName = ""
-        deletionDate = 0
-        robe = 0
+        delRevDate = 0
+        robePalette = 0
         charSlotChangeCount = 0
         charNameChangeCount = 0
         sex = 0
@@ -104,12 +104,12 @@ public struct CharInfo: BinaryDecodable, Sendable {
         charID = try decoder.decode(UInt32.self)
 
         if PACKET_VERSION >= 20170830 {
-            baseExp = try decoder.decode(UInt64.self)
+            exp = try decoder.decode(UInt64.self)
         } else {
-            baseExp = try UInt64(decoder.decode(UInt32.self))
+            exp = try UInt64(decoder.decode(UInt32.self))
         }
 
-        zeny = try decoder.decode(UInt32.self)
+        money = try decoder.decode(UInt32.self)
 
         if PACKET_VERSION >= 20170830 {
             jobExp = try decoder.decode(UInt64.self)
@@ -121,9 +121,9 @@ public struct CharInfo: BinaryDecodable, Sendable {
         bodyState = try decoder.decode(UInt32.self)
         healthState = try decoder.decode(UInt32.self)
         effectState = try decoder.decode(UInt32.self)
-        karma = try decoder.decode(UInt32.self)
-        manner = try decoder.decode(UInt32.self)
-        statusPoint = try decoder.decode(UInt16.self)
+        virtue = try decoder.decode(UInt32.self)
+        honor = try decoder.decode(UInt32.self)
+        jobPoint = try decoder.decode(UInt16.self)
 
         if PACKET_VERSION_RE_NUMBER >= 20211103 || PACKET_VERSION_MAIN_NUMBER >= 20220330 {
             hp = try decoder.decode(UInt64.self)
@@ -139,7 +139,7 @@ public struct CharInfo: BinaryDecodable, Sendable {
 
         speed = try decoder.decode(UInt16.self)
         job = try decoder.decode(UInt16.self)
-        hair = try decoder.decode(UInt16.self)
+        head = try decoder.decode(UInt16.self)
 
         if PACKET_VERSION >= 20141022 {
             body = try decoder.decode(UInt16.self)
@@ -148,14 +148,14 @@ public struct CharInfo: BinaryDecodable, Sendable {
         }
 
         weapon = try decoder.decode(UInt16.self)
-        baseLevel = try decoder.decode(UInt16.self)
-        skillPoint = try decoder.decode(UInt16.self)
-        headBottom = try decoder.decode(UInt16.self)
+        level = try decoder.decode(UInt16.self)
+        spPoint = try decoder.decode(UInt16.self)
+        accessory = try decoder.decode(UInt16.self)
         shield = try decoder.decode(UInt16.self)
-        headTop = try decoder.decode(UInt16.self)
-        headMiddle = try decoder.decode(UInt16.self)
-        hairColor = try decoder.decode(UInt16.self)
-        clothesColor = try decoder.decode(UInt16.self)
+        accessory2 = try decoder.decode(UInt16.self)
+        accessory3 = try decoder.decode(UInt16.self)
+        headPalette = try decoder.decode(UInt16.self)
+        bodyPalette = try decoder.decode(UInt16.self)
         name = try decoder.decode(String.self, lengthOfBytes: 24)
         str = try decoder.decode(UInt8.self)
         agi = try decoder.decode(UInt8.self)
@@ -163,9 +163,9 @@ public struct CharInfo: BinaryDecodable, Sendable {
         int = try decoder.decode(UInt8.self)
         dex = try decoder.decode(UInt8.self)
         luk = try decoder.decode(UInt8.self)
-        slot = try decoder.decode(UInt8.self)
-        hairColor2 = try decoder.decode(UInt8.self)
-        isRenamed = try decoder.decode(UInt16.self)
+        charNum = try decoder.decode(UInt8.self)
+        hairColor = try decoder.decode(UInt8.self)
+        bIsChangedCharName = try decoder.decode(UInt16.self)
 
         if (PACKET_VERSION >= 20100720 && PACKET_VERSION <= 20100727) || 
             PACKET_VERSION >= 20100803 {
@@ -175,15 +175,15 @@ public struct CharInfo: BinaryDecodable, Sendable {
         }
 
         if PACKET_VERSION >= 20100803 {
-            deletionDate = try decoder.decode(UInt32.self)
+            delRevDate = try decoder.decode(UInt32.self)
         } else {
-            deletionDate = 0
+            delRevDate = 0
         }
 
         if PACKET_VERSION >= 20110111 {
-            robe = try decoder.decode(UInt32.self)
+            robePalette = try decoder.decode(UInt32.self)
         } else {
-            robe = 0
+            robePalette = 0
         }
 
         if PACKET_VERSION >= 20110928 {
