@@ -12,31 +12,25 @@ struct MapLoadingView: View {
     var progress: Double
 
     var body: some View {
-        GeometryReader { proxy in
-            ScrollView([.horizontal, .vertical]) {
-                ZStack {
-                    GameImage("loading01.jpg") { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                    }
+        ZStack {
+            GameImage("loading01.jpg") { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            }
+            .ignoresSafeArea()
 
-                    VStack {
-                        Spacer()
+            VStack {
+                Spacer()
 
-                        GameProgressBar(progress: progress)
-                            .padding(.bottom, 50)
-                    }
-                }
+                GameProgressBar(progress: progress)
+                    .padding(.bottom, 50)
             }
         }
-        .ignoresSafeArea()
     }
 }
 
 #Preview {
     MapLoadingView(progress: 0.5)
-        .frame(width: 400, height: 300)
         .environment(GameSession.previewing)
 }

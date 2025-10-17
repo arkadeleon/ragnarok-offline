@@ -49,7 +49,15 @@ struct CharServerListView: View {
 }
 
 #Preview {
-    CharServerListView(charServers: [])
-        .padding()
-        .environment(GameSession.previewing)
+    ZStack {
+        GameImage("bgi_temp.bmp") { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
+        .ignoresSafeArea()
+
+        CharServerListView(charServers: [])
+    }
+    .environment(GameSession.previewing)
 }

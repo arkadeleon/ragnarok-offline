@@ -70,7 +70,15 @@ struct CharMakeView: View {
 }
 
 #Preview {
-    CharMakeView(slot: 0)
-        .padding()
-        .environment(GameSession.previewing)
+    ZStack {
+        GameImage("bgi_temp.bmp") { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
+        .ignoresSafeArea()
+
+        CharMakeView(slot: 0)
+    }
+    .environment(GameSession.previewing)
 }

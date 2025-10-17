@@ -74,6 +74,5 @@ struct OptionsView: View {
 
 #Preview {
     OptionsView()
-        .padding()
         .environment(GameSession.previewing)
 }

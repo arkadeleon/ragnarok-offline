@@ -38,6 +38,5 @@ struct ChatBoxView: View {
 
 #Preview {
     ChatBoxView()
-        .padding()
         .environment(GameSession.previewing)
 }

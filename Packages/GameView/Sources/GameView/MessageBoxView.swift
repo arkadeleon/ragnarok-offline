@@ -28,6 +28,5 @@ struct MessageBoxView: View {
 
 #Preview {
     MessageBoxView("Please wait...")
-        .padding()
         .environment(GameSession.previewing)
 }

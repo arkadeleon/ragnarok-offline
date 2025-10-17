@@ -71,6 +71,5 @@ struct BasicInfoView: View {
 
 #Preview {
     BasicInfoView(char: CharInfo(), status: CharacterStatus())
-        .padding()
         .environment(GameSession.previewing)
 }

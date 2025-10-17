@@ -59,6 +59,5 @@ struct InventoryItemView<Actions>: View where Actions: View {
     InventoryItemView(item: item) {
         Text(verbatim: "Use")
     }
-    .padding()
     .environment(GameSession.previewing)
 }

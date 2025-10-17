@@ -115,6 +115,5 @@ struct InventoryView: View {
     }()
 
     InventoryView(inventory: inventory)
-        .padding()
         .environment(GameSession.previewing)
 }

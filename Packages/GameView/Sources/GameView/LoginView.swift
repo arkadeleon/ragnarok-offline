@@ -73,7 +73,15 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
-        .padding()
-        .environment(GameSession.previewing)
+    ZStack {
+        GameImage("bgi_temp.bmp") { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
+        .ignoresSafeArea()
+
+        LoginView()
+    }
+    .environment(GameSession.previewing)
 }
