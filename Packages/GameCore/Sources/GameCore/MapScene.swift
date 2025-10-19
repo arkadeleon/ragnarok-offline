@@ -338,7 +338,8 @@ extension MapScene: MapEventHandlerProtocol {
             entity.components[GridPositionComponent.self]?.gridPosition = event.position
         } else {
             Task {
-                if let entity = try? await spriteEntityManager.entity(for: event.object) {
+                do {
+                    let entity = try await spriteEntityManager.entity(for: event.object)
                     entity.name = "\(event.object.objectID)"
                     entity.transform = transform(for: event.position)
                     entity.isEnabled = (event.object.effectState != .cloak)
@@ -349,6 +350,8 @@ extension MapScene: MapEventHandlerProtocol {
                     ])
                     entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: event.direction), repeats: true)
                     rootEntity.addChild(entity)
+                } catch {
+                    logger.info("\(error)")
                 }
             }
         }
@@ -362,7 +365,8 @@ extension MapScene: MapEventHandlerProtocol {
             entity.walk(through: path)
         } else {
             Task {
-                if let entity = try? await spriteEntityManager.entity(for: event.object) {
+                do {
+                    let entity = try await spriteEntityManager.entity(for: event.object)
                     entity.name = "\(event.object.objectID)"
                     entity.transform = transform(for: event.endPosition)
                     entity.isEnabled = (event.object.effectState != .cloak)
@@ -373,6 +377,8 @@ extension MapScene: MapEventHandlerProtocol {
                     ])
                     entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(entity)
+                } catch {
+                    logger.info("\(error)")
                 }
             }
         }

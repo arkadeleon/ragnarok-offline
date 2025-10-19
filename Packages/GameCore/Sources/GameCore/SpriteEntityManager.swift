@@ -16,33 +16,58 @@ import SpriteRendering
 final class SpriteEntityManager {
     let resourceManager: ResourceManager
 
-    private var tasksByJobID: [Int : Task<SpriteEntity, any Error>] = [:]
+    private var playerEntitiesByObjectID: [UInt32 : Task<SpriteEntity, any Error>] = [:]
+    private var nonPlayerEntitiesByJobID: [Int : Task<SpriteEntity, any Error>] = [:]
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
     }
 
     func entity(for mapObject: MapObject) async throws -> SpriteEntity {
-        if let task = tasksByJobID[mapObject.job] {
-            let entity = try await task.value
-            let entityClone = entity.clone(recursive: true)
-            return entityClone
+        let job = CharacterJob(rawValue: mapObject.job)
+        if job.isPlayer {
+            return try await playerEntity(for: mapObject)
+        } else {
+            return try await nonPlayerEntity(for: mapObject)
+        }
+    }
+
+    func playerEntity(for mapObject: MapObject) async throws -> SpriteEntity {
+        if let task = playerEntitiesByObjectID[mapObject.objectID] {
+            return try await task.value
         }
 
-        let configuration = ComposedSprite.Configuration(mapObject: mapObject)
         let task = Task {
+            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
             let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
             let animations = try await SpriteAnimation.animations(for: composedSprite)
             let entity = SpriteEntity(animations: animations)
             return entity
         }
 
-        if configuration.job.isPlayer {
-            return try await task.value
-        } else {
-            tasksByJobID[mapObject.job] = task
-            return try await task.value
+        playerEntitiesByObjectID[mapObject.objectID] = task
+
+        return try await task.value
+    }
+
+    func nonPlayerEntity(for mapObject: MapObject) async throws -> SpriteEntity {
+        if let task = nonPlayerEntitiesByJobID[mapObject.job] {
+            let entity = try await task.value
+            let entityClone = entity.clone(recursive: true)
+            return entityClone
         }
+
+        let task = Task {
+            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
+            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+            let animations = try await SpriteAnimation.animations(for: composedSprite)
+            let entity = SpriteEntity(animations: animations)
+            return entity
+        }
+
+        nonPlayerEntitiesByJobID[mapObject.job] = task
+
+        return try await task.value
     }
 }
 
