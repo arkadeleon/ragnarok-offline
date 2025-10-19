@@ -48,47 +48,76 @@ extension ComposedSprite {
 
                 // Weapon
                 taskGroup.addTask {
-                    try await ComposedSprite.Part.generateWeaponPart(
-                        configuration: configuration,
-                        resourceManager: resourceManager
-                    )
+                    do {
+                        let weaponPart = try await ComposedSprite.Part.generateWeaponPart(
+                            configuration: configuration,
+                            resourceManager: resourceManager
+                        )
+                        return weaponPart
+                    } catch {
+                        logger.warning("Weapon sprite error: \(error)")
+                        return nil
+                    }
                 }
 
                 // Weapon Slash
                 taskGroup.addTask {
-                    try await ComposedSprite.Part.generateWeaponSlashPart(
-                        configuration: configuration,
-                        resourceManager: resourceManager
-                    )
+                    do {
+                        let weaponSlashPart = try await ComposedSprite.Part.generateWeaponSlashPart(
+                            configuration: configuration,
+                            resourceManager: resourceManager
+                        )
+                        return weaponSlashPart
+                    } catch {
+                        logger.warning("Weapon slash sprite error: \(error)")
+                        return nil
+                    }
                 }
 
                 // Shield
                 taskGroup.addTask {
-                    try await ComposedSprite.Part.generateShieldPart(
-                        configuration: configuration,
-                        resourceManager: resourceManager
-                    )
+                    do {
+                        let shieldPart = try await ComposedSprite.Part.generateShieldPart(
+                            configuration: configuration,
+                            resourceManager: resourceManager
+                        )
+                        return shieldPart
+                    } catch {
+                        logger.warning("Shield sprite error: \(error)")
+                        return nil
+                    }
                 }
 
                 // Headgears
                 for headgearIndex in 0..<configuration.headgears.count {
                     taskGroup.addTask {
-                        var headgearPart = try await ComposedSprite.Part.generateHeadgearPart(
-                            configuration: configuration,
-                            headgearIndex: headgearIndex,
-                            resourceManager: resourceManager
-                        )
-                        headgearPart?.parent = bodyPart?.sprite
-                        return headgearPart
+                        do {
+                            var headgearPart = try await ComposedSprite.Part.generateHeadgearPart(
+                                configuration: configuration,
+                                headgearIndex: headgearIndex,
+                                resourceManager: resourceManager
+                            )
+                            headgearPart?.parent = bodyPart?.sprite
+                            return headgearPart
+                        } catch {
+                            logger.warning("Headgear sprite error: \(error)")
+                            return nil
+                        }
                     }
                 }
 
                 // Garment
                 taskGroup.addTask {
-                    try await ComposedSprite.Part.generateGarmentPart(
-                        configuration: configuration,
-                        resourceManager: resourceManager
-                    )
+                    do {
+                        let garmentPart = try await ComposedSprite.Part.generateGarmentPart(
+                            configuration: configuration,
+                            resourceManager: resourceManager
+                        )
+                        return garmentPart
+                    } catch {
+                        logger.warning("Garment sprite error: \(error)")
+                        return nil
+                    }
                 }
 
                 // Shadow
