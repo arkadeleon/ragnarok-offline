@@ -100,6 +100,7 @@ struct ContentView: View {
         case .walkingSimulator:
             WalkingSimulatorView()
                 .environment(appModel.gameSession)
+                .environment(appModel.settings)
         case .chat:
             ChatView()
                 .environment(appModel.chatSession)

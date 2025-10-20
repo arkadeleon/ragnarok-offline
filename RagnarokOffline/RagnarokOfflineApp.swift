@@ -29,9 +29,17 @@ struct RagnarokOfflineApp: App {
         }
 
         #if os(macOS)
-        Window("Game", id: appModel.gameSession.windowID) {
+        WindowGroup("Game", id: appModel.gameSession.windowID, for: GameSession.Configuration.self) { configuration in
             GameView(gameSession: appModel.gameSession) {
                 dismissWindow(id: appModel.gameSession.windowID)
+            }
+            .onAppear {
+                if let configuration = configuration.wrappedValue {
+                    appModel.gameSession.start(configuration)
+                }
+            }
+            .onDisappear {
+                appModel.gameSession.stop()
             }
         }
         #endif

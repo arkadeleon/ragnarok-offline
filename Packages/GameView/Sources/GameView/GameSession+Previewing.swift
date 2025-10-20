@@ -10,7 +10,14 @@ import GameCore
 import ResourceManagement
 
 extension GameSession {
-    static let previewing = GameSession(serverAddress: "127.0.0.1", serverPort: "6900", resourceManager: .previewing)
+    static let previewing: GameSession = {
+        let gameSession = GameSession(resourceManager: .previewing)
+
+        let configuration = GameSession.Configuration(serverAddress: "127.0.0.1", serverPort: "6900")
+        gameSession.start(configuration)
+
+        return gameSession
+    }()
 }
 
 extension ResourceManager {

@@ -40,18 +40,12 @@ final class AppModel {
     let characterSimulator = CharacterSimulator()
 
     let chatSession: ChatSession
-    let gameSession: GameSession
+    let gameSession = GameSession(resourceManager: .shared)
 
     init() {
         chatSession = ChatSession(
             serverAddress: settings.serverAddress,
             serverPort: settings.serverPort
-        )
-
-        gameSession = GameSession(
-            serverAddress: settings.serverAddress,
-            serverPort: settings.serverPort,
-            resourceManager: .shared
         )
 
         Task.detached {

@@ -20,9 +20,25 @@ final public class GameSession {
     public let windowID = "Game"
     public let immersiveSpaceID = "Game"
 
-    public let serverAddress: String
-    public let serverPort: String
     public let resourceManager: ResourceManager
+
+    public struct Configuration: Codable, Hashable {
+        public var serverAddress: String
+        public var serverPort: String
+
+        public init(serverAddress: String, serverPort: String) {
+            self.serverAddress = serverAddress
+            self.serverPort = serverPort
+        }
+    }
+
+    public enum State {
+        case notStarted
+        case running(configuration: GameSession.Configuration)
+        case stopped
+    }
+
+    public private(set) var state: GameSession.State = .notStarted
 
     public enum Phase {
         case login
@@ -60,10 +76,18 @@ final public class GameSession {
     @ObservationIgnored
     private var sceneSubscriptions = Set<AnyCancellable>()
 
-    public init(serverAddress: String, serverPort: String, resourceManager: ResourceManager) {
-        self.serverAddress = serverAddress
-        self.serverPort = serverPort
+    public init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
+    }
+
+    // MARK: - Start and Stop
+
+    public func start(_ configuration: GameSession.Configuration) {
+        state = .running(configuration: configuration)
+    }
+
+    public func stop() {
+        state = .stopped
     }
 
     // MARK: - Public
@@ -220,11 +244,15 @@ final public class GameSession {
     // MARK: - Private
 
     private func startLoginSession() {
-        guard let serverPort = UInt16(serverPort) else {
+        guard case .running(let configuration) = state else {
             return
         }
 
-        let loginSession = LoginSession(address: serverAddress, port: serverPort)
+        guard let serverPort = UInt16(configuration.serverPort) else {
+            return
+        }
+
+        let loginSession = LoginSession(address: configuration.serverAddress, port: serverPort)
 
         loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
             self.account = event.account

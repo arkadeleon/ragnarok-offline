@@ -12,16 +12,6 @@ struct SettingsView: View {
 
     @Environment(SettingsModel.self) private var settings
 
-    @State private var serverAddress = ""
-    @State private var serverPort = ""
-
-    private enum Field: Hashable {
-        case serverAddress
-        case serverPort
-    }
-
-    @FocusState private var focusedField: SettingsView.Field?
-
     var body: some View {
         let remoteClient = Binding {
             settings.remoteClient
@@ -33,50 +23,12 @@ struct SettingsView: View {
             Section("Client") {
                 Toggle("Remote Client", isOn: remoteClient)
             }
-
-            Section("Game") {
-                LabeledContent("Server Address") {
-                    TextField(String(), text: $serverAddress)
-                        .multilineTextAlignment(.trailing)
-                        .focused($focusedField, equals: .serverAddress)
-                }
-
-                LabeledContent("Server Port") {
-                    TextField(String(), text: $serverPort)
-                        .multilineTextAlignment(.trailing)
-                        .focused($focusedField, equals: .serverPort)
-                }
-            }
         }
         .navigationTitle("Settings")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") {
-                    focusedField = nil
                     onDone()
-                }
-            }
-        }
-        .onAppear {
-            serverAddress = settings.serverAddress
-            serverPort = settings.serverPort
-        }
-        .onChange(of: focusedField) { oldValue, newValue in
-            if oldValue == SettingsView.Field.serverAddress {
-                let regex = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}|localhost)$/
-                if let _ = try? regex.wholeMatch(in: serverAddress) {
-                    settings.serverAddress = serverAddress
-                } else {
-                    serverAddress = settings.serverAddress
-                }
-            }
-
-            if oldValue == SettingsView.Field.serverPort {
-                let regex = /^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$/
-                if let _ = try? regex.wholeMatch(in: serverPort) {
-                    settings.serverPort = serverPort
-                } else {
-                    serverPort = settings.serverPort
                 }
             }
         }
