@@ -67,11 +67,15 @@ final class NetworkSessionTests: XCTestCase {
         let password = "ragnarok"
         loginSession.login(username: username, password: password)
 
-        for await event in loginSession.events(for: LoginEvents.Accepted.self).prefix(1) {
-            account = event.account
-            charServers = event.charServers
+        for await event in loginSession.events {
+            if case .loginAccepted(let account, let charServers) = event {
+                self.account = account
+                self.charServers = charServers
 
-            XCTAssertEqual(event.charServers.count, 1)
+                XCTAssertEqual(charServers.count, 1)
+
+                break
+            }
         }
 
         // MARK: - Start char session

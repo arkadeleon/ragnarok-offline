@@ -6,19 +6,36 @@
 //
 
 import AsyncAlgorithms
-import Combine
+@preconcurrency import Combine
 import Foundation
 import NetworkPackets
 
-final public class LoginSession: SessionProtocol, @unchecked Sendable {
+final public class LoginSession: @unchecked Sendable {
+    public enum Event: Sendable {
+        case errorOccurred(any Error)
+        case loginAccepted(account: AccountInfo, charServers: [CharServerInfo])
+        case loginRefused(message: LoginRefusedMessage)
+        case authenticationBanned(message: BannedMessage)
+    }
+
+    public var events: AsyncStream<LoginSession.Event> {
+        AsyncStream { continuation in
+            let subscription = eventSubject
+                .sink { completion in
+                    continuation.finish()
+                } receiveValue: { e in
+                    continuation.yield(e)
+                }
+            continuation.onTermination = { termination in
+                subscription.cancel()
+            }
+        }
+    }
+
     let client: Client
-    let eventSubject = PassthroughSubject<any Event, Never>()
+    let eventSubject = PassthroughSubject<LoginSession.Event, Never>()
 
     private var timerTask: Task<Void, Never>?
-
-    public var eventPublisher: AnyPublisher<any Event, Never> {
-        eventSubject.eraseToAnyPublisher()
-    }
 
     public init(address: String, port: UInt16) {
         self.client = Client(name: "Login", address: address, port: port)
@@ -28,13 +45,13 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         var subscription = ClientSubscription()
 
         subscription.subscribe(to: ClientError.self) { [unowned self] error in
-            let event = ConnectionEvents.ErrorOccurred(error: error)
+            let event = LoginSession.Event.errorOccurred(error)
             self.eventSubject.send(event)
         }
 
         // See `logclif_auth_ok`
         subscription.subscribe(to: PACKET_AC_ACCEPT_LOGIN.self) { [unowned self] packet in
-            let event = LoginEvents.Accepted(
+            let event = LoginSession.Event.loginAccepted(
                 account: AccountInfo(packet: packet),
                 charServers: packet.char_servers.map(CharServerInfo.init)
             )
@@ -44,14 +61,14 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         // See `logclif_auth_failed`
         subscription.subscribe(to: PACKET_AC_REFUSE_LOGIN.self) { [unowned self] packet in
             let message = LoginRefusedMessage(packet: packet)
-            let event = LoginEvents.Refused(message: message)
+            let event = LoginSession.Event.loginRefused(message: message)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
             let message = BannedMessage(packet: packet)
-            let event = AuthenticationEvents.Banned(message: message)
+            let event = LoginSession.Event.authenticationBanned(message: message)
             self.postEvent(event)
         }
 
@@ -106,7 +123,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func postEvent(_ event: some Event) {
+    private func postEvent(_ event: LoginSession.Event) {
         eventSubject.send(event)
     }
 }

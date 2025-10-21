@@ -241,7 +241,7 @@ final public class GameSession {
         }
     }
 
-    // MARK: - Private
+    // MARK: - Login Session
 
     private func startLoginSession() {
         guard case .running(let configuration) = state else {
@@ -254,33 +254,37 @@ final public class GameSession {
 
         let loginSession = LoginSession(address: configuration.serverAddress, port: serverPort)
 
-        loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
-            self.account = event.account
-
-            if event.charServers.count == 1 {
-                self.selectCharServer(event.charServers[0])
-            } else if event.charServers.count > 1 {
-                self.phase = .charServerList(event.charServers)
+        Task {
+            for await event in loginSession.events {
+                await handleLoginEvent(event)
             }
         }
-        .store(in: &subscriptions)
-
-        loginSession.subscribe(to: LoginEvents.Refused.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        loginSession.subscribe(to: AuthenticationEvents.Banned.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        loginSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
-        }
-        .store(in: &subscriptions)
 
         loginSession.start()
 
         self.loginSession = loginSession
     }
+
+    private func handleLoginEvent(_ event: LoginSession.Event) async {
+        switch event {
+        case .errorOccurred(let error):
+            break
+        case .loginAccepted(let account, let charServers):
+            self.account = account
+
+            if charServers.count == 1 {
+                selectCharServer(charServers[0])
+            } else if charServers.count > 1 {
+                phase = .charServerList(charServers)
+            }
+        case .loginRefused(let message):
+            break
+        case .authenticationBanned(let message):
+            break
+        }
+    }
+
+    // MARK: - Char Session
 
     private func startCharSession(_ charServer: CharServerInfo) {
         guard let account else {
@@ -333,6 +337,8 @@ final public class GameSession {
 
         self.charSession = charSession
     }
+
+    // MARK: - Map Session
 
     private func startMapSession(char: CharInfo, mapServer: MapServerInfo) {
         guard let account = charSession?.account else {

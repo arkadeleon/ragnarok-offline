@@ -139,56 +139,51 @@ final class ChatSession {
 
         let loginSession = LoginSession(address: serverAddress, port: serverPort)
 
-        loginSession.subscribe(to: LoginEvents.Accepted.self) { [unowned self] event in
-            self.account = event.account
-            self.charServers = event.charServers
+        Task {
+            for await event in loginSession.events {
+                await handleLoginEvent(event)
+            }
+        }
+
+        loginSession.start()
+
+        self.loginSession = loginSession
+    }
+
+    private func handleLoginEvent(_ event: LoginSession.Event) async {
+        switch event {
+        case .errorOccurred(let error):
+            self.messages.append(.serverText(error.localizedDescription))
+        case .loginAccepted(let account, let charServers):
+            self.account = account
+            self.charServers = charServers
 
             self.phase = .selectCharServer
 
             self.messages.append(.serverText("Accepted"))
 
-            let charServers = event.charServers.enumerated()
+            let charServers = charServers.enumerated()
                 .map {
                     "(\($0.offset + 1)) \($0.element.name)"
                 }
                 .joined(separator: "\n")
             self.messages.append(.serverText(charServers))
-        }
-        .store(in: &subscriptions)
-
-        loginSession.subscribe(to: LoginEvents.Refused.self) { [unowned self] event in
+        case .loginRefused(let message):
             self.messages.append(.serverText("Refused"))
 
-            Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                if let message = messageStringTable.localizedMessageString(forID: event.message.messageID) {
-                    let message = message.replacingOccurrences(of: "%s", with: event.message.unblockTime)
-                    self.messages.append(.serverText(message))
-                }
+            let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
+            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                let text = text.replacingOccurrences(of: "%s", with: message.unblockTime)
+                self.messages.append(.serverText(text))
             }
-        }
-        .store(in: &subscriptions)
-
-        loginSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
+        case .authenticationBanned(let message):
             self.messages.append(.serverText("Banned"))
 
-            Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                if let message = messageStringTable.localizedMessageString(forID: event.message.messageID) {
-                    self.messages.append(.serverText(message))
-                }
+            let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
+            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                self.messages.append(.serverText(text))
             }
         }
-        .store(in: &subscriptions)
-
-        loginSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { [unowned self] event in
-            self.messages.append(.serverText(event.error.localizedDescription))
-        }
-        .store(in: &subscriptions)
-
-        loginSession.start()
-
-        self.loginSession = loginSession
     }
 
     private func startCharSession(_ charServer: CharServerInfo) {
