@@ -36,20 +36,22 @@ final class TileEntityManager {
                 material.triangleFillMode = .lines
 
                 tileEntity.components.set(ModelComponent(mesh: mesh, materials: [material]))
+                #if os(visionOS)
                 tileEntity.components.set(CollisionComponent(shapes: [
                     .generateBox(width: 1, height: 1, depth: 0)
                 ]))
                 tileEntity.components.set(InputTargetComponent())
+                #endif
                 tileEntity.components.set(TileComponent(position: [x, y]))
-                tileEntity.components.set(OpacityComponent(opacity: 0))
+//                tileEntity.components.set(OpacityComponent(opacity: 0))
 
                 if 0..<mapGrid.width ~= x && 0..<mapGrid.height ~= y {
                     let cell = mapGrid[[x, y]]
-                    let altitude = cell.altitude / 5
+                    let altitude = cell.averageAltitude
                     tileEntity.position = [
                         Float(x) + 0.5,
                         Float(y) + 0.5,
-                        -altitude - 0.0001,
+                        altitude + 0.0001,
                     ]
 
                     if cell.isWalkable {
@@ -85,11 +87,11 @@ final class TileEntityManager {
 
                 if 0..<mapGrid.width ~= x && 0..<mapGrid.height ~= y {
                     let cell = mapGrid[[x, y]]
-                    let altitude = cell.altitude / 5
+                    let altitude = cell.averageAltitude
                     tileEntity.position = [
                         Float(x) + 0.5,
                         Float(y) + 0.5,
-                        -altitude - 0.0001,
+                        altitude + 0.0001,
                     ]
 
                     if cell.isWalkable {

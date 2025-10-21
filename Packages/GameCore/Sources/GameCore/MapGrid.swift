@@ -12,7 +12,11 @@ struct MapGrid {
     var height: Int
 
     struct Cell {
-        var altitude: Float
+        var bottomLeftAltitude: Float
+        var bottomRightAltitude: Float
+        var topLeftAltitude: Float
+        var topRightAltitude: Float
+        var averageAltitude: Float
         var isWalkable: Bool
     }
 
@@ -25,7 +29,14 @@ struct MapGrid {
         for y in 0..<height {
             for x in 0..<width {
                 let tile = gat.tileAt(x: x, y: y)
-                let cell = MapGrid.Cell(altitude: tile.averageAltitude, isWalkable: tile.isWalkable)
+                let cell = MapGrid.Cell(
+                    bottomLeftAltitude: -tile.bottomLeftAltitude / 5,
+                    bottomRightAltitude: -tile.bottomRightAltitude / 5,
+                    topLeftAltitude: -tile.topLeftAltitude / 5,
+                    topRightAltitude: -tile.topRightAltitude / 5,
+                    averageAltitude: -tile.averageAltitude / 5,
+                    isWalkable: tile.isWalkable
+                )
                 cells.append(cell)
             }
         }

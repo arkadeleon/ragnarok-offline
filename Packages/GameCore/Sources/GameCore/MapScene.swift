@@ -169,6 +169,45 @@ public class MapScene {
         }
     }
 
+    func hitEntity(_ entity: Entity) {
+        if let mapObject = entity.components[MapObjectComponent.self]?.mapObject {
+            mapSceneDelegate?.mapScene(self, didTapMapObject: mapObject)
+        } else if let mapItem = entity.components[MapItemComponent.self]?.mapItem {
+            mapSceneDelegate?.mapScene(self, didTapMapItem: mapItem)
+        }
+    }
+
+    func raycast(origin: SIMD3<Float>, direction: SIMD3<Float>) {
+        var point = origin
+        for i in 0..<200 {
+            point = origin + direction * Float(i)
+
+            let x = point.x + 0.5
+            let y = point.y + 0.5
+
+            let position: SIMD2<Int> = [Int(x), Int(y)]
+
+            guard 0..<mapGrid.width ~= position.x, 0..<mapGrid.height ~= position.y else {
+                continue
+            }
+
+            let cell = mapGrid[position]
+
+            let xr = x.truncatingRemainder(dividingBy: 1)
+            let yr = y.truncatingRemainder(dividingBy: 1)
+
+            let x1 = cell.bottomLeftAltitude + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * xr
+            let x2 = cell.topLeftAltitude + (cell.topRightAltitude - cell.topLeftAltitude) * xr
+
+            let altitude = x1 + (x2 - x1) * yr
+
+            if fabsf(altitude - point.z) < 0.5 {
+                mapSceneDelegate?.mapScene(self, didTapTileAt: position)
+                break
+            }
+        }
+    }
+
     private func setupLighting() {
         let lightEntity = Entity()
 
@@ -263,11 +302,11 @@ public class MapScene {
     }
 
     private func position(for gridPosition: SIMD2<Int>) -> SIMD3<Float> {
-        let altitude = mapGrid[gridPosition].altitude
+        let altitude = mapGrid[gridPosition].averageAltitude
         let position: SIMD3<Float> = [
             Float(gridPosition.x) + 0.5,
             Float(gridPosition.y) + 0.5,
-            -altitude / 5,
+            altitude,
         ]
         return position
     }

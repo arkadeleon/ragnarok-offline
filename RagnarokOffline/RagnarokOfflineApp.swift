@@ -36,6 +36,12 @@ struct RagnarokOfflineApp: App {
             .onAppear {
                 if let configuration = configuration.wrappedValue {
                     appModel.gameSession.start(configuration)
+                } else {
+                    let configuration = GameSession.Configuration(
+                        serverAddress: appModel.settings.serverAddress,
+                        serverPort: appModel.settings.serverPort
+                    )
+                    appModel.gameSession.start(configuration)
                 }
             }
             .onDisappear {
