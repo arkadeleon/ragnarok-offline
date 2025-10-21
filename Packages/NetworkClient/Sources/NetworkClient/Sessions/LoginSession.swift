@@ -12,10 +12,13 @@ import NetworkPackets
 
 final public class LoginSession: @unchecked Sendable {
     public enum Event: Sendable {
-        case errorOccurred(any Error)
+        // Login events
         case loginAccepted(account: AccountInfo, charServers: [CharServerInfo])
         case loginRefused(message: LoginRefusedMessage)
+
+        // Error events
         case authenticationBanned(message: BannedMessage)
+        case errorOccurred(error: any Error)
     }
 
     public var events: AsyncStream<LoginSession.Event> {
@@ -45,7 +48,7 @@ final public class LoginSession: @unchecked Sendable {
         var subscription = ClientSubscription()
 
         subscription.subscribe(to: ClientError.self) { [unowned self] error in
-            let event = LoginSession.Event.errorOccurred(error)
+            let event = LoginSession.Event.errorOccurred(error: error)
             self.eventSubject.send(event)
         }
 

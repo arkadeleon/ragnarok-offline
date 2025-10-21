@@ -267,8 +267,6 @@ final public class GameSession {
 
     private func handleLoginEvent(_ event: LoginSession.Event) async {
         switch event {
-        case .errorOccurred(let error):
-            break
         case .loginAccepted(let account, let charServers):
             self.account = account
 
@@ -280,6 +278,8 @@ final public class GameSession {
         case .loginRefused(let message):
             break
         case .authenticationBanned(let message):
+            break
+        case .errorOccurred(let error):
             break
         }
     }
@@ -293,49 +293,49 @@ final public class GameSession {
 
         let charSession = CharSession(account: account, charServer: charServer)
 
-        charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
-            self.chars = event.chars
-            self.phase = .charSelect(event.chars)
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharServerEvents.Refused.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
-            if let char = self.chars.first(where: { $0.charID == event.charID }) {
-                self.char = char
-                self.startMapSession(char: char, mapServer: event.mapServer)
+        Task {
+            for await event in charSession.events {
+                await handleCharEvent(event)
             }
         }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
-            self.chars.append(event.char)
-            self.phase = .charSelect(chars)
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharEvents.MakeRefused.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: AuthenticationEvents.Banned.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { event in
-        }
-        .store(in: &subscriptions)
 
         charSession.start()
 
         self.charSession = charSession
+    }
+
+    private func handleCharEvent(_ event: CharSession.Event) async {
+        switch event {
+        case .charServerAccepted(let chars):
+            self.chars = chars
+            phase = .charSelect(chars)
+        case .charServerRefused:
+            break
+        case .charServerNotifiedMapServer(let charID, let mapName, let mapServer):
+            if let char = chars.first(where: { $0.charID == charID }) {
+                self.char = char
+                startMapSession(char: char, mapServer: mapServer)
+            }
+        case .charServerNotifiedAccessibleMaps(let accessibleMaps):
+            break
+        case .makeCharAccepted(let char):
+            chars.append(char)
+            phase = .charSelect(chars)
+        case .makeCharRefused:
+            break
+        case .deleteCharAccepted:
+            break
+        case .deleteCharRefused:
+            break
+        case .deleteCharCancelled:
+            break
+        case .deleteCharReserved(let deletionDate):
+            break
+        case .authenticationBanned(let message):
+            break
+        case .errorOccurred(let error):
+            break
+        }
     }
 
     // MARK: - Map Session

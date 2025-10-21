@@ -132,6 +132,8 @@ final class ChatSession {
         }
     }
 
+    // MARK: - Login Session
+
     private func startLoginSession() {
         guard let serverPort = UInt16(serverPort) else {
             return
@@ -152,39 +154,41 @@ final class ChatSession {
 
     private func handleLoginEvent(_ event: LoginSession.Event) async {
         switch event {
-        case .errorOccurred(let error):
-            self.messages.append(.serverText(error.localizedDescription))
         case .loginAccepted(let account, let charServers):
             self.account = account
             self.charServers = charServers
 
-            self.phase = .selectCharServer
+            phase = .selectCharServer
 
-            self.messages.append(.serverText("Accepted"))
+            messages.append(.serverText("Accepted"))
 
             let charServers = charServers.enumerated()
                 .map {
                     "(\($0.offset + 1)) \($0.element.name)"
                 }
                 .joined(separator: "\n")
-            self.messages.append(.serverText(charServers))
+            messages.append(.serverText(charServers))
         case .loginRefused(let message):
-            self.messages.append(.serverText("Refused"))
+            messages.append(.serverText("Refused"))
 
             let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
             if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
                 let text = text.replacingOccurrences(of: "%s", with: message.unblockTime)
-                self.messages.append(.serverText(text))
+                messages.append(.serverText(text))
             }
         case .authenticationBanned(let message):
-            self.messages.append(.serverText("Banned"))
+            messages.append(.serverText("Banned"))
 
             let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
             if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                self.messages.append(.serverText(text))
+                messages.append(.serverText(text))
             }
+        case .errorOccurred(let error):
+            messages.append(.serverText(error.localizedDescription))
         }
     }
+
+    // MARK: - Char Session
 
     private func startCharSession(_ charServer: CharServerInfo) {
         guard let account else {
@@ -193,13 +197,26 @@ final class ChatSession {
 
         let charSession = CharSession(account: account, charServer: charServer)
 
-        charSession.subscribe(to: CharServerEvents.Accepted.self) { [unowned self] event in
-            self.chars = event.chars
-            self.phase = .selectChar
+        Task {
+            for await event in charSession.events {
+                await handleCharEvent(event)
+            }
+        }
 
-            self.messages.append(.serverText("Accepted"))
+        charSession.start()
 
-            for char in event.chars {
+        self.charSession = charSession
+    }
+
+    private func handleCharEvent(_ event: CharSession.Event) async {
+        switch event {
+        case .charServerAccepted(let chars):
+            self.chars = chars
+            phase = .selectChar
+
+            messages.append(.serverText("Accepted"))
+
+            for char in chars {
                 let message = """
                 Char ID: \(char.charID)
                 Name: \(char.name)
@@ -211,68 +228,51 @@ final class ChatSession {
                 Luk: \(char.luk)
                 Slot: \(char.charNum)
                 """
-                self.messages.append(.serverText(message))
+                messages.append(.serverText(message))
             }
-        }
-        .store(in: &subscriptions)
+        case .charServerRefused:
+            messages.append(.serverText("Refused"))
+        case .charServerNotifiedMapServer(let charID, let mapName, let mapServer):
+            phase = .map
 
-        charSession.subscribe(to: CharServerEvents.Refused.self) { [unowned self] event in
-            self.messages.append(.serverText("Refused"))
-        }
-        .store(in: &subscriptions)
+            messages.append(.serverText("Entered map: \(mapName)"))
 
-        charSession.subscribe(to: CharServerEvents.NotifyMapServer.self) { [unowned self] event in
-            self.phase = .map
+            startMapSession(charID: charID, mapName: mapName, mapServer: mapServer)
+        case .charServerNotifiedAccessibleMaps(let accessibleMaps):
+            break
+        case .makeCharAccepted(let char):
+            messages.append(.serverText("Accepted"))
+        case .makeCharRefused:
+            messages.append(.serverText("Refused"))
+        case .deleteCharAccepted:
+            break
+        case .deleteCharRefused:
+            break
+        case .deleteCharCancelled:
+            break
+        case .deleteCharReserved(let deletionDate):
+            break
+        case .authenticationBanned(let message):
+            messages.append(.serverText("Banned"))
 
-            self.messages.append(.serverText("Entered map: \(event.mapName)"))
-
-            self.startMapSession(event)
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharServerEvents.NotifyAccessibleMaps.self) { event in
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharEvents.MakeAccepted.self) { [unowned self] event in
-            self.messages.append(.serverText("Accepted"))
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: CharEvents.MakeRefused.self) { [unowned self] event in
-            self.messages.append(.serverText("Refused"))
-        }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: AuthenticationEvents.Banned.self) { [unowned self] event in
-            self.messages.append(.serverText("Banned"))
-
-            Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                if let message = messageStringTable.localizedMessageString(forID: event.message.messageID) {
-                    self.messages.append(.serverText(message))
-                }
+            let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
+            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                messages.append(.serverText(text))
             }
+        case .errorOccurred(let error):
+            messages.append(.serverText(error.localizedDescription))
         }
-        .store(in: &subscriptions)
-
-        charSession.subscribe(to: ConnectionEvents.ErrorOccurred.self) { [unowned self] event in
-            self.messages.append(.serverText(event.error.localizedDescription))
-        }
-        .store(in: &subscriptions)
-
-        charSession.start()
-
-        self.charSession = charSession
     }
 
-    private func startMapSession(_ event: CharServerEvents.NotifyMapServer) {
+    // MARK: - Map Session
+
+    private func startMapSession(charID: UInt32, mapName: String, mapServer: MapServerInfo) {
         guard let account = charSession?.account,
-              let char = chars.first(where: { $0.charID == event.charID }) else {
+              let char = chars.first(where: { $0.charID == charID }) else {
             return
         }
 
-        let mapSession = MapSession(account: account, char: char, mapServer: event.mapServer)
+        let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
 
         mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
             self.playerPosition = event.position

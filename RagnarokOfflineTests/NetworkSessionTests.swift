@@ -71,9 +71,7 @@ final class NetworkSessionTests: XCTestCase {
             if case .loginAccepted(let account, let charServers) = event {
                 self.account = account
                 self.charServers = charServers
-
                 XCTAssertEqual(charServers.count, 1)
-
                 break
             }
         }
@@ -84,13 +82,16 @@ final class NetworkSessionTests: XCTestCase {
 
         charSession.start()
 
-        for await event in charSession.events(for: CharServerEvents.Accepted.self).prefix(1) {
-            XCTAssertEqual(event.chars.count, 0)
+        for await event in charSession.events {
+            if case .charServerAccepted(let chars) = event {
+                XCTAssertEqual(chars.count, 0)
+                break
+            }
         }
 
         // MARK: - Make a char
 
-        var char = CharInfo()
+        char = CharInfo()
         char.name = "Leon"
         char.str = 1
         char.agi = 1
@@ -100,20 +101,25 @@ final class NetworkSessionTests: XCTestCase {
         char.luk = 1
         charSession.makeChar(char: char)
 
-        for await event in charSession.events(for: CharEvents.MakeAccepted.self).prefix(1) {
-            char = event.char
-            XCTAssertEqual(event.char.name, "Leon")
-            XCTAssertEqual(event.char.speed, 150)
+        for await event in charSession.events {
+            if case .makeCharAccepted(let char) = event {
+                self.char = char
+                XCTAssertEqual(char.name, "Leon")
+                XCTAssertEqual(char.speed, 150)
+                break
+            }
         }
 
         // MARK: - Select a char
 
         charSession.selectChar(slot: 0)
 
-        for await event in charSession.events(for: CharServerEvents.NotifyMapServer.self).prefix(1) {
-            mapServer = event.mapServer
-
-            XCTAssertEqual(event.charID, char.charID)
+        for await event in charSession.events {
+            if case .charServerNotifiedMapServer(let charID, let mapName, let mapServer) = event {
+                self.mapServer = mapServer
+                XCTAssertEqual(charID, char.charID)
+                break
+            }
         }
 
         // MARK: - Start map session
