@@ -27,7 +27,7 @@ extension MapSession {
 
         // See `clif_inventoryEnd`
         subscription.subscribe(to: PACKET_ZC_INVENTORY_END.self) { [unowned self] packet in
-            let event = ItemEvents.ListReceived(inventory: self.inventory)
+            let event = MapSession.Event.itemListReceived(inventory: self.inventory)
             self.postEvent(event)
         }
 
@@ -36,7 +36,7 @@ extension MapSession {
             let item = MapItem(packet: packet)
             let position = SIMD2(x: Int(packet.x), y: Int(packet.y))
 
-            let event = ItemEvents.Spawned(item: item, position: position)
+            let event = MapSession.Event.itemSpawned(item: item, position: position)
             self.postEvent(event)
         }
 
@@ -45,34 +45,34 @@ extension MapSession {
             let item = MapItem(packet: packet)
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
 
-            let event = ItemEvents.Spawned(item: item, position: position)
+            let event = MapSession.Event.itemSpawned(item: item, position: position)
             self.postEvent(event)
         }
 
         // See `clif_clearflooritem`
         subscription.subscribe(to: PACKET_ZC_ITEM_DISAPPEAR.self) { [unowned self] packet in
-            let event = ItemEvents.Vanished(objectID: packet.itemAid)
+            let event = MapSession.Event.itemVanished(objectID: packet.itemAid)
             self.postEvent(event)
         }
 
         // See `clif_additem`
         subscription.subscribe(to: PACKET_ZC_ITEM_PICKUP_ACK.self) { [unowned self] packet in
             let item = PickedUpItem(packet: packet)
-            let event = ItemEvents.PickedUp(item: item)
+            let event = MapSession.Event.itemPickedUp(item: item)
             self.postEvent(event)
         }
 
         // See `clif_dropitem`
         subscription.subscribe(to: PACKET_ZC_ITEM_THROW_ACK.self) { [unowned self] packet in
             let item = ThrownItem(packet: packet)
-            let event = ItemEvents.Thrown(item: item)
+            let event = MapSession.Event.itemThrown(item: item)
             self.postEvent(event)
         }
 
         // See `clif_useitemack`
         subscription.subscribe(to: PACKET_ZC_USE_ITEM_ACK.self) { [unowned self] packet in
             let item = UsedItem(packet: packet)
-            let event = ItemEvents.Used(
+            let event = MapSession.Event.itemUsed(
                 item: item,
                 accountID: packet.AID,
                 success: (packet.result != 0)
@@ -81,14 +81,14 @@ extension MapSession {
 
             self.inventory.updateItem(at: Int(packet.index), amount: Int(packet.amount))
 
-            let listUpdatedEvent = ItemEvents.ListUpdated(inventory: self.inventory)
+            let listUpdatedEvent = MapSession.Event.itemListUpdated(inventory: self.inventory)
             self.postEvent(listUpdatedEvent)
         }
 
         // See `clif_equipitemack`
         subscription.subscribe(to: PACKET_ZC_REQ_WEAR_EQUIP_ACK.self) { [unowned self] packet in
             let item = EquippedItem(packet: packet)
-            let event = ItemEvents.Equipped(
+            let event = MapSession.Event.itemEquipped(
                 item: item,
                 success: (packet.result != 0)
             )
@@ -98,7 +98,7 @@ extension MapSession {
         // See `clif_unequipitemack`
         subscription.subscribe(to: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK.self) { [unowned self] packet in
             let item = UnequippedItem(packet: packet)
-            let event = ItemEvents.Unequipped(
+            let event = MapSession.Event.itemUnequipped(
                 item: item,
                 success: (packet.flag != 0)
             )

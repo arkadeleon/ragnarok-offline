@@ -37,7 +37,7 @@ struct MapView: View {
         }
         #endif
         .overlay(alignment: .topLeading) {
-            if let char = gameSession.char, let status = gameSession.status {
+            if let char = gameSession.char, let status = gameSession.playerStatus {
                 VStack(alignment: .leading, spacing: 0) {
                     BasicInfoView(char: char, status: status)
 

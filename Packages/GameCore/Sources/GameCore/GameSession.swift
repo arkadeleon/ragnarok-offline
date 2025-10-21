@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/9/5.
 //
 
-import Combine
 import Constants
 import NetworkClient
 import NetworkPackets
@@ -57,7 +56,7 @@ final public class GameSession {
 
     public private(set) var char: CharInfo?
 
-    public private(set) var status: CharacterStatus?
+    public private(set) var playerStatus: CharacterStatus?
 
     public private(set) var inventory = Inventory()
 
@@ -70,11 +69,13 @@ final public class GameSession {
     @ObservationIgnored
     var mapSession: MapSession?
 
-    @ObservationIgnored
-    private var subscriptions = Set<AnyCancellable>()
-
-    @ObservationIgnored
-    private var sceneSubscriptions = Set<AnyCancellable>()
+    var mapScene: MapScene? {
+        if case .map(let scene) = phase {
+            scene
+        } else {
+            nil
+        }
+    }
 
     public init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
@@ -256,7 +257,7 @@ final public class GameSession {
 
         Task {
             for await event in loginSession.events {
-                await handleLoginEvent(event)
+                handleLoginEvent(event)
             }
         }
 
@@ -265,7 +266,7 @@ final public class GameSession {
         self.loginSession = loginSession
     }
 
-    private func handleLoginEvent(_ event: LoginSession.Event) async {
+    private func handleLoginEvent(_ event: LoginSession.Event) {
         switch event {
         case .loginAccepted(let account, let charServers):
             self.account = account
@@ -295,7 +296,7 @@ final public class GameSession {
 
         Task {
             for await event in charSession.events {
-                await handleCharEvent(event)
+                handleCharEvent(event)
             }
         }
 
@@ -304,7 +305,7 @@ final public class GameSession {
         self.charSession = charSession
     }
 
-    private func handleCharEvent(_ event: CharSession.Event) async {
+    private func handleCharEvent(_ event: CharSession.Event) {
         switch event {
         case .charServerAccepted(let chars):
             self.chars = chars
@@ -345,21 +346,42 @@ final public class GameSession {
             return
         }
 
-        let resourceManager = resourceManager
         let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
 
-        mapSession.subscribe(to: MapEvents.Changed.self) { event in
-            if case .map(let scene) = self.phase {
-                scene.unload()
+        Task {
+            for await event in mapSession.events {
+                handleMapEvent(event)
+            }
+        }
 
-                self.sceneSubscriptions.removeAll()
+        mapSession.start()
+
+        self.mapSession = mapSession
+    }
+
+    private func handleMapEvent(_ event: MapSession.Event) {
+        switch event {
+        case .mapServerAccepted:
+            break
+        case .mapServerDisconnected:
+            mapSession?.stop()
+            mapSession = nil
+
+            phase = .charSelect(chars)
+        case .mapChanged(let mapName, let position):
+            if case .map(let scene) = phase {
+                scene.unload()
             }
 
-            self.phase = .mapLoading
+            phase = .mapLoading
 
             Task {
-                let mapName = String(event.mapName.dropLast(4))
-                let worldPath: ResourcePath = ["data", mapName]
+                guard let account, let char else {
+                    return
+                }
+
+                let mapName = String(mapName.dropLast(4))
+                let worldPath = ResourcePath(components: ["data", mapName])
                 let world = try await resourceManager.world(at: worldPath)
 
                 let player = MapObject(account: account, char: char)
@@ -368,107 +390,74 @@ final public class GameSession {
                     mapName: mapName,
                     world: world,
                     player: player,
-                    playerPosition: event.position,
+                    playerPosition: position,
                     resourceManager: resourceManager
                 )
                 scene.mapSceneDelegate = self
 
-                await self.loadMapScene(scene)
+                await scene.load()
 
-                self.phase = .map(scene)
+                phase = .map(scene)
             }
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: MapConnectionEvents.Disconnected.self) { [unowned self] event in
-            self.mapSession?.stop()
-            self.mapSession = nil
-
-            phase = .charSelect(chars)
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: PlayerEvents.StatusChanged.self) { [unowned self] event in
-            self.status = event.status
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: ItemEvents.ListReceived.self) { [unowned self] event in
-            self.inventory = event.inventory
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: ItemEvents.ListUpdated.self) { [unowned self] event in
-            self.inventory = event.inventory
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: NPCEvents.DialogReceived.self) { [unowned self] event in
-            dialog = event.dialog
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: NPCEvents.DialogClosed.self) { [unowned self] event in
+        case .playerMoved(let startPosition, let endPosition):
+            mapScene?.onPlayerMoved(startPosition: startPosition, endPosition: endPosition)
+        case .playerStatusChanged(let status):
+            self.playerStatus = status
+        case .playerAttackRangeChanged(let value):
+            break
+        case .achievementListed:
+            break
+        case .achievementUpdated:
+            break
+        case .itemListReceived(let inventory):
+            self.inventory = inventory
+        case .itemListUpdated(let inventory):
+            self.inventory = inventory
+        case .itemSpawned(let item, let position):
+            mapScene?.onItemSpawned(item: item, position: position)
+        case .itemVanished(let objectID):
+            mapScene?.onItemVanished(objectID: objectID)
+        case .itemPickedUp(let item):
+            break
+        case .itemThrown(let item):
+            break
+        case .itemUsed(let item, let accountID, let success):
+            break
+        case .itemEquipped(let item, let success):
+            break
+        case .itemUnequipped(let item, let success):
+            break
+        case .mapObjectSpawned(let object, let position, let direction, let headDirection):
+            mapScene?.onMapObjectSpawned(object: object, position: position, direction: direction, headDirection: headDirection)
+        case .mapObjectMoved(let object, let startPosition, let endPosition):
+            mapScene?.onMapObjectMoved(object: object, startPosition: startPosition, endPosition: endPosition)
+        case .mapObjectStopped(let objectID, let position):
+            mapScene?.onMapObjectStopped(objectID: objectID, position: position)
+        case .maoObjectVanished(let objectID):
+            mapScene?.onMapObjectVanished(objectID: objectID)
+        case .mapObjectDirectionChanged(let objectID, let direction, let headDirection):
+            break
+        case .mapObjectSpriteChanged(let objectID):
+            break
+        case .mapObjectStateChanged(let objectID, let bodyState, let healthState, let effectState):
+            mapScene?.onMapObjectStateChanged(objectID: objectID, bodyState: bodyState, healthState: healthState, effectState: effectState)
+        case .mapObjectActionPerformed(let sourceObjectID, let targetObjectID, let actionType):
+            mapScene?.onMapObjectActionPerformed(sourceObjectID: sourceObjectID, targetObjectID: targetObjectID, actionType: actionType)
+        case .npcDialogReceived(let dialog):
+            self.dialog = dialog
+        case .npcDialogClosed(let npcID):
             dialog = nil
+        case .imageReceived(let image):
+            break
+        case .minimapMarkPositionReceived(let npcID, let position):
+            break
+        case .chatMessageReceived(let message):
+            break
+        case .authenticationBanned(let message):
+            break
+        case .errorOccurred(let error):
+            break
         }
-        .store(in: &subscriptions)
-
-        mapSession.start()
-
-        self.mapSession = mapSession
-    }
-
-    private func loadMapScene(_ scene: MapScene) async {
-        guard let mapSession else {
-            return
-        }
-
-        await scene.load()
-
-        mapSession.subscribe(to: PlayerEvents.Moved.self) { event in
-            scene.onPlayerMoved(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: ItemEvents.Spawned.self) { event in
-            scene.onItemSpawned(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: ItemEvents.Vanished.self) { event in
-            scene.onItemVanished(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.Spawned.self) { event in
-            scene.onMapObjectSpawned(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.Moved.self) { event in
-            scene.onMapObjectMoved(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.Stopped.self) { event in
-            scene.onMapObjectStopped(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.Vanished.self) { event in
-            scene.onMapObjectVanished(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.StateChanged.self) { event in
-            scene.onMapObjectStateChanged(event)
-        }
-        .store(in: &sceneSubscriptions)
-
-        mapSession.subscribe(to: MapObjectEvents.ActionPerformed.self) { event in
-            scene.onMapObjectActionPerformed(event)
-        }
-        .store(in: &sceneSubscriptions)
     }
 }
 

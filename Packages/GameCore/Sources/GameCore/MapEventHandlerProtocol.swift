@@ -5,19 +5,20 @@
 //  Created by Leon Li on 2025/7/8.
 //
 
+import Constants
 import NetworkClient
 
 @MainActor
 protocol MapEventHandlerProtocol {
-    func onPlayerMoved(_ event: PlayerEvents.Moved)
+    func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
 
-    func onItemSpawned(_ event: ItemEvents.Spawned)
-    func onItemVanished(_ event: ItemEvents.Vanished)
+    func onItemSpawned(item: MapItem, position: SIMD2<Int>)
+    func onItemVanished(objectID: UInt32)
 
-    func onMapObjectSpawned(_ event: MapObjectEvents.Spawned)
-    func onMapObjectMoved(_ event: MapObjectEvents.Moved)
-    func onMapObjectStopped(_ event: MapObjectEvents.Stopped)
-    func onMapObjectVanished(_ event: MapObjectEvents.Vanished)
-    func onMapObjectStateChanged(_ event: MapObjectEvents.StateChanged)
-    func onMapObjectActionPerformed(_ event: MapObjectEvents.ActionPerformed)
+    func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection)
+    func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
+    func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>)
+    func onMapObjectVanished(objectID: UInt32)
+    func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
+    func onMapObjectActionPerformed(sourceObjectID: UInt32, targetObjectID: UInt32, actionType: DamageType)
 }

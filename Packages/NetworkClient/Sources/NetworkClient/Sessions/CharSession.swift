@@ -6,11 +6,11 @@
 //
 
 import AsyncAlgorithms
-@preconcurrency import Combine
+import Combine
 import Foundation
 import NetworkPackets
 
-final public class CharSession: @unchecked Sendable {
+final public class CharSession: SessionProtocol, @unchecked Sendable {
     public enum Event: Sendable {
         // Char server events
         case charServerAccepted(chars: [CharInfo])
@@ -31,24 +31,14 @@ final public class CharSession: @unchecked Sendable {
         case errorOccurred(error: any Error)
     }
 
-    public var events: AsyncStream<CharSession.Event> {
-        AsyncStream { continuation in
-            let subscription = eventSubject
-                .sink { completion in
-                    continuation.finish()
-                } receiveValue: { e in
-                    continuation.yield(e)
-                }
-            continuation.onTermination = { termination in
-                subscription.cancel()
-            }
-        }
-    }
-
     public private(set) var account: AccountInfo
 
     let client: Client
     let eventSubject = PassthroughSubject<CharSession.Event, Never>()
+
+    public var eventPublisher: AnyPublisher<CharSession.Event, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
 
     private var timerTask: Task<Void, Never>?
 

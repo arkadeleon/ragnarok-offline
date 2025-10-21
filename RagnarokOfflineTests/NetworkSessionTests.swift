@@ -128,18 +128,22 @@ final class NetworkSessionTests: XCTestCase {
 
         mapSession.start()
 
-        for await event in mapSession.events(for: MapEvents.Changed.self).prefix(1) {
-            XCTAssertEqual(event.position, [18, 26])
+        for await event in mapSession.events {
+            if case .mapChanged(let mapName, let position) = event {
+                XCTAssertEqual(position, [18, 26])
 
-            // Load map.
-            sleep(1)
+                // Load map.
+                sleep(1)
 
-            mapSession.notifyMapLoaded()
+                mapSession.notifyMapLoaded()
+
+                break
+            }
         }
 
         sleep(1)
 
-        let status = mapSession.status
+        let status = mapSession.playerStatus
         XCTAssertEqual(status.str, 1)
         XCTAssertEqual(status.agi, 1)
         XCTAssertEqual(status.vit, 1)
@@ -151,23 +155,36 @@ final class NetworkSessionTests: XCTestCase {
 
         mapSession.requestMove(to: [27, 30])
 
-        for await event in mapSession.events(for: PlayerEvents.Moved.self).prefix(1) {
-            XCTAssertEqual(event.startPosition, [18, 26])
-            XCTAssertEqual(event.endPosition, [27, 30])
+        for await event in mapSession.events {
+            if case .playerMoved(let startPosition, let endPosition) = event {
+                XCTAssertEqual(startPosition, [18, 26])
+                XCTAssertEqual(endPosition, [27, 30])
+                break
+            }
         }
 
-        for await event in mapSession.events(for: MapEvents.Changed.self).prefix(1) {
-            XCTAssertEqual(event.position, [51, 30])
+        for await event in mapSession.events {
+            if case .mapChanged(let mapName, let position) = event {
+                XCTAssertEqual(position, [51, 30])
 
-            // Load map.
-            sleep(1)
+                // Load map.
+                sleep(1)
 
-            mapSession.notifyMapLoaded()
+                mapSession.notifyMapLoaded()
+
+                break
+            }
         }
 
         var mapObjects: [MapObject] = []
-        for await event in mapSession.events(for: MapObjectEvents.Spawned.self).prefix(4) {
-            mapObjects.append(event.object)
+        for await event in mapSession.events {
+            if case .mapObjectSpawned(let object, let position, let direction, let headDirection) = event {
+                mapObjects.append(object)
+
+                if mapObjects.count == 4 {
+                    break
+                }
+            }
         }
 
         // MARK: - Talk to wounded swordsman

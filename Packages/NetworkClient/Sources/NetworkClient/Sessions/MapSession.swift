@@ -12,21 +12,75 @@ import Foundation
 import NetworkPackets
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {
+    public enum Event: Sendable {
+        // Map server events
+        case mapServerAccepted
+        case mapServerDisconnected
+
+        // Map events
+        case mapChanged(mapName: String, position: SIMD2<Int>)
+
+        // Player events
+        case playerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
+        case playerStatusChanged(status: CharacterStatus)
+        case playerAttackRangeChanged(value: Int)
+
+        // Mail events
+
+        // Achievement events
+        case achievementListed
+        case achievementUpdated
+
+        // Item events
+        case itemListReceived(inventory: Inventory)
+        case itemListUpdated(inventory: Inventory)
+        case itemSpawned(item: MapItem, position: SIMD2<Int>)
+        case itemVanished(objectID: UInt32)
+        case itemPickedUp(item: PickedUpItem)
+        case itemThrown(item: ThrownItem)
+        case itemUsed(item: UsedItem, accountID: UInt32, success: Bool)
+        case itemEquipped(item: EquippedItem, success: Bool)
+        case itemUnequipped(item: UnequippedItem, success: Bool)
+
+        // Object events
+        case mapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection)
+        case mapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
+        case mapObjectStopped(objectID: UInt32, position: SIMD2<Int>)
+        case maoObjectVanished(objectID: UInt32)
+        case mapObjectDirectionChanged(objectID: UInt32, direction: Direction, headDirection: HeadDirection)
+        case mapObjectSpriteChanged(objectID: UInt32)
+        case mapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
+        case mapObjectActionPerformed(sourceObjectID: UInt32, targetObjectID: UInt32, actionType: DamageType)
+
+        // NPC events
+        case npcDialogReceived(dialog: NPCDialog)
+        case npcDialogClosed(npcID: UInt32)
+        case imageReceived(image: String)
+        case minimapMarkPositionReceived(npcID: UInt32, position: SIMD2<Int>)
+
+        // Chat events
+        case chatMessageReceived(message: ChatMessage)
+
+        // Error events
+        case authenticationBanned(message: BannedMessage)
+        case errorOccurred(error: any Error)
+    }
+
     public private(set) var account: AccountInfo
     public let char: CharInfo
 
     let client: Client
-    let eventSubject = PassthroughSubject<any Event, Never>()
+    let eventSubject = PassthroughSubject<MapSession.Event, Never>()
 
-    var status = CharacterStatus()
+    public var eventPublisher: AnyPublisher<MapSession.Event, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+
+    var playerStatus = CharacterStatus()
     var inventory = Inventory()
     var pendingNPCDialog: NPCDialog?
 
     private var timerTask: Task<Void, Never>?
-
-    public var eventPublisher: AnyPublisher<any Event, Never> {
-        eventSubject.eraseToAnyPublisher()
-    }
 
     public init(account: AccountInfo, char: CharInfo, mapServer: MapServerInfo) {
         self.account = account
@@ -38,7 +92,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         var subscription = ClientSubscription()
 
         subscription.subscribe(to: ClientError.self) { [unowned self] error in
-            let event = ConnectionEvents.ErrorOccurred(error: error)
+            let event = MapSession.Event.errorOccurred(error: error)
             self.eventSubject.send(event)
         }
 
@@ -94,7 +148,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_authfail_fd`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
             let message = BannedMessage(packet: packet)
-            let event = AuthenticationEvents.Banned(message: message)
+            let event = MapSession.Event.authenticationBanned(message: message)
             self.postEvent(event)
         }
 
@@ -142,14 +196,14 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToMapConnectionPackets(with subscription: inout ClientSubscription) {
         // See `clif_authok`
         subscription.subscribe(to: PACKET_ZC_ACCEPT_ENTER.self) { [unowned self] packet in
-            let event = MapConnectionEvents.Accepted()
+            let event = MapSession.Event.mapServerAccepted
             self.postEvent(event)
         }
 
         // See `clif_charselectok`
         subscription.subscribe(to: PACKET_ZC_RESTART_ACK.self) { [unowned self] packet in
             if packet.type == 1 {
-                let event = MapConnectionEvents.Disconnected()
+                let event = MapSession.Event.mapServerDisconnected
                 self.postEvent(event)
             }
         }
@@ -157,7 +211,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_disconnect_ack`
         subscription.subscribe(to: PACKET_ZC_ACK_REQ_DISCONNECT.self) { [unowned self] packet in
             if packet.result == 0 {
-                let event = MapConnectionEvents.Disconnected()
+                let event = MapSession.Event.mapServerDisconnected
                 self.postEvent(event)
             }
         }
@@ -167,7 +221,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         // See `clif_changemap`
         subscription.subscribe(to: PACKET_ZC_NPCACK_MAPMOVE.self) { [unowned self] packet in
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
-            let event = MapEvents.Changed(mapName: packet.mapName, position: position)
+            let event = MapSession.Event.mapChanged(mapName: packet.mapName, position: position)
             self.postEvent(event)
         }
     }
@@ -175,13 +229,13 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToAchievementPackets(with subscription: inout ClientSubscription) {
         // 0xa23
         subscription.subscribe(to: PACKET_ZC_ALL_ACH_LIST.self) { [unowned self] packet in
-            let event = AchievementEvents.Listed()
+            let event = MapSession.Event.achievementListed
             self.postEvent(event)
         }
 
         // 0xa24
         subscription.subscribe(to: PACKET_ZC_ACH_UPDATE.self) { [unowned self] packet in
-            let event = AchievementEvents.Updated()
+            let event = MapSession.Event.achievementUpdated
             self.postEvent(event)
         }
     }
@@ -194,7 +248,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let direction = Direction(rawValue: posDir.direction) ?? .north
             let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
 
-            let event = MapObjectEvents.Spawned(
+            let event = MapSession.Event.mapObjectSpawned(
                 object: object,
                 position: posDir.position,
                 direction: direction,
@@ -210,7 +264,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let direction = Direction(rawValue: posDir.direction) ?? .north
             let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
 
-            let event = MapObjectEvents.Spawned(
+            let event = MapSession.Event.mapObjectSpawned(
                 object: object,
                 position: posDir.position,
                 direction: direction,
@@ -224,7 +278,11 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let object = MapObject(packet: packet)
             let moveData = MoveData(data: packet.MoveData)
 
-            let event = MapObjectEvents.Moved(object: object, startPosition: moveData.startPosition, endPosition: moveData.endPosition)
+            let event = MapSession.Event.mapObjectMoved(
+                object: object,
+                startPosition: moveData.startPosition,
+                endPosition: moveData.endPosition
+            )
             self.postEvent(event)
         }
 
@@ -232,14 +290,14 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         subscription.subscribe(to: PACKET_ZC_STOPMOVE.self) { [unowned self] packet in
             let objectID = packet.AID
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
-            let event = MapObjectEvents.Stopped(objectID: objectID, position: position)
+            let event = MapSession.Event.mapObjectStopped(objectID: objectID, position: position)
             self.postEvent(event)
         }
 
         // See `clif_clearunit_single` and `clif_clearunit_area`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_VANISH.self) { [unowned self] packet in
             let objectID = packet.gid
-            let event = MapObjectEvents.Vanished(objectID: objectID)
+            let event = MapSession.Event.maoObjectVanished(objectID: objectID)
             self.postEvent(event)
         }
 
@@ -248,7 +306,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
             let direction = Direction(rawValue: Int(packet.dir)) ?? .north
             let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
 
-            let event = MapObjectEvents.DirectionChanged(
+            let event = MapSession.Event.mapObjectDirectionChanged(
                 objectID: packet.srcId,
                 direction: direction,
                 headDirection: headDirection
@@ -258,13 +316,13 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_sprite_change`
         subscription.subscribe(to: PACKET_ZC_SPRITE_CHANGE.self) { [unowned self] packet in
-            let event = MapObjectEvents.SpriteChanged(objectID: packet.AID)
+            let event = MapSession.Event.mapObjectSpriteChanged(objectID: packet.AID)
             self.postEvent(event)
         }
 
         // See `clif_changeoption_target`
         subscription.subscribe(to: PACKET_ZC_STATE_CHANGE.self) { [unowned self] packet in
-            let event = MapObjectEvents.StateChanged(
+            let event = MapSession.Event.mapObjectStateChanged(
                 objectID: packet.AID,
                 bodyState: StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none,
                 healthState: StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none,
@@ -275,7 +333,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_ACT.self) { [unowned self] packet in
-            let event = MapObjectEvents.ActionPerformed(
+            let event = MapSession.Event.mapObjectActionPerformed(
                 sourceObjectID: UInt32(packet.srcID),
                 targetObjectID: UInt32(packet.targetID),
                 actionType: DamageType(rawValue: Int(packet.type)) ?? .normal
@@ -297,61 +355,67 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToChatPackets(with subscription: inout ClientSubscription) {
         // See `clif_GlobalMessage`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_CHAT.self) { [unowned self] packet in
-            let event = ChatEvents.MessageReceived(
+            let message = ChatMessage(
                 type: .public,
                 senderObjectID: packet.GID,
                 content: packet.Message
             )
+            let event = MapSession.Event.chatMessageReceived(message: message)
             self.postEvent(event)
         }
 
         // See `clif_wis_message`
         subscription.subscribe(to: PACKET_ZC_WHISPER.self) { [unowned self] packet in
-            let event = ChatEvents.MessageReceived(
+            let message = ChatMessage(
                 type: .private,
                 senderObjectID: packet.senderGID,
                 senderName: packet.sender,
                 content: packet.message
             )
+            let event = MapSession.Event.chatMessageReceived(message: message)
             self.postEvent(event)
         }
 
         // See `clif_displaymessage`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_PLAYERCHAT.self) { [unowned self] packet in
-            let event = ChatEvents.MessageReceived(
+            let message = ChatMessage(
                 type: .`self`,
                 content: packet.Message
             )
+            let event = MapSession.Event.chatMessageReceived(message: message)
             self.postEvent(event)
         }
 
         // See `clif_displaymessage` and `clif_channel_msg` and `clif_messagecolor_target`
         subscription.subscribe(to: PACKET_ZC_NPC_CHAT.self) { [unowned self] packet in
-            let event = ChatEvents.MessageReceived(
+            let message = ChatMessage(
                 type: .channel,
                 senderObjectID: packet.accountID,
                 content: packet.message,
                 color: packet.color
             )
+            let event = MapSession.Event.chatMessageReceived(message: message)
             self.postEvent(event)
         }
 
         // See `clif_party_message`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_CHAT_PARTY.self) { [unowned self] packet in
-            let event = ChatEvents.MessageReceived(
+            let message = ChatMessage(
                 type: .party,
                 senderObjectID: UInt32(packet.AID),
                 content: packet.chatMsg
             )
+            let event = MapSession.Event.chatMessageReceived(message: message)
             self.postEvent(event)
         }
 
         // See `clif_guild_message`
         subscription.subscribe(to: PACKET_ZC_GUILD_CHAT.self) { [unowned self] packet in
-            let event = ChatEvents.MessageReceived(
+            let message = ChatMessage(
                 type: .guild,
                 content: packet.message
             )
+            let event = MapSession.Event.chatMessageReceived(message: message)
             self.postEvent(event)
         }
 
@@ -361,11 +425,12 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_clan_message`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_CLAN_CHAT.self) { [unowned self] packet in
-            let event = ChatEvents.MessageReceived(
+            let message = ChatMessage(
                 type: .clan,
                 senderName: packet.MemberName,
                 content: packet.Message
             )
+            let event = MapSession.Event.chatMessageReceived(message: message)
             self.postEvent(event)
         }
     }
@@ -430,7 +495,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         client.sendPacket(packet)
     }
 
-    func postEvent(_ event: some Event) {
+    func postEvent(_ event: MapSession.Event) {
         eventSubject.send(event)
     }
 }

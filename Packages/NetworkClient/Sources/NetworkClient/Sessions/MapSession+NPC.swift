@@ -30,7 +30,7 @@ extension MapSession {
                dialog.objectID == packet.NpcID,
                case .message(let message, _) = dialog.content {
                 let dialog = NPCDialog(objectID: dialog.objectID, content: .message(message: message, hasNextMessage: true))
-                let event = NPCEvents.DialogReceived(dialog: dialog)
+                let event = MapSession.Event.npcDialogReceived(dialog: dialog)
                 self.postEvent(event)
 
                 self.pendingNPCDialog = nil
@@ -43,7 +43,7 @@ extension MapSession {
                dialog.objectID == packet.npcId,
                case .message(let message, _) = dialog.content {
                 let dialog = NPCDialog(objectID: dialog.objectID, content: .message(message: message, hasNextMessage: false))
-                let event = NPCEvents.DialogReceived(dialog: dialog)
+                let event = MapSession.Event.npcDialogReceived(dialog: dialog)
                 self.postEvent(event)
 
                 self.pendingNPCDialog = nil
@@ -52,7 +52,7 @@ extension MapSession {
 
         // See `clif_scriptclear`
         subscription.subscribe(to: PACKET_ZC_CLEAR_DIALOG.self) { [unowned self] packet in
-            let event = NPCEvents.DialogClosed(npcID: packet.GID)
+            let event = MapSession.Event.npcDialogClosed(npcID: packet.GID)
             self.postEvent(event)
         }
 
@@ -60,33 +60,33 @@ extension MapSession {
         subscription.subscribe(to: PACKET_ZC_MENU_LIST.self) { [unowned self] packet in
             let menu = packet.menu.split(separator: ":").map(String.init)
             let dialog = NPCDialog(objectID: packet.npcId, content: .menu(menu: menu))
-            let event = NPCEvents.DialogReceived(dialog: dialog)
+            let event = MapSession.Event.npcDialogReceived(dialog: dialog)
             self.postEvent(event)
         }
 
         // See `clif_scriptinput`
         subscription.subscribe(to: PACKET_ZC_OPEN_EDITDLG.self) { [unowned self] packet in
             let dialog = NPCDialog(objectID: packet.npcId, content: .numberInput)
-            let event = NPCEvents.DialogReceived(dialog: dialog)
+            let event = MapSession.Event.npcDialogReceived(dialog: dialog)
             self.postEvent(event)
         }
 
         // See `clif_scriptinputstr`
         subscription.subscribe(to: PACKET_ZC_OPEN_EDITDLGSTR.self) { [unowned self] packet in
             let dialog = NPCDialog(objectID: packet.npcId, content: .textInput)
-            let event = NPCEvents.DialogReceived(dialog: dialog)
+            let event = MapSession.Event.npcDialogReceived(dialog: dialog)
             self.postEvent(event)
         }
 
         // See `clif_cutin`
         subscription.subscribe(to: PACKET_ZC_SHOW_IMAGE.self) { [unowned self] packet in
-            let event = NPCEvents.ImageReceived(image: packet.image)
+            let event = MapSession.Event.imageReceived(image: packet.image)
             self.postEvent(event)
         }
 
         // See `clif_viewpoint`
         subscription.subscribe(to: PACKET_ZC_COMPASS.self) { [unowned self] packet in
-            let event = NPCEvents.MinimapMarkPositionReceived(
+            let event = MapSession.Event.minimapMarkPositionReceived(
                 npcID: packet.npcId,
                 position: SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
             )

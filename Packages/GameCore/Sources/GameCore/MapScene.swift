@@ -6,6 +6,7 @@
 //
 
 import AVFAudio
+import Constants
 import NetworkClient
 import RealityKit
 import ResourceManagement
@@ -361,33 +362,33 @@ public class MapScene {
 }
 
 extension MapScene: MapEventHandlerProtocol {
-    func onPlayerMoved(_ event: PlayerEvents.Moved) {
-        let startPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition ?? event.startPosition
-        let endPosition = event.endPosition
+    func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        let startPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
+        let endPosition = endPosition
         let path = pathfinder.findPath(from: startPosition, to: endPosition)
         playerEntity.walk(through: path)
 
-        tileEntityManager.updateTileEntities(forCenter: event.endPosition)
+        tileEntityManager.updateTileEntities(forCenter: endPosition)
     }
 
-    func onMapObjectSpawned(_ event: MapObjectEvents.Spawned) {
-        if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
-            let transform = transform(for: event.position)
+    func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
+        if let entity = rootEntity.findEntity(named: "\(object.objectID)") as? SpriteEntity {
+            let transform = transform(for: position)
             entity.transform = transform
-            entity.components[GridPositionComponent.self]?.gridPosition = event.position
+            entity.components[GridPositionComponent.self]?.gridPosition = position
         } else {
             Task {
                 do {
-                    let entity = try await spriteEntityManager.entity(for: event.object)
-                    entity.name = "\(event.object.objectID)"
-                    entity.transform = transform(for: event.position)
-                    entity.isEnabled = (event.object.effectState != .cloak)
+                    let entity = try await spriteEntityManager.entity(for: object)
+                    entity.name = "\(object.objectID)"
+                    entity.transform = transform(for: position)
+                    entity.isEnabled = (object.effectState != .cloak)
                     entity.components.set([
-                        GridPositionComponent(gridPosition: event.position),
+                        GridPositionComponent(gridPosition: position),
                         MapGridComponent(mapGrid: mapGrid),
-                        MapObjectComponent(mapObject: event.object),
+                        MapObjectComponent(mapObject: object),
                     ])
-                    entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: event.direction), repeats: true)
+                    entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: direction), repeats: true)
                     rootEntity.addChild(entity)
                 } catch {
                     logger.info("\(error)")
@@ -396,23 +397,23 @@ extension MapScene: MapEventHandlerProtocol {
         }
     }
 
-    func onMapObjectMoved(_ event: MapObjectEvents.Moved) {
-        if let entity = rootEntity.findEntity(named: "\(event.object.objectID)") as? SpriteEntity {
-            let startPosition = entity.components[GridPositionComponent.self]?.gridPosition ?? event.startPosition
-            let endPosition = event.endPosition
+    func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        if let entity = rootEntity.findEntity(named: "\(object.objectID)") as? SpriteEntity {
+            let startPosition = entity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
+            let endPosition = endPosition
             let path = pathfinder.findPath(from: startPosition, to: endPosition)
             entity.walk(through: path)
         } else {
             Task {
                 do {
-                    let entity = try await spriteEntityManager.entity(for: event.object)
-                    entity.name = "\(event.object.objectID)"
-                    entity.transform = transform(for: event.endPosition)
-                    entity.isEnabled = (event.object.effectState != .cloak)
+                    let entity = try await spriteEntityManager.entity(for: object)
+                    entity.name = "\(object.objectID)"
+                    entity.transform = transform(for: endPosition)
+                    entity.isEnabled = (object.effectState != .cloak)
                     entity.components.set([
-                        GridPositionComponent(gridPosition: event.endPosition),
+                        GridPositionComponent(gridPosition: endPosition),
                         MapGridComponent(mapGrid: mapGrid),
-                        MapObjectComponent(mapObject: event.object),
+                        MapObjectComponent(mapObject: object),
                     ])
                     entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     rootEntity.addChild(entity)
@@ -423,29 +424,29 @@ extension MapScene: MapEventHandlerProtocol {
         }
     }
 
-    func onMapObjectStopped(_ event: MapObjectEvents.Stopped) {
-        if let entity = rootEntity.findEntity(named: "\(event.objectID)") as? SpriteEntity {
-            let transform = transform(for: event.position)
+    func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>) {
+        if let entity = rootEntity.findEntity(named: "\(objectID)") as? SpriteEntity {
+            let transform = transform(for: position)
             entity.transform = transform
             entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
         }
     }
 
-    func onMapObjectVanished(_ event: MapObjectEvents.Vanished) {
-        if let entity = rootEntity.findEntity(named: "\(event.objectID)") {
+    func onMapObjectVanished(objectID: UInt32) {
+        if let entity = rootEntity.findEntity(named: "\(objectID)") {
             entity.removeFromParent()
         }
     }
 
-    func onMapObjectStateChanged(_ event: MapObjectEvents.StateChanged) {
-        if let entity = rootEntity.findEntity(named: "\(event.objectID)") {
-            entity.isEnabled = (event.effectState != .cloak)
+    func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
+        if let entity = rootEntity.findEntity(named: "\(objectID)") {
+            entity.isEnabled = (effectState != .cloak)
         }
     }
 
-    func onMapObjectActionPerformed(_ event: MapObjectEvents.ActionPerformed) {
-        if let entity = rootEntity.findEntity(named: "\(event.sourceObjectID)") as? SpriteEntity {
-            switch event.actionType {
+    func onMapObjectActionPerformed(sourceObjectID: UInt32, targetObjectID: UInt32, actionType: DamageType) {
+        if let entity = rootEntity.findEntity(named: "\(sourceObjectID)") as? SpriteEntity {
+            switch actionType {
             case .normal, .endure, .multi_hit, .multi_hit_endure, .critical, .lucy_dodge, .multi_hit_critical:
                 entity.attack(direction: .south)
             case .pickup_item:
@@ -460,10 +461,10 @@ extension MapScene: MapEventHandlerProtocol {
         }
     }
 
-    func onItemSpawned(_ event: ItemEvents.Spawned) {
+    func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
         Task {
             let scriptContext = await resourceManager.scriptContext()
-            guard let path = ResourcePath.generateItemSpritePath(itemID: Int(event.item.itemID), scriptContext: scriptContext) else {
+            guard let path = ResourcePath.generateItemSpritePath(itemID: Int(item.itemID), scriptContext: scriptContext) else {
                 return
             }
 
@@ -471,20 +472,20 @@ extension MapScene: MapEventHandlerProtocol {
             let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
 
             let entity = SpriteEntity(animations: [animation])
-            entity.name = "\(event.item.objectID)"
-            entity.transform = transform(for: event.position)
+            entity.name = "\(item.objectID)"
+            entity.transform = transform(for: position)
             entity.components.set([
-                GridPositionComponent(gridPosition: event.position),
+                GridPositionComponent(gridPosition: position),
                 MapGridComponent(mapGrid: mapGrid),
-                MapItemComponent(mapItem: event.item),
+                MapItemComponent(mapItem: item),
             ])
             entity.playSpriteAnimation(atIndex: 0, repeats: true)
             rootEntity.addChild(entity)
         }
     }
 
-    func onItemVanished(_ event: ItemEvents.Vanished) {
-        if let entity = rootEntity.findEntity(named: "\(event.objectID)") {
+    func onItemVanished(objectID: UInt32) {
+        if let entity = rootEntity.findEntity(named: "\(objectID)") {
             entity.removeFromParent()
         }
     }

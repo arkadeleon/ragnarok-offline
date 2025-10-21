@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/8/15.
 //
 
-import Combine
 import NetworkClient
 import NetworkPackets
 import Observation
@@ -58,9 +57,6 @@ final class ChatSession {
     private var charSession: CharSession?
     @ObservationIgnored
     private var mapSession: MapSession?
-
-    @ObservationIgnored
-    private var subscriptions = Set<AnyCancellable>()
 
     init(serverAddress: String, serverPort: String) {
         self.serverAddress = serverAddress
@@ -143,7 +139,7 @@ final class ChatSession {
 
         Task {
             for await event in loginSession.events {
-                await handleLoginEvent(event)
+                handleLoginEvent(event)
             }
         }
 
@@ -152,7 +148,7 @@ final class ChatSession {
         self.loginSession = loginSession
     }
 
-    private func handleLoginEvent(_ event: LoginSession.Event) async {
+    private func handleLoginEvent(_ event: LoginSession.Event) {
         switch event {
         case .loginAccepted(let account, let charServers):
             self.account = account
@@ -171,17 +167,21 @@ final class ChatSession {
         case .loginRefused(let message):
             messages.append(.serverText("Refused"))
 
-            let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                let text = text.replacingOccurrences(of: "%s", with: message.unblockTime)
-                messages.append(.serverText(text))
+            Task {
+                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
+                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                    let text = text.replacingOccurrences(of: "%s", with: message.unblockTime)
+                    messages.append(.serverText(text))
+                }
             }
         case .authenticationBanned(let message):
             messages.append(.serverText("Banned"))
 
-            let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                messages.append(.serverText(text))
+            Task {
+                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
+                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                    messages.append(.serverText(text))
+                }
             }
         case .errorOccurred(let error):
             messages.append(.serverText(error.localizedDescription))
@@ -199,7 +199,7 @@ final class ChatSession {
 
         Task {
             for await event in charSession.events {
-                await handleCharEvent(event)
+                handleCharEvent(event)
             }
         }
 
@@ -208,7 +208,7 @@ final class ChatSession {
         self.charSession = charSession
     }
 
-    private func handleCharEvent(_ event: CharSession.Event) async {
+    private func handleCharEvent(_ event: CharSession.Event) {
         switch event {
         case .charServerAccepted(let chars):
             self.chars = chars
@@ -255,9 +255,11 @@ final class ChatSession {
         case .authenticationBanned(let message):
             messages.append(.serverText("Banned"))
 
-            let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                messages.append(.serverText(text))
+            Task {
+                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
+                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                    messages.append(.serverText(text))
+                }
             }
         case .errorOccurred(let error):
             messages.append(.serverText(error.localizedDescription))
@@ -274,30 +276,45 @@ final class ChatSession {
 
         let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
 
-        mapSession.subscribe(to: MapEvents.Changed.self) { [unowned self] event in
-            self.playerPosition = event.position
-            self.messages.append(.serverText("Map changed: \(event.mapName), position: \(event.position)"))
-
-            // Load map.
-
-            self.mapSession?.notifyMapLoaded()
+        Task {
+            for await event in mapSession.events {
+                handleMapEvent(event)
+            }
         }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: PlayerEvents.Moved.self) { [unowned self] event in
-            self.playerPosition = event.endPosition
-            self.messages.append(.serverText("Player moved from \(event.startPosition) to \(event.endPosition)"))
-        }
-        .store(in: &subscriptions)
-
-        mapSession.subscribe(to: ChatEvents.MessageReceived.self) { [unowned self] event in
-            self.messages.append(.serverText("\(event.content)"))
-        }
-        .store(in: &subscriptions)
 
         mapSession.start()
 
         self.mapSession = mapSession
+    }
+
+    private func handleMapEvent(_ event: MapSession.Event) {
+        switch event {
+        case .mapChanged(let mapName, let position):
+            playerPosition = position
+            messages.append(.serverText("Map changed: \(mapName), position: \(position)"))
+
+            // Load map.
+
+            mapSession?.notifyMapLoaded()
+        case .playerMoved(let startPosition, let endPosition):
+            playerPosition = endPosition
+            messages.append(.serverText("Player moved from \(startPosition) to \(endPosition)"))
+        case .chatMessageReceived(let message):
+            messages.append(.serverText("\(message.content)"))
+        case .authenticationBanned(let message):
+            messages.append(.serverText("Banned"))
+
+            Task {
+                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
+                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                    messages.append(.serverText(text))
+                }
+            }
+        case .errorOccurred(let error):
+            messages.append(.serverText(error.localizedDescription))
+        default:
+            break
+        }
     }
 }
 
