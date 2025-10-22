@@ -34,73 +34,75 @@ struct WalkingSimulatorView: View {
     private let accountRegistrationTip = AccountRegistrationTip()
 
     var body: some View {
-        VStack(spacing: 20) {
-            #if !os(macOS)
-            TipView(serverStartupTip)
-            TipView(accountRegistrationTip)
-            #endif
+        ScrollView {
+            VStack(spacing: 20) {
+                #if !os(macOS)
+                TipView(serverStartupTip)
+                TipView(accountRegistrationTip)
+                #endif
 
-            VStack(spacing: 12) {
-                VStack(spacing: 0) {
-                    HStack {
-                        Text("Server Address")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        TextField(String(), text: $serverAddress)
-                            .multilineTextAlignment(.trailing)
-                            .focused($focusedField, equals: .serverAddress)
-                            .textFieldStyle(.plain)
-                    }
-                    .padding(12)
-
-                    Divider()
-
-                    HStack {
-                        Text("Server Port")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        TextField(String(), text: $serverPort)
-                            .multilineTextAlignment(.trailing)
-                            .focused($focusedField, equals: .serverPort)
-                            .textFieldStyle(.plain)
-                    }
-                    .padding(12)
-                }
-                .background(.background.secondary)
-                .cornerRadius(8)
-
-                Button {
-                    focusedField = nil
-
-                    let configuration = GameSession.Configuration(
-                        serverAddress: settings.serverAddress,
-                        serverPort: settings.serverPort
-                    )
-
-                    #if os(macOS)
-                    openWindow(id: gameSession.windowID, value: configuration)
-                    #else
-                    gameSession.start(configuration)
-                    isGameViewPresented = true
-                    #endif
-                } label: {
-                    Text("Start")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
+                VStack(spacing: 12) {
+                    VStack(spacing: 0) {
+                        HStack {
+                            Text("Server Address")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            TextField(String(), text: $serverAddress)
+                                .multilineTextAlignment(.trailing)
+                                .focused($focusedField, equals: .serverAddress)
+                                .textFieldStyle(.plain)
+                        }
                         .padding(12)
-                        .background(Color.blue)
-                        .cornerRadius(8)
+
+                        Divider()
+
+                        HStack {
+                            Text("Server Port")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            TextField(String(), text: $serverPort)
+                                .multilineTextAlignment(.trailing)
+                                .focused($focusedField, equals: .serverPort)
+                                .textFieldStyle(.plain)
+                        }
+                        .padding(12)
+                    }
+                    .background(.background.secondary)
+                    .cornerRadius(8)
+
+                    Button {
+                        focusedField = nil
+
+                        let configuration = GameSession.Configuration(
+                            serverAddress: settings.serverAddress,
+                            serverPort: settings.serverPort
+                        )
+
+                        #if os(macOS)
+                        openWindow(id: gameSession.windowID, value: configuration)
+                        #else
+                        gameSession.start(configuration)
+                        isGameViewPresented = true
+                        #endif
+                    } label: {
+                        Text("Start")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(12)
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
+                    .padding(.top, 8)
                 }
-                .padding(.top, 8)
+                .padding(16)
+                .background(.background)
+                .cornerRadius(12)
+                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
             }
-            .padding(16)
-            .background(.background)
-            .cornerRadius(12)
-            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
+            .padding()
         }
-        .padding()
         .navigationTitle("Walking Simulator")
         .onAppear {
             serverAddress = settings.serverAddress
