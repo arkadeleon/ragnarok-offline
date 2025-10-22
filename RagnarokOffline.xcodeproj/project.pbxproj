@@ -147,6 +147,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		35063E9F2E0E18B3003039B0 /* RagnarokOffline */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (35063F492E0E18B4003039B0 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RagnarokOffline; sourceTree = "<group>"; };
 		3558A3C22DFC25AD0038DFC3 /* RagnarokOfflineTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = RagnarokOfflineTests; sourceTree = "<group>"; };
+		3562C2F12EA9328D007BBA7B /* Configurations */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Configurations; sourceTree = "<group>"; };
 		359915462E0EA35500D94655 /* RagnarokOfflineThumbnailExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (359915512E0EA35500D94655 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RagnarokOfflineThumbnailExtension; sourceTree = "<group>"; };
 		35DCADA82E77D71000CA1988 /* Packages */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (35DCADA92E77D71000CA1988 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Packages; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -205,6 +206,7 @@
 		35B3B8CB2A08BEA600B4540B = {
 			isa = PBXGroup;
 			children = (
+				3562C2F12EA9328D007BBA7B /* Configurations */,
 				35063E9F2E0E18B3003039B0 /* RagnarokOffline */,
 				3558A3C22DFC25AD0038DFC3 /* RagnarokOfflineTests */,
 				359915462E0EA35500D94655 /* RagnarokOfflineThumbnailExtension */,
@@ -297,6 +299,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				35063E9F2E0E18B3003039B0 /* RagnarokOffline */,
+				3562C2F12EA9328D007BBA7B /* Configurations */,
 				35DCADA82E77D71000CA1988 /* Packages */,
 			);
 			name = RagnarokOffline;
@@ -572,8 +575,8 @@
 		};
 		35B3B8F62A08BEA700B4540B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 35063E9F2E0E18B3003039B0 /* RagnarokOffline */;
-			baseConfigurationReferenceRelativePath = Configurations/Development.xcconfig;
+			baseConfigurationReferenceAnchor = 3562C2F12EA9328D007BBA7B /* Configurations */;
+			baseConfigurationReferenceRelativePath = Development.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -636,8 +639,8 @@
 		};
 		35B3B8F72A08BEA700B4540B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 35063E9F2E0E18B3003039B0 /* RagnarokOffline */;
-			baseConfigurationReferenceRelativePath = Configurations/Beta.xcconfig;
+			baseConfigurationReferenceAnchor = 3562C2F12EA9328D007BBA7B /* Configurations */;
+			baseConfigurationReferenceRelativePath = AppStore.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
