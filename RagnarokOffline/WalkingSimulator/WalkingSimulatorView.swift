@@ -91,10 +91,11 @@ struct WalkingSimulatorView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(12)
-                            .background(Color.blue)
+                            .background(Color.blue.opacity(focusedField == nil ? 1.0 : 0.5))
                             .cornerRadius(8)
                     }
                     .padding(.top, 8)
+                    .disabled(focusedField != nil)
                 }
                 .padding(16)
                 .background(.background)
