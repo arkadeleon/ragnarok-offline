@@ -43,7 +43,7 @@ final class TileEntityManager {
                 tileEntity.components.set(InputTargetComponent())
                 #endif
                 tileEntity.components.set(TileComponent(position: [x, y]))
-//                tileEntity.components.set(OpacityComponent(opacity: 0))
+                tileEntity.components.set(OpacityComponent(opacity: 0))
 
                 if 0..<mapGrid.width ~= x && 0..<mapGrid.height ~= y {
                     let cell = mapGrid[[x, y]]

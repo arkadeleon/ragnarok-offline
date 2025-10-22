@@ -33,7 +33,7 @@ public struct MapSceneView: View {
                 .onChanged { value in
                     var distance = distance * Float(1 / value.magnification)
                     distance = max(distance, 3)
-                    distance = min(distance, 100)
+                    distance = min(distance, 120)
                     scene.distance = distance
                 }
                 .onEnded { value in
@@ -112,7 +112,7 @@ class MapSceneARViewController: UIViewController {
         case .changed:
             var distance = distance * Float(1 / pinchGestureRecognizer.scale)
             distance = max(distance, 3)
-            distance = min(distance, 100)
+            distance = min(distance, 120)
             scene.distance = distance
         default:
             break

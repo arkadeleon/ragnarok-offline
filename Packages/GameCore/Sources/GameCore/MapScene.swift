@@ -48,9 +48,10 @@ public class MapScene {
     }
 
     private let playerEntity = SpriteEntity()
+    private let tileSelectorEntity = Entity()
 
-    private let tileEntityManager: TileEntityManager
     private let spriteEntityManager: SpriteEntityManager
+    private let tileEntityManager: TileEntityManager
 
     private let pathfinder: Pathfinder
 
@@ -100,8 +101,8 @@ public class MapScene {
 
         self.resourceManager = resourceManager
 
-        self.tileEntityManager = TileEntityManager(mapGrid: mapGrid, rootEntity: rootEntity)
         self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager)
+        self.tileEntityManager = TileEntityManager(mapGrid: mapGrid, rootEntity: rootEntity)
 
         self.pathfinder = Pathfinder(mapGrid: mapGrid)
 
@@ -135,6 +136,27 @@ public class MapScene {
         }
 
         tileEntityManager.addTileEntities(forCenter: playerPosition)
+
+        do {
+            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
+            let image = try await resourceManager.image(at: path)
+
+            let options = TextureResource.CreateOptions(semantic: .color)
+            let texture = try await TextureResource(image: image, withName: "tile.selector", options: options)
+
+            var material = UnlitMaterial(texture: texture)
+            material.blending = .transparent(opacity: 1.0)
+            material.opacityThreshold = 0.0001
+
+            tileSelectorEntity.components.set(
+                ModelComponent(mesh: .generatePlane(width: 1, height: 1), materials: [material])
+            )
+            tileSelectorEntity.isEnabled = false
+
+            rootEntity.addChild(tileSelectorEntity)
+        } catch {
+            logger.warning("\(error)")
+        }
 
         do {
             let configuration = ComposedSprite.Configuration(mapObject: player)
@@ -183,8 +205,8 @@ public class MapScene {
         for i in 0..<200 {
             point = origin + direction * Float(i)
 
-            let x = point.x + 0.5
-            let y = point.y + 0.5
+            let x = point.x
+            let y = point.y
 
             let position: SIMD2<Int> = [Int(x), Int(y)]
 
@@ -204,6 +226,33 @@ public class MapScene {
 
             if fabsf(altitude - point.z) < 0.5 {
                 mapSceneDelegate?.mapScene(self, didTapTileAt: position)
+
+                let p0: SIMD3<Float> = [Float(position.x), Float(position.y), cell.bottomLeftAltitude + 0.1]
+                let p1: SIMD3<Float> = [Float(position.x + 1), Float(position.y), cell.bottomRightAltitude + 0.1]
+                let p2: SIMD3<Float> = [Float(position.x + 1), Float(position.y + 1), cell.topRightAltitude + 0.1]
+                let p3: SIMD3<Float> = [Float(position.x), Float(position.y + 1), cell.topLeftAltitude + 0.1]
+
+                let t0: SIMD2<Float> = [0, 0]
+                let t1: SIMD2<Float> = [1, 0]
+                let t2: SIMD2<Float> = [1, 1]
+                let t3: SIMD2<Float> = [0, 1]
+
+                var descriptor = MeshDescriptor(name: "tile.selector")
+                descriptor.materials = .allFaces(0)
+                descriptor.primitives = .triangles([0, 1, 2, 2, 3, 0])
+                descriptor.positions = MeshBuffer([p0, p1, p2, p3])
+                descriptor.textureCoordinates = MeshBuffer([t0, t1, t2, t3])
+
+                Task {
+                    let mesh = try await MeshResource(from: [descriptor])
+                    tileSelectorEntity.components[ModelComponent.self]?.mesh = mesh
+                    tileSelectorEntity.isEnabled = true
+
+                    let disableEntityAction = SetEntityEnabledAction(isEnabled: false)
+                    let disableEntityAnimation = try AnimationResource.makeActionAnimation(for: disableEntityAction, duration: 1 / 30, delay: 0.5)
+                    tileSelectorEntity.playAnimation(disableEntityAnimation)
+                }
+
                 break
             }
         }
