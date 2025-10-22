@@ -85,7 +85,7 @@ extension RSW.BoundingBox {
     }
 }
 
-extension RSW.Object.Model {
+extension RSW.Objects.Model {
     var json: String {
         """
         {
@@ -103,7 +103,7 @@ extension RSW.Object.Model {
     }
 }
 
-extension RSW.Object.Light {
+extension RSW.Objects.Light {
     var json: String {
         """
         {
@@ -118,7 +118,7 @@ extension RSW.Object.Light {
     }
 }
 
-extension RSW.Object.Sound {
+extension RSW.Objects.Sound {
     var json: String {
         """
         {
@@ -135,7 +135,7 @@ extension RSW.Object.Sound {
     }
 }
 
-extension RSW.Object.Effect {
+extension RSW.Objects.Effect {
     var json: String {
         """
         {

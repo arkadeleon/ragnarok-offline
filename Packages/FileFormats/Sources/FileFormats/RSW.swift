@@ -15,10 +15,10 @@ public struct RSW: FileFormat {
     public var water: RSW.Water
     public var light: RSW.Light
     public var boundingBox: RSW.BoundingBox
-    public var models: [RSW.Object.Model] = []
-    public var lights: [RSW.Object.Light] = []
-    public var sounds: [RSW.Object.Sound] = []
-    public var effects: [RSW.Object.Effect] = []
+    public var models: [RSW.Objects.Model] = []
+    public var lights: [RSW.Objects.Light] = []
+    public var sounds: [RSW.Objects.Sound] = []
+    public var effects: [RSW.Objects.Effect] = []
 
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
@@ -51,19 +51,19 @@ public struct RSW: FileFormat {
         let objectCount = try decoder.decode(Int32.self)
 
         for _ in 0..<objectCount {
-            let objectType = try RSW.Object.ObjectType(rawValue: decoder.decode(Int32.self))
+            let objectType = try RSW.Objects.ObjectType(rawValue: decoder.decode(Int32.self))
             switch objectType {
             case .model:
-                let model = try decoder.decode(RSW.Object.Model.self, configuration: version)
+                let model = try decoder.decode(RSW.Objects.Model.self, configuration: version)
                 models.append(model)
             case .light:
-                let light = try decoder.decode(RSW.Object.Light.self, configuration: version)
+                let light = try decoder.decode(RSW.Objects.Light.self, configuration: version)
                 lights.append(light)
             case .sound:
-                let sound = try decoder.decode(RSW.Object.Sound.self, configuration: version)
+                let sound = try decoder.decode(RSW.Objects.Sound.self, configuration: version)
                 sounds.append(sound)
             case .effect:
-                let effect = try decoder.decode(RSW.Object.Effect.self, configuration: version)
+                let effect = try decoder.decode(RSW.Objects.Effect.self, configuration: version)
                 effects.append(effect)
             default:
                 break
@@ -208,7 +208,7 @@ extension RSW {
 }
 
 extension RSW {
-    public enum Object {
+    public enum Objects {
         public enum ObjectType: Int32 {
             case model = 1
             case light = 2
