@@ -13,7 +13,7 @@ struct MapLoadingView: View {
 
     var body: some View {
         ZStack {
-            GameImage("loading01.jpg") { image in
+            GameImage(imageName) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -27,6 +27,12 @@ struct MapLoadingView: View {
                     .padding(.bottom, 50)
             }
         }
+    }
+
+    private var imageName: String {
+        let i = Int.random(in: 1...10)
+        let imageName = String(format: "loading%02d.jpg", i)
+        return imageName
     }
 }
 
