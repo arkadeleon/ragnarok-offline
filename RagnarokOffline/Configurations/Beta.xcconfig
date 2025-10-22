@@ -1,0 +1,15 @@
+//
+//  Beta.xcconfig
+//  RagnarokOffline
+//
+//  Created by Leon Li on 2025/10/22.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+INFOPLIST_KEY_CFBundleDisplayName = RagOff
+MARKETING_VERSION = 2.0
+CURRENT_PROJECT_VERSION = 2005
+
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) WALKING_SIMULATOR

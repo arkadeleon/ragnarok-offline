@@ -1,0 +1,13 @@
+//
+//  AppStore.xcconfig
+//  RagnarokOffline
+//
+//  Created by Leon Li on 2025/10/22.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+INFOPLIST_KEY_CFBundleDisplayName = RagOff
+MARKETING_VERSION = 1.7.1
+CURRENT_PROJECT_VERSION = 18

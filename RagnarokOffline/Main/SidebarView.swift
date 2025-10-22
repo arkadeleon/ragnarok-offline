@@ -156,11 +156,13 @@ struct SidebarView: View {
                     Label("Character Simulator", systemImage: "person")
                 }
 
-                #if DEBUG
+                #if DEBUG || WALKING_SIMULATOR
                 NavigationLink(value: SidebarItem.walkingSimulator) {
                     Label("Walking Simulator", systemImage: "macwindow")
                 }
+                #endif
 
+                #if DEBUG
                 NavigationLink(value: SidebarItem.chat) {
                     Label("Chat", systemImage: "message")
                 }
