@@ -98,9 +98,13 @@ struct ContentView: View {
                 .environment(appModel.characterSimulator)
                 .environment(appModel.database)
         case .walkingSimulator:
+            #if DEBUG || WALKING_SIMULATOR
             WalkingSimulatorView()
                 .environment(appModel.gameSession)
                 .environment(appModel.settings)
+            #else
+            WalkingSimulatorIntroView()
+            #endif
         case .chat:
             ChatView()
                 .environment(appModel.chatSession)
