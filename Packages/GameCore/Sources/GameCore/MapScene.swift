@@ -41,7 +41,7 @@ public class MapScene {
 
     weak var mapSceneDelegate: (any MapSceneDelegate)?
 
-    var distance: Float = 80 {
+    var distance: Float = 100 {
         didSet {
             rootEntity.findEntity(named: "camera")?.components[WorldCameraComponent.self]?.radius = distance
         }
@@ -192,15 +192,17 @@ public class MapScene {
         }
     }
 
-    func hitEntity(_ entity: Entity) {
-        if let mapObject = entity.components[MapObjectComponent.self]?.mapObject {
-            mapSceneDelegate?.mapScene(self, didTapMapObject: mapObject)
-        } else if let mapItem = entity.components[MapItemComponent.self]?.mapItem {
-            mapSceneDelegate?.mapScene(self, didTapMapItem: mapItem)
+    func raycast(origin: SIMD3<Float>, direction: SIMD3<Float>, in scene: RealityKit.Scene) {
+        let nearestHit = scene.raycast(origin: origin, direction: direction, length: 150, query: .nearest).first
+        if let nearestHit {
+            if let mapObject = nearestHit.entity.components[MapObjectComponent.self]?.mapObject {
+                mapSceneDelegate?.mapScene(self, didTapMapObject: mapObject)
+            } else if let mapItem = nearestHit.entity.components[MapItemComponent.self]?.mapItem {
+                mapSceneDelegate?.mapScene(self, didTapMapItem: mapItem)
+            }
+            return
         }
-    }
 
-    func raycast(origin: SIMD3<Float>, direction: SIMD3<Float>) {
         var point = origin
         for i in 0..<200 {
             point = origin + direction * Float(i)
@@ -274,7 +276,7 @@ public class MapScene {
         )
         let lightComponent = DirectionalLightComponent(color: lightColor)
 
-        let lightShadowComponent = DirectionalLightComponent.Shadow(maximumDistance: 100)
+        let lightShadowComponent = DirectionalLightComponent.Shadow(maximumDistance: 150)
 
         lightEntity.components.set([lightComponent, lightShadowComponent])
 

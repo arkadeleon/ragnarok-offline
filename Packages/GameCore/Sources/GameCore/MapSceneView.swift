@@ -11,7 +11,7 @@ import SwiftUI
 public struct MapSceneView: View {
     public var scene: MapScene
 
-    @State private var distance: Float = 80
+    @State private var distance: Float = 100
 
     public var body: some View {
         #if os(iOS) || os(macOS)
@@ -65,7 +65,7 @@ class MapSceneARViewController: UIViewController {
     let scene: MapScene
 
     private var arView: ARView!
-    private var distance: Float = 80
+    private var distance: Float = 100
 
     init(scene: MapScene) {
         self.scene = scene
@@ -98,10 +98,8 @@ class MapSceneARViewController: UIViewController {
     @objc func handleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
         let screenPoint = tapGestureRecognizer.location(in: arView)
 
-        if let entity = arView.entity(at: screenPoint) {
-            scene.hitEntity(entity)
-        } else if let (origin, direction) = arView.ray(through: screenPoint) {
-            scene.raycast(origin: origin, direction: direction)
+        if let (origin, direction) = arView.ray(through: screenPoint) {
+            scene.raycast(origin: origin, direction: direction, in: arView.scene)
         }
     }
 
@@ -162,10 +160,8 @@ class MapSceneARViewController: NSViewController {
 
     override func mouseDown(with event: NSEvent) {
         let screenPoint = arView.convert(event.locationInWindow, from: nil)
-        if let entity = arView.entity(at: screenPoint) {
-            scene.hitEntity(entity)
-        } else if let (origin, direction) = arView.ray(through: screenPoint) {
-            scene.raycast(origin: origin, direction: direction)
+        if let (origin, direction) = arView.ray(through: screenPoint) {
+            scene.raycast(origin: origin, direction: direction, in: arView.scene)
         }
     }
 
