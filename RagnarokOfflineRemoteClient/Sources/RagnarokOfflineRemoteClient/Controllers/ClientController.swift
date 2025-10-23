@@ -19,7 +19,6 @@ struct ClientController: RouteCollection {
         self.resourcesDirectory = resourcesDirectory
 
         self.grfArchives = [
-            GRFArchive(url: resourcesDirectory.appending(path: "rdata.grf")),
             GRFArchive(url: resourcesDirectory.appending(path: "data.grf")),
         ]
     }
