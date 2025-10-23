@@ -9,7 +9,7 @@ import BinaryIO
 import Foundation
 
 public actor MapDatabase {
-    public let sourceURL: URL
+    public let baseURL: URL
     public let mode: DatabaseMode
 
     private lazy var _maps: [Map] = {
@@ -19,8 +19,8 @@ public actor MapDatabase {
 
         do {
             let mapCacheURLs = [
-                sourceURL.appending(path: "db/map_cache.dat"),
-                sourceURL.appending(path: "db/\(mode.path)/map_cache.dat"),
+                baseURL.appending(path: "db/map_cache.dat"),
+                baseURL.appending(path: "db/\(mode.path)/map_cache.dat"),
             ]
             for mapCacheURL in mapCacheURLs {
                 guard let decoder = BinaryDecoder(url: mapCacheURL) else {
@@ -42,7 +42,7 @@ public actor MapDatabase {
         metric.beginMeasuring("Load map index")
 
         do {
-            let url = sourceURL.appending(path: "db/map_index.txt")
+            let url = baseURL.appending(path: "db/map_index.txt")
             let string = try String(contentsOf: url, encoding: .utf8)
 
             var index = 0
@@ -88,8 +88,8 @@ public actor MapDatabase {
         )
     }()
 
-    public init(sourceURL: URL, mode: DatabaseMode) {
-        self.sourceURL = sourceURL
+    public init(baseURL: URL, mode: DatabaseMode) {
+        self.baseURL = baseURL
         self.mode = mode
     }
 

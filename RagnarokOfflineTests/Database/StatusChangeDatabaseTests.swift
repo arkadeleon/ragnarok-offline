@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class StatusChangeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = StatusChangeDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = StatusChangeDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let stone = await database.statusChange(for: .stone)!
         XCTAssertEqual(stone.status, .stone)
@@ -28,8 +27,7 @@ final class StatusChangeDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = StatusChangeDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = StatusChangeDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let stone = await database.statusChange(for: .stone)!
         XCTAssertEqual(stone.status, .stone)

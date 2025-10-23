@@ -13,7 +13,7 @@ enum NPCDatabaseError: Error {
 }
 
 public actor NPCDatabase {
-    public let sourceURL: URL
+    public let baseURL: URL
     public let mode: DatabaseMode
 
     private var mapFlags: [MapFlag] = []
@@ -27,8 +27,8 @@ public actor NPCDatabase {
 
     private var isCached = false
 
-    public init(sourceURL: URL, mode: DatabaseMode) {
-        self.sourceURL = sourceURL
+    public init(baseURL: URL, mode: DatabaseMode) {
+        self.baseURL = baseURL
         self.mode = mode
     }
 
@@ -64,7 +64,7 @@ public actor NPCDatabase {
             metric.beginMeasuring("Load NPC database")
 
             do {
-                let url = sourceURL.appending(path: "npc/\(mode.path)/scripts_main.conf")
+                let url = baseURL.appending(path: "npc/\(mode.path)/scripts_main.conf")
                 try import_conf_file(url: url)
 
                 metric.endMeasuring("Load NPC database")
@@ -99,7 +99,7 @@ public actor NPCDatabase {
 
             let w1 = words[0]
             let w2 = words[1]
-            let url = sourceURL.appending(path: w2)
+            let url = baseURL.appending(path: w2)
 
             switch w1 {
             case "npc":

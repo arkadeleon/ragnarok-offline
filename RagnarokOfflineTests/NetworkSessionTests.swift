@@ -20,12 +20,14 @@ final class NetworkSessionTests: XCTestCase {
     var mapServer: MapServerInfo!
 
     override func setUp() async throws {
-        let url = ServerResourceManager.shared.workingDirectoryURL
-        if FileManager.default.fileExists(atPath: url.path()) {
-            try FileManager.default.removeItem(at: url)
+        let workingDirectoryURL = URL.libraryDirectory.appending(path: "rathena.testing", directoryHint: .isDirectory)
+
+        if FileManager.default.fileExists(atPath: workingDirectoryURL.path()) {
+            try FileManager.default.removeItem(at: workingDirectoryURL)
         }
 
-        try await ServerResourceManager.shared.prepareWorkingDirectory()
+        let serverResourceManager = ServerResourceManager()
+        try await serverResourceManager.prepareWorkingDirectory(at: workingDirectoryURL)
 
         Task {
             let messages = NotificationCenter.default.notifications(named: .ServerDidOutputData)

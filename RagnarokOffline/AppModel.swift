@@ -17,6 +17,7 @@ import rAthenaResources
 let localClientURL = URL.documentsDirectory
 let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")
 let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
+let serverWorkingDirectoryURL = URL.libraryDirectory.appending(path: "rathena", directoryHint: .isDirectory)
 
 @MainActor
 @Observable
@@ -29,7 +30,7 @@ final class AppModel {
     var clientSyncedDirectory: File?
     let clientCachedDirectory = File(node: .directory(remoteClientCacheURL))
 
-    let serverDirectory = File(node: .directory(ServerResourceManager.shared.workingDirectoryURL))
+    let serverDirectory = File(node: .directory(serverWorkingDirectoryURL))
     let loginServer = ServerModel(server: LoginServer.shared)
     let charServer = ServerModel(server: CharServer.shared)
     let mapServer = ServerModel(server: MapServer.shared)

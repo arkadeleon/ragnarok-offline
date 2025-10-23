@@ -9,7 +9,7 @@ import Foundation
 import RapidYAML
 
 public actor ItemDatabase {
-    public let sourceURL: URL
+    public let baseURL: URL
     public let mode: DatabaseMode
 
     private lazy var _usableItems: [Item] = {
@@ -18,7 +18,7 @@ public actor ItemDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = sourceURL.appending(path: "db/\(mode.path)/item_db_usable.yml")
+            let url = baseURL.appending(path: "db/\(mode.path)/item_db_usable.yml")
             let data = try Data(contentsOf: url)
             let usableItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
@@ -38,7 +38,7 @@ public actor ItemDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = sourceURL.appending(path: "db/\(mode.path)/item_db_equip.yml")
+            let url = baseURL.appending(path: "db/\(mode.path)/item_db_equip.yml")
             let data = try Data(contentsOf: url)
             let equipItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
@@ -58,7 +58,7 @@ public actor ItemDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = sourceURL.appending(path: "db/\(mode.path)/item_db_etc.yml")
+            let url = baseURL.appending(path: "db/\(mode.path)/item_db_etc.yml")
             let data = try Data(contentsOf: url)
             let etcItems = try decoder.decode(ListNode<Item>.self, from: data).body
 
@@ -90,8 +90,8 @@ public actor ItemDatabase {
         )
     }()
 
-    public init(sourceURL: URL, mode: DatabaseMode) {
-        self.sourceURL = sourceURL
+    public init(baseURL: URL, mode: DatabaseMode) {
+        self.baseURL = baseURL
         self.mode = mode
     }
 

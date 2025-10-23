@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class MapDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = MapDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = MapDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let alberta = await database.map(forName: "alberta")!
         let grid = alberta.grid()!
@@ -21,8 +20,7 @@ final class MapDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = MapDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = MapDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let alberta = await database.map(forName: "alberta")!
         let grid = alberta.grid()!

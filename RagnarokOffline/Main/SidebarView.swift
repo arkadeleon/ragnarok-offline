@@ -215,12 +215,15 @@ struct SidebarView: View {
     }
 
     private func startAllServers() async throws {
+        let serverResourceManager = ServerResourceManager()
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+
         async let startLoginServer = appModel.loginServer.start()
         async let startCharServer = appModel.charServer.start()
         async let startMapServer = appModel.mapServer.start()
         async let startWebServer = appModel.webServer.start()
 
-        _ = try await (startLoginServer, startCharServer, startMapServer, startWebServer)
+        _ = await (startLoginServer, startCharServer, startMapServer, startWebServer)
     }
 }
 

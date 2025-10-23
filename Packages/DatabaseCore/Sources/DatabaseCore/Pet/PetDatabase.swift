@@ -9,7 +9,7 @@ import Foundation
 import RapidYAML
 
 public actor PetDatabase {
-    public let sourceURL: URL
+    public let baseURL: URL
     public let mode: DatabaseMode
 
     private lazy var _pets: [Pet] = {
@@ -18,7 +18,7 @@ public actor PetDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = sourceURL.appending(path: "db/\(mode.path)/pet_db.yml")
+            let url = baseURL.appending(path: "db/\(mode.path)/pet_db.yml")
             let data = try Data(contentsOf: url)
             let pets = try decoder.decode(ListNode<Pet>.self, from: data).body
 
@@ -39,8 +39,8 @@ public actor PetDatabase {
         )
     }()
 
-    public init(sourceURL: URL, mode: DatabaseMode) {
-        self.sourceURL = sourceURL
+    public init(baseURL: URL, mode: DatabaseMode) {
+        self.baseURL = baseURL
         self.mode = mode
     }
 

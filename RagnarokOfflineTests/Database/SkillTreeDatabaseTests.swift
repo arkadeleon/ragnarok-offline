@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class SkillTreeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = SkillTreeDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = SkillTreeDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let acolyte = await database.skillTree(for: .acolyte)!
         XCTAssertEqual(acolyte.job, .acolyte)
@@ -21,8 +20,7 @@ final class SkillTreeDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = SkillTreeDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = SkillTreeDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let acolyte = await database.skillTree(for: .acolyte)!
         XCTAssertEqual(acolyte.job, .acolyte)

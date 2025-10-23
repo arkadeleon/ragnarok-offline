@@ -10,7 +10,7 @@ import Foundation
 import RapidYAML
 
 public actor SkillTreeDatabase {
-    public let sourceURL: URL
+    public let baseURL: URL
     public let mode: DatabaseMode
 
     private lazy var _skillTrees: [SkillTree] = {
@@ -19,7 +19,7 @@ public actor SkillTreeDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = sourceURL.appending(path: "db/\(mode.path)/skill_tree.yml")
+            let url = baseURL.appending(path: "db/\(mode.path)/skill_tree.yml")
             let data = try Data(contentsOf: url)
             let skillTrees = try decoder.decode(ListNode<SkillTree>.self, from: data).body
 
@@ -40,8 +40,8 @@ public actor SkillTreeDatabase {
         )
     }()
 
-    public init(sourceURL: URL, mode: DatabaseMode) {
-        self.sourceURL = sourceURL
+    public init(baseURL: URL, mode: DatabaseMode) {
+        self.baseURL = baseURL
         self.mode = mode
     }
 

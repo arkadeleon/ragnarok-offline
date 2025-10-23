@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class SkillDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = SkillDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = SkillDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!
         XCTAssertEqual(napalmBeat.id, 11)
@@ -56,8 +55,7 @@ final class SkillDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = SkillDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = SkillDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!
         XCTAssertEqual(napalmBeat.id, 11)

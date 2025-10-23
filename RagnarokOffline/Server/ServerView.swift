@@ -6,6 +6,7 @@
 //
 
 import rAthenaCommon
+import rAthenaResources
 import SwiftUI
 
 struct ServerView: View {
@@ -17,9 +18,7 @@ struct ServerView: View {
 
             if server.status == .notStarted {
                 Button {
-                    Task {
-                        try await server.start()
-                    }
+                    startServer()
                 } label: {
                     Image(systemName: "play")
                         .font(.system(size: 40))
@@ -34,18 +33,14 @@ struct ServerView: View {
         .toolbar {
             ToolbarItemGroup {
                 Button {
-                    Task {
-                        await server.stop()
-                    }
+                    stopServer()
                 } label: {
                     Image(systemName: "stop.fill")
                 }
                 .disabled(stopDisabled)
 
                 Button {
-                    Task {
-                        try await server.start()
-                    }
+                    startServer()
                 } label: {
                     Image(systemName: "play.fill")
                 }
@@ -73,6 +68,21 @@ struct ServerView: View {
         switch server.status {
         case .notStarted, .starting, .stopping, .stopped: true
         case .running: false
+        }
+    }
+
+    private func startServer() {
+        Task {
+            let serverResourceManager = ServerResourceManager()
+            try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+
+            _ = await server.start()
+        }
+    }
+
+    private func stopServer() {
+        Task {
+            _ = await server.stop()
         }
     }
 }

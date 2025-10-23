@@ -100,17 +100,16 @@ final class DatabaseModel {
     init(mode: DatabaseMode) {
         self.mode = mode
 
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        itemDatabase = ItemDatabase(sourceURL: sourceURL, mode: mode)
-        jobDatabase = JobDatabase(sourceURL: sourceURL, mode: mode)
-        mapDatabase = MapDatabase(sourceURL: sourceURL, mode: mode)
-        monsterDatabase = MonsterDatabase(sourceURL: sourceURL, mode: mode)
-        monsterSummonDatabase = MonsterSummonDatabase(sourceURL: sourceURL, mode: mode)
-        npcDatabase = NPCDatabase(sourceURL: sourceURL, mode: mode)
-        petDatabase = PetDatabase(sourceURL: sourceURL, mode: mode)
-        skillDatabase = SkillDatabase(sourceURL: sourceURL, mode: mode)
-        skillTreeDatabase = SkillTreeDatabase(sourceURL: sourceURL, mode: mode)
-        statusChangeDatabase = StatusChangeDatabase(sourceURL: sourceURL, mode: mode)
+        itemDatabase = ItemDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        jobDatabase = JobDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        mapDatabase = MapDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        monsterDatabase = MonsterDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        monsterSummonDatabase = MonsterSummonDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        npcDatabase = NPCDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        petDatabase = PetDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        skillDatabase = SkillDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        skillTreeDatabase = SkillTreeDatabase(baseURL: serverResourceBaseURL, mode: mode)
+        statusChangeDatabase = StatusChangeDatabase(baseURL: serverResourceBaseURL, mode: mode)
     }
 
     // MARK: - Item Database

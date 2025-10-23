@@ -7,7 +7,6 @@
 
 import Combine
 import rAthenaCommon
-import rAthenaResources
 
 @MainActor
 @Observable
@@ -47,9 +46,8 @@ final class ServerModel {
             .store(in: &subscriptions)
     }
 
-    func start() async throws -> Bool {
-        try await ServerResourceManager.shared.prepareWorkingDirectory()
-        return await server.start()
+    func start() async -> Bool {
+        await server.start()
     }
 
     func stop() async -> Bool {

@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class MonsterSummonDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = MonsterSummonDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = MonsterSummonDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let bloodyDeadBranch = await database.monsterSummon(forGroup: "Bloody_Dead_Branch")!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")
@@ -20,8 +19,7 @@ final class MonsterSummonDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = MonsterSummonDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = MonsterSummonDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let bloodyDeadBranch = await database.monsterSummon(forGroup: "BLOODY_DEAD_BRANCH")!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")

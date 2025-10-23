@@ -9,7 +9,7 @@ import Foundation
 import RapidYAML
 
 public actor MonsterSummonDatabase {
-    public let sourceURL: URL
+    public let baseURL: URL
     public let mode: DatabaseMode
 
     private lazy var _monsterSummons: [MonsterSummon] = {
@@ -18,7 +18,7 @@ public actor MonsterSummonDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = sourceURL.appending(path: "db/\(mode.path)/mob_summon.yml")
+            let url = baseURL.appending(path: "db/\(mode.path)/mob_summon.yml")
             let data = try Data(contentsOf: url)
             let monsterSummons = try decoder.decode(ListNode<MonsterSummon>.self, from: data).body
 
@@ -39,8 +39,8 @@ public actor MonsterSummonDatabase {
         )
     }()
 
-    public init(sourceURL: URL, mode: DatabaseMode) {
-        self.sourceURL = sourceURL
+    public init(baseURL: URL, mode: DatabaseMode) {
+        self.baseURL = baseURL
         self.mode = mode
     }
 

@@ -20,8 +20,7 @@ final class ItemDatabaseTests: XCTestCase {
     }
 
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = ItemDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = ItemDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let redPotion = await database.item(forAegisName: "Red_Potion")!
         XCTAssertEqual(redPotion.id, 501)
@@ -127,8 +126,7 @@ final class ItemDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = ItemDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = ItemDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let redPotion = await database.item(forAegisName: "Red_Potion")!
         XCTAssertEqual(redPotion.id, 501)

@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class JobDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = JobDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = JobDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let novice = await database.jobs().first(where: { $0.id == .novice })!
         XCTAssertEqual(novice.baseASPD[.w_fist], 500)
@@ -24,8 +23,7 @@ final class JobDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = JobDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = JobDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let novice = await database.jobs().first(where: { $0.id == .novice })!
         XCTAssertEqual(novice.baseASPD[.w_fist], 40)

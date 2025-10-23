@@ -9,7 +9,7 @@ import Foundation
 import RapidYAML
 
 public actor SkillDatabase {
-    public let sourceURL: URL
+    public let baseURL: URL
     public let mode: DatabaseMode
 
     private lazy var _skills: [Skill] = {
@@ -18,7 +18,7 @@ public actor SkillDatabase {
         do {
             let decoder = YAMLDecoder()
 
-            let url = sourceURL.appending(path: "db/\(mode.path)/skill_db.yml")
+            let url = baseURL.appending(path: "db/\(mode.path)/skill_db.yml")
             let data = try Data(contentsOf: url)
             let skills = try decoder.decode(ListNode<Skill>.self, from: data).body
 
@@ -46,8 +46,8 @@ public actor SkillDatabase {
         )
     }()
 
-    public init(sourceURL: URL, mode: DatabaseMode) {
-        self.sourceURL = sourceURL
+    public init(baseURL: URL, mode: DatabaseMode) {
+        self.baseURL = baseURL
         self.mode = mode
     }
 

@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class MonsterDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = MonsterDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = MonsterDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let poring = await database.monster(forAegisName: "PORING")!
         XCTAssertEqual(poring.aegisName, "PORING")
@@ -85,8 +84,7 @@ final class MonsterDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = MonsterDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = MonsterDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let poring = await database.monster(forAegisName: "PORING")!
         XCTAssertEqual(poring.aegisName, "PORING")

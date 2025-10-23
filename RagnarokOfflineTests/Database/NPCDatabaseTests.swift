@@ -11,9 +11,8 @@ import rAthenaResources
 
 final class NPCDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let npcDatabase = NPCDatabase(sourceURL: sourceURL, mode: .prerenewal)
-        let monsterDatabase = MonsterDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let npcDatabase = NPCDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
+        let monsterDatabase = MonsterDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let poring = await monsterDatabase.monster(forAegisName: "PORING")!
         let poringMonsterSpawns = await npcDatabase.monsterSpawns(for: poring)
@@ -24,9 +23,8 @@ final class NPCDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let npcDatabase = NPCDatabase(sourceURL: sourceURL, mode: .renewal)
-        let monsterDatabase = MonsterDatabase(sourceURL: sourceURL, mode: .renewal)
+        let npcDatabase = NPCDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
+        let monsterDatabase = MonsterDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let poring = await monsterDatabase.monster(forAegisName: "PORING")!
         let poringMonsterSpawns = await npcDatabase.monsterSpawns(for: poring)

@@ -11,8 +11,7 @@ import rAthenaResources
 
 final class PetDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = PetDatabase(sourceURL: sourceURL, mode: .prerenewal)
+        let database = PetDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
 
         let poring = await database.pet(forAegisName: "PORING")!
         XCTAssertEqual(poring.monster, "PORING")
@@ -27,8 +26,7 @@ final class PetDatabaseTests: XCTestCase {
     }
 
     func testRenewal() async throws {
-        let sourceURL = ServerResourceManager.shared.sourceURL
-        let database = PetDatabase(sourceURL: sourceURL, mode: .renewal)
+        let database = PetDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
 
         let poring = await database.pet(forAegisName: "PORING")!
         XCTAssertEqual(poring.monster, "PORING")
