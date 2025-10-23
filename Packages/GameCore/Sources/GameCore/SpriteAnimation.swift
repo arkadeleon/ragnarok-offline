@@ -34,32 +34,34 @@ final class SpriteAnimation: Sendable {
     init(animation: SpriteRenderer.Animation) async throws {
         let frameCount = animation.frames.count
 
-        let frameWidth = animation.frameWidth
-        let frameHeight = animation.frameHeight
-
-        let size = CGSize(width: frameWidth * CGFloat(frameCount), height: frameHeight)
+        let width = animation.frameWidth * animation.scale
+        let height = animation.frameHeight * animation.scale
+        let size = CGSize(width: width * CGFloat(frameCount), height: height)
         let renderer = CGImageRenderer(size: size, flipped: false)
         let image = renderer.image { cgContext in
             for frameIndex in 0..<frameCount {
                 if let frame = animation.frames[frameIndex] {
-                    let rect = CGRect(x: frameWidth * CGFloat(frameIndex), y: 0, width: frameWidth, height: frameHeight)
+                    let rect = CGRect(x: width * CGFloat(frameIndex), y: 0, width: width, height: height)
                     cgContext.draw(frame, in: rect)
                 }
             }
         }
 
         if let image {
-            let options = TextureResource.CreateOptions(semantic: .color, mipmapsMode: .none)
+            let options = TextureResource.CreateOptions(semantic: .color)
             texture = try await TextureResource(image: image, options: options)
         } else {
             texture = nil
         }
 
         self.frameCount = frameCount
-        self.frameWidth = Float(frameWidth)
-        self.frameHeight = Float(frameHeight)
+        self.frameWidth = Float(animation.frameWidth)
+        self.frameHeight = Float(animation.frameHeight)
         self.frameInterval = animation.frameInterval
-        self.pivot = [Float(animation.pivot.x), Float(animation.pivot.y)]
+        self.pivot = [
+            Float(animation.pivot.x),
+            Float(animation.pivot.y),
+        ]
     }
 }
 

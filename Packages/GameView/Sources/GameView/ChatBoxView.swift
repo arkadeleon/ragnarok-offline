@@ -15,11 +15,6 @@ struct ChatBoxView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView {
-            }
-            .frame(height: 42)
-            .background(.black.opacity(0.5))
-
             TextField(String(), text: $message)
                 .textFieldStyle(.roundedBorder)
                 #if !os(macOS)
@@ -32,7 +27,7 @@ struct ChatBoxView: View {
                     message = ""
                 }
         }
-        .frame(width: 280)
+        .frame(width: 220)
     }
 }
 

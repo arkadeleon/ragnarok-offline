@@ -324,7 +324,7 @@ public class MapScene {
         worldCameraComponent.radius = 15
         worldCameraComponent.targetOffset = [0, -0.75, 0]
         #else
-        worldCameraComponent.radius = 80
+        worldCameraComponent.radius = 100
         worldCameraComponent.targetOffset = [0, 0.5, 0]
         #endif
 
