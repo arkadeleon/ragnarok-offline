@@ -28,10 +28,14 @@ final class Client: Sendable {
 
     init(name: String, address: String, port: UInt16) {
         self.name = name
+
+        let tcp = NWProtocolTCP.Options()
+        tcp.connectionTimeout = 10
+
         self.connection = NWConnection(
             host: NWEndpoint.Host(address),
             port: NWEndpoint.Port(rawValue: port)!,
-            using: .tcp
+            using: NWParameters(tls: nil, tcp: tcp)
         )
 
         let (errorStream, errorContinuation) = AsyncStream<ClientError>.makeStream()
@@ -45,8 +49,17 @@ final class Client: Sendable {
 
     func connect(with subscription: ClientSubscription) {
         let name = name
+        let errorContinuation = errorContinuation
+
         connection.stateUpdateHandler = { state in
-            logger.info("\(name) client \(String(describing: state))")
+            logger.info("\(name) client connection state changed: \(String(describing: state))")
+
+            switch state {
+            case .waiting(let error), .failed(let error):
+                errorContinuation.yield(.network(error))
+            default:
+                break
+            }
         }
 
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")

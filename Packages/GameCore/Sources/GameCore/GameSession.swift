@@ -86,14 +86,18 @@ final public class GameSession {
 
     public func test(_ configuration: GameSession.Configuration) async -> NWError? {
         await withCheckedContinuation { continuation in
+            let tcp = NWProtocolTCP.Options()
+            tcp.connectionTimeout = 10
+
             let connection = NWConnection(
                 host: NWEndpoint.Host(configuration.serverAddress),
                 port: NWEndpoint.Port(rawValue: configuration.serverPort)!,
-                using: .tcp
+                using: NWParameters(tls: nil, tcp: tcp)
             )
 
             connection.stateUpdateHandler = { state in
-                print(state)
+                logger.info("Game session testing connection state changed: \(String(describing: state))")
+
                 switch state {
                 case .ready:
                     continuation.resume(returning: nil)

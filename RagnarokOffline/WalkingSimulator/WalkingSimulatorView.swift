@@ -91,7 +91,7 @@ struct WalkingSimulatorView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(12)
-                            .background(Color.blue)
+                            .background(Color.blue.opacity(connectionState == .testing ? 0.5 : 1.0))
                             .cornerRadius(8)
                     }
                     .padding(.top, 8)
