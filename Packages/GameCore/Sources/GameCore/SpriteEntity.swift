@@ -10,14 +10,8 @@ import RealityKit
 import SpriteRendering
 
 class SpriteEntity: Entity {
-    required init() {
-        super.init()
-
-        let inputTargetComponent = InputTargetComponent()
-        components.set(inputTargetComponent)
-
-        let shadowComponent = DynamicLightShadowComponent(castsShadow: false)
-        components.set(shadowComponent)
+    convenience required init() {
+        self.init(animations: [])
     }
 
     init(animations: [SpriteAnimation]) {
@@ -25,6 +19,9 @@ class SpriteEntity: Entity {
 
         let inputTargetComponent = InputTargetComponent()
         components.set(inputTargetComponent)
+
+        let hoverEffectComponent = HoverEffectComponent(.highlight(.default))
+        components.set(hoverEffectComponent)
 
         let shadowComponent = DynamicLightShadowComponent(castsShadow: false)
         components.set(shadowComponent)

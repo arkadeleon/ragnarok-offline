@@ -21,6 +21,7 @@ final class TileEntityManager {
     }
 
     func addTileEntities(forCenter center: SIMD2<Int>) {
+        #if os(visionOS)
         for offsetX in (-range)...(range) {
             for offsetY in (-range)...(range) {
                 let x = center.x + offsetX
@@ -36,14 +37,12 @@ final class TileEntityManager {
                 material.triangleFillMode = .lines
 
                 tileEntity.components.set(ModelComponent(mesh: mesh, materials: [material]))
-                #if os(visionOS)
                 tileEntity.components.set(CollisionComponent(shapes: [
                     .generateBox(width: 1, height: 1, depth: 0)
                 ]))
                 tileEntity.components.set(InputTargetComponent())
-                #endif
+                tileEntity.components.set(HoverEffectComponent())
                 tileEntity.components.set(TileComponent(position: [x, y]))
-                tileEntity.components.set(OpacityComponent(opacity: 0))
 
                 if 0..<mapGrid.width ~= x && 0..<mapGrid.height ~= y {
                     let cell = mapGrid[[x, y]]
@@ -73,9 +72,11 @@ final class TileEntityManager {
                 rootEntity.addChild(tileEntity)
             }
         }
+        #endif
     }
 
     func updateTileEntities(forCenter center: SIMD2<Int>) {
+        #if os(visionOS)
         for offsetX in (-range)...(range) {
             for offsetY in (-range)...(range) {
                 let x = center.x + offsetX
@@ -109,5 +110,6 @@ final class TileEntityManager {
                 }
             }
         }
+        #endif
     }
 }
