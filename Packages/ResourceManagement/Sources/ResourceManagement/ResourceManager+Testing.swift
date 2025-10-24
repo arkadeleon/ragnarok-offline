@@ -1,15 +1,14 @@
 //
 //  ResourceManager+Testing.swift
-//  RagnarokOfflineTests
+//  ResourceManagement
 //
-//  Created by Leon Li on 2025/7/25.
+//  Created by Leon Li on 2025/10/22.
 //
 
 import Foundation
-import ResourceManagement
 
 extension ResourceManager {
-    static let testing = ResourceManager(
+    public static let testing = ResourceManager(
         localURL: Bundle.main.resourceURL!,
         remoteURL: URL(string: "http://127.0.0.1:8080/client")
     )

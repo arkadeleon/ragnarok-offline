@@ -52,5 +52,5 @@ extension ButtonStyle where Self == GameButtonStyle {
 #Preview {
     GameButton("btn_ok.bmp") {
     }
-    .environment(GameSession.previewing)
+    .environment(GameSession.testing)
 }

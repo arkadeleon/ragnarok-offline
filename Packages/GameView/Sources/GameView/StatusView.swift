@@ -133,5 +133,5 @@ struct StatusView: View {
 #Preview {
     StatusView(status: CharacterStatus())
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

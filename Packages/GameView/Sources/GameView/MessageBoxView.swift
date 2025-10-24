@@ -29,5 +29,5 @@ struct MessageBoxView: View {
 #Preview {
     MessageBoxView("Please wait...")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

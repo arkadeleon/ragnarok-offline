@@ -200,5 +200,5 @@ struct CharMakeView: View {
 #Preview {
     CharMakeView(slot: 0)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

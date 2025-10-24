@@ -27,5 +27,5 @@ struct GameBottomBar: View {
     GameBottomBar()
         .frame(width: 280)
         .padding()
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

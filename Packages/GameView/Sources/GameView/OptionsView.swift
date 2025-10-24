@@ -74,5 +74,5 @@ struct OptionsView: View {
 
 #Preview {
     OptionsView()
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

@@ -116,5 +116,5 @@ struct InventoryView: View {
 
     InventoryView(inventory: inventory)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

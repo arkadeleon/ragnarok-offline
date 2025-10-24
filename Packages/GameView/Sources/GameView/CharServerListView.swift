@@ -48,5 +48,5 @@ struct CharServerListView: View {
 #Preview {
     CharServerListView(charServers: [])
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

@@ -27,5 +27,5 @@ struct GameTitleBar: View {
     GameTitleBar()
         .frame(width: 280)
         .padding()
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

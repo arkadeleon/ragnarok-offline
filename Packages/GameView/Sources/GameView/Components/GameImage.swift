@@ -54,5 +54,5 @@ struct GameImage<Content>: View where Content: View {
     GameImage("win_msgbox.bmp")
         .frame(width: 280, height: 120)
         .padding()
-        .environment(GameSession.previewing)
+        .environment(GameSession.testing)
 }

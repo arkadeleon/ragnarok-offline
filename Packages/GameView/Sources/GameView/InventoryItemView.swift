@@ -61,5 +61,5 @@ struct InventoryItemView<Actions>: View where Actions: View {
         Text(verbatim: "Use")
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(GameSession.previewing)
+    .environment(GameSession.testing)
 }

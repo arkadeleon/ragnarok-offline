@@ -80,6 +80,6 @@ public struct GameView: View {
 }
 
 #Preview {
-    GameView(gameSession: .previewing) {
+    GameView(gameSession: .testing) {
     }
 }
