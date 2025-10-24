@@ -39,7 +39,7 @@ struct RagnarokOfflineApp: App {
                 } else {
                     let configuration = GameSession.Configuration(
                         serverAddress: appModel.settings.serverAddress,
-                        serverPort: appModel.settings.serverPort
+                        serverPort: UInt16(appModel.settings.serverPort)!
                     )
                     appModel.gameSession.start(configuration)
                 }

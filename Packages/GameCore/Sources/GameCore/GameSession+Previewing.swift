@@ -11,7 +11,7 @@ extension GameSession {
     public static let previewing: GameSession = {
         let gameSession = GameSession(resourceManager: .previewing)
 
-        let configuration = GameSession.Configuration(serverAddress: "127.0.0.1", serverPort: "6900")
+        let configuration = GameSession.Configuration(serverAddress: "127.0.0.1", serverPort: 6900)
         gameSession.start(configuration)
 
         return gameSession

@@ -7,6 +7,7 @@
 
 import GameCore
 import GameView
+import Network
 import SwiftUI
 import TipKit
 
@@ -30,16 +31,23 @@ struct WalkingSimulatorView: View {
 
     @FocusState private var focusedField: WalkingSimulatorView.Field?
 
+    private enum ConnectionState: Equatable {
+        case unknown
+        case testing
+        case available
+        case unavailable(NWError)
+    }
+
+    @State private var connectionState: ConnectionState = .unknown
+
     private let serverStartupTip = ServerStartupTip()
     private let accountRegistrationTip = AccountRegistrationTip()
 
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                #if !os(macOS)
                 TipView(serverStartupTip)
                 TipView(accountRegistrationTip)
-                #endif
 
                 VStack(spacing: 12) {
                     VStack(spacing: 0) {
@@ -73,17 +81,9 @@ struct WalkingSimulatorView: View {
                     Button {
                         focusedField = nil
 
-                        let configuration = GameSession.Configuration(
-                            serverAddress: settings.serverAddress,
-                            serverPort: settings.serverPort
-                        )
-
-                        #if os(macOS)
-                        openWindow(id: gameSession.windowID, value: configuration)
-                        #else
-                        gameSession.start(configuration)
-                        isGameViewPresented = true
-                        #endif
+                        Task {
+                            await startGameSession()
+                        }
                     } label: {
                         Text("Start")
                             .font(.title2)
@@ -91,16 +91,25 @@ struct WalkingSimulatorView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(12)
-                            .background(Color.blue.opacity(focusedField == nil ? 1.0 : 0.5))
+                            .background(Color.blue)
                             .cornerRadius(8)
                     }
                     .padding(.top, 8)
-                    .disabled(focusedField != nil)
+                    .disabled(connectionState == .testing)
                 }
                 .padding(16)
                 .background(.background)
                 .cornerRadius(12)
                 .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
+
+                if connectionState == .testing {
+                    ProgressView()
+                }
+
+                if case .unavailable(let error) = connectionState {
+                    Text(error.localizedDescription)
+                        .foregroundStyle(.red)
+                }
             }
             .padding()
         }
@@ -136,6 +145,30 @@ struct WalkingSimulatorView: View {
             }
         }
         #endif
+    }
+
+    private func startGameSession() async {
+        let configuration = GameSession.Configuration(
+            serverAddress: settings.serverAddress,
+            serverPort: UInt16(settings.serverPort)!
+        )
+
+        connectionState = .testing
+
+        let error = await gameSession.test(configuration)
+
+        if let error {
+            connectionState = .unavailable(error)
+        } else {
+            connectionState = .available
+
+            #if os(macOS)
+            openWindow(id: gameSession.windowID, value: configuration)
+            #else
+            gameSession.start(configuration)
+            isGameViewPresented = true
+            #endif
+        }
     }
 }
 

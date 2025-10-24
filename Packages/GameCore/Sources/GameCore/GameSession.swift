@@ -6,6 +6,7 @@
 //
 
 import Constants
+import Network
 import NetworkClient
 import NetworkPackets
 import Observation
@@ -23,9 +24,9 @@ final public class GameSession {
 
     public struct Configuration: Codable, Hashable {
         public var serverAddress: String
-        public var serverPort: String
+        public var serverPort: UInt16
 
-        public init(serverAddress: String, serverPort: String) {
+        public init(serverAddress: String, serverPort: UInt16) {
             self.serverAddress = serverAddress
             self.serverPort = serverPort
         }
@@ -82,6 +83,32 @@ final public class GameSession {
     }
 
     // MARK: - Start and Stop
+
+    public func test(_ configuration: GameSession.Configuration) async -> NWError? {
+        await withCheckedContinuation { continuation in
+            let connection = NWConnection(
+                host: NWEndpoint.Host(configuration.serverAddress),
+                port: NWEndpoint.Port(rawValue: configuration.serverPort)!,
+                using: .tcp
+            )
+
+            connection.stateUpdateHandler = { state in
+                print(state)
+                switch state {
+                case .ready:
+                    continuation.resume(returning: nil)
+                    connection.cancel()
+                case .waiting(let error), .failed(let error):
+                    continuation.resume(returning: error)
+                    connection.cancel()
+                default:
+                    break
+                }
+            }
+
+            connection.start(queue: .global())
+        }
+    }
 
     public func start(_ configuration: GameSession.Configuration) {
         state = .running(configuration: configuration)
@@ -249,11 +276,10 @@ final public class GameSession {
             return
         }
 
-        guard let serverPort = UInt16(configuration.serverPort) else {
-            return
-        }
-
-        let loginSession = LoginSession(address: configuration.serverAddress, port: serverPort)
+        let loginSession = LoginSession(
+            address: configuration.serverAddress,
+            port: configuration.serverPort
+        )
 
         Task {
             for await event in loginSession.events {
