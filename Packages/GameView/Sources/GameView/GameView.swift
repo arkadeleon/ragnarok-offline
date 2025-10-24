@@ -25,7 +25,22 @@ public struct GameView: View {
                                     .frame(width: proxy.size.width, height: proxy.size.height)
                             }
 
-                            contentView
+                            VStack(spacing: 0) {
+                                ForEach(gameSession.errorMessages.reversed()) { errorMessage in
+                                    MessageBoxView(errorMessage.content)
+                                        .overlay(alignment: .bottomTrailing) {
+                                            HStack(spacing: 3) {
+                                                GameButton("btn_ok.bmp") {
+                                                    gameSession.removeErrorMessage(errorMessage)
+                                                }
+                                            }
+                                            .padding(.horizontal, 5)
+                                            .padding(.vertical, 4)
+                                        }
+                                }
+
+                                contentView
+                            }
                         }
                     }
                 }

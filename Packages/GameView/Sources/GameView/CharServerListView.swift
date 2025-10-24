@@ -30,8 +30,6 @@ struct CharServerListView: View {
         .frame(width: 280, height: 120)
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
-                Spacer()
-
                 GameButton("btn_ok.bmp") {
                     gameSession.selectCharServer(charServers[0])
                 }

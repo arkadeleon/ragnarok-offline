@@ -50,14 +50,13 @@ struct LoginView: View {
         .frame(width: 280, height: 120)
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
-                Spacer()
-
                 GameButton("login_interface/btn_connect.bmp") {
                     gameSession.login(
                         username: username,
                         password: password
                     )
                 }
+                .disabled(!isValidUsername || !isValidPassword)
 
                 GameButton("login_interface/btn_exit.bmp") {
                     exitGame()
@@ -66,6 +65,19 @@ struct LoginView: View {
             .padding(.horizontal, 5)
             .padding(.vertical, 4)
         }
+    }
+
+    private var isValidUsername: Bool {
+        let username = username.replacingOccurrences(
+            of: "_[mMfF]$",
+            with: "",
+            options: .regularExpression
+        )
+        return username.count >= 6
+    }
+
+    private var isValidPassword: Bool {
+        password.count >= 6
     }
 }
 

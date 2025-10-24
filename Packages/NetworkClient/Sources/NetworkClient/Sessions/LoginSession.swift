@@ -28,6 +28,8 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         eventSubject.eraseToAnyPublisher()
     }
 
+    private var username: String?
+
     private var timerTask: Task<Void, Never>?
 
     public init(address: String, port: UInt16) {
@@ -49,6 +51,8 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
                 charServers: packet.char_servers.map(CharServerInfo.init)
             )
             self.postEvent(event)
+
+            self.keepAlive()
         }
 
         // See `logclif_auth_failed`
@@ -83,6 +87,8 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_AC_REFUSE_LOGIN`` or
     ///         ``PACKET_SC_NOTIFY_BAN``
     public func login(username: String, password: String) {
+        self.username = username
+
         // See `logclif_parse_reqauth_raw`
         var packet = PACKET_CA_LOGIN()
         packet.packetType = HEADER_CA_LOGIN
@@ -99,7 +105,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     /// Keep alive.
     ///
     /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
-    public func keepAlive(username: String) {
+    private func keepAlive() {
         let timer = AsyncTimerSequence(interval: .seconds(10), clock: .continuous)
 
         let client = client
@@ -109,7 +115,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
                 // See `logclif_parse_keepalive`
                 var packet = PACKET_CA_CONNECT_INFO_CHANGED()
                 packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
-                packet.name = username
+                packet.name = username ?? ""
 
                 client.sendPacket(packet)
             }

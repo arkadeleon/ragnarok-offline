@@ -81,8 +81,6 @@ final class ChatSession {
             let username = parameters[0]
             let password = parameters[1]
             loginSession?.login(username: username, password: password)
-
-            loginSession?.keepAlive(username: username)
         case .selectCharServer:
             guard let serverNumber = Int(parameters[0]),
                   serverNumber - 1 < charServers.count else {

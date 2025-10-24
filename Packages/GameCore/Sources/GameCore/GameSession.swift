@@ -6,6 +6,7 @@
 //
 
 import Constants
+import Foundation
 import Network
 import NetworkClient
 import NetworkPackets
@@ -50,6 +51,13 @@ final public class GameSession {
     }
 
     public private(set) var phase: GameSession.Phase = .login
+
+    public struct ErrorMessage: Identifiable {
+        public let id = UUID()
+        public let content: String
+    }
+
+    public private(set) var errorMessages: [GameSession.ErrorMessage] = []
 
     public private(set) var account: AccountInfo?
 
@@ -124,12 +132,16 @@ final public class GameSession {
 
     // MARK: - Public
 
+    public func removeErrorMessage(_ errorMessage: GameSession.ErrorMessage) {
+        if let index = errorMessages.firstIndex(where: { $0.id == errorMessage.id }) {
+            errorMessages.remove(at: index)
+        }
+    }
+
     public func login(username: String, password: String) {
         startLoginSession()
 
         loginSession?.login(username: username, password: password)
-
-        loginSession?.keepAlive(username: username)
     }
 
     public func selectCharServer(_ charServer: CharServerInfo) {
@@ -307,11 +319,25 @@ final public class GameSession {
                 phase = .charServerList(charServers)
             }
         case .loginRefused(let message):
-            break
+            Task {
+                let messageStringTable = await resourceManager.messageStringTable(for: .current)
+                if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
+                    let localizedMessage = localizedMessage.replacingOccurrences(of: "%s", with: message.unblockTime)
+                    let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                    errorMessages.append(errorMessage)
+                }
+            }
         case .authenticationBanned(let message):
-            break
+            Task {
+                let messageStringTable = await resourceManager.messageStringTable(for: .current)
+                if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
+                    let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                    errorMessages.append(errorMessage)
+                }
+            }
         case .errorOccurred(let error):
-            break
+            let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
+            errorMessages.append(errorMessage)
         }
     }
 
