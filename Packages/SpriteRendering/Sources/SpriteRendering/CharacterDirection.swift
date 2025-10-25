@@ -17,24 +17,12 @@ public enum CharacterDirection: Int, CaseIterable, CustomStringConvertible, Send
     case east
     case southeast
 
-    public init(direction: Direction) {
-        switch direction {
-        case .north:
-            self = .north
-        case .northwest:
-            self = .northwest
-        case .west:
-            self = .west
-        case .southwest:
-            self = .southwest
-        case .south:
-            self = .south
-        case .southeast:
-            self = .southeast
-        case .east:
-            self = .east
-        case .northeast:
-            self = .northeast
+    public var isDiagonal: Bool {
+        switch self {
+        case .south, .west, .north, .east:
+            false
+        case .southwest, .northwest, .northeast, .southeast:
+            true
         }
     }
 
@@ -56,6 +44,27 @@ public enum CharacterDirection: Int, CaseIterable, CustomStringConvertible, Send
             "East"
         case .southeast:
             "Southeast"
+        }
+    }
+
+    public init(direction: Direction) {
+        switch direction {
+        case .north:
+            self = .north
+        case .northwest:
+            self = .northwest
+        case .west:
+            self = .west
+        case .southwest:
+            self = .southwest
+        case .south:
+            self = .south
+        case .southeast:
+            self = .southeast
+        case .east:
+            self = .east
+        case .northeast:
+            self = .northeast
         }
     }
 }

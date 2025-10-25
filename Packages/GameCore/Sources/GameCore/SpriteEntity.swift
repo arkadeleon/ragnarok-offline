@@ -96,6 +96,7 @@ class SpriteEntity: Entity {
         }
     }
 
+    @available(*, deprecated)
     func walk(through path: [SIMD2<Int>]) {
         guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
               let mapObject = components[MapObjectComponent.self]?.mapObject,
@@ -106,41 +107,34 @@ class SpriteEntity: Entity {
         stopAllAnimations()
 
         do {
-            let speed = TimeInterval(mapObject.speed) / 1000
-
             var animationSequence: [AnimationResource] = []
             for i in 1..<path.count {
                 let sourcePosition = path[i - 1]
                 let targetPosition = path[i]
 
-                let direction: CharacterDirection
-                let duration: TimeInterval
-                switch (targetPosition &- sourcePosition) {
+                let direction: CharacterDirection = switch (targetPosition &- sourcePosition) {
+                case [0, -1]:
+                    .south
                 case [-1, -1]:
-                    direction = .southwest
-                    duration = speed * sqrt(2)
+                    .southwest
                 case [-1, 0]:
-                    direction = .west
-                    duration = speed
+                    .west
                 case [-1, 1]:
-                    direction = .northwest
-                    duration = speed * sqrt(2)
+                    .northwest
                 case [0, 1]:
-                    direction = .north
-                    duration = speed
+                    .north
                 case [1, 1]:
-                    direction = .northeast
-                    duration = speed * sqrt(2)
+                    .northeast
                 case [1, 0]:
-                    direction = .east
-                    duration = speed
+                    .east
                 case [1, -1]:
-                    direction = .southeast
-                    duration = speed * sqrt(2)
+                    .southeast
                 default:
-                    direction = .south
-                    duration = speed
+                    .south
                 }
+
+                let speed = TimeInterval(mapObject.speed) / 1000
+                let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 
                 let animationIndex = CharacterActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
                 let animation = animations[animationIndex]

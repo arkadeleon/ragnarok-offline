@@ -89,3 +89,33 @@ extension SpriteAnimation {
         return animations
     }
 }
+
+extension Entity {
+    func generateModelAndCollisionShape(for animation: SpriteAnimation) {
+        let width = animation.frameWidth / 32
+        let height = animation.frameHeight / 32
+
+        // Create material.
+        var material = PhysicallyBasedMaterial()
+        material.blending = .transparent(opacity: 1.0)
+        material.opacityThreshold = 0.0001
+
+        if let texture = animation.texture {
+            material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
+            material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / Float(animation.frameCount), 1])
+        }
+
+        // Create model component.
+        let modelComponent = ModelComponent(
+            mesh: .generatePlane(width: width, height: height),
+            materials: [material]
+        )
+        components.set(modelComponent)
+
+        // Create collision component.
+        let collisionComponent = CollisionComponent(
+            shapes: [.generateBox(width: width, height: height, depth: 0)]
+        )
+        components.set(collisionComponent)
+    }
+}

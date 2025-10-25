@@ -112,6 +112,9 @@ public class MapScene {
         MapObjectComponent.registerComponent()
         SpriteComponent.registerComponent()
         TileComponent.registerComponent()
+        WalkingComponent.registerComponent()
+
+        WalkingSystem.registerSystem()
 
         PlaySpriteAnimationAction.registerAction()
         PlaySpriteAnimationActionHandler.register { _ in
@@ -414,10 +417,20 @@ public class MapScene {
 
 extension MapScene: MapEventHandlerProtocol {
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        let startPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
-        let endPosition = endPosition
-        let path = pathfinder.findPath(from: startPosition, to: endPosition)
-        playerEntity.walk(through: path)
+        if var walkingComponent = playerEntity.components[WalkingComponent.self],
+           walkingComponent.path.count > 1 {
+            let startPosition = walkingComponent.path[1]
+            let path = pathfinder.findPath(from: startPosition, to: endPosition)
+
+            walkingComponent.path = [walkingComponent.path[0]] + path
+            playerEntity.components.set(walkingComponent)
+        } else {
+            let startPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
+            let path = pathfinder.findPath(from: startPosition, to: endPosition)
+
+            let walkingComponent = WalkingComponent(path: path, mapGrid: mapGrid)
+            playerEntity.components.set(walkingComponent)
+        }
 
         tileEntityManager.updateTileEntities(forCenter: endPosition)
     }
@@ -450,10 +463,20 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         if let entity = rootEntity.findEntity(named: "\(object.objectID)") as? SpriteEntity {
-            let startPosition = entity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
-            let endPosition = endPosition
-            let path = pathfinder.findPath(from: startPosition, to: endPosition)
-            entity.walk(through: path)
+            if var walkingComponent = entity.components[WalkingComponent.self],
+               walkingComponent.path.count > 1 {
+                let startPosition = walkingComponent.path[1]
+                let path = pathfinder.findPath(from: startPosition, to: endPosition)
+
+                walkingComponent.path = [walkingComponent.path[0]] + path
+                entity.components.set(walkingComponent)
+            } else {
+                let startPosition = entity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
+                let path = pathfinder.findPath(from: startPosition, to: endPosition)
+
+                let walkingComponent = WalkingComponent(path: path, mapGrid: mapGrid)
+                entity.components.set(walkingComponent)
+            }
         } else {
             Task {
                 do {
