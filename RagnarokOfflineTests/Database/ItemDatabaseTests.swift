@@ -8,7 +8,7 @@
 import XCTest
 import rAthenaResources
 @testable import RagnarokConstants
-@testable import DatabaseCore
+@testable import RagnarokDatabase
 
 final class ItemDatabaseTests: XCTestCase {
     func testItemType() {

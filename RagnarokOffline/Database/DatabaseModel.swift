@@ -6,7 +6,7 @@
 //
 
 import RagnarokConstants
-import DatabaseCore
+import RagnarokDatabase
 import Foundation
 import rAthenaResources
 

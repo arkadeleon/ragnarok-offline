@@ -7,7 +7,7 @@
 
 import XCTest
 import rAthenaResources
-@testable import DatabaseCore
+@testable import RagnarokDatabase
 
 final class SkillTreeDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {

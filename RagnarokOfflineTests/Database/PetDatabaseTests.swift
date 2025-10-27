@@ -7,7 +7,7 @@
 
 import XCTest
 import rAthenaResources
-@testable import DatabaseCore
+@testable import RagnarokDatabase
 
 final class PetDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {

@@ -7,7 +7,7 @@
 
 import RagnarokConstants
 import CoreGraphics
-import DatabaseCore
+import RagnarokDatabase
 import Observation
 import rAthenaCommon
 import RagnarokResources

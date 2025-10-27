@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import DatabaseCore
+import RagnarokDatabase
 import Foundation
 import Observation
 import RagnarokResources
