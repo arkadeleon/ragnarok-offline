@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/12.
 //
 
-import ResourceManagement
+import RagnarokResources
 
 extension ComposedSprite {
     final class Composer {

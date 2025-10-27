@@ -11,7 +11,7 @@ import Network
 import NetworkClient
 import NetworkPackets
 import Observation
-import ResourceManagement
+import RagnarokResources
 import SpriteRendering
 import WorldRendering
 

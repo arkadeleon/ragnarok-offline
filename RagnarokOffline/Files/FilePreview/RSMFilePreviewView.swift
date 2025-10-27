@@ -8,7 +8,7 @@
 import RagnarokFileFormats
 import MetalRenderers
 import RealityKit
-import ResourceManagement
+import RagnarokResources
 import SwiftUI
 
 struct RSMFilePreviewView: View {

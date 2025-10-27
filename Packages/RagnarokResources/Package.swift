@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ResourceManagement",
+    name: "RagnarokResources",
     defaultLocalization: "en",
     platforms: [
         .macOS(.v13),
@@ -12,8 +12,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ResourceManagement",
-            targets: ["ResourceManagement"]
+            name: "RagnarokResources",
+            targets: ["RagnarokResources"]
         ),
     ],
     dependencies: [
@@ -23,7 +23,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ResourceManagement",
+            name: "RagnarokResources",
             dependencies: [
                 "GRF",
                 "TextEncoding",
@@ -34,8 +34,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "ResourceManagementTests",
-            dependencies: ["ResourceManagement"]
+            name: "RagnarokResourcesTests",
+            dependencies: ["RagnarokResources"]
         ),
     ]
 )

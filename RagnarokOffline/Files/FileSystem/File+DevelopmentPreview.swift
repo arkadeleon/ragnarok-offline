@@ -7,7 +7,7 @@
 
 import Foundation
 import GRF
-import ResourceManagement
+import RagnarokResources
 import TextEncoding
 
 extension File {

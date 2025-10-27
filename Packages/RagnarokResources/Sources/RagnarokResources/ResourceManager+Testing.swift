@@ -1,6 +1,6 @@
 //
 //  ResourceManager+Testing.swift
-//  ResourceManagement
+//  RagnarokResources
 //
 //  Created by Leon Li on 2025/10/22.
 //

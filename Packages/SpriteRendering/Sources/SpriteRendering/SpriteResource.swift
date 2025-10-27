@@ -8,7 +8,7 @@
 import CoreGraphics
 import RagnarokFileFormats
 import Foundation
-import ResourceManagement
+import RagnarokResources
 
 final public class SpriteResource: @unchecked Sendable {
     public let act: ACT

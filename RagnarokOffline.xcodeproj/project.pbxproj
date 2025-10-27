@@ -133,7 +133,7 @@
 				PerformanceMetric,
 				RagnarokConstants,
 				RagnarokFileFormats,
-				ResourceManagement,
+				RagnarokResources,
 				SGLMath,
 				SpriteRendering,
 				TextEncoding,

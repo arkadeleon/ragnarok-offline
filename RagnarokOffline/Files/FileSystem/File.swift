@@ -8,7 +8,7 @@
 import Foundation
 import GRF
 import Observation
-import ResourceManagement
+import RagnarokResources
 import TextEncoding
 import UniformTypeIdentifiers
 

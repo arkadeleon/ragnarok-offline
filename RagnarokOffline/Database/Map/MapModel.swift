@@ -8,7 +8,7 @@
 import CoreGraphics
 import DatabaseCore
 import Observation
-import ResourceManagement
+import RagnarokResources
 
 @Observable
 @dynamicMemberLookup

@@ -1,6 +1,6 @@
 //
 //  ResourceManager.swift
-//  ResourceManagement
+//  RagnarokResources
 //
 //  Created by Leon Li on 2025/2/14.
 //

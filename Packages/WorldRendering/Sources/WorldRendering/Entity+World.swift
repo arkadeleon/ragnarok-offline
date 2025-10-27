@@ -6,7 +6,7 @@
 //
 
 import RealityKit
-import ResourceManagement
+import RagnarokResources
 import SGLMath
 
 extension Entity {

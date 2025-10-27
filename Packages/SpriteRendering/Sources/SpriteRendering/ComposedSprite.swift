@@ -6,7 +6,7 @@
 //
 
 import RagnarokFileFormats
-import ResourceManagement
+import RagnarokResources
 
 final public class ComposedSprite: Sendable {
     public let configuration: ComposedSprite.Configuration

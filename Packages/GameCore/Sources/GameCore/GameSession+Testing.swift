@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/8/28.
 //
 
-import ResourceManagement
+import RagnarokResources
 
 extension GameSession {
     public static let testing: GameSession = {

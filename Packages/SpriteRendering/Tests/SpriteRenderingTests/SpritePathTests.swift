@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import ResourceManagement
+import RagnarokResources
 import TextEncoding
 @testable import SpriteRendering
 

@@ -6,7 +6,7 @@
 //
 
 import RagnarokFileFormats
-import ResourceManagement
+import RagnarokResources
 
 final public class WorldResource: Sendable {
     public let gat: GAT

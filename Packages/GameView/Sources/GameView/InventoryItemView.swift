@@ -7,7 +7,7 @@
 
 import GameCore
 import NetworkClient
-import ResourceManagement
+import RagnarokResources
 import SwiftUI
 
 struct InventoryItemView<Actions>: View where Actions: View {

@@ -6,7 +6,7 @@
 //
 
 import GameCore
-import ResourceManagement
+import RagnarokResources
 import SwiftUI
 
 struct GameImage<Content>: View where Content: View {

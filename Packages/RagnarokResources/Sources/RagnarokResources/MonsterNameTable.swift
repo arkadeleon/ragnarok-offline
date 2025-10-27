@@ -1,6 +1,6 @@
 //
 //  MonsterNameTable.swift
-//  ResourceManagement
+//  RagnarokResources
 //
 //  Created by Leon Li on 2024/5/29.
 //

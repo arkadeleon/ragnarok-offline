@@ -8,7 +8,7 @@
 import RagnarokFileFormats
 import MetalRenderers
 import RealityKit
-import ResourceManagement
+import RagnarokResources
 
 extension Entity {
     public static func waterEntity(gnd: GND, rsw: RSW, resourceManager: ResourceManager) async throws -> Entity {

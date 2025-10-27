@@ -21,7 +21,7 @@ let package = Package(
         .package(path: "../ImageRendering"),
         .package(path: "../MetalRenderers"),
         .package(path: "../PerformanceMetric"),
-        .package(path: "../ResourceManagement"),
+        .package(path: "../RagnarokResources"),
         .package(path: "../SGLMath"),
         .package(path: "../TextEncoding"),
     ],
@@ -33,7 +33,7 @@ let package = Package(
                 "ImageRendering",
                 "MetalRenderers",
                 "PerformanceMetric",
-                "ResourceManagement",
+                "RagnarokResources",
                 "SGLMath",
                 "TextEncoding",
             ]

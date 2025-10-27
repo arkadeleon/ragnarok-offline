@@ -7,7 +7,7 @@
 
 import XCTest
 import TextEncoding
-@testable import ResourceManagement
+@testable import RagnarokResources
 
 final class ScriptContextTests: XCTestCase {
     let resourceManager = ResourceManager.testing

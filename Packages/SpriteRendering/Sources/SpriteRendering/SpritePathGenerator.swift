@@ -6,7 +6,7 @@
 //
 
 import RagnarokConstants
-import ResourceManagement
+import RagnarokResources
 import TextEncoding
 
 class SpritePathGenerator {

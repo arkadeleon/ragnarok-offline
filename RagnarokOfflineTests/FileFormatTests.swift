@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import ResourceManagement
+import RagnarokResources
 @testable import RagnarokFileFormats
 
 final class FileFormatTests: XCTestCase {

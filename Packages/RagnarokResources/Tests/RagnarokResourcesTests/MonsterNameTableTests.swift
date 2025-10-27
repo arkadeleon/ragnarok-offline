@@ -1,12 +1,12 @@
 //
 //  MonsterNameTableTests.swift
-//  ResourceManagementTests
+//  RagnarokResourcesTests
 //
 //  Created by Leon Li on 2024/5/29.
 //
 
 import XCTest
-@testable import ResourceManagement
+@testable import RagnarokResources
 
 final class MonsterNameTableTests: XCTestCase {
     let resourceManager = ResourceManager(localURL: Bundle.module.resourceURL!)

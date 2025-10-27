@@ -9,7 +9,7 @@ import RagnarokConstants
 import NetworkClient
 import NetworkPackets
 import RealityKit
-import ResourceManagement
+import RagnarokResources
 import SpriteRendering
 
 @MainActor

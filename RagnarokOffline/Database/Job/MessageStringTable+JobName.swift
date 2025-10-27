@@ -6,7 +6,7 @@
 //
 
 import RagnarokConstants
-import ResourceManagement
+import RagnarokResources
 
 extension MessageStringTable {
     func localizedJobName(for jobID: JobID) -> String? {

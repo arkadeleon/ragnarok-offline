@@ -7,7 +7,7 @@
 
 import XCTest
 import RagnarokConstants
-@testable import ResourceManagement
+@testable import RagnarokResources
 
 final class StatusInfoTableTests: XCTestCase {
     let resourceManager = ResourceManager.testing

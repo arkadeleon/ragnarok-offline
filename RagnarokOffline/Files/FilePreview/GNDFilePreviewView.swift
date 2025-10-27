@@ -7,7 +7,7 @@
 
 import RagnarokFileFormats
 import RealityKit
-import ResourceManagement
+import RagnarokResources
 import SGLMath
 import SwiftUI
 

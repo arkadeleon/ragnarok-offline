@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ResourceManagement
+@testable import RagnarokResources
 
 final class SkillInfoTableTests: XCTestCase {
     let resourceManager = ResourceManager.testing

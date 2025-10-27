@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         .package(path: "../RagnarokConstants"),
         .package(path: "../RagnarokFileFormats"),
-        .package(path: "../ResourceManagement"),
+        .package(path: "../RagnarokResources"),
         .package(path: "../TextEncoding"),
     ],
     targets: [
@@ -27,7 +27,7 @@ let package = Package(
             dependencies: [
                 "RagnarokConstants",
                 "RagnarokFileFormats",
-                "ResourceManagement",
+                "RagnarokResources",
                 "TextEncoding",
             ]
         ),

@@ -8,7 +8,7 @@
 import NetworkClient
 import NetworkPackets
 import Observation
-import ResourceManagement
+import RagnarokResources
 
 @MainActor
 @Observable

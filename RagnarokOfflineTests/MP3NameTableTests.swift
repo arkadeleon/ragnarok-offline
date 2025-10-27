@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ResourceManagement
+@testable import RagnarokResources
 
 final class MP3NameTableTests: XCTestCase {
     let resourceManager = ResourceManager.testing

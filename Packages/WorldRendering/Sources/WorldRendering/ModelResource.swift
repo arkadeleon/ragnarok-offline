@@ -6,7 +6,7 @@
 //
 
 import RagnarokFileFormats
-import ResourceManagement
+import RagnarokResources
 
 final public class ModelResource: Sendable {
     public let rsm: RSM

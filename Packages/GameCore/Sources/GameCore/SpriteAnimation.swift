@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import ImageRendering
 import RealityKit
-import ResourceManagement
+import RagnarokResources
 import SpriteRendering
 
 final class SpriteAnimation: Sendable {

@@ -9,7 +9,7 @@ import AVFAudio
 import RagnarokConstants
 import NetworkClient
 import RealityKit
-import ResourceManagement
+import RagnarokResources
 import SGLMath
 import Spatial
 import SpriteRendering

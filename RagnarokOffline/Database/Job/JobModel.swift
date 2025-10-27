@@ -10,7 +10,7 @@ import CoreGraphics
 import DatabaseCore
 import Observation
 import rAthenaCommon
-import ResourceManagement
+import RagnarokResources
 import SpriteRendering
 
 @Observable

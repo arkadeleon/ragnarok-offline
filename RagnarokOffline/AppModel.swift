@@ -7,7 +7,7 @@
 
 import GameCore
 import Observation
-import ResourceManagement
+import RagnarokResources
 import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
