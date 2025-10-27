@@ -6,7 +6,7 @@
 //
 
 import MetalKit
-import MetalRenderers
+import RagnarokRenderers
 import SwiftUI
 
 #if os(iOS)

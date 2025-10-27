@@ -6,7 +6,7 @@
 //
 
 import RagnarokFileFormats
-import MetalRenderers
+import RagnarokRenderers
 import RealityKit
 
 extension Entity {

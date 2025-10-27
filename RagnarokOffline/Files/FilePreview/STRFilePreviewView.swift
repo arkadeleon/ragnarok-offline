@@ -7,7 +7,7 @@
 
 import RagnarokFileFormats
 import MetalKit
-import MetalRenderers
+import RagnarokRenderers
 import SwiftUI
 
 struct STRFilePreviewView: View {

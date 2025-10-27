@@ -19,7 +19,7 @@ let package = Package(
     dependencies: [
         .package(path: "../RagnarokFileFormats"),
         .package(path: "../ImageRendering"),
-        .package(path: "../MetalRenderers"),
+        .package(path: "../RagnarokRenderers"),
         .package(path: "../PerformanceMetric"),
         .package(path: "../RagnarokResources"),
         .package(path: "../SGLMath"),
@@ -31,7 +31,7 @@ let package = Package(
             dependencies: [
                 "RagnarokFileFormats",
                 "ImageRendering",
-                "MetalRenderers",
+                "RagnarokRenderers",
                 "PerformanceMetric",
                 "RagnarokResources",
                 "SGLMath",
