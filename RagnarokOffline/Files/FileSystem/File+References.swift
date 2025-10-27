@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/28.
 //
 
-import FileFormats
+import RagnarokFileFormats
 import GRF
 
 extension File {

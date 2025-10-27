@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		351E64EB2EAF3B5D008E7A15 /* RagnarokFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 351E64EA2EAF3B5D008E7A15 /* RagnarokFileFormats */; };
 		3522886D2E8146E1002B9466 /* GameView in Frameworks */ = {isa = PBXBuildFile; productRef = 3522886C2E8146E1002B9466 /* GameView */; };
 		353112092E7A90BB0043F263 /* DatabaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 353112082E7A90BB0043F263 /* DatabaseCore */; };
 		353725ED2D83FDF2008590F6 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 353725EC2D83FDF2008590F6 /* Highlight */; };
@@ -33,7 +34,6 @@
 		359152902E7AA0E800BBA7A6 /* GameCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3591528F2E7AA0E800BBA7A6 /* GameCore */; };
 		359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */; };
 		3599154C2E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		35EDF07F2E79383F00569C38 /* FileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 35EDF07E2E79383F00569C38 /* FileFormats */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,7 +124,6 @@
 				BinaryIO,
 				DatabaseCore,
 				DataCompression,
-				FileFormats,
 				GameCore,
 				GameView,
 				GRF,
@@ -133,6 +132,7 @@
 				NetworkClient,
 				PerformanceMetric,
 				RagnarokConstants,
+				RagnarokFileFormats,
 				ResourceManagement,
 				SGLMath,
 				SpriteRendering,
@@ -170,8 +170,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				351E64EB2EAF3B5D008E7A15 /* RagnarokFileFormats in Frameworks */,
 				359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */,
-				35EDF07F2E79383F00569C38 /* FileFormats in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +276,7 @@
 			);
 			name = RagnarokOfflineThumbnailExtension;
 			packageProductDependencies = (
-				35EDF07E2E79383F00569C38 /* FileFormats */,
+				351E64EA2EAF3B5D008E7A15 /* RagnarokFileFormats */,
 			);
 			productName = RagnarokOfflineThumbnailExtension;
 			productReference = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */;
@@ -833,6 +833,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		351E64EA2EAF3B5D008E7A15 /* RagnarokFileFormats */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RagnarokFileFormats;
+		};
 		3522886C2E8146E1002B9466 /* GameView */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GameView;
@@ -908,10 +912,6 @@
 		3591528F2E7AA0E800BBA7A6 /* GameCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GameCore;
-		};
-		35EDF07E2E79383F00569C38 /* FileFormats */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FileFormats;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

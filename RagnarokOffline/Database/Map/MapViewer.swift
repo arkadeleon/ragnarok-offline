@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/6/9.
 //
 
-import FileFormats
+import RagnarokFileFormats
 import RealityKit
 import ResourceManagement
 import SGLMath

@@ -6,7 +6,7 @@
 //
 
 import DataCompression
-import FileFormats
+import RagnarokFileFormats
 import SwiftUI
 
 struct ImageFilePreviewView: View {

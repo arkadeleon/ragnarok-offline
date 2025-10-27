@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import FileFormats
+import RagnarokFileFormats
 import Foundation
 import ResourceManagement
 

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/10/10.
 //
 
-import FileFormats
+import RagnarokFileFormats
 
 struct MapGrid {
     var width: Int

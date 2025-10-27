@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/14.
 //
 
-import FileFormats
+import RagnarokFileFormats
 
 extension IMF {
     var json: String {

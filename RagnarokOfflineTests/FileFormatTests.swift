@@ -7,7 +7,7 @@
 
 import XCTest
 import ResourceManagement
-@testable import FileFormats
+@testable import RagnarokFileFormats
 
 final class FileFormatTests: XCTestCase {
     let resourceManager = ResourceManager.testing

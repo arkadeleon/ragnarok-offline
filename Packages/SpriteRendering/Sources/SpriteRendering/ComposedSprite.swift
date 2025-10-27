@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/29.
 //
 
-import FileFormats
+import RagnarokFileFormats
 import ResourceManagement
 
 final public class ComposedSprite: Sendable {

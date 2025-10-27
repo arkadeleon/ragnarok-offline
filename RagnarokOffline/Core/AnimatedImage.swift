@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import FileFormats
+import RagnarokFileFormats
 import SpriteRendering
 
 struct AnimatedImage: Hashable, Sendable {

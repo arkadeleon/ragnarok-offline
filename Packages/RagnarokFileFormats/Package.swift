@@ -4,15 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "FileFormats",
+    name: "RagnarokFileFormats",
     platforms: [
         .macOS(.v13),
         .iOS(.v16),
     ],
     products: [
         .library(
-            name: "FileFormats",
-            targets: ["FileFormats"]
+            name: "RagnarokFileFormats",
+            targets: ["RagnarokFileFormats"]
         ),
     ],
     dependencies: [
@@ -22,7 +22,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FileFormats",
+            name: "RagnarokFileFormats",
             dependencies: [
                 "BinaryIO",
                 "ImageRendering",
@@ -30,8 +30,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "FileFormatsTests",
-            dependencies: ["FileFormats"]
+            name: "RagnarokFileFormatsTests",
+            dependencies: ["RagnarokFileFormats"]
         ),
     ]
 )

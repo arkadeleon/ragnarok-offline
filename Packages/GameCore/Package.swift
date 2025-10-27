@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../RagnarokConstants"),
-        .package(path: "../FileFormats"),
+        .package(path: "../RagnarokFileFormats"),
         .package(path: "../ImageRendering"),
         .package(path: "../NetworkClient"),
         .package(path: "../PerformanceMetric"),
@@ -33,7 +33,7 @@ let package = Package(
             name: "GameCore",
             dependencies: [
                 "RagnarokConstants",
-                "FileFormats",
+                "RagnarokFileFormats",
                 "ImageRendering",
                 "NetworkClient",
                 "PerformanceMetric",

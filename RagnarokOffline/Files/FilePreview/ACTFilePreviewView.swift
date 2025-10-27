@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/24.
 //
 
-import FileFormats
+import RagnarokFileFormats
 import SpriteRendering
 import SwiftUI
 

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/26.
 //
 
-import FileFormats
+import RagnarokFileFormats
 import MetalKit
 import MetalRenderers
 import SwiftUI

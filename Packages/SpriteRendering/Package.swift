@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../RagnarokConstants"),
-        .package(path: "../FileFormats"),
+        .package(path: "../RagnarokFileFormats"),
         .package(path: "../ResourceManagement"),
         .package(path: "../TextEncoding"),
     ],
@@ -26,7 +26,7 @@ let package = Package(
             name: "SpriteRendering",
             dependencies: [
                 "RagnarokConstants",
-                "FileFormats",
+                "RagnarokFileFormats",
                 "ResourceManagement",
                 "TextEncoding",
             ]

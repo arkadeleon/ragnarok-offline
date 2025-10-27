@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import FileFormats
+import RagnarokFileFormats
 
 struct SpriteRenderNode {
     static let null = SpriteRenderNode()

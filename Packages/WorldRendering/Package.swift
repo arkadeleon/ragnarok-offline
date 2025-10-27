@@ -17,7 +17,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../FileFormats"),
+        .package(path: "../RagnarokFileFormats"),
         .package(path: "../ImageRendering"),
         .package(path: "../MetalRenderers"),
         .package(path: "../PerformanceMetric"),
@@ -29,7 +29,7 @@ let package = Package(
         .target(
             name: "WorldRendering",
             dependencies: [
-                "FileFormats",
+                "RagnarokFileFormats",
                 "ImageRendering",
                 "MetalRenderers",
                 "PerformanceMetric",

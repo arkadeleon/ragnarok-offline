@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/10/16.
 //
 
-import FileFormats
+import RagnarokFileFormats
 
 extension RSM {
     var json: String {

@@ -1,6 +1,6 @@
 //
 //  GAT+Image.swift
-//  FileFormats
+//  RagnarokFileFormats
 //
 //  Created by Leon Li on 2023/11/19.
 //

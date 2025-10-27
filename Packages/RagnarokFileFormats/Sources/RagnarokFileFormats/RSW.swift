@@ -1,6 +1,6 @@
 //
 //  RSW.swift
-//  FileFormats
+//  RagnarokFileFormats
 //
 //  Created by Leon Li on 2020/5/19.
 //

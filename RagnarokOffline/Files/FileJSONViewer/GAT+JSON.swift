@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/10/15.
 //
 
-import FileFormats
+import RagnarokFileFormats
 
 extension GAT {
     var json: String {

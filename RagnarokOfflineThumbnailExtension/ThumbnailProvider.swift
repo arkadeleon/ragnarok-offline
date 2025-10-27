@@ -7,7 +7,7 @@
 
 import AVFoundation
 import BinaryIO
-import FileFormats
+import RagnarokFileFormats
 import QuickLookThumbnailing
 
 enum ThumbnailProviderError: Error {

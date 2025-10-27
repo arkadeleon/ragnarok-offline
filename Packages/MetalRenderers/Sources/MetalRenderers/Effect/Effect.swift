@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2023/11/24.
 //
 
-import FileFormats
+import RagnarokFileFormats
 import MetalShaders
 
 public struct Effect {

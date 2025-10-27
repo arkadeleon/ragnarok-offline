@@ -16,14 +16,14 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../FileFormats"),
+        .package(path: "../RagnarokFileFormats"),
         .package(path: "../SGLMath"),
     ],
     targets: [
         .target(
             name: "MetalRenderers",
             dependencies: [
-                "FileFormats",
+                "RagnarokFileFormats",
                 "MetalShaders",
                 "SGLMath",
             ]

@@ -1,6 +1,6 @@
 //
 //  GND.swift
-//  FileFormats
+//  RagnarokFileFormats
 //
 //  Created by Leon Li on 2020/6/22.
 //
