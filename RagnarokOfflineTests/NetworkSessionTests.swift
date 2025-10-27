@@ -10,8 +10,8 @@ import rAthenaLogin
 import rAthenaChar
 import rAthenaMap
 import rAthenaResources
-@testable import NetworkClient
-@testable import NetworkPackets
+@testable import RagnarokNetwork
+@testable import RagnarokPackets
 
 final class NetworkSessionTests: XCTestCase {
     var account: AccountInfo!

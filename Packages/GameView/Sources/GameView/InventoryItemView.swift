@@ -6,7 +6,7 @@
 //
 
 import GameCore
-import NetworkClient
+import RagnarokNetwork
 import RagnarokResources
 import SwiftUI
 

@@ -7,7 +7,7 @@
 
 import RagnarokConstants
 import GameCore
-import NetworkClient
+import RagnarokNetwork
 import SwiftUI
 
 struct StatusView: View {

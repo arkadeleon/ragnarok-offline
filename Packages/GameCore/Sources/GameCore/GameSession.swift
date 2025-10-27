@@ -8,8 +8,8 @@
 import RagnarokConstants
 import Foundation
 import Network
-import NetworkClient
-import NetworkPackets
+import RagnarokNetwork
+import RagnarokPackets
 import Observation
 import RagnarokResources
 import SpriteRendering

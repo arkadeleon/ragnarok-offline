@@ -6,7 +6,7 @@
 //
 
 import RagnarokConstants
-import NetworkClient
+import RagnarokNetwork
 
 @MainActor
 protocol MapEventHandlerProtocol {

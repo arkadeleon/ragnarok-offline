@@ -6,8 +6,8 @@
 //
 
 import RagnarokConstants
-import NetworkClient
-import NetworkPackets
+import RagnarokNetwork
+import RagnarokPackets
 import RealityKit
 import RagnarokResources
 import SpriteRendering

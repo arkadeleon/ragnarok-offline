@@ -6,7 +6,7 @@
 //
 
 import GameCore
-import NetworkPackets
+import RagnarokPackets
 import SpriteRendering
 import SwiftUI
 

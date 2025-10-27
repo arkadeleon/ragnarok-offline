@@ -7,7 +7,7 @@
 
 import AVFAudio
 import RagnarokConstants
-import NetworkClient
+import RagnarokNetwork
 import RealityKit
 import RagnarokResources
 import SGLMath

@@ -7,8 +7,8 @@
 
 import RagnarokConstants
 import GameCore
-import NetworkClient
-import NetworkPackets
+import RagnarokNetwork
+import RagnarokPackets
 import SwiftUI
 
 struct BasicInfoView: View {

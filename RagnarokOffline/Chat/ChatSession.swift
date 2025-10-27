@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/8/15.
 //
 
-import NetworkClient
-import NetworkPackets
+import RagnarokNetwork
+import RagnarokPackets
 import Observation
 import RagnarokResources
 
