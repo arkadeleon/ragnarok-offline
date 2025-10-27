@@ -7,7 +7,7 @@
 
 import Foundation
 import RealityKit
-import SpriteRendering
+import RagnarokSprite
 
 final class WalkingSystem: System {
     static let query = EntityQuery(where: .has(WalkingComponent.self))

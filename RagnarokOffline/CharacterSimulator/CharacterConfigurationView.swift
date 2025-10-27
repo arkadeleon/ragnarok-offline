@@ -6,7 +6,7 @@
 //
 
 import RagnarokConstants
-import SpriteRendering
+import RagnarokSprite
 import SwiftUI
 
 struct CharacterConfigurationView: View {

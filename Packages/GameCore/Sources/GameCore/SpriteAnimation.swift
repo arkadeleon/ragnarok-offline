@@ -10,7 +10,7 @@ import Foundation
 import ImageRendering
 import RealityKit
 import RagnarokResources
-import SpriteRendering
+import RagnarokSprite
 
 final class SpriteAnimation: Sendable {
     let texture: TextureResource?

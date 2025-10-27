@@ -7,7 +7,7 @@
 
 import XCTest
 import RagnarokResources
-@testable import SpriteRendering
+@testable import RagnarokSprite
 
 final class SpriteRendererTests: XCTestCase {
     func testSpriteRenderer() async throws {

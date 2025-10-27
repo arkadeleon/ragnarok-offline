@@ -7,7 +7,7 @@
 
 import RagnarokConstants
 import Observation
-import SpriteRendering
+import RagnarokSprite
 
 @MainActor
 @Observable

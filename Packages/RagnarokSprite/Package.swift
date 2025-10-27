@@ -4,15 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "SpriteRendering",
+    name: "RagnarokSprite",
     platforms: [
         .macOS(.v13),
         .iOS(.v16),
     ],
     products: [
         .library(
-            name: "SpriteRendering",
-            targets: ["SpriteRendering"]
+            name: "RagnarokSprite",
+            targets: ["RagnarokSprite"]
         ),
     ],
     dependencies: [
@@ -23,7 +23,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SpriteRendering",
+            name: "RagnarokSprite",
             dependencies: [
                 "RagnarokConstants",
                 "RagnarokFileFormats",
@@ -32,8 +32,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "SpriteRenderingTests",
-            dependencies: ["SpriteRendering"]
+            name: "RagnarokSpriteTests",
+            dependencies: ["RagnarokSprite"]
         ),
     ]
 )

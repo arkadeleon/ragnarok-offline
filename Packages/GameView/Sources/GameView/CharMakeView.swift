@@ -7,7 +7,7 @@
 
 import GameCore
 import RagnarokPackets
-import SpriteRendering
+import RagnarokSprite
 import SwiftUI
 
 struct CharMakeView: View {

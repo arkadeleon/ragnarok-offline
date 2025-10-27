@@ -12,7 +12,7 @@ import RealityKit
 import RagnarokResources
 import SGLMath
 import Spatial
-import SpriteRendering
+import RagnarokSprite
 import SwiftUI
 import WorldCamera
 import WorldRendering

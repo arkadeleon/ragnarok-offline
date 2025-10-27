@@ -11,7 +11,7 @@ import DatabaseCore
 import Observation
 import rAthenaCommon
 import RagnarokResources
-import SpriteRendering
+import RagnarokSprite
 
 @Observable
 @dynamicMemberLookup

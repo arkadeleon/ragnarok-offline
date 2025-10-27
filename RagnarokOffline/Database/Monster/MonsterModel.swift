@@ -10,7 +10,7 @@ import DatabaseCore
 import Foundation
 import Observation
 import RagnarokResources
-import SpriteRendering
+import RagnarokSprite
 
 @Observable
 @dynamicMemberLookup

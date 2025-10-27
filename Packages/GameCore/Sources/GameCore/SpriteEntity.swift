@@ -7,7 +7,7 @@
 
 import Foundation
 import RealityKit
-import SpriteRendering
+import RagnarokSprite
 
 class SpriteEntity: Entity {
     convenience required init() {

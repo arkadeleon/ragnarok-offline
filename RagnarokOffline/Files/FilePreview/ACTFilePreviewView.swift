@@ -6,7 +6,7 @@
 //
 
 import RagnarokFileFormats
-import SpriteRendering
+import RagnarokSprite
 import SwiftUI
 
 struct ACTFilePreviewView: View {

@@ -10,7 +10,7 @@ import RagnarokNetwork
 import RagnarokPackets
 import RealityKit
 import RagnarokResources
-import SpriteRendering
+import RagnarokSprite
 
 @MainActor
 final class SpriteEntityManager {

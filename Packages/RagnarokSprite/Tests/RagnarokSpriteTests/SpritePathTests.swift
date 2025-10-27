@@ -1,6 +1,6 @@
 //
 //  SpritePathTests.swift
-//  SpriteRenderingTests
+//  RagnarokSpriteTests
 //
 //  Created by Leon Li on 2025/2/13.
 //
@@ -8,7 +8,7 @@
 import XCTest
 import RagnarokResources
 import TextEncoding
-@testable import SpriteRendering
+@testable import RagnarokSprite
 
 final class SpritePathTests: XCTestCase {
     let resourceManager = ResourceManager(localURL: Bundle.main.resourceURL!)

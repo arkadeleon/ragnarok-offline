@@ -12,7 +12,7 @@ import RagnarokNetwork
 import RagnarokPackets
 import Observation
 import RagnarokResources
-import SpriteRendering
+import RagnarokSprite
 import WorldRendering
 
 @MainActor

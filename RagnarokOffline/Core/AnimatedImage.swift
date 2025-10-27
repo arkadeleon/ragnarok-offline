@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import RagnarokFileFormats
-import SpriteRendering
+import RagnarokSprite
 
 struct AnimatedImage: Hashable, Sendable {
     var frames: [CGImage?]
