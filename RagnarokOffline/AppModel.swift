@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/7/3.
 //
 
-import GameCore
+import RagnarokGame
 import Observation
 import RagnarokResources
 import rAthenaLogin

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		351E64EB2EAF3B5D008E7A15 /* RagnarokFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 351E64EA2EAF3B5D008E7A15 /* RagnarokFileFormats */; };
-		3522886D2E8146E1002B9466 /* GameView in Frameworks */ = {isa = PBXBuildFile; productRef = 3522886C2E8146E1002B9466 /* GameView */; };
 		353112092E7A90BB0043F263 /* DatabaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 353112082E7A90BB0043F263 /* DatabaseCore */; };
 		353725ED2D83FDF2008590F6 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 353725EC2D83FDF2008590F6 /* Highlight */; };
 		3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */; };
@@ -31,9 +30,9 @@
 		3558A3DD2DFC28410038DFC3 /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3DB2DFC28410038DFC3 /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3558A3E02DFC288D0038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3DF2DFC288D0038DFC3 /* rAthenaCommon */; };
 		3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3E12DFC28960038DFC3 /* rAthenaCommon */; };
-		359152902E7AA0E800BBA7A6 /* GameCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3591528F2E7AA0E800BBA7A6 /* GameCore */; };
 		359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */; };
 		3599154C2E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */ = {isa = PBXBuildFile; productRef = 35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,13 +123,12 @@
 				BinaryIO,
 				DatabaseCore,
 				DataCompression,
-				GameCore,
-				GameView,
 				GRF,
 				ImageRendering,
 				PerformanceMetric,
 				RagnarokConstants,
 				RagnarokFileFormats,
+				RagnarokGame,
 				RagnarokNetwork,
 				RagnarokReality,
 				RagnarokRenderers,
@@ -183,10 +181,9 @@
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
 				353112092E7A90BB0043F263 /* DatabaseCore in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
-				359152902E7AA0E800BBA7A6 /* GameCore in Frameworks */,
+				35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
 				3558A3BB2DFC22EA0038DFC3 /* rAthenaWeb in Frameworks */,
-				3522886D2E8146E1002B9466 /* GameView in Frameworks */,
 				3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */,
 				353725ED2D83FDF2008590F6 /* Highlight in Frameworks */,
 			);
@@ -312,8 +309,7 @@
 				3558A3BA2DFC22EA0038DFC3 /* rAthenaWeb */,
 				3558A3E12DFC28960038DFC3 /* rAthenaCommon */,
 				353112082E7A90BB0043F263 /* DatabaseCore */,
-				3591528F2E7AA0E800BBA7A6 /* GameCore */,
-				3522886C2E8146E1002B9466 /* GameView */,
+				35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -837,10 +833,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = RagnarokFileFormats;
 		};
-		3522886C2E8146E1002B9466 /* GameView */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GameView;
-		};
 		353112082E7A90BB0043F263 /* DatabaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DatabaseCore;
@@ -909,9 +901,9 @@
 			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaCommon;
 		};
-		3591528F2E7AA0E800BBA7A6 /* GameCore */ = {
+		35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = GameCore;
+			productName = RagnarokGame;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

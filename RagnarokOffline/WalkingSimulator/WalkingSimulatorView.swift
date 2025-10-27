@@ -5,8 +5,7 @@
 //  Created by Leon Li on 2025/10/13.
 //
 
-import GameCore
-import GameView
+import RagnarokGame
 import Network
 import SwiftUI
 import TipKit
