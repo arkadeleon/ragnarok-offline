@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/18.
 //
 
-import Constants
+import RagnarokConstants
 import NetworkPackets
 
 extension MapSession {

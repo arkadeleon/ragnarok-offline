@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/6.
 //
 
-import Constants
+import RagnarokConstants
 import NetworkPackets
 
 // See `clif_bl_type`

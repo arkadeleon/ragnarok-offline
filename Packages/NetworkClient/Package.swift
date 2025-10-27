@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
-        .package(path: "../Constants"),
+        .package(path: "../RagnarokConstants"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
     ],
     targets: [
@@ -29,7 +29,7 @@ let package = Package(
             name: "NetworkClient",
             dependencies: [
                 "BinaryIO",
-                "Constants",
+                "RagnarokConstants",
                 "NetworkPackets",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ]

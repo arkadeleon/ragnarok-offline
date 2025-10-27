@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/6/30.
 //
 
-import Constants
+import RagnarokConstants
 import NetworkPackets
 
 public struct EquippedItem: Sendable {

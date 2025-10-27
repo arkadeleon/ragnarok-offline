@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/14.
 //
 
-import Constants
+import RagnarokConstants
 
 extension ComposedSprite {
     public struct Configuration: Equatable, Sendable {

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/16.
 //
 
-import Constants
+import RagnarokConstants
 
 public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
 

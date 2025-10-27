@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2023/1/18.
 //
 
-import Constants
+import RagnarokConstants
 
 public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
 

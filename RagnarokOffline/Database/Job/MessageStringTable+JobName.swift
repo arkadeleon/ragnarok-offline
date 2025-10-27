@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/9/26.
 //
 
-import Constants
+import RagnarokConstants
 import ResourceManagement
 
 extension MessageStringTable {

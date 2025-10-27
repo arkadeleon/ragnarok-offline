@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/10.
 //
 
-import Constants
+import RagnarokConstants
 import NetworkPackets
 
 public struct Inventory: Sendable {

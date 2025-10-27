@@ -17,7 +17,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../Constants"),
+        .package(path: "../RagnarokConstants"),
         .package(path: "../FileFormats"),
         .package(path: "../ImageRendering"),
         .package(path: "../NetworkClient"),
@@ -32,7 +32,7 @@ let package = Package(
         .target(
             name: "GameCore",
             dependencies: [
-                "Constants",
+                "RagnarokConstants",
                 "FileFormats",
                 "ImageRendering",
                 "NetworkClient",

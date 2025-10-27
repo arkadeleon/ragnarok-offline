@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/12/24.
 //
 
-import Constants
+import RagnarokConstants
 import FileFormats
 import ImageRendering
 import Metal

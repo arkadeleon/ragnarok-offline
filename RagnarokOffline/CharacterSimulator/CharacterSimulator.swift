@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/20.
 //
 
-import Constants
+import RagnarokConstants
 import Observation
 import SpriteRendering
 

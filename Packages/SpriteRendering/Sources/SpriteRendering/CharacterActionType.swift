@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/6.
 //
 
-import Constants
+import RagnarokConstants
 
 public enum CharacterActionType: String, CaseIterable, CustomStringConvertible, Sendable {
     case idle

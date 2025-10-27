@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/8.
 //
 
-import Constants
+import RagnarokConstants
 import ResourceManagement
 import TextEncoding
 

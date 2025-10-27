@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/7.
 //
 
-import Constants
+import RagnarokConstants
 
 public enum CharacterHeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
     case lookForward

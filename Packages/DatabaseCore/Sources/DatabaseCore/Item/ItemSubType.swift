@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/10.
 //
 
-import Constants
+import RagnarokConstants
 
 public enum ItemSubType: Equatable, Hashable, Sendable {
     case none

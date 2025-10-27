@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import Constants
+import RagnarokConstants
 @testable import ResourceManagement
 
 final class StatusInfoTableTests: XCTestCase {

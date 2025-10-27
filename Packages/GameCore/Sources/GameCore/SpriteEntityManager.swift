@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/18.
 //
 
-import Constants
+import RagnarokConstants
 import NetworkClient
 import NetworkPackets
 import RealityKit

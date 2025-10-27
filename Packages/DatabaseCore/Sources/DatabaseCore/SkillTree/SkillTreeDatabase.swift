@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/3/11.
 //
 
-import Constants
+import RagnarokConstants
 import Foundation
 import RapidYAML
 

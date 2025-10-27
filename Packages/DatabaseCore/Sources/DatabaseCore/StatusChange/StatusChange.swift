@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/5/10.
 //
 
-import Constants
+import RagnarokConstants
 
 public struct StatusChange: Decodable, Equatable, Hashable, Identifiable, Sendable {
 

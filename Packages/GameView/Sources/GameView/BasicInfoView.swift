@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/6.
 //
 
-import Constants
+import RagnarokConstants
 import GameCore
 import NetworkClient
 import NetworkPackets

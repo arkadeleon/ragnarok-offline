@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/9.
 //
 
-import Constants
+import RagnarokConstants
 
 public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
 

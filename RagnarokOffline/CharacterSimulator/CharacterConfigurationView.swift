@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/2/19.
 //
 
-import Constants
+import RagnarokConstants
 import SpriteRendering
 import SwiftUI
 

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/11/7.
 //
 
-import Constants
+import RagnarokConstants
 import CoreGraphics
 import DatabaseCore
 import Observation

@@ -122,7 +122,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				BinaryIO,
-				Constants,
 				DatabaseCore,
 				DataCompression,
 				FileFormats,
@@ -133,6 +132,7 @@
 				MetalRenderers,
 				NetworkClient,
 				PerformanceMetric,
+				RagnarokConstants,
 				ResourceManagement,
 				SGLMath,
 				SpriteRendering,

@@ -7,7 +7,7 @@
 
 import XCTest
 import rAthenaResources
-@testable import Constants
+@testable import RagnarokConstants
 @testable import DatabaseCore
 
 final class ItemDatabaseTests: XCTestCase {

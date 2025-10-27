@@ -7,7 +7,7 @@
 
 import AsyncAlgorithms
 import Combine
-import Constants
+import RagnarokConstants
 import Foundation
 import NetworkPackets
 

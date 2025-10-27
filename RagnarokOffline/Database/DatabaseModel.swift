@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/8/27.
 //
 
-import Constants
+import RagnarokConstants
 import DatabaseCore
 import Foundation
 import rAthenaResources
