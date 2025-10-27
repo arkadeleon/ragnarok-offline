@@ -15,7 +15,7 @@ import Spatial
 import RagnarokSprite
 import SwiftUI
 import WorldCamera
-import WorldRendering
+import RagnarokReality
 
 @MainActor
 protocol MapSceneDelegate: AnyObject {

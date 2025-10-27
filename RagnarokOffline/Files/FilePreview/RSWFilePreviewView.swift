@@ -10,7 +10,7 @@ import RealityKit
 import RagnarokResources
 import SGLMath
 import SwiftUI
-import WorldRendering
+import RagnarokReality
 
 struct RSWFilePreviewView: View {
     var file: File

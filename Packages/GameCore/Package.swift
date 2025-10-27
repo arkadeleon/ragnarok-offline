@@ -26,7 +26,7 @@ let package = Package(
         .package(path: "../SGLMath"),
         .package(path: "../RagnarokSprite"),
         .package(path: "../WorldCamera"),
-        .package(path: "../WorldRendering"),
+        .package(path: "../RagnarokReality"),
     ],
     targets: [
         .target(
@@ -41,7 +41,7 @@ let package = Package(
                 "SGLMath",
                 "RagnarokSprite",
                 "WorldCamera",
-                "WorldRendering",
+                "RagnarokReality",
             ]
         ),
         .testTarget(

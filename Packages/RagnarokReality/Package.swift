@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "WorldRendering",
+    name: "RagnarokReality",
     platforms: [
         .macOS(.v15),
         .iOS(.v18),
@@ -12,8 +12,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "WorldRendering",
-            targets: ["WorldRendering"]
+            name: "RagnarokReality",
+            targets: ["RagnarokReality"]
         ),
     ],
     dependencies: [
@@ -27,7 +27,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WorldRendering",
+            name: "RagnarokReality",
             dependencies: [
                 "RagnarokFileFormats",
                 "ImageRendering",
@@ -39,8 +39,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "WorldRenderingTests",
-            dependencies: ["WorldRendering"]
+            name: "RagnarokRealityTests",
+            dependencies: ["RagnarokReality"]
         ),
     ]
 )

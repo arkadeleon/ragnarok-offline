@@ -13,7 +13,7 @@ import RagnarokPackets
 import Observation
 import RagnarokResources
 import RagnarokSprite
-import WorldRendering
+import RagnarokReality
 
 @MainActor
 @Observable

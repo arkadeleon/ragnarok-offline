@@ -132,13 +132,13 @@
 				RagnarokConstants,
 				RagnarokFileFormats,
 				RagnarokNetwork,
+				RagnarokReality,
 				RagnarokRenderers,
 				RagnarokResources,
+				RagnarokSprite,
 				SGLMath,
-				SpriteRendering,
 				TextEncoding,
 				WorldCamera,
-				WorldRendering,
 			);
 			target = 35B3B8D32A08BEA600B4540B /* RagnarokOffline */;
 		};
