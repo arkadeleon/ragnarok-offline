@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/10/15.
 //
 
-import RagnarokFileFormats
 import Foundation
+import RagnarokFileFormats
 
 extension File {
     var jsonRepresentable: Bool {

@@ -7,8 +7,8 @@
 
 import AVFoundation
 import BinaryIO
-import RagnarokFileFormats
 import QuickLookThumbnailing
+import RagnarokFileFormats
 
 enum ThumbnailProviderError: Error {
     case unsupportedFileFormat

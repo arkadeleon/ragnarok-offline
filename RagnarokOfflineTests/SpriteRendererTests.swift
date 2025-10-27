@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/2/17.
 //
 
-import XCTest
 import RagnarokResources
+import XCTest
 @testable import RagnarokSprite
 
 final class SpriteRendererTests: XCTestCase {

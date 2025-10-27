@@ -8,9 +8,9 @@
 import RagnarokConstants
 import RagnarokNetwork
 import RagnarokPackets
-import RealityKit
 import RagnarokResources
 import RagnarokSprite
+import RealityKit
 
 @MainActor
 final class SpriteEntityManager {

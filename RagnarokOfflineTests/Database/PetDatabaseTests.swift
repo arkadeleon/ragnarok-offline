@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/5/8.
 //
 
-import XCTest
 import rAthenaResources
+import XCTest
 @testable import RagnarokDatabase
 
 final class PetDatabaseTests: XCTestCase {

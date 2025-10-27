@@ -5,11 +5,11 @@
 //  Created by Leon Li on 2024/8/8.
 //
 
-import XCTest
-import rAthenaLogin
 import rAthenaChar
+import rAthenaLogin
 import rAthenaMap
 import rAthenaResources
+import XCTest
 @testable import RagnarokNetwork
 @testable import RagnarokPackets
 

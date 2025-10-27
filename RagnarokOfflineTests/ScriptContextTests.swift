@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/3/3.
 //
 
-import XCTest
 import TextEncoding
+import XCTest
 @testable import RagnarokResources
 
 final class ScriptContextTests: XCTestCase {

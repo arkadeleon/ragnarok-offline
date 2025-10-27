@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/8/26.
 //
 
-import Darwin
 import BinaryIO
+import Darwin
 
 public struct MapServerInfo: BinaryDecodable, Sendable {
     public var ip: String

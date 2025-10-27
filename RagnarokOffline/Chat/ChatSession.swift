@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2024/8/15.
 //
 
+import Observation
 import RagnarokNetwork
 import RagnarokPackets
-import Observation
 import RagnarokResources
 
 @MainActor

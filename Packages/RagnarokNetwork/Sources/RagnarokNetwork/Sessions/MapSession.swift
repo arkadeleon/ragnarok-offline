@@ -7,8 +7,8 @@
 
 import AsyncAlgorithms
 import Combine
-import RagnarokConstants
 import Foundation
+import RagnarokConstants
 import RagnarokPackets
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {

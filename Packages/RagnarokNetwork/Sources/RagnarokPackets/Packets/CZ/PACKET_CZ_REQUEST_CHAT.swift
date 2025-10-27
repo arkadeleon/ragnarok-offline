@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/4/16.
 //
 
-import Foundation
 import BinaryIO
+import Foundation
 
 let ENTRY_CZ_REQUEST_CHAT = packetDatabase.entry(forFunctionName: "clif_parse_GlobalMessage")!
 

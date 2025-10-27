@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import RealityKit
 import RagnarokSprite
+import RealityKit
 
 class SpriteEntity: Entity {
     convenience required init() {

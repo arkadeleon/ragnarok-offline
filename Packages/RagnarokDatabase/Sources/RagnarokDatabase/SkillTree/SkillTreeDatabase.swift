@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/3/11.
 //
 
-import RagnarokConstants
 import Foundation
+import RagnarokConstants
 import RapidYAML
 
 public actor SkillTreeDatabase {

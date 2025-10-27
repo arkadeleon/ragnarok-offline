@@ -6,9 +6,9 @@
 //
 
 import DataCompression
-import RagnarokFileFormats
 import Foundation
 import ImageIO
+import RagnarokFileFormats
 
 enum FileThumbnailError: Error {
     case unsupportedFileFormat

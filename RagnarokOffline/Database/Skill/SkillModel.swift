@@ -6,9 +6,9 @@
 //
 
 import CoreGraphics
-import RagnarokDatabase
 import Foundation
 import Observation
+import RagnarokDatabase
 import RagnarokResources
 
 @Observable

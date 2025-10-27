@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2025/2/13.
 //
 
-import XCTest
 import RagnarokResources
 import TextEncoding
+import XCTest
 @testable import RagnarokSprite
 
 final class SpritePathTests: XCTestCase {

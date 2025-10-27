@@ -7,8 +7,8 @@
 
 import RagnarokFileFormats
 import RagnarokRenderers
-import RealityKit
 import RagnarokResources
+import RealityKit
 import SwiftUI
 
 struct RSMFilePreviewView: View {

@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/8/14.
 //
 
-import CoreFoundation
 import BinaryIO
+import CoreFoundation
 
 /// See `chclif_char_delete2_ack`
 public struct PACKET_HC_DELETE_CHAR_RESERVED: DecodablePacket, Sendable {

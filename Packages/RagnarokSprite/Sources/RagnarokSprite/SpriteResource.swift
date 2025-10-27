@@ -6,8 +6,8 @@
 //
 
 import CoreGraphics
-import RagnarokFileFormats
 import Foundation
+import RagnarokFileFormats
 import RagnarokResources
 
 final public class SpriteResource: @unchecked Sendable {

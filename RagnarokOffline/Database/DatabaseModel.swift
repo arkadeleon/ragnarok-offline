@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2025/8/27.
 //
 
+import Foundation
 import RagnarokConstants
 import RagnarokDatabase
-import Foundation
 import rAthenaResources
 
 struct DropItem: Identifiable {

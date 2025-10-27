@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/5/9.
 //
 
-import RagnarokDatabase
 import Observation
+import RagnarokDatabase
 
 @Observable
 @dynamicMemberLookup

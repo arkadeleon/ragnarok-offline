@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/10/12.
 //
 
-import XCTest
 import RagnarokResources
+import XCTest
 @testable import RagnarokFileFormats
 
 final class FileFormatTests: XCTestCase {

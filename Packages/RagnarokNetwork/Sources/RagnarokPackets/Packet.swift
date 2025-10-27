@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2021/7/5.
 //
 
-import Foundation
 import BinaryIO
+import Foundation
 
 public protocol Packet {
     var packetType: Int16 { get }

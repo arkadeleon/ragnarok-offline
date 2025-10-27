@@ -6,11 +6,11 @@
 //
 
 import RagnarokFileFormats
-import RealityKit
+import RagnarokReality
 import RagnarokResources
+import RealityKit
 import SGLMath
 import SwiftUI
-import RagnarokReality
 
 struct RSWFilePreviewView: View {
     var file: File

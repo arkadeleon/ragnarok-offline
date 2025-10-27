@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/5/9.
 //
 
-import XCTest
 import rAthenaResources
+import XCTest
 @testable import RagnarokDatabase
 
 final class MonsterDatabaseTests: XCTestCase {

@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/1/29.
 //
 
-import XCTest
 import RagnarokConstants
+import XCTest
 @testable import RagnarokResources
 
 final class StatusInfoTableTests: XCTestCase {

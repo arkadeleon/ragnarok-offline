@@ -7,8 +7,8 @@
 
 import CoreGraphics
 import ImageRendering
-import RealityKit
 import RagnarokResources
+import RealityKit
 import TextEncoding
 
 enum WaterTextureError: Error {

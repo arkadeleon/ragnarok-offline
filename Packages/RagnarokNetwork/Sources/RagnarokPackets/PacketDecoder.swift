@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2021/6/28.
 //
 
-import Foundation
 import BinaryIO
+import Foundation
 
 enum PacketDecodingError: Error {
     case packetMismatch(Int16)

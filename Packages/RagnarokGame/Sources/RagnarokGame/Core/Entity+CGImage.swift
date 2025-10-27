@@ -5,11 +5,11 @@
 //  Created by Leon Li on 2024/12/24.
 //
 
-import RagnarokConstants
-import RagnarokFileFormats
 import ImageRendering
 import Metal
 import MetalKit
+import RagnarokConstants
+import RagnarokFileFormats
 import RealityKit
 
 extension Entity {

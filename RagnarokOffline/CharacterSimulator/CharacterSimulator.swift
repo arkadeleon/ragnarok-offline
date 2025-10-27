@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/2/20.
 //
 
-import RagnarokConstants
 import Observation
+import RagnarokConstants
 import RagnarokSprite
 
 @MainActor
