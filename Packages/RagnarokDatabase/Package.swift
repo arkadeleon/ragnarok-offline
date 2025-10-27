@@ -17,9 +17,9 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
-        .package(path: "../RagnarokConstants"),
         .package(path: "../DataCompression"),
         .package(path: "../PerformanceMetric"),
+        .package(path: "../RagnarokConstants"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
     ],
     targets: [
@@ -27,9 +27,9 @@ let package = Package(
             name: "RagnarokDatabase",
             dependencies: [
                 "BinaryIO",
-                "RagnarokConstants",
                 "DataCompression",
                 "PerformanceMetric",
+                "RagnarokConstants",
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
             ]
         ),

@@ -17,10 +17,10 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../RagnarokFileFormats"),
         .package(path: "../ImageRendering"),
-        .package(path: "../RagnarokRenderers"),
         .package(path: "../PerformanceMetric"),
+        .package(path: "../RagnarokFileFormats"),
+        .package(path: "../RagnarokRenderers"),
         .package(path: "../RagnarokResources"),
         .package(path: "../SGLMath"),
         .package(path: "../TextEncoding"),
@@ -29,10 +29,10 @@ let package = Package(
         .target(
             name: "RagnarokReality",
             dependencies: [
-                "RagnarokFileFormats",
                 "ImageRendering",
-                "RagnarokRenderers",
                 "PerformanceMetric",
+                "RagnarokFileFormats",
+                "RagnarokRenderers",
                 "RagnarokResources",
                 "SGLMath",
                 "TextEncoding",
