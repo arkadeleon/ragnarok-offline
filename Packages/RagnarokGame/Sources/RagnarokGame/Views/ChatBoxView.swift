@@ -22,7 +22,7 @@ struct ChatBoxView: View {
                 .disableAutocorrection(true)
                 .gameText()
                 .onSubmit {
-                    gameSession.sendMessage(message)
+                    gameSession.mapSession?.sendMessage(message)
                     message = ""
                 }
         }

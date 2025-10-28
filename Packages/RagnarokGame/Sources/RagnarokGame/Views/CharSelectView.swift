@@ -152,7 +152,7 @@ struct CharSelectView: View {
 
                 if let selectedCharacter {
                     GameButton("btn_ok.bmp") {
-                        gameSession.selectChar(char: selectedCharacter)
+                        gameSession.charSession?.selectChar(slot: selectedCharacter.charNum)
                     }
                 }
 

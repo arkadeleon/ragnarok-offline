@@ -18,17 +18,9 @@ import SwiftUI
 import WorldCamera
 
 @MainActor
-protocol MapSceneDelegate: AnyObject {
-    func mapSceneDidFinishLoading(_ scene: MapScene)
-    func mapScene(_ scene: MapScene, didTapTileAt position: SIMD2<Int>)
-    func mapScene(_ scene: MapScene, didTapMapObject object: MapObject)
-    func mapScene(_ scene: MapScene, didTapMapObjectWith objectID: UInt32)
-    func mapScene(_ scene: MapScene, didTapMapItem item: MapItem)
-}
-
-@MainActor
 public class MapScene {
     let mapName: String
+    let mapSession: MapSession
     let world: WorldResource
     let player: MapObject
     let playerPosition: SIMD2<Int>
@@ -38,8 +30,6 @@ public class MapScene {
     let resourceManager: ResourceManager
 
     let rootEntity = Entity()
-
-    weak var mapSceneDelegate: (any MapSceneDelegate)?
 
     var distance: Float = 100 {
         didSet {
@@ -66,7 +56,7 @@ public class MapScene {
             .targetedToEntity(where: .has(TileComponent.self))
             .onEnded { [unowned self] event in
                 if let position = event.entity.components[TileComponent.self]?.position {
-                    self.mapSceneDelegate?.mapScene(self, didTapTileAt: position)
+                    mapSession.requestMove(to: position)
                 }
             }
     }
@@ -76,7 +66,14 @@ public class MapScene {
             .targetedToEntity(where: .has(MapObjectComponent.self))
             .onEnded { [unowned self] event in
                 if let mapObject = event.entity.components[MapObjectComponent.self]?.mapObject {
-                    self.mapSceneDelegate?.mapScene(self, didTapMapObject: mapObject)
+                    switch mapObject.type {
+                    case .monster:
+                        mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                    case .npc:
+                        mapSession.talkToNPC(objectID: mapObject.objectID)
+                    default:
+                        break
+                    }
                 }
             }
     }
@@ -86,13 +83,14 @@ public class MapScene {
             .targetedToEntity(where: .has(MapItemComponent.self))
             .onEnded { [unowned self] event in
                 if let mapItem = event.entity.components[MapItemComponent.self]?.mapItem {
-                    self.mapSceneDelegate?.mapScene(self, didTapMapItem: mapItem)
+                    mapSession.pickUpItem(objectID: mapItem.objectID)
                 }
             }
     }
 
-    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager) {
+    init(mapName: String, mapSession: MapSession, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager) {
         self.mapName = mapName
+        self.mapSession = mapSession
         self.world = world
         self.player = player
         self.playerPosition = playerPosition
@@ -186,7 +184,7 @@ public class MapScene {
         setupLighting()
         _ = setupWorldCamera(target: playerEntity)
 
-        mapSceneDelegate?.mapSceneDidFinishLoading(self)
+        mapSession.notifyMapLoaded()
     }
 
     func unload() {
@@ -199,9 +197,16 @@ public class MapScene {
         let nearestHit = scene.raycast(origin: origin, direction: direction, length: 150, query: .nearest).first
         if let nearestHit {
             if let mapObject = nearestHit.entity.components[MapObjectComponent.self]?.mapObject {
-                mapSceneDelegate?.mapScene(self, didTapMapObject: mapObject)
+                switch mapObject.type {
+                case .monster:
+                    mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                case .npc:
+                    mapSession.talkToNPC(objectID: mapObject.objectID)
+                default:
+                    break
+                }
             } else if let mapItem = nearestHit.entity.components[MapItemComponent.self]?.mapItem {
-                mapSceneDelegate?.mapScene(self, didTapMapItem: mapItem)
+                mapSession.pickUpItem(objectID: mapItem.objectID)
             }
             return
         }
@@ -230,7 +235,7 @@ public class MapScene {
             let altitude = x1 + (x2 - x1) * yr
 
             if fabsf(altitude - point.z) < 0.5 {
-                mapSceneDelegate?.mapScene(self, didTapTileAt: position)
+                mapSession.requestMove(to: position)
 
                 let p0: SIMD3<Float> = [Float(position.x), Float(position.y), cell.bottomLeftAltitude + 0.1]
                 let p1: SIMD3<Float> = [Float(position.x + 1), Float(position.y), cell.bottomRightAltitude + 0.1]
@@ -427,18 +432,21 @@ extension MapScene {
 
         if let position {
             var newPosition = position
-            if movementValue.x > 20 {
+            if movementValue.x > 15 {
                 newPosition.x += 3
-            } else if movementValue.x < -20 {
+            }
+            if movementValue.x < -15 {
                 newPosition.x -= 3
-            } else if movementValue.y > 20 {
+            }
+            if movementValue.y > 15 {
                 newPosition.y -= 3
-            } else if movementValue.y < -20 {
+            }
+            if movementValue.y < -15 {
                 newPosition.y += 3
             }
 
             if newPosition != position {
-                mapSceneDelegate?.mapScene(self, didTapTileAt: newPosition)
+                mapSession.requestMove(to: newPosition)
             }
         }
     }

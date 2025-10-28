@@ -21,7 +21,7 @@ final public class GameSession {
     public let windowID = "Game"
     public let immersiveSpaceID = "Game"
 
-    public let resourceManager: ResourceManager
+    let resourceManager: ResourceManager
 
     public struct Configuration: Codable, Hashable {
         public var serverAddress: String
@@ -41,7 +41,7 @@ final public class GameSession {
 
     public private(set) var state: GameSession.State = .notStarted
 
-    public enum Phase {
+    enum Phase {
         case login
         case charServerList(_ charServers: [CharServerInfo])
         case charSelect(_ chars: [CharInfo])
@@ -50,33 +50,24 @@ final public class GameSession {
         case map(_ scene: MapScene)
     }
 
-    public private(set) var phase: GameSession.Phase = .login
+    private(set) var phase: GameSession.Phase = .login
 
-    public struct ErrorMessage: Identifiable {
-        public let id = UUID()
-        public let content: String
+    struct ErrorMessage: Identifiable {
+        let id = UUID()
+        let content: String
     }
 
-    public private(set) var errorMessages: [GameSession.ErrorMessage] = []
+    private(set) var errorMessages: [GameSession.ErrorMessage] = []
+    private(set) var account: AccountInfo?
+    private(set) var chars: [CharInfo] = []
+    private(set) var char: CharInfo?
+    private(set) var playerStatus: CharacterStatus?
+    private(set) var inventory = Inventory()
+    private(set) var dialog: NPCDialog?
 
-    public private(set) var account: AccountInfo?
-
-    public private(set) var chars: [CharInfo] = []
-
-    public private(set) var char: CharInfo?
-
-    public private(set) var playerStatus: CharacterStatus?
-
-    public private(set) var inventory = Inventory()
-
-    public private(set) var dialog: NPCDialog?
-
-    @ObservationIgnored
-    var loginSession: LoginSession?
-    @ObservationIgnored
-    var charSession: CharSession?
-    @ObservationIgnored
-    var mapSession: MapSession?
+    @ObservationIgnored var loginSession: LoginSession?
+    @ObservationIgnored var charSession: CharSession?
+    @ObservationIgnored var mapSession: MapSession?
 
     var mapScene: MapScene? {
         if case .map(let scene) = phase {
@@ -90,7 +81,7 @@ final public class GameSession {
         self.resourceManager = resourceManager
     }
 
-    // MARK: - Start and Stop
+    // MARK: - Public
 
     public func test(_ configuration: GameSession.Configuration) async -> NWError? {
         await withCheckedContinuation { continuation in
@@ -130,79 +121,33 @@ final public class GameSession {
         state = .stopped
     }
 
-    // MARK: - Public
+    // MARK: - Internal
 
-    public func removeErrorMessage(_ errorMessage: GameSession.ErrorMessage) {
+    func removeErrorMessage(_ errorMessage: GameSession.ErrorMessage) {
         if let index = errorMessages.firstIndex(where: { $0.id == errorMessage.id }) {
             errorMessages.remove(at: index)
         }
     }
 
-    public func login(username: String, password: String) {
+    func login(username: String, password: String) {
         startLoginSession()
 
         loginSession?.login(username: username, password: password)
     }
 
-    public func selectCharServer(_ charServer: CharServerInfo) {
+    func selectCharServer(_ charServer: CharServerInfo) {
         startCharSession(charServer)
     }
 
-    public func selectChar(char: CharInfo) {
-        if let charSession {
-            charSession.selectChar(slot: char.charNum)
-        }
-    }
-
-    public func makeChar(slot: UInt8) {
+    func makeChar(slot: UInt8) {
         phase = .charMake(slot)
     }
 
-    public func makeChar(char: CharInfo) {
-        if let charSession {
-            charSession.makeChar(char: char)
-        }
-    }
-
-    public func cancelMakeChar() {
+    func cancelMakeChar() {
         phase = .charSelect(chars)
     }
 
-    public func incrementStatusProperty(_ sp: StatusProperty) {
-        if let mapSession {
-            mapSession.incrementStatusProperty(sp, by: 1)
-        }
-    }
-
-    public func useItem(_ item: InventoryItem) {
-        if let mapSession {
-            let accountID = mapSession.account.accountID
-            mapSession.useItem(at: item.index, by: accountID)
-        }
-    }
-
-    public func equipItem(_ item: InventoryItem) {
-        if let mapSession {
-            mapSession.equipItem(at: item.index, location: item.location)
-        }
-    }
-
-    public func sendMessage(_ message: String) {
-        if let mapSession {
-            mapSession.sendMessage(message)
-        }
-    }
-
-    public func returnToLastSavePoint() {
-        mapSession?.returnToLastSavePoint()
-    }
-
-    public func returnToCharacterSelect() {
-        mapSession?.returnToCharacterSelect()
-    }
-
-    public func requestExit() {
-        mapSession?.requestExit()
+    func stopAllSessions() {
         mapSession?.stop()
         mapSession = nil
 
@@ -211,11 +156,13 @@ final public class GameSession {
 
         loginSession?.stop()
         loginSession = nil
+
+        phase = .login
     }
 
     // MARK: - NPC
 
-    public func requestNextMessage() {
+    func requestNextMessage() {
         guard let mapSession, let dialog else {
             return
         }
@@ -228,7 +175,7 @@ final public class GameSession {
         self.dialog = nil
     }
 
-    public func closeDialog() {
+    func closeDialog() {
         guard let mapSession, let dialog else {
             return
         }
@@ -241,7 +188,7 @@ final public class GameSession {
         self.dialog = nil
     }
 
-    public func selectMenu(select: UInt8) {
+    func selectMenu(select: UInt8) {
         guard let mapSession, let dialog else {
             return
         }
@@ -252,37 +199,6 @@ final public class GameSession {
         }
 
         self.dialog = nil
-    }
-
-    // MARK: - Character Sprite
-
-    public func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
-        guard 0..<chars.count ~= slot else {
-            return nil
-        }
-
-        return await characterAnimation(for: chars[slot])
-    }
-
-    public func characterAnimation(for char: CharInfo) async -> SpriteRenderer.Animation? {
-        do {
-            let configuration = ComposedSprite.Configuration(char: char)
-            let composedSprite = try await ComposedSprite(
-                configuration: configuration,
-                resourceManager: resourceManager
-            )
-
-            let spriteRenderer = SpriteRenderer()
-            let animation = await spriteRenderer.render(
-                composedSprite: composedSprite,
-                actionType: .idle,
-                rendersShadow: false
-            )
-            return animation
-        } catch {
-            logger.warning("\(error)")
-            return nil
-        }
     }
 
     // MARK: - Login Session
@@ -432,7 +348,7 @@ final public class GameSession {
             phase = .mapLoading
 
             Task {
-                guard let account, let char else {
+                guard let mapSession, let account, let char else {
                     return
                 }
 
@@ -444,12 +360,12 @@ final public class GameSession {
 
                 let scene = MapScene(
                     mapName: mapName,
+                    mapSession: mapSession,
                     world: world,
                     player: player,
                     playerPosition: position,
                     resourceManager: resourceManager
                 )
-                scene.mapSceneDelegate = self
 
                 await scene.load()
 
@@ -517,31 +433,35 @@ final public class GameSession {
     }
 }
 
-extension GameSession: MapSceneDelegate {
-    func mapSceneDidFinishLoading(_ scene: MapScene) {
-        mapSession?.notifyMapLoaded()
-    }
+// MARK: - Character Sprite
 
-    func mapScene(_ scene: MapScene, didTapTileAt position: SIMD2<Int>) {
-        mapSession?.requestMove(to: position)
-    }
-
-    func mapScene(_ scene: MapScene, didTapMapObject object: MapObject) {
-        switch object.type {
-        case .monster:
-            mapSession?.requestAction(._repeat, onTarget: object.objectID)
-        case .npc:
-            mapSession?.talkToNPC(objectID: object.objectID)
-        default:
-            break
+extension GameSession {
+    func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
+        guard 0..<chars.count ~= slot else {
+            return nil
         }
+
+        return await characterAnimation(for: chars[slot])
     }
 
-    func mapScene(_ scene: MapScene, didTapMapObjectWith objectID: UInt32) {
-        mapSession?.talkToNPC(objectID: objectID)
-    }
+    func characterAnimation(for char: CharInfo) async -> SpriteRenderer.Animation? {
+        do {
+            let configuration = ComposedSprite.Configuration(char: char)
+            let composedSprite = try await ComposedSprite(
+                configuration: configuration,
+                resourceManager: resourceManager
+            )
 
-    func mapScene(_ scene: MapScene, didTapMapItem item: MapItem) {
-        mapSession?.pickUpItem(objectID: item.objectID)
+            let spriteRenderer = SpriteRenderer()
+            let animation = await spriteRenderer.render(
+                composedSprite: composedSprite,
+                actionType: .idle,
+                rendersShadow: false
+            )
+            return animation
+        } catch {
+            logger.warning("\(error)")
+            return nil
+        }
     }
 }

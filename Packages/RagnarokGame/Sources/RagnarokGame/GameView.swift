@@ -49,7 +49,10 @@ public struct GameView: View {
             }
         }
         .environment(gameSession)
-        .environment(\.exitGame, ExitGameAction(action: onExit))
+        .environment(\.exitGame, ExitGameAction {
+            gameSession.stopAllSessions()
+            onExit()
+        })
         #if os(iOS)
         .statusBarHidden()
         .onAppear {

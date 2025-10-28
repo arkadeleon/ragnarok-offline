@@ -52,22 +52,22 @@ struct StatusView: View {
                 VStack(spacing: 2) {
                     Group {
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.str)
+                            gameSession.mapSession?.incrementStatusProperty(.str, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.agi)
+                            gameSession.mapSession?.incrementStatusProperty(.agi, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.vit)
+                            gameSession.mapSession?.incrementStatusProperty(.vit, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.int)
+                            gameSession.mapSession?.incrementStatusProperty(.int, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.dex)
+                            gameSession.mapSession?.incrementStatusProperty(.dex, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.luk)
+                            gameSession.mapSession?.incrementStatusProperty(.luk, by: 1)
                         }
                     }
                     .frame(width: 14, height: 14)
