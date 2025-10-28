@@ -36,8 +36,7 @@ class SpriteEntity: Entity {
         repeats: Bool,
         actionEnded: (() -> Void)? = nil
     ) {
-        guard let gridPosition = components[GridPositionComponent.self]?.gridPosition,
-              let mapGrid = components[MapGridComponent.self]?.mapGrid,
+        guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
               let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
@@ -51,6 +50,8 @@ class SpriteEntity: Entity {
         stopAllAnimations()
 
         let animation = animations[animationIndex]
+
+        let gridPosition = gridPosition
         let altitude = mapGrid[gridPosition].averageAltitude
 
         self.position = [
@@ -69,8 +70,7 @@ class SpriteEntity: Entity {
     }
 
     func playSpriteAnimation(atIndex animationIndex: Int, repeats: Bool) {
-        guard let gridPosition = components[GridPositionComponent.self]?.gridPosition,
-              let mapGrid = components[MapGridComponent.self]?.mapGrid,
+        guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
               let animations = components[SpriteComponent.self]?.animations,
               0..<animations.count ~= animationIndex else {
             return
@@ -79,6 +79,8 @@ class SpriteEntity: Entity {
         stopAllAnimations()
 
         let animation = animations[animationIndex]
+
+        let gridPosition = gridPosition
         let altitude = mapGrid[gridPosition].averageAltitude
 
         self.position = [

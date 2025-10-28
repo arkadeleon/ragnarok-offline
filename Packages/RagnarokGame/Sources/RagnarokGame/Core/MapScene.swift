@@ -110,8 +110,11 @@ public class MapScene {
         MapObjectComponent.registerComponent()
         SpriteComponent.registerComponent()
         TileComponent.registerComponent()
-        WalkingComponent.registerComponent()
 
+        LockOnComponent.registerComponent()
+        LockOnSystem.registerSystem()
+
+        WalkingComponent.registerComponent()
         WalkingSystem.registerSystem()
 
         PlaySpriteAnimationAction.registerAction()
@@ -199,7 +202,13 @@ public class MapScene {
             if let mapObject = nearestHit.entity.components[MapObjectComponent.self]?.mapObject {
                 switch mapObject.type {
                 case .monster:
-                    mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                    let lockOnComponent = LockOnComponent(targetEntity: nearestHit.entity, attackRange: 1) {
+                        self.mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                    }
+                    playerEntity.components.set(lockOnComponent)
+
+                    let endPosition = nearestHit.entity.gridPosition
+                    mapSession.requestMove(to: [endPosition.x, endPosition.y])
                 case .npc:
                     mapSession.talkToNPC(objectID: mapObject.objectID)
                 default:
@@ -421,33 +430,29 @@ public class MapScene {
 
 extension MapScene {
     func onMovementValueChanged(movementValue: CGPoint) {
-        let position: SIMD2<Int>?
+        let position: SIMD2<Int>
         if let path = playerEntity.components[WalkingComponent.self]?.path, path.count > 1 {
             position = path[1]
-        } else if let gridPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition {
-            position = gridPosition
         } else {
-            position = nil
+            position = playerEntity.gridPosition
         }
 
-        if let position {
-            var newPosition = position
-            if movementValue.x > 15 {
-                newPosition.x += 3
-            }
-            if movementValue.x < -15 {
-                newPosition.x -= 3
-            }
-            if movementValue.y > 15 {
-                newPosition.y -= 3
-            }
-            if movementValue.y < -15 {
-                newPosition.y += 3
-            }
+        var newPosition = position
+        if movementValue.x > 15 {
+            newPosition.x += 3
+        }
+        if movementValue.x < -15 {
+            newPosition.x -= 3
+        }
+        if movementValue.y > 15 {
+            newPosition.y -= 3
+        }
+        if movementValue.y < -15 {
+            newPosition.y += 3
+        }
 
-            if newPosition != position {
-                mapSession.requestMove(to: newPosition)
-            }
+        if newPosition != position {
+            mapSession.requestMove(to: newPosition)
         }
     }
 }
@@ -462,7 +467,7 @@ extension MapScene: MapEventHandlerProtocol {
             walkingComponent.path = [walkingComponent.path[0]] + path
             playerEntity.components.set(walkingComponent)
         } else {
-            let startPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
+            let startPosition = playerEntity.gridPosition
             let path = pathfinder.findPath(from: startPosition, to: endPosition)
 
             let walkingComponent = WalkingComponent(path: path, mapGrid: mapGrid)
@@ -508,7 +513,7 @@ extension MapScene: MapEventHandlerProtocol {
                 walkingComponent.path = [walkingComponent.path[0]] + path
                 entity.components.set(walkingComponent)
             } else {
-                let startPosition = entity.components[GridPositionComponent.self]?.gridPosition ?? startPosition
+                let startPosition = entity.gridPosition
                 let path = pathfinder.findPath(from: startPosition, to: endPosition)
 
                 let walkingComponent = WalkingComponent(path: path, mapGrid: mapGrid)
