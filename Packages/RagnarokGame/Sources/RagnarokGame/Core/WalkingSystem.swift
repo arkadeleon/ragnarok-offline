@@ -113,10 +113,10 @@ final class WalkingSystem: System {
             walkingComponent.totalTime = totalTime
 
             if walkingComponent.path.count == 1 {
-                entity.components[WalkingComponent.self] = nil
+                entity.components.remove(WalkingComponent.self)
                 entity.playSpriteAnimation(.idle, direction: direction, repeats: true)
             } else {
-                entity.components[WalkingComponent.self] = walkingComponent
+                entity.components.set(walkingComponent)
             }
         }
     }

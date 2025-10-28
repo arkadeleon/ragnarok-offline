@@ -136,6 +136,7 @@
 				RagnarokSprite,
 				SGLMath,
 				TextEncoding,
+				ThumbstickView,
 				WorldCamera,
 			);
 			target = 35B3B8D32A08BEA600B4540B /* RagnarokOffline */;

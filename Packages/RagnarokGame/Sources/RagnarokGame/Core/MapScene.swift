@@ -283,9 +283,8 @@ public class MapScene {
 
         lightEntity.components.set([lightComponent, lightShadowComponent])
 
-        // Default longitude(45), latitude(45) makes shadow too long.
-        let longitude = radians(Double(world.rsw.light.longitude)) / 2
-        let latitude = radians(Double(world.rsw.light.latitude)) / 2
+        let longitude = radians(Double(world.rsw.light.longitude))
+        let latitude = radians(Double(world.rsw.light.latitude))
 
         let target: SIMD3<Float> = [0, 0, 0]
         var position: SIMD3<Float> = [0, 0, 1]
@@ -411,6 +410,36 @@ public class MapScene {
         } catch {
             try? FileManager.default.removeItem(at: tempURL)
             return nil
+        }
+    }
+}
+
+extension MapScene {
+    func onMovementValueChanged(movementValue: CGPoint) {
+        let position: SIMD2<Int>?
+        if let path = playerEntity.components[WalkingComponent.self]?.path, path.count > 1 {
+            position = path[1]
+        } else if let gridPosition = playerEntity.components[GridPositionComponent.self]?.gridPosition {
+            position = gridPosition
+        } else {
+            position = nil
+        }
+
+        if let position {
+            var newPosition = position
+            if movementValue.x > 20 {
+                newPosition.x += 3
+            } else if movementValue.x < -20 {
+                newPosition.x -= 3
+            } else if movementValue.y > 20 {
+                newPosition.y -= 3
+            } else if movementValue.y < -20 {
+                newPosition.y += 3
+            }
+
+            if newPosition != position {
+                mapSceneDelegate?.mapScene(self, didTapTileAt: newPosition)
+            }
         }
     }
 }

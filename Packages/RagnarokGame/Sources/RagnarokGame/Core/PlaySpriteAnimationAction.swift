@@ -49,12 +49,7 @@ struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerProtocol {
     }
 
     func actionEnded(event: EventType) {
-        logger.info("action ended")
         event.action.actionEnded?()
-    }
-
-    func actionTerminated(event: EventType) {
-        logger.info("action terminated")
     }
 }
 

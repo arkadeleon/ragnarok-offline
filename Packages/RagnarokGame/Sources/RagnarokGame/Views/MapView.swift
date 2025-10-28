@@ -7,6 +7,7 @@
 
 import RealityKit
 import SwiftUI
+import ThumbstickView
 
 struct MapView: View {
     var scene: MapScene
@@ -18,6 +19,9 @@ struct MapView: View {
     #endif
 
     @State private var presentedMenuItem: MenuItem?
+    @State private var movementValue: CGPoint = .zero
+
+    private let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
 
     var body: some View {
         ZStack {
@@ -63,6 +67,13 @@ struct MapView: View {
         }
         .overlay(alignment: .bottomLeading) {
             ChatBoxView()
+        }
+        .overlay(alignment: .bottomTrailing) {
+            ThumbstickView(updatingValue: $movementValue, radius: 60)
+                .padding(.horizontal)
+                .onReceive(timer) { _ in
+                    scene.onMovementValueChanged(movementValue: movementValue)
+                }
         }
         .overlay {
             NPCDialogOverlayView()

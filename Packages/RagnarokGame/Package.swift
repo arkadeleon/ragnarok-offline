@@ -26,6 +26,7 @@ let package = Package(
         .package(path: "../RagnarokResources"),
         .package(path: "../RagnarokSprite"),
         .package(path: "../SGLMath"),
+        .package(path: "../ThumbstickView"),
         .package(path: "../WorldCamera"),
     ],
     targets: [
@@ -41,6 +42,7 @@ let package = Package(
                 "RagnarokResources",
                 "RagnarokSprite",
                 "SGLMath",
+                "ThumbstickView",
                 "WorldCamera",
             ]
         ),

@@ -5,27 +5,26 @@
 See the LICENSE.txt file for this sample’s licensing information.
 
 Abstract:
-The package for controlling camera movements in a RealityKit app.
+The package that contains a UI for thumbstick control.
 */
 
 import PackageDescription
 
 let package = Package(
-    name: "WorldCamera",
+    name: "ThumbstickView",
     platforms: [
-        .macOS(.v15),
-        .iOS(.v18),
-        .visionOS(.v2),
+        .macOS(.v14),
+        .iOS(.v17),
     ],
     products: [
         .library(
-            name: "WorldCamera",
-            targets: ["WorldCamera"]
+            name: "ThumbstickView",
+            targets: ["ThumbstickView"]
         ),
     ],
     targets: [
         .target(
-            name: "WorldCamera",
+            name: "ThumbstickView",
             swiftSettings: [
                 .enableUpcomingFeature("MemberImportVisibility"),
             ]
