@@ -12,15 +12,10 @@ struct FileReferencesView: View {
     var onDone: () -> Void
 
     @State private var referenceFiles: [File] = []
-    @State private var fileToPreview: File?
 
     var body: some View {
         ImageGrid(referenceFiles) { file in
-            Button {
-                if file.canPreview {
-                    fileToPreview = file
-                }
-            } label: {
+            NavigationLink(value: file) {
                 FileGridCell(file: file)
             }
             .fileContextMenu(file: file)
@@ -31,14 +26,6 @@ struct FileReferencesView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done", action: onDone)
             }
-        }
-        .sheet(item: $fileToPreview) { file in
-            NavigationStack {
-                FilePreviewTabView(files: referenceFiles.filter({ $0.canPreview }), currentFile: file) {
-                    fileToPreview = nil
-                }
-            }
-            .presentationSizing(.page)
         }
         .task {
             referenceFiles = await file.referenceFiles()
@@ -53,5 +40,5 @@ struct FileReferencesView: View {
         FileReferencesView(file: file) {
         }
     }
-    .frame(width: 400, height: 300)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

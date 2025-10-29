@@ -39,5 +39,5 @@ struct GATFilePreviewView: View {
     } content: { file in
         GATFilePreviewView(file: file)
     }
-    .frame(width: 400, height: 300)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

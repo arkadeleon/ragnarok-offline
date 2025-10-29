@@ -26,11 +26,7 @@ struct FilesView: View {
                 }
                 .fileContextMenu(file: file, onDelete: onDeleteFile)
             } else {
-                Button {
-                    if file.canPreview {
-                        fileToPreview = file
-                    }
-                } label: {
+                NavigationLink(value: file) {
                     FileGridCell(file: file)
                 }
                 .fileContextMenu(file: file, onDelete: onDeleteFile)
@@ -65,14 +61,6 @@ struct FilesView: View {
         }
         .onChange(of: searchText) {
             filterFiles()
-        }
-        .sheet(item: $fileToPreview) { file in
-            NavigationStack {
-                FilePreviewTabView(files: filteredFiles.filter({ $0.canPreview }), currentFile: file) {
-                    fileToPreview = nil
-                }
-            }
-            .presentationSizing(.page)
         }
         .task {
             await load()
@@ -123,5 +111,5 @@ struct FilesView: View {
 
 #Preview {
     FilesView(directory: .previewGRF())
-        .frame(width: 400, height: 300)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

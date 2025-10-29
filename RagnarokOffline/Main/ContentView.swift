@@ -42,9 +42,14 @@ struct ContentView: View {
         }
         .sheet(item: $incomingFile) { file in
             NavigationStack {
-                FilePreviewTabView(files: [file], currentFile: file) {
-                    incomingFile = nil
-                }
+                FilePreviewView(file: file)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                incomingFile = nil
+                            }
+                        }
+                    }
             }
             .presentationSizing(.page)
         }
@@ -118,7 +123,11 @@ extension View {
     func navigationDestinations(appModel: AppModel) -> some View {
         self
             .navigationDestination(for: File.self) { file in
-                FilesView(directory: file)
+                if file.hasFiles {
+                    FilesView(directory: file)
+                } else {
+                    FilePreviewView(file: file)
+                }
             }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
