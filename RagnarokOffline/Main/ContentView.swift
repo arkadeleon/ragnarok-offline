@@ -129,6 +129,9 @@ extension View {
                     FilePreviewView(file: file)
                 }
             }
+            .navigationDestination(for: FileGroup.self) { fileGroup in
+                FileGroupView(group: fileGroup)
+            }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
                     .environment(appModel.database)

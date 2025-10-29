@@ -14,7 +14,6 @@ struct FileContextMenu: ViewModifier {
     @Environment(\.fileSystem) private var fileSystem
 
     @State private var isJSONViewerPresented = false
-    @State private var isReferencesPresented = false
 
     func body(content: Content) -> some View {
         content
@@ -29,9 +28,7 @@ struct FileContextMenu: ViewModifier {
                     }
 
                     if file.hasReferences {
-                        Button {
-                            isReferencesPresented.toggle()
-                        } label: {
+                        NavigationLink(value: FileGroup(file: file, type: .references)) {
                             Label("References", systemImage: "link")
                         }
                     }
@@ -76,13 +73,6 @@ struct FileContextMenu: ViewModifier {
                 NavigationStack {
                     FileJSONViewer(file: file) {
                         isJSONViewerPresented.toggle()
-                    }
-                }
-            }
-            .sheet(isPresented: $isReferencesPresented) {
-                NavigationStack {
-                    FileReferencesView(file: file) {
-                        isReferencesPresented.toggle()
                     }
                 }
             }
