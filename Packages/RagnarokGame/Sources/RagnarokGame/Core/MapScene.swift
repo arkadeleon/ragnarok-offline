@@ -484,21 +484,28 @@ extension MapScene: MapEventHandlerProtocol {
             entity.components[GridPositionComponent.self]?.gridPosition = position
         } else {
             Task {
+                let entity: SpriteEntity
                 do {
-                    let entity = try await spriteEntityManager.entity(for: object)
-                    entity.name = "\(object.objectID)"
-                    entity.transform = transform(for: position)
-                    entity.isEnabled = (object.effectState != .cloak)
-                    entity.components.set([
-                        GridPositionComponent(gridPosition: position),
-                        MapGridComponent(mapGrid: mapGrid),
-                        MapObjectComponent(mapObject: object),
-                    ])
-                    entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: direction), repeats: true)
-                    rootEntity.addChild(entity)
+                    entity = try await spriteEntityManager.entity(for: object)
                 } catch {
-                    logger.info("\(error)")
+                    logger.warning("\(error)")
+                    return
                 }
+
+                if let _ = rootEntity.findEntity(named: "\(object.objectID)") {
+                    return
+                }
+
+                entity.name = "\(object.objectID)"
+                entity.transform = transform(for: position)
+                entity.isEnabled = (object.effectState != .cloak)
+                entity.components.set([
+                    GridPositionComponent(gridPosition: position),
+                    MapGridComponent(mapGrid: mapGrid),
+                    MapObjectComponent(mapObject: object),
+                ])
+                entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: direction), repeats: true)
+                rootEntity.addChild(entity)
             }
         }
     }
@@ -521,21 +528,28 @@ extension MapScene: MapEventHandlerProtocol {
             }
         } else {
             Task {
+                let entity: SpriteEntity
                 do {
-                    let entity = try await spriteEntityManager.entity(for: object)
-                    entity.name = "\(object.objectID)"
-                    entity.transform = transform(for: endPosition)
-                    entity.isEnabled = (object.effectState != .cloak)
-                    entity.components.set([
-                        GridPositionComponent(gridPosition: endPosition),
-                        MapGridComponent(mapGrid: mapGrid),
-                        MapObjectComponent(mapObject: object),
-                    ])
-                    entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
-                    rootEntity.addChild(entity)
+                    entity = try await spriteEntityManager.entity(for: object)
                 } catch {
-                    logger.info("\(error)")
+                    logger.warning("\(error)")
+                    return
                 }
+
+                if let _ = rootEntity.findEntity(named: "\(object.objectID)") {
+                    return
+                }
+
+                entity.name = "\(object.objectID)"
+                entity.transform = transform(for: endPosition)
+                entity.isEnabled = (object.effectState != .cloak)
+                entity.components.set([
+                    GridPositionComponent(gridPosition: endPosition),
+                    MapGridComponent(mapGrid: mapGrid),
+                    MapObjectComponent(mapObject: object),
+                ])
+                entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                rootEntity.addChild(entity)
             }
         }
     }

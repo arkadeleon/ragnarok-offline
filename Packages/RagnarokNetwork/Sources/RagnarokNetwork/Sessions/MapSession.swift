@@ -76,8 +76,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         eventSubject.eraseToAnyPublisher()
     }
 
-    var playerStatus = CharacterStatus()
-    var inventory = Inventory()
+    var playerStatus: CharacterStatus
+    var inventory: Inventory
     var pendingNPCDialog: NPCDialog?
 
     private var timerTask: Task<Void, Never>?
@@ -86,6 +86,9 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         self.account = account
         self.char = char
         self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
+
+        self.playerStatus = CharacterStatus(char: char)
+        self.inventory = Inventory()
     }
 
     public func start() {

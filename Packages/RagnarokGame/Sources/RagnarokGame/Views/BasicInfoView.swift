@@ -47,9 +47,19 @@ struct BasicInfoView: View {
                 .gameText()
                 .offset(x: 15, y: 86)
 
+            ProgressView(value: baseExp)
+                .progressViewStyle(.linear)
+                .frame(width: 110, height: 6)
+                .offset(x: 84, y: 89)
+
             Text(verbatim: "Job Lv. \(status.jobLevel)")
                 .gameText()
                 .offset(x: 15, y: 97)
+
+            ProgressView(value: jobExp)
+                .progressViewStyle(.linear)
+                .frame(width: 110, height: 6)
+                .offset(x: 84, y: 101)
 
             VStack {
                 Spacer()
@@ -65,6 +75,22 @@ struct BasicInfoView: View {
             }
         }
         .frame(width: 220, height: 135)
+    }
+
+    private var baseExp: Float {
+        if status.baseExpNext > 0 {
+            Float(status.baseExp) / Float(status.baseExpNext)
+        } else {
+            0
+        }
+    }
+
+    private var jobExp: Float {
+        if status.jobExpNext > 0 {
+            Float(status.jobExp) / Float(status.jobExpNext)
+        } else {
+            0
+        }
     }
 }
 

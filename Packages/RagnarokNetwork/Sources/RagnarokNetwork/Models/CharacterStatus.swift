@@ -64,6 +64,28 @@ public struct CharacterStatus: Sendable {
     public init() {
     }
 
+    public init(char: CharInfo) {
+        hp = Int(char.hp)
+        maxHp = Int(char.maxHp)
+        sp = Int(char.sp)
+        maxSp = Int(char.maxSp)
+
+        baseLevel = Int(char.level)
+        baseExp = Int(char.exp)
+
+        jobLevel = Int(char.jobLevel)
+        jobExp = Int(char.jobExp)
+
+        zeny = Int(char.money)
+
+        str = Int(char.str)
+        agi = Int(char.agi)
+        vit = Int(char.vit)
+        int = Int(char.int)
+        dex = Int(char.dex)
+        luk = Int(char.luk)
+    }
+
     mutating func update(with packet: PACKET_ZC_STATUS) {
         str = Int(packet.str)
         str3 = Int(packet.standardStr)

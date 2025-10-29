@@ -70,7 +70,7 @@ struct MapView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             ThumbstickView(updatingValue: $movementValue, radius: 60)
-                .padding(.horizontal)
+                .padding()
                 .onReceive(timer) { _ in
                     scene.onMovementValueChanged(movementValue: movementValue)
                 }
