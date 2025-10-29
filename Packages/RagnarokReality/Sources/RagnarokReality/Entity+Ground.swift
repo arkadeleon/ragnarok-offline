@@ -39,6 +39,7 @@ extension Entity {
             if let texture = textures[mesh.textureName] {
                 var material = PhysicallyBasedMaterial()
                 material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
+                material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.9)
                 return material
             } else {
                 let material = SimpleMaterial()

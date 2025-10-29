@@ -208,8 +208,9 @@ class SpriteEntity: Entity {
 
         // Create material.
         var material = PhysicallyBasedMaterial()
-        material.blending = .transparent(opacity: 1.0)
+        material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.7)
         material.opacityThreshold = 0.0001
+        material.blending = .transparent(opacity: 1.0)
 
         if let texture = animation.texture {
             material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))

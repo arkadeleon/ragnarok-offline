@@ -291,7 +291,7 @@ public class MapScene {
             blue: CGFloat(diffuse[2]),
             alpha: 1
         )
-        let lightComponent = DirectionalLightComponent(color: lightColor)
+        let lightComponent = DirectionalLightComponent(color: lightColor, intensity: 3000)
 
         let lightShadowComponent = DirectionalLightComponent.Shadow(maximumDistance: 150)
 

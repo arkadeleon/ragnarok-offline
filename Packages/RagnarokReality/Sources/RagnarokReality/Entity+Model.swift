@@ -53,8 +53,9 @@ extension Entity {
             if let texture = textures[mesh.textureName] {
                 var material = PhysicallyBasedMaterial()
                 material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
-                material.blending = .transparent(opacity: 1.0)
+                material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.8)
                 material.opacityThreshold = 0.9999
+                material.blending = .transparent(opacity: 1.0)
                 return material
             } else {
                 let material = SimpleMaterial()
