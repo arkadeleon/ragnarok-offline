@@ -25,9 +25,16 @@ enum FileNode {
     case grfArchiveNode(GRFArchive, GRFNode)
 }
 
+enum FileLocation {
+    case client
+    case server
+    case external
+}
+
 @Observable
 final class File: Sendable {
     let node: FileNode
+    let location: FileLocation
 
     let url: URL
     let name: String
@@ -66,8 +73,9 @@ final class File: Sendable {
         }
     }
 
-    init(node: FileNode) {
+    init(node: FileNode, location: FileLocation) {
         self.node = node
+        self.location = location
 
         self.url = switch node {
         case .directory(let url):
@@ -113,7 +121,7 @@ final class File: Sendable {
             .grfArchiveNode(grfArchive, node)
         }
 
-        self.init(node: node)
+        self.init(node: node, location: .client)
     }
 
     func size() async -> Int {
@@ -160,13 +168,13 @@ final class File: Sendable {
                 switch url.pathExtension.lowercased() {
                 case "grf":
                     let grfArchive = GRFArchive(url: url)
-                    return File(node: .grfArchive(grfArchive))
+                    return File(node: .grfArchive(grfArchive), location: location)
                 default:
                     let values = try? url.resourceValues(forKeys: [.isDirectoryKey])
                     if values?.isDirectory == true {
-                        return File(node: .directory(url))
+                        return File(node: .directory(url), location: location)
                     } else {
-                        return File(node: .regularFile(url))
+                        return File(node: .regularFile(url), location: location)
                     }
                 }
             }
@@ -178,7 +186,7 @@ final class File: Sendable {
             guard let directoryNode = await grfArchive.directoryNode(at: path) else {
                 return []
             }
-            let file = File(node: .grfArchiveNode(grfArchive, directoryNode))
+            let file = File(node: .grfArchiveNode(grfArchive, directoryNode), location: location)
             return await file.files()
         case .grfArchiveNode(let grfArchive, let node):
             guard node.isDirectory else {
@@ -186,7 +194,7 @@ final class File: Sendable {
             }
             let nodes = await grfArchive.contentsOfDirectoryNode(at: node.path)
             let files = nodes.map { node in
-                File(node: .grfArchiveNode(grfArchive, node))
+                File(node: .grfArchiveNode(grfArchive, node), location: location)
             }
             return files.sorted()
         }
@@ -204,7 +212,7 @@ final class File: Sendable {
             guard let directoryNode = await grfArchive.directoryNode(at: path) else {
                 return 0
             }
-            let file = File(node: .grfArchiveNode(grfArchive, directoryNode))
+            let file = File(node: .grfArchiveNode(grfArchive, directoryNode), location: location)
             return await file.fileCount()
         case .grfArchiveNode(let grfArchive, let node):
             if node.isDirectory {

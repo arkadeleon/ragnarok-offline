@@ -14,7 +14,7 @@ extension File {
     static func previewGRF() -> File {
         let url = ResourceManager.shared.localURL.appending(path: "data.grf")
         let grfArchive = GRFArchive(url: url)
-        let file = File(node: .grfArchive(grfArchive))
+        let file = File(node: .grfArchive(grfArchive), location: .client)
         return file
     }
 

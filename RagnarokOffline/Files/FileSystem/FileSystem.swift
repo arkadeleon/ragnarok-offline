@@ -10,15 +10,23 @@ import TextEncoding
 
 final class FileSystem: Sendable {
     func canExtractFile(_ file: File) -> Bool {
+        guard file.location == .client else {
+            return false
+        }
+
         switch file.node {
         case .grfArchiveNode(_, let node) where !node.isDirectory:
-            true
+            return true
         default:
-            false
+            return false
         }
     }
 
     func extractFile(_ file: File) async throws {
+        guard file.location == .client else {
+            return
+        }
+
         guard case .grfArchiveNode(let grfArchive, let node) = file.node, !node.isDirectory else {
             return
         }
@@ -34,15 +42,23 @@ final class FileSystem: Sendable {
     }
 
     func canDeleteFile(_ file: File) -> Bool {
+        guard file.location == .client else {
+            return false
+        }
+
         switch file.node {
         case .directory, .regularFile, .grfArchive:
-            true
+            return true
         default:
-            false
+            return false
         }
     }
 
     func deleteFile(_ file: File) throws {
+        guard file.location == .client else {
+            return
+        }
+
         switch file.node {
         case .directory, .regularFile, .grfArchive:
             try FileManager.default.removeItem(at: file.url)

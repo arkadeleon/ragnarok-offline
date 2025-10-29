@@ -26,11 +26,11 @@ final class AppModel {
 
     let settings = SettingsModel()
 
-    let clientLocalDirectory = File(node: .directory(localClientURL))
+    let clientLocalDirectory = File(node: .directory(localClientURL), location: .client)
     var clientSyncedDirectory: File?
-    let clientCachedDirectory = File(node: .directory(remoteClientCacheURL))
+    let clientCachedDirectory = File(node: .directory(remoteClientCacheURL), location: .client)
 
-    let serverDirectory = File(node: .directory(serverWorkingDirectoryURL))
+    let serverDirectory = File(node: .directory(serverWorkingDirectoryURL), location: .server)
     let loginServer = ServerModel(server: LoginServer.shared)
     let charServer = ServerModel(server: CharServer.shared)
     let mapServer = ServerModel(server: MapServer.shared)
@@ -61,7 +61,7 @@ final class AppModel {
             try? FileManager.default.createDirectory(at: dataURL, withIntermediateDirectories: true)
 
             Task { @MainActor in
-                self.clientSyncedDirectory = File(node: .directory(documentsURL))
+                self.clientSyncedDirectory = File(node: .directory(documentsURL), location: .client)
             }
         }
     }

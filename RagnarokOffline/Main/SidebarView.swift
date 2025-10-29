@@ -72,11 +72,9 @@ struct SidebarView: View {
             }
 
             Section(isExpanded: $isServerSectionExpanded) {
-                #if DEBUG
                 NavigationLink(value: SidebarItem.serverFiles) {
                     Label("Server Files", systemImage: "folder")
                 }
-                #endif
 
                 NavigationLink(value: SidebarItem.loginServer) {
                     ServerCell(server: appModel.loginServer)

@@ -33,7 +33,7 @@ extension File {
                 guard let entryNode = await grfArchive.entryNode(at: path) else {
                     continue
                 }
-                let file = File(node: .grfArchiveNode(grfArchive, entryNode))
+                let file = File(node: .grfArchiveNode(grfArchive, entryNode), location: location)
                 referenceFiles.append(file)
             }
             return referenceFiles
@@ -50,7 +50,7 @@ extension File {
                 guard let entryNode = await grfArchive.entryNode(at: path) else {
                     continue
                 }
-                let file = File(node: .grfArchiveNode(grfArchive, entryNode))
+                let file = File(node: .grfArchiveNode(grfArchive, entryNode), location: location)
                 if !referenceFiles.contains(file) {
                     referenceFiles.append(file)
                 }

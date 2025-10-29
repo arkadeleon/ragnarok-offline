@@ -38,7 +38,7 @@ struct ContentView: View {
             }
         }
         .onOpenURL { url in
-            incomingFile = File(node: .regularFile(url))
+            incomingFile = File(node: .regularFile(url), location: .external)
         }
         .sheet(item: $incomingFile) { file in
             NavigationStack {
