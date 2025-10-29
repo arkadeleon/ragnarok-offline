@@ -51,6 +51,18 @@ final class File: Sendable {
         }
     }
 
+    var isTextFile: Bool {
+        utType.conforms(to: .text)
+    }
+
+    var isImageFile: Bool {
+        utType.conforms(to: .image)
+    }
+
+    var isAudioFile: Bool {
+        utType.conforms(to: .audio)
+    }
+
     var hasFiles: Bool {
         switch node {
         case .directory, .grfArchive:
@@ -62,14 +74,14 @@ final class File: Sendable {
         }
     }
 
-    var utType: UTType? {
+    var utType: UTType {
         switch node {
         case .directory:
             .folder
         case .regularFile, .grfArchive:
-            UTType(filenameExtension: self.extension)
+            UTType(filenameExtension: self.extension) ?? .data
         case .grfArchiveNode(_, let node):
-            node.isDirectory ? .directory : UTType(filenameExtension: node.path.extension)
+            node.isDirectory ? .directory : UTType(filenameExtension: node.path.extension) ?? .data
         }
     }
 
@@ -227,25 +239,21 @@ final class File: Sendable {
 
 extension File {
     var canPreview: Bool {
-        guard let utType else {
-            return false
-        }
-
         switch utType {
         case let utType where utType.conforms(to: .text):
-            return true
+            true
         case .lua, .lub:
-            return true
+            true
         case let utType where utType.conforms(to: .image):
-            return true
+            true
         case .ebm, .pal:
-            return true
+            true
         case let utType where utType.conforms(to: .audio):
-            return true
+            true
         case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }

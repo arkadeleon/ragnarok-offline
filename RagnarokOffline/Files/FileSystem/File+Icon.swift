@@ -7,43 +7,39 @@
 
 extension File {
     var iconName: String {
-        guard let utType else {
-            return "doc"
-        }
-
         switch utType {
         case let utType where utType.conforms(to: .directory):
-            return "folder.fill"
+            "folder.fill"
         case let utType where utType.conforms(to: .archive):
-            return "doc.zipper"
+            "doc.zipper"
         case let utType where utType.conforms(to: .text):
-            return "doc.text"
+            "doc.text"
         case .lua, .lub:
-            return "doc.text"
+            "doc.text"
         case let utType where utType.conforms(to: .image):
-            return "photo"
+            "photo"
         case .ebm, .pal:
-            return "photo"
+            "photo"
         case let utType where utType.conforms(to: .audio):
-            return "waveform.circle"
+            "waveform.circle"
         case .act:
-            return "livephoto"
+            "livephoto"
         case .gat:
-            return "square.grid.3x3.middle.filled"
+            "square.grid.3x3.middle.filled"
         case .gnd:
-            return "mountain.2"
+            "mountain.2"
         case .imf:
-            return "square.stack.3d.up"
+            "square.stack.3d.up"
         case .rsm:
-            return "cube"
+            "cube"
         case .rsw:
-            return "map"
+            "map"
         case .spr:
-            return "photo.stack"
+            "photo.stack"
         case .str:
-            return "sparkles.rectangle.stack"
+            "sparkles.rectangle.stack"
         default:
-            return "doc"
+            "doc"
         }
     }
 }

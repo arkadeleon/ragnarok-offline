@@ -19,11 +19,7 @@ enum FileThumbnailError: Error {
 
 final class FileThumbnailGenerator: Sendable {
     func generateThumbnail(for request: FileThumbnailRequest) async throws -> FileThumbnail {
-        guard let utType = request.file.utType else {
-            throw FileThumbnailError.unsupportedFileFormat
-        }
-
-        switch utType {
+        switch request.file.utType {
         case let utType where utType.conforms(to: .image):
             let data = try await request.file.contents()
 
