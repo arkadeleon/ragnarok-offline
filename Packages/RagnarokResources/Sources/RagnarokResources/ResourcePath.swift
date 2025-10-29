@@ -8,6 +8,11 @@
 import Foundation
 import TextEncoding
 
+public func K2L(_ path: ResourcePath) -> ResourcePath {
+    let components = path.components.map(K2L)
+    return ResourcePath(components: components)
+}
+
 public func L2K(_ path: ResourcePath) -> ResourcePath {
     let components = path.components.map(L2K)
     return ResourcePath(components: components)
