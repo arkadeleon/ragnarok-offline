@@ -352,9 +352,8 @@ final public class GameSession {
                     return
                 }
 
-                let mapName = String(mapName.dropLast(4))
-                let worldPath = ResourcePath(components: ["data", mapName])
-                let world = try await resourceManager.world(at: worldPath)
+                let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
+                let world = try await resourceManager.world(mapName: mapName)
 
                 let player = MapObject(account: account, char: char)
 

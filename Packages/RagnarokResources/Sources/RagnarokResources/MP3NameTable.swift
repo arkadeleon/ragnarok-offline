@@ -9,14 +9,15 @@ import BinaryIO
 import Foundation
 
 final public class MP3NameTable: Resource {
-    let mp3NamesByRSW: [String : String]
+    let mp3NamesByMapName: [String : String]
 
-    init(mp3NamesByRSW: [String : String] = [:]) {
-        self.mp3NamesByRSW = mp3NamesByRSW
+    init(mp3NamesByMapName: [String : String] = [:]) {
+        self.mp3NamesByMapName = mp3NamesByMapName
     }
 
+    // The map name should contain rsw suffix.
     public func mp3Name(forMapName mapName: String) -> String? {
-        mp3NamesByRSW[mapName]
+        mp3NamesByMapName[mapName]
     }
 }
 
@@ -31,14 +32,13 @@ extension ResourceManager {
                 return MP3NameTable()
             }
 
-            var mp3NamesByRSW: [String : String] = [:]
-
             let stream = MemoryStream(data: data)
-
             let reader = StreamReader(stream: stream, delimiter: "\r\n")
             defer {
                 reader.close()
             }
+
+            var mp3NamesByMapName: [String : String] = [:]
 
             while let line = reader.readLine() {
                 if line.trimmingCharacters(in: .whitespaces).starts(with: "//") {
@@ -47,16 +47,15 @@ extension ResourceManager {
 
                 let columns = line.split(separator: "#")
                 if columns.count >= 2 {
-                    let rsw = columns[0]
-                        .replacingOccurrences(of: ".rsw", with: "")
+                    let mapName = String(columns[0])
                     let mp3Name = columns[1]
                         .trimmingCharacters(in: .whitespaces)
                         .replacingOccurrences(of: "bgm\\\\", with: "")
-                    mp3NamesByRSW[rsw] = mp3Name
+                    mp3NamesByMapName[mapName] = mp3Name
                 }
             }
 
-            return MP3NameTable(mp3NamesByRSW: mp3NamesByRSW)
+            return MP3NameTable(mp3NamesByMapName: mp3NamesByMapName)
         }
     }
 }

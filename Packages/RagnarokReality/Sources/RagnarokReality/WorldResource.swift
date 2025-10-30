@@ -21,19 +21,26 @@ final public class WorldResource: Sendable {
 }
 
 extension ResourceManager {
-    public func world(at path: ResourcePath) async throws -> WorldResource {
-        let gatPath = path.appendingPathExtension("gat")
+
+    // The map name should contain rsw suffix.
+    public func world(mapName: String) async throws -> WorldResource {
+        let resourceNameTable = await resourceNameTable()
+
+        let rswResourceName = resourceNameTable.resourceName(forAlias: mapName) ?? mapName
+        let rswPath = ResourcePath(components: ["data", rswResourceName])
+        let rswData = try await contentsOfResource(at: rswPath)
+        let rsw = try RSW(data: rswData)
+
+        let gatResourceName = resourceNameTable.resourceName(forAlias: rsw.files.gat) ?? rsw.files.gat
+        let gatPath = ResourcePath(components: ["data", gatResourceName])
         async let gatData = contentsOfResource(at: gatPath)
 
-        let gndPath = path.appendingPathExtension("gnd")
+        let gndResourceName = resourceNameTable.resourceName(forAlias: rsw.files.gnd) ?? rsw.files.gnd
+        let gndPath = ResourcePath(components: ["data", gndResourceName])
         async let gndData = contentsOfResource(at: gndPath)
-
-        let rswPath = path.appendingPathExtension("rsw")
-        async let rswData = contentsOfResource(at: rswPath)
 
         let gat = try await GAT(data: gatData)
         let gnd = try await GND(data: gndData)
-        let rsw = try await RSW(data: rswData)
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
         return world
