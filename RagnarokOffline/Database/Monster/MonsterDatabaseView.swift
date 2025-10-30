@@ -19,18 +19,17 @@ struct MonsterDatabaseView: View {
                 MonsterGridCell(monster: monster, secondaryText: nil)
             }
         }
-        .navigationTitle("Monster Database")
         .background(.background)
+        .navigationTitle("Monster Database")
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredMonsters = await monsters(matching: searchText, in: database.monsters)
+        }
         .overlay {
             if database.monsters.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredMonsters.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "pawprint.fill")
             }
-        }
-        .searchable(text: $searchText)
-        .task(id: searchText) {
-            filteredMonsters = await monsters(matching: searchText, in: database.monsters)
         }
         .task {
             await database.fetchMonsters()

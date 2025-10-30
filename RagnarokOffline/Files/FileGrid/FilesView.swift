@@ -33,6 +33,14 @@ struct FilesView: View {
             }
         }
         .background(.background)
+        .navigationTitle(title)
+        .toolbar(content: toolbarContent)
+        .adaptiveSearch(text: $searchText) { searchText in
+            filterFiles(searchText: searchText)
+        }
+        .refreshable {
+            await reload()
+        }
         .overlay {
             if loadStatus == .loading {
                 ProgressView()
@@ -42,18 +50,6 @@ struct FilesView: View {
             if loadStatus == .loaded && filteredFiles.isEmpty {
                 ContentUnavailableView("No Files", systemImage: "folder.fill")
             }
-        }
-        .navigationTitle(title)
-        .toolbar(content: toolbarContent)
-        .searchable(text: $searchText)
-        .onSubmit(of: .search) {
-            filterFiles()
-        }
-        .onChange(of: searchText) {
-            filterFiles()
-        }
-        .refreshable {
-            await reload()
         }
         .fileImporter(
             isPresented: $isFileImporterPresented,
@@ -114,17 +110,17 @@ struct FilesView: View {
         loadStatus = .loading
 
         files = await directory.files()
-        filterFiles()
+        filterFiles(searchText: searchText)
 
         loadStatus = .loaded
     }
 
     private func reload() async {
         files = await directory.files()
-        filterFiles()
+        filterFiles(searchText: searchText)
     }
 
-    private func filterFiles() {
+    private func filterFiles(searchText: String) {
         if searchText.isEmpty {
             filteredFiles = files
         } else {
@@ -136,7 +132,7 @@ struct FilesView: View {
 
     private func onDeleteFile(_ file: File) {
         files.removeAll(where: { $0 == file })
-        filterFiles()
+        filterFiles(searchText: searchText)
     }
 
     private func onFileImporterCompletion(_ result: Result<URL, any Error>) {

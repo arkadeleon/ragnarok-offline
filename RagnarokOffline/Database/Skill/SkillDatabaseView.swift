@@ -40,18 +40,17 @@ struct SkillDatabaseView: View {
             }
             .listStyle(.plain)
         }
-        .navigationTitle("Skill Database")
         .background(.background)
+        .navigationTitle("Skill Database")
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredSkills = await skills(matching: searchText, in: database.skills)
+        }
         .overlay {
             if database.skills.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredSkills.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
             }
-        }
-        .searchable(text: $searchText)
-        .task(id: searchText) {
-            filteredSkills = await skills(matching: searchText, in: database.skills)
         }
         .task {
             await database.fetchSkills()

@@ -17,6 +17,7 @@ struct CharacterEquipmentPicker: View {
     @State private var isPicking = false
     @State private var searchText = ""
     @State private var items: [ItemModel] = []
+    @State private var filteredItems: [ItemModel] = []
 
     var body: some View {
         LabeledContent(titleKey) {
@@ -84,25 +85,18 @@ struct CharacterEquipmentPicker: View {
                 }
             }
         }
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredItems = await items(matching: searchText, in: items)
+        }
         .overlay {
             if items.isEmpty {
                 ProgressView()
             }
         }
-        .searchable(text: $searchText)
         .task {
             await database.fetchItems()
             items = database.items.filter(predicate)
-        }
-    }
-
-    private var filteredItems: [ItemModel] {
-        if searchText.isEmpty {
-            items
-        } else {
-            items.filter { item in
-                item.displayName.localizedStandardContains(searchText)
-            }
+            filteredItems = await items(matching: searchText, in: items)
         }
     }
 
@@ -110,6 +104,26 @@ struct CharacterEquipmentPicker: View {
         self.titleKey = titleKey
         self.predicate = predicate
         _selection = selection
+    }
+
+    private func items(matching searchText: String, in items: [ItemModel]) async -> [ItemModel] {
+        if searchText.isEmpty {
+            return items
+        }
+
+        if searchText.hasPrefix("#") {
+            if let itemID = Int(searchText.dropFirst()),
+               let item = items.first(where: { $0.id == itemID }) {
+                return [item]
+            } else {
+                return []
+            }
+        }
+
+        let filteredItems = items.filter { item in
+            item.displayName.localizedStandardContains(searchText)
+        }
+        return filteredItems
     }
 }
 

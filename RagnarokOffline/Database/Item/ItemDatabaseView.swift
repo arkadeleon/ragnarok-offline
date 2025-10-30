@@ -46,18 +46,17 @@ struct ItemDatabaseView: View {
             }
             .listStyle(.plain)
         }
-        .navigationTitle("Item Database")
         .background(.background)
+        .navigationTitle("Item Database")
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredItems = await items(matching: searchText, in: database.items)
+        }
         .overlay {
             if database.items.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredItems.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "leaf.fill")
             }
-        }
-        .searchable(text: $searchText)
-        .task(id: searchText) {
-            filteredItems = await items(matching: searchText, in: database.items)
         }
         .task {
             await database.fetchItems()

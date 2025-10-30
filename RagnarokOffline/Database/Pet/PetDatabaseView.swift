@@ -21,18 +21,17 @@ struct PetDatabaseView: View {
                 }
             }
         }
-        .navigationTitle("Pet Database")
         .background(.background)
+        .navigationTitle("Pet Database")
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredPets = await pets(matching: searchText, in: database.pets)
+        }
         .overlay {
             if database.pets.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredPets.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "pawprint.fill")
             }
-        }
-        .searchable(text: $searchText)
-        .task(id: searchText) {
-            filteredPets = await pets(matching: searchText, in: database.pets)
         }
         .task {
             await database.fetchPets()

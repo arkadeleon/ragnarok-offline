@@ -29,18 +29,17 @@ struct StatusChangeDatabaseView: View {
             }
             .listStyle(.plain)
         }
-        .navigationTitle("Status Change Database")
         .background(.background)
+        .navigationTitle("Status Change Database")
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredStatusChanges = await statusChanges(matching: searchText, in: database.statusChanges)
+        }
         .overlay {
             if database.statusChanges.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredStatusChanges.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "moon.zzz.fill")
             }
-        }
-        .searchable(text: $searchText)
-        .task(id: searchText) {
-            filteredStatusChanges = await statusChanges(matching: searchText, in: database.statusChanges)
         }
         .task {
             await database.fetchStatusChanges()

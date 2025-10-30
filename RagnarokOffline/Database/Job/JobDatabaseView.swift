@@ -19,18 +19,17 @@ struct JobDatabaseView: View {
                 JobGridCell(job: job)
             }
         }
-        .navigationTitle("Job Database")
         .background(.background)
+        .navigationTitle("Job Database")
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredJobs = await jobs(matching: searchText, in: database.jobs)
+        }
         .overlay {
             if database.jobs.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredJobs.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "person.fill")
             }
-        }
-        .searchable(text: $searchText)
-        .task(id: searchText) {
-            filteredJobs = await jobs(matching: searchText, in: database.jobs)
         }
         .task {
             await database.fetchJobs()

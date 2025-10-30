@@ -37,18 +37,17 @@ struct MonsterSummonDatabaseView: View {
             }
             .listStyle(.plain)
         }
-        .navigationTitle("Monster Summon Database")
         .background(.background)
+        .navigationTitle("Monster Summon Database")
+        .adaptiveSearch(text: $searchText) { searchText in
+            filteredMonsterSummons = await monsterSummons(matching: searchText, in: database.monsterSummons)
+        }
         .overlay {
             if database.monsterSummons.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredMonsterSummons.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "pawprint.fill")
             }
-        }
-        .searchable(text: $searchText)
-        .task(id: searchText) {
-            filteredMonsterSummons = await monsterSummons(matching: searchText, in: database.monsterSummons)
         }
         .task {
             await database.fetchMonsterSummons()
