@@ -16,7 +16,7 @@ struct FilesView: View {
     @State private var files: [File] = []
     @State private var filteredFiles: [File] = []
 
-    @State private var fileToPreview: File?
+    @State private var isFileImporterPresented = false
 
     var body: some View {
         ImageGrid(filteredFiles) { file in
@@ -44,17 +44,7 @@ struct FilesView: View {
             }
         }
         .navigationTitle(title)
-        .toolbar {
-            #if os(macOS)
-            if directory.utType == .folder {
-                Button {
-                    NSWorkspace.shared.activateFileViewerSelecting([directory.url])
-                } label: {
-                    Image(systemName: "folder")
-                }
-            }
-            #endif
-        }
+        .toolbar(content: toolbarContent)
         .searchable(text: $searchText)
         .onSubmit(of: .search) {
             filterFiles()
@@ -62,6 +52,14 @@ struct FilesView: View {
         .onChange(of: searchText) {
             filterFiles()
         }
+        .refreshable {
+            await reload()
+        }
+        .fileImporter(
+            isPresented: $isFileImporterPresented,
+            allowedContentTypes: [.data],
+            onCompletion: onFileImporterCompletion
+        )
         .task {
             await load()
         }
@@ -80,6 +78,34 @@ struct FilesView: View {
         self.directory = directory
     }
 
+    @ToolbarContentBuilder private func toolbarContent() -> some ToolbarContent {
+        if directory.location == .client, directory.utType == .folder {
+            ToolbarItem {
+                Button {
+                    isFileImporterPresented = true
+                } label: {
+                    Image(systemName: "square.and.arrow.down")
+                }
+            }
+        }
+
+        #if os(macOS)
+        if directory.utType == .folder {
+            if #available(macOS 26.0, *) {
+                ToolbarSpacer()
+            }
+
+            ToolbarItem {
+                Button {
+                    NSWorkspace.shared.activateFileViewerSelecting([directory.url])
+                } label: {
+                    Image(systemName: "folder")
+                }
+            }
+        }
+        #endif
+    }
+
     private func load() async {
         guard loadStatus == .notYetLoaded else {
             return
@@ -91,6 +117,11 @@ struct FilesView: View {
         filterFiles()
 
         loadStatus = .loaded
+    }
+
+    private func reload() async {
+        files = await directory.files()
+        filterFiles()
     }
 
     private func filterFiles() {
@@ -106,6 +137,27 @@ struct FilesView: View {
     private func onDeleteFile(_ file: File) {
         files.removeAll(where: { $0 == file })
         filterFiles()
+    }
+
+    private func onFileImporterCompletion(_ result: Result<URL, any Error>) {
+        switch result {
+        case .success(let url):
+            let accessed = url.startAccessingSecurityScopedResource()
+            if accessed {
+                let dstURL = directory.url.appending(component: url.lastPathComponent)
+                do {
+                    try FileManager.default.copyItem(at: url, to: dstURL)
+                } catch {
+                    logger.warning("\(error)")
+                }
+                Task {
+                    await reload()
+                }
+            }
+            url.stopAccessingSecurityScopedResource()
+        case .failure(let error):
+            logger.warning("\(error)")
+        }
     }
 }
 
