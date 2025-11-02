@@ -399,12 +399,16 @@ final public class GameSession {
         case .itemUnequipped(let item, let success):
             break
         case .mapObjectSpawned(let object, let position, let direction, let headDirection):
+            logger.info("Object \(object.objectID) spawned at \(position) direction: \(direction.rawValue)")
             mapScene?.onMapObjectSpawned(object: object, position: position, direction: direction, headDirection: headDirection)
         case .mapObjectMoved(let object, let startPosition, let endPosition):
+            logger.info("Object \(object.objectID) moved from \(startPosition) to \(endPosition)")
             mapScene?.onMapObjectMoved(object: object, startPosition: startPosition, endPosition: endPosition)
         case .mapObjectStopped(let objectID, let position):
+            logger.info("Object \(objectID) stopped at \(position)")
             mapScene?.onMapObjectStopped(objectID: objectID, position: position)
         case .maoObjectVanished(let objectID):
+            logger.info("Object \(objectID) vanished")
             mapScene?.onMapObjectVanished(objectID: objectID)
         case .mapObjectDirectionChanged(let objectID, let direction, let headDirection):
             break

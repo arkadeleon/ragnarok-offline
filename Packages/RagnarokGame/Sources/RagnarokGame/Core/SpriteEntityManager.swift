@@ -16,14 +16,51 @@ import RealityKit
 final class SpriteEntityManager {
     let resourceManager: ResourceManager
 
-    private var playerEntitiesByObjectID: [UInt32 : Task<SpriteEntity, any Error>] = [:]
-    private var nonPlayerEntitiesByJobID: [Int : Task<SpriteEntity, any Error>] = [:]
+    /// The current phase of the entity loading operation.
+    enum EntityPhase {
+        case inProgress(Task<SpriteEntity, any Error>)
+        case loaded(SpriteEntity)
+
+        var entity: SpriteEntity {
+            get async throws {
+                switch self {
+                case .inProgress(let task):
+                    try await task.value
+                case .loaded(let entity):
+                    entity
+                }
+            }
+        }
+    }
+
+    private var entitiesByObjectID: [UInt32 : EntityPhase] = [:]
+    private var templateEntitiesByJobID: [Int : EntityPhase] = [:]
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
     }
 
-    func entity(for mapObject: MapObject) async throws -> SpriteEntity {
+    func addEntity(_ entity: SpriteEntity, forObjectID objectID: UInt32) {
+        entitiesByObjectID[objectID] = .loaded(entity)
+    }
+
+    func removeEntity(forObjectID objectID: UInt32) async throws {
+        if let phase = entitiesByObjectID[objectID] {
+            let entity = try await phase.entity
+            entity.removeFromParent()
+            entitiesByObjectID.removeValue(forKey: objectID)
+        }
+    }
+
+    func entity(forOjectID objectID: UInt32) async throws -> SpriteEntity? {
+        if let phase = entitiesByObjectID[objectID] {
+            return try await phase.entity
+        } else {
+            return nil
+        }
+    }
+
+    func entity(for mapObject: MapObject) async throws -> (entity: SpriteEntity, isNew: Bool) {
         let job = CharacterJob(rawValue: mapObject.job)
         if job.isPlayer {
             return try await playerEntity(for: mapObject)
@@ -32,9 +69,9 @@ final class SpriteEntityManager {
         }
     }
 
-    func playerEntity(for mapObject: MapObject) async throws -> SpriteEntity {
-        if let task = playerEntitiesByObjectID[mapObject.objectID] {
-            return try await task.value
+    func playerEntity(for mapObject: MapObject) async throws -> (entity: SpriteEntity, isNew: Bool) {
+        if let phase = entitiesByObjectID[mapObject.objectID] {
+            return try await (phase.entity, false)
         }
 
         let task = Task {
@@ -45,19 +82,37 @@ final class SpriteEntityManager {
             return entity
         }
 
-        playerEntitiesByObjectID[mapObject.objectID] = task
+        entitiesByObjectID[mapObject.objectID] = .inProgress(task)
 
-        return try await task.value
+        let entity = try await task.value
+
+        entitiesByObjectID[mapObject.objectID] = .loaded(entity)
+
+        return (entity, true)
     }
 
-    func nonPlayerEntity(for mapObject: MapObject) async throws -> SpriteEntity {
-        if let task = nonPlayerEntitiesByJobID[mapObject.job] {
-            let entity = try await task.value
-            let entityClone = entity.clone(recursive: true)
-            return entityClone
+    func nonPlayerEntity(for mapObject: MapObject) async throws -> (entity: SpriteEntity, isNew: Bool) {
+        if let phase = entitiesByObjectID[mapObject.objectID] {
+            return try await (phase.entity, false)
         }
 
-        let task = Task {
+        if let templatePhase = templateEntitiesByJobID[mapObject.job] {
+            let cloneTask = Task {
+                let templateEntity = try await templatePhase.entity
+                let clonedEntity = templateEntity.clone(recursive: true)
+                return clonedEntity
+            }
+
+            entitiesByObjectID[mapObject.objectID] = .inProgress(cloneTask)
+
+            let clonedEntity = try await cloneTask.value
+
+            entitiesByObjectID[mapObject.objectID] = .loaded(clonedEntity)
+
+            return (clonedEntity, true)
+        }
+
+        let templateTask = Task {
             let configuration = ComposedSprite.Configuration(mapObject: mapObject)
             let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
             let animations = try await SpriteAnimation.animations(for: composedSprite)
@@ -65,9 +120,17 @@ final class SpriteEntityManager {
             return entity
         }
 
-        nonPlayerEntitiesByJobID[mapObject.job] = task
+        templateEntitiesByJobID[mapObject.job] = .inProgress(templateTask)
 
-        return try await task.value
+        let templateEntity = try await templateTask.value
+
+        templateEntitiesByJobID[mapObject.job] = .loaded(templateEntity)
+
+        let clonedEntity = templateEntity.clone(recursive: true)
+
+        entitiesByObjectID[mapObject.objectID] = .loaded(clonedEntity)
+
+        return (clonedEntity, true)
     }
 }
 
