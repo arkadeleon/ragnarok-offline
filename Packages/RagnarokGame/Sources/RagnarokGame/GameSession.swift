@@ -41,7 +41,7 @@ final public class GameSession {
 
     public private(set) var state: GameSession.State = .notStarted
 
-    enum Phase {
+    public enum Phase {
         case login
         case charServerList(_ charServers: [CharServerInfo])
         case charSelect(_ chars: [CharInfo])
@@ -50,7 +50,7 @@ final public class GameSession {
         case map(_ scene: MapScene)
     }
 
-    private(set) var phase: GameSession.Phase = .login
+    public private(set) var phase: GameSession.Phase = .login
 
     struct ErrorMessage: Identifiable {
         let id = UUID()

@@ -80,7 +80,8 @@ public struct ThumbstickView: View {
 
     // The outer circle.
     @ViewBuilder private var outerCircle: some View {
-        if #available(macOS 26.0, iOS 26.0, visionOS 26.0, *) {
+        #if os(macOS) || os(iOS)
+        if #available(macOS 26.0, iOS 26.0, *) {
             Color.clear
                 .frame(width: largeRadius * 2, height: largeRadius * 2)
                 .glassEffect(.regular, in: .circle)
@@ -90,6 +91,12 @@ public struct ThumbstickView: View {
                 .background(.ultraThinMaterial)
                 .cornerRadius(largeRadius)
         }
+        #else
+        Color.clear
+            .frame(width: largeRadius * 2, height: largeRadius * 2)
+            .background(.ultraThinMaterial)
+            .cornerRadius(largeRadius)
+        #endif
     }
 
     // MARK: - Gesture
