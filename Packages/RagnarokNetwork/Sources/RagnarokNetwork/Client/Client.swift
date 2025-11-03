@@ -96,7 +96,7 @@ final class Client: Sendable {
         packetContinuation.finish()
     }
 
-    func sendPacket(_ packet: some BinaryEncodable) {
+    func sendPacket(_ packet: some (BinaryEncodable & Sendable)) {
         do {
             let encoder = PacketEncoder()
             let data = try encoder.encode(packet)
@@ -104,10 +104,10 @@ final class Client: Sendable {
             connection.send(content: data, completion: .contentProcessed({ [weak self] error in
                 if let error {
                     self?.errorContinuation.yield(.network(error))
+                } else {
+                    logger.info("Sent packet: \(String(describing: packet))")
                 }
             }))
-
-            logger.info("Sent packet: \(String(describing: packet))")
         } catch {
             errorContinuation.yield(.encoding(error))
         }

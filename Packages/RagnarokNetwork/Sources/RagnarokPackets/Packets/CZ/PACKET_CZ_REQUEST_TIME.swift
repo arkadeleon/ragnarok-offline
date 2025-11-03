@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_REQUEST_TIME = packetDatabase.entry(forFunctionName: "clif_parse_TickSend")!
 
-public struct PACKET_CZ_REQUEST_TIME: BinaryEncodable {
+public struct PACKET_CZ_REQUEST_TIME: BinaryEncodable, Sendable {
     public let packetType: Int16
     public var clientTime: UInt32
 

@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_REQ_TAKEOFF_EQUIP = packetDatabase.entry(forFunctionName: "clif_parse_UnequipItem")!
 
-public struct PACKET_CZ_REQ_TAKEOFF_EQUIP: BinaryEncodable {
+public struct PACKET_CZ_REQ_TAKEOFF_EQUIP: BinaryEncodable, Sendable {
     public let packetType: Int16
     public var index: UInt16
 

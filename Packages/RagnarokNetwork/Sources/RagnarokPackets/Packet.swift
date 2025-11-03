@@ -8,7 +8,7 @@
 import BinaryIO
 import Foundation
 
-public protocol Packet {
+public protocol Packet: Sendable {
     var packetType: Int16 { get }
 
     var packetLength: Int16 { get }

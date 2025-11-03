@@ -9,7 +9,7 @@ import BinaryIO
 
 public let HEADER_CZ_REQ_NEXT_SCRIPT: Int16 = 0xb9
 
-public struct PACKET_CZ_REQ_NEXT_SCRIPT: BinaryEncodable {
+public struct PACKET_CZ_REQ_NEXT_SCRIPT: BinaryEncodable, Sendable {
     public var packetType: Int16 = 0
     public var npcID: UInt32 = 0
 

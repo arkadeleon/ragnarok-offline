@@ -37,7 +37,7 @@ public struct _PACKET_ZC_FRIENDS_LIST: DecodablePacket {
 
 @available(*, deprecated, message: "Use generated struct instead.")
 extension _PACKET_ZC_FRIENDS_LIST {
-    public struct _FriendInfo: BinaryDecodable {
+    public struct _FriendInfo: BinaryDecodable, Sendable {
         public var accountID: UInt32
         public var charID: UInt32
         public var name: String

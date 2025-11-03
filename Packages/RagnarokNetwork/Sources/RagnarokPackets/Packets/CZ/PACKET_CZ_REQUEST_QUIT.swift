@@ -7,7 +7,7 @@
 
 import BinaryIO
 
-public struct PACKET_CZ_REQUEST_QUIT: BinaryEncodable {
+public struct PACKET_CZ_REQUEST_QUIT: BinaryEncodable, Sendable {
     public let packetType: Int16
 
     public init() {

@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_RESTART = packetDatabase.entry(forFunctionName: "clif_parse_Restart")!
 
-public struct PACKET_CZ_RESTART: BinaryEncodable {
+public struct PACKET_CZ_RESTART: BinaryEncodable, Sendable {
     public let packetType: Int16
     public var type: UInt8
 

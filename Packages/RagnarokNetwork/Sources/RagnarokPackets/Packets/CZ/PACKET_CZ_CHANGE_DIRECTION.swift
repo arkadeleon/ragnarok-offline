@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_CHANGE_DIRECTION = packetDatabase.entry(forFunctionName: "clif_parse_ChangeDir")!
 
-public struct PACKET_CZ_CHANGE_DIRECTION: BinaryEncodable {
+public struct PACKET_CZ_CHANGE_DIRECTION: BinaryEncodable, Sendable {
     public let packetType: Int16
     public var headDirection: UInt16
     public var direction: UInt8

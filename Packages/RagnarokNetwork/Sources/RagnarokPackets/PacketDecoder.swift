@@ -32,8 +32,12 @@ final public class PacketDecoder {
             try stream.seek(-MemoryLayout<Int16>.size, origin: .current)
 
             if let registeredPacket = registeredPackets[packetType] {
-                let packet = try registeredPacket.init(from: decoder)
-                packets.append(packet)
+                do {
+                    let packet = try registeredPacket.init(from: decoder)
+                    packets.append(packet)
+                } catch {
+                    logger.warning("Failed to decode packet 0x\(UInt16(packetType)): \(error)")
+                }
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {
                 if entry.packetLength == -1 {
                     let packetType = try decoder.decode(Int16.self)
