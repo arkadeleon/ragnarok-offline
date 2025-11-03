@@ -10,6 +10,9 @@ import Foundation
 final class Pathfinder {
     let mapGrid: MapGrid
 
+    // Small tolerance so floating point noise does not break tie-breaking logic
+    private let tieBreakerEpsilon: Float = 0.0001
+
     init(mapGrid: MapGrid) {
         self.mapGrid = mapGrid
     }
@@ -35,14 +38,28 @@ final class Pathfinder {
 
         let startNode = PathNode(position: start)
         startNode.gScore = 0
-        startNode.fScore = heuristic(from: start, to: end)
+        startNode.hScore = heuristic(from: start, to: end)
+        startNode.fScore = startNode.hScore
 
         openSet.insert(startNode)
         allNodes[start] = startNode
 
         while !openSet.isEmpty {
             // Find node with lowest fScore (most promising)
-            let current = openSet.min { $0.fScore < $1.fScore }!
+            let current = openSet.min { lhs, rhs in
+                // Prefer nodes with lower total estimated cost (f), then
+                // lower heuristic (h) so we reach diagonals sooner, and finally
+                // higher g so straights are pushed later in the path
+                if abs(lhs.fScore - rhs.fScore) > tieBreakerEpsilon {
+                    return lhs.fScore < rhs.fScore
+                }
+
+                if abs(lhs.hScore - rhs.hScore) > tieBreakerEpsilon {
+                    return lhs.hScore < rhs.hScore
+                }
+
+                return lhs.gScore > rhs.gScore
+            }!
 
             // Check if we reached the destination
             if current.position == end {
@@ -86,7 +103,10 @@ final class Pathfinder {
                 // This is the best path to this neighbor so far
                 neighborNode.parent = current
                 neighborNode.gScore = tentativeGScore
-                neighborNode.fScore = tentativeGScore + heuristic(from: neighbor, to: end)
+
+                // Cache heuristic to reuse in tie-breaking
+                neighborNode.hScore = heuristic(from: neighbor, to: end)
+                neighborNode.fScore = tentativeGScore + neighborNode.hScore
             }
         }
 
@@ -168,6 +188,7 @@ private class PathNode: Equatable, Hashable {
     var parent: PathNode?
     var gScore: Float = .infinity   // Actual cost from start to this node
     var fScore: Float = .infinity   // gScore + heuristic (estimated total cost)
+    var hScore: Float = .infinity   // Cached heuristic for tie-breaking preference
 
     init(position: SIMD2<Int>) {
         self.position = position
