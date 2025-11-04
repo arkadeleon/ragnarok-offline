@@ -18,6 +18,32 @@ final class Pathfinder {
     }
 
     func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
+        return findPath(from: start, to: end, within: 0)
+    }
+
+    /// Finds a path that ends within `range` tiles (Chebyshev distance) of `end`.
+    /// When `range` is zero this behaves identically to the original `findPath`.
+    func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>, within range: Int) -> [SIMD2<Int>] {
+        let normalizedRange = max(range, 0)
+
+        if normalizedRange == 0 {
+            return astarEntry(from: start, to: end)
+        }
+
+        // Start must be walkable; destination only needs to be inside the map.
+        guard isValidAndWalkable(position: start) && isInBounds(position: end) else {
+            return []
+        }
+
+        // Already inside the acceptable area.
+        if isWithinRange(position: start, to: end, range: normalizedRange) {
+            return [start]
+        }
+
+        return astar(from: start, to: end, range: normalizedRange)
+    }
+
+    private func astarEntry(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
         // Check if start and end positions are valid and walkable
         guard isValidAndWalkable(position: start) && isValidAndWalkable(position: end) else {
             return []
@@ -28,17 +54,17 @@ final class Pathfinder {
             return [start]
         }
 
-        return astar(from: start, to: end)
+        return astar(from: start, to: end, range: 0)
     }
 
-    private func astar(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
+    private func astar(from start: SIMD2<Int>, to end: SIMD2<Int>, range: Int) -> [SIMD2<Int>] {
         var openSet: Set<PathNode> = []    // Nodes to explore
         var closedSet: Set<PathNode> = []  // Nodes already explored
         var allNodes: [SIMD2<Int> : PathNode] = [:]
 
         let startNode = PathNode(position: start)
         startNode.gScore = 0
-        startNode.hScore = heuristic(from: start, to: end)
+        startNode.hScore = heuristic(from: start, to: end, range: range)
         startNode.fScore = startNode.hScore
 
         openSet.insert(startNode)
@@ -62,7 +88,11 @@ final class Pathfinder {
             }!
 
             // Check if we reached the destination
-            if current.position == end {
+            if range == 0 {
+                if current.position == end {
+                    return reconstructPath(node: current)
+                }
+            } else if isWithinRange(position: current.position, to: end, range: range) {
                 return reconstructPath(node: current)
             }
 
@@ -105,7 +135,7 @@ final class Pathfinder {
                 neighborNode.gScore = tentativeGScore
 
                 // Cache heuristic to reuse in tie-breaking
-                neighborNode.hScore = heuristic(from: neighbor, to: end)
+                neighborNode.hScore = heuristic(from: neighbor, to: end, range: range)
                 neighborNode.fScore = tentativeGScore + neighborNode.hScore
             }
         }
@@ -146,10 +176,16 @@ final class Pathfinder {
         return mapGrid[position].isWalkable
     }
 
-    private func heuristic(from start: SIMD2<Int>, to end: SIMD2<Int>) -> Float {
+    private func isWithinRange(position: SIMD2<Int>, to target: SIMD2<Int>, range: Int) -> Bool {
+        guard range >= 0 else { return false }
+        return max(abs(target.x - position.x), abs(target.y - position.y)) <= range
+    }
+
+    private func heuristic(from start: SIMD2<Int>, to end: SIMD2<Int>, range: Int) -> Float {
         // Octile distance (allows diagonal movement)
-        let dx = abs(end.x - start.x)
-        let dy = abs(end.y - start.y)
+        let normalizedRange = max(range, 0)
+        let dx = max(abs(end.x - start.x) - normalizedRange, 0)
+        let dy = max(abs(end.y - start.y) - normalizedRange, 0)
         return Float(max(dx, dy)) + Float(min(dx, dy)) * (sqrt(2) - 1)
     }
 

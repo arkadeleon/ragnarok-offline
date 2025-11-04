@@ -68,7 +68,20 @@ public class MapScene {
                 if let mapObject = event.entity.components[MapObjectComponent.self]?.mapObject {
                     switch mapObject.type {
                     case .monster:
-                        mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                        let lockOnComponent = LockOnComponent(targetEntity: event.entity, attackRange: 1) {
+                            self.mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                        }
+                        playerEntity.components.set(lockOnComponent)
+
+                        let startPosition = playerEntity.gridPosition
+                        let endPosition = event.entity.gridPosition
+                        let path = pathfinder.findPath(from: startPosition, to: endPosition, within: 1)
+
+                        if path == [startPosition] {
+                            mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                        } else {
+                            mapSession.requestMove(to: path.last ?? endPosition)
+                        }
                     case .npc:
                         mapSession.talkToNPC(objectID: mapObject.objectID)
                     default:
@@ -209,8 +222,15 @@ public class MapScene {
                     }
                     playerEntity.components.set(lockOnComponent)
 
+                    let startPosition = playerEntity.gridPosition
                     let endPosition = nearestHit.entity.gridPosition
-                    mapSession.requestMove(to: [endPosition.x, endPosition.y])
+                    let path = pathfinder.findPath(from: startPosition, to: endPosition, within: 1)
+
+                    if path == [startPosition] {
+                        mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+                    } else {
+                        mapSession.requestMove(to: path.last ?? endPosition)
+                    }
                 case .npc:
                     mapSession.talkToNPC(objectID: mapObject.objectID)
                 default:
