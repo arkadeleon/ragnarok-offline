@@ -117,30 +117,6 @@
 			);
 			target = 359915422E0EA35500D94655 /* RagnarokOfflineThumbnailExtension */;
 		};
-		35DCADA92E77D71000CA1988 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				BinaryIO,
-				DataCompression,
-				GRF,
-				ImageRendering,
-				PerformanceMetric,
-				RagnarokConstants,
-				RagnarokDatabase,
-				RagnarokFileFormats,
-				RagnarokGame,
-				RagnarokNetwork,
-				RagnarokReality,
-				RagnarokRenderers,
-				RagnarokResources,
-				RagnarokSprite,
-				SGLMath,
-				TextEncoding,
-				ThumbstickView,
-				WorldCamera,
-			);
-			target = 35B3B8D32A08BEA600B4540B /* RagnarokOffline */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -148,7 +124,7 @@
 		3558A3C22DFC25AD0038DFC3 /* RagnarokOfflineTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = RagnarokOfflineTests; sourceTree = "<group>"; };
 		3562C2F12EA9328D007BBA7B /* Configurations */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Configurations; sourceTree = "<group>"; };
 		359915462E0EA35500D94655 /* RagnarokOfflineThumbnailExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (359915512E0EA35500D94655 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RagnarokOfflineThumbnailExtension; sourceTree = "<group>"; };
-		35DCADA82E77D71000CA1988 /* Packages */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (35DCADA92E77D71000CA1988 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Packages; sourceTree = "<group>"; };
+		35DCADA82E77D71000CA1988 /* Packages */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Packages; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,7 +273,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				35063E9F2E0E18B3003039B0 /* RagnarokOffline */,
-				35DCADA82E77D71000CA1988 /* Packages */,
 			);
 			name = RagnarokOffline;
 			packageProductDependencies = (
