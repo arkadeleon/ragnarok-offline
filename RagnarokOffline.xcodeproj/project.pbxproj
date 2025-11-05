@@ -297,7 +297,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				35063E9F2E0E18B3003039B0 /* RagnarokOffline */,
-				3562C2F12EA9328D007BBA7B /* Configurations */,
 				35DCADA82E77D71000CA1988 /* Packages */,
 			);
 			name = RagnarokOffline;
@@ -694,6 +693,8 @@
 		};
 		35B3B8F92A08BEA700B4540B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 3562C2F12EA9328D007BBA7B /* Configurations */;
+			baseConfigurationReferenceRelativePath = Development.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = RagnarokOfflineIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -745,6 +746,8 @@
 		};
 		35B3B8FA2A08BEA700B4540B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 3562C2F12EA9328D007BBA7B /* Configurations */;
+			baseConfigurationReferenceRelativePath = AppStore.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = RagnarokOfflineIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

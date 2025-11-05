@@ -1,5 +1,5 @@
 //
-//  Beta.xcconfig
+//  TestFlight.xcconfig
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/10/22.
@@ -12,4 +12,6 @@ INFOPLIST_KEY_CFBundleDisplayName = RagOff
 MARKETING_VERSION = 2.0
 CURRENT_PROJECT_VERSION = 2008
 
-SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) WALKING_SIMULATOR
+_DD_WALKING_SIMULATOR = WALKING_SIMULATOR
+
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) $(_DD_WALKING_SIMULATOR)

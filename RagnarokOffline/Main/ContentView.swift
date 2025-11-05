@@ -103,7 +103,7 @@ struct ContentView: View {
                 .environment(appModel.characterSimulator)
                 .environment(appModel.database)
         case .walkingSimulator:
-            #if DEBUG || WALKING_SIMULATOR
+            #if WALKING_SIMULATOR
             WalkingSimulatorView()
                 .environment(appModel.gameSession)
                 .environment(appModel.settings)
