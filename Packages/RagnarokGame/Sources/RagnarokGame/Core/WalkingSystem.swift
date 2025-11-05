@@ -19,8 +19,8 @@ final class WalkingSystem: System {
         let entities = context.entities(matching: Self.query, updatingSystemWhen: .rendering)
 
         for entity in entities {
-            guard let entity = entity as? SpriteEntity else {
-                continue
+            guard let spriteEntity = entity.findEntity(named: "sprite") else {
+                return
             }
 
             guard var walkingComponent = entity.components[WalkingComponent.self],
@@ -29,7 +29,7 @@ final class WalkingSystem: System {
             }
 
             guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
-                  let animations = entity.components[SpriteComponent.self]?.animations else {
+                  let animations = spriteEntity.components[SpriteComponent.self]?.animations else {
                 continue
             }
 
@@ -70,24 +70,30 @@ final class WalkingSystem: System {
                 continue
             }
 
+            spriteEntity.position = [
+                -animation.pivot.x / 32,
+                -(animation.frameHeight / 2 - animation.pivot.y) / 32,
+                animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
+            ]
+
             let mapGrid = walkingComponent.mapGrid
             let sourceAltitude = mapGrid[sourceGridPosition].averageAltitude
             let targetAltitude = mapGrid[targetGridPosition].averageAltitude
 
             let sourcePosition: SIMD3<Float> = [
-                Float(sourceGridPosition.x) + 0.5 - animation.pivot.x / 32,
-                Float(sourceGridPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
-                sourceAltitude + animation.frameHeight / 2 / 32 * entity.scale.y,
+                Float(sourceGridPosition.x) + 0.5,
+                Float(sourceGridPosition.y) + 0.5,
+                sourceAltitude,
             ]
 
             let targetPosition: SIMD3<Float> = [
-                Float(targetGridPosition.x) + 0.5 - animation.pivot.x / 32,
-                Float(targetGridPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
-                targetAltitude + animation.frameHeight / 2 / 32 * entity.scale.y,
+                Float(targetGridPosition.x) + 0.5,
+                Float(targetGridPosition.y) + 0.5,
+                targetAltitude,
             ]
 
             if walkingComponent.stepTime == 0 {
-                entity.generateModelAndCollisionShape(for: animation)
+                spriteEntity.generateModelAndCollisionShape(for: animation)
             }
 
             let totalTime = walkingComponent.totalTime + context.deltaTime
@@ -96,7 +102,7 @@ final class WalkingSystem: System {
             let frameIndex = Int(totalTime / animation.frameInterval) % animation.frameCount
 
             if let _ = animation.texture {
-                entity.components[ModelComponent.self]?.materialTextureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(
+                spriteEntity.components[ModelComponent.self]?.materialTextureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(
                     offset: [Float(frameIndex) / Float(animation.frameCount), 0],
                     scale: [1 / Float(animation.frameCount), 1]
                 )

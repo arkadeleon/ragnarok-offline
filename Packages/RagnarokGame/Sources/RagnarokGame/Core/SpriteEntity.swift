@@ -33,15 +33,17 @@ class SpriteEntity: Entity {
         let spriteComponent = SpriteComponent(animations: animations)
         components.set(spriteComponent)
     }
+}
 
+extension Entity {
     func playSpriteAnimation(
         _ actionType: CharacterActionType,
         direction: CharacterDirection,
         repeats: Bool,
         actionEnded: (() -> Void)? = nil
     ) {
-        guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
-              let animations = components[SpriteComponent.self]?.animations else {
+        guard let spriteEntity = findEntity(named: "sprite"),
+              let animations = spriteEntity.components[SpriteComponent.self]?.animations else {
             return
         }
 
@@ -54,62 +56,59 @@ class SpriteEntity: Entity {
             return
         }
 
-        stopAllAnimations()
+        spriteEntity.stopAllAnimations()
 
-        let gridPosition = gridPosition
-        let altitude = mapGrid[gridPosition].averageAltitude
-
-        self.position = [
-            Float(gridPosition.x) + 0.5 - animation.pivot.x / 32,
-            Float(gridPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
-            altitude + animation.frameHeight / 2 / 32 * scale.y,
+        spriteEntity.position = [
+            -animation.pivot.x / 32,
+            -(animation.frameHeight / 2 - animation.pivot.y) / 32,
+            animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
         ]
 
         do {
             let duration = (repeats ? .infinity : animation.duration)
             let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: actionEnded)
-            playAnimation(actionAnimation)
+            spriteEntity.playAnimation(actionAnimation)
         } catch {
             logger.warning("\(error)")
         }
     }
 
     func playDefaultSpriteAnimation(repeats: Bool) {
-        guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
-              let animations = components[SpriteComponent.self]?.animations,
+        guard let spriteEntity = findEntity(named: "sprite"),
+              let animations = spriteEntity.components[SpriteComponent.self]?.animations,
               let animation = animations.values.first else {
             return
         }
 
-        stopAllAnimations()
+        spriteEntity.stopAllAnimations()
 
-        let gridPosition = gridPosition
-        let altitude = mapGrid[gridPosition].averageAltitude
-
-        self.position = [
-            Float(gridPosition.x) + 0.5 - animation.pivot.x / 32,
-            Float(gridPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
-            altitude + animation.frameHeight / 2 / 32 * scale.y,
+        spriteEntity.position = [
+            -animation.pivot.x / 32,
+            -(animation.frameHeight / 2 - animation.pivot.y) / 32,
+            animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
         ]
 
         do {
             let duration = (repeats ? .infinity : animation.duration)
             let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
-            playAnimation(actionAnimation)
+            spriteEntity.playAnimation(actionAnimation)
         } catch {
             logger.warning("\(error)")
         }
     }
 
     @available(*, deprecated)
-    func walk(through path: [SIMD2<Int>]) {
-        guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
-              let mapObject = components[MapObjectComponent.self]?.mapObject,
-              let animations = components[SpriteComponent.self]?.animations else {
+    func walk(through path: [SIMD2<Int>], mapGrid: MapGrid) {
+        guard let spriteEntity = findEntity(named: "sprite") else {
             return
         }
 
-        stopAllAnimations()
+        guard let mapObject = components[MapObjectComponent.self]?.mapObject,
+              let animations = spriteEntity.components[SpriteComponent.self]?.animations else {
+            return
+        }
+
+        spriteEntity.stopAllAnimations()
 
         do {
             var animationSequence: [AnimationResource] = []
@@ -164,14 +163,14 @@ class SpriteEntity: Entity {
                 sourceTransform.translation = [
                     Float(sourcePosition.x) + 0.5 - animation.pivot.x / 32,
                     Float(sourcePosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
-                    sourceAltitude + animation.frameHeight / 2 / 32 * scale.y,
+                    sourceAltitude + animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
                 ]
 
                 var targetTransform = transform
                 targetTransform.translation = [
                     Float(targetPosition.x) + 0.5 - animation.pivot.x / 32,
                     Float(targetPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
-                    targetAltitude + animation.frameHeight / 2 / 32 * scale.y,
+                    targetAltitude + animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
                 ]
 
                 let moveAction = FromToByAction(from: sourceTransform, to: targetTransform, mode: .parent, timing: .linear)
@@ -182,7 +181,7 @@ class SpriteEntity: Entity {
             }
 
             let animationResource = try AnimationResource.sequence(with: animationSequence)
-            playAnimation(animationResource)
+            spriteEntity.playAnimation(animationResource)
         } catch {
             logger.warning("\(error)")
         }

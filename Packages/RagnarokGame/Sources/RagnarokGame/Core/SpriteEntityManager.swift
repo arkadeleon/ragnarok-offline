@@ -11,17 +11,19 @@ import RagnarokPackets
 import RagnarokResources
 import RagnarokSprite
 import RealityKit
+import SGLMath
 
 @MainActor
 final class SpriteEntityManager {
+    let elevation: Float
     let resourceManager: ResourceManager
 
     /// The current phase of the entity loading operation.
     enum EntityPhase {
-        case inProgress(Task<SpriteEntity, any Error>)
-        case loaded(SpriteEntity)
+        case inProgress(Task<Entity, any Error>)
+        case loaded(Entity)
 
-        var entity: SpriteEntity {
+        var entity: Entity {
             get async throws {
                 switch self {
                 case .inProgress(let task):
@@ -36,11 +38,12 @@ final class SpriteEntityManager {
     private var entitiesByObjectID: [UInt32 : EntityPhase] = [:]
     private var templateEntitiesByJobID: [Int : EntityPhase] = [:]
 
-    init(resourceManager: ResourceManager) {
+    init(elevation: Float, resourceManager: ResourceManager) {
+        self.elevation = elevation
         self.resourceManager = resourceManager
     }
 
-    func addEntity(_ entity: SpriteEntity, forObjectID objectID: UInt32) {
+    func addEntity(_ entity: Entity, forObjectID objectID: UInt32) {
         entitiesByObjectID[objectID] = .loaded(entity)
     }
 
@@ -52,7 +55,7 @@ final class SpriteEntityManager {
         }
     }
 
-    func entity(forOjectID objectID: UInt32) async throws -> SpriteEntity? {
+    func entity(forOjectID objectID: UInt32) async throws -> Entity? {
         if let phase = entitiesByObjectID[objectID] {
             return try await phase.entity
         } else {
@@ -60,7 +63,7 @@ final class SpriteEntityManager {
         }
     }
 
-    func entity(for mapObject: MapObject) async throws -> (entity: SpriteEntity, isNew: Bool) {
+    func entity(for mapObject: MapObject) async throws -> (entity: Entity, isNew: Bool) {
         let job = CharacterJob(rawValue: mapObject.job)
         if job.isPlayer {
             return try await playerEntity(for: mapObject)
@@ -69,17 +72,29 @@ final class SpriteEntityManager {
         }
     }
 
-    func playerEntity(for mapObject: MapObject) async throws -> (entity: SpriteEntity, isNew: Bool) {
+    func playerEntity(for mapObject: MapObject) async throws -> (entity: Entity, isNew: Bool) {
         if let phase = entitiesByObjectID[mapObject.objectID] {
             return try await (phase.entity, false)
         }
 
         let task = Task {
+            let pivotEntity = Entity()
+
             let configuration = ComposedSprite.Configuration(mapObject: mapObject)
             let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
             let animations = await SpriteAnimation.animations(for: composedSprite)
-            let entity = SpriteEntity(animations: animations)
-            return entity
+
+            let spriteEntity = SpriteEntity(animations: animations)
+            spriteEntity.name = "sprite"
+            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
+            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
+            pivotEntity.addChild(spriteEntity)
+
+//            let hpEntity = try await Entity.loadHP()
+//            hpEntity.position = [0, -1, 0.5]
+//            pivotEntity.addChild(hpEntity)
+
+            return pivotEntity
         }
 
         entitiesByObjectID[mapObject.objectID] = .inProgress(task)
@@ -91,7 +106,7 @@ final class SpriteEntityManager {
         return (entity, true)
     }
 
-    func nonPlayerEntity(for mapObject: MapObject) async throws -> (entity: SpriteEntity, isNew: Bool) {
+    func nonPlayerEntity(for mapObject: MapObject) async throws -> (entity: Entity, isNew: Bool) {
         if let phase = entitiesByObjectID[mapObject.objectID] {
             return try await (phase.entity, false)
         }
@@ -113,11 +128,23 @@ final class SpriteEntityManager {
         }
 
         let templateTask = Task {
+            let pivotEntity = Entity()
+
             let configuration = ComposedSprite.Configuration(mapObject: mapObject)
             let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
             let animations = await SpriteAnimation.animations(for: composedSprite)
-            let entity = SpriteEntity(animations: animations)
-            return entity
+
+            let spriteEntity = SpriteEntity(animations: animations)
+            spriteEntity.name = "sprite"
+            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
+            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
+            pivotEntity.addChild(spriteEntity)
+
+//            let hpEntity = try await Entity.loadHP()
+//            hpEntity.position = [0, -1, 0.5]
+//            pivotEntity.addChild(hpEntity)
+
+            return pivotEntity
         }
 
         templateEntitiesByJobID[mapObject.job] = .inProgress(templateTask)

@@ -37,7 +37,7 @@ public class MapScene {
         }
     }
 
-    private let playerEntity = SpriteEntity()
+    private let playerEntity = Entity()
     private let tileSelectorEntity = Entity()
 
     private let spriteEntityManager: SpriteEntityManager
@@ -112,7 +112,7 @@ public class MapScene {
 
         self.resourceManager = resourceManager
 
-        self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager)
+        self.spriteEntityManager = SpriteEntityManager(elevation: elevation, resourceManager: resourceManager)
         self.tileEntityManager = TileEntityManager(mapGrid: mapGrid, rootEntity: rootEntity)
 
         self.pathfinder = Pathfinder(mapGrid: mapGrid)
@@ -175,17 +175,6 @@ public class MapScene {
             logger.warning("\(error)")
         }
 
-        do {
-            let configuration = ComposedSprite.Configuration(mapObject: player)
-            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-
-            let animations = await SpriteAnimation.animations(for: composedSprite)
-            let spriteComponent = SpriteComponent(animations: animations)
-            playerEntity.components.set(spriteComponent)
-        } catch {
-            logger.warning("\(error)")
-        }
-
         playerEntity.name = "\(player.objectID)"
         playerEntity.transform = transform(for: playerPosition)
         playerEntity.components.set([
@@ -193,6 +182,21 @@ public class MapScene {
             MapGridComponent(mapGrid: mapGrid),
             MapObjectComponent(mapObject: player),
         ])
+
+        do {
+            let configuration = ComposedSprite.Configuration(mapObject: player)
+            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+            let animations = await SpriteAnimation.animations(for: composedSprite)
+
+            let spriteEntity = SpriteEntity(animations: animations)
+            spriteEntity.name = "sprite"
+            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
+            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
+            playerEntity.addChild(spriteEntity)
+        } catch {
+            logger.warning("\(error)")
+        }
+
         playerEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
 
         rootEntity.addChild(playerEntity)
@@ -212,18 +216,18 @@ public class MapScene {
     }
 
     func raycast(origin: SIMD3<Float>, direction: SIMD3<Float>, in scene: RealityKit.Scene) {
-        let nearestHit = scene.raycast(origin: origin, direction: direction, length: 150, query: .nearest).first
-        if let nearestHit {
-            if let mapObject = nearestHit.entity.components[MapObjectComponent.self]?.mapObject {
+        let hitEntity = scene.raycast(origin: origin, direction: direction, length: 150, query: .nearest).first?.entity.parent
+        if let hitEntity {
+            if let mapObject = hitEntity.components[MapObjectComponent.self]?.mapObject {
                 switch mapObject.type {
                 case .monster:
-                    let lockOnComponent = LockOnComponent(targetEntity: nearestHit.entity, attackRange: 1) {
+                    let lockOnComponent = LockOnComponent(targetEntity: hitEntity, attackRange: 1) {
                         self.mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
                     }
                     playerEntity.components.set(lockOnComponent)
 
                     let startPosition = playerEntity.gridPosition
-                    let endPosition = nearestHit.entity.gridPosition
+                    let endPosition = hitEntity.gridPosition
                     let path = pathfinder.findPath(from: startPosition, to: endPosition, within: 1)
 
                     if path == [startPosition] {
@@ -236,7 +240,7 @@ public class MapScene {
                 default:
                     break
                 }
-            } else if let mapItem = nearestHit.entity.components[MapItemComponent.self]?.mapItem {
+            } else if let mapItem = hitEntity.components[MapItemComponent.self]?.mapItem {
                 mapSession.pickUpItem(objectID: mapItem.objectID)
             }
             return
@@ -384,10 +388,8 @@ public class MapScene {
     }
 
     private func transform(for gridPosition: SIMD2<Int>) -> Transform {
-        let scale: SIMD3<Float> = [1, 1 / cosf(radians(90) + elevation), 1]
-        let rotation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
         let translation = position(for: gridPosition)
-        let transform = Transform(scale: scale, rotation: rotation, translation: translation)
+        let transform = Transform(translation: translation)
         return transform
     }
 
@@ -607,19 +609,27 @@ extension MapScene: MapEventHandlerProtocol {
                 return
             }
 
-            let sprite = try await resourceManager.sprite(at: path)
-            let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
-
-            let entity = SpriteEntity(animation: animation)
-            entity.name = "\(item.objectID)"
-            entity.transform = transform(for: position)
-            entity.components.set([
+            let pivotEntity = Entity()
+            pivotEntity.name = "\(item.objectID)"
+            pivotEntity.transform = transform(for: position)
+            pivotEntity.components.set([
                 GridPositionComponent(gridPosition: position),
                 MapGridComponent(mapGrid: mapGrid),
                 MapItemComponent(mapItem: item),
             ])
-            entity.playDefaultSpriteAnimation(repeats: true)
-            rootEntity.addChild(entity)
+
+            let sprite = try await resourceManager.sprite(at: path)
+            let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
+
+            let spriteEntity = SpriteEntity(animation: animation)
+            spriteEntity.name = "sprite"
+            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
+            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
+            pivotEntity.addChild(spriteEntity)
+
+            pivotEntity.playDefaultSpriteAnimation(repeats: true)
+
+            rootEntity.addChild(pivotEntity)
         }
     }
 

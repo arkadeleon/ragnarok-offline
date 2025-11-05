@@ -24,7 +24,7 @@ extension Entity {
             context.fillPath()
         }
 
-        let entity = try await Entity(image: image!, size: CGSize(width: 60 / 175.0, height: 5 / 175.0))
+        let entity = try await Entity(image: image!, size: CGSize(width: 60 / 32.0, height: 5 / 32.0))
 //        let entity = Entity()
 //
 //        let texture = try await TextureResource(image: image!, options: TextureResource.CreateOptions(semantic: .color))
