@@ -1,6 +1,6 @@
 //
 //  ScriptContextTests.swift
-//  RagnarokOfflineTests
+//  RagnarokResourcesTests
 //
 //  Created by Leon Li on 2025/3/3.
 //

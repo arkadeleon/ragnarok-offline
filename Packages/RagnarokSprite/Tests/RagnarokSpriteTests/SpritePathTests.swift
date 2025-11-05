@@ -11,7 +11,7 @@ import XCTest
 @testable import RagnarokSprite
 
 final class SpritePathTests: XCTestCase {
-    let resourceManager = ResourceManager(localURL: Bundle.main.resourceURL!)
+    let resourceManager = ResourceManager.testing
 
     func testSpriteResourcePath() async throws {
         let scriptContext = await resourceManager.scriptContext()

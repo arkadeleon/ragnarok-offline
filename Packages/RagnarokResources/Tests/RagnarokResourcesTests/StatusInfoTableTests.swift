@@ -1,11 +1,10 @@
 //
 //  StatusInfoTableTests.swift
-//  RagnarokOfflineTests
+//  RagnarokResourcesTests
 //
 //  Created by Leon Li on 2025/1/29.
 //
 
-import RagnarokConstants
 import XCTest
 @testable import RagnarokResources
 
@@ -14,13 +13,13 @@ final class StatusInfoTableTests: XCTestCase {
 
     func testIconName() async throws {
         let scriptContext = await resourceManager.scriptContext()
-        let swordclan = scriptContext.statusIconName(forStatusID: OfficialStatusChangeID.efst_swordclan.rawValue)
+        let swordclan = scriptContext.statusIconName(forStatusID: 762)
         XCTAssertEqual(swordclan, "SWORDCLAN.TGA")
     }
 
     func testLocalizedDescription() async throws {
         let statusInfoTable = await resourceManager.statusInfoTable(for: .korean)
-        let provoke = statusInfoTable.localizedStatusDescription(forStatusID: OfficialStatusChangeID.efst_provoke.rawValue)
+        let provoke = statusInfoTable.localizedStatusDescription(forStatusID: 0)
         XCTAssertEqual(provoke, "프로보크(Provoke)")
     }
 }

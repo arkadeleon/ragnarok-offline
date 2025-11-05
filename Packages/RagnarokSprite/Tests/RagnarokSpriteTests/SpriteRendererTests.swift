@@ -1,6 +1,6 @@
 //
 //  SpriteRendererTests.swift
-//  RagnarokOfflineTests
+//  RagnarokSpriteTests
 //
 //  Created by Leon Li on 2025/2/17.
 //
@@ -10,9 +10,11 @@ import XCTest
 @testable import RagnarokSprite
 
 final class SpriteRendererTests: XCTestCase {
+    let resourceManager = ResourceManager.testing
+
     func testSpriteRenderer() async throws {
         let configuration = ComposedSprite.Configuration(jobID: 0)
-        let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: .testing)
+        let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
         XCTAssertEqual(composedSprite.parts.count, 3)
 
         let spriteRenderer = SpriteRenderer()

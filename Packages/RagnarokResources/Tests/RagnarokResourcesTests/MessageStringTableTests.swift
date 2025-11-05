@@ -1,6 +1,6 @@
 //
 //  MessageStringTableTests.swift
-//  RagnarokOfflineTests
+//  RagnarokResourcesTests
 //
 //  Created by Leon Li on 2024/6/14.
 //
