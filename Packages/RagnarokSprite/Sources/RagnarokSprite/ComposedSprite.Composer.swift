@@ -393,11 +393,10 @@ extension ComposedSprite.Part {
         let spritePath = pathGenerator.generateShadowSpritePath()
         let shadowSprite = try await resourceManager.sprite(at: spritePath)
 
+        var shadowPart = ComposedSprite.Part(sprite: shadowSprite, semantic: .shadow)
         if let shadowFactor = scriptContext.shadowFactor(forJobID: configuration.job.rawValue), shadowFactor >= 0 {
-            shadowSprite.scaleFactor = shadowFactor
+            shadowPart.scaleFactor = shadowFactor
         }
-
-        let shadowPart = ComposedSprite.Part(sprite: shadowSprite, semantic: .shadow)
         return shadowPart
     }
 }

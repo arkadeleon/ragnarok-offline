@@ -67,6 +67,8 @@ extension ComposedSprite {
 
         var parent: SpriteResource?
 
+        var scaleFactor: Double = 1
+
         init(sprite: SpriteResource, semantic: ComposedSprite.Part.Semantic, orderBySemantic: Int = 0) {
             self.sprite = sprite
             self.semantic = semantic

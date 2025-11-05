@@ -77,7 +77,7 @@ final class SpriteEntityManager {
         let task = Task {
             let configuration = ComposedSprite.Configuration(mapObject: mapObject)
             let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-            let animations = try await SpriteAnimation.animations(for: composedSprite)
+            let animations = await SpriteAnimation.animations(for: composedSprite)
             let entity = SpriteEntity(animations: animations)
             return entity
         }
@@ -115,7 +115,7 @@ final class SpriteEntityManager {
         let templateTask = Task {
             let configuration = ComposedSprite.Configuration(mapObject: mapObject)
             let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-            let animations = try await SpriteAnimation.animations(for: composedSprite)
+            let animations = await SpriteAnimation.animations(for: composedSprite)
             let entity = SpriteEntity(animations: animations)
             return entity
         }

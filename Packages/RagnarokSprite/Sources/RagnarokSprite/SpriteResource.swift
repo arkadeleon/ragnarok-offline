@@ -7,26 +7,29 @@
 
 import CoreGraphics
 import Foundation
+import os
 import RagnarokFileFormats
 import RagnarokResources
 
-final public class SpriteResource: @unchecked Sendable {
+final public class SpriteResource: Sendable {
     public let act: ACT
     public let spr: SPR
     public let pal: PAL?
 
-    var scaleFactor: CGFloat = 1
-
-    private var indexedSpriteImages: [CGImage?]
-    private var rgbaSpriteImages: [CGImage?]
+    private let indexedSpriteImages: OSAllocatedUnfairLock<[CGImage?]>
+    private let rgbaSpriteImages: OSAllocatedUnfairLock<[CGImage?]>
 
     public init(act: ACT, spr: SPR, pal: PAL? = nil) {
         self.act = act
         self.spr = spr
         self.pal = pal
 
-        indexedSpriteImages = Array(repeating: nil, count: Int(spr.indexedSpriteCount))
-        rgbaSpriteImages = Array(repeating: nil, count: Int(spr.rgbaSpriteCount))
+        indexedSpriteImages = OSAllocatedUnfairLock(
+            initialState: Array(repeating: nil, count: Int(spr.indexedSpriteCount))
+        )
+        rgbaSpriteImages = OSAllocatedUnfairLock(
+            initialState: Array(repeating: nil, count: Int(spr.rgbaSpriteCount))
+        )
     }
 
     func image(for layer: ACT.Layer) -> CGImage? {
@@ -49,29 +52,41 @@ final public class SpriteResource: @unchecked Sendable {
                 return nil
             }
 
-            if let image = indexedSpriteImages[spriteIndex] {
+            if let image = indexedSpriteImages.withLock({ $0[spriteIndex] }) {
                 return image
             }
 
             let index = spriteIndex
             let image = spr.imageForSprite(at: index, palette: pal)
-            indexedSpriteImages[spriteIndex] = image
 
-            return image
+            return indexedSpriteImages.withLock { storage in
+                if let cachedImage = storage[spriteIndex] {
+                    return cachedImage
+                }
+
+                storage[spriteIndex] = image
+                return image
+            }
         case .rgba:
             guard 0..<rgbaSpriteCount ~= spriteIndex else {
                 return nil
             }
 
-            if let image = rgbaSpriteImages[spriteIndex] {
+            if let image = rgbaSpriteImages.withLock({ $0[spriteIndex] }) {
                 return image
             }
 
             let index = indexedSpriteCount + spriteIndex
             let image = spr.imageForSprite(at: index, palette: pal)
-            rgbaSpriteImages[spriteIndex] = image
 
-            return image
+            return rgbaSpriteImages.withLock { storage in
+                if let cachedImage = storage[spriteIndex] {
+                    return cachedImage
+                }
+
+                storage[spriteIndex] = image
+                return image
+            }
         }
     }
 }

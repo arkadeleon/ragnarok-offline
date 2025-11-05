@@ -74,35 +74,54 @@ extension SpriteAnimation {
         "\(actionType).\(direction).\(headDirection)"
     }
 
-    static func animations(for composedSprite: ComposedSprite) async throws -> [String : SpriteAnimation] {
-        var animations: [String : SpriteAnimation] = [:]
+    static func animations(for composedSprite: ComposedSprite) async -> [String : SpriteAnimation] {
+        await withTaskGroup(
+            of: (String, SpriteAnimation?).self,
+            returning: [String : SpriteAnimation].self
+        ) { taskGroup in
+            let spriteRenderer = SpriteRenderer()
 
-        let spriteRenderer = SpriteRenderer()
+            let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
 
-        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
+            for actionType in availableActionTypes {
+                for direction in CharacterDirection.allCases {
+                    let headDirection: CharacterHeadDirection = .lookForward
 
-        for actionType in availableActionTypes {
-            for direction in CharacterDirection.allCases {
-                let headDirection: CharacterHeadDirection = .lookForward
+                    taskGroup.addTask {
+                        let animationName = animationName(
+                            for: actionType,
+                            direction: direction,
+                            headDirection: headDirection
+                        )
 
-                let anim = await spriteRenderer.render(
-                    composedSprite: composedSprite,
-                    actionType: actionType,
-                    direction: direction,
-                    headDirection: headDirection
-                )
-                let animation = try await SpriteAnimation(animation: anim)
+                        let anim = await spriteRenderer.render(
+                            composedSprite: composedSprite,
+                            actionType: actionType,
+                            direction: direction,
+                            headDirection: headDirection
+                        )
 
-                let animationName = animationName(
-                    for: actionType,
-                    direction: direction,
-                    headDirection: headDirection
-                )
-                animations[animationName] = animation
+                        do {
+                            let animation = try await SpriteAnimation(animation: anim)
+                            return (animationName, animation)
+                        } catch {
+                            logger.warning("Failed to render sprite: \(error)")
+                            return (animationName, nil)
+                        }
+                    }
+                }
             }
-        }
 
-        return animations
+            var animations: [String : SpriteAnimation] = [:]
+
+            for await (animationName, animation) in taskGroup {
+                if let animation {
+                    animations[animationName] = animation
+                }
+            }
+
+            return animations
+        }
     }
 }
 
