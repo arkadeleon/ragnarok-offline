@@ -61,8 +61,14 @@ final class WalkingSystem: System {
             let speed = TimeInterval(mapObject.speed) / 1000
             let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 
-            let animationIndex = CharacterActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
-            let animation = animations[animationIndex]
+            let animationName = SpriteAnimation.animationName(
+                for: .walk,
+                direction: direction,
+                headDirection: .lookForward
+            )
+            guard let animation = animations[animationName] else {
+                continue
+            }
 
             let mapGrid = walkingComponent.mapGrid
             let sourceAltitude = mapGrid[sourceGridPosition].averageAltitude

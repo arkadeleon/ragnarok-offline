@@ -610,7 +610,7 @@ extension MapScene: MapEventHandlerProtocol {
             let sprite = try await resourceManager.sprite(at: path)
             let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
 
-            let entity = SpriteEntity(animations: [animation])
+            let entity = SpriteEntity(animation: animation)
             entity.name = "\(item.objectID)"
             entity.transform = transform(for: position)
             entity.components.set([
@@ -618,7 +618,7 @@ extension MapScene: MapEventHandlerProtocol {
                 MapGridComponent(mapGrid: mapGrid),
                 MapItemComponent(mapItem: item),
             ])
-            entity.playSpriteAnimation(atIndex: 0, repeats: true)
+            entity.playDefaultSpriteAnimation(repeats: true)
             rootEntity.addChild(entity)
         }
     }

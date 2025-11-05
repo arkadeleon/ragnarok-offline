@@ -11,10 +11,14 @@ import RealityKit
 
 class SpriteEntity: Entity {
     convenience required init() {
-        self.init(animations: [])
+        self.init(animations: [:])
     }
 
-    init(animations: [SpriteAnimation]) {
+    convenience init(animation: SpriteAnimation) {
+        self.init(animations: ["default": animation])
+    }
+
+    init(animations: [String : SpriteAnimation]) {
         super.init()
 
         let inputTargetComponent = InputTargetComponent()
@@ -37,19 +41,20 @@ class SpriteEntity: Entity {
         actionEnded: (() -> Void)? = nil
     ) {
         guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
-              let mapObject = components[MapObjectComponent.self]?.mapObject,
               let animations = components[SpriteComponent.self]?.animations else {
             return
         }
 
-        let animationIndex = actionType.calculateActionIndex(forJobID: mapObject.job, direction: direction)
-        guard 0..<animations.count ~= animationIndex else {
+        let animationName = SpriteAnimation.animationName(
+            for: actionType,
+            direction: direction,
+            headDirection: .lookForward
+        )
+        guard let animation = animations[animationName] else {
             return
         }
 
         stopAllAnimations()
-
-        let animation = animations[animationIndex]
 
         let gridPosition = gridPosition
         let altitude = mapGrid[gridPosition].averageAltitude
@@ -69,16 +74,14 @@ class SpriteEntity: Entity {
         }
     }
 
-    func playSpriteAnimation(atIndex animationIndex: Int, repeats: Bool) {
+    func playDefaultSpriteAnimation(repeats: Bool) {
         guard let mapGrid = components[MapGridComponent.self]?.mapGrid,
               let animations = components[SpriteComponent.self]?.animations,
-              0..<animations.count ~= animationIndex else {
+              let animation = animations.values.first else {
             return
         }
 
         stopAllAnimations()
-
-        let animation = animations[animationIndex]
 
         let gridPosition = gridPosition
         let altitude = mapGrid[gridPosition].averageAltitude
@@ -138,8 +141,15 @@ class SpriteEntity: Entity {
                 let speed = TimeInterval(mapObject.speed) / 1000
                 let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 
-                let animationIndex = CharacterActionType.walk.calculateActionIndex(forJobID: mapObject.job, direction: direction)
-                let animation = animations[animationIndex]
+                let animationName = SpriteAnimation.animationName(
+                    for: .walk,
+                    direction: direction,
+                    headDirection: .lookForward
+                )
+                guard let animation = animations[animationName] else {
+                    continue
+                }
+
                 let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration) {
                     self.components[GridPositionComponent.self]?.gridPosition = targetPosition
                     if i == path.count - 1 {
@@ -195,13 +205,11 @@ class SpriteEntity: Entity {
     }
 
     @available(*, deprecated)
-    private func generateModelForAnimation(at animationIndex: Int) {
+    private func generateModelForAnimation(named animationName: String) {
         guard let animations = components[SpriteComponent.self]?.animations,
-              0..<animations.count ~= animationIndex else {
+              let animation = animations[animationName] else {
             return
         }
-
-        let animation = animations[animationIndex]
 
         let width = animation.frameWidth / 32
         let height = animation.frameHeight / 32

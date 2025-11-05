@@ -66,8 +66,16 @@ final class SpriteAnimation: Sendable {
 }
 
 extension SpriteAnimation {
-    static func animations(for composedSprite: ComposedSprite) async throws -> [SpriteAnimation] {
-        var animations: [SpriteAnimation] = []
+    static func animationName(
+        for actionType: CharacterActionType,
+        direction: CharacterDirection,
+        headDirection: CharacterHeadDirection
+    ) -> String {
+        "\(actionType).\(direction).\(headDirection)"
+    }
+
+    static func animations(for composedSprite: ComposedSprite) async throws -> [String : SpriteAnimation] {
+        var animations: [String : SpriteAnimation] = [:]
 
         let spriteRenderer = SpriteRenderer()
 
@@ -75,14 +83,22 @@ extension SpriteAnimation {
 
         for actionType in availableActionTypes {
             for direction in CharacterDirection.allCases {
+                let headDirection: CharacterHeadDirection = .lookForward
+
                 let anim = await spriteRenderer.render(
                     composedSprite: composedSprite,
                     actionType: actionType,
                     direction: direction,
-                    headDirection: .lookForward
+                    headDirection: headDirection
                 )
                 let animation = try await SpriteAnimation(animation: anim)
-                animations.append(animation)
+
+                let animationName = animationName(
+                    for: actionType,
+                    direction: direction,
+                    headDirection: headDirection
+                )
+                animations[animationName] = animation
             }
         }
 

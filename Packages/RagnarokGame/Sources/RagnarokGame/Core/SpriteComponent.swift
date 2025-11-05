@@ -8,5 +8,5 @@
 import RealityKit
 
 struct SpriteComponent: Component {
-    var animations: [SpriteAnimation]
+    var animations: [String : SpriteAnimation]
 }
