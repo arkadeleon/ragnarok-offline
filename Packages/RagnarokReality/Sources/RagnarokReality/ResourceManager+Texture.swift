@@ -33,8 +33,8 @@ extension ResourceManager {
                         return (textureName, nil)
                     }
 
-                    let texture = try? await TextureResource(
-                        image: textureImage,
+                    let texture = try? await Backport<TextureResource>.generate(
+                        from: textureImage,
                         withName: textureName,
                         options: TextureResource.CreateOptions(semantic: .color)
                     )
@@ -86,8 +86,8 @@ extension ResourceManager {
             throw WaterTextureError.cannotCreateImage
         }
 
-        let texture = try await TextureResource(
-            image: textureImage,
+        let texture = try await Backport<TextureResource>.generate(
+            from: textureImage,
             withName: "water",
             options: TextureResource.CreateOptions(semantic: .color)
         )
