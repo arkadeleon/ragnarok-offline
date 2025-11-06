@@ -69,8 +69,10 @@ public struct ThumbstickView: View {
                         .gesture(fingerDrag)
                 }
         }
-        .onAppear { resetThumbstick() }
-        .onChange(of: innerCircleLocation) { _, newValue in
+        .onAppear {
+            resetThumbstick()
+        }
+        .onChange(of: innerCircleLocation) { newValue in
             updatingValue = CGPoint(
                 x: newValue.x - smallCircleCenter.x,
                 y: newValue.y - smallCircleCenter.y
@@ -84,7 +86,7 @@ public struct ThumbstickView: View {
         if #available(macOS 26.0, iOS 26.0, *) {
             Color.clear
                 .frame(width: largeRadius * 2, height: largeRadius * 2)
-                .glassEffect(.regular, in: .circle)
+                .glassEffect(.clear, in: .circle)
         } else {
             Color.clear
                 .frame(width: largeRadius * 2, height: largeRadius * 2)
