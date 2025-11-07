@@ -13,8 +13,8 @@ import PackageDescription
 let package = Package(
     name: "ThumbstickView",
     platforms: [
-        .macOS(.v12),
-        .iOS(.v15),
+        .macOS(.v14),
+        .iOS(.v17),
     ],
     products: [
         .library(
