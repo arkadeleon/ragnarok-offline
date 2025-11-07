@@ -30,7 +30,7 @@ extension Entity {
 
             descriptor.materials = .allFaces(0)
 
-            let mesh = try await Backport<MeshResource>.generate(from: [descriptor])
+            let mesh = try await MeshResource(from: [descriptor])
             return mesh
         }()
 
@@ -41,7 +41,6 @@ extension Entity {
             var material = PhysicallyBasedMaterial()
             material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
             material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.2)
-            material.blending = .transparent(opacity: PhysicallyBasedMaterial.Opacity(floatLiteral: 0.6))
             material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / Float(32), 1])
             materials = [material]
         } else {
@@ -49,24 +48,25 @@ extension Entity {
             materials = [material]
         }
 
-        let waterEntity = ModelEntity(mesh: mesh, materials: materials)
+        let waterEntity = Entity(components: [
+            ModelComponent(mesh: mesh, materials: materials),
+            OpacityComponent(opacity: 0.6),
+        ])
 
-        if #available(macOS 15.0, iOS 18.0, *) {
-            let frames: [SIMD2<Float>] = (0..<32).map { frameIndex in
-                [Float(frameIndex) / 32, 0]
-            }
-            let animationDefinition = SampledAnimation(
-                frames: frames,
-                name: "flow",
-                tweenMode: .hold,
-                frameInterval: 1 / 30,
-                isAdditive: false,
-                bindTarget: .material(0).textureCoordinate.offset,
-                repeatMode: .repeat
-            )
-            let animationResource = try AnimationResource.generate(with: animationDefinition)
-            waterEntity.playAnimation(animationResource)
+        let frames: [SIMD2<Float>] = (0..<32).map { frameIndex in
+            [Float(frameIndex) / 32, 0]
         }
+        let animationDefinition = SampledAnimation(
+            frames: frames,
+            name: "flow",
+            tweenMode: .hold,
+            frameInterval: 1 / 30,
+            isAdditive: false,
+            bindTarget: .material(0).textureCoordinate.offset,
+            repeatMode: .repeat
+        )
+        let animationResource = try AnimationResource.generate(with: animationDefinition)
+        waterEntity.playAnimation(animationResource)
 
         return waterEntity
     }

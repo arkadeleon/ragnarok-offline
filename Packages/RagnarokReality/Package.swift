@@ -6,8 +6,9 @@ import PackageDescription
 let package = Package(
     name: "RagnarokReality",
     platforms: [
-        .macOS(.v13),
-        .iOS(.v16),
+        .macOS(.v15),
+        .iOS(.v18),
+        .visionOS(.v2),
     ],
     products: [
         .library(

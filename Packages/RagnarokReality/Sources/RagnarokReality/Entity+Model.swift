@@ -45,7 +45,7 @@ extension Entity {
                 descriptors.append(descriptor)
             }
 
-            let mesh = try await Backport<MeshResource>.generate(from: descriptors)
+            let mesh = try await MeshResource(from: descriptors)
             return mesh
         }()
 
