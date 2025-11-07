@@ -64,6 +64,17 @@ struct ContentView: View {
             FilesView("Synced Files", directory: directory)
         case .clientCachedFiles:
             FilesView("Cached Files", directory: appModel.clientCachedDirectory)
+        case .gameClient:
+            #if GAME_CLIENT_FEATURE
+            GameClientView()
+                .environment(appModel.gameSession)
+                .environment(appModel.settings)
+            #else
+            GameClientIntroView()
+            #endif
+        case .chatClient:
+            ChatClientView()
+                .environment(appModel.chatSession)
         case .serverFiles:
             FilesView("Server Files", directory: appModel.serverDirectory)
         case .loginServer:
@@ -102,17 +113,6 @@ struct ContentView: View {
             CharacterSimulatorView()
                 .environment(appModel.characterSimulator)
                 .environment(appModel.database)
-        case .walkingSimulator:
-            #if WALKING_SIMULATOR
-            WalkingSimulatorView()
-                .environment(appModel.gameSession)
-                .environment(appModel.settings)
-            #else
-            WalkingSimulatorIntroView()
-            #endif
-        case .chat:
-            ChatView()
-                .environment(appModel.chatSession)
         case .cube:
             CubeView()
         }

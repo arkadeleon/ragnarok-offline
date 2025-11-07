@@ -14,7 +14,7 @@ struct ServerStartupTip: Tip {
     }
 
     var message: Text? {
-        Text("Make sure all the servers are running before starting the walking simulator.")
+        Text("Make sure all the servers are running before starting the game client.")
     }
 
     var image: Image? {

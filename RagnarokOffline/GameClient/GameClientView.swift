@@ -1,5 +1,5 @@
 //
-//  WalkingSimulatorView.swift
+//  GameClientView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/10/13.
@@ -10,7 +10,7 @@ import RagnarokGame
 import SwiftUI
 import TipKit
 
-struct WalkingSimulatorView: View {
+struct GameClientView: View {
     @Environment(GameSession.self) private var gameSession
     @Environment(SettingsModel.self) private var settings
 
@@ -28,7 +28,7 @@ struct WalkingSimulatorView: View {
         case serverPort
     }
 
-    @FocusState private var focusedField: WalkingSimulatorView.Field?
+    @FocusState private var focusedField: GameClientView.Field?
 
     private enum ConnectionState: Equatable {
         case unknown
@@ -112,13 +112,13 @@ struct WalkingSimulatorView: View {
             }
             .padding()
         }
-        .navigationTitle("Walking Simulator")
+        .navigationTitle("Game Client")
         .onAppear {
             serverAddress = settings.serverAddress
             serverPort = settings.serverPort
         }
         .onChange(of: focusedField) { oldValue, newValue in
-            if oldValue == WalkingSimulatorView.Field.serverAddress {
+            if oldValue == GameClientView.Field.serverAddress {
                 let regex = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}|localhost)$/
                 if let _ = try? regex.wholeMatch(in: serverAddress) {
                     settings.serverAddress = serverAddress
@@ -127,7 +127,7 @@ struct WalkingSimulatorView: View {
                 }
             }
 
-            if oldValue == WalkingSimulatorView.Field.serverPort {
+            if oldValue == GameClientView.Field.serverPort {
                 let regex = /^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$/
                 if let _ = try? regex.wholeMatch(in: serverPort) {
                     settings.serverPort = serverPort
@@ -172,7 +172,7 @@ struct WalkingSimulatorView: View {
 }
 
 #Preview {
-    WalkingSimulatorView()
+    GameClientView()
         .environment(GameSession(resourceManager: .shared))
         .environment(SettingsModel())
 }

@@ -1,5 +1,5 @@
 //
-//  WalkingSimulatorIntroView.swift
+//  GameClientIntroView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2025/10/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WalkingSimulatorIntroView: View {
+struct GameClientIntroView: View {
     @State private var betaLink: URL?
 
     var body: some View {
@@ -18,26 +18,25 @@ struct WalkingSimulatorIntroView: View {
                     .foregroundStyle(.secondary)
 
                 VStack(spacing: 8) {
-                    Text("Walking Simulator")
+                    Text("Game Client")
                         .font(.largeTitle)
                         .fontWeight(.bold)
 
-                    Text(verbatim: "Beta Access Required")
+                    Text("Beta Access Required")
                         .font(.title2)
                         .foregroundStyle(.secondary)
                 }
             }
 
             VStack(spacing: 12) {
-                Text(verbatim: "The Walking Simulator allows you to explore and walk through the game world.")
+                Text("The **Game Client** allows you to explore and walk through the game world.")
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.primary)
 
-                Text(verbatim: "This feature is currently available only for beta testers.")
+                Text("This feature is currently available only for beta testers.")
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)
             }
-
 
             Button {
                 if let betaLink {
@@ -48,7 +47,7 @@ struct WalkingSimulatorIntroView: View {
                     #endif
                 }
             } label: {
-                Text(verbatim: "Join Beta")
+                Text("Join Beta")
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundColor(.white)
@@ -61,7 +60,7 @@ struct WalkingSimulatorIntroView: View {
         }
         .padding(.horizontal, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationTitle("Walking Simulator")
+        .navigationTitle("Game Client")
         .task {
             do {
                 let fetchURL = URL(string: "https://raw.githubusercontent.com/arkadeleon/ragnarok-offline/master/beta-link.json")!
@@ -76,5 +75,5 @@ struct WalkingSimulatorIntroView: View {
 }
 
 #Preview {
-    WalkingSimulatorIntroView()
+    GameClientIntroView()
 }

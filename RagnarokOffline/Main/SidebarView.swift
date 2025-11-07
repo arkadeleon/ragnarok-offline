@@ -12,6 +12,8 @@ enum SidebarItem: Hashable {
     case clientLocalFiles
     case clientSyncedFiles(File)
     case clientCachedFiles
+    case gameClient
+    case chatClient
 
     case serverFiles
     case loginServer
@@ -29,8 +31,6 @@ enum SidebarItem: Hashable {
     case statusChangeDatabase
 
     case characterSimulator
-    case walkingSimulator
-    case chat
     case cube
 }
 
@@ -63,6 +63,16 @@ struct SidebarView: View {
                 NavigationLink(value: SidebarItem.clientCachedFiles) {
                     Label("Cached Files", systemImage: "folder")
                 }
+
+                NavigationLink(value: SidebarItem.gameClient) {
+                    Label("Game Client", systemImage: "macwindow")
+                }
+
+                #if CHAT_CLIENT_FEATURE
+                NavigationLink(value: SidebarItem.chatClient) {
+                    Label("Chat Client", systemImage: "message")
+                }
+                #endif
             } header: {
                 Text("Client")
                     .font(.title3)
@@ -153,15 +163,7 @@ struct SidebarView: View {
                     Label("Character Simulator", systemImage: "person")
                 }
 
-                NavigationLink(value: SidebarItem.walkingSimulator) {
-                    Label("Walking Simulator", systemImage: "macwindow")
-                }
-
                 #if DEBUG
-                NavigationLink(value: SidebarItem.chat) {
-                    Label("Chat", systemImage: "message")
-                }
-
                 NavigationLink(value: SidebarItem.cube) {
                     Label("Cube", systemImage: "cube")
                 }

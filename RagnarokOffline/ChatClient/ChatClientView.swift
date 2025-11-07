@@ -1,5 +1,5 @@
 //
-//  ChatView.swift
+//  ChatClientView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/3/27.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChatView: View {
+struct ChatClientView: View {
     @Environment(ChatSession.self) private var chatSession
 
     @State private var position = ScrollPosition(idType: UUID.self)
@@ -63,7 +63,7 @@ struct ChatView: View {
             .background(.bar)
         }
         .background(.background)
-        .navigationTitle("Chat")
+        .navigationTitle("Chat Client")
         .alert(pendingCommand?.rawValue ?? "", isPresented: $isCommandAlertPresented) {
             ForEach(0..<(pendingCommand?.arguments.count ?? 0), id: \.self) { index in
                 TextField(pendingCommand?.arguments[index] ?? "", text: $commandParameters[index])
@@ -114,6 +114,6 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView()
+    ChatClientView()
         .environment(ChatSession.previewing)
 }
