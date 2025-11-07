@@ -11,11 +11,9 @@ import RagnarokPackets
 import RagnarokResources
 import RagnarokSprite
 import RealityKit
-import SGLMath
 
 @MainActor
 final class SpriteEntityManager {
-    let elevation: Float
     let resourceManager: ResourceManager
 
     /// The current phase of the entity loading operation.
@@ -38,8 +36,7 @@ final class SpriteEntityManager {
     private var entitiesByObjectID: [UInt32 : EntityPhase] = [:]
     private var templateEntitiesByJobID: [Int : EntityPhase] = [:]
 
-    init(elevation: Float, resourceManager: ResourceManager) {
-        self.elevation = elevation
+    init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
     }
 
@@ -78,23 +75,7 @@ final class SpriteEntityManager {
         }
 
         let task = Task {
-            let pivotEntity = Entity()
-
-            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
-            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-            let animations = await SpriteAnimation.animations(for: composedSprite)
-
-            let spriteEntity = SpriteEntity(animations: animations)
-            spriteEntity.name = "sprite"
-            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
-            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
-            pivotEntity.addChild(spriteEntity)
-
-//            let hpEntity = try await Entity.loadHP()
-//            hpEntity.position = [0, -1, 0.5]
-//            pivotEntity.addChild(hpEntity)
-
-            return pivotEntity
+            try await Entity(from: mapObject, resourceManager: resourceManager)
         }
 
         entitiesByObjectID[mapObject.objectID] = .inProgress(task)
@@ -128,23 +109,7 @@ final class SpriteEntityManager {
         }
 
         let templateTask = Task {
-            let pivotEntity = Entity()
-
-            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
-            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-            let animations = await SpriteAnimation.animations(for: composedSprite)
-
-            let spriteEntity = SpriteEntity(animations: animations)
-            spriteEntity.name = "sprite"
-            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
-            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
-            pivotEntity.addChild(spriteEntity)
-
-//            let hpEntity = try await Entity.loadHP()
-//            hpEntity.position = [0, -1, 0.5]
-//            pivotEntity.addChild(hpEntity)
-
-            return pivotEntity
+            try await Entity(from: mapObject, resourceManager: resourceManager)
         }
 
         templateEntitiesByJobID[mapObject.job] = .inProgress(templateTask)

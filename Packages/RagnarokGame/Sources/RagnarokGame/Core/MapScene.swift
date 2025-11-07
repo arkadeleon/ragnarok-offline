@@ -30,26 +30,31 @@ public class MapScene {
     let resourceManager: ResourceManager
 
     let rootEntity = Entity()
+    let worldCameraEntity = Entity()
 
     var distance: Float = 100 {
         didSet {
-            rootEntity.findEntity(named: "camera")?.components[WorldCameraComponent.self]?.radius = distance
+            worldCameraEntity.components[WorldCameraComponent.self]?.radius = distance
         }
     }
 
-    private let playerEntity = Entity()
+    #if os(visionOS)
+    var verticalAngle: Float = radians(-75)
+    #else
+    var verticalAngle: Float = radians(-45) {
+        didSet {
+            worldCameraEntity.components[WorldCameraComponent.self]?.elevation = verticalAngle
+        }
+    }
+    #endif
+
+    private var playerEntity = Entity()
     private let tileSelectorEntity = Entity()
 
     private let spriteEntityManager: SpriteEntityManager
     private let tileEntityManager: TileEntityManager
 
     private let pathfinder: Pathfinder
-
-    #if os(visionOS)
-    let elevation: Float = radians(-75)
-    #else
-    let elevation: Float = radians(-45)
-    #endif
 
     var tileTapGesture: some Gesture {
         SpatialTapGesture()
@@ -112,7 +117,7 @@ public class MapScene {
 
         self.resourceManager = resourceManager
 
-        self.spriteEntityManager = SpriteEntityManager(elevation: elevation, resourceManager: resourceManager)
+        self.spriteEntityManager = SpriteEntityManager(resourceManager: resourceManager)
         self.tileEntityManager = TileEntityManager(mapGrid: mapGrid, rootEntity: rootEntity)
 
         self.pathfinder = Pathfinder(mapGrid: mapGrid)
@@ -121,11 +126,14 @@ public class MapScene {
         MapGridComponent.registerComponent()
         MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
-        SpriteComponent.registerComponent()
         TileComponent.registerComponent()
 
         LockOnComponent.registerComponent()
         LockOnSystem.registerSystem()
+
+        SpriteAnimationsComponent.registerComponent()
+        SpriteActionComponent.registerComponent()
+        SpriteSystem.registerSystem()
 
         WalkingComponent.registerComponent()
         WalkingSystem.registerSystem()
@@ -175,24 +183,15 @@ public class MapScene {
             logger.warning("\(error)")
         }
 
-        playerEntity.name = "\(player.objectID)"
-        playerEntity.transform = transform(for: playerPosition)
-        playerEntity.components.set([
-            GridPositionComponent(gridPosition: playerPosition),
-            MapGridComponent(mapGrid: mapGrid),
-            MapObjectComponent(mapObject: player),
-        ])
-
         do {
-            let configuration = ComposedSprite.Configuration(mapObject: player)
-            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-            let animations = await SpriteAnimation.animations(for: composedSprite)
-
-            let spriteEntity = SpriteEntity(animations: animations)
-            spriteEntity.name = "sprite"
-            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
-            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
-            playerEntity.addChild(spriteEntity)
+            playerEntity = try await Entity(from: player, resourceManager: resourceManager)
+            playerEntity.name = "\(player.objectID)"
+            playerEntity.transform = transform(for: playerPosition)
+            playerEntity.components.set([
+                GridPositionComponent(gridPosition: playerPosition),
+                MapGridComponent(mapGrid: mapGrid),
+                MapObjectComponent(mapObject: player),
+            ])
         } catch {
             logger.warning("\(error)")
         }
@@ -204,7 +203,7 @@ public class MapScene {
         spriteEntityManager.addEntity(playerEntity, forObjectID: player.objectID)
 
         setupLighting()
-        _ = setupWorldCamera(target: playerEntity)
+        setupWorldCamera(target: playerEntity)
 
         mapSession.notifyMapLoaded()
     }
@@ -346,10 +345,10 @@ public class MapScene {
 
     /// Performs any necessary setup of the world camera.
     /// - Parameter target: The entity to orient the camera toward.
-    private func setupWorldCamera(target: Entity) -> Entity {
+    private func setupWorldCamera(target: Entity) {
         // Set the available bounds for the camera orientation.
         let elevationBounds: ClosedRange<Float> = radians(-75)...radians(-45)
-        let initialElevation = elevation
+        let initialElevation = verticalAngle
 
         // Create a world camera component, which acts as a target camera,
         // where it repositions the scene to orient toward the owning entity.
@@ -372,19 +371,19 @@ public class MapScene {
 
         let followComponent = FollowComponent(targetId: target.id, smoothing: [3, 1.2, 3])
 
-        let worldCamera = Entity(components: worldCameraComponent, followComponent)
-        worldCamera.name = "camera"
+        worldCameraEntity.components.set([worldCameraComponent, followComponent])
+        worldCameraEntity.name = "camera"
         #if !os(visionOS)
-        worldCamera.addChild(Entity(components: PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15)))
+        worldCameraEntity.addChild(
+            Entity(components: PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15))
+        )
         #endif
 
         let simulationEntity = PhysicsSimulationComponent.nearestSimulationEntity(for: target)
         let parentEntity = simulationEntity ?? target.parent
-        worldCamera.setParent(parentEntity)
+        worldCameraEntity.setParent(parentEntity)
 
-        worldCamera.position = target.position(relativeTo: parentEntity)
-
-        return worldCamera
+        worldCameraEntity.position = target.position(relativeTo: parentEntity)
     }
 
     private func transform(for gridPosition: SIMD2<Int>) -> Transform {
@@ -604,32 +603,18 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
         Task {
-            let scriptContext = await resourceManager.scriptContext()
-            guard let path = ResourcePath.generateItemSpritePath(itemID: Int(item.itemID), scriptContext: scriptContext) else {
-                return
-            }
-
-            let pivotEntity = Entity()
-            pivotEntity.name = "\(item.objectID)"
-            pivotEntity.transform = transform(for: position)
-            pivotEntity.components.set([
+            let entity = try await Entity(from: item, resourceManager: resourceManager)
+            entity.name = "\(item.objectID)"
+            entity.transform = transform(for: position)
+            entity.components.set([
                 GridPositionComponent(gridPosition: position),
                 MapGridComponent(mapGrid: mapGrid),
                 MapItemComponent(mapItem: item),
             ])
 
-            let sprite = try await resourceManager.sprite(at: path)
-            let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
+            entity.playDefaultSpriteAnimation(repeats: true)
 
-            let spriteEntity = SpriteEntity(animation: animation)
-            spriteEntity.name = "sprite"
-            spriteEntity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
-            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
-            pivotEntity.addChild(spriteEntity)
-
-            pivotEntity.playDefaultSpriteAnimation(repeats: true)
-
-            rootEntity.addChild(pivotEntity)
+            rootEntity.addChild(entity)
         }
     }
 

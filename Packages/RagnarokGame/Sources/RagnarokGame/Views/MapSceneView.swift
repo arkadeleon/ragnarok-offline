@@ -6,6 +6,7 @@
 //
 
 import RealityKit
+import SGLMath
 import SwiftUI
 
 public struct MapSceneView: View {
@@ -66,6 +67,7 @@ class MapSceneARViewController: UIViewController {
 
     private var arView: ARView!
     private var distance: Float = 100
+    private var verticalAngle: Float = radians(-45)
 
     init(scene: MapScene) {
         self.scene = scene
@@ -93,6 +95,11 @@ class MapSceneARViewController: UIViewController {
 
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         arView.addGestureRecognizer(pinchGestureRecognizer)
+
+        let twoFingerPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTwoFingerPan(_:)))
+        twoFingerPanGestureRecognizer.minimumNumberOfTouches = 2
+        twoFingerPanGestureRecognizer.maximumNumberOfTouches = 2
+        arView.addGestureRecognizer(twoFingerPanGestureRecognizer)
     }
 
     @objc func handleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
@@ -116,6 +123,20 @@ class MapSceneARViewController: UIViewController {
             break
         }
     }
+
+    @objc func handleTwoFingerPan(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        switch panGestureRecognizer.state {
+        case .began:
+            verticalAngle = scene.verticalAngle
+        case .changed:
+            var verticalAngle = verticalAngle + Float(panGestureRecognizer.translation(in: arView).y) * 0.01
+            verticalAngle = max(verticalAngle, radians(-75))
+            verticalAngle = min(verticalAngle, radians(-30))
+            scene.verticalAngle = verticalAngle
+        default:
+            break
+        }
+    }
 }
 
 #elseif os(macOS)
@@ -135,6 +156,8 @@ class MapSceneARViewController: NSViewController {
     let scene: MapScene
 
     private var arView: ARView!
+    private var distance: Float = 100
+    private var verticalAngle: Float = radians(-45)
 
     init(scene: MapScene) {
         self.scene = scene
@@ -156,6 +179,10 @@ class MapSceneARViewController: NSViewController {
         let anchorEntity = AnchorEntity(world: .zero)
         anchorEntity.addChild(scene.rootEntity)
         arView.scene.addAnchor(anchorEntity)
+
+        let twoFingerPanGestureRecognizer = NSPanGestureRecognizer(target: self, action: #selector(handleTwoFingerPan(_:)))
+        twoFingerPanGestureRecognizer.numberOfTouchesRequired = 2
+        arView.addGestureRecognizer(twoFingerPanGestureRecognizer)
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -167,6 +194,20 @@ class MapSceneARViewController: NSViewController {
 
     override func scrollWheel(with event: NSEvent) {
         // handle magnification
+    }
+
+    @objc func handleTwoFingerPan(_ panGestureRecognizer: NSPanGestureRecognizer) {
+        switch panGestureRecognizer.state {
+        case .began:
+            verticalAngle = scene.verticalAngle
+        case .changed:
+            var verticalAngle = verticalAngle - Float(panGestureRecognizer.translation(in: arView).y) * 0.01
+            verticalAngle = max(verticalAngle, radians(-75))
+            verticalAngle = min(verticalAngle, radians(-30))
+            scene.verticalAngle = verticalAngle
+        default:
+            break
+        }
     }
 }
 

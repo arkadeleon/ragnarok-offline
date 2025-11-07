@@ -29,7 +29,7 @@ final class WalkingSystem: System {
             }
 
             guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
-                  let animations = spriteEntity.components[SpriteComponent.self]?.animations else {
+                  let animations = spriteEntity.components[SpriteAnimationsComponent.self]?.animations else {
                 continue
             }
 
@@ -93,6 +93,10 @@ final class WalkingSystem: System {
             ]
 
             if walkingComponent.stepTime == 0 {
+                spriteEntity.components.set(
+                    SpriteActionComponent(actionType: .walk, direction: direction, headDirection: .lookForward)
+                )
+
                 spriteEntity.generateModelAndCollisionShape(for: animation)
             }
 

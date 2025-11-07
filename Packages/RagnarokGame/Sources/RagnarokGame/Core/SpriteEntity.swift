@@ -6,19 +6,14 @@
 //
 
 import Foundation
+import RagnarokNetwork
+import RagnarokResources
 import RagnarokSprite
 import RealityKit
+import SGLMath
 
 class SpriteEntity: Entity {
-    convenience required init() {
-        self.init(animations: [:])
-    }
-
-    convenience init(animation: SpriteAnimation) {
-        self.init(animations: ["default": animation])
-    }
-
-    init(animations: [String : SpriteAnimation]) {
+    required init() {
         super.init()
 
         let inputTargetComponent = InputTargetComponent()
@@ -29,9 +24,54 @@ class SpriteEntity: Entity {
 
         let shadowComponent = DynamicLightShadowComponent(castsShadow: false)
         components.set(shadowComponent)
+    }
 
-        let spriteComponent = SpriteComponent(animations: animations)
+    convenience init(animation: SpriteAnimation) {
+        self.init()
+
+        let spriteComponent = SpriteAnimationsComponent(animation: animation)
         components.set(spriteComponent)
+    }
+
+    convenience init(animations: [String : SpriteAnimation]) {
+        self.init()
+
+        let spriteComponent = SpriteAnimationsComponent(animations: animations)
+        components.set(spriteComponent)
+    }
+}
+
+extension Entity {
+    convenience init(from mapObject: MapObject, resourceManager: ResourceManager) async throws {
+        self.init()
+
+        let configuration = ComposedSprite.Configuration(mapObject: mapObject)
+        let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+        let animations = await SpriteAnimation.animations(for: composedSprite)
+
+        let spriteEntity = SpriteEntity(animations: animations)
+        spriteEntity.name = "sprite"
+        spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
+        addChild(spriteEntity)
+
+//        let hpEntity = try await Entity.loadHP()
+//        hpEntity.position = [0, -1, 0.5]
+//        addChild(hpEntity)
+    }
+
+    convenience init(from mapItem: MapItem, resourceManager: ResourceManager) async throws {
+        self.init()
+
+        let scriptContext = await resourceManager.scriptContext()
+        if let path = ResourcePath.generateItemSpritePath(itemID: Int(mapItem.itemID), scriptContext: scriptContext) {
+            let sprite = try await resourceManager.sprite(at: path)
+            let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
+
+            let spriteEntity = SpriteEntity(animation: animation)
+            spriteEntity.name = "sprite"
+            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
+            addChild(spriteEntity)
+        }
     }
 }
 
@@ -43,9 +83,13 @@ extension Entity {
         actionEnded: (() -> Void)? = nil
     ) {
         guard let spriteEntity = findEntity(named: "sprite"),
-              let animations = spriteEntity.components[SpriteComponent.self]?.animations else {
+              let animations = spriteEntity.components[SpriteAnimationsComponent.self]?.animations else {
             return
         }
+
+        spriteEntity.components.set(
+            SpriteActionComponent(actionType: actionType, direction: direction, headDirection: .lookForward)
+        )
 
         let animationName = SpriteAnimation.animationName(
             for: actionType,
@@ -75,8 +119,7 @@ extension Entity {
 
     func playDefaultSpriteAnimation(repeats: Bool) {
         guard let spriteEntity = findEntity(named: "sprite"),
-              let animations = spriteEntity.components[SpriteComponent.self]?.animations,
-              let animation = animations.values.first else {
+              let animation = spriteEntity.components[SpriteAnimationsComponent.self]?.defaultAnimation else {
             return
         }
 
@@ -104,7 +147,7 @@ extension Entity {
         }
 
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
-              let animations = spriteEntity.components[SpriteComponent.self]?.animations else {
+              let animations = spriteEntity.components[SpriteAnimationsComponent.self]?.animations else {
             return
         }
 
@@ -205,7 +248,7 @@ extension Entity {
 
     @available(*, deprecated)
     private func generateModelForAnimation(named animationName: String) {
-        guard let animations = components[SpriteComponent.self]?.animations,
+        guard let animations = components[SpriteAnimationsComponent.self]?.animations,
               let animation = animations[animationName] else {
             return
         }
