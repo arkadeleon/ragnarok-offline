@@ -1,5 +1,5 @@
 //
-//  Entity+World.swift
+//  WorldEntity.swift
 //  RagnarokReality
 //
 //  Created by Leon Li on 2025/2/26.
@@ -10,13 +10,20 @@ import RealityKit
 import SGLMath
 
 extension Entity {
-    public static func worldEntity(world: WorldResource, resourceManager: ResourceManager) async throws -> Entity {
-        metric.beginMeasuring("Load ground")
+    public convenience init(from world: WorldResource, resourceManager: ResourceManager) async throws {
+        self.init()
+
+        // MARK: - Ground Entity
+
+        metric.beginMeasuring("Load ground entity")
 
         let groundTextures = await resourceManager.textures(forNames: world.gnd.textures, removesMagentaPixels: false)
         let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd, textures: groundTextures)
+        addChild(groundEntity, preservingWorldTransform: true)
 
-        metric.endMeasuring("Load ground")
+        metric.endMeasuring("Load ground entity")
+
+        // MARK: - Models
 
         metric.beginMeasuring("Load models")
 
@@ -24,6 +31,8 @@ extension Entity {
         let models = await resourceManager.models(forNames: uniqueModelNames)
 
         metric.endMeasuring("Load models")
+
+        // MARK: - Model Textures
 
         metric.beginMeasuring("Load model textures")
 
@@ -37,10 +46,14 @@ extension Entity {
 
         metric.endMeasuring("Load model textures")
 
-        let waterEntity = try await Entity.waterEntity(gnd: world.gnd, rsw: world.rsw, resourceManager: resourceManager)
-        groundEntity.addChild(waterEntity)
+        // MARK: - Water Entity
 
-        metric.beginMeasuring("Load model entities")
+        let waterEntity = try await Entity.waterEntity(gnd: world.gnd, rsw: world.rsw, resourceManager: resourceManager)
+        addChild(waterEntity, preservingWorldTransform: true)
+
+        // MARK: - Prototype Model Entities
+
+        metric.beginMeasuring("Load prototype model entities")
 
         let modelEntitiesByName = await withTaskGroup(
             of: Entity?.self,
@@ -62,29 +75,33 @@ extension Entity {
             return modelEntitiesByName
         }
 
-        metric.endMeasuring("Load model entities")
+        metric.endMeasuring("Load prototype model entities")
+
+        // MARK: - Model Entities
+
+        metric.beginMeasuring("Load model entities")
 
         for model in world.rsw.models {
             guard let modelEntity = modelEntitiesByName[model.modelName] else {
                 continue
             }
 
-            let modelEntityClone = modelEntity.clone(recursive: true)
+            let clonedModelEntity = modelEntity.clone(recursive: true)
 
-            modelEntityClone.position = [
+            clonedModelEntity.position = [
                 model.position.x + Float(world.gnd.width),
                 model.position.y,
                 model.position.z + Float(world.gnd.height),
             ]
-            modelEntityClone.orientation =
+            clonedModelEntity.orientation =
                 simd_quatf(angle: radians(model.rotation.z), axis: [0, 0, 1]) *
                 simd_quatf(angle: radians(model.rotation.x), axis: [1, 0, 0]) *
                 simd_quatf(angle: radians(model.rotation.y), axis: [0, 1, 0])
-            modelEntityClone.scale = model.scale
+            clonedModelEntity.scale = model.scale
 
-            groundEntity.addChild(modelEntityClone)
+            addChild(clonedModelEntity, preservingWorldTransform: true)
         }
 
-        return groundEntity
+        metric.endMeasuring("Load model entities")
     }
 }

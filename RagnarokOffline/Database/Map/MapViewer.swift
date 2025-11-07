@@ -33,7 +33,7 @@ struct MapViewer: View {
     private func loadEntity() async throws -> Entity {
         let world = try await ResourceManager.shared.world(mapName: "\(mapName).rsw")
 
-        let worldEntity = try await Entity.worldEntity(world: world, resourceManager: .shared)
+        let worldEntity = try await Entity(from: world, resourceManager: .shared)
 
         let translation = simd_float4x4(translation: [-Float(world.gat.width / 2), 0, -Float(world.gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))

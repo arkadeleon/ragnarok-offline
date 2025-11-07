@@ -145,7 +145,7 @@ public class MapScene {
     }
 
     func load() async {
-        if let worldEntity = try? await Entity.worldEntity(world: world, resourceManager: resourceManager) {
+        if let worldEntity = try? await Entity(from: world, resourceManager: resourceManager) {
             worldEntity.name = mapName
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
 

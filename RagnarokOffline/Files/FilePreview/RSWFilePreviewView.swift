@@ -54,7 +54,7 @@ struct RSWFilePreviewView: View {
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
 
-        let worldEntity = try await Entity.worldEntity(world: world, resourceManager: .shared)
+        let worldEntity = try await Entity(from: world, resourceManager: .shared)
 
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))
