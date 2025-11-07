@@ -21,14 +21,19 @@ class SpriteSystem: System {
             updatingSystemWhen: .rendering
         )
         guard let worldCameraEntity = worldCameraEntities.first(where: { _ in true }),
-              let elevation = worldCameraEntity.components[WorldCameraComponent.self]?.elevation else {
+              let worldCameraComponent = worldCameraEntity.components[WorldCameraComponent.self] else {
             return
         }
+
+        let azimuth = worldCameraComponent.azimuth
+        let elevation = worldCameraComponent.elevation
 
         let entities = context.entities(matching: Self.query, updatingSystemWhen: .rendering)
 
         for entity in entities {
-            entity.scale = [1, 1 / cosf(radians(90) + elevation), 1]
+            entity.scale = [1, 1 / cosf(elevation), 1]
+
+            entity.orientation = simd_quatf(angle: -azimuth, axis: [0, 0, 1]) * simd_quatf(angle: radians(90), axis: [1, 0, 0])
 
             guard let animations = entity.components[SpriteAnimationsComponent.self]?.animations else {
                 continue

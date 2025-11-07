@@ -66,8 +66,9 @@ class MapSceneARViewController: UIViewController {
     let scene: MapScene
 
     private var arView: ARView!
+    private var horizontalAngle: Float = radians(0)
+    private var verticalAngle: Float = radians(45)
     private var distance: Float = 100
-    private var verticalAngle: Float = radians(-45)
 
     init(scene: MapScene) {
         self.scene = scene
@@ -93,13 +94,21 @@ class MapSceneARViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         arView.addGestureRecognizer(tapGestureRecognizer)
 
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
-        arView.addGestureRecognizer(pinchGestureRecognizer)
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        arView.addGestureRecognizer(doubleTapGestureRecognizer)
+
+        tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
+
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        arView.addGestureRecognizer(panGestureRecognizer)
 
         let twoFingerPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTwoFingerPan(_:)))
         twoFingerPanGestureRecognizer.minimumNumberOfTouches = 2
-        twoFingerPanGestureRecognizer.maximumNumberOfTouches = 2
         arView.addGestureRecognizer(twoFingerPanGestureRecognizer)
+
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        arView.addGestureRecognizer(pinchGestureRecognizer)
     }
 
     @objc func handleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
@@ -107,6 +116,40 @@ class MapSceneARViewController: UIViewController {
 
         if let (origin, direction) = arView.ray(through: screenPoint) {
             scene.raycast(origin: origin, direction: direction, in: arView.scene)
+        }
+    }
+
+    @objc func handleDoubleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
+        horizontalAngle = radians(0)
+        scene.horizontalAngle = horizontalAngle
+
+        verticalAngle = radians(45)
+        scene.verticalAngle = verticalAngle
+    }
+
+    @objc func handlePan(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        switch panGestureRecognizer.state {
+        case .began:
+            horizontalAngle = scene.horizontalAngle
+        case .changed:
+            let horizontalAngle = horizontalAngle + Float(panGestureRecognizer.translation(in: arView).x) * 0.01
+            scene.horizontalAngle = horizontalAngle.truncatingRemainder(dividingBy: radians(360))
+        default:
+            break
+        }
+    }
+
+    @objc func handleTwoFingerPan(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        switch panGestureRecognizer.state {
+        case .began:
+            verticalAngle = scene.verticalAngle
+        case .changed:
+            var verticalAngle = verticalAngle + Float(panGestureRecognizer.translation(in: arView).y) * 0.01
+            verticalAngle = max(verticalAngle, radians(15))
+            verticalAngle = min(verticalAngle, radians(60))
+            scene.verticalAngle = verticalAngle
+        default:
+            break
         }
     }
 
@@ -119,20 +162,6 @@ class MapSceneARViewController: UIViewController {
             distance = max(distance, 3)
             distance = min(distance, 120)
             scene.distance = distance
-        default:
-            break
-        }
-    }
-
-    @objc func handleTwoFingerPan(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        switch panGestureRecognizer.state {
-        case .began:
-            verticalAngle = scene.verticalAngle
-        case .changed:
-            var verticalAngle = verticalAngle + Float(panGestureRecognizer.translation(in: arView).y) * 0.01
-            verticalAngle = max(verticalAngle, radians(-75))
-            verticalAngle = min(verticalAngle, radians(-30))
-            scene.verticalAngle = verticalAngle
         default:
             break
         }
@@ -156,8 +185,9 @@ class MapSceneARViewController: NSViewController {
     let scene: MapScene
 
     private var arView: ARView!
+    private var horizontalAngle: Float = radians(0)
+    private var verticalAngle: Float = radians(45)
     private var distance: Float = 100
-    private var verticalAngle: Float = radians(-45)
 
     init(scene: MapScene) {
         self.scene = scene
@@ -180,9 +210,8 @@ class MapSceneARViewController: NSViewController {
         anchorEntity.addChild(scene.rootEntity)
         arView.scene.addAnchor(anchorEntity)
 
-        let twoFingerPanGestureRecognizer = NSPanGestureRecognizer(target: self, action: #selector(handleTwoFingerPan(_:)))
-        twoFingerPanGestureRecognizer.numberOfTouchesRequired = 2
-        arView.addGestureRecognizer(twoFingerPanGestureRecognizer)
+        let panGestureRecognizer = NSPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        arView.addGestureRecognizer(panGestureRecognizer)
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -196,14 +225,18 @@ class MapSceneARViewController: NSViewController {
         // handle magnification
     }
 
-    @objc func handleTwoFingerPan(_ panGestureRecognizer: NSPanGestureRecognizer) {
+    @objc func handlePan(_ panGestureRecognizer: NSPanGestureRecognizer) {
         switch panGestureRecognizer.state {
         case .began:
+            horizontalAngle = scene.horizontalAngle
             verticalAngle = scene.verticalAngle
         case .changed:
+            let horizontalAngle = horizontalAngle + Float(panGestureRecognizer.translation(in: arView).x) * 0.01
+            scene.horizontalAngle = horizontalAngle.truncatingRemainder(dividingBy: radians(360))
+
             var verticalAngle = verticalAngle - Float(panGestureRecognizer.translation(in: arView).y) * 0.01
-            verticalAngle = max(verticalAngle, radians(-75))
-            verticalAngle = min(verticalAngle, radians(-30))
+            verticalAngle = max(verticalAngle, radians(15))
+            verticalAngle = min(verticalAngle, radians(60))
             scene.verticalAngle = verticalAngle
         default:
             break

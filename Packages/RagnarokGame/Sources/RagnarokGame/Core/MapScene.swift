@@ -32,21 +32,27 @@ public class MapScene {
     let rootEntity = Entity()
     let worldCameraEntity = Entity()
 
-    var distance: Float = 100 {
+    var horizontalAngle: Float = radians(0) {
         didSet {
-            worldCameraEntity.components[WorldCameraComponent.self]?.radius = distance
+            worldCameraEntity.components[WorldCameraComponent.self]?.azimuth = horizontalAngle
         }
     }
 
     #if os(visionOS)
-    var verticalAngle: Float = radians(-75)
+    var verticalAngle: Float = radians(15)
     #else
-    var verticalAngle: Float = radians(-45) {
+    var verticalAngle: Float = radians(45) {
         didSet {
             worldCameraEntity.components[WorldCameraComponent.self]?.elevation = verticalAngle
         }
     }
     #endif
+
+    var distance: Float = 100 {
+        didSet {
+            worldCameraEntity.components[WorldCameraComponent.self]?.radius = distance
+        }
+    }
 
     private var playerEntity = Entity()
     private let tileSelectorEntity = Entity()
@@ -347,7 +353,7 @@ public class MapScene {
     /// - Parameter target: The entity to orient the camera toward.
     private func setupWorldCamera(target: Entity) {
         // Set the available bounds for the camera orientation.
-        let elevationBounds: ClosedRange<Float> = radians(-75)...radians(-45)
+        let elevationBounds: ClosedRange<Float> = radians(15)...radians(60)
         let initialElevation = verticalAngle
 
         // Create a world camera component, which acts as a target camera,

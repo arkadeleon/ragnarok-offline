@@ -102,8 +102,8 @@ public struct WorldCameraComponent: Component {
     }
 
     public func cameraAxisOrientation() -> simd_quatf {
-        simd_quatf(angle: -azimuth, axis: [0, 1, 0]) *
-            simd_quatf(angle: -elevation, axis: [1, 0, 0])
+        simd_quatf(angle: -azimuth, axis: [0, 0, 1]) *
+            simd_quatf(angle: -elevation + .pi / 2, axis: [1, 0, 0])
     }
 
     public mutating func updateWith(continuousMotion: SIMD2<Float>) {
