@@ -98,8 +98,6 @@ class MapSceneARViewController: UIViewController {
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         arView.addGestureRecognizer(doubleTapGestureRecognizer)
 
-        tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
-
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         arView.addGestureRecognizer(panGestureRecognizer)
 
