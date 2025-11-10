@@ -466,21 +466,62 @@ extension MapScene {
             position = playerEntity.gridPosition
         }
 
-        var newPosition = position
-        if movementValue.x > 15 {
-            newPosition.x += 3
-        }
-        if movementValue.x < -15 {
-            newPosition.x -= 3
-        }
-        if movementValue.y > 15 {
-            newPosition.y -= 3
-        }
-        if movementValue.y < -15 {
-            newPosition.y += 3
+        // SwiftUI screen-space: origin at top-left, +x right, +y down.
+        // Game grid-space: origin bottom-left, +x east, +y north.
+        // We first flip the Y axis to get a Cartesian vector, rotate it by the
+        // negative camera azimuth, then flip Y back so the thresholds below
+        // still use “north is positive Y”.
+        //
+        //            screen-space (SwiftUI)
+        //                ^ -Y (up)
+        //                |
+        //   -X (left) <--+--> +X (right)
+        //                |
+        //                v +Y (down)
+        //
+        // After flip + rotate:
+        //
+        //                ^ +Y (north)
+        //                |
+        //   -X (west) <--+--> +X (east)
+        //                |
+        //                v -Y (south)
+        let joystickInput = SIMD2<Float>(
+            Float(movementValue.x),
+            Float(-movementValue.y)
+        )
+        let angle = -horizontalAngle
+        // Rotate the joystick vector to align with the camera azimuth.
+        // We use the standard 2D rotation matrix:
+        // [ x' ]   [ cosθ  -sinθ ] [ x ]
+        // [ y' ] = [ sinθ   cosθ ] [ y ]
+        // where θ is the horizontal camera angle (clockwise pan increases the angle,
+        // so we rotate by -θ to recover world-space directions).
+        let cosAngle = cos(angle)
+        let sinAngle = sin(angle)
+        let worldInput = SIMD2<Float>(
+            joystickInput.x * cosAngle - joystickInput.y * sinAngle,
+            joystickInput.x * sinAngle + joystickInput.y * cosAngle
+        )
+
+        // Use a constant stride once the joystick leaves the dead zone so players
+        // always advance three tiles in the intended direction, regardless of camera.
+        let deadZone: Float = 15
+        let stepLength: Float = 3
+        let inputMagnitude = simd_length(worldInput)
+        guard inputMagnitude > deadZone else {
+            return
         }
 
-        if newPosition != position {
+        let normalizedDirection = worldInput / inputMagnitude
+        let desiredOffset = normalizedDirection * stepLength
+        let gridOffset = SIMD2<Int>(
+            Int(desiredOffset.x.rounded()),
+            Int(desiredOffset.y.rounded()),
+        )
+
+        if gridOffset != .zero {
+            let newPosition = position &+ gridOffset
             mapSession.requestMove(to: newPosition)
         }
     }
