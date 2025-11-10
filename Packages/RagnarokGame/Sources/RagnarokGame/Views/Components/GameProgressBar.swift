@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct GameProgressBar: View {
-    var progress: Double
+    var progress: Progress
+
+    @State private var fractionCompleted: Double = 0
 
     var body: some View {
-        VStack(spacing: 8) {
+        ZStack {
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 2)
                     .fill(Color(#colorLiteral(red: 0.5490196078, green: 0.5490196078, blue: 0.5490196078, alpha: 1)))
@@ -23,17 +25,20 @@ struct GameProgressBar: View {
 
                 RoundedRectangle(cornerRadius: 1)
                     .fill(Color(#colorLiteral(red: 0.2588235294, green: 0.3882352941, blue: 0.6470588235, alpha: 1)))
-                    .frame(width: max(0, progress * 236), height: 11)
+                    .frame(width: max(0, fractionCompleted * 236), height: 11)
                     .offset(x: 2)
             }
             .frame(width: 240)
 
-            Text(verbatim: "\(Int(progress / 100))%")
+            Text(verbatim: "\(Int(fractionCompleted * 100))%")
                 .gameText(color: Color(#colorLiteral(red: 1, green: 1, blue: 0, alpha: 1)))
+        }
+        .onReceive(progress.publisher(for: \.fractionCompleted)) { fractionCompleted in
+            self.fractionCompleted = fractionCompleted
         }
     }
 }
 
 #Preview {
-    GameProgressBar(progress: 0.5)
+    GameProgressBar(progress: Progress())
 }

@@ -14,9 +14,10 @@ enum AsyncContentStatus<Value> {
     case failed(any Error)
 }
 
-struct AsyncContentView<Value, Content>: View where Value: Sendable, Content: View {
+struct AsyncContentView<Value, Content, Placeholder>: View where Value: Sendable, Content: View, Placeholder: View {
     var load: () async throws -> Value
-    @ViewBuilder var content: (Value) -> Content
+    var content: (Value) -> Content
+    var placeholder: () -> Placeholder
 
     @State private var status: AsyncContentStatus<Value> = .notYetLoaded
 
@@ -26,7 +27,7 @@ struct AsyncContentView<Value, Content>: View where Value: Sendable, Content: Vi
             case .notYetLoaded:
                 EmptyView()
             case .loading:
-                ProgressView()
+                placeholder()
             case .loaded(let value):
                 content(value)
             case .failed(let error):
@@ -45,6 +46,27 @@ struct AsyncContentView<Value, Content>: View where Value: Sendable, Content: Vi
                 status = .failed(error)
             }
         }
+    }
+
+    init(
+        load: @escaping () async throws -> Value,
+        @ViewBuilder content: @escaping (Value) -> Content
+    ) where Placeholder == ProgressView<EmptyView, EmptyView> {
+        self.load = load
+        self.content = content
+        self.placeholder = {
+            ProgressView()
+        }
+    }
+
+    init(
+        load: @escaping () async throws -> Value,
+        @ViewBuilder content: @escaping (Value) -> Content,
+        @ViewBuilder placeholder: @escaping () -> Placeholder
+    ) {
+        self.load = load
+        self.content = content
+        self.placeholder = placeholder
     }
 }
 

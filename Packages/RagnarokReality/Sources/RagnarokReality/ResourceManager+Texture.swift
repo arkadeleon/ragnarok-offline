@@ -16,7 +16,11 @@ enum WaterTextureError: Error {
 }
 
 extension ResourceManager {
-    public func textures(forNames textureNames: some Collection<String>, removesMagentaPixels: Bool) async -> [String : TextureResource] {
+    public func textures(
+        forNames textureNames: some Collection<String>,
+        removesMagentaPixels: Bool,
+        perTextureCompletionBlock: (@MainActor (String, TextureResource?) -> Void)? = nil
+    ) async -> [String : TextureResource] {
         await withTaskGroup(
             of: (String, TextureResource?).self,
             returning: [String : TextureResource].self
@@ -45,6 +49,7 @@ extension ResourceManager {
             var textures: [String : TextureResource] = [:]
             for await (textureName, texture) in taskGroup {
                 textures[textureName] = texture
+                await perTextureCompletionBlock?(textureName, texture)
             }
             return textures
         }

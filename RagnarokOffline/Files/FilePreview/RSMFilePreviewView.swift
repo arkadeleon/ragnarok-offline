@@ -14,11 +14,16 @@ import SwiftUI
 struct RSMFilePreviewView: View {
     var file: File
 
+    private let progress = Progress()
+
     var body: some View {
         AsyncContentView {
             try await loadRSMFile()
         } content: { entity in
             ModelViewer(entity: entity)
+        } placeholder: {
+            ProgressView(progress)
+                .progressViewStyle(.circular)
         }
     }
 
@@ -38,7 +43,13 @@ struct RSMFilePreviewView: View {
         for node in rsm.nodes {
             textureNames.formUnion(node.textures)
         }
-        let textures = await ResourceManager.shared.textures(forNames: textureNames, removesMagentaPixels: true)
+
+        progress.totalUnitCount = Int64(textureNames.count)
+        progress.completedUnitCount = 0
+
+        let textures = await ResourceManager.shared.textures(forNames: textureNames, removesMagentaPixels: true) { _, _ in
+            progress.completedUnitCount += 1
+        }
 
         let entity = try await Entity.modelEntity(rsm: rsm, instance: instance, textures: textures)
         return entity

@@ -15,6 +15,8 @@ import SwiftUI
 struct RSWFilePreviewView: View {
     var file: File
 
+    private let progress = Progress()
+
     @State private var translation: CGSize = .zero
     @State private var magnification: CGFloat = 1
 
@@ -23,6 +25,9 @@ struct RSWFilePreviewView: View {
             try await loadRSWFile()
         } content: { entity in
             ModelViewer(entity: entity)
+        } placeholder: {
+            ProgressView(progress)
+                .progressViewStyle(.circular)
         }
     }
 
@@ -54,7 +59,7 @@ struct RSWFilePreviewView: View {
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
 
-        let worldEntity = try await Entity(from: world, resourceManager: .shared)
+        let worldEntity = try await Entity(from: world, resourceManager: .shared, progress: progress)
 
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))

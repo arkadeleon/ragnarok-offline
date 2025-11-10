@@ -15,11 +15,16 @@ struct MapViewer: View {
     var mapName: String
     var onDone: () -> Void
 
+    private let progress = Progress()
+
     var body: some View {
         AsyncContentView {
             try await loadEntity()
         } content: { entity in
             ModelViewer(entity: entity)
+        } placeholder: {
+            ProgressView(progress)
+                .progressViewStyle(.circular)
         }
         .navigationTitle(mapName)
         .toolbarTitleDisplayMode(.inline)
@@ -33,7 +38,7 @@ struct MapViewer: View {
     private func loadEntity() async throws -> Entity {
         let world = try await ResourceManager.shared.world(mapName: "\(mapName).rsw")
 
-        let worldEntity = try await Entity(from: world, resourceManager: .shared)
+        let worldEntity = try await Entity(from: world, resourceManager: .shared, progress: progress)
 
         let translation = simd_float4x4(translation: [-Float(world.gat.width / 2), 0, -Float(world.gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))

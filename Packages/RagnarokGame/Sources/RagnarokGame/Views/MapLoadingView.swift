@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapLoadingView: View {
-    var progress: Double
+    var progress: Progress
 
     var body: some View {
         ZStack {
@@ -36,6 +36,6 @@ struct MapLoadingView: View {
 }
 
 #Preview {
-    MapLoadingView(progress: 0.5)
+    MapLoadingView(progress: Progress())
         .environment(GameSession.testing)
 }

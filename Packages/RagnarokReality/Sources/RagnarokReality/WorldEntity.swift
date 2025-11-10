@@ -5,36 +5,27 @@
 //  Created by Leon Li on 2025/2/26.
 //
 
+import Foundation
 import RagnarokResources
 import RealityKit
 import SGLMath
 
 extension Entity {
-    public convenience init(from world: WorldResource, resourceManager: ResourceManager) async throws {
+    public convenience init(from world: WorldResource, resourceManager: ResourceManager, progress: Progress) async throws {
         self.init()
 
-        // MARK: - Ground Entity
+        // MARK: - RSM Models
 
-        metric.beginMeasuring("Load ground entity")
-
-        let groundTextures = await resourceManager.textures(forNames: world.gnd.textures, removesMagentaPixels: false)
-        let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd, textures: groundTextures)
-        addChild(groundEntity, preservingWorldTransform: true)
-
-        metric.endMeasuring("Load ground entity")
-
-        // MARK: - Models
-
-        metric.beginMeasuring("Load models")
+        metric.beginMeasuring("Load rsm models")
 
         let uniqueModelNames = Set(world.rsw.models.map({ $0.modelName }))
         let models = await resourceManager.models(forNames: uniqueModelNames)
 
-        metric.endMeasuring("Load models")
+        metric.endMeasuring("Load rsm models")
 
-        // MARK: - Model Textures
+        // MARK: - Textures
 
-        metric.beginMeasuring("Load model textures")
+        metric.beginMeasuring("Load textures")
 
         var modelTextureNames: Set<String> = []
         for (_, model) in models {
@@ -42,9 +33,28 @@ extension Entity {
                 modelTextureNames.formUnion(node.textures)
             }
         }
-        let modelTextures = await resourceManager.textures(forNames: modelTextureNames, removesMagentaPixels: true)
 
-        metric.endMeasuring("Load model textures")
+        progress.totalUnitCount = Int64(world.gnd.textures.count + modelTextureNames.count)
+        progress.completedUnitCount = 0
+
+        let groundTextures = await resourceManager.textures(forNames: world.gnd.textures, removesMagentaPixels: false) { _, _ in
+            progress.completedUnitCount += 1
+        }
+
+        let modelTextures = await resourceManager.textures(forNames: modelTextureNames, removesMagentaPixels: true) { _, _ in
+            progress.completedUnitCount += 1
+        }
+
+        metric.endMeasuring("Load textures")
+
+        // MARK: - Ground Entity
+
+        metric.beginMeasuring("Load ground entity")
+
+        let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd, textures: groundTextures)
+        addChild(groundEntity, preservingWorldTransform: true)
+
+        metric.endMeasuring("Load ground entity")
 
         // MARK: - Water Entity
 

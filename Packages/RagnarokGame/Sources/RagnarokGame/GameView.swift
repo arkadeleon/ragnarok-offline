@@ -83,8 +83,8 @@ public struct GameView: View {
             CharSelectView(chars: chars)
         case .charMake(let slot):
             CharMakeView(slot: slot)
-        case .mapLoading:
-            MapLoadingView(progress: 0)
+        case .mapLoading(let progress):
+            MapLoadingView(progress: progress)
         case .map(let scene):
             MapView(scene: scene)
         }

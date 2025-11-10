@@ -46,7 +46,7 @@ final public class GameSession {
         case charServerList(_ charServers: [CharServerInfo])
         case charSelect(_ chars: [CharInfo])
         case charMake(_ slot: UInt8)
-        case mapLoading
+        case mapLoading(_ progress: Progress)
         case map(_ scene: MapScene)
     }
 
@@ -345,7 +345,8 @@ final public class GameSession {
                 scene.unload()
             }
 
-            phase = .mapLoading
+            let progress = Progress()
+            phase = .mapLoading(progress)
 
             Task {
                 guard let mapSession, let account, let char else {
@@ -366,7 +367,7 @@ final public class GameSession {
                     resourceManager: resourceManager
                 )
 
-                await scene.load()
+                await scene.load(progress: progress)
 
                 phase = .map(scene)
             }

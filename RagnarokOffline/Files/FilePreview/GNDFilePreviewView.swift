@@ -14,11 +14,16 @@ import SwiftUI
 struct GNDFilePreviewView: View {
     var file: File
 
+    private let progress = Progress()
+
     var body: some View {
         AsyncContentView {
             try await loadGNDFile()
         } content: { entity in
             ModelViewer(entity: entity)
+        } placeholder: {
+            ProgressView(progress)
+                .progressViewStyle(.circular)
         }
     }
 
@@ -40,7 +45,12 @@ struct GNDFilePreviewView: View {
 
         let gat = try GAT(data: gatData)
 
-        let textures = await ResourceManager.shared.textures(forNames: gnd.textures, removesMagentaPixels: false)
+        progress.totalUnitCount = Int64(gnd.textures.count)
+        progress.completedUnitCount = 0
+
+        let textures = await ResourceManager.shared.textures(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+            progress.completedUnitCount += 1
+        }
 
         let groundEntity = try await Entity.groundEntity(gat: gat, gnd: gnd, textures: textures)
 
