@@ -245,14 +245,10 @@ extension Entity {
             self.playSpriteAnimation(.readyToAttack, direction: direction, repeats: true)
         }
     }
+}
 
-    @available(*, deprecated)
-    private func generateModelForAnimation(named animationName: String) {
-        guard let animations = components[SpriteAnimationsComponent.self]?.animations,
-              let animation = animations[animationName] else {
-            return
-        }
-
+extension Entity {
+    func generateModelAndCollisionShape(for animation: SpriteAnimation) {
         let width = animation.frameWidth / 32
         let height = animation.frameHeight / 32
 
