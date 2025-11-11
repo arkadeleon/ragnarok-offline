@@ -129,7 +129,6 @@ public class MapScene {
         self.pathfinder = Pathfinder(mapGrid: mapGrid)
 
         GridPositionComponent.registerComponent()
-        MapGridComponent.registerComponent()
         MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
         TileComponent.registerComponent()
@@ -195,7 +194,6 @@ public class MapScene {
             playerEntity.transform = transform(for: playerPosition)
             playerEntity.components.set([
                 GridPositionComponent(gridPosition: playerPosition),
-                MapGridComponent(mapGrid: mapGrid),
                 MapObjectComponent(mapObject: player),
             ])
         } catch {
@@ -557,7 +555,6 @@ extension MapScene: MapEventHandlerProtocol {
                 entity.isEnabled = (object.effectState != .cloak)
                 entity.components.set([
                     GridPositionComponent(gridPosition: position),
-                    MapGridComponent(mapGrid: mapGrid),
                     MapObjectComponent(mapObject: object),
                 ])
                 rootEntity.addChild(entity)
@@ -581,7 +578,6 @@ extension MapScene: MapEventHandlerProtocol {
                 entity.isEnabled = (object.effectState != .cloak)
                 entity.components.set([
                     GridPositionComponent(gridPosition: startPosition),
-                    MapGridComponent(mapGrid: mapGrid),
                     MapObjectComponent(mapObject: object),
                 ])
                 rootEntity.addChild(entity)
@@ -655,7 +651,6 @@ extension MapScene: MapEventHandlerProtocol {
             entity.transform = transform(for: position)
             entity.components.set([
                 GridPositionComponent(gridPosition: position),
-                MapGridComponent(mapGrid: mapGrid),
                 MapItemComponent(mapItem: item),
             ])
 
