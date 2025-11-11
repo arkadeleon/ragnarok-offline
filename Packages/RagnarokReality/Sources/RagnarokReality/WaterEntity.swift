@@ -1,21 +1,20 @@
 //
-//  Entity+Water.swift
+//  WaterEntity.swift
 //  RagnarokReality
 //
 //  Created by Leon Li on 2025/9/29.
 //
 
-import RagnarokFileFormats
 import RagnarokRenderers
 import RagnarokResources
 import RealityKit
 
 extension Entity {
-    public static func waterEntity(gnd: GND, rsw: RSW, resourceManager: ResourceManager) async throws -> Entity {
-        let water = Water(gnd: gnd, rsw: rsw)
+    public convenience init(from water: Water, resourceManager: ResourceManager) async throws {
+        self.init()
 
         if water.mesh.vertices.isEmpty {
-            return Entity()
+            return
         }
 
         let mesh = try await {
@@ -48,7 +47,7 @@ extension Entity {
             materials = [material]
         }
 
-        let waterEntity = Entity(components: [
+        components.set([
             ModelComponent(mesh: mesh, materials: materials),
             OpacityComponent(opacity: 0.6),
         ])
@@ -66,8 +65,6 @@ extension Entity {
             repeatMode: .repeat
         )
         let animationResource = try AnimationResource.generate(with: animationDefinition)
-        waterEntity.playAnimation(animationResource)
-
-        return waterEntity
+        playAnimation(animationResource)
     }
 }

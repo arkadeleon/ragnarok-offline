@@ -1,5 +1,5 @@
 //
-//  Entity+Model.swift
+//  ModelEntity.swift
 //  RagnarokReality
 //
 //  Created by Leon Li on 2025/2/26.
@@ -10,7 +10,7 @@ import RagnarokRenderers
 import RealityKit
 
 extension Entity {
-    public static func modelEntity(model: ModelResource, name: String, textures: [String : TextureResource]) async throws -> Entity {
+    public convenience init(from resource: ModelResource, name: String, textures: [String : TextureResource]) async throws {
         let instance = Model.createInstance(
             position: .zero,
             rotation: .zero,
@@ -19,13 +19,15 @@ extension Entity {
             height: 0
         )
 
-        let modelEntity = try await Entity.modelEntity(rsm: model.rsm, instance: instance, textures: textures)
-        modelEntity.name = name
-        return modelEntity
+        let model = Model(rsm: resource.rsm, instance: instance)
+
+        try await self.init(from: model, textures: textures)
+
+        self.name = name
     }
 
-    public static func modelEntity(rsm: RSM, instance: simd_float4x4, textures: [String : TextureResource]) async throws -> Entity {
-        let model = Model(rsm: rsm, instance: instance)
+    public convenience init(from model: Model, textures: [String : TextureResource]) async throws {
+        self.init()
 
         let mesh = try await {
             var descriptors: [MeshDescriptor] = []
@@ -63,11 +65,9 @@ extension Entity {
             }
         }
 
-        let modelEntity = ModelEntity(mesh: mesh, materials: materials)
+        components.set(ModelComponent(mesh: mesh, materials: materials))
 
         let scale = 2 / model.boundingBox.range.max()
-        modelEntity.scale = [scale, scale, scale]
-
-        return modelEntity
+        self.scale = [scale, scale, scale]
     }
 }

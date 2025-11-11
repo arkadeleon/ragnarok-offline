@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RagnarokRenderers
 import RagnarokResources
 import RealityKit
 import SGLMath
@@ -51,14 +52,16 @@ extension Entity {
 
         metric.beginMeasuring("Load ground entity")
 
-        let groundEntity = try await Entity.groundEntity(gat: world.gat, gnd: world.gnd, textures: groundTextures)
+        let ground = Ground(gat: world.gat, gnd: world.gnd)
+        let groundEntity = try await Entity(from: ground, textures: groundTextures)
         addChild(groundEntity, preservingWorldTransform: true)
 
         metric.endMeasuring("Load ground entity")
 
         // MARK: - Water Entity
 
-        let waterEntity = try await Entity.waterEntity(gnd: world.gnd, rsw: world.rsw, resourceManager: resourceManager)
+        let water = Water(gnd: world.gnd, rsw: world.rsw)
+        let waterEntity = try await Entity(from: water, resourceManager: resourceManager)
         addChild(waterEntity, preservingWorldTransform: true)
 
         // MARK: - Prototype Model Entities
@@ -71,8 +74,13 @@ extension Entity {
         ) { taskGroup in
             for (modelName, model) in models {
                 taskGroup.addTask {
-                    let modelEntity = try? await Entity.modelEntity(model: model, name: modelName, textures: modelTextures)
-                    return modelEntity
+                    do {
+                        let modelEntity = try await Entity(from: model, name: modelName, textures: modelTextures)
+                        return modelEntity
+                    } catch {
+                        logger.warning("\(error)")
+                        return nil
+                    }
                 }
             }
 

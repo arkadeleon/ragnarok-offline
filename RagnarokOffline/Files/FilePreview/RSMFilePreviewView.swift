@@ -51,8 +51,9 @@ struct RSMFilePreviewView: View {
             progress.completedUnitCount += 1
         }
 
-        let entity = try await Entity.modelEntity(rsm: rsm, instance: instance, textures: textures)
-        return entity
+        let model = Model(rsm: rsm, instance: instance)
+        let modelEntity = try await Entity(from: model, textures: textures)
+        return modelEntity
     }
 }
 

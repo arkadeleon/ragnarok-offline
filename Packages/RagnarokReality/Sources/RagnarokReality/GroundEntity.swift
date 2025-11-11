@@ -1,17 +1,16 @@
 //
-//  Entity+Ground.swift
+//  GroundEntity.swift
 //  RagnarokReality
 //
 //  Created by Leon Li on 2025/9/28.
 //
 
-import RagnarokFileFormats
 import RagnarokRenderers
 import RealityKit
 
 extension Entity {
-    public static func groundEntity(gat: GAT, gnd: GND, textures: [String : TextureResource]) async throws -> Entity {
-        let ground = Ground(gat: gat, gnd: gnd)
+    public convenience init(from ground: Ground, textures: [String : TextureResource]) async throws {
+        self.init()
 
         let mesh = try await {
             var descriptors: [MeshDescriptor] = []
@@ -47,7 +46,6 @@ extension Entity {
             }
         }
 
-        let groundEntity = ModelEntity(mesh: mesh, materials: materials)
-        return groundEntity
+        components.set(ModelComponent(mesh: mesh, materials: materials))
     }
 }
