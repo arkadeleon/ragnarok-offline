@@ -29,12 +29,13 @@ struct FileThumbnailView: View {
             } else if file.isDirectory {
                 Image(systemName: file.iconName)
                     .font(.system(size: 50))
-                    .symbolRenderingMode(.multicolor)
+                    .symbolRenderingMode(.monochrome)
+                    .foregroundStyle(Color.accentColor)
             } else {
                 Image(systemName: file.iconName)
                     .font(.system(size: 30, weight: .thin))
-                    .foregroundStyle(Color.secondary)
                     .symbolRenderingMode(.monochrome)
+                    .foregroundStyle(Color.secondary)
                     .frame(width: 60, height: 80)
                     .background {
                         RoundedRectangle(cornerRadius: 4)

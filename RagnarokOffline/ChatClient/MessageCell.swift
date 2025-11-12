@@ -19,7 +19,7 @@ struct MessageCell: View {
 
     private var backgroundColor: Color {
         switch message.sender {
-        case .client: .blue
+        case .client: .accentColor
         case .server: .init(white: 0.95)
         }
     }

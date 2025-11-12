@@ -53,8 +53,9 @@ struct GameClientIntroView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(12)
-                    .background(Color.blue.opacity(betaLink == nil ? 0.5 : 1.0))
+                    .background(Color.accentColor)
                     .cornerRadius(8)
+                    .disabled(betaLink == nil)
             }
             .disabled(betaLink == nil)
         }

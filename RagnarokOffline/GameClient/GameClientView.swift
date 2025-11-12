@@ -90,8 +90,9 @@ struct GameClientView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(12)
-                            .background(Color.blue.opacity(connectionState == .testing ? 0.5 : 1.0))
+                            .background(Color.accentColor)
                             .cornerRadius(8)
+                            .disabled(connectionState == .testing)
                     }
                     .padding(.top, 8)
                     .disabled(connectionState == .testing)
