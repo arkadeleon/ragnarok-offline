@@ -6,6 +6,7 @@
 //
 
 import RealityKit
+import SGLMath
 import SwiftUI
 import ThumbstickView
 
@@ -69,14 +70,56 @@ struct MapView: View {
             ChatBoxView()
         }
         .overlay(alignment: .bottomTrailing) {
-            ThumbstickView(updatingValue: $movementValue, radius: 60)
-                .padding()
-                .onReceive(timer) { _ in
-                    scene.onMovementValueChanged(movementValue: movementValue)
+            ZStack {
+                ThumbstickView(updatingValue: $movementValue, radius: 60)
+                    .onReceive(timer) { _ in
+                        scene.onMovementValueChanged(movementValue: movementValue)
+                    }
+
+                ActionButton("A", angle: 0) {
+                    scene.attackNearestMonster()
                 }
+
+                ActionButton("P", angle: 45) {
+                    scene.pickUpNearestItem()
+                }
+
+                ActionButton("T", angle: 90) {
+                    scene.talkToNearestNPC()
+                }
+            }
+            .padding()
         }
         .overlay {
             NPCDialogOverlayView()
         }
+    }
+}
+
+private struct ActionButton: View {
+    var title: String
+    var angle: CGFloat
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Color.clear
+                    .frame(width: 48, height: 48)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(24)
+
+                Text(title)
+                    .font(.title3.bold())
+                    .foregroundStyle(.white)
+            }
+        }
+        .offset(x: -96 * sin(radians(angle)), y: -96 * cos(radians(angle)))
+    }
+
+    init(_ title: String, angle: CGFloat, action: @escaping () -> Void) {
+        self.title = title
+        self.angle = angle
+        self.action = action
     }
 }

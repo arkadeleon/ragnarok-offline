@@ -79,20 +79,7 @@ public class MapScene {
                 if let mapObject = event.entity.components[MapObjectComponent.self]?.mapObject {
                     switch mapObject.type {
                     case .monster:
-                        let lockOnComponent = LockOnComponent(targetEntity: event.entity, attackRange: 1) {
-                            self.mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
-                        }
-                        playerEntity.components.set(lockOnComponent)
-
-                        let startPosition = playerEntity.gridPosition
-                        let endPosition = event.entity.gridPosition
-                        let path = pathfinder.findPath(from: startPosition, to: endPosition, within: 1)
-
-                        if path == [startPosition] {
-                            mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
-                        } else {
-                            mapSession.requestMove(to: path.last ?? endPosition)
-                        }
+                        engageMonster(targetEntity: event.entity)
                     case .npc:
                         mapSession.talkToNPC(objectID: mapObject.objectID)
                     default:
@@ -224,20 +211,7 @@ public class MapScene {
             if let mapObject = hitEntity.components[MapObjectComponent.self]?.mapObject {
                 switch mapObject.type {
                 case .monster:
-                    let lockOnComponent = LockOnComponent(targetEntity: hitEntity, attackRange: 1) {
-                        self.mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
-                    }
-                    playerEntity.components.set(lockOnComponent)
-
-                    let startPosition = playerEntity.gridPosition
-                    let endPosition = hitEntity.gridPosition
-                    let path = pathfinder.findPath(from: startPosition, to: endPosition, within: 1)
-
-                    if path == [startPosition] {
-                        mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
-                    } else {
-                        mapSession.requestMove(to: path.last ?? endPosition)
-                    }
+                    engageMonster(targetEntity: hitEntity)
                 case .npc:
                     mapSession.talkToNPC(objectID: mapObject.objectID)
                 default:
@@ -523,6 +497,109 @@ extension MapScene {
             mapSession.requestMove(to: newPosition)
         }
     }
+
+    func attackNearestMonster() {
+        let playerPosition = playerEntity.gridPosition
+
+        func distanceSquared(to entity: Entity) -> Int {
+            let position = entity.gridPosition
+            let dx = position.x - playerPosition.x
+            let dy = position.y - playerPosition.y
+            return dx * dx + dy * dy
+        }
+
+        let monsters = rootEntity.children.filter { entity in
+            entity.components[MapObjectComponent.self]?.mapObject.type == .monster
+        }
+
+        if let targetEntity = monsters.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }) {
+            engageMonster(targetEntity: targetEntity)
+        }
+    }
+
+    func pickUpNearestItem() {
+        let playerPosition = playerEntity.gridPosition
+
+        func distanceSquared(to entity: Entity) -> Int {
+            let position = entity.gridPosition
+            let dx = position.x - playerPosition.x
+            let dy = position.y - playerPosition.y
+            return dx * dx + dy * dy
+        }
+
+        let items = rootEntity.children.filter { entity in
+            entity.components.has(MapItemComponent.self)
+        }
+
+        guard let targetEntity = items.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }) else {
+            return
+        }
+
+        engageItem(targetEntity: targetEntity)
+    }
+
+    func talkToNearestNPC() {
+        let playerPosition = playerEntity.gridPosition
+
+        func distanceSquared(to entity: Entity) -> Int {
+            let position = entity.gridPosition
+            let dx = position.x - playerPosition.x
+            let dy = position.y - playerPosition.y
+            return dx * dx + dy * dy
+        }
+
+        let npcs = rootEntity.children.filter { entity in
+            entity.components[MapObjectComponent.self]?.mapObject.type == .npc
+        }
+
+        guard let targetEntity = npcs.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }),
+              let mapObject = targetEntity.components[MapObjectComponent.self]?.mapObject else {
+            return
+        }
+
+        mapSession.talkToNPC(objectID: mapObject.objectID)
+    }
+
+    private func engageMonster(targetEntity: Entity) {
+        guard let mapObject = targetEntity.components[MapObjectComponent.self]?.mapObject else {
+            return
+        }
+
+        movePlayerToward(targetEntity: targetEntity, within: 1) {
+            self.mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+        }
+    }
+
+    private func engageItem(targetEntity: Entity) {
+        guard let mapItem = targetEntity.components[MapItemComponent.self]?.mapItem else {
+            return
+        }
+
+        movePlayerToward(targetEntity: targetEntity, within: 1) {
+            self.mapSession.pickUpItem(objectID: mapItem.objectID)
+        }
+    }
+
+    private func movePlayerToward(targetEntity: Entity, within range: Int, onArrival: @escaping () -> Void) {
+        let startPosition = playerEntity.gridPosition
+        let endPosition = targetEntity.gridPosition
+        let path = pathfinder.findPath(from: startPosition, to: endPosition, within: range)
+
+        guard !path.isEmpty else {
+            return
+        }
+
+        if path == [startPosition] {
+            onArrival()
+        } else {
+            let lockOnComponent = LockOnComponent(targetEntity: targetEntity, attackRange: Float(range)) {
+                onArrival()
+            }
+            playerEntity.components.set(lockOnComponent)
+
+            mapSession.requestMove(to: path.last ?? endPosition)
+        }
+    }
 }
 
 extension MapScene: MapEventHandlerProtocol {
@@ -632,7 +709,9 @@ extension MapScene: MapEventHandlerProtocol {
                 case .normal, .endure, .multi_hit, .multi_hit_endure, .critical, .lucy_dodge, .multi_hit_critical:
                     entity.attack(direction: .south)
                 case .pickup_item:
-                    entity.playSpriteAnimation(.pickup, direction: .south, repeats: false)
+                    entity.playSpriteAnimation(.pickup, direction: .south, repeats: false) {
+                        entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                    }
                 case .sit_down:
                     entity.playSpriteAnimation(.sit, direction: .south, repeats: true)
                 case .stand_up:
