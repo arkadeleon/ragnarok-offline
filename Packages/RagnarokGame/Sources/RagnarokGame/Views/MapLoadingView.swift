@@ -19,12 +19,7 @@ struct MapLoadingView: View {
             }
             .ignoresSafeArea()
 
-            VStack {
-                Spacer()
-
-                GameProgressBar(progress: progress)
-                    .padding(.bottom, 50)
-            }
+            GameProgressBar(progress: progress)
         }
     }
 
