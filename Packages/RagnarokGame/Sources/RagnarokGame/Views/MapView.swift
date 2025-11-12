@@ -76,15 +76,15 @@ struct MapView: View {
                         scene.onMovementValueChanged(movementValue: movementValue)
                     }
 
-                ActionButton("A", angle: 0) {
+                ActionButton("A", color: .red, angle: 0) {
                     scene.attackNearestMonster()
                 }
 
-                ActionButton("P", angle: 45) {
+                ActionButton("P", color: .green, angle: 45) {
                     scene.pickUpNearestItem()
                 }
 
-                ActionButton("T", angle: 90) {
+                ActionButton("T", color: .blue, angle: 90) {
                     scene.talkToNearestNPC()
                 }
             }
@@ -98,16 +98,17 @@ struct MapView: View {
 
 private struct ActionButton: View {
     var title: String
+    var color: Color
     var angle: CGFloat
     var action: () -> Void
 
     var body: some View {
         Button(action: action) {
             ZStack {
-                Color.clear
+                Circle()
+                    .fill(color.opacity(0.75))
                     .frame(width: 48, height: 48)
-                    .background(.ultraThinMaterial)
-                    .cornerRadius(24)
+                    .shadow(color: color.opacity(0.4), radius: 5, x: 0, y: 2)
 
                 Text(title)
                     .font(.title3.bold())
@@ -117,8 +118,9 @@ private struct ActionButton: View {
         .offset(x: -96 * sin(radians(angle)), y: -96 * cos(radians(angle)))
     }
 
-    init(_ title: String, angle: CGFloat, action: @escaping () -> Void) {
+    init(_ title: String, color: Color, angle: CGFloat, action: @escaping () -> Void) {
         self.title = title
+        self.color = color
         self.angle = angle
         self.action = action
     }
