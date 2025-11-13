@@ -417,8 +417,8 @@ final public class GameSession {
             break
         case .mapObjectStateChanged(let objectID, let bodyState, let healthState, let effectState):
             mapScene?.onMapObjectStateChanged(objectID: objectID, bodyState: bodyState, healthState: healthState, effectState: effectState)
-        case .mapObjectActionPerformed(let sourceObjectID, let targetObjectID, let actionType):
-            mapScene?.onMapObjectActionPerformed(sourceObjectID: sourceObjectID, targetObjectID: targetObjectID, actionType: actionType)
+        case .mapObjectActionPerformed(let objectAction):
+            mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
         case .npcDialogReceived(let dialog):
             self.dialog = dialog
         case .npcDialogClosed(let npcID):

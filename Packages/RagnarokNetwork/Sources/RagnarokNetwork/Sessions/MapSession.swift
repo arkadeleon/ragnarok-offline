@@ -50,7 +50,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         case mapObjectDirectionChanged(objectID: UInt32, direction: Direction, headDirection: HeadDirection)
         case mapObjectSpriteChanged(objectID: UInt32)
         case mapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
-        case mapObjectActionPerformed(sourceObjectID: UInt32, targetObjectID: UInt32, actionType: DamageType)
+        case mapObjectActionPerformed(objectAction: MapObjectAction)
 
         // NPC events
         case npcDialogReceived(dialog: NPCDialog)
@@ -336,11 +336,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_ACT.self) { [unowned self] packet in
-            let event = MapSession.Event.mapObjectActionPerformed(
-                sourceObjectID: UInt32(packet.srcID),
-                targetObjectID: UInt32(packet.targetID),
-                actionType: DamageType(rawValue: Int(packet.type)) ?? .normal
-            )
+            let objectAction = MapObjectAction(packet: packet)
+            let event = MapSession.Event.mapObjectActionPerformed(objectAction: objectAction)
             self.postEvent(event)
         }
 

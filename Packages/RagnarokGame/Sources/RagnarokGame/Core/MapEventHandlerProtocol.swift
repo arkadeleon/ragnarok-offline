@@ -20,5 +20,5 @@ protocol MapEventHandlerProtocol {
     func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>)
     func onMapObjectVanished(objectID: UInt32)
     func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
-    func onMapObjectActionPerformed(sourceObjectID: UInt32, targetObjectID: UInt32, actionType: DamageType)
+    func onMapObjectActionPerformed(objectAction: MapObjectAction)
 }

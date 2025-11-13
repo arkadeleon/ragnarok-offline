@@ -120,6 +120,9 @@ public class MapScene {
         MapObjectComponent.registerComponent()
         TileComponent.registerComponent()
 
+        DamageDigitComponent.registerComponent()
+        DamageDigitSystem.registerSystem()
+
         LockOnComponent.registerComponent()
         LockOnSystem.registerSystem()
 
@@ -702,20 +705,35 @@ extension MapScene: MapEventHandlerProtocol {
         }
     }
 
-    func onMapObjectActionPerformed(sourceObjectID: UInt32, targetObjectID: UInt32, actionType: DamageType) {
+    func onMapObjectActionPerformed(objectAction: MapObjectAction) {
         Task {
-            if let entity = try await spriteEntityManager.entity(forOjectID: sourceObjectID) {
-                switch actionType {
+            if let sourceEntity = try await spriteEntityManager.entity(forOjectID: objectAction.sourceObjectID) {
+                switch objectAction.type {
                 case .normal, .endure, .multi_hit, .multi_hit_endure, .critical, .lucy_dodge, .multi_hit_critical:
-                    entity.attack(direction: .south)
+                    sourceEntity.attack(direction: .south)
+
+                    if let targetEntity = try await spriteEntityManager.entity(forOjectID: objectAction.targetObjectID) {
+                        let damageEntity = Entity()
+                        damageEntity.orientation = simd_quatf(angle: verticalAngle, axis: [1, 0, 0])
+
+                        let damageDigitComponent = DamageDigitComponent(
+                            digits: "\(objectAction.damage)",
+                            duration: 1.5,
+                            delay: TimeInterval(objectAction.sourceSpeed) / 1000,
+                            startPosition: targetEntity.position(relativeTo: rootEntity) + [0, 0, 2]
+                        )
+                        damageEntity.components.set(damageDigitComponent)
+
+                        rootEntity.addChild(damageEntity)
+                    }
                 case .pickup_item:
-                    entity.playSpriteAnimation(.pickup, direction: .south, repeats: false) {
-                        entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                    sourceEntity.playSpriteAnimation(.pickup, direction: .south, repeats: false) {
+                        sourceEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                     }
                 case .sit_down:
-                    entity.playSpriteAnimation(.sit, direction: .south, repeats: true)
+                    sourceEntity.playSpriteAnimation(.sit, direction: .south, repeats: true)
                 case .stand_up:
-                    entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                    sourceEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
                 default:
                     break
                 }
