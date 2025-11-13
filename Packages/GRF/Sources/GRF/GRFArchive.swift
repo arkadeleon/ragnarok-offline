@@ -18,14 +18,14 @@ public class GRFArchive {
     nonisolated public let url: URL
 
     private lazy var grf: GRF? = {
-        #if canImport(OSLog)
+        #if !os(Linux)
         let beginTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: Begin loading")
         #endif
 
         let grf = try? GRF(url: url)
 
-        #if canImport(OSLog)
+        #if !os(Linux)
         let endTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: End loading (\(endTime - beginTime)s)")
         #endif
@@ -38,7 +38,7 @@ public class GRFArchive {
             return []
         }
 
-        #if canImport(OSLog)
+        #if !os(Linux)
         let beginTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: Begin loading directories")
         #endif
@@ -52,7 +52,7 @@ public class GRFArchive {
             } while !parent.string.isEmpty
         }
 
-        #if canImport(OSLog)
+        #if !os(Linux)
         let endTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: End loading directories (\(endTime - beginTime)s)")
         #endif
@@ -65,7 +65,7 @@ public class GRFArchive {
             return [:]
         }
 
-        #if canImport(OSLog)
+        #if !os(Linux)
         let beginTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: Begin loading entries")
         #endif
@@ -75,7 +75,7 @@ public class GRFArchive {
             uniquingKeysWith: { (first, _) in first }
         )
 
-        #if canImport(OSLog)
+        #if !os(Linux)
         let endTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: End loading entries (\(endTime - beginTime)s)")
         #endif
@@ -96,7 +96,7 @@ public class GRFArchive {
             return []
         }
 
-        #if canImport(OSLog)
+        #if !os(Linux)
         let beginTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: Begin loading directory at \(path.string)")
         #endif
@@ -111,7 +111,7 @@ public class GRFArchive {
             .map({ GRFNode(path: $0.path, isDirectory: false) })
             .sorted(using: KeyPathComparator(\.path.string))
 
-        #if canImport(OSLog)
+        #if !os(Linux)
         let endTime = CFAbsoluteTimeGetCurrent()
         logger.info("GRF: End loading directory at \(path.string) (\(endTime - beginTime)s)")
         #endif
