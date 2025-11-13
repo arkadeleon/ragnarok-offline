@@ -707,36 +707,81 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
         Task {
-            if let sourceEntity = try await spriteEntityManager.entity(forOjectID: objectAction.sourceObjectID) {
-                switch objectAction.type {
-                case .normal, .endure, .multi_hit, .multi_hit_endure, .critical, .lucy_dodge, .multi_hit_critical:
-                    sourceEntity.attack(direction: .south)
+            guard let sourceEntity = try await spriteEntityManager.entity(forOjectID: objectAction.sourceObjectID) else {
+                return
+            }
 
-                    if let targetEntity = try await spriteEntityManager.entity(forOjectID: objectAction.targetObjectID) {
-                        let damageEntity = Entity()
-                        damageEntity.orientation = simd_quatf(angle: verticalAngle, axis: [1, 0, 0])
-
-                        let damageDigitComponent = DamageDigitComponent(
-                            digits: "\(objectAction.damage)",
-                            duration: 1.5,
-                            delay: TimeInterval(objectAction.sourceSpeed) / 1000,
-                            startPosition: targetEntity.position(relativeTo: rootEntity) + [0, 0, 2]
-                        )
-                        damageEntity.components.set(damageDigitComponent)
-
-                        rootEntity.addChild(damageEntity)
-                    }
-                case .pickup_item:
-                    sourceEntity.playSpriteAnimation(.pickup, direction: .south, repeats: false) {
-                        sourceEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
-                    }
-                case .sit_down:
-                    sourceEntity.playSpriteAnimation(.sit, direction: .south, repeats: true)
-                case .stand_up:
+            switch objectAction.type {
+            case .pickup_item:
+                sourceEntity.playSpriteAnimation(.pickup, direction: .south, repeats: false) {
                     sourceEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
-                default:
-                    break
                 }
+            case .sit_down:
+                sourceEntity.playSpriteAnimation(.sit, direction: .south, repeats: true)
+            case .stand_up:
+                sourceEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+            case .normal, .endure, .critical:
+                sourceEntity.attack(direction: .south)
+
+                if let targetEntity = try await spriteEntityManager.entity(forOjectID: objectAction.targetObjectID) {
+                    let damageEntity = Entity.makeDamageEntity(
+                        for: objectAction.damage,
+                        delay: TimeInterval(objectAction.sourceSpeed),
+                        targetEntity: targetEntity
+                    )
+                    damageEntity.setParent(rootEntity)
+
+                    if objectAction.damage2 > 0 {
+                        let damageEntity = Entity.makeDamageEntity(
+                            for: objectAction.damage2,
+                            delay: TimeInterval(objectAction.sourceSpeed) + 200 * 1.75,
+                            targetEntity: targetEntity
+                        )
+                        damageEntity.setParent(rootEntity)
+                    }
+                }
+            case .multi_hit, .multi_hit_endure, .multi_hit_critical:
+                sourceEntity.attack(direction: .south)
+
+                if let targetEntity = try await spriteEntityManager.entity(forOjectID: objectAction.targetObjectID) {
+                    let count = (objectAction.damage > 1 ? 2 : 1)
+
+                    if count == 2 {
+                        let damageEntity = Entity.makeDamageEntity(
+                            for: objectAction.damage / count,
+                            delay: TimeInterval(objectAction.sourceSpeed),
+                            targetEntity: targetEntity
+                        )
+                        damageEntity.setParent(rootEntity)
+                    }
+
+                    if objectAction.damage2 > 0 {
+                        let damageEntity = Entity.makeDamageEntity(
+                            for: objectAction.damage / count,
+                            delay: TimeInterval(objectAction.sourceSpeed) + 200 / 2,
+                            targetEntity: targetEntity
+                        )
+                        damageEntity.setParent(rootEntity)
+
+                        let damage2Entity = Entity.makeDamageEntity(
+                            for: objectAction.damage2,
+                            delay: TimeInterval(objectAction.sourceSpeed) + 200 * 1.75,
+                            targetEntity: targetEntity
+                        )
+                        damage2Entity.setParent(rootEntity)
+                    } else {
+                        let damageEntity = Entity.makeDamageEntity(
+                            for: objectAction.damage / count,
+                            delay: TimeInterval(objectAction.sourceSpeed) + 200,
+                            targetEntity: targetEntity
+                        )
+                        damageEntity.setParent(rootEntity)
+                    }
+                }
+            case .lucy_dodge:
+                sourceEntity.attack(direction: .south)
+            default:
+                break
             }
         }
     }
