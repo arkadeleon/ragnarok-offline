@@ -7,23 +7,17 @@
 
 import BinaryIO
 
+public let HEADER_HC_SECOND_PASSWD_LOGIN: Int16 = 0x8b9
+
 /// See `chclif_pincode_sendstate`
-public struct PACKET_HC_SECOND_PASSWD_LOGIN: DecodablePacket, Sendable {
-    public static var packetType: Int16 {
-        0x8b9
-    }
-
-    public var packetLength: Int16 {
-        2 + 4 + 4 + 2
-    }
-
+public struct PACKET_HC_SECOND_PASSWD_LOGIN: BinaryDecodable, Sendable {
+    public var packetType: Int16
     public var pinCodeSeed: UInt32
     public var accountID: UInt32
     public var state: UInt16
 
     public init(from decoder: BinaryDecoder) throws {
-        try decoder.decodePacketType(Self.self)
-
+        packetType = try decoder.decode(Int16.self)
         pinCodeSeed = try decoder.decode(UInt32.self)
         accountID = try decoder.decode(UInt32.self)
         state = try decoder.decode(UInt16.self)

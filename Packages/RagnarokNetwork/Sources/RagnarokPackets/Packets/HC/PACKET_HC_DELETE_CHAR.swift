@@ -7,22 +7,16 @@
 
 import BinaryIO
 
+public let HEADER_HC_DELETE_CHAR: Int16 = 0x82a
+
 /// See `chclif_char_delete2_accept_ack`
-public struct PACKET_HC_DELETE_CHAR: DecodablePacket, Sendable {
-    public static var packetType: Int16 {
-        0x82a
-    }
-
-    public var packetLength: Int16 {
-        2 + 4 + 4
-    }
-
+public struct PACKET_HC_DELETE_CHAR: BinaryDecodable, Sendable {
+    public var packetType: Int16
     public var charID: UInt32
     public var result: UInt32
 
     public init(from decoder: BinaryDecoder) throws {
-        try decoder.decodePacketType(Self.self)
-
+        packetType = try decoder.decode(Int16.self)
         charID = try decoder.decode(UInt32.self)
         result = try decoder.decode(UInt32.self)
     }

@@ -7,17 +7,13 @@
 
 import BinaryIO
 
-/// See `chclif_parse_delchar`
-public struct PACKET_HC_ACCEPT_DELETECHAR: DecodablePacket, Sendable {
-    public static var packetType: Int16 {
-        0x6f
-    }
+public let HEADER_HC_ACCEPT_DELETECHAR: Int16 = 0x6f
 
-    public var packetLength: Int16 {
-        2
-    }
+/// See `chclif_parse_delchar`
+public struct PACKET_HC_ACCEPT_DELETECHAR: BinaryDecodable, Sendable {
+    public var packetType: Int16
 
     public init(from decoder: BinaryDecoder) throws {
-        try decoder.decodePacketType(Self.self)
+        packetType = try decoder.decode(Int16.self)
     }
 }
