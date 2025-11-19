@@ -190,6 +190,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_HC_REFUSE_ENTER``
     private func enter() {
         var packet = PACKET_CH_ENTER()
+        packet.packetType = HEADER_CH_ENTER
         packet.accountID = account.accountID
         packet.loginID1 = account.loginID1
         packet.loginID2 = account.loginID2
@@ -216,6 +217,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         timerTask = Task {
             for await _ in timer {
                 var packet = PACKET_CZ_PING()
+                packet.packetType = HEADER_CZ_PING
                 packet.accountID = accountID
 
                 client.sendPacket(packet)
@@ -231,6 +233,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_HC_REFUSE_MAKECHAR``
     public func makeChar(char: CharInfo) {
         var packet = PACKET_CH_MAKE_CHAR()
+        packet.packetType = HEADER_CH_MAKE_CHAR
         packet.name = char.name
         packet.str = char.str
         packet.agi = char.agi
@@ -265,6 +268,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_HC_DELETE_CHAR``
     public func deleteChar(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR()
+        packet.packetType = HEADER_CH_DELETE_CHAR
         packet.charID = charID
 
         client.sendPacket(packet)
@@ -277,6 +281,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_HC_DELETE_CHAR_RESERVED``
     public func requestDeletionDate(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR_RESERVED()
+        packet.packetType = HEADER_CH_DELETE_CHAR_RESERVED
         packet.charID = charID
 
         client.sendPacket(packet)
@@ -289,6 +294,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_HC_DELETE_CHAR_CANCEL``
     public func cancelDelete(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR_CANCEL()
+        packet.packetType = HEADER_CH_DELETE_CHAR_CANCEL
         packet.charID = charID
 
         client.sendPacket(packet)
@@ -307,6 +313,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_HC_NOTIFY_ZONESVR`` when accepted.
     public func selectChar(slot: UInt8) {
         var packet = PACKET_CH_SELECT_CHAR()
+        packet.packetType = HEADER_CH_SELECT_CHAR
         packet.slot = slot
 
         client.sendPacket(packet)

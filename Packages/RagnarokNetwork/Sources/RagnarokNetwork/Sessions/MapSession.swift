@@ -455,7 +455,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     }
 
     public func notifyMapLoaded() {
-        let packet = PACKET_CZ_NOTIFY_ACTORINIT()
+        var packet = PACKET_CZ_NOTIFY_ACTORINIT()
+        packet.packetType = HEADER_CZ_NOTIFY_ACTORINIT
 
         client.sendPacket(packet)
     }
@@ -490,7 +491,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     }
 
     public func requestExit() {
-        let packet = PACKET_CZ_REQUEST_QUIT()
+        var packet = PACKET_CZ_REQUEST_QUIT()
+        packet.packetType = HEADER_CZ_REQUEST_QUIT
 
         client.sendPacket(packet)
     }

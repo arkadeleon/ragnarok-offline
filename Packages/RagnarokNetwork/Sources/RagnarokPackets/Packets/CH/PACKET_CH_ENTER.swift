@@ -7,28 +7,18 @@
 
 import BinaryIO
 
+public let HEADER_CH_ENTER: Int16 = 0x65
+
 /// See `chclif_parse_reqtoconnect`
-public struct PACKET_CH_ENTER: EncodablePacket {
-    public var packetType: Int16 {
-        0x65
-    }
-
-    public var packetLength: Int16 {
-        2 + 4 + 4 + 4 + 2 + 1
-    }
-
-    public var accountID: UInt32
-    public var loginID1: UInt32
-    public var loginID2: UInt32
-    public var clientType: UInt16
-    public var sex: UInt8
+public struct PACKET_CH_ENTER: BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var accountID: UInt32 = 0
+    public var loginID1: UInt32 = 0
+    public var loginID2: UInt32 = 0
+    public var clientType: UInt16 = 0
+    public var sex: UInt8 = 0
 
     public init() {
-        accountID = 0
-        loginID1 = 0
-        loginID2 = 0
-        clientType = 0
-        sex = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

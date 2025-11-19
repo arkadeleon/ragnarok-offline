@@ -7,20 +7,14 @@
 
 import BinaryIO
 
+public let HEADER_CH_DELETE_CHAR_RESERVED: Int16 = 0x827
+
 /// See `chclif_parse_char_delete2_req`
-public struct PACKET_CH_DELETE_CHAR_RESERVED: EncodablePacket {
-    public var packetType: Int16 {
-        0x827
-    }
-
-    public var packetLength: Int16 {
-        2 + 4
-    }
-
-    public var charID: UInt32
+public struct PACKET_CH_DELETE_CHAR_RESERVED: BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var charID: UInt32 = 0
 
     public init() {
-        charID = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

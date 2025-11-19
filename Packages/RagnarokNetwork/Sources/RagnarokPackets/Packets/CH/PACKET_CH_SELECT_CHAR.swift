@@ -7,20 +7,14 @@
 
 import BinaryIO
 
+public let HEADER_CH_SELECT_CHAR: Int16 = 0x66
+
 /// See `chclif_parse_charselect`
-public struct PACKET_CH_SELECT_CHAR: EncodablePacket {
-    public var packetType: Int16 {
-        0x66
-    }
-
-    public var packetLength: Int16 {
-        2 + 1
-    }
-
-    public var slot: UInt8
+public struct PACKET_CH_SELECT_CHAR: BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
+    public var slot: UInt8 = 0
 
     public init() {
-        slot = 0
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

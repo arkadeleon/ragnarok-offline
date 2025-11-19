@@ -7,11 +7,12 @@
 
 import BinaryIO
 
+public let HEADER_CZ_REQUEST_QUIT: Int16 = 0x82
+
 public struct PACKET_CZ_REQUEST_QUIT: BinaryEncodable, Sendable {
-    public let packetType: Int16
+    public var packetType: Int16 = 0
 
     public init() {
-        packetType = 0x82
     }
 
     public func encode(to encoder: BinaryEncoder) throws {

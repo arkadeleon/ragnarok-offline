@@ -7,15 +7,11 @@
 
 import BinaryIO
 
-/// See `clif_parse_LoadEndAck`
-public struct PACKET_CZ_NOTIFY_ACTORINIT: EncodablePacket {
-    public var packetType: Int16 {
-        0x7d
-    }
+public let HEADER_CZ_NOTIFY_ACTORINIT: Int16 = 0x7d
 
-    public var packetLength: Int16 {
-        2
-    }
+/// See `clif_parse_LoadEndAck`
+public struct PACKET_CZ_NOTIFY_ACTORINIT: BinaryEncodable, Sendable {
+    public var packetType: Int16 = 0
 
     public init() {
     }
