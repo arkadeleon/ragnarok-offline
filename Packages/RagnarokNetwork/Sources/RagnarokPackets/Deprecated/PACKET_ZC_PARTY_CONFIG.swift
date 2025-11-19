@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_partyinvitationstate`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_PARTY_CONFIG: DecodablePacket {
+public struct _PACKET_ZC_PARTY_CONFIG: _DecodablePacket {
     public static var packetType: Int16 {
         0x2c9
     }

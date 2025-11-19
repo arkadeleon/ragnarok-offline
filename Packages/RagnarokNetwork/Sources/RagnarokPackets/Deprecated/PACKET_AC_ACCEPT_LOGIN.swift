@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `logclif_auth_ok`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_AC_ACCEPT_LOGIN: DecodablePacket {
+public struct _PACKET_AC_ACCEPT_LOGIN: _DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION >= 20170315 {
             0xac4

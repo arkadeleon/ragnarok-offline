@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `logclif_parse_keepalive`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_CA_CONNECT_INFO_CHANGED: EncodablePacket {
+public struct _PACKET_CA_CONNECT_INFO_CHANGED: _EncodablePacket {
     public var packetType: Int16 {
         0x200
     }

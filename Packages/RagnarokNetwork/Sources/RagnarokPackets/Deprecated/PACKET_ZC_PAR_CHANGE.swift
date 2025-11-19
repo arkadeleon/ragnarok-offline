@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_par_change`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_PAR_CHANGE: DecodablePacket {
+public struct _PACKET_ZC_PAR_CHANGE: _DecodablePacket {
     public static var packetType: Int16 {
         0xb0
     }

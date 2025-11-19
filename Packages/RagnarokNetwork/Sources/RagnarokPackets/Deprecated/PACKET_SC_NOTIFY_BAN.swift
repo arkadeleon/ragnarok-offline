@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `logclif_sent_auth_result` or `chclif_send_auth_result` or `clif_authfail_fd`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_SC_NOTIFY_BAN: DecodablePacket {
+public struct _PACKET_SC_NOTIFY_BAN: _DecodablePacket {
     public static var packetType: Int16 {
         0x81
     }

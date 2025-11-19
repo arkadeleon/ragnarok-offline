@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_authok`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_ACCEPT_ENTER: DecodablePacket {
+public struct _PACKET_ZC_ACCEPT_ENTER: _DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION < 20080102 {
             0x73

@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_Mail_new`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_NOTIFY_UNREADMAIL: DecodablePacket {
+public struct _PACKET_ZC_NOTIFY_UNREADMAIL: _DecodablePacket {
     public static var packetType: Int16 {
         0x9e7
     }

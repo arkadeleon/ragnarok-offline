@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_walkok`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_NOTIFY_PLAYERMOVE: DecodablePacket {
+public struct _PACKET_ZC_NOTIFY_PLAYERMOVE: _DecodablePacket {
     public static var packetType: Int16 {
         0x87
     }

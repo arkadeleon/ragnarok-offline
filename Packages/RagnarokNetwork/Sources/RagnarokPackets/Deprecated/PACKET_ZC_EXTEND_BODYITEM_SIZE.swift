@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_inventory_expansion_info`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_EXTEND_BODYITEM_SIZE: DecodablePacket {
+public struct _PACKET_ZC_EXTEND_BODYITEM_SIZE: _DecodablePacket {
     public static var packetType: Int16 {
         0xb18
     }

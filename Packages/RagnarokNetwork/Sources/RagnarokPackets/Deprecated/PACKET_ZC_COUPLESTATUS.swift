@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_couplestatus`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_COUPLESTATUS: DecodablePacket {
+public struct _PACKET_ZC_COUPLESTATUS: _DecodablePacket {
     public static var packetType: Int16 {
         0x141
     }

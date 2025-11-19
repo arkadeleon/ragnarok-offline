@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_cartcount`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: DecodablePacket {
+public struct _PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: _DecodablePacket {
     public static var packetType: Int16 {
         0x121
     }

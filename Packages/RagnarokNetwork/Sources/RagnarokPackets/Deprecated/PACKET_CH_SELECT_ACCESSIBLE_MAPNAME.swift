@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `chclif_parse_select_accessible_map`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: EncodablePacket {
+public struct _PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: _EncodablePacket {
     public var packetType: Int16 {
         0x841
     }

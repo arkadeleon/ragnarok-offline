@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_changed_dir`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_CHANGE_DIRECTION: DecodablePacket {
+public struct _PACKET_ZC_CHANGE_DIRECTION: _DecodablePacket {
     public static var packetType: Int16 {
         0x9c
     }

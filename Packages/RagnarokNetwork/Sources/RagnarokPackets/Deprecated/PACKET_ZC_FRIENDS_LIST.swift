@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_friendslist_send`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_FRIENDS_LIST: DecodablePacket {
+public struct _PACKET_ZC_FRIENDS_LIST: _DecodablePacket {
     public static var packetType: Int16 {
         0x201
     }

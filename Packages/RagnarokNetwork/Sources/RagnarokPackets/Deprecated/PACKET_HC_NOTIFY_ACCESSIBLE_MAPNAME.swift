@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `chclif_accessible_maps`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: DecodablePacket {
+public struct _PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: _DecodablePacket {
     public static var packetType: Int16 {
         0x840
     }

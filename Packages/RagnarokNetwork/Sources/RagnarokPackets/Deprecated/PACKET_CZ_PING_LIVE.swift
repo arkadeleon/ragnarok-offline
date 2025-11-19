@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_ping`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_CZ_PING_LIVE: EncodablePacket {
+public struct _PACKET_CZ_PING_LIVE: _EncodablePacket {
     public var packetType: Int16 {
         0xb1c
     }

@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_inventorylist`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_ITEMLIST_NORMAL: DecodablePacket {
+public struct _PACKET_ZC_ITEMLIST_NORMAL: _DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION_RE_NUMBER >= 20180912 || PACKET_VERSION_ZERO_NUMBER >= 20180919 || PACKET_VERSION_MAIN_NUMBER >= 20181002 {
             0xb09

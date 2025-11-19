@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_hotkeys_send`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_SHORTCUT_KEY_LIST: DecodablePacket {
+public struct _PACKET_ZC_SHORTCUT_KEY_LIST: _DecodablePacket {
     public static var packetType: Int16 {
         if PACKET_VERSION_MAIN_NUMBER >= 20190522 || PACKET_VERSION_RE_NUMBER >= 20190508 || PACKET_VERSION_ZERO_NUMBER >= 20190605 {
             0xb20

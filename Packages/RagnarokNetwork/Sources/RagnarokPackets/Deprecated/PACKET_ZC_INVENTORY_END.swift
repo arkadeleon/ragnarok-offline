@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_inventoryEnd`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_INVENTORY_END: DecodablePacket {
+public struct _PACKET_ZC_INVENTORY_END: _DecodablePacket {
     public static var packetType: Int16 {
         0xb0b
     }

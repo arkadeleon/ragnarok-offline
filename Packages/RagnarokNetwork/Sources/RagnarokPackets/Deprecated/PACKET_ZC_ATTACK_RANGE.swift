@@ -9,7 +9,7 @@ import BinaryIO
 
 /// See `clif_attackrange`
 @available(*, deprecated, message: "Use generated struct instead.")
-public struct _PACKET_ZC_ATTACK_RANGE: DecodablePacket {
+public struct _PACKET_ZC_ATTACK_RANGE: _DecodablePacket {
     public static var packetType: Int16 {
         0x13a
     }
