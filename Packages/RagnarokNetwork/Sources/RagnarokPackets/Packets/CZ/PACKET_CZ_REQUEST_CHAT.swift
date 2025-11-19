@@ -10,7 +10,7 @@ import Foundation
 
 let ENTRY_CZ_REQUEST_CHAT = packetDatabase.entry(forFunctionName: "clif_parse_GlobalMessage")!
 
-public struct PACKET_CZ_REQUEST_CHAT: BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_CHAT: EncodablePacket {
     public let packetType: Int16
     public let packetLength: Int16
     public var message: String

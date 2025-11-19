@@ -16,6 +16,12 @@ class PacketStructConverter {
         var outputs: [String] = []
 
         for structDecl in structDecls {
+            let protocols = if structDecl.fields.first?.name == "packetType" {
+                "CodablePacket"
+            } else {
+                "BinaryDecodable, BinaryEncodable, Sendable"
+            }
+
             var properties: [String] = []
             var decodes: [String] = []
             var encodes: [String] = []
@@ -90,7 +96,7 @@ class PacketStructConverter {
             }
 
             outputs.append("""
-            public struct \(structDecl.name): BinaryDecodable, BinaryEncodable, Sendable {
+            public struct \(structDecl.name): \(protocols) {
                 public static var size: Int {
                     \(byteCount(forCustomStructNamed: structDecl.name))
                 }

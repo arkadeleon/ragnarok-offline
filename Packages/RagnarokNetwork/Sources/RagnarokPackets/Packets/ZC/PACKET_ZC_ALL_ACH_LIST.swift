@@ -8,7 +8,7 @@
 import BinaryIO
 
 /// See `clif_achievement_list_all`
-public struct PACKET_ZC_ALL_ACH_LIST: BinaryDecodable, Sendable {
+public struct PACKET_ZC_ALL_ACH_LIST: DecodablePacket {
     public var packetType: Int16
     public var packetLength: Int16
 

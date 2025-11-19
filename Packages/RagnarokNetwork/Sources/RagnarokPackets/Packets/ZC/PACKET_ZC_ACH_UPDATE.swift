@@ -8,7 +8,7 @@
 import BinaryIO
 
 /// See `clif_achievement_update`
-public struct PACKET_ZC_ACH_UPDATE: BinaryDecodable, Sendable {
+public struct PACKET_ZC_ACH_UPDATE: DecodablePacket {
     public var packetType: Int16
 
     public init(from decoder: BinaryDecoder) throws {

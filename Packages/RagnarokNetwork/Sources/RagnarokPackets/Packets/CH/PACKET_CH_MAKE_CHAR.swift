@@ -18,7 +18,7 @@ public let HEADER_CH_MAKE_CHAR: Int16 = {
 }()
 
 /// See `chclif_parse_createnewchar`
-public struct PACKET_CH_MAKE_CHAR: BinaryEncodable, Sendable {
+public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
     public var packetType: Int16 = 0
     public var name: String = ""
     public var str: UInt8 = 0

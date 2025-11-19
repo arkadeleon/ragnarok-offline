@@ -9,7 +9,7 @@ import BinaryIO
 
 public let HEADER_ZC_RECOVER_PENALTY_OVERWEIGHT: Int16 = 0xade
 
-public struct PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT: BinaryDecodable, Sendable {
+public struct PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT: DecodablePacket {
     public var packetType: Int16
     public var percentage: UInt32
 

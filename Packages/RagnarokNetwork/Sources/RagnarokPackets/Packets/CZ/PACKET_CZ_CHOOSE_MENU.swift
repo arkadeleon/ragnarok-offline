@@ -9,7 +9,7 @@ import BinaryIO
 
 public let HEADER_CZ_CHOOSE_MENU: Int16 = 0xb8
 
-public struct PACKET_CZ_CHOOSE_MENU: BinaryEncodable, Sendable {
+public struct PACKET_CZ_CHOOSE_MENU: EncodablePacket {
     public var packetType: Int16 = 0
     public var npcID: UInt32 = 0
     public var select: UInt8 = 0

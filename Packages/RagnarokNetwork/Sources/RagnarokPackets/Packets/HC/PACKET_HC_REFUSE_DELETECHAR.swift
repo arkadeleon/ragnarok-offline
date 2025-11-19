@@ -10,7 +10,7 @@ import BinaryIO
 public let HEADER_HC_REFUSE_DELETECHAR: Int16 = 0x70
 
 /// See `chclif_refuse_delchar`
-public struct PACKET_HC_REFUSE_DELETECHAR: BinaryDecodable, Sendable {
+public struct PACKET_HC_REFUSE_DELETECHAR: DecodablePacket {
     public var packetType: Int16
     public var errorCode: UInt8
 

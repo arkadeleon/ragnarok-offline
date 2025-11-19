@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_ENTER = packetDatabase.entry(forFunctionName: "clif_parse_WantToConnection")!
 
-public struct PACKET_CZ_ENTER: BinaryEncodable, Sendable {
+public struct PACKET_CZ_ENTER: EncodablePacket {
     public let packetType: Int16
     public var accountID: UInt32
     public var charID: UInt32

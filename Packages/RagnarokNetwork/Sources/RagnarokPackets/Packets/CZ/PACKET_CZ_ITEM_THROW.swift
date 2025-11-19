@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_ITEM_THROW = packetDatabase.entry(forFunctionName: "clif_parse_DropItem")!
 
-public struct PACKET_CZ_ITEM_THROW: BinaryEncodable, Sendable {
+public struct PACKET_CZ_ITEM_THROW: EncodablePacket {
     public let packetType: Int16
     public var index: UInt16
     public var amount: Int16

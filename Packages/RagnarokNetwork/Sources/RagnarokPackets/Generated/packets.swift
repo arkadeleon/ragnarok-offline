@@ -592,7 +592,7 @@ public let packet_header_skilWarpPointType: Int16 = 0xabe
 public let packet_header_guildExpulsion: Int16 = 0xa82
 public let packet_header_guildLeave: Int16 = 0xa83
 
-public struct PACKET_CA_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_LOGIN: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + 24 + 1)
     }
@@ -656,7 +656,7 @@ public struct PACKET_AC_ACCEPT_LOGIN_sub: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_AC_ACCEPT_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_AC_ACCEPT_LOGIN: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -700,7 +700,7 @@ public struct PACKET_AC_ACCEPT_LOGIN: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_AC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_AC_REFUSE_LOGIN: CodablePacket {
     public static var size: Int {
         (2 + 4 + 20)
     }
@@ -722,7 +722,7 @@ public struct PACKET_AC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_SC_NOTIFY_BAN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_SC_NOTIFY_BAN: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -740,7 +740,7 @@ public struct PACKET_SC_NOTIFY_BAN: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CA_REQ_HASH: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_REQ_HASH: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -755,7 +755,7 @@ public struct PACKET_CA_REQ_HASH: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_AC_ACK_HASH: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_AC_ACK_HASH: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -776,7 +776,7 @@ public struct PACKET_AC_ACK_HASH: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CA_LOGIN2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_LOGIN2: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + (1 * 16) + 1)
     }
@@ -805,7 +805,7 @@ public struct PACKET_CA_LOGIN2: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CA_LOGIN3: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_LOGIN3: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + (1 * 16) + 1 + 1)
     }
@@ -837,7 +837,7 @@ public struct PACKET_CA_LOGIN3: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CA_CONNECT_INFO_CHANGED: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_CONNECT_INFO_CHANGED: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -856,7 +856,7 @@ public struct PACKET_CA_CONNECT_INFO_CHANGED: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CA_EXE_HASHCHECK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_EXE_HASHCHECK: CodablePacket {
     public static var size: Int {
         (2 + 16)
     }
@@ -875,7 +875,7 @@ public struct PACKET_CA_EXE_HASHCHECK: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CA_LOGIN_PCBANG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_LOGIN_PCBANG: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + 24 + 1 + 16 + 13)
     }
@@ -912,7 +912,7 @@ public struct PACKET_CA_LOGIN_PCBANG: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CA_LOGIN4: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_LOGIN4: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + (1 * 16) + 1 + 13)
     }
@@ -945,7 +945,7 @@ public struct PACKET_CA_LOGIN4: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CA_LOGIN_CHANNEL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_LOGIN_CHANNEL: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + 24 + 1 + 16 + 13 + 1)
     }
@@ -985,7 +985,7 @@ public struct PACKET_CA_LOGIN_CHANNEL: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CA_SSO_LOGIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CA_SSO_LOGIN_REQ: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -1028,7 +1028,7 @@ public struct PACKET_CA_SSO_LOGIN_REQ: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CT_AUTH: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CT_AUTH: CodablePacket {
     public static var size: Int {
         (2 + (1 * 66))
     }
@@ -1047,7 +1047,7 @@ public struct PACKET_CT_AUTH: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_TC_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_TC_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 20 + 6)
     }
@@ -1095,7 +1095,7 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -1116,7 +1116,7 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: CodablePacket {
     public static var size: Int {
         (2 + 1 + 1)
     }
@@ -1137,7 +1137,7 @@ public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PAR_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -1158,7 +1158,7 @@ public struct PACKET_ZC_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_LONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_LONGPAR_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -1179,7 +1179,7 @@ public struct PACKET_ZC_LONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_STATUS_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_STATUS_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -1200,7 +1200,7 @@ public struct PACKET_ZC_STATUS_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 4 + 4)
     }
@@ -1227,7 +1227,7 @@ public struct PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_ATTACK_RANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ATTACK_RANGE: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -1245,7 +1245,7 @@ public struct PACKET_ZC_ATTACK_RANGE: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_COUPLESTATUS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_COUPLESTATUS: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -1269,7 +1269,7 @@ public struct PACKET_ZC_COUPLESTATUS: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_LONGLONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_LONGLONGPAR_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 8)
     }
@@ -1290,7 +1290,7 @@ public struct PACKET_ZC_LONGLONGPAR_CHANGE: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct packet_authok: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_authok: CodablePacket {
     public static var size: Int {
         (2 + 4 + (1 * 3) + 1 + 1 + 2)
     }
@@ -1321,7 +1321,7 @@ public struct packet_authok: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_monster_hp: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_monster_hp: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -1345,7 +1345,7 @@ public struct packet_monster_hp: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_sc_notick: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_sc_notick: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1)
     }
@@ -1369,7 +1369,7 @@ public struct packet_sc_notick: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ITEM_PICKUP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ITEM_PICKUP_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 4 + 1 + 1 + EQUIPSLOTINFO.size + 4 + 1 + 1 + 4 + 2 + (ItemOptions.size * 5) + 1 + 2 + 1 + 1)
     }
@@ -1433,7 +1433,7 @@ public struct PACKET_ZC_ITEM_PICKUP_ACK: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct packet_dropflooritem: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_dropflooritem: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 2 + 1 + 2 + 2 + 1 + 1 + 2 + 1 + 2)
     }
@@ -1511,7 +1511,7 @@ public struct packet_spawn_unit2: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_spawn_unit: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_spawn_unit: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + 4 + 4 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 1 + 1 + (1 * 3) + 1 + 1 + 2 + 2 + 4 + 4 + 1 + 2 + 24)
     }
@@ -1633,7 +1633,7 @@ public struct packet_spawn_unit: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_unit_walking: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_unit_walking: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + 4 + 4 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 2 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 1 + 1 + (1 * 6) + 1 + 1 + 2 + 2 + 4 + 4 + 1 + 2 + 24)
     }
@@ -1758,7 +1758,7 @@ public struct packet_unit_walking: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_idle_unit: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_idle_unit: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + 4 + 4 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 2 + 2 + 4 + 1 + 1 + (1 * 3) + 1 + 1 + 1 + 2 + 2 + 4 + 4 + 1 + 2 + 24)
     }
@@ -1883,7 +1883,7 @@ public struct packet_idle_unit: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_status_change: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_status_change: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1 + 4 + 4 + 4 + 4 + 4)
     }
@@ -1922,7 +1922,7 @@ public struct packet_status_change: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_status_change_end: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_status_change_end: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1)
     }
@@ -1946,7 +1946,7 @@ public struct packet_status_change_end: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct packet_status_change2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_status_change2: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1 + 4 + 4 + 4 + 4)
     }
@@ -1982,7 +1982,7 @@ public struct packet_status_change2: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct packet_maptypeproperty2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_maptypeproperty2: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -2003,7 +2003,7 @@ public struct packet_maptypeproperty2: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_bgqueue_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_ack: CodablePacket {
     public static var size: Int {
         (2 + 1 + 24)
     }
@@ -2025,7 +2025,7 @@ public struct packet_bgqueue_ack: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_bgqueue_notice_delete: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_notice_delete: CodablePacket {
     public static var size: Int {
         (2 + 1 + 24)
     }
@@ -2047,7 +2047,7 @@ public struct packet_bgqueue_notice_delete: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct packet_bgqueue_register: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_register: CodablePacket {
     public static var size: Int {
         (2 + 2 + 24)
     }
@@ -2069,7 +2069,7 @@ public struct packet_bgqueue_register: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_bgqueue_update_info: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_update_info: CodablePacket {
     public static var size: Int {
         (2 + 24 + 4)
     }
@@ -2091,7 +2091,7 @@ public struct packet_bgqueue_update_info: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct packet_bgqueue_checkstate: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_checkstate: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -2110,7 +2110,7 @@ public struct packet_bgqueue_checkstate: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct packet_bgqueue_revoke_req: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_revoke_req: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -2129,7 +2129,7 @@ public struct packet_bgqueue_revoke_req: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct packet_bgqueue_battlebegin_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_battlebegin_ack: CodablePacket {
     public static var size: Int {
         (2 + 1 + 24 + 24)
     }
@@ -2155,7 +2155,7 @@ public struct packet_bgqueue_battlebegin_ack: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct packet_bgqueue_notify_entry: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_notify_entry: CodablePacket {
     public static var size: Int {
         (2 + 24 + 4)
     }
@@ -2177,7 +2177,7 @@ public struct packet_bgqueue_notify_entry: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct packet_bgqueue_battlebegins: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_bgqueue_battlebegins: CodablePacket {
     public static var size: Int {
         (2 + 24 + 24)
     }
@@ -2200,7 +2200,7 @@ public struct packet_bgqueue_battlebegins: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct packet_script_clear: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_script_clear: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -2218,7 +2218,7 @@ public struct packet_script_clear: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + 4 + 1 + 24 + 1 + 4)
     }
@@ -2255,7 +2255,7 @@ public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: BinaryDecodable, 
     }
 }
 
-public struct packet_item_drop_announce: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_item_drop_announce: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + 4 + 1 + 24 + 1 + 24)
     }
@@ -2293,7 +2293,7 @@ public struct packet_item_drop_announce: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct packet_cart_additem_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_cart_additem_ack: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -2311,7 +2311,7 @@ public struct packet_cart_additem_ack: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_banking_check: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_banking_check: CodablePacket {
     public static var size: Int {
         (2 + 8 + 2)
     }
@@ -2332,7 +2332,7 @@ public struct packet_banking_check: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_banking_deposit_req: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_banking_deposit_req: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -2353,7 +2353,7 @@ public struct packet_banking_deposit_req: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct packet_banking_withdraw_req: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_banking_withdraw_req: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -2374,7 +2374,7 @@ public struct packet_banking_withdraw_req: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct packet_banking_deposit_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_banking_deposit_ack: CodablePacket {
     public static var size: Int {
         (2 + 2 + 8 + 4)
     }
@@ -2398,7 +2398,7 @@ public struct packet_banking_deposit_ack: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct packet_banking_withdraw_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_banking_withdraw_ack: CodablePacket {
     public static var size: Int {
         (2 + 2 + 8 + 4)
     }
@@ -2422,7 +2422,7 @@ public struct packet_banking_withdraw_ack: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct packet_roulette_open_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_roulette_open_ack: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4 + 1 + 1 + 4 + 4 + 4 + 4)
     }
@@ -2461,7 +2461,7 @@ public struct packet_roulette_open_ack: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct packet_roulette_info_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_roulette_info_ack: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + (packet_roulette_info_ack_sub.size * 42))
     }
@@ -2486,7 +2486,7 @@ public struct packet_roulette_info_ack: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct packet_roulette_close_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_roulette_close_ack: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -2504,7 +2504,7 @@ public struct packet_roulette_close_ack: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct packet_roulette_generate_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_roulette_generate_ack: CodablePacket {
     public static var size: Int {
         (2 + 1 + 2 + 2 + 4 + 4 + 4 + 4)
     }
@@ -2540,7 +2540,7 @@ public struct packet_roulette_generate_ack: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct packet_roulette_itemrecv_req: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_roulette_itemrecv_req: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -2558,7 +2558,7 @@ public struct packet_roulette_itemrecv_req: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct packet_roulette_itemrecv_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_roulette_itemrecv_ack: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -2579,7 +2579,7 @@ public struct packet_roulette_itemrecv_ack: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct packet_itemlist_normal: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_itemlist_normal: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -2603,7 +2603,7 @@ public struct packet_itemlist_normal: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct packet_itemlist_equip: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_itemlist_equip: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -2627,7 +2627,7 @@ public struct packet_itemlist_equip: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct ZC_STORE_ITEMLIST_NORMAL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct ZC_STORE_ITEMLIST_NORMAL: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -2651,7 +2651,7 @@ public struct ZC_STORE_ITEMLIST_NORMAL: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_INVENTORY_START: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_INVENTORY_START: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -2675,7 +2675,7 @@ public struct PACKET_ZC_INVENTORY_START: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_INVENTORY_END: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_INVENTORY_END: CodablePacket {
     public static var size: Int {
         (2 + 1 + 1)
     }
@@ -2696,7 +2696,7 @@ public struct PACKET_ZC_INVENTORY_END: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct ZC_STORE_ITEMLIST_EQUIP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct ZC_STORE_ITEMLIST_EQUIP: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -2720,7 +2720,7 @@ public struct ZC_STORE_ITEMLIST_EQUIP: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_equip_item: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_equip_item: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -2741,7 +2741,7 @@ public struct packet_equip_item: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 2 + 1)
     }
@@ -2768,7 +2768,7 @@ public struct PACKET_ZC_REQ_WEAR_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct packet_unequipitem_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_unequipitem_ack: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1)
     }
@@ -2792,7 +2792,7 @@ public struct packet_unequipitem_ack: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -2847,7 +2847,7 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct packet_notify_bounditem: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_notify_bounditem: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -2865,7 +2865,7 @@ public struct packet_notify_bounditem: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_skill_entry: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_skill_entry: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 2 + 2 + 4 + 1 + 1 + 1)
     }
@@ -2907,7 +2907,7 @@ public struct packet_skill_entry: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_graffiti_entry: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_graffiti_entry: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 2 + 2 + 1 + 1 + 1 + 80)
     }
@@ -2947,7 +2947,7 @@ public struct packet_graffiti_entry: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct packet_damage: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_damage: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 4 + 4 + 4 + 1 + 2 + 1 + 4)
     }
@@ -2992,7 +2992,7 @@ public struct packet_damage: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_gm_monster_item: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_gm_monster_item: CodablePacket {
     public static var size: Int {
         (2 + 100)
     }
@@ -3029,7 +3029,7 @@ public struct PACKET_CZ_NPC_MARKET_PURCHASE_sub: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_NPC_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_NPC_MARKET_PURCHASE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -3080,7 +3080,7 @@ public struct PACKET_ZC_NPC_MARKET_OPEN_sub: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_NPC_MARKET_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPC_MARKET_OPEN: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -3101,7 +3101,7 @@ public struct PACKET_ZC_NPC_MARKET_OPEN: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct packet_wis_end: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_wis_end: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -3122,7 +3122,7 @@ public struct packet_wis_end: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_party_leader_changed: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_party_leader_changed: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -3143,7 +3143,7 @@ public struct packet_party_leader_changed: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_SHORTCUT_KEY_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SHORTCUT_KEY_LIST: CodablePacket {
     public static var size: Int {
         (2 + 1 + 2 + (hotkey_data.size * 38))
     }
@@ -3168,7 +3168,7 @@ public struct PACKET_ZC_SHORTCUT_KEY_LIST: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: CodablePacket {
     public static var size: Int {
         (2 + 2 + hotkey_data.size)
     }
@@ -3189,7 +3189,7 @@ public struct PACKET_CZ_SHORTCUT_KEY_CHANGE1: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CZ_SHORTCUT_KEY_CHANGE2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SHORTCUT_KEY_CHANGE2: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + hotkey_data.size)
     }
@@ -3213,7 +3213,7 @@ public struct PACKET_CZ_SHORTCUT_KEY_CHANGE2: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE1: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -3231,7 +3231,7 @@ public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE1: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -3292,7 +3292,7 @@ public struct packet_mission_info_sub: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_quest_list_header: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_quest_list_header: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -3313,7 +3313,7 @@ public struct packet_quest_list_header: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct packet_chat_message: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_chat_message: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -3334,7 +3334,7 @@ public struct packet_chat_message: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct packet_whisper_message: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_whisper_message: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -3359,7 +3359,7 @@ public struct packet_whisper_message: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_ADD_ITEM_TO_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ADD_ITEM_TO_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -3380,7 +3380,7 @@ public struct PACKET_CZ_ADD_ITEM_TO_MAIL: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: CodablePacket {
     public static var size: Int {
         (2 + 1 + 2 + 2 + 4 + 1 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 2 + 1 + 4 + 1 + 1)
     }
@@ -3438,7 +3438,7 @@ public struct PACKET_ZC_ACK_ADD_ITEM_RODEX: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -3457,7 +3457,7 @@ public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 24 + 1)
     }
@@ -3479,7 +3479,7 @@ public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -3500,7 +3500,7 @@ public struct PACKET_CZ_REQ_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 1 + 2 + 2 + 2)
     }
@@ -3527,7 +3527,7 @@ public struct PACKET_ZC_ACK_REMOVE_ITEM_MAIL: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CZ_SEND_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SEND_MAIL: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -3568,7 +3568,7 @@ public struct PACKET_CZ_SEND_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_WRITE_MAIL_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_WRITE_MAIL_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -3586,7 +3586,7 @@ public struct PACKET_ZC_WRITE_MAIL_RESULT: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_CHECKNAME1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CHECKNAME1: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -3605,7 +3605,7 @@ public struct PACKET_CZ_CHECKNAME1: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_CHECKNAME2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CHECKNAME2: CodablePacket {
     public static var size: Int {
         (2 + 24 + 1)
     }
@@ -3627,7 +3627,7 @@ public struct PACKET_CZ_CHECKNAME2: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_CHECKNAME: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CHECKNAME: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2 + 24)
     }
@@ -3655,7 +3655,7 @@ public struct PACKET_ZC_CHECKNAME: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_NOTIFY_UNREADMAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_UNREADMAIL: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -3673,7 +3673,7 @@ public struct PACKET_ZC_NOTIFY_UNREADMAIL: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MAIL_LIST: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -3694,7 +3694,7 @@ public struct PACKET_ZC_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: CodablePacket {
     public static var size: Int {
         (2 + 1 + 8)
     }
@@ -3715,7 +3715,7 @@ public struct PACKET_CZ_REQ_NEXT_MAIL_LIST: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_CZ_REQ_OPEN_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_OPEN_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 8 + 8 + 8)
     }
@@ -3739,7 +3739,7 @@ public struct PACKET_CZ_REQ_OPEN_MAIL: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CZ_REQ_READ_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_READ_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 1 + 8)
     }
@@ -3809,7 +3809,7 @@ public struct PACKET_ZC_ACK_READ_RODEX_SUB: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_ACK_READ_RODEX: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_READ_RODEX: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -3845,7 +3845,7 @@ public struct PACKET_ZC_ACK_READ_RODEX: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_REQ_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_DELETE_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 1 + 8)
     }
@@ -3866,7 +3866,7 @@ public struct PACKET_CZ_REQ_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_ACK_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_DELETE_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 1 + 8)
     }
@@ -3887,7 +3887,7 @@ public struct PACKET_ZC_ACK_DELETE_MAIL: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: CodablePacket {
     public static var size: Int {
         (2 + 8 + (1 * 16))
     }
@@ -3909,7 +3909,7 @@ public struct PACKET_CZ_REQ_REFRESH_MAIL_LIST: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 8 + 1)
     }
@@ -3930,7 +3930,7 @@ public struct PACKET_CZ_REQ_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 8 + 1 + 1)
     }
@@ -3954,7 +3954,7 @@ public struct PACKET_ZC_ACK_ZENY_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 8 + 1)
     }
@@ -3975,7 +3975,7 @@ public struct PACKET_CZ_REQ_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: CodablePacket {
     public static var size: Int {
         (2 + 8 + 1 + 1)
     }
@@ -3999,7 +3999,7 @@ public struct PACKET_ZC_ACK_ITEM_FROM_MAIL: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_SKILL_SCALE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILL_SCALE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2 + 2 + 2 + 4)
     }
@@ -4032,7 +4032,7 @@ public struct PACKET_ZC_SKILL_SCALE: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct ZC_PROGRESS_ACTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct ZC_PROGRESS_ACTOR: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -4056,7 +4056,7 @@ public struct ZC_PROGRESS_ACTOR: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 2 + 2 + 2 + 2 + 1 + 24 + 24 + 16 + 1 + 1)
     }
@@ -4151,7 +4151,7 @@ public struct PACKET_ZC_GROUP_LIST_SUB: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_GROUP_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GROUP_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4176,7 +4176,7 @@ public struct PACKET_ZC_GROUP_LIST: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_CLANINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CLANINFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 24 + 24 + 16 + 1 + 1)
     }
@@ -4215,7 +4215,7 @@ public struct PACKET_ZC_CLANINFO: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -4236,7 +4236,7 @@ public struct PACKET_ZC_NOTIFY_CLAN_CONNECTINFO: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_ACK_CLAN_LEAVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_CLAN_LEAVE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -4251,7 +4251,7 @@ public struct PACKET_ZC_ACK_CLAN_LEAVE: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_NOTIFY_CLAN_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_CLAN_CHAT: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4313,7 +4313,7 @@ public struct packet_quest_hunt_sub: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct packet_quest_add_header: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_quest_add_header: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4373,7 +4373,7 @@ public struct packet_quest_update_hunt: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct packet_quest_update_header: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_quest_update_header: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4421,7 +4421,7 @@ public struct packet_quest_hunt_info_sub: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct packet_quest_hunt_info: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_quest_hunt_info: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4442,7 +4442,7 @@ public struct packet_quest_hunt_info: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_FORMATSTRING_MSG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_FORMATSTRING_MSG: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4466,7 +4466,7 @@ public struct PACKET_ZC_FORMATSTRING_MSG: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4493,7 +4493,7 @@ public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_ZC_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MSG_COLOR: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -4514,7 +4514,7 @@ public struct PACKET_ZC_MSG_COLOR: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_OPEN_UI: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_OPEN_UI: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -4532,7 +4532,7 @@ public struct PACKET_CZ_OPEN_UI: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UI_OPEN: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -4553,7 +4553,7 @@ public struct PACKET_ZC_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_UI_OPEN2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UI_OPEN2: CodablePacket {
     public static var size: Int {
         (2 + 1 + 8)
     }
@@ -4574,7 +4574,7 @@ public struct PACKET_ZC_UI_OPEN2: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_UI_ACTION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UI_ACTION: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -4595,7 +4595,7 @@ public struct PACKET_ZC_UI_ACTION: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: CodablePacket {
     public static var size: Int {
         (2 + 16 + 4)
     }
@@ -4617,7 +4617,7 @@ public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_PRIVATE_AIRSHIP_RESPONSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PRIVATE_AIRSHIP_RESPONSE: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -4635,7 +4635,7 @@ public struct PACKET_ZC_PRIVATE_AIRSHIP_RESPONSE: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_REQ_STYLE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_STYLE_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2 + 2 + 2 + 2)
     }
@@ -4668,7 +4668,7 @@ public struct PACKET_CZ_REQ_STYLE_CHANGE: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_REQ_STYLE_CHANGE2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_STYLE_CHANGE2: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2 + 2 + 2 + 2 + 2)
     }
@@ -4704,7 +4704,7 @@ public struct PACKET_CZ_REQ_STYLE_CHANGE2: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_STYLE_CHANGE_RES: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_STYLE_CHANGE_RES: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -4722,7 +4722,7 @@ public struct PACKET_ZC_STYLE_CHANGE_RES: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_PET_EVOLUTION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PET_EVOLUTION: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -4743,7 +4743,7 @@ public struct PACKET_CZ_PET_EVOLUTION: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_ZC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_ZC_REFUSE_LOGIN: CodablePacket {
     public static var size: Int {
         (2 + 4 + 20)
     }
@@ -4765,7 +4765,7 @@ public struct packet_ZC_REFUSE_LOGIN: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_NOTIFY_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_CHAT: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4789,7 +4789,7 @@ public struct PACKET_ZC_NOTIFY_CHAT: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_NOTIFY_PLAYERCHAT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_PLAYERCHAT: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -4810,7 +4810,7 @@ public struct PACKET_ZC_NOTIFY_PLAYERCHAT: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_ITEM_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ITEM_ENTRY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 1 + 2 + 2 + 2 + 1 + 1)
     }
@@ -4849,7 +4849,7 @@ public struct PACKET_ZC_ITEM_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ADD_ITEM_TO_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ADD_ITEM_TO_STORE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 1 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
@@ -4895,7 +4895,7 @@ public struct PACKET_ZC_ADD_ITEM_TO_STORE: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_MVP_GETTING_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MVP_GETTING_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -4913,7 +4913,7 @@ public struct PACKET_ZC_MVP_GETTING_ITEM: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ACK_TOUSESKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_TOUSESKILL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 1 + 1)
     }
@@ -4943,7 +4943,7 @@ public struct PACKET_ZC_ACK_TOUSESKILL: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ADD_ITEM_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ADD_ITEM_TO_CART: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 1 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
@@ -4989,7 +4989,7 @@ public struct PACKET_ZC_ADD_ITEM_TO_CART: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQMAKINGITEM: CodablePacket {
     public static var size: Int {
         (2 + 4 + (4 * 3))
     }
@@ -5011,7 +5011,7 @@ public struct PACKET_CZ_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_ACK_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQMAKINGITEM: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -5032,7 +5032,7 @@ public struct PACKET_ZC_ACK_REQMAKINGITEM: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_FEED_PET: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_FEED_PET: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -5053,7 +5053,7 @@ public struct PACKET_ZC_FEED_PET: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_FEED_MER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_FEED_MER: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -5074,7 +5074,7 @@ public struct PACKET_ZC_FEED_MER: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_USE_ITEM_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_USE_ITEM_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 2 + 1)
     }
@@ -5104,7 +5104,7 @@ public struct PACKET_ZC_USE_ITEM_ACK: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_SPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SPRITE_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1 + 4 + 4)
     }
@@ -5131,7 +5131,7 @@ public struct PACKET_ZC_SPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ADD_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1 + 4 + 1 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 4 + 2 + 1 + 1)
     }
@@ -5180,7 +5180,7 @@ public struct PACKET_ZC_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_CASH_TIME_COUNTER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CASH_TIME_COUNTER: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -5201,7 +5201,7 @@ public struct PACKET_ZC_CASH_TIME_COUNTER: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_CASH_ITEM_DELETE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CASH_ITEM_DELETE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -5222,7 +5222,7 @@ public struct PACKET_ZC_CASH_ITEM_DELETE: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ITEM_PICKUP_PARTY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ITEM_PICKUP_PARTY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 1 + 1 + EQUIPSLOTINFO.size + 2 + 1 + 1 + 1)
     }
@@ -5264,7 +5264,7 @@ public struct PACKET_ZC_ITEM_PICKUP_PARTY: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4 + 4 + 4 + 4)
     }
@@ -5297,7 +5297,7 @@ public struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_ACK_WEAPONREFINE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_WEAPONREFINE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -5318,7 +5318,7 @@ public struct PACKET_ZC_ACK_WEAPONREFINE: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_PROPERTY_HOMUN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PROPERTY_HOMUN: CodablePacket {
     public static var size: Int {
         (2 + 24 + 1 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 4 + 4 + 4 + 8 + 8 + 2 + 2)
     }
@@ -5397,7 +5397,7 @@ public struct PACKET_ZC_PROPERTY_HOMUN: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -5418,7 +5418,7 @@ public struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER: BinaryDecodable, Bi
     }
 }
 
-public struct PACKET_CZ_REQ_ITEMREPAIR2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ITEMREPAIR2: CodablePacket {
     public static var size: Int {
         (2 + REPAIRITEM_INFO2.size)
     }
@@ -5436,7 +5436,7 @@ public struct PACKET_CZ_REQ_ITEMREPAIR2: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_ITEMREPAIR1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ITEMREPAIR1: CodablePacket {
     public static var size: Int {
         (2 + REPAIRITEM_INFO1.size)
     }
@@ -5454,7 +5454,7 @@ public struct PACKET_CZ_REQ_ITEMREPAIR1: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_MAKINGITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_MAKINGITEM: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -5475,7 +5475,7 @@ public struct PACKET_CZ_REQ_MAKINGITEM: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_SSILIST_ITEM_CLICK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SSILIST_ITEM_CLICK: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -5517,7 +5517,7 @@ public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_SCHEDULER_CASHITEM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5590,7 +5590,7 @@ public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PC_PURCHASE_MYITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5644,7 +5644,7 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_ZC_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PC_PURCHASE_ITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5683,7 +5683,7 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_sub: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_PC_PURCHASE_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PC_PURCHASE_ITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5725,7 +5725,7 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5780,7 +5780,7 @@ public struct PACKET_ZC_MYITEMLIST_BUYING_STORE_sub: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_ZC_MYITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MYITEMLIST_BUYING_STORE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5859,7 +5859,7 @@ public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub: BinaryDecodable, Binary
     }
 }
 
-public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5910,7 +5910,7 @@ public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE_sub: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ITEMLIST_BUYING_STORE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -5961,7 +5961,7 @@ public struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_CZ_REQ_TRADE_BUYING_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_TRADE_BUYING_STORE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6007,7 +6007,7 @@ public struct PACKET_ZC_MAKABLEITEMLIST_sub: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_MAKABLEITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MAKABLEITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6043,7 +6043,7 @@ public struct PACKET_ZC_MAKINGARROW_LIST_sub: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_MAKINGARROW_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MAKINGARROW_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6064,7 +6064,7 @@ public struct PACKET_ZC_MAKINGARROW_LIST: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_SKILL_SELECT_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILL_SELECT_REQUEST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6088,7 +6088,7 @@ public struct PACKET_ZC_SKILL_SELECT_REQUEST: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CZ_SKILL_SELECT_RESPONSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SKILL_SELECT_RESPONSE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2)
     }
@@ -6109,7 +6109,7 @@ public struct PACKET_CZ_SKILL_SELECT_RESPONSE: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_REPAIRITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REPAIRITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6154,7 +6154,7 @@ public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_WEAPONITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6190,7 +6190,7 @@ public struct PACKET_ZC_MAKINGITEM_LIST_sub: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_MAKINGITEM_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MAKINGITEM_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6238,7 +6238,7 @@ public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PC_CASH_POINT_ITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6283,7 +6283,7 @@ public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6325,7 +6325,7 @@ public struct PACKET_CZ_SEARCH_STORE_INFO_item: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_CZ_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SEARCH_STORE_INFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6361,7 +6361,7 @@ public struct PACKET_CZ_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_SEARCH_STORE_INFO_FAILED: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SEARCH_STORE_INFO_FAILED: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -6379,7 +6379,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_FAILED: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_ZC_OPEN_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_OPEN_SEARCH_STORE_INFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -6400,7 +6400,7 @@ public struct PACKET_ZC_OPEN_SEARCH_STORE_INFO: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SSILIST_ITEM_CLICK_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -6468,7 +6468,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6498,7 +6498,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct packet_achievement_list: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_achievement_list: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 2 + 4 + 4 + (ach_list_info.size * 10))
     }
@@ -6535,7 +6535,7 @@ public struct packet_achievement_list: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct packet_achievement_update: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_achievement_update: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4 + 4 + ach_list_info.size)
     }
@@ -6565,7 +6565,7 @@ public struct packet_achievement_update: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct packet_achievement_reward_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_achievement_reward_ack: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -6586,7 +6586,7 @@ public struct packet_achievement_reward_ack: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct packet_reqname_ack: BinaryDecodable, BinaryEncodable, Sendable {
+public struct packet_reqname_ack: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24)
     }
@@ -6608,7 +6608,7 @@ public struct packet_reqname_ack: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQNAMEALL: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + 24 + 24 + 24 + 4)
     }
@@ -6645,7 +6645,7 @@ public struct PACKET_ZC_ACK_REQNAMEALL: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ACK_REQNAMEALL_NPC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQNAMEALL_NPC: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 24 + 24)
     }
@@ -6674,7 +6674,7 @@ public struct PACKET_ZC_ACK_REQNAMEALL_NPC: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_OVERWEIGHT_PERCENT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_OVERWEIGHT_PERCENT: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -6708,7 +6708,7 @@ public struct PACKET_ZC_WARPLIST_sub: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_WARPLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_WARPLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6732,7 +6732,7 @@ public struct PACKET_ZC_WARPLIST: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_GROUP_ISALIVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GROUP_ISALIVE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -6753,7 +6753,7 @@ public struct PACKET_ZC_GROUP_ISALIVE: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_GUILD_POSITION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GUILD_POSITION: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -6777,7 +6777,7 @@ public struct PACKET_ZC_GUILD_POSITION: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_MOVE_ITEM_FAILED: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MOVE_ITEM_FAILED: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -6798,7 +6798,7 @@ public struct PACKET_ZC_MOVE_ITEM_FAILED: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ACK_BAN_GUILD1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_BAN_GUILD1: CodablePacket {
     public static var size: Int {
         (2 + 24 + 40 + 24)
     }
@@ -6825,7 +6825,7 @@ public struct PACKET_ZC_ACK_BAN_GUILD1: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ACK_BAN_GUILD2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_BAN_GUILD2: CodablePacket {
     public static var size: Int {
         (2 + 24 + 40)
     }
@@ -6848,7 +6848,7 @@ public struct PACKET_ZC_ACK_BAN_GUILD2: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ACK_BAN_GUILD3: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_BAN_GUILD3: CodablePacket {
     public static var size: Int {
         (2 + 40 + 4)
     }
@@ -6870,7 +6870,7 @@ public struct PACKET_ZC_ACK_BAN_GUILD3: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ACK_LEAVE_GUILD1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_LEAVE_GUILD1: CodablePacket {
     public static var size: Int {
         (2 + 24 + 40)
     }
@@ -6893,7 +6893,7 @@ public struct PACKET_ZC_ACK_LEAVE_GUILD1: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ACK_LEAVE_GUILD2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_LEAVE_GUILD2: CodablePacket {
     public static var size: Int {
         (2 + 4 + 40)
     }
@@ -6915,7 +6915,7 @@ public struct PACKET_ZC_ACK_LEAVE_GUILD2: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_MEMORIALDUNGEON_COMMAND: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MEMORIALDUNGEON_COMMAND: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -6933,7 +6933,7 @@ public struct PACKET_CZ_MEMORIALDUNGEON_COMMAND: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_REMOVE_EFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REMOVE_EFFECT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -6954,7 +6954,7 @@ public struct PACKET_ZC_REMOVE_EFFECT: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_VIEW_CAMERAINFO: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4 + 4 + 4)
     }
@@ -6981,7 +6981,7 @@ public struct PACKET_ZC_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_VIEW_CAMERAINFO: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4 + 4 + 4)
     }
@@ -7008,7 +7008,7 @@ public struct PACKET_CZ_VIEW_CAMERAINFO: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_AUTOSPELLLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_AUTOSPELLLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7029,7 +7029,7 @@ public struct PACKET_ZC_AUTOSPELLLIST: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_CHANGE_ITEM_OPTION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CHANGE_ITEM_OPTION: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + EQUIPSLOTINFO.size + (ItemOptions.size * 5) + 1 + 1)
     }
@@ -7063,7 +7063,7 @@ public struct PACKET_ZC_CHANGE_ITEM_OPTION: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_UPDATE_CARDSLOT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UPDATE_CARDSLOT: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 4 + 1)
     }
@@ -7090,7 +7090,7 @@ public struct PACKET_ZC_UPDATE_CARDSLOT: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_DEBUGMSG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DEBUGMSG: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7114,7 +7114,7 @@ public struct PACKET_ZC_DEBUGMSG: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_USE_SKILL_START: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_USE_SKILL_START: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 4)
     }
@@ -7138,7 +7138,7 @@ public struct PACKET_CZ_USE_SKILL_START: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_USE_SKILL_END: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_USE_SKILL_END: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -7156,7 +7156,7 @@ public struct PACKET_CZ_USE_SKILL_END: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -7174,7 +7174,7 @@ public struct PACKET_ZC_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -7195,7 +7195,7 @@ public struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, B
     }
 }
 
-public struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -7213,7 +7213,7 @@ public struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7228,7 +7228,7 @@ public struct PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, B
     }
 }
 
-public struct PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7243,7 +7243,7 @@ public struct PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7258,7 +7258,7 @@ public struct PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE: BinaryDecodable, Bina
     }
 }
 
-public struct PACKET_CZ_REQ_REMAINTIME: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_REMAINTIME: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7273,7 +7273,7 @@ public struct PACKET_CZ_REQ_REMAINTIME: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_PARTY_CONFIG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PARTY_CONFIG: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -7330,7 +7330,7 @@ public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable, BinaryE
     }
 }
 
-public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7351,7 +7351,7 @@ public struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_CZ_NPC_BARTER_MARKET_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_NPC_BARTER_MARKET_CLOSE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7390,7 +7390,7 @@ public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub: BinaryDecodable, BinaryE
     }
 }
 
-public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7411,7 +7411,7 @@ public struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_USESKILL_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_USESKILL_ACK: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 2 + 2 + 2 + 4 + 4 + 1 + 4)
     }
@@ -7453,7 +7453,7 @@ public struct PACKET_ZC_USESKILL_ACK: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_CLIENT_VERSION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CLIENT_VERSION: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -7471,7 +7471,7 @@ public struct PACKET_CZ_CLIENT_VERSION: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PING_LIVE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7486,7 +7486,7 @@ public struct PACKET_CZ_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PING_LIVE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7501,7 +7501,7 @@ public struct PACKET_ZC_PING_LIVE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_CMD_RESETCOOLTIME: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CMD_RESETCOOLTIME: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7516,7 +7516,7 @@ public struct PACKET_CZ_CMD_RESETCOOLTIME: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_CLOSE_UI_STYLINGSHOP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CLOSE_UI_STYLINGSHOP: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7531,7 +7531,7 @@ public struct PACKET_CZ_CLOSE_UI_STYLINGSHOP: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_NOTIFY_ACTORINIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_ACTORINIT: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7546,7 +7546,7 @@ public struct PACKET_ZC_NOTIFY_ACTORINIT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_PARTY_CONFIG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PARTY_CONFIG: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -7564,7 +7564,7 @@ public struct PACKET_ZC_PARTY_CONFIG: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_ROLE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ROLE_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24)
     }
@@ -7609,7 +7609,7 @@ public struct PACKET_ZC_BAN_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_BAN_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BAN_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7630,7 +7630,7 @@ public struct PACKET_ZC_BAN_LIST: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ACK_CLOSE_ROULETTE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_CLOSE_ROULETTE: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -7648,7 +7648,7 @@ public struct PACKET_ZC_ACK_CLOSE_ROULETTE: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_ACK_MERGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_MERGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 1)
     }
@@ -7687,7 +7687,7 @@ public struct PACKET_ZC_MERGE_ITEM_OPEN_sub: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_MERGE_ITEM_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MERGE_ITEM_OPEN: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7708,7 +7708,7 @@ public struct PACKET_ZC_MERGE_ITEM_OPEN: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4 + 4)
     }
@@ -7735,7 +7735,7 @@ public struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_OPEN_REFINING_UI: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_OPEN_REFINING_UI: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7750,7 +7750,7 @@ public struct PACKET_ZC_OPEN_REFINING_UI: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_REFINING_SELECT_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REFINING_SELECT_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -7789,7 +7789,7 @@ public struct PACKET_ZC_REFINING_MATERIAL_LIST_SUB: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_REFINING_MATERIAL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REFINING_MATERIAL_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7816,7 +7816,7 @@ public struct PACKET_ZC_REFINING_MATERIAL_LIST: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_CZ_REQ_REFINING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_REFINING: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1)
     }
@@ -7840,7 +7840,7 @@ public struct PACKET_CZ_REQ_REFINING: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_CLOSE_REFINING_UI: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CLOSE_REFINING_UI: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -7855,7 +7855,7 @@ public struct PACKET_CZ_CLOSE_REFINING_UI: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 24 + 4 + 1 + 1)
     }
@@ -7883,7 +7883,7 @@ public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_STATUS_CHANGE_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_STATUS_CHANGE_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + 1)
     }
@@ -7907,7 +7907,7 @@ public struct PACKET_ZC_STATUS_CHANGE_ACK: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_EQUIPMENT_EFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EQUIPMENT_EFFECT: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7934,7 +7934,7 @@ public struct PACKET_ZC_EQUIPMENT_EFFECT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ADD_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ADD_SKILL: CodablePacket {
     public static var size: Int {
         (2 + SKILLDATA.size)
     }
@@ -7952,7 +7952,7 @@ public struct PACKET_ZC_ADD_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_SKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILLINFO_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -7973,7 +7973,7 @@ public struct PACKET_ZC_SKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_SKILLINFO_UPDATE2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILLINFO_UPDATE2: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 2 + 2 + 2 + 1 + 2)
     }
@@ -8030,7 +8030,7 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub: BinaryDecodable, BinaryE
     }
 }
 
-public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -8054,7 +8054,7 @@ public struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_TALKBOX_CHATCONTENTS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_TALKBOX_CHATCONTENTS: CodablePacket {
     public static var size: Int {
         (2 + 4 + 21)
     }
@@ -8076,7 +8076,7 @@ public struct PACKET_ZC_TALKBOX_CHATCONTENTS: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_GUILD_AGIT_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GUILD_AGIT_INFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -8097,7 +8097,7 @@ public struct PACKET_ZC_GUILD_AGIT_INFO: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_MOVE_GUILD_AGIT: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -8115,7 +8115,7 @@ public struct PACKET_CZ_REQ_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_REQ_ACK_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_ACK_MOVE_GUILD_AGIT: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -8133,7 +8133,7 @@ public struct PACKET_ZC_REQ_ACK_MOVE_GUILD_AGIT: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4 + 4)
     }
@@ -8157,7 +8157,7 @@ public struct PACKET_ZC_REQ_ACK_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_REQ_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_AGIT_INVESTMENT: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -8175,7 +8175,7 @@ public struct PACKET_CZ_REQ_AGIT_INVESTMENT: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_RANDOM_COMBINE_ITEM_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_RANDOM_COMBINE_ITEM_UI_OPEN: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -8193,7 +8193,7 @@ public struct PACKET_ZC_RANDOM_COMBINE_ITEM_UI_OPEN: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -8226,7 +8226,7 @@ public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -8250,7 +8250,7 @@ public struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -8268,7 +8268,7 @@ public struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_UNINSTALLATION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_UNINSTALLATION: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -8286,7 +8286,7 @@ public struct PACKET_CZ_UNINSTALLATION: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_NOTIFY_EFFECT3: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_EFFECT3: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 8)
     }
@@ -8310,7 +8310,7 @@ public struct PACKET_ZC_NOTIFY_EFFECT3: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_SE_CASHSHOP_OPEN1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SE_CASHSHOP_OPEN1: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -8325,7 +8325,7 @@ public struct PACKET_CZ_SE_CASHSHOP_OPEN1: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_SE_CASHSHOP_OPEN2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SE_CASHSHOP_OPEN2: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -8343,7 +8343,7 @@ public struct PACKET_CZ_SE_CASHSHOP_OPEN2: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -8358,7 +8358,7 @@ public struct PACKET_CZ_GET_ACCOUNT_LIMTIED_SALE_LIST: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_SE_CASHSHOP_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SE_CASHSHOP_OPEN: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -8382,7 +8382,7 @@ public struct PACKET_ZC_SE_CASHSHOP_OPEN: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -8418,7 +8418,7 @@ public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub: BinaryDecodable
     }
 }
 
-public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -8439,7 +8439,7 @@ public struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE: BinaryDecodable, Bi
     }
 }
 
-public struct PACKET_ZC_STATE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_STATE_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2 + 4 + 1)
     }
@@ -8469,7 +8469,7 @@ public struct PACKET_ZC_STATE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_AUTORUN_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_AUTORUN_SKILL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 2 + 2 + 2 + 24 + 1)
     }
@@ -8506,7 +8506,7 @@ public struct PACKET_ZC_AUTORUN_SKILL: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -8524,7 +8524,7 @@ public struct PACKET_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_ZC_ACK_RANDOM_UPGRADE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_RANDOM_UPGRADE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -8542,7 +8542,7 @@ public struct PACKET_ZC_ACK_RANDOM_UPGRADE_ITEM: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -8557,7 +8557,7 @@ public struct PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2)
     }
@@ -8602,7 +8602,7 @@ public struct PACKET_ZC_PERSONAL_INFOMATION_SUB: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_PERSONAL_INFOMATION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PERSONAL_INFOMATION: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -8632,7 +8632,7 @@ public struct PACKET_ZC_PERSONAL_INFOMATION: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_CZ_REQUEST_ACTNPC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_ACTNPC: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 1)
     }
@@ -8656,7 +8656,7 @@ public struct PACKET_CZ_REQUEST_ACTNPC: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_NOTIFY_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_SKILL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 4 + 4 + 4 + 4 + 2 + 2 + 1)
     }
@@ -8701,7 +8701,7 @@ public struct PACKET_ZC_NOTIFY_SKILL: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_USE_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_USE_SKILL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 4 + 1)
     }
@@ -8731,7 +8731,7 @@ public struct PACKET_ZC_USE_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_NOTIFY_GROUNDSKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_GROUNDSKILL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 2 + 2 + 2 + 4)
     }
@@ -8764,7 +8764,7 @@ public struct PACKET_ZC_NOTIFY_GROUNDSKILL: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_SKILL_POSTDELAY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILL_POSTDELAY: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -8785,7 +8785,7 @@ public struct PACKET_ZC_SKILL_POSTDELAY: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_NOTIFY_SKILL_POSITION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_SKILL_POSITION: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4 + 4 + 4 + 4 + 2 + 2 + 2 + 2 + 2 + 1)
     }
@@ -8836,7 +8836,7 @@ public struct PACKET_ZC_NOTIFY_SKILL_POSITION: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_C_MARKERINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_C_MARKERINFO: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -8860,7 +8860,7 @@ public struct PACKET_ZC_C_MARKERINFO: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_MEMBERMGR_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MEMBERMGR_INFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -8881,7 +8881,7 @@ public struct PACKET_ZC_MEMBERMGR_INFO: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GUILD_INFO: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 4 + 24 + 16 + 4 + 4 + 24)
     }
@@ -8947,7 +8947,7 @@ public struct PACKET_ZC_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_POSITION_ID_NAME_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_POSITION_ID_NAME_INFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + (PACKET_ZC_POSITION_ID_NAME_INFO_sub.size * 20))
     }
@@ -8993,7 +8993,7 @@ public struct PACKET_ZC_POSITION_INFO_sub: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_POSITION_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_POSITION_INFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9014,7 +9014,7 @@ public struct PACKET_ZC_POSITION_INFO: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_GUILD_SKILLINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GUILD_SKILLINFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9038,7 +9038,7 @@ public struct PACKET_ZC_GUILD_SKILLINFO: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_MYGUILD_BASIC_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MYGUILD_BASIC_INFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9059,7 +9059,7 @@ public struct PACKET_ZC_MYGUILD_BASIC_INFO: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 16 + 2)
     }
@@ -9081,7 +9081,7 @@ public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -9103,7 +9103,7 @@ public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9128,7 +9128,7 @@ public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_COMPLETE_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_COMPLETE_UPLOAD_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -9143,7 +9143,7 @@ public struct PACKET_ZC_COMPLETE_UPLOAD_MACRO_DETECTOR_CAPTCHA: BinaryDecodable,
     }
 }
 
-public struct PACKET_CZ_REQ_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_APPLY_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -9161,7 +9161,7 @@ public struct PACKET_CZ_REQ_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -9179,7 +9179,7 @@ public struct PACKET_ZC_ACK_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_ZC_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_APPLY_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -9201,7 +9201,7 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9226,7 +9226,7 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -9241,7 +9241,7 @@ public struct PACKET_CZ_COMPLETE_APPLY_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, 
     }
 }
 
-public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -9262,7 +9262,7 @@ public struct PACKET_ZC_REQ_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 16)
     }
@@ -9281,7 +9281,7 @@ public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_CLOSE_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CLOSE_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -9299,7 +9299,7 @@ public struct PACKET_ZC_CLOSE_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -9317,7 +9317,7 @@ public struct PACKET_CZ_REQ_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4)
     }
@@ -9342,7 +9342,7 @@ public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9367,7 +9367,7 @@ public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: BinaryDecodable, BinaryE
     }
 }
 
-public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 1)
     }
@@ -9391,7 +9391,7 @@ public struct PACKET_CZ_REQ_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_ACK_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_PLAYER_AID_IN_RANGE: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9412,7 +9412,7 @@ public struct PACKET_ZC_ACK_PLAYER_AID_IN_RANGE: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_ACK_MAKE_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_MAKE_GROUP: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -9430,7 +9430,7 @@ public struct PACKET_ZC_ACK_MAKE_GROUP: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PARTY_JOIN_REQ: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24)
     }
@@ -9452,7 +9452,7 @@ public struct PACKET_ZC_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: CodablePacket {
     public static var size: Int {
         (2 + 24 + 4)
     }
@@ -9474,7 +9474,7 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_NOTIFY_CHAT_PARTY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_CHAT_PARTY: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9498,7 +9498,7 @@ public struct PACKET_ZC_NOTIFY_CHAT_PARTY: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -9522,7 +9522,7 @@ public struct PACKET_ZC_NOTIFY_POSITION_TO_GROUPM: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -9546,7 +9546,7 @@ public struct PACKET_ZC_NOTIFY_HP_TO_GROUPM: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -9570,7 +9570,7 @@ public struct PACKET_ZC_NOTIFY_MEMBERINFO_TO_GROUPM: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + 1)
     }
@@ -9595,7 +9595,7 @@ public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -9610,7 +9610,7 @@ public struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -9628,7 +9628,7 @@ public struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -9652,7 +9652,7 @@ public struct PACKET_ZC_BATTLEFIELD_NOTIFY_HP: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_CZ_CHOOSE_MENU_ZERO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CHOOSE_MENU_ZERO: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -9673,7 +9673,7 @@ public struct PACKET_CZ_CHOOSE_MENU_ZERO: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_DIALOG_TEXT_ALIGN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DIALOG_TEXT_ALIGN: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -9691,7 +9691,7 @@ public struct PACKET_ZC_DIALOG_TEXT_ALIGN: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -9709,7 +9709,7 @@ public struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT: BinaryDecodable, BinaryE
     }
 }
 
-public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9745,7 +9745,7 @@ public struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1 + 4 + 1)
     }
@@ -9775,7 +9775,7 @@ public struct PACKET_CZ_GRADE_ENCHANT_REQUEST: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -9790,7 +9790,7 @@ public struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_ZC_GRADE_ENCHANT_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GRADE_ENCHANT_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 4)
     }
@@ -9814,7 +9814,7 @@ public struct PACKET_ZC_GRADE_ENCHANT_ACK: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 24 + 4 + 2 + 1)
     }
@@ -9842,7 +9842,7 @@ public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: BinaryDecodable, BinaryE
     }
 }
 
-public struct PACKET_ZC_SHOW_IMAGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SHOW_IMAGE: CodablePacket {
     public static var size: Int {
         (2 + 64 + 1)
     }
@@ -9864,7 +9864,7 @@ public struct PACKET_ZC_SHOW_IMAGE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_WHISPER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_WHISPER: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -9895,7 +9895,7 @@ public struct PACKET_ZC_WHISPER: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_UPDATE_GDID: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UPDATE_GDID: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 1 + 4 + 24)
     }
@@ -9929,7 +9929,7 @@ public struct PACKET_ZC_UPDATE_GDID: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_CZ_CONTACTNPC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CONTACTNPC: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -9950,7 +9950,7 @@ public struct PACKET_CZ_CONTACTNPC: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2 + 2 + 2 + 2)
     }
@@ -9983,7 +9983,7 @@ public struct PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_ZC_START_CAPTURE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_START_CAPTURE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -9998,7 +9998,7 @@ public struct PACKET_ZC_START_CAPTURE: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_TRYCAPTURE_MONSTER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_TRYCAPTURE_MONSTER: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -10016,7 +10016,7 @@ public struct PACKET_ZC_TRYCAPTURE_MONSTER: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_PROPERTY_PET: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PROPERTY_PET: CodablePacket {
     public static var size: Int {
         (2 + 24 + 1 + 2 + 2 + 2 + 2 + 2)
     }
@@ -10053,7 +10053,7 @@ public struct PACKET_ZC_PROPERTY_PET: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_CHANGESTATE_PET: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CHANGESTATE_PET: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4 + 4)
     }
@@ -10077,7 +10077,7 @@ public struct PACKET_ZC_CHANGESTATE_PET: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_SPIRITS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SPIRITS: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2)
     }
@@ -10098,7 +10098,7 @@ public struct PACKET_ZC_SPIRITS: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_SPIRITS2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SPIRITS2: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2)
     }
@@ -10119,7 +10119,7 @@ public struct PACKET_ZC_SPIRITS2: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_SOULENERGY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SOULENERGY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2)
     }
@@ -10140,7 +10140,7 @@ public struct PACKET_ZC_SOULENERGY: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_SAY_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SAY_DIALOG: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -10164,7 +10164,7 @@ public struct PACKET_ZC_SAY_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_SAY_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SAY_DIALOG2: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -10188,7 +10188,7 @@ public struct PACKET_ZC_SAY_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_WAIT_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_WAIT_DIALOG: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10206,7 +10206,7 @@ public struct PACKET_ZC_WAIT_DIALOG: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_WAIT_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_WAIT_DIALOG2: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10224,7 +10224,7 @@ public struct PACKET_ZC_WAIT_DIALOG2: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_PLAY_NPC_BGM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PLAY_NPC_BGM: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -10243,7 +10243,7 @@ public struct PACKET_ZC_PLAY_NPC_BGM: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -10264,7 +10264,7 @@ public struct PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_CART: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_ZC_SOUND: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SOUND: CodablePacket {
     public static var size: Int {
         (2 + 24 + 1 + 4 + 4)
     }
@@ -10292,7 +10292,7 @@ public struct PACKET_ZC_SOUND: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BUYING_STORE_ENTRY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 80)
     }
@@ -10314,7 +10314,7 @@ public struct PACKET_ZC_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_STORE_ENTRY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 80)
     }
@@ -10336,7 +10336,7 @@ public struct PACKET_ZC_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -10360,7 +10360,7 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -10387,7 +10387,7 @@ public struct PACKET_CZ_PC_PURCHASE_ITEMLIST_FROMMC2: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10405,7 +10405,7 @@ public struct PACKET_ZC_DISAPPEAR_BUYING_STORE_ENTRY: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_ZC_OPEN_REFORM_UI: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_OPEN_REFORM_UI: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10423,7 +10423,7 @@ public struct PACKET_ZC_OPEN_REFORM_UI: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_CLOSE_REFORM_UI: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CLOSE_REFORM_UI: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -10438,7 +10438,7 @@ public struct PACKET_CZ_CLOSE_REFORM_UI: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_ITEM_REFORM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ITEM_REFORM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2)
     }
@@ -10459,7 +10459,7 @@ public struct PACKET_CZ_ITEM_REFORM: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_ITEM_REFORM_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ITEM_REFORM_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -10480,7 +10480,7 @@ public struct PACKET_ZC_ITEM_REFORM_ACK: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: CodablePacket {
     public static var size: Int {
         (2 + 8 + 2)
     }
@@ -10501,7 +10501,7 @@ public struct PACKET_CZ_REQUEST_RANDOM_ENCHANT: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: CodablePacket {
     public static var size: Int {
         (2 + 8 + 2 + 4)
     }
@@ -10525,7 +10525,7 @@ public struct PACKET_CZ_REQUEST_PERFECT_ENCHANT: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: CodablePacket {
     public static var size: Int {
         (2 + 8 + 2 + 2)
     }
@@ -10549,7 +10549,7 @@ public struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_REQUEST_RESET_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_RESET_ENCHANT: CodablePacket {
     public static var size: Int {
         (2 + 8 + 2)
     }
@@ -10570,7 +10570,7 @@ public struct PACKET_CZ_REQUEST_RESET_ENCHANT: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_RESPONSE_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_RESPONSE_ENCHANT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -10591,7 +10591,7 @@ public struct PACKET_ZC_RESPONSE_ENCHANT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_CLOSE_UI_ENCHANT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CLOSE_UI_ENCHANT: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -10606,7 +10606,7 @@ public struct PACKET_CZ_CLOSE_UI_ENCHANT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_GOLDPCCAFE_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GOLDPCCAFE_POINT: CodablePacket {
     public static var size: Int {
         (2 + 1 + 1 + 4 + 4)
     }
@@ -10633,7 +10633,7 @@ public struct PACKET_ZC_GOLDPCCAFE_POINT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -10652,7 +10652,7 @@ public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10670,7 +10670,7 @@ public struct PACKET_ZC_DYNAMICNPC_CREATE_RESULT: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG1: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG1: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10688,7 +10688,7 @@ public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG1: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG3: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG3: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -10709,7 +10709,7 @@ public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG3: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG2: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -10733,7 +10733,7 @@ public struct PACKET_CZ_REQ_GUILD_EMBLEM_IMG2: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_CHANGE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CHANGE_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -10757,7 +10757,7 @@ public struct PACKET_ZC_CHANGE_GUILD: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_GUILD_EMBLEM_IMG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GUILD_EMBLEM_IMG: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -10787,7 +10787,7 @@ public struct PACKET_ZC_GUILD_EMBLEM_IMG: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_REQ: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -10808,7 +10808,7 @@ public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 24 + 24 + 4 + 4)
     }
@@ -10837,7 +10837,7 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 24 + 2 + 2)
     }
@@ -10868,7 +10868,7 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 1)
     }
@@ -10892,7 +10892,7 @@ public struct PACKET_CZ_ADVENTURER_AGENCY_JOIN_RESULT: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_USER_COUNT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_USER_COUNT: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10910,7 +10910,7 @@ public struct PACKET_ZC_USER_COUNT: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_PC_PURCHASE_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PC_PURCHASE_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -10928,7 +10928,7 @@ public struct PACKET_ZC_PC_PURCHASE_RESULT: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_CZ_REQ_MAKINGARROW: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_MAKINGARROW: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -10967,7 +10967,7 @@ public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -10994,7 +10994,7 @@ public struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4)
     }
@@ -11018,7 +11018,7 @@ public struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, Binary
     }
 }
 
-public struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4)
     }
@@ -11042,7 +11042,7 @@ public struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO: BinaryDecodable, Binary
     }
 }
 
-public struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 4 + 2)
     }
@@ -11072,7 +11072,7 @@ public struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -11093,7 +11093,7 @@ public struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -11114,7 +11114,7 @@ public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -11132,7 +11132,7 @@ public struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -11203,7 +11203,7 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -11230,7 +11230,7 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CZ_ADVANCED_STATUS_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ADVANCED_STATUS_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -11251,7 +11251,7 @@ public struct PACKET_CZ_ADVANCED_STATUS_CHANGE: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -11272,7 +11272,7 @@ public struct PACKET_CZ_REQ_ADD_NEW_EMBLEM: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BROADCAST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -11293,7 +11293,7 @@ public struct PACKET_ZC_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_BROADCAST2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BROADCAST2: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -11329,7 +11329,7 @@ public struct PACKET_ZC_BROADCAST2: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ENTRY_QUEUE_INIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ENTRY_QUEUE_INIT: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -11344,7 +11344,7 @@ public struct PACKET_ZC_ENTRY_QUEUE_INIT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_RODEX_RETURN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_RODEX_RETURN: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -11362,7 +11362,7 @@ public struct PACKET_CZ_RODEX_RETURN: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_REQ_STYLE_CLOSE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_STYLE_CLOSE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -11377,7 +11377,7 @@ public struct PACKET_CZ_REQ_STYLE_CLOSE: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_SUMMON_HP_INIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SUMMON_HP_INIT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -11401,7 +11401,7 @@ public struct PACKET_ZC_SUMMON_HP_INIT: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_SUMMON_HP_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SUMMON_HP_UPDATE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4)
     }
@@ -11443,7 +11443,7 @@ public struct PACKET_ZC_REPUTE_INFO_sub: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_REPUTE_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REPUTE_INFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -11467,7 +11467,7 @@ public struct PACKET_ZC_REPUTE_INFO: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_UI_OPEN_V3: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UI_OPEN_V3: CodablePacket {
     public static var size: Int {
         (2 + 1 + 8)
     }
@@ -11488,7 +11488,7 @@ public struct PACKET_ZC_UI_OPEN_V3: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_TARGET_SPIRITS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_TARGET_SPIRITS: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 2)
     }
@@ -11534,7 +11534,7 @@ public struct PACKET_ZC_FRIENDS_LIST_sub: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_FRIENDS_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_FRIENDS_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -11573,7 +11573,7 @@ public struct PACKET_CZ_PC_SELL_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_CZ_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PC_SELL_ITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -11615,7 +11615,7 @@ public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS_sub: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -11636,7 +11636,7 @@ public struct PACKET_CZ_REQ_CHANGE_MEMBERPOS: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_CLEAR_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CLEAR_DIALOG: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -11654,7 +11654,7 @@ public struct PACKET_ZC_CLEAR_DIALOG: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_NOTIFY_BIND_ON_EQUIP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_BIND_ON_EQUIP: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -11672,7 +11672,7 @@ public struct PACKET_ZC_NOTIFY_BIND_ON_EQUIP: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BANKING_CHECK: CodablePacket {
     public static var size: Int {
         (2 + 8 + 2)
     }
@@ -11693,7 +11693,7 @@ public struct PACKET_ZC_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_ACK_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_BANKING_WITHDRAW: CodablePacket {
     public static var size: Int {
         (2 + 2 + 8 + 4)
     }
@@ -11717,7 +11717,7 @@ public struct PACKET_ZC_ACK_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_ACK_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_BANKING_DEPOSIT: CodablePacket {
     public static var size: Int {
         (2 + 2 + 8 + 4)
     }
@@ -11741,7 +11741,7 @@ public struct PACKET_ZC_ACK_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_ACK_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_CLOSE_BANKING: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -11759,7 +11759,7 @@ public struct PACKET_ZC_ACK_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_ACK_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_OPEN_BANKING: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -11777,7 +11777,7 @@ public struct PACKET_ZC_ACK_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_REQ_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 24 + 4 + 2)
     }
@@ -11802,7 +11802,7 @@ public struct PACKET_ZC_REQ_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_ACK_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4 + 2)
     }
@@ -11826,7 +11826,7 @@ public struct PACKET_ZC_ACK_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -11847,7 +11847,7 @@ public struct PACKET_ZC_ACK_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_COUPLENAME: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_COUPLENAME: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -11866,7 +11866,7 @@ public struct PACKET_ZC_COUPLENAME: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -11887,7 +11887,7 @@ public struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 24 + 2 + 2)
     }
@@ -11918,7 +11918,7 @@ public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 1)
     }
@@ -11942,7 +11942,7 @@ public struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: CodablePacket {
     public static var size: Int {
         (2 + 24 + 24 + 4 + 4)
     }
@@ -11971,7 +11971,7 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: BinaryDecodable, BinaryE
     }
 }
 
-public struct PACKET_CZ_REQ_SE_CASH_TAB_CODE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_SE_CASH_TAB_CODE: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -12007,7 +12007,7 @@ public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2_sub: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -12034,7 +12034,7 @@ public struct PACKET_ZC_ACK_SE_CASH_ITEM_LIST2: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_CZ_REQ_MERGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_MERGE_ITEM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -12055,7 +12055,7 @@ public struct PACKET_CZ_REQ_MERGE_ITEM: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_RESET_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_RESET_SKILL: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -12073,7 +12073,7 @@ public struct PACKET_CZ_RESET_SKILL: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_SKILLINFO_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILLINFO_UPDATE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2 + 2 + 1)
     }
@@ -12103,7 +12103,7 @@ public struct PACKET_ZC_SKILLINFO_UPDATE: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_BOSS_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BOSS_INFO: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4 + 4 + 2 + 2 + 2 + 2 + 51)
     }
@@ -12143,7 +12143,7 @@ public struct PACKET_ZC_BOSS_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_INVENTORY_TAB: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -12164,7 +12164,7 @@ public struct PACKET_CZ_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_INVENTORY_TAB: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -12185,7 +12185,7 @@ public struct PACKET_ZC_INVENTORY_TAB: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CZ_REQ_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_OPEN_BANKING: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12203,7 +12203,7 @@ public struct PACKET_CZ_REQ_OPEN_BANKING: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_REQ_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_CLOSE_BANKING: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12221,7 +12221,7 @@ public struct PACKET_CZ_REQ_CLOSE_BANKING: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_REQ_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_BANKING_CHECK: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12239,7 +12239,7 @@ public struct PACKET_CZ_REQ_BANKING_CHECK: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_REQ_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_BANKING_DEPOSIT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -12260,7 +12260,7 @@ public struct PACKET_CZ_REQ_BANKING_DEPOSIT: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_CZ_REQ_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_BANKING_WITHDRAW: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -12281,7 +12281,7 @@ public struct PACKET_CZ_REQ_BANKING_WITHDRAW: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_ACCEPT_ENTER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACCEPT_ENTER: CodablePacket {
     public static var size: Int {
         (2 + 4 + (1 * 3) + 1 + 1 + 2)
     }
@@ -12312,7 +12312,7 @@ public struct PACKET_ZC_ACCEPT_ENTER: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_REFUSE_ENTER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REFUSE_ENTER: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -12330,7 +12330,7 @@ public struct PACKET_ZC_REFUSE_ENTER: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_RESTART_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_RESTART_ACK: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -12348,7 +12348,7 @@ public struct PACKET_ZC_RESTART_ACK: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_NOTIFY_VANISH: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_VANISH: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -12369,7 +12369,7 @@ public struct PACKET_ZC_NOTIFY_VANISH: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_ITEM_DISAPPEAR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ITEM_DISAPPEAR: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12387,7 +12387,7 @@ public struct PACKET_ZC_ITEM_DISAPPEAR: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_MILLENNIUMSHIELD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MILLENNIUMSHIELD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -12411,7 +12411,7 @@ public struct PACKET_ZC_MILLENNIUMSHIELD: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_SPIRITS_ATTRIBUTE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SPIRITS_ATTRIBUTE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -12435,7 +12435,7 @@ public struct PACKET_ZC_SPIRITS_ATTRIBUTE: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_CHANGESTATE_MER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CHANGESTATE_MER: CodablePacket {
     public static var size: Int {
         (2 + 1 + 1 + 4 + 4)
     }
@@ -12499,7 +12499,7 @@ public struct PACKET_ZC_HOSKILLINFO_LIST_sub: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_HOSKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_HOSKILLINFO_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -12520,7 +12520,7 @@ public struct PACKET_ZC_HOSKILLINFO_LIST: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_HOSKILLINFO_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_HOSKILLINFO_UPDATE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2 + 2 + 1)
     }
@@ -12550,7 +12550,7 @@ public struct PACKET_ZC_HOSKILLINFO_UPDATE: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_NOTIFY_PLAYERMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_PLAYERMOVE: CodablePacket {
     public static var size: Int {
         (2 + 4 + (1 * 6))
     }
@@ -12572,7 +12572,7 @@ public struct PACKET_ZC_NOTIFY_PLAYERMOVE: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_CHANGE_DIRECTION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CHANGE_DIRECTION: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 1)
     }
@@ -12596,7 +12596,7 @@ public struct PACKET_ZC_CHANGE_DIRECTION: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_NPCACK_MAPMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPCACK_MAPMOVE: CodablePacket {
     public static var size: Int {
         (2 + 16 + 2 + 2)
     }
@@ -12621,7 +12621,7 @@ public struct PACKET_ZC_NPCACK_MAPMOVE: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_NPCACK_SERVERMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPCACK_SERVERMOVE: CodablePacket {
     public static var size: Int {
         (2 + 16 + 2 + 2 + 4 + 2 + 128)
     }
@@ -12656,7 +12656,7 @@ public struct PACKET_ZC_NPCACK_SERVERMOVE: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_STOPMOVE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_STOPMOVE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -12680,7 +12680,7 @@ public struct PACKET_ZC_STOPMOVE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SELECT_DEALTYPE: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12719,7 +12719,7 @@ public struct PACKET_ZC_PC_SELL_ITEMLIST_sub: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PC_SELL_ITEMLIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -12740,7 +12740,7 @@ public struct PACKET_ZC_PC_SELL_ITEMLIST: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_CLOSE_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CLOSE_DIALOG: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12758,7 +12758,7 @@ public struct PACKET_ZC_CLOSE_DIALOG: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_MENU_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MENU_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -12782,7 +12782,7 @@ public struct PACKET_ZC_MENU_LIST: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_OPEN_EDITDLG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_OPEN_EDITDLG: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12800,7 +12800,7 @@ public struct PACKET_ZC_OPEN_EDITDLG: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_OPEN_EDITDLGSTR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_OPEN_EDITDLGSTR: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -12818,7 +12818,7 @@ public struct PACKET_ZC_OPEN_EDITDLGSTR: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_ACK_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQ_ALLY_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -12836,7 +12836,7 @@ public struct PACKET_ZC_ACK_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_DELETE_RELATED_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DELETE_RELATED_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -12857,7 +12857,7 @@ public struct PACKET_ZC_DELETE_RELATED_GUILD: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_ALLY_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24)
     }
@@ -12879,7 +12879,7 @@ public struct PACKET_ZC_REQ_ALLY_GUILD: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ACK_REQ_HOSTILE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQ_HOSTILE_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -12897,7 +12897,7 @@ public struct PACKET_ZC_ACK_REQ_HOSTILE_GUILD: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_COMPASS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_COMPASS: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 4 + 1 + 4)
     }
@@ -12930,7 +12930,7 @@ public struct PACKET_ZC_COMPASS: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ITEM_THROW_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ITEM_THROW_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -12951,7 +12951,7 @@ public struct PACKET_ZC_ITEM_THROW_ACK: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_DELETE_ITEM_FROM_BODY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DELETE_ITEM_FROM_BODY: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2)
     }
@@ -12975,7 +12975,7 @@ public struct PACKET_ZC_DELETE_ITEM_FROM_BODY: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_CARTOFF: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CARTOFF: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -12990,7 +12990,7 @@ public struct PACKET_ZC_CARTOFF: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ACK_GUILD_MENUINTERFACE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_GUILD_MENUINTERFACE: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -13036,7 +13036,7 @@ public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub: BinaryDecodable, Bina
     }
 }
 
-public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -13057,7 +13057,7 @@ public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO: BinaryDecodable, BinaryEn
     }
 }
 
-public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -13081,7 +13081,7 @@ public struct PACKET_ZC_NOTIFY_POSITION_TO_GUILDM: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_GUILD_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GUILD_CHAT: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -13102,7 +13102,7 @@ public struct PACKET_ZC_GUILD_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_UPDATE_CHARSTAT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UPDATE_CHARSTAT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 2 + 2 + 2)
     }
@@ -13156,7 +13156,7 @@ public struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -13177,7 +13177,7 @@ public struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_ZC_STATUS: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_STATUS: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2)
     }
@@ -13273,7 +13273,7 @@ public struct PACKET_ZC_STATUS: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_NOTIFY_MAPINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_MAPINFO: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -13291,7 +13291,7 @@ public struct PACKET_ZC_NOTIFY_MAPINFO: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ACK_REMEMBER_WARPPOINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REMEMBER_WARPPOINT: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -13309,7 +13309,7 @@ public struct PACKET_ZC_ACK_REMEMBER_WARPPOINT: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_ZC_DISPEL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DISPEL: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -13327,7 +13327,7 @@ public struct PACKET_ZC_DISPEL: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_RESURRECTION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_RESURRECTION: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2)
     }
@@ -13348,7 +13348,7 @@ public struct PACKET_ZC_RESURRECTION: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_NOTIFY_MAPPROPERTY2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_MAPPROPERTY2: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -13366,7 +13366,7 @@ public struct PACKET_ZC_NOTIFY_MAPPROPERTY2: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_ACK_ITEMREFINING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ITEMREFINING: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2)
     }
@@ -13390,7 +13390,7 @@ public struct PACKET_ZC_ACK_ITEMREFINING: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_PAR_CHANGE_USER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PAR_CHANGE_USER: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4)
     }
@@ -13414,7 +13414,7 @@ public struct PACKET_ZC_PAR_CHANGE_USER: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CHANGE_CHATROOM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -13450,7 +13450,7 @@ public struct PACKET_ZC_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_EQUIP_ARROW: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EQUIP_ARROW: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -13468,7 +13468,7 @@ public struct PACKET_ZC_EQUIP_ARROW: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 1)
     }
@@ -13492,7 +13492,7 @@ public struct PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_CLOSE_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CLOSE_STORE: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -13507,7 +13507,7 @@ public struct PACKET_ZC_CLOSE_STORE: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_DELETE_ITEM_FROM_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DELETE_ITEM_FROM_STORE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -13528,7 +13528,7 @@ public struct PACKET_ZC_DELETE_ITEM_FROM_STORE: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -13549,7 +13549,7 @@ public struct PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO: BinaryDecodable, BinaryEncod
     }
 }
 
-public struct PACKET_ZC_EXCHANGEITEM_UNDO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EXCHANGEITEM_UNDO: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -13564,7 +13564,7 @@ public struct PACKET_ZC_EXCHANGEITEM_UNDO: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_EXEC_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EXEC_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -13582,7 +13582,7 @@ public struct PACKET_ZC_EXEC_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_CANCEL_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CANCEL_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -13597,7 +13597,7 @@ public struct PACKET_ZC_CANCEL_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -13615,7 +13615,7 @@ public struct PACKET_ZC_CONCLUDE_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_ZC_ACK_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_CREATE_CHATROOM: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -13633,7 +13633,7 @@ public struct PACKET_ZC_ACK_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_REFUSE_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REFUSE_ENTER_ROOM: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -13651,7 +13651,7 @@ public struct PACKET_ZC_REFUSE_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_DESTROY_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DESTROY_ROOM: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -13688,7 +13688,7 @@ public struct PACKET_ZC_ENTER_ROOM_sub: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ENTER_ROOM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -13712,7 +13712,7 @@ public struct PACKET_ZC_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_NPC_SHOWEFST_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPC_SHOWEFST_UPDATE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 4)
     }
@@ -13739,7 +13739,7 @@ public struct PACKET_ZC_NPC_SHOWEFST_UPDATE: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_ACTION_FAILURE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACTION_FAILURE: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -13757,7 +13757,7 @@ public struct PACKET_ZC_ACTION_FAILURE: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_NOTIFY_EFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_EFFECT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -13778,7 +13778,7 @@ public struct PACKET_ZC_NOTIFY_EFFECT: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_ACK_ITEMCOMPOSITION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ITEMCOMPOSITION: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 1)
     }
@@ -13802,7 +13802,7 @@ public struct PACKET_ZC_ACK_ITEMCOMPOSITION: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_ACK_ITEMIDENTIFY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ITEMIDENTIFY: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -13823,7 +13823,7 @@ public struct PACKET_ZC_ACK_ITEMIDENTIFY: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ACK_ITEMREPAIR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ITEMREPAIR: CodablePacket {
     public static var size: Int {
         (2 + 2 + 1)
     }
@@ -13844,7 +13844,7 @@ public struct PACKET_ZC_ACK_ITEMREPAIR: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_EQUIPITEM_DAMAGED: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EQUIPITEM_DAMAGED: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -13865,7 +13865,7 @@ public struct PACKET_ZC_EQUIPITEM_DAMAGED: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_DELETE_ITEM_FROM_CART: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DELETE_ITEM_FROM_CART: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -13886,7 +13886,7 @@ public struct PACKET_ZC_DELETE_ITEM_FROM_CART: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_OPENSTORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_OPENSTORE: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -13904,7 +13904,7 @@ public struct PACKET_ZC_OPENSTORE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_PC_PURCHASE_RESULT_FROMMC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PC_PURCHASE_RESULT_FROMMC: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 1)
     }
@@ -13928,7 +13928,7 @@ public struct PACKET_ZC_PC_PURCHASE_RESULT_FROMMC: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_ACK_OPENSTORE2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_OPENSTORE2: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -13946,7 +13946,7 @@ public struct PACKET_ZC_ACK_OPENSTORE2: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_SKILL_DISAPPEAR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILL_DISAPPEAR: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -13964,7 +13964,7 @@ public struct PACKET_ZC_SKILL_DISAPPEAR: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_SKILLINFO_DELETE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILLINFO_DELETE: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -13982,7 +13982,7 @@ public struct PACKET_ZC_SKILLINFO_DELETE: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_SKILL_UPDATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILL_UPDATE: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -14000,7 +14000,7 @@ public struct PACKET_ZC_SKILL_UPDATE: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_HIGHJUMP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_HIGHJUMP: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 2)
     }
@@ -14024,7 +14024,7 @@ public struct PACKET_ZC_HIGHJUMP: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_RECOVERY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_RECOVERY: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -14045,7 +14045,7 @@ public struct PACKET_ZC_RECOVERY: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_ACK_WHISPER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_WHISPER: CodablePacket {
     public static var size: Int {
         (2 + 1 + 4)
     }
@@ -14066,7 +14066,7 @@ public struct PACKET_ZC_ACK_WHISPER: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_ACK_ADDITEM_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_ADDITEM_TO_CART: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -14084,7 +14084,7 @@ public struct PACKET_ZC_ACK_ADDITEM_TO_CART: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_ZC_DELETEITEM_FROM_MCSTORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DELETEITEM_FROM_MCSTORE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 4 + 4 + 4)
     }
@@ -14114,7 +14114,7 @@ public struct PACKET_ZC_DELETEITEM_FROM_MCSTORE: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_CZ_REQ_BAN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_BAN_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 40)
     }
@@ -14142,7 +14142,7 @@ public struct PACKET_CZ_REQ_BAN_GUILD: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CZ_REQ_LEAVE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_LEAVE_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 40)
     }
@@ -14170,7 +14170,7 @@ public struct PACKET_CZ_REQ_LEAVE_GUILD: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 40)
     }
@@ -14189,7 +14189,7 @@ public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -14207,7 +14207,7 @@ public struct PACKET_ZC_ACK_DISORGANIZE_GUILD_RESULT: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_ZC_RESULT_MAKE_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_RESULT_MAKE_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -14225,7 +14225,7 @@ public struct PACKET_ZC_RESULT_MAKE_GUILD: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_JOIN_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -14249,7 +14249,7 @@ public struct PACKET_CZ_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ACK_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQ_JOIN_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -14267,7 +14267,7 @@ public struct PACKET_ZC_ACK_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_REQ_JOIN_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24)
     }
@@ -14289,7 +14289,7 @@ public struct PACKET_ZC_REQ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_JOIN_GUILD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -14310,7 +14310,7 @@ public struct PACKET_CZ_JOIN_GUILD: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_GUILD_NOTICE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GUILD_NOTICE: CodablePacket {
     public static var size: Int {
         (2 + 60 + 120)
     }
@@ -14333,7 +14333,7 @@ public struct PACKET_ZC_GUILD_NOTICE: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_REQ_JOIN_GUILD2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_JOIN_GUILD2: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -14352,7 +14352,7 @@ public struct PACKET_CZ_REQ_JOIN_GUILD2: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_JOIN_GROUP: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -14370,7 +14370,7 @@ public struct PACKET_CZ_REQ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_JOIN_GROUP: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -14391,7 +14391,7 @@ public struct PACKET_CZ_JOIN_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_REQ_LEAVE_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_LEAVE_GROUP: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -14406,7 +14406,7 @@ public struct PACKET_CZ_REQ_LEAVE_GROUP: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24)
     }
@@ -14428,7 +14428,7 @@ public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: BinaryDecodable, BinaryEncodable
     }
 }
 
-public struct PACKET_CZ_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PARTY_JOIN_REQ: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -14447,7 +14447,7 @@ public struct PACKET_CZ_PARTY_JOIN_REQ: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_PARTY_JOIN_REQ_ACK: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -14468,7 +14468,7 @@ public struct PACKET_CZ_PARTY_JOIN_REQ_ACK: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_HO_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_HO_PAR_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 8)
     }
@@ -14489,7 +14489,7 @@ public struct PACKET_ZC_HO_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_EL_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EL_PAR_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -14510,7 +14510,7 @@ public struct PACKET_ZC_EL_PAR_CHANGE: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CZ_REQ_EMOTION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_EMOTION: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -14528,7 +14528,7 @@ public struct PACKET_CZ_REQ_EMOTION: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_NOTIFY_ACT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_ACT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4 + 4 + 4 + 4 + 1 + 2 + 1 + 4)
     }
@@ -14573,7 +14573,7 @@ public struct PACKET_ZC_NOTIFY_ACT: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_REQUEST_MOVENPC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_MOVENPC: CodablePacket {
     public static var size: Int {
         (2 + 4 + (1 * 3))
     }
@@ -14595,7 +14595,7 @@ public struct PACKET_CZ_REQUEST_MOVENPC: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_NPCSPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPCSPRITE_CHANGE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1 + 4)
     }
@@ -14619,7 +14619,7 @@ public struct PACKET_ZC_NPCSPRITE_CHANGE: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_MEMBER_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MEMBER_NEWENTRY: CodablePacket {
     public static var size: Int {
         (2 + 2 + 24)
     }
@@ -14641,7 +14641,7 @@ public struct PACKET_ZC_MEMBER_NEWENTRY: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_MEMBER_EXIT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MEMBER_EXIT: CodablePacket {
     public static var size: Int {
         (2 + 2 + 24 + 1)
     }
@@ -14666,7 +14666,7 @@ public struct PACKET_ZC_MEMBER_EXIT: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_CZ_MOVETO_MAP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MOVETO_MAP: CodablePacket {
     public static var size: Int {
         (2 + 16 + 2 + 2)
     }
@@ -14691,7 +14691,7 @@ public struct PACKET_CZ_MOVETO_MAP: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_BROADCAST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -14712,7 +14712,7 @@ public struct PACKET_CZ_BROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_REQ_WEAR_EQUIP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_WEAR_EQUIP: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -14733,7 +14733,7 @@ public struct PACKET_CZ_REQ_WEAR_EQUIP: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_ACK_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ACK_SELECT_DEALTYPE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -14754,7 +14754,7 @@ public struct PACKET_CZ_ACK_SELECT_DEALTYPE: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_CZ_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CREATE_CHATROOM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -14785,7 +14785,7 @@ public struct PACKET_CZ_CREATE_CHATROOM: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_BLACKSMITH_RANK: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -14800,7 +14800,7 @@ public struct PACKET_CZ_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ALCHEMIST_RANK: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -14815,7 +14815,7 @@ public struct PACKET_CZ_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BLACKSMITH_RANK: CodablePacket {
     public static var size: Int {
         (2 + RANKLIST.size)
     }
@@ -14833,7 +14833,7 @@ public struct PACKET_ZC_BLACKSMITH_RANK: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ALCHEMIST_RANK: CodablePacket {
     public static var size: Int {
         (2 + RANKLIST.size)
     }
@@ -14851,7 +14851,7 @@ public struct PACKET_ZC_ALCHEMIST_RANK: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_BLACKSMITH_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BLACKSMITH_POINT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -14872,7 +14872,7 @@ public struct PACKET_ZC_BLACKSMITH_POINT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_ALCHEMIST_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ALCHEMIST_POINT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -14893,7 +14893,7 @@ public struct PACKET_ZC_ALCHEMIST_POINT: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_TAEKWON_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_TAEKWON_POINT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -14914,7 +14914,7 @@ public struct PACKET_ZC_TAEKWON_POINT: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CZ_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_TAEKWON_RANK: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -14929,7 +14929,7 @@ public struct PACKET_CZ_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_TAEKWON_RANK: CodablePacket {
     public static var size: Int {
         (2 + RANKLIST.size)
     }
@@ -14947,7 +14947,7 @@ public struct PACKET_ZC_TAEKWON_RANK: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_KILLER_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_KILLER_POINT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -14968,7 +14968,7 @@ public struct PACKET_ZC_KILLER_POINT: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_KILLER_RANK: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -14983,7 +14983,7 @@ public struct PACKET_CZ_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_KILLER_RANK: CodablePacket {
     public static var size: Int {
         (2 + RANKLIST.size)
     }
@@ -15001,7 +15001,7 @@ public struct PACKET_ZC_KILLER_RANK: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_CZ_REQ_RANKING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_RANKING: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -15038,7 +15038,7 @@ public struct PACKET_ZC_ACK_RANKING_sub: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_ACK_RANKING: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_RANKING: CodablePacket {
     public static var size: Int {
         (2 + 2 + RANKLIST.size + 4)
     }
@@ -15062,7 +15062,7 @@ public struct PACKET_ZC_ACK_RANKING: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_UPDATE_RANKING_POINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UPDATE_RANKING_POINT: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 4)
     }
@@ -15086,7 +15086,7 @@ public struct PACKET_ZC_UPDATE_RANKING_POINT: BinaryDecodable, BinaryEncodable, 
     }
 }
 
-public struct PACKET_ZC_ACK_RANKING2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_RANKING2: CodablePacket {
     public static var size: Int {
         (2 + 2 + (4 * 10) + (4 * 10) + 4)
     }
@@ -15115,7 +15115,7 @@ public struct PACKET_ZC_ACK_RANKING2: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_LESSEFFECT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_LESSEFFECT: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -15133,7 +15133,7 @@ public struct PACKET_CZ_LESSEFFECT: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_ACTIVE_QUEST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ACTIVE_QUEST: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -15154,7 +15154,7 @@ public struct PACKET_CZ_ACTIVE_QUEST: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_JOIN_BABY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_JOIN_BABY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -15178,7 +15178,7 @@ public struct PACKET_CZ_JOIN_BABY: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_AUCTION_ITEM_SEARCH: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_AUCTION_ITEM_SEARCH: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 24 + 2)
     }
@@ -15206,7 +15206,7 @@ public struct PACKET_CZ_AUCTION_ITEM_SEARCH: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_CZ_AUCTION_BUY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_AUCTION_BUY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -15227,7 +15227,7 @@ public struct PACKET_CZ_AUCTION_BUY: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_CZ_AUCTION_ADD: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_AUCTION_ADD: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 2)
     }
@@ -15251,7 +15251,7 @@ public struct PACKET_CZ_AUCTION_ADD: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_DRESSROOM_OPEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DRESSROOM_OPEN: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -15269,7 +15269,7 @@ public struct PACKET_ZC_DRESSROOM_OPEN: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_ROOM_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ROOM_NEWENTRY: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -15305,7 +15305,7 @@ public struct PACKET_ZC_ROOM_NEWENTRY: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_MONSTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MONSTER_INFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2 + 4 + 2 + 2 + 2 + 2 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1)
     }
@@ -15371,7 +15371,7 @@ public struct PACKET_ZC_MONSTER_INFO: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_ZC_ACK_REQNAME_BYGID: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_ACK_REQNAME_BYGID: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4 + 24)
     }
@@ -15396,7 +15396,7 @@ public struct PACKET_ZC_ACK_REQNAME_BYGID: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_ZC_PET_ACT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_PET_ACT: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -15417,7 +15417,7 @@ public struct PACKET_ZC_PET_ACT: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_COMBODELAY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_COMBODELAY: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -15438,7 +15438,7 @@ public struct PACKET_ZC_COMBODELAY: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_BLADESTOP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_BLADESTOP: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 4)
     }
@@ -15462,7 +15462,7 @@ public struct PACKET_ZC_BLADESTOP: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_MVP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MVP: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -15480,7 +15480,7 @@ public struct PACKET_ZC_MVP: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -15498,7 +15498,7 @@ public struct PACKET_ZC_MVP_GETTING_SPECIAL_EXP: BinaryDecodable, BinaryEncodabl
     }
 }
 
-public struct PACKET_ZC_THROW_MVPITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_THROW_MVPITEM: CodablePacket {
     public static var size: Int {
         (2)
     }
@@ -15513,7 +15513,7 @@ public struct PACKET_ZC_THROW_MVPITEM: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_UPDATE_MAPINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_UPDATE_MAPINFO: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2 + 2 + 16)
     }
@@ -15541,7 +15541,7 @@ public struct PACKET_ZC_UPDATE_MAPINFO: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_REQ_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ENTER_ROOM: CodablePacket {
     public static var size: Int {
         (2 + 4 + 8)
     }
@@ -15563,7 +15563,7 @@ public struct PACKET_CZ_REQ_ENTER_ROOM: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CHANGE_CHATROOM: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -15594,7 +15594,7 @@ public struct PACKET_CZ_CHANGE_CHATROOM: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ADD_EXCHANGE_ITEM: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -15615,7 +15615,7 @@ public struct PACKET_CZ_ADD_EXCHANGE_ITEM: BinaryDecodable, BinaryEncodable, Sen
     }
 }
 
-public struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -15636,7 +15636,7 @@ public struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY: BinaryDecodable, BinaryEnco
     }
 }
 
-public struct PACKET_CZ_SELECT_WARPPOINT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SELECT_WARPPOINT: CodablePacket {
     public static var size: Int {
         (2 + 2 + 16)
     }
@@ -15658,7 +15658,7 @@ public struct PACKET_CZ_SELECT_WARPPOINT: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_INPUT_EDITDLG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_INPUT_EDITDLG: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4)
     }
@@ -15679,7 +15679,7 @@ public struct PACKET_CZ_INPUT_EDITDLG: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CZ_INPUT_EDITDLGSTR: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_INPUT_EDITDLGSTR: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -15703,7 +15703,7 @@ public struct PACKET_CZ_INPUT_EDITDLGSTR: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_CLOSE_DIALOG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_CLOSE_DIALOG: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -15721,7 +15721,7 @@ public struct PACKET_CZ_CLOSE_DIALOG: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_RESET: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_RESET: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -15739,7 +15739,7 @@ public struct PACKET_CZ_RESET: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -15760,7 +15760,7 @@ public struct PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_CZ_REQ_ITEMIDENTIFY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ITEMIDENTIFY: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -15778,7 +15778,7 @@ public struct PACKET_CZ_REQ_ITEMIDENTIFY: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_SELECTAUTOSPELL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SELECTAUTOSPELL: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -15796,7 +15796,7 @@ public struct PACKET_CZ_SELECTAUTOSPELL: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_REQ_ITEMCOMPOSITION_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ITEMCOMPOSITION_LIST: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -15814,7 +15814,7 @@ public struct PACKET_CZ_REQ_ITEMCOMPOSITION_LIST: BinaryDecodable, BinaryEncodab
     }
 }
 
-public struct PACKET_CZ_REQ_ITEMCOMPOSITION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_ITEMCOMPOSITION: CodablePacket {
     public static var size: Int {
         (2 + 2 + 2)
     }
@@ -15835,7 +15835,7 @@ public struct PACKET_CZ_REQ_ITEMCOMPOSITION: BinaryDecodable, BinaryEncodable, S
     }
 }
 
-public struct PACKET_CZ_LOCALBROADCAST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_LOCALBROADCAST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -15856,7 +15856,7 @@ public struct PACKET_CZ_LOCALBROADCAST: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -15877,7 +15877,7 @@ public struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE: BinaryDecodable, BinaryEnc
     }
 }
 
-public struct PACKET_ZC_FRIENDS_STATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_FRIENDS_STATE: CodablePacket {
     public static var size: Int {
         (2 + 4 + 4 + 1 + 24)
     }
@@ -15905,7 +15905,7 @@ public struct PACKET_ZC_FRIENDS_STATE: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_CZ_MAKE_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MAKE_GROUP: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -15924,7 +15924,7 @@ public struct PACKET_CZ_MAKE_GROUP: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_MAKE_GROUP2: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MAKE_GROUP2: CodablePacket {
     public static var size: Int {
         (2 + 24 + 1 + 1)
     }
@@ -15949,7 +15949,7 @@ public struct PACKET_CZ_MAKE_GROUP2: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_CZ_GM_CHECKER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_GM_CHECKER: CodablePacket {
     public static var size: Int {
         (2 + 16)
     }
@@ -15968,7 +15968,7 @@ public struct PACKET_CZ_GM_CHECKER: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_GM_CHECKER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_GM_CHECKER: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -15986,7 +15986,7 @@ public struct PACKET_ZC_GM_CHECKER: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_CONFIG_NOTIFY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CONFIG_NOTIFY: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -16004,7 +16004,7 @@ public struct PACKET_ZC_CONFIG_NOTIFY: BinaryDecodable, BinaryEncodable, Sendabl
     }
 }
 
-public struct PACKET_ZC_CONGRATULATION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_CONGRATULATION: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -16022,7 +16022,7 @@ public struct PACKET_ZC_CONGRATULATION: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_ZC_DIVORCE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DIVORCE: CodablePacket {
     public static var size: Int {
         (2 + 24)
     }
@@ -16041,7 +16041,7 @@ public struct PACKET_ZC_DIVORCE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_EMOTION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EMOTION: CodablePacket {
     public static var size: Int {
         (2 + 4 + 1)
     }
@@ -16062,7 +16062,7 @@ public struct PACKET_ZC_EMOTION: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_MSG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MSG: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -16080,7 +16080,7 @@ public struct PACKET_ZC_MSG: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_MSG_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MSG_SKILL: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -16101,7 +16101,7 @@ public struct PACKET_ZC_MSG_SKILL: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_MSG_VALUE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_MSG_VALUE: CodablePacket {
     public static var size: Int {
         (2 + 2 + 4)
     }
@@ -16122,7 +16122,7 @@ public struct PACKET_ZC_MSG_VALUE: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN: CodablePacket {
     public static var size: Int {
         (2 + 1 + 24)
     }
@@ -16144,7 +16144,7 @@ public struct PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN: BinaryDecodable, BinaryEncoda
     }
 }
 
-public struct PACKET_ZC_NOTIFY_TIME: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NOTIFY_TIME: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -16162,7 +16162,7 @@ public struct PACKET_ZC_NOTIFY_TIME: BinaryDecodable, BinaryEncodable, Sendable 
     }
 }
 
-public struct PACKET_ZC_SETTING_WHISPER_PC: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SETTING_WHISPER_PC: CodablePacket {
     public static var size: Int {
         (2 + 1 + 1)
     }
@@ -16183,7 +16183,7 @@ public struct PACKET_ZC_SETTING_WHISPER_PC: BinaryDecodable, BinaryEncodable, Se
     }
 }
 
-public struct PACKET_ZC_SETTING_WHISPER_STATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SETTING_WHISPER_STATE: CodablePacket {
     public static var size: Int {
         (2 + 1 + 1)
     }
@@ -16204,7 +16204,7 @@ public struct PACKET_ZC_SETTING_WHISPER_STATE: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_SKILLMSG: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_SKILLMSG: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -16222,7 +16222,7 @@ public struct PACKET_ZC_SKILLMSG: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_REQ_EMOTION_EXPANSION: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_EMOTION_EXPANSION: CodablePacket {
     public static var size: Int {
         (2 + (1 * 4))
     }
@@ -16241,7 +16241,7 @@ public struct PACKET_CZ_REQ_EMOTION_EXPANSION: BinaryDecodable, BinaryEncodable,
     }
 }
 
-public struct PACKET_ZC_DISAPPEAR_ENTRY: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_DISAPPEAR_ENTRY: CodablePacket {
     public static var size: Int {
         (2 + 4)
     }
@@ -16259,7 +16259,7 @@ public struct PACKET_ZC_DISAPPEAR_ENTRY: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_ZC_EFST_SET_ENTER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_EFST_SET_ENTER: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4 + 4 + 4 + 4 + 4)
     }
@@ -16295,7 +16295,7 @@ public struct PACKET_ZC_EFST_SET_ENTER: BinaryDecodable, BinaryEncodable, Sendab
     }
 }
 
-public struct PACKET_CZ_SETTING_WHISPER_STATE: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_SETTING_WHISPER_STATE: CodablePacket {
     public static var size: Int {
         (2 + 1)
     }
@@ -16329,7 +16329,7 @@ public struct PACKET_ZC_WHISPER_LIST_sub: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_ZC_WHISPER_LIST: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_WHISPER_LIST: CodablePacket {
     public static var size: Int {
         -1
     }
@@ -16350,7 +16350,7 @@ public struct PACKET_ZC_WHISPER_LIST: BinaryDecodable, BinaryEncodable, Sendable
     }
 }
 
-public struct PACKET_CZ_ALLY_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_ALLY_CHAT: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -16368,7 +16368,7 @@ public struct PACKET_CZ_ALLY_CHAT: BinaryDecodable, BinaryEncodable, Sendable {
     }
 }
 
-public struct PACKET_CZ_REQ_REPORT_USER: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQ_REPORT_USER: CodablePacket {
     public static var size: Int {
         (2 + (1 * 135))
     }
@@ -16387,7 +16387,7 @@ public struct PACKET_CZ_REQ_REPORT_USER: BinaryDecodable, BinaryEncodable, Senda
     }
 }
 
-public struct PACKET_CZ_QUEST_STATUS_REQ: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_QUEST_STATUS_REQ: CodablePacket {
     public static var size: Int {
         (2 + 2)
     }
@@ -16405,7 +16405,7 @@ public struct PACKET_CZ_QUEST_STATUS_REQ: BinaryDecodable, BinaryEncodable, Send
     }
 }
 
-public struct PACKET_CZ_MOVE_ITEM_TO_PERSONAL: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_CZ_MOVE_ITEM_TO_PERSONAL: CodablePacket {
     public static var size: Int {
         (2 + 4 + 2 + 4)
     }
@@ -16496,7 +16496,7 @@ public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub: BinaryDecodable
     }
 }
 
-public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: BinaryDecodable, BinaryEncodable, Sendable {
+public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: CodablePacket {
     public static var size: Int {
         -1
     }

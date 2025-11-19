@@ -10,7 +10,7 @@ import BinaryIO
 public let HEADER_HC_ACCEPT_ENTER_NEO_UNION_HEADER: Int16 = 0x82d
 
 /// See `chclif_mmo_send082d`
-public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER: BinaryDecodable, Sendable {
+public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER: DecodablePacket {
     public var packetType: Int16
     public var totalSlot: UInt16
     public var normalSlot: UInt8

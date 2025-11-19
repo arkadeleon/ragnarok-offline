@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_REQUEST_ACT = packetDatabase.entry(forFunctionName: "clif_parse_ActionRequest")!
 
-public struct PACKET_CZ_REQUEST_ACT: BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_ACT: EncodablePacket {
     public let packetType: Int16
     public var targetID: UInt32
     public var action: UInt8

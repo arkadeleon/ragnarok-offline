@@ -17,8 +17,8 @@ final public class PacketDecoder {
     public init() {
     }
 
-    public func decode(from data: Data) throws -> [any RegisteredPacket] {
-        var packets: [any RegisteredPacket] = []
+    public func decode(from data: Data) throws -> [any DecodablePacket] {
+        var packets: [any DecodablePacket] = []
 
         let stream = MemoryStream(data: data)
         defer {

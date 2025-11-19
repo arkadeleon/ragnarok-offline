@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_STATUS_CHANGE = packetDatabase.entry(forFunctionName: "clif_parse_StatusUp")!
 
-public struct PACKET_CZ_STATUS_CHANGE: BinaryEncodable, Sendable {
+public struct PACKET_CZ_STATUS_CHANGE: EncodablePacket {
     public let packetType: Int16
     public var statusID: Int16
     public var amount: Int8

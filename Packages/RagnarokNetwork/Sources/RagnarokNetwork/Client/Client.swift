@@ -23,8 +23,8 @@ final class Client: Sendable {
     private let errorStream: AsyncStream<ClientError>
     private let errorContinuation: AsyncStream<ClientError>.Continuation
 
-    private let packetStream: AsyncStream<any RegisteredPacket>
-    private let packetContinuation: AsyncStream<any RegisteredPacket>.Continuation
+    private let packetStream: AsyncStream<any DecodablePacket>
+    private let packetContinuation: AsyncStream<any DecodablePacket>.Continuation
 
     init(name: String, address: String, port: UInt16) {
         self.name = name
@@ -42,7 +42,7 @@ final class Client: Sendable {
         self.errorStream = errorStream
         self.errorContinuation = errorContinuation
 
-        let (packetStream, packetContinuation) = AsyncStream<any RegisteredPacket>.makeStream()
+        let (packetStream, packetContinuation) = AsyncStream<any DecodablePacket>.makeStream()
         self.packetStream = packetStream
         self.packetContinuation = packetContinuation
     }
@@ -96,7 +96,7 @@ final class Client: Sendable {
         packetContinuation.finish()
     }
 
-    func sendPacket(_ packet: some (BinaryEncodable & Sendable)) {
+    func sendPacket(_ packet: some EncodablePacket) {
         do {
             let encoder = PacketEncoder()
             let data = try encoder.encode(packet)

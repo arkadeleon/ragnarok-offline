@@ -5,11 +5,7 @@
 //  Created by Leon Li on 2025/3/24.
 //
 
-import BinaryIO
-
-public typealias RegisteredPacket = BinaryDecodable & Sendable
-
-let registeredPackets: [Int16 : any RegisteredPacket.Type] = [
+let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_SC_NOTIFY_BAN: PACKET_SC_NOTIFY_BAN.self,
 
     HEADER_AC_ACCEPT_LOGIN: PACKET_AC_ACCEPT_LOGIN.self,

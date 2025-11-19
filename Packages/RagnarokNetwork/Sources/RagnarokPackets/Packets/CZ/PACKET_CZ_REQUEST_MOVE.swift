@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_REQUEST_MOVE = packetDatabase.entry(forFunctionName: "clif_parse_WalkToXY")!
 
-public struct PACKET_CZ_REQUEST_MOVE: BinaryEncodable, Sendable {
+public struct PACKET_CZ_REQUEST_MOVE: EncodablePacket {
     public let packetType: Int16
     public var x: Int16
     public var y: Int16

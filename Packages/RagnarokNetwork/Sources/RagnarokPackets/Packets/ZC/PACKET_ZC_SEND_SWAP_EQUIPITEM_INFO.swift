@@ -9,7 +9,7 @@ import BinaryIO
 
 public let HEADER_ZC_SEND_SWAP_EQUIPITEM_INFO: Int16 = 0xa9b
 
-public struct PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO: BinaryDecodable, Sendable {
+public struct PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO: DecodablePacket {
     public var packetType: Int16
     public var packetLength: Int16
     public var items: [PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO_sub]

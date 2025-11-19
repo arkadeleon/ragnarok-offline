@@ -10,7 +10,7 @@ import BinaryIO
 public let HEADER_CZ_PING: Int16 = 0x187
 
 /// See `chclif_parse_keepalive`
-public struct PACKET_CZ_PING: BinaryEncodable, Sendable {
+public struct PACKET_CZ_PING: EncodablePacket {
     public var packetType: Int16 = 0
     public var accountID: UInt32 = 0
 

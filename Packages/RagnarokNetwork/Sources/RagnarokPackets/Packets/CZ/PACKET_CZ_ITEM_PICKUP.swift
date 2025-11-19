@@ -9,7 +9,7 @@ import BinaryIO
 
 let ENTRY_CZ_ITEM_PICKUP = packetDatabase.entry(forFunctionName: "clif_parse_TakeItem")!
 
-public struct PACKET_CZ_ITEM_PICKUP: BinaryEncodable, Sendable {
+public struct PACKET_CZ_ITEM_PICKUP: EncodablePacket {
     public let packetType: Int16
     public var objectID: UInt32
 

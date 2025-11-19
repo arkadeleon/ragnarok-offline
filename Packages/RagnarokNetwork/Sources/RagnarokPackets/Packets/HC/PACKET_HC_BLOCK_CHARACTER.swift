@@ -10,7 +10,7 @@ import BinaryIO
 public let HEADER_HC_BLOCK_CHARACTER: Int16 = 0x20d
 
 /// See `chclif_block_character`
-public struct PACKET_HC_BLOCK_CHARACTER: BinaryDecodable, Sendable {
+public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
     public var packetType: Int16
     public var packetLength: Int16
     public var chars: [CharBlockInfo]

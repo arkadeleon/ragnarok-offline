@@ -10,7 +10,7 @@ import BinaryIO
 public let HEADER_HC_REFUSE_ENTER: Int16 = 0x6c
 
 /// See `chclif_reject`
-public struct PACKET_HC_REFUSE_ENTER: BinaryDecodable, Sendable {
+public struct PACKET_HC_REFUSE_ENTER: DecodablePacket {
     public var packetType: Int16
     public var errorCode: UInt8
 

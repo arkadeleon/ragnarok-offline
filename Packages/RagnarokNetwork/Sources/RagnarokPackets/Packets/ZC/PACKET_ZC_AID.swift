@@ -9,7 +9,7 @@ import BinaryIO
 
 public let HEADER_ZC_AID: Int16 = 0x283
 
-public struct PACKET_ZC_AID: BinaryDecodable, Sendable {
+public struct PACKET_ZC_AID: DecodablePacket {
     public var packetType: Int16
     public var accountID: UInt32
 

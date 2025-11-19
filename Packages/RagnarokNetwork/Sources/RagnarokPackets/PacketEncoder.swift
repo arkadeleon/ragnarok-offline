@@ -12,7 +12,7 @@ final public class PacketEncoder {
     public init() {
     }
 
-    public func encode(_ packet: some BinaryEncodable) throws -> Data {
+    public func encode(_ packet: some EncodablePacket) throws -> Data {
         let stream = MemoryStream()
         defer {
             stream.close()

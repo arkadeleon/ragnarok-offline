@@ -10,7 +10,7 @@ import BinaryIO
 public let HEADER_CH_ENTER: Int16 = 0x65
 
 /// See `chclif_parse_reqtoconnect`
-public struct PACKET_CH_ENTER: BinaryEncodable, Sendable {
+public struct PACKET_CH_ENTER: EncodablePacket {
     public var packetType: Int16 = 0
     public var accountID: UInt32 = 0
     public var loginID1: UInt32 = 0

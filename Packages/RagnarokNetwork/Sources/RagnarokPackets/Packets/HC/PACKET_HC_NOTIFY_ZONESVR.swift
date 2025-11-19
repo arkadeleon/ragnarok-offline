@@ -10,7 +10,7 @@ import BinaryIO
 public let HEADER_HC_NOTIFY_ZONESVR: Int16 = PACKET_VERSION >= 20170315 ? 0xac5 : 0x71
 
 /// See `chclif_send_map_data`
-public struct PACKET_HC_NOTIFY_ZONESVR: BinaryDecodable, Sendable {
+public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
     public var packetType: Int16
     public var charID: UInt32
     public var mapName: String

@@ -7,7 +7,7 @@
 
 import BinaryIO
 
-public struct PACKET_ZC_MAPPROPERTY_R2: BinaryDecodable, Sendable {
+public struct PACKET_ZC_MAPPROPERTY_R2: DecodablePacket {
     public var packetType: Int16
     public var type: Int16
     public var flags: UInt32
