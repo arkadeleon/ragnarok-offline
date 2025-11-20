@@ -10,7 +10,6 @@ import Network
 import Observation
 import RagnarokConstants
 import RagnarokNetwork
-import RagnarokPackets
 import RagnarokReality
 import RagnarokResources
 import RagnarokSprite
@@ -44,8 +43,8 @@ final public class GameSession {
     public enum Phase {
         case login
         case charServerList(_ charServers: [CharServerInfo])
-        case charSelect(_ chars: [CharInfo])
-        case charMake(_ slot: UInt8)
+        case characterSelect(_ characters: [CharacterInfo])
+        case characterMake(_ slot: Int)
         case mapLoading(_ progress: Progress)
         case map(_ scene: MapScene)
     }
@@ -59,8 +58,8 @@ final public class GameSession {
 
     private(set) var errorMessages: [GameSession.ErrorMessage] = []
     private(set) var account: AccountInfo?
-    private(set) var chars: [CharInfo] = []
-    private(set) var char: CharInfo?
+    private(set) var characters: [CharacterInfo] = []
+    private(set) var character: CharacterInfo?
     private(set) var playerStatus: CharacterStatus?
     private(set) var inventory = Inventory()
     private(set) var dialog: NPCDialog?
@@ -139,12 +138,12 @@ final public class GameSession {
         startCharSession(charServer)
     }
 
-    func makeChar(slot: UInt8) {
-        phase = .charMake(slot)
+    func makeCharacter(slot: Int) {
+        phase = .characterMake(slot)
     }
 
-    func cancelMakeChar() {
-        phase = .charSelect(chars)
+    func cancelMakeCharacter() {
+        phase = .characterSelect(characters)
     }
 
     func stopAllSessions() {
@@ -279,30 +278,30 @@ final public class GameSession {
 
     private func handleCharEvent(_ event: CharSession.Event) {
         switch event {
-        case .charServerAccepted(let chars):
-            self.chars = chars
-            phase = .charSelect(chars)
+        case .charServerAccepted(let characters):
+            self.characters = characters
+            phase = .characterSelect(characters)
         case .charServerRefused:
             break
         case .charServerNotifiedMapServer(let charID, let mapName, let mapServer):
-            if let char = chars.first(where: { $0.charID == charID }) {
-                self.char = char
-                startMapSession(char: char, mapServer: mapServer)
+            if let character = characters.first(where: { $0.charID == charID }) {
+                self.character = character
+                startMapSession(character: character, mapServer: mapServer)
             }
         case .charServerNotifiedAccessibleMaps(let accessibleMaps):
             break
-        case .makeCharAccepted(let char):
-            chars.append(char)
-            phase = .charSelect(chars)
-        case .makeCharRefused:
+        case .makeCharacterAccepted(let character):
+            characters.append(character)
+            phase = .characterSelect(characters)
+        case .makeCharacterRefused:
             break
-        case .deleteCharAccepted:
+        case .deleteCharacterAccepted:
             break
-        case .deleteCharRefused:
+        case .deleteCharacterRefused:
             break
-        case .deleteCharCancelled:
+        case .deleteCharacterCancelled:
             break
-        case .deleteCharReserved(let deletionDate):
+        case .deleteCharacterReserved(let deletionDate):
             break
         case .authenticationBanned(let message):
             break
@@ -313,12 +312,12 @@ final public class GameSession {
 
     // MARK: - Map Session
 
-    private func startMapSession(char: CharInfo, mapServer: MapServerInfo) {
+    private func startMapSession(character: CharacterInfo, mapServer: MapServerInfo) {
         guard let account = charSession?.account else {
             return
         }
 
-        let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
+        let mapSession = MapSession(account: account, character: character, mapServer: mapServer)
 
         Task {
             for await event in mapSession.events {
@@ -339,7 +338,7 @@ final public class GameSession {
             mapSession?.stop()
             mapSession = nil
 
-            phase = .charSelect(chars)
+            phase = .characterSelect(characters)
         case .mapChanged(let mapName, let position):
             if case .map(let scene) = phase {
                 scene.unload()
@@ -349,14 +348,14 @@ final public class GameSession {
             phase = .mapLoading(progress)
 
             Task {
-                guard let mapSession, let account, let char else {
+                guard let mapSession, let account, let character else {
                     return
                 }
 
                 let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
                 let world = try await resourceManager.world(mapName: mapName)
 
-                let player = MapObject(account: account, char: char)
+                let player = MapObject(account: account, character: character)
 
                 let scene = MapScene(
                     mapName: mapName,
@@ -441,16 +440,16 @@ final public class GameSession {
 
 extension GameSession {
     func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
-        guard 0..<chars.count ~= slot else {
+        guard 0..<characters.count ~= slot else {
             return nil
         }
 
-        return await characterAnimation(for: chars[slot])
+        return await characterAnimation(for: characters[slot])
     }
 
-    func characterAnimation(for char: CharInfo) async -> SpriteRenderer.Animation? {
+    func characterAnimation(for character: CharacterInfo) async -> SpriteRenderer.Animation? {
         do {
-            let configuration = ComposedSprite.Configuration(char: char)
+            let configuration = ComposedSprite.Configuration(character: character)
             let composedSprite = try await ComposedSprite(
                 configuration: configuration,
                 resourceManager: resourceManager

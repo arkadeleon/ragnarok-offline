@@ -14,13 +14,15 @@ public struct PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
     public var packetType: Int16
     public var charID: UInt32
     public var mapName: String
-    public var mapServer: MapServerInfo
+    public var ip: UInt32
+    public var port: UInt16
 
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         charID = try decoder.decode(UInt32.self)
         mapName = try decoder.decode(String.self, lengthOfBytes: 16)
-        mapServer = try decoder.decode(MapServerInfo.self)
+        ip = try decoder.decode(UInt32.self)
+        port = try decoder.decode(UInt16.self)
 
         if PACKET_VERSION >= 20170315 {
             _ = try decoder.decode([UInt8].self, count: 128)

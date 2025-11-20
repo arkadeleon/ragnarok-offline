@@ -7,7 +7,8 @@
 
 import BinaryIO
 
-public struct CharInfo: BinaryDecodable, Sendable {
+@available(*, deprecated, message: "Use generated struct instead.")
+public struct _CharInfo: BinaryDecodable, Sendable {
     public var charID: UInt32
     public var exp: UInt64
     public var money: UInt32

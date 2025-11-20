@@ -16,17 +16,17 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
     public var maxSlots: UInt8
     public var availableSlots: UInt8
     public var premiumSlots: UInt8
-    public var chars: [CharInfo]
+    public var chars: [CHARACTER_INFO]
 
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
 
-        let charCount: Int16
+        let charCount: Int
         if PACKET_VERSION >= 20100413 {
-            charCount = (packetLength - 27) / CharInfo.decodedLength
+            charCount = Int(packetLength - 27) / CHARACTER_INFO.size
         } else {
-            charCount = (packetLength - 24) / CharInfo.decodedLength
+            charCount = Int(packetLength - 24) / CHARACTER_INFO.size
         }
 
         if PACKET_VERSION >= 20100413 {
@@ -43,7 +43,7 @@ public struct PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
 
         chars = []
         for _ in 0..<charCount {
-            let char = try decoder.decode(CharInfo.self)
+            let char = try decoder.decode(CHARACTER_INFO.self)
             chars.append(char)
         }
     }

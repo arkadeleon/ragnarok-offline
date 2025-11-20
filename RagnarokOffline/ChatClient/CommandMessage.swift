@@ -31,9 +31,9 @@ extension CommandMessage {
     enum Command: String {
         case login = "login"
         case selectCharServer = "select-char-server"
-        case makeChar = "make-char"
-        case deleteChar = "delete-char"
-        case selectChar = "select-char"
+        case makeCharacter = "make-character"
+        case deleteCharacter = "delete-character"
+        case selectCharacter = "select-character"
         case moveUp = "move-up"
         case moveDown = "move-down"
         case moveLeft = "move-left"
@@ -45,11 +45,11 @@ extension CommandMessage {
                 ["username", "password"]
             case .selectCharServer:
                 ["server-number"]
-            case .makeChar:
+            case .makeCharacter:
                 ["name", "str", "agi", "vit", "int", "dex", "luk", "slot"]
-            case .deleteChar:
+            case .deleteCharacter:
                 ["char-id"]
-            case .selectChar:
+            case .selectCharacter:
                 ["slot"]
             case .moveUp, .moveDown, .moveLeft, .moveRight:
                 []

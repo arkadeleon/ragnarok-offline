@@ -49,27 +49,27 @@ public struct MapObject: Sendable {
     public let healthState: StatusChangeOption2
     public let effectState: StatusChangeOption
 
-    public init(account: AccountInfo, char: CharInfo) {
+    public init(account: AccountInfo, character: CharacterInfo) {
         self.objectID = account.accountID
         self.type = .pc
-        self.name = char.name
-        self.speed = Int(char.speed)
+        self.name = character.name
+        self.speed = character.speed
 
-        self.job = Int(char.job)
-        self.gender = Gender(rawValue: Int(char.sex)) ?? .female
-        self.hairStyle = Int(char.head)
-        self.hairColor = Int(char.headPalette)
-        self.clothesColor = Int(char.bodyPalette)
-        self.weapon = Int(char.weapon)
-        self.shield = Int(char.shield)
-        self.headTop = Int(char.accessory2)
-        self.headMid = Int(char.accessory3)
-        self.headBottom = Int(char.accessory)
-        self.garment = Int(char.robePalette)
+        self.job = character.job
+        self.gender = Gender(rawValue: character.sex) ?? .female
+        self.hairStyle = character.head
+        self.hairColor = character.headPalette
+        self.clothesColor = character.bodyPalette
+        self.weapon = character.weapon
+        self.shield = character.shield
+        self.headTop = character.accessory2
+        self.headMid = character.accessory3
+        self.headBottom = character.accessory
+        self.garment = character.robePalette
 
-        self.bodyState = StatusChangeOption1(rawValue: Int(char.bodyState)) ?? .none
-        self.healthState = StatusChangeOption2(rawValue: Int(char.healthState)) ?? .none
-        self.effectState = StatusChangeOption(rawValue: Int(char.effectState)) ?? .nothing
+        self.bodyState = StatusChangeOption1(rawValue: character.bodyState) ?? .none
+        self.healthState = StatusChangeOption2(rawValue: character.healthState) ?? .none
+        self.effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
     }
 
     init(packet: packet_spawn_unit) {

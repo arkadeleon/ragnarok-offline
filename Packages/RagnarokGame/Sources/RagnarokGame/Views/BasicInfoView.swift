@@ -7,22 +7,21 @@
 
 import RagnarokConstants
 import RagnarokNetwork
-import RagnarokPackets
 import SwiftUI
 
 struct BasicInfoView: View {
-    var char: CharInfo
+    var character: CharacterInfo
     var status: CharacterStatus
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             GameImage("basic_interface/basewin_bg2.bmp")
 
-            Text(char.name)
+            Text(character.name)
                 .gameText()
                 .offset(x: 10, y: 20)
 
-            Text(JobID(rawValue: Int(char.job))?.stringValue ?? "")
+            Text(JobID(rawValue: character.job)?.stringValue ?? "")
                 .gameText()
                 .offset(x: 10, y: 33)
 
@@ -95,7 +94,7 @@ struct BasicInfoView: View {
 }
 
 #Preview {
-    BasicInfoView(char: CharInfo(), status: CharacterStatus())
+    BasicInfoView(character: CharacterInfo(), status: CharacterStatus())
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
 }

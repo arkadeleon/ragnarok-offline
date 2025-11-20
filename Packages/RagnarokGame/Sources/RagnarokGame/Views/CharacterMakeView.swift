@@ -1,27 +1,27 @@
 //
-//  CharMakeView.swift
+//  CharacterMakeView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2024/9/10.
 //
 
-import RagnarokPackets
+import RagnarokNetwork
 import RagnarokSprite
 import SwiftUI
 
-struct CharMakeView: View {
-    var slot: UInt8
+struct CharacterMakeView: View {
+    var slot: Int
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var char = CharInfo()
+    @State private var character = CharacterInfo()
     @State private var characterAnimation: SpriteRenderer.Animation?
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             GameImage("login_interface/win_make.bmp")
 
-            TextField(String(), text: $char.name)
+            TextField(String(), text: $character.name)
                 .textFieldStyle(.plain)
                 #if !os(macOS)
                 .textInputAutocapitalization(.never)
@@ -33,25 +33,25 @@ struct CharMakeView: View {
 
             Group {
                 GameButton("scroll0up.bmp") {
-                    if char.headPalette == 8 {
-                        char.headPalette = 0
+                    if character.headPalette == 8 {
+                        character.headPalette = 0
                     } else {
-                        char.headPalette += 1
+                        character.headPalette += 1
                     }
                 }
                 .offset(x: 87, y: 105)
 
                 GameButton("scroll1left.bmp") {
-                    char.head -= 1
+                    character.head -= 1
                 }
                 .offset(x: 47, y: 135)
-                .disabled(char.head == 0)
+                .disabled(character.head == 0)
 
                 GameButton("scroll1right.bmp") {
-                    char.head += 1
+                    character.head += 1
                 }
                 .offset(x: 127, y: 135)
-                .disabled(char.head == 12)
+                .disabled(character.head == 12)
             }
             .frame(width: 13, height: 13)
 
@@ -68,49 +68,49 @@ struct CharMakeView: View {
 
             Group {
                 GameButton("login_interface/arw-str0.bmp") {
-                    if char.str != 9 {
-                        char.str += 1
-                        char.int -= 1
+                    if character.str != 9 {
+                        character.str += 1
+                        character.int -= 1
                     }
                 }
                 .offset(x: 270, y: 50)
 
                 GameButton("login_interface/arw-agi0.bmp") {
-                    if char.agi != 9 {
-                        char.agi += 1
-                        char.luk -= 1
+                    if character.agi != 9 {
+                        character.agi += 1
+                        character.luk -= 1
                     }
                 }
                 .offset(x: 191, y: 103)
 
                 GameButton("login_interface/arw-vit0.bmp") {
-                    if char.vit != 9 {
-                        char.vit += 1
-                        char.dex -= 1
+                    if character.vit != 9 {
+                        character.vit += 1
+                        character.dex -= 1
                     }
                 }
                 .offset(x: 348, y: 104)
 
                 GameButton("login_interface/arw-int0.bmp") {
-                    if char.int != 9 {
-                        char.int += 1
-                        char.str -= 1
+                    if character.int != 9 {
+                        character.int += 1
+                        character.str -= 1
                     }
                 }
                 .offset(x: 270, y: 243)
 
                 GameButton("login_interface/arw-dex0.bmp") {
-                    if char.dex != 9 {
-                        char.dex += 1
-                        char.vit -= 1
+                    if character.dex != 9 {
+                        character.dex += 1
+                        character.vit -= 1
                     }
                 }
                 .offset(x: 191, y: 190)
 
                 GameButton("login_interface/arw-luk0.bmp") {
-                    if char.luk != 9 {
-                        char.luk += 1
-                        char.agi -= 1
+                    if character.luk != 9 {
+                        character.luk += 1
+                        character.agi -= 1
                     }
                 }
                 .offset(x: 348, y: 190)
@@ -118,12 +118,12 @@ struct CharMakeView: View {
             .frame(width: 36, height: 36)
 
             Canvas { context, size in
-                let str = Double(char.str + 1) / 10 * size.height / 2
-                let agi = Double(char.agi + 1) / 10 * size.height / 2
-                let vit = Double(char.vit + 1) / 10 * size.height / 2
-                let int = Double(char.int + 1) / 10 * size.height / 2
-                let dex = Double(char.dex + 1) / 10 * size.height / 2
-                let luk = Double(char.luk + 1) / 10 * size.height / 2
+                let str = Double(character.str + 1) / 10 * size.height / 2
+                let agi = Double(character.agi + 1) / 10 * size.height / 2
+                let vit = Double(character.vit + 1) / 10 * size.height / 2
+                let int = Double(character.int + 1) / 10 * size.height / 2
+                let dex = Double(character.dex + 1) / 10 * size.height / 2
+                let luk = Double(character.luk + 1) / 10 * size.height / 2
 
                 let sin60: Double = sin(60 * .pi / 180)
                 let cos60: Double = cos(60 * .pi / 180)
@@ -147,12 +147,12 @@ struct CharMakeView: View {
 
             VStack(spacing: 1) {
                 Group {
-                    Text(char.str.formatted())
-                    Text(char.agi.formatted())
-                    Text(char.vit.formatted())
-                    Text(char.int.formatted())
-                    Text(char.dex.formatted())
-                    Text(char.luk.formatted())
+                    Text(character.str.formatted())
+                    Text(character.agi.formatted())
+                    Text(character.vit.formatted())
+                    Text(character.int.formatted())
+                    Text(character.dex.formatted())
+                    Text(character.luk.formatted())
                 }
                 .gameText()
                 .frame(width: 95, height: 15)
@@ -163,41 +163,41 @@ struct CharMakeView: View {
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
                 GameButton("btn_make.bmp") {
-                    gameSession.charSession?.makeChar(char: char)
+                    gameSession.charSession?.makeCharacter(character: character)
                 }
-                .disabled(char.name.isEmpty)
+                .disabled(character.name.isEmpty)
 
                 GameButton("btn_cancel.bmp") {
-                    gameSession.cancelMakeChar()
+                    gameSession.cancelMakeCharacter()
                 }
             }
             .padding(.horizontal, 5)
             .padding(.vertical, 4)
         }
         .task {
-            char.job = 0            // Novice
-            char.head = 0           // First hair style in the list
-            char.headPalette = 0    // Default hair color
-            char.str = 5
-            char.agi = 5
-            char.vit = 5
-            char.int = 5
-            char.dex = 5
-            char.luk = 5
-            char.charNum = slot
+            character.job = 0           // Novice
+            character.head = 0          // First hair style in the list
+            character.headPalette = 0   // Default hair color
+            character.str = 5
+            character.agi = 5
+            character.vit = 5
+            character.int = 5
+            character.dex = 5
+            character.luk = 5
+            character.charNum = slot
 
             if let account = gameSession.account {
-                char.sex = account.sex
+                character.sex = account.sex
             }
         }
-        .task(id: "\(char.head), \(char.headPalette)") {
-            characterAnimation = await gameSession.characterAnimation(for: char)
+        .task(id: "\(character.head), \(character.headPalette)") {
+            characterAnimation = await gameSession.characterAnimation(for: character)
         }
     }
 }
 
 #Preview {
-    CharMakeView(slot: 0)
+    CharacterMakeView(slot: 0)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
 }

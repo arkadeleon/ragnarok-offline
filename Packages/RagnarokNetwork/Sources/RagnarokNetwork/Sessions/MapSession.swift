@@ -67,7 +67,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     }
 
     public private(set) var account: AccountInfo
-    public let char: CharInfo
+    public let character: CharacterInfo
 
     let client: Client
     let eventSubject = PassthroughSubject<MapSession.Event, Never>()
@@ -82,12 +82,12 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     private var timerTask: Task<Void, Never>?
 
-    public init(account: AccountInfo, char: CharInfo, mapServer: MapServerInfo) {
+    public init(account: AccountInfo, character: CharacterInfo, mapServer: MapServerInfo) {
         self.account = account
-        self.char = char
+        self.character = character
         self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
 
-        self.playerStatus = CharacterStatus(char: char)
+        self.playerStatus = CharacterStatus(character: character)
         self.inventory = Inventory()
     }
 
@@ -179,10 +179,10 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     private func enter() {
         var packet = PACKET_CZ_ENTER()
         packet.accountID = account.accountID
-        packet.charID = char.charID
+        packet.charID = character.charID
         packet.loginID1 = account.loginID1
         packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
-        packet.sex = account.sex
+        packet.sex = UInt8(account.sex)
 
         client.sendPacket(packet)
 
@@ -470,7 +470,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 //            PACKET_CZ_CLAN_CHAT
         } else {
             var packet = PACKET_CZ_REQUEST_CHAT()
-            packet.message = "\(char.name) : \(message)"
+            packet.message = "\(character.name) : \(message)"
 
             client.sendPacket(packet)
         }

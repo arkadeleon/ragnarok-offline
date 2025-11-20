@@ -1,31 +1,31 @@
 //
-//  CharSelectView.swift
+//  CharacterSelectView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2024/9/10.
 //
 
-import RagnarokPackets
+import RagnarokNetwork
 import RagnarokSprite
 import SwiftUI
 
-struct CharSelectView: View {
-    var chars: [CharInfo]
+struct CharacterSelectView: View {
+    var characters: [CharacterInfo]
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var character1: CharInfo?
+    @State private var character1: CharacterInfo?
     @State private var characterAnimation1: SpriteRenderer.Animation?
 
-    @State private var character2: CharInfo?
+    @State private var character2: CharacterInfo?
     @State private var characterAnimation2: SpriteRenderer.Animation?
 
-    @State private var character3: CharInfo?
+    @State private var character3: CharacterInfo?
     @State private var characterAnimation3: SpriteRenderer.Animation?
 
-    @State private var selectedSlot: UInt8?
+    @State private var selectedSlot: Int?
 
-    private var selectedCharacter: CharInfo? {
+    private var selectedCharacter: CharacterInfo? {
         guard let selectedSlot else {
             return nil
         }
@@ -146,13 +146,13 @@ struct CharSelectView: View {
             HStack(spacing: 3) {
                 if let selectedSlot, selectedCharacter == nil {
                     GameButton("btn_make.bmp") {
-                        gameSession.makeChar(slot: selectedSlot)
+                        gameSession.makeCharacter(slot: selectedSlot)
                     }
                 }
 
                 if let selectedCharacter {
                     GameButton("btn_ok.bmp") {
-                        gameSession.charSession?.selectChar(slot: selectedCharacter.charNum)
+                        gameSession.charSession?.selectCharacter(slot: selectedCharacter.charNum)
                     }
                 }
 
@@ -163,34 +163,34 @@ struct CharSelectView: View {
             .padding(.vertical, 4)
         }
         .task {
-            character1 = chars.count > 0 ? chars[0] : nil
+            character1 = characters.count > 0 ? characters[0] : nil
             characterAnimation1 = await gameSession.characterAnimation(forSlot: 0)
         }
         .task {
-            character2 = chars.count > 1 ? chars[1] : nil
+            character2 = characters.count > 1 ? characters[1] : nil
             characterAnimation2 = await gameSession.characterAnimation(forSlot: 1)
         }
         .task {
-            character3 = chars.count > 2 ? chars[2] : nil
+            character3 = characters.count > 2 ? characters[2] : nil
             characterAnimation3 = await gameSession.characterAnimation(forSlot: 2)
         }
     }
 }
 
 #Preview {
-    let char = {
-        var char = CharInfo()
-        char.name = "Leon"
-        char.str = 1
-        char.agi = 1
-        char.vit = 1
-        char.int = 1
-        char.dex = 1
-        char.luk = 1
-        return char
+    let character = {
+        var character = CharacterInfo()
+        character.name = "Leon"
+        character.str = 1
+        character.agi = 1
+        character.vit = 1
+        character.int = 1
+        character.dex = 1
+        character.luk = 1
+        return character
     }()
 
-    CharSelectView(chars: [char])
+    CharacterSelectView(characters: [character])
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
 }

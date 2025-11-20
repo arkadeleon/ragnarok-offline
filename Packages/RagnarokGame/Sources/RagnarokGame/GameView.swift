@@ -66,7 +66,7 @@ public struct GameView: View {
 
     private var showsBackground: Bool {
         switch gameSession.phase {
-        case .login, .charServerList, .charSelect, .charMake:
+        case .login, .charServerList, .characterSelect, .characterMake:
             true
         case .mapLoading, .map:
             false
@@ -79,10 +79,10 @@ public struct GameView: View {
             LoginView()
         case .charServerList(let charServers):
             CharServerListView(charServers: charServers)
-        case .charSelect(let chars):
-            CharSelectView(chars: chars)
-        case .charMake(let slot):
-            CharMakeView(slot: slot)
+        case .characterSelect(let characters):
+            CharacterSelectView(characters: characters)
+        case .characterMake(let slot):
+            CharacterMakeView(slot: slot)
         case .mapLoading(let progress):
             MapLoadingView(progress: progress)
         case .map(let scene):

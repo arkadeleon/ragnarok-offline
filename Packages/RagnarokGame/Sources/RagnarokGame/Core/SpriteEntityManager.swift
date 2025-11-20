@@ -7,7 +7,6 @@
 
 import RagnarokConstants
 import RagnarokNetwork
-import RagnarokPackets
 import RagnarokResources
 import RagnarokSprite
 import RealityKit
@@ -127,16 +126,16 @@ final class SpriteEntityManager {
 }
 
 extension ComposedSprite.Configuration {
-    init(char: CharInfo) {
-        self.init(jobID: Int(char.job))
-        self.gender = Gender(rawValue: Int(char.sex)) ?? .female
-        self.hairStyle = Int(char.head)
-        self.hairColor = Int(char.headPalette)
-        self.clothesColor = Int(char.bodyPalette)
-        self.weapon = Int(char.weapon)
-        self.shield = Int(char.shield)
-        self.headgears = [Int(char.accessory2), Int(char.accessory3), Int(char.accessory)]
-        self.garment = Int(char.robePalette)
+    init(character: CharacterInfo) {
+        self.init(jobID: character.job)
+        self.gender = Gender(rawValue: character.sex) ?? .female
+        self.hairStyle = character.head
+        self.hairColor = character.headPalette
+        self.clothesColor = character.bodyPalette
+        self.weapon = character.weapon
+        self.shield = character.shield
+        self.headgears = [character.accessory2, character.accessory3, character.accessory]
+        self.garment = character.robePalette
 
         self.updateHairStyle()
     }

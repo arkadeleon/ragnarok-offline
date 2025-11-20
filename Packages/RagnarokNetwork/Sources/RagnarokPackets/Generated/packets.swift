@@ -16520,6 +16520,152 @@ public struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO: CodablePacket {
     }
 }
 
+public struct CHARACTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 8 + 4 + 8 + 4 + 4 + 4 + 4 + 4 + 4 + 2 + 8 + 8 + 8 + 8 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 24 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 2 + 16 + 4 + 4 + 4 + 4 + 1)
+    }
+    public var GID: UInt32 = 0
+    public var exp: Int64 = 0
+    public var money: Int32 = 0
+    public var jobexp: Int64 = 0
+    public var joblevel: Int32 = 0
+    public var bodystate: Int32 = 0
+    public var healthstate: Int32 = 0
+    public var effectstate: Int32 = 0
+    public var virtue: Int32 = 0
+    public var honor: Int32 = 0
+    public var jobpoint: Int16 = 0
+    public var hp: Int64 = 0
+    public var maxhp: Int64 = 0
+    public var sp: Int64 = 0
+    public var maxsp: Int64 = 0
+    public var speed: Int16 = 0
+    public var job: Int16 = 0
+    public var head: Int16 = 0
+    public var body: Int16 = 0
+    public var weapon: Int16 = 0
+    public var level: Int16 = 0
+    public var sppoint: Int16 = 0
+    public var accessory: Int16 = 0
+    public var shield: Int16 = 0
+    public var accessory2: Int16 = 0
+    public var accessory3: Int16 = 0
+    public var headpalette: Int16 = 0
+    public var bodypalette: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public var Str: UInt8 = 0
+    public var Agi: UInt8 = 0
+    public var Vit: UInt8 = 0
+    public var Int: UInt8 = 0
+    public var Dex: UInt8 = 0
+    public var Luk: UInt8 = 0
+    public var CharNum: UInt8 = 0
+    public var hairColor: UInt8 = 0
+    public var bIsChangedCharName: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapName: String
+    public var DelRevDate: Int32 = 0
+    public var robePalette: Int32 = 0
+    public var chr_slot_changeCnt: Int32 = 0
+    public var chr_name_changeCnt: Int32 = 0
+    public var sex: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        GID = try decoder.decode(UInt32.self)
+        exp = try decoder.decode(Int64.self)
+        money = try decoder.decode(Int32.self)
+        jobexp = try decoder.decode(Int64.self)
+        joblevel = try decoder.decode(Int32.self)
+        bodystate = try decoder.decode(Int32.self)
+        healthstate = try decoder.decode(Int32.self)
+        effectstate = try decoder.decode(Int32.self)
+        virtue = try decoder.decode(Int32.self)
+        honor = try decoder.decode(Int32.self)
+        jobpoint = try decoder.decode(Int16.self)
+        hp = try decoder.decode(Int64.self)
+        maxhp = try decoder.decode(Int64.self)
+        sp = try decoder.decode(Int64.self)
+        maxsp = try decoder.decode(Int64.self)
+        speed = try decoder.decode(Int16.self)
+        job = try decoder.decode(Int16.self)
+        head = try decoder.decode(Int16.self)
+        body = try decoder.decode(Int16.self)
+        weapon = try decoder.decode(Int16.self)
+        level = try decoder.decode(Int16.self)
+        sppoint = try decoder.decode(Int16.self)
+        accessory = try decoder.decode(Int16.self)
+        shield = try decoder.decode(Int16.self)
+        accessory2 = try decoder.decode(Int16.self)
+        accessory3 = try decoder.decode(Int16.self)
+        headpalette = try decoder.decode(Int16.self)
+        bodypalette = try decoder.decode(Int16.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        Str = try decoder.decode(UInt8.self)
+        Agi = try decoder.decode(UInt8.self)
+        Vit = try decoder.decode(UInt8.self)
+        Int = try decoder.decode(UInt8.self)
+        Dex = try decoder.decode(UInt8.self)
+        Luk = try decoder.decode(UInt8.self)
+        CharNum = try decoder.decode(UInt8.self)
+        hairColor = try decoder.decode(UInt8.self)
+        bIsChangedCharName = try decoder.decode(Int16.self)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        DelRevDate = try decoder.decode(Int32.self)
+        robePalette = try decoder.decode(Int32.self)
+        chr_slot_changeCnt = try decoder.decode(Int32.self)
+        chr_name_changeCnt = try decoder.decode(Int32.self)
+        sex = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(GID)
+        try encoder.encode(exp)
+        try encoder.encode(money)
+        try encoder.encode(jobexp)
+        try encoder.encode(joblevel)
+        try encoder.encode(bodystate)
+        try encoder.encode(healthstate)
+        try encoder.encode(effectstate)
+        try encoder.encode(virtue)
+        try encoder.encode(honor)
+        try encoder.encode(jobpoint)
+        try encoder.encode(hp)
+        try encoder.encode(maxhp)
+        try encoder.encode(sp)
+        try encoder.encode(maxsp)
+        try encoder.encode(speed)
+        try encoder.encode(job)
+        try encoder.encode(head)
+        try encoder.encode(body)
+        try encoder.encode(weapon)
+        try encoder.encode(level)
+        try encoder.encode(sppoint)
+        try encoder.encode(accessory)
+        try encoder.encode(shield)
+        try encoder.encode(accessory2)
+        try encoder.encode(accessory3)
+        try encoder.encode(headpalette)
+        try encoder.encode(bodypalette)
+        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(Str)
+        try encoder.encode(Agi)
+        try encoder.encode(Vit)
+        try encoder.encode(Int)
+        try encoder.encode(Dex)
+        try encoder.encode(Luk)
+        try encoder.encode(CharNum)
+        try encoder.encode(hairColor)
+        try encoder.encode(bIsChangedCharName)
+        try encoder.encode(mapName, lengthOfBytes: 16)
+        try encoder.encode(DelRevDate)
+        try encoder.encode(robePalette)
+        try encoder.encode(chr_slot_changeCnt)
+        try encoder.encode(chr_name_changeCnt)
+        try encoder.encode(sex)
+    }
+}
+
 public struct EQUIPSLOTINFO: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
         ((4 * 4))

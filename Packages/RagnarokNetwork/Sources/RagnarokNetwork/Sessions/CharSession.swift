@@ -13,18 +13,18 @@ import RagnarokPackets
 final public class CharSession: SessionProtocol, @unchecked Sendable {
     public enum Event: Sendable {
         // Char server events
-        case charServerAccepted(chars: [CharInfo])
+        case charServerAccepted(characters: [CharacterInfo])
         case charServerRefused
         case charServerNotifiedMapServer(charID: UInt32, mapName: String, mapServer: MapServerInfo)
         case charServerNotifiedAccessibleMaps(accessibleMaps: [AccessibleMapInfo])
 
-        // Char events
-        case makeCharAccepted(char: CharInfo)
-        case makeCharRefused
-        case deleteCharAccepted
-        case deleteCharRefused
-        case deleteCharCancelled
-        case deleteCharReserved(deletionDate: UInt32)
+        // Character events
+        case makeCharacterAccepted(character: CharacterInfo)
+        case makeCharacterRefused
+        case deleteCharacterAccepted
+        case deleteCharacterRefused
+        case deleteCharacterCancelled
+        case deleteCharacterReserved(deletionDate: UInt32)
 
         // Error events
         case authenticationBanned(message: BannedMessage)
@@ -98,7 +98,8 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToCharServerPackets(with subscription: inout ClientSubscription) {
         // 0x6b
         subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [unowned self] packet in
-            let event = CharSession.Event.charServerAccepted(chars: packet.chars)
+            let characters = packet.chars.map(CharacterInfo.init(from:))
+            let event = CharSession.Event.charServerAccepted(characters: characters)
             self.postEvent(event)
         }
 
@@ -113,7 +114,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
             let event = CharSession.Event.charServerNotifiedMapServer(
                 charID: packet.charID,
                 mapName: packet.mapName,
-                mapServer: packet.mapServer
+                mapServer: MapServerInfo(from: packet)
             )
             self.postEvent(event)
         }
@@ -130,48 +131,49 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToCharPackets(with subscription: inout ClientSubscription) {
         // 0x6d
         subscription.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
-            let event = CharSession.Event.makeCharAccepted(char: packet.char)
+            let character = CharacterInfo(from: packet.char)
+            let event = CharSession.Event.makeCharacterAccepted(character: character)
             self.postEvent(event)
         }
 
         // 0x6e
         subscription.subscribe(to: PACKET_HC_REFUSE_MAKECHAR.self) { [unowned self] packet in
-            let event = CharSession.Event.makeCharRefused
+            let event = CharSession.Event.makeCharacterRefused
             self.postEvent(event)
         }
 
         // 0x6f
         subscription.subscribe(to: PACKET_HC_ACCEPT_DELETECHAR.self) { [unowned self] packet in
-            let event = CharSession.Event.deleteCharAccepted
+            let event = CharSession.Event.deleteCharacterAccepted
             self.postEvent(event)
         }
 
         // 0x70
         subscription.subscribe(to: PACKET_HC_REFUSE_DELETECHAR.self) { [unowned self] packet in
-            let event = CharSession.Event.deleteCharRefused
+            let event = CharSession.Event.deleteCharacterRefused
             self.postEvent(event)
         }
 
         // 0x82a
         subscription.subscribe(to: PACKET_HC_DELETE_CHAR.self) { [unowned self] packet in
             if packet.result == 1 {
-                let event = CharSession.Event.deleteCharAccepted
+                let event = CharSession.Event.deleteCharacterAccepted
                 self.postEvent(event)
             } else {
-                let event = CharSession.Event.deleteCharRefused
+                let event = CharSession.Event.deleteCharacterRefused
                 self.postEvent(event)
             }
         }
 
         // 0x82c
         subscription.subscribe(to: PACKET_HC_DELETE_CHAR_CANCEL.self) { [unowned self] packet in
-            let event = CharSession.Event.deleteCharCancelled
+            let event = CharSession.Event.deleteCharacterCancelled
             self.postEvent(event)
         }
 
         // 0x828
         subscription.subscribe(to: PACKET_HC_DELETE_CHAR_RESERVED.self) { [unowned self] packet in
-            let event = CharSession.Event.deleteCharReserved(deletionDate: packet.deletionDate)
+            let event = CharSession.Event.deleteCharacterReserved(deletionDate: packet.deletionDate)
             self.postEvent(event)
         }
     }
@@ -195,7 +197,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         packet.loginID1 = account.loginID1
         packet.loginID2 = account.loginID2
         packet.clientType = account.langType
-        packet.sex = account.sex
+        packet.sex = UInt8(account.sex)
 
         client.sendPacket(packet)
 
@@ -225,32 +227,32 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    /// Make char.
+    /// Make character.
     ///
     /// Send ``PACKET_CH_MAKE_CHAR``
     ///
     /// Receive ``PACKET_HC_ACCEPT_MAKECHAR`` or
     ///         ``PACKET_HC_REFUSE_MAKECHAR``
-    public func makeChar(char: CharInfo) {
+    public func makeCharacter(character: CharacterInfo) {
         var packet = PACKET_CH_MAKE_CHAR()
         packet.packetType = HEADER_CH_MAKE_CHAR
-        packet.name = char.name
-        packet.str = char.str
-        packet.agi = char.agi
-        packet.vit = char.vit
-        packet.int = char.int
-        packet.dex = char.dex
-        packet.luk = char.luk
-        packet.slot = char.charNum
-        packet.hairColor = char.headPalette
-        packet.hairStyle = char.head
-        packet.job = char.job
-        packet.sex = char.sex
+        packet.name = character.name
+        packet.str = UInt8(character.str)
+        packet.agi = UInt8(character.agi)
+        packet.vit = UInt8(character.vit)
+        packet.int = UInt8(character.int)
+        packet.dex = UInt8(character.dex)
+        packet.luk = UInt8(character.luk)
+        packet.slot = UInt8(character.charNum)
+        packet.hairColor = UInt16(character.headPalette)
+        packet.hairStyle = UInt16(character.head)
+        packet.job = UInt16(character.job)
+        packet.sex = UInt8(character.sex)
 
         client.sendPacket(packet)
     }
 
-    /// Delete char.
+    /// Delete character.
     ///
     /// Send ``PACKET_CH_DELETE_CHAR``
     ///
@@ -266,7 +268,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_HC_CHARLIST_NOTIFY`` +
     ///         ``PACKET_HC_BLOCK_CHARACTER`` +
     ///         ``PACKET_HC_DELETE_CHAR``
-    public func deleteChar(charID: UInt32) {
+    public func deleteCharacter(charID: UInt32) {
         var packet = PACKET_CH_DELETE_CHAR()
         packet.packetType = HEADER_CH_DELETE_CHAR
         packet.charID = charID
@@ -300,7 +302,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         client.sendPacket(packet)
     }
 
-    /// Select char.
+    /// Select character.
     ///
     /// Send ``PACKET_CH_SELECT_CHAR``
     ///
@@ -311,10 +313,10 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_HC_REFUSE_ENTER`` when refused.
     ///
     /// Receive ``PACKET_HC_NOTIFY_ZONESVR`` when accepted.
-    public func selectChar(slot: UInt8) {
+    public func selectCharacter(slot: Int) {
         var packet = PACKET_CH_SELECT_CHAR()
         packet.packetType = HEADER_CH_SELECT_CHAR
-        packet.slot = slot
+        packet.slot = UInt8(slot)
 
         client.sendPacket(packet)
     }

@@ -11,12 +11,11 @@ import rAthenaMap
 import rAthenaResources
 import XCTest
 @testable import RagnarokNetwork
-@testable import RagnarokPackets
 
 final class NetworkSessionTests: XCTestCase {
     var account: AccountInfo!
     var charServers: [CharServerInfo]!
-    var char: CharInfo!
+    var character: CharacterInfo!
     var mapServer: MapServerInfo!
 
     override func setUp() async throws {
@@ -85,48 +84,48 @@ final class NetworkSessionTests: XCTestCase {
         charSession.start()
 
         for await event in charSession.events {
-            if case .charServerAccepted(let chars) = event {
-                XCTAssertEqual(chars.count, 0)
+            if case .charServerAccepted(let characters) = event {
+                XCTAssertEqual(characters.count, 0)
                 break
             }
         }
 
-        // MARK: - Make a char
+        // MARK: - Make a character
 
-        char = CharInfo()
-        char.name = "Leon"
-        char.str = 1
-        char.agi = 1
-        char.vit = 1
-        char.int = 1
-        char.dex = 1
-        char.luk = 1
-        charSession.makeChar(char: char)
+        character = CharacterInfo()
+        character.name = "Leon"
+        character.str = 1
+        character.agi = 1
+        character.vit = 1
+        character.int = 1
+        character.dex = 1
+        character.luk = 1
+        charSession.makeCharacter(character: character)
 
         for await event in charSession.events {
-            if case .makeCharAccepted(let char) = event {
-                self.char = char
-                XCTAssertEqual(char.name, "Leon")
-                XCTAssertEqual(char.speed, 150)
+            if case .makeCharacterAccepted(let character) = event {
+                self.character = character
+                XCTAssertEqual(character.name, "Leon")
+                XCTAssertEqual(character.speed, 150)
                 break
             }
         }
 
-        // MARK: - Select a char
+        // MARK: - Select a character
 
-        charSession.selectChar(slot: 0)
+        charSession.selectCharacter(slot: 0)
 
         for await event in charSession.events {
             if case .charServerNotifiedMapServer(let charID, let mapName, let mapServer) = event {
                 self.mapServer = mapServer
-                XCTAssertEqual(charID, char.charID)
+                XCTAssertEqual(charID, character.charID)
                 break
             }
         }
 
         // MARK: - Start map session
 
-        let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
+        let mapSession = MapSession(account: account, character: character, mapServer: mapServer)
 
         mapSession.start()
 

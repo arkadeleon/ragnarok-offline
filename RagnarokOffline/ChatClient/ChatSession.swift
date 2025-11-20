@@ -19,7 +19,7 @@ final class ChatSession {
     enum Phase {
         case login
         case selectCharServer
-        case selectChar
+        case selectCharacter
         case map
     }
 
@@ -35,8 +35,8 @@ final class ChatSession {
             [.login]
         case .selectCharServer:
             [.selectCharServer]
-        case .selectChar:
-            [.makeChar, .deleteChar, .selectChar]
+        case .selectCharacter:
+            [.makeCharacter, .deleteCharacter, .selectCharacter]
         case .map:
             [.moveUp, .moveDown, .moveLeft, .moveRight]
         }
@@ -49,7 +49,7 @@ final class ChatSession {
     private var charServers: [CharServerInfo] = []
 
     @ObservationIgnored
-    private var chars: [CharInfo] = []
+    private var characters: [CharacterInfo] = []
 
     @ObservationIgnored
     private var loginSession: LoginSession?
@@ -89,24 +89,24 @@ final class ChatSession {
 
             let charServer = charServers[serverNumber - 1]
             startCharSession(charServer)
-        case .makeChar:
-            var char = CharInfo()
-            char.name = parameters[0]
-            char.str = UInt8(parameters[1]) ?? 1
-            char.agi = UInt8(parameters[2]) ?? 1
-            char.vit = UInt8(parameters[3]) ?? 1
-            char.int = UInt8(parameters[4]) ?? 1
-            char.dex = UInt8(parameters[5]) ?? 1
-            char.luk = UInt8(parameters[6]) ?? 1
-            char.charNum = UInt8(parameters[7]) ?? 0
+        case .makeCharacter:
+            var character = CharacterInfo()
+            character.name = parameters[0]
+            character.str = Int(parameters[1]) ?? 1
+            character.agi = Int(parameters[2]) ?? 1
+            character.vit = Int(parameters[3]) ?? 1
+            character.int = Int(parameters[4]) ?? 1
+            character.dex = Int(parameters[5]) ?? 1
+            character.luk = Int(parameters[6]) ?? 1
+            character.charNum = Int(parameters[7]) ?? 0
 
-            charSession?.makeChar(char: char)
-        case .deleteChar:
+            charSession?.makeCharacter(character: character)
+        case .deleteCharacter:
             break
-        case .selectChar:
-            let slot = UInt8(parameters[0]) ?? 0
+        case .selectCharacter:
+            let slot = Int(parameters[0]) ?? 0
 
-            charSession?.selectChar(slot: slot)
+            charSession?.selectCharacter(slot: slot)
         case .moveUp:
             if let position = playerPosition {
                 mapSession?.requestMove(to: [position.x, position.y + 1])
@@ -208,23 +208,23 @@ final class ChatSession {
 
     private func handleCharEvent(_ event: CharSession.Event) {
         switch event {
-        case .charServerAccepted(let chars):
-            self.chars = chars
-            phase = .selectChar
+        case .charServerAccepted(let characters):
+            self.characters = characters
+            phase = .selectCharacter
 
             messages.append(.serverText("Accepted"))
 
-            for char in chars {
+            for character in characters {
                 let message = """
-                Char ID: \(char.charID)
-                Name: \(char.name)
-                Str: \(char.str)
-                Agi: \(char.agi)
-                Vit: \(char.vit)
-                Int: \(char.int)
-                Dex: \(char.dex)
-                Luk: \(char.luk)
-                Slot: \(char.charNum)
+                Char ID: \(character.charID)
+                Name: \(character.name)
+                Str: \(character.str)
+                Agi: \(character.agi)
+                Vit: \(character.vit)
+                Int: \(character.int)
+                Dex: \(character.dex)
+                Luk: \(character.luk)
+                Slot: \(character.charNum)
                 """
                 messages.append(.serverText(message))
             }
@@ -238,17 +238,17 @@ final class ChatSession {
             startMapSession(charID: charID, mapName: mapName, mapServer: mapServer)
         case .charServerNotifiedAccessibleMaps(let accessibleMaps):
             break
-        case .makeCharAccepted(let char):
+        case .makeCharacterAccepted(let character):
             messages.append(.serverText("Accepted"))
-        case .makeCharRefused:
+        case .makeCharacterRefused:
             messages.append(.serverText("Refused"))
-        case .deleteCharAccepted:
+        case .deleteCharacterAccepted:
             break
-        case .deleteCharRefused:
+        case .deleteCharacterRefused:
             break
-        case .deleteCharCancelled:
+        case .deleteCharacterCancelled:
             break
-        case .deleteCharReserved(let deletionDate):
+        case .deleteCharacterReserved(let deletionDate):
             break
         case .authenticationBanned(let message):
             messages.append(.serverText("Banned"))
@@ -268,11 +268,11 @@ final class ChatSession {
 
     private func startMapSession(charID: UInt32, mapName: String, mapServer: MapServerInfo) {
         guard let account = charSession?.account,
-              let char = chars.first(where: { $0.charID == charID }) else {
+              let character = characters.first(where: { $0.charID == charID }) else {
             return
         }
 
-        let mapSession = MapSession(account: account, char: char, mapServer: mapServer)
+        let mapSession = MapSession(account: account, character: character, mapServer: mapServer)
 
         Task {
             for await event in mapSession.events {
