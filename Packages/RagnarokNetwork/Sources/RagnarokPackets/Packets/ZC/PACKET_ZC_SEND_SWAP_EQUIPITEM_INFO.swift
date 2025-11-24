@@ -9,6 +9,7 @@ import BinaryIO
 
 public let HEADER_ZC_SEND_SWAP_EQUIPITEM_INFO: Int16 = 0xa9b
 
+/// See `clif_equipswitch_list`
 public struct PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO: DecodablePacket {
     public var packetType: Int16
     public var packetLength: Int16
