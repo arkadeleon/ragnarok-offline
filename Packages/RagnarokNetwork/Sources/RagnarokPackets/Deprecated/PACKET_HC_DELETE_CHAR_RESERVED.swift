@@ -8,10 +8,12 @@
 import BinaryIO
 import CoreFoundation
 
-public let HEADER_HC_DELETE_CHAR_RESERVED: Int16 = 0x828
+@available(*, deprecated, message: "Use HEADER_HC_DELETE_CHAR3_RESERVED instead.")
+public let _HEADER_HC_DELETE_CHAR_RESERVED: Int16 = 0x828
 
 /// See `chclif_char_delete2_ack`
-public struct PACKET_HC_DELETE_CHAR_RESERVED: DecodablePacket {
+@available(*, deprecated, message: "Use PACKET_HC_DELETE_CHAR3_RESERVED instead.")
+public struct _PACKET_HC_DELETE_CHAR_RESERVED: DecodablePacket {
     public var packetType: Int16
     public var charID: UInt32
     public var result: UInt32

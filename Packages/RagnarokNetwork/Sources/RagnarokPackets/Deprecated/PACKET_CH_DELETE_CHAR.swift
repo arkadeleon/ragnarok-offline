@@ -7,7 +7,8 @@
 
 import BinaryIO
 
-public let HEADER_CH_DELETE_CHAR: Int16 = {
+@available(*, deprecated, message: "Use HEADER_CH_DELETE_CHAR3 instead.")
+public let _HEADER_CH_DELETE_CHAR: Int16 = {
     if PACKET_VERSION > 20100803 {
         0x829
     } else if PACKET_VERSION == 20040419 {
@@ -18,7 +19,8 @@ public let HEADER_CH_DELETE_CHAR: Int16 = {
 }()
 
 /// See `chclif_parse_delchar` and `chclif_parse_char_delete2_accept`
-public struct PACKET_CH_DELETE_CHAR: EncodablePacket {
+@available(*, deprecated, message: "Use PACKET_CH_DELETE_CHAR3 instead.")
+public struct _PACKET_CH_DELETE_CHAR: EncodablePacket {
     public var packetType: Int16 = 0
     public var charID: UInt32 = 0
     public var email: String = ""

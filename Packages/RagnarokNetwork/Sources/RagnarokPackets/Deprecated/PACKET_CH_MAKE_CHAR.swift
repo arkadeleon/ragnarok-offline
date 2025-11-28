@@ -7,7 +7,8 @@
 
 import BinaryIO
 
-public let HEADER_CH_MAKE_CHAR: Int16 = {
+@available(*, deprecated, message: "Use HEADER_CH_MAKE_CHAR instead.")
+public let _HEADER_CH_MAKE_CHAR: Int16 = {
     if PACKET_VERSION >= 20151001 {
         0xa39
     } else if PACKET_VERSION >= 20120307 {
@@ -18,7 +19,8 @@ public let HEADER_CH_MAKE_CHAR: Int16 = {
 }()
 
 /// See `chclif_parse_createnewchar`
-public struct PACKET_CH_MAKE_CHAR: EncodablePacket {
+@available(*, deprecated, message: "Use PACKET_CH_MAKE_CHAR instead.")
+public struct _PACKET_CH_MAKE_CHAR: EncodablePacket {
     public var packetType: Int16 = 0
     public var name: String = ""
     public var str: UInt8 = 0

@@ -8,26 +8,56 @@
 import BinaryIO
 
 public let HEADER_CA_LOGIN: Int16 = 0x64
+public let HEADER_CH_SELECT_CHAR: Int16 = 0x66
+public let HEADER_CH_MAKE_CHAR: Int16 = 0xa39
+public let HEADER_CH_DELETE_CHAR: Int16 = 0x1fb
 public let HEADER_AC_ACCEPT_LOGIN: Int16 = 0xac4
 public let HEADER_AC_REFUSE_LOGIN: Int16 = 0x83e
+public let HEADER_HC_ACCEPT_ENTER: Int16 = 0x6b
+public let HEADER_HC_REFUSE_ENTER: Int16 = 0x6c
+public let HEADER_HC_ACCEPT_MAKECHAR: Int16 = 0xb6f
+public let HEADER_HC_REFUSE_MAKECHAR: Int16 = 0x6e
+public let HEADER_HC_ACCEPT_DELETECHAR: Int16 = 0x6f
+public let HEADER_HC_REFUSE_DELETECHAR: Int16 = 0x70
+public let HEADER_HC_NOTIFY_ZONESVR: Int16 = 0xac5
 public let HEADER_SC_NOTIFY_BAN: Int16 = 0x81
+public let HEADER_PING: Int16 = 0x187
 public let HEADER_CA_REQ_HASH: Int16 = 0x1db
 public let HEADER_AC_ACK_HASH: Int16 = 0x1dc
 public let HEADER_CA_LOGIN2: Int16 = 0x1dd
 public let HEADER_CA_LOGIN3: Int16 = 0x1fa
 public let HEADER_CA_CONNECT_INFO_CHANGED: Int16 = 0x200
 public let HEADER_CA_EXE_HASHCHECK: Int16 = 0x204
+public let HEADER_HC_BLOCK_CHARACTER: Int16 = 0x20d
 public let HEADER_CA_LOGIN_PCBANG: Int16 = 0x277
 public let HEADER_CA_LOGIN4: Int16 = 0x27c
+public let HEADER_CH_REQ_IS_VALID_CHARNAME: Int16 = 0x28d
+public let HEADER_HC_ACK_IS_VALID_CHARNAME: Int16 = 0x28e
+public let HEADER_CH_REQ_CHANGE_CHARNAME: Int16 = 0x8fc
+public let HEADER_HC_ACK_CHANGE_CHARNAME: Int16 = 0x8fd
 public let HEADER_CA_LOGIN_CHANNEL: Int16 = 0x2b0
 public let HEADER_CA_SSO_LOGIN_REQ: Int16 = 0x825
-public let HEADER_CT_AUTH: Int16 = 0xacf
-public let HEADER_TC_RESULT: Int16 = 0xae3
-public let HEADER_HC_ACK_CHANGE_CHARACTER_SLOT: Int16 = 0xb70
-public let HEADER_HC_ACK_CHARINFO_PER_PAGE: Int16 = 0xb72
-public let HEADER_HC_ACCEPT_MAKECHAR: Int16 = 0xb6f
+public let HEADER_CH_DELETE_CHAR3_RESERVED: Int16 = 0x827
+public let HEADER_HC_DELETE_CHAR3_RESERVED: Int16 = 0x828
+public let HEADER_CH_DELETE_CHAR3: Int16 = 0x829
+public let HEADER_HC_DELETE_CHAR3: Int16 = 0x82a
+public let HEADER_CH_DELETE_CHAR3_CANCEL: Int16 = 0x82b
+public let HEADER_HC_DELETE_CHAR3_CANCEL: Int16 = 0x82c
+public let HEADER_HC_ACCEPT_ENTER2: Int16 = 0x82d
 public let HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME: Int16 = 0x840
 public let HEADER_CH_SELECT_ACCESSIBLE_MAPNAME: Int16 = 0x841
+public let HEADER_CH_SECOND_PASSWD_ACK: Int16 = 0x8b8
+public let HEADER_HC_SECOND_PASSWD_LOGIN: Int16 = 0x8b9
+public let HEADER_CH_MAKE_SECOND_PASSWD: Int16 = 0x8ba
+public let HEADER_CH_EDIT_SECOND_PASSWD: Int16 = 0x8be
+public let HEADER_CH_AVAILABLE_SECOND_PASSWD: Int16 = 0x8c5
+public let HEADER_CH_REQ_CHANGE_CHARACTER_SLOT: Int16 = 0x8d4
+public let HEADER_HC_ACK_CHANGE_CHARACTER_SLOT: Int16 = 0xb70
+public let HEADER_HC_ACK_CHARINFO_PER_PAGE: Int16 = 0xb72
+public let HEADER_HC_CHARLIST_NOTIFY: Int16 = 0x9a0
+public let HEADER_CH_CHARLIST_REQ: Int16 = 0x9a1
+public let HEADER_CT_AUTH: Int16 = 0xacf
+public let HEADER_TC_RESULT: Int16 = 0xae3
 public let HEADER_ZC_PAR_4JOB_CHANGE: Int16 = 0xb25
 public let HEADER_ZC_PAR_CHANGE: Int16 = 0xb0
 public let HEADER_ZC_LONGPAR_CHANGE: Int16 = 0xb1
@@ -621,6 +651,80 @@ public struct PACKET_CA_LOGIN: CodablePacket {
     }
 }
 
+public struct PACKET_CH_SELECT_CHAR: CodablePacket {
+    public static var size: Int {
+        (2 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var slot: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        slot = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(slot)
+    }
+}
+
+public struct PACKET_CH_MAKE_CHAR: CodablePacket {
+    public static var size: Int {
+        (2 + 24 + 1 + 2 + 2 + 4 + 1)
+    }
+    public var packetType: Int16 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var name: String
+    public var slot: UInt8 = 0
+    public var hair_color: UInt16 = 0
+    public var hair_style: UInt16 = 0
+    public var job: UInt32 = 0
+    public var sex: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        slot = try decoder.decode(UInt8.self)
+        hair_color = try decoder.decode(UInt16.self)
+        hair_style = try decoder.decode(UInt16.self)
+        job = try decoder.decode(UInt32.self)
+        sex = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(slot)
+        try encoder.encode(hair_color)
+        try encoder.encode(hair_style)
+        try encoder.encode(job)
+        try encoder.encode(sex)
+    }
+}
+
+public struct PACKET_CH_DELETE_CHAR: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 50)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 50)
+    public var key: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+        key = try decoder.decode(String.self, lengthOfBytes: 50)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+        try encoder.encode(key, lengthOfBytes: 50)
+    }
+}
+
 public struct PACKET_AC_ACCEPT_LOGIN_sub: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
         (4 + 2 + 20 + 2 + 2 + 2 + (1 * 128))
@@ -722,6 +826,159 @@ public struct PACKET_AC_REFUSE_LOGIN: CodablePacket {
     }
 }
 
+public struct PACKET_HC_ACCEPT_ENTER: CodablePacket {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var total: UInt8 = 0
+    public var premium_start: UInt8 = 0
+    public var premium_end: UInt8 = 0
+    @FixedLengthString(lengthOfBytes: 20)
+    public var `extension`: String
+    public var characters: [CHARACTER_INFO] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        total = try decoder.decode(UInt8.self)
+        premium_start = try decoder.decode(UInt8.self)
+        premium_end = try decoder.decode(UInt8.self)
+        `extension` = try decoder.decode(String.self, lengthOfBytes: 20)
+        characters = try decoder.decode([CHARACTER_INFO].self, count: (Int(packetLength) - (2 + 2 + 1 + 1 + 1 + 20)) / CHARACTER_INFO.size)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(total)
+        try encoder.encode(premium_start)
+        try encoder.encode(premium_end)
+        try encoder.encode(`extension`, lengthOfBytes: 20)
+        try encoder.encode(characters)
+    }
+}
+
+public struct PACKET_HC_REFUSE_ENTER: CodablePacket {
+    public static var size: Int {
+        (2 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var error: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        error = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(error)
+    }
+}
+
+public struct PACKET_HC_ACCEPT_MAKECHAR: CodablePacket {
+    public static var size: Int {
+        (2 + CHARACTER_INFO.size)
+    }
+    public var packetType: Int16 = 0
+    public var character: CHARACTER_INFO = CHARACTER_INFO()
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        character = try decoder.decode(CHARACTER_INFO.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(character)
+    }
+}
+
+public struct PACKET_HC_REFUSE_MAKECHAR: CodablePacket {
+    public static var size: Int {
+        (2 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var error: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        error = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(error)
+    }
+}
+
+public struct PACKET_HC_ACCEPT_DELETECHAR: CodablePacket {
+    public static var size: Int {
+        (2)
+    }
+    public var packetType: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+    }
+}
+
+public struct PACKET_HC_REFUSE_DELETECHAR: CodablePacket {
+    public static var size: Int {
+        (2 + 1)
+    }
+    public var packetType: Int16 = 0
+    public var error: UInt8 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        error = try decoder.decode(UInt8.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(error)
+    }
+}
+
+public struct PACKET_HC_NOTIFY_ZONESVR: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 16 + 4 + 2 + 128)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 16)
+    public var mapname: String
+    public var ip: UInt32 = 0
+    public var port: UInt16 = 0
+    @FixedLengthString(lengthOfBytes: 128)
+    public var domain: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+        mapname = try decoder.decode(String.self, lengthOfBytes: 16)
+        ip = try decoder.decode(UInt32.self)
+        port = try decoder.decode(UInt16.self)
+        domain = try decoder.decode(String.self, lengthOfBytes: 128)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+        try encoder.encode(mapname, lengthOfBytes: 16)
+        try encoder.encode(ip)
+        try encoder.encode(port)
+        try encoder.encode(domain, lengthOfBytes: 128)
+    }
+}
+
 public struct PACKET_SC_NOTIFY_BAN: CodablePacket {
     public static var size: Int {
         (2 + 1)
@@ -737,6 +994,24 @@ public struct PACKET_SC_NOTIFY_BAN: CodablePacket {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(result)
+    }
+}
+
+public struct PACKET_PING: CodablePacket {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
     }
 }
 
@@ -875,6 +1150,46 @@ public struct PACKET_CA_EXE_HASHCHECK: CodablePacket {
     }
 }
 
+public struct PACKET_HC_BLOCK_CHARACTER_sub: BinaryDecodable, BinaryEncodable, Sendable {
+    public static var size: Int {
+        (4 + 20)
+    }
+    public var CID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 20)
+    public var unblock_time: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        CID = try decoder.decode(UInt32.self)
+        unblock_time = try decoder.decode(String.self, lengthOfBytes: 20)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(CID)
+        try encoder.encode(unblock_time, lengthOfBytes: 20)
+    }
+}
+
+public struct PACKET_HC_BLOCK_CHARACTER: CodablePacket {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var characters: [PACKET_HC_BLOCK_CHARACTER_sub] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        characters = try decoder.decode([PACKET_HC_BLOCK_CHARACTER_sub].self, count: (Int(packetLength) - (2 + 2)) / PACKET_HC_BLOCK_CHARACTER_sub.size)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(characters)
+    }
+}
+
 public struct PACKET_CA_LOGIN_PCBANG: CodablePacket {
     public static var size: Int {
         (2 + 4 + 24 + 24 + 1 + 16 + 13)
@@ -942,6 +1257,89 @@ public struct PACKET_CA_LOGIN4: CodablePacket {
         try encoder.encode(passwordMD5)
         try encoder.encode(clienttype)
         try encoder.encode(mac, lengthOfBytes: 13)
+    }
+}
+
+public struct PACKET_CH_REQ_IS_VALID_CHARNAME: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 4 + 24)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public var CID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var new_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        CID = try decoder.decode(UInt32.self)
+        new_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(CID)
+        try encoder.encode(new_name, lengthOfBytes: 24)
+    }
+}
+
+public struct PACKET_HC_ACK_IS_VALID_CHARNAME: CodablePacket {
+    public static var size: Int {
+        (2 + 2)
+    }
+    public var packetType: Int16 = 0
+    public var result: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        result = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(result)
+    }
+}
+
+public struct PACKET_CH_REQ_CHANGE_CHARNAME: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 24)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 24)
+    public var new_name: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+        new_name = try decoder.decode(String.self, lengthOfBytes: 24)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+        try encoder.encode(new_name, lengthOfBytes: 24)
+    }
+}
+
+public struct PACKET_HC_ACK_CHANGE_CHARNAME: CodablePacket {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var result: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        result = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(result)
     }
 }
 
@@ -1028,51 +1426,164 @@ public struct PACKET_CA_SSO_LOGIN_REQ: CodablePacket {
     }
 }
 
-public struct PACKET_CT_AUTH: CodablePacket {
+public struct PACKET_CH_DELETE_CHAR3_RESERVED: CodablePacket {
     public static var size: Int {
-        (2 + (1 * 66))
+        (2 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedSizeArray(size: 66, initialValue: 0)
-    public var unknown: [UInt8]
+    public var CID: UInt32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        unknown = try decoder.decode([UInt8].self, count: 66)
+        CID = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(unknown)
+        try encoder.encode(CID)
     }
 }
 
-public struct PACKET_TC_RESULT: CodablePacket {
+public struct PACKET_HC_DELETE_CHAR3_RESERVED: CodablePacket {
     public static var size: Int {
-        (2 + 2 + 4 + 20 + 6)
+        (2 + 4 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    public var result: Int32 = 0
+    public var date: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+        result = try decoder.decode(Int32.self)
+        date = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+        try encoder.encode(result)
+        try encoder.encode(date)
+    }
+}
+
+public struct PACKET_CH_DELETE_CHAR3: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 6)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 6)
+    public var birthdate: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+        birthdate = try decoder.decode(String.self, lengthOfBytes: 6)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+        try encoder.encode(birthdate, lengthOfBytes: 6)
+    }
+}
+
+public struct PACKET_HC_DELETE_CHAR3: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    public var result: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+        result = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+        try encoder.encode(result)
+    }
+}
+
+public struct PACKET_CH_DELETE_CHAR3_CANCEL: CodablePacket {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+    }
+}
+
+public struct PACKET_HC_DELETE_CHAR3_CANCEL: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var CID: UInt32 = 0
+    public var result: Int32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        CID = try decoder.decode(UInt32.self)
+        result = try decoder.decode(Int32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(CID)
+        try encoder.encode(result)
+    }
+}
+
+public struct PACKET_HC_ACCEPT_ENTER2: CodablePacket {
+    public static var size: Int {
+        (2 + 2 + 1 + 1 + 1 + 1 + 1 + 20)
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    public var type: UInt32 = 0
+    public var normal: UInt8 = 0
+    public var premium: UInt8 = 0
+    public var billing: UInt8 = 0
+    public var producible: UInt8 = 0
+    public var total: UInt8 = 0
     @FixedLengthString(lengthOfBytes: 20)
-    public var unknown1: String
-    @FixedLengthString(lengthOfBytes: 6)
-    public var unknown2: String
+    public var `extension`: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        type = try decoder.decode(UInt32.self)
-        unknown1 = try decoder.decode(String.self, lengthOfBytes: 20)
-        unknown2 = try decoder.decode(String.self, lengthOfBytes: 6)
+        normal = try decoder.decode(UInt8.self)
+        premium = try decoder.decode(UInt8.self)
+        billing = try decoder.decode(UInt8.self)
+        producible = try decoder.decode(UInt8.self)
+        total = try decoder.decode(UInt8.self)
+        `extension` = try decoder.decode(String.self, lengthOfBytes: 20)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(type)
-        try encoder.encode(unknown1, lengthOfBytes: 20)
-        try encoder.encode(unknown2, lengthOfBytes: 6)
+        try encoder.encode(normal)
+        try encoder.encode(premium)
+        try encoder.encode(billing)
+        try encoder.encode(producible)
+        try encoder.encode(total)
+        try encoder.encode(`extension`, lengthOfBytes: 20)
     }
 }
 
@@ -1134,6 +1645,268 @@ public struct PACKET_CH_SELECT_ACCESSIBLE_MAPNAME: CodablePacket {
         try encoder.encode(packetType)
         try encoder.encode(slot)
         try encoder.encode(mapnumber)
+    }
+}
+
+public struct PACKET_CH_SECOND_PASSWD_ACK: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 4)
+    public var pin: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        pin = try decoder.decode(String.self, lengthOfBytes: 4)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(pin, lengthOfBytes: 4)
+    }
+}
+
+public struct PACKET_HC_SECOND_PASSWD_LOGIN: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 4 + 2)
+    }
+    public var packetType: Int16 = 0
+    public var seed: UInt32 = 0
+    public var AID: UInt32 = 0
+    public var result: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        seed = try decoder.decode(UInt32.self)
+        AID = try decoder.decode(UInt32.self)
+        result = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(seed)
+        try encoder.encode(AID)
+        try encoder.encode(result)
+    }
+}
+
+public struct PACKET_CH_MAKE_SECOND_PASSWD: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 4)
+    public var pin: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        pin = try decoder.decode(String.self, lengthOfBytes: 4)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(pin, lengthOfBytes: 4)
+    }
+}
+
+public struct PACKET_CH_EDIT_SECOND_PASSWD: CodablePacket {
+    public static var size: Int {
+        (2 + 4 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 4)
+    public var old_pin: String
+    @FixedLengthString(lengthOfBytes: 4)
+    public var new_pin: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+        old_pin = try decoder.decode(String.self, lengthOfBytes: 4)
+        new_pin = try decoder.decode(String.self, lengthOfBytes: 4)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+        try encoder.encode(old_pin, lengthOfBytes: 4)
+        try encoder.encode(new_pin, lengthOfBytes: 4)
+    }
+}
+
+public struct PACKET_CH_AVAILABLE_SECOND_PASSWD: CodablePacket {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var AID: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        AID = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(AID)
+    }
+}
+
+public struct PACKET_CH_REQ_CHANGE_CHARACTER_SLOT: CodablePacket {
+    public static var size: Int {
+        (2 + 2 + 2 + 2)
+    }
+    public var packetType: Int16 = 0
+    public var slot_before: UInt16 = 0
+    public var slot_after: UInt16 = 0
+    public var remaining: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        slot_before = try decoder.decode(UInt16.self)
+        slot_after = try decoder.decode(UInt16.self)
+        remaining = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(slot_before)
+        try encoder.encode(slot_after)
+        try encoder.encode(remaining)
+    }
+}
+
+public struct PACKET_HC_ACK_CHANGE_CHARACTER_SLOT: CodablePacket {
+    public static var size: Int {
+        (2 + 2 + 2 + 2)
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var reason: UInt16 = 0
+    public var moves: UInt16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        reason = try decoder.decode(UInt16.self)
+        moves = try decoder.decode(UInt16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(reason)
+        try encoder.encode(moves)
+    }
+}
+
+public struct PACKET_HC_ACK_CHARINFO_PER_PAGE: CodablePacket {
+    public static var size: Int {
+        -1
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var characters: [CHARACTER_INFO] = []
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        characters = try decoder.decode([CHARACTER_INFO].self, count: (Int(packetLength) - (2 + 2)) / CHARACTER_INFO.size)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(characters)
+    }
+}
+
+public struct PACKET_HC_CHARLIST_NOTIFY: CodablePacket {
+    public static var size: Int {
+        (2 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var total: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        total = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(total)
+    }
+}
+
+public struct PACKET_CH_CHARLIST_REQ: CodablePacket {
+    public static var size: Int {
+        (2)
+    }
+    public var packetType: Int16 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+    }
+}
+
+public struct PACKET_CT_AUTH: CodablePacket {
+    public static var size: Int {
+        (2 + (1 * 66))
+    }
+    public var packetType: Int16 = 0
+    @FixedSizeArray(size: 66, initialValue: 0)
+    public var unknown: [UInt8]
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        unknown = try decoder.decode([UInt8].self, count: 66)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(unknown)
+    }
+}
+
+public struct PACKET_TC_RESULT: CodablePacket {
+    public static var size: Int {
+        (2 + 2 + 4 + 20 + 6)
+    }
+    public var packetType: Int16 = 0
+    public var packetLength: Int16 = 0
+    public var type: UInt32 = 0
+    @FixedLengthString(lengthOfBytes: 20)
+    public var unknown1: String
+    @FixedLengthString(lengthOfBytes: 6)
+    public var unknown2: String
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        packetLength = try decoder.decode(Int16.self)
+        type = try decoder.decode(UInt32.self)
+        unknown1 = try decoder.decode(String.self, lengthOfBytes: 20)
+        unknown2 = try decoder.decode(String.self, lengthOfBytes: 6)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(packetLength)
+        try encoder.encode(type)
+        try encoder.encode(unknown1, lengthOfBytes: 20)
+        try encoder.encode(unknown2, lengthOfBytes: 6)
     }
 }
 

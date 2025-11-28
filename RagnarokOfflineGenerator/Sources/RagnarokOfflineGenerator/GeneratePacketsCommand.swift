@@ -33,7 +33,6 @@ struct GeneratePacketsCommand: ParsableCommand {
         let dumper = ASTDumper(rathenaDirectory: rathenaDirectory)
         let asts = try [
             dumper.dump(path: "common/packets.hpp"),
-            dumper.dump(path: "char/packets.hpp"),
             dumper.dump(path: "map/packets.hpp"),
         ]
 
@@ -88,17 +87,6 @@ struct GeneratePacketsCommand: ParsableCommand {
                 guard let name = node.name, name.hasPrefix("PACKET_") || name.hasPrefix("packet_") || name.hasPrefix("ZC_") else { return false }
                 guard node.inner != nil else { return false }
                 return true
-            }
-
-            let characterInfoNode = ast.findNode { node in
-                guard node.kind == "CXXRecordDecl" else { return false }
-                guard let name = node.name, name == "CHARACTER_INFO" else { return false }
-                guard node.inner != nil else { return false }
-                return true
-            }
-            if let characterInfoNode, !referencedStructDecls.contains(where: { $0.name == characterInfoNode.name }) {
-                let structDecl = StructDecl(node: characterInfoNode)
-                referencedStructDecls.append(structDecl)
             }
 
             for node in packetNodes {

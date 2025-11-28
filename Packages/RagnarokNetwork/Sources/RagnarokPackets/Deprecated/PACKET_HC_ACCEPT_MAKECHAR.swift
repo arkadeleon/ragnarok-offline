@@ -7,8 +7,9 @@
 
 import BinaryIO
 
-/// See `chclif_parse_createnewchar`
-public struct PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
+/// See `chclif_createnewchar`
+@available(*, deprecated, message: "Use PACKET_HC_ACCEPT_MAKECHAR instead.")
+public struct _PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
     public var packetType: Int16
     public var char: CHARACTER_INFO
 

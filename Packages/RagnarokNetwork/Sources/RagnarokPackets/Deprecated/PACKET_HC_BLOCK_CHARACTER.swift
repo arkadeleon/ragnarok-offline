@@ -7,30 +7,32 @@
 
 import BinaryIO
 
-public let HEADER_HC_BLOCK_CHARACTER: Int16 = 0x20d
+@available(*, deprecated, message: "Use HEADER_HC_BLOCK_CHARACTER instead.")
+public let _HEADER_HC_BLOCK_CHARACTER: Int16 = 0x20d
 
 /// See `chclif_block_character`
-public struct PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
+@available(*, deprecated, message: "Use PACKET_HC_BLOCK_CHARACTER instead.")
+public struct _PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
     public var packetType: Int16
     public var packetLength: Int16
-    public var chars: [CharBlockInfo]
+    public var chars: [_CharBlockInfo]
 
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
 
-        let charCount = (packetLength - 4) / CharBlockInfo.decodedLength
+        let charCount = (packetLength - 4) / _CharBlockInfo.decodedLength
 
         chars = []
         for _ in 0..<charCount {
-            let charBlockInfo = try CharBlockInfo(from: decoder)
+            let charBlockInfo = try _CharBlockInfo(from: decoder)
             chars.append(charBlockInfo)
         }
     }
 }
 
-extension PACKET_HC_BLOCK_CHARACTER {
-    public struct CharBlockInfo: BinaryDecodable, Sendable {
+extension _PACKET_HC_BLOCK_CHARACTER {
+    public struct _CharBlockInfo: BinaryDecodable, Sendable {
         public var charID: UInt32
         public var szExpireDate: String
 

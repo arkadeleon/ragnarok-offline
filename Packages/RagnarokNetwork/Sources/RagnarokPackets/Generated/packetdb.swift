@@ -106,7 +106,6 @@ public func add_packets(_ add_packet: (Int16, Int, String?, [Int]) -> Void) {
     add_packet(0x104, 79, nil, [])
     add_packet(0x108, -1, "clif_parse_PartyMessage", [2, 4])
     add_packet(0x109, -1, nil, [])
-    add_packet(0x10f, -1, nil, [])
     add_packet(0x112, 4, "clif_parse_SkillUp", [2])
     add_packet(0x113, 10, "clif_parse_UseSkillToId", [2, 4, 6])
     add_packet(0x114, 31, nil, [])

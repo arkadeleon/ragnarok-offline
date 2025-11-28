@@ -59,7 +59,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         subscribeToCharPackets(with: &subscription)
 
         // 0x82d
-        subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self) { packet in
+        subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER2.self) { packet in
         }
 
         // 0x8b9
@@ -97,8 +97,8 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     private func subscribeToCharServerPackets(with subscription: inout ClientSubscription) {
         // 0x6b
-        subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self) { [unowned self] packet in
-            let characters = packet.chars.map(CharacterInfo.init(from:))
+        subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER.self) { [unowned self] packet in
+            let characters = packet.characters.map(CharacterInfo.init(from:))
             let event = CharSession.Event.charServerAccepted(characters: characters)
             self.postEvent(event)
         }
@@ -112,8 +112,8 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         // 0x71, 0xac5
         subscription.subscribe(to: PACKET_HC_NOTIFY_ZONESVR.self) { [unowned self] packet in
             let event = CharSession.Event.charServerNotifiedMapServer(
-                charID: packet.charID,
-                mapName: packet.mapName,
+                charID: packet.CID,
+                mapName: packet.mapname,
                 mapServer: MapServerInfo(from: packet)
             )
             self.postEvent(event)
@@ -131,7 +131,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToCharPackets(with subscription: inout ClientSubscription) {
         // 0x6d
         subscription.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
-            let character = CharacterInfo(from: packet.char)
+            let character = CharacterInfo(from: packet.character)
             let event = CharSession.Event.makeCharacterAccepted(character: character)
             self.postEvent(event)
         }
@@ -155,7 +155,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
 
         // 0x82a
-        subscription.subscribe(to: PACKET_HC_DELETE_CHAR.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_HC_DELETE_CHAR3.self) { [unowned self] packet in
             if packet.result == 1 {
                 let event = CharSession.Event.deleteCharacterAccepted
                 self.postEvent(event)
@@ -166,14 +166,14 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
 
         // 0x82c
-        subscription.subscribe(to: PACKET_HC_DELETE_CHAR_CANCEL.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_HC_DELETE_CHAR3_CANCEL.self) { [unowned self] packet in
             let event = CharSession.Event.deleteCharacterCancelled
             self.postEvent(event)
         }
 
         // 0x828
-        subscription.subscribe(to: PACKET_HC_DELETE_CHAR_RESERVED.self) { [unowned self] packet in
-            let event = CharSession.Event.deleteCharacterReserved(deletionDate: packet.deletionDate)
+        subscription.subscribe(to: PACKET_HC_DELETE_CHAR3_RESERVED.self) { [unowned self] packet in
+            let event = CharSession.Event.deleteCharacterReserved(deletionDate: packet.date)
             self.postEvent(event)
         }
     }
@@ -184,13 +184,14 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Receive Account ID
     ///
-    /// Receive ``PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER`` +
-    ///         ``PACKET_HC_ACCEPT_ENTER_NEO_UNION`` +
+    /// Receive ``PACKET_HC_ACCEPT_ENTER2`` +
+    ///         ``PACKET_HC_ACCEPT_ENTER`` +
     ///         ``PACKET_HC_CHARLIST_NOTIFY`` +
     ///         ``PACKET_HC_BLOCK_CHARACTER`` +
     ///         ``PACKET_HC_SECOND_PASSWD_LOGIN`` or
     ///         ``PACKET_HC_REFUSE_ENTER``
     private func enter() {
+        // `chclif_parse_reqtoconnect`
         var packet = PACKET_CH_ENTER()
         packet.packetType = HEADER_CH_ENTER
         packet.accountID = account.accountID
@@ -209,7 +210,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     /// Keep alive.
     ///
-    /// Send ``PACKET_CZ_PING`` every 12 seconds.
+    /// Send ``PACKET_PING`` every 12 seconds.
     private func keepAlive() {
         let timer = AsyncTimerSequence(interval: .seconds(12), clock: .continuous)
 
@@ -218,9 +219,9 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         timerTask = Task {
             for await _ in timer {
-                var packet = PACKET_CZ_PING()
-                packet.packetType = HEADER_CZ_PING
-                packet.accountID = accountID
+                var packet = PACKET_PING()
+                packet.packetType = HEADER_PING
+                packet.AID = accountID
 
                 client.sendPacket(packet)
             }
@@ -234,19 +235,14 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_HC_ACCEPT_MAKECHAR`` or
     ///         ``PACKET_HC_REFUSE_MAKECHAR``
     public func makeCharacter(character: CharacterInfo) {
+        // `chclif_parse_createnewchar`
         var packet = PACKET_CH_MAKE_CHAR()
         packet.packetType = HEADER_CH_MAKE_CHAR
         packet.name = character.name
-        packet.str = UInt8(character.str)
-        packet.agi = UInt8(character.agi)
-        packet.vit = UInt8(character.vit)
-        packet.int = UInt8(character.int)
-        packet.dex = UInt8(character.dex)
-        packet.luk = UInt8(character.luk)
         packet.slot = UInt8(character.charNum)
-        packet.hairColor = UInt16(character.headPalette)
-        packet.hairStyle = UInt16(character.head)
-        packet.job = UInt16(character.job)
+        packet.hair_color = UInt16(character.headPalette)
+        packet.hair_style = UInt16(character.head)
+        packet.job = UInt32(character.job)
         packet.sex = UInt8(character.sex)
 
         client.sendPacket(packet)
@@ -254,50 +250,42 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     /// Delete character.
     ///
-    /// Send ``PACKET_CH_DELETE_CHAR``
+    /// Send ``PACKET_CH_DELETE_CHAR3``
     ///
-    /// if ``PACKET_VERSION`` > 20100803
-    ///
-    /// Receive ``PACKET_HC_ACCEPT_DELETECHAR`` or
-    ///         ``PACKET_HC_REFUSE_DELETECHAR``
-    ///
-    /// else
-    ///
-    /// Receive ``PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER`` +
-    ///         ``PACKET_HC_ACCEPT_ENTER_NEO_UNION`` +
-    ///         ``PACKET_HC_CHARLIST_NOTIFY`` +
-    ///         ``PACKET_HC_BLOCK_CHARACTER`` +
-    ///         ``PACKET_HC_DELETE_CHAR``
+    /// Receive ``PACKET_HC_DELETE_CHAR3``
     public func deleteCharacter(charID: UInt32) {
-        var packet = PACKET_CH_DELETE_CHAR()
-        packet.packetType = HEADER_CH_DELETE_CHAR
-        packet.charID = charID
+        // `chclif_parse_char_delete2_accept`
+        var packet = PACKET_CH_DELETE_CHAR3()
+        packet.packetType = HEADER_CH_DELETE_CHAR3
+        packet.CID = charID
 
         client.sendPacket(packet)
     }
 
     /// Request deletion date.
     ///
-    /// Send ``PACKET_CH_DELETE_CHAR_RESERVED``
+    /// Send ``PACKET_CH_DELETE_CHAR3_RESERVED``
     ///
-    /// Receive ``PACKET_HC_DELETE_CHAR_RESERVED``
+    /// Receive ``PACKET_HC_DELETE_CHAR3_RESERVED``
     public func requestDeletionDate(charID: UInt32) {
-        var packet = PACKET_CH_DELETE_CHAR_RESERVED()
-        packet.packetType = HEADER_CH_DELETE_CHAR_RESERVED
-        packet.charID = charID
+        // `chclif_parse_char_delete2_req`
+        var packet = PACKET_CH_DELETE_CHAR3_RESERVED()
+        packet.packetType = HEADER_CH_DELETE_CHAR3_RESERVED
+        packet.CID = charID
 
         client.sendPacket(packet)
     }
 
     /// Cancel delete.
     ///
-    /// Send ``PACKET_CH_DELETE_CHAR_CANCEL``
+    /// Send ``PACKET_CH_DELETE_CHAR3_CANCEL``
     ///
-    /// Receive ``PACKET_HC_DELETE_CHAR_CANCEL``
+    /// Receive ``PACKET_HC_DELETE_CHAR3_CANCEL``
     public func cancelDelete(charID: UInt32) {
-        var packet = PACKET_CH_DELETE_CHAR_CANCEL()
-        packet.packetType = HEADER_CH_DELETE_CHAR_CANCEL
-        packet.charID = charID
+        // `chclif_parse_char_delete2_cancel`
+        var packet = PACKET_CH_DELETE_CHAR3_CANCEL()
+        packet.packetType = HEADER_CH_DELETE_CHAR3_CANCEL
+        packet.CID = charID
 
         client.sendPacket(packet)
     }
@@ -314,6 +302,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Receive ``PACKET_HC_NOTIFY_ZONESVR`` when accepted.
     public func selectCharacter(slot: Int) {
+        // `chclif_parse_charselect`
         var packet = PACKET_CH_SELECT_CHAR()
         packet.packetType = HEADER_CH_SELECT_CHAR
         packet.slot = UInt8(slot)

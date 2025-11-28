@@ -42,6 +42,11 @@ struct StructDecl {
 struct FieldDecl {
     var name: String
     var type: FieldType
+
+    init(name: String, type: FieldType) {
+        self.name = name == "extension" ? "`\(name)`" : name
+        self.type = type
+    }
 }
 
 enum FieldType {

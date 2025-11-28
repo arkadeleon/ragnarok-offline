@@ -26,18 +26,18 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     // MARK: - Char
 
     // | 0x6b | `chclif_mmo_send006b` |
-    HEADER_HC_ACCEPT_ENTER_NEO_UNION: PACKET_HC_ACCEPT_ENTER_NEO_UNION.self,
+    HEADER_HC_ACCEPT_ENTER: PACKET_HC_ACCEPT_ENTER.self,
 
     // | 0x6c | `chclif_reject` |
     HEADER_HC_REFUSE_ENTER: PACKET_HC_REFUSE_ENTER.self,
 
-    // | 0x6d | `chclif_parse_createnewchar` |
+    // | 0x6d, 0xb6f | `chclif_createnewchar` |
     HEADER_HC_ACCEPT_MAKECHAR: PACKET_HC_ACCEPT_MAKECHAR.self,
 
-    // | 0x6e | `chclif_parse_createnewchar` |
+    // | 0x6e | `chclif_createnewchar_refuse` |
     HEADER_HC_REFUSE_MAKECHAR: PACKET_HC_REFUSE_MAKECHAR.self,
 
-    // | 0x6f | `chclif_parse_delchar` |
+    // | 0x6f | `chclif_delchar` |
     HEADER_HC_ACCEPT_DELETECHAR: PACKET_HC_ACCEPT_DELETECHAR.self,
 
     // | 0x70 | `chclif_refuse_delchar` |
@@ -50,16 +50,16 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_HC_BLOCK_CHARACTER: PACKET_HC_BLOCK_CHARACTER.self,
 
     // | 0x828 | `chclif_char_delete2_ack` |
-    HEADER_HC_DELETE_CHAR_RESERVED: PACKET_HC_DELETE_CHAR_RESERVED.self,
+    HEADER_HC_DELETE_CHAR3_RESERVED: PACKET_HC_DELETE_CHAR3_RESERVED.self,
 
     // | 0x82a | `chclif_char_delete2_accept_ack` |
-    HEADER_HC_DELETE_CHAR: PACKET_HC_DELETE_CHAR.self,
+    HEADER_HC_DELETE_CHAR3: PACKET_HC_DELETE_CHAR3.self,
 
     // | 0x82c | `chclif_char_delete2_cancel_ack` |
-    HEADER_HC_DELETE_CHAR_CANCEL: PACKET_HC_DELETE_CHAR_CANCEL.self,
+    HEADER_HC_DELETE_CHAR3_CANCEL: PACKET_HC_DELETE_CHAR3_CANCEL.self,
 
     // | 0x82d | `chclif_mmo_send082d` |
-    HEADER_HC_ACCEPT_ENTER_NEO_UNION_HEADER: PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER.self,
+    HEADER_HC_ACCEPT_ENTER2: PACKET_HC_ACCEPT_ENTER2.self,
 
     // | 0x840 | `chclif_accessible_maps` |
     HEADER_HC_NOTIFY_ACCESSIBLE_MAPNAME: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self,
@@ -68,7 +68,7 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_HC_SECOND_PASSWD_LOGIN: PACKET_HC_SECOND_PASSWD_LOGIN.self,
 
     // | 0x99d, 0xb72 | `chclif_mmo_send099d` |
-//  HEADER_HC_ACK_CHARINFO_PER_PAGE: PACKET_HC_ACK_CHARINFO_PER_PAGE.self
+    HEADER_HC_ACK_CHARINFO_PER_PAGE: PACKET_HC_ACK_CHARINFO_PER_PAGE.self,
 
     // | 0x9a0 | `chclif_charlist_notify` |
     HEADER_HC_CHARLIST_NOTIFY: PACKET_HC_CHARLIST_NOTIFY.self,

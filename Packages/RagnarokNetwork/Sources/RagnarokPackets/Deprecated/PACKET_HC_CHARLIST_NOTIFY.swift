@@ -7,10 +7,12 @@
 
 import BinaryIO
 
-public let HEADER_HC_CHARLIST_NOTIFY: Int16 = 0x9a0
+@available(*, deprecated, message: "Use HEADER_HC_CHARLIST_NOTIFY instead.")
+public let _HEADER_HC_CHARLIST_NOTIFY: Int16 = 0x9a0
 
 /// See `chclif_charlist_notify`
-public struct PACKET_HC_CHARLIST_NOTIFY: DecodablePacket {
+@available(*, deprecated, message: "Use PACKET_HC_CHARLIST_NOTIFY instead.")
+public struct _PACKET_HC_CHARLIST_NOTIFY: DecodablePacket {
     public var packetType: Int16
     public var totalCount: UInt32
     public var charSlots: UInt32
