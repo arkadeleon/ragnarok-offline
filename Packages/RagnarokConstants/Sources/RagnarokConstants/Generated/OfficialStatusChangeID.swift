@@ -1456,6 +1456,11 @@ public enum OfficialStatusChangeID: Int, CaseIterable, Sendable {
     case efst_contents_37 = 1495
     case efst_contents_38 = 1496
     case efst_contents_39 = 1497
+    case efst_contents_40 = 1498
+    case efst_contents_41 = 1499
+    case efst_contents_42 = 1500
+    case efst_contents_43 = 1501
+    case efst_contents_44 = 1502
     case efst_c_buff_1 = 1509
     case efst_c_buff_2 = 1510
     case efst_c_buff_3 = 1511
@@ -1473,6 +1478,7 @@ public enum OfficialStatusChangeID: Int, CaseIterable, Sendable {
     case efst_wind_charm_power = 1669
     case efst_ground_charm_power = 1670
     case efst_overcoming_crisis = 1671
+    case efst_block = 1688
 }
 
 extension OfficialStatusChangeID: CodingKey {
@@ -2927,6 +2933,11 @@ extension OfficialStatusChangeID: CodingKey {
         case .efst_contents_37: "EFST_CONTENTS_37"
         case .efst_contents_38: "EFST_CONTENTS_38"
         case .efst_contents_39: "EFST_CONTENTS_39"
+        case .efst_contents_40: "EFST_CONTENTS_40"
+        case .efst_contents_41: "EFST_CONTENTS_41"
+        case .efst_contents_42: "EFST_CONTENTS_42"
+        case .efst_contents_43: "EFST_CONTENTS_43"
+        case .efst_contents_44: "EFST_CONTENTS_44"
         case .efst_c_buff_1: "EFST_C_BUFF_1"
         case .efst_c_buff_2: "EFST_C_BUFF_2"
         case .efst_c_buff_3: "EFST_C_BUFF_3"
@@ -2944,6 +2955,7 @@ extension OfficialStatusChangeID: CodingKey {
         case .efst_wind_charm_power: "EFST_WIND_CHARM_POWER"
         case .efst_ground_charm_power: "EFST_GROUND_CHARM_POWER"
         case .efst_overcoming_crisis: "EFST_OVERCOMING_CRISIS"
+        case .efst_block: "EFST_BLOCK"
         }
     }
 
@@ -4398,6 +4410,11 @@ extension OfficialStatusChangeID: CodingKey {
         case "EFST_CONTENTS_37": self = .efst_contents_37
         case "EFST_CONTENTS_38": self = .efst_contents_38
         case "EFST_CONTENTS_39": self = .efst_contents_39
+        case "EFST_CONTENTS_40": self = .efst_contents_40
+        case "EFST_CONTENTS_41": self = .efst_contents_41
+        case "EFST_CONTENTS_42": self = .efst_contents_42
+        case "EFST_CONTENTS_43": self = .efst_contents_43
+        case "EFST_CONTENTS_44": self = .efst_contents_44
         case "EFST_C_BUFF_1": self = .efst_c_buff_1
         case "EFST_C_BUFF_2": self = .efst_c_buff_2
         case "EFST_C_BUFF_3": self = .efst_c_buff_3
@@ -4415,6 +4432,7 @@ extension OfficialStatusChangeID: CodingKey {
         case "EFST_WIND_CHARM_POWER": self = .efst_wind_charm_power
         case "EFST_GROUND_CHARM_POWER": self = .efst_ground_charm_power
         case "EFST_OVERCOMING_CRISIS": self = .efst_overcoming_crisis
+        case "EFST_BLOCK": self = .efst_block
         default: return nil
         }
     }

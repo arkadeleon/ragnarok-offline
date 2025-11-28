@@ -68,6 +68,8 @@ let allConstantConversions: [ConstantConversion] = [
         prefix: "JOB_",
         exclude: [
             "JOB_MAX_BASIC",
+            "JOB_SECOND_JOB_START",
+            "JOB_SECOND_JOB_END",
             "JOB_MAX",
         ],
         compatible: [

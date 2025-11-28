@@ -188,6 +188,19 @@ public enum JobID: Int, CaseIterable, Sendable {
     case hyper_novice = 4307
     case spirit_handler = 4308
     case sky_emperor2 = 4316
+    case rune_knight_2nd = 4332
+    case mechanic_2nd = 4333
+    case guillotine_cross_2nd = 4334
+    case warlock_2nd = 4335
+    case archbishop_2nd = 4336
+    case ranger_2nd = 4337
+    case royal_guard_2nd = 4338
+    case genetic_2nd = 4339
+    case shadow_chaser_2nd = 4340
+    case sorcerer_2nd = 4341
+    case sura_2nd = 4342
+    case minstrel_2nd = 4343
+    case wanderer_2nd = 4344
 }
 
 extension JobID: CodingKey {
@@ -374,6 +387,19 @@ extension JobID: CodingKey {
         case .hyper_novice: "HYPER_NOVICE"
         case .spirit_handler: "SPIRIT_HANDLER"
         case .sky_emperor2: "SKY_EMPEROR2"
+        case .rune_knight_2nd: "RUNE_KNIGHT_2ND"
+        case .mechanic_2nd: "MECHANIC_2ND"
+        case .guillotine_cross_2nd: "GUILLOTINE_CROSS_2ND"
+        case .warlock_2nd: "WARLOCK_2ND"
+        case .archbishop_2nd: "ARCHBISHOP_2ND"
+        case .ranger_2nd: "RANGER_2ND"
+        case .royal_guard_2nd: "ROYAL_GUARD_2ND"
+        case .genetic_2nd: "GENETIC_2ND"
+        case .shadow_chaser_2nd: "SHADOW_CHASER_2ND"
+        case .sorcerer_2nd: "SORCERER_2ND"
+        case .sura_2nd: "SURA_2ND"
+        case .minstrel_2nd: "MINSTREL_2ND"
+        case .wanderer_2nd: "WANDERER_2ND"
         }
     }
 
@@ -560,6 +586,19 @@ extension JobID: CodingKey {
         case "HYPER_NOVICE": self = .hyper_novice
         case "SPIRIT_HANDLER": self = .spirit_handler
         case "SKY_EMPEROR2": self = .sky_emperor2
+        case "RUNE_KNIGHT_2ND": self = .rune_knight_2nd
+        case "MECHANIC_2ND": self = .mechanic_2nd
+        case "GUILLOTINE_CROSS_2ND": self = .guillotine_cross_2nd
+        case "WARLOCK_2ND": self = .warlock_2nd
+        case "ARCHBISHOP_2ND": self = .archbishop_2nd
+        case "RANGER_2ND": self = .ranger_2nd
+        case "ROYAL_GUARD_2ND": self = .royal_guard_2nd
+        case "GENETIC_2ND": self = .genetic_2nd
+        case "SHADOW_CHASER_2ND": self = .shadow_chaser_2nd
+        case "SORCERER_2ND": self = .sorcerer_2nd
+        case "SURA_2ND": self = .sura_2nd
+        case "MINSTREL_2ND": self = .minstrel_2nd
+        case "WANDERER_2ND": self = .wanderer_2nd
         default: return nil
         }
     }

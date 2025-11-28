@@ -1027,6 +1027,10 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case contents_20 = 1037
     case overcoming_crisis = 1038
     case chasing = 1039
+    case fire_charm_power = 1040
+    case water_charm_power = 1041
+    case wind_charm_power = 1042
+    case ground_charm_power = 1043
 }
 
 extension StatusChangeID: CodingKey {
@@ -2052,6 +2056,10 @@ extension StatusChangeID: CodingKey {
         case .contents_20: "CONTENTS_20"
         case .overcoming_crisis: "OVERCOMING_CRISIS"
         case .chasing: "CHASING"
+        case .fire_charm_power: "FIRE_CHARM_POWER"
+        case .water_charm_power: "WATER_CHARM_POWER"
+        case .wind_charm_power: "WIND_CHARM_POWER"
+        case .ground_charm_power: "GROUND_CHARM_POWER"
         }
     }
 
@@ -3077,6 +3085,10 @@ extension StatusChangeID: CodingKey {
         case "CONTENTS_20": self = .contents_20
         case "OVERCOMING_CRISIS": self = .overcoming_crisis
         case "CHASING": self = .chasing
+        case "FIRE_CHARM_POWER": self = .fire_charm_power
+        case "WATER_CHARM_POWER": self = .water_charm_power
+        case "WIND_CHARM_POWER": self = .wind_charm_power
+        case "GROUND_CHARM_POWER": self = .ground_charm_power
         default: return nil
         }
     }

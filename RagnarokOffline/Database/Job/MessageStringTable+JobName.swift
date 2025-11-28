@@ -321,6 +321,32 @@ extension MessageStringTable {
             nil
         case .sky_emperor2:
             nil
+        case .rune_knight_2nd:
+            nil
+        case .mechanic_2nd:
+            nil
+        case .guillotine_cross_2nd:
+            nil
+        case .warlock_2nd:
+            nil
+        case .archbishop_2nd:
+            nil
+        case .ranger_2nd:
+            nil
+        case .royal_guard_2nd:
+            nil
+        case .genetic_2nd:
+            nil
+        case .shadow_chaser_2nd:
+            nil
+        case .sorcerer_2nd:
+            nil
+        case .sura_2nd:
+            nil
+        case .minstrel_2nd:
+            nil
+        case .wanderer_2nd:
+            nil
         }
     }
 }
