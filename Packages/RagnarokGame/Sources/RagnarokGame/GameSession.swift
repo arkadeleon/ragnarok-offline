@@ -61,8 +61,8 @@ final public class GameSession {
     private(set) var characters: [CharacterInfo] = []
     private(set) var character: CharacterInfo?
     private(set) var playerStatus: CharacterStatus?
-    private(set) var inventory = Inventory()
 
+    private(set) var inventory = Inventory()
     private(set) var dialog: NPCDialog?
 
     @ObservationIgnored var loginSession: LoginSession?
@@ -403,10 +403,12 @@ final public class GameSession {
             break
         case .achievementUpdated:
             break
-        case .itemListReceived(let inventory):
-            self.inventory = inventory
-        case .itemListUpdated(let inventory):
-            self.inventory = inventory
+        case .inventoryUpdatesBegan:
+            break
+        case .inventoryUpdatesEnded:
+            break
+        case .inventoryItemsAppended(let items):
+            inventory.append(items: items)
         case .itemSpawned(let item, let position):
             mapScene?.onItemSpawned(item: item, position: position)
         case .itemVanished(let objectID):
@@ -416,7 +418,7 @@ final public class GameSession {
         case .itemThrown(let item):
             break
         case .itemUsed(let item, let accountID, let success):
-            break
+            inventory.updateItem(at: item.index, amount: item.amount)
         case .itemEquipped(let item, let success):
             break
         case .itemUnequipped(let item, let success):

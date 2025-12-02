@@ -9,16 +9,34 @@ import RagnarokNetwork
 import RagnarokResources
 import SwiftUI
 
-struct InventoryItemView<Actions>: View where Actions: View {
+struct InventoryItemView: View {
     var item: InventoryItem
-    var actions: () -> Actions
 
     @Environment(GameSession.self) private var gameSession
 
     @State private var iconImage: CGImage?
 
     var body: some View {
-        Menu(content: actions) {
+        Menu {
+            if item.isUsable {
+                Button {
+                    if let mapSession = gameSession.mapSession {
+                        let accountID = mapSession.account.accountID
+                        mapSession.useItem(at: item.index, by: accountID)
+                    }
+                } label: {
+                    Text(verbatim: "Use")
+                }
+            }
+
+            if item.isEquippable {
+                Button {
+                    gameSession.mapSession?.equipItem(at: item.index, location: item.location)
+                } label: {
+                    Text(verbatim: "Equip")
+                }
+            }
+        } label: {
             ZStack {
                 if let iconImage {
                     Image(decorative: iconImage, scale: 1)
@@ -41,24 +59,18 @@ struct InventoryItemView<Actions>: View where Actions: View {
             }
         }
     }
-
-    init(item: InventoryItem, @ViewBuilder actions: @escaping () -> Actions) {
-        self.item = item
-        self.actions = actions
-    }
 }
 
 #Preview {
     let item = {
         var item = InventoryItem()
         item.itemID = 501
+        item.type = .healing
         item.amount = 1
         return item
     }()
 
-    InventoryItemView(item: item) {
-        Text(verbatim: "Use")
-    }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(GameSession.testing)
+    InventoryItemView(item: item)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(GameSession.testing)
 }

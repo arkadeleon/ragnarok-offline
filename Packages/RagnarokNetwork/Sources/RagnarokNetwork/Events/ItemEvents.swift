@@ -6,14 +6,6 @@
 //
 
 public enum ItemEvents {
-    public struct ListReceived: Event {
-        public let inventory: Inventory
-    }
-
-    public struct ListUpdated: Event {
-        public let inventory: Inventory
-    }
-
     public struct Spawned: Event {
         public let item: MapItem
         public let position: SIMD2<Int>

@@ -31,9 +31,12 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         case achievementListed
         case achievementUpdated
 
+        // Inventory events
+        case inventoryUpdatesBegan
+        case inventoryUpdatesEnded
+        case inventoryItemsAppended(items: [InventoryItem])
+
         // Item events
-        case itemListReceived(inventory: Inventory)
-        case itemListUpdated(inventory: Inventory)
         case itemSpawned(item: MapItem, position: SIMD2<Int>)
         case itemVanished(objectID: UInt32)
         case itemPickedUp(item: PickedUpItem)
@@ -80,7 +83,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     }
 
     var playerStatus: CharacterStatus
-    var inventory: Inventory
 
     private var timerTask: Task<Void, Never>?
 
@@ -90,7 +92,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
 
         self.playerStatus = CharacterStatus(character: character)
-        self.inventory = Inventory()
     }
 
     public func start() {

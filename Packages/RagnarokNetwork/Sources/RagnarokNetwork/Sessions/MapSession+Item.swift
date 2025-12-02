@@ -12,22 +12,27 @@ extension MapSession {
     func subscribeToItemPackets(with subscription: inout ClientSubscription) {
         // See `clif_inventoryStart`
         subscription.subscribe(to: PACKET_ZC_INVENTORY_START.self) { [unowned self] packet in
-            self.inventory = Inventory()
-        }
-
-        // See `clif_inventorylist`
-        subscription.subscribe(to: packet_itemlist_normal.self) { [unowned self] packet in
-            self.inventory.append(items: packet.list)
-        }
-
-        // See `clif_inventorylist`
-        subscription.subscribe(to: packet_itemlist_equip.self) { [unowned self] packet in
-            self.inventory.append(items: packet.list)
+            let event = MapSession.Event.inventoryUpdatesBegan
+            self.postEvent(event)
         }
 
         // See `clif_inventoryEnd`
         subscription.subscribe(to: PACKET_ZC_INVENTORY_END.self) { [unowned self] packet in
-            let event = MapSession.Event.itemListReceived(inventory: self.inventory)
+            let event = MapSession.Event.inventoryUpdatesEnded
+            self.postEvent(event)
+        }
+
+        // See `clif_inventorylist`
+        subscription.subscribe(to: packet_itemlist_normal.self) { [unowned self] packet in
+            let items = packet.list.map(InventoryItem.init)
+            let event = MapSession.Event.inventoryItemsAppended(items: items)
+            self.postEvent(event)
+        }
+
+        // See `clif_inventorylist`
+        subscription.subscribe(to: packet_itemlist_equip.self) { [unowned self] packet in
+            let items = packet.list.map(InventoryItem.init)
+            let event = MapSession.Event.inventoryItemsAppended(items: items)
             self.postEvent(event)
         }
 
@@ -78,11 +83,6 @@ extension MapSession {
                 success: (packet.result != 0)
             )
             self.postEvent(event)
-
-            self.inventory.updateItem(at: Int(packet.index), amount: Int(packet.amount))
-
-            let listUpdatedEvent = MapSession.Event.itemListUpdated(inventory: self.inventory)
-            self.postEvent(listUpdatedEvent)
         }
 
         // See `clif_equipitemack`

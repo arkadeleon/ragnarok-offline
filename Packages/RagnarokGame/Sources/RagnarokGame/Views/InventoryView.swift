@@ -13,7 +13,21 @@ struct InventoryView: View {
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var items: [InventoryItem] = []
+    private enum Tab {
+        case item
+        case gear
+    }
+
+    @State private var tab: InventoryView.Tab = .item
+
+    private var items: [InventoryItem] {
+        switch tab {
+        case .item:
+            inventory.usableItems
+        case .gear:
+            inventory.equippableItems
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -40,7 +54,7 @@ struct InventoryView: View {
 
                 VStack {
                     Button {
-                        items = inventory.usableItems
+                        tab = .item
                     } label: {
                         Text(verbatim: "I\nt\ne\nm")
                             .gameText()
@@ -50,7 +64,7 @@ struct InventoryView: View {
                     .buttonStyle(.borderless)
 
                     Button {
-                        items = inventory.equippableItems
+                        tab = .gear
                     } label: {
                         Text(verbatim: "G\ne\na\nr")
                             .gameText()
@@ -63,26 +77,7 @@ struct InventoryView: View {
 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
                     ForEach(items, id: \.index) { item in
-                        InventoryItemView(item: item) {
-                            if item.isUsable {
-                                Button {
-                                    if let mapSession = gameSession.mapSession {
-                                        let accountID = mapSession.account.accountID
-                                        mapSession.useItem(at: item.index, by: accountID)
-                                    }
-                                } label: {
-                                    Text(verbatim: "Use")
-                                }
-                            }
-
-                            if item.isEquippable {
-                                Button {
-                                    gameSession.mapSession?.equipItem(at: item.index, location: item.location)
-                                } label: {
-                                    Text(verbatim: "Equip")
-                                }
-                            }
-                        }
+                        InventoryItemView(item: item)
                     }
                 }
                 .frame(width: 32 * 7)
@@ -93,9 +88,6 @@ struct InventoryView: View {
             GameBottomBar()
         }
         .frame(width: 280)
-        .task {
-            items = inventory.usableItems
-        }
     }
 }
 
@@ -105,11 +97,13 @@ struct InventoryView: View {
         item1.index = 0
         item1.itemID = 501
         item1.type = .healing
+        item1.amount = 1
 
         var item2 = InventoryItem()
         item2.index = 1
         item2.itemID = 502
         item2.type = .healing
+        item2.amount = 2
 
         var inventory = Inventory()
         inventory.append(items: [item1, item2])
