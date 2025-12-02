@@ -900,7 +900,7 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     // | 0x2bb | `clif_item_damaged` |
     HEADER_ZC_EQUIPITEM_DAMAGED: PACKET_ZC_EQUIPITEM_DAMAGED.self,
 
-    // | 0x2c1 | `clif_messagecolor_target` |
+    // | 0x2c1 | `clif_displaymessage`, `clif_channel_msg`, `clif_messagecolor_target` |
     HEADER_ZC_NPC_CHAT: PACKET_ZC_NPC_CHAT.self,
 
     // | 0x2c2 |

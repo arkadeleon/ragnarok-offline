@@ -42,7 +42,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         case itemEquipped(item: EquippedItem, success: Bool)
         case itemUnequipped(item: UnequippedItem, success: Bool)
 
-        // Object events
+        // Map object events
         case mapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection)
         case mapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
         case mapObjectStopped(objectID: UInt32, position: SIMD2<Int>)
@@ -53,9 +53,12 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         case mapObjectActionPerformed(objectAction: MapObjectAction)
 
         // NPC events
-        case npcDialogReceived(dialog: NPCDialog)
+        case npcDialogMessageReceived(npcID: UInt32, message: String)
+        case npcDialogActionReceived(npcID: UInt32, action: NPCDialogAction)
+        case npcDialogMenuReceived(npcID: UInt32, menu: [String])
+        case npcDialogInputReceived(npcID: UInt32, input: NPCDialogInput)
         case npcDialogClosed(npcID: UInt32)
-        case imageReceived(image: String)
+        case npcImageReceived(image: String)
         case minimapMarkPositionReceived(npcID: UInt32, position: SIMD2<Int>)
 
         // Chat events
@@ -78,7 +81,6 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
     var playerStatus: CharacterStatus
     var inventory: Inventory
-    var pendingNPCDialog: NPCDialog?
 
     private var timerTask: Task<Void, Never>?
 

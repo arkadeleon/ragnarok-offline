@@ -81,7 +81,7 @@ public class MapScene {
                     case .monster:
                         engageMonster(targetEntity: event.entity)
                     case .npc:
-                        mapSession.talkToNPC(objectID: mapObject.objectID)
+                        mapSession.talkToNPC(npcID: mapObject.objectID)
                     default:
                         break
                     }
@@ -216,7 +216,7 @@ public class MapScene {
                 case .monster:
                     engageMonster(targetEntity: hitEntity)
                 case .npc:
-                    mapSession.talkToNPC(objectID: mapObject.objectID)
+                    mapSession.talkToNPC(npcID: mapObject.objectID)
                 default:
                     break
                 }
@@ -560,7 +560,7 @@ extension MapScene {
             return
         }
 
-        mapSession.talkToNPC(objectID: mapObject.objectID)
+        mapSession.talkToNPC(npcID: mapObject.objectID)
     }
 
     private func engageMonster(targetEntity: Entity) {

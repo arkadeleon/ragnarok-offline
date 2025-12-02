@@ -62,6 +62,7 @@ final public class GameSession {
     private(set) var character: CharacterInfo?
     private(set) var playerStatus: CharacterStatus?
     private(set) var inventory = Inventory()
+
     private(set) var dialog: NPCDialog?
 
     @ObservationIgnored var loginSession: LoginSession?
@@ -166,12 +167,10 @@ final public class GameSession {
             return
         }
 
-        Task {
-            try await Task.sleep(for: .milliseconds(1))
-            mapSession.requestNextMessage(objectID: dialog.objectID)
-        }
+        mapSession.requestNextMessage(npcID: dialog.npcID)
 
-        self.dialog = nil
+        dialog.setNeedsClear()
+        dialog.action = nil
     }
 
     func closeDialog() {
@@ -179,25 +178,49 @@ final public class GameSession {
             return
         }
 
-        Task {
-            try await Task.sleep(for: .milliseconds(1))
-            mapSession.closeDialog(objectID: dialog.objectID)
-        }
-
         self.dialog = nil
+
+        mapSession.closeDialog(npcID: dialog.npcID)
     }
 
-    func selectMenu(select: UInt8) {
+    func selectMenu(_ select: UInt8) {
         guard let mapSession, let dialog else {
             return
         }
 
-        Task {
-            try await Task.sleep(for: .milliseconds(1))
-            mapSession.selectMenu(objectID: dialog.objectID, select: select)
+        dialog.menu = nil
+
+        mapSession.selectMenu(npcID: dialog.npcID, select: select)
+    }
+
+    func cancelMenu() {
+        guard let mapSession, let dialog else {
+            return
         }
 
         self.dialog = nil
+
+        mapSession.selectMenu(npcID: dialog.npcID, select: 255)
+    }
+
+    func confirmInput(_ value: Int32) {
+        guard let mapSession, let dialog else {
+            return
+        }
+
+        mapSession.inputNumber(npcID: dialog.npcID, value: value)
+
+        dialog.input = nil
+    }
+
+    func confirmInput(_ value: String) {
+        guard let mapSession, let dialog else {
+            return
+        }
+
+        mapSession.inputText(npcID: dialog.npcID, value: value)
+
+        dialog.input = nil
     }
 
     // MARK: - Login Session
@@ -418,11 +441,39 @@ final public class GameSession {
             mapScene?.onMapObjectStateChanged(objectID: objectID, bodyState: bodyState, healthState: healthState, effectState: effectState)
         case .mapObjectActionPerformed(let objectAction):
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
-        case .npcDialogReceived(let dialog):
-            self.dialog = dialog
+        case .npcDialogMessageReceived(let npcID, let message):
+            if let dialog, dialog.npcID == npcID {
+                dialog.clearIfNeeded()
+                dialog.append(message: message)
+            } else {
+                dialog = NPCDialog(npcID: npcID, message: message)
+            }
+        case .npcDialogActionReceived(let npcID, let action):
+            if let dialog, dialog.npcID == npcID {
+                switch action {
+                case .next:
+                    dialog.action = .next
+                case .close:
+                    dialog.action = .close
+                    dialog.menu = nil
+                    dialog.input = nil
+                }
+            }
+        case .npcDialogMenuReceived(let npcID, let menu):
+            if let dialog, dialog.npcID == npcID {
+                dialog.action = nil
+                dialog.menu = menu
+            }
+        case .npcDialogInputReceived(let npcID, let input):
+            if let dialog, dialog.npcID == npcID {
+                dialog.action = nil
+                dialog.input = input
+            }
         case .npcDialogClosed(let npcID):
-            dialog = nil
-        case .imageReceived(let image):
+            if let dialog, dialog.npcID == npcID {
+                self.dialog = nil
+            }
+        case .npcImageReceived(let image):
             break
         case .minimapMarkPositionReceived(let npcID, let position):
             break

@@ -7,7 +7,7 @@
 
 public enum NPCEvents {
     public struct DialogReceived: Event {
-        public let dialog: NPCDialog
+        public let npcID: UInt32
     }
 
     public struct DialogClosed: Event {

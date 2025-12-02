@@ -91,7 +91,9 @@ struct MapView: View {
             .padding()
         }
         .overlay {
-            NPCDialogOverlayView()
+            if let dialog = gameSession.dialog {
+                NPCDialogView(dialog: dialog)
+            }
         }
     }
 }

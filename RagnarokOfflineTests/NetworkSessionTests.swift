@@ -193,24 +193,24 @@ final class NetworkSessionTests: XCTestCase {
         sleep(1)
 
         let woundedSwordsman1 = mapObjects.first(where: { $0.job == 687 })!
-        mapSession.talkToNPC(objectID: woundedSwordsman1.objectID)
+        mapSession.talkToNPC(npcID: woundedSwordsman1.objectID)
 
         sleep(1)
 
         let woundedSwordsman2 = mapObjects.first(where: { $0.job == 688 })!
-        mapSession.talkToNPC(objectID: woundedSwordsman2.objectID)
+        mapSession.talkToNPC(npcID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapSession.requestNextMessage(objectID: woundedSwordsman2.objectID)
+        mapSession.requestNextMessage(npcID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapSession.requestNextMessage(objectID: woundedSwordsman2.objectID)
+        mapSession.requestNextMessage(npcID: woundedSwordsman2.objectID)
 
         sleep(1)
 
-        mapSession.closeDialog(objectID: woundedSwordsman2.objectID)
+        mapSession.closeDialog(npcID: woundedSwordsman2.objectID)
 
         sleep(5)
     }
