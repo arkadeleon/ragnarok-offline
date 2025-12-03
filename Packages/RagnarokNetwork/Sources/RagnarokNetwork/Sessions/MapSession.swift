@@ -22,7 +22,9 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // Player events
         case playerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
-        case playerStatusChanged(status: CharacterStatus)
+        case playerStatusChanged(basicStatus: CharacterBasicStatus)
+        case playerStatusPropertyChanged(property: StatusProperty, value: Int)
+        case playerStatusPropertyChanged2(property: StatusProperty, value: Int, value2: Int)
         case playerAttackRangeChanged(value: Int)
 
         // Mail events
@@ -82,16 +84,12 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         eventSubject.eraseToAnyPublisher()
     }
 
-    var playerStatus: CharacterStatus
-
     private var timerTask: Task<Void, Never>?
 
     public init(account: AccountInfo, character: CharacterInfo, mapServer: MapServerInfo) {
         self.account = account
         self.character = character
         self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
-
-        self.playerStatus = CharacterStatus(character: character)
     }
 
     public func start() {

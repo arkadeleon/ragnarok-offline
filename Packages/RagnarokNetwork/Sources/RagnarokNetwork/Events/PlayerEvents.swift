@@ -12,7 +12,7 @@ public enum PlayerEvents {
     }
 
     public struct StatusChanged: Event {
-        public let status: CharacterStatus
+        public let basicStatus: CharacterBasicStatus
     }
 
     public struct AttackRangeChanged: Event {

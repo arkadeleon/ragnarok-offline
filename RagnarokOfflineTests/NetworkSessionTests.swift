@@ -142,15 +142,19 @@ final class NetworkSessionTests: XCTestCase {
             }
         }
 
-        sleep(1)
+        for await event in mapSession.events {
+            if case .playerStatusChanged(let basicStatus) = event {
+                XCTAssertEqual(basicStatus.str, 1)
+                XCTAssertEqual(basicStatus.agi, 1)
+                XCTAssertEqual(basicStatus.vit, 1)
+                XCTAssertEqual(basicStatus.int, 1)
+                XCTAssertEqual(basicStatus.dex, 1)
+                XCTAssertEqual(basicStatus.luk, 1)
+                break
+            }
+        }
 
-        let status = mapSession.playerStatus
-        XCTAssertEqual(status.str, 1)
-        XCTAssertEqual(status.agi, 1)
-        XCTAssertEqual(status.vit, 1)
-        XCTAssertEqual(status.int, 1)
-        XCTAssertEqual(status.dex, 1)
-        XCTAssertEqual(status.luk, 1)
+        sleep(1)
 
         // MARK: - Move to warp
 

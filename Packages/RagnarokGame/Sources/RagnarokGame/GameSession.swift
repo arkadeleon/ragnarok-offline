@@ -60,10 +60,10 @@ final public class GameSession {
     private(set) var account: AccountInfo?
     private(set) var characters: [CharacterInfo] = []
     private(set) var character: CharacterInfo?
-    private(set) var playerStatus: CharacterStatus?
 
-    private(set) var inventory = Inventory()
-    private(set) var dialog: NPCDialog?
+    var playerStatus = CharacterStatus()
+    var inventory = Inventory()
+    var dialog: NPCDialog?
 
     @ObservationIgnored var loginSession: LoginSession?
     @ObservationIgnored var charSession: CharSession?
@@ -340,6 +340,8 @@ final public class GameSession {
             return
         }
 
+        playerStatus = CharacterStatus(from: character)
+
         let mapSession = MapSession(account: account, character: character, mapServer: mapServer)
 
         Task {
@@ -396,7 +398,11 @@ final public class GameSession {
         case .playerMoved(let startPosition, let endPosition):
             mapScene?.onPlayerMoved(startPosition: startPosition, endPosition: endPosition)
         case .playerStatusChanged(let status):
-            self.playerStatus = status
+            playerStatus.update(from: status)
+        case .playerStatusPropertyChanged(let property, let value):
+            playerStatus.update(property: property, value: value)
+        case .playerStatusPropertyChanged2(let property, let value, let value2):
+            playerStatus.update(property: property, value: value, value2: value2)
         case .playerAttackRangeChanged(let value):
             break
         case .achievementListed:

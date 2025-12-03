@@ -41,9 +41,9 @@ struct MapView: View {
         }
         #endif
         .overlay(alignment: .topLeading) {
-            if let character = gameSession.character, let status = gameSession.playerStatus {
+            if let character = gameSession.character {
                 VStack(alignment: .leading, spacing: 0) {
-                    BasicInfoView(character: character, status: status)
+                    BasicInfoView(character: character, status: gameSession.playerStatus)
 
                     MenuView { item in
                         if item == presentedMenuItem {
@@ -56,7 +56,7 @@ struct MapView: View {
                     if let presentedMenuItem {
                         switch presentedMenuItem {
                         case .status:
-                            StatusView(status: status)
+                            StatusView(status: gameSession.playerStatus)
                         case .inventory:
                             InventoryView(inventory: gameSession.inventory)
                         case .options:

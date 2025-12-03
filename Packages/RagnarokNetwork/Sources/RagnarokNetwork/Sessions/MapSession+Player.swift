@@ -23,8 +23,8 @@ extension MapSession {
 
         // See `clif_initialstatus`
         subscription.subscribe(to: PACKET_ZC_STATUS.self) { [unowned self] packet in
-            self.playerStatus.update(with: packet)
-            let event = MapSession.Event.playerStatusChanged(status: self.playerStatus)
+            let basicStatus = CharacterBasicStatus(from: packet)
+            let event = MapSession.Event.playerStatusChanged(basicStatus: basicStatus)
             self.postEvent(event)
         }
 
@@ -34,8 +34,7 @@ extension MapSession {
                 return
             }
 
-            self.playerStatus.update(property: sp, value: Int(packet.count))
-            let event = MapSession.Event.playerStatusChanged(status: self.playerStatus)
+            let event = MapSession.Event.playerStatusPropertyChanged(property: sp, value: Int(packet.count))
             self.postEvent(event)
         }
 
@@ -45,8 +44,7 @@ extension MapSession {
                 return
             }
 
-            self.playerStatus.update(property: sp, value: Int(packet.amount))
-            let event = MapSession.Event.playerStatusChanged(status: self.playerStatus)
+            let event = MapSession.Event.playerStatusPropertyChanged(property: sp, value: Int(packet.amount))
             self.postEvent(event)
         }
 
@@ -56,8 +54,7 @@ extension MapSession {
                 return
             }
 
-            self.playerStatus.update(property: sp, value: Int(packet.amount))
-            let event = MapSession.Event.playerStatusChanged(status: self.playerStatus)
+            let event = MapSession.Event.playerStatusPropertyChanged(property: sp, value: Int(packet.amount))
             self.postEvent(event)
         }
 
@@ -67,8 +64,7 @@ extension MapSession {
                 return
             }
 
-            self.playerStatus.update(property: sp, value: Int(packet.value))
-            let event = MapSession.Event.playerStatusChanged(status: self.playerStatus)
+            let event = MapSession.Event.playerStatusPropertyChanged(property: sp, value: Int(packet.value))
             self.postEvent(event)
         }
 
@@ -78,8 +74,7 @@ extension MapSession {
                 return
             }
 
-            self.playerStatus.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
-            let event = MapSession.Event.playerStatusChanged(status: self.playerStatus)
+            let event = MapSession.Event.playerStatusPropertyChanged2(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
             self.postEvent(event)
         }
 
