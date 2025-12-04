@@ -52,9 +52,10 @@ final class NetworkSessionTests: XCTestCase {
     }
 
     override func tearDown() async throws {
-//        await LoginServer.shared.stop()
-//        await CharServer.shared.stop()
-//        await MapServer.shared.stop()
+        async let login = LoginServer.shared.stop()
+        async let char = CharServer.shared.stop()
+        async let map = MapServer.shared.stop()
+        _ = await (login, char, map)
     }
 
     func testNetworkSession() async throws {
@@ -76,6 +77,8 @@ final class NetworkSessionTests: XCTestCase {
                 break
             }
         }
+
+        loginSession.stop()
 
         // MARK: - Start char session
 
@@ -123,6 +126,8 @@ final class NetworkSessionTests: XCTestCase {
             }
         }
 
+        charSession.stop()
+
         // MARK: - Start map session
 
         let mapSession = MapSession(account: account, character: character, mapServer: mapServer)
@@ -134,7 +139,7 @@ final class NetworkSessionTests: XCTestCase {
                 XCTAssertEqual(position, [18, 26])
 
                 // Load map.
-                sleep(1)
+                try await Task.sleep(for: .seconds(1))
 
                 mapSession.notifyMapLoaded()
 
@@ -154,7 +159,7 @@ final class NetworkSessionTests: XCTestCase {
             }
         }
 
-        sleep(1)
+        try await Task.sleep(for: .seconds(1))
 
         // MARK: - Move to warp
 
@@ -173,7 +178,7 @@ final class NetworkSessionTests: XCTestCase {
                 XCTAssertEqual(position, [51, 30])
 
                 // Load map.
-                sleep(1)
+                try await Task.sleep(for: .seconds(1))
 
                 mapSession.notifyMapLoaded()
 
@@ -194,28 +199,30 @@ final class NetworkSessionTests: XCTestCase {
 
         // MARK: - Talk to wounded swordsman
 
-        sleep(1)
+        try await Task.sleep(for: .seconds(1))
 
         let woundedSwordsman1 = mapObjects.first(where: { $0.job == 687 })!
         mapSession.talkToNPC(npcID: woundedSwordsman1.objectID)
 
-        sleep(1)
+        try await Task.sleep(for: .seconds(1))
 
         let woundedSwordsman2 = mapObjects.first(where: { $0.job == 688 })!
         mapSession.talkToNPC(npcID: woundedSwordsman2.objectID)
 
-        sleep(1)
+        try await Task.sleep(for: .seconds(1))
 
         mapSession.requestNextMessage(npcID: woundedSwordsman2.objectID)
 
-        sleep(1)
+        try await Task.sleep(for: .seconds(1))
 
         mapSession.requestNextMessage(npcID: woundedSwordsman2.objectID)
 
-        sleep(1)
+        try await Task.sleep(for: .seconds(1))
 
         mapSession.closeDialog(npcID: woundedSwordsman2.objectID)
 
-        sleep(5)
+        try await Task.sleep(for: .seconds(5))
+
+        mapSession.stop()
     }
 }
