@@ -13,39 +13,16 @@ public struct GameView: View {
 
     public var body: some View {
         Group {
-            if showsBackground {
-                GeometryReader { proxy in
-                    ScrollView([.horizontal, .vertical]) {
-                        ZStack {
-                            GameImage("bgi_temp.bmp") { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: proxy.size.width, height: proxy.size.height)
-                            }
-
-                            VStack(spacing: 0) {
-                                ForEach(gameSession.errorMessages.reversed()) { errorMessage in
-                                    MessageBoxView(errorMessage.content)
-                                        .overlay(alignment: .bottomTrailing) {
-                                            HStack(spacing: 3) {
-                                                GameButton("btn_ok.bmp") {
-                                                    gameSession.removeErrorMessage(errorMessage)
-                                                }
-                                            }
-                                            .padding(.horizontal, 5)
-                                            .padding(.vertical, 4)
-                                        }
-                                }
-
-                                contentView
-                            }
-                        }
-                    }
+            switch gameSession.phase {
+            case .login(let loginPhase):
+                LoginFlowView(loginPhase: loginPhase)
+            case .map(let mapPhase):
+                switch mapPhase {
+                case .loading(let progress):
+                    MapLoadingView(progress: progress)
+                case .loaded(let scene):
+                    MapView(scene: scene)
                 }
-                .ignoresSafeArea()
-            } else {
-                contentView
             }
         }
         .environment(gameSession)
@@ -62,32 +39,6 @@ public struct GameView: View {
             UIApplication.shared.isIdleTimerDisabled = false
         }
         #endif
-    }
-
-    private var showsBackground: Bool {
-        switch gameSession.phase {
-        case .login, .charServerList, .characterSelect, .characterMake:
-            true
-        case .mapLoading, .map:
-            false
-        }
-    }
-
-    @ViewBuilder private var contentView: some View {
-        switch gameSession.phase {
-        case .login:
-            LoginView()
-        case .charServerList(let charServers):
-            CharServerListView(charServers: charServers)
-        case .characterSelect(let characters):
-            CharacterSelectView(characters: characters)
-        case .characterMake(let slot):
-            CharacterMakeView(slot: slot)
-        case .mapLoading(let progress):
-            MapLoadingView(progress: progress)
-        case .map(let scene):
-            MapView(scene: scene)
-        }
     }
 
     public init(gameSession: GameSession, onExit: @escaping () -> Void) {

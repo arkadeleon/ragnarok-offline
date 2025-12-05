@@ -41,15 +41,23 @@ final public class GameSession {
     public private(set) var state: GameSession.State = .notStarted
 
     public enum Phase {
+        case login(GameSession.LoginPhase)
+        case map(GameSession.MapPhase)
+    }
+
+    public enum LoginPhase {
         case login
         case charServerList(_ charServers: [CharServerInfo])
         case characterSelect(_ characters: [CharacterInfo])
         case characterMake(_ slot: Int)
-        case mapLoading(_ progress: Progress)
-        case map(_ scene: MapScene)
     }
 
-    public private(set) var phase: GameSession.Phase = .login
+    public enum MapPhase {
+        case loading(_ progress: Progress)
+        case loaded(_ scene: MapScene)
+    }
+
+    public private(set) var phase: GameSession.Phase = .login(.login)
 
     struct ErrorMessage: Identifiable {
         let id = UUID()
@@ -70,7 +78,7 @@ final public class GameSession {
     @ObservationIgnored var mapSession: MapSession?
 
     var mapScene: MapScene? {
-        if case .map(let scene) = phase {
+        if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
             scene
         } else {
             nil
@@ -140,11 +148,11 @@ final public class GameSession {
     }
 
     func makeCharacter(slot: Int) {
-        phase = .characterMake(slot)
+        phase = .login(.characterMake(slot))
     }
 
     func cancelMakeCharacter() {
-        phase = .characterSelect(characters)
+        phase = .login(.characterSelect(characters))
     }
 
     func stopAllSessions() {
@@ -157,7 +165,7 @@ final public class GameSession {
         loginSession?.stop()
         loginSession = nil
 
-        phase = .login
+        phase = .login(.login)
     }
 
     // MARK: - NPC
@@ -254,7 +262,7 @@ final public class GameSession {
             if charServers.count == 1 {
                 selectCharServer(charServers[0])
             } else if charServers.count > 1 {
-                phase = .charServerList(charServers)
+                phase = .login(.charServerList(charServers))
             }
         case .loginRefused(let message):
             Task {
@@ -303,7 +311,7 @@ final public class GameSession {
         switch event {
         case .charServerAccepted(let characters):
             self.characters = characters
-            phase = .characterSelect(characters)
+            phase = .login(.characterSelect(characters))
         case .charServerRefused:
             break
         case .charServerNotifiedMapServer(let charID, let mapName, let mapServer):
@@ -315,7 +323,7 @@ final public class GameSession {
             break
         case .makeCharacterAccepted(let character):
             characters.append(character)
-            phase = .characterSelect(characters)
+            phase = .login(.characterSelect(characters))
         case .makeCharacterRefused:
             break
         case .deleteCharacterAccepted:
@@ -363,14 +371,14 @@ final public class GameSession {
             mapSession?.stop()
             mapSession = nil
 
-            phase = .characterSelect(characters)
+            phase = .login(.characterSelect(characters))
         case .mapChanged(let mapName, let position):
-            if case .map(let scene) = phase {
-                scene.unload()
+            if let mapScene {
+                mapScene.unload()
             }
 
             let progress = Progress()
-            phase = .mapLoading(progress)
+            phase = .map(.loading(progress))
 
             Task {
                 guard let mapSession, let account, let character else {
@@ -393,7 +401,7 @@ final public class GameSession {
 
                 await scene.load(progress: progress)
 
-                phase = .map(scene)
+                phase = .map(.loaded(scene))
             }
         case .playerMoved(let startPosition, let endPosition):
             mapScene?.onPlayerMoved(startPosition: startPosition, endPosition: endPosition)
