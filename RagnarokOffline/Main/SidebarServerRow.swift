@@ -1,5 +1,5 @@
 //
-//  ServerCell.swift
+//  SidebarServerRow.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2024/7/24.
@@ -8,12 +8,16 @@
 import rAthenaCommon
 import SwiftUI
 
-struct ServerCell: View {
+struct SidebarServerRow: View {
     var server: ServerModel
 
     var body: some View {
         HStack {
-            Label(server.name, systemImage: "server.rack")
+            Label {
+                Text(server.name)
+            } icon: {
+                SidebarIcon(name: "server.rack", color: .gray)
+            }
 
             Spacer()
 
@@ -25,5 +29,5 @@ struct ServerCell: View {
 }
 
 #Preview {
-    ServerCell(server: ServerModel(server: Server()))
+    SidebarServerRow(server: ServerModel(server: Server()))
 }

@@ -51,26 +51,26 @@ struct SidebarView: View {
         List(selection: selection) {
             Section(isExpanded: $isClientSectionExpanded) {
                 NavigationLink(value: SidebarItem.clientLocalFiles) {
-                    Label("Local Files", systemImage: "folder")
+                    SidebarRow("Local Files", iconName: "folder.fill", iconColor: .blue)
                 }
 
                 if let clientSyncedDirectory = appModel.clientSyncedDirectory {
                     NavigationLink(value: SidebarItem.clientSyncedFiles(clientSyncedDirectory)) {
-                        Label("Synced Files", systemImage: "folder")
+                        SidebarRow("Synced Files", iconName: "folder.fill", iconColor: .blue)
                     }
                 }
 
                 NavigationLink(value: SidebarItem.clientCachedFiles) {
-                    Label("Cached Files", systemImage: "folder")
+                    SidebarRow("Cached Files", iconName: "folder.fill", iconColor: .blue)
                 }
 
                 NavigationLink(value: SidebarItem.gameClient) {
-                    Label("Game Client", systemImage: "macwindow")
+                    SidebarRow("Game Client", iconName: "ipad.and.iphone", iconColor: .green)
                 }
 
                 #if CHAT_CLIENT_FEATURE
                 NavigationLink(value: SidebarItem.chatClient) {
-                    Label("Chat Client", systemImage: "message")
+                    SidebarRow("Chat Client", iconName: "message.fill", iconColor: .green)
                 }
                 #endif
             } header: {
@@ -83,23 +83,23 @@ struct SidebarView: View {
 
             Section(isExpanded: $isServerSectionExpanded) {
                 NavigationLink(value: SidebarItem.serverFiles) {
-                    Label("Server Files", systemImage: "folder")
+                    SidebarRow("Server Files", iconName: "folder.fill", iconColor: .blue)
                 }
 
                 NavigationLink(value: SidebarItem.loginServer) {
-                    ServerCell(server: appModel.loginServer)
+                    SidebarServerRow(server: appModel.loginServer)
                 }
 
                 NavigationLink(value: SidebarItem.charServer) {
-                    ServerCell(server: appModel.charServer)
+                    SidebarServerRow(server: appModel.charServer)
                 }
 
                 NavigationLink(value: SidebarItem.mapServer) {
-                    ServerCell(server: appModel.mapServer)
+                    SidebarServerRow(server: appModel.mapServer)
                 }
 
                 NavigationLink(value: SidebarItem.webServer) {
-                    ServerCell(server: appModel.webServer)
+                    SidebarServerRow(server: appModel.webServer)
                 }
             } header: {
                 Text("Server")
@@ -109,45 +109,47 @@ struct SidebarView: View {
                     .textCase(nil)
             }
             .sectionActions {
-                Button("Start All Servers", systemImage: "play") {
+                Button {
                     Task {
                         try await startAllServers()
                     }
+                } label: {
+                    SidebarRow("Start All Servers", iconName: "play.fill", iconColor: .gray)
                 }
             }
 
             Section(isExpanded: $isDatabaseSectionExpanded) {
                 NavigationLink(value: SidebarItem.itemDatabase) {
-                    Label("Item Database", systemImage: "leaf")
+                    SidebarRow("Item Database", iconName: "leaf.fill", iconColor: .green)
                 }
 
                 NavigationLink(value: SidebarItem.jobDatabase) {
-                    Label("Job Database", systemImage: "person")
+                    SidebarRow("Job Database", iconName: "person.fill", iconColor: .cyan)
                 }
 
                 NavigationLink(value: SidebarItem.mapDatabase) {
-                    Label("Map Database", systemImage: "map")
+                    SidebarRow("Map Database", iconName: "map.fill", iconColor: .brown)
                 }
 
                 NavigationLink(value: SidebarItem.monsterDatabase) {
-                    Label("Monster Database", systemImage: "pawprint")
+                    SidebarRow("Monster Database", iconName: "pawprint.fill", iconColor: .red)
                 }
 
                 NavigationLink(value: SidebarItem.monsterSummonDatabase) {
-                    Label("Monster Summon Database", systemImage: "pawprint")
+                    SidebarRow("Monster Summon Database", iconName: "pawprint.fill", iconColor: .red)
                 }
 
                 NavigationLink(value: SidebarItem.petDatabase) {
-                    Label("Pet Database", systemImage: "pawprint")
+                    SidebarRow("Pet Database", iconName: "pawprint.fill", iconColor: .pink)
                 }
 
                 NavigationLink(value: SidebarItem.skillDatabase) {
-                    Label("Skill Database", systemImage: "arrow.up.heart")
+                    SidebarRow("Skill Database", iconName: "arrow.up.heart.fill", iconColor: .purple)
                 }
 
                 #if DEBUG
                 NavigationLink(value: SidebarItem.statusChangeDatabase) {
-                    Label("Status Change Database", systemImage: "moon.zzz")
+                    SidebarRow("Status Change Database", iconName: "moon.zzz.fill", iconColor: .indigo)
                 }
                 #endif
             } header: {
@@ -160,12 +162,12 @@ struct SidebarView: View {
 
             Section(isExpanded: $isToolsSectionExpanded) {
                 NavigationLink(value: SidebarItem.characterSimulator) {
-                    Label("Character Simulator", systemImage: "person")
+                    SidebarRow("Character Simulator", iconName: "person.fill", iconColor: .cyan)
                 }
 
                 #if DEBUG
                 NavigationLink(value: SidebarItem.cube) {
-                    Label("Cube", systemImage: "cube")
+                    SidebarRow("Cube", iconName: "cube.fill", iconColor: .orange)
                 }
                 #endif
             } header: {
@@ -228,5 +230,8 @@ struct SidebarView: View {
 }
 
 #Preview {
-    SidebarView(selection: nil)
+    NavigationStack {
+        SidebarView(selection: nil)
+    }
+    .environment(AppModel())
 }
