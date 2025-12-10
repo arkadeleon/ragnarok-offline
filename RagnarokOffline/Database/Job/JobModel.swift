@@ -89,7 +89,7 @@ final class JobModel {
         let jobLevels = (1...maxJobLevel).map { level in
             let bonusStats = Parameter.allCases.compactMap { parameter in
                 if let value = job.bonusStats[level]?[parameter], value > 0 {
-                    return "\(parameter.stringValue)(+\(value))"
+                    return "\(parameter.stringValue)(+\(value.formatted()))"
                 } else {
                     return nil
                 }

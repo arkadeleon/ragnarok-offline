@@ -34,7 +34,7 @@ final class SkillModel {
         case .left(let spCost):
             return spCost.formatted()
         case .right(let spCost):
-            return spCost.compactMap(String.init).joined(separator: " / ")
+            return spCost.map({ $0.formatted() }).joined(separator: " / ")
         }
     }
 

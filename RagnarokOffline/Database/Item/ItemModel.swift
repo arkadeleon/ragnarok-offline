@@ -25,7 +25,7 @@ final class ItemModel {
     var displayName: String {
         var displayName = localizedName ?? item.name
         if item.slots > 0 {
-            displayName += " [\(item.slots)]"
+            displayName += " [\(item.slots.formatted())]"
         }
         return displayName
     }

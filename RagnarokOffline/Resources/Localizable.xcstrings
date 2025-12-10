@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lld monsters" : {
-
-    },
     "Account Registration" : {
       "localizations" : {
         "de" : {

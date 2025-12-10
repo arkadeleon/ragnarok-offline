@@ -29,7 +29,7 @@ struct MonsterSummonDatabaseView: View {
                         Text(monsterSummon.default)
                             .frame(minWidth: 120, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
-                        Text("\(monsterSummon.summon.count) monsters")
+                        Text(monsterSummon.summon.count.formatted() + " monsters")
                             .frame(minWidth: 120, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
                     }
