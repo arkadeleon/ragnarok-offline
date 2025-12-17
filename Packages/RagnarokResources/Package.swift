@@ -18,6 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../GRF"),
+        .package(path: "../ImageRendering"),
         .package(path: "../TextEncoding"),
         .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
     ],
@@ -26,6 +27,7 @@ let package = Package(
             name: "RagnarokResources",
             dependencies: [
                 "GRF",
+                "ImageRendering",
                 "TextEncoding",
                 .product(name: "Lua", package: "swift-lua"),
             ],

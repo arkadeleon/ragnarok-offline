@@ -54,8 +54,7 @@ struct InventoryItemView: View {
             let resourceManager = gameSession.resourceManager
             let scriptContext = await resourceManager.scriptContext()
             if let path = ResourcePath.generateItemIconImagePath(itemID: item.itemID, scriptContext: scriptContext) {
-                let image = try? await resourceManager.image(at: path)
-                iconImage = image?.removingMagentaPixels()
+                iconImage = try? await resourceManager.image(at: path, removesMagentaPixels: true)
             }
         }
     }

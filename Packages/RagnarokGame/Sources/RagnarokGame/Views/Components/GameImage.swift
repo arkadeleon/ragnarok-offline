@@ -21,8 +21,7 @@ struct GameImage<Content>: View where Content: View {
             .task {
                 let components = name.split(separator: "/").map(String.init)
                 let path = ResourcePath.userInterfaceDirectory.appending(components)
-                let image = try? await gameSession.resourceManager.image(at: path)
-                self.image = image?.removingMagentaPixels()
+                image = try? await gameSession.resourceManager.image(at: path, removesMagentaPixels: true)
             }
     }
 

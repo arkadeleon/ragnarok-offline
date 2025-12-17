@@ -35,15 +35,14 @@ final class MapModel {
     @MainActor
     func fetchLocalizedName() async {
         let mapNameTable = await ResourceManager.shared.mapNameTable(for: .current)
-        self.localizedName = mapNameTable.localizedMapName(forMapName: map.name)
+        localizedName = mapNameTable.localizedMapName(forMapName: map.name)
     }
 
     @MainActor
     func fetchImage() async {
         if image == nil {
             let path = ResourcePath.generateMapImagePath(mapName: map.name)
-            let image = try? await ResourceManager.shared.image(at: path)
-            self.image = image?.removingMagentaPixels()
+            image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }
     }
 }

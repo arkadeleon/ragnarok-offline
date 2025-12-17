@@ -15,7 +15,10 @@ public func CGImageCreateWithData(_ data: Data) -> CGImage? {
         return nil
     }
 
-    let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
+    guard let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
+        return nil
+    }
+
     return image
 }
 

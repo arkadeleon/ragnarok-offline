@@ -70,8 +70,7 @@ final class SkillModel {
     func fetchIconImage() async {
         if iconImage == nil {
             let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skill.aegisName)
-            let image = try? await ResourceManager.shared.image(at: path)
-            iconImage = image?.removingMagentaPixels()
+            iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
         }
     }
 
