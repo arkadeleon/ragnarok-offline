@@ -26,7 +26,7 @@ struct ChatBoxView: View {
                     message = ""
                 }
         }
-        .frame(width: 220)
+        .frame(width: 128)
     }
 }
 

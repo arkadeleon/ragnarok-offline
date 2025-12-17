@@ -66,29 +66,31 @@ struct MapView: View {
                 }
             }
         }
-        .overlay(alignment: .bottomLeading) {
+        .overlay(alignment: .topTrailing) {
             ChatBoxView()
+        }
+        .overlay(alignment: .bottomLeading) {
+            ThumbstickView(updatingValue: $movementValue, radius: 72)
+                .onReceive(timer) { _ in
+                    scene.onMovementValueChanged(movementValue: movementValue)
+                }
+                .padding(16)
         }
         .overlay(alignment: .bottomTrailing) {
             ZStack {
-                ThumbstickView(updatingValue: $movementValue, radius: 60)
-                    .onReceive(timer) { _ in
-                        scene.onMovementValueChanged(movementValue: movementValue)
-                    }
-
-                ActionButton("A", color: .red, angle: 0) {
+                MainActionButton("A", color: .red) {
                     scene.attackNearestMonster()
                 }
 
-                ActionButton("P", color: .green, angle: 45) {
+                SubActionButton("P", color: .green, angle: 75) {
                     scene.pickUpNearestItem()
                 }
 
-                ActionButton("T", color: .blue, angle: 90) {
+                SubActionButton("T", color: .blue, angle: 15) {
                     scene.talkToNearestNPC()
                 }
             }
-            .padding()
+            .padding(16)
         }
         .overlay {
             if let dialog = gameSession.dialog {
@@ -98,7 +100,34 @@ struct MapView: View {
     }
 }
 
-private struct ActionButton: View {
+private struct MainActionButton: View {
+    var title: String
+    var color: Color
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Circle()
+                    .fill(color.opacity(0.75))
+                    .frame(width: 72, height: 72)
+                    .shadow(color: color.opacity(0.4), radius: 5, x: 0, y: 2)
+
+                Text(title)
+                    .font(.title.bold())
+                    .foregroundStyle(.white)
+            }
+        }
+    }
+
+    init(_ title: String, color: Color, action: @escaping () -> Void) {
+        self.title = title
+        self.color = color
+        self.action = action
+    }
+}
+
+private struct SubActionButton: View {
     var title: String
     var color: Color
     var angle: CGFloat
@@ -109,7 +138,7 @@ private struct ActionButton: View {
             ZStack {
                 Circle()
                     .fill(color.opacity(0.75))
-                    .frame(width: 48, height: 48)
+                    .frame(width: 56, height: 56)
                     .shadow(color: color.opacity(0.4), radius: 5, x: 0, y: 2)
 
                 Text(title)
@@ -117,7 +146,7 @@ private struct ActionButton: View {
                     .foregroundStyle(.white)
             }
         }
-        .offset(x: -96 * sin(radians(angle)), y: -96 * cos(radians(angle)))
+        .offset(x: -80 * sin(radians(angle)), y: -80 * cos(radians(angle)))
     }
 
     init(_ title: String, color: Color, angle: CGFloat, action: @escaping () -> Void) {

@@ -84,7 +84,7 @@ public struct ThumbstickView: View {
         if #available(macOS 26.0, iOS 26.0, *) {
             Color.clear
                 .frame(width: largeRadius * 2, height: largeRadius * 2)
-                .glassEffect(.regular, in: .circle)
+                .glassEffect(.clear, in: .circle)
         } else {
             Color.clear
                 .frame(width: largeRadius * 2, height: largeRadius * 2)
