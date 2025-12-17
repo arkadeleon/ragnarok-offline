@@ -179,6 +179,10 @@ struct SidebarView: View {
             }
         }
         .listStyle(.sidebar)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isClientSectionExpanded)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isServerSectionExpanded)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isDatabaseSectionExpanded)
+        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isToolsSectionExpanded)
         .navigationTitle(String("Ragnarok Offline"))
         .toolbar {
             Menu {
@@ -196,7 +200,7 @@ struct SidebarView: View {
                 }
                 #endif
             } label: {
-                Image(systemName: "ellipsis.circle")
+                Image(systemName: "ellipsis")
             }
         }
         .sheet(isPresented: $isHelpPresented) {
