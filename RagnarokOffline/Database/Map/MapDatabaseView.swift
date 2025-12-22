@@ -39,9 +39,7 @@ struct MapDatabaseView: View {
         }
         .background(.background)
         .navigationTitle("Map Database")
-        .adaptiveSearch(text: $searchText) { searchText in
-            filteredMaps = await maps(matching: searchText, in: database.maps)
-        }
+        .adaptiveSearch(text: $searchText)
         .overlay {
             if database.maps.isEmpty {
                 ProgressView()
@@ -49,7 +47,7 @@ struct MapDatabaseView: View {
                 ContentUnavailableView("No Results", systemImage: "map.fill")
             }
         }
-        .task {
+        .task(id: "\(searchText)") {
             await database.fetchMaps()
             filteredMaps = await maps(matching: searchText, in: database.maps)
         }

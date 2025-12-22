@@ -48,9 +48,7 @@ struct ItemDatabaseView: View {
         }
         .background(.background)
         .navigationTitle("Item Database")
-        .adaptiveSearch(text: $searchText) { searchText in
-            filteredItems = await items(matching: searchText, in: database.items)
-        }
+        .adaptiveSearch(text: $searchText)
         .overlay {
             if database.items.isEmpty {
                 ProgressView()
@@ -58,7 +56,7 @@ struct ItemDatabaseView: View {
                 ContentUnavailableView("No Results", systemImage: "leaf.fill")
             }
         }
-        .task {
+        .task(id: "\(searchText)") {
             await database.fetchItems()
             filteredItems = await items(matching: searchText, in: database.items)
         }

@@ -31,9 +31,7 @@ struct StatusChangeDatabaseView: View {
         }
         .background(.background)
         .navigationTitle("Status Change Database")
-        .adaptiveSearch(text: $searchText) { searchText in
-            filteredStatusChanges = await statusChanges(matching: searchText, in: database.statusChanges)
-        }
+        .adaptiveSearch(text: $searchText)
         .overlay {
             if database.statusChanges.isEmpty {
                 ProgressView()
@@ -41,7 +39,7 @@ struct StatusChangeDatabaseView: View {
                 ContentUnavailableView("No Results", systemImage: "moon.zzz.fill")
             }
         }
-        .task {
+        .task(id: "\(searchText)") {
             await database.fetchStatusChanges()
             filteredStatusChanges = await statusChanges(matching: searchText, in: database.statusChanges)
         }

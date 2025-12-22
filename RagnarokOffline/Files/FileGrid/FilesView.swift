@@ -35,9 +35,7 @@ struct FilesView: View {
         .background(.background)
         .navigationTitle(title)
         .toolbar(content: toolbarContent)
-        .adaptiveSearch(text: $searchText) { searchText in
-            filterFiles(searchText: searchText)
-        }
+        .adaptiveSearch(text: $searchText)
         .refreshable {
             await reload()
         }
@@ -58,6 +56,9 @@ struct FilesView: View {
         )
         .task {
             await load()
+        }
+        .task(id: "\(searchText)") {
+            filterFiles(searchText: searchText)
         }
     }
 

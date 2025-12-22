@@ -9,33 +9,33 @@ import SwiftUI
 
 struct AdaptiveSearch: ViewModifier {
     @Binding var text: String
-    var onSearch: (String) async -> Void
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     private var placement: SearchFieldPlacement {
-        #if os(macOS)
-        .automatic
-        #else
-        if sizeClass == .compact {
-            .navigationBarDrawer(displayMode: .always)
-        } else {
+        #if os(iOS)
+        if #available(iOS 26.0, *) {
             .automatic
+        } else {
+            if sizeClass == .compact {
+                .navigationBarDrawer(displayMode: .always)
+            } else {
+                .automatic
+            }
         }
+        #else
+        .automatic
         #endif
     }
 
     func body(content: Content) -> some View {
         content
             .searchable(text: $text, placement: placement)
-            .task(id: text) {
-                await onSearch(text)
-            }
     }
 }
 
 extension View {
-    func adaptiveSearch(text: Binding<String>, onSearch: @escaping (String) async -> Void) -> some View {
-        modifier(AdaptiveSearch(text: text, onSearch: onSearch))
+    func adaptiveSearch(text: Binding<String>) -> some View {
+        modifier(AdaptiveSearch(text: text))
     }
 }

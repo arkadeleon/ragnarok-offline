@@ -93,17 +93,18 @@ struct CharacterEquipmentPicker: View {
                 }
             }
         }
-        .adaptiveSearch(text: $searchText) { searchText in
-            filteredItems = await items(matching: searchText, in: items)
-        }
+        .adaptiveSearch(text: $searchText)
         .overlay {
             if items.isEmpty {
                 ProgressView()
             }
         }
-        .task {
-            await database.fetchItems()
-            items = database.items.filter(predicate)
+        .task(id: "\(searchText)") {
+            if items.isEmpty {
+                await database.fetchItems()
+                items = database.items.filter(predicate)
+            }
+
             filteredItems = await items(matching: searchText, in: items)
         }
     }

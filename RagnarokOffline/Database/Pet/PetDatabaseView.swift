@@ -23,9 +23,7 @@ struct PetDatabaseView: View {
         }
         .background(.background)
         .navigationTitle("Pet Database")
-        .adaptiveSearch(text: $searchText) { searchText in
-            filteredPets = await pets(matching: searchText, in: database.pets)
-        }
+        .adaptiveSearch(text: $searchText)
         .overlay {
             if database.pets.isEmpty {
                 ProgressView()
@@ -33,7 +31,7 @@ struct PetDatabaseView: View {
                 ContentUnavailableView("No Results", systemImage: "pawprint.fill")
             }
         }
-        .task {
+        .task(id: "\(searchText)") {
             await database.fetchPets()
             filteredPets = await pets(matching: searchText, in: database.pets)
         }

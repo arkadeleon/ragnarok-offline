@@ -21,9 +21,7 @@ struct JobDatabaseView: View {
         }
         .background(.background)
         .navigationTitle("Job Database")
-        .adaptiveSearch(text: $searchText) { searchText in
-            filteredJobs = await jobs(matching: searchText, in: database.jobs)
-        }
+        .adaptiveSearch(text: $searchText)
         .overlay {
             if database.jobs.isEmpty {
                 ProgressView()
@@ -31,7 +29,7 @@ struct JobDatabaseView: View {
                 ContentUnavailableView("No Results", systemImage: "person.fill")
             }
         }
-        .task {
+        .task(id: "\(searchText)") {
             await database.fetchJobs()
             filteredJobs = await jobs(matching: searchText, in: database.jobs)
         }

@@ -42,9 +42,7 @@ struct SkillDatabaseView: View {
         }
         .background(.background)
         .navigationTitle("Skill Database")
-        .adaptiveSearch(text: $searchText) { searchText in
-            filteredSkills = await skills(matching: searchText, in: database.skills)
-        }
+        .adaptiveSearch(text: $searchText)
         .overlay {
             if database.skills.isEmpty {
                 ProgressView()
@@ -52,7 +50,7 @@ struct SkillDatabaseView: View {
                 ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
             }
         }
-        .task {
+        .task(id: "\(searchText)") {
             await database.fetchSkills()
             filteredSkills = await skills(matching: searchText, in: database.skills)
         }
