@@ -47,6 +47,8 @@ struct SidebarView: View {
     @State private var isHelpPresented = false
     @State private var isSettingsPresented = false
 
+    @Namespace private var menuNamespace
+
     var body: some View {
         List(selection: selection) {
             Section(isExpanded: $isClientSectionExpanded) {
@@ -202,6 +204,7 @@ struct SidebarView: View {
             } label: {
                 Image(systemName: "ellipsis")
             }
+            .matchedTransitionSource(id: "menu", in: menuNamespace)
         }
         .sheet(isPresented: $isHelpPresented) {
             NavigationStack {
@@ -209,6 +212,11 @@ struct SidebarView: View {
                     isHelpPresented.toggle()
                 }
             }
+            #if os(macOS)
+            .navigationTransition(.automatic)
+            #else
+            .navigationTransition(.zoom(sourceID: "menu", in: menuNamespace))
+            #endif
         }
         .sheet(isPresented: $isSettingsPresented) {
             NavigationStack {
@@ -217,6 +225,11 @@ struct SidebarView: View {
                 }
                 .environment(appModel.settings)
             }
+            #if os(macOS)
+            .navigationTransition(.automatic)
+            #else
+            .navigationTransition(.zoom(sourceID: "menu", in: menuNamespace))
+            #endif
         }
     }
 

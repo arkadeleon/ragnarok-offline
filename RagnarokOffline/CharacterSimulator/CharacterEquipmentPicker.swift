@@ -14,6 +14,8 @@ struct CharacterEquipmentPicker: View {
 
     @Environment(DatabaseModel.self) private var database
 
+    @Namespace private var equipmentNamespace
+
     @State private var isPicking = false
     @State private var searchText = ""
     @State private var items: [ItemModel] = []
@@ -31,12 +33,18 @@ struct CharacterEquipmentPicker: View {
                 }
             }
             .buttonStyle(.bordered)
+            .matchedTransitionSource(id: "equipment", in: equipmentNamespace)
         }
         .sheet(isPresented: $isPicking) {
             NavigationStack {
                 itemList
             }
             .presentationSizing(.form)
+            #if os(macOS)
+            .navigationTransition(.automatic)
+            #else
+            .navigationTransition(.zoom(sourceID: "equipment", in: equipmentNamespace))
+            #endif
         }
     }
 
@@ -79,8 +87,8 @@ struct CharacterEquipmentPicker: View {
         .navigationTitle(titleKey)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done") {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", systemImage: "xmark") {
                     isPicking = false
                 }
             }

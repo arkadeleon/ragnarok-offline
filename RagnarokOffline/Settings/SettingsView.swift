@@ -25,11 +25,10 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
+        .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done") {
-                    onDone()
-                }
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", systemImage: "xmark", action: onDone)
             }
         }
     }

@@ -29,8 +29,8 @@ struct MapViewer: View {
         .navigationTitle(mapName)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done", action: onDone)
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel", systemImage: "xmark", action: onDone)
             }
         }
     }
@@ -50,10 +50,5 @@ struct MapViewer: View {
         entity.addChild(worldEntity)
 
         return entity
-    }
-
-    init(mapName: String, onDone: @escaping () -> Void) {
-        self.mapName = mapName
-        self.onDone = onDone
     }
 }

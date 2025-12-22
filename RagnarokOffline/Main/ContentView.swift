@@ -44,8 +44,8 @@ struct ContentView: View {
             NavigationStack {
                 FilePreviewView(file: file)
                     .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Done") {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel", systemImage: "xmark") {
                                 incomingFile = nil
                             }
                         }
