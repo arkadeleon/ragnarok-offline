@@ -27,9 +27,7 @@ struct SettingsView: View {
         .navigationTitle("Settings")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel", systemImage: "xmark", action: onDone)
-            }
+            ToolbarCancelButton(action: onDone)
         }
     }
 }

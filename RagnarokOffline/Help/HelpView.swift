@@ -19,9 +19,7 @@ struct HelpView: View {
         .navigationTitle("Help")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel", systemImage: "xmark", action: onDone)
-            }
+            ToolbarCancelButton(action: onDone)
         }
     }
 }

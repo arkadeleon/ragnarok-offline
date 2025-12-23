@@ -87,10 +87,8 @@ struct CharacterEquipmentPicker: View {
         .navigationTitle(titleKey)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel", systemImage: "xmark") {
-                    isPicking = false
-                }
+            ToolbarCancelButton {
+                isPicking = false
             }
         }
         .adaptiveSearch(text: $searchText)

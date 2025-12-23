@@ -19,9 +19,7 @@ struct FileJSONViewer: View {
             .frame(height: 400)
             .navigationTitle("JSON Viewer")
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", systemImage: "xmark", action: onDone)
-                }
+                ToolbarCancelButton(action: onDone)
             }
             .task {
                 await loadHTMLString()
@@ -32,9 +30,7 @@ struct FileJSONViewer: View {
             .navigationTitle("JSON Viewer")
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", systemImage: "xmark", action: onDone)
-                }
+                ToolbarCancelButton(action: onDone)
             }
             .task {
                 await loadHTMLString()
