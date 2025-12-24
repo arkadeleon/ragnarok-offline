@@ -13,13 +13,13 @@ struct JobBasePointsStats: Decodable {
     var jobs: Set<JobID>
 
     /// Base HP per base level.
-    var baseHp: [LevelBaseHp]
+    var baseHp: [JobBasePointsStats.LevelBaseHp]
 
     /// Base SP per base level.
-    var baseSp: [LevelBaseSp]
+    var baseSp: [JobBasePointsStats.LevelBaseSp]
 
     /// Base AP per base level.
-    var baseAp: [LevelBaseAp]
+    var baseAp: [JobBasePointsStats.LevelBaseAp]
 
     enum CodingKeys: String, CodingKey {
         case jobs = "Jobs"
@@ -32,9 +32,9 @@ struct JobBasePointsStats: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.jobs = try container.decode([JobID : Bool].self, forKey: .jobs).unorderedKeys
-        self.baseHp = try container.decodeIfPresent([LevelBaseHp].self, forKey: .baseHp) ?? []
-        self.baseSp = try container.decodeIfPresent([LevelBaseSp].self, forKey: .baseSp) ?? []
-        self.baseAp = try container.decodeIfPresent([LevelBaseAp].self, forKey: .baseAp) ?? []
+        self.baseHp = try container.decodeIfPresent([JobBasePointsStats.LevelBaseHp].self, forKey: .baseHp) ?? []
+        self.baseSp = try container.decodeIfPresent([JobBasePointsStats.LevelBaseSp].self, forKey: .baseSp) ?? []
+        self.baseAp = try container.decodeIfPresent([JobBasePointsStats.LevelBaseAp].self, forKey: .baseAp) ?? []
     }
 }
 

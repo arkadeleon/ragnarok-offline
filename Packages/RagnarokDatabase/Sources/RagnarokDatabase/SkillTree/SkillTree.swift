@@ -17,7 +17,7 @@ public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
     public var inherit: Set<JobID>?
 
     /// List of skills available for the job. (Default: null)
-    public var tree: [Skill]?
+    public var tree: [SkillTree.Skill]?
 
     enum CodingKeys: String, CodingKey {
         case job = "Job"
@@ -29,7 +29,7 @@ public struct SkillTree: Decodable, Equatable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.job = try container.decode(JobID.self, forKey: .job)
         self.inherit = try container.decodeIfPresent([JobID : Bool].self, forKey: .inherit)?.unorderedKeys
-        self.tree = try container.decodeIfPresent([Skill].self, forKey: .tree)
+        self.tree = try container.decodeIfPresent([SkillTree.Skill].self, forKey: .tree)
     }
 }
 
@@ -53,7 +53,7 @@ extension SkillTree {
         public var jobLevel: Int
 
         /// List of skills required to unlock the skill. (Default: null)
-        public var requires: [PrerequisiteSkill]?
+        public var requires: [SkillTree.PrerequisiteSkill]?
 
         enum CodingKeys: String, CodingKey {
             case name = "Name"
@@ -71,7 +71,7 @@ extension SkillTree {
             self.exclude = try container.decodeIfPresent(Bool.self, forKey: .exclude) ?? false
             self.baseLevel = try container.decodeIfPresent(Int.self, forKey: .baseLevel) ?? 0
             self.jobLevel = try container.decodeIfPresent(Int.self, forKey: .jobLevel) ?? 0
-            self.requires = try container.decodeIfPresent([PrerequisiteSkill].self, forKey: .requires)
+            self.requires = try container.decodeIfPresent([SkillTree.PrerequisiteSkill].self, forKey: .requires)
         }
     }
 }
@@ -90,11 +90,5 @@ extension SkillTree {
             case name = "Name"
             case level = "Level"
         }
-    }
-}
-
-extension SkillTree: Comparable {
-    public static func < (lhs: SkillTree, rhs: SkillTree) -> Bool {
-        lhs.job.rawValue < rhs.job.rawValue
     }
 }

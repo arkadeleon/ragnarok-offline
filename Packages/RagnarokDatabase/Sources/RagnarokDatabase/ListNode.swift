@@ -23,7 +23,7 @@ struct ListNode<Element>: Decodable where Element: Decodable {
     }
 
     /// Header.
-    var header: Header
+    var header: ListNode.Header
 
     /// Body.
     var body: [Element]

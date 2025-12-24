@@ -125,9 +125,3 @@ public struct Job: Equatable, Hashable, Identifiable, Sendable {
         self.bonusStats = Dictionary(bonusStats, uniquingKeysWith: { (_, last) in last })
     }
 }
-
-extension Job: Comparable {
-    public static func < (lhs: Job, rhs: Job) -> Bool {
-        lhs.id.rawValue < rhs.id.rawValue
-    }
-}

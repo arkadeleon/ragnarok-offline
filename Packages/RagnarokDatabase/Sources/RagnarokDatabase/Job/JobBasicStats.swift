@@ -34,7 +34,7 @@ struct JobBasicStats: Decodable {
     var apIncrease: Int
 
     /// Job level bonus stats/traits.
-    var bonusStats: [LevelBonusStats]
+    var bonusStats: [JobBasicStats.LevelBonusStats]
 
     enum CodingKeys: String, CodingKey {
         case jobs = "Jobs"
@@ -59,7 +59,7 @@ struct JobBasicStats: Decodable {
         self.spIncrease = try container.decodeIfPresent(Int.self, forKey: .spIncrease) ?? 100
         self.apFactor = try container.decodeIfPresent(Int.self, forKey: .apFactor) ?? 0
         self.apIncrease = try container.decodeIfPresent(Int.self, forKey: .apIncrease) ?? 0
-        self.bonusStats = try container.decodeIfPresent([LevelBonusStats].self, forKey: .bonusStats) ?? []
+        self.bonusStats = try container.decodeIfPresent([JobBasicStats.LevelBonusStats].self, forKey: .bonusStats) ?? []
     }
 }
 

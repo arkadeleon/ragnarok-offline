@@ -14,7 +14,7 @@ public struct MonsterSummon: Decodable, Equatable, Hashable, Sendable {
     public var `default`: String
 
     /// List of Summonable Monsters.
-    public var summon: [Summon]
+    public var summon: [MonsterSummon.Summon]
 
     enum CodingKeys: String, CodingKey {
         case group = "Group"

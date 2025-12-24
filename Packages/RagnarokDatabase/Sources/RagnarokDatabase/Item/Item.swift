@@ -85,19 +85,19 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var aliasName: String?
 
     /// Item flags. (Default: null)
-    public var flags: Flags?
+    public var flags: Item.Flags?
 
     /// Item use delay. (Default: null)
-    public var delay: Delay?
+    public var delay: Item.Delay?
 
     /// Item stack amount. (Default: null)
-    public var stack: Stack?
+    public var stack: Item.Stack?
 
     /// Conditions when the item is unusable. (Default: null)
-    public var noUse: NoUse?
+    public var noUse: Item.NoUse?
 
     /// Trade restrictions. (Default: null)
-    public var trade: Trade?
+    public var trade: Item.Trade?
 
     /// Script to execute when the item is used/equipped. (Default: null)
     public var script: String?
@@ -196,11 +196,11 @@ public struct Item: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.gradable = try container.decodeIfPresent(Bool.self, forKey: .gradable) ?? false
         self.view = try container.decodeIfPresent(Int.self, forKey: .view) ?? 0
         self.aliasName = try container.decodeIfPresent(String.self, forKey: .aliasName)
-        self.flags = try container.decodeIfPresent(Flags.self, forKey: .flags)
-        self.delay = try container.decodeIfPresent(Delay.self, forKey: .delay)
-        self.stack = try container.decodeIfPresent(Stack.self, forKey: .stack)
-        self.noUse = try container.decodeIfPresent(NoUse.self, forKey: .noUse)
-        self.trade = try container.decodeIfPresent(Trade.self, forKey: .trade)
+        self.flags = try container.decodeIfPresent(Item.Flags.self, forKey: .flags)
+        self.delay = try container.decodeIfPresent(Item.Delay.self, forKey: .delay)
+        self.stack = try container.decodeIfPresent(Item.Stack.self, forKey: .stack)
+        self.noUse = try container.decodeIfPresent(Item.NoUse.self, forKey: .noUse)
+        self.trade = try container.decodeIfPresent(Item.Trade.self, forKey: .trade)
         self.script = try container.decodeIfPresent(String.self, forKey: .script)
         self.equipScript = try container.decodeIfPresent(String.self, forKey: .equipScript)
         self.unEquipScript = try container.decodeIfPresent(String.self, forKey: .unEquipScript)
@@ -409,11 +409,5 @@ extension Item {
             self.noMail = try container.decodeIfPresent(Bool.self, forKey: .noMail) ?? false
             self.noAuction = try container.decodeIfPresent(Bool.self, forKey: .noAuction) ?? false
         }
-    }
-}
-
-extension Item: Comparable {
-    public static func < (lhs: Item, rhs: Item) -> Bool {
-        lhs.id < rhs.id
     }
 }

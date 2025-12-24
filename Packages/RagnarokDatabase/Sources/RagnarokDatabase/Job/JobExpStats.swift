@@ -16,13 +16,13 @@ struct JobExpStats: Decodable {
     var maxBaseLevel: Int?
 
     /// Base experience per level.
-    var baseExp: [LevelExp]
+    var baseExp: [JobExpStats.LevelExp]
 
     /// Maximum job level. (Default: MAX_LEVEL)
     var maxJobLevel: Int?
 
     /// Job experience per level.
-    var jobExp: [LevelExp]
+    var jobExp: [JobExpStats.LevelExp]
 
     enum CodingKeys: String, CodingKey {
         case jobs = "Jobs"

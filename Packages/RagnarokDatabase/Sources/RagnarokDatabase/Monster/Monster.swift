@@ -100,7 +100,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var elementLevel: Int
 
     /// Walk speed. (Default: DEFAULT_WALK_SPEED)
-    public var walkSpeed: WalkSpeed
+    public var walkSpeed: Monster.WalkSpeed
 
     /// Attack speed. (Default: 0)
     public var attackDelay: Int
@@ -133,10 +133,10 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
     public var modes: Set<MonsterMode>?
 
     /// List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
-    public var mvpDrops: [Drop]?
+    public var mvpDrops: [Monster.Drop]?
 
     /// List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
-    public var drops: [Drop]?
+    public var drops: [Monster.Drop]?
 
     enum CodingKeys: String, CodingKey {
         case id = "Id"
@@ -216,7 +216,7 @@ public struct Monster: Decodable, Equatable, Hashable, Identifiable, Sendable {
         self.raceGroups = try container.decodeIfPresent([Race2 : Bool].self, forKey: .raceGroups)?.unorderedKeys
         self.element = try container.decodeIfPresent(Element.self, forKey: .element) ?? .neutral
         self.elementLevel = try container.decodeIfPresent(Int.self, forKey: .elementLevel) ?? 1
-        self.walkSpeed = try container.decodeIfPresent(WalkSpeed.self, forKey: .walkSpeed) ?? .default
+        self.walkSpeed = try container.decodeIfPresent(Monster.WalkSpeed.self, forKey: .walkSpeed) ?? .default
         self.attackDelay = try container.decodeIfPresent(Int.self, forKey: .attackDelay) ?? 0
         self.attackMotion = try container.decodeIfPresent(Int.self, forKey: .attackMotion) ?? 0
         self.clientAttackMotion = try container.decodeIfPresent(Int.self, forKey: .clientAttackMotion) ?? self.attackMotion
@@ -240,13 +240,13 @@ extension Monster {
         public var rawValue: Int
 
         /// DEFAULT_WALK_SPEED
-        public static let `default` = WalkSpeed(rawValue: 150)
+        public static let `default` = Monster.WalkSpeed(rawValue: 150)
 
         /// MIN_WALK_SPEED
-        public static let min = WalkSpeed(rawValue: 20)
+        public static let min = Monster.WalkSpeed(rawValue: 20)
 
         /// MAX_WALK_SPEED
-        public static let max = WalkSpeed(rawValue: 1000)
+        public static let max = Monster.WalkSpeed(rawValue: 1000)
 
         public init(rawValue: Int) {
             self.rawValue = rawValue
@@ -290,11 +290,5 @@ extension Monster {
             self.randomOptionGroup = try container.decodeIfPresent(String.self, forKey: .randomOptionGroup)
             self.index = try container.decodeIfPresent(Int.self, forKey: .index)
         }
-    }
-}
-
-extension Monster: Comparable {
-    public static func < (lhs: Monster, rhs: Monster) -> Bool {
-        lhs.id < rhs.id
     }
 }

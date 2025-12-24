@@ -128,9 +128,3 @@ extension Map {
         }
     }
 }
-
-extension Map: Comparable {
-    public static func < (lhs: Map, rhs: Map) -> Bool {
-        lhs.index < rhs.index
-    }
-}

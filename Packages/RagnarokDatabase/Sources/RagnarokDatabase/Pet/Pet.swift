@@ -71,7 +71,7 @@ public struct Pet: Decodable, Equatable, Hashable, Sendable {
     public var supportScript: String?
 
     /// Pet evolution settings. (Optional) (Default: null)
-    public var evolution: [Evolution]?
+    public var evolution: [Pet.Evolution]?
 
     enum CodingKeys: String, CodingKey {
         case monster = "Mob"
@@ -121,7 +121,7 @@ public struct Pet: Decodable, Equatable, Hashable, Sendable {
         self.allowAutoFeed = try container.decodeIfPresent(Bool.self, forKey: .allowAutoFeed) ?? false
         self.script = try container.decodeIfPresent(String.self, forKey: .script)
         self.supportScript = try container.decodeIfPresent(String.self, forKey: .supportScript)
-        self.evolution = try container.decodeIfPresent([Evolution].self, forKey: .evolution)
+        self.evolution = try container.decodeIfPresent([Pet.Evolution].self, forKey: .evolution)
     }
 }
 
@@ -134,7 +134,7 @@ extension Pet {
         public var target: String
 
         /// Item requirements for evolving this pet.
-        public var itemRequirements: [ItemRequirement]
+        public var itemRequirements: [Pet.Evolution.ItemRequirement]
 
         enum CodingKeys: String, CodingKey {
             case target = "Target"
