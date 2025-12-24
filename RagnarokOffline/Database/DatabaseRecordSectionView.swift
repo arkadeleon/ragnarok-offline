@@ -15,10 +15,7 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
 
     var body: some View {
         VStack(spacing: 0) {
-            header()
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color.primary)
+            SectionHeaderView(content: header)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.vertical)
 

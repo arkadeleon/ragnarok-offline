@@ -76,11 +76,7 @@ struct SidebarView: View {
                 }
                 #endif
             } header: {
-                Text("Client")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.primary)
-                    .textCase(nil)
+                SectionHeaderView("Client")
             }
 
             Section(isExpanded: $isServerSectionExpanded) {
@@ -104,11 +100,7 @@ struct SidebarView: View {
                     SidebarServerRow(server: appModel.webServer)
                 }
             } header: {
-                Text("Server")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.primary)
-                    .textCase(nil)
+                SectionHeaderView("Server")
             }
             .sectionActions {
                 Button {
@@ -155,11 +147,7 @@ struct SidebarView: View {
                 }
                 #endif
             } header: {
-                Text("Database")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.primary)
-                    .textCase(nil)
+                SectionHeaderView("Database")
             }
 
             Section(isExpanded: $isToolsSectionExpanded) {
@@ -173,11 +161,7 @@ struct SidebarView: View {
                 }
                 #endif
             } header: {
-                Text("Tools")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(Color.primary)
-                    .textCase(nil)
+                SectionHeaderView("Tools")
             }
         }
         .listStyle(.sidebar)

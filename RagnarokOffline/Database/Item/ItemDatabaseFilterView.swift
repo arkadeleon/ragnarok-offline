@@ -30,11 +30,7 @@ struct ItemDatabaseFilterView: View {
                         }
                     }
                 } header: {
-                    Text("Type")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color.primary)
-                        .textCase(nil)
+                    SectionHeaderView("Type")
                 }
 
                 if filter.itemType == .weapon {
@@ -47,11 +43,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        Text("Weapon Type")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.primary)
-                            .textCase(nil)
+                        SectionHeaderView("Weapon Type")
                             .padding(.top)
                     }
                 }
@@ -66,11 +58,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        Text("Ammo Type")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.primary)
-                            .textCase(nil)
+                        SectionHeaderView("Ammo Type")
                             .padding(.top)
                     }
                 }
@@ -85,11 +73,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        Text("Card Type")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.primary)
-                            .textCase(nil)
+                        SectionHeaderView("Card Type")
                             .padding(.top)
                     }
                 }
@@ -108,11 +92,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        Text("Locations")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Color.primary)
-                            .textCase(nil)
+                        SectionHeaderView("Locations")
                             .padding(.top)
                     }
                 }
