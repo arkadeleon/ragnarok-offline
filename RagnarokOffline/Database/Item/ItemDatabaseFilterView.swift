@@ -100,6 +100,9 @@ struct ItemDatabaseFilterView: View {
             .padding()
         }
         .toolbar {
+            ToolbarResetButton {
+                filter.reset()
+            }
             ToolbarDoneButton {
                 dismiss()
             }

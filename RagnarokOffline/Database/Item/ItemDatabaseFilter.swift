@@ -7,7 +7,6 @@
 
 import Observation
 import RagnarokConstants
-import RagnarokDatabase
 
 @Observable
 class ItemDatabaseFilter {
@@ -120,5 +119,13 @@ class ItemDatabaseFilter {
         } else {
             return item.displayName.localizedStandardContains(searchText)
         }
+    }
+
+    func reset() {
+        itemType = nil
+        weaponType = nil
+        ammoType = nil
+        cardType = nil
+        locations = EquipPositions(rawValue: 0)
     }
 }
