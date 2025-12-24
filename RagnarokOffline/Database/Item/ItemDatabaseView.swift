@@ -10,8 +10,11 @@ import SwiftUI
 struct ItemDatabaseView: View {
     @Environment(DatabaseModel.self) private var database
 
-    @State private var searchText = ""
+    @Namespace private var filterNamespace
+
+    @State private var filter = ItemDatabaseFilter()
     @State private var filteredItems: [ItemModel] = []
+    @State private var isFilterPresented = false
 
     var body: some View {
         AdaptiveView {
@@ -48,27 +51,41 @@ struct ItemDatabaseView: View {
         }
         .background(.background)
         .navigationTitle("Item Database")
-        .adaptiveSearch(text: $searchText)
+        .adaptiveSearch(text: $filter.searchText)
+        .toolbar {
+            ToolbarItem {
+                Button("Filter", systemImage: "line.3.horizontal.decrease") {
+                    isFilterPresented.toggle()
+                }
+                .matchedTransitionSource(id: "filter", in: filterNamespace)
+            }
+        }
         .overlay {
             if database.items.isEmpty {
                 ProgressView()
-            } else if !searchText.isEmpty && filteredItems.isEmpty {
+            } else if !filter.isEmpty && filteredItems.isEmpty {
                 ContentUnavailableView("No Results", systemImage: "leaf.fill")
             }
         }
-        .task(id: "\(searchText)") {
+        .sheet(isPresented: $isFilterPresented) {
+            NavigationStack {
+                ItemDatabaseFilterView(filter: filter)
+            }
+            #if os(macOS)
+            .navigationTransition(.automatic)
+            #else
+            .navigationTransition(.zoom(sourceID: "filter", in: filterNamespace))
+            #endif
+        }
+        .task(id: filter.identifier) {
             await database.fetchItems()
-            filteredItems = await items(matching: searchText, in: database.items)
+            filteredItems = await items(matching: filter, in: database.items)
         }
     }
 
-    private func items(matching searchText: String, in items: [ItemModel]) async -> [ItemModel] {
-        if searchText.isEmpty {
-            return items
-        }
-
-        if searchText.hasPrefix("#") {
-            if let itemID = Int(searchText.dropFirst()),
+    private func items(matching filter: ItemDatabaseFilter, in items: [ItemModel]) async -> [ItemModel] {
+        if filter.searchText.hasPrefix("#") {
+            if let itemID = Int(filter.searchText.dropFirst()),
                let item = items.first(where: { $0.id == itemID }) {
                 return [item]
             } else {
@@ -76,9 +93,7 @@ struct ItemDatabaseView: View {
             }
         }
 
-        let filteredItems = items.filter { item in
-            item.displayName.localizedStandardContains(searchText)
-        }
+        let filteredItems = items.filter(filter.isIncluded)
         return filteredItems
     }
 }

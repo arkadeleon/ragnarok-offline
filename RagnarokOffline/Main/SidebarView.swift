@@ -44,10 +44,10 @@ struct SidebarView: View {
     @AppStorage("databaseSectionExpanded") private var isDatabaseSectionExpanded = true
     @AppStorage("toolsSectionExpanded") private var isToolsSectionExpanded = true
 
+    @Namespace private var menuNamespace
+
     @State private var isHelpPresented = false
     @State private var isSettingsPresented = false
-
-    @Namespace private var menuNamespace
 
     var body: some View {
         List(selection: selection) {

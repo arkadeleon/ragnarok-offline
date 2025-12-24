@@ -8,6 +8,7 @@
 import CoreGraphics
 import Foundation
 import Observation
+import RagnarokConstants
 import RagnarokDatabase
 import RagnarokResources
 
@@ -28,6 +29,30 @@ final class ItemModel {
             displayName += " [\(item.slots.formatted())]"
         }
         return displayName
+    }
+
+    var weaponType: WeaponType? {
+        if case .weapon(let weaponType) = item.subType {
+            weaponType
+        } else {
+            nil
+        }
+    }
+
+    var ammoType: AmmoType? {
+        if case .ammo(let ammoType) = item.subType {
+            ammoType
+        } else {
+            nil
+        }
+    }
+
+    var cardType: CardType? {
+        if case .card(let cardType) = item.subType {
+            cardType
+        } else {
+            nil
+        }
     }
 
     var attributes: [DatabaseRecordAttribute] {
