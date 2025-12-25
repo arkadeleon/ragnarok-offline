@@ -8,39 +8,53 @@
 import BinaryIO
 import Foundation
 
-@globalActor
-public actor GRFActor {
-    public static let shared = GRFActor()
-}
-
-@GRFActor
-public class GRFArchive {
+public actor GRFArchive {
     nonisolated public let url: URL
 
     private lazy var grf: GRF? = {
         #if !os(Linux)
         let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: Begin loading")
         #endif
 
         let grf = try? GRF(url: url)
 
         #if !os(Linux)
         let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: End loading (\(endTime - beginTime)s)")
+        logger.info("GRF: Load (\(endTime - beginTime)s)")
         #endif
 
         return grf
     }()
 
-    private lazy var directories: Set<GRFPath> = {
+    private lazy var entriesByPath: [String : GRF.Entry] = {
+        guard let grf else {
+            return [:]
+        }
+
+        #if !os(Linux)
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        #endif
+
+        let entries = Dictionary(
+            grf.table.entries.map({ ($0.path.string.uppercased(), $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
+
+        #if !os(Linux)
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("GRF: Load entries (\(endTime - beginTime)s)")
+        #endif
+
+        return entries
+    }()
+
+    private lazy var directories: Set<GRFPathReference> = {
         guard let grf else {
             return []
         }
 
         #if !os(Linux)
         let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: Begin loading directories")
         #endif
 
         var directories = Set(grf.table.entries.map({ $0.path.parent }))
@@ -54,51 +68,60 @@ public class GRFArchive {
 
         #if !os(Linux)
         let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: End loading directories (\(endTime - beginTime)s)")
+        logger.info("GRF: Load directories (\(endTime - beginTime)s)")
         #endif
 
         return directories
     }()
 
-    private lazy var entriesByPath: [String : GRF.Entry] = {
-        guard let grf else {
-            return [:]
-        }
-
-        #if !os(Linux)
-        let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: Begin loading entries")
-        #endif
-
-        let entries = Dictionary(
-            grf.table.entries.map({ ($0.path.string.uppercased(), $0) }),
-            uniquingKeysWith: { (first, _) in first }
-        )
-
-        #if !os(Linux)
-        let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: End loading entries (\(endTime - beginTime)s)")
-        #endif
-
-        return entries
-    }()
-
-    nonisolated public init(url: URL) {
+    public init(url: URL) {
         self.url = url
     }
 
     public func directoryNode(at path: GRFPath) -> GRFNode? {
-        directories.contains(path) ? GRFNode(path: path, isDirectory: true) : nil
+        let path = GRFPathReference(path: path)
+
+        if directories.contains(path) {
+            return GRFNode(path: path, isDirectory: true)
+        } else {
+            return nil
+        }
     }
 
-    public func contentsOfDirectoryNode(at path: GRFPath) -> [GRFNode] {
+    public func childCountOfDirectoryNode(at path: GRFPath) -> Int {
+        guard let grf else {
+            return 0
+        }
+
+        let path = GRFPathReference(path: path)
+
+        #if !os(Linux)
+        let beginTime = CFAbsoluteTimeGetCurrent()
+        #endif
+
+        let subdirectoryNodeCount = directories
+            .count(where: { $0.parent == path })
+
+        let entryNodeCount = grf.table.entries
+            .count(where: { $0.path.parent == path })
+
+        #if !os(Linux)
+        let endTime = CFAbsoluteTimeGetCurrent()
+        logger.info("GRF: Load child count of directory node at \(path.string) (\(endTime - beginTime)s)")
+        #endif
+
+        return subdirectoryNodeCount + entryNodeCount
+    }
+
+    public func childrenOfDirectoryNode(at path: GRFPath) -> [GRFNode] {
         guard let grf else {
             return []
         }
 
+        let path = GRFPathReference(path: path)
+
         #if !os(Linux)
         let beginTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: Begin loading directory at \(path.string)")
         #endif
 
         let subdirectoryNodes = directories
@@ -113,7 +136,7 @@ public class GRFArchive {
 
         #if !os(Linux)
         let endTime = CFAbsoluteTimeGetCurrent()
-        logger.info("GRF: End loading directory at \(path.string) (\(endTime - beginTime)s)")
+        logger.info("GRF: Load children of directory node at \(path.string) (\(endTime - beginTime)s)")
         #endif
 
         return subdirectoryNodes + entryNodes

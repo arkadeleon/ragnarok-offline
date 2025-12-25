@@ -112,7 +112,7 @@ extension GRF {
                     var decodedName = des.decodeFileName(fileName: encodedName)
                     decodedName = decodedName.prefix(while: { $0 != 0 })
                     let name = String(data: Data(decodedName), encoding: .isoLatin1) ?? ""
-                    let path = GRFPath(string: name)
+                    let path = GRFPathReference(string: name)
 
                     position += Int(position2)
 
@@ -150,7 +150,7 @@ extension GRF {
                     }
 
                     let entry = GRF.Entry(
-                        path: GRFPath(string: name),
+                        path: GRFPathReference(string: name),
                         sizeCompressed: compressedSizeBase - decompressedSize - 715,
                         sizeCompressedAligned: compressedSizeAligned - 37579,
                         size: decompressedSize,
@@ -178,7 +178,7 @@ extension GRF {
                     }
 
                     let name = String(data: data[position..<index], encoding: .isoLatin1) ?? ""
-                    let path = GRFPath(string: name)
+                    let path = GRFPathReference(string: name)
 
                     position = index + 1
 
@@ -248,7 +248,7 @@ extension GRF {
     }
 
     struct Entry {
-        var path: GRFPath
+        var path: GRFPathReference
         var sizeCompressed: UInt32
         var sizeCompressedAligned: UInt32
         var size: UInt32

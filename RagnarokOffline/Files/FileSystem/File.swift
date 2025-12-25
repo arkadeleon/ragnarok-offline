@@ -204,9 +204,9 @@ final class File: Sendable {
             guard node.isDirectory else {
                 return []
             }
-            let nodes = await grfArchive.contentsOfDirectoryNode(at: node.path)
-            let files = nodes.map { node in
-                File(node: .grfArchiveNode(grfArchive, node), location: location)
+            let children = await grfArchive.childrenOfDirectoryNode(at: node.path)
+            let files = children.map { child in
+                File(node: .grfArchiveNode(grfArchive, child), location: location)
             }
             return files.sorted()
         }
@@ -228,8 +228,8 @@ final class File: Sendable {
             return await file.fileCount()
         case .grfArchiveNode(let grfArchive, let node):
             if node.isDirectory {
-                let nodes = await grfArchive.contentsOfDirectoryNode(at: node.path)
-                return nodes.count
+                let childCount = await grfArchive.childCountOfDirectoryNode(at: node.path)
+                return childCount
             } else {
                 return 0
             }
