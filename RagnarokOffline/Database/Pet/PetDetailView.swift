@@ -19,7 +19,7 @@ struct PetDetailView: View {
                 DatabaseRecordSectionView("Monster") {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         NavigationLink(value: monster) {
-                            MonsterGridCell(monster: monster, secondaryText: nil)
+                            MonsterGridCell(monster: monster, reservesSecondaryTextSpace: false, secondaryText: nil)
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))

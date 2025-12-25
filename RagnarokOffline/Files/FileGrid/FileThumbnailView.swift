@@ -16,7 +16,7 @@ struct FileThumbnailView: View {
     @State private var thumbnail: FileThumbnail?
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             if let thumbnail {
                 Image(thumbnail.cgImage, scale: displayScale, label: Text(file.name))
                     .resizable()
@@ -26,11 +26,13 @@ struct FileThumbnailView: View {
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.secondary, lineWidth: 1)
                     }
+                    .frame(maxHeight: .infinity, alignment: .bottom)
             } else if file.isDirectory {
                 Image(systemName: file.iconName)
                     .font(.system(size: 50))
                     .symbolRenderingMode(.monochrome)
                     .foregroundStyle(Color.accentColor)
+                    .frame(maxHeight: .infinity, alignment: .bottom)
             } else {
                 Image(systemName: file.iconName)
                     .font(.system(size: 30, weight: .thin))
@@ -43,6 +45,7 @@ struct FileThumbnailView: View {
                     }
             }
         }
+        .frame(width: 80, height: 80)
         .task {
             let size = CGSize(width: 80, height: 80)
             let request = FileThumbnailRequest(file: file, size: size, scale: displayScale)
@@ -54,18 +57,24 @@ struct FileThumbnailView: View {
 #Preview {
     AsyncContentView {
         try await [
+            File.previewFolder(),
             File.previewGRF(),
             File.previewGAT(),
+            File.previewWideGAT(),
+            File.previewTallGAT(),
             File.previewGND(),
             File.previewRSW(),
             File.previewSPR(),
         ]
     } content: { files in
-        HStack {
-            ForEach(files) { file in
-                FileThumbnailView(file: file)
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(files) { file in
+                    FileThumbnailView(file: file)
+                }
             }
+            .frame(maxHeight: .infinity)
         }
     }
-    .frame(width: 400, height: 100)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

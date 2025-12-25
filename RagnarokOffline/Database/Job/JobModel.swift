@@ -127,7 +127,7 @@ final class JobModel {
 
         let composedSprite: ComposedSprite
         do {
-            let configuration = ComposedSprite.Configuration(jobID: job.id.rawValue)
+            let configuration = ComposedSprite.Configuration.random(jobID: job.id.rawValue)
             composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: .shared)
         } catch {
             logger.warning("Composed sprite error: \(error)")
@@ -158,5 +158,27 @@ extension JobModel: Hashable {
 extension JobModel: Identifiable {
     var id: JobID {
         job.id
+    }
+}
+
+extension ComposedSprite.Configuration {
+    static func random(jobID: Int) -> ComposedSprite.Configuration {
+        var configuration = ComposedSprite.Configuration(jobID: jobID)
+        configuration.gender = switch JobID(rawValue: jobID) {
+        case .dancer, .baby_dancer, .gypsy, .wanderer, .wanderer_t, .wanderer_2nd, .baby_wanderer:
+            .female
+        case .bard, .baby_bard, .clown, .minstrel, .minstrel_t, .minstrel_2nd, .baby_minstrel:
+            .male
+        default:
+            [.female, .male].randomElement()!
+        }
+        configuration.hairStyle = if configuration.job.isDoram {
+            (1...10).randomElement()!
+        } else {
+            (1...42).randomElement()!
+        }
+        configuration.hairColor = (0...8).randomElement()!
+        configuration.clothesColor = (0...7).randomElement()!
+        return configuration
     }
 }

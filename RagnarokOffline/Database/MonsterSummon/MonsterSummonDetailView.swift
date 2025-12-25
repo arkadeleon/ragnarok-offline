@@ -19,7 +19,7 @@ struct MonsterSummonDetailView: View {
                 DatabaseRecordSectionView("Default") {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         NavigationLink(value: defaultMonster) {
-                            MonsterGridCell(monster: defaultMonster, secondaryText: nil)
+                            MonsterGridCell(monster: defaultMonster, reservesSecondaryTextSpace: false, secondaryText: nil)
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
@@ -31,7 +31,7 @@ struct MonsterSummonDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(summonMonsters) { summonMonster in
                             NavigationLink(value: summonMonster.monster) {
-                                MonsterGridCell(monster: summonMonster.monster, secondaryText: summonMonster.rate.formatted())
+                                MonsterGridCell(monster: summonMonster.monster, reservesSecondaryTextSpace: true, secondaryText: summonMonster.rate.formatted())
                             }
                         }
                     }

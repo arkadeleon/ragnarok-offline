@@ -81,6 +81,7 @@ struct SkillDatabaseView: View {
     NavigationStack {
         SkillDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -88,5 +89,6 @@ struct SkillDatabaseView: View {
     NavigationStack {
         SkillDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

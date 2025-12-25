@@ -9,16 +9,14 @@ import SwiftUI
 
 struct ImageGridCell<Image>: View where Image: View {
     var title: String
+    var reservesSubtitleSpace: Bool
     var subtitle: String?
+
     @ViewBuilder var image: () -> Image
 
     var body: some View {
         VStack {
-            ZStack(alignment: .bottom) {
-                image()
-                    .frame(maxHeight: .infinity, alignment: .bottom)
-            }
-            .frame(width: 80, height: 80)
+            image()
 
             ZStack(alignment: .top) {
                 // This VStack is just for reserving space.
@@ -27,9 +25,11 @@ struct ImageGridCell<Image>: View where Image: View {
                         .font(.body)
                         .lineLimit(2, reservesSpace: true)
 
-                    Text(verbatim: " ")
-                        .font(.footnote)
-                        .lineLimit(1, reservesSpace: true)
+                    if reservesSubtitleSpace {
+                        Text(verbatim: " ")
+                            .font(.footnote)
+                            .lineLimit(1, reservesSpace: true)
+                    }
                 }
 
                 VStack(spacing: 2) {
@@ -40,7 +40,7 @@ struct ImageGridCell<Image>: View where Image: View {
                         .lineLimit(2, reservesSpace: false)
                         .frame(maxWidth: .infinity)
 
-                    if let subtitle {
+                    if let subtitle, reservesSubtitleSpace {
                         Text(subtitle)
                             .font(.footnote)
                             .foregroundStyle(Color.secondary)
@@ -50,14 +50,14 @@ struct ImageGridCell<Image>: View where Image: View {
                 }
             }
         }
-        .frame(maxHeight: .infinity, alignment: .top)
     }
 }
 
 #Preview {
-    ImageGridCell(title: "Title", subtitle: "Subtitle") {
-        Image(systemName: "folder")
+    ImageGridCell(title: "Title", reservesSubtitleSpace: true, subtitle: "Subtitle") {
+        Image(systemName: "folder.fill")
             .font(.system(size: 50, weight: .thin))
             .foregroundStyle(Color.accentColor)
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

@@ -102,6 +102,7 @@ struct ItemDatabaseView: View {
     NavigationStack {
         ItemDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -109,5 +110,6 @@ struct ItemDatabaseView: View {
     NavigationStack {
         ItemDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

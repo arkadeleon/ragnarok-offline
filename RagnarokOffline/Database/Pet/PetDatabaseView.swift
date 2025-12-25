@@ -17,7 +17,7 @@ struct PetDatabaseView: View {
         ImageGrid(filteredPets) { pet in
             if let monster = pet.monster {
                 NavigationLink(value: pet) {
-                    MonsterGridCell(monster: monster, secondaryText: nil)
+                    MonsterGridCell(monster: monster, reservesSecondaryTextSpace: false, secondaryText: nil)
                 }
             }
         }
@@ -53,6 +53,7 @@ struct PetDatabaseView: View {
     NavigationStack {
         PetDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -60,5 +61,6 @@ struct PetDatabaseView: View {
     NavigationStack {
         PetDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

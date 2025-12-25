@@ -61,6 +61,7 @@ struct StatusChangeDatabaseView: View {
     NavigationStack {
         StatusChangeDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -68,5 +69,6 @@ struct StatusChangeDatabaseView: View {
     NavigationStack {
         StatusChangeDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

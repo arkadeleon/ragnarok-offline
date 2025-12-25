@@ -51,6 +51,7 @@ struct JobDatabaseView: View {
     NavigationStack {
         JobDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -58,5 +59,6 @@ struct JobDatabaseView: View {
     NavigationStack {
         JobDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

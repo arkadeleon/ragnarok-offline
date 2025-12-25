@@ -69,6 +69,7 @@ struct MonsterSummonDatabaseView: View {
     NavigationStack {
         MonsterSummonDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -76,5 +77,6 @@ struct MonsterSummonDatabaseView: View {
     NavigationStack {
         MonsterSummonDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

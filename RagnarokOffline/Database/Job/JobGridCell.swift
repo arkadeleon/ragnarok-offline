@@ -11,15 +11,18 @@ struct JobGridCell: View {
     var job: JobModel
 
     var body: some View {
-        ImageGridCell(title: job.displayName) {
-            if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
-                Image(firstFrame, scale: animatedImage.scale, label: Text(job.displayName))
-                    .scaleEffect(2 / 3)
-            } else {
-                Image(systemName: "person")
-                    .font(.system(size: 50, weight: .thin))
-                    .foregroundStyle(Color.secondary)
+        ImageGridCell(title: job.displayName, reservesSubtitleSpace: false) {
+            ZStack {
+                if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
+                    Image(firstFrame, scale: animatedImage.scale, label: Text(job.displayName))
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                } else {
+                    Image(systemName: "person")
+                        .font(.system(size: 50, weight: .thin))
+                        .foregroundStyle(Color.secondary)
+                }
             }
+            .frame(width: 80, height: 140)
         }
         .task {
             await job.fetchAnimatedImage()

@@ -69,6 +69,7 @@ struct MapDatabaseView: View {
     NavigationStack {
         MapDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -76,5 +77,6 @@ struct MapDatabaseView: View {
     NavigationStack {
         MapDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

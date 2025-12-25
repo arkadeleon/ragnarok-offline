@@ -19,7 +19,7 @@ struct MonsterDatabaseView: View {
     var body: some View {
         ImageGrid(filteredMonsters) { monster in
             NavigationLink(value: monster) {
-                MonsterGridCell(monster: monster, secondaryText: nil)
+                MonsterGridCell(monster: monster, reservesSecondaryTextSpace: false, secondaryText: nil)
             }
         }
         .background(.background)
@@ -75,6 +75,7 @@ struct MonsterDatabaseView: View {
     NavigationStack {
         MonsterDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .prerenewal))
 }
 
@@ -82,5 +83,6 @@ struct MonsterDatabaseView: View {
     NavigationStack {
         MonsterDatabaseView()
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .environment(DatabaseModel(mode: .renewal))
 }

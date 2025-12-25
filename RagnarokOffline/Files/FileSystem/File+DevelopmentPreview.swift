@@ -11,6 +11,12 @@ import RagnarokResources
 import TextEncoding
 
 extension File {
+    static func previewFolder() -> File {
+        let url = ResourceManager.shared.localURL.appending(path: "data")
+        let file = File(node: .directory(url), location: .client)
+        return file
+    }
+
     static func previewGRF() -> File {
         let url = ResourceManager.shared.localURL.appending(path: "data.grf")
         let grfArchive = GRFArchive(url: url)
@@ -26,6 +32,18 @@ extension File {
 
     static func previewGAT() async throws -> File {
         let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "iz_int.gat"])
+        let file = File(locator)
+        return file
+    }
+
+    static func previewWideGAT() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "1@4sac.gat"])
+        let file = File(locator)
+        return file
+    }
+
+    static func previewTallGAT() async throws -> File {
+        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "1@adv.gat"])
         let file = File(locator)
         return file
     }

@@ -10,10 +10,10 @@ import SwiftUI
 struct FileGridCell: View {
     var file: File
 
-    @State private var subtitle: String?
+    @State private var subtitle = ""
 
     var body: some View {
-        ImageGridCell(title: file.name, subtitle: subtitle) {
+        ImageGridCell(title: file.name, reservesSubtitleSpace: true, subtitle: subtitle) {
             FileThumbnailView(file: file)
         }
         .task {
@@ -50,9 +50,25 @@ struct FileGridCell: View {
 
 #Preview {
     AsyncContentView {
-        try await File.previewGAT()
-    } content: { file in
-        FileGridCell(file: file)
+        try await [
+            File.previewFolder(),
+            File.previewGRF(),
+            File.previewGAT(),
+            File.previewWideGAT(),
+            File.previewTallGAT(),
+            File.previewGND(),
+            File.previewRSW(),
+            File.previewSPR(),
+        ]
+    } content: { files in
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(files) { file in
+                    FileGridCell(file: file)
+                }
+            }
+            .frame(maxHeight: .infinity)
+        }
     }
-    .frame(width: 80, height: 120)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
 }
