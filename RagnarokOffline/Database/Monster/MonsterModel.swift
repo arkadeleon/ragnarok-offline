@@ -9,6 +9,7 @@ import CoreGraphics
 import Foundation
 import Observation
 import RagnarokDatabase
+import RagnarokLocalization
 import RagnarokResources
 import RagnarokSprite
 

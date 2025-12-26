@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
+import RagnarokLocalization
 import SwiftUI
 
 struct ItemDatabaseView: View {

@@ -10,6 +10,7 @@ import Foundation
 import Observation
 import RagnarokConstants
 import RagnarokDatabase
+import RagnarokLocalization
 import RagnarokResources
 
 @Observable

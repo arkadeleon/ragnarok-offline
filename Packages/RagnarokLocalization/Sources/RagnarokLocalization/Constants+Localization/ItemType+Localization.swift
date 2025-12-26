@@ -1,11 +1,12 @@
 //
-//  ItemType+Localized.swift
-//  RagnarokConstants
+//  ItemType+Localization.swift
+//  RagnarokLocalization
 //
 //  Created by Leon Li on 2024/1/10.
 //
 
 import Foundation
+import RagnarokConstants
 
 extension ItemType {
     public var localizedName: LocalizedStringResource {

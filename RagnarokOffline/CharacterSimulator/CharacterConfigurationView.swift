@@ -6,6 +6,7 @@
 //
 
 import RagnarokConstants
+import RagnarokLocalization
 import RagnarokSprite
 import SwiftUI
 

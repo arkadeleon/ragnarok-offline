@@ -1,11 +1,12 @@
 //
-//  Race+Localized.swift
-//  RagnarokConstants
+//  Race+Localization.swift
+//  RagnarokLocalization
 //
 //  Created by Leon Li on 2024/1/9.
 //
 
 import Foundation
+import RagnarokConstants
 
 extension Race {
     public var localizedName: LocalizedStringResource {

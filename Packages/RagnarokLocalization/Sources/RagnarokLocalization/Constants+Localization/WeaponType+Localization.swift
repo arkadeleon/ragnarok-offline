@@ -1,11 +1,12 @@
 //
-//  WeaponType+Localized.swift
-//  RagnarokConstants
+//  WeaponType+Localization.swift
+//  RagnarokLocalization
 //
 //  Created by Leon Li on 2024/1/10.
 //
 
 import Foundation
+import RagnarokConstants
 
 extension WeaponType {
     public var localizedName: LocalizedStringResource {

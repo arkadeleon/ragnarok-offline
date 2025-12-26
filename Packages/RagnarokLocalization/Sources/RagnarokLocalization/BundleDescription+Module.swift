@@ -1,6 +1,6 @@
 //
 //  BundleDescription+Module.swift
-//  RagnarokConstants
+//  RagnarokLocalization
 //
 //  Created by Leon Li on 2024/7/12.
 //
