@@ -25,7 +25,7 @@ struct MonsterDatabaseFilterView: View {
                 Section {
                     LazyVGrid(columns: [gridItem], alignment: .leading) {
                         ForEach(filter.availableSizes, id: \.rawValue) { size in
-                            SelectableButton(size.stringValue, isSelected: filter.size == size) {
+                            SelectableButton(size.localizedName, isSelected: filter.size == size) {
                                 filter.size = size
                             }
                         }
@@ -50,7 +50,7 @@ struct MonsterDatabaseFilterView: View {
                 Section {
                     LazyVGrid(columns: [gridItem], alignment: .leading) {
                         ForEach(filter.availableElements, id: \.rawValue) { element in
-                            SelectableButton(element.stringValue, isSelected: filter.element == element) {
+                            SelectableButton(element.localizedName, isSelected: filter.element == element) {
                                 filter.element = element
                             }
                         }

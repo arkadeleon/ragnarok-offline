@@ -53,7 +53,7 @@ struct ItemDatabaseFilterView: View {
                     Section {
                         LazyVGrid(columns: [gridItem], alignment: .leading) {
                             ForEach(filter.availableAmmoTypes, id: \.rawValue) { ammoType in
-                                SelectableButton(ammoType.stringValue, isSelected: filter.ammoType == ammoType) {
+                                SelectableButton(ammoType.localizedName, isSelected: filter.ammoType == ammoType) {
                                     filter.ammoType = ammoType
                                 }
                             }
@@ -68,7 +68,7 @@ struct ItemDatabaseFilterView: View {
                     Section {
                         LazyVGrid(columns: [gridItem], alignment: .leading) {
                             ForEach(filter.availableCardTypes, id: \.rawValue) { cardType in
-                                SelectableButton(cardType.stringValue, isSelected: filter.cardType == cardType) {
+                                SelectableButton(cardType.localizedName, isSelected: filter.cardType == cardType) {
                                     filter.cardType = cardType
                                 }
                             }
