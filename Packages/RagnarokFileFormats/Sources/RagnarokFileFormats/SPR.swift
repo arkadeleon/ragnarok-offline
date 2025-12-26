@@ -90,7 +90,7 @@ extension SPR {
             case .indexedRLE:
                 type = .indexed
 
-                let dataLength = try decoder.decode(Int16.self)
+                let dataLength = try decoder.decode(UInt16.self)
                 let data = try decoder.decode([UInt8].self, count: Int(dataLength))
                 self.data = Data(data)
             case .rgba:
