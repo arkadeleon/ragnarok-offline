@@ -12,29 +12,29 @@ extension ItemType {
     public var localizedName: LocalizedStringResource {
         switch self {
         case .healing:
-            LocalizedStringResource("Healing", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Healing", table: "ItemType", bundle: .module)
         case .usable:
-            LocalizedStringResource("Usable", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Usable", table: "ItemType", bundle: .module)
         case .etc:
-            LocalizedStringResource("Etc", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Etc", table: "ItemType", bundle: .module)
         case .armor:
-            LocalizedStringResource("Armor", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Armor", table: "ItemType", bundle: .module)
         case .weapon:
-            LocalizedStringResource("Weapon", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Weapon", table: "ItemType", bundle: .module)
         case .card:
-            LocalizedStringResource("Card", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Card", table: "ItemType", bundle: .module)
         case .petegg:
-            LocalizedStringResource("Pet Egg", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Pet Egg", table: "ItemType", bundle: .module)
         case .petarmor:
-            LocalizedStringResource("Pet Armor", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Pet Armor", table: "ItemType", bundle: .module)
         case .ammo:
-            LocalizedStringResource("Ammo", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Ammo", table: "ItemType", bundle: .module)
         case .delayconsume:
-            LocalizedStringResource("Delay Consume", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Delay Consume", table: "ItemType", bundle: .module)
         case .shadowgear:
-            LocalizedStringResource("Shadow Gear", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Shadow Gear", table: "ItemType", bundle: .module)
         case .cash:
-            LocalizedStringResource("Cash", table: "ItemType", bundle: .module, comment: "The name of an item type.")
+            LocalizedStringResource("Cash", table: "ItemType", bundle: .module)
         }
     }
 }

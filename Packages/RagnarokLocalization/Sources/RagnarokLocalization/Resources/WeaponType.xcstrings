@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Book" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A magical weapon type used by Sage and Scholar classes. Books provide MATK bonuses for spellcasting.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -85,7 +85,7 @@
       }
     },
     "Bow" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A two-handed ranged weapon used by Archer, Hunter, and Bard/Dancer classes. Requires arrows as ammunition.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -168,7 +168,7 @@
       }
     },
     "Dagger" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A one-handed weapon used by Thief, Assassin, and Rogue classes. Known for high attack speed and critical hits.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -251,7 +251,7 @@
       }
     },
     "Fist" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A weapon category representing bare-handed combat or knuckle weapons used by Monk and Champion classes.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -334,7 +334,7 @@
       }
     },
     "Gatling" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A heavy machine gun weapon used by Gunslinger and Rebellion classes. High attack speed with spread damage.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -417,7 +417,7 @@
       }
     },
     "Grenade" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A launcher weapon used by Gunslinger and Rebellion classes. Fires explosive grenades for area damage.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -500,7 +500,7 @@
       }
     },
     "Huuma" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A large shuriken weapon exclusive to Ninja classes. Two-handed throwing weapon with high damage output.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -583,7 +583,7 @@
       }
     },
     "Katar" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A dual-blade weapon exclusive to Assassin and Assassin Cross classes. Allows double attack and sonic blow skills.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -666,7 +666,7 @@
       }
     },
     "Knuckle" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "Brass knuckles or fist weapons used by Monk and Champion classes. Enhances bare-handed combat abilities.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -749,7 +749,7 @@
       }
     },
     "Mace" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A one-handed blunt weapon used by Acolyte, Priest, and Monk classes. Effective against Undead monsters.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -832,7 +832,7 @@
       }
     },
     "Musical" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "Musical instruments used by Bard and Minstrel classes. Required for performing ensemble skills and buffs.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -915,7 +915,7 @@
       }
     },
     "One-Handed Axe" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A one-handed axe weapon used by Merchant and Blacksmith classes. Can be dual-wielded by Assassins.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -998,7 +998,7 @@
       }
     },
     "One-Handed Spear" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A one-handed spear used by Swordsman and Knight classes. Can be equipped with a shield for mounted combat.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1081,7 +1081,7 @@
       }
     },
     "One-Handed Sword" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A one-handed sword used by Swordsman, Knight, and Crusader classes. Versatile and balanced weapon type.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1164,7 +1164,7 @@
       }
     },
     "Revolver" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A handgun weapon used by Gunslinger and Rebellion classes. Medium range firearm with balanced stats.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1247,7 +1247,7 @@
       }
     },
     "Rifle" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A long-range firearm used by Gunslinger and Rebellion classes. High accuracy and damage at distance.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1330,7 +1330,7 @@
       }
     },
     "Shield" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A defensive equipment that provides DEF and MDEF bonuses. Can be equipped in the off-hand with one-handed weapons.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1413,7 +1413,7 @@
       }
     },
     "Shotgun" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A close-range firearm used by Gunslinger and Rebellion classes. High damage output at short distance.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1496,7 +1496,7 @@
       }
     },
     "Staff" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A one-handed magical weapon used by Mage, Wizard, and Acolyte classes. Provides INT and MATK bonuses.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1579,7 +1579,7 @@
       }
     },
     "Two-Handed Axe" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A two-handed axe used by Merchant and Blacksmith classes. High damage with slower attack speed.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1662,7 +1662,7 @@
       }
     },
     "Two-Handed Mace" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A two-handed blunt weapon used by Acolyte and Priest classes. High damage against Undead race monsters.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1745,7 +1745,7 @@
       }
     },
     "Two-Handed Spear" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A two-handed spear used by Swordsman and Knight classes. Provides long reach and high damage for unmounted combat.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1828,7 +1828,7 @@
       }
     },
     "Two-Handed Staff" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A two-handed magical weapon used by Mage and Wizard classes. Provides higher MATK bonuses than one-handed staffs.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1911,7 +1911,7 @@
       }
     },
     "Two-Handed Sword" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A two-handed sword used by Swordsman and Knight classes. High ATK with powerful melee skills like Bowling Bash.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1994,7 +1994,7 @@
       }
     },
     "Whip" : {
-      "comment" : "The name of a weapon type.",
+      "comment" : "A ranged weapon used by Dancer and Gypsy classes. Required for performing ensemble skills and support dances.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

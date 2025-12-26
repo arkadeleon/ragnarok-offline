@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Angel" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of divine and holy creatures. Angel-type monsters are typically resistant to Holy element and weak to Shadow/Dark element.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -85,7 +85,7 @@
       }
     },
     "Brute" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of wild animals and beasts. Brute-type monsters include wolves, bears, and other animalistic creatures.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -168,7 +168,7 @@
       }
     },
     "Demi-Human" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of humanoid creatures including goblins, orcs, and other intelligent bipedal monsters. Often found in organized groups.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -251,7 +251,7 @@
       }
     },
     "Demon" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of evil and dark creatures from the underworld. Demon-type monsters are typically strong against Shadow element and weak to Holy element.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -334,7 +334,7 @@
       }
     },
     "Dragon" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of powerful draconic creatures. Dragon-type monsters are often high-level enemies with strong elemental affinities and resistances.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -417,7 +417,7 @@
       }
     },
     "Fish" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of aquatic creatures and marine life. Fish-type monsters are typically found near water and are weak to Lightning element.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -500,7 +500,7 @@
       }
     },
     "Formless" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of shapeless creatures like slimes, ghosts, and ethereal beings. Formless-type monsters often have unique physical properties.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -583,7 +583,7 @@
       }
     },
     "Insect" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of arthropods and bug-like creatures. Insect-type monsters include spiders, flies, and other multi-legged creatures.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -666,7 +666,7 @@
       }
     },
     "Plant" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of botanical and vegetation-based creatures. Plant-type monsters are typically weak to Fire element and strong against Water element.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -749,7 +749,7 @@
       }
     },
     "Undead" : {
-      "comment" : "The name of a race.",
+      "comment" : "A race of reanimated and cursed beings like zombies and skeletons. Undead-type monsters are weak to Holy and Fire elements, and recover HP from Poison.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Ammo" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for ammunition like arrows and bullets used by ranged weapons in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -85,7 +85,7 @@
       }
     },
     "Armor" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for defensive equipment including headgear, body armor, garments, footgear, shields, and accessories in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -168,7 +168,7 @@
       }
     },
     "Card" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for cards dropped by monsters that can be inserted into equipment slots to provide stat bonuses and special effects in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -251,7 +251,7 @@
       }
     },
     "Cash" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for cash shop items purchased with real money currency in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -334,7 +334,7 @@
       }
     },
     "Delay Consume" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for consumable items with a usage delay or cooldown period in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -417,7 +417,7 @@
       }
     },
     "Etc" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for miscellaneous items including crafting materials, monster drops, quest items, and collectibles in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -500,7 +500,7 @@
       }
     },
     "Healing" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for consumables that restore HP (health points) and SP (skill points) in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -583,7 +583,7 @@
       }
     },
     "Pet Armor" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for equipment that can be worn by pets to provide bonuses or visual customization in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -666,7 +666,7 @@
       }
     },
     "Pet Egg" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for eggs used to hatch and tame companion pets from monsters in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -749,7 +749,7 @@
       }
     },
     "Shadow Gear" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for special equipment worn in shadow slots that provide additional stats without visible appearance changes in Ragnarok Online Renewal.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -832,7 +832,7 @@
       }
     },
     "Usable" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for consumable items that provide temporary buffs, effects, or activate special functions in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -915,7 +915,7 @@
       }
     },
     "Weapon" : {
-      "comment" : "The name of an item type.",
+      "comment" : "Item type for offensive equipment including swords, spears, bows, staffs, and other weapons used for combat in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

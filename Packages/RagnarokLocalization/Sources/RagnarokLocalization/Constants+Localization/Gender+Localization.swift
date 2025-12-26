@@ -12,11 +12,11 @@ extension Gender {
     public var localizedName: LocalizedStringResource {
         switch self {
         case .female:
-            LocalizedStringResource("Female", table: "Gender", bundle: .module, comment: "The name of a gender.")
+            LocalizedStringResource("Female", table: "Gender", bundle: .module)
         case .male:
-            LocalizedStringResource("Male", table: "Gender", bundle: .module, comment: "The name of a gender.")
+            LocalizedStringResource("Male", table: "Gender", bundle: .module)
         case .both:
-            LocalizedStringResource("Both", table: "Gender", bundle: .module, comment: "The name of a gender.")
+            LocalizedStringResource("Both", table: "Gender", bundle: .module)
         }
     }
 }

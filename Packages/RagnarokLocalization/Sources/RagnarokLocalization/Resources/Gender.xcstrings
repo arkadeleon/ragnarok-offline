@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Both" : {
-      "comment" : "The name of a gender.",
+      "comment" : "Gender option for items and equipment that can be used by both male and female characters in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -85,7 +85,7 @@
       }
     },
     "Female" : {
-      "comment" : "The name of a gender.",
+      "comment" : "Female gender option for character creation and equipment restrictions in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -168,7 +168,7 @@
       }
     },
     "Male" : {
-      "comment" : "The name of a gender.",
+      "comment" : "Male gender option for character creation and equipment restrictions in Ragnarok Online.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
