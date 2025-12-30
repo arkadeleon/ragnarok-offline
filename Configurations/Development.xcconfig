@@ -9,8 +9,8 @@
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
 
 INFOPLIST_KEY_CFBundleDisplayName = Ragnarok Offline
-MARKETING_VERSION = 1.7.3
-CURRENT_PROJECT_VERSION = 20
+MARKETING_VERSION = 1.8
+CURRENT_PROJECT_VERSION = 21
 
 _DD_GAME_CLIENT_FEATURE = GAME_CLIENT_FEATURE
 _DD_CHAT_CLIENT_FEATURE = CHAT_CLIENT_FEATURE
