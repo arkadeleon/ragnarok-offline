@@ -8,6 +8,7 @@
 import Foundation
 import RagnarokConstants
 import RagnarokDatabase
+import RagnarokLocalization
 import rAthenaResources
 
 struct DropItem: Identifiable {
@@ -88,6 +89,13 @@ final class DatabaseModel {
     private let skillTreeDatabase: SkillTreeDatabase
     private let statusChangeDatabase: StatusChangeDatabase
 
+    private let itemInfoTable: ItemInfoTable
+    private let mapNameTable: MapNameTable
+    private let messageStringTable: MessageStringTable
+    private let monsterNameTable: MonsterNameTable
+    private let skillInfoTable: SkillInfoTable
+    private let statusInfoTable: StatusInfoTable
+
     @ObservationIgnored private var itemDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var jobDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var mapDatabaseTask: Task<Void, Never>?
@@ -110,6 +118,13 @@ final class DatabaseModel {
         skillDatabase = SkillDatabase(baseURL: serverResourceBaseURL, mode: mode)
         skillTreeDatabase = SkillTreeDatabase(baseURL: serverResourceBaseURL, mode: mode)
         statusChangeDatabase = StatusChangeDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+        itemInfoTable = ItemInfoTable()
+        mapNameTable = MapNameTable()
+        messageStringTable = MessageStringTable()
+        monsterNameTable = MonsterNameTable()
+        skillInfoTable = SkillInfoTable()
+        statusInfoTable = StatusInfoTable()
     }
 
     // MARK: - Item Database
@@ -123,11 +138,10 @@ final class DatabaseModel {
             let items = await itemDatabase.items()
 
             self.items = items.map { item in
-                ItemModel(mode: mode, item: item)
-            }
-
-            for item in self.items {
-                await item.fetchLocalizedName()
+                let localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
+                let localizedDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id)
+                let model = ItemModel(mode: mode, item: item, localizedName: localizedName, localizedDescription: localizedDescription)
+                return model
             }
 
             self.itemsByID = Dictionary(
@@ -182,11 +196,9 @@ final class DatabaseModel {
             let jobs = await jobDatabase.jobs()
 
             self.jobs = jobs.map { job in
-                JobModel(mode: mode, job: job)
-            }
-
-            for job in self.jobs {
-                await job.fetchLocalizedName()
+                let localizedName = messageStringTable.localizedJobName(for: job.id)
+                let model = JobModel(mode: mode, job: job, localizedName: localizedName)
+                return model
             }
         }
 
@@ -206,11 +218,9 @@ final class DatabaseModel {
             let maps = await mapDatabase.maps()
 
             self.maps = maps.map { map in
-                MapModel(mode: mode, map: map)
-            }
-
-            for map in self.maps {
-                await map.fetchLocalizedName()
+                let localizedName = mapNameTable.localizedMapName(forMapName: map.name)
+                let model = MapModel(mode: mode, map: map, localizedName: localizedName)
+                return model
             }
 
             self.mapsByName = Dictionary(
@@ -256,11 +266,9 @@ final class DatabaseModel {
             let monsters = await monsterDatabase.monsters()
 
             self.monsters = monsters.map { monster in
-                MonsterModel(mode: mode, monster: monster)
-            }
-
-            for monster in self.monsters {
-                await monster.fetchLocalizedName()
+                let localizedName = monsterNameTable.localizedMonsterName(forMonsterID: monster.id)
+                let model = MonsterModel(mode: mode, monster: monster, localizedName: localizedName)
+                return model
             }
 
             self.monstersByID = Dictionary(
@@ -405,11 +413,10 @@ final class DatabaseModel {
             let skills = await skillDatabase.skills()
 
             self.skills = skills.map { skill in
-                SkillModel(mode: mode, skill: skill)
-            }
-
-            for skill in self.skills {
-                await skill.fetchLocalizedName()
+                let localizedName = skillInfoTable.localizedSkillName(forSkillID: skill.id)
+                let localizedDescription = skillInfoTable.localizedSkillDescription(forSkillID: skill.id)
+                let model = SkillModel(mode: mode, skill: skill, localizedName: localizedName, localizedDescription: localizedDescription)
+                return model
             }
 
             self.skillsByID = Dictionary(
@@ -463,7 +470,9 @@ final class DatabaseModel {
             let statusChanges = await statusChangeDatabase.statusChanges()
 
             self.statusChanges = statusChanges.map { statusChange in
-                StatusChangeModel(mode: mode, statusChange: statusChange)
+                let localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)
+                let model = StatusChangeModel(mode: mode, statusChange: statusChange, localizedDescription: localizedDescription)
+                return model
             }
 
             self.statusChangesByID = Dictionary(

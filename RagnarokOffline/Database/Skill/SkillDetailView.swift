@@ -15,12 +15,9 @@ struct SkillDetailView: View {
             DatabaseRecordSectionView("Info", attributes: skill.attributes)
 
             if let localizedDescription = skill.localizedDescription {
-                DatabaseRecordSectionView("Description", text: localizedDescription)
+                DatabaseRecordSectionView("Description", text: AttributedString(description: localizedDescription))
             }
         }
         .navigationTitle(skill.displayName)
-        .task {
-            await skill.fetchDetail()
-        }
     }
 }

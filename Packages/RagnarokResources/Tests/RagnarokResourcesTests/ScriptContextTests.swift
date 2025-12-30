@@ -28,12 +28,6 @@ final class ScriptContextTests: XCTestCase {
         XCTAssertEqual(goggles, K2L("_고글"))
     }
 
-    func testItemRandomOptionName() async throws {
-        let itemRandomOptionNameTable = await resourceManager.itemRandomOptionNameTable(for: .korean)
-        let mhp = itemRandomOptionNameTable.localizedItemRandomOptionName(forID: 1)
-        XCTAssertEqual(mhp, "MHP + %d")
-    }
-
     func testJobName() async throws {
         let etc01 = await scriptContext.jobName(forJobID: 46)
         XCTAssertEqual(etc01, "1_ETC_01")
@@ -58,5 +52,10 @@ final class ScriptContextTests: XCTestCase {
 
         let mainGauche = await scriptContext.realWeaponID(forWeaponID: 31)
         XCTAssertEqual(mainGauche, 1)
+    }
+
+    func testStatusIconName() async throws {
+        let swordclan = await scriptContext.statusIconName(forStatusID: 762)
+        XCTAssertEqual(swordclan, "SWORDCLAN.TGA")
     }
 }

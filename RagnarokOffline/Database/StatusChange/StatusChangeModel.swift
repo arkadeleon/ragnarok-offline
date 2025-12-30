@@ -17,12 +17,13 @@ final class StatusChangeModel {
     private let mode: DatabaseMode
     private let statusChange: StatusChange
 
+    let localizedDescription: String?
+
     var iconImage: CGImage?
     var fail: [StatusChangeModel] = []
     var endOnStart: [StatusChangeModel] = []
     var endReturn: [StatusChangeModel] = []
     var endOnEnd: [StatusChangeModel] = []
-    var localizedDescription: String?
 
     var displayName: String {
         statusChange.status.stringValue
@@ -37,9 +38,10 @@ final class StatusChangeModel {
         return attributes
     }
 
-    init(mode: DatabaseMode, statusChange: StatusChange) {
+    init(mode: DatabaseMode, statusChange: StatusChange, localizedDescription: String?) {
         self.mode = mode
         self.statusChange = statusChange
+        self.localizedDescription = localizedDescription
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<StatusChange, Value>) -> Value {
@@ -73,9 +75,6 @@ final class StatusChangeModel {
         if let endOnEnd = statusChange.endOnEnd {
             self.endOnEnd = await database.statusChanges(for: Array(endOnEnd))
         }
-
-        let statusInfoTable = await ResourceManager.shared.statusInfoTable(for: .current)
-        localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)
     }
 }
 

@@ -19,7 +19,8 @@ final class MonsterModel {
     private let mode: DatabaseMode
     private let monster: Monster
 
-    var localizedName: String?
+    let localizedName: String?
+
     var animatedImage: AnimatedImage?
 
     var displayName: String {
@@ -101,19 +102,14 @@ final class MonsterModel {
             .joined(separator: "\n")
     }
 
-    init(mode: DatabaseMode, monster: Monster) {
+    init(mode: DatabaseMode, monster: Monster, localizedName: String?) {
         self.mode = mode
         self.monster = monster
+        self.localizedName = localizedName
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Monster, Value>) -> Value {
         monster[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        let monsterNameTable = await ResourceManager.shared.monsterNameTable(for: .current)
-        self.localizedName = monsterNameTable.localizedMonsterName(forMonsterID: monster.id)
     }
 
     @MainActor

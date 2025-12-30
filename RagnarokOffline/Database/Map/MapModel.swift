@@ -16,26 +16,22 @@ final class MapModel {
     private let mode: DatabaseMode
     private let map: Map
 
-    var localizedName: String?
+    let localizedName: String?
+
     var image: CGImage?
 
     var displayName: String {
         localizedName ?? map.name
     }
 
-    init(mode: DatabaseMode, map: Map) {
+    init(mode: DatabaseMode, map: Map, localizedName: String?) {
         self.mode = mode
         self.map = map
+        self.localizedName = localizedName
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Map, Value>) -> Value {
         map[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        let mapNameTable = await ResourceManager.shared.mapNameTable(for: .current)
-        localizedName = mapNameTable.localizedMapName(forMapName: map.name)
     }
 
     @MainActor

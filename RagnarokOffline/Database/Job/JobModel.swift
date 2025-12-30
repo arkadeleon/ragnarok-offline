@@ -41,7 +41,8 @@ final class JobModel {
     private let mode: DatabaseMode
     private let job: Job
 
-    var localizedName: String?
+    let localizedName: String?
+
     var animatedImage: AnimatedImage?
 
     var displayName: String {
@@ -105,19 +106,14 @@ final class JobModel {
         return jobLevels
     }
 
-    init(mode: DatabaseMode, job: Job) {
+    init(mode: DatabaseMode, job: Job, localizedName: String?) {
         self.mode = mode
         self.job = job
+        self.localizedName = localizedName
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Job, Value>) -> Value {
         job[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-        self.localizedName = messageStringTable.localizedJobName(for: job.id)
     }
 
     @MainActor

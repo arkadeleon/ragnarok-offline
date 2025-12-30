@@ -17,9 +17,10 @@ final class SkillModel {
     private let mode: DatabaseMode
     private let skill: Skill
 
-    var localizedName: String?
+    let localizedName: String?
+    let localizedDescription: String?
+
     var iconImage: CGImage?
-    var localizedDescription: AttributedString?
 
     var displayName: String {
         localizedName ?? skill.name
@@ -51,9 +52,11 @@ final class SkillModel {
         return attributes
     }
 
-    init(mode: DatabaseMode, skill: Skill) {
+    init(mode: DatabaseMode, skill: Skill, localizedName: String?, localizedDescription: String?) {
         self.mode = mode
         self.skill = skill
+        self.localizedName = localizedName
+        self.localizedDescription = localizedDescription
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Skill, Value>) -> Value {
@@ -61,24 +64,10 @@ final class SkillModel {
     }
 
     @MainActor
-    func fetchLocalizedName() async {
-        let skillInfoTable = await ResourceManager.shared.skillInfoTable(for: .current)
-        localizedName = skillInfoTable.localizedSkillName(forSkillID: skill.id)
-    }
-
-    @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
             let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skill.aegisName)
             iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
-        }
-    }
-
-    @MainActor
-    func fetchDetail() async {
-        let skillInfoTable = await ResourceManager.shared.skillInfoTable(for: .current)
-        if let skillDescription = skillInfoTable.localizedSkillDescription(forSkillID: skill.id) {
-            localizedDescription = AttributedString(description: skillDescription)
         }
     }
 }

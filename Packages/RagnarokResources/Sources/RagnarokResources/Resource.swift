@@ -7,6 +7,3 @@
 
 public protocol Resource: Sendable {
 }
-
-public protocol LocalizedResource: Resource {
-}

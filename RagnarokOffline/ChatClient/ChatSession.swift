@@ -6,6 +6,7 @@
 //
 
 import Observation
+import RagnarokLocalization
 import RagnarokNetwork
 import RagnarokPackets
 import RagnarokResources
@@ -15,6 +16,8 @@ import RagnarokResources
 final class ChatSession {
     let serverAddress: String
     let serverPort: String
+
+    let messageStringTable: MessageStringTable
 
     enum Phase {
         case login
@@ -61,6 +64,7 @@ final class ChatSession {
     init(serverAddress: String, serverPort: String) {
         self.serverAddress = serverAddress
         self.serverPort = serverPort
+        self.messageStringTable = MessageStringTable()
     }
 
     func sendMessage(_ content: String) {
@@ -165,21 +169,15 @@ final class ChatSession {
         case .loginRefused(let message):
             messages.append(.serverText("Refused"))
 
-            Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                    let text = text.replacingOccurrences(of: "%s", with: message.unblockTime)
-                    messages.append(.serverText(text))
-                }
+            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                let text = text.replacingOccurrences(of: "%s", with: message.unblockTime)
+                messages.append(.serverText(text))
             }
         case .authenticationBanned(let message):
             messages.append(.serverText("Banned"))
 
-            Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                    messages.append(.serverText(text))
-                }
+            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                messages.append(.serverText(text))
             }
         case .errorOccurred(let error):
             messages.append(.serverText(error.localizedDescription))
@@ -253,11 +251,8 @@ final class ChatSession {
         case .authenticationBanned(let message):
             messages.append(.serverText("Banned"))
 
-            Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                    messages.append(.serverText(text))
-                }
+            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                messages.append(.serverText(text))
             }
         case .errorOccurred(let error):
             messages.append(.serverText(error.localizedDescription))
@@ -302,11 +297,8 @@ final class ChatSession {
         case .authenticationBanned(let message):
             messages.append(.serverText("Banned"))
 
-            Task {
-                let messageStringTable = await ResourceManager.shared.messageStringTable(for: .current)
-                if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                    messages.append(.serverText(text))
-                }
+            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
+                messages.append(.serverText(text))
             }
         case .errorOccurred(let error):
             messages.append(.serverText(error.localizedDescription))

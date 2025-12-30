@@ -1,6 +1,6 @@
 //
 //  Bundle+Locale.swift
-//  RagnarokResources
+//  RagnarokLocalization
 //
 //  Created by Leon Li on 2024/5/27.
 //

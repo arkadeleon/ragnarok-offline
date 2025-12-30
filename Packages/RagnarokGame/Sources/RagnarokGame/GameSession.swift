@@ -9,6 +9,7 @@ import Foundation
 import Network
 import Observation
 import RagnarokConstants
+import RagnarokLocalization
 import RagnarokNetwork
 import RagnarokReality
 import RagnarokResources
@@ -21,6 +22,7 @@ final public class GameSession {
     public let immersiveSpaceID = "Game"
 
     let resourceManager: ResourceManager
+    let messageStringTable: MessageStringTable
 
     public struct Configuration: Codable, Hashable {
         public var serverAddress: String
@@ -87,6 +89,7 @@ final public class GameSession {
 
     public init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
+        self.messageStringTable = MessageStringTable()
     }
 
     // MARK: - Public
@@ -265,21 +268,15 @@ final public class GameSession {
                 phase = .login(.charServerList(charServers))
             }
         case .loginRefused(let message):
-            Task {
-                let messageStringTable = await resourceManager.messageStringTable(for: .current)
-                if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
-                    let localizedMessage = localizedMessage.replacingOccurrences(of: "%s", with: message.unblockTime)
-                    let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
-                    errorMessages.append(errorMessage)
-                }
+            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
+                let localizedMessage = localizedMessage.replacingOccurrences(of: "%s", with: message.unblockTime)
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                errorMessages.append(errorMessage)
             }
         case .authenticationBanned(let message):
-            Task {
-                let messageStringTable = await resourceManager.messageStringTable(for: .current)
-                if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
-                    let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
-                    errorMessages.append(errorMessage)
-                }
+            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                errorMessages.append(errorMessage)
             }
         case .errorOccurred(let error):
             let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)

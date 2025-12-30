@@ -42,7 +42,7 @@ struct ItemDetailView: View {
             }
 
             if let localizedDescription = item.localizedDescription {
-                DatabaseRecordSectionView("Description", text: localizedDescription)
+                DatabaseRecordSectionView("Description", text: AttributedString(description: localizedDescription))
             }
 
             if let script = item.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
@@ -76,7 +76,7 @@ struct ItemDetailView: View {
         }
         .navigationTitle(item.displayName)
         .task {
-            await item.fetchDetail()
+            await item.fetchPreviewImage()
         }
         .task {
             droppingMonsters = await database.droppingMonsters(forItemAegisName: item.aegisName)

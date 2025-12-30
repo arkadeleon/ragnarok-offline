@@ -19,10 +19,11 @@ final class ItemModel {
     private let mode: DatabaseMode
     private let item: Item
 
-    var localizedName: String?
+    let localizedName: String?
+    let localizedDescription: String?
+
     var iconImage: CGImage?
     var previewImage: CGImage?
-    var localizedDescription: AttributedString?
 
     var displayName: String {
         var displayName = localizedName ?? item.name
@@ -143,19 +144,15 @@ final class ItemModel {
             .joined(separator: "\n")
     }
 
-    init(mode: DatabaseMode, item: Item) {
+    init(mode: DatabaseMode, item: Item, localizedName: String?, localizedDescription: String?) {
         self.mode = mode
         self.item = item
+        self.localizedName = localizedName
+        self.localizedDescription = localizedDescription
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Item, Value>) -> Value {
         item[keyPath: keyPath]
-    }
-
-    @MainActor
-    func fetchLocalizedName() async {
-        let itemInfoTable = await ResourceManager.shared.itemInfoTable(for: .current)
-        localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
     }
 
     @MainActor
@@ -169,15 +166,10 @@ final class ItemModel {
     }
 
     @MainActor
-    func fetchDetail() async {
+    func fetchPreviewImage() async {
         let scriptContext = await ResourceManager.shared.scriptContext()
         if let previewImagePath = ResourcePath.generateItemPreviewImagePath(itemID: item.id, scriptContext: scriptContext) {
             previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)
-        }
-
-        let itemInfoTable = await ResourceManager.shared.itemInfoTable(for: .current)
-        if let itemDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id) {
-            localizedDescription = AttributedString(description: itemDescription)
         }
     }
 }

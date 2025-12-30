@@ -30,9 +30,6 @@ let package = Package(
                 "ImageRendering",
                 "TextEncoding",
                 .product(name: "Lua", package: "swift-lua"),
-            ],
-            resources: [
-                .process("Resources"),
             ]
         ),
         .testTarget(
