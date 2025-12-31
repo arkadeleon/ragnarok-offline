@@ -51,8 +51,8 @@ struct RagnarokOfflineApp: App {
 
         #if os(visionOS)
         ImmersiveSpace(id: appModel.gameSession.immersiveSpaceID) {
-            if case .map(let scene) = appModel.gameSession.phase {
-                MapSceneView(scene: scene)
+            if let mapScene = appModel.gameSession.mapScene {
+                MapSceneView(scene: mapScene)
             }
         }
         .immersionStyle(selection: $immersionStyle, in: .progressive)

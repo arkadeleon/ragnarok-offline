@@ -79,7 +79,7 @@ final public class GameSession {
     @ObservationIgnored var charSession: CharSession?
     @ObservationIgnored var mapSession: MapSession?
 
-    var mapScene: MapScene? {
+    public var mapScene: MapScene? {
         if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
             scene
         } else {
