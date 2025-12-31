@@ -2241,6 +2241,9 @@
         }
       }
     },
+    "Server Not Started" : {
+
+    },
     "Server Port" : {
 
     },
@@ -2519,6 +2522,9 @@
           }
         }
       }
+    },
+    "Start Server" : {
+
     },
     "STARTING" : {
       "localizations" : {
@@ -2862,6 +2868,9 @@
           }
         }
       }
+    },
+    "Tap Start to run the server" : {
+
     },
     "Target Type" : {
 

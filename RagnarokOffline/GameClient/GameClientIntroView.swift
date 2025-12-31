@@ -13,7 +13,7 @@ struct GameClientIntroView: View {
     var body: some View {
         VStack(spacing: 24) {
             VStack(spacing: 16) {
-                Image(systemName: "macwindow")
+                Image(systemName: "ipad.and.iphone")
                     .font(.system(size: 60))
                     .foregroundStyle(.secondary)
 

@@ -17,15 +17,19 @@ struct ServerView: View {
             ConsoleView(messages: server.consoleMessages)
 
             if server.status == .notStarted {
-                Button {
-                    startServer()
-                } label: {
-                    Image(systemName: "play")
-                        .font(.system(size: 40))
-                        .padding(15)
+                ContentUnavailableView {
+                    Label("Server Not Started", systemImage: "server.rack")
+                } description: {
+                    Text("Tap Start to run the server")
+                } actions: {
+                    Button {
+                        startServer()
+                    } label: {
+                        Label("Start Server", systemImage: "play.fill")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
                 }
-                .buttonStyle(.bordered)
-                .buttonBorderShape(.circle)
             }
         }
         .background(.background)
