@@ -36,6 +36,7 @@ public enum EAJobID: Int, CaseIterable, Sendable {
     case rebellion = 0x109
     case kagerouoboro = 0x10a
     case death_knight = 0x10e
+    case spirit_handler = 0x110
     case crusader = 0x201
     case sage = 0x202
     case barddancer = 0x203
@@ -99,6 +100,8 @@ public enum EAJobID: Int, CaseIterable, Sendable {
     case mechanic = 0x4105
     case guillotine_cross = 0x4106
     case star_emperor = 0x4107
+    case night_watch = 0x4109
+    case shinkiroshiranui = 0x410a
     case royal_guard = 0x4201
     case sorcerer = 0x4202
     case minstrelwanderer = 0x4203
@@ -133,24 +136,21 @@ public enum EAJobID: Int, CaseIterable, Sendable {
     case baby_genetic = 0x6205
     case baby_shadow_chaser = 0x6206
     case baby_soul_reaper = 0x6207
-    case hyper_novice = 0xd100
+    case hyper_novice = 0xc100
     case dragon_knight = 0xd101
     case arch_mage = 0xd102
     case windhawk = 0xd103
     case cardinal = 0xd104
     case meister = 0xd105
     case shadow_cross = 0xd106
-    case sky_emperor = 0xd107
-    case night_watch = 0xd109
-    case shinkiro_shiranui = 0xd10a
-    case spirit_handler = 0xd110
+    case sky_emperor = 0xc107
     case imperial_guard = 0xd201
     case elemental_master = 0xd202
     case troubadourtrouvere = 0xd203
     case inquisitor = 0xd204
     case biolo = 0xd205
     case abyss_chaser = 0xd206
-    case soul_ascetic = 0xd207
+    case soul_ascetic = 0xc207
 }
 
 extension EAJobID: CodingKey {
@@ -185,6 +185,7 @@ extension EAJobID: CodingKey {
         case .rebellion: "REBELLION"
         case .kagerouoboro: "KAGEROUOBORO"
         case .death_knight: "DEATH_KNIGHT"
+        case .spirit_handler: "SPIRIT_HANDLER"
         case .crusader: "CRUSADER"
         case .sage: "SAGE"
         case .barddancer: "BARDDANCER"
@@ -248,6 +249,8 @@ extension EAJobID: CodingKey {
         case .mechanic: "MECHANIC"
         case .guillotine_cross: "GUILLOTINE_CROSS"
         case .star_emperor: "STAR_EMPEROR"
+        case .night_watch: "NIGHT_WATCH"
+        case .shinkiroshiranui: "SHINKIROSHIRANUI"
         case .royal_guard: "ROYAL_GUARD"
         case .sorcerer: "SORCERER"
         case .minstrelwanderer: "MINSTRELWANDERER"
@@ -290,9 +293,6 @@ extension EAJobID: CodingKey {
         case .meister: "MEISTER"
         case .shadow_cross: "SHADOW_CROSS"
         case .sky_emperor: "SKY_EMPEROR"
-        case .night_watch: "NIGHT_WATCH"
-        case .shinkiro_shiranui: "SHINKIRO_SHIRANUI"
-        case .spirit_handler: "SPIRIT_HANDLER"
         case .imperial_guard: "IMPERIAL_GUARD"
         case .elemental_master: "ELEMENTAL_MASTER"
         case .troubadourtrouvere: "TROUBADOURTROUVERE"
@@ -334,6 +334,7 @@ extension EAJobID: CodingKey {
         case "REBELLION": self = .rebellion
         case "KAGEROUOBORO": self = .kagerouoboro
         case "DEATH_KNIGHT", "DEATHKNIGHT": self = .death_knight
+        case "SPIRIT_HANDLER": self = .spirit_handler
         case "CRUSADER": self = .crusader
         case "SAGE": self = .sage
         case "BARDDANCER": self = .barddancer
@@ -397,6 +398,8 @@ extension EAJobID: CodingKey {
         case "MECHANIC": self = .mechanic
         case "GUILLOTINE_CROSS": self = .guillotine_cross
         case "STAR_EMPEROR": self = .star_emperor
+        case "NIGHT_WATCH": self = .night_watch
+        case "SHINKIROSHIRANUI": self = .shinkiroshiranui
         case "ROYAL_GUARD": self = .royal_guard
         case "SORCERER": self = .sorcerer
         case "MINSTRELWANDERER": self = .minstrelwanderer
@@ -439,9 +442,6 @@ extension EAJobID: CodingKey {
         case "MEISTER": self = .meister
         case "SHADOW_CROSS": self = .shadow_cross
         case "SKY_EMPEROR": self = .sky_emperor
-        case "NIGHT_WATCH": self = .night_watch
-        case "SHINKIRO_SHIRANUI": self = .shinkiro_shiranui
-        case "SPIRIT_HANDLER": self = .spirit_handler
         case "IMPERIAL_GUARD": self = .imperial_guard
         case "ELEMENTAL_MASTER": self = .elemental_master
         case "TROUBADOURTROUVERE": self = .troubadourtrouvere

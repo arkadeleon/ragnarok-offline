@@ -48,6 +48,7 @@ public enum SkillInfoFlag2: Int, CaseIterable, Sendable {
     case showscale = 38
     case ignoregtb = 39
     case toggleable = 40
+    case ignorenoncritatkbonus = 41
 }
 
 extension SkillInfoFlag2: CodingKey {
@@ -94,6 +95,7 @@ extension SkillInfoFlag2: CodingKey {
         case .showscale: "SHOWSCALE"
         case .ignoregtb: "IGNOREGTB"
         case .toggleable: "TOGGLEABLE"
+        case .ignorenoncritatkbonus: "IGNORENONCRITATKBONUS"
         }
     }
 
@@ -140,6 +142,7 @@ extension SkillInfoFlag2: CodingKey {
         case "SHOWSCALE": self = .showscale
         case "IGNOREGTB": self = .ignoregtb
         case "TOGGLEABLE": self = .toggleable
+        case "IGNORENONCRITATKBONUS": self = .ignorenoncritatkbonus
         default: return nil
         }
     }

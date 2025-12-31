@@ -800,6 +800,8 @@ public enum SkillID: Int, CaseIterable, Sendable {
     case npc_lightning_judgement = 791
     case npc_groggy_on = 792
     case npc_reset_efst = 793
+    case npc_corruptundead = 794
+    case npc_slowskill = 795
     case kn_chargeatk = 1001
     case cr_shrink = 1002
     case as_sonicaccel = 1003
@@ -1124,6 +1126,7 @@ public enum SkillID: Int, CaseIterable, Sendable {
     case gm_item_atkmin = 2546
     case gm_item_matkmax = 2547
     case gm_item_matkmin = 2548
+    case gm_ap_heal = 2549
     case rl_glittering_greed = 2551
     case rl_richs_coin = 2552
     case rl_mass_spiral = 2553
@@ -1222,6 +1225,7 @@ public enum SkillID: Int, CaseIterable, Sendable {
     case eclage_recall = 3035
     case ba_poembragi2 = 3036
     case dc_fortunekiss2 = 3037
+    case item_option_splash_attack = 3038
     case gm_force_transfer = 3039
     case gm_wide_resurrection = 3040
     case all_niflheim_recall = 3041
@@ -1283,11 +1287,19 @@ public enum SkillID: Int, CaseIterable, Sendable {
     case su_spiritofland = 5054
     case su_chattering = 5055
     case su_spiritofsea = 5056
+    case private_airplane = 5059
+    case macro_detector_answer_waiting = 5060
+    case all_assistant_vending = 5061
+    case all_assistant_buying = 5062
     case we_callallfamily = 5063
     case we_oneforever = 5064
     case we_cheerup = 5065
+    case all_refining_ui = 5066
     case all_eqswitch = 5067
     case cg_specialsinger = 5068
+    case gc_rollingcutter2 = 5069
+    case gc_counterslash2 = 5070
+    case evt_full_throttle = 5071
     case ab_vituperatum = 5072
     case ab_convenio = 5073
     case all_lightning_storm = 5074
@@ -1295,6 +1307,7 @@ public enum SkillID: Int, CaseIterable, Sendable {
     case nv_helpangel = 5076
     case nv_transcendence = 5077
     case wl_reading_sb_reading = 5078
+    case all_grade_enchant_ui = 5079
     case dk_servantweapon = 5201
     case dk_servantweapon_atk = 5202
     case dk_servant_w_sign = 5203
@@ -1488,6 +1501,7 @@ public enum SkillID: Int, CaseIterable, Sendable {
     case em_elemental_buster_wind = 5391
     case em_elemental_buster_ground = 5392
     case em_elemental_buster_poison = 5393
+    case dk_chargingpierce_atk = 5394
     case nw_p_f_i = 5401
     case nw_grenade_mastery = 5402
     case nw_intensive_aim = 5403
@@ -1585,6 +1599,7 @@ public enum SkillID: Int, CaseIterable, Sendable {
     case ss_ankokuryuuakumu = 5495
     case nw_the_vigilante_at_night_gun_gatling = 5496
     case nw_the_vigilante_at_night_gun_shotgun = 5497
+    case ss_fuumakouchiku_blasting = 5498
     case ss_four_charm = 5499
     case nw_wild_shot = 5500
     case nw_midnight_fallen = 5501
@@ -2581,6 +2596,8 @@ extension SkillID: CodingKey {
         case .npc_lightning_judgement: "NPC_LIGHTNING_JUDGEMENT"
         case .npc_groggy_on: "NPC_GROGGY_ON"
         case .npc_reset_efst: "NPC_RESET_EFST"
+        case .npc_corruptundead: "NPC_CORRUPTUNDEAD"
+        case .npc_slowskill: "NPC_SLOWSKILL"
         case .kn_chargeatk: "KN_CHARGEATK"
         case .cr_shrink: "CR_SHRINK"
         case .as_sonicaccel: "AS_SONICACCEL"
@@ -2905,6 +2922,7 @@ extension SkillID: CodingKey {
         case .gm_item_atkmin: "GM_ITEM_ATKMIN"
         case .gm_item_matkmax: "GM_ITEM_MATKMAX"
         case .gm_item_matkmin: "GM_ITEM_MATKMIN"
+        case .gm_ap_heal: "GM_AP_HEAL"
         case .rl_glittering_greed: "RL_GLITTERING_GREED"
         case .rl_richs_coin: "RL_RICHS_COIN"
         case .rl_mass_spiral: "RL_MASS_SPIRAL"
@@ -3003,6 +3021,7 @@ extension SkillID: CodingKey {
         case .eclage_recall: "ECLAGE_RECALL"
         case .ba_poembragi2: "BA_POEMBRAGI2"
         case .dc_fortunekiss2: "DC_FORTUNEKISS2"
+        case .item_option_splash_attack: "ITEM_OPTION_SPLASH_ATTACK"
         case .gm_force_transfer: "GM_FORCE_TRANSFER"
         case .gm_wide_resurrection: "GM_WIDE_RESURRECTION"
         case .all_niflheim_recall: "ALL_NIFLHEIM_RECALL"
@@ -3064,11 +3083,19 @@ extension SkillID: CodingKey {
         case .su_spiritofland: "SU_SPIRITOFLAND"
         case .su_chattering: "SU_CHATTERING"
         case .su_spiritofsea: "SU_SPIRITOFSEA"
+        case .private_airplane: "PRIVATE_AIRPLANE"
+        case .macro_detector_answer_waiting: "MACRO_DETECTOR_ANSWER_WAITING"
+        case .all_assistant_vending: "ALL_ASSISTANT_VENDING"
+        case .all_assistant_buying: "ALL_ASSISTANT_BUYING"
         case .we_callallfamily: "WE_CALLALLFAMILY"
         case .we_oneforever: "WE_ONEFOREVER"
         case .we_cheerup: "WE_CHEERUP"
+        case .all_refining_ui: "ALL_REFINING_UI"
         case .all_eqswitch: "ALL_EQSWITCH"
         case .cg_specialsinger: "CG_SPECIALSINGER"
+        case .gc_rollingcutter2: "GC_ROLLINGCUTTER2"
+        case .gc_counterslash2: "GC_COUNTERSLASH2"
+        case .evt_full_throttle: "EVT_FULL_THROTTLE"
         case .ab_vituperatum: "AB_VITUPERATUM"
         case .ab_convenio: "AB_CONVENIO"
         case .all_lightning_storm: "ALL_LIGHTNING_STORM"
@@ -3076,6 +3103,7 @@ extension SkillID: CodingKey {
         case .nv_helpangel: "NV_HELPANGEL"
         case .nv_transcendence: "NV_TRANSCENDENCE"
         case .wl_reading_sb_reading: "WL_READING_SB_READING"
+        case .all_grade_enchant_ui: "ALL_GRADE_ENCHANT_UI"
         case .dk_servantweapon: "DK_SERVANTWEAPON"
         case .dk_servantweapon_atk: "DK_SERVANTWEAPON_ATK"
         case .dk_servant_w_sign: "DK_SERVANT_W_SIGN"
@@ -3269,6 +3297,7 @@ extension SkillID: CodingKey {
         case .em_elemental_buster_wind: "EM_ELEMENTAL_BUSTER_WIND"
         case .em_elemental_buster_ground: "EM_ELEMENTAL_BUSTER_GROUND"
         case .em_elemental_buster_poison: "EM_ELEMENTAL_BUSTER_POISON"
+        case .dk_chargingpierce_atk: "DK_CHARGINGPIERCE_ATK"
         case .nw_p_f_i: "NW_P_F_I"
         case .nw_grenade_mastery: "NW_GRENADE_MASTERY"
         case .nw_intensive_aim: "NW_INTENSIVE_AIM"
@@ -3366,6 +3395,7 @@ extension SkillID: CodingKey {
         case .ss_ankokuryuuakumu: "SS_ANKOKURYUUAKUMU"
         case .nw_the_vigilante_at_night_gun_gatling: "NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING"
         case .nw_the_vigilante_at_night_gun_shotgun: "NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN"
+        case .ss_fuumakouchiku_blasting: "SS_FUUMAKOUCHIKU_BLASTING"
         case .ss_four_charm: "SS_FOUR_CHARM"
         case .nw_wild_shot: "NW_WILD_SHOT"
         case .nw_midnight_fallen: "NW_MIDNIGHT_FALLEN"
@@ -4362,6 +4392,8 @@ extension SkillID: CodingKey {
         case "NPC_LIGHTNING_JUDGEMENT": self = .npc_lightning_judgement
         case "NPC_GROGGY_ON": self = .npc_groggy_on
         case "NPC_RESET_EFST": self = .npc_reset_efst
+        case "NPC_CORRUPTUNDEAD": self = .npc_corruptundead
+        case "NPC_SLOWSKILL": self = .npc_slowskill
         case "KN_CHARGEATK": self = .kn_chargeatk
         case "CR_SHRINK": self = .cr_shrink
         case "AS_SONICACCEL": self = .as_sonicaccel
@@ -4686,6 +4718,7 @@ extension SkillID: CodingKey {
         case "GM_ITEM_ATKMIN": self = .gm_item_atkmin
         case "GM_ITEM_MATKMAX": self = .gm_item_matkmax
         case "GM_ITEM_MATKMIN": self = .gm_item_matkmin
+        case "GM_AP_HEAL": self = .gm_ap_heal
         case "RL_GLITTERING_GREED": self = .rl_glittering_greed
         case "RL_RICHS_COIN": self = .rl_richs_coin
         case "RL_MASS_SPIRAL": self = .rl_mass_spiral
@@ -4784,6 +4817,7 @@ extension SkillID: CodingKey {
         case "ECLAGE_RECALL": self = .eclage_recall
         case "BA_POEMBRAGI2": self = .ba_poembragi2
         case "DC_FORTUNEKISS2": self = .dc_fortunekiss2
+        case "ITEM_OPTION_SPLASH_ATTACK": self = .item_option_splash_attack
         case "GM_FORCE_TRANSFER": self = .gm_force_transfer
         case "GM_WIDE_RESURRECTION": self = .gm_wide_resurrection
         case "ALL_NIFLHEIM_RECALL": self = .all_niflheim_recall
@@ -4845,11 +4879,19 @@ extension SkillID: CodingKey {
         case "SU_SPIRITOFLAND": self = .su_spiritofland
         case "SU_CHATTERING": self = .su_chattering
         case "SU_SPIRITOFSEA": self = .su_spiritofsea
+        case "PRIVATE_AIRPLANE": self = .private_airplane
+        case "MACRO_DETECTOR_ANSWER_WAITING": self = .macro_detector_answer_waiting
+        case "ALL_ASSISTANT_VENDING": self = .all_assistant_vending
+        case "ALL_ASSISTANT_BUYING": self = .all_assistant_buying
         case "WE_CALLALLFAMILY": self = .we_callallfamily
         case "WE_ONEFOREVER": self = .we_oneforever
         case "WE_CHEERUP": self = .we_cheerup
+        case "ALL_REFINING_UI": self = .all_refining_ui
         case "ALL_EQSWITCH": self = .all_eqswitch
         case "CG_SPECIALSINGER": self = .cg_specialsinger
+        case "GC_ROLLINGCUTTER2": self = .gc_rollingcutter2
+        case "GC_COUNTERSLASH2": self = .gc_counterslash2
+        case "EVT_FULL_THROTTLE": self = .evt_full_throttle
         case "AB_VITUPERATUM": self = .ab_vituperatum
         case "AB_CONVENIO": self = .ab_convenio
         case "ALL_LIGHTNING_STORM": self = .all_lightning_storm
@@ -4857,6 +4899,7 @@ extension SkillID: CodingKey {
         case "NV_HELPANGEL": self = .nv_helpangel
         case "NV_TRANSCENDENCE": self = .nv_transcendence
         case "WL_READING_SB_READING": self = .wl_reading_sb_reading
+        case "ALL_GRADE_ENCHANT_UI": self = .all_grade_enchant_ui
         case "DK_SERVANTWEAPON": self = .dk_servantweapon
         case "DK_SERVANTWEAPON_ATK": self = .dk_servantweapon_atk
         case "DK_SERVANT_W_SIGN": self = .dk_servant_w_sign
@@ -5050,6 +5093,7 @@ extension SkillID: CodingKey {
         case "EM_ELEMENTAL_BUSTER_WIND": self = .em_elemental_buster_wind
         case "EM_ELEMENTAL_BUSTER_GROUND": self = .em_elemental_buster_ground
         case "EM_ELEMENTAL_BUSTER_POISON": self = .em_elemental_buster_poison
+        case "DK_CHARGINGPIERCE_ATK": self = .dk_chargingpierce_atk
         case "NW_P_F_I": self = .nw_p_f_i
         case "NW_GRENADE_MASTERY": self = .nw_grenade_mastery
         case "NW_INTENSIVE_AIM": self = .nw_intensive_aim
@@ -5147,6 +5191,7 @@ extension SkillID: CodingKey {
         case "SS_ANKOKURYUUAKUMU": self = .ss_ankokuryuuakumu
         case "NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING": self = .nw_the_vigilante_at_night_gun_gatling
         case "NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN": self = .nw_the_vigilante_at_night_gun_shotgun
+        case "SS_FUUMAKOUCHIKU_BLASTING": self = .ss_fuumakouchiku_blasting
         case "SS_FOUR_CHARM": self = .ss_four_charm
         case "NW_WILD_SHOT": self = .nw_wild_shot
         case "NW_MIDNIGHT_FALLEN": self = .nw_midnight_fallen

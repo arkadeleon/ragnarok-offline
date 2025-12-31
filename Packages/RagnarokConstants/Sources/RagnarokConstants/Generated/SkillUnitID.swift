@@ -145,10 +145,11 @@ public enum SkillUnitID: CaseIterable, Sendable {
     case fire_rain
     case catnippowder
     case nyanggrass
+    case grounddrift_neutral
     case creatingstar
-    case dummy_0
     case rain_of_crystal
     case mystery_illusion
+    case seedtrap
     case strantum_tremor
     case violent_quake
     case all_bloom
@@ -169,6 +170,7 @@ public enum SkillUnitID: CaseIterable, Sendable {
     case twinkling_galaxy
     case star_cannon
     case grenades_dropping
+    case unknown_2
     case fuumashouaku
     case mission_bombard
     case totem_of_tutelary
@@ -178,6 +180,8 @@ public enum SkillUnitID: CaseIterable, Sendable {
     case ground_gravitation
     case kunaikaiten
     case kunaiwaikyoku
+    case kunaikussetsu
+    case sekienhou
     case star_burst
     case deepblindtrap
     case solidtrap
@@ -330,10 +334,11 @@ extension SkillUnitID: RawRepresentable {
         case .fire_rain: 261
         case .catnippowder: 262
         case .nyanggrass: 263
-        case .creatingstar: 264
-        case .dummy_0: 265
+        case .grounddrift_neutral: 264
+        case .creatingstar: 265
         case .rain_of_crystal: 266
         case .mystery_illusion: 267
+        case .seedtrap: 268
         case .strantum_tremor: 269
         case .violent_quake: 270
         case .all_bloom: 271
@@ -354,6 +359,7 @@ extension SkillUnitID: RawRepresentable {
         case .twinkling_galaxy: 286
         case .star_cannon: 287
         case .grenades_dropping: 288
+        case .unknown_2: 289
         case .fuumashouaku: 290
         case .mission_bombard: 291
         case .totem_of_tutelary: 292
@@ -363,6 +369,8 @@ extension SkillUnitID: RawRepresentable {
         case .ground_gravitation: 296
         case .kunaikaiten: 297
         case .kunaiwaikyoku: 298
+        case .kunaikussetsu: 299
+        case .sekienhou: 300
         case .star_burst: 2409
         case .deepblindtrap: 20852
         case .solidtrap: 20853
@@ -515,10 +523,11 @@ extension SkillUnitID: RawRepresentable {
         case 261: self = .fire_rain
         case 262: self = .catnippowder
         case 263: self = .nyanggrass
-        case 264: self = .creatingstar
-        case 265: self = .dummy_0
+        case 264: self = .grounddrift_neutral
+        case 265: self = .creatingstar
         case 266: self = .rain_of_crystal
         case 267: self = .mystery_illusion
+        case 268: self = .seedtrap
         case 269: self = .strantum_tremor
         case 270: self = .violent_quake
         case 271: self = .all_bloom
@@ -539,6 +548,7 @@ extension SkillUnitID: RawRepresentable {
         case 286: self = .twinkling_galaxy
         case 287: self = .star_cannon
         case 288: self = .grenades_dropping
+        case 289: self = .unknown_2
         case 290: self = .fuumashouaku
         case 291: self = .mission_bombard
         case 292: self = .totem_of_tutelary
@@ -548,6 +558,8 @@ extension SkillUnitID: RawRepresentable {
         case 296: self = .ground_gravitation
         case 297: self = .kunaikaiten
         case 298: self = .kunaiwaikyoku
+        case 299: self = .kunaikussetsu
+        case 300: self = .sekienhou
         case 2409: self = .star_burst
         case 20852: self = .deepblindtrap
         case 20853: self = .solidtrap
@@ -703,10 +715,11 @@ extension SkillUnitID: CodingKey {
         case .fire_rain: "FIRE_RAIN"
         case .catnippowder: "CATNIPPOWDER"
         case .nyanggrass: "NYANGGRASS"
+        case .grounddrift_neutral: "GROUNDDRIFT_NEUTRAL"
         case .creatingstar: "CREATINGSTAR"
-        case .dummy_0: "DUMMY_0"
         case .rain_of_crystal: "RAIN_OF_CRYSTAL"
         case .mystery_illusion: "MYSTERY_ILLUSION"
+        case .seedtrap: "SEEDTRAP"
         case .strantum_tremor: "STRANTUM_TREMOR"
         case .violent_quake: "VIOLENT_QUAKE"
         case .all_bloom: "ALL_BLOOM"
@@ -727,6 +740,7 @@ extension SkillUnitID: CodingKey {
         case .twinkling_galaxy: "TWINKLING_GALAXY"
         case .star_cannon: "STAR_CANNON"
         case .grenades_dropping: "GRENADES_DROPPING"
+        case .unknown_2: "UNKNOWN_2"
         case .fuumashouaku: "FUUMASHOUAKU"
         case .mission_bombard: "MISSION_BOMBARD"
         case .totem_of_tutelary: "TOTEM_OF_TUTELARY"
@@ -736,6 +750,8 @@ extension SkillUnitID: CodingKey {
         case .ground_gravitation: "GROUND_GRAVITATION"
         case .kunaikaiten: "KUNAIKAITEN"
         case .kunaiwaikyoku: "KUNAIWAIKYOKU"
+        case .kunaikussetsu: "KUNAIKUSSETSU"
+        case .sekienhou: "SEKIENHOU"
         case .star_burst: "STAR_BURST"
         case .deepblindtrap: "DEEPBLINDTRAP"
         case .solidtrap: "SOLIDTRAP"
@@ -888,10 +904,11 @@ extension SkillUnitID: CodingKey {
         case "FIRE_RAIN": self = .fire_rain
         case "CATNIPPOWDER": self = .catnippowder
         case "NYANGGRASS": self = .nyanggrass
+        case "GROUNDDRIFT_NEUTRAL": self = .grounddrift_neutral
         case "CREATINGSTAR": self = .creatingstar
-        case "DUMMY_0": self = .dummy_0
         case "RAIN_OF_CRYSTAL": self = .rain_of_crystal
         case "MYSTERY_ILLUSION": self = .mystery_illusion
+        case "SEEDTRAP": self = .seedtrap
         case "STRANTUM_TREMOR": self = .strantum_tremor
         case "VIOLENT_QUAKE": self = .violent_quake
         case "ALL_BLOOM": self = .all_bloom
@@ -912,6 +929,7 @@ extension SkillUnitID: CodingKey {
         case "TWINKLING_GALAXY": self = .twinkling_galaxy
         case "STAR_CANNON": self = .star_cannon
         case "GRENADES_DROPPING": self = .grenades_dropping
+        case "UNKNOWN_2": self = .unknown_2
         case "FUUMASHOUAKU": self = .fuumashouaku
         case "MISSION_BOMBARD": self = .mission_bombard
         case "TOTEM_OF_TUTELARY": self = .totem_of_tutelary
@@ -921,6 +939,8 @@ extension SkillUnitID: CodingKey {
         case "GROUND_GRAVITATION": self = .ground_gravitation
         case "KUNAIKAITEN": self = .kunaikaiten
         case "KUNAIWAIKYOKU": self = .kunaiwaikyoku
+        case "KUNAIKUSSETSU": self = .kunaikussetsu
+        case "SEKIENHOU": self = .sekienhou
         case "STAR_BURST": self = .star_burst
         case "DEEPBLINDTRAP": self = .deepblindtrap
         case "SOLIDTRAP": self = .solidtrap
