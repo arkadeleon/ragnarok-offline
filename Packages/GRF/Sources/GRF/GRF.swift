@@ -131,12 +131,12 @@ extension GRF {
                     }
                     position += 4
 
-                    var type = data[position]
+                    var types = GRF.EntryTypes(rawValue: data[position])
                     switch path.extension.lowercased() {
                     case "act", "gat", "gnd", "str":
-                        type |= GRF.EntryType.encryptHeader.rawValue
+                        types.insert(.encryptHeader)
                     default:
-                        type |= GRF.EntryType.encryptMixed.rawValue
+                        types.insert(.encryptMixed)
                     }
                     position += 1
 
@@ -145,7 +145,7 @@ extension GRF {
                     }
                     position += 4
 
-                    if type & GRF.EntryType.file.rawValue == 0 {
+                    if !types.contains(.file) {
                         continue
                     }
 
@@ -154,7 +154,7 @@ extension GRF {
                         sizeCompressed: compressedSizeBase - decompressedSize - 715,
                         sizeCompressedAligned: compressedSizeAligned - 37579,
                         size: decompressedSize,
-                        type: type,
+                        types: types,
                         offset: dataOffset
                     )
                     entries.append(entry)
@@ -197,7 +197,7 @@ extension GRF {
                     }
                     position += 4
 
-                    let type = data[position]
+                    let types = GRF.EntryTypes(rawValue: data[position])
                     position += 1
 
                     let offset: UInt64
@@ -213,7 +213,7 @@ extension GRF {
                         position += 8
                     }
 
-                    if type & GRF.EntryType.file.rawValue == 0 {
+                    if !types.contains(.file) {
                         continue
                     }
 
@@ -222,7 +222,7 @@ extension GRF {
                         sizeCompressed: sizeCompressed,
                         sizeCompressedAligned: sizeCompressedAligned,
                         size: size,
-                        type: type,
+                        types: types,
                         offset: offset
                     )
                     entries.append(entry)
@@ -235,16 +235,16 @@ extension GRF {
 }
 
 extension GRF {
-    struct EntryType: OptionSet {
+    struct EntryTypes: OptionSet {
+        static let file          = GRF.EntryTypes(rawValue: 0x01) // entry is a file
+        static let encryptMixed  = GRF.EntryTypes(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
+        static let encryptHeader = GRF.EntryTypes(rawValue: 0x04) // encryption mode 1 (header DES only)
+
         let rawValue: UInt8
 
         init(rawValue: UInt8) {
             self.rawValue = rawValue
         }
-
-        static let file          = GRF.EntryType(rawValue: 0x01) // entry is a file
-        static let encryptMixed  = GRF.EntryType(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
-        static let encryptHeader = GRF.EntryType(rawValue: 0x04) // encryption mode 1 (header DES only)
     }
 
     struct Entry {
@@ -252,7 +252,7 @@ extension GRF {
         var sizeCompressed: UInt32
         var sizeCompressedAligned: UInt32
         var size: UInt32
-        var type: UInt8
+        var types: GRF.EntryTypes
         var offset: UInt64
 
         func data(from stream: any BinaryIO.Stream) throws -> Data {
@@ -261,10 +261,10 @@ extension GRF {
             let decoder = BinaryDecoder(stream: stream)
             var bytes = try decoder.decode([UInt8].self, count: Int(sizeCompressedAligned))
 
-            if type & GRF.EntryType.encryptMixed.rawValue != 0 {
+            if types.contains(.encryptMixed) {
                 let des = DES()
                 des.decodeFull(buf: &bytes, len: Int(sizeCompressedAligned), entrylen: Int(sizeCompressed))
-            } else if type & GRF.EntryType.encryptHeader.rawValue != 0 {
+            } else if types.contains(.encryptHeader) {
                 let des = DES()
                 des.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
             }
