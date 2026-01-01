@@ -157,8 +157,6 @@ let allConstantConversions: [ConstantConversion] = [
         prefix: "RC_",
         exclude: [
             "RC_NONE_",
-            "RC_PLAYER_HUMAN",
-            "RC_PLAYER_DORAM",
             "RC_ALL",
             "RC_MAX",
         ],

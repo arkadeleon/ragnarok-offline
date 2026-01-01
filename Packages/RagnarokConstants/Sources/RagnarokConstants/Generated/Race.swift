@@ -17,6 +17,8 @@ public enum Race: Int, CaseIterable, Sendable {
     case demihuman = 7
     case angel = 8
     case dragon = 9
+    case player_human = 10
+    case player_doram = 11
 }
 
 extension Race: CodingKey {
@@ -32,6 +34,8 @@ extension Race: CodingKey {
         case .demihuman: "DEMIHUMAN"
         case .angel: "ANGEL"
         case .dragon: "DRAGON"
+        case .player_human: "PLAYER_HUMAN"
+        case .player_doram: "PLAYER_DORAM"
         }
     }
 
@@ -47,6 +51,8 @@ extension Race: CodingKey {
         case "DEMIHUMAN": self = .demihuman
         case "ANGEL": self = .angel
         case "DRAGON": self = .dragon
+        case "PLAYER_HUMAN": self = .player_human
+        case "PLAYER_DORAM": self = .player_doram
         default: return nil
         }
     }

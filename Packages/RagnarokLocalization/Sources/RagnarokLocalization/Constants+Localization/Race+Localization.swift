@@ -31,6 +31,10 @@ extension Race {
             LocalizedStringResource("Angel", table: "Race", bundle: .module)
         case .dragon:
             LocalizedStringResource("Dragon", table: "Race", bundle: .module)
+        case .player_human:
+            LocalizedStringResource("Human Player", table: "Race", bundle: .module)
+        case .player_doram:
+            LocalizedStringResource("Doram Player", table: "Race", bundle: .module)
         }
     }
 }
