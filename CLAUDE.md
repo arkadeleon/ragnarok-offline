@@ -82,7 +82,10 @@ The codebase uses 20+ Swift Package Manager packages organized in layers:
 - `RagnarokDatabase` - YAML-based game database parsing (items, jobs, monsters, skills, etc.)
   - Uses RapidYAML to parse rAthena database files
   - Supports Renewal and Pre-Renewal game modes
-- `RagnarokConstants` - Generated Swift enums from C++ (JobID, SkillID, ItemType, etc.)
+- `RagnarokConstants` - Generated Swift enums and OptionSets from C++ (JobID, SkillID, ItemType, EquipPositions, ItemClasses, etc.)
+- `RagnarokLocalization` - Localization support for game content
+  - DataTables: SkillInfoTable, MapNameTable, StatusInfoTable, ItemInfoTable, MonsterNameTable, etc.
+  - Constants+Localization extensions for displaying localized names of enums
 
 **Networking Layer:**
 - `RagnarokNetwork` - Client-server networking
@@ -106,6 +109,7 @@ The codebase uses 20+ Swift Package Manager packages organized in layers:
   - GameSession state machine (Login → Char Select → Map Loading → Map Loaded)
   - MapScene for 3D map rendering, player movement, pathfinding, NPC dialogs
   - Event handling from network layer
+  - Entity-Component-System: MapGrid, MapItemComponent, MapObjectComponent, TileComponent
 - `WorldCamera` - 3D camera system
 - `ThumbstickView` - UI controls
 
@@ -125,6 +129,10 @@ The codebase uses 20+ Swift Package Manager packages organized in layers:
 - `ChatClient/` - Chat client interface
 - `CharacterSimulator/` - Character preview tools
 - `Settings/` - App configuration using @SettingsItem property wrapper
+- `Help/` - In-app help documentation
+
+**RagnarokOfflineThumbnailExtension/** (Quick Look extension):
+- Provides thumbnail previews for Ragnarok file formats in Finder
 
 ### swift-rathena Integration
 
@@ -168,8 +176,9 @@ GameSession
 
 The `RagnarokOfflineGenerator` executable generates Swift code from C++ headers:
 
-1. **generate-constants**: Parses C++ enums → Swift enums in RagnarokConstants/Generated/
-   - JobID, SkillID, ItemType, MonsterMode, StatusChangeID, etc.
+1. **generate-constants**: Parses C++ enums → Swift enums and OptionSets in RagnarokConstants/Generated/
+   - Enums: JobID, SkillID, ItemType, MonsterMode, StatusChangeID, etc.
+   - OptionSets: EquipPositions, ItemClasses, etc.
    - Uses SwiftSyntax for AST manipulation
 
 2. **generate-packets**: Parses C++ packet structs → Swift structs in RagnarokPackets/Generated/
@@ -188,8 +197,8 @@ The project uses Xcode configuration files (Configurations/*.xcconfig):
 - `AppStore.xcconfig` - For App Store releases
 
 Feature flags are controlled via `SWIFT_ACTIVE_COMPILATION_CONDITIONS`:
-- `GAME_CLIENT_FEATURE` - Enables game client functionality
-- `CHAT_CLIENT_FEATURE` - Enables chat client functionality
+- `GAME_CLIENT_FEATURE` - Enables game client functionality (enabled in Development and TestFlight)
+- `CHAT_CLIENT_FEATURE` - Enables chat client functionality (enabled in Development only)
 
 ### Platform-Specific Behavior
 
@@ -224,6 +233,7 @@ The test plan includes tests for all packages:
 - File format parsing (GRF, SPR, ACT, RSW, etc.)
 - Network packet encoding/decoding
 - Database parsing
+- Localization data tables
 - Rendering pipelines
 - Binary I/O operations
 - Math operations
@@ -261,3 +271,10 @@ Run tests via Xcode test plan or individual package `swift test`.
 2. If enums/packets changed, run `./generate.sh`
 3. Update Swift code to handle new behavior
 4. Test with embedded server in app
+
+### Adding Localization for a Constant Type
+
+1. Add a new DataTable in `RagnarokLocalization` (e.g., `NewTypeNameTable.swift`)
+2. Add a Constants+Localization extension to provide `.localizedName` property
+3. Add localization resources to the appropriate locale bundles
+4. Add tests in `RagnarokLocalizationTests`
