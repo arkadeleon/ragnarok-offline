@@ -78,7 +78,7 @@ final class DatabaseModel {
     var statusChanges: [StatusChangeModel] = []
     var statusChangesByID: [StatusChangeID: StatusChangeModel] = [:]
 
-    private let npcDatabase: NPCDatabase
+    var scriptCommands = ScriptCommands()
 
     private let itemInfoTable: ItemInfoTable
     private let mapNameTable: MapNameTable
@@ -95,11 +95,10 @@ final class DatabaseModel {
     @ObservationIgnored private var petDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var skillDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var statusChangeDatabaseTask: Task<Void, Never>?
+    @ObservationIgnored private var npcDatabaseTask: Task<Void, Never>?
 
     init(mode: DatabaseMode) {
         self.mode = mode
-
-        npcDatabase = NPCDatabase(baseURL: serverResourceBaseURL, mode: mode)
 
         itemInfoTable = ItemInfoTable()
         mapNameTable = MapNameTable()
@@ -250,9 +249,11 @@ final class DatabaseModel {
     }
 
     func spawnMaps(for monster: (id: Int, aegisName: String)) async -> [SpawnMap] {
+        await fetchScriptCommands()
+
         var spawnMaps: [SpawnMap] = []
 
-        let monsterSpawns = await npcDatabase.monsterSpawns(for: monster)
+        let monsterSpawns = scriptCommands.monsterSpawns(for: monster)
         for monsterSpawn in monsterSpawns {
             if let map = await map(forName: monsterSpawn.mapName) {
                 if !spawnMaps.contains(where: { $0.map.name == map.name }) {
@@ -335,10 +336,12 @@ final class DatabaseModel {
     }
 
     func spawningMonsters(forMapName mapName: String) async -> [SpawningMonster] {
+        await fetchScriptCommands()
+
         var spawningMonsters: [SpawningMonster] = []
         var monsters: [MonsterModel] = []
 
-        let monsterSpawns = await npcDatabase.monsterSpawns(forMapName: mapName)
+        let monsterSpawns = scriptCommands.monsterSpawns(forMapName: mapName)
         for monsterSpawn in monsterSpawns {
             if let monsterID = monsterSpawn.monsterID {
                 if let monster = await monster(forID: monsterID) {
@@ -546,5 +549,27 @@ final class DatabaseModel {
         return statusChangeIDs.compactMap {
             statusChangesByID[$0]
         }
+    }
+
+    // MARK: - NPC Database
+
+    func fetchScriptCommands() async {
+        if let npcDatabaseTask {
+            return await npcDatabaseTask.value
+        }
+
+        let npcDatabaseTask = Task {
+            let npcDatabase = NPCDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            do {
+                scriptCommands = try await npcDatabase.scriptCommands()
+            } catch {
+                logger.warning("NPC database task failed: \(error)")
+            }
+        }
+
+        self.npcDatabaseTask = npcDatabaseTask
+
+        return await npcDatabaseTask.value
     }
 }

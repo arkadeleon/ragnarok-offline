@@ -12,71 +12,77 @@ enum NPCDatabaseError: Error {
     case invalidFile(URL)
 }
 
-public actor NPCDatabase {
+final public class NPCDatabase: Sendable {
     public let baseURL: URL
     public let mode: DatabaseMode
-
-    private var mapFlags: [MapFlag] = []
-    private var monsterSpawns: [MonsterSpawn] = []
-    private var warpPoints: [WarpPoint] = []
-    private var npcs: [NPC] = []
-    private var floatingNPCs: [FloatingNPC] = []
-    private var shopNPCs: [ShopNPC] = []
-    private var duplicates: [Duplicate] = []
-    private var functions: [Function] = []
-
-    private var isCached = false
 
     public init(baseURL: URL, mode: DatabaseMode) {
         self.baseURL = baseURL
         self.mode = mode
     }
 
-    public func monsterSpawns(for monster: Monster) -> [MonsterSpawn] {
-        restoreScripts()
+    public func scriptCommands() async throws -> ScriptCommands {
+        metric.beginMeasuring("Load NPC database")
 
-        let monsterSpawns = monsterSpawns.filter { monsterSpawn in
-            monsterSpawn.monsterID == monster.id || monsterSpawn.monsterAegisName == monster.aegisName
-        }
-        return monsterSpawns
+        let url = baseURL.appending(path: "npc/\(mode.path)/scripts_main.conf")
+        let scriptCommands = try await importScript(at: url)
+
+        metric.endMeasuring("Load NPC database")
+
+        return scriptCommands
     }
 
-    public func monsterSpawns(for monster: (id: Int, aegisName: String)) -> [MonsterSpawn] {
-        restoreScripts()
-
-        let monsterSpawns = monsterSpawns.filter { monsterSpawn in
-            monsterSpawn.monsterID == monster.id || monsterSpawn.monsterAegisName == monster.aegisName
-        }
-        return monsterSpawns
-    }
-
-    public func monsterSpawns(forMapName mapName: String) -> [MonsterSpawn] {
-        restoreScripts()
-
-        let monsterSpawns = monsterSpawns.filter { monsterSpawn in
-            monsterSpawn.mapName == mapName
-        }
-        return monsterSpawns
-    }
-
-    private func restoreScripts() {
-        if !isCached {
-            metric.beginMeasuring("Load NPC database")
-
-            do {
-                let url = baseURL.appending(path: "npc/\(mode.path)/scripts_main.conf")
-                try importScript(at: url)
-
-                metric.endMeasuring("Load NPC database")
-            } catch {
-                metric.endMeasuring("Load NPC database", error)
+    private func importScript(at url: URL) async throws -> ScriptCommands {
+        try await withThrowingTaskGroup { taskGroup in
+            guard let stream = FileStream(forReadingFrom: url) else {
+                throw NPCDatabaseError.invalidFile(url)
             }
 
-            isCached = true
+            let reader = StreamReader(stream: stream)
+            defer {
+                reader.close()
+            }
+
+            while let line = reader.readLine() {
+                let line = line.trimmingCharacters(in: .whitespaces)
+                if line.isEmpty || line.starts(with: "//") {
+                    continue
+                }
+
+                let words = line.components(separatedBy: ": ")
+                guard words.count == 2 else {
+                    continue
+                }
+
+                let w1 = words[0]
+                let w2 = words[1]
+                let url = baseURL.appending(path: w2)
+
+                switch w1 {
+                case "npc":
+                    taskGroup.addTask {
+                        try await self.loadScript(at: url)
+                    }
+                case "delnpc":
+                    try unloadScript(at: url)
+                case "import":
+                    taskGroup.addTask {
+                        try await self.importScript(at: url)
+                    }
+                default:
+                    break
+                }
+            }
+
+            var mergedCommands = ScriptCommands()
+            for try await commands in taskGroup {
+                mergedCommands.merge(commands)
+            }
+            return mergedCommands
         }
     }
 
-    private func importScript(at url: URL) throws {
+    private func loadScript(at url: URL) async throws -> ScriptCommands {
         guard let stream = FileStream(forReadingFrom: url) else {
             throw NPCDatabaseError.invalidFile(url)
         }
@@ -86,43 +92,7 @@ public actor NPCDatabase {
             reader.close()
         }
 
-        while let line = reader.readLine() {
-            let line = line.trimmingCharacters(in: .whitespaces)
-            if line.isEmpty || line.starts(with: "//") {
-                continue
-            }
-
-            let words = line.components(separatedBy: ": ")
-            guard words.count == 2 else {
-                continue
-            }
-
-            let w1 = words[0]
-            let w2 = words[1]
-            let url = baseURL.appending(path: w2)
-
-            switch w1 {
-            case "npc":
-                try loadScript(at: url)
-            case "delnpc":
-                try unloadScript(at: url)
-            case "import":
-                try importScript(at: url)
-            default:
-                break
-            }
-        }
-    }
-
-    private func loadScript(at url: URL) throws {
-        guard let stream = FileStream(forReadingFrom: url) else {
-            throw NPCDatabaseError.invalidFile(url)
-        }
-
-        let reader = StreamReader(stream: stream)
-        defer {
-            reader.close()
-        }
+        var commands = ScriptCommands()
 
         while let line = reader.readLine() {
             let line = line.trimmingCharacters(in: .whitespaces)
@@ -169,13 +139,13 @@ public actor NPCDatabase {
                     break
                 }
                 let warpPoint = WarpPoint(w1, w2, w3, w4)
-                warpPoints.append(warpPoint)
+                commands.warpPoints.append(warpPoint)
             case "shop", "cashshop", "itemshop", "pointshop", "marketshop":
                 guard words.count >= 4 else {
                     break
                 }
                 let shopNPC = ShopNPC(w1, w2, w3, w4)
-                shopNPCs.append(shopNPC)
+                commands.shopNPCs.append(shopNPC)
             case "script":
                 guard words.count >= 4 else {
                     break
@@ -189,33 +159,35 @@ public actor NPCDatabase {
                 }
                 if w1 == "function" {
                     let function = Function(w1, w2, w3, w4)
-                    functions.append(function)
+                    commands.functions.append(function)
                 } else if w1 == "-" {
                     let floatingNPC = FloatingNPC(w1, w2, w3, w4)
-                    floatingNPCs.append(floatingNPC)
+                    commands.floatingNPCs.append(floatingNPC)
                 } else {
                     let npc = NPC(w1, w2, w3, w4)
-                    npcs.append(npc)
+                    commands.npcs.append(npc)
                 }
             case let w2 where w2.starts(with: "duplicate"):
                 guard words.count >= 4 else {
                     break
                 }
                 let duplicate = Duplicate(w1, w2, w3, w4)
-                duplicates.append(duplicate)
+                commands.duplicates.append(duplicate)
             case "monster", "boss_monster":
                 guard words.count >= 4 else {
                     break
                 }
                 let monsterSpawn = MonsterSpawn(w1, w2, w3, w4)
-                monsterSpawns.append(monsterSpawn)
+                commands.monsterSpawns.append(monsterSpawn)
             case "mapflag":
                 let mapFlag = MapFlag(w1, w2, w3, w4)
-                mapFlags.append(mapFlag)
+                commands.mapFlags.append(mapFlag)
             default:
                 break
             }
         }
+
+        return commands
     }
 
     private func unloadScript(at url: URL) throws {
