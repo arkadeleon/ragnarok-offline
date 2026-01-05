@@ -12,8 +12,9 @@ import XCTest
 final class JobDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = JobDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
+        let jobs = try await database.jobs()
 
-        let novice = await database.jobs().first(where: { $0.id == .novice })!
+        let novice = jobs.first(where: { $0.id == .novice })!
         XCTAssertEqual(novice.baseASPD[.w_fist], 500)
         XCTAssertEqual(novice.bonusStats[2]![.luk], 1)
         XCTAssertEqual(novice.baseExp[1], 9)
@@ -24,8 +25,9 @@ final class JobDatabaseTests: XCTestCase {
 
     func testRenewal() async throws {
         let database = JobDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
+        let jobs = try await database.jobs()
 
-        let novice = await database.jobs().first(where: { $0.id == .novice })!
+        let novice = jobs.first(where: { $0.id == .novice })!
         XCTAssertEqual(novice.baseASPD[.w_fist], 40)
         XCTAssertEqual(novice.bonusStats[2]![.luk], 1)
         XCTAssertEqual(novice.baseExp[1], 548)

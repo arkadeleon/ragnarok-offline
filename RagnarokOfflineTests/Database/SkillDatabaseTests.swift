@@ -12,8 +12,13 @@ import XCTest
 final class SkillDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = SkillDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
+        let skills = try await database.skills()
+        let skillsByAegisName = Dictionary(
+            skills.map({ ($0.aegisName, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
 
-        let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!
+        let napalmBeat = skillsByAegisName["MG_NAPALMBEAT"]!
         XCTAssertEqual(napalmBeat.id, 11)
         XCTAssertEqual(napalmBeat.aegisName, "MG_NAPALMBEAT")
         XCTAssertEqual(napalmBeat.name, "Napalm Beat")
@@ -24,7 +29,7 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(napalmBeat.flags, [.isautoshadowspell, .targettrap])
         XCTAssertEqual(napalmBeat.range, .left(9))
 
-        let warp = await database.skill(forAegisName: "AL_WARP")!
+        let warp = skillsByAegisName["AL_WARP"]!
         XCTAssertEqual(warp.id, 27)
         XCTAssertEqual(warp.aegisName, "AL_WARP")
         XCTAssertEqual(warp.name, "Warp Portal")
@@ -33,14 +38,14 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(warp.unit?.interval, -1)
         XCTAssertEqual(warp.unit?.flag, [.noreiteration, .nofootset, .nooverlap])
 
-        let vending = await database.skill(forAegisName: "MC_VENDING")!
+        let vending = skillsByAegisName["MC_VENDING"]!
         XCTAssertEqual(vending.id, 41)
         XCTAssertEqual(vending.aegisName, "MC_VENDING")
         XCTAssertEqual(vending.name, "Vending")
         XCTAssertEqual(vending.requires?.spCost, .left(30))
         XCTAssertEqual(vending.requires?.state, .cart)
 
-        let spearBoomerang = await database.skill(forAegisName: "KN_SPEARBOOMERANG")!
+        let spearBoomerang = skillsByAegisName["KN_SPEARBOOMERANG"]!
         XCTAssertEqual(spearBoomerang.id, 59)
         XCTAssertEqual(spearBoomerang.aegisName, "KN_SPEARBOOMERANG")
         XCTAssertEqual(spearBoomerang.name, "Spear Boomerang")
@@ -49,15 +54,20 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(spearBoomerang.targetType, .attack)
         XCTAssertEqual(spearBoomerang.range, .right([3, 5, 7, 9, 11]))
 
-        let sightrasher = await database.skill(forAegisName: "WZ_SIGHTRASHER")!
+        let sightrasher = skillsByAegisName["WZ_SIGHTRASHER"]!
         XCTAssertEqual(sightrasher.id, 81)
         XCTAssertEqual(sightrasher.requires?.status, ["Sight"])
     }
 
     func testRenewal() async throws {
         let database = SkillDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
+        let skills = try await database.skills()
+        let skillsByAegisName = Dictionary(
+            skills.map({ ($0.aegisName, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
 
-        let napalmBeat = await database.skill(forAegisName: "MG_NAPALMBEAT")!
+        let napalmBeat = skillsByAegisName["MG_NAPALMBEAT"]!
         XCTAssertEqual(napalmBeat.id, 11)
         XCTAssertEqual(napalmBeat.aegisName, "MG_NAPALMBEAT")
         XCTAssertEqual(napalmBeat.name, "Napalm Beat")
@@ -68,7 +78,7 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(napalmBeat.flags, [.isautoshadowspell, .targettrap])
         XCTAssertEqual(napalmBeat.range, .left(9))
 
-        let warp = await database.skill(forAegisName: "AL_WARP")!
+        let warp = skillsByAegisName["AL_WARP"]!
         XCTAssertEqual(warp.id, 27)
         XCTAssertEqual(warp.aegisName, "AL_WARP")
         XCTAssertEqual(warp.name, "Warp Portal")
@@ -77,14 +87,14 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(warp.unit?.interval, -1)
         XCTAssertEqual(warp.unit?.flag, [.noreiteration, .nofootset, .nooverlap])
 
-        let vending = await database.skill(forAegisName: "MC_VENDING")!
+        let vending = skillsByAegisName["MC_VENDING"]!
         XCTAssertEqual(vending.id, 41)
         XCTAssertEqual(vending.aegisName, "MC_VENDING")
         XCTAssertEqual(vending.name, "Vending")
         XCTAssertEqual(vending.requires?.spCost, .left(30))
         XCTAssertEqual(vending.requires?.state, .cart)
 
-        let spearBoomerang = await database.skill(forAegisName: "KN_SPEARBOOMERANG")!
+        let spearBoomerang = skillsByAegisName["KN_SPEARBOOMERANG"]!
         XCTAssertEqual(spearBoomerang.id, 59)
         XCTAssertEqual(spearBoomerang.aegisName, "KN_SPEARBOOMERANG")
         XCTAssertEqual(spearBoomerang.name, "Spear Boomerang")
@@ -93,7 +103,7 @@ final class SkillDatabaseTests: XCTestCase {
         XCTAssertEqual(spearBoomerang.targetType, .attack)
         XCTAssertEqual(spearBoomerang.range, .right([3, 5, 7, 9, 11]))
 
-        let sightrasher = await database.skill(forAegisName: "WZ_SIGHTRASHER")!
+        let sightrasher = skillsByAegisName["WZ_SIGHTRASHER"]!
         XCTAssertEqual(sightrasher.id, 81)
         XCTAssertEqual(sightrasher.requires?.status, ["Sight"])
     }

@@ -78,16 +78,7 @@ final class DatabaseModel {
     var statusChanges: [StatusChangeModel] = []
     var statusChangesByID: [StatusChangeID: StatusChangeModel] = [:]
 
-    private let itemDatabase: ItemDatabase
-    private let jobDatabase: JobDatabase
-    private let mapDatabase: MapDatabase
-    private let monsterDatabase: MonsterDatabase
-    private let monsterSummonDatabase: MonsterSummonDatabase
     private let npcDatabase: NPCDatabase
-    private let petDatabase: PetDatabase
-    private let skillDatabase: SkillDatabase
-    private let skillTreeDatabase: SkillTreeDatabase
-    private let statusChangeDatabase: StatusChangeDatabase
 
     private let itemInfoTable: ItemInfoTable
     private let mapNameTable: MapNameTable
@@ -108,16 +99,7 @@ final class DatabaseModel {
     init(mode: DatabaseMode) {
         self.mode = mode
 
-        itemDatabase = ItemDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        jobDatabase = JobDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        mapDatabase = MapDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        monsterDatabase = MonsterDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        monsterSummonDatabase = MonsterSummonDatabase(baseURL: serverResourceBaseURL, mode: mode)
         npcDatabase = NPCDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        petDatabase = PetDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        skillDatabase = SkillDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        skillTreeDatabase = SkillTreeDatabase(baseURL: serverResourceBaseURL, mode: mode)
-        statusChangeDatabase = StatusChangeDatabase(baseURL: serverResourceBaseURL, mode: mode)
 
         itemInfoTable = ItemInfoTable()
         mapNameTable = MapNameTable()
@@ -135,7 +117,15 @@ final class DatabaseModel {
         }
 
         let itemDatabaseTask = Task {
-            let items = await itemDatabase.items()
+            let itemDatabase = ItemDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let items: [Item]
+            do {
+                items = try await itemDatabase.items()
+            } catch {
+                logger.warning("Item database task failed: \(error)")
+                return
+            }
 
             self.items = items.map { item in
                 let localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
@@ -193,11 +183,23 @@ final class DatabaseModel {
         }
 
         let jobDatabaseTask = Task {
-            let jobs = await jobDatabase.jobs()
+            let jobDatabase = JobDatabase(baseURL: serverResourceBaseURL, mode: mode)
+            let skillTreeDatabase = SkillTreeDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let jobs: [Job]
+            let skillTrees: [SkillTree]
+            do {
+                jobs = try await jobDatabase.jobs()
+                skillTrees = try await skillTreeDatabase.skillTrees()
+            } catch {
+                logger.warning("Job database task failed: \(error)")
+                return
+            }
 
             self.jobs = jobs.map { job in
                 let localizedName = messageStringTable.localizedJobName(for: job.id)
-                let model = JobModel(mode: mode, job: job, localizedName: localizedName)
+                let skillTree = skillTrees.first(where: { $0.job == job.id })
+                let model = JobModel(mode: mode, job: job, localizedName: localizedName, skillTree: skillTree)
                 return model
             }
         }
@@ -215,7 +217,15 @@ final class DatabaseModel {
         }
 
         let mapDatabaseTask = Task {
-            let maps = await mapDatabase.maps()
+            let mapDatabase = MapDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let maps: [Map]
+            do {
+                maps = try await mapDatabase.maps()
+            } catch {
+                logger.warning("Map database task failed: \(error)")
+                return
+            }
 
             self.maps = maps.map { map in
                 let localizedName = mapNameTable.localizedMapName(forMapName: map.name)
@@ -263,7 +273,15 @@ final class DatabaseModel {
         }
 
         let monsterDatabaseTask = Task {
-            let monsters = await monsterDatabase.monsters()
+            let monsterDatabase = MonsterDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let monsters: [Monster]
+            do {
+                monsters = try await monsterDatabase.monsters()
+            } catch {
+                logger.warning("Monster database task failed: \(error)")
+                return
+            }
 
             self.monsters = monsters.map { monster in
                 let localizedName = monsterNameTable.localizedMonsterName(forMonsterID: monster.id)
@@ -354,9 +372,17 @@ final class DatabaseModel {
         }
 
         let monsterSummonDatabaseTask = Task {
-            let summons = await monsterSummonDatabase.monsterSummons()
+            let monsterSummonDatabase = MonsterSummonDatabase(baseURL: serverResourceBaseURL, mode: mode)
 
-            self.monsterSummons = summons.map { summon in
+            let monsterSummons: [MonsterSummon]
+            do {
+                monsterSummons = try await monsterSummonDatabase.monsterSummons()
+            } catch {
+                logger.warning("Monster summon database task failed: \(error)")
+                return
+            }
+
+            self.monsterSummons = monsterSummons.map { summon in
                 MonsterSummonModel(mode: mode, monsterSummon: summon)
             }
 
@@ -386,7 +412,15 @@ final class DatabaseModel {
         let petDatabaseTask = Task {
             await fetchMonsters()
 
-            let pets = await petDatabase.pets()
+            let petDatabase = PetDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let pets: [Pet]
+            do {
+                pets = try await petDatabase.pets()
+            } catch {
+                logger.warning("Pet database task failed: \(error)")
+                return
+            }
 
             self.pets = pets.map { pet in
                 PetModel(mode: mode, pet: pet)
@@ -410,7 +444,15 @@ final class DatabaseModel {
         }
 
         let skillDatabaseTask = Task {
-            let skills = await skillDatabase.skills()
+            let skillDatabase = SkillDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let skills: [Skill]
+            do {
+                skills = try await skillDatabase.skills()
+            } catch {
+                logger.warning("Skill database task failed: \(error)")
+                return
+            }
 
             self.skills = skills.map { skill in
                 let localizedName = skillInfoTable.localizedSkillName(forSkillID: skill.id)
@@ -446,7 +488,7 @@ final class DatabaseModel {
     }
 
     func skills(for jobID: JobID) async -> [SkillModel] {
-        guard let tree = await skillTreeDatabase.skillTree(for: jobID)?.tree else {
+        guard let tree = jobs.first(where: { $0.id == jobID })?.skillTree?.tree else {
             return []
         }
 
@@ -467,7 +509,15 @@ final class DatabaseModel {
         }
 
         let statusChangeDatabaseTask = Task {
-            let statusChanges = await statusChangeDatabase.statusChanges()
+            let statusChangeDatabase = StatusChangeDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let statusChanges: [StatusChange]
+            do {
+                statusChanges = try await statusChangeDatabase.statusChanges()
+            } catch {
+                logger.warning("Status change database task failed: \(error)")
+                return
+            }
 
             self.statusChanges = statusChanges.map { statusChange in
                 let localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)

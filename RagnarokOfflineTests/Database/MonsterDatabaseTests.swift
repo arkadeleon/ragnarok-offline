@@ -12,8 +12,13 @@ import XCTest
 final class MonsterDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = MonsterDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
+        let monsters = try await database.monsters()
+        let monstersByAegisName = Dictionary(
+            monsters.map({ ($0.aegisName, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
 
-        let poring = await database.monster(forAegisName: "PORING")!
+        let poring = monstersByAegisName["PORING"]!
         XCTAssertEqual(poring.aegisName, "PORING")
         XCTAssertEqual(poring.name, "Poring")
         XCTAssertEqual(poring.level, 1)
@@ -45,7 +50,7 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(poring.class, .normal)
         XCTAssertEqual(poring.drops?.count, 8)
 
-        let archerSkeleton = await database.monster(forAegisName: "ARCHER_SKELETON")!
+        let archerSkeleton = monstersByAegisName["ARCHER_SKELETON"]!
         XCTAssertEqual(archerSkeleton.aegisName, "ARCHER_SKELETON")
         XCTAssertEqual(archerSkeleton.name, "Archer Skeleton")
         XCTAssertEqual(archerSkeleton.level, 31)
@@ -76,7 +81,7 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(archerSkeleton.class, .normal)
         XCTAssertEqual(archerSkeleton.drops?.count, 8)
 
-        let osiris = await database.monster(forAegisName: "OSIRIS")!
+        let osiris = monstersByAegisName["OSIRIS"]!
         XCTAssertEqual(osiris.ai, ._21)
         XCTAssertEqual(osiris.class, .boss)
         XCTAssertEqual(osiris.modes, [.mvp])
@@ -85,8 +90,13 @@ final class MonsterDatabaseTests: XCTestCase {
 
     func testRenewal() async throws {
         let database = MonsterDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
+        let monsters = try await database.monsters()
+        let monstersByAegisName = Dictionary(
+            monsters.map({ ($0.aegisName, $0) }),
+            uniquingKeysWith: { (first, _) in first }
+        )
 
-        let poring = await database.monster(forAegisName: "PORING")!
+        let poring = monstersByAegisName["PORING"]!
         XCTAssertEqual(poring.aegisName, "PORING")
         XCTAssertEqual(poring.name, "Poring")
         XCTAssertEqual(poring.level, 1)
@@ -119,7 +129,7 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(poring.class, .normal)
         XCTAssertEqual(poring.drops?.count, 8)
 
-        let archerSkeleton = await database.monster(forAegisName: "ARCHER_SKELETON")!
+        let archerSkeleton = monstersByAegisName["ARCHER_SKELETON"]!
         XCTAssertEqual(archerSkeleton.aegisName, "ARCHER_SKELETON")
         XCTAssertEqual(archerSkeleton.name, "Archer Skeleton")
         XCTAssertEqual(archerSkeleton.level, 50)
@@ -153,7 +163,7 @@ final class MonsterDatabaseTests: XCTestCase {
         XCTAssertEqual(archerSkeleton.class, .normal)
         XCTAssertEqual(archerSkeleton.drops?.count, 8)
 
-        let osiris = await database.monster(forAegisName: "OSIRIS")!
+        let osiris = monstersByAegisName["OSIRIS"]!
         XCTAssertEqual(osiris.ai, ._21)
         XCTAssertEqual(osiris.class, .boss)
         XCTAssertEqual(osiris.modes, [.mvp])

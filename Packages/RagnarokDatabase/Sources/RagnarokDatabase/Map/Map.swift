@@ -8,6 +8,10 @@
 import DataCompression
 import Foundation
 
+public enum MapGridError: Error {
+    case dataCorrupted
+}
+
 public struct Map: Equatable, Hashable, Sendable {
 
     /// Map name.
@@ -33,8 +37,8 @@ public struct Map: Equatable, Hashable, Sendable {
         self.data = info.data
     }
 
-    public func grid() -> Map.Grid? {
-        let grid = Map.Grid(xs: xs, ys: ys, data: data)
+    public func grid() async throws -> Map.Grid {
+        let grid = try await Map.Grid(xs: xs, ys: ys, data: data)
         return grid
     }
 }
@@ -58,20 +62,20 @@ extension Map {
             cells = []
         }
 
-        init?(xs: Int16, ys: Int16, data: [UInt8]) {
+        init(xs: Int16, ys: Int16, data: [UInt8]) async throws {
             self.xs = xs
             self.ys = ys
 
             let decompressor = GzipDecompressor()
-            guard let decompressedData = try? decompressor.unzip(bytes: data),
-                  decompressedData.count == Int(xs) * Int(ys)
-            else {
-                return nil
+            let decompressedData = try await decompressor.unzip(bytes: data)
+
+            guard decompressedData.count == Int(xs) * Int(ys) else {
+                throw MapGridError.dataCorrupted
             }
 
             let cells = decompressedData.compactMap(Map.Cell.init)
             guard cells.count == Int(xs) * Int(ys) else {
-                return nil
+                throw MapGridError.dataCorrupted
             }
 
             self.cells = cells

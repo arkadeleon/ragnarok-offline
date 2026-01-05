@@ -12,16 +12,18 @@ import XCTest
 final class MonsterSummonDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = MonsterSummonDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
+        let monsterSummons = try await database.monsterSummons()
 
-        let bloodyDeadBranch = await database.monsterSummon(forGroup: "Bloody_Dead_Branch")!
+        let bloodyDeadBranch = monsterSummons.first(where: { $0.group == "Bloody_Dead_Branch" })!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")
         XCTAssertEqual(bloodyDeadBranch.summon.count, 44)
     }
 
     func testRenewal() async throws {
         let database = MonsterSummonDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
+        let monsterSummons = try await database.monsterSummons()
 
-        let bloodyDeadBranch = await database.monsterSummon(forGroup: "BLOODY_DEAD_BRANCH")!
+        let bloodyDeadBranch = monsterSummons.first(where: { $0.group == "BLOODY_DEAD_BRANCH" })!
         XCTAssertEqual(bloodyDeadBranch.default, "BAPHOMET")
         XCTAssertEqual(bloodyDeadBranch.summon.count, 46)
     }

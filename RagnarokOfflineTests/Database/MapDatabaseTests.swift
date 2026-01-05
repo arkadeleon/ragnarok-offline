@@ -12,18 +12,20 @@ import XCTest
 final class MapDatabaseTests: XCTestCase {
     func testPrerenewal() async throws {
         let database = MapDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
+        let maps = try await database.maps()
 
-        let alberta = await database.map(forName: "alberta")!
-        let grid = alberta.grid()!
+        let alberta = maps.first(where: { $0.name == "alberta" })!
+        let grid = try await alberta.grid()
         XCTAssertEqual(grid.xs, 280)
         XCTAssertEqual(grid.ys, 280)
     }
 
     func testRenewal() async throws {
         let database = MapDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
+        let maps = try await database.maps()
 
-        let alberta = await database.map(forName: "alberta")!
-        let grid = alberta.grid()!
+        let alberta = maps.first(where: { $0.name == "alberta" })!
+        let grid = try await alberta.grid()
         XCTAssertEqual(grid.xs, 280)
         XCTAssertEqual(grid.ys, 280)
     }

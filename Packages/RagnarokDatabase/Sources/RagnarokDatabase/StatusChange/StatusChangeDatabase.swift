@@ -6,56 +6,28 @@
 //
 
 import Foundation
-import RagnarokConstants
 import RapidYAML
 
-public actor StatusChangeDatabase {
+final public class StatusChangeDatabase: Sendable {
     public let baseURL: URL
     public let mode: DatabaseMode
-
-    private lazy var _statusChanges: [StatusChange] = {
-        metric.beginMeasuring("Load status change database")
-
-        do {
-            let decoder = YAMLDecoder()
-
-            let url = baseURL.appending(path: "db/\(mode.path)/status.yml")
-            let data = try Data(contentsOf: url)
-            let statusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
-
-            metric.endMeasuring("Load status change database")
-
-            return statusChanges
-        } catch {
-            metric.endMeasuring("Load status change database", error)
-
-            return []
-        }
-    }()
-
-    private lazy var _statusChangesByID: [StatusChangeID : StatusChange] = {
-        Dictionary(
-            _statusChanges.map({ ($0.status, $0) }),
-            uniquingKeysWith: { (first, _) in first }
-        )
-    }()
 
     public init(baseURL: URL, mode: DatabaseMode) {
         self.baseURL = baseURL
         self.mode = mode
     }
 
-    public func statusChanges() -> [StatusChange] {
-        _statusChanges
-    }
+    public func statusChanges() async throws -> [StatusChange] {
+        metric.beginMeasuring("Load status changes")
 
-    public func statusChange(for statusChangeID: StatusChangeID) -> StatusChange? {
-        _statusChangesByID[statusChangeID]
-    }
+        let decoder = YAMLDecoder()
 
-    public func statusChanges(for statusChangeIDs: [StatusChangeID]) -> [StatusChange] {
-        statusChangeIDs.compactMap {
-            statusChange(for: $0)
-        }
+        let url = baseURL.appending(path: "db/\(mode.path)/status.yml")
+        let data = try Data(contentsOf: url)
+        let statusChanges = try decoder.decode(ListNode<StatusChange>.self, from: data).body
+
+        metric.endMeasuring("Load status changes")
+
+        return statusChanges
     }
 }

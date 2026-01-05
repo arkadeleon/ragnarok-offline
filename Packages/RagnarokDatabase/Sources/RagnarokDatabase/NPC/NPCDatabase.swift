@@ -65,7 +65,7 @@ public actor NPCDatabase {
 
             do {
                 let url = baseURL.appending(path: "npc/\(mode.path)/scripts_main.conf")
-                try import_conf_file(url: url)
+                try importScript(at: url)
 
                 metric.endMeasuring("Load NPC database")
             } catch {
@@ -76,7 +76,7 @@ public actor NPCDatabase {
         }
     }
 
-    private func import_conf_file(url: URL) throws {
+    private func importScript(at url: URL) throws {
         guard let stream = FileStream(forReadingFrom: url) else {
             throw NPCDatabaseError.invalidFile(url)
         }
@@ -103,18 +103,18 @@ public actor NPCDatabase {
 
             switch w1 {
             case "npc":
-                try add_npc_file(url: url)
+                try loadScript(at: url)
             case "delnpc":
-                try del_npc_file(url: url)
+                try unloadScript(at: url)
             case "import":
-                try import_conf_file(url: url)
+                try importScript(at: url)
             default:
                 break
             }
         }
     }
 
-    private func add_npc_file(url: URL) throws {
+    private func loadScript(at url: URL) throws {
         guard let stream = FileStream(forReadingFrom: url) else {
             throw NPCDatabaseError.invalidFile(url)
         }
@@ -218,6 +218,6 @@ public actor NPCDatabase {
         }
     }
 
-    private func del_npc_file(url: URL) throws {
+    private func unloadScript(at url: URL) throws {
     }
 }

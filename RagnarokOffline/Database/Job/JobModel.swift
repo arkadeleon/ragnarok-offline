@@ -42,6 +42,7 @@ final class JobModel {
     private let job: Job
 
     let localizedName: String?
+    let skillTree: SkillTree?
 
     var animatedImage: AnimatedImage?
 
@@ -106,10 +107,11 @@ final class JobModel {
         return jobLevels
     }
 
-    init(mode: DatabaseMode, job: Job, localizedName: String?) {
+    init(mode: DatabaseMode, job: Job, localizedName: String?, skillTree: SkillTree?) {
         self.mode = mode
         self.job = job
         self.localizedName = localizedName
+        self.skillTree = skillTree
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Job, Value>) -> Value {
