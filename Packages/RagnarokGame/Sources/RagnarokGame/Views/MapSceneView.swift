@@ -17,7 +17,6 @@ public struct MapSceneView: View {
     public var body: some View {
         #if os(iOS) || os(macOS)
         MapSceneARView(scene: scene)
-            .ignoresSafeArea()
         #else
         RealityView { content in
             content.add(scene.rootEntity)
@@ -25,7 +24,6 @@ public struct MapSceneView: View {
         } placeholder: {
             ProgressView()
         }
-        .ignoresSafeArea()
         .gesture(scene.tileTapGesture)
         .gesture(scene.mapObjectTapGesture)
         .gesture(scene.mapItemTapGesture)

@@ -33,48 +33,12 @@ struct MapView: View {
             MapSceneView(scene: scene)
             #endif
         }
-        #if os(visionOS)
-        .onAppear {
-            Task {
-                await openImmersiveSpace(id: gameSession.immersiveSpaceID)
-            }
-        }
-        #endif
-        .overlay(alignment: .topLeading) {
-            if let character = gameSession.character {
-                VStack(alignment: .leading, spacing: 0) {
-                    BasicInfoView(character: character, status: gameSession.playerStatus)
-
-                    MenuView { item in
-                        if item == presentedMenuItem {
-                            presentedMenuItem = nil
-                        } else {
-                            presentedMenuItem = item
-                        }
-                    }
-
-                    if let presentedMenuItem {
-                        switch presentedMenuItem {
-                        case .status:
-                            StatusView(status: gameSession.playerStatus)
-                        case .inventory:
-                            InventoryView(inventory: gameSession.inventory)
-                        case .options:
-                            OptionsView()
-                        }
-                    }
-                }
-            }
-        }
-        .overlay(alignment: .topTrailing) {
-            ChatBoxView()
-        }
         .overlay(alignment: .bottomLeading) {
             ThumbstickView(updatingValue: $movementValue, radius: 72)
+                .padding(16)
                 .onReceive(timer) { _ in
                     scene.onMovementValueChanged(movementValue: movementValue)
                 }
-                .padding(16)
         }
         .overlay(alignment: .bottomTrailing) {
             ZStack {
@@ -92,11 +56,51 @@ struct MapView: View {
             }
             .padding(16)
         }
-        .overlay {
+        .overlay(alignment: .topLeading) {
+            if let character = gameSession.character {
+                VStack(alignment: .leading, spacing: 0) {
+                    BasicInfoView(character: character, status: gameSession.playerStatus)
+
+                    MenuView { item in
+                        if item == presentedMenuItem {
+                            presentedMenuItem = nil
+                        } else {
+                            presentedMenuItem = item
+                        }
+                    }
+                }
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            VStack {
+                ChatBoxView()
+            }
+        }
+        .overlay(alignment: .center) {
+            if let presentedMenuItem {
+                switch presentedMenuItem {
+                case .status:
+                    StatusView(status: gameSession.playerStatus)
+                case .inventory:
+                    InventoryView(inventory: gameSession.inventory)
+                case .options:
+                    OptionsView()
+                }
+            }
+        }
+        .overlay(alignment: .center) {
             if let dialog = gameSession.dialog {
                 NPCDialogView(dialog: dialog)
             }
         }
+        .ignoresSafeArea()
+        #if os(visionOS)
+        .onAppear {
+            Task {
+                await openImmersiveSpace(id: gameSession.immersiveSpaceID)
+            }
+        }
+        #endif
     }
 }
 
