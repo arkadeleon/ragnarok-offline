@@ -1,6 +1,6 @@
 //
 //  PickedUpItem.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2025/4/15.
 //
@@ -18,7 +18,7 @@ public struct PickedUpItem: Sendable {
     public let location: EquipPositions
     public let itemType: ItemType
 
-    init(packet: PACKET_ZC_ITEM_PICKUP_ACK) {
+    public init(from packet: PACKET_ZC_ITEM_PICKUP_ACK) {
         self.index = Int(packet.Index)
         self.count = Int(packet.count)
         self.itemID = Int(packet.nameid)

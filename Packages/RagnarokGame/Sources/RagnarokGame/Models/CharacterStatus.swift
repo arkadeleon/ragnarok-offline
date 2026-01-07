@@ -7,7 +7,7 @@
 
 import Observation
 import RagnarokConstants
-import RagnarokNetwork
+import RagnarokModels
 
 @Observable
 final class CharacterStatus {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import RagnarokNetwork
+import RagnarokModels
 import RagnarokResources
 import RagnarokSprite
 import RealityKit

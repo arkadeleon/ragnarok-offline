@@ -1,6 +1,6 @@
 //
 //  InventoryItem.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2025/4/15.
 //
@@ -52,7 +52,7 @@ public struct InventoryItem: Sendable {
         slots = [0, 0, 0, 0]
     }
 
-    public init(item: NORMALITEM_INFO) {
+    public init(from item: NORMALITEM_INFO) {
         index = Int(item.index)
         itemID = Int(item.ITID)
         type = ItemType(rawValue: Int(item.type)) ?? .etc
@@ -62,7 +62,7 @@ public struct InventoryItem: Sendable {
         slots = item.slot.card.map(Int.init)
     }
 
-    public init(item: EQUIPITEM_INFO) {
+    public init(from item: EQUIPITEM_INFO) {
         index = Int(item.index)
         itemID = Int(item.ITID)
         type = ItemType(rawValue: Int(item.type)) ?? .etc

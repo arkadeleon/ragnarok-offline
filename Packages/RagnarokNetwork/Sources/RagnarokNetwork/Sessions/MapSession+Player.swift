@@ -6,13 +6,14 @@
 //
 
 import RagnarokConstants
+import RagnarokModels
 import RagnarokPackets
 
 extension MapSession {
     func subscribeToPlayerPackets(with subscription: inout ClientSubscription) {
         // See `clif_walkok`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_PLAYERMOVE.self) { [unowned self] packet in
-            let moveData = MoveData(data: packet.moveData)
+            let moveData = MoveData(from: packet.moveData)
 
             let event = MapSession.Event.playerMoved(
                 startPosition: moveData.startPosition,

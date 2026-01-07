@@ -10,6 +10,7 @@ import Network
 import Observation
 import RagnarokConstants
 import RagnarokLocalization
+import RagnarokModels
 import RagnarokNetwork
 import RagnarokReality
 import RagnarokResources

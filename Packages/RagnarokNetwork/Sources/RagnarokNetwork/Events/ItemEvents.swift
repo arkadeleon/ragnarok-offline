@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2025/4/1.
 //
 
+import RagnarokModels
+
 public enum ItemEvents {
     public struct Spawned: Event {
         public let item: MapItem

@@ -1,6 +1,6 @@
 //
 //  CharacterBasicStatus.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2024/12/13.
 //
@@ -36,7 +36,7 @@ public struct CharacterBasicStatus: Sendable {
     public var aspd = 0
     public var statusPoint = 0
 
-    init(from packet: PACKET_ZC_STATUS) {
+    public init(from packet: PACKET_ZC_STATUS) {
         str = Int(packet.str)
         str3 = Int(packet.standardStr)
         agi = Int(packet.agi)

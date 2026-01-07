@@ -1,12 +1,12 @@
 //
 //  MoveData.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2024/8/24.
 //
 
 // See `WBUFPOS2`
-struct MoveData {
+public struct MoveData {
     private let x0: Int16
     private let y0: Int16
     private let x1: Int16
@@ -14,15 +14,15 @@ struct MoveData {
     private let sx0: UInt8
     private let sy0: UInt8
 
-    var startPosition: SIMD2<Int> {
+    public var startPosition: SIMD2<Int> {
         SIMD2(x: Int(x0), y: Int(y0))
     }
 
-    var endPosition: SIMD2<Int> {
+    public var endPosition: SIMD2<Int> {
         SIMD2(x: Int(x1), y: Int(y1))
     }
 
-    init(data: [UInt8]) {
+    public init(from data: [UInt8]) {
         let a = data[0]
         let b = data[1]
         let c = data[2]

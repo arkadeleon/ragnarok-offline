@@ -8,6 +8,7 @@
 import AsyncAlgorithms
 import Combine
 import Foundation
+import RagnarokModels
 import RagnarokPackets
 
 final public class LoginSession: SessionProtocol, @unchecked Sendable {
@@ -47,8 +48,8 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         // See `logclif_auth_ok`
         subscription.subscribe(to: PACKET_AC_ACCEPT_LOGIN.self) { [unowned self] packet in
             let event = LoginSession.Event.loginAccepted(
-                account: AccountInfo(packet: packet),
-                charServers: packet.char_servers.map(CharServerInfo.init)
+                account: AccountInfo(from: packet),
+                charServers: packet.char_servers.map { CharServerInfo(from: $0) }
             )
             self.postEvent(event)
 
@@ -57,14 +58,14 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
 
         // See `logclif_auth_failed`
         subscription.subscribe(to: PACKET_AC_REFUSE_LOGIN.self) { [unowned self] packet in
-            let message = LoginRefusedMessage(packet: packet)
+            let message = LoginRefusedMessage(from: packet)
             let event = LoginSession.Event.loginRefused(message: message)
             self.postEvent(event)
         }
 
         // See `logclif_sent_auth_result`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let message = BannedMessage(packet: packet)
+            let message = BannedMessage(from: packet)
             let event = LoginSession.Event.authenticationBanned(message: message)
             self.postEvent(event)
         }

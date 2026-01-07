@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
+import RagnarokModels
+
 public enum CharacterEvents {
     public struct MakeAccepted: Event {
         public let character: CharacterInfo

@@ -6,6 +6,7 @@
 //
 
 import RagnarokConstants
+import RagnarokModels
 
 public enum MapObjectEvents {
     public struct Spawned: Event {

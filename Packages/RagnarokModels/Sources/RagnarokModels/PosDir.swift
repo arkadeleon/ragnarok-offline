@@ -1,25 +1,25 @@
 //
 //  PosDir.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2024/11/27.
 //
 
 // See `WBUFPOS`
-struct PosDir {
+public struct PosDir {
     private let x: Int16
     private let y: Int16
     private let dir: UInt8
 
-    var position: SIMD2<Int> {
+    public var position: SIMD2<Int> {
         SIMD2(x: Int(x), y: Int(y))
     }
 
-    var direction: Int {
+    public var direction: Int {
         Int(dir)
     }
 
-    init(data: [UInt8]) {
+    public init(from data: [UInt8]) {
         var p: UInt32 = 0
         withUnsafeMutableBytes(of: &p) { pointer in
             pointer[2] = data[0]

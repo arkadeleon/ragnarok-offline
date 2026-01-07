@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
+import RagnarokModels
+
 public enum PlayerEvents {
     public struct Moved: Event {
         public let startPosition: SIMD2<Int>

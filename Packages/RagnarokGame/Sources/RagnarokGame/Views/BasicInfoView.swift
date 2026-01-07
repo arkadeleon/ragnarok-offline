@@ -6,7 +6,7 @@
 //
 
 import RagnarokConstants
-import RagnarokNetwork
+import RagnarokModels
 import SwiftUI
 
 struct BasicInfoView: View {

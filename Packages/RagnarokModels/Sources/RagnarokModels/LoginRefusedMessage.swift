@@ -1,6 +1,6 @@
 //
 //  LoginRefusedMessage.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2025/6/30.
 //
@@ -11,7 +11,7 @@ public struct LoginRefusedMessage: Sendable {
     public let messageID: Int
     public let unblockTime: String
 
-    init(packet: PACKET_AC_REFUSE_LOGIN) {
+    public init(from packet: PACKET_AC_REFUSE_LOGIN) {
         let messageID = switch packet.error {
         case   0: 6     // Unregistered ID
         case   1: 7     // Incorrect Password

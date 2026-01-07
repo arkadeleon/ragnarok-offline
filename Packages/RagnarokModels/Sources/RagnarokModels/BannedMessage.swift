@@ -1,6 +1,6 @@
 //
 //  BannedMessage.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2025/6/30.
 //
@@ -10,7 +10,7 @@ import RagnarokPackets
 public struct BannedMessage: Sendable {
     public let messageID: Int
 
-    init(packet: PACKET_SC_NOTIFY_BAN) {
+    public init(from packet: PACKET_SC_NOTIFY_BAN) {
         let messageID = switch packet.result {
         case   0: 3     // Server closed
         case   1: 4     // Server closed

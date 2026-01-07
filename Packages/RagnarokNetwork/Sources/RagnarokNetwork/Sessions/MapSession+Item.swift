@@ -6,6 +6,7 @@
 //
 
 import RagnarokConstants
+import RagnarokModels
 import RagnarokPackets
 
 extension MapSession {
@@ -24,21 +25,21 @@ extension MapSession {
 
         // See `clif_inventorylist`
         subscription.subscribe(to: packet_itemlist_normal.self) { [unowned self] packet in
-            let items = packet.list.map(InventoryItem.init)
+            let items = packet.list.map { InventoryItem(from: $0) }
             let event = MapSession.Event.inventoryItemsAppended(items: items)
             self.postEvent(event)
         }
 
         // See `clif_inventorylist`
         subscription.subscribe(to: packet_itemlist_equip.self) { [unowned self] packet in
-            let items = packet.list.map(InventoryItem.init)
+            let items = packet.list.map { InventoryItem(from: $0) }
             let event = MapSession.Event.inventoryItemsAppended(items: items)
             self.postEvent(event)
         }
 
         // See `clif_getareachar_item`
         subscription.subscribe(to: PACKET_ZC_ITEM_ENTRY.self) { [unowned self] packet in
-            let item = MapItem(packet: packet)
+            let item = MapItem(from: packet)
             let position = SIMD2(x: Int(packet.x), y: Int(packet.y))
 
             let event = MapSession.Event.itemSpawned(item: item, position: position)
@@ -47,7 +48,7 @@ extension MapSession {
 
         // See `clif_dropflooritem`
         subscription.subscribe(to: packet_dropflooritem.self) { [unowned self] packet in
-            let item = MapItem(packet: packet)
+            let item = MapItem(from: packet)
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
 
             let event = MapSession.Event.itemSpawned(item: item, position: position)
@@ -62,21 +63,21 @@ extension MapSession {
 
         // See `clif_additem`
         subscription.subscribe(to: PACKET_ZC_ITEM_PICKUP_ACK.self) { [unowned self] packet in
-            let item = PickedUpItem(packet: packet)
+            let item = PickedUpItem(from: packet)
             let event = MapSession.Event.itemPickedUp(item: item)
             self.postEvent(event)
         }
 
         // See `clif_dropitem`
         subscription.subscribe(to: PACKET_ZC_ITEM_THROW_ACK.self) { [unowned self] packet in
-            let item = ThrownItem(packet: packet)
+            let item = ThrownItem(from: packet)
             let event = MapSession.Event.itemThrown(item: item)
             self.postEvent(event)
         }
 
         // See `clif_useitemack`
         subscription.subscribe(to: PACKET_ZC_USE_ITEM_ACK.self) { [unowned self] packet in
-            let item = UsedItem(packet: packet)
+            let item = UsedItem(from: packet)
             let event = MapSession.Event.itemUsed(
                 item: item,
                 accountID: packet.AID,
@@ -87,7 +88,7 @@ extension MapSession {
 
         // See `clif_equipitemack`
         subscription.subscribe(to: PACKET_ZC_REQ_WEAR_EQUIP_ACK.self) { [unowned self] packet in
-            let item = EquippedItem(packet: packet)
+            let item = EquippedItem(from: packet)
             let event = MapSession.Event.itemEquipped(
                 item: item,
                 success: (packet.result != 0)
@@ -97,7 +98,7 @@ extension MapSession {
 
         // See `clif_unequipitemack`
         subscription.subscribe(to: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK.self) { [unowned self] packet in
-            let item = UnequippedItem(packet: packet)
+            let item = UnequippedItem(from: packet)
             let event = MapSession.Event.itemUnequipped(
                 item: item,
                 success: (packet.flag != 0)

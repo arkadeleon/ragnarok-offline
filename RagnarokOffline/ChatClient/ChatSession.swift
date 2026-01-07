@@ -7,6 +7,7 @@
 
 import Observation
 import RagnarokLocalization
+import RagnarokModels
 import RagnarokNetwork
 import RagnarokPackets
 import RagnarokResources

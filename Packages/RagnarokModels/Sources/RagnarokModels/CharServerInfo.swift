@@ -1,6 +1,6 @@
 //
 //  CharServerInfo.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2024/12/10.
 //
@@ -16,7 +16,7 @@ public struct CharServerInfo: Sendable {
     public let type: UInt16
     public let new: UInt16
 
-    init(sub: PACKET_AC_ACCEPT_LOGIN_sub) {
+    public init(from sub: PACKET_AC_ACCEPT_LOGIN_sub) {
         let addri = in_addr(s_addr: sub.ip)
         if let addrs = inet_ntoa(addri) {
             self.ip = String(cString: addrs)

@@ -8,6 +8,7 @@
 import AsyncAlgorithms
 import Combine
 import Foundation
+import RagnarokModels
 import RagnarokPackets
 
 final public class CharSession: SessionProtocol, @unchecked Sendable {
@@ -76,7 +77,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         // See `chclif_send_auth_result`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let message = BannedMessage(packet: packet)
+            let message = BannedMessage(from: packet)
             let event = CharSession.Event.authenticationBanned(message: message)
             self.postEvent(event)
         }
@@ -122,7 +123,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         // 0x840
         subscription.subscribe(to: PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME.self) { [unowned self] packet in
             let event = CharSession.Event.charServerNotifiedAccessibleMaps(
-                accessibleMaps: packet.maps.map(AccessibleMapInfo.init)
+                accessibleMaps: packet.maps.map { AccessibleMapInfo(from: $0) }
             )
             self.postEvent(event)
         }

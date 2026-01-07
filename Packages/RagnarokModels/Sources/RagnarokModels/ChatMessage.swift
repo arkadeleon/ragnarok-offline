@@ -1,6 +1,6 @@
 //
 //  ChatMessage.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2025/10/21.
 //
@@ -22,7 +22,7 @@ public struct ChatMessage: Sendable {
     public let content: String
     public let color: UInt32
 
-    init(
+    public init(
         type: ChatMessage.MessageType,
         senderObjectID: UInt32 = 0,
         senderName: String = "",

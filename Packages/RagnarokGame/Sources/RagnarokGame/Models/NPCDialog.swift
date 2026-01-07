@@ -6,7 +6,7 @@
 //
 
 import Observation
-import RagnarokNetwork
+import RagnarokModels
 
 @Observable
 final class NPCDialog {

@@ -7,6 +7,7 @@
 
 import AVFAudio
 import RagnarokConstants
+import RagnarokModels
 import RagnarokNetwork
 import RagnarokReality
 import RagnarokResources

@@ -1,6 +1,6 @@
 //
 //  MapObject.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2024/12/6.
 //
@@ -72,7 +72,7 @@ public struct MapObject: Sendable {
         self.effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
     }
 
-    init(packet: packet_spawn_unit) {
+    public init(from packet: packet_spawn_unit) {
         self.objectID = packet.AID
         self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.name = packet.name
@@ -95,7 +95,7 @@ public struct MapObject: Sendable {
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
     }
 
-    init(packet: packet_idle_unit) {
+    public init(from packet: packet_idle_unit) {
         self.objectID = packet.AID
         self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.name = packet.name
@@ -118,7 +118,7 @@ public struct MapObject: Sendable {
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
     }
 
-    init(packet: packet_unit_walking) {
+    public init(from packet: packet_unit_walking) {
         self.objectID = packet.AID
         self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown
         self.name = packet.name

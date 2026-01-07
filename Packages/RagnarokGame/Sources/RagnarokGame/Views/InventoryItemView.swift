@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/4/11.
 //
 
-import RagnarokNetwork
+import RagnarokModels
 import RagnarokResources
 import SwiftUI
 

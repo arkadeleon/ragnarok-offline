@@ -9,6 +9,7 @@ import AsyncAlgorithms
 import Combine
 import Foundation
 import RagnarokConstants
+import RagnarokModels
 import RagnarokPackets
 
 final public class MapSession: SessionProtocol, @unchecked Sendable {
@@ -151,7 +152,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_authfail_fd`
         subscription.subscribe(to: PACKET_SC_NOTIFY_BAN.self) { [unowned self] packet in
-            let message = BannedMessage(packet: packet)
+            let message = BannedMessage(from: packet)
             let event = MapSession.Event.authenticationBanned(message: message)
             self.postEvent(event)
         }
@@ -247,8 +248,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     private func subscribeToMapObjectPackets(with subscription: inout ClientSubscription) {
         // See `clif_spawn_unit`
         subscription.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in
-            let object = MapObject(packet: packet)
-            let posDir = PosDir(data: packet.PosDir)
+            let object = MapObject(from: packet)
+            let posDir = PosDir(from: packet.PosDir)
             let direction = Direction(rawValue: posDir.direction) ?? .north
             let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
 
@@ -263,8 +264,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_set_unit_idle`
         subscription.subscribe(to: packet_idle_unit.self) { [unowned self] packet in
-            let object = MapObject(packet: packet)
-            let posDir = PosDir(data: packet.PosDir)
+            let object = MapObject(from: packet)
+            let posDir = PosDir(from: packet.PosDir)
             let direction = Direction(rawValue: posDir.direction) ?? .north
             let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
 
@@ -279,8 +280,8 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_set_unit_walking`
         subscription.subscribe(to: packet_unit_walking.self) { [unowned self] packet in
-            let object = MapObject(packet: packet)
-            let moveData = MoveData(data: packet.MoveData)
+            let object = MapObject(from: packet)
+            let moveData = MoveData(from: packet.MoveData)
 
             let event = MapSession.Event.mapObjectMoved(
                 object: object,
@@ -337,7 +338,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_damage` and `clif_takeitem` and `clif_sitting` and `clif_standing`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_ACT.self) { [unowned self] packet in
-            let objectAction = MapObjectAction(packet: packet)
+            let objectAction = MapObjectAction(from: packet)
             let event = MapSession.Event.mapObjectActionPerformed(objectAction: objectAction)
             self.postEvent(event)
         }

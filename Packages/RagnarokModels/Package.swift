@@ -4,38 +4,32 @@
 import PackageDescription
 
 let package = Package(
-    name: "RagnarokNetwork",
+    name: "RagnarokModels",
     platforms: [
         .macOS(.v13),
         .iOS(.v16),
     ],
     products: [
         .library(
-            name: "RagnarokNetwork",
-            targets: ["RagnarokNetwork"]
+            name: "RagnarokModels",
+            targets: ["RagnarokModels"]
         ),
     ],
     dependencies: [
-        .package(path: "../BinaryIO"),
         .package(path: "../RagnarokConstants"),
-        .package(path: "../RagnarokModels"),
         .package(path: "../RagnarokPackets"),
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
     ],
     targets: [
         .target(
-            name: "RagnarokNetwork",
+            name: "RagnarokModels",
             dependencies: [
-                "BinaryIO",
                 "RagnarokConstants",
-                "RagnarokModels",
                 "RagnarokPackets",
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ]
         ),
         .testTarget(
-            name: "RagnarokNetworkTests",
-            dependencies: ["RagnarokNetwork"]
+            name: "RagnarokModelsTests",
+            dependencies: ["RagnarokModels"]
         ),
     ]
 )

@@ -1,6 +1,6 @@
 //
 //  CharacterInfo.swift
-//  RagnarokNetwork
+//  RagnarokModels
 //
 //  Created by Leon Li on 2025/11/19.
 //
