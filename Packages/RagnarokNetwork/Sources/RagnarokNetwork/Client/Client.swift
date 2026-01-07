@@ -10,23 +10,23 @@ import Foundation
 import Network
 import RagnarokPackets
 
-enum ClientError: Error {
+public enum ClientError: Error, Sendable {
     case decoding(any Error)
     case encoding(any Error)
     case network(NWError)
 }
 
-final class Client: Sendable {
+public final class Client: Sendable {
     private let name: String
     private let connection: NWConnection
 
-    private let errorStream: AsyncStream<ClientError>
+    public let errorStream: AsyncStream<ClientError>
     private let errorContinuation: AsyncStream<ClientError>.Continuation
 
-    private let packetStream: AsyncStream<any DecodablePacket>
+    public let packetStream: AsyncStream<any DecodablePacket>
     private let packetContinuation: AsyncStream<any DecodablePacket>.Continuation
 
-    init(name: String, address: String, port: UInt16) {
+    public init(name: String, address: String, port: UInt16) {
         self.name = name
 
         let tcp = NWProtocolTCP.Options()
@@ -47,7 +47,7 @@ final class Client: Sendable {
         self.packetContinuation = packetContinuation
     }
 
-    func connect(with subscription: ClientSubscription) {
+    public func connect() {
         let name = name
         let errorContinuation = errorContinuation
 
@@ -64,30 +64,9 @@ final class Client: Sendable {
 
         let queue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.client")
         connection.start(queue: queue)
-
-        let errorHandlers = subscription.errorHandlers
-        let packetHandlers = subscription.packetHandlers
-
-        Task {
-            for await error in errorStream {
-                for errorHandler in errorHandlers {
-                    errorHandler(error)
-                }
-            }
-        }
-
-        Task {
-            for await packet in packetStream {
-                for packetHandler in packetHandlers {
-                    if type(of: packet) == packetHandler.type {
-                        packetHandler.handlePacket(packet)
-                    }
-                }
-            }
-        }
     }
 
-    func disconnect() {
+    public func disconnect() {
         connection.stateUpdateHandler = nil
 
         connection.cancel()
@@ -96,7 +75,7 @@ final class Client: Sendable {
         packetContinuation.finish()
     }
 
-    func sendPacket(_ packet: some EncodablePacket) {
+    public func sendPacket(_ packet: some EncodablePacket) {
         do {
             let encoder = PacketEncoder()
             let data = try encoder.encode(packet)

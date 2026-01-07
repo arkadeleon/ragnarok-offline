@@ -219,9 +219,91 @@ Updated all model initializer calls in Session files to use `from:` label:
 
 ---
 
+## Phase 2: Refactor RagnarokNetwork Client
+
+**Status**: ✅ COMPLETED & VERIFIED
+
+**Date Completed**: 2026-01-07
+
+### What Was Done
+
+#### 1. Made Client Public
+- Changed `enum ClientError` to `public enum ClientError: Error, Sendable`
+- Changed `final class Client` to `public final class Client`
+- Made `errorStream: AsyncStream<ClientError>` public
+- Made `packetStream: AsyncStream<any DecodablePacket>` public
+- Made all methods public: `init()`, `connect()`, `disconnect()`, `sendPacket()`
+
+#### 2. Simplified connect() Method
+- Removed `ClientSubscription` parameter from `connect(with:)`
+- Changed signature from `func connect(with subscription: ClientSubscription)` to `public func connect()`
+- Removed internal Task creation for error and packet stream handling
+- Simplified to only handle connection establishment and state management
+- Consumers now iterate over `errorStream` and `packetStream` directly
+
+#### 3. Updated Session Files for Compatibility
+Updated all three Session files to maintain backward compatibility during transition:
+
+**LoginSession.swift**:
+- Changed `client.connect(with: subscription)` to `client.connect()`
+- Added manual Task creation to iterate over `client.errorStream`
+- Added manual Task creation to iterate over `client.packetStream`
+- Applied subscription handlers to incoming errors and packets
+
+**CharSession.swift**:
+- Changed `client.connect(with: subscription)` to `client.connect()`
+- Added manual Task creation to iterate over `client.errorStream`
+- Added manual Task creation to iterate over `client.packetStream`
+- Applied subscription handlers to incoming errors and packets
+
+**MapSession.swift**:
+- Changed `client.connect(with: subscription)` to `client.connect()`
+- Added manual Task creation to iterate over `client.errorStream`
+- Added manual Task creation to iterate over `client.packetStream`
+- Applied subscription handlers to incoming errors and packets
+
+### New Public Client API
+
+```swift
+public final class Client: Sendable {
+    public let errorStream: AsyncStream<ClientError>
+    public let packetStream: AsyncStream<any DecodablePacket>
+
+    public init(name: String, address: String, port: UInt16)
+    public func connect()
+    public func disconnect()
+    public func sendPacket(_ packet: some EncodablePacket)
+}
+
+public enum ClientError: Error, Sendable {
+    case decoding(any Error)
+    case encoding(any Error)
+    case network(NWError)
+}
+```
+
+### Files Modified
+
+| File | Type | Description |
+|------|------|-------------|
+| `Packages/RagnarokNetwork/Sources/RagnarokNetwork/Client/Client.swift` | Modified | Made class and API public, simplified connect() |
+| `Packages/RagnarokNetwork/Sources/RagnarokNetwork/Sessions/LoginSession.swift` | Modified | Updated to use new Client API |
+| `Packages/RagnarokNetwork/Sources/RagnarokNetwork/Sessions/CharSession.swift` | Modified | Updated to use new Client API |
+| `Packages/RagnarokNetwork/Sources/RagnarokNetwork/Sessions/MapSession.swift` | Modified | Updated to use new Client API |
+
+### What Should Work Now
+
+1. Client is now public and can be used directly by consumers outside RagnarokNetwork
+2. Client has a simplified connect() API that doesn't require subscription infrastructure
+3. Consumers can directly iterate over errorStream and packetStream for async packet handling
+4. All existing Sessions continue to work with the new Client API
+5. Sessions maintain their event-based architecture temporarily during transition
+6. All tests pass without modification
+
+---
+
 ## Remaining Phases
 
-- [ ] **Phase 2**: Refactor RagnarokNetwork Client
 - [ ] **Phase 3**: Refactor GameSession
 - [ ] **Phase 4**: Refactor ChatSession
 - [ ] **Phase 5**: Remove Sessions, Events, and Subscription Infrastructure

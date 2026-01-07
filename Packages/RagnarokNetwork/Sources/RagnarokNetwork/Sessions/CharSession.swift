@@ -82,7 +82,28 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
             self.postEvent(event)
         }
 
-        client.connect(with: subscription)
+        client.connect()
+
+        let errorHandlers = subscription.errorHandlers
+        let packetHandlers = subscription.packetHandlers
+
+        Task {
+            for await error in client.errorStream {
+                for errorHandler in errorHandlers {
+                    errorHandler(error)
+                }
+            }
+        }
+
+        Task {
+            for await packet in client.packetStream {
+                for packetHandler in packetHandlers {
+                    if type(of: packet) == packetHandler.type {
+                        packetHandler.handlePacket(packet)
+                    }
+                }
+            }
+        }
 
         enter()
 

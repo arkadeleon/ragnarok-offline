@@ -10,6 +10,7 @@ import rAthenaLogin
 import rAthenaMap
 import rAthenaResources
 import XCTest
+@testable import RagnarokModels
 @testable import RagnarokNetwork
 
 final class NetworkSessionTests: XCTestCase {
