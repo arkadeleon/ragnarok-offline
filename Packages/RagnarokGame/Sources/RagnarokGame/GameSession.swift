@@ -12,6 +12,7 @@ import RagnarokConstants
 import RagnarokLocalization
 import RagnarokModels
 import RagnarokNetwork
+import RagnarokPackets
 import RagnarokReality
 import RagnarokResources
 import RagnarokSprite
@@ -67,6 +68,8 @@ final public class GameSession {
         let content: String
     }
 
+    private var username: String?
+
     private(set) var errorMessages: [GameSession.ErrorMessage] = []
     private(set) var account: AccountInfo?
     private(set) var characters: [CharacterInfo] = []
@@ -76,7 +79,9 @@ final public class GameSession {
     var inventory = Inventory()
     var dialog: NPCDialog?
 
-    @ObservationIgnored var loginSession: LoginSession?
+    @ObservationIgnored var loginClient: Client?
+    @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
+
     @ObservationIgnored var charSession: CharSession?
     @ObservationIgnored var mapSession: MapSession?
 
@@ -141,13 +146,14 @@ final public class GameSession {
         }
     }
 
-    func login(username: String, password: String) {
-        startLoginSession()
-
-        loginSession?.login(username: username, password: password)
-    }
-
     func selectCharServer(_ charServer: CharServerInfo) {
+        // Stop and disconnect login client before starting char session
+        loginKeepaliveTask?.cancel()
+        loginKeepaliveTask = nil
+
+        loginClient?.disconnect()
+        loginClient = nil
+
         startCharSession(charServer)
     }
 
@@ -166,8 +172,11 @@ final public class GameSession {
         charSession?.stop()
         charSession = nil
 
-        loginSession?.stop()
-        loginSession = nil
+        loginKeepaliveTask?.cancel()
+        loginKeepaliveTask = nil
+
+        loginClient?.disconnect()
+        loginClient = nil
 
         phase = .login(.login)
     }
@@ -235,32 +244,64 @@ final public class GameSession {
         dialog.input = nil
     }
 
-    // MARK: - Login Session
+    // MARK: - Login Client
 
-    private func startLoginSession() {
+    // Send login packet
+    func login(username: String, password: String) {
+        startLoginClient()
+
+        self.username = username
+
+        // See `logclif_parse_reqauth_raw`
+        var packet = PACKET_CA_LOGIN()
+        packet.packetType = HEADER_CA_LOGIN
+        packet.version = 0
+        packet.username = username
+        packet.password = password
+        packet.clienttype = 0
+        loginClient?.sendPacket(packet)
+
+        loginClient?.receivePacket()
+    }
+
+    private func startLoginClient() {
         guard case .running(let configuration) = state else {
             return
         }
 
-        let loginSession = LoginSession(
+        let client = Client(
+            name: "Login",
             address: configuration.serverAddress,
             port: configuration.serverPort
         )
 
+        // Handle error stream
         Task {
-            for await event in loginSession.events {
-                handleLoginEvent(event)
+            for await error in client.errorStream {
+                let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
+                errorMessages.append(errorMessage)
             }
         }
 
-        loginSession.start()
+        // Handle packet stream
+        Task {
+            for await packet in client.packetStream {
+                handleLoginPacket(packet)
+            }
+        }
 
-        self.loginSession = loginSession
+        client.connect()
+
+        self.loginClient = client
     }
 
-    private func handleLoginEvent(_ event: LoginSession.Event) {
-        switch event {
-        case .loginAccepted(let account, let charServers):
+    private func handleLoginPacket(_ packet: any DecodablePacket) {
+        switch packet {
+        case let packet as PACKET_AC_ACCEPT_LOGIN:
+            // See `logclif_auth_ok`
+            let account = AccountInfo(from: packet)
+            let charServers = packet.char_servers.map(CharServerInfo.init(from:))
+
             self.account = account
 
             if charServers.count == 1 {
@@ -268,20 +309,52 @@ final public class GameSession {
             } else if charServers.count > 1 {
                 phase = .login(.charServerList(charServers))
             }
-        case .loginRefused(let message):
+
+            // Start keepalive after successful login
+            startLoginKeepalive()
+        case let packet as PACKET_AC_REFUSE_LOGIN:
+            // See `logclif_auth_failed`
+            let message = LoginRefusedMessage(from: packet)
             if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
                 let localizedMessage = localizedMessage.replacingOccurrences(of: "%s", with: message.unblockTime)
                 let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
                 errorMessages.append(errorMessage)
             }
-        case .authenticationBanned(let message):
+        case let packet as PACKET_SC_NOTIFY_BAN:
+            // See `logclif_sent_auth_result`
+            let message = BannedMessage(from: packet)
             if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
                 let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
                 errorMessages.append(errorMessage)
             }
-        case .errorOccurred(let error):
-            let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
-            errorMessages.append(errorMessage)
+        default:
+            break
+        }
+    }
+
+    /// Keep alive.
+    ///
+    /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
+    private func startLoginKeepalive() {
+        guard let loginClient else {
+            return
+        }
+
+        loginKeepaliveTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(10))
+
+                guard !Task.isCancelled else {
+                    break
+                }
+
+                // See `logclif_parse_keepalive`
+                var packet = PACKET_CA_CONNECT_INFO_CHANGED()
+                packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
+                packet.name = username ?? ""
+
+                loginClient.sendPacket(packet)
+            }
         }
     }
 

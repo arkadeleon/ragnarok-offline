@@ -302,9 +302,136 @@ public enum ClientError: Error, Sendable {
 
 ---
 
+## Phase 3A: Refactor GameSession - Login Client
+
+**Status**: ✅ COMPLETED & VERIFIED
+
+**Date Completed**: 2026-01-08
+
+### What Was Done
+
+#### 1. Updated Package.swift Dependencies
+
+Added RagnarokPackets and RagnarokModels dependencies to `Packages/RagnarokGame/Package.swift`:
+- Added `.package(path: "../RagnarokModels")` to dependencies array
+- Added `.package(path: "../RagnarokPackets")` to dependencies array
+- Added `"RagnarokModels"` to RagnarokGame target dependencies
+- Added `"RagnarokPackets"` to RagnarokGame target dependencies
+
+#### 2. Replaced LoginSession with LoginClient
+
+In `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`:
+- Removed `@ObservationIgnored var loginSession: LoginSession?`
+- Added `@ObservationIgnored var loginClient: Client?`
+- Added `@ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?`
+- Added `private var username: String?` to store username for keepalive packets
+- Added `import RagnarokPackets` to imports
+
+#### 3. Refactored startLoginSession() to startLoginClient()
+
+Replaced `startLoginSession()` with `startLoginClient()`:
+- Creates `Client` instance with login server address and port
+- Spawns Task to handle `client.errorStream` - converts errors to ErrorMessage and appends to errorMessages
+- Spawns Task to handle `client.packetStream` - calls `handleLoginPacket()` for each packet
+- Calls `client.connect()` to establish connection
+- Stores client in `self.loginClient`
+
+#### 4. Added handleLoginPacket() Method
+
+Created new `handleLoginPacket(_ packet: any DecodablePacket)` method:
+- Pattern matches on packet types using `switch` and `case let packet as PacketType:`
+- Handles `PACKET_AC_ACCEPT_LOGIN`:
+  - Converts packet to `AccountInfo(from: packet)`
+  - Maps char_servers to `CharServerInfo(from:)`
+  - Stores account
+  - Auto-selects char server if only 1, or shows char server list if multiple
+  - Calls `startLoginKeepalive()` to begin keepalive timer
+- Handles `PACKET_AC_REFUSE_LOGIN`:
+  - Converts packet to `LoginRefusedMessage(from: packet)`
+  - Looks up localized message from messageStringTable
+  - Appends error message to errorMessages
+- Handles `PACKET_SC_NOTIFY_BAN`:
+  - Converts packet to `BannedMessage(from: packet)`
+  - Looks up localized message from messageStringTable
+  - Appends error message to errorMessages
+
+#### 5. Added startLoginKeepalive() Method
+
+Created new `startLoginKeepalive()` method:
+- Spawns Task that loops indefinitely
+- Sleeps for 10 seconds using `try? await Task.sleep(for: .seconds(10))`
+- Checks for cancellation with `guard !Task.isCancelled`
+- Sends `PACKET_CA_CONNECT_INFO_CHANGED` with stored username
+- Stores task in `self.loginKeepaliveTask`
+
+#### 6. Updated login() Method
+
+Refactored `login(username: String, password: String)`:
+- Stores username in `self.username` for keepalive packets
+- Calls `startLoginClient()` instead of `startLoginSession()`
+- Creates `PACKET_CA_LOGIN` packet directly
+- Sets packet fields: packetType, version, username, password, clienttype
+- Sends packet via `loginClient?.sendPacket(packet)`
+- Calls `loginClient?.receivePacket()` to trigger packet reception
+
+#### 7. Updated selectCharServer() Method
+
+Modified `selectCharServer(_ charServer: CharServerInfo)`:
+- Cancels `loginKeepaliveTask` before transitioning to char server
+- Sets `loginKeepaliveTask` to nil
+- Disconnects `loginClient`
+- Sets `loginClient` to nil
+- Then calls `startCharSession(charServer)`
+
+#### 8. Updated stopAllSessions() Method
+
+Modified `stopAllSessions()`:
+- Cancels `loginKeepaliveTask`
+- Sets `loginKeepaliveTask` to nil
+- Disconnects `loginClient`
+- Sets `loginClient` to nil
+- Continues to stop charSession and mapSession as before
+
+### Files Modified
+
+| File | Type | Description |
+|------|------|-------------|
+| `Packages/RagnarokGame/Package.swift` | Modified | Added RagnarokModels and RagnarokPackets dependencies |
+| `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift` | Modified | Complete refactor of login flow from LoginSession to Client |
+
+### Packets Handled
+
+Phase 3A handles 5 packet types:
+- `PACKET_CA_LOGIN` (sent) - Login authentication request
+- `PACKET_CA_CONNECT_INFO_CHANGED` (sent) - Keepalive packet every 10 seconds
+- `PACKET_AC_ACCEPT_LOGIN` (received) - Successful login response
+- `PACKET_AC_REFUSE_LOGIN` (received) - Login refused response
+- `PACKET_SC_NOTIFY_BAN` (received) - Account banned notification
+
+### What Should Work Now
+
+1. GameSession no longer depends on LoginSession
+2. Login flow uses Client directly with async packet streams
+3. No event-based architecture for login - direct packet handling
+4. Keepalive timer managed by GameSession using Task
+5. All login functionality works identically to before
+6. Tests pass without modification
+
+### Testing Checklist
+
+- [x] Build succeeds: `swift build` in RagnarokGame package
+- [x] All tests pass
+- [x] Login client connects and authenticates
+- [x] Keepalive packets sent every 10 seconds
+- [x] Login errors handled correctly
+- [x] Transition to char server disconnects login client properly
+
+---
+
 ## Remaining Phases
 
-- [ ] **Phase 3**: Refactor GameSession
+- [ ] **Phase 3B**: Refactor GameSession - Char Client
+- [ ] **Phase 3C**: Refactor GameSession - Map Client
 - [ ] **Phase 4**: Refactor ChatSession
 - [ ] **Phase 5**: Remove Sessions, Events, and Subscription Infrastructure
 - [ ] **Phase 6**: Update Package Dependencies

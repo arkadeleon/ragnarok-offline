@@ -92,7 +92,7 @@ public final class Client: Sendable {
         }
     }
 
-    func receiveDataAndPacket(count: Int, completion: @escaping @Sendable (_ data: Data) -> Void) {
+    public func receiveDataAndPacket(count: Int, completion: @escaping @Sendable (_ data: Data) -> Void) {
         connection.receive(minimumIncompleteLength: count, maximumLength: 65536) { [weak self] content, _, _, error in
             guard let self else {
                 return
@@ -127,7 +127,7 @@ public final class Client: Sendable {
         }
     }
 
-    func receivePacket() {
+    public func receivePacket() {
         connection.receive(minimumIncompleteLength: 2, maximumLength: 65536) { [weak self] content, _, _, error in
             guard let self else {
                 return
