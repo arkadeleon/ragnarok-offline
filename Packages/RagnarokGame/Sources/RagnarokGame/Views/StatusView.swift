@@ -6,7 +6,6 @@
 //
 
 import RagnarokConstants
-import RagnarokNetwork
 import SwiftUI
 
 struct StatusView: View {
@@ -52,22 +51,22 @@ struct StatusView: View {
                 VStack(spacing: 2) {
                     Group {
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.mapSession?.incrementStatusProperty(.str, by: 1)
+                            gameSession.incrementStatusProperty(.str, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.mapSession?.incrementStatusProperty(.agi, by: 1)
+                            gameSession.incrementStatusProperty(.agi, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.mapSession?.incrementStatusProperty(.vit, by: 1)
+                            gameSession.incrementStatusProperty(.vit, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.mapSession?.incrementStatusProperty(.int, by: 1)
+                            gameSession.incrementStatusProperty(.int, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.mapSession?.incrementStatusProperty(.dex, by: 1)
+                            gameSession.incrementStatusProperty(.dex, by: 1)
                         }
                         GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.mapSession?.incrementStatusProperty(.luk, by: 1)
+                            gameSession.incrementStatusProperty(.luk, by: 1)
                         }
                     }
                     .frame(width: 14, height: 14)

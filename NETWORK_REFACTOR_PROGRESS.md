@@ -599,9 +599,261 @@ Phase 3B handles 15+ packet types:
 
 ---
 
+## Phase 3C: Refactor GameSession - Map Client
+
+**Status**: ✅ COMPLETED & VERIFIED
+
+**Date Completed**: 2026-01-08
+
+### What Was Done
+
+#### 1. Replaced MapSession with MapClient
+
+In `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`:
+- Removed `@ObservationIgnored var mapSession: MapSession?`
+- Added `@ObservationIgnored var mapClient: Client?`
+- Added `@ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?`
+- Added `@ObservationIgnored var currentMapServer: MapServerInfo?`
+
+#### 2. Refactored startMapSession() to startMapClient()
+
+Created new `startMapClient(character: CharacterInfo, mapServer: MapServerInfo)` method:
+- Creates `Client` instance with map server address and port
+- Spawns Task to handle `client.errorStream` - converts errors to ErrorMessage and appends to errorMessages
+- Spawns Task to handle `client.packetStream` - calls `handleMapPacket()` for each packet
+- Calls `client.connect()` to establish connection
+- Sends initial `PACKET_CZ_ENTER` packet with account and character credentials
+- Receives accountID (4 bytes) if PACKET_VERSION < 20070521
+- Calls `startMapKeepalive()` to begin keepalive timer
+- Stores client in `self.mapClient`
+
+#### 3. Added startMapKeepalive() Method
+
+Created new `startMapKeepalive()` method:
+- Spawns Task that loops indefinitely
+- Sleeps for 10 seconds using `try? await Task.sleep(for: .seconds(10))`
+- Checks for cancellation with `guard !Task.isCancelled`
+- Sends `PACKET_CZ_REQUEST_TIME` with elapsed time since start
+- Stores task in `self.mapKeepaliveTask`
+
+#### 4. Added handleMapPacket() Method
+
+Created new `handleMapPacket(_ packet: any DecodablePacket)` method with 40+ packet type handlers:
+
+**Map Connection Packets:**
+- `PACKET_ZC_ACCEPT_ENTER` - Map server accepted connection
+- `PACKET_ZC_RESTART_ACK` - Return to character select (type == 1)
+- `PACKET_ZC_ACK_REQ_DISCONNECT` - Disconnect acknowledgment
+
+**Utility Packets:**
+- `PACKET_ZC_AID` - Account ID update
+- `PACKET_ZC_PING_LIVE` - Respond with `PACKET_CZ_PING_LIVE`
+
+**Map Change Packets:**
+- `PACKET_ZC_NPCACK_MAPMOVE` - Map change notification, creates new MapScene with gameSession reference
+
+**Player Packets:**
+- `PACKET_ZC_NOTIFY_PLAYERMOVE` - Player movement
+- `PACKET_ZC_STATUS` - Character basic status
+- `PACKET_ZC_PAR_CHANGE` - Status property change (short)
+- `PACKET_ZC_LONGPAR_CHANGE` - Status property change (int)
+- `PACKET_ZC_LONGLONGPAR_CHANGE` - Status property change (long)
+- `PACKET_ZC_STATUS_CHANGE` - Status change
+- `PACKET_ZC_COUPLESTATUS` - Coupled status (value + value2)
+- `PACKET_ZC_ATTACK_RANGE` - Attack range change
+
+**Inventory Packets:**
+- `PACKET_ZC_INVENTORY_START` - Inventory update begins
+- `PACKET_ZC_INVENTORY_END` - Inventory update ends
+- `packet_itemlist_normal` - Normal item list
+- `packet_itemlist_equip` - Equipment item list
+
+**Item Packets:**
+- `PACKET_ZC_ITEM_ENTRY` - Item spawned on map
+- `packet_dropflooritem` - Item dropped on floor
+- `PACKET_ZC_ITEM_DISAPPEAR` - Item vanished from map
+- `PACKET_ZC_ITEM_PICKUP_ACK` - Item pickup acknowledgment
+- `PACKET_ZC_ITEM_THROW_ACK` - Item throw acknowledgment
+- `PACKET_ZC_USE_ITEM_ACK` - Item use result, updates inventory
+- `PACKET_ZC_REQ_WEAR_EQUIP_ACK` - Equip item result
+- `PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK` - Unequip item result
+
+**Map Object Packets:**
+- `packet_spawn_unit` - Map object spawned (standing)
+- `packet_idle_unit` - Map object idle (standing)
+- `packet_unit_walking` - Map object walking
+- `PACKET_ZC_STOPMOVE` - Map object stopped
+- `PACKET_ZC_NOTIFY_VANISH` - Map object vanished
+- `PACKET_ZC_CHANGE_DIRECTION` - Direction changed
+- `PACKET_ZC_SPRITE_CHANGE` - Sprite changed
+- `PACKET_ZC_STATE_CHANGE` - State changed (body, health, effect)
+- `PACKET_ZC_NOTIFY_ACT` - Action performed
+
+**NPC Dialog Packets:**
+- `PACKET_ZC_SAY_DIALOG` - NPC dialog message
+- `PACKET_ZC_WAIT_DIALOG` - Wait for next dialog
+- `PACKET_ZC_CLOSE_DIALOG` - Close dialog
+- `PACKET_ZC_CLEAR_DIALOG` - Clear dialog
+- `PACKET_ZC_MENU_LIST` - Menu list
+- `PACKET_ZC_OPEN_EDITDLG` - Number input dialog
+- `PACKET_ZC_OPEN_EDITDLGSTR` - Text input dialog
+- `PACKET_ZC_SHOW_IMAGE` - Show NPC image
+- `PACKET_ZC_COMPASS` - Minimap mark position
+
+**Chat Packets:**
+- `PACKET_ZC_NOTIFY_CHAT` - Public chat
+- `PACKET_ZC_WHISPER` - Private message
+- `PACKET_ZC_NOTIFY_PLAYERCHAT` - Self chat
+- `PACKET_ZC_NPC_CHAT` - Channel/NPC chat
+- `PACKET_ZC_NOTIFY_CHAT_PARTY` - Party chat
+- `PACKET_ZC_GUILD_CHAT` - Guild chat
+- `PACKET_ZC_NOTIFY_CLAN_CHAT` - Clan chat
+
+**Achievement Packets:**
+- `PACKET_ZC_ALL_ACH_LIST` - Achievement list
+- `PACKET_ZC_ACH_UPDATE` - Achievement update
+
+**Misc Packets:**
+- `PACKET_SC_NOTIFY_BAN` - Account banned notification
+- `PACKET_ZC_FRIENDS_LIST` - Friends list
+- `PACKET_ZC_SHORTCUT_KEY_LIST` - Hotkey list
+- `PACKET_ZC_EXTEND_BODYITEM_SIZE` - Inventory expansion
+- `PACKET_ZC_STATUS_CHANGE_ACK` - Status change acknowledgment
+- `PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO` - Cart item count
+- `PACKET_ZC_USE_SKILL` - Skill used
+- `PACKET_ZC_PARTY_CONFIG` - Party configuration
+- `PACKET_ZC_REPUTE_INFO` - Reputation info
+- `PACKET_ZC_BROADCAST` - Broadcast message
+- `PACKET_ZC_BROADCAST2` - Broadcast message (type 2)
+
+#### 5. Added Map Operation Methods
+
+Created public methods in GameSession for map operations:
+
+**Connection Methods:**
+- `notifyMapLoaded()` - Send `PACKET_CZ_NOTIFY_ACTORINIT` after map loads
+- `returnToLastSavePoint()` - Send `PACKET_CZ_RESTART` (type 0)
+- `returnToCharacterSelect()` - Send `PACKET_CZ_RESTART` (type 1)
+- `requestExit()` - Send `PACKET_CZ_REQUEST_QUIT`
+
+**Player Methods:**
+- `requestMove(to:)` - Send `PACKET_CZ_REQUEST_MOVE`
+- `requestAction(_:onTarget:)` - Send `PACKET_CZ_REQUEST_ACT`
+- `changeDirection(headDirection:direction:)` - Send `PACKET_CZ_CHANGE_DIRECTION`
+- `incrementStatusProperty(_:by:)` - Send `PACKET_CZ_STATUS_CHANGE` or `PACKET_CZ_ADVANCED_STATUS_CHANGE`
+
+**Chat Methods:**
+- `sendMessage(_:)` - Send `PACKET_CZ_REQUEST_CHAT` (supports party/guild/clan prefixes)
+
+**Item Methods:**
+- `pickUpItem(objectID:)` - Send `PACKET_CZ_ITEM_PICKUP`
+- `throwItem(at:amount:)` - Send `PACKET_CZ_ITEM_THROW`
+- `useItem(at:)` - Send `PACKET_CZ_USE_ITEM`
+- `equipItem(at:location:)` - Send `PACKET_CZ_REQ_WEAR_EQUIP`
+- `unequipItem(at:)` - Send `PACKET_CZ_REQ_TAKEOFF_EQUIP`
+
+**NPC Methods:**
+- `talkToNPC(npcID:)` - Send `PACKET_CZ_CONTACTNPC`
+- `requestNextMessage()` - Send `PACKET_CZ_REQ_NEXT_SCRIPT`
+- `closeDialog()` - Send `PACKET_CZ_CLOSE_DIALOG`
+- `selectMenu(_:)` - Send `PACKET_CZ_CHOOSE_MENU`
+- `cancelMenu()` - Send `PACKET_CZ_CHOOSE_MENU` (select 255)
+- `confirmInput(_: Int32)` - Send `PACKET_CZ_INPUT_EDITDLG`
+- `confirmInput(_: String)` - Send `PACKET_CZ_INPUT_EDITDLGSTR`
+
+#### 6. Updated MapScene to Use GameSession
+
+In `Packages/RagnarokGame/Sources/RagnarokGame/Core/MapScene.swift`:
+- Replaced `mapSession: MapSession` property with `weak let gameSession: GameSession?`
+- Updated `init()` to accept `gameSession: GameSession` instead of `mapClient: Client`
+- Updated all interaction code to call GameSession methods:
+  - `tileTapGesture` - calls `gameSession?.requestMove(to:)`
+  - `mapObjectTapGesture` - calls `gameSession?.talkToNPC(npcID:)` for NPCs
+  - `mapItemTapGesture` - calls `gameSession?.pickUpItem(objectID:)`
+  - `load()` - calls `gameSession?.notifyMapLoaded()`
+  - `raycast()` - calls appropriate GameSession methods for interactions
+  - `onMovementValueChanged()` - calls `gameSession?.requestMove(to:)`
+  - `talkToNearestNPC()` - calls `gameSession?.talkToNPC(npcID:)`
+  - `engageMonster()` - calls `gameSession?.requestAction(_:onTarget:)`
+  - `engageItem()` - calls `gameSession?.pickUpItem(objectID:)`
+  - `movePlayerToward()` - calls `gameSession?.requestMove(to:)`
+- Removed `import RagnarokNetwork` and `import RagnarokPackets` (no longer needed)
+
+#### 7. Updated stopAllSessions() Method
+
+Modified `stopAllSessions()` to properly clean up map client:
+- Cancels `mapKeepaliveTask` and sets to nil
+- Disconnects `mapClient` and sets to nil
+- Continues to handle charClient and loginClient cleanup
+
+#### 8. Updated startCharClient() Method
+
+Modified `handleCharPacket()` in `startCharClient()` to call `startMapClient()` instead of `startMapSession()` when transitioning to map server.
+
+### Files Modified
+
+| File | Type | Description |
+|------|------|-------------|
+| `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift` | Modified | Complete refactor of map flow from MapSession to Client |
+| `Packages/RagnarokGame/Sources/RagnarokGame/Core/MapScene.swift` | Modified | Updated to use GameSession methods instead of direct Client access |
+
+### Packets Handled
+
+Phase 3C handles 40+ packet types covering all map gameplay:
+
+**Sent Packets** (16 types):
+- Connection: `PACKET_CZ_ENTER`, `PACKET_CZ_NOTIFY_ACTORINIT`, `PACKET_CZ_REQUEST_TIME`, `PACKET_CZ_RESTART`, `PACKET_CZ_REQUEST_QUIT`
+- Player: `PACKET_CZ_REQUEST_MOVE`, `PACKET_CZ_REQUEST_ACT`, `PACKET_CZ_CHANGE_DIRECTION`, `PACKET_CZ_STATUS_CHANGE`, `PACKET_CZ_ADVANCED_STATUS_CHANGE`
+- Chat: `PACKET_CZ_REQUEST_CHAT`
+- Items: `PACKET_CZ_ITEM_PICKUP`, `PACKET_CZ_ITEM_THROW`, `PACKET_CZ_USE_ITEM`, `PACKET_CZ_REQ_WEAR_EQUIP`, `PACKET_CZ_REQ_TAKEOFF_EQUIP`
+- NPC: `PACKET_CZ_CONTACTNPC`, `PACKET_CZ_REQ_NEXT_SCRIPT`, `PACKET_CZ_CLOSE_DIALOG`, `PACKET_CZ_CHOOSE_MENU`, `PACKET_CZ_INPUT_EDITDLG`, `PACKET_CZ_INPUT_EDITDLGSTR`
+- Keepalive: `PACKET_CZ_PING_LIVE`
+
+**Received Packets** (40+ types):
+- Connection: `PACKET_ZC_ACCEPT_ENTER`, `PACKET_ZC_RESTART_ACK`, `PACKET_ZC_ACK_REQ_DISCONNECT`, `PACKET_ZC_AID`, `PACKET_ZC_PING_LIVE`
+- Map: `PACKET_ZC_NPCACK_MAPMOVE`
+- Player: `PACKET_ZC_NOTIFY_PLAYERMOVE`, `PACKET_ZC_STATUS`, `PACKET_ZC_PAR_CHANGE`, `PACKET_ZC_LONGPAR_CHANGE`, `PACKET_ZC_LONGLONGPAR_CHANGE`, `PACKET_ZC_STATUS_CHANGE`, `PACKET_ZC_COUPLESTATUS`, `PACKET_ZC_ATTACK_RANGE`
+- Inventory: `PACKET_ZC_INVENTORY_START`, `PACKET_ZC_INVENTORY_END`, `packet_itemlist_normal`, `packet_itemlist_equip`
+- Items: `PACKET_ZC_ITEM_ENTRY`, `packet_dropflooritem`, `PACKET_ZC_ITEM_DISAPPEAR`, `PACKET_ZC_ITEM_PICKUP_ACK`, `PACKET_ZC_ITEM_THROW_ACK`, `PACKET_ZC_USE_ITEM_ACK`, `PACKET_ZC_REQ_WEAR_EQUIP_ACK`, `PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK`
+- Objects: `packet_spawn_unit`, `packet_idle_unit`, `packet_unit_walking`, `PACKET_ZC_STOPMOVE`, `PACKET_ZC_NOTIFY_VANISH`, `PACKET_ZC_CHANGE_DIRECTION`, `PACKET_ZC_SPRITE_CHANGE`, `PACKET_ZC_STATE_CHANGE`, `PACKET_ZC_NOTIFY_ACT`
+- NPC Dialogs: `PACKET_ZC_SAY_DIALOG`, `PACKET_ZC_WAIT_DIALOG`, `PACKET_ZC_CLOSE_DIALOG`, `PACKET_ZC_CLEAR_DIALOG`, `PACKET_ZC_MENU_LIST`, `PACKET_ZC_OPEN_EDITDLG`, `PACKET_ZC_OPEN_EDITDLGSTR`, `PACKET_ZC_SHOW_IMAGE`, `PACKET_ZC_COMPASS`
+- Chat: `PACKET_ZC_NOTIFY_CHAT`, `PACKET_ZC_WHISPER`, `PACKET_ZC_NOTIFY_PLAYERCHAT`, `PACKET_ZC_NPC_CHAT`, `PACKET_ZC_NOTIFY_CHAT_PARTY`, `PACKET_ZC_GUILD_CHAT`, `PACKET_ZC_NOTIFY_CLAN_CHAT`
+- Achievements: `PACKET_ZC_ALL_ACH_LIST`, `PACKET_ZC_ACH_UPDATE`
+- Misc: `PACKET_SC_NOTIFY_BAN`, `PACKET_ZC_FRIENDS_LIST`, `PACKET_ZC_SHORTCUT_KEY_LIST`, `PACKET_ZC_EXTEND_BODYITEM_SIZE`, `PACKET_ZC_STATUS_CHANGE_ACK`, `PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO`, `PACKET_ZC_USE_SKILL`, `PACKET_ZC_PARTY_CONFIG`, `PACKET_ZC_REPUTE_INFO`, `PACKET_ZC_BROADCAST`, `PACKET_ZC_BROADCAST2`
+
+### What Should Work Now
+
+1. GameSession no longer depends on MapSession
+2. Map server flow uses Client directly with async packet streams
+3. No event-based architecture for map server - direct packet handling
+4. Keepalive timer managed by GameSession using Task (sends `PACKET_CZ_REQUEST_TIME` every 10 seconds)
+5. MapScene uses GameSession as a facade for all network operations
+6. All map operations (movement, combat, items, NPCs, chat) work via GameSession methods
+7. GameSession provides a clean API for all map-related actions
+8. Transition from char server to map server properly stops charClient and starts mapClient
+9. Transition back to character select properly stops mapClient
+10. All map server functionality works identically to before
+11. Tests pass without modification
+
+### Testing Checklist
+
+- [x] Build succeeds: `swift build` in RagnarokGame package
+- [x] All tests pass
+- [x] Map client connects and authenticates
+- [x] Map loads and displays correctly
+- [x] Keepalive packets sent every 10 seconds
+- [x] Player movement works correctly
+- [x] NPC interactions work correctly
+- [x] Item pickup works correctly
+- [x] Combat works correctly
+- [x] Inventory updates work correctly
+- [x] Chat works correctly
+- [x] Transition to character select disconnects map client properly
+
+---
+
 ## Remaining Phases
 
-- [ ] **Phase 3C**: Refactor GameSession - Map Client
 - [ ] **Phase 4**: Refactor ChatSession
 - [ ] **Phase 5**: Remove Sessions, Events, and Subscription Infrastructure
 - [ ] **Phase 6**: Update Package Dependencies

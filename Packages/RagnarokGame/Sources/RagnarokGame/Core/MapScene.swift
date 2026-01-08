@@ -8,7 +8,6 @@
 import AVFAudio
 import RagnarokConstants
 import RagnarokModels
-import RagnarokNetwork
 import RagnarokReality
 import RagnarokResources
 import RagnarokSprite
@@ -21,14 +20,13 @@ import WorldCamera
 @MainActor
 public class MapScene {
     let mapName: String
-    let mapSession: MapSession
     let world: WorldResource
     let player: MapObject
     let playerPosition: SIMD2<Int>
+    let resourceManager: ResourceManager
+    weak let gameSession: GameSession?
 
     let mapGrid: MapGrid
-
-    let resourceManager: ResourceManager
 
     let rootEntity = Entity()
     let worldCameraEntity = Entity()
@@ -68,7 +66,7 @@ public class MapScene {
             .targetedToEntity(where: .has(TileComponent.self))
             .onEnded { [unowned self] event in
                 if let position = event.entity.components[TileComponent.self]?.position {
-                    mapSession.requestMove(to: position)
+                    gameSession?.requestMove(to: position)
                 }
             }
     }
@@ -82,7 +80,7 @@ public class MapScene {
                     case .monster:
                         engageMonster(targetEntity: event.entity)
                     case .npc:
-                        mapSession.talkToNPC(npcID: mapObject.objectID)
+                        gameSession?.talkToNPC(npcID: mapObject.objectID)
                     default:
                         break
                     }
@@ -95,17 +93,17 @@ public class MapScene {
             .targetedToEntity(where: .has(MapItemComponent.self))
             .onEnded { [unowned self] event in
                 if let mapItem = event.entity.components[MapItemComponent.self]?.mapItem {
-                    mapSession.pickUpItem(objectID: mapItem.objectID)
+                    gameSession?.pickUpItem(objectID: mapItem.objectID)
                 }
             }
     }
 
-    init(mapName: String, mapSession: MapSession, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager) {
+    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager, gameSession: GameSession) {
         self.mapName = mapName
-        self.mapSession = mapSession
         self.world = world
         self.player = player
         self.playerPosition = playerPosition
+        self.gameSession = gameSession
 
         self.mapGrid = MapGrid(gat: world.gat)
 
@@ -200,7 +198,7 @@ public class MapScene {
         setupLighting()
         setupWorldCamera(target: playerEntity)
 
-        mapSession.notifyMapLoaded()
+        gameSession?.notifyMapLoaded()
     }
 
     func unload() {
@@ -217,12 +215,12 @@ public class MapScene {
                 case .monster:
                     engageMonster(targetEntity: hitEntity)
                 case .npc:
-                    mapSession.talkToNPC(npcID: mapObject.objectID)
+                    gameSession?.talkToNPC(npcID: mapObject.objectID)
                 default:
                     break
                 }
             } else if let mapItem = hitEntity.components[MapItemComponent.self]?.mapItem {
-                mapSession.pickUpItem(objectID: mapItem.objectID)
+                gameSession?.pickUpItem(objectID: mapItem.objectID)
             }
             return
         }
@@ -251,7 +249,7 @@ public class MapScene {
             let altitude = x1 + (x2 - x1) * yr
 
             if fabsf(altitude - point.z) < 0.5 {
-                mapSession.requestMove(to: position)
+                gameSession?.requestMove(to: position)
 
                 let p0: SIMD3<Float> = [Float(position.x), Float(position.y), cell.bottomLeftAltitude + 0.1]
                 let p1: SIMD3<Float> = [Float(position.x + 1), Float(position.y), cell.bottomRightAltitude + 0.1]
@@ -498,7 +496,7 @@ extension MapScene {
 
         if gridOffset != .zero {
             let newPosition = position &+ gridOffset
-            mapSession.requestMove(to: newPosition)
+            gameSession?.requestMove(to: newPosition)
         }
     }
 
@@ -561,7 +559,7 @@ extension MapScene {
             return
         }
 
-        mapSession.talkToNPC(npcID: mapObject.objectID)
+        gameSession?.talkToNPC(npcID: mapObject.objectID)
     }
 
     private func engageMonster(targetEntity: Entity) {
@@ -570,7 +568,7 @@ extension MapScene {
         }
 
         movePlayerToward(targetEntity: targetEntity, within: 1) {
-            self.mapSession.requestAction(._repeat, onTarget: mapObject.objectID)
+            self.gameSession?.requestAction(._repeat, onTarget: mapObject.objectID)
         }
     }
 
@@ -580,7 +578,7 @@ extension MapScene {
         }
 
         movePlayerToward(targetEntity: targetEntity, within: 1) {
-            self.mapSession.pickUpItem(objectID: mapItem.objectID)
+            self.gameSession?.pickUpItem(objectID: mapItem.objectID)
         }
     }
 
@@ -601,7 +599,7 @@ extension MapScene {
             }
             playerEntity.components.set(lockOnComponent)
 
-            mapSession.requestMove(to: path.last ?? endPosition)
+            gameSession?.requestMove(to: path.last ?? endPosition)
         }
     }
 }

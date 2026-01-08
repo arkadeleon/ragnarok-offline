@@ -85,7 +85,9 @@ final public class GameSession {
     @ObservationIgnored var charClient: Client?
     @ObservationIgnored var charKeepaliveTask: Task<Void, Never>?
 
-    @ObservationIgnored var mapSession: MapSession?
+    @ObservationIgnored var mapClient: Client?
+    @ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?
+    @ObservationIgnored var currentMapServer: MapServerInfo?
 
     public var mapScene: MapScene? {
         if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
@@ -149,8 +151,11 @@ final public class GameSession {
     }
 
     func stopAllSessions() {
-        mapSession?.stop()
-        mapSession = nil
+        mapKeepaliveTask?.cancel()
+        mapKeepaliveTask = nil
+
+        mapClient?.disconnect()
+        mapClient = nil
 
         charKeepaliveTask?.cancel()
         charKeepaliveTask = nil
@@ -165,69 +170,6 @@ final public class GameSession {
         loginClient = nil
 
         phase = .login(.login)
-    }
-
-    // MARK: - NPC
-
-    func requestNextMessage() {
-        guard let mapSession, let dialog else {
-            return
-        }
-
-        mapSession.requestNextMessage(npcID: dialog.npcID)
-
-        dialog.setNeedsClear()
-        dialog.action = nil
-    }
-
-    func closeDialog() {
-        guard let mapSession, let dialog else {
-            return
-        }
-
-        self.dialog = nil
-
-        mapSession.closeDialog(npcID: dialog.npcID)
-    }
-
-    func selectMenu(_ select: UInt8) {
-        guard let mapSession, let dialog else {
-            return
-        }
-
-        dialog.menu = nil
-
-        mapSession.selectMenu(npcID: dialog.npcID, select: select)
-    }
-
-    func cancelMenu() {
-        guard let mapSession, let dialog else {
-            return
-        }
-
-        self.dialog = nil
-
-        mapSession.selectMenu(npcID: dialog.npcID, select: 255)
-    }
-
-    func confirmInput(_ value: Int32) {
-        guard let mapSession, let dialog else {
-            return
-        }
-
-        mapSession.inputNumber(npcID: dialog.npcID, value: value)
-
-        dialog.input = nil
-    }
-
-    func confirmInput(_ value: String) {
-        guard let mapSession, let dialog else {
-            return
-        }
-
-        mapSession.inputText(npcID: dialog.npcID, value: value)
-
-        dialog.input = nil
     }
 
     // MARK: - Login Client
@@ -488,7 +430,7 @@ final public class GameSession {
                 charClient?.disconnect()
                 charClient = nil
 
-                startMapSession(character: character, mapServer: mapServer)
+                startMapClient(character: character, mapServer: mapServer)
             }
         case _ as PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME:
             break
@@ -556,47 +498,138 @@ final public class GameSession {
         }
     }
 
-    // MARK: - Map Session
+    // MARK: - Map Client
 
-    private func startMapSession(character: CharacterInfo, mapServer: MapServerInfo) {
+    private func startMapClient(character: CharacterInfo, mapServer: MapServerInfo) {
         guard let account else {
             return
         }
 
         playerStatus = CharacterStatus(from: character)
 
-        let mapSession = MapSession(account: account, character: character, mapServer: mapServer)
+        self.currentMapServer = mapServer
 
+        let client = Client(
+            name: "Map",
+            address: mapServer.ip,
+            port: mapServer.port
+        )
+
+        // Handle error stream
         Task {
-            for await event in mapSession.events {
-                handleMapEvent(event)
+            for await error in client.errorStream {
+                let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
+                errorMessages.append(errorMessage)
             }
         }
 
-        mapSession.start()
+        // Handle packet stream
+        Task {
+            for await packet in client.packetStream {
+                handleMapPacket(packet)
+            }
+        }
 
-        self.mapSession = mapSession
+        client.connect()
+
+        self.mapClient = client
+
+        // Send initial enter packet
+        // See `clif_parse_LoadEndAck`
+        var packet = PACKET_CZ_ENTER()
+        packet.accountID = account.accountID
+        packet.charID = character.charID
+        packet.loginID1 = account.loginID1
+        packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
+        packet.sex = UInt8(account.sex)
+        client.sendPacket(packet)
+
+        if PACKET_VERSION < 20070521 {
+            client.receiveDataAndPacket(count: 4) { [weak self] data in
+                let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+                Task { @MainActor in
+                    self?.account?.update(accountID: accountID)
+                }
+            }
+        } else {
+            client.receivePacket()
+        }
+
+        // Start keepalive timer
+        startMapKeepalive()
     }
 
-    private func handleMapEvent(_ event: MapSession.Event) {
-        switch event {
-        case .mapServerAccepted:
-            break
-        case .mapServerDisconnected:
-            mapSession?.stop()
-            mapSession = nil
+    /// Keep alive.
+    ///
+    /// Send ``PACKET_CZ_REQUEST_TIME`` every 10 seconds.
+    private func startMapKeepalive() {
+        guard let mapClient else {
+            return
+        }
 
-            phase = .login(.characterSelect(characters))
-        case .mapChanged(let mapName, let position):
+        let startTime = Date.now
+
+        mapKeepaliveTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(10))
+
+                guard !Task.isCancelled else {
+                    break
+                }
+
+                // See `clif_keepalive`
+                var packet = PACKET_CZ_REQUEST_TIME()
+                packet.clientTime = UInt32(Date.now.timeIntervalSince(startTime))
+                mapClient.sendPacket(packet)
+            }
+        }
+    }
+
+    private func handleMapPacket(_ packet: any DecodablePacket) {
+        switch packet {
+        case _ as PACKET_ZC_ACCEPT_ENTER:
+            break
+        case let packet as PACKET_ZC_RESTART_ACK:
+            if packet.type == 1 {
+                // Stop and disconnect map client
+                mapKeepaliveTask?.cancel()
+                mapKeepaliveTask = nil
+
+                mapClient?.disconnect()
+                mapClient = nil
+
+                phase = .login(.characterSelect(characters))
+            }
+        case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
+            if packet.result == 0 {
+                // Stop and disconnect map client
+                mapKeepaliveTask?.cancel()
+                mapKeepaliveTask = nil
+
+                mapClient?.disconnect()
+                mapClient = nil
+
+                phase = .login(.characterSelect(characters))
+            }
+        case let packet as PACKET_ZC_AID:
+            account?.update(accountID: packet.accountID)
+        case _ as PACKET_ZC_PING_LIVE:
+            var packet = PACKET_CZ_PING_LIVE()
+            packet.packetType = HEADER_CZ_PING_LIVE
+            mapClient?.sendPacket(packet)
+        case let packet as PACKET_ZC_NPCACK_MAPMOVE:
             if let mapScene {
                 mapScene.unload()
             }
+
+            let mapName = packet.mapName
+            let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
 
             let progress = Progress()
             phase = .map(.loading(progress))
 
             Task {
-                guard let mapSession, let account, let character else {
+                guard let account, let character else {
                     return
                 }
 
@@ -607,114 +640,500 @@ final public class GameSession {
 
                 let scene = MapScene(
                     mapName: mapName,
-                    mapSession: mapSession,
                     world: world,
                     player: player,
                     playerPosition: position,
-                    resourceManager: resourceManager
+                    resourceManager: resourceManager,
+                    gameSession: self
                 )
 
                 await scene.load(progress: progress)
 
                 phase = .map(.loaded(scene))
             }
-        case .playerMoved(let startPosition, let endPosition):
-            mapScene?.onPlayerMoved(startPosition: startPosition, endPosition: endPosition)
-        case .playerStatusChanged(let status):
-            playerStatus.update(from: status)
-        case .playerStatusPropertyChanged(let property, let value):
-            playerStatus.update(property: property, value: value)
-        case .playerStatusPropertyChanged2(let property, let value, let value2):
-            playerStatus.update(property: property, value: value, value2: value2)
-        case .playerAttackRangeChanged(let value):
+        case let packet as PACKET_ZC_NOTIFY_PLAYERMOVE:
+            let moveData = MoveData(from: packet.moveData)
+            mapScene?.onPlayerMoved(startPosition: moveData.startPosition, endPosition: moveData.endPosition)
+        case let packet as PACKET_ZC_STATUS:
+            let basicStatus = CharacterBasicStatus(from: packet)
+            playerStatus.update(from: basicStatus)
+        case let packet as PACKET_ZC_PAR_CHANGE:
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                playerStatus.update(property: sp, value: Int(packet.count))
+            }
+        case let packet as PACKET_ZC_LONGPAR_CHANGE:
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                playerStatus.update(property: sp, value: Int(packet.amount))
+            }
+        case let packet as PACKET_ZC_LONGLONGPAR_CHANGE:
+            if let sp = StatusProperty(rawValue: Int(packet.varID)) {
+                playerStatus.update(property: sp, value: Int(packet.amount))
+            }
+        case let packet as PACKET_ZC_STATUS_CHANGE:
+            if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
+                playerStatus.update(property: sp, value: Int(packet.value))
+            }
+        case let packet as PACKET_ZC_COUPLESTATUS:
+            if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
+                playerStatus.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
+            }
+        case _ as PACKET_ZC_ATTACK_RANGE:
             break
-        case .achievementListed:
+        case _ as PACKET_ZC_INVENTORY_START:
             break
-        case .achievementUpdated:
+        case _ as PACKET_ZC_INVENTORY_END:
             break
-        case .inventoryUpdatesBegan:
-            break
-        case .inventoryUpdatesEnded:
-            break
-        case .inventoryItemsAppended(let items):
+        case let packet as packet_itemlist_normal:
+            let items = packet.list.map { InventoryItem(from: $0) }
             inventory.append(items: items)
-        case .itemSpawned(let item, let position):
+        case let packet as packet_itemlist_equip:
+            let items = packet.list.map { InventoryItem(from: $0) }
+            inventory.append(items: items)
+        case let packet as PACKET_ZC_ITEM_ENTRY:
+            let item = MapItem(from: packet)
+            let position = SIMD2(x: Int(packet.x), y: Int(packet.y))
             mapScene?.onItemSpawned(item: item, position: position)
-        case .itemVanished(let objectID):
-            mapScene?.onItemVanished(objectID: objectID)
-        case .itemPickedUp(let item):
+        case let packet as packet_dropflooritem:
+            let item = MapItem(from: packet)
+            let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
+            mapScene?.onItemSpawned(item: item, position: position)
+        case let packet as PACKET_ZC_ITEM_DISAPPEAR:
+            mapScene?.onItemVanished(objectID: packet.itemAid)
+        case _ as PACKET_ZC_ITEM_PICKUP_ACK:
             break
-        case .itemThrown(let item):
+        case _ as PACKET_ZC_ITEM_THROW_ACK:
             break
-        case .itemUsed(let item, let accountID, let success):
+        case let packet as PACKET_ZC_USE_ITEM_ACK:
+            let item = UsedItem(from: packet)
             inventory.updateItem(at: item.index, amount: item.amount)
-        case .itemEquipped(let item, let success):
+        case _ as PACKET_ZC_REQ_WEAR_EQUIP_ACK:
             break
-        case .itemUnequipped(let item, let success):
+        case _ as PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK:
             break
-        case .mapObjectSpawned(let object, let position, let direction, let headDirection):
-            logger.info("Object \(object.objectID) spawned at \(position) direction: \(direction.rawValue)")
-            mapScene?.onMapObjectSpawned(object: object, position: position, direction: direction, headDirection: headDirection)
-        case .mapObjectMoved(let object, let startPosition, let endPosition):
-            logger.info("Object \(object.objectID) moved from \(startPosition) to \(endPosition)")
-            mapScene?.onMapObjectMoved(object: object, startPosition: startPosition, endPosition: endPosition)
-        case .mapObjectStopped(let objectID, let position):
+        case let packet as packet_spawn_unit:
+            let object = MapObject(from: packet)
+            let posDir = PosDir(from: packet.PosDir)
+            let direction = Direction(rawValue: posDir.direction) ?? .north
+            let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
+            logger.info("Object \(object.objectID) spawned at \(posDir.position) direction: \(direction.rawValue)")
+            mapScene?.onMapObjectSpawned(object: object, position: posDir.position, direction: direction, headDirection: headDirection)
+        case let packet as packet_idle_unit:
+            let object = MapObject(from: packet)
+            let posDir = PosDir(from: packet.PosDir)
+            let direction = Direction(rawValue: posDir.direction) ?? .north
+            let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
+            logger.info("Object \(object.objectID) spawned at \(posDir.position) direction: \(direction.rawValue)")
+            mapScene?.onMapObjectSpawned(object: object, position: posDir.position, direction: direction, headDirection: headDirection)
+        case let packet as packet_unit_walking:
+            let object = MapObject(from: packet)
+            let moveData = MoveData(from: packet.MoveData)
+            logger.info("Object \(object.objectID) moved from \(moveData.startPosition) to \(moveData.endPosition)")
+            mapScene?.onMapObjectMoved(object: object, startPosition: moveData.startPosition, endPosition: moveData.endPosition)
+        case let packet as PACKET_ZC_STOPMOVE:
+            let objectID = packet.AID
+            let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
             logger.info("Object \(objectID) stopped at \(position)")
             mapScene?.onMapObjectStopped(objectID: objectID, position: position)
-        case .maoObjectVanished(let objectID):
+        case let packet as PACKET_ZC_NOTIFY_VANISH:
+            let objectID = packet.gid
             logger.info("Object \(objectID) vanished")
             mapScene?.onMapObjectVanished(objectID: objectID)
-        case .mapObjectDirectionChanged(let objectID, let direction, let headDirection):
+        case _ as PACKET_ZC_CHANGE_DIRECTION:
             break
-        case .mapObjectSpriteChanged(let objectID):
+        case _ as PACKET_ZC_SPRITE_CHANGE:
             break
-        case .mapObjectStateChanged(let objectID, let bodyState, let healthState, let effectState):
-            mapScene?.onMapObjectStateChanged(objectID: objectID, bodyState: bodyState, healthState: healthState, effectState: effectState)
-        case .mapObjectActionPerformed(let objectAction):
+        case let packet as PACKET_ZC_STATE_CHANGE:
+            let bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
+            let healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
+            let effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
+            mapScene?.onMapObjectStateChanged(objectID: packet.AID, bodyState: bodyState, healthState: healthState, effectState: effectState)
+        case let packet as PACKET_ZC_NOTIFY_ACT:
+            let objectAction = MapObjectAction(from: packet)
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
-        case .npcDialogMessageReceived(let npcID, let message):
-            if let dialog, dialog.npcID == npcID {
+        case let packet as PACKET_ZC_SAY_DIALOG:
+            if let dialog, dialog.npcID == packet.NpcID {
                 dialog.clearIfNeeded()
-                dialog.append(message: message)
+                dialog.append(message: packet.message)
             } else {
-                dialog = NPCDialog(npcID: npcID, message: message)
+                dialog = NPCDialog(npcID: packet.NpcID, message: packet.message)
             }
-        case .npcDialogActionReceived(let npcID, let action):
-            if let dialog, dialog.npcID == npcID {
-                switch action {
-                case .next:
-                    dialog.action = .next
-                case .close:
-                    dialog.action = .close
-                    dialog.menu = nil
-                    dialog.input = nil
-                }
+        case let packet as PACKET_ZC_WAIT_DIALOG:
+            if let dialog, dialog.npcID == packet.NpcID {
+                dialog.action = .next
             }
-        case .npcDialogMenuReceived(let npcID, let menu):
-            if let dialog, dialog.npcID == npcID {
+        case let packet as PACKET_ZC_CLOSE_DIALOG:
+            if let dialog, dialog.npcID == packet.npcId {
+                dialog.action = .close
+                dialog.menu = nil
+                dialog.input = nil
+            }
+        case let packet as PACKET_ZC_CLEAR_DIALOG:
+            if let dialog, dialog.npcID == packet.GID {
+                self.dialog = nil
+            }
+        case let packet as PACKET_ZC_MENU_LIST:
+            if let dialog, dialog.npcID == packet.npcId {
+                let menu = packet.menu.split(separator: ":").map(String.init)
                 dialog.action = nil
                 dialog.menu = menu
             }
-        case .npcDialogInputReceived(let npcID, let input):
-            if let dialog, dialog.npcID == npcID {
+        case let packet as PACKET_ZC_OPEN_EDITDLG:
+            if let dialog, dialog.npcID == packet.npcId {
                 dialog.action = nil
-                dialog.input = input
+                dialog.input = .number
             }
-        case .npcDialogClosed(let npcID):
-            if let dialog, dialog.npcID == npcID {
-                self.dialog = nil
+        case let packet as PACKET_ZC_OPEN_EDITDLGSTR:
+            if let dialog, dialog.npcID == packet.npcId {
+                dialog.action = nil
+                dialog.input = .text
             }
-        case .npcImageReceived(let image):
+        case _ as PACKET_ZC_SHOW_IMAGE:
             break
-        case .minimapMarkPositionReceived(let npcID, let position):
+        case _ as PACKET_ZC_COMPASS:
             break
-        case .chatMessageReceived(let message):
+        case _ as PACKET_ZC_NOTIFY_CHAT:
             break
-        case .authenticationBanned(let message):
+        case _ as PACKET_ZC_WHISPER:
             break
-        case .errorOccurred(let error):
+        case _ as PACKET_ZC_NOTIFY_PLAYERCHAT:
+            break
+        case _ as PACKET_ZC_NPC_CHAT:
+            break
+        case _ as PACKET_ZC_NOTIFY_CHAT_PARTY:
+            break
+        case _ as PACKET_ZC_GUILD_CHAT:
+            break
+        case _ as PACKET_ZC_NOTIFY_CLAN_CHAT:
+            break
+        case _ as PACKET_ZC_ALL_ACH_LIST:
+            break
+        case _ as PACKET_ZC_ACH_UPDATE:
+            break
+        case let packet as PACKET_SC_NOTIFY_BAN:
+            let message = BannedMessage(from: packet)
+            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                errorMessages.append(errorMessage)
+            }
+        case _ as PACKET_ZC_FRIENDS_LIST:
+            break
+        case _ as PACKET_ZC_SHORTCUT_KEY_LIST:
+            break
+        case _ as PACKET_ZC_EXTEND_BODYITEM_SIZE:
+            break
+        case _ as PACKET_ZC_STATUS_CHANGE_ACK:
+            break
+        case _ as PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO:
+            break
+        case _ as PACKET_ZC_USE_SKILL:
+            break
+        case _ as PACKET_ZC_PARTY_CONFIG:
+            break
+        case _ as PACKET_ZC_REPUTE_INFO:
+            break
+        case _ as PACKET_ZC_BROADCAST:
+            break
+        case _ as PACKET_ZC_BROADCAST2:
+            break
+        default:
             break
         }
+    }
+
+    // MARK: - Map Operations
+
+    func notifyMapLoaded() {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_NOTIFY_ACTORINIT()
+        packet.packetType = HEADER_CZ_NOTIFY_ACTORINIT
+        mapClient.sendPacket(packet)
+    }
+
+    func returnToLastSavePoint() {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_RESTART()
+        packet.type = 0
+        mapClient.sendPacket(packet)
+    }
+
+    func returnToCharacterSelect() {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_RESTART()
+        packet.type = 1
+        mapClient.sendPacket(packet)
+    }
+
+    func requestExit() {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_REQUEST_QUIT()
+        packet.packetType = HEADER_CZ_REQUEST_QUIT
+        mapClient.sendPacket(packet)
+    }
+
+    // MARK: - Player
+
+    /// Request move to position.
+    ///
+    /// Send ``PACKET_CZ_REQUEST_MOVE``
+    func requestMove(to position: SIMD2<Int>) {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_REQUEST_MOVE()
+        packet.x = Int16(position.x)
+        packet.y = Int16(position.y)
+        mapClient.sendPacket(packet)
+    }
+
+    /// Request action on target.
+    ///
+    /// Send ``PACKET_CZ_REQUEST_ACT``
+    func requestAction(_ actionType: DamageType, onTarget targetID: UInt32 = 0) {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_REQUEST_ACT()
+        packet.targetID = targetID
+        packet.action = UInt8(actionType.rawValue)
+        mapClient.sendPacket(packet)
+    }
+
+    /// Change direction.
+    ///
+    /// Send ``PACKET_CZ_CHANGE_DIRECTION``
+    ///
+    /// Receive ``PACKET_ZC_CHANGE_DIRECTION``
+    func changeDirection(headDirection: UInt16, direction: UInt8) {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_CHANGE_DIRECTION()
+        packet.headDirection = headDirection
+        packet.direction = direction
+        mapClient.sendPacket(packet)
+    }
+
+    func incrementStatusProperty(_ sp: StatusProperty, by amount: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        switch sp {
+        case .str, .agi, .vit, .int, .dex, .luk:
+            var packet = PACKET_CZ_STATUS_CHANGE()
+            packet.statusID = Int16(sp.rawValue)
+            packet.amount = Int8(amount)
+            mapClient.sendPacket(packet)
+        case .pow, .sta, .wis, .spl, .con, .crt:
+            var packet = PACKET_CZ_ADVANCED_STATUS_CHANGE()
+            packet.packetType = HEADER_CZ_ADVANCED_STATUS_CHANGE
+            packet.type = Int16(sp.rawValue)
+            packet.amount = Int16(amount)
+            mapClient.sendPacket(packet)
+        default:
+            break
+        }
+    }
+
+    // MARK: - Chat
+
+    func sendMessage(_ message: String) {
+        guard let mapClient, let character else {
+            return
+        }
+
+        if message.hasPrefix("%") {
+//            PACKET_CZ_REQUEST_CHAT_PARTY
+        } else if message.hasPrefix("$") {
+//            PACKET_CZ_GUILD_CHAT
+        } else if message.hasPrefix("/cl") {
+//            PACKET_CZ_CLAN_CHAT
+        } else {
+            var packet = PACKET_CZ_REQUEST_CHAT()
+            packet.message = "\(character.name) : \(message)"
+            mapClient.sendPacket(packet)
+        }
+    }
+
+    // MARK: - Item
+
+    // See `clif_parse_TakeItem`
+    func pickUpItem(objectID: UInt32) {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_ITEM_PICKUP()
+        packet.objectID = objectID
+        mapClient.sendPacket(packet)
+    }
+
+    // See `clif_parse_DropItem`
+    func throwItem(at index: Int, amount: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_ITEM_THROW()
+        packet.index = UInt16(index)
+        packet.amount = Int16(amount)
+        mapClient.sendPacket(packet)
+    }
+
+    // See `clif_parse_UseItem`
+    func useItem(at index: Int) {
+        guard let mapClient, let accountID = account?.accountID else {
+            return
+        }
+
+        var packet = PACKET_CZ_USE_ITEM()
+        packet.index = UInt16(index)
+        packet.accountID = accountID
+        mapClient.sendPacket(packet)
+    }
+
+    // See `clif_parse_EquipItem`
+    func equipItem(at index: Int, location: EquipPositions) {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_REQ_WEAR_EQUIP()
+        packet.packetType = HEADER_CZ_REQ_WEAR_EQUIP
+        packet.index = UInt16(index)
+        packet.position = UInt32(location.rawValue)
+        mapClient.sendPacket(packet)
+    }
+
+    // See `clif_parse_UnequipItem`
+    func unequipItem(at index: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        var packet = PACKET_CZ_REQ_TAKEOFF_EQUIP()
+        packet.index = UInt16(index)
+        mapClient.sendPacket(packet)
+    }
+
+    // MARK: - NPC
+
+    func talkToNPC(npcID: UInt32) {
+        guard let mapClient else {
+            return
+        }
+
+        // See `clif_parse_NpcClicked`
+        var packet = PACKET_CZ_CONTACTNPC()
+        packet.packetType = HEADER_CZ_CONTACTNPC
+        packet.AID = npcID
+        packet.type = 1
+        mapClient.sendPacket(packet)
+    }
+
+    func requestNextMessage() {
+        guard let mapClient, let dialog else {
+            return
+        }
+
+        // See `clif_parse_NpcNextClicked`
+        var packet = PACKET_CZ_REQ_NEXT_SCRIPT()
+        packet.packetType = HEADER_CZ_REQ_NEXT_SCRIPT
+        packet.npcID = dialog.npcID
+        mapClient.sendPacket(packet)
+
+        dialog.setNeedsClear()
+        dialog.action = nil
+    }
+
+    func closeDialog() {
+        guard let mapClient, let dialog else {
+            return
+        }
+
+        self.dialog = nil
+
+        // See `clif_parse_NpcCloseClicked`
+        var packet = PACKET_CZ_CLOSE_DIALOG()
+        packet.packetType = HEADER_CZ_CLOSE_DIALOG
+        packet.GID = dialog.npcID
+        mapClient.sendPacket(packet)
+    }
+
+    func selectMenu(_ select: UInt8) {
+        guard let mapClient, let dialog else {
+            return
+        }
+
+        dialog.menu = nil
+
+        // See `clif_parse_NpcSelectMenu`
+        var packet = PACKET_CZ_CHOOSE_MENU()
+        packet.packetType = HEADER_CZ_CHOOSE_MENU
+        packet.npcID = dialog.npcID
+        packet.select = select
+        mapClient.sendPacket(packet)
+    }
+
+    func cancelMenu() {
+        guard let mapClient, let dialog else {
+            return
+        }
+
+        self.dialog = nil
+
+        // See `clif_parse_NpcSelectMenu`
+        var packet = PACKET_CZ_CHOOSE_MENU()
+        packet.packetType = HEADER_CZ_CHOOSE_MENU
+        packet.npcID = dialog.npcID
+        packet.select = 255
+        mapClient.sendPacket(packet)
+    }
+
+    func confirmInput(_ value: Int32) {
+        guard let mapClient, let dialog else {
+            return
+        }
+
+        // See `clif_parse_NpcAmountInput`
+        var packet = PACKET_CZ_INPUT_EDITDLG()
+        packet.packetType = HEADER_CZ_INPUT_EDITDLG
+        packet.GID = dialog.npcID
+        packet.value = value
+        mapClient.sendPacket(packet)
+
+        dialog.input = nil
+    }
+
+    func confirmInput(_ value: String) {
+        guard let mapClient, let dialog else {
+            return
+        }
+
+        // See `clif_parse_NpcStringInput`
+        var packet = PACKET_CZ_INPUT_EDITDLGSTR()
+        packet.packetType = HEADER_CZ_INPUT_EDITDLGSTR
+        packet.packetLength = Int16(2 + 2 + 4 + value.utf8.count)
+        packet.GID = Int32(dialog.npcID)
+        packet.value = value
+        mapClient.sendPacket(packet)
+
+        dialog.input = nil
     }
 }
 

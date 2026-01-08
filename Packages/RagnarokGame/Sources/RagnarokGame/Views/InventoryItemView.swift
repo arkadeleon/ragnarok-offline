@@ -20,10 +20,7 @@ struct InventoryItemView: View {
         Menu {
             if item.isUsable {
                 Button {
-                    if let mapSession = gameSession.mapSession {
-                        let accountID = mapSession.account.accountID
-                        mapSession.useItem(at: item.index, by: accountID)
-                    }
+                    gameSession.useItem(at: item.index)
                 } label: {
                     Text(verbatim: "Use")
                 }
@@ -31,7 +28,7 @@ struct InventoryItemView: View {
 
             if item.isEquippable {
                 Button {
-                    gameSession.mapSession?.equipItem(at: item.index, location: item.location)
+                    gameSession.equipItem(at: item.index, location: item.location)
                 } label: {
                     Text(verbatim: "Equip")
                 }

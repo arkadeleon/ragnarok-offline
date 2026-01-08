@@ -23,13 +23,13 @@ struct OptionsView: View {
 
                 // Return to last save point
                 GameButton("esc_04a.bmp") {
-                    gameSession.mapSession?.returnToLastSavePoint()
+                    gameSession.returnToLastSavePoint()
                 }
                 .disabled(true)
 
                 // Character Select
                 GameButton("esc_01a.bmp") {
-                    gameSession.mapSession?.returnToCharacterSelect()
+                    gameSession.returnToCharacterSelect()
                 }
 
                 // Settings
@@ -49,7 +49,7 @@ struct OptionsView: View {
 
                 // Exit to Windows
                 GameButton("esc_03a.bmp") {
-                    gameSession.mapSession?.requestExit()
+                    gameSession.requestExit()
                     exitGame()
                 }
 
