@@ -163,7 +163,7 @@ struct CharacterMakeView: View {
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
                 GameButton("btn_make.bmp") {
-                    gameSession.charSession?.makeCharacter(character: character)
+                    gameSession.createCharacter(character)
                 }
                 .disabled(character.name.isEmpty)
 

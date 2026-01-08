@@ -82,7 +82,9 @@ final public class GameSession {
     @ObservationIgnored var loginClient: Client?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
 
-    @ObservationIgnored var charSession: CharSession?
+    @ObservationIgnored var charClient: Client?
+    @ObservationIgnored var charKeepaliveTask: Task<Void, Never>?
+
     @ObservationIgnored var mapSession: MapSession?
 
     public var mapScene: MapScene? {
@@ -146,31 +148,15 @@ final public class GameSession {
         }
     }
 
-    func selectCharServer(_ charServer: CharServerInfo) {
-        // Stop and disconnect login client before starting char session
-        loginKeepaliveTask?.cancel()
-        loginKeepaliveTask = nil
-
-        loginClient?.disconnect()
-        loginClient = nil
-
-        startCharSession(charServer)
-    }
-
-    func makeCharacter(slot: Int) {
-        phase = .login(.characterMake(slot))
-    }
-
-    func cancelMakeCharacter() {
-        phase = .login(.characterSelect(characters))
-    }
-
     func stopAllSessions() {
         mapSession?.stop()
         mapSession = nil
 
-        charSession?.stop()
-        charSession = nil
+        charKeepaliveTask?.cancel()
+        charKeepaliveTask = nil
+
+        charClient?.disconnect()
+        charClient = nil
 
         loginKeepaliveTask?.cancel()
         loginKeepaliveTask = nil
@@ -250,6 +236,10 @@ final public class GameSession {
     func login(username: String, password: String) {
         startLoginClient()
 
+        guard let loginClient else {
+            return
+        }
+
         self.username = username
 
         // See `logclif_parse_reqauth_raw`
@@ -259,9 +249,9 @@ final public class GameSession {
         packet.username = username
         packet.password = password
         packet.clienttype = 0
-        loginClient?.sendPacket(packet)
+        loginClient.sendPacket(packet)
 
-        loginClient?.receivePacket()
+        loginClient.receivePacket()
     }
 
     private func startLoginClient() {
@@ -298,7 +288,6 @@ final public class GameSession {
     private func handleLoginPacket(_ packet: any DecodablePacket) {
         switch packet {
         case let packet as PACKET_AC_ACCEPT_LOGIN:
-            // See `logclif_auth_ok`
             let account = AccountInfo(from: packet)
             let charServers = packet.char_servers.map(CharServerInfo.init(from:))
 
@@ -313,7 +302,6 @@ final public class GameSession {
             // Start keepalive after successful login
             startLoginKeepalive()
         case let packet as PACKET_AC_REFUSE_LOGIN:
-            // See `logclif_auth_failed`
             let message = LoginRefusedMessage(from: packet)
             if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
                 let localizedMessage = localizedMessage.replacingOccurrences(of: "%s", with: message.unblockTime)
@@ -321,7 +309,6 @@ final public class GameSession {
                 errorMessages.append(errorMessage)
             }
         case let packet as PACKET_SC_NOTIFY_BAN:
-            // See `logclif_sent_auth_result`
             let message = BannedMessage(from: packet)
             if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
                 let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
@@ -352,70 +339,227 @@ final public class GameSession {
                 var packet = PACKET_CA_CONNECT_INFO_CHANGED()
                 packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
                 packet.name = username ?? ""
-
                 loginClient.sendPacket(packet)
             }
         }
     }
 
-    // MARK: - Char Session
+    // MARK: - Char Client
 
-    private func startCharSession(_ charServer: CharServerInfo) {
+    func selectCharServer(_ charServer: CharServerInfo) {
+        // Stop and disconnect login client before starting char client
+        loginKeepaliveTask?.cancel()
+        loginKeepaliveTask = nil
+
+        loginClient?.disconnect()
+        loginClient = nil
+
+        startCharClient(charServer)
+    }
+
+    func makeCharacter(slot: Int) {
+        phase = .login(.characterMake(slot))
+    }
+
+    func cancelMakeCharacter() {
+        phase = .login(.characterSelect(characters))
+    }
+
+    /// Select character.
+    ///
+    /// Send ``PACKET_CH_SELECT_CHAR``
+    func selectCharacter(slot: Int) {
+        guard let charClient else {
+            return
+        }
+
+        // See `chclif_parse_charselect`
+        var packet = PACKET_CH_SELECT_CHAR()
+        packet.packetType = HEADER_CH_SELECT_CHAR
+        packet.slot = UInt8(slot)
+        charClient.sendPacket(packet)
+    }
+
+    /// Create character.
+    ///
+    /// Send ``PACKET_CH_MAKE_CHAR``
+    func createCharacter(_ character: CharacterInfo) {
+        guard let charClient else {
+            return
+        }
+
+        // See `chclif_parse_createnewchar`
+        var packet = PACKET_CH_MAKE_CHAR()
+        packet.packetType = HEADER_CH_MAKE_CHAR
+        packet.name = character.name
+        packet.slot = UInt8(character.charNum)
+        packet.hair_color = UInt16(character.headPalette)
+        packet.hair_style = UInt16(character.head)
+        packet.job = UInt32(character.job)
+        packet.sex = UInt8(character.sex)
+        charClient.sendPacket(packet)
+    }
+
+    /// Delete character.
+    ///
+    /// Send ``PACKET_CH_DELETE_CHAR3``
+    func deleteCharacter(charID: UInt32) {
+        guard let charClient else {
+            return
+        }
+
+        // See `chclif_parse_char_delete2_accept`
+        var packet = PACKET_CH_DELETE_CHAR3()
+        packet.packetType = HEADER_CH_DELETE_CHAR3
+        packet.CID = charID
+        charClient.sendPacket(packet)
+    }
+
+    private func startCharClient(_ charServer: CharServerInfo) {
         guard let account else {
             return
         }
 
-        let charSession = CharSession(account: account, charServer: charServer)
+        let client = Client(
+            name: "Char",
+            address: charServer.ip,
+            port: charServer.port
+        )
 
+        // Handle error stream
         Task {
-            for await event in charSession.events {
-                handleCharEvent(event)
+            for await error in client.errorStream {
+                let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
+                errorMessages.append(errorMessage)
             }
         }
 
-        charSession.start()
+        // Handle packet stream
+        Task {
+            for await packet in client.packetStream {
+                handleCharPacket(packet)
+            }
+        }
 
-        self.charSession = charSession
+        client.connect()
+
+        self.charClient = client
+
+        // Send initial enter packet and receive accountID
+        // See `chclif_parse_reqtoconnect`
+        var packet = PACKET_CH_ENTER()
+        packet.packetType = HEADER_CH_ENTER
+        packet.accountID = account.accountID
+        packet.loginID1 = account.loginID1
+        packet.loginID2 = account.loginID2
+        packet.clientType = account.langType
+        packet.sex = UInt8(account.sex)
+        client.sendPacket(packet)
+
+        // Receive accountID (4 bytes) and update account
+        client.receiveDataAndPacket(count: 4) { [weak self] data in
+            let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
+            Task { @MainActor in
+                self?.account?.update(accountID: accountID)
+            }
+        }
+
+        // Start keepalive timer
+        startCharKeepalive()
     }
 
-    private func handleCharEvent(_ event: CharSession.Event) {
-        switch event {
-        case .charServerAccepted(let characters):
+    private func handleCharPacket(_ packet: any DecodablePacket) {
+        switch packet {
+        case let packet as PACKET_HC_ACCEPT_ENTER:
+            let characters = packet.characters.map(CharacterInfo.init(from:))
             self.characters = characters
             phase = .login(.characterSelect(characters))
-        case .charServerRefused:
+        case _ as PACKET_HC_REFUSE_ENTER:
             break
-        case .charServerNotifiedMapServer(let charID, let mapName, let mapServer):
-            if let character = characters.first(where: { $0.charID == charID }) {
+        case let packet as PACKET_HC_NOTIFY_ZONESVR:
+            if let character = characters.first(where: { $0.charID == packet.CID }) {
                 self.character = character
+                let mapServer = MapServerInfo(from: packet)
+
+                // Stop and disconnect char client before starting map session
+                charKeepaliveTask?.cancel()
+                charKeepaliveTask = nil
+
+                charClient?.disconnect()
+                charClient = nil
+
                 startMapSession(character: character, mapServer: mapServer)
             }
-        case .charServerNotifiedAccessibleMaps(let accessibleMaps):
+        case _ as PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME:
             break
-        case .makeCharacterAccepted(let character):
+        case let packet as PACKET_HC_ACCEPT_MAKECHAR:
+            let character = CharacterInfo(from: packet.character)
             characters.append(character)
             phase = .login(.characterSelect(characters))
-        case .makeCharacterRefused:
+        case _ as PACKET_HC_REFUSE_MAKECHAR:
             break
-        case .deleteCharacterAccepted:
+        case _ as PACKET_HC_ACCEPT_DELETECHAR:
             break
-        case .deleteCharacterRefused:
+        case _ as PACKET_HC_REFUSE_DELETECHAR:
             break
-        case .deleteCharacterCancelled:
+        case let packet as PACKET_HC_DELETE_CHAR3:
+            if packet.result == 1 {
+                // Delete character accepted
+            } else {
+                // Delete character refused
+            }
+        case _ as PACKET_HC_DELETE_CHAR3_CANCEL:
             break
-        case .deleteCharacterReserved(let deletionDate):
+        case _ as PACKET_HC_DELETE_CHAR3_RESERVED:
             break
-        case .authenticationBanned(let message):
+        case _ as PACKET_HC_ACCEPT_ENTER2:
             break
-        case .errorOccurred(let error):
+        case _ as PACKET_HC_SECOND_PASSWD_LOGIN:
             break
+        case _ as PACKET_HC_CHARLIST_NOTIFY:
+            break
+        case _ as PACKET_HC_BLOCK_CHARACTER:
+            break
+        case let packet as PACKET_SC_NOTIFY_BAN:
+            let message = BannedMessage(from: packet)
+            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                errorMessages.append(errorMessage)
+            }
+        default:
+            break
+        }
+    }
+
+    /// Keep alive.
+    ///
+    /// Send ``PACKET_CH_ENTER`` (PACKET_PING) every 12 seconds.
+    private func startCharKeepalive() {
+        guard let charClient, let account else {
+            return
+        }
+
+        charKeepaliveTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(12))
+
+                guard !Task.isCancelled else {
+                    break
+                }
+
+                // See `chclif_parse_keepalive`
+                var packet = PACKET_PING()
+                packet.packetType = HEADER_PING
+                packet.AID = account.accountID
+                charClient.sendPacket(packet)
+            }
         }
     }
 
     // MARK: - Map Session
 
     private func startMapSession(character: CharacterInfo, mapServer: MapServerInfo) {
-        guard let account = charSession?.account else {
+        guard let account else {
             return
         }
 

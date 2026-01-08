@@ -428,9 +428,179 @@ Phase 3A handles 5 packet types:
 
 ---
 
+## Phase 3B: Refactor GameSession - Char Client
+
+**Status**: ✅ COMPLETED & VERIFIED
+
+**Date Completed**: 2026-01-08
+
+### What Was Done
+
+#### 1. Replaced CharSession with CharClient
+
+In `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`:
+- Removed `@ObservationIgnored var charSession: CharSession?`
+- Added `@ObservationIgnored var charClient: Client?`
+- Added `@ObservationIgnored var charKeepaliveTask: Task<Void, Never>?`
+
+#### 2. Refactored startCharSession() to startCharClient()
+
+Replaced `startCharSession()` with `startCharClient()`:
+- Creates `Client` instance with char server address and port
+- Spawns Task to handle `client.errorStream` - converts errors to ErrorMessage and appends to errorMessages
+- Spawns Task to handle `client.packetStream` - calls `handleCharPacket()` for each packet
+- Calls `client.connect()` to establish connection
+- Sends initial `PACKET_CH_ENTER` packet with account credentials
+- Receives accountID (4 bytes) and updates account
+- Calls `startCharKeepalive()` to begin keepalive timer
+- Stores client in `self.charClient`
+
+#### 3. Added handleCharPacket() Method
+
+Created new `handleCharPacket(_ packet: any DecodablePacket)` method:
+- Pattern matches on packet types using `switch` and `case let packet as PacketType:`
+- Handles char server connection packets:
+  - `PACKET_HC_ACCEPT_ENTER`: Converts to character list, updates state to characterSelect phase
+  - `PACKET_HC_REFUSE_ENTER`: Appends error message for refused connection
+  - `PACKET_HC_NOTIFY_ZONESVR`: Extracts map server info, stops charClient, starts mapSession
+  - `PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME`: Accessible maps notification (currently unused)
+- Handles character operation packets:
+  - `PACKET_HC_ACCEPT_MAKECHAR`: Converts to CharacterInfo, appends to characters, updates phase
+  - `PACKET_HC_REFUSE_MAKECHAR`: Appends error message
+  - `PACKET_HC_ACCEPT_DELETECHAR`: Character deleted successfully
+  - `PACKET_HC_REFUSE_DELETECHAR`: Appends error message
+  - `PACKET_HC_DELETE_CHAR3`: Checks result field for success/failure
+  - `PACKET_HC_DELETE_CHAR3_CANCEL`: Character deletion cancelled
+  - `PACKET_HC_DELETE_CHAR3_RESERVED`: Character deletion reserved
+- Handles other packets:
+  - `PACKET_HC_ACCEPT_ENTER2`: Additional enter response
+  - `PACKET_HC_SECOND_PASSWD_LOGIN`: Second password login
+  - `PACKET_HC_CHARLIST_NOTIFY`: Character list notification
+  - `PACKET_HC_BLOCK_CHARACTER`: Character block notification
+  - `PACKET_SC_NOTIFY_BAN`: Account banned notification with localized message
+- Stops charClient (keepalive task + disconnect) before transitioning to map server
+
+#### 4. Added startCharKeepalive() Method
+
+Created new `startCharKeepalive()` method:
+- Spawns Task that loops indefinitely
+- Sleeps for 12 seconds using `try? await Task.sleep(for: .seconds(12))`
+- Checks for cancellation with `guard !Task.isCancelled`
+- Sends `PACKET_PING` with account ID
+- Stores task in `self.charKeepaliveTask`
+
+#### 5. Added Character Operation Methods
+
+Created three new public methods in GameSession:
+
+**selectCharacter(slot: Int)**:
+- Sends `PACKET_CH_SELECT_CHAR` with slot number
+- Triggers server to send `PACKET_HC_NOTIFY_ZONESVR` with map server info
+
+**createCharacter(_ character: CharacterInfo)**:
+- Sends `PACKET_CH_MAKE_CHAR` with character details (name, slot, hair, stats, job, sex)
+- Triggers server to send `PACKET_HC_ACCEPT_MAKECHAR` or `PACKET_HC_REFUSE_MAKECHAR`
+
+**deleteCharacter(charID: UInt32)**:
+- Sends `PACKET_CH_DELETE_CHAR3` with character ID
+- Triggers server to send `PACKET_HC_DELETE_CHAR3` with result
+
+#### 6. Updated selectCharServer() Method
+
+Modified `selectCharServer(_ charServer: CharServerInfo)`:
+- Cancels `loginKeepaliveTask` before transitioning to char server
+- Sets `loginKeepaliveTask` to nil
+- Disconnects `loginClient`
+- Sets `loginClient` to nil
+- Calls `startCharClient(charServer)` instead of `startCharSession(charServer)`
+
+#### 7. Updated stopAllSessions() Method
+
+Modified `stopAllSessions()`:
+- Cancels `charKeepaliveTask` and sets to nil
+- Disconnects `charClient` and sets to nil
+- Continues to handle mapSession, loginKeepaliveTask, loginClient as before
+
+#### 8. Updated startMapSession() Method
+
+Modified `startMapSession(character:mapServer:)`:
+- Changed from `guard let account = charSession?.account` to `guard let account`
+- Uses GameSession's `account` property directly instead of accessing via charSession
+
+#### 9. Updated UI View Files
+
+**CharacterMakeView.swift**:
+- Changed from `gameSession.charSession?.makeCharacter(character: character)`
+- To: `gameSession.createCharacter(character)`
+
+**CharacterSelectView.swift**:
+- Changed from `gameSession.charSession?.selectCharacter(slot: selectedCharacter.charNum)`
+- To: `gameSession.selectCharacter(slot: selectedCharacter.charNum)`
+
+### Files Modified
+
+| File | Type | Description |
+|------|------|-------------|
+| `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift` | Modified | Complete refactor of char flow from CharSession to Client |
+| `Packages/RagnarokGame/Sources/RagnarokGame/Views/CharacterMakeView.swift` | Modified | Updated to call new GameSession.createCharacter() method |
+| `Packages/RagnarokGame/Sources/RagnarokGame/Views/CharacterSelectView.swift` | Modified | Updated to call new GameSession.selectCharacter() method |
+
+### Packets Handled
+
+Phase 3B handles 15+ packet types:
+
+**Sent Packets**:
+- `PACKET_CH_ENTER` - Initial char server authentication with account credentials
+- `PACKET_PING` - Keepalive packet sent every 12 seconds
+- `PACKET_CH_SELECT_CHAR` - Select character from slot
+- `PACKET_CH_MAKE_CHAR` - Create new character
+- `PACKET_CH_DELETE_CHAR3` - Delete character
+
+**Received Packets**:
+- `PACKET_HC_ACCEPT_ENTER` - Char server accepted with character list
+- `PACKET_HC_REFUSE_ENTER` - Char server refused connection
+- `PACKET_HC_NOTIFY_ZONESVR` - Map server info (triggers transition to map)
+- `PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME` - Accessible maps notification
+- `PACKET_HC_ACCEPT_MAKECHAR` - Character created successfully
+- `PACKET_HC_REFUSE_MAKECHAR` - Character creation failed
+- `PACKET_HC_ACCEPT_DELETECHAR` - Character deleted successfully
+- `PACKET_HC_REFUSE_DELETECHAR` - Character deletion failed
+- `PACKET_HC_DELETE_CHAR3` - Character deletion result (with result code)
+- `PACKET_HC_DELETE_CHAR3_CANCEL` - Character deletion cancelled
+- `PACKET_HC_DELETE_CHAR3_RESERVED` - Character deletion reserved with date
+- `PACKET_HC_ACCEPT_ENTER2` - Additional enter response packet
+- `PACKET_HC_SECOND_PASSWD_LOGIN` - Second password login packet
+- `PACKET_HC_CHARLIST_NOTIFY` - Character list notification packet
+- `PACKET_HC_BLOCK_CHARACTER` - Character block notification packet
+- `PACKET_SC_NOTIFY_BAN` - Account banned notification
+
+### What Should Work Now
+
+1. GameSession no longer depends on CharSession
+2. Character server flow uses Client directly with async packet streams
+3. No event-based architecture for char server - direct packet handling
+4. Keepalive timer managed by GameSession using Task
+5. Character operations (select, create, delete) work via direct GameSession methods
+6. UI views call GameSession methods directly instead of accessing charSession
+7. Transition from char server to map server properly stops charClient
+8. All char server functionality works identically to before
+9. Tests pass without modification
+
+### Testing Checklist
+
+- [x] Build succeeds: `swift build` in RagnarokGame package
+- [x] All tests pass
+- [x] Character server connects and authenticates
+- [x] Character list received and displayed
+- [x] Keepalive packets sent every 12 seconds
+- [x] Character selection works correctly
+- [x] Character creation works correctly
+- [x] Transition to map server disconnects char client properly
+
+---
+
 ## Remaining Phases
 
-- [ ] **Phase 3B**: Refactor GameSession - Char Client
 - [ ] **Phase 3C**: Refactor GameSession - Map Client
 - [ ] **Phase 4**: Refactor ChatSession
 - [ ] **Phase 5**: Remove Sessions, Events, and Subscription Infrastructure
