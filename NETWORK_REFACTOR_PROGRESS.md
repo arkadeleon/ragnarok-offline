@@ -852,8 +852,256 @@ Phase 3C handles 40+ packet types covering all map gameplay:
 
 ---
 
+## Phase 4: Refactor ChatSession
+
+**Status**: ✅ COMPLETED & VERIFIED
+
+**Date Completed**: 2026-01-08
+
+### What Was Done
+
+#### 1. Replaced Session Properties with Client Properties
+
+In `RagnarokOffline/ChatClient/ChatSession.swift`:
+- Removed `loginSession: LoginSession?`
+- Removed `charSession: CharSession?`
+- Removed `mapSession: MapSession?`
+- Added `loginClient: Client?`
+- Added `loginKeepaliveTask: Task<Void, Never>?`
+- Added `charClient: Client?`
+- Added `charKeepaliveTask: Task<Void, Never>?`
+- Added `mapClient: Client?`
+- Added `mapKeepaliveTask: Task<Void, Never>?`
+- Added `username: String?` to store username for login keepalive packets
+
+#### 2. Refactored Login Client Flow
+
+Replaced `startLoginSession()` with `startLoginClient()`:
+- Creates `Client` instance with login server address and port
+- Spawns Task to handle `client.errorStream` - appends errors to messages
+- Spawns Task to handle `client.packetStream` - calls `handleLoginPacket()` for each packet
+- Calls `client.connect()` to establish connection
+- Stores client in `self.loginClient`
+
+Created `handleLoginPacket(_ packet: any DecodablePacket)`:
+- Pattern matches on packet types using `switch` and `case let packet as PacketType:`
+- Handles `PACKET_AC_ACCEPT_LOGIN`:
+  - Converts packet to `AccountInfo(from: packet)`
+  - Maps char_servers to `CharServerInfo(from:)`
+  - Updates account and charServers
+  - Changes phase to `.selectCharServer`
+  - Appends success message and char server list to messages
+  - Calls `startLoginKeepalive()` to begin keepalive timer
+- Handles `PACKET_AC_REFUSE_LOGIN`:
+  - Converts packet to `LoginRefusedMessage(from: packet)`
+  - Looks up localized message from messageStringTable
+  - Appends error message to messages
+- Handles `PACKET_SC_NOTIFY_BAN`:
+  - Converts packet to `BannedMessage(from: packet)`
+  - Looks up localized message from messageStringTable
+  - Appends error message to messages
+
+Created `startLoginKeepalive()`:
+- Spawns Task that loops indefinitely
+- Sleeps for 10 seconds using `try? await Task.sleep(for: .seconds(10))`
+- Checks for cancellation with `guard !Task.isCancelled`
+- Sends `PACKET_CA_CONNECT_INFO_CHANGED` with stored username
+- Stores task in `self.loginKeepaliveTask`
+
+#### 3. Refactored Char Client Flow
+
+Replaced `startCharSession()` with `startCharClient()`:
+- Cancels and disconnects login client before transitioning
+- Creates `Client` instance with char server address and port
+- Spawns Task to handle `client.errorStream` - appends errors to messages
+- Spawns Task to handle `client.packetStream` - calls `handleCharPacket()` for each packet
+- Calls `client.connect()` to establish connection
+- Sends initial `PACKET_CH_ENTER` packet with account credentials
+- Receives accountID (4 bytes) and updates account using `receiveDataAndPacket()`
+- Calls `startCharKeepalive()` to begin keepalive timer
+- Stores client in `self.charClient`
+
+Created `handleCharPacket(_ packet: any DecodablePacket)`:
+- Pattern matches on packet types using `switch` and `case let packet as PacketType:`
+- Handles `PACKET_HC_ACCEPT_ENTER`:
+  - Converts packet to character list
+  - Updates characters array
+  - Changes phase to `.selectCharacter`
+  - Appends success message and character details to messages
+- Handles `PACKET_HC_REFUSE_ENTER`:
+  - Appends error message
+- Handles `PACKET_HC_NOTIFY_ZONESVR`:
+  - Extracts map server info and map name
+  - Changes phase to `.map`
+  - Appends map entry message
+  - Stops charClient and calls `startMapClient()`
+- Handles `PACKET_HC_ACCEPT_MAKECHAR`:
+  - Appends success message
+- Handles `PACKET_HC_REFUSE_MAKECHAR`:
+  - Appends error message
+- Handles `PACKET_HC_ACCEPT_DELETECHAR`, `PACKET_HC_REFUSE_DELETECHAR`, `PACKET_HC_DELETE_CHAR3`, `PACKET_HC_DELETE_CHAR3_CANCEL`, `PACKET_HC_DELETE_CHAR3_RESERVED`:
+  - Placeholder handling (no action needed for chat client)
+- Handles `PACKET_SC_NOTIFY_BAN`:
+  - Converts packet to `BannedMessage(from: packet)`
+  - Looks up localized message
+  - Appends error message to messages
+
+Created `startCharKeepalive()`:
+- Spawns Task that loops indefinitely
+- Sleeps for 12 seconds using `try? await Task.sleep(for: .seconds(12))`
+- Checks for cancellation with `guard !Task.isCancelled`
+- Sends `PACKET_PING` with account ID
+- Stores task in `self.charKeepaliveTask`
+
+#### 4. Refactored Map Client Flow
+
+Replaced `startMapSession()` with `startMapClient()`:
+- Cancels and disconnects char client before transitioning
+- Creates `Client` instance with map server address and port
+- Spawns Task to handle `client.errorStream` - appends errors to messages
+- Spawns Task to handle `client.packetStream` - calls `handleMapPacket()` for each packet
+- Calls `client.connect()` to establish connection
+- Sends initial `PACKET_CZ_ENTER` packet with account and character credentials
+- Conditionally receives accountID (4 bytes) if `PACKET_VERSION < 20070521`, otherwise calls `receivePacket()`
+- Calls `startMapKeepalive()` to begin keepalive timer
+- Stores client in `self.mapClient`
+
+Created `handleMapPacket(_ packet: any DecodablePacket)`:
+- Pattern matches on packet types using `switch` and `case let packet as PacketType:`
+- Handles `PACKET_ZC_ACCEPT_ENTER`:
+  - Map server accepted connection (no action needed)
+- Handles `PACKET_ZC_NPCACK_MAPMOVE`:
+  - Extracts map name and position
+  - Updates playerPosition
+  - Appends map changed message
+  - Sends `PACKET_CZ_NOTIFY_ACTORINIT` to notify map loaded
+- Handles `PACKET_ZC_NOTIFY_PLAYERMOVE`:
+  - Converts packet to `MoveData(from: packet.moveData)`
+  - Updates playerPosition
+  - Appends player moved message
+- Handles `PACKET_ZC_NOTIFY_CHAT`:
+  - Converts packet to `ChatMessage(from: packet)`
+  - Appends chat message content to messages
+- Handles `PACKET_ZC_PING_LIVE`:
+  - Responds with `PACKET_CZ_PING_LIVE` keepalive packet
+- Handles `PACKET_SC_NOTIFY_BAN`:
+  - Converts packet to `BannedMessage(from: packet)`
+  - Looks up localized message
+  - Appends error message to messages
+
+Created `startMapKeepalive()`:
+- Records start time
+- Spawns Task that loops indefinitely
+- Sleeps for 10 seconds using `try? await Task.sleep(for: .seconds(10))`
+- Checks for cancellation with `guard !Task.isCancelled`
+- Sends `PACKET_CZ_REQUEST_TIME` with elapsed time since start
+- Stores task in `self.mapKeepaliveTask`
+
+#### 5. Updated Command Handlers
+
+Modified `sendCommand()` to send packets directly via clients:
+
+**Login Command**:
+- Stores username in `self.username`
+- Calls `startLoginClient()`
+- Creates and sends `PACKET_CA_LOGIN` with username, password
+- Calls `loginClient?.receivePacket()` to trigger packet reception
+
+**Select Char Server Command**:
+- Validates server number
+- Calls `startCharClient(charServer)` to connect to selected char server
+
+**Make Character Command**:
+- Creates character info from parameters
+- Creates and sends `PACKET_CH_MAKE_CHAR` with character details
+- Sends via `charClient?.sendPacket(packet)`
+
+**Select Character Command**:
+- Creates and sends `PACKET_CH_SELECT_CHAR` with slot number
+- Sends via `charClient?.sendPacket(packet)`
+
+**Movement Commands** (moveUp, moveDown, moveLeft, moveRight):
+- Creates and sends `PACKET_CZ_REQUEST_MOVE` with position coordinates
+- Sends via `mapClient?.sendPacket(packet)`
+
+Modified `sendMessage()`:
+- Creates and sends `PACKET_CZ_REQUEST_CHAT` with message content
+- Sends via `mapClient?.sendPacket(packet)`
+
+#### 6. Client Lifecycle Management
+
+Each client transition properly cancels keepalive tasks and disconnects previous client:
+- **Login → Char**: Stops loginClient and loginKeepaliveTask before starting charClient
+- **Char → Map**: Stops charClient and charKeepaliveTask before starting mapClient
+
+### Files Modified
+
+| File | Type | Description |
+|------|------|-------------|
+| `RagnarokOffline/ChatClient/ChatSession.swift` | Modified | Complete refactor from Session-based to Client-based architecture |
+
+### Packets Handled
+
+Phase 4 handles 15+ packet types across all three server connections:
+
+**Login Packets** (3 types):
+- `PACKET_CA_LOGIN` (sent) - Login authentication request
+- `PACKET_CA_CONNECT_INFO_CHANGED` (sent) - Keepalive packet every 10 seconds
+- `PACKET_AC_ACCEPT_LOGIN` (received) - Successful login response
+- `PACKET_AC_REFUSE_LOGIN` (received) - Login refused response
+- `PACKET_SC_NOTIFY_BAN` (received) - Account banned notification
+
+**Char Packets** (8 types):
+- `PACKET_CH_ENTER` (sent) - Initial char server authentication
+- `PACKET_PING` (sent) - Keepalive packet every 12 seconds
+- `PACKET_CH_MAKE_CHAR` (sent) - Create new character
+- `PACKET_CH_SELECT_CHAR` (sent) - Select character from slot
+- `PACKET_HC_ACCEPT_ENTER` (received) - Char server accepted with character list
+- `PACKET_HC_REFUSE_ENTER` (received) - Char server refused connection
+- `PACKET_HC_NOTIFY_ZONESVR` (received) - Map server info (triggers transition to map)
+- `PACKET_HC_ACCEPT_MAKECHAR` (received) - Character created successfully
+- `PACKET_HC_REFUSE_MAKECHAR` (received) - Character creation failed
+- `PACKET_SC_NOTIFY_BAN` (received) - Account banned notification
+
+**Map Packets** (7 types):
+- `PACKET_CZ_ENTER` (sent) - Initial map server authentication
+- `PACKET_CZ_NOTIFY_ACTORINIT` (sent) - Notify map loaded
+- `PACKET_CZ_REQUEST_TIME` (sent) - Keepalive packet every 10 seconds
+- `PACKET_CZ_REQUEST_MOVE` (sent) - Player movement request
+- `PACKET_CZ_REQUEST_CHAT` (sent) - Chat message
+- `PACKET_CZ_PING_LIVE` (sent) - Respond to server ping
+- `PACKET_ZC_ACCEPT_ENTER` (received) - Map server accepted connection
+- `PACKET_ZC_NPCACK_MAPMOVE` (received) - Map change notification
+- `PACKET_ZC_NOTIFY_PLAYERMOVE` (received) - Player movement notification
+- `PACKET_ZC_NOTIFY_CHAT` (received) - Chat message received
+- `PACKET_ZC_PING_LIVE` (received) - Server keepalive ping
+- `PACKET_SC_NOTIFY_BAN` (received) - Account banned notification
+
+### What Should Work Now
+
+1. ChatSession no longer depends on LoginSession, CharSession, or MapSession
+2. All network flows use Client directly with async packet streams
+3. No event-based architecture - direct packet handling with pattern matching
+4. Keepalive timers managed by ChatSession using Tasks
+5. All command handlers send packets directly via clients
+6. Clean client lifecycle management with proper cleanup on transitions
+7. All chat client functionality works identically to before
+8. Tests pass without modification
+
+### Testing Checklist
+
+- [x] Build succeeds
+- [x] All tests pass
+- [x] Login client connects and authenticates
+- [x] Keepalive packets sent at correct intervals (10s login, 12s char, 10s map)
+- [x] Character server connects and displays character list
+- [x] Map client connects and handles basic packets
+- [x] Chat messages work correctly
+- [x] Client transitions properly disconnect previous clients
+
+---
+
 ## Remaining Phases
 
-- [ ] **Phase 4**: Refactor ChatSession
 - [ ] **Phase 5**: Remove Sessions, Events, and Subscription Infrastructure
 - [ ] **Phase 6**: Update Package Dependencies
