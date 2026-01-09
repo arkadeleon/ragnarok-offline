@@ -246,7 +246,6 @@ final class ChatSession {
             return
         }
 
-        // Stop login client before transitioning
         loginKeepaliveTask?.cancel()
         loginKeepaliveTask = nil
 
@@ -269,7 +268,6 @@ final class ChatSession {
 
         client.connect()
 
-        // Send initial PACKET_CH_ENTER
         let packet = PacketFactory.CH_ENTER(account: account)
         client.sendPacket(packet)
 
@@ -281,7 +279,6 @@ final class ChatSession {
             }
         }
 
-        // Start keepalive timer
         startCharKeepalive()
 
         self.charClient = client
@@ -377,7 +374,6 @@ final class ChatSession {
             return
         }
 
-        // Stop char client before transitioning
         charKeepaliveTask?.cancel()
         charKeepaliveTask = nil
 
@@ -400,7 +396,6 @@ final class ChatSession {
 
         client.connect()
 
-        // Send initial PACKET_CZ_ENTER
         let packet = PacketFactory.CZ_ENTER(account: account, charID: character.charID)
         client.sendPacket(packet)
 
@@ -415,7 +410,6 @@ final class ChatSession {
             client.receivePacket()
         }
 
-        // Start keepalive timer
         startMapKeepalive()
 
         self.mapClient = client
@@ -448,9 +442,8 @@ final class ChatSession {
             playerPosition = position
             messages.append(.serverText("Map changed: \(mapName), position: \(position)"))
 
-            // Notify map loaded
-            let notifyPacket = PacketFactory.CZ_NOTIFY_ACTORINIT()
-            mapClient?.sendPacket(notifyPacket)
+            let packet = PacketFactory.CZ_NOTIFY_ACTORINIT()
+            mapClient?.sendPacket(packet)
         case let packet as PACKET_ZC_NOTIFY_PLAYERMOVE:
             let moveData = MoveData(from: packet.moveData)
             playerPosition = moveData.endPosition

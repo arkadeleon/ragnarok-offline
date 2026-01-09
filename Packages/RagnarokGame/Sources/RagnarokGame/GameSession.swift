@@ -174,7 +174,6 @@ final public class GameSession {
 
     // MARK: - Login Client
 
-    // Send login packet
     func login(username: String, password: String) {
         startLoginClient()
 
@@ -184,7 +183,6 @@ final public class GameSession {
 
         self.username = username
 
-        // See `logclif_parse_reqauth_raw`
         let packet = PacketFactory.CA_LOGIN(username: username, password: password)
         loginClient.sendPacket(packet)
 
@@ -236,7 +234,6 @@ final public class GameSession {
                 phase = .login(.charServerList(charServers))
             }
 
-            // Start keepalive after successful login
             startLoginKeepalive()
         case let packet as PACKET_AC_REFUSE_LOGIN:
             let message = LoginRefusedMessage(from: packet)
@@ -272,7 +269,6 @@ final public class GameSession {
                     break
                 }
 
-                // See `logclif_parse_keepalive`
                 let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username ?? "")
                 loginClient.sendPacket(packet)
             }
@@ -282,7 +278,6 @@ final public class GameSession {
     // MARK: - Char Client
 
     func selectCharServer(_ charServer: CharServerInfo) {
-        // Stop and disconnect login client before starting char client
         loginKeepaliveTask?.cancel()
         loginKeepaliveTask = nil
 
@@ -308,7 +303,6 @@ final public class GameSession {
             return
         }
 
-        // See `chclif_parse_charselect`
         let packet = PacketFactory.CH_SELECT_CHAR(slot: slot)
         charClient.sendPacket(packet)
     }
@@ -321,7 +315,6 @@ final public class GameSession {
             return
         }
 
-        // See `chclif_parse_createnewchar`
         let packet = PacketFactory.CH_MAKE_CHAR(character: character)
         charClient.sendPacket(packet)
     }
@@ -334,7 +327,6 @@ final public class GameSession {
             return
         }
 
-        // See `chclif_parse_char_delete2_accept`
         let packet = PacketFactory.CH_DELETE_CHAR3(charID: charID)
         charClient.sendPacket(packet)
     }
@@ -369,8 +361,6 @@ final public class GameSession {
 
         self.charClient = client
 
-        // Send initial enter packet and receive accountID
-        // See `chclif_parse_reqtoconnect`
         let packet = PacketFactory.CH_ENTER(account: account)
         client.sendPacket(packet)
 
@@ -382,7 +372,6 @@ final public class GameSession {
             }
         }
 
-        // Start keepalive timer
         startCharKeepalive()
     }
 
@@ -399,7 +388,6 @@ final public class GameSession {
                 self.character = character
                 let mapServer = MapServerInfo(from: packet)
 
-                // Stop and disconnect char client before starting map session
                 charKeepaliveTask?.cancel()
                 charKeepaliveTask = nil
 
@@ -465,7 +453,6 @@ final public class GameSession {
                     break
                 }
 
-                // See `chclif_parse_keepalive`
                 let packet = PacketFactory.PING(accountID: account.accountID)
                 charClient.sendPacket(packet)
             }
@@ -508,8 +495,6 @@ final public class GameSession {
 
         self.mapClient = client
 
-        // Send initial enter packet
-        // See `clif_parse_LoadEndAck`
         let packet = PacketFactory.CZ_ENTER(account: account, charID: character.charID)
         client.sendPacket(packet)
 
@@ -524,7 +509,6 @@ final public class GameSession {
             client.receivePacket()
         }
 
-        // Start keepalive timer
         startMapKeepalive()
     }
 
@@ -546,7 +530,6 @@ final public class GameSession {
                     break
                 }
 
-                // See `clif_keepalive`
                 let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
                 mapClient.sendPacket(packet)
             }
@@ -559,7 +542,6 @@ final public class GameSession {
             break
         case let packet as PACKET_ZC_RESTART_ACK:
             if packet.type == 1 {
-                // Stop and disconnect map client
                 mapKeepaliveTask?.cancel()
                 mapKeepaliveTask = nil
 
@@ -570,7 +552,6 @@ final public class GameSession {
             }
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
             if packet.result == 0 {
-                // Stop and disconnect map client
                 mapKeepaliveTask?.cancel()
                 mapKeepaliveTask = nil
 
@@ -923,7 +904,6 @@ final public class GameSession {
 
     // MARK: - Item
 
-    // See `clif_parse_TakeItem`
     func pickUpItem(objectID: UInt32) {
         guard let mapClient else {
             return
@@ -933,7 +913,6 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
-    // See `clif_parse_DropItem`
     func throwItem(at index: Int, amount: Int) {
         guard let mapClient else {
             return
@@ -943,7 +922,6 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
-    // See `clif_parse_UseItem`
     func useItem(at index: Int) {
         guard let mapClient, let accountID = account?.accountID else {
             return
@@ -953,7 +931,6 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
-    // See `clif_parse_EquipItem`
     func equipItem(at index: Int, location: EquipPositions) {
         guard let mapClient else {
             return
@@ -963,7 +940,6 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
-    // See `clif_parse_UnequipItem`
     func unequipItem(at index: Int) {
         guard let mapClient else {
             return
@@ -980,7 +956,6 @@ final public class GameSession {
             return
         }
 
-        // See `clif_parse_NpcClicked`
         let packet = PacketFactory.CZ_CONTACTNPC(npcID: npcID)
         mapClient.sendPacket(packet)
     }
@@ -990,7 +965,6 @@ final public class GameSession {
             return
         }
 
-        // See `clif_parse_NpcNextClicked`
         let packet = PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: dialog.npcID)
         mapClient.sendPacket(packet)
 
@@ -1005,7 +979,6 @@ final public class GameSession {
 
         self.dialog = nil
 
-        // See `clif_parse_NpcCloseClicked`
         let packet = PacketFactory.CZ_CLOSE_DIALOG(npcID: dialog.npcID)
         mapClient.sendPacket(packet)
     }
@@ -1017,7 +990,6 @@ final public class GameSession {
 
         dialog.menu = nil
 
-        // See `clif_parse_NpcSelectMenu`
         let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: dialog.npcID, select: select)
         mapClient.sendPacket(packet)
     }
@@ -1029,7 +1001,6 @@ final public class GameSession {
 
         self.dialog = nil
 
-        // See `clif_parse_NpcSelectMenu`
         let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: dialog.npcID, select: 255)
         mapClient.sendPacket(packet)
     }
@@ -1039,7 +1010,6 @@ final public class GameSession {
             return
         }
 
-        // See `clif_parse_NpcAmountInput`
         let packet = PacketFactory.CZ_INPUT_EDITDLG(npcID: dialog.npcID, value: value)
         mapClient.sendPacket(packet)
 
@@ -1051,7 +1021,6 @@ final public class GameSession {
             return
         }
 
-        // See `clif_parse_NpcStringInput`
         let packet = PacketFactory.CZ_INPUT_EDITDLGSTR(npcID: dialog.npcID, value: value)
         mapClient.sendPacket(packet)
 
