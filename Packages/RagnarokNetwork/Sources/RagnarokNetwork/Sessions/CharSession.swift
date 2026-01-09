@@ -214,14 +214,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_HC_REFUSE_ENTER``
     private func enter() {
         // `chclif_parse_reqtoconnect`
-        var packet = PACKET_CH_ENTER()
-        packet.packetType = HEADER_CH_ENTER
-        packet.accountID = account.accountID
-        packet.loginID1 = account.loginID1
-        packet.loginID2 = account.loginID2
-        packet.clientType = account.langType
-        packet.sex = UInt8(account.sex)
-
+        let packet = PacketFactory.CH_ENTER(account: account)
         client.sendPacket(packet)
 
         client.receiveDataAndPacket(count: 4) { data in
@@ -241,10 +234,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
         timerTask = Task {
             for await _ in timer {
-                var packet = PACKET_PING()
-                packet.packetType = HEADER_PING
-                packet.AID = accountID
-
+                let packet = PacketFactory.PING(accountID: accountID)
                 client.sendPacket(packet)
             }
         }
@@ -258,15 +248,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_HC_REFUSE_MAKECHAR``
     public func makeCharacter(character: CharacterInfo) {
         // `chclif_parse_createnewchar`
-        var packet = PACKET_CH_MAKE_CHAR()
-        packet.packetType = HEADER_CH_MAKE_CHAR
-        packet.name = character.name
-        packet.slot = UInt8(character.charNum)
-        packet.hair_color = UInt16(character.headPalette)
-        packet.hair_style = UInt16(character.head)
-        packet.job = UInt32(character.job)
-        packet.sex = UInt8(character.sex)
-
+        let packet = PacketFactory.CH_MAKE_CHAR(character: character)
         client.sendPacket(packet)
     }
 
@@ -277,10 +259,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_HC_DELETE_CHAR3``
     public func deleteCharacter(charID: UInt32) {
         // `chclif_parse_char_delete2_accept`
-        var packet = PACKET_CH_DELETE_CHAR3()
-        packet.packetType = HEADER_CH_DELETE_CHAR3
-        packet.CID = charID
-
+        let packet = PacketFactory.CH_DELETE_CHAR3(charID: charID)
         client.sendPacket(packet)
     }
 
@@ -325,10 +304,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Receive ``PACKET_HC_NOTIFY_ZONESVR`` when accepted.
     public func selectCharacter(slot: Int) {
         // `chclif_parse_charselect`
-        var packet = PACKET_CH_SELECT_CHAR()
-        packet.packetType = HEADER_CH_SELECT_CHAR
-        packet.slot = UInt8(slot)
-
+        let packet = PacketFactory.CH_SELECT_CHAR(slot: slot)
         client.sendPacket(packet)
     }
 

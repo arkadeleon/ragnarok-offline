@@ -98,10 +98,7 @@ extension MapSession {
     ///
     /// Send ``PACKET_CZ_REQUEST_MOVE``
     public func requestMove(to position: SIMD2<Int>) {
-        var packet = PACKET_CZ_REQUEST_MOVE()
-        packet.x = Int16(position.x)
-        packet.y = Int16(position.y)
-
+        let packet = PacketFactory.CZ_REQUEST_MOVE(position: position)
         client.sendPacket(packet)
     }
 
@@ -109,10 +106,7 @@ extension MapSession {
     ///
     /// Send ``PACKET_CZ_REQUEST_ACT``
     public func requestAction(_ actionType: DamageType, onTarget targetID: UInt32 = 0) {
-        var packet = PACKET_CZ_REQUEST_ACT()
-        packet.targetID = targetID
-        packet.action = UInt8(actionType.rawValue)
-
+        let packet = PacketFactory.CZ_REQUEST_ACT(targetID: targetID, actionType: actionType)
         client.sendPacket(packet)
     }
 
@@ -122,27 +116,17 @@ extension MapSession {
     ///
     /// Receive ``PACKET_ZC_CHANGE_DIRECTION``
     public func changeDirection(headDirection: UInt16, direction: UInt8) {
-        var packet = PACKET_CZ_CHANGE_DIRECTION()
-        packet.headDirection = headDirection
-        packet.direction = direction
-
+        let packet = PacketFactory.CZ_CHANGE_DIRECTION(headDirection: headDirection, direction: direction)
         client.sendPacket(packet)
     }
 
     public func incrementStatusProperty(_ sp: StatusProperty, by amount: Int) {
         switch sp {
         case .str, .agi, .vit, .int, .dex, .luk:
-            var packet = PACKET_CZ_STATUS_CHANGE()
-            packet.statusID = Int16(sp.rawValue)
-            packet.amount = Int8(amount)
-
+            let packet = PacketFactory.CZ_STATUS_CHANGE(property: sp, amount: amount)
             client.sendPacket(packet)
         case .pow, .sta, .wis, .spl, .con, .crt:
-            var packet = PACKET_CZ_ADVANCED_STATUS_CHANGE()
-            packet.packetType = HEADER_CZ_ADVANCED_STATUS_CHANGE
-            packet.type = Int16(sp.rawValue)
-            packet.amount = Int16(amount)
-
+            let packet = PacketFactory.CZ_ADVANCED_STATUS_CHANGE(property: sp, amount: amount)
             client.sendPacket(packet)
         default:
             break

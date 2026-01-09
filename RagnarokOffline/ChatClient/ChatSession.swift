@@ -84,8 +84,7 @@ final class ChatSession {
         messages.append(.clientText(content))
 
         if let mapClient {
-            var packet = PACKET_CZ_REQUEST_CHAT()
-            packet.message = content
+            let packet = PacketFactory.CZ_REQUEST_CHAT(message: content)
 //            packet.message = "\(character.name) : \(content)"
             mapClient.sendPacket(packet)
         }
@@ -103,12 +102,7 @@ final class ChatSession {
 
             startLoginClient()
 
-            var packet = PACKET_CA_LOGIN()
-            packet.packetType = HEADER_CA_LOGIN
-            packet.version = 0
-            packet.username = username
-            packet.password = password
-            packet.clienttype = 0
+            let packet = PacketFactory.CA_LOGIN(username: username, password: password)
             loginClient?.sendPacket(packet)
 
             loginClient?.receivePacket()
@@ -121,10 +115,6 @@ final class ChatSession {
             let charServer = charServers[serverNumber - 1]
             startCharClient(charServer)
         case .makeCharacter:
-            guard let account else {
-                break
-            }
-
             var character = CharacterInfo()
             character.name = parameters[0]
             character.str = Int(parameters[1]) ?? 1
@@ -135,50 +125,33 @@ final class ChatSession {
             character.luk = Int(parameters[6]) ?? 1
             character.charNum = Int(parameters[7]) ?? 0
 
-            var packet = PACKET_CH_MAKE_CHAR()
-            packet.packetType = HEADER_CH_MAKE_CHAR
-            packet.name = character.name
-            packet.slot = UInt8(character.charNum)
-            packet.hair_color = 0
-            packet.hair_style = 0
-            packet.job = 0
-            packet.sex = UInt8(account.sex)
+            let packet = PacketFactory.CH_MAKE_CHAR(character: character)
             charClient?.sendPacket(packet)
         case .deleteCharacter:
             break
         case .selectCharacter:
             let slot = Int(parameters[0]) ?? 0
 
-            var packet = PACKET_CH_SELECT_CHAR()
-            packet.packetType = HEADER_CH_SELECT_CHAR
-            packet.slot = UInt8(slot)
+            let packet = PacketFactory.CH_SELECT_CHAR(slot: slot)
             charClient?.sendPacket(packet)
         case .moveUp:
             if let position = playerPosition {
-                var packet = PACKET_CZ_REQUEST_MOVE()
-                packet.x = Int16(position.x)
-                packet.y = Int16(position.y + 1)
+                let packet = PacketFactory.CZ_REQUEST_MOVE(position: [position.x, position.y + 1])
                 mapClient?.sendPacket(packet)
             }
         case .moveDown:
             if let position = playerPosition {
-                var packet = PACKET_CZ_REQUEST_MOVE()
-                packet.x = Int16(position.x)
-                packet.y = Int16(position.y - 1)
+                let packet = PacketFactory.CZ_REQUEST_MOVE(position: [position.x, position.y - 1])
                 mapClient?.sendPacket(packet)
             }
         case .moveLeft:
             if let position = playerPosition {
-                var packet = PACKET_CZ_REQUEST_MOVE()
-                packet.x = Int16(position.x - 1)
-                packet.y = Int16(position.y)
+                let packet = PacketFactory.CZ_REQUEST_MOVE(position: [position.x - 1, position.y])
                 mapClient?.sendPacket(packet)
             }
         case .moveRight:
             if let position = playerPosition {
-                var packet = PACKET_CZ_REQUEST_MOVE()
-                packet.x = Int16(position.x + 1)
-                packet.y = Int16(position.y)
+                let packet = PacketFactory.CZ_REQUEST_MOVE(position: [position.x + 1, position.y])
                 mapClient?.sendPacket(packet)
             }
         }
@@ -219,9 +192,7 @@ final class ChatSession {
                     return
                 }
 
-                var packet = PACKET_CA_CONNECT_INFO_CHANGED()
-                packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
-                packet.name = username
+                let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username)
                 loginClient?.sendPacket(packet)
             }
         }
@@ -299,13 +270,7 @@ final class ChatSession {
         client.connect()
 
         // Send initial PACKET_CH_ENTER
-        var packet = PACKET_CH_ENTER()
-        packet.packetType = HEADER_CH_ENTER
-        packet.accountID = account.accountID
-        packet.loginID1 = account.loginID1
-        packet.loginID2 = account.loginID2
-        packet.clientType = account.langType
-        packet.sex = UInt8(account.sex)
+        let packet = PacketFactory.CH_ENTER(account: account)
         client.sendPacket(packet)
 
         // Receive accountID (4 bytes) and update account
@@ -335,9 +300,7 @@ final class ChatSession {
                     return
                 }
 
-                var packet = PACKET_PING()
-                packet.packetType = HEADER_PING
-                packet.AID = account.accountID
+                let packet = PacketFactory.PING(accountID: account.accountID)
                 charClient?.sendPacket(packet)
             }
         }
@@ -438,12 +401,7 @@ final class ChatSession {
         client.connect()
 
         // Send initial PACKET_CZ_ENTER
-        var packet = PACKET_CZ_ENTER()
-        packet.accountID = account.accountID
-        packet.charID = character.charID
-        packet.loginID1 = account.loginID1
-        packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
-        packet.sex = UInt8(account.sex)
+        let packet = PacketFactory.CZ_ENTER(account: account, charID: character.charID)
         client.sendPacket(packet)
 
         if PACKET_VERSION < 20070521 {
@@ -474,8 +432,7 @@ final class ChatSession {
                     return
                 }
 
-                var packet = PACKET_CZ_REQUEST_TIME()
-                packet.clientTime = UInt32(Date.now.timeIntervalSince(startTime))
+                let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
                 mapClient?.sendPacket(packet)
             }
         }
@@ -492,8 +449,7 @@ final class ChatSession {
             messages.append(.serverText("Map changed: \(mapName), position: \(position)"))
 
             // Notify map loaded
-            var notifyPacket = PACKET_CZ_NOTIFY_ACTORINIT()
-            notifyPacket.packetType = HEADER_CZ_NOTIFY_ACTORINIT
+            let notifyPacket = PacketFactory.CZ_NOTIFY_ACTORINIT()
             mapClient?.sendPacket(notifyPacket)
         case let packet as PACKET_ZC_NOTIFY_PLAYERMOVE:
             let moveData = MoveData(from: packet.moveData)
@@ -503,8 +459,7 @@ final class ChatSession {
             let message = ChatMessage(from: packet)
             messages.append(.serverText(message.content))
         case _ as PACKET_ZC_PING_LIVE:
-            var packet = PACKET_CZ_PING_LIVE()
-            packet.packetType = HEADER_CZ_PING_LIVE
+            let packet = PacketFactory.CZ_PING_LIVE()
             mapClient?.sendPacket(packet)
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)

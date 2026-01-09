@@ -67,15 +67,7 @@ final class NetworkClientTests: XCTestCase {
 
         loginClient.connect()
 
-        loginClient.sendPacket({
-            var packet = PACKET_CA_LOGIN()
-            packet.packetType = HEADER_CA_LOGIN
-            packet.version = 0
-            packet.username = "ragnarok_m"
-            packet.password = "ragnarok"
-            packet.clienttype = 0
-            return packet
-        }())
+        loginClient.sendPacket(PacketFactory.CA_LOGIN(username: "ragnarok_m", password: "ragnarok"))
 
         loginClient.receivePacket()
 
@@ -96,16 +88,7 @@ final class NetworkClientTests: XCTestCase {
 
         charClient.connect()
 
-        charClient.sendPacket({
-            var packet = PACKET_CH_ENTER()
-            packet.packetType = HEADER_CH_ENTER
-            packet.accountID = account.accountID
-            packet.loginID1 = account.loginID1
-            packet.loginID2 = account.loginID2
-            packet.clientType = account.langType
-            packet.sex = UInt8(account.sex)
-            return packet
-        }())
+        charClient.sendPacket(PacketFactory.CH_ENTER(account: account))
 
         charClient.receiveDataAndPacket(count: 4) { data in
 //            let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
@@ -122,15 +105,14 @@ final class NetworkClientTests: XCTestCase {
         // MARK: - Make a character
 
         charClient.sendPacket({
-            var packet = PACKET_CH_MAKE_CHAR()
-            packet.packetType = HEADER_CH_MAKE_CHAR
-            packet.name = "Leon"
-            packet.slot = 0
-            packet.hair_color = 0
-            packet.hair_style = 0
-            packet.job = 0
-            packet.sex = 0
-            return packet
+            var character = CharacterInfo()
+            character.name = "Leon"
+            character.charNum = 0
+            character.headPalette = 0
+            character.head = 0
+            character.job = 0
+            character.sex = 0
+            return PacketFactory.CH_MAKE_CHAR(character: character)
         }())
 
         for await packet in charClient.packetStream {
@@ -144,12 +126,7 @@ final class NetworkClientTests: XCTestCase {
 
         // MARK: - Select a character
 
-        charClient.sendPacket({
-            var packet = PACKET_CH_SELECT_CHAR()
-            packet.packetType = HEADER_CH_SELECT_CHAR
-            packet.slot = 0
-            return packet
-        }())
+        charClient.sendPacket(PacketFactory.CH_SELECT_CHAR(slot: 0))
 
         for await packet in charClient.packetStream {
             if let packet = packet as? PACKET_HC_NOTIFY_ZONESVR {
@@ -167,15 +144,7 @@ final class NetworkClientTests: XCTestCase {
 
         mapClient.connect()
 
-        mapClient.sendPacket({
-            var packet = PACKET_CZ_ENTER()
-            packet.accountID = account.accountID
-            packet.charID = character.charID
-            packet.loginID1 = account.loginID1
-            packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
-            packet.sex = UInt8(account.sex)
-            return packet
-        }())
+        mapClient.sendPacket(PacketFactory.CZ_ENTER(account: account, charID: character.charID))
 
         mapClient.receiveDataAndPacket(count: 4) { data in
 //            let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
@@ -190,11 +159,7 @@ final class NetworkClientTests: XCTestCase {
                 // Load map.
                 try await Task.sleep(for: .seconds(1))
 
-                mapClient.sendPacket({
-                    var packet = PACKET_CZ_NOTIFY_ACTORINIT()
-                    packet.packetType = HEADER_CZ_NOTIFY_ACTORINIT
-                    return packet
-                }())
+                mapClient.sendPacket(PacketFactory.CZ_NOTIFY_ACTORINIT())
 
                 break
             }
@@ -216,12 +181,7 @@ final class NetworkClientTests: XCTestCase {
 
         // MARK: - Move to warp
 
-        mapClient.sendPacket({
-            var packet = PACKET_CZ_REQUEST_MOVE()
-            packet.x = 27
-            packet.y = 30
-            return packet
-        }())
+        mapClient.sendPacket(PacketFactory.CZ_REQUEST_MOVE(position: [27, 30]))
 
         for await packet in mapClient.packetStream {
             if let packet = packet as? PACKET_ZC_NOTIFY_PLAYERMOVE {
@@ -240,11 +200,7 @@ final class NetworkClientTests: XCTestCase {
                 // Load map.
                 try await Task.sleep(for: .seconds(1))
 
-                mapClient.sendPacket({
-                    var packet = PACKET_CZ_NOTIFY_ACTORINIT()
-                    packet.packetType = HEADER_CZ_NOTIFY_ACTORINIT
-                    return packet
-                }())
+                mapClient.sendPacket(PacketFactory.CZ_NOTIFY_ACTORINIT())
 
                 break
             }
@@ -269,52 +225,25 @@ final class NetworkClientTests: XCTestCase {
 
         let woundedSwordsman1 = mapObjects.first(where: { $0.job == 687 })!
 
-        mapClient.sendPacket({
-            var packet = PACKET_CZ_CONTACTNPC()
-            packet.packetType = HEADER_CZ_CONTACTNPC
-            packet.AID = woundedSwordsman1.objectID
-            packet.type = 1
-            return packet
-        }())
+        mapClient.sendPacket(PacketFactory.CZ_CONTACTNPC(npcID: woundedSwordsman1.objectID))
 
         try await Task.sleep(for: .seconds(1))
 
         let woundedSwordsman2 = mapObjects.first(where: { $0.job == 688 })!
 
-        mapClient.sendPacket({
-            var packet = PACKET_CZ_CONTACTNPC()
-            packet.packetType = HEADER_CZ_CONTACTNPC
-            packet.AID = woundedSwordsman2.objectID
-            packet.type = 1
-            return packet
-        }())
+        mapClient.sendPacket(PacketFactory.CZ_CONTACTNPC(npcID: woundedSwordsman2.objectID))
 
         try await Task.sleep(for: .seconds(1))
 
-        mapClient.sendPacket({
-            var packet = PACKET_CZ_REQ_NEXT_SCRIPT()
-            packet.packetType = HEADER_CZ_REQ_NEXT_SCRIPT
-            packet.npcID = woundedSwordsman2.objectID
-            return packet
-        }())
+        mapClient.sendPacket(PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: woundedSwordsman2.objectID))
 
         try await Task.sleep(for: .seconds(1))
 
-        mapClient.sendPacket({
-            var packet = PACKET_CZ_REQ_NEXT_SCRIPT()
-            packet.packetType = HEADER_CZ_REQ_NEXT_SCRIPT
-            packet.npcID = woundedSwordsman2.objectID
-            return packet
-        }())
+        mapClient.sendPacket(PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: woundedSwordsman2.objectID))
 
         try await Task.sleep(for: .seconds(1))
 
-        mapClient.sendPacket({
-            var packet = PACKET_CZ_CLOSE_DIALOG()
-            packet.packetType = HEADER_CZ_CLOSE_DIALOG
-            packet.GID = woundedSwordsman2.objectID
-            return packet
-        }())
+        mapClient.sendPacket(PacketFactory.CZ_CLOSE_DIALOG(npcID: woundedSwordsman2.objectID))
 
         try await Task.sleep(for: .seconds(5))
 

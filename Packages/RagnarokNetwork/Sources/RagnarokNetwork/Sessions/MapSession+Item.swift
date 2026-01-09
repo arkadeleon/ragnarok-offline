@@ -109,45 +109,31 @@ extension MapSession {
 
     // See `clif_parse_TakeItem`
     public func pickUpItem(objectID: UInt32) {
-        var packet = PACKET_CZ_ITEM_PICKUP()
-        packet.objectID = objectID
-
+        let packet = PacketFactory.CZ_ITEM_PICKUP(objectID: objectID)
         client.sendPacket(packet)
     }
 
     // See `clif_parse_DropItem`
     public func throwItem(at index: Int, amount: Int) {
-        var packet = PACKET_CZ_ITEM_THROW()
-        packet.index = UInt16(index)
-        packet.amount = Int16(amount)
-
+        let packet = PacketFactory.CZ_ITEM_THROW(index: index, amount: amount)
         client.sendPacket(packet)
     }
 
     // See `clif_parse_UseItem`
     public func useItem(at index: Int, by accountID: UInt32) {
-        var packet = PACKET_CZ_USE_ITEM()
-        packet.index = UInt16(index)
-        packet.accountID = accountID
-
+        let packet = PacketFactory.CZ_USE_ITEM(index: index, accountID: accountID)
         client.sendPacket(packet)
     }
 
     // See `clif_parse_EquipItem`
     public func equipItem(at index: Int, location: EquipPositions) {
-        var packet = PACKET_CZ_REQ_WEAR_EQUIP()
-        packet.packetType = HEADER_CZ_REQ_WEAR_EQUIP
-        packet.index = UInt16(index)
-        packet.position = UInt32(location.rawValue)
-
+        let packet = PacketFactory.CZ_REQ_WEAR_EQUIP(index: index, location: location)
         client.sendPacket(packet)
     }
 
     // See `clif_parse_UnequipItem`
     public func unequipItem(at index: Int) {
-        var packet = PACKET_CZ_REQ_TAKEOFF_EQUIP()
-        packet.index = UInt16(index)
-
+        let packet = PacketFactory.CZ_REQ_TAKEOFF_EQUIP(index: index)
         client.sendPacket(packet)
     }
 }

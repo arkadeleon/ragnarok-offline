@@ -112,13 +112,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         self.username = username
 
         // See `logclif_parse_reqauth_raw`
-        var packet = PACKET_CA_LOGIN()
-        packet.packetType = HEADER_CA_LOGIN
-        packet.version = 0
-        packet.username = username
-        packet.password = password
-        packet.clienttype = 0
-
+        let packet = PacketFactory.CA_LOGIN(username: username, password: password)
         client.sendPacket(packet)
 
         client.receivePacket()
@@ -135,10 +129,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         timerTask = Task {
             for await _ in timer {
                 // See `logclif_parse_keepalive`
-                var packet = PACKET_CA_CONNECT_INFO_CHANGED()
-                packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
-                packet.name = username ?? ""
-
+                let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username ?? "")
                 client.sendPacket(packet)
             }
         }

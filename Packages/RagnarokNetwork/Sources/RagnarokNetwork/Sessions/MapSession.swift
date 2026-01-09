@@ -120,9 +120,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         // See `clif_ping`
         subscription.subscribe(to: PACKET_ZC_PING_LIVE.self) { [unowned self] packet in
-            var packet = PACKET_CZ_PING_LIVE()
-            packet.packetType = HEADER_CZ_PING_LIVE
-
+            let packet = PacketFactory.CZ_PING_LIVE()
             self.client.sendPacket(packet)
         }
 
@@ -200,13 +198,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     ///         ``PACKET_ZC_EXTEND_BODYITEM_SIZE`` +
     ///         ``PACKET_ZC_ACCEPT_ENTER``
     private func enter() {
-        var packet = PACKET_CZ_ENTER()
-        packet.accountID = account.accountID
-        packet.charID = character.charID
-        packet.loginID1 = account.loginID1
-        packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
-        packet.sex = UInt8(account.sex)
-
+        let packet = PacketFactory.CZ_ENTER(account: account, charID: character.charID)
         client.sendPacket(packet)
 
         if PACKET_VERSION < 20070521 {
@@ -469,18 +461,14 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
 
         timerTask = Task {
             for await _ in timer {
-                var packet = PACKET_CZ_REQUEST_TIME()
-                packet.clientTime = UInt32(Date.now.timeIntervalSince(startTime))
-
+                let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
                 client.sendPacket(packet)
             }
         }
     }
 
     public func notifyMapLoaded() {
-        var packet = PACKET_CZ_NOTIFY_ACTORINIT()
-        packet.packetType = HEADER_CZ_NOTIFY_ACTORINIT
-
+        let packet = PacketFactory.CZ_NOTIFY_ACTORINIT()
         client.sendPacket(packet)
     }
 
@@ -492,31 +480,23 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         } else if message.hasPrefix("/cl") {
 //            PACKET_CZ_CLAN_CHAT
         } else {
-            var packet = PACKET_CZ_REQUEST_CHAT()
-            packet.message = "\(character.name) : \(message)"
-
+            let packet = PacketFactory.CZ_REQUEST_CHAT(message: "\(character.name) : \(message)")
             client.sendPacket(packet)
         }
     }
 
     public func returnToLastSavePoint() {
-        var packet = PACKET_CZ_RESTART()
-        packet.type = 0
-
+        let packet = PacketFactory.CZ_RESTART(type: 0)
         client.sendPacket(packet)
     }
 
     public func returnToCharacterSelect() {
-        var packet = PACKET_CZ_RESTART()
-        packet.type = 1
-
+        let packet = PacketFactory.CZ_RESTART(type: 1)
         client.sendPacket(packet)
     }
 
     public func requestExit() {
-        var packet = PACKET_CZ_REQUEST_QUIT()
-        packet.packetType = HEADER_CZ_REQUEST_QUIT
-
+        let packet = PacketFactory.CZ_REQUEST_QUIT()
         client.sendPacket(packet)
     }
 

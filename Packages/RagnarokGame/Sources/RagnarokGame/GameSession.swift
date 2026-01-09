@@ -185,12 +185,7 @@ final public class GameSession {
         self.username = username
 
         // See `logclif_parse_reqauth_raw`
-        var packet = PACKET_CA_LOGIN()
-        packet.packetType = HEADER_CA_LOGIN
-        packet.version = 0
-        packet.username = username
-        packet.password = password
-        packet.clienttype = 0
+        let packet = PacketFactory.CA_LOGIN(username: username, password: password)
         loginClient.sendPacket(packet)
 
         loginClient.receivePacket()
@@ -278,9 +273,7 @@ final public class GameSession {
                 }
 
                 // See `logclif_parse_keepalive`
-                var packet = PACKET_CA_CONNECT_INFO_CHANGED()
-                packet.packetType = HEADER_CA_CONNECT_INFO_CHANGED
-                packet.name = username ?? ""
+                let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username ?? "")
                 loginClient.sendPacket(packet)
             }
         }
@@ -316,9 +309,7 @@ final public class GameSession {
         }
 
         // See `chclif_parse_charselect`
-        var packet = PACKET_CH_SELECT_CHAR()
-        packet.packetType = HEADER_CH_SELECT_CHAR
-        packet.slot = UInt8(slot)
+        let packet = PacketFactory.CH_SELECT_CHAR(slot: slot)
         charClient.sendPacket(packet)
     }
 
@@ -331,14 +322,7 @@ final public class GameSession {
         }
 
         // See `chclif_parse_createnewchar`
-        var packet = PACKET_CH_MAKE_CHAR()
-        packet.packetType = HEADER_CH_MAKE_CHAR
-        packet.name = character.name
-        packet.slot = UInt8(character.charNum)
-        packet.hair_color = UInt16(character.headPalette)
-        packet.hair_style = UInt16(character.head)
-        packet.job = UInt32(character.job)
-        packet.sex = UInt8(character.sex)
+        let packet = PacketFactory.CH_MAKE_CHAR(character: character)
         charClient.sendPacket(packet)
     }
 
@@ -351,9 +335,7 @@ final public class GameSession {
         }
 
         // See `chclif_parse_char_delete2_accept`
-        var packet = PACKET_CH_DELETE_CHAR3()
-        packet.packetType = HEADER_CH_DELETE_CHAR3
-        packet.CID = charID
+        let packet = PacketFactory.CH_DELETE_CHAR3(charID: charID)
         charClient.sendPacket(packet)
     }
 
@@ -389,13 +371,7 @@ final public class GameSession {
 
         // Send initial enter packet and receive accountID
         // See `chclif_parse_reqtoconnect`
-        var packet = PACKET_CH_ENTER()
-        packet.packetType = HEADER_CH_ENTER
-        packet.accountID = account.accountID
-        packet.loginID1 = account.loginID1
-        packet.loginID2 = account.loginID2
-        packet.clientType = account.langType
-        packet.sex = UInt8(account.sex)
+        let packet = PacketFactory.CH_ENTER(account: account)
         client.sendPacket(packet)
 
         // Receive accountID (4 bytes) and update account
@@ -490,9 +466,7 @@ final public class GameSession {
                 }
 
                 // See `chclif_parse_keepalive`
-                var packet = PACKET_PING()
-                packet.packetType = HEADER_PING
-                packet.AID = account.accountID
+                let packet = PacketFactory.PING(accountID: account.accountID)
                 charClient.sendPacket(packet)
             }
         }
@@ -536,12 +510,7 @@ final public class GameSession {
 
         // Send initial enter packet
         // See `clif_parse_LoadEndAck`
-        var packet = PACKET_CZ_ENTER()
-        packet.accountID = account.accountID
-        packet.charID = character.charID
-        packet.loginID1 = account.loginID1
-        packet.clientTime = UInt32(Date.now.timeIntervalSince1970)
-        packet.sex = UInt8(account.sex)
+        let packet = PacketFactory.CZ_ENTER(account: account, charID: character.charID)
         client.sendPacket(packet)
 
         if PACKET_VERSION < 20070521 {
@@ -578,8 +547,7 @@ final public class GameSession {
                 }
 
                 // See `clif_keepalive`
-                var packet = PACKET_CZ_REQUEST_TIME()
-                packet.clientTime = UInt32(Date.now.timeIntervalSince(startTime))
+                let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
                 mapClient.sendPacket(packet)
             }
         }
@@ -614,8 +582,7 @@ final public class GameSession {
         case let packet as PACKET_ZC_AID:
             account?.update(accountID: packet.accountID)
         case _ as PACKET_ZC_PING_LIVE:
-            var packet = PACKET_CZ_PING_LIVE()
-            packet.packetType = HEADER_CZ_PING_LIVE
+            let packet = PacketFactory.CZ_PING_LIVE()
             mapClient?.sendPacket(packet)
         case let packet as PACKET_ZC_NPCACK_MAPMOVE:
             if let mapScene {
@@ -847,8 +814,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_NOTIFY_ACTORINIT()
-        packet.packetType = HEADER_CZ_NOTIFY_ACTORINIT
+        let packet = PacketFactory.CZ_NOTIFY_ACTORINIT()
         mapClient.sendPacket(packet)
     }
 
@@ -857,8 +823,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_RESTART()
-        packet.type = 0
+        let packet = PacketFactory.CZ_RESTART(type: 0)
         mapClient.sendPacket(packet)
     }
 
@@ -867,8 +832,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_RESTART()
-        packet.type = 1
+        let packet = PacketFactory.CZ_RESTART(type: 1)
         mapClient.sendPacket(packet)
     }
 
@@ -877,8 +841,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_REQUEST_QUIT()
-        packet.packetType = HEADER_CZ_REQUEST_QUIT
+        let packet = PacketFactory.CZ_REQUEST_QUIT()
         mapClient.sendPacket(packet)
     }
 
@@ -892,9 +855,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_REQUEST_MOVE()
-        packet.x = Int16(position.x)
-        packet.y = Int16(position.y)
+        let packet = PacketFactory.CZ_REQUEST_MOVE(position: position)
         mapClient.sendPacket(packet)
     }
 
@@ -906,9 +867,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_REQUEST_ACT()
-        packet.targetID = targetID
-        packet.action = UInt8(actionType.rawValue)
+        let packet = PacketFactory.CZ_REQUEST_ACT(targetID: targetID, actionType: actionType)
         mapClient.sendPacket(packet)
     }
 
@@ -922,9 +881,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_CHANGE_DIRECTION()
-        packet.headDirection = headDirection
-        packet.direction = direction
+        let packet = PacketFactory.CZ_CHANGE_DIRECTION(headDirection: headDirection, direction: direction)
         mapClient.sendPacket(packet)
     }
 
@@ -935,15 +892,10 @@ final public class GameSession {
 
         switch sp {
         case .str, .agi, .vit, .int, .dex, .luk:
-            var packet = PACKET_CZ_STATUS_CHANGE()
-            packet.statusID = Int16(sp.rawValue)
-            packet.amount = Int8(amount)
+            let packet = PacketFactory.CZ_STATUS_CHANGE(property: sp, amount: amount)
             mapClient.sendPacket(packet)
         case .pow, .sta, .wis, .spl, .con, .crt:
-            var packet = PACKET_CZ_ADVANCED_STATUS_CHANGE()
-            packet.packetType = HEADER_CZ_ADVANCED_STATUS_CHANGE
-            packet.type = Int16(sp.rawValue)
-            packet.amount = Int16(amount)
+            let packet = PacketFactory.CZ_ADVANCED_STATUS_CHANGE(property: sp, amount: amount)
             mapClient.sendPacket(packet)
         default:
             break
@@ -964,8 +916,7 @@ final public class GameSession {
         } else if message.hasPrefix("/cl") {
 //            PACKET_CZ_CLAN_CHAT
         } else {
-            var packet = PACKET_CZ_REQUEST_CHAT()
-            packet.message = "\(character.name) : \(message)"
+            let packet = PacketFactory.CZ_REQUEST_CHAT(message: "\(character.name) : \(message)")
             mapClient.sendPacket(packet)
         }
     }
@@ -978,8 +929,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_ITEM_PICKUP()
-        packet.objectID = objectID
+        let packet = PacketFactory.CZ_ITEM_PICKUP(objectID: objectID)
         mapClient.sendPacket(packet)
     }
 
@@ -989,9 +939,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_ITEM_THROW()
-        packet.index = UInt16(index)
-        packet.amount = Int16(amount)
+        let packet = PacketFactory.CZ_ITEM_THROW(index: index, amount: amount)
         mapClient.sendPacket(packet)
     }
 
@@ -1001,9 +949,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_USE_ITEM()
-        packet.index = UInt16(index)
-        packet.accountID = accountID
+        let packet = PacketFactory.CZ_USE_ITEM(index: index, accountID: accountID)
         mapClient.sendPacket(packet)
     }
 
@@ -1013,10 +959,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_REQ_WEAR_EQUIP()
-        packet.packetType = HEADER_CZ_REQ_WEAR_EQUIP
-        packet.index = UInt16(index)
-        packet.position = UInt32(location.rawValue)
+        let packet = PacketFactory.CZ_REQ_WEAR_EQUIP(index: index, location: location)
         mapClient.sendPacket(packet)
     }
 
@@ -1026,8 +969,7 @@ final public class GameSession {
             return
         }
 
-        var packet = PACKET_CZ_REQ_TAKEOFF_EQUIP()
-        packet.index = UInt16(index)
+        let packet = PacketFactory.CZ_REQ_TAKEOFF_EQUIP(index: index)
         mapClient.sendPacket(packet)
     }
 
@@ -1039,10 +981,7 @@ final public class GameSession {
         }
 
         // See `clif_parse_NpcClicked`
-        var packet = PACKET_CZ_CONTACTNPC()
-        packet.packetType = HEADER_CZ_CONTACTNPC
-        packet.AID = npcID
-        packet.type = 1
+        let packet = PacketFactory.CZ_CONTACTNPC(npcID: npcID)
         mapClient.sendPacket(packet)
     }
 
@@ -1052,9 +991,7 @@ final public class GameSession {
         }
 
         // See `clif_parse_NpcNextClicked`
-        var packet = PACKET_CZ_REQ_NEXT_SCRIPT()
-        packet.packetType = HEADER_CZ_REQ_NEXT_SCRIPT
-        packet.npcID = dialog.npcID
+        let packet = PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: dialog.npcID)
         mapClient.sendPacket(packet)
 
         dialog.setNeedsClear()
@@ -1069,9 +1006,7 @@ final public class GameSession {
         self.dialog = nil
 
         // See `clif_parse_NpcCloseClicked`
-        var packet = PACKET_CZ_CLOSE_DIALOG()
-        packet.packetType = HEADER_CZ_CLOSE_DIALOG
-        packet.GID = dialog.npcID
+        let packet = PacketFactory.CZ_CLOSE_DIALOG(npcID: dialog.npcID)
         mapClient.sendPacket(packet)
     }
 
@@ -1083,10 +1018,7 @@ final public class GameSession {
         dialog.menu = nil
 
         // See `clif_parse_NpcSelectMenu`
-        var packet = PACKET_CZ_CHOOSE_MENU()
-        packet.packetType = HEADER_CZ_CHOOSE_MENU
-        packet.npcID = dialog.npcID
-        packet.select = select
+        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: dialog.npcID, select: select)
         mapClient.sendPacket(packet)
     }
 
@@ -1098,10 +1030,7 @@ final public class GameSession {
         self.dialog = nil
 
         // See `clif_parse_NpcSelectMenu`
-        var packet = PACKET_CZ_CHOOSE_MENU()
-        packet.packetType = HEADER_CZ_CHOOSE_MENU
-        packet.npcID = dialog.npcID
-        packet.select = 255
+        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: dialog.npcID, select: 255)
         mapClient.sendPacket(packet)
     }
 
@@ -1111,10 +1040,7 @@ final public class GameSession {
         }
 
         // See `clif_parse_NpcAmountInput`
-        var packet = PACKET_CZ_INPUT_EDITDLG()
-        packet.packetType = HEADER_CZ_INPUT_EDITDLG
-        packet.GID = dialog.npcID
-        packet.value = value
+        let packet = PacketFactory.CZ_INPUT_EDITDLG(npcID: dialog.npcID, value: value)
         mapClient.sendPacket(packet)
 
         dialog.input = nil
@@ -1126,11 +1052,7 @@ final public class GameSession {
         }
 
         // See `clif_parse_NpcStringInput`
-        var packet = PACKET_CZ_INPUT_EDITDLGSTR()
-        packet.packetType = HEADER_CZ_INPUT_EDITDLGSTR
-        packet.packetLength = Int16(2 + 2 + 4 + value.utf8.count)
-        packet.GID = Int32(dialog.npcID)
-        packet.value = value
+        let packet = PacketFactory.CZ_INPUT_EDITDLGSTR(npcID: dialog.npcID, value: value)
         mapClient.sendPacket(packet)
 
         dialog.input = nil
