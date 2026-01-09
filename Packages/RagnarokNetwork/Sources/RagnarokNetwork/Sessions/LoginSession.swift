@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/3/27.
 //
 
-import AsyncAlgorithms
 import Combine
 import Foundation
 import RagnarokModels
@@ -122,15 +121,18 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Send ``PACKET_CA_CONNECT_INFO_CHANGED`` every 10 seconds.
     private func keepAlive() {
-        let timer = AsyncTimerSequence(interval: .seconds(10), clock: .continuous)
-
         let client = client
 
         timerTask = Task {
-            for await _ in timer {
-                // See `logclif_parse_keepalive`
-                let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username ?? "")
-                client.sendPacket(packet)
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(10))
+
+                    let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username ?? "")
+                    client.sendPacket(packet)
+                }
+            } catch {
+                logger.warning("\(error)")
             }
         }
     }

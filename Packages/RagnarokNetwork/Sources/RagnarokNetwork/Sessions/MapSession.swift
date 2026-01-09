@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/8/22.
 //
 
-import AsyncAlgorithms
 import Combine
 import Foundation
 import RagnarokConstants
@@ -454,15 +453,19 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Send ``PACKET_CZ_REQUEST_TIME`` every 10 seconds.
     private func keepAlive() {
-        let timer = AsyncTimerSequence(interval: .seconds(10), clock: .continuous)
-
         let startTime = Date.now
         let client = client
 
         timerTask = Task {
-            for await _ in timer {
-                let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
-                client.sendPacket(packet)
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(10))
+
+                    let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
+                    client.sendPacket(packet)
+                }
+            } catch {
+                logger.warning("\(error)")
             }
         }
     }

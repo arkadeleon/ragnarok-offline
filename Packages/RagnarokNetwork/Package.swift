@@ -20,7 +20,6 @@ let package = Package(
         .package(path: "../RagnarokConstants"),
         .package(path: "../RagnarokModels"),
         .package(path: "../RagnarokPackets"),
-        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
     ],
     targets: [
         .target(
@@ -30,7 +29,6 @@ let package = Package(
                 "RagnarokConstants",
                 "RagnarokModels",
                 "RagnarokPackets",
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ]
         ),
         .testTarget(

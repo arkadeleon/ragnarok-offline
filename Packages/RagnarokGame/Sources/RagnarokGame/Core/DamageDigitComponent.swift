@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RagnarokNetwork
 import RealityKit
 
 struct DamageDigitComponent: Component {

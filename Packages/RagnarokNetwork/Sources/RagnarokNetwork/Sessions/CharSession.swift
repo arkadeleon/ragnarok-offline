@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/8/8.
 //
 
-import AsyncAlgorithms
 import Combine
 import Foundation
 import RagnarokModels
@@ -227,15 +226,19 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     ///
     /// Send ``PACKET_PING`` every 12 seconds.
     private func keepAlive() {
-        let timer = AsyncTimerSequence(interval: .seconds(12), clock: .continuous)
-
         let accountID = account.accountID
         let client = client
 
         timerTask = Task {
-            for await _ in timer {
-                let packet = PacketFactory.PING(accountID: accountID)
-                client.sendPacket(packet)
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(12))
+
+                    let packet = PacketFactory.PING(accountID: accountID)
+                    client.sendPacket(packet)
+                }
+            } catch {
+                logger.warning("\(error)")
             }
         }
     }

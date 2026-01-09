@@ -262,15 +262,15 @@ final public class GameSession {
         }
 
         loginKeepaliveTask = Task {
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(10))
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(10))
 
-                guard !Task.isCancelled else {
-                    break
+                    let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username ?? "")
+                    loginClient.sendPacket(packet)
                 }
-
-                let packet = PacketFactory.CA_CONNECT_INFO_CHANGED(username: username ?? "")
-                loginClient.sendPacket(packet)
+            } catch {
+                logger.warning("\(error)")
             }
         }
     }
@@ -446,15 +446,15 @@ final public class GameSession {
         }
 
         charKeepaliveTask = Task {
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(12))
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(12))
 
-                guard !Task.isCancelled else {
-                    break
+                    let packet = PacketFactory.PING(accountID: account.accountID)
+                    charClient.sendPacket(packet)
                 }
-
-                let packet = PacketFactory.PING(accountID: account.accountID)
-                charClient.sendPacket(packet)
+            } catch {
+                logger.warning("\(error)")
             }
         }
     }
@@ -523,15 +523,15 @@ final public class GameSession {
         let startTime = Date.now
 
         mapKeepaliveTask = Task {
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(10))
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(10))
 
-                guard !Task.isCancelled else {
-                    break
+                    let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
+                    mapClient.sendPacket(packet)
                 }
-
-                let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
-                mapClient.sendPacket(packet)
+            } catch {
+                logger.warning("\(error)")
             }
         }
     }
