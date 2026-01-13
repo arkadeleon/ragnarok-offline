@@ -5,64 +5,33 @@
 //  Created by Leon Li on 2024/2/28.
 //
 
+import JSONViewer
 import SwiftUI
 
 struct FileJSONViewer: View {
     var file: File
     var onDone: () -> Void
 
-    @State private var htmlString = ""
-
     var body: some View {
+        AsyncContentView(load: loadJSON) { json in
+            JSONViewer(data: json)
+        }
         #if os(macOS)
-        WebView(htmlString: htmlString, baseURL: Bundle.main.resourceURL)
-            .frame(height: 400)
-            .navigationTitle("JSON Viewer")
-            .toolbar {
-                ToolbarCancelButton(action: onDone)
-            }
-            .task {
-                await loadHTMLString()
-            }
-        #else
-        WebView(htmlString: htmlString, baseURL: Bundle.main.resourceURL)
-            .ignoresSafeArea()
-            .navigationTitle("JSON Viewer")
-            .toolbarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarCancelButton(action: onDone)
-            }
-            .task {
-                await loadHTMLString()
-            }
+        .frame(height: 400)
         #endif
+        .navigationTitle("JSON Viewer")
+        .toolbarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarCancelButton(action: onDone)
+        }
     }
 
-    private func loadHTMLString() async {
+    private func loadJSON() async -> Data {
         guard let json = await file.json() else {
-            return
+            return Data()
         }
 
-        htmlString = """
-        <!doctype html>
-        <html lang="en">
-          <meta charset="utf-8">
-          <meta name="viewport" content="height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-          <body>
-            <div id="json-viewer"></div>
-            <script src="browser.js"></script>
-            <script>
-              new JsonViewer({
-                value: \(json),
-                rootName: false,
-                enableClipboard: false,
-                quotesOnKeys: false,
-                displayDataTypes: false
-              }).render('#json-viewer')
-            </script>
-          </body>
-        </html>
-        """
+        return json.data(using: .utf8) ?? Data()
     }
 }
 

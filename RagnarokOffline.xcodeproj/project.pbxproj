@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		351E64EB2EAF3B5D008E7A15 /* RagnarokFileFormats in Frameworks */ = {isa = PBXBuildFile; productRef = 351E64EA2EAF3B5D008E7A15 /* RagnarokFileFormats */; };
 		353725ED2D83FDF2008590F6 /* Highlight in Frameworks */ = {isa = PBXBuildFile; productRef = 353725EC2D83FDF2008590F6 /* Highlight */; };
+		354FCEA42F14B9FA00995F35 /* JSONViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 354FCEA32F14B9FA00995F35 /* JSONViewer */; };
 		3558A3AC2DFBECDB0038DFC3 /* rAthenaResources in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */; };
 		3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3B12DFC22EA0038DFC3 /* rAthenaChar */; };
 		3558A3B32DFC22EA0038DFC3 /* rAthenaChar in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3B12DFC22EA0038DFC3 /* rAthenaChar */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -156,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3558A3B52DFC22EA0038DFC3 /* rAthenaLogin in Frameworks */,
+				354FCEA42F14B9FA00995F35 /* JSONViewer in Frameworks */,
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
 				35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */,
@@ -288,6 +290,7 @@
 				35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */,
 				35B2C4702EAF5D2900A4FD11 /* RagnarokDatabase */,
 				35BB2F992EFE86FC0047040D /* RagnarokLocalization */,
+				354FCEA32F14B9FA00995F35 /* JSONViewer */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -843,6 +846,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */;
 			productName = Highlight;
+		};
+		354FCEA32F14B9FA00995F35 /* JSONViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = JSONViewer;
 		};
 		3558A3AB2DFBECDB0038DFC3 /* rAthenaResources */ = {
 			isa = XCSwiftPackageProductDependency;
