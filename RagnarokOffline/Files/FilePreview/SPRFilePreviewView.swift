@@ -9,6 +9,40 @@ import RagnarokFileFormats
 import SwiftUI
 
 struct SPRFilePreviewView: View {
+    var file: File
+
+    private enum ViewMode {
+        case sprites
+        case tree
+    }
+
+    @State private var viewMode: ViewMode = .sprites
+
+    var body: some View {
+        Group {
+            switch viewMode {
+            case .sprites:
+                SPRFileSpritesView(file: file)
+            case .tree:
+                FileJSONViewer(file: file)
+            }
+        }
+        .toolbar {
+            Menu {
+                Picker("View Mode", selection: $viewMode) {
+                    Label("Sprites", systemImage: "square.grid.2x2")
+                        .tag(ViewMode.sprites)
+                    Label("Tree", systemImage: "list.bullet.indent")
+                        .tag(ViewMode.tree)
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+}
+
+struct SPRFileSpritesView: View {
     struct SpriteSection {
         var spriteSize: CGSize
         var sprites: [Sprite]

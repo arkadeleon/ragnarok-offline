@@ -10,6 +10,40 @@ import RagnarokSprite
 import SwiftUI
 
 struct ACTFilePreviewView: View {
+    var file: File
+
+    private enum ViewMode {
+        case actions
+        case tree
+    }
+
+    @State private var viewMode: ViewMode = .actions
+
+    var body: some View {
+        Group {
+            switch viewMode {
+            case .actions:
+                ACTFileActionView(file: file)
+            case .tree:
+                FileJSONViewer(file: file)
+            }
+        }
+        .toolbar {
+            Menu {
+                Picker("View Mode", selection: $viewMode) {
+                    Label("Actions", systemImage: "square.grid.2x2")
+                        .tag(ViewMode.actions)
+                    Label("Tree", systemImage: "list.bullet.indent")
+                        .tag(ViewMode.tree)
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+}
+
+struct ACTFileActionView: View {
     struct ActionSection {
         var index: Int
         var actionSize: CGSize

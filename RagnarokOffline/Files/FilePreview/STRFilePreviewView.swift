@@ -13,6 +13,40 @@ import SwiftUI
 struct STRFilePreviewView: View {
     var file: File
 
+    private enum ViewMode {
+        case sprites
+        case tree
+    }
+
+    @State private var viewMode: ViewMode = .sprites
+
+    var body: some View {
+        Group {
+            switch viewMode {
+            case .sprites:
+                STRFileEffectView(file: file)
+            case .tree:
+                FileJSONViewer(file: file)
+            }
+        }
+        .toolbar {
+            Menu {
+                Picker("View Mode", selection: $viewMode) {
+                    Label("Effect", systemImage: "sparkles.rectangle.stack")
+                        .tag(ViewMode.sprites)
+                    Label("Tree", systemImage: "list.bullet.indent")
+                        .tag(ViewMode.tree)
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+}
+
+struct STRFileEffectView: View {
+    var file: File
+
     @State private var magnification: CGFloat = 1
 
     var body: some View {

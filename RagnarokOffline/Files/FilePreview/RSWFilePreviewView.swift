@@ -15,6 +15,40 @@ import SwiftUI
 struct RSWFilePreviewView: View {
     var file: File
 
+    private enum ViewMode {
+        case world
+        case tree
+    }
+
+    @State private var viewMode: ViewMode = .world
+
+    var body: some View {
+        Group {
+            switch viewMode {
+            case .world:
+                RSWFileWorldView(file: file)
+            case .tree:
+                FileJSONViewer(file: file)
+            }
+        }
+        .toolbar {
+            Menu {
+                Picker("View Mode", selection: $viewMode) {
+                    Label("World", systemImage: "map")
+                        .tag(ViewMode.world)
+                    Label("Tree", systemImage: "list.bullet.indent")
+                        .tag(ViewMode.tree)
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+}
+
+struct RSWFileWorldView: View {
+    var file: File
+
     private let progress = Progress()
 
     @State private var translation: CGSize = .zero

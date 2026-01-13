@@ -16,6 +16,7 @@ struct JSONTreeView: View {
         List(displayNodes, children: \.children) { item in
             JSONNodeRow(node: item, searchText: searchText)
         }
+        .listStyle(.plain)
     }
 
     /// Nodes to display - expands root node by default if it has no key

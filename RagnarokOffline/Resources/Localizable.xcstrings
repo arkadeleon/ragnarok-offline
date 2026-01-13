@@ -86,6 +86,9 @@
     "Action" : {
 
     },
+    "Actions" : {
+
+    },
     "Aegis Name" : {
 
     },
@@ -96,6 +99,9 @@
 
     },
     "Allow Auto Feed" : {
+
+    },
+    "Altitude" : {
 
     },
     "Ammo Type" : {
@@ -941,6 +947,9 @@
     "Drops" : {
 
     },
+    "Effect" : {
+
+    },
     "Element" : {
 
     },
@@ -1142,6 +1151,9 @@
 
     },
     "Gradable" : {
+
+    },
+    "Ground" : {
 
     },
     "Hair Color" : {
@@ -1389,9 +1401,6 @@
         }
       }
     },
-    "JSON Viewer" : {
-
-    },
     "Level" : {
 
     },
@@ -1596,6 +1605,9 @@
 
     },
     "Minimum Level" : {
+
+    },
+    "Model" : {
 
     },
     "Modes" : {
@@ -2438,6 +2450,9 @@
     "Special Performance" : {
 
     },
+    "Sprites" : {
+
+    },
     "Start" : {
 
     },
@@ -3121,6 +3136,9 @@
         }
       }
     },
+    "Tree" : {
+
+    },
     "Type" : {
 
     },
@@ -3215,6 +3233,9 @@
     "View" : {
 
     },
+    "View Mode" : {
+
+    },
     "Vit" : {
 
     },
@@ -3228,6 +3249,9 @@
 
     },
     "Weight" : {
+
+    },
+    "World" : {
 
     },
     "Yes" : {

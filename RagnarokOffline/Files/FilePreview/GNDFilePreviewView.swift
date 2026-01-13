@@ -15,6 +15,40 @@ import SwiftUI
 struct GNDFilePreviewView: View {
     var file: File
 
+    private enum ViewMode {
+        case ground
+        case tree
+    }
+
+    @State private var viewMode: ViewMode = .ground
+
+    var body: some View {
+        Group {
+            switch viewMode {
+            case .ground:
+                GNDFileGroundView(file: file)
+            case .tree:
+                FileJSONViewer(file: file)
+            }
+        }
+        .toolbar {
+            Menu {
+                Picker("View Mode", selection: $viewMode) {
+                    Label("Ground", systemImage: "mountain.2")
+                        .tag(ViewMode.ground)
+                    Label("Tree", systemImage: "list.bullet.indent")
+                        .tag(ViewMode.tree)
+                }
+            } label: {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+}
+
+struct GNDFileGroundView: View {
+    var file: File
+
     private let progress = Progress()
 
     var body: some View {
