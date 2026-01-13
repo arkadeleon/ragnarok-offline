@@ -16,6 +16,7 @@ enum FileError: Error {
     case fileIsDirectory
     case imageGenerationFailed
     case stringConversionFailed
+    case jsonConversionFailed
 }
 
 enum FileNode {

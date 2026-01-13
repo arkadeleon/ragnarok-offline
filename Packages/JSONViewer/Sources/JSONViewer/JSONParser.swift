@@ -62,8 +62,12 @@ struct JSONParser {
         if let dict = value as? [String: Any] {
             // Note: NSDictionary does not preserve JSON insertion order.
             // Keys will be in the order provided by Foundation's dictionary implementation.
-            let allChildren = dict.map { (dictKey, dictValue) in
-                buildNode(from: dictValue, key: dictKey)
+            let sortedKeys = dict.keys.sorted()
+            let allChildren = sortedKeys.compactMap { key -> JSONNode? in
+                guard let value = dict[key] else {
+                    return nil
+                }
+                return buildNode(from: value, key: key)
             }
 
             // Chunk if too large

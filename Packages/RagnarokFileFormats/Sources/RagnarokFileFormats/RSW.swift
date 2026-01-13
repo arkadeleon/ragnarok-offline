@@ -102,7 +102,7 @@ extension RSW {
         public var waveHeight: Float
         public var waveSpeed: Float
         public var wavePitch: Float
-        public var animSpeed: Int32
+        public var animationSpeed: Int32
 
         public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             if version >= "2.6" {
@@ -111,7 +111,7 @@ extension RSW {
                 waveHeight = 0
                 waveSpeed = 0
                 wavePitch = 0
-                animSpeed = 0
+                animationSpeed = 0
                 return
             }
 
@@ -134,9 +134,9 @@ extension RSW {
             }
 
             if version >= "1.9" {
-                animSpeed = try decoder.decode(Int32.self)
+                animationSpeed = try decoder.decode(Int32.self)
             } else {
-                animSpeed = 3
+                animationSpeed = 3
             }
         }
     }

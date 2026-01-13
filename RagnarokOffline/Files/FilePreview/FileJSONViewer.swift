@@ -26,12 +26,8 @@ struct FileJSONViewer: View {
         }
     }
 
-    private func loadJSON() async -> Data {
-        guard let json = await file.json() else {
-            return Data()
-        }
-
-        return json.data(using: .utf8) ?? Data()
+    private func loadJSON() async throws -> Data {
+        try await file.json()
     }
 }
 
