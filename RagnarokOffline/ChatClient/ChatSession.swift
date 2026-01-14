@@ -223,17 +223,14 @@ final class ChatSession {
             let message = LoginRefusedMessage(from: packet)
             messages.append(.serverText("Refused"))
 
-            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                let text = text.replacingOccurrences(of: "%s", with: message.unblockTime)
-                messages.append(.serverText(text))
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID, arguments: message.unblockTime)
+            messages.append(.serverText(localizedMessage))
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)
             messages.append(.serverText("Banned"))
 
-            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                messages.append(.serverText(text))
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+            messages.append(.serverText(localizedMessage))
         default:
             break
         }
@@ -358,9 +355,8 @@ final class ChatSession {
             let message = BannedMessage(from: packet)
             messages.append(.serverText("Banned"))
 
-            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                messages.append(.serverText(text))
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+            messages.append(.serverText(localizedMessage))
         default:
             break
         }
@@ -458,9 +454,8 @@ final class ChatSession {
             let message = BannedMessage(from: packet)
             messages.append(.serverText("Banned"))
 
-            if let text = messageStringTable.localizedMessageString(forID: message.messageID) {
-                messages.append(.serverText(text))
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+            messages.append(.serverText(localizedMessage))
         default:
             break
         }

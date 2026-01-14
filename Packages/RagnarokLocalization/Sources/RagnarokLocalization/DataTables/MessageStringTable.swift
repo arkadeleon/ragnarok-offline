@@ -25,7 +25,15 @@ final public class MessageStringTable {
         }
     }
 
-    public func localizedMessageString(forID messageID: Int) -> String? {
-        messageStringsByID[messageID]
+    public func localizedMessageString(forID messageID: Int) -> String {
+        messageStringsByID[messageID] ?? "<MSG_\(messageID)>"
+    }
+
+    public func localizedMessageString(forID messageID: Int, arguments: any CVarArg...) -> String {
+        if let messageString = messageStringsByID[messageID] {
+            String(format: messageString.replacingOccurrences(of: "%s", with: "%@"), arguments: arguments)
+        } else {
+            "<MSG_\(messageID)>"
+        }
     }
 }

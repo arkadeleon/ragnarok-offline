@@ -237,17 +237,14 @@ final public class GameSession {
             startLoginKeepalive()
         case let packet as PACKET_AC_REFUSE_LOGIN:
             let message = LoginRefusedMessage(from: packet)
-            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
-                let localizedMessage = localizedMessage.replacingOccurrences(of: "%s", with: message.unblockTime)
-                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
-                errorMessages.append(errorMessage)
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID, arguments: message.unblockTime)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            errorMessages.append(errorMessage)
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)
-            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
-                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
-                errorMessages.append(errorMessage)
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            errorMessages.append(errorMessage)
         default:
             break
         }
@@ -428,10 +425,9 @@ final public class GameSession {
             break
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)
-            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
-                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
-                errorMessages.append(errorMessage)
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            errorMessages.append(errorMessage)
         default:
             break
         }
@@ -759,10 +755,9 @@ final public class GameSession {
             break
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)
-            if let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID) {
-                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
-                errorMessages.append(errorMessage)
-            }
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            errorMessages.append(errorMessage)
         case _ as PACKET_ZC_FRIENDS_LIST:
             break
         case _ as PACKET_ZC_SHORTCUT_KEY_LIST:
