@@ -19,6 +19,7 @@ struct MapView: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     #endif
 
+    @State private var isWidescreen = true
     @State private var presentedMenuItem: MenuItem?
     @State private var movementValue: CGPoint = .zero
 
@@ -33,9 +34,14 @@ struct MapView: View {
             MapSceneView(scene: scene)
             #endif
         }
+        .overlay(alignment: .bottom) {
+            ChatBoxView()
+                .padding(.bottom, 16)
+        }
         .overlay(alignment: .bottomLeading) {
             ThumbstickView(updatingValue: $movementValue, radius: 72)
-                .padding(16)
+                .padding(.leading, 16)
+                .padding(.bottom, isWidescreen ? 16 : 16 + 98 + 16)
                 .onReceive(timer) { _ in
                     scene.onMovementValueChanged(movementValue: movementValue)
                 }
@@ -54,7 +60,8 @@ struct MapView: View {
                     scene.talkToNearestNPC()
                 }
             }
-            .padding(16)
+            .padding(.trailing, 16)
+            .padding(.bottom, isWidescreen ? 16 : 16 + 98 + 16)
         }
         .overlay(alignment: .topLeading) {
             if let character = gameSession.character {
@@ -69,11 +76,6 @@ struct MapView: View {
                         }
                     }
                 }
-            }
-        }
-        .overlay(alignment: .topTrailing) {
-            VStack {
-                ChatBoxView()
             }
         }
         .overlay(alignment: .center) {
@@ -94,6 +96,11 @@ struct MapView: View {
             }
         }
         .ignoresSafeArea()
+        .onGeometryChange(for: Bool.self) { geometryProxy in
+            geometryProxy.size.width >= 640
+        } action: { isWidescreen in
+            self.isWidescreen = isWidescreen
+        }
         #if os(visionOS)
         .onAppear {
             Task {

@@ -77,6 +77,7 @@ final public class GameSession {
 
     var playerStatus = CharacterStatus()
     var inventory = Inventory()
+    var messages: [ChatMessage] = []
     var dialog: NPCDialog?
 
     @ObservationIgnored var loginClient: Client?
@@ -643,8 +644,18 @@ final public class GameSession {
             mapScene?.onItemSpawned(item: item, position: position)
         case let packet as PACKET_ZC_ITEM_DISAPPEAR:
             mapScene?.onItemVanished(objectID: packet.itemAid)
-        case _ as PACKET_ZC_ITEM_PICKUP_ACK:
-            break
+        case let packet as PACKET_ZC_ITEM_PICKUP_ACK:
+            let item = PickedUpItem(from: packet)
+
+            if packet.result == 0 {
+                let localizedMessage = messageStringTable.localizedMessageString(forID: 153, arguments: "\(item.itemID)", item.count)
+                let message = ChatMessage(type: .public, content: localizedMessage)
+                messages.append(message)
+            } else {
+                let localizedMessage = messageStringTable.localizedMessageString(forID: 53)
+                let message = ChatMessage(type: .public, content: localizedMessage)
+                messages.append(message)
+            }
         case _ as PACKET_ZC_ITEM_THROW_ACK:
             break
         case let packet as PACKET_ZC_USE_ITEM_ACK:
@@ -694,6 +705,18 @@ final public class GameSession {
         case let packet as PACKET_ZC_NOTIFY_ACT:
             let objectAction = MapObjectAction(from: packet)
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
+
+            if objectAction.damage > 0 {
+                if objectAction.sourceObjectID == account?.accountID {
+                    let localizedMessage = messageStringTable.localizedMessageString(forID: 1607, arguments: "\(objectAction.targetObjectID)", objectAction.damage)
+                    let message = ChatMessage(type: .public, content: localizedMessage)
+                    messages.append(message)
+                } else if objectAction.targetObjectID == account?.accountID {
+                    let localizedMessage = messageStringTable.localizedMessageString(forID: 1605, arguments: "\(objectAction.sourceObjectID)", objectAction.damage)
+                    let message = ChatMessage(type: .public, content: localizedMessage)
+                    messages.append(message)
+                }
+            }
         case let packet as PACKET_ZC_SAY_DIALOG:
             if let dialog, dialog.npcID == packet.NpcID {
                 dialog.clearIfNeeded()
@@ -735,20 +758,27 @@ final public class GameSession {
             break
         case _ as PACKET_ZC_COMPASS:
             break
-        case _ as PACKET_ZC_NOTIFY_CHAT:
-            break
-        case _ as PACKET_ZC_WHISPER:
-            break
-        case _ as PACKET_ZC_NOTIFY_PLAYERCHAT:
-            break
-        case _ as PACKET_ZC_NPC_CHAT:
-            break
-        case _ as PACKET_ZC_NOTIFY_CHAT_PARTY:
-            break
-        case _ as PACKET_ZC_GUILD_CHAT:
-            break
-        case _ as PACKET_ZC_NOTIFY_CLAN_CHAT:
-            break
+        case let packet as PACKET_ZC_NOTIFY_CHAT:
+            let message = ChatMessage(from: packet)
+            messages.append(message)
+        case let packet as PACKET_ZC_WHISPER:
+            let message = ChatMessage(from: packet)
+            messages.append(message)
+        case let packet as PACKET_ZC_NOTIFY_PLAYERCHAT:
+            let message = ChatMessage(from: packet)
+            messages.append(message)
+        case let packet as PACKET_ZC_NPC_CHAT:
+            let message = ChatMessage(from: packet)
+            messages.append(message)
+        case let packet as PACKET_ZC_NOTIFY_CHAT_PARTY:
+            let message = ChatMessage(from: packet)
+            messages.append(message)
+        case let packet as PACKET_ZC_GUILD_CHAT:
+            let message = ChatMessage(from: packet)
+            messages.append(message)
+        case let packet as PACKET_ZC_NOTIFY_CLAN_CHAT:
+            let message = ChatMessage(from: packet)
+            messages.append(message)
         case _ as PACKET_ZC_ALL_ACH_LIST:
             break
         case _ as PACKET_ZC_ACH_UPDATE:
