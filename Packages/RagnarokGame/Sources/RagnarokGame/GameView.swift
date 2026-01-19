@@ -30,6 +30,7 @@ public struct GameView: View {
             gameSession.stopAllSessions()
             onExit()
         })
+        .persistentSystemOverlays(.hidden)
         #if os(iOS)
         .statusBarHidden()
         .onAppear {

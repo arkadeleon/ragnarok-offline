@@ -19,7 +19,8 @@ struct MapView: View {
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     #endif
 
-    @State private var isWidescreen = true
+    @State private var screenWidth: CGFloat = 320
+    @State private var chatBoxOffsetY: CGFloat = 0
     @State private var presentedMenuItem: MenuItem?
     @State private var movementValue: CGPoint = .zero
 
@@ -34,14 +35,10 @@ struct MapView: View {
             MapSceneView(scene: scene)
             #endif
         }
-        .overlay(alignment: .bottom) {
-            ChatBoxView()
-                .padding(.bottom, 16)
-        }
         .overlay(alignment: .bottomLeading) {
             ThumbstickView(updatingValue: $movementValue, radius: 72)
                 .padding(.leading, 16)
-                .padding(.bottom, isWidescreen ? 16 : 16 + 98 + 16)
+                .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
                 .onReceive(timer) { _ in
                     scene.onMovementValueChanged(movementValue: movementValue)
                 }
@@ -61,7 +58,7 @@ struct MapView: View {
                 }
             }
             .padding(.trailing, 16)
-            .padding(.bottom, isWidescreen ? 16 : 16 + 98 + 16)
+            .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
         }
         .overlay(alignment: .topLeading) {
             if let character = gameSession.character {
@@ -77,6 +74,35 @@ struct MapView: View {
                     }
                 }
             }
+        }
+        .overlay(alignment: .topTrailing) {
+            // Minimap
+        }
+        .overlay(alignment: .bottom) {
+            ChatBoxView()
+                .frame(width: chatBoxWidth)
+                .offset(y: chatBoxOffsetY)
+                #if os(iOS)
+                .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { notification in
+                    let frameEnd = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+                    let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+                    let animationCurve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt
+
+                    guard let frameEnd, let animationDuration, let animationCurve else {
+                        return
+                    }
+
+                    let screenHeight = UIScreen.main.bounds.height
+                    withAnimation(.keyboard(curve: animationCurve, duration: animationDuration)) {
+                        if frameEnd.minY < screenHeight {
+                            let keyboardHeight = screenHeight - frameEnd.minY
+                            chatBoxOffsetY = ChatBoxView.contentHeight(for: .full) - keyboardHeight
+                        } else {
+                            chatBoxOffsetY = 0
+                        }
+                    }
+                }
+                #endif
         }
         .overlay(alignment: .center) {
             if let presentedMenuItem {
@@ -96,10 +122,10 @@ struct MapView: View {
             }
         }
         .ignoresSafeArea()
-        .onGeometryChange(for: Bool.self) { geometryProxy in
-            geometryProxy.size.width >= 640
-        } action: { isWidescreen in
-            self.isWidescreen = isWidescreen
+        .onGeometryChange(for: CGFloat.self) { geometryProxy in
+            geometryProxy.size.width + geometryProxy.safeAreaInsets.leading + geometryProxy.safeAreaInsets.trailing
+        } action: { containerWidth in
+            self.screenWidth = containerWidth
         }
         #if os(visionOS)
         .onAppear {
@@ -108,6 +134,24 @@ struct MapView: View {
             }
         }
         #endif
+    }
+
+    private var isUltraWidescreen: Bool {
+        screenWidth >= 780
+    }
+
+    private var isWidescreen: Bool {
+        screenWidth >= 640
+    }
+
+    private var chatBoxWidth: CGFloat {
+        if isUltraWidescreen {
+            360
+        } else if isWidescreen {
+            280
+        } else {
+            screenWidth - 16 * 2
+        }
     }
 }
 
