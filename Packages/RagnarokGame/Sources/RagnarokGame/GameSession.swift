@@ -77,7 +77,8 @@ final public class GameSession {
 
     var playerStatus = CharacterStatus()
     var inventory = Inventory()
-    var messages: [ChatMessage] = []
+    var chatMessages: [ChatMessage] = []
+    var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
 
     @ObservationIgnored var loginClient: Client?
@@ -534,6 +535,9 @@ final public class GameSession {
     }
 
     private func handleMapPacket(_ packet: any DecodablePacket) {
+        let packetMessage = PacketMessage(packet: packet)
+        packetMessages.append(packetMessage)
+
         switch packet {
         case _ as PACKET_ZC_ACCEPT_ENTER:
             break
@@ -650,11 +654,11 @@ final public class GameSession {
             if packet.result == 0 {
                 let localizedMessage = messageStringTable.localizedMessageString(forID: 153, arguments: "\(item.itemID)", item.count)
                 let message = ChatMessage(type: .public, content: localizedMessage)
-                messages.append(message)
+                chatMessages.append(message)
             } else {
                 let localizedMessage = messageStringTable.localizedMessageString(forID: 53)
                 let message = ChatMessage(type: .public, content: localizedMessage)
-                messages.append(message)
+                chatMessages.append(message)
             }
         case _ as PACKET_ZC_ITEM_THROW_ACK:
             break
@@ -710,11 +714,11 @@ final public class GameSession {
                 if objectAction.sourceObjectID == account?.accountID {
                     let localizedMessage = messageStringTable.localizedMessageString(forID: 1607, arguments: "\(objectAction.targetObjectID)", objectAction.damage)
                     let message = ChatMessage(type: .public, content: localizedMessage)
-                    messages.append(message)
+                    chatMessages.append(message)
                 } else if objectAction.targetObjectID == account?.accountID {
                     let localizedMessage = messageStringTable.localizedMessageString(forID: 1605, arguments: "\(objectAction.sourceObjectID)", objectAction.damage)
                     let message = ChatMessage(type: .public, content: localizedMessage)
-                    messages.append(message)
+                    chatMessages.append(message)
                 }
             }
         case let packet as PACKET_ZC_SAY_DIALOG:
@@ -760,25 +764,25 @@ final public class GameSession {
             break
         case let packet as PACKET_ZC_NOTIFY_CHAT:
             let message = ChatMessage(from: packet)
-            messages.append(message)
+            chatMessages.append(message)
         case let packet as PACKET_ZC_WHISPER:
             let message = ChatMessage(from: packet)
-            messages.append(message)
+            chatMessages.append(message)
         case let packet as PACKET_ZC_NOTIFY_PLAYERCHAT:
             let message = ChatMessage(from: packet)
-            messages.append(message)
+            chatMessages.append(message)
         case let packet as PACKET_ZC_NPC_CHAT:
             let message = ChatMessage(from: packet)
-            messages.append(message)
+            chatMessages.append(message)
         case let packet as PACKET_ZC_NOTIFY_CHAT_PARTY:
             let message = ChatMessage(from: packet)
-            messages.append(message)
+            chatMessages.append(message)
         case let packet as PACKET_ZC_GUILD_CHAT:
             let message = ChatMessage(from: packet)
-            messages.append(message)
+            chatMessages.append(message)
         case let packet as PACKET_ZC_NOTIFY_CLAN_CHAT:
             let message = ChatMessage(from: packet)
-            messages.append(message)
+            chatMessages.append(message)
         case _ as PACKET_ZC_ALL_ACH_LIST:
             break
         case _ as PACKET_ZC_ACH_UPDATE:

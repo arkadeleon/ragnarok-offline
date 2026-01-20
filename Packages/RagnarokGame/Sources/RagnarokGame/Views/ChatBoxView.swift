@@ -13,6 +13,18 @@ struct ChatBoxView: View {
         case full
     }
 
+    enum MessageGroup {
+        case chat
+        case packet
+
+        var title: String {
+            switch self {
+            case .chat: "Chat"
+            case .packet: "Packet"
+            }
+        }
+    }
+
     static let perMessageHeight: CGFloat = 14
     static let messageHeaderHeight: CGFloat = 22
 
@@ -33,6 +45,7 @@ struct ChatBoxView: View {
     @Environment(GameSession.self) private var gameSession
 
     @State private var viewStyle: ViewStyle = .compact
+    @State private var messageGroup: MessageGroup = .chat
     @State private var scrollPosition: UUID?
     @State private var message = ""
 
@@ -64,6 +77,8 @@ struct ChatBoxView: View {
             VStack(spacing: 0) {
                 if viewStyle == .full {
                     HStack(spacing: 0) {
+                        MessageGroupButton(group: .chat, selection: $messageGroup)
+                        MessageGroupButton(group: .packet, selection: $messageGroup)
                     }
                     .frame(height: ChatBoxView.messageHeaderHeight)
 
@@ -73,17 +88,33 @@ struct ChatBoxView: View {
 
                 ScrollView {
                     LazyVStack(alignment: .leading) {
-                        ForEach(gameSession.messages) { message in
-                            Text(message.content)
-                                .id(message.id)
-                                .gameText(color: .white)
+                        switch messageGroup {
+                        case .chat:
+                            ForEach(gameSession.chatMessages) { message in
+                                Text(message.content)
+                                    .id(message.id)
+                                    .gameText(color: .white)
+                            }
+                        case .packet:
+                            ForEach(gameSession.packetMessages) { message in
+                                Text(String(describing: type(of: message.packet)))
+                                    .id(message.id)
+                                    .gameText(color: .white)
+                            }
                         }
                     }
                 }
                 .frame(height: ChatBoxView.perMessageHeight * CGFloat(ChatBoxView.messageCount(for: viewStyle)))
                 .scrollPosition(id: $scrollPosition, anchor: .bottom)
-                .onChange(of: gameSession.messages.count) {
-                    scrollPosition = gameSession.messages.last?.id
+                .onChange(of: gameSession.chatMessages.count) {
+                    if messageGroup == .chat {
+                        scrollPosition = gameSession.chatMessages.last?.id
+                    }
+                }
+                .onChange(of: gameSession.packetMessages.count) {
+                    if messageGroup == .packet {
+                        scrollPosition = gameSession.packetMessages.last?.id
+                    }
                 }
                 .onTapGesture {
                     switch viewStyle {
@@ -103,17 +134,35 @@ struct ChatBoxView: View {
     }
 }
 
+private struct MessageGroupButton: View {
+    var group: ChatBoxView.MessageGroup
+    @Binding var selection: ChatBoxView.MessageGroup
+
+    var body: some View {
+        Button {
+            selection = group
+        } label: {
+            Text(group.title)
+                .gameText(color: .white)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .contentShape(Rectangle())
+                .background(selection == group ? Color.white.opacity(0.3) : Color.clear)
+        }
+        .buttonStyle(.plain)
+    }
+}
+
 #Preview {
     let gameSession = {
         let gameSession = GameSession.testing
-        gameSession.messages.append(.init(type: .public, content: "You got Apple (1)."))
-        gameSession.messages.append(.init(type: .public, content: "You got Banana (1)."))
-        gameSession.messages.append(.init(type: .public, content: "You got Grape (1)."))
-        gameSession.messages.append(.init(type: .public, content: "You got Carrot (1)."))
-        gameSession.messages.append(.init(type: .public, content: "You got Potato (1)."))
-        gameSession.messages.append(.init(type: .public, content: "You got Meat (1)."))
-        gameSession.messages.append(.init(type: .public, content: "You got Honey (1)."))
-        gameSession.messages.append(.init(type: .public, content: "You got Milk (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Apple (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Banana (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Grape (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Carrot (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Potato (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Meat (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Honey (1)."))
+        gameSession.chatMessages.append(.init(type: .public, content: "You got Milk (1)."))
         return gameSession
     }()
 
