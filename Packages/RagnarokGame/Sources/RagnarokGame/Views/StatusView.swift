@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2025/4/8.
 //
 
-import RagnarokConstants
 import SwiftUI
 
 struct StatusView: View {
@@ -17,114 +16,164 @@ struct StatusView: View {
         VStack(spacing: 0) {
             GameTitleBar()
 
-            ZStack(alignment: .topLeading) {
-                GameImage("statuswnd/w_statwin_bg.bmp")
-
+            HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: 2) {
-                    Group {
-                        Text(verbatim: "\(status.str)")
-                        Text(verbatim: "\(status.agi)")
-                        Text(verbatim: "\(status.vit)")
-                        Text(verbatim: "\(status.int)")
-                        Text(verbatim: "\(status.dex)")
-                        Text(verbatim: "\(status.luk)")
+                    PrimaryStatRow("Str", value: status.str, value2: status.str2, value3: status.str3) {
+                        gameSession.incrementStatusProperty(.str, by: 1)
                     }
-                    .gameText()
-                    .frame(height: 14)
-                }
-                .offset(x: 37, y: 6)
-
-                VStack(spacing: 2) {
-                    Group {
-                        Text(verbatim: "+\(status.str2)")
-                        Text(verbatim: "+\(status.agi2)")
-                        Text(verbatim: "+\(status.vit2)")
-                        Text(verbatim: "+\(status.int2)")
-                        Text(verbatim: "+\(status.dex2)")
-                        Text(verbatim: "+\(status.luk2)")
+                    PrimaryStatRow("Agi", value: status.agi, value2: status.agi2, value3: status.agi3) {
+                        gameSession.incrementStatusProperty(.agi, by: 1)
                     }
-                    .gameText()
-                    .frame(height: 14)
+                    PrimaryStatRow("Vit", value: status.vit, value2: status.vit2, value3: status.vit3) {
+                        gameSession.incrementStatusProperty(.vit, by: 1)
+                    }
+                    PrimaryStatRow("Int", value: status.int, value2: status.int2, value3: status.int3) {
+                        gameSession.incrementStatusProperty(.int, by: 1)
+                    }
+                    PrimaryStatRow("Dex", value: status.dex, value2: status.dex2, value3: status.dex3) {
+                        gameSession.incrementStatusProperty(.dex, by: 1)
+                    }
+                    PrimaryStatRow("Luk", value: status.luk, value2: status.luk2, value3: status.luk3) {
+                        gameSession.incrementStatusProperty(.luk, by: 1)
+                    }
                 }
-                .offset(x: 54, y: 6)
+                .padding(.leading, 6)
 
-                VStack(spacing: 2) {
-                    Group {
-                        GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.str, by: 1)
+                Spacer()
+
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(alignment: .top, spacing: 12) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            SecondaryStatRow("Atk", value: "\(status.atk)")
+                            SecondaryStatRow("Matk", value: "\(status.matk)")
+                            SecondaryStatRow("Hit", value: "\(status.hit)")
+                            SecondaryStatRow("Critical", value: "\(status.critical)")
                         }
-                        GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.agi, by: 1)
-                        }
-                        GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.vit, by: 1)
-                        }
-                        GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.int, by: 1)
-                        }
-                        GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.dex, by: 1)
-                        }
-                        GameButton("basic_interface/arw_right.bmp") {
-                            gameSession.incrementStatusProperty(.luk, by: 1)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            SecondaryStatRow("Def", value: "\(status.def)")
+                            SecondaryStatRow("Mdef", value: "\(status.mdef)")
+                            SecondaryStatRow("Flee", value: "\(status.flee)")
+                            SecondaryStatRow("Aspd", value: "\(status.aspd)")
                         }
                     }
-                    .frame(width: 14, height: 14)
+
+                    SecondaryStatRow("Status Point", value: "\(status.statusPoint)")
+                    SecondaryStatRow("Guild", value: "")
                 }
-                .offset(x: 75, y: 6)
-
-                VStack(spacing: 2) {
-                    Group {
-                        Text(verbatim: "\(status.str3)")
-                        Text(verbatim: "\(status.agi3)")
-                        Text(verbatim: "\(status.vit3)")
-                        Text(verbatim: "\(status.int3)")
-                        Text(verbatim: "\(status.dex3)")
-                        Text(verbatim: "\(status.luk3)")
-                    }
-                    .gameText()
-                    .frame(width: 14, height: 14, alignment: .trailing)
-                }
-                .offset(x: 87, y: 6)
-
-                HStack {
-                    Spacer()
-
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Group {
-                            Text(verbatim: "\(status.atk) + \(status.atk2)")
-                            Text(verbatim: "\(status.matk) + \(status.matk2)")
-                            Text(verbatim: "\(status.hit)")
-                            Text(verbatim: "\(status.critical)")
-                        }
-                        .gameText()
-                        .frame(height: 14)
-                    }
-                    .padding(.top, 5)
-                    .padding(.trailing, 92)
-                }
-
-                HStack {
-                    Spacer()
-
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Group {
-                            Text(verbatim: "\(status.def) + \(status.def2)")
-                            Text(verbatim: "\(status.mdef) + \(status.mdef2)")
-                            Text(verbatim: "\(status.flee) + \(status.flee2)")
-                            Text(verbatim: "\(status.aspd)")
-                            Text(verbatim: "\(status.statusPoint)")
-                        }
-                        .gameText()
-                        .frame(height: 14)
-                    }
-                    .padding(.top, 5)
-                    .padding(.trailing, 5)
-                }
+                .padding(.trailing, 6)
             }
-            .frame(height: 123)
+            .padding(.vertical, 6)
+            .background(Color.white)
+            .overlay(alignment: .leading) {
+                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
+            }
+            .overlay(alignment: .trailing) {
+                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
+            }
+
+            GameBottomBar()
         }
         .frame(width: 280)
+    }
+}
+
+private struct PrimaryStatRow: View {
+    var title: String
+    var value: Int
+    var value2: Int
+    var value3: Int
+    var onIncrement: () -> Void
+
+    var body: some View {
+        HStack(spacing: 2) {
+            Text(title)
+                .font(.game(weight: .bold))
+                .foregroundStyle(Color.gameProminentLabel)
+                .frame(width: 24, alignment: .leading)
+
+            HStack(spacing: 0) {
+                Text("\(value)")
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
+                    .frame(width: 24, height: 12)
+                Text("+\(value2)")
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
+                    .frame(width: 24, height: 12)
+            }
+            .background(Color.gameSecondaryBoxBackground)
+            .overlay(Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1))
+
+            Button(action: onIncrement) {
+                RightArrow()
+                    .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
+                    .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
+                    .frame(width: 6, height: 8)
+            }
+            .buttonStyle(.plain)
+            .frame(width: 14, height: 12)
+            .background(Color.gameSecondaryBoxBackground)
+            .overlay(Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1))
+
+            Text("\(value3)")
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
+                .frame(width: 20, height: 12, alignment: .trailing)
+                .background(Color.white)
+                .overlay(Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1))
+        }
+        .frame(height: 14)
+    }
+
+    init(_ title: String, value: Int, value2: Int, value3: Int, onIncrement: @escaping () -> Void) {
+        self.title = title
+        self.value = value
+        self.value2 = value2
+        self.value3 = value3
+        self.onIncrement = onIncrement
+    }
+}
+
+private struct SecondaryStatRow: View {
+    var title: String
+    var value: String
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 4) {
+                Text(title)
+                    .font(.game(weight: .bold))
+                    .foregroundStyle(Color.gameProminentLabel)
+
+                Spacer()
+
+                Text(value)
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
+            }
+
+            Rectangle()
+                .fill(Color.gameBoxBorder)
+                .frame(height: 1)
+        }
+        .frame(height: 14)
+    }
+
+    init(_ title: String, value: String) {
+        self.title = title
+        self.value = value
+    }
+}
+
+private struct RightArrow: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.closeSubpath()
+        return path
     }
 }
 

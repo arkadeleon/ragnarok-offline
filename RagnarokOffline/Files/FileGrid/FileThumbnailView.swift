@@ -24,7 +24,7 @@ struct FileThumbnailView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 4))
                     .overlay {
                         RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.secondary, lineWidth: 1)
+                            .strokeBorder(Color.secondary, lineWidth: 1)
                     }
                     .frame(maxHeight: .infinity, alignment: .bottom)
             } else if file.isDirectory {
@@ -41,7 +41,7 @@ struct FileThumbnailView: View {
                     .frame(width: 60, height: 80)
                     .background {
                         RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.secondary, lineWidth: 1)
+                            .strokeBorder(Color.secondary, lineWidth: 1)
                     }
             }
         }

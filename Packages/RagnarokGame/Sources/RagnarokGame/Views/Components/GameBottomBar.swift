@@ -20,7 +20,7 @@ struct GameBottomBar: View {
                 }
 
                 UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
-                    .stroke(Color(#colorLiteral(red: 0.7607843137, green: 0.7607843137, blue: 0.7607843137, alpha: 1)), lineWidth: 2)
+                    .strokeBorder(Color.gameBoxBorder, lineWidth: 1)
             }
             .background(Color.white)
             .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
