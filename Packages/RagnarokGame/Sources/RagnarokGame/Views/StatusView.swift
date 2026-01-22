@@ -17,7 +17,7 @@ struct StatusView: View {
             GameTitleBar()
 
             HStack(alignment: .top, spacing: 0) {
-                VStack(spacing: 2) {
+                VStack(spacing: 6) {
                     PrimaryStatRow("Str", value: status.str, value2: status.str2, value3: status.str3) {
                         gameSession.incrementStatusProperty(.str, by: 1)
                     }
@@ -41,16 +41,16 @@ struct StatusView: View {
 
                 Spacer()
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 6) {
                     HStack(alignment: .top, spacing: 12) {
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: 6) {
                             SecondaryStatRow("Atk", value: "\(status.atk)")
                             SecondaryStatRow("Matk", value: "\(status.matk)")
                             SecondaryStatRow("Hit", value: "\(status.hit)")
                             SecondaryStatRow("Critical", value: "\(status.critical)")
                         }
 
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: 6) {
                             SecondaryStatRow("Def", value: "\(status.def)")
                             SecondaryStatRow("Mdef", value: "\(status.mdef)")
                             SecondaryStatRow("Flee", value: "\(status.flee)")
@@ -74,7 +74,7 @@ struct StatusView: View {
 
             GameBottomBar()
         }
-        .frame(width: 280)
+        .frame(width: 320)
     }
 }
 
@@ -93,37 +93,40 @@ private struct PrimaryStatRow: View {
                 .frame(width: 24, alignment: .leading)
 
             HStack(spacing: 0) {
-                Text("\(value)")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(width: 24, height: 12)
-                Text("+\(value2)")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(width: 24, height: 12)
-            }
-            .background(Color.gameSecondaryBoxBackground)
-            .overlay(Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1))
+                HStack(spacing: 0) {
+                    Text("\(value)")
+                        .font(.game())
+                        .foregroundStyle(Color.gameLabel)
+                        .frame(width: 24, height: 24)
+                    Text("+\(value2)")
+                        .font(.game())
+                        .foregroundStyle(Color.gameLabel)
+                        .frame(width: 24, height: 24)
+                }
+                .overlay(alignment: .trailing) {
+                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
+                }
 
-            Button(action: onIncrement) {
-                RightArrow()
-                    .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
-                    .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
-                    .frame(width: 6, height: 8)
+                Button(action: onIncrement) {
+                    RightArrow()
+                        .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
+                        .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
+                        .frame(width: 6, height: 8)
+                }
+                .buttonStyle(.plain)
+                .frame(width: 24, height: 24)
             }
-            .buttonStyle(.plain)
-            .frame(width: 14, height: 12)
             .background(Color.gameSecondaryBoxBackground)
             .overlay(Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1))
 
             Text("\(value3)")
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
-                .frame(width: 20, height: 12, alignment: .trailing)
+                .frame(width: 20, height: 24)
                 .background(Color.white)
                 .overlay(Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1))
         }
-        .frame(height: 14)
+        .frame(height: 24)
     }
 
     init(_ title: String, value: Int, value2: Int, value3: Int, onIncrement: @escaping () -> Void) {
@@ -140,24 +143,21 @@ private struct SecondaryStatRow: View {
     var value: String
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 4) {
-                Text(title)
-                    .font(.game(weight: .bold))
-                    .foregroundStyle(Color.gameProminentLabel)
+        HStack(spacing: 4) {
+            Text(title)
+                .font(.game(weight: .bold))
+                .foregroundStyle(Color.gameProminentLabel)
 
-                Spacer()
+            Spacer()
 
-                Text(value)
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-            }
-
-            Rectangle()
-                .fill(Color.gameBoxBorder)
-                .frame(height: 1)
+            Text(value)
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
         }
-        .frame(height: 14)
+        .frame(height: 24)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(Color.gameBoxBorder).frame(height: 1)
+        }
     }
 
     init(_ title: String, value: String) {
