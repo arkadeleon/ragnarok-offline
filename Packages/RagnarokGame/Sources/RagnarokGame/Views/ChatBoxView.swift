@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2025/4/16.
 //
 
+import RagnarokModels
+import RagnarokPackets
 import SwiftUI
 
 struct ChatBoxView: View {
@@ -46,7 +48,6 @@ struct ChatBoxView: View {
 
     @State private var viewStyle: ViewStyle = .compact
     @State private var messageGroup: MessageGroup = .chat
-    @State private var scrollPosition: UUID?
     @State private var message = ""
 
     @FocusState private var isFocused: Bool
@@ -82,40 +83,20 @@ struct ChatBoxView: View {
                     }
                     .frame(height: ChatBoxView.messageHeaderHeight)
 
-                    Divider()
-                        .overlay(Color.white)
+                    Rectangle()
+                        .foregroundStyle(Color.white)
+                        .frame(height: 1)
                 }
 
-                ScrollView {
-                    LazyVStack(alignment: .leading) {
-                        switch messageGroup {
-                        case .chat:
-                            ForEach(gameSession.chatMessages) { message in
-                                Text(message.content)
-                                    .id(message.id)
-                                    .gameText(color: .white)
-                            }
-                        case .packet:
-                            ForEach(gameSession.packetMessages) { message in
-                                Text(String(describing: type(of: message.packet)))
-                                    .id(message.id)
-                                    .gameText(color: .white)
-                            }
-                        }
+                Group {
+                    switch messageGroup {
+                    case .chat:
+                        ChatMessageListView(messages: gameSession.chatMessages)
+                    case .packet:
+                        PacketMessageListView(messages: gameSession.packetMessages)
                     }
                 }
                 .frame(height: ChatBoxView.perMessageHeight * CGFloat(ChatBoxView.messageCount(for: viewStyle)))
-                .scrollPosition(id: $scrollPosition, anchor: .bottom)
-                .onChange(of: gameSession.chatMessages.count) {
-                    if messageGroup == .chat {
-                        scrollPosition = gameSession.chatMessages.last?.id
-                    }
-                }
-                .onChange(of: gameSession.packetMessages.count) {
-                    if messageGroup == .packet {
-                        scrollPosition = gameSession.packetMessages.last?.id
-                    }
-                }
                 .onTapGesture {
                     switch viewStyle {
                     case .compact:
@@ -152,6 +133,59 @@ private struct MessageGroupButton: View {
     }
 }
 
+private struct ChatMessageListView: View {
+    var messages: [ChatMessage]
+
+    @State private var scrollPosition: UUID?
+
+    var body: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading) {
+                ForEach(messages) { message in
+                    Text(message.content)
+                        .id(message.id)
+                        .gameText(color: .white)
+                }
+            }
+        }
+        .scrollPosition(id: $scrollPosition, anchor: .bottom)
+        .onChange(of: messages.count) {
+            scrollPosition = messages.last?.id
+        }
+    }
+}
+
+private struct PacketMessageListView: View {
+    var messages: [PacketMessage]
+
+    @State private var scrollPosition: UUID?
+
+    var body: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading) {
+                ForEach(messages) { message in
+                    Text(content(of: message))
+                        .id(message.id)
+                        .gameText(color: .white)
+                }
+            }
+        }
+        .scrollPosition(id: $scrollPosition, anchor: .bottom)
+        .onChange(of: messages.count) {
+            scrollPosition = messages.last?.id
+        }
+    }
+
+    private func content(of message: PacketMessage) -> String {
+        switch message.direction {
+        case .outgoing:
+            "[Send] " + String(describing: type(of: message.packet))
+        case .incoming:
+            "[Recv] " + String(describing: type(of: message.packet))
+        }
+    }
+}
+
 #Preview {
     let gameSession = {
         let gameSession = GameSession.testing
@@ -168,10 +202,9 @@ private struct MessageGroupButton: View {
 
     VStack {
         Spacer()
-
         ChatBoxView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color.gray)
+    .background(Color.gray.opacity(0.5))
     .environment(gameSession)
 }

@@ -26,6 +26,9 @@ public final class Client: Sendable {
     public let packetStream: AsyncStream<any DecodablePacket>
     private let packetContinuation: AsyncStream<any DecodablePacket>.Continuation
 
+    public let sentPacketStream: AsyncStream<any EncodablePacket>
+    private let sentPacketContinuation: AsyncStream<any EncodablePacket>.Continuation
+
     public init(name: String, address: String, port: UInt16) {
         self.name = name
 
@@ -45,6 +48,10 @@ public final class Client: Sendable {
         let (packetStream, packetContinuation) = AsyncStream<any DecodablePacket>.makeStream()
         self.packetStream = packetStream
         self.packetContinuation = packetContinuation
+
+        let (sentPacketStream, sentPacketContinuation) = AsyncStream<any EncodablePacket>.makeStream()
+        self.sentPacketStream = sentPacketStream
+        self.sentPacketContinuation = sentPacketContinuation
     }
 
     public func connect() {
@@ -73,6 +80,7 @@ public final class Client: Sendable {
 
         errorContinuation.finish()
         packetContinuation.finish()
+        sentPacketContinuation.finish()
     }
 
     public func sendPacket(_ packet: some EncodablePacket) {
@@ -85,6 +93,7 @@ public final class Client: Sendable {
                     self?.errorContinuation.yield(.network(error))
                 } else {
                     logger.info("Sent packet: \(String(describing: packet))")
+                    self?.sentPacketContinuation.yield(packet)
                 }
             }))
         } catch {

@@ -485,7 +485,18 @@ final public class GameSession {
         // Handle packet stream
         Task {
             for await packet in client.packetStream {
+                let packetMessage = PacketMessage(packet: packet, direction: .incoming)
+                packetMessages.append(packetMessage)
+
                 handleMapPacket(packet)
+            }
+        }
+
+        // Handle sent packet stream
+        Task {
+            for await packet in client.sentPacketStream {
+                let message = PacketMessage(packet: packet, direction: .outgoing)
+                packetMessages.append(message)
             }
         }
 
@@ -535,9 +546,6 @@ final public class GameSession {
     }
 
     private func handleMapPacket(_ packet: any DecodablePacket) {
-        let packetMessage = PacketMessage(packet: packet)
-        packetMessages.append(packetMessage)
-
         switch packet {
         case _ as PACKET_ZC_ACCEPT_ENTER:
             break
