@@ -91,7 +91,7 @@ struct ChatBoxView: View {
                 Group {
                     switch messageGroup {
                     case .chat:
-                        ChatMessageListView(messages: gameSession.chatMessages)
+                        ChatMessageListView(messages: gameSession.messageCenter.messages)
                     case .packet:
                         PacketMessageListView(messages: gameSession.packetMessages)
                     }
@@ -134,7 +134,7 @@ private struct MessageGroupButton: View {
 }
 
 private struct ChatMessageListView: View {
-    var messages: [ChatMessage]
+    var messages: [MessageCenter.Message]
 
     @State private var scrollPosition: UUID?
 
@@ -189,14 +189,14 @@ private struct PacketMessageListView: View {
 #Preview {
     let gameSession = {
         let gameSession = GameSession.testing
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Apple (1)."))
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Banana (1)."))
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Grape (1)."))
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Carrot (1)."))
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Potato (1)."))
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Meat (1)."))
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Honey (1)."))
-        gameSession.chatMessages.append(.init(type: .public, content: "You got Milk (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Apple (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Banana (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Grape (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Carrot (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Potato (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Meat (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Honey (1)."))
+        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Milk (1)."))
         return gameSession
     }()
 

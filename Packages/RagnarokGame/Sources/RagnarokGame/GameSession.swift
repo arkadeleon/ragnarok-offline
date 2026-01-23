@@ -24,6 +24,8 @@ final public class GameSession {
     public let immersiveSpaceID = "Game"
 
     let resourceManager: ResourceManager
+
+    let itemInfoTable: ItemInfoTable
     let messageStringTable: MessageStringTable
 
     public struct Configuration: Codable, Hashable {
@@ -77,7 +79,7 @@ final public class GameSession {
 
     var playerStatus = CharacterStatus()
     var inventory = Inventory()
-    var chatMessages: [ChatMessage] = []
+    let messageCenter: MessageCenter
     var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
 
@@ -101,7 +103,14 @@ final public class GameSession {
 
     public init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
+
+        self.itemInfoTable = ItemInfoTable()
         self.messageStringTable = MessageStringTable()
+
+        self.messageCenter = MessageCenter(
+            itemInfoTable: itemInfoTable,
+            messageStringTable: messageStringTable
+        )
     }
 
     // MARK: - Public
@@ -657,26 +666,20 @@ final public class GameSession {
         case let packet as PACKET_ZC_ITEM_DISAPPEAR:
             mapScene?.onItemVanished(objectID: packet.itemAid)
         case let packet as PACKET_ZC_ITEM_PICKUP_ACK:
-            let item = PickedUpItem(from: packet)
-
-            if packet.result == 0 {
-                let localizedMessage = messageStringTable.localizedMessageString(forID: 153, arguments: "\(item.itemID)", item.count)
-                let message = ChatMessage(type: .public, content: localizedMessage)
-                chatMessages.append(message)
-            } else {
-                let localizedMessage = messageStringTable.localizedMessageString(forID: 53)
-                let message = ChatMessage(type: .public, content: localizedMessage)
-                chatMessages.append(message)
-            }
+            messageCenter.addMessage(for: packet)
         case _ as PACKET_ZC_ITEM_THROW_ACK:
             break
         case let packet as PACKET_ZC_USE_ITEM_ACK:
             let item = UsedItem(from: packet)
             inventory.updateItem(at: item.index, amount: item.amount)
-        case _ as PACKET_ZC_REQ_WEAR_EQUIP_ACK:
-            break
-        case _ as PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK:
-            break
+        case let packet as PACKET_ZC_REQ_WEAR_EQUIP_ACK:
+            if let item = inventory.items[Int(packet.index)] {
+                messageCenter.addMessage(for: packet, itemID: item.itemID)
+            }
+        case let packet as PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK:
+            if let item = inventory.items[Int(packet.index)] {
+                messageCenter.addMessage(for: packet, itemID: item.itemID)
+            }
         case let packet as packet_spawn_unit:
             let object = MapObject(from: packet)
             let posDir = PosDir(from: packet.PosDir)
@@ -717,18 +720,7 @@ final public class GameSession {
         case let packet as PACKET_ZC_NOTIFY_ACT:
             let objectAction = MapObjectAction(from: packet)
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
-
-            if objectAction.damage > 0 {
-                if objectAction.sourceObjectID == account?.accountID {
-                    let localizedMessage = messageStringTable.localizedMessageString(forID: 1607, arguments: "\(objectAction.targetObjectID)", objectAction.damage)
-                    let message = ChatMessage(type: .public, content: localizedMessage)
-                    chatMessages.append(message)
-                } else if objectAction.targetObjectID == account?.accountID {
-                    let localizedMessage = messageStringTable.localizedMessageString(forID: 1605, arguments: "\(objectAction.sourceObjectID)", objectAction.damage)
-                    let message = ChatMessage(type: .public, content: localizedMessage)
-                    chatMessages.append(message)
-                }
-            }
+            messageCenter.addMessage(for: objectAction, account: account)
         case let packet as PACKET_ZC_SAY_DIALOG:
             if let dialog, dialog.npcID == packet.NpcID {
                 dialog.clearIfNeeded()
@@ -772,25 +764,25 @@ final public class GameSession {
             break
         case let packet as PACKET_ZC_NOTIFY_CHAT:
             let message = ChatMessage(from: packet)
-            chatMessages.append(message)
+            messageCenter.add(message)
         case let packet as PACKET_ZC_WHISPER:
             let message = ChatMessage(from: packet)
-            chatMessages.append(message)
+            messageCenter.add(message)
         case let packet as PACKET_ZC_NOTIFY_PLAYERCHAT:
             let message = ChatMessage(from: packet)
-            chatMessages.append(message)
+            messageCenter.add(message)
         case let packet as PACKET_ZC_NPC_CHAT:
             let message = ChatMessage(from: packet)
-            chatMessages.append(message)
+            messageCenter.add(message)
         case let packet as PACKET_ZC_NOTIFY_CHAT_PARTY:
             let message = ChatMessage(from: packet)
-            chatMessages.append(message)
+            messageCenter.add(message)
         case let packet as PACKET_ZC_GUILD_CHAT:
             let message = ChatMessage(from: packet)
-            chatMessages.append(message)
+            messageCenter.add(message)
         case let packet as PACKET_ZC_NOTIFY_CLAN_CHAT:
             let message = ChatMessage(from: packet)
-            chatMessages.append(message)
+            messageCenter.add(message)
         case _ as PACKET_ZC_ALL_ACH_LIST:
             break
         case _ as PACKET_ZC_ACH_UPDATE:

@@ -5,10 +5,9 @@
 //  Created by Leon Li on 2025/10/21.
 //
 
-import Foundation
 import RagnarokPackets
 
-public struct ChatMessage: Identifiable, Sendable {
+public struct ChatMessage: Sendable {
     public enum MessageType: Sendable {
         case `public`
         case `private`
@@ -19,7 +18,6 @@ public struct ChatMessage: Identifiable, Sendable {
         case clan
     }
 
-    public let id: UUID
     public let type: ChatMessage.MessageType
     public let senderObjectID: UInt32
     public let senderName: String
@@ -33,7 +31,6 @@ public struct ChatMessage: Identifiable, Sendable {
         content: String,
         color: UInt32 = 0
     ) {
-        self.id = UUID()
         self.type = type
         self.senderObjectID = senderObjectID
         self.senderName = senderName
