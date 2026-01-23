@@ -22,6 +22,7 @@ final class MessageCenter {
     enum MessageCategory {
         case item
         case battle
+        case exp
     }
 
     struct Message: Identifiable {
@@ -127,6 +128,28 @@ final class MessageCenter {
             // TODO: Party member deals damage
 
             // TODO: Party member receives damage
+        }
+    }
+
+    // MARK: - Exp
+
+    func addMessage(for packet: PACKET_ZC_NOTIFY_EXP) {
+        if packet.expType == 0 {
+            if packet.varID == 1 {
+                let messageString = messageStringTable.localizedMessageString(forID: 1613, arguments: packet.amount)
+                let message = MessageCenter.Message(content: messageString, type: .info, category: .exp)
+                messages.append(message)
+            } else if packet.varID == 2 {
+                let messageString = messageStringTable.localizedMessageString(forID: 1614, arguments: packet.amount)
+                let message = MessageCenter.Message(content: messageString, type: .info, category: .exp)
+                messages.append(message)
+            }
+        } else if packet.expType == 1 {
+            if packet.varID == 1 {
+                // TODO: Experience gained from Quest, Base:
+            } else if packet.varID == 2 {
+                // TODO: Experience gained from Quest, Job:
+            }
         }
     }
 }

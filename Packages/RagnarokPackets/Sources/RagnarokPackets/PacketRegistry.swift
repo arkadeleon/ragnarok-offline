@@ -988,7 +988,7 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_ZC_MSG_SKILL: PACKET_ZC_MSG_SKILL.self,
 
     // | 0x7f6, 0xacc | `clif_displayexp` |
-//  HEADER_ZC_NOTIFY_EXP: PACKET_ZC_NOTIFY_EXP.self,
+    HEADER_ZC_NOTIFY_EXP: PACKET_ZC_NOTIFY_EXP.self,
 
     // | 0x7fa | `clif_delitem` |
     HEADER_ZC_DELETE_ITEM_FROM_BODY: PACKET_ZC_DELETE_ITEM_FROM_BODY.self,

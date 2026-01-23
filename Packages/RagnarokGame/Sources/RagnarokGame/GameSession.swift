@@ -645,6 +645,8 @@ final public class GameSession {
             }
         case _ as PACKET_ZC_ATTACK_RANGE:
             break
+        case let packet as PACKET_ZC_NOTIFY_EXP:
+            messageCenter.addMessage(for: packet)
         case _ as PACKET_ZC_INVENTORY_START:
             break
         case _ as PACKET_ZC_INVENTORY_END:
