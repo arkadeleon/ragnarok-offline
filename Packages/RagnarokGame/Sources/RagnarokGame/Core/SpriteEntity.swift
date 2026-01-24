@@ -51,7 +51,6 @@ extension Entity {
 
         let spriteEntity = SpriteEntity(animations: animations)
         spriteEntity.name = "sprite"
-        spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
         addChild(spriteEntity)
 
 //        let hpEntity = try await Entity.loadHP()
@@ -69,7 +68,6 @@ extension Entity {
 
             let spriteEntity = SpriteEntity(animation: animation)
             spriteEntity.name = "sprite"
-            spriteEntity.orientation = simd_quatf(angle: radians(90), axis: [1, 0, 0])
             addChild(spriteEntity)
         }
     }
@@ -104,8 +102,8 @@ extension Entity {
 
         spriteEntity.position = [
             -animation.pivot.x / 32,
-            -(animation.frameHeight / 2 - animation.pivot.y) / 32,
             animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
+            (animation.frameHeight / 2 - animation.pivot.y) / 32,
         ]
 
         do {
@@ -127,8 +125,8 @@ extension Entity {
 
         spriteEntity.position = [
             -animation.pivot.x / 32,
-            -(animation.frameHeight / 2 - animation.pivot.y) / 32,
             animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
+            (animation.frameHeight / 2 - animation.pivot.y) / 32,
         ]
 
         do {
@@ -205,15 +203,15 @@ extension Entity {
                 var sourceTransform = transform
                 sourceTransform.translation = [
                     Float(sourcePosition.x) + 0.5 - animation.pivot.x / 32,
-                    Float(sourcePosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
                     sourceAltitude + animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
+                    -Float(sourcePosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32,
                 ]
 
                 var targetTransform = transform
                 targetTransform.translation = [
                     Float(targetPosition.x) + 0.5 - animation.pivot.x / 32,
-                    Float(targetPosition.y) + 0.5 - (animation.frameHeight / 2 - animation.pivot.y) / 32,
                     targetAltitude + animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
+                    -Float(targetPosition.y) - 0.5 + (animation.frameHeight / 2 - animation.pivot.y) / 32,
                 ]
 
                 let moveAction = FromToByAction(from: sourceTransform, to: targetTransform, mode: .parent, timing: .linear)

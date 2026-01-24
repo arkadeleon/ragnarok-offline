@@ -64,23 +64,23 @@ class DamageDigitSystem: System {
             switch component.digit {
             case .miss:
                 var position = component.startPosition
-                position.z += 3.5 + 7 * t
+                position.y += 3.5 + 7 * t
                 entity.position = position
 
                 let scale: Float = 2.5
-                entity.scale = [scale, scale, scale]
+                entity.scale = [scale, scale / cosf(elevation), scale]
             case .damage:
                 var position = component.startPosition
                 position.x += 4 * t
-                position.y -= 4 * t
-                position.z += 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5
+                position.y += 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5
+                position.z -= 4 * t
                 entity.position = position
 
                 let scale = 4 * (1 - t)
-                entity.scale = [scale, scale, scale]
+                entity.scale = [scale, scale / cosf(elevation), scale]
             }
 
-            entity.orientation = simd_quatf(angle: -azimuth, axis: [0, 0, 1]) * simd_quatf(angle: elevation, axis: [1, 0, 0])
+            entity.orientation = simd_quatf(angle: -azimuth, axis: [0, 1, 0])
 
             let opacity = 1 - t
             entity.components.set(OpacityComponent(opacity: opacity))

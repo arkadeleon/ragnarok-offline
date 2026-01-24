@@ -141,7 +141,7 @@ public class MapScene {
     func load(progress: Progress) async {
         if let worldEntity = try? await Entity(from: world, resourceManager: resourceManager, progress: progress) {
             worldEntity.name = mapName
-            worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-90), axis: [1, 0, 0]))
+            worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
 
             if let audioResource = await audioResource(forMapName: mapName) {
                 worldEntity.components.set(AudioLibraryComponent(resources: [
@@ -230,7 +230,7 @@ public class MapScene {
             point = origin + direction * Float(i)
 
             let x = point.x
-            let y = point.y
+            let y = -point.z
 
             let position: SIMD2<Int> = [Int(x), Int(y)]
 
@@ -248,13 +248,13 @@ public class MapScene {
 
             let altitude = x1 + (x2 - x1) * yr
 
-            if fabsf(altitude - point.z) < 0.5 {
+            if fabsf(altitude - point.y) < 0.5 {
                 gameSession?.requestMove(to: position)
 
-                let p0: SIMD3<Float> = [Float(position.x), Float(position.y), cell.bottomLeftAltitude + 0.1]
-                let p1: SIMD3<Float> = [Float(position.x + 1), Float(position.y), cell.bottomRightAltitude + 0.1]
-                let p2: SIMD3<Float> = [Float(position.x + 1), Float(position.y + 1), cell.topRightAltitude + 0.1]
-                let p3: SIMD3<Float> = [Float(position.x), Float(position.y + 1), cell.topLeftAltitude + 0.1]
+                let p0: SIMD3<Float> = [Float(position.x), cell.bottomLeftAltitude + 0.1, -Float(position.y)]
+                let p1: SIMD3<Float> = [Float(position.x + 1), cell.bottomRightAltitude + 0.1, -Float(position.y)]
+                let p2: SIMD3<Float> = [Float(position.x + 1), cell.topRightAltitude + 0.1, -Float(position.y + 1)]
+                let p3: SIMD3<Float> = [Float(position.x), cell.topLeftAltitude + 0.1, -Float(position.y + 1)]
 
                 let t0: SIMD2<Float> = [0, 0]
                 let t1: SIMD2<Float> = [1, 0]
@@ -306,14 +306,14 @@ public class MapScene {
         let latitude = radians(Double(world.rsw.light.latitude))
 
         let target: SIMD3<Float> = [0, 0, 0]
-        var position: SIMD3<Float> = [0, 0, 1]
+        var position: SIMD3<Float> = [0, 1, 0]
         var point = Point3D(position)
         point = point.rotated(
             by: simd_quatd(angle: latitude, axis: [1, 0, 0]),
             around: Point3D(target)
         )
         point = point.rotated(
-            by: simd_quatd(angle: -longitude, axis: [0, 1, 0]),
+            by: simd_quatd(angle: longitude, axis: [0, 0, 1]),
             around: Point3D(target)
         )
         position = SIMD3(point)
@@ -376,8 +376,8 @@ public class MapScene {
         let altitude = mapGrid[gridPosition].averageAltitude
         let position: SIMD3<Float> = [
             Float(gridPosition.x) + 0.5,
-            Float(gridPosition.y) + 0.5,
             altitude,
+            -Float(gridPosition.y) - 0.5,
         ]
         return position
     }

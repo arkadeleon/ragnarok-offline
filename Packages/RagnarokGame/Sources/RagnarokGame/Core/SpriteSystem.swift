@@ -33,7 +33,7 @@ class SpriteSystem: System {
         for entity in entities {
             entity.scale = [1, 1 / cosf(elevation), 1]
 
-            entity.orientation = simd_quatf(angle: -azimuth, axis: [0, 0, 1]) * simd_quatf(angle: radians(90), axis: [1, 0, 0])
+            entity.orientation = simd_quatf(angle: -azimuth, axis: [0, 1, 0])
 
             guard let animations = entity.components[SpriteAnimationsComponent.self]?.animations else {
                 continue
@@ -49,8 +49,8 @@ class SpriteSystem: System {
             if let animation {
                 entity.position = [
                     -animation.pivot.x / 32,
-                    -(animation.frameHeight / 2 - animation.pivot.y) / 32,
                     animation.frameHeight / 2 / 32 * entity.scale.y,
+                    (animation.frameHeight / 2 - animation.pivot.y) / 32,
                 ]
             }
         }

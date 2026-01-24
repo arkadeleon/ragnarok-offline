@@ -72,8 +72,8 @@ final class WalkingSystem: System {
 
             spriteEntity.position = [
                 -animation.pivot.x / 32,
-                -(animation.frameHeight / 2 - animation.pivot.y) / 32,
                 animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
+                (animation.frameHeight / 2 - animation.pivot.y) / 32,
             ]
 
             let mapGrid = walkingComponent.mapGrid
@@ -82,14 +82,14 @@ final class WalkingSystem: System {
 
             let sourcePosition: SIMD3<Float> = [
                 Float(sourceGridPosition.x) + 0.5,
-                Float(sourceGridPosition.y) + 0.5,
                 sourceAltitude,
+                -Float(sourceGridPosition.y) - 0.5,
             ]
 
             let targetPosition: SIMD3<Float> = [
                 Float(targetGridPosition.x) + 0.5,
-                Float(targetGridPosition.y) + 0.5,
                 targetAltitude,
+                -Float(targetGridPosition.y) - 0.5,
             ]
 
             if walkingComponent.stepTime == 0 {

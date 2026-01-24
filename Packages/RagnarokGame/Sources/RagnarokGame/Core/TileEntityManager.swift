@@ -30,7 +30,7 @@ final class TileEntityManager {
                 let tileEntity = Entity()
                 tileEntity.name = "tile"
 
-                let mesh = MeshResource.generatePlane(width: 1, height: 1)
+                let mesh = MeshResource.generatePlane(width: 1, depth: 1)
 
                 var material = SimpleMaterial()
                 material.color = SimpleMaterial.BaseColor(tint: .yellow)
@@ -38,7 +38,7 @@ final class TileEntityManager {
 
                 tileEntity.components.set(ModelComponent(mesh: mesh, materials: [material]))
                 tileEntity.components.set(CollisionComponent(shapes: [
-                    .generateBox(width: 1, height: 1, depth: 0)
+                    .generateBox(width: 1, height: 0, depth: 1)
                 ]))
                 tileEntity.components.set(InputTargetComponent())
                 tileEntity.components.set(HoverEffectComponent())
@@ -49,8 +49,8 @@ final class TileEntityManager {
                     let altitude = cell.averageAltitude
                     tileEntity.position = [
                         Float(x) + 0.5,
-                        Float(y) + 0.5,
                         altitude + 0.0001,
+                        -Float(y) - 0.5,
                     ]
 
                     if cell.isWalkable {
@@ -61,8 +61,8 @@ final class TileEntityManager {
                 } else {
                     tileEntity.position = [
                         Float(x) + 0.5,
-                        Float(y) + 0.5,
                         0,
+                        -Float(y) - 0.5,
                     ]
                     tileEntity.isEnabled = false
                 }
@@ -91,8 +91,8 @@ final class TileEntityManager {
                     let altitude = cell.averageAltitude
                     tileEntity.position = [
                         Float(x) + 0.5,
-                        Float(y) + 0.5,
                         altitude + 0.0001,
+                        -Float(y) - 0.5,
                     ]
 
                     if cell.isWalkable {
@@ -103,8 +103,8 @@ final class TileEntityManager {
                 } else {
                     tileEntity.position = [
                         Float(x) + 0.5,
-                        Float(y) + 0.5,
                         0,
+                        -Float(y) - 0.5,
                     ]
                     tileEntity.isEnabled = false
                 }
