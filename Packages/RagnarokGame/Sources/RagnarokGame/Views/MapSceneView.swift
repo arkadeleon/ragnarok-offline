@@ -208,6 +208,9 @@ class MapSceneARViewController: NSViewController {
 
         let panGestureRecognizer = NSPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         arView.addGestureRecognizer(panGestureRecognizer)
+
+        let magnificationGestureRecognizer = NSMagnificationGestureRecognizer(target: self, action: #selector(handleMagnification(_:)))
+        arView.addGestureRecognizer(magnificationGestureRecognizer)
     }
 
     override func mouseDown(with event: NSEvent) {
@@ -215,10 +218,6 @@ class MapSceneARViewController: NSViewController {
         if let (origin, direction) = arView.ray(through: screenPoint) {
             scene.raycast(origin: origin, direction: direction, in: arView.scene)
         }
-    }
-
-    override func scrollWheel(with event: NSEvent) {
-        // handle magnification
     }
 
     @objc func handlePan(_ panGestureRecognizer: NSPanGestureRecognizer) {
@@ -234,6 +233,23 @@ class MapSceneARViewController: NSViewController {
             verticalAngle = max(verticalAngle, radians(15))
             verticalAngle = min(verticalAngle, radians(60))
             scene.verticalAngle = verticalAngle
+        default:
+            break
+        }
+    }
+
+    @objc func handleMagnification(_ magnificationGestureRecognizer: NSMagnificationGestureRecognizer) {
+        switch magnificationGestureRecognizer.state {
+        case .began:
+            distance = scene.distance
+        case .changed:
+            var scale = 1 + magnificationGestureRecognizer.magnification
+            scale = max(scale, .leastNonzeroMagnitude)
+
+            var distance = distance * Float(1 / scale)
+            distance = max(distance, 3)
+            distance = min(distance, 120)
+            scene.distance = distance
         default:
             break
         }
