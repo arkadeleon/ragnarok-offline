@@ -154,6 +154,16 @@ public class MapScene {
             rootEntity.addChild(worldEntity)
         }
 
+        let skyboxConfiguration = SkyboxConfiguration.generate(
+            light: world.rsw.light,
+            mapWidth: mapGrid.width,
+            mapHeight: mapGrid.height
+        )
+        if let skyboxEntity = try? await SkyboxEntity(configuration: skyboxConfiguration) {
+            skyboxEntity.name = "skybox"
+            rootEntity.addChild(skyboxEntity)
+        }
+
         tileEntityManager.addTileEntities(forCenter: playerPosition)
 
         do {
@@ -355,7 +365,7 @@ public class MapScene {
         worldCameraEntity.name = "camera"
         #if !os(visionOS)
         worldCameraEntity.addChild(
-            Entity(components: PerspectiveCameraComponent(near: 2, far: 300, fieldOfViewInDegrees: 15))
+            Entity(components: PerspectiveCameraComponent(near: 2, far: 1000, fieldOfViewInDegrees: 15))
         )
         #endif
 
