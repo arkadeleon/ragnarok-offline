@@ -40,7 +40,7 @@ extension Entity {
             var material = PhysicallyBasedMaterial()
             material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
             material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.2)
-            material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / Float(32), 1])
+            material.textureCoordinateTransform = PhysicallyBasedMaterial.TextureCoordinateTransform(scale: [1 / Float(32), 1])
             materials = [material]
         } else {
             let material = SimpleMaterial()

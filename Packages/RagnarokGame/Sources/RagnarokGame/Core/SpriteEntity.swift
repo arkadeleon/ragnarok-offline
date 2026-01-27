@@ -251,14 +251,13 @@ extension Entity {
         let height = animation.frameHeight / 32
 
         // Create material.
-        var material = PhysicallyBasedMaterial()
-        material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.7)
+        var material = UnlitMaterial()
         material.opacityThreshold = 0.0001
         material.blending = .transparent(opacity: 1.0)
 
         if let texture = animation.texture {
-            material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
-            material.textureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(scale: [1 / Float(animation.frameCount), 1])
+            material.color = UnlitMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
+            material.textureCoordinateTransform = UnlitMaterial.TextureCoordinateTransform(scale: [1 / Float(animation.frameCount), 1])
         }
 
         // Create model component.

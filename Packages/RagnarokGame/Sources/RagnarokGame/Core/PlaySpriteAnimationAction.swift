@@ -41,7 +41,7 @@ struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerProtocol {
         let frameIndex = Int(event.playbackController.time / animation.frameInterval) % animation.frameCount
 
         if let _ = animation.texture {
-            entity.components[ModelComponent.self]?.materialTextureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(
+            entity.components[ModelComponent.self]?.materialTextureCoordinateTransform = UnlitMaterial.TextureCoordinateTransform(
                 offset: [Float(frameIndex) / Float(animation.frameCount), 0],
                 scale: [1 / Float(animation.frameCount), 1]
             )
@@ -54,13 +54,13 @@ struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerProtocol {
 }
 
 extension ModelComponent {
-    var materialTextureCoordinateTransform: MaterialParameterTypes.TextureCoordinateTransform? {
+    var materialTextureCoordinateTransform: UnlitMaterial.TextureCoordinateTransform? {
         get {
-            let material = materials[0] as? PhysicallyBasedMaterial
+            let material = materials[0] as? UnlitMaterial
             return material?.textureCoordinateTransform
         }
         set {
-            if let newValue, var material = materials[0] as? PhysicallyBasedMaterial {
+            if let newValue, var material = materials[0] as? UnlitMaterial {
                 material.textureCoordinateTransform = newValue
                 materials[0] = material
             }

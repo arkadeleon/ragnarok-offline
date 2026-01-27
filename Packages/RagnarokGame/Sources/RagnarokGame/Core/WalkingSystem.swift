@@ -106,7 +106,7 @@ final class WalkingSystem: System {
             let frameIndex = Int(totalTime / animation.frameInterval) % animation.frameCount
 
             if let _ = animation.texture {
-                spriteEntity.components[ModelComponent.self]?.materialTextureCoordinateTransform = MaterialParameterTypes.TextureCoordinateTransform(
+                spriteEntity.components[ModelComponent.self]?.materialTextureCoordinateTransform = UnlitMaterial.TextureCoordinateTransform(
                     offset: [Float(frameIndex) / Float(animation.frameCount), 0],
                     scale: [1 / Float(animation.frameCount), 1]
                 )
