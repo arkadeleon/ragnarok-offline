@@ -67,4 +67,10 @@ public enum CharacterDirection: Int, CaseIterable, CustomStringConvertible, Send
             self = .northeast
         }
     }
+
+    public func adjustedForCameraAzimuth(_ azimuth: Float) -> CharacterDirection {
+        let offset = Int((-azimuth / (.pi / 4)).rounded())
+        let adjusted = ((rawValue + offset) % 8 + 8) % 8
+        return CharacterDirection(rawValue: adjusted)!
+    }
 }

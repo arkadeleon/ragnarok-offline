@@ -6,6 +6,7 @@
 //
 
 import RealityKit
+import WorldCamera
 
 class SpriteActionSystem: System {
     static let query = EntityQuery(where: .has(SpriteAnimationLibraryComponent.self) && .has(SpriteActionComponent.self))
@@ -14,6 +15,17 @@ class SpriteActionSystem: System {
     }
 
     func update(context: SceneUpdateContext) {
+        let worldCameraEntities = context.entities(
+            matching: EntityQuery(where: .has(WorldCameraComponent.self)),
+            updatingSystemWhen: .rendering
+        )
+        guard let worldCameraEntity = worldCameraEntities.first(where: { _ in true }),
+              let worldCameraComponent = worldCameraEntity.components[WorldCameraComponent.self] else {
+            return
+        }
+
+        let azimuth = worldCameraComponent.azimuth
+
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
             guard let animations = entity.components[SpriteAnimationLibraryComponent.self]?.animations,
                   var actionComponent = entity.components[SpriteActionComponent.self] else {
@@ -31,9 +43,10 @@ class SpriteActionSystem: System {
                 entity.components.remove(SpriteAnimationComponent.self)
             }
 
+            let visualDirection = actionComponent.direction.adjustedForCameraAzimuth(azimuth)
             let animationName = SpriteAnimation.animationName(
                 for: actionComponent.actionType,
-                direction: actionComponent.direction,
+                direction: visualDirection,
                 headDirection: actionComponent.headDirection
             )
             guard let animation = animations[animationName] else {
