@@ -1,5 +1,5 @@
 //
-//  SpriteAnimationsComponent.swift
+//  SpriteAnimationLibraryComponent.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2025/2/22.
@@ -7,15 +7,17 @@
 
 import RealityKit
 
-struct SpriteAnimationsComponent: Component {
+struct SpriteAnimationLibraryComponent: Component {
+    private static let defaultAnimationKey = "default"
+
     var animations: [String : SpriteAnimation]
 
     var defaultAnimation: SpriteAnimation? {
-        animations["default"]
+        animations[Self.defaultAnimationKey]
     }
 
     init(animation: SpriteAnimation) {
-        self.animations = ["default": animation]
+        self.animations = [Self.defaultAnimationKey: animation]
     }
 
     init(animations: [String : SpriteAnimation]) {

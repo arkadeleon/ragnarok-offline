@@ -125,9 +125,14 @@ public class MapScene {
         LockOnComponent.registerComponent()
         LockOnSystem.registerSystem()
 
-        SpriteAnimationsComponent.registerComponent()
         SpriteActionComponent.registerComponent()
-        SpriteSystem.registerSystem()
+        SpriteNextActionComponent.registerComponent()
+        SpriteActionSystem.registerSystem()
+        SpriteAnimationComponent.registerComponent()
+        SpriteAnimationLibraryComponent.registerComponent()
+        SpriteAnimationSystem.registerSystem()
+        SpriteBillboardComponent.registerComponent()
+        SpriteBillboardSystem.registerSystem()
 
         WalkingComponent.registerComponent()
         WalkingSystem.registerSystem()
@@ -199,7 +204,7 @@ public class MapScene {
             logger.warning("\(error)")
         }
 
-        playerEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+        playerEntity.playSpriteAnimation(.idle, direction: .south)
 
         rootEntity.addChild(playerEntity)
 
@@ -653,7 +658,7 @@ extension MapScene: MapEventHandlerProtocol {
                 entity.components.remove(WalkingComponent.self)
             }
 
-            entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: direction), repeats: true)
+            entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: direction))
         }
     }
 
@@ -695,7 +700,7 @@ extension MapScene: MapEventHandlerProtocol {
                 entity.transform = transform(for: position)
                 entity.components[GridPositionComponent.self]?.gridPosition = position
                 entity.components.remove(WalkingComponent.self)
-                entity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                entity.playSpriteAnimation(.idle, direction: .south)
             }
         }
     }
@@ -722,13 +727,11 @@ extension MapScene: MapEventHandlerProtocol {
 
             switch objectAction.type {
             case .pickup_item:
-                sourceEntity.playSpriteAnimation(.pickup, direction: .south, repeats: false) {
-                    sourceEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
-                }
+                sourceEntity.playSpriteAnimation(.pickup, direction: .south, nextActionType: .idle)
             case .sit_down:
-                sourceEntity.playSpriteAnimation(.sit, direction: .south, repeats: true)
+                sourceEntity.playSpriteAnimation(.sit, direction: .south)
             case .stand_up:
-                sourceEntity.playSpriteAnimation(.idle, direction: .south, repeats: true)
+                sourceEntity.playSpriteAnimation(.idle, direction: .south)
             case .normal, .endure, .critical:
                 sourceEntity.attack(direction: .south)
 
@@ -805,7 +808,7 @@ extension MapScene: MapEventHandlerProtocol {
                 MapItemComponent(mapItem: item),
             ])
 
-            entity.playDefaultSpriteAnimation(repeats: true)
+            entity.playDefaultSpriteAnimation()
 
             rootEntity.addChild(entity)
         }

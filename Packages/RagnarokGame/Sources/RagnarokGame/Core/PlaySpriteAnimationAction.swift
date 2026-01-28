@@ -53,17 +53,11 @@ struct PlaySpriteAnimationActionHandler: @preconcurrency ActionHandlerProtocol {
     }
 }
 
-extension ModelComponent {
-    var materialTextureCoordinateTransform: UnlitMaterial.TextureCoordinateTransform? {
-        get {
-            let material = materials[0] as? UnlitMaterial
-            return material?.textureCoordinateTransform
-        }
-        set {
-            if let newValue, var material = materials[0] as? UnlitMaterial {
-                material.textureCoordinateTransform = newValue
-                materials[0] = material
-            }
-        }
+extension AnimationResource {
+    @available(*, deprecated)
+    static func makeActionAnimation(with animation: SpriteAnimation, duration: TimeInterval, actionEnded: (() -> Void)?) throws -> AnimationResource {
+        let action = PlaySpriteAnimationAction(animation: animation, actionEnded: actionEnded)
+        let actionAnimation = try makeActionAnimation(for: action, duration: duration)
+        return actionAnimation
     }
 }

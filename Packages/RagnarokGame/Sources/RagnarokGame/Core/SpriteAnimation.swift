@@ -12,7 +12,7 @@ import RagnarokResources
 import RagnarokSprite
 import RealityKit
 
-final class SpriteAnimation: Sendable {
+struct SpriteAnimation: Equatable, Sendable {
     let texture: TextureResource?
     let frameCount: Int
     let frameWidth: Float
@@ -24,7 +24,7 @@ final class SpriteAnimation: Sendable {
         frameInterval * TimeInterval(frameCount)
     }
 
-    convenience init(sprite: SpriteResource, actionIndex: Int) async throws {
+    init(sprite: SpriteResource, actionIndex: Int) async throws {
         let spriteRenderer = SpriteRenderer()
         let animation = await spriteRenderer.render(sprite: sprite, actionIndex: actionIndex)
 
@@ -122,5 +122,29 @@ extension SpriteAnimation {
 
             return animations
         }
+    }
+}
+
+extension AnimationResource {
+    @available(*, deprecated)
+    static func generate(with animation: SpriteAnimation, repeats: Bool, trimDuration: TimeInterval? = nil) throws -> AnimationResource {
+        var frames: [SIMD2<Float>] = (0..<animation.frameCount).map { frameIndex in
+            [Float(frameIndex) / Float(animation.frameCount), 0]
+        }
+        if repeats {
+            frames = Array(repeating: frames, count: 100).flatMap({ $0 })
+        }
+        let animationDefinition = SampledAnimation(
+            frames: frames,
+            name: "action",
+            tweenMode: .hold,
+            frameInterval: Float(animation.frameInterval),
+            isAdditive: false,
+            bindTarget: .material(0).textureCoordinate.offset,
+            repeatMode: repeats ? .repeat : .none,
+            trimDuration: trimDuration
+        )
+        let animationResource = try AnimationResource.generate(with: animationDefinition)
+        return animationResource
     }
 }

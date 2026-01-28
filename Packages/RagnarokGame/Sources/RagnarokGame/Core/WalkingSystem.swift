@@ -9,18 +9,16 @@ import Foundation
 import RagnarokSprite
 import RealityKit
 
-final class WalkingSystem: System {
+class WalkingSystem: System {
     static let query = EntityQuery(where: .has(WalkingComponent.self))
 
-    init(scene: Scene) {
+    required init(scene: Scene) {
     }
 
     func update(context: SceneUpdateContext) {
-        let entities = context.entities(matching: Self.query, updatingSystemWhen: .rendering)
-
-        for entity in entities {
+        for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
             guard let spriteEntity = entity.findEntity(named: "sprite") else {
-                return
+                continue
             }
 
             guard var walkingComponent = entity.components[WalkingComponent.self],
@@ -28,8 +26,7 @@ final class WalkingSystem: System {
                 continue
             }
 
-            guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
-                  let animations = spriteEntity.components[SpriteAnimationsComponent.self]?.animations else {
+            guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject else {
                 continue
             }
 
@@ -61,21 +58,6 @@ final class WalkingSystem: System {
             let speed = TimeInterval(mapObject.speed) / 1000
             let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 
-            let animationName = SpriteAnimation.animationName(
-                for: .walk,
-                direction: direction,
-                headDirection: .lookForward
-            )
-            guard let animation = animations[animationName] else {
-                continue
-            }
-
-            spriteEntity.position = [
-                -animation.pivot.x / 32,
-                animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
-                (animation.frameHeight / 2 - animation.pivot.y) / 32,
-            ]
-
             let mapGrid = walkingComponent.mapGrid
             let sourceAltitude = mapGrid[sourceGridPosition].averageAltitude
             let targetAltitude = mapGrid[targetGridPosition].averageAltitude
@@ -96,21 +78,9 @@ final class WalkingSystem: System {
                 spriteEntity.components.set(
                     SpriteActionComponent(actionType: .walk, direction: direction, headDirection: .lookForward)
                 )
-
-                spriteEntity.generateModelAndCollisionShape(for: animation)
             }
 
-            let totalTime = walkingComponent.totalTime + context.deltaTime
             let stepTime = walkingComponent.stepTime + context.deltaTime
-
-            let frameIndex = Int(totalTime / animation.frameInterval) % animation.frameCount
-
-            if let _ = animation.texture {
-                spriteEntity.components[ModelComponent.self]?.materialTextureCoordinateTransform = UnlitMaterial.TextureCoordinateTransform(
-                    offset: [Float(frameIndex) / Float(animation.frameCount), 0],
-                    scale: [1 / Float(animation.frameCount), 1]
-                )
-            }
 
             let t = stepTime / duration
             if t > 1 {
@@ -126,11 +96,9 @@ final class WalkingSystem: System {
                 walkingComponent.stepTime = stepTime
             }
 
-            walkingComponent.totalTime = totalTime
-
             if walkingComponent.path.count == 1 {
                 entity.components.remove(WalkingComponent.self)
-                entity.playSpriteAnimation(.idle, direction: direction, repeats: true)
+                entity.playSpriteAnimation(.idle, direction: direction)
             } else {
                 entity.components.set(walkingComponent)
             }

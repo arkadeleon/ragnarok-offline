@@ -24,19 +24,22 @@ class SpriteEntity: Entity {
 
         let shadowComponent = DynamicLightShadowComponent(castsShadow: false)
         components.set(shadowComponent)
+
+        let billboardComponent = SpriteBillboardComponent()
+        components.set(billboardComponent)
     }
 
     convenience init(animation: SpriteAnimation) {
         self.init()
 
-        let spriteComponent = SpriteAnimationsComponent(animation: animation)
+        let spriteComponent = SpriteAnimationLibraryComponent(animation: animation)
         components.set(spriteComponent)
     }
 
     convenience init(animations: [String : SpriteAnimation]) {
         self.init()
 
-        let spriteComponent = SpriteAnimationsComponent(animations: animations)
+        let spriteComponent = SpriteAnimationLibraryComponent(animations: animations)
         components.set(spriteComponent)
     }
 }
@@ -74,14 +77,22 @@ extension Entity {
 }
 
 extension Entity {
+    func playDefaultSpriteAnimation() {
+        guard let spriteEntity = findEntity(named: "sprite"),
+              let animation = spriteEntity.components[SpriteAnimationLibraryComponent.self]?.defaultAnimation else {
+            return
+        }
+
+        spriteEntity.setSpriteAnimation(animation)
+        spriteEntity.generateModelAndCollisionShape(for: animation)
+    }
+
     func playSpriteAnimation(
         _ actionType: CharacterActionType,
         direction: CharacterDirection,
-        repeats: Bool,
-        actionEnded: (() -> Void)? = nil
+        nextActionType: CharacterActionType? = nil
     ) {
-        guard let spriteEntity = findEntity(named: "sprite"),
-              let animations = spriteEntity.components[SpriteAnimationsComponent.self]?.animations else {
+        guard let spriteEntity = findEntity(named: "sprite") else {
             return
         }
 
@@ -89,55 +100,63 @@ extension Entity {
             SpriteActionComponent(actionType: actionType, direction: direction, headDirection: .lookForward)
         )
 
-        let animationName = SpriteAnimation.animationName(
-            for: actionType,
-            direction: direction,
-            headDirection: .lookForward
+        spriteEntity.components.remove(SpriteAnimationComponent.self)
+
+        if let nextActionType {
+            spriteEntity.components.set(
+                SpriteNextActionComponent(actionType: nextActionType, direction: direction, headDirection: .lookForward)
+            )
+        } else {
+            spriteEntity.components.remove(SpriteNextActionComponent.self)
+        }
+    }
+
+    func attack(direction: CharacterDirection) {
+        guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
+            return
+        }
+
+        let attackActionType = CharacterActionType.attackActionType(
+            forJobID: mapObject.job,
+            gender: mapObject.gender,
+            weapon: mapObject.weapon
         )
-        guard let animation = animations[animationName] else {
-            return
-        }
 
-        spriteEntity.stopAllAnimations()
-
-        spriteEntity.position = [
-            -animation.pivot.x / 32,
-            animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
-            (animation.frameHeight / 2 - animation.pivot.y) / 32,
-        ]
-
-        do {
-            let duration = (repeats ? .infinity : animation.duration)
-            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: actionEnded)
-            spriteEntity.playAnimation(actionAnimation)
-        } catch {
-            logger.warning("\(error)")
-        }
+        playSpriteAnimation(attackActionType, direction: direction, nextActionType: .readyToAttack)
     }
+}
 
-    func playDefaultSpriteAnimation(repeats: Bool) {
-        guard let spriteEntity = findEntity(named: "sprite"),
-              let animation = spriteEntity.components[SpriteAnimationsComponent.self]?.defaultAnimation else {
-            return
+extension Entity {
+    func generateModelAndCollisionShape(for animation: SpriteAnimation) {
+        let width = animation.frameWidth / 32
+        let height = animation.frameHeight / 32
+
+        // Create material.
+        var material = UnlitMaterial()
+        material.opacityThreshold = 0.0001
+        material.blending = .transparent(opacity: 1.0)
+
+        if let texture = animation.texture {
+            material.color = UnlitMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
+            material.textureCoordinateTransform = UnlitMaterial.TextureCoordinateTransform(scale: [1 / Float(animation.frameCount), 1])
         }
 
-        spriteEntity.stopAllAnimations()
+        // Create model component.
+        let modelComponent = ModelComponent(
+            mesh: .generatePlane(width: width, height: height),
+            materials: [material]
+        )
+        components.set(modelComponent)
 
-        spriteEntity.position = [
-            -animation.pivot.x / 32,
-            animation.frameHeight / 2 / 32 * spriteEntity.scale.y,
-            (animation.frameHeight / 2 - animation.pivot.y) / 32,
-        ]
-
-        do {
-            let duration = (repeats ? .infinity : animation.duration)
-            let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration, actionEnded: nil)
-            spriteEntity.playAnimation(actionAnimation)
-        } catch {
-            logger.warning("\(error)")
-        }
+        // Create collision component.
+        let collisionComponent = CollisionComponent(
+            shapes: [.generateBox(width: width, height: height, depth: 0)]
+        )
+        components.set(collisionComponent)
     }
+}
 
+extension Entity {
     @available(*, deprecated)
     func walk(through path: [SIMD2<Int>], mapGrid: MapGrid) {
         guard let spriteEntity = findEntity(named: "sprite") else {
@@ -145,7 +164,7 @@ extension Entity {
         }
 
         guard let mapObject = components[MapObjectComponent.self]?.mapObject,
-              let animations = spriteEntity.components[SpriteAnimationsComponent.self]?.animations else {
+              let animations = spriteEntity.components[SpriteAnimationLibraryComponent.self]?.animations else {
             return
         }
 
@@ -193,7 +212,7 @@ extension Entity {
                 let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration) {
                     self.components[GridPositionComponent.self]?.gridPosition = targetPosition
                     if i == path.count - 1 {
-                        self.playSpriteAnimation(.idle, direction: direction, repeats: true)
+                        self.playSpriteAnimation(.idle, direction: direction)
                     }
                 }
 
@@ -226,81 +245,5 @@ extension Entity {
         } catch {
             logger.warning("\(error)")
         }
-    }
-
-    func attack(direction: CharacterDirection) {
-        guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
-            return
-        }
-
-        let attackActionType = CharacterActionType.attackActionType(
-            forJobID: mapObject.job,
-            gender: mapObject.gender,
-            weapon: mapObject.weapon
-        )
-
-        playSpriteAnimation(attackActionType, direction: direction, repeats: false) {
-            self.playSpriteAnimation(.readyToAttack, direction: direction, repeats: true)
-        }
-    }
-}
-
-extension Entity {
-    func generateModelAndCollisionShape(for animation: SpriteAnimation) {
-        let width = animation.frameWidth / 32
-        let height = animation.frameHeight / 32
-
-        // Create material.
-        var material = UnlitMaterial()
-        material.opacityThreshold = 0.0001
-        material.blending = .transparent(opacity: 1.0)
-
-        if let texture = animation.texture {
-            material.color = UnlitMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
-            material.textureCoordinateTransform = UnlitMaterial.TextureCoordinateTransform(scale: [1 / Float(animation.frameCount), 1])
-        }
-
-        // Create model component.
-        let modelComponent = ModelComponent(
-            mesh: .generatePlane(width: width, height: height),
-            materials: [material]
-        )
-        components.set(modelComponent)
-
-        // Create collision component.
-        let collisionComponent = CollisionComponent(
-            shapes: [.generateBox(width: width, height: height, depth: 0)]
-        )
-        components.set(collisionComponent)
-    }
-}
-
-extension AnimationResource {
-    @available(*, deprecated)
-    static func generate(with animation: SpriteAnimation, repeats: Bool, trimDuration: TimeInterval? = nil) throws -> AnimationResource {
-        var frames: [SIMD2<Float>] = (0..<animation.frameCount).map { frameIndex in
-            [Float(frameIndex) / Float(animation.frameCount), 0]
-        }
-        if repeats {
-            frames = Array(repeating: frames, count: 100).flatMap({ $0 })
-        }
-        let animationDefinition = SampledAnimation(
-            frames: frames,
-            name: "action",
-            tweenMode: .hold,
-            frameInterval: Float(animation.frameInterval),
-            isAdditive: false,
-            bindTarget: .material(0).textureCoordinate.offset,
-            repeatMode: repeats ? .repeat : .none,
-            trimDuration: trimDuration
-        )
-        let animationResource = try AnimationResource.generate(with: animationDefinition)
-        return animationResource
-    }
-
-    static func makeActionAnimation(with animation: SpriteAnimation, duration: TimeInterval, actionEnded: (() -> Void)?) throws -> AnimationResource {
-        let action = PlaySpriteAnimationAction(animation: animation, actionEnded: actionEnded)
-        let actionAnimation = try makeActionAnimation(for: action, duration: duration)
-        return actionAnimation
     }
 }
