@@ -52,7 +52,7 @@ struct RagnarokOfflineApp: App {
         #if os(visionOS)
         ImmersiveSpace(id: appModel.gameSession.immersiveSpaceID) {
             if let mapScene = appModel.gameSession.mapScene {
-                MapSceneView(scene: mapScene)
+                MapSceneRealityView(scene: mapScene)
             }
         }
         .immersionStyle(selection: $immersionStyle, in: .progressive)

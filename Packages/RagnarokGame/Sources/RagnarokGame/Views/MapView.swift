@@ -32,7 +32,7 @@ struct MapView: View {
             Text("Game")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             #else
-            MapSceneView(scene: scene)
+            MapSceneARView(scene: scene)
             #endif
         }
         .overlay(alignment: .bottomLeading) {
