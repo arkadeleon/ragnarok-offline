@@ -81,6 +81,7 @@ final public class GameSession {
     var inventory = Inventory()
     let messageCenter: MessageCenter
     var packetMessages: [PacketMessage] = []
+    var overlay = MapSceneOverlay()
     var dialog: NPCDialog?
 
     @ObservationIgnored var loginClient: Client?
@@ -587,6 +588,8 @@ final public class GameSession {
             if let mapScene {
                 mapScene.unload()
             }
+
+            overlay.clearAll()
 
             let mapName = packet.mapName
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/8/7.
 //
 
+import Combine
 import RealityKit
 import SGLMath
 import SwiftUI
@@ -13,9 +14,10 @@ import SwiftUI
 
 struct MapSceneARView: UIViewControllerRepresentable {
     var scene: MapScene
+    var onSceneUpdate: (ARView) -> Void
 
     func makeUIViewController(context: Context) -> MapSceneARViewController {
-        MapSceneARViewController(scene: scene)
+        MapSceneARViewController(scene: scene, onSceneUpdate: onSceneUpdate)
     }
 
     func updateUIViewController(_ viewController: MapSceneARViewController, context: Context) {
@@ -24,14 +26,17 @@ struct MapSceneARView: UIViewControllerRepresentable {
 
 class MapSceneARViewController: UIViewController {
     let scene: MapScene
+    let onSceneUpdate: (ARView) -> Void
 
     private var arView: ARView!
     private var horizontalAngle: Float = radians(0)
     private var verticalAngle: Float = radians(45)
     private var distance: Float = 100
+    private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene) {
+    init(scene: MapScene, onSceneUpdate: @escaping (ARView) -> Void) {
         self.scene = scene
+        self.onSceneUpdate = onSceneUpdate
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -67,6 +72,22 @@ class MapSceneARViewController: UIViewController {
 
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         arView.addGestureRecognizer(pinchGestureRecognizer)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        sceneSubscription = arView.scene.subscribe(to: SceneEvents.Update.self) { [weak self] _ in
+            if let self {
+                onSceneUpdate(arView)
+            }
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        sceneSubscription = nil
     }
 
     @objc func handleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
@@ -130,9 +151,10 @@ class MapSceneARViewController: UIViewController {
 
 struct MapSceneARView: NSViewControllerRepresentable {
     var scene: MapScene
+    var onSceneUpdate: (ARView) -> Void
 
     func makeNSViewController(context: Context) -> MapSceneARViewController {
-        MapSceneARViewController(scene: scene)
+        MapSceneARViewController(scene: scene, onSceneUpdate: onSceneUpdate)
     }
 
     func updateNSViewController(_ viewController: MapSceneARViewController, context: Context) {
@@ -141,14 +163,17 @@ struct MapSceneARView: NSViewControllerRepresentable {
 
 class MapSceneARViewController: NSViewController {
     let scene: MapScene
+    let onSceneUpdate: (ARView) -> Void
 
     private var arView: ARView!
     private var horizontalAngle: Float = radians(0)
     private var verticalAngle: Float = radians(45)
     private var distance: Float = 100
+    private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene) {
+    init(scene: MapScene, onSceneUpdate: @escaping (ARView) -> Void) {
         self.scene = scene
+        self.onSceneUpdate = onSceneUpdate
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -173,6 +198,22 @@ class MapSceneARViewController: NSViewController {
 
         let magnificationGestureRecognizer = NSMagnificationGestureRecognizer(target: self, action: #selector(handleMagnification(_:)))
         arView.addGestureRecognizer(magnificationGestureRecognizer)
+    }
+
+    override func viewWillAppear() {
+        super.viewWillAppear()
+
+        sceneSubscription = arView.scene.subscribe(to: SceneEvents.Update.self) { [weak self] _ in
+            if let self {
+                onSceneUpdate(arView)
+            }
+        }
+    }
+
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+
+        sceneSubscription = nil
     }
 
     override func mouseDown(with event: NSEvent) {

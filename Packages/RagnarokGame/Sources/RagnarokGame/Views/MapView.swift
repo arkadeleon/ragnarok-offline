@@ -32,7 +32,12 @@ struct MapView: View {
             Text("Game")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             #else
-            MapSceneARView(scene: scene)
+            MapSceneARView(scene: scene) { arView in
+                updateOverlay(arView: arView)
+            }
+            .overlay {
+                MapSceneOverlayView(overlay: gameSession.overlay)
+            }
             #endif
         }
         .overlay(alignment: .bottomLeading) {
@@ -153,6 +158,47 @@ struct MapView: View {
             screenWidth - 16 * 2
         }
     }
+
+    #if !os(visionOS)
+    private func updateOverlay(arView: ARView) {
+        var gauges: [UInt32: MapSceneOverlay.Gauge] = [:]
+
+        let query = EntityQuery(where: .has(HealthPointsComponent.self))
+        for entity in arView.scene.performQuery(query) {
+            guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
+                  let healthPointsComponent = entity.components[HealthPointsComponent.self] else {
+                continue
+            }
+
+            let worldPosition = entity.position(relativeTo: nil)
+            let gaugePosition = worldPosition + [0, -0.8, 0]
+
+            guard var screenPoint = arView.project(gaugePosition) else {
+                continue
+            }
+
+            #if os(macOS)
+            screenPoint.y = arView.bounds.height - screenPoint.y
+            #endif
+
+            let spellPointsComponent = entity.components[SpellPointsComponent.self]
+
+            let gauge = MapSceneOverlay.Gauge(
+                objectID: mapObject.objectID,
+                screenPosition: screenPoint,
+                hp: healthPointsComponent.hp,
+                maxHp: healthPointsComponent.maxHp,
+                sp: spellPointsComponent?.sp,
+                maxSp: spellPointsComponent?.maxSp,
+                objectType: mapObject.type
+            )
+
+            gauges[mapObject.objectID] = gauge
+        }
+
+        gameSession.overlay.gauges = gauges
+    }
+    #endif
 }
 
 private struct MainActionButton: View {
