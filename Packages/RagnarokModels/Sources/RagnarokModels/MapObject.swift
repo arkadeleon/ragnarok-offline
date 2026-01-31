@@ -45,6 +45,9 @@ public struct MapObject: Sendable {
     public let headBottom: Int
     public let garment: Int
 
+    public let hp: Int
+    public let maxHp: Int
+
     public let bodyState: StatusChangeOption1
     public let healthState: StatusChangeOption2
     public let effectState: StatusChangeOption
@@ -66,6 +69,9 @@ public struct MapObject: Sendable {
         self.headMid = character.accessory3
         self.headBottom = character.accessory
         self.garment = character.robePalette
+
+        self.hp = character.hp
+        self.maxHp = character.maxHp
 
         self.bodyState = StatusChangeOption1(rawValue: character.bodyState) ?? .none
         self.healthState = StatusChangeOption2(rawValue: character.healthState) ?? .none
@@ -90,6 +96,9 @@ public struct MapObject: Sendable {
         self.headBottom = Int(packet.accessory)
         self.garment = Int(packet.robe)
 
+        self.hp = Int(packet.HP)
+        self.maxHp = Int(packet.maxHP)
+
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
@@ -113,6 +122,9 @@ public struct MapObject: Sendable {
         self.headBottom = Int(packet.accessory)
         self.garment = Int(packet.robe)
 
+        self.hp = Int(packet.HP)
+        self.maxHp = Int(packet.maxHP)
+
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
@@ -135,6 +147,9 @@ public struct MapObject: Sendable {
         self.headMid = Int(packet.accessory3)
         self.headBottom = Int(packet.accessory)
         self.garment = Int(packet.robe)
+
+        self.hp = Int(packet.HP)
+        self.maxHp = Int(packet.maxHP)
 
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none

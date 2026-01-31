@@ -607,6 +607,7 @@ final public class GameSession {
                 let scene = MapScene(
                     mapName: mapName,
                     world: world,
+                    character: character,
                     player: player,
                     playerPosition: position,
                     resourceManager: resourceManager,
@@ -614,6 +615,8 @@ final public class GameSession {
                 )
 
                 await scene.load(progress: progress)
+
+                notifyMapLoaded()
 
                 phase = .map(.loaded(scene))
             }
@@ -627,6 +630,7 @@ final public class GameSession {
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.count))
             }
+            mapScene?.onReceivePacket(packet)
         case let packet as PACKET_ZC_LONGPAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.amount))
@@ -723,8 +727,8 @@ final public class GameSession {
             let objectAction = MapObjectAction(from: packet)
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
             messageCenter.addMessage(for: objectAction, account: account)
-        case _ as PACKET_ZC_HP_INFO:
-            break
+        case let packet as PACKET_ZC_HP_INFO:
+            mapScene?.onReceivePacket(packet)
         case let packet as PACKET_ZC_SAY_DIALOG:
             if let dialog, dialog.npcID == packet.NpcID {
                 dialog.clearIfNeeded()

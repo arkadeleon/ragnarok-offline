@@ -51,11 +51,11 @@ final class SpriteEntityManager {
         }
     }
 
-    func entity(forOjectID objectID: UInt32) async throws -> Entity? {
+    func findEntity(forObjectID objectID: UInt32) async throws -> Entity? {
         if let phase = entitiesByObjectID[objectID] {
-            return try await phase.entity
+            try await phase.entity
         } else {
-            return nil
+            nil
         }
     }
 

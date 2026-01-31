@@ -8,6 +8,7 @@
 import AVFAudio
 import RagnarokConstants
 import RagnarokModels
+import RagnarokPackets
 import RagnarokReality
 import RagnarokResources
 import RagnarokSprite
@@ -21,6 +22,7 @@ import WorldCamera
 public class MapScene {
     let mapName: String
     let world: WorldResource
+    let character: CharacterInfo
     let player: MapObject
     let playerPosition: SIMD2<Int>
     let resourceManager: ResourceManager
@@ -98,9 +100,10 @@ public class MapScene {
             }
     }
 
-    init(mapName: String, world: WorldResource, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager, gameSession: GameSession) {
+    init(mapName: String, world: WorldResource, character: CharacterInfo, player: MapObject, playerPosition: SIMD2<Int>, resourceManager: ResourceManager, gameSession: GameSession) {
         self.mapName = mapName
         self.world = world
+        self.character = character
         self.player = player
         self.playerPosition = playerPosition
         self.gameSession = gameSession
@@ -118,6 +121,8 @@ public class MapScene {
         MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
         TileComponent.registerComponent()
+        HealthPointsComponent.registerComponent()
+        SpellPointsComponent.registerComponent()
 
         DamageDigitComponent.registerComponent()
         DamageDigitSystem.registerSystem()
@@ -199,6 +204,8 @@ public class MapScene {
             playerEntity.components.set([
                 GridPositionComponent(gridPosition: playerPosition),
                 MapObjectComponent(mapObject: player),
+                HealthPointsComponent(hp: character.hp, maxHp: character.maxHp),
+                SpellPointsComponent(sp: character.sp, maxSp: character.maxSp),
             ])
         } catch {
             logger.warning("\(error)")
@@ -212,8 +219,6 @@ public class MapScene {
 
         setupLighting()
         setupWorldCamera(target: playerEntity)
-
-        gameSession?.notifyMapLoaded()
     }
 
     func unload() {
@@ -620,6 +625,36 @@ extension MapScene {
 }
 
 extension MapScene: MapEventHandlerProtocol {
+    func onReceivePacket(_ packet: PACKET_ZC_PAR_CHANGE) {
+        guard let sp = StatusProperty(rawValue: Int(packet.varID)) else {
+            return
+        }
+
+        switch sp {
+        case .hp:
+            playerEntity.components[HealthPointsComponent.self]?.hp = Int(packet.count)
+        case .maxhp:
+            playerEntity.components[HealthPointsComponent.self]?.maxHp = Int(packet.count)
+        case .sp:
+            playerEntity.components[SpellPointsComponent.self]?.sp = Int(packet.count)
+        case .maxsp:
+            playerEntity.components[SpellPointsComponent.self]?.maxSp = Int(packet.count)
+        default:
+            break
+        }
+    }
+
+    func onReceivePacket(_ packet: PACKET_ZC_HP_INFO) {
+        Task {
+            guard let entity = try await spriteEntityManager.findEntity(forObjectID: packet.GID) else {
+                return
+            }
+
+            entity.components[HealthPointsComponent.self]?.hp = Int(packet.HP)
+            entity.components[HealthPointsComponent.self]?.maxHp = Int(packet.maxHP)
+        }
+    }
+
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         if var walkingComponent = playerEntity.components[WalkingComponent.self],
            walkingComponent.path.count > 1 {
@@ -651,6 +686,11 @@ extension MapScene: MapEventHandlerProtocol {
                     GridPositionComponent(gridPosition: position),
                     MapObjectComponent(mapObject: object),
                 ])
+                if object.type == .monster {
+                    entity.components.set([
+                        HealthPointsComponent(hp: object.hp, maxHp: object.maxHp),
+                    ])
+                }
                 rootEntity.addChild(entity)
             } else {
                 entity.transform = transform(for: position)
@@ -674,6 +714,11 @@ extension MapScene: MapEventHandlerProtocol {
                     GridPositionComponent(gridPosition: startPosition),
                     MapObjectComponent(mapObject: object),
                 ])
+                if object.type == .monster {
+                    entity.components.set([
+                        HealthPointsComponent(hp: object.hp, maxHp: object.maxHp),
+                    ])
+                }
                 rootEntity.addChild(entity)
             }
 
@@ -696,7 +741,7 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>) {
         Task {
-            if let entity = try await spriteEntityManager.entity(forOjectID: objectID) {
+            if let entity = try await spriteEntityManager.findEntity(forObjectID: objectID) {
                 entity.transform = transform(for: position)
                 entity.components[GridPositionComponent.self]?.gridPosition = position
                 entity.components.remove(WalkingComponent.self)
@@ -713,7 +758,7 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
         Task {
-            if let entity = try await spriteEntityManager.entity(forOjectID: objectID) {
+            if let entity = try await spriteEntityManager.findEntity(forObjectID: objectID) {
                 entity.isEnabled = (effectState != .cloak)
             }
         }
@@ -721,7 +766,7 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
         Task {
-            guard let sourceEntity = try await spriteEntityManager.entity(forOjectID: objectAction.sourceObjectID) else {
+            guard let sourceEntity = try await spriteEntityManager.findEntity(forObjectID: objectAction.sourceObjectID) else {
                 return
             }
 
@@ -735,7 +780,7 @@ extension MapScene: MapEventHandlerProtocol {
             case .normal, .endure, .critical:
                 sourceEntity.attack(direction: .south)
 
-                if let targetEntity = try await spriteEntityManager.entity(forOjectID: objectAction.targetObjectID) {
+                if let targetEntity = try await spriteEntityManager.findEntity(forObjectID: objectAction.targetObjectID) {
                     let damageEntity = Entity.makeDamageEntity(
                         for: objectAction.damage,
                         delay: TimeInterval(objectAction.sourceSpeed),
@@ -755,7 +800,7 @@ extension MapScene: MapEventHandlerProtocol {
             case .multi_hit, .multi_hit_endure, .multi_hit_critical:
                 sourceEntity.attack(direction: .south)
 
-                if let targetEntity = try await spriteEntityManager.entity(forOjectID: objectAction.targetObjectID) {
+                if let targetEntity = try await spriteEntityManager.findEntity(forObjectID: objectAction.targetObjectID) {
                     let count = (objectAction.damage > 1 ? 2 : 1)
 
                     if count == 2 {

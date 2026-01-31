@@ -7,9 +7,13 @@
 
 import RagnarokConstants
 import RagnarokModels
+import RagnarokPackets
 
 @MainActor
 protocol MapEventHandlerProtocol {
+    func onReceivePacket(_ packet: PACKET_ZC_PAR_CHANGE)
+    func onReceivePacket(_ packet: PACKET_ZC_HP_INFO)
+
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>)
