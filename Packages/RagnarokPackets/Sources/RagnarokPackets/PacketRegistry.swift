@@ -1114,7 +1114,7 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_ZC_ACK_MERGE_ITEM: PACKET_ZC_ACK_MERGE_ITEM.self,
 
     // | 0x977 | `clif_monster_hp_bar` |
-//  packet_header_monsterhpType: PACKET_ZC_HP_INFO.self,
+    packet_header_monsterhpType: PACKET_ZC_HP_INFO.self,
 
     // | 0x97d, 0xaf6 | `clif_ranklist` |
     HEADER_ZC_ACK_RANKING: PACKET_ZC_ACK_RANKING.self,

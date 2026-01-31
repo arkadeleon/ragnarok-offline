@@ -723,6 +723,8 @@ final public class GameSession {
             let objectAction = MapObjectAction(from: packet)
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
             messageCenter.addMessage(for: objectAction, account: account)
+        case _ as PACKET_ZC_HP_INFO:
+            break
         case let packet as PACKET_ZC_SAY_DIALOG:
             if let dialog, dialog.npcID == packet.NpcID {
                 dialog.clearIfNeeded()
