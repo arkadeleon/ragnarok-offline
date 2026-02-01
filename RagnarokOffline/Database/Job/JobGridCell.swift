@@ -11,7 +11,7 @@ struct JobGridCell: View {
     var job: JobModel
 
     var body: some View {
-        ImageGridCell(title: job.displayName, reservesSubtitleSpace: false) {
+        ImageGridCell(title: job.displayName) {
             ZStack {
                 if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
                     Image(firstFrame, scale: animatedImage.scale, label: Text(job.displayName))

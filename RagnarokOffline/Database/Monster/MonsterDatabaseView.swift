@@ -19,7 +19,9 @@ struct MonsterDatabaseView: View {
     var body: some View {
         ImageGrid(filteredMonsters) { monster in
             NavigationLink(value: monster) {
-                MonsterGridCell(monster: monster, reservesSecondaryTextSpace: false, secondaryText: nil)
+                ImageGridCell(title: monster.displayName) {
+                    MonsterImageView(monster: monster)
+                }
             }
         }
         .background(.background)

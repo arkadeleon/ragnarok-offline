@@ -62,11 +62,12 @@ struct ItemDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(droppingMonsters) { droppingMonster in
                             NavigationLink(value: droppingMonster.monster) {
-                                MonsterGridCell(
-                                    monster: droppingMonster.monster,
-                                    reservesSecondaryTextSpace: true,
-                                    secondaryText: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)"
-                                )
+                                ImageGridCell(
+                                    title: droppingMonster.monster.displayName,
+                                    subtitle: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)"
+                                ) {
+                                    MonsterImageView(monster: droppingMonster.monster)
+                                }
                             }
                         }
                     }

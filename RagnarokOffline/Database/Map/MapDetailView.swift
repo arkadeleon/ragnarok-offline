@@ -37,11 +37,12 @@ struct MapDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(spawningMonsters) { spawningMonster in
                             NavigationLink(value: spawningMonster.monster) {
-                                MonsterGridCell(
-                                    monster: spawningMonster.monster,
-                                    reservesSecondaryTextSpace: true,
-                                    secondaryText: "(\(spawningMonster.spawn.amount)x)"
-                                )
+                                ImageGridCell(
+                                    title: spawningMonster.monster.displayName,
+                                    subtitle: "(\(spawningMonster.spawn.amount)x)"
+                                ) {
+                                    MonsterImageView(monster: spawningMonster.monster)
+                                }
                             }
                         }
                     }

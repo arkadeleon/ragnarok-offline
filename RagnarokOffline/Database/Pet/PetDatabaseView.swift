@@ -17,7 +17,9 @@ struct PetDatabaseView: View {
         ImageGrid(filteredPets) { pet in
             if let monster = pet.monster {
                 NavigationLink(value: pet) {
-                    MonsterGridCell(monster: monster, reservesSecondaryTextSpace: false, secondaryText: nil)
+                    ImageGridCell(title: monster.displayName) {
+                        MonsterImageView(monster: monster)
+                    }
                 }
             }
         }

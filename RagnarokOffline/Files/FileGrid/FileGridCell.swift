@@ -10,10 +10,14 @@ import SwiftUI
 struct FileGridCell: View {
     var file: File
 
-    @State private var subtitle = ""
+    @State private var subtitleKey: LocalizedStringKey?
 
     var body: some View {
-        ImageGridCell(title: file.name, reservesSubtitleSpace: true, subtitle: subtitle) {
+        ImageGridCell(title: file.name) {
+            if let subtitleKey {
+                Text(subtitleKey)
+            }
+        } image: {
             FileThumbnailView(file: file)
         }
         .task {
@@ -24,25 +28,21 @@ struct FileGridCell: View {
     private func loadSubtitle() async {
         if file.isDirectory {
             let fileCount = await file.fileCount()
-            if fileCount == 1 {
-                subtitle = fileCount.formatted() + " item"
-            } else {
-                subtitle = fileCount.formatted() + " items"
-            }
+            subtitleKey = LocalizedStringKey("^[\(fileCount) item](inflect: true)")
         } else {
             let fileSize = await file.size()
             let formatStyle = FloatingPointFormatStyle<Float>().precision(.significantDigits(2))
             if fileSize > 1024 * 1024 * 1024 {
                 let fileSizeInGB = Float(fileSize) / 1024 / 1024 / 1024
-                subtitle = fileSizeInGB.formatted(formatStyle) + " GB"
+                subtitleKey = LocalizedStringKey("\(fileSizeInGB.formatted(formatStyle)) GB")
             } else if fileSize > 1024 * 1024 {
                 let fileSizeInMB = Float(fileSize) / 1024 / 1024
-                subtitle = fileSizeInMB.formatted(formatStyle) + " MB"
+                subtitleKey = LocalizedStringKey("\(fileSizeInMB.formatted(formatStyle)) MB")
             } else if fileSize > 1024 {
                 let fileSizeInKB = Float(fileSize) / 1024
-                subtitle = fileSizeInKB.formatted(formatStyle) + " KB"
+                subtitleKey = LocalizedStringKey("\(fileSizeInKB.formatted(formatStyle)) KB")
             } else {
-                subtitle = fileSize.formatted() + " B"
+                subtitleKey = LocalizedStringKey("\(fileSize.formatted()) B")
             }
         }
     }

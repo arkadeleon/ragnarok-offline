@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct ImageGridCell<Image>: View where Image: View {
-    var title: String
-    var reservesSubtitleSpace: Bool
-    var subtitle: String?
+struct ImageGridCell<Image, Title, Subtitle>: View where Image: View, Title: View, Subtitle: View {
+    var title: () -> Title
+    var subtitle: () -> Subtitle
+    var image: () -> Image
 
-    @ViewBuilder var image: () -> Image
+    private var reservesSubtitleSpace: Bool
 
     var body: some View {
         VStack {
@@ -33,15 +33,15 @@ struct ImageGridCell<Image>: View where Image: View {
                 }
 
                 VStack(spacing: 2) {
-                    Text(title)
+                    title()
                         .font(.body)
                         .foregroundStyle(Color.primary)
                         .multilineTextAlignment(.center)
                         .lineLimit(2, reservesSpace: false)
                         .frame(maxWidth: .infinity)
 
-                    if let subtitle, reservesSubtitleSpace {
-                        Text(subtitle)
+                    if reservesSubtitleSpace {
+                        subtitle()
                             .font(.footnote)
                             .foregroundStyle(Color.secondary)
                             .lineLimit(1, reservesSpace: false)
@@ -51,10 +51,55 @@ struct ImageGridCell<Image>: View where Image: View {
             }
         }
     }
+
+    init(
+        title: String,
+        @ViewBuilder image: @escaping () -> Image
+    ) where Title == Text, Subtitle == EmptyView {
+        self.title = {
+            Text(title)
+        }
+        self.subtitle = {
+            EmptyView()
+        }
+        self.image = image
+
+        self.reservesSubtitleSpace = false
+    }
+
+    init(
+        title: String,
+        subtitle: String,
+        @ViewBuilder image: @escaping () -> Image
+    ) where Title == Text, Subtitle == Text {
+        self.title = {
+            Text(title)
+        }
+        self.subtitle = {
+            Text(subtitle)
+        }
+        self.image = image
+
+        self.reservesSubtitleSpace = true
+    }
+
+    init(
+        title: String,
+        @ViewBuilder subtitle: @escaping () -> Subtitle,
+        @ViewBuilder image: @escaping () -> Image
+    ) where Title == Text {
+        self.title = {
+            Text(title)
+        }
+        self.subtitle = subtitle
+        self.image = image
+
+        self.reservesSubtitleSpace = true
+    }
 }
 
 #Preview {
-    ImageGridCell(title: "Title", reservesSubtitleSpace: true, subtitle: "Subtitle") {
+    ImageGridCell(title: "Title", subtitle: "Subtitle") {
         Image(systemName: "folder.fill")
             .font(.system(size: 50, weight: .thin))
             .foregroundStyle(Color.accentColor)
