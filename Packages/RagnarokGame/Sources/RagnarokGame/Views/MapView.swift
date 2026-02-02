@@ -114,6 +114,8 @@ struct MapView: View {
                 switch presentedMenuItem {
                 case .status:
                     StatusView(status: gameSession.playerStatus)
+                case .equipment:
+                    EquipmentView()
                 case .inventory:
                     InventoryView(inventory: gameSession.inventory)
                 case .options:

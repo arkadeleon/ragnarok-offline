@@ -10,7 +10,7 @@ import SwiftUI
 struct GameBottomBar: View {
     var body: some View {
         GeometryReader { geometry in
-            let stripeCount = max(0, Int(geometry.size.height / 4))
+            let stripeCount = max(0, Int((geometry.size.height + 2) / 4))
 
             ZStack(alignment: .top) {
                 VStack(spacing: 2) {
