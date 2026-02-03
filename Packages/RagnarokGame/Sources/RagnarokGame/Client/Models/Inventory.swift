@@ -35,6 +35,10 @@ final class Inventory {
         }
     }
 
+    func append(item: InventoryItem) {
+        items[item.index] = item
+    }
+
     func update(from packet: packet_itemlist_normal) {
         let items = packet.list.map { InventoryItem(from: $0) }
         for item in items {
