@@ -1,23 +1,17 @@
 //
-//  LockOnComponent.swift
+//  LockOnSystem.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2025/10/28.
+//  Created by Leon Li on 2026/2/3.
 //
 
 import Combine
 import RealityKit
 
-struct LockOnComponent: Component {
-    var targetEntity: Entity
-    var attackRange: Float
-    var action: () -> Void
-}
-
-final class LockOnSystem: System {
+class LockOnSystem: System {
     var subscriptions: [AnyCancellable] = []
 
-    init(scene: Scene) {
+    required init(scene: Scene) {
         scene.subscribe(
             to: ComponentEvents.WillRemove.self,
             componentType: WalkingComponent.self,
