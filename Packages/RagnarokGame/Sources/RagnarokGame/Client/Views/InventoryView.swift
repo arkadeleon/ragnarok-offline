@@ -12,6 +12,7 @@ import SwiftUI
 private enum InventoryTab {
     case item
     case gear
+    case etc
 }
 
 struct InventoryView: View {
@@ -30,6 +31,8 @@ struct InventoryView: View {
             inventory.usableItems
         case .gear:
             inventory.equippableItems
+        case .etc:
+            inventory.etcItems
         }
     }
 
@@ -38,65 +41,17 @@ struct InventoryView: View {
             VStack(spacing: 0) {
                 GameTitleBar()
 
-                ZStack(alignment: .topLeading) {
-                    HStack(spacing: 0) {
-                        GameImage("basic_interface/itemwin_left.bmp") { image in
-                            image.resizable(resizingMode: .tile)
-                        }
-                        .frame(width: 20)
-
-                        GameImage("basic_interface/itemwin_mid.bmp") { image in
-                            image.resizable(resizingMode: .tile)
-                        }
-                        .offset(x: 16)
-
-                        GameImage("basic_interface/itemwin_right.bmp") { image in
-                            image.resizable(resizingMode: .tile)
-                        }
-                        .frame(width: 20)
-                    }
-                    .background(.white)
-
-                    VStack {
-                        Button {
-                            tab = .item
-                        } label: {
-                            Text(verbatim: "I\nt\ne\nm")
-                                .gameText()
-                                .multilineTextAlignment(.center)
-                                .frame(height: 66)
-                        }
-                        .buttonStyle(.borderless)
-
-                        Button {
-                            tab = .gear
-                        } label: {
-                            Text(verbatim: "G\ne\na\nr")
-                                .gameText()
-                                .multilineTextAlignment(.center)
-                                .frame(height: 66)
-                        }
-                        .buttonStyle(.borderless)
-                    }
-                    .frame(width: 20, height: 264)
-
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
-                        ForEach(items, id: \.index) { item in
-                            InventoryItemView(item: item)
-                                .matchedGeometryEffect(
-                                    id: item.index,
-                                    in: itemNamespace,
-                                    anchor: .bottom
-                                )
-                                .onTapGesture {
-                                    selectedItem = item
-                                }
-                        }
-                    }
-                    .frame(width: 32 * 7)
-                    .offset(x: 36)
+                VStack(spacing: 0) {
+                    tabBar
+                    itemGrid
                 }
-                .frame(height: 264)
+                .background(Color.white)
+                .overlay(alignment: .leading) {
+                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
+                }
+                .overlay(alignment: .trailing) {
+                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
+                }
 
                 GameBottomBar()
             }
@@ -112,6 +67,79 @@ struct InventoryView: View {
                 .transition(.opacity.combined(with: .scale).animation(.bouncy(duration: 0.25, extraBounce: 0.2)))
         }
         .animation(.easeInOut(duration: 0.25), value: selectedItem)
+    }
+
+    private var tabBar: some View {
+        HStack {
+            Button {
+                tab = .item
+            } label: {
+                Text(verbatim: "Item")
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                tab = .gear
+            } label: {
+                Text(verbatim: "Gear")
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                tab = .etc
+            } label: {
+                Text(verbatim: "Etc.")
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
+        .frame(width: 280, height: 20)
+    }
+
+    private var itemGrid: some View {
+        ZStack(alignment: .top) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
+                ForEach(0..<64) { _ in
+                    ZStack(alignment: .center) {
+                        Ellipse()
+                            .foregroundStyle(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
+                            .frame(width: 24, height: 12)
+                            .offset(y: 5)
+                            .blur(radius: 2)
+                    }
+                    .frame(width: 32, height: 32)
+                }
+            }
+            .frame(width: 32 * 8, height: 32 * 8)
+
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
+                ForEach(items, id: \.index) { item in
+                    InventoryItemView(item: item)
+                        .matchedGeometryEffect(
+                            id: item.index,
+                            in: itemNamespace,
+                            anchor: .bottom
+                        )
+                        .onTapGesture {
+                            selectedItem = item
+                        }
+                }
+            }
+            .frame(width: 32 * 8)
+        }
+        .padding(.horizontal, 12)
+        .padding(.bottom, 12)
     }
 
     @ViewBuilder
