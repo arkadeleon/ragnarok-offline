@@ -659,11 +659,9 @@ final public class GameSession {
         case _ as PACKET_ZC_INVENTORY_END:
             break
         case let packet as packet_itemlist_normal:
-            let items = packet.list.map { InventoryItem(from: $0) }
-            inventory.append(items: items)
+            inventory.update(from: packet)
         case let packet as packet_itemlist_equip:
-            let items = packet.list.map { InventoryItem(from: $0) }
-            inventory.append(items: items)
+            inventory.update(from: packet)
         case let packet as PACKET_ZC_ITEM_ENTRY:
             let item = MapItem(from: packet)
             let position = SIMD2(x: Int(packet.x), y: Int(packet.y))
@@ -679,8 +677,7 @@ final public class GameSession {
         case _ as PACKET_ZC_ITEM_THROW_ACK:
             break
         case let packet as PACKET_ZC_USE_ITEM_ACK:
-            let item = UsedItem(from: packet)
-            inventory.updateItem(at: item.index, amount: item.amount)
+            inventory.update(from: packet)
         case let packet as PACKET_ZC_REQ_WEAR_EQUIP_ACK:
             if let item = inventory.items[Int(packet.index)] {
                 messageCenter.addMessage(for: packet, itemID: item.itemID)

@@ -106,7 +106,8 @@ struct InventoryView: View {
         item2.amount = 2
 
         var inventory = Inventory()
-        inventory.append(items: [item1, item2])
+        inventory.items[0] = item1
+        inventory.items[1] = item2
         return inventory
     }()
 
