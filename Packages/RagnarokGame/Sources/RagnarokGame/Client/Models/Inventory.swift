@@ -19,9 +19,9 @@ final class Inventory {
         return usableItems.sorted()
     }
 
-    var equippableItems: [InventoryItem] {
-        let equippableItems = items.values.filter(\.isEquippable)
-        return equippableItems.sorted()
+    var equipItems: [InventoryItem] {
+        let equipItems = items.values.filter({ $0.isEquippable && !$0.isEquipped })
+        return equipItems.sorted()
     }
 
     var etcItems: [InventoryItem] {
@@ -59,6 +59,25 @@ final class Inventory {
             item.amount = usedItem.amount
             items[usedItem.index] = item
         }
+    }
+
+    func update(from packet: PACKET_ZC_REQ_WEAR_EQUIP_ACK) {
+        guard let flag = ItemEquipAcknowledgeFlag(rawValue: Int(packet.result)), flag == .ok else {
+            return
+        }
+
+        let index = Int(packet.index)
+        let location = EquipPositions(rawValue: Int(packet.wearLocation))
+        items[index]?.equippedLocation = location
+    }
+
+    func update(from packet: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK) {
+        guard let flag = ItemEquipAcknowledgeFlag(rawValue: Int(packet.flag)), flag == .ok else {
+            return
+        }
+
+        let index = Int(packet.index)
+        items[index]?.equippedLocation = EquipPositions(rawValue: 0)
     }
 
     func update(from packet: PACKET_ZC_ITEM_THROW_ACK) {

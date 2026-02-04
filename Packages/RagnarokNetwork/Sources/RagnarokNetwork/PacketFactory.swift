@@ -180,14 +180,6 @@ public enum PacketFactory {
         return packet
     }
 
-    /// | `PACKET_CZ_ITEM_THROW` | `clif_parse_DropItem` |
-    public static func CZ_ITEM_THROW(index: Int, amount: Int) -> PACKET_CZ_ITEM_THROW {
-        var packet = PACKET_CZ_ITEM_THROW()
-        packet.index = UInt16(index)
-        packet.amount = Int16(amount)
-        return packet
-    }
-
     /// | `PACKET_CZ_USE_ITEM` | `clif_parse_UseItem` |
     public static func CZ_USE_ITEM(index: Int, accountID: UInt32) -> PACKET_CZ_USE_ITEM {
         var packet = PACKET_CZ_USE_ITEM()
@@ -209,6 +201,14 @@ public enum PacketFactory {
     public static func CZ_REQ_TAKEOFF_EQUIP(index: Int) -> PACKET_CZ_REQ_TAKEOFF_EQUIP {
         var packet = PACKET_CZ_REQ_TAKEOFF_EQUIP()
         packet.index = UInt16(index)
+        return packet
+    }
+
+    /// | `PACKET_CZ_ITEM_THROW` | `clif_parse_DropItem` |
+    public static func CZ_ITEM_THROW(index: Int, amount: Int) -> PACKET_CZ_ITEM_THROW {
+        var packet = PACKET_CZ_ITEM_THROW()
+        packet.index = UInt16(index)
+        packet.amount = Int16(amount)
         return packet
     }
 

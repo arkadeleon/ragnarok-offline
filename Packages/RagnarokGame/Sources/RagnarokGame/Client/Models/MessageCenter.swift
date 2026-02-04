@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import RagnarokConstants
 import RagnarokLocalization
 import RagnarokModels
 import RagnarokPackets
@@ -72,7 +73,11 @@ final class MessageCenter {
     }
 
     func addMessage(for packet: PACKET_ZC_REQ_WEAR_EQUIP_ACK, itemID: Int) {
-        if packet.result == 1 {
+        guard let flag = ItemEquipAcknowledgeFlag(rawValue: Int(packet.result)) else {
+            return
+        }
+
+        if flag == .ok {
             let itemName = itemInfoTable.localizedIdentifiedItemName(forItemID: itemID) ?? "\(itemID)"
             let messageString = messageStringTable.localizedMessageString(forID: 170)
             let message = MessageCenter.Message(content: "\(itemName) " + messageString, type: .system, category: .item)
@@ -85,7 +90,11 @@ final class MessageCenter {
     }
 
     func addMessage(for packet: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK, itemID: Int) {
-        if packet.flag != 0 {
+        guard let flag = ItemEquipAcknowledgeFlag(rawValue: Int(packet.flag)) else {
+            return
+        }
+
+        if flag != .ok {
             let itemName = itemInfoTable.localizedIdentifiedItemName(forItemID: itemID) ?? "\(itemID)"
             let messageString = messageStringTable.localizedMessageString(forID: 171)
             let message = MessageCenter.Message(content: "\(itemName) " + messageString, type: .error, category: .item)

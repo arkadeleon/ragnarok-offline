@@ -30,7 +30,7 @@ struct InventoryView: View {
         case .item:
             inventory.usableItems
         case .gear:
-            inventory.equippableItems
+            inventory.equipItems
         case .etc:
             inventory.etcItems
         }

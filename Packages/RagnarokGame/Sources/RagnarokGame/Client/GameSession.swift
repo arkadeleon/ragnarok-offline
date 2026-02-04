@@ -677,10 +677,12 @@ final public class GameSession {
         case let packet as PACKET_ZC_USE_ITEM_ACK:
             inventory.update(from: packet)
         case let packet as PACKET_ZC_REQ_WEAR_EQUIP_ACK:
+            inventory.update(from: packet)
             if let item = inventory.items[Int(packet.index)] {
                 messageCenter.addMessage(for: packet, itemID: item.itemID)
             }
         case let packet as PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK:
+            inventory.update(from: packet)
             if let item = inventory.items[Int(packet.index)] {
                 messageCenter.addMessage(for: packet, itemID: item.itemID)
             }
@@ -950,15 +952,6 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
-    func throwItem(at index: Int, amount: Int) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_ITEM_THROW(index: index, amount: amount)
-        mapClient.sendPacket(packet)
-    }
-
     func useItem(at index: Int) {
         guard let mapClient, let accountID = account?.accountID else {
             return
@@ -983,6 +976,15 @@ final public class GameSession {
         }
 
         let packet = PacketFactory.CZ_REQ_TAKEOFF_EQUIP(index: index)
+        mapClient.sendPacket(packet)
+    }
+
+    func throwItem(at index: Int, amount: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_ITEM_THROW(index: index, amount: amount)
         mapClient.sendPacket(packet)
     }
 

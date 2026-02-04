@@ -113,6 +113,12 @@ let allConstantConversions: [ConstantConversion] = [
     // MARK: - map/clif.hpp
     .cEnum(
         source: "map/clif.hpp",
+        type: "clif_equipitemack_flag",
+        prefix: "ITEM_EQUIP_ACK_",
+        outputType: "ItemEquipAcknowledgeFlag"
+    ),
+    .cEnum(
+        source: "map/clif.hpp",
         type: "e_damage_type",
         prefix: "DMG_",
         outputType: "DamageType",
