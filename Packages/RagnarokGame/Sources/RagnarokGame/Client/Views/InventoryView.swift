@@ -159,6 +159,23 @@ struct InventoryView: View {
                         selectedItem = nil
                     }
                 }
+
+                if item.amount > 1 {
+                    InventoryItemActionButton(label: "Throw One") {
+                        gameSession.throwItem(at: item.index, amount: 1)
+                        selectedItem = nil
+                    }
+
+                    InventoryItemActionButton(label: "Throw All") {
+                        gameSession.throwItem(at: item.index, amount: item.amount)
+                        selectedItem = nil
+                    }
+                } else {
+                    InventoryItemActionButton(label: "Throw") {
+                        gameSession.throwItem(at: item.index, amount: 1)
+                        selectedItem = nil
+                    }
+                }
             }
             .background(RoundedRectangle(cornerRadius: 10).fill(Material.bar))
             .matchedGeometryEffect(

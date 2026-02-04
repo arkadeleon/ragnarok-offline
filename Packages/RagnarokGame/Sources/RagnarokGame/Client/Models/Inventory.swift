@@ -60,4 +60,19 @@ final class Inventory {
             items[usedItem.index] = item
         }
     }
+
+    func update(from packet: PACKET_ZC_ITEM_THROW_ACK) {
+        let index = Int(packet.index)
+        let amount = Int(packet.count)
+        guard amount > 0, var item = items[index] else {
+            return
+        }
+
+        item.amount -= amount
+        if item.amount > 0 {
+            items[index] = item
+        } else {
+            items.removeValue(forKey: index)
+        }
+    }
 }

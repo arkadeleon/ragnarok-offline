@@ -674,8 +674,6 @@ final public class GameSession {
             mapScene?.onItemVanished(objectID: packet.itemAid)
         case let packet as PACKET_ZC_ITEM_PICKUP_ACK:
             messageCenter.addMessage(for: packet)
-        case _ as PACKET_ZC_ITEM_THROW_ACK:
-            break
         case let packet as PACKET_ZC_USE_ITEM_ACK:
             inventory.update(from: packet)
         case let packet as PACKET_ZC_REQ_WEAR_EQUIP_ACK:
@@ -686,6 +684,8 @@ final public class GameSession {
             if let item = inventory.items[Int(packet.index)] {
                 messageCenter.addMessage(for: packet, itemID: item.itemID)
             }
+        case let packet as PACKET_ZC_ITEM_THROW_ACK:
+            inventory.update(from: packet)
         case let packet as packet_spawn_unit:
             let object = MapObject(from: packet)
             let posDir = PosDir(from: packet.PosDir)
