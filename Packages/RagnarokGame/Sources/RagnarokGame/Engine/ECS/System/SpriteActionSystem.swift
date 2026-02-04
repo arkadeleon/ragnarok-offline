@@ -32,14 +32,12 @@ class SpriteActionSystem: System {
                 continue
             }
 
-            if let nextActionComponent = entity.components[SpriteNextActionComponent.self],
+            if let nextActionType = actionComponent.nextActionType,
                let animationComponent = entity.components[SpriteAnimationComponent.self],
                animationComponent.elapsedTime >= animationComponent.animation.duration {
-                actionComponent.actionType = nextActionComponent.actionType
-                actionComponent.direction = nextActionComponent.direction
-                actionComponent.headDirection = nextActionComponent.headDirection
+                actionComponent.actionType = nextActionType
+                actionComponent.nextActionType = nil
                 entity.components.set(actionComponent)
-                entity.components.remove(SpriteNextActionComponent.self)
                 entity.components.remove(SpriteAnimationComponent.self)
             }
 

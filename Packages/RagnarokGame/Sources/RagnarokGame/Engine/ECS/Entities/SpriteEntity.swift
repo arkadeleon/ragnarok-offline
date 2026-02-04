@@ -97,18 +97,15 @@ extension Entity {
         }
 
         spriteEntity.components.set(
-            SpriteActionComponent(actionType: actionType, direction: direction, headDirection: .lookForward)
+            SpriteActionComponent(
+                actionType: actionType,
+                direction: direction,
+                headDirection: .lookForward,
+                nextActionType: nextActionType
+            )
         )
 
         spriteEntity.components.remove(SpriteAnimationComponent.self)
-
-        if let nextActionType {
-            spriteEntity.components.set(
-                SpriteNextActionComponent(actionType: nextActionType, direction: direction, headDirection: .lookForward)
-            )
-        } else {
-            spriteEntity.components.remove(SpriteNextActionComponent.self)
-        }
     }
 
     func attack(direction: CharacterDirection) {

@@ -131,7 +131,6 @@ public class MapScene {
         LockOnSystem.registerSystem()
 
         SpriteActionComponent.registerComponent()
-        SpriteNextActionComponent.registerComponent()
         SpriteActionSystem.registerSystem()
         SpriteAnimationComponent.registerComponent()
         SpriteAnimationLibraryComponent.registerComponent()

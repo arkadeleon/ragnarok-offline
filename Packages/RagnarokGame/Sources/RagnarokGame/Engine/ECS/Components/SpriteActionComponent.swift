@@ -12,4 +12,5 @@ struct SpriteActionComponent: Component {
     var actionType: CharacterActionType
     var direction: CharacterDirection
     var headDirection: CharacterHeadDirection
+    var nextActionType: CharacterActionType? = nil
 }
