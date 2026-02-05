@@ -688,7 +688,7 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_ZC_NOTIFY_POSITION_TO_GUILDM: PACKET_ZC_NOTIFY_POSITION_TO_GUILDM.self,
 
     // | 0x1f3 | `clif_specialeffect` |
-//  HEADER_ZC_NOTIFY_EFFECT2: PACKET_ZC_NOTIFY_EFFECT2.self,
+    HEADER_ZC_NOTIFY_EFFECT2: PACKET_ZC_NOTIFY_EFFECT2.self,
 
     // | 0x1f6 | `clif_Adopt_request` |
 //  HEADER_ZC_REQ_BABY: PACKET_ZC_REQ_BABY.self,
