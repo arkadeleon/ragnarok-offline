@@ -108,7 +108,11 @@ struct SidebarView: View {
                         try await startAllServers()
                     }
                 } label: {
+                    #if os(macOS)
+                    Label("Start All Servers", systemImage: "play")
+                    #else
                     SidebarRow("Start All Servers", iconName: "play.fill", iconColor: .gray)
+                    #endif
                 }
             }
 

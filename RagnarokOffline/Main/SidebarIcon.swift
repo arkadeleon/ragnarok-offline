@@ -12,6 +12,16 @@ struct SidebarIcon: View {
     var color: Color
 
     var body: some View {
+        #if os(macOS)
+        RoundedRectangle(cornerRadius: 4)
+            .fill(color)
+            .frame(width: 20, height: 20)
+            .overlay {
+                Image(systemName: name)
+                    .font(.system(size: 11))
+                    .foregroundStyle(.white)
+            }
+        #else
         RoundedRectangle(cornerRadius: 6.5)
             .fill(color)
             .frame(width: 29, height: 29)
@@ -20,6 +30,7 @@ struct SidebarIcon: View {
                     .font(.system(size: 14))
                     .foregroundStyle(.white)
             }
+        #endif
     }
 }
 
