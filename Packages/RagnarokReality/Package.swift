@@ -36,6 +36,9 @@ let package = Package(
                 "RagnarokResources",
                 "SGLMath",
                 "TextEncoding",
+            ],
+            resources: [
+                .process("Ground.metal"),
             ]
         ),
         .testTarget(

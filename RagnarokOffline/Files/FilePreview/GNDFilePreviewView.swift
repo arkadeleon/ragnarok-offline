@@ -146,7 +146,7 @@ struct GNDFileTextureAtlasView: View {
         }
 
         let textureAtlas = GroundTextureAtlas(gnd: gnd)
-        guard let image = textureAtlas.makeCGImage(textureImages: textureImages)?.verticallyFlipped() else {
+        guard let image = textureAtlas.makeCGImage(textureImages: textureImages) else {
             throw FileError.imageGenerationFailed
         }
 

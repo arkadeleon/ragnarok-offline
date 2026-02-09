@@ -35,7 +35,7 @@ public struct GroundTextureAtlas {
     }
 
     public func makeCGImage(textureImages: [String : CGImage]) -> CGImage? {
-        let renderer = CGImageRenderer(size: CGSize(width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)), flipped: false)
+        let renderer = CGImageRenderer(size: CGSize(width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)), flipped: true)
         let image = renderer.image { context in
             context.setFillColor(CGColor(gray: 1, alpha: 1))
             context.fill(CGRect(x: 0, y: 0, width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)))
