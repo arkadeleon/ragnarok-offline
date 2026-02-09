@@ -16,6 +16,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../ImageRendering"),
         .package(path: "../RagnarokFileFormats"),
         .package(path: "../SGLMath"),
     ],
@@ -23,6 +24,7 @@ let package = Package(
         .target(
             name: "RagnarokRenderers",
             dependencies: [
+                "ImageRendering",
                 "RagnarokFileFormats",
                 "RagnarokShaders",
                 "SGLMath",
