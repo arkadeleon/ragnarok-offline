@@ -34,6 +34,26 @@ public struct GroundTextureAtlas {
         ATLAS_PX_V = 1 / 258
     }
 
+    public func makeCGImage(textureImages: [String : CGImage]) -> CGImage? {
+        let renderer = CGImageRenderer(size: CGSize(width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)), flipped: false)
+        let image = renderer.image { context in
+            context.setFillColor(CGColor(gray: 1, alpha: 1))
+            context.fill(CGRect(x: 0, y: 0, width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)))
+
+            for (i, name) in gnd.textures.enumerated() {
+                guard let textureImage = textureImages[name]?.verticallyFlipped() else {
+                    continue
+                }
+
+                let x = (i % Int(ATLAS_COLS)) * 258
+                let y = (i / Int(ATLAS_COLS)) * 258
+                context.draw(textureImage, in: CGRect(x: x, y: y, width: 258, height: 258)) // generate border
+                context.draw(textureImage, in: CGRect(x: x + 1, y: y + 1, width: 256, height: 256))
+            }
+        }
+        return image
+    }
+
     func uv(for surface: GND.Surface) -> (u: SIMD4<Float>, v: SIMD4<Float>) {
         let u = Float(Int(surface.textureIndex) % Int(ATLAS_COLS))
         let v = floorf(Float(surface.textureIndex) / ATLAS_COLS)
@@ -52,25 +72,5 @@ public struct GroundTextureAtlas {
             )
         )
         return uv
-    }
-
-    func makeCGImage(textureImages: [String : CGImage]) -> CGImage? {
-        let renderer = CGImageRenderer(size: CGSize(width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)), flipped: true)
-        let image = renderer.image { context in
-            context.setFillColor(CGColor(gray: 1, alpha: 1))
-            context.fill(CGRect(x: 0, y: 0, width: Int(ATLAS_WIDTH), height: Int(ATLAS_HEIGHT)))
-
-            for (i, name) in gnd.textures.enumerated() {
-                guard let textureImage = textureImages[name] else {
-                    continue
-                }
-
-                let x = (i % Int(ATLAS_COLS)) * 258
-                let y = (i / Int(ATLAS_COLS)) * 258
-                context.draw(textureImage, in: CGRect(x: x, y: y, width: 258, height: 258)) // generate border
-                context.draw(textureImage, in: CGRect(x: x + 1, y: y + 1, width: 256, height: 256))
-            }
-        }
-        return image
     }
 }

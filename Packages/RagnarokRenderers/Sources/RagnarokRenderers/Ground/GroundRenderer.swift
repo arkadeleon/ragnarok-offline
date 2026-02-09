@@ -14,7 +14,7 @@ class GroundRenderer {
     let depthStencilState: (any MTLDepthStencilState)?
 
     let ground: Ground
-    let textures: [String : any MTLTexture]
+    let groundTexture: any MTLTexture
 
     let fog = Fog(
         use: false,
@@ -32,7 +32,7 @@ class GroundRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: any MTLDevice, library: any MTLLibrary, ground: Ground, textures: [String : any MTLTexture]) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, ground: Ground, groundTexture: any MTLTexture) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
@@ -56,7 +56,7 @@ class GroundRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         self.ground = ground
-        self.textures = textures
+        self.groundTexture = groundTexture
     }
 
     func render(
@@ -68,6 +68,11 @@ class GroundRenderer {
         normalMatrix: simd_float3x3
     ) {
         let device = renderCommandEncoder.device
+
+        let vertices = ground.mesh.vertices
+        guard vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
+            return
+        }
 
         var vertexUniforms = GroundVertexUniforms(
             modelMatrix: modelMatrix,
@@ -97,23 +102,15 @@ class GroundRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
+        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        for mesh in ground.meshes where mesh.vertices.count > 0 {
-            guard let vertexBuffer = device.makeBuffer(bytes: mesh.vertices, length: mesh.vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
-                continue
-            }
+        renderCommandEncoder.setFragmentTexture(groundTexture, index: 0)
+        renderCommandEncoder.setFragmentTexture(groundTexture, index: 1)
+        renderCommandEncoder.setFragmentTexture(groundTexture, index: 2)
 
-            renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-
-            let texture = textures[mesh.textureName]
-            renderCommandEncoder.setFragmentTexture(texture, index: 0)
-            renderCommandEncoder.setFragmentTexture(texture, index: 1)
-            renderCommandEncoder.setFragmentTexture(texture, index: 2)
-
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
-        }
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 }

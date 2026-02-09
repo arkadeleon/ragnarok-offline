@@ -23,15 +23,16 @@ public class RSWRenderer: Renderer {
         ground: Ground,
         water: Water,
         models: [Model],
-        textures: [String : any MTLTexture],
-        waterTextures: [any MTLTexture]
+        groundTexture: any MTLTexture,
+        waterTextures: [any MTLTexture],
+        modelTextures: [String : any MTLTexture]
     ) throws {
         self.device = device
 
         let library = RagnarokCreateShadersLibrary(device)!
-        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground, textures: textures)
+        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground, groundTexture: groundTexture)
         waterRenderer = try WaterRenderer(device: device, library: library, water: water, textures: waterTextures)
-        modelRenderer = try ModelRenderer(device: device, library: library, models: models, textures: textures)
+        modelRenderer = try ModelRenderer(device: device, library: library, models: models, textures: modelTextures)
 
         camera = Camera()
         camera.defaultDistance = -ground.altitude / 5 + 200

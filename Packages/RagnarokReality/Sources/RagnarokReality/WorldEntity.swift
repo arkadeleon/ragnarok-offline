@@ -38,7 +38,7 @@ extension Entity {
         progress.totalUnitCount = Int64(world.gnd.textures.count + modelTextureNames.count)
         progress.completedUnitCount = 0
 
-        let groundTextures = await resourceManager.textures(forNames: world.gnd.textures, removesMagentaPixels: false) { _, _ in
+        let groundTextureImages = await resourceManager.textureImages(forNames: world.gnd.textures, removesMagentaPixels: false) { _, _ in
             progress.completedUnitCount += 1
         }
 
@@ -53,7 +53,7 @@ extension Entity {
         metric.beginMeasuring("Load ground entity")
 
         let ground = Ground(gat: world.gat, gnd: world.gnd)
-        let groundEntity = try await Entity(from: ground, textures: groundTextures)
+        let groundEntity = try await Entity(from: ground, textureImages: groundTextureImages)
         addChild(groundEntity, preservingWorldTransform: true)
 
         metric.endMeasuring("Load ground entity")

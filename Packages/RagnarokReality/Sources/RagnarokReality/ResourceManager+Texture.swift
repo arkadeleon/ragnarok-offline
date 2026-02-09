@@ -16,6 +16,33 @@ enum WaterTextureError: Error {
 }
 
 extension ResourceManager {
+    public func textureImages(
+        forNames textureNames: some Collection<String>,
+        removesMagentaPixels: Bool,
+        perTextureCompletionBlock: (@MainActor (String, CGImage?) -> Void)? = nil
+    ) async -> [String : CGImage] {
+        await withTaskGroup(
+            of: (String, CGImage?).self,
+            returning: [String : CGImage].self
+        ) { taskGroup in
+            for textureName in textureNames {
+                taskGroup.addTask {
+                    let components = textureName.split(separator: "\\").map(String.init)
+                    let texturePath = ResourcePath.textureDirectory.appending(components)
+                    let textureImage = try? await self.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
+                    return (textureName, textureImage)
+                }
+            }
+
+            var textureImages: [String : CGImage] = [:]
+            for await (textureName, textureImage) in taskGroup {
+                textureImages[textureName] = textureImage
+                await perTextureCompletionBlock?(textureName, textureImage)
+            }
+            return textureImages
+        }
+    }
+
     public func textures(
         forNames textureNames: some Collection<String>,
         removesMagentaPixels: Bool,

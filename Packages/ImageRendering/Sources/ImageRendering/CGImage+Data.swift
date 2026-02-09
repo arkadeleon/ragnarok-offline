@@ -23,6 +23,16 @@ public func CGImageCreateWithData(_ data: Data) -> CGImage? {
 }
 
 extension CGImage {
+    public func verticallyFlipped() -> CGImage? {
+        let renderer = CGImageRenderer(size: CGSize(width: width, height: height), flipped: true)
+        let image = renderer.image { context in
+            context.draw(self, in: CGRect(x: 0, y: 0, width: width, height: height))
+        }
+        return image
+    }
+}
+
+extension CGImage {
     public func resizing(_ size: CGSize) -> CGImage? {
         let availableRect = AVMakeRect(
             aspectRatio: CGSize(width: width, height: height),
