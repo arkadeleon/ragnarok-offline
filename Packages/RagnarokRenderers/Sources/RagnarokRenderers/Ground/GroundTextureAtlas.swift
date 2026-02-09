@@ -10,7 +10,7 @@ import ImageRendering
 import RagnarokFileFormats
 
 public struct GroundTextureAtlas {
-    public let gnd: GND
+    let gnd: GND
 
     private let ATLAS_COLS: Float
     private let ATLAS_ROWS: Float

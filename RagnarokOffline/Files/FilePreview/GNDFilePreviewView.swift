@@ -39,6 +39,18 @@ struct GNDFilePreviewView: View {
                     Label("Tree", systemImage: "list.bullet.indent")
                         .tag(ViewMode.tree)
                 }
+
+                NavigationLink {
+                    GNDFileTextureAtlasView(file: file)
+                } label: {
+                    Label(String("Texture Atlas"), systemImage: "photo")
+                }
+
+                NavigationLink {
+                    GNDFileLightmapAtlasView(file: file)
+                } label: {
+                    Label(String("Lightmap Atlas"), systemImage: "photo")
+                }
             } label: {
                 Image(systemName: "ellipsis")
             }
@@ -101,6 +113,70 @@ struct GNDFileGroundView: View {
         entity.addChild(groundEntity)
 
         return entity
+    }
+}
+
+struct GNDFileTextureAtlasView: View {
+    var file: File
+
+    private let progress = Progress()
+
+    var body: some View {
+        AsyncContentView {
+            try await loadGNDTextureAtlasImage()
+        } content: { image in
+            Image(decorative: image, scale: 1)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        } placeholder: {
+            ProgressView(progress)
+                .progressViewStyle(.circular)
+        }
+    }
+
+    private func loadGNDTextureAtlasImage() async throws -> CGImage {
+        let gndData = try await file.contents()
+        let gnd = try GND(data: gndData)
+
+        progress.totalUnitCount = Int64(gnd.textures.count)
+        progress.completedUnitCount = 0
+
+        let textureImages = await ResourceManager.shared.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+            progress.completedUnitCount += 1
+        }
+
+        let textureAtlas = GroundTextureAtlas(gnd: gnd)
+        guard let image = textureAtlas.makeCGImage(textureImages: textureImages)?.verticallyFlipped() else {
+            throw FileError.imageGenerationFailed
+        }
+
+        return image
+    }
+}
+
+struct GNDFileLightmapAtlasView: View {
+    var file: File
+
+    var body: some View {
+        AsyncContentView {
+            try await loadGNDLightmapAtlasImage()
+        } content: { image in
+            Image(decorative: image, scale: 1)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+    }
+
+    private func loadGNDLightmapAtlasImage() async throws -> CGImage {
+        let gndData = try await file.contents()
+        let gnd = try GND(data: gndData)
+
+        let lightmapAtlas = GroundLightmapAtlas(lightmap: gnd.lightmap)
+        guard let image = lightmapAtlas.makeCGImage() else {
+            throw FileError.imageGenerationFailed
+        }
+
+        return image
     }
 }
 

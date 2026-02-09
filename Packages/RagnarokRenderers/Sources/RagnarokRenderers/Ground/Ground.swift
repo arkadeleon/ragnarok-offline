@@ -21,6 +21,7 @@ public struct Ground {
 
     public var mesh: GroundMesh
     public var textureAtlas: GroundTextureAtlas
+    public var lightmapAtlas: GroundLightmapAtlas
 
     public init(gat: GAT, gnd: GND) {
         width = Int(gat.width)
@@ -29,24 +30,12 @@ public struct Ground {
 
         mesh = GroundMesh()
         textureAtlas = GroundTextureAtlas(gnd: gnd)
+        lightmapAtlas = GroundLightmapAtlas(lightmap: gnd.lightmap)
 
         let width = Int(gnd.width)
         let height = Int(gnd.height)
 
         let normals = getSmoothNormal(gnd: gnd)
-
-        let l_count_w  = roundf(sqrtf(Float(gnd.lightmap.count)))
-        let l_count_h  = ceilf(sqrtf(Float(gnd.lightmap.count)))
-        let l_width    = powf(2, ceilf(logf(l_count_w * 8) / logf(2)))
-        let l_height   = powf(2, ceilf(logf(l_count_h * 8) / logf(2)))
-        let lightmap_atlas: (Int) -> LightmapAtlas = { (i: Int) -> LightmapAtlas in
-            return LightmapAtlas(
-                u1: ((Float(i % Int(l_count_w)) + 0.125) / l_count_w) * ((l_count_w * 8) / l_width),
-                u2: ((Float(i % Int(l_count_w)) + 0.875) / l_count_w) * ((l_count_w * 8) / l_width),
-                v1: ((Float(i / Int(l_count_w)) + 0.125) / l_count_h) * ((l_count_h * 8) / l_height),
-                v2: ((Float(i / Int(l_count_w)) + 0.875) / l_count_h) * ((l_count_h * 8) / l_height)
-            )
-        }
 
         // Compiling mesh
         for y in 0..<height {
@@ -61,7 +50,7 @@ public struct Ground {
                     if surface.textureIndex > -1 {
                         let n = normals[x + y * width]
                         let uv = textureAtlas.uv(for: surface)
-                        let l = lightmap_atlas(Int(surface.lightmapIndex))
+                        let l = lightmapAtlas.uv(forLightmapSliceIndex: Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.bottomLeftAltitude / 5, (Float(y) + 0) * 2],
@@ -103,7 +92,7 @@ public struct Ground {
                     if surface.textureIndex > -1 {
                         let frontCube = gnd.cubes[x + (y + 1) * width]
                         let uv = textureAtlas.uv(for: surface)
-                        let l = lightmap_atlas(Int(surface.lightmapIndex))
+                        let l = lightmapAtlas.uv(forLightmapSliceIndex: Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.topLeftAltitude / 5, (Float(y) + 1) * 2],
@@ -145,7 +134,7 @@ public struct Ground {
                     if surface.textureIndex > -1 {
                         let rightCube = gnd.cubes[(x + 1) + y * width]
                         let uv = textureAtlas.uv(for: surface)
-                        let l = lightmap_atlas(Int(surface.lightmapIndex))
+                        let l = lightmapAtlas.uv(forLightmapSliceIndex: Int(surface.lightmapIndex))
 
                         let v0 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
@@ -181,44 +170,6 @@ public struct Ground {
                 }
             }
         }
-    }
-
-    private struct LightmapAtlas {
-        var u1: Float
-        var u2: Float
-        var v1: Float
-        var v2: Float
-    }
-
-    private func createLightmapImage(gnd: GND) -> [UInt8] {
-        let count     = Int(gnd.lightmap.count)
-        let data      = gnd.lightmap.data
-        let per_cell  = Int(gnd.lightmap.per_cell)
-
-        let width     = Int(roundf(sqrtf(Float(count))))
-        let height    = Int(ceilf(sqrtf(Float(count))))
-        let _width    = Int(powf(2, ceilf(logf(Float(width) * 8) / logf(2))))
-        let _height   = Int(powf(2, ceilf(logf(Float(height) * 8) / logf(2))))
-
-        var out: [UInt8] = Array(repeating: 0, count: _width * _height * 4)
-
-        for i in 0..<count {
-            let pos   = i * 4 * per_cell
-            let x     = (i % width) * 8
-            let y     = (i / width) * 8
-
-            for _x in 0..<8 {
-                for _y in 0..<8 {
-                    let idx = ((x + _x) + (y + _y) * _width) * 4
-                    out[idx + 0] = (data[pos + per_cell + (_x + _y * 8) * 3 + 0] >> 4) << 4 // Posterisation
-                    out[idx + 1] = (data[pos + per_cell + (_x + _y * 8) * 3 + 1] >> 4) << 4 // Posterisation
-                    out[idx + 2] = (data[pos + per_cell + (_x + _y * 8) * 3 + 2] >> 4) << 4 // Posterisation
-                    out[idx + 3] = data[pos + (_x + _y * 8)]
-                }
-            }
-        }
-
-        return out
     }
 
     private func createTilesColorImage(gnd: GND) -> [UInt8] {
