@@ -129,7 +129,7 @@ extension Entity {
         let height = animation.frameHeight / 32
 
         // Create material.
-        var material = UnlitMaterial()
+        var material = UnlitMaterial(applyPostProcessToneMap: false)
         material.opacityThreshold = 0.0001
         material.blending = .transparent(opacity: 1.0)
 
