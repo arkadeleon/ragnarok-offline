@@ -117,6 +117,16 @@ extension Entity {
             material.custom.texture = CustomMaterial.Texture(lightmapTexture)
         }
 
+        if let tileColorImage = ground.tileColorMap.makeCGImage() {
+            let tileColorTexture = try await TextureResource(
+                image: tileColorImage,
+                withName: "ground-tile-color-texture",
+                options: TextureResource.CreateOptions(semantic: .color)
+            )
+            material.custom.value.y = 1
+            material.emissiveColor = CustomMaterial.EmissiveColor(texture: CustomMaterial.Texture(tileColorTexture))
+        }
+
         return material
         #else
         var material = PhysicallyBasedMaterial()

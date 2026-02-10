@@ -22,6 +22,7 @@ public struct Ground {
     public var mesh: GroundMesh
     public var textureAtlas: GroundTextureAtlas
     public var lightmapAtlas: GroundLightmapAtlas
+    public var tileColorMap: GroundTileColorMap
 
     public init(gat: GAT, gnd: GND) {
         width = Int(gat.width)
@@ -31,6 +32,7 @@ public struct Ground {
         mesh = GroundMesh()
         textureAtlas = GroundTextureAtlas(gnd: gnd)
         lightmapAtlas = GroundLightmapAtlas(lightmap: gnd.lightmap)
+        tileColorMap = GroundTileColorMap(gnd: gnd)
 
         let width = Int(gnd.width)
         let height = Int(gnd.height)
@@ -170,28 +172,6 @@ public struct Ground {
                 }
             }
         }
-    }
-
-    private func createTilesColorImage(gnd: GND) -> [UInt8] {
-        let width = Int(gnd.width)
-        let height = Int(gnd.height)
-        var data: [UInt8] = Array(repeating: 0, count: width * height * 4)
-
-        for y in 0..<height {
-            for x in 0..<width {
-                let cube = gnd.cubes[x + y * width]
-                if cube.topSurfaceIndex > -1 {
-                    let index = (x + y * width) * 4
-                    let color = gnd.surfaces[Int(cube.topSurfaceIndex)].color
-                    data[index + 0] = color.alpha
-                    data[index + 1] = color.red
-                    data[index + 2] = color.green
-                    data[index + 3] = color.blue
-                }
-            }
-        }
-
-        return data
     }
 
     private func createShadowmapData(gnd: GND) -> [UInt8] {
