@@ -100,7 +100,11 @@ struct GNDFileGroundView: View {
         }
 
         let ground = Ground(gat: gat, gnd: gnd)
-        let groundEntity = try await Entity(from: ground, textureImages: textureImages)
+        let groundEntity = try await Entity(
+            from: ground,
+            lighting: .preview,
+            textureImages: textureImages
+        )
 
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))

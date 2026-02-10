@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+//import Metal
 import RagnarokRenderers
 import RagnarokShaders
 import RealityKit
@@ -17,11 +18,15 @@ enum GroundEntityError: Error {
 }
 
 extension Entity {
-    public convenience init(from ground: Ground, textureImages: [String : CGImage]) async throws {
+    public convenience init(
+        from ground: Ground,
+        lighting: GroundLighting,
+        textureImages: [String : CGImage],
+    ) async throws {
         self.init()
 
         let mesh = try makeMeshResource(ground: ground)
-        let material = try await makeMaterial(ground: ground, textureImages: textureImages)
+        let material = try await makeMaterial(ground: ground, lighting: lighting, textureImages: textureImages)
 
         components.set(ModelComponent(mesh: mesh, materials: [material]))
     }
@@ -88,42 +93,63 @@ extension Entity {
         return meshResource
     }
 
-    private func makeMaterial(ground: Ground, textureImages: [String : CGImage]) async throws -> any Material {
+    private func makeMaterial(
+        ground: Ground,
+        lighting: GroundLighting,
+        textureImages: [String : CGImage]
+    ) async throws -> any Material {
         #if os(iOS) || os(macOS)
         guard let device = MTLCreateSystemDefaultDevice() else {
             throw GroundEntityError.cannotCreateMetalDevice
         }
         let library = try device.makeDefaultLibrary(bundle: .module)
-        let surfaceShader = CustomMaterial.SurfaceShader(named: "groundSurface", in: library)
+
+        let textureImage = ground.textureAtlas.makeCGImage(textureImages: textureImages)
+        let lightmapTextureImage = ground.lightmapAtlas.makeCGImage()
+        let tileColorImage = ground.tileColorMap.makeCGImage()
+
+        let functionConstants = MTLFunctionConstantValues()
+        var useLightmap = lightmapTextureImage != nil
+        var lightAmbient = lighting.ambient
+        var lightDiffuse = lighting.diffuse
+        var lightOpacity = lighting.opacity
+        functionConstants.setConstantValue(&useLightmap, type: .bool, index: 0)
+        functionConstants.setConstantValue(&lightAmbient, type: .float3, index: 1)
+        functionConstants.setConstantValue(&lightDiffuse, type: .float3, index: 2)
+        functionConstants.setConstantValue(&lightOpacity, type: .float, index: 3)
+
+        let surfaceShader = CustomMaterial.SurfaceShader(
+            named: "groundSurface",
+            in: library,
+            constantValues: functionConstants
+        )
 
         var material = try CustomMaterial(surfaceShader: surfaceShader, lightingModel: .unlit)
 
-        if let textureImage = ground.textureAtlas.makeCGImage(textureImages: textureImages) {
+        if let textureImage {
             let texture = try await TextureResource(
                 image: textureImage,
                 withName: "ground-texture",
-                options: TextureResource.CreateOptions(semantic: .color)
+                options: TextureResource.CreateOptions(semantic: .raw)
             )
             material.baseColor = CustomMaterial.BaseColor(texture: CustomMaterial.Texture(texture))
         }
 
-        if let lightmapTextureImage = ground.lightmapAtlas.makeCGImage() {
+        if let lightmapTextureImage {
             let lightmapTexture = try await TextureResource(
                 image: lightmapTextureImage,
                 withName: "ground-lightmap-texture",
-                options: TextureResource.CreateOptions(semantic: .color)
+                options: TextureResource.CreateOptions(semantic: .raw)
             )
-            material.custom.value.x = 1
             material.custom.texture = CustomMaterial.Texture(lightmapTexture)
         }
 
-        if let tileColorImage = ground.tileColorMap.makeCGImage() {
+        if let tileColorImage {
             let tileColorTexture = try await TextureResource(
                 image: tileColorImage,
                 withName: "ground-tile-color-texture",
-                options: TextureResource.CreateOptions(semantic: .color)
+                options: TextureResource.CreateOptions(semantic: .raw)
             )
-            material.custom.value.y = 1
             material.emissiveColor = CustomMaterial.EmissiveColor(texture: CustomMaterial.Texture(tileColorTexture))
         }
 
