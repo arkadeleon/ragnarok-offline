@@ -10,11 +10,11 @@ import SwiftUI
 
 struct GameImage<Content>: View where Content: View {
     var name: String
-    var content: (CGImage) -> Content
+    var content: (Resources.Image) -> Content
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var image: CGImage?
+    @State private var image: Resources.Image?
 
     var body: some View {
         contentView
@@ -36,14 +36,14 @@ struct GameImage<Content>: View where Content: View {
     init(_ name: String) where Content == Image {
         self.name = name
         self.content = { image in
-            Image(decorative: image, scale: 1)
+            Image(decorative: image.cgImage, scale: 1)
         }
     }
 
     init(_ name: String, @ViewBuilder content: @escaping (Image) -> Content) {
         self.name = name
         self.content = { image in
-            content(Image(decorative: image, scale: 1))
+            content(Image(decorative: image.cgImage, scale: 1))
         }
     }
 }

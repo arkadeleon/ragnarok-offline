@@ -19,7 +19,7 @@ struct ItemDetailView: View {
         DatabaseRecordDetailView {
             ZStack {
                 if let itemPreviewImage = item.previewImage {
-                    Image(itemPreviewImage, scale: 1, label: Text(item.displayName))
+                    Image(decorative: itemPreviewImage.cgImage, scale: 1)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {

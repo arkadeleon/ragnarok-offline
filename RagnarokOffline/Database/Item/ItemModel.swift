@@ -22,8 +22,8 @@ final class ItemModel {
     let localizedName: String?
     let localizedDescription: String?
 
-    var iconImage: CGImage?
-    var previewImage: CGImage?
+    var iconImage: Resources.Image?
+    var previewImage: Resources.Image?
 
     var displayName: String {
         var displayName = localizedName ?? item.name

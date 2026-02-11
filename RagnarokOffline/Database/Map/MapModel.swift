@@ -18,7 +18,7 @@ final class MapModel {
 
     let localizedName: String?
 
-    var image: CGImage?
+    var image: Resources.Image?
 
     var displayName: String {
         localizedName ?? map.name

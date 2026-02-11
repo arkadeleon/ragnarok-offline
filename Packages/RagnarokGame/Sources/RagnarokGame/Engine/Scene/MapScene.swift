@@ -180,7 +180,7 @@ public class MapScene {
             let image = try await resourceManager.image(at: path)
 
             let options = TextureResource.CreateOptions(semantic: .color)
-            let texture = try await TextureResource(image: image, withName: "tile.selector", options: options)
+            let texture = try await TextureResource(image: image.cgImage, withName: "tile.selector", options: options)
 
             var material = UnlitMaterial(texture: texture)
             material.blending = .transparent(opacity: 1.0)

@@ -30,6 +30,7 @@ final public class ResourceManager: Sendable {
     public let remoteCacheURL: URL?
 
     let cache = ResourceCache()
+    let imageResourceCache = ThrowingResourceCache<Resources.Image>()
 
     private let localGRFArchives: [GRFArchive]
 

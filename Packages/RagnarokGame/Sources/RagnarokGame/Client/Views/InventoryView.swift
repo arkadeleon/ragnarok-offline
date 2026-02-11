@@ -194,12 +194,12 @@ private struct InventoryItemView: View {
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var iconImage: CGImage?
+    @State private var iconImage: Resources.Image?
 
     var body: some View {
         ZStack {
             if let iconImage {
-                Image(decorative: iconImage, scale: 1)
+                Image(decorative: iconImage.cgImage, scale: 1)
             }
 
             Text(verbatim: "\(item.amount)")

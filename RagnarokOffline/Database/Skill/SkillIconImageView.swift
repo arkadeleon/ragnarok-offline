@@ -13,7 +13,7 @@ struct SkillIconImageView: View {
     var body: some View {
         ZStack {
             if let skillIconImage = skill.iconImage {
-                Image(skillIconImage, scale: 1, label: Text(skill.displayName))
+                Image(decorative: skillIconImage.cgImage, scale: 1)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             } else {

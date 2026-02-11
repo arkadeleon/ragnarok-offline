@@ -22,7 +22,7 @@ extension ResourceManager {
         perTextureCompletionBlock: (@MainActor (String, CGImage?) -> Void)? = nil
     ) async -> [String : CGImage] {
         await withTaskGroup(
-            of: (String, CGImage?).self,
+            of: (String, Resources.Image?).self,
             returning: [String : CGImage].self
         ) { taskGroup in
             for textureName in textureNames {
@@ -36,8 +36,8 @@ extension ResourceManager {
 
             var textureImages: [String : CGImage] = [:]
             for await (textureName, textureImage) in taskGroup {
-                textureImages[textureName] = textureImage
-                await perTextureCompletionBlock?(textureName, textureImage)
+                textureImages[textureName] = textureImage?.cgImage
+                await perTextureCompletionBlock?(textureName, textureImage?.cgImage)
             }
             return textureImages
         }
@@ -62,7 +62,7 @@ extension ResourceManager {
                     }
 
                     let texture = try? await TextureResource(
-                        image: textureImage,
+                        image: textureImage.cgImage,
                         withName: textureName,
                         options: TextureResource.CreateOptions(semantic: .raw)
                     )
@@ -81,7 +81,7 @@ extension ResourceManager {
 
     public func waterTexture() async throws -> TextureResource {
         let textureImage = await withTaskGroup(
-            of: (Int, CGImage?).self,
+            of: (Int, Resources.Image?).self,
             returning: CGImage?.self
         ) { taskGroup in
             for i in 0..<32 {
@@ -93,7 +93,7 @@ extension ResourceManager {
                 }
             }
 
-            var textureImages: [Int : CGImage?] = [:]
+            var textureImages: [Int : Resources.Image?] = [:]
             for await (index, image) in taskGroup {
                 textureImages[index] = image
             }
@@ -104,7 +104,7 @@ extension ResourceManager {
                 for textureIndex in 0..<textureImages.count {
                     if let image = textureImages[textureIndex], let image {
                         let rect = CGRect(x: 128 * textureIndex, y: 0, width: 128, height: 128)
-                        cgContext.draw(image, in: rect)
+                        cgContext.draw(image.cgImage, in: rect)
                     }
                 }
             }

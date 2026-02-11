@@ -20,7 +20,7 @@ final class SkillModel {
     let localizedName: String?
     let localizedDescription: String?
 
-    var iconImage: CGImage?
+    var iconImage: Resources.Image?
 
     var displayName: String {
         localizedName ?? skill.name

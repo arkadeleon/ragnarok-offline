@@ -20,7 +20,7 @@ struct MapDetailView: View {
         DatabaseRecordDetailView {
             ZStack {
                 if let mapImage = map.image {
-                    Image(mapImage, scale: 1, label: Text(map.displayName))
+                    Image(decorative: mapImage.cgImage, scale: 1)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {

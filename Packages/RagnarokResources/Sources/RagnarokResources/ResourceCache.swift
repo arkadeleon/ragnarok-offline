@@ -7,7 +7,7 @@
 
 typealias ResourceTask = Task<any Resource, Never>
 
-/// The current phase of the resource loading operation.
+/// The current phase of a resource loading operation.
 enum ResourcePhase {
     case inProgress(ResourceTask)
     case loaded(any Resource)

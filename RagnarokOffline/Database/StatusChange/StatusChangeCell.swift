@@ -14,7 +14,7 @@ struct StatusChangeCell: View {
         HStack {
             ZStack {
                 if let iconImage = statusChange.iconImage {
-                    Image(iconImage, scale: 1, label: Text(statusChange.displayName))
+                    Image(decorative: iconImage.cgImage, scale: 1)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 } else {

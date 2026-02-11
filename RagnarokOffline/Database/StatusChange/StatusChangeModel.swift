@@ -19,7 +19,7 @@ final class StatusChangeModel {
 
     let localizedDescription: String?
 
-    var iconImage: CGImage?
+    var iconImage: Resources.Image?
     var fail: [StatusChangeModel] = []
     var endOnStart: [StatusChangeModel] = []
     var endReturn: [StatusChangeModel] = []
