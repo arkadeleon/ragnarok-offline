@@ -10,10 +10,11 @@
 
 using namespace metal;
 
-constant bool kUseLightmap [[function_constant(0)]];
+constant float3 kLightDirection [[function_constant(0)]];
 constant float3 kLightAmbient [[function_constant(1)]];
 constant float3 kLightDiffuse [[function_constant(2)]];
 constant float kLightOpacity [[function_constant(3)]];
+constant bool kUseLightmap [[function_constant(4)]];
 
 static inline half3 srgbToLinear(half3 color) {
     half3 c = clamp(color, half3(0.0h), half3(1.0h));
@@ -23,7 +24,7 @@ static inline half3 srgbToLinear(half3 color) {
 }
 
 [[visible]]
-void groundSurface(realitykit::surface_parameters params) {
+void groundSurfaceShader(realitykit::surface_parameters params) {
     constexpr sampler textureSampler(
         coord::normalized,
         address::clamp_to_edge,
@@ -42,12 +43,16 @@ void groundSurface(realitykit::surface_parameters params) {
         return;
     }
 
+    float3 normal = normalize(params.geometry().normal());
+    float3 lightDirection = normalize(kLightDirection);
+    float lightWeight = 1.0;
+
     if (uv2.x != 0.0 || uv2.y != 0.0) {
         half4 tileColor = params.textures().emissive_color().sample(textureSampler, uv2.xy);
         textureColor *= tileColor;
+        lightWeight = max(dot(normal, lightDirection), 0.1);
     }
 
-    float lightWeight = 1.0;
     float3 ambient = kLightAmbient * kLightOpacity;
     float3 diffuse = kLightDiffuse * lightWeight;
 
@@ -65,5 +70,36 @@ void groundSurface(realitykit::surface_parameters params) {
         params.surface().set_base_color(linearColor);
         params.surface().set_emissive_color(linearColor);
     }
+    params.surface().set_opacity(textureColor.a);
+}
+
+[[visible]]
+void modelSurfaceShader(realitykit::surface_parameters params) {
+    constexpr sampler textureSampler(
+        coord::normalized,
+        address::clamp_to_edge,
+        filter::linear
+    );
+
+    float2 uv0 = params.geometry().uv0();
+    half4 textureColor = params.textures().base_color().sample(textureSampler, uv0);
+    if (textureColor.a == 0.0h) {
+        params.surface().set_base_color(half3(0.0h));
+        params.surface().set_emissive_color(half3(0.0h));
+        params.surface().set_opacity(0.0h);
+        return;
+    }
+
+    float3 normal = normalize(params.geometry().normal());
+    float3 lightDirection = normalize(kLightDirection);
+    float lightWeight = max(dot(normal, lightDirection), 0.5);
+
+    float3 ambient = kLightAmbient * kLightOpacity;
+    float3 diffuse = kLightDiffuse * lightWeight;
+    float3 lightColor = clamp(ambient + diffuse, 0.0, 1.0);
+    half3 srgbColor = textureColor.rgb * half3(lightColor);
+    half3 linearColor = srgbToLinear(clamp(srgbColor, 0.0h, 1.0h));
+    params.surface().set_base_color(linearColor);
+    params.surface().set_emissive_color(linearColor);
     params.surface().set_opacity(textureColor.a);
 }

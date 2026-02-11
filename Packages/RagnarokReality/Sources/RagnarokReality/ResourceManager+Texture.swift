@@ -64,7 +64,7 @@ extension ResourceManager {
                     let texture = try? await TextureResource(
                         image: textureImage,
                         withName: textureName,
-                        options: TextureResource.CreateOptions(semantic: .color)
+                        options: TextureResource.CreateOptions(semantic: .raw)
                     )
                     return (textureName, texture)
                 }

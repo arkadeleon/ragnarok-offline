@@ -15,6 +15,8 @@ extension Entity {
     public convenience init(from world: WorldResource, resourceManager: ResourceManager, progress: Progress) async throws {
         self.init()
 
+        let lighting = WorldLighting(light: world.rsw.light)
+
         // MARK: - RSM Models
 
         metric.beginMeasuring("Load rsm models")
@@ -53,10 +55,9 @@ extension Entity {
         metric.beginMeasuring("Load ground entity")
 
         let ground = Ground(gat: world.gat, gnd: world.gnd)
-        let groundLighting = GroundLighting(light: world.rsw.light)
         let groundEntity = try await Entity(
             from: ground,
-            lighting: groundLighting,
+            lighting: lighting,
             textureImages: groundTextureImages
         )
         addChild(groundEntity, preservingWorldTransform: true)
@@ -80,7 +81,12 @@ extension Entity {
             for (modelName, model) in models {
                 taskGroup.addTask {
                     do {
-                        let modelEntity = try await Entity(from: model, name: modelName, textures: modelTextures)
+                        let modelEntity = try await Entity(
+                            from: model,
+                            name: modelName,
+                            lighting: lighting,
+                            textures: modelTextures
+                        )
                         return modelEntity
                     } catch {
                         logger.warning("\(error)")

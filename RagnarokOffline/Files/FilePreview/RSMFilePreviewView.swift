@@ -86,7 +86,7 @@ struct RSMFileModelView: View {
         }
 
         let model = Model(rsm: rsm, instance: instance)
-        let modelEntity = try await Entity(from: model, textures: textures)
+        let modelEntity = try await Entity(from: model, lighting: .preview, textures: textures)
         return modelEntity
     }
 }

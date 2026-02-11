@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-//import Metal
+import Metal
 import RagnarokRenderers
 import RagnarokShaders
 import RealityKit
@@ -20,7 +20,7 @@ enum GroundEntityError: Error {
 extension Entity {
     public convenience init(
         from ground: Ground,
-        lighting: GroundLighting,
+        lighting: WorldLighting,
         textureImages: [String : CGImage],
     ) async throws {
         self.init()
@@ -95,7 +95,7 @@ extension Entity {
 
     private func makeMaterial(
         ground: Ground,
-        lighting: GroundLighting,
+        lighting: WorldLighting,
         textureImages: [String : CGImage]
     ) async throws -> any Material {
         #if os(iOS) || os(macOS)
@@ -109,17 +109,19 @@ extension Entity {
         let tileColorImage = ground.tileColorMap.makeCGImage()
 
         let functionConstants = MTLFunctionConstantValues()
-        var useLightmap = lightmapTextureImage != nil
+        var lightDirection = lighting.direction
         var lightAmbient = lighting.ambient
         var lightDiffuse = lighting.diffuse
         var lightOpacity = lighting.opacity
-        functionConstants.setConstantValue(&useLightmap, type: .bool, index: 0)
+        var useLightmap = lightmapTextureImage != nil
+        functionConstants.setConstantValue(&lightDirection, type: .float3, index: 0)
         functionConstants.setConstantValue(&lightAmbient, type: .float3, index: 1)
         functionConstants.setConstantValue(&lightDiffuse, type: .float3, index: 2)
         functionConstants.setConstantValue(&lightOpacity, type: .float, index: 3)
+        functionConstants.setConstantValue(&useLightmap, type: .bool, index: 4)
 
         let surfaceShader = CustomMaterial.SurfaceShader(
-            named: "groundSurface",
+            named: "groundSurfaceShader",
             in: library,
             constantValues: functionConstants
         )

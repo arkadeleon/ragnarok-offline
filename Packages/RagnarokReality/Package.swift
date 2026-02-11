@@ -38,7 +38,7 @@ let package = Package(
                 "TextEncoding",
             ],
             resources: [
-                .process("Ground.metal"),
+                .process("Shaders.metal"),
             ]
         ),
         .testTarget(
