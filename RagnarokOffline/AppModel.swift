@@ -39,6 +39,7 @@ final class AppModel {
     let database = DatabaseModel(mode: .renewal)
 
     let characterSimulator = CharacterSimulator()
+    let skillSimulator = SkillSimulator()
 
     let chatSession: ChatSession
     let gameSession = GameSession(resourceManager: .shared)

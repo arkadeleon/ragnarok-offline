@@ -31,6 +31,7 @@ enum SidebarItem: Hashable {
     case statusChangeDatabase
 
     case characterSimulator
+    case skillSimulator
     case cube
 }
 
@@ -157,6 +158,10 @@ struct SidebarView: View {
             Section(isExpanded: $isToolsSectionExpanded) {
                 NavigationLink(value: SidebarItem.characterSimulator) {
                     SidebarRow("Character Simulator", iconName: "person.fill", iconColor: .cyan)
+                }
+
+                NavigationLink(value: SidebarItem.skillSimulator) {
+                    SidebarRow("Skill Simulator", iconName: "point.3.connected.trianglepath.dotted", iconColor: .indigo)
                 }
 
                 #if DEBUG
