@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-#if canImport(AppKit)
-import AppKit
-#endif
-
-#if canImport(UIKit)
-import UIKit
-#endif
-
 /// Displays a single node in the JSON tree
 struct JSONNodeRow: View {
     var node: JSONNode
@@ -26,7 +18,7 @@ struct JSONNodeRow: View {
             if let key = node.key {
                 Text(key)
                     .fontWeight(.semibold)
-                Text(":")
+                Text(verbatim: ":")
             }
 
             // Value
@@ -43,12 +35,12 @@ struct JSONNodeRow: View {
         )
         .contextMenu {
             if let key = node.key {
-                Button("Copy Key") {
+                Button(LocalizedStringResource("Copy Key", bundle: .module)) {
                     copyToClipboard(key)
                 }
             }
             if let value = node.displayValue {
-                Button("Copy Value") {
+                Button(LocalizedStringResource("Copy Value", bundle: .module)) {
                     copyToClipboard(value)
                 }
             }
@@ -88,10 +80,10 @@ struct JSONNodeRow: View {
 
     /// Copy text to clipboard (platform-specific)
     private func copyToClipboard(_ text: String) {
-        #if os(macOS)
+        #if canImport(AppKit)
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(text, forType: .string)
-        #else
+        #elseif canImport(UIKit)
         UIPasteboard.general.string = text
         #endif
     }

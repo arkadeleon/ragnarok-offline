@@ -20,17 +20,17 @@ public struct JSONViewer: View {
             if let error {
                 // Error state
                 ContentUnavailableView {
-                    Label("Failed to Parse JSON", systemImage: "exclamationmark.triangle")
+                    Label(LocalizedStringResource("Failed to Parse JSON", bundle: .module), systemImage: "exclamationmark.triangle")
                 } description: {
                     Text(error.localizedDescription)
                 }
             } else if let rootNode {
                 // Content state
                 JSONTreeView(node: rootNode, searchText: searchText)
-                    .searchable(text: $searchText, prompt: "Search keys and values")
+                    .searchable(text: $searchText, prompt: LocalizedStringResource("Search keys and values", bundle: .module))
             } else {
                 // Loading state
-                ProgressView("Parsing JSON...")
+                ProgressView(LocalizedStringResource("Parsing JSON...", bundle: .module))
             }
         }
         .task {

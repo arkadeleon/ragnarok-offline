@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "JSONViewer",
+    defaultLocalization: "en",
     platforms: [
         .macOS(.v14),
         .iOS(.v17),
