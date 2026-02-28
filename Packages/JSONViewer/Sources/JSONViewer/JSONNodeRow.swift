@@ -24,7 +24,7 @@ struct JSONNodeRow: View {
             // Value
             if let value = node.displayValue {
                 Text(value)
-                    .foregroundStyle(node.valueType.color)
+                    .foregroundStyle(node.color)
             }
         }
         .padding(.vertical, 2)
@@ -92,33 +92,33 @@ struct JSONNodeRow: View {
 #Preview("Different Node Types") {
     VStack(alignment: .leading, spacing: 8) {
         JSONNodeRow(
-            node: .string(id: UUID(), key: "name", value: "John Doe"),
+            node: .string(key: "name", value: "John Doe"),
             searchText: ""
         )
         JSONNodeRow(
-            node: .number(id: UUID(), key: "age", value: 42),
+            node: .number(key: "age", value: 42),
             searchText: ""
         )
         JSONNodeRow(
-            node: .number(id: UUID(), key: "price", value: 19.99),
+            node: .number(key: "price", value: 19.99),
             searchText: ""
         )
         JSONNodeRow(
-            node: .boolean(id: UUID(), key: "isActive", value: true),
+            node: .boolean(key: "isActive", value: true),
             searchText: ""
         )
         JSONNodeRow(
-            node: .null(id: UUID(), key: "metadata"),
+            node: .null(key: "metadata"),
             searchText: ""
         )
         JSONNodeRow(
-            node: .object(id: UUID(), key: "address", children: []),
+            node: .object(key: "address", children: []),
             searchText: ""
         )
         JSONNodeRow(
-            node: .array(id: UUID(), key: "tags", children: [
-                .string(id: UUID(), key: "[0]", value: "swift"),
-                .string(id: UUID(), key: "[1]", value: "swiftui")
+            node: .array(key: "tags", children: [
+                .string(key: "[0]", value: "swift"),
+                .string(key: "[1]", value: "swiftui")
             ]),
             searchText: ""
         )
@@ -129,15 +129,15 @@ struct JSONNodeRow: View {
 #Preview("With Search Highlight") {
     VStack(alignment: .leading, spacing: 8) {
         JSONNodeRow(
-            node: .string(id: UUID(), key: "username", value: "john_doe"),
+            node: .string(key: "username", value: "john_doe"),
             searchText: "user"
         )
         JSONNodeRow(
-            node: .string(id: UUID(), key: "email", value: "john@example.com"),
+            node: .string(key: "email", value: "john@example.com"),
             searchText: "user"
         )
         JSONNodeRow(
-            node: .number(id: UUID(), key: "userId", value: 12345),
+            node: .number(key: "userId", value: 12345),
             searchText: "user"
         )
     }

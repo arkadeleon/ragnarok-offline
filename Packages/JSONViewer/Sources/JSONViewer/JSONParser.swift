@@ -24,6 +24,12 @@ public enum JSONParsingError: LocalizedError {
 
 /// Parser for converting JSON data into a tree structure
 struct JSONParser {
+    /// Parent type for chunk labeling logic
+    private enum ChunkParentType {
+        case object
+        case array
+    }
+
     /// Threshold for chunking large arrays/objects
     static let chunkThreshold = 100
 
@@ -51,11 +57,9 @@ struct JSONParser {
     ///   - key: Optional key for this node
     /// - Returns: A JSONNode representing the value
     private static func buildNode(from value: Any, key: String?) -> JSONNode {
-        let id = UUID()
-
         // Handle null
         if value is NSNull {
-            return .null(id: id, key: key)
+            return .null(key: key)
         }
 
         // Handle dictionary (object)
@@ -78,7 +82,7 @@ struct JSONParser {
                 children = allChildren
             }
 
-            return .object(id: id, key: key, children: children)
+            return .object(key: key, children: children)
         }
 
         // Handle array
@@ -95,26 +99,26 @@ struct JSONParser {
                 children = allChildren
             }
 
-            return .array(id: id, key: key, children: children)
+            return .array(key: key, children: children)
         }
 
         // Handle boolean (must check before number, as NSNumber can represent both)
         if let number = value as? NSNumber {
             // Use Core Foundation to distinguish boolean from number
             if CFGetTypeID(number as CFTypeRef) == CFBooleanGetTypeID() {
-                return .boolean(id: id, key: key, value: number.boolValue)
+                return .boolean(key: key, value: number.boolValue)
             } else {
-                return .number(id: id, key: key, value: number.doubleValue)
+                return .number(key: key, value: number.doubleValue)
             }
         }
 
         // Handle string
         if let string = value as? String {
-            return .string(id: id, key: key, value: string)
+            return .string(key: key, value: string)
         }
 
         // Fallback: treat unknown types as null
-        return .null(id: id, key: key)
+        return .null(key: key)
     }
 
     /// Chunk a large array of nodes into smaller groups
@@ -122,7 +126,7 @@ struct JSONParser {
     ///   - nodes: The nodes to chunk
     ///   - type: The type of the parent (object or array)
     /// - Returns: Array of chunk nodes
-    private static func chunkNodes(_ nodes: [JSONNode], type: JSONValueType) -> [JSONNode] {
+    private static func chunkNodes(_ nodes: [JSONNode], type: ChunkParentType) -> [JSONNode] {
         var chunks: [JSONNode] = []
         let totalCount = nodes.count
         let numberOfChunks = (totalCount + chunkSize - 1) / chunkSize
@@ -139,11 +143,7 @@ struct JSONParser {
                 label = "Items \(startIndex)..\(endIndex - 1)"
             }
 
-            let chunk = JSONNode.chunk(
-                id: UUID(),
-                label: label,
-                children: chunkNodes
-            )
+            let chunk = JSONNode.chunk(label: label, children: chunkNodes)
             chunks.append(chunk)
         }
 

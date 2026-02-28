@@ -11,7 +11,6 @@ import Testing
 
 @Suite("JSON Parser Tests")
 struct JSONParserTests {
-
     @Test("Parse simple object")
     func testParseObject() throws {
         let json = #"{"key": "value"}"#
@@ -20,13 +19,13 @@ struct JSONParserTests {
         let node = try JSONParser.parse(data: data)
 
         #expect(node.key == nil) // Root has no key
-        #expect(node.valueType == .object)
+        #expect(node.isObject)
         #expect(node.children?.count == 1)
 
         let child = try #require(node.children?.first)
         #expect(child.key == "key")
-        #expect(child.valueType == .string)
-        if case .string(_, _, let value) = child {
+        #expect(child.isString)
+        if case .string(_, let value) = child.payload {
             #expect(value == "value")
         } else {
             Issue.record("Expected string node")
@@ -40,13 +39,13 @@ struct JSONParserTests {
 
         let node = try JSONParser.parse(data: data)
 
-        #expect(node.valueType == .array)
+        #expect(node.isArray)
         #expect(node.children?.count == 3)
 
         let children = try #require(node.children)
         for (index, child) in children.enumerated() {
             #expect(child.key == "[\(index)]")
-            #expect(child.valueType == .number)
+            #expect(child.isNumber)
         }
     }
 
@@ -57,16 +56,16 @@ struct JSONParserTests {
 
         let node = try JSONParser.parse(data: data)
 
-        #expect(node.valueType == .object)
+        #expect(node.isObject)
         #expect(node.children?.count == 1)
 
         let objChild = try #require(node.children?.first)
         #expect(objChild.key == "obj")
-        #expect(objChild.valueType == .object)
+        #expect(objChild.isObject)
 
         let arrChild = try #require(objChild.children?.first)
         #expect(arrChild.key == "arr")
-        #expect(arrChild.valueType == .array)
+        #expect(arrChild.isArray)
         #expect(arrChild.children?.count == 2)
     }
 
@@ -79,8 +78,8 @@ struct JSONParserTests {
         let children = try #require(node.children)
 
         for child in children {
-            #expect(child.valueType == .number)
-            if case .number(_, let key, let value) = child {
+            #expect(child.isNumber)
+            if case .number(let key, let value) = child.payload {
                 if key == "integer" {
                     #expect(value == 42.0)
                 } else if key == "float" {
@@ -100,8 +99,8 @@ struct JSONParserTests {
 
         #expect(children.count == 2)
         for child in children {
-            #expect(child.valueType == .boolean)
-            if case .boolean(_, let key, let value) = child {
+            #expect(child.isBoolean)
+            if case .boolean(let key, let value) = child.payload {
                 if key == "isTrue" {
                     #expect(value == true)
                 } else if key == "isFalse" {
@@ -120,7 +119,7 @@ struct JSONParserTests {
         let child = try #require(node.children?.first)
 
         #expect(child.key == "nullValue")
-        #expect(child.valueType == .null)
+        #expect(child.isNull)
     }
 
     @Test("Parse invalid JSON throws error")
@@ -143,10 +142,10 @@ struct JSONParserTests {
 
         for child in children {
             if child.key == "emptyObject" {
-                #expect(child.valueType == .object)
+                #expect(child.isObject)
                 #expect(child.children?.count == 0)
             } else if child.key == "emptyArray" {
-                #expect(child.valueType == .array)
+                #expect(child.isArray)
                 #expect(child.children?.count == 0)
             }
         }
@@ -162,8 +161,8 @@ struct JSONParserTests {
 
         #expect(children.count == 3)
         for child in children {
-            #expect(child.valueType == .string)
-            if case .string(_, let key, let value) = child {
+            #expect(child.isString)
+            if case .string(let key, let value) = child.payload {
                 if key == "japanese" {
                     #expect(value == "日本語")
                 } else if key == "korean" {
@@ -184,7 +183,7 @@ struct JSONParserTests {
         let children = try #require(node.children)
 
         for child in children {
-            #expect(child.valueType == .number)
+            #expect(child.isNumber)
         }
     }
 
@@ -200,7 +199,7 @@ struct JSONParserTests {
             let displayValue = child.displayValue
             #expect(displayValue != nil)
 
-            if case .number(_, let key, _) = child {
+            if case .number(let key, _) = child.payload {
                 if key == "integer" {
                     // Should display without decimal point
                     #expect(displayValue == "42")
@@ -208,15 +207,15 @@ struct JSONParserTests {
                     // Should display with decimal
                     #expect(displayValue?.contains(".") == true)
                 }
-            } else if case .string = child {
+            } else if case .string = child.payload {
                 // String should be quoted
                 #expect(displayValue?.hasPrefix("\"") == true)
                 #expect(displayValue?.hasSuffix("\"") == true)
-            } else if case .boolean(_, let key, _) = child {
+            } else if case .boolean(let key, _) = child.payload {
                 if key == "bool" {
                     #expect(displayValue == "true")
                 }
-            } else if case .null = child {
+            } else if case .null = child.payload {
                 #expect(displayValue == "null")
             }
         }
@@ -233,7 +232,7 @@ struct JSONParserTests {
         let jsonData = try JSONEncoder().encode(items)
         let node = try JSONParser.parse(data: jsonData)
 
-        #expect(node.valueType == .array)
+        #expect(node.isArray)
         let children = try #require(node.children)
 
         // Should have 3 chunks
@@ -244,19 +243,19 @@ struct JSONParserTests {
 
         // First chunk: [0..99]
         let chunk1 = children[0]
-        #expect(chunk1.valueType == .chunk)
+        #expect(chunk1.isChunk)
         #expect(chunk1.key == "[0..99]")
         #expect(chunk1.children?.count == 100)
 
         // Second chunk: [100..199]
         let chunk2 = children[1]
-        #expect(chunk2.valueType == .chunk)
+        #expect(chunk2.isChunk)
         #expect(chunk2.key == "[100..199]")
         #expect(chunk2.children?.count == 100)
 
         // Third chunk: [200..249]
         let chunk3 = children[2]
-        #expect(chunk3.valueType == .chunk)
+        #expect(chunk3.isChunk)
         #expect(chunk3.key == "[200..249]")
         #expect(chunk3.children?.count == 50)
     }
@@ -272,7 +271,7 @@ struct JSONParserTests {
         let jsonData = try JSONEncoder().encode(dict)
         let node = try JSONParser.parse(data: jsonData)
 
-        #expect(node.valueType == .object)
+        #expect(node.isObject)
         let children = try #require(node.children)
 
         // Should have 3 chunks
@@ -283,7 +282,7 @@ struct JSONParserTests {
 
         // All chunks should be of type .chunk
         for chunk in children {
-            #expect(chunk.valueType == .chunk)
+            #expect(chunk.isChunk)
             #expect(chunk.key?.hasPrefix("Items ") == true)
         }
 
@@ -303,14 +302,14 @@ struct JSONParserTests {
         let jsonData = try JSONEncoder().encode(items)
         let node = try JSONParser.parse(data: jsonData)
 
-        #expect(node.valueType == .array)
+        #expect(node.isArray)
         let children = try #require(node.children)
 
         // Should have 50 direct children, not chunked
         #expect(children.count == 50)
 
         // First child should be a number, not a chunk
-        #expect(children[0].valueType == .number)
+        #expect(children[0].isNumber)
     }
 
     @Test("Array at threshold not chunked")
@@ -324,14 +323,14 @@ struct JSONParserTests {
         let jsonData = try JSONEncoder().encode(items)
         let node = try JSONParser.parse(data: jsonData)
 
-        #expect(node.valueType == .array)
+        #expect(node.isArray)
         let children = try #require(node.children)
 
         // Should have 100 direct children, not chunked
         #expect(children.count == 100)
 
         // First child should be a number, not a chunk
-        #expect(children[0].valueType == .number)
+        #expect(children[0].isNumber)
     }
 
     @Test("Array just over threshold is chunked")
@@ -345,14 +344,14 @@ struct JSONParserTests {
         let jsonData = try JSONEncoder().encode(items)
         let node = try JSONParser.parse(data: jsonData)
 
-        #expect(node.valueType == .array)
+        #expect(node.isArray)
         let children = try #require(node.children)
 
         // Should have 2 chunks
         #expect(children.count == 2)
 
         // First child should be a chunk
-        #expect(children[0].valueType == .chunk)
+        #expect(children[0].isChunk)
 
         // First chunk should have 100 items
         #expect(children[0].children?.count == 100)

@@ -32,25 +32,25 @@ struct JSONTreeView: View {
 
 #Preview("Nested JSON Tree") {
     JSONTreeView(
-        node: .object(id: UUID(), key: nil, children: [
-            .string(id: UUID(), key: "name", value: "Ragnarok Online"),
-            .number(id: UUID(), key: "year", value: 2002),
-            .boolean(id: UUID(), key: "isActive", value: true),
-            .object(id: UUID(), key: "player", children: [
-                .string(id: UUID(), key: "class", value: "Swordsman"),
-                .number(id: UUID(), key: "level", value: 99),
-                .array(id: UUID(), key: "skills", children: [
-                    .string(id: UUID(), key: "[0]", value: "Bash"),
-                    .string(id: UUID(), key: "[1]", value: "Provoke"),
-                    .string(id: UUID(), key: "[2]", value: "Magnum Break")
+        node: .object(key: nil, children: [
+            .string(key: "name", value: "Ragnarok Online"),
+            .number(key: "year", value: 2002),
+            .boolean(key: "isActive", value: true),
+            .object(key: "player", children: [
+                .string(key: "class", value: "Swordsman"),
+                .number(key: "level", value: 99),
+                .array(key: "skills", children: [
+                    .string(key: "[0]", value: "Bash"),
+                    .string(key: "[1]", value: "Provoke"),
+                    .string(key: "[2]", value: "Magnum Break")
                 ])
             ]),
-            .array(id: UUID(), key: "maps", children: [
-                .string(id: UUID(), key: "[0]", value: "prontera"),
-                .string(id: UUID(), key: "[1]", value: "geffen"),
-                .string(id: UUID(), key: "[2]", value: "morocc")
+            .array(key: "maps", children: [
+                .string(key: "[0]", value: "prontera"),
+                .string(key: "[1]", value: "geffen"),
+                .string(key: "[2]", value: "morocc")
             ]),
-            .null(id: UUID(), key: "metadata")
+            .null(key: "metadata")
         ]),
         searchText: ""
     )
@@ -58,10 +58,10 @@ struct JSONTreeView: View {
 
 #Preview("With Search") {
     JSONTreeView(
-        node: .object(id: UUID(), key: nil, children: [
-            .string(id: UUID(), key: "username", value: "player123"),
-            .number(id: UUID(), key: "userId", value: 12345),
-            .string(id: UUID(), key: "email", value: "user@example.com")
+        node: .object(key: nil, children: [
+            .string(key: "username", value: "player123"),
+            .number(key: "userId", value: 12345),
+            .string(key: "email", value: "user@example.com")
         ]),
         searchText: "user"
     )
