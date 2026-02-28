@@ -5,61 +5,12 @@
 //  Created by Leon Li on 2023/12/26.
 //
 
-import rAthenaCommon
-import rAthenaResources
 import SwiftUI
 
 struct ServerView: View {
     var server: ServerModel
 
-    var body: some View {
-        ZStack {
-            ConsoleView(messages: server.consoleMessages)
-
-            if server.status == .notStarted {
-                ContentUnavailableView {
-                    Label("Server Not Started", systemImage: "server.rack")
-                } description: {
-                    Text("Tap Start to run the server")
-                } actions: {
-                    Button {
-                        startServer()
-                    } label: {
-                        Label("Start Server", systemImage: "play.fill")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                }
-            }
-        }
-        .background(.background)
-        .navigationTitle(server.name)
-        .toolbar {
-            ToolbarItemGroup {
-                Button {
-                    stopServer()
-                } label: {
-                    Image(systemName: "stop.fill")
-                }
-                .disabled(stopDisabled)
-
-                Button {
-                    startServer()
-                } label: {
-                    Image(systemName: "play.fill")
-                }
-                .disabled(startDisabled)
-            }
-
-            ToolbarItem {
-                Button {
-                    server.clearConsole()
-                } label: {
-                    Image(systemName: "trash")
-                }
-            }
-        }
-    }
+    @Environment(AppModel.self) private var appModel
 
     private var startDisabled: Bool {
         switch server.status {
@@ -75,22 +26,65 @@ struct ServerView: View {
         }
     }
 
-    private func startServer() {
-        Task {
-            let serverResourceManager = ServerResourceManager()
-            try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+    var body: some View {
+        ZStack {
+            ConsoleView(messages: server.consoleMessages)
 
-            _ = await server.start()
+            if server.status == .notStarted {
+                ContentUnavailableView {
+                    Label("Server Not Started", systemImage: "server.rack")
+                } description: {
+                    Text("Tap Start to run the server")
+                } actions: {
+                    Button {
+                        Task {
+                            try await appModel.startServer(server)
+                        }
+                    } label: {
+                        Label("Start Server", systemImage: "play.fill")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                }
+            }
         }
-    }
+        .background(.background)
+        .navigationTitle(server.name)
+        .toolbar {
+            ToolbarItemGroup {
+                Button {
+                    Task {
+                        await appModel.stopServer(server)
+                    }
+                } label: {
+                    Image(systemName: "stop.fill")
+                }
+                .disabled(stopDisabled)
 
-    private func stopServer() {
-        Task {
-            _ = await server.stop()
+                Button {
+                    Task {
+                        try await appModel.startServer(server)
+                    }
+                } label: {
+                    Image(systemName: "play.fill")
+                }
+                .disabled(startDisabled)
+            }
+
+            ToolbarItem {
+                Button {
+                    server.clearConsole()
+                } label: {
+                    Image(systemName: "trash")
+                }
+            }
         }
     }
 }
 
 #Preview {
-    ServerView(server: ServerModel(server: Server()))
+    let appModel = AppModel()
+
+    ServerView(server: appModel.loginServer)
+        .environment(appModel)
 }

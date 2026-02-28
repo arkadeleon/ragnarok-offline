@@ -16,7 +16,7 @@ public enum ClientError: Error, Sendable {
     case network(NWError)
 }
 
-public final class Client: Sendable {
+final public class Client: Sendable {
     private let name: String
     private let connection: NWConnection
 

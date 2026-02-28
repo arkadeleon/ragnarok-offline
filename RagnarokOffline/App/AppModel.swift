@@ -31,6 +31,8 @@ final class AppModel {
     let clientCachedDirectory = File(node: .directory(remoteClientCacheURL), location: .client)
 
     let serverDirectory = File(node: .directory(serverWorkingDirectoryURL), location: .server)
+
+    let serverResourceManager = ServerResourceManager()
     let loginServer = ServerModel(server: LoginServer.shared)
     let charServer = ServerModel(server: CharServer.shared)
     let mapServer = ServerModel(server: MapServer.shared)
@@ -43,6 +45,9 @@ final class AppModel {
 
     let chatSession: ChatSession
     let gameSession = GameSession(resourceManager: .shared)
+
+    @ObservationIgnored
+    private var serversToResume: [ServerModel] = []
 
     init() {
         chatSession = ChatSession(
@@ -65,6 +70,66 @@ final class AppModel {
                 self.clientSyncedDirectory = File(node: .directory(documentsURL), location: .client)
             }
         }
+    }
+
+    func startServer(_ server: ServerModel) async throws {
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+        _ = await server.start()
+    }
+
+    func startAllServers() async throws {
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+        await startServers(allServers)
+    }
+
+    func stopServer(_ server: ServerModel) async {
+        _ = await server.stop()
+    }
+
+    func stopAllServers() async {
+        serversToResume.removeAll()
+        await stopServers(allServers)
+    }
+
+    func pauseServers() async {
+        serversToResume = runningServers()
+        await stopServers(serversToResume)
+    }
+
+    func resumeServers() async throws {
+        let servers = serversToResume
+        serversToResume.removeAll()
+
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+        await startServers(servers)
+    }
+
+    private func startServers(_ servers: [ServerModel]) async {
+        await withTaskGroup(of: Void.self) { taskGroup in
+            for server in servers {
+                taskGroup.addTask {
+                    _ = await server.start()
+                }
+            }
+        }
+    }
+
+    private func stopServers(_ servers: [ServerModel]) async {
+        await withTaskGroup(of: Void.self) { taskGroup in
+            for server in servers {
+                taskGroup.addTask {
+                    _ = await server.stop()
+                }
+            }
+        }
+    }
+
+    private func runningServers() -> [ServerModel] {
+        allServers.filter({ $0.status == .running })
+    }
+
+    private var allServers: [ServerModel] {
+        [loginServer, charServer, mapServer, webServer]
     }
 }
 

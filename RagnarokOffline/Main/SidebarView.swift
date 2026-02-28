@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
-import rAthenaResources
 import SwiftUI
 
 enum SidebarItem: Hashable {
@@ -106,7 +105,7 @@ struct SidebarView: View {
             .sectionActions {
                 Button {
                     Task {
-                        try await startAllServers()
+                        try await appModel.startAllServers()
                     }
                 } label: {
                     #if os(macOS)
@@ -224,18 +223,6 @@ struct SidebarView: View {
             .navigationTransition(.zoom(sourceID: "menu", in: menuNamespace))
             #endif
         }
-    }
-
-    private func startAllServers() async throws {
-        let serverResourceManager = ServerResourceManager()
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
-
-        async let startLoginServer = appModel.loginServer.start()
-        async let startCharServer = appModel.charServer.start()
-        async let startMapServer = appModel.mapServer.start()
-        async let startWebServer = appModel.webServer.start()
-
-        _ = await (startLoginServer, startCharServer, startMapServer, startWebServer)
     }
 }
 
