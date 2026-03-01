@@ -219,6 +219,15 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_USE_SKILL` | `clif_parse_UseSkillToId` |
+    public static func CZ_USE_SKILL(skillID: Int, selectedLevel: Int, targetID: UInt32) -> PACKET_CZ_USE_SKILL {
+        var packet = PACKET_CZ_USE_SKILL()
+        packet.selectedLevel = UInt16(selectedLevel)
+        packet.skillId = UInt16(skillID)
+        packet.targetId = targetID
+        return packet
+    }
+
     /// | `PACKET_CZ_CONTACTNPC` | `clif_parse_NpcClicked` |
     public static func CZ_CONTACTNPC(npcID: UInt32) -> PACKET_CZ_CONTACTNPC {
         var packet = PACKET_CZ_CONTACTNPC()
