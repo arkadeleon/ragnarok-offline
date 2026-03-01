@@ -78,7 +78,8 @@ final public class GameSession {
     private(set) var character: CharacterInfo?
 
     var playerStatus = CharacterStatus()
-    var inventory = Inventory()
+    let inventory = Inventory()
+    let skillList = SkillList()
     let messageCenter: MessageCenter
     var packetMessages: [PacketMessage] = []
     var overlay = MapSceneOverlay()
@@ -629,6 +630,14 @@ final public class GameSession {
         case let packet as PACKET_ZC_STATUS:
             let basicStatus = CharacterBasicStatus(from: packet)
             playerStatus.update(from: basicStatus)
+        case let packet as PACKET_ZC_SKILLINFO_LIST:
+            skillList.replace(from: packet)
+        case let packet as PACKET_ZC_SKILLINFO_UPDATE:
+            skillList.update(from: packet)
+        case let packet as PACKET_ZC_SKILLINFO_UPDATE2:
+            skillList.update(from: packet)
+        case let packet as PACKET_ZC_ADD_SKILL:
+            skillList.add(from: packet)
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.count))
