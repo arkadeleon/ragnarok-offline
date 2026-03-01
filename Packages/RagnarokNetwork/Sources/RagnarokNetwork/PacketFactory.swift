@@ -212,6 +212,13 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_UPGRADE_SKILLLEVEL` | `clif_parse_SkillUp` |
+    public static func CZ_UPGRADE_SKILLLEVEL(skillID: Int) -> PACKET_CZ_UPGRADE_SKILLLEVEL {
+        var packet = PACKET_CZ_UPGRADE_SKILLLEVEL()
+        packet.skillId = UInt16(skillID)
+        return packet
+    }
+
     /// | `PACKET_CZ_CONTACTNPC` | `clif_parse_NpcClicked` |
     public static func CZ_CONTACTNPC(npcID: UInt32) -> PACKET_CZ_CONTACTNPC {
         var packet = PACKET_CZ_CONTACTNPC()
