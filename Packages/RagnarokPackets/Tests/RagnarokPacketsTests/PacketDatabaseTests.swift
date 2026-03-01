@@ -26,6 +26,7 @@ final class PacketDatabaseTests: XCTestCase {
 
         XCTAssertEqual(ENTRY_CZ_UPGRADE_SKILLLEVEL.packetType, 0x112)
         XCTAssertEqual(ENTRY_CZ_USE_SKILL.packetType, 0x438)
+        XCTAssertEqual(ENTRY_CZ_USE_SKILL_TOGROUND.packetType, 0x366)
 
         XCTAssertEqual(ENTRY_CZ_REQUEST_CHAT.packetType, 0xf3)
     }

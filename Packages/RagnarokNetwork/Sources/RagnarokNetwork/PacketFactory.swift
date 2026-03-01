@@ -228,6 +228,16 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_USE_SKILL_TOGROUND` | `clif_parse_UseSkillToPos` |
+    public static func CZ_USE_SKILL_TOGROUND(skillID: Int, selectedLevel: Int, position: SIMD2<Int>) -> PACKET_CZ_USE_SKILL_TOGROUND {
+        var packet = PACKET_CZ_USE_SKILL_TOGROUND()
+        packet.selectedLevel = UInt16(selectedLevel)
+        packet.skillId = UInt16(skillID)
+        packet.xPos = Int16(position.x)
+        packet.yPos = Int16(position.y)
+        return packet
+    }
+
     /// | `PACKET_CZ_CONTACTNPC` | `clif_parse_NpcClicked` |
     public static func CZ_CONTACTNPC(npcID: UInt32) -> PACKET_CZ_CONTACTNPC {
         var packet = PACKET_CZ_CONTACTNPC()
