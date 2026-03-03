@@ -63,6 +63,8 @@ final class CharacterStatus {
     var aspd = 0
     var statusPoint = 0
 
+    var skillPoint = 0
+
     init() {
     }
 
@@ -186,6 +188,8 @@ final class CharacterStatus {
             aspd = value / 4
         case .statuspoint:
             statusPoint = value
+        case .skillpoint:
+            skillPoint = value
         default:
             break
         }

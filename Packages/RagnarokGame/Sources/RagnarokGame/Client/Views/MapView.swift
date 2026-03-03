@@ -118,6 +118,8 @@ struct MapView: View {
                     EquipmentView()
                 case .inventory:
                     InventoryView(inventory: gameSession.inventory)
+                case .skill:
+                    SkillListView(skillList: gameSession.skillList)
                 case .options:
                     OptionsView()
                 }

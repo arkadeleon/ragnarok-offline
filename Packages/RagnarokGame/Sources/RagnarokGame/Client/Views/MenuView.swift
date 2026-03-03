@@ -11,6 +11,7 @@ enum MenuItem {
     case status
     case equipment
     case inventory
+    case skill
     case options
 }
 
@@ -46,8 +47,8 @@ struct MenuView: View {
                             action(.inventory)
                         }
                         GameButton("menu_icon/bt_skill.bmp") {
+                            action(.skill)
                         }
-                        .disabled(true)
                         GameButton("menu_icon/bt_party.bmp") {
                         }
                         .disabled(true)

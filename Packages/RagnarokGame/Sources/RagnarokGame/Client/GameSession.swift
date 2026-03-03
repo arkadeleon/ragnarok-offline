@@ -26,6 +26,7 @@ final public class GameSession {
     let resourceManager: ResourceManager
 
     let itemInfoTable: ItemInfoTable
+    let skillInfoTable: SkillInfoTable
     let messageStringTable: MessageStringTable
 
     public struct Configuration: Codable, Hashable {
@@ -107,6 +108,7 @@ final public class GameSession {
         self.resourceManager = resourceManager
 
         self.itemInfoTable = ItemInfoTable()
+        self.skillInfoTable = SkillInfoTable()
         self.messageStringTable = MessageStringTable()
 
         self.messageCenter = MessageCenter(
@@ -929,6 +931,15 @@ final public class GameSession {
         default:
             break
         }
+    }
+
+    func upgradeSkillLevel(skillID: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_UPGRADE_SKILLLEVEL(skillID: skillID)
+        mapClient.sendPacket(packet)
     }
 
     // MARK: - Chat
