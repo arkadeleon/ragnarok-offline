@@ -27,6 +27,11 @@ final class SkillList {
         skills[skill.skillID] = skill
     }
 
+    func delete(from packet: PACKET_ZC_SKILLINFO_DELETE) {
+        let skillID = Int(packet.skillID)
+        skills[skillID] = nil
+    }
+
     func update(from packet: PACKET_ZC_SKILLINFO_UPDATE) {
         let skillID = Int(packet.skillId)
 

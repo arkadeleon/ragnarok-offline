@@ -640,6 +640,8 @@ final public class GameSession {
             skillList.update(from: packet)
         case let packet as PACKET_ZC_ADD_SKILL:
             skillList.add(from: packet)
+        case let packet as PACKET_ZC_SKILLINFO_DELETE:
+            skillList.delete(from: packet)
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.count))
