@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
+import StoreKit
 import SwiftUI
 
 enum SidebarItem: Hashable {
@@ -38,6 +39,7 @@ struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
 
     @Environment(AppModel.self) private var appModel
+    @Environment(\.requestReview) private var requestReview
 
     @AppStorage("clientSectionExpanded") private var isClientSectionExpanded = true
     @AppStorage("serverSectionExpanded") private var isServerSectionExpanded = true
@@ -106,6 +108,7 @@ struct SidebarView: View {
                 Button {
                     Task {
                         try await appModel.startAllServers()
+                        requestReview()
                     }
                 } label: {
                     #if os(macOS)
