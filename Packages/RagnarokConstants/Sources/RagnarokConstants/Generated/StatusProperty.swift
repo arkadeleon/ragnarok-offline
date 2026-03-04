@@ -59,8 +59,8 @@ public enum StatusProperty: Int, CaseIterable, Sendable {
     case unbreakable = 60
     case cartinfo = 99
     case killedgid = 118
-    case basejob = 119
-    case baseclass = 120
+    case basesecond = 119
+    case basefirst = 120
     case killerrid = 121
     case killedrid = 122
     case sitting = 123
