@@ -17,6 +17,12 @@ final class SkillList {
         skills.values.sorted()
     }
 
+    var activeSkills: [SkillInfo] {
+        sortedSkills.filter { skill in
+            skill.level > 0 && !skill.isPassiveSkill
+        }
+    }
+
     func replace(from packet: PACKET_ZC_SKILLINFO_LIST) {
         let skills = packet.skills.map(SkillInfo.init(from:))
         self.skills = Dictionary(uniqueKeysWithValues: skills.map({ ($0.skillID, $0) }))

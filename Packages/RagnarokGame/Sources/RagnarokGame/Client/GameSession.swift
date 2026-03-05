@@ -944,6 +944,32 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
+    func useSkill(skillID: Int, level: Int, onTarget targetID: UInt32) {
+        guard let mapClient else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_USE_SKILL(
+            skillID: skillID,
+            selectedLevel: max(level, 1),
+            targetID: targetID
+        )
+        mapClient.sendPacket(packet)
+    }
+
+    func useSkill(skillID: Int, level: Int, toGround position: SIMD2<Int>) {
+        guard let mapClient else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_USE_SKILL_TOGROUND(
+            skillID: skillID,
+            selectedLevel: max(level, 1),
+            position: position
+        )
+        mapClient.sendPacket(packet)
+    }
+
     // MARK: - Chat
 
     func sendMessage(_ message: String) {

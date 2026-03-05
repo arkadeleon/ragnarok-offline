@@ -57,6 +57,9 @@ struct MapView: View {
                 },
                 onTalk: {
                     scene.talkToNearestNPC()
+                },
+                onSkill: { skill in
+                    scene.useSkillOnNearestMonster(skill)
                 }
             )
             .padding(.trailing, 16)

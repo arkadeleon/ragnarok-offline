@@ -538,6 +538,38 @@ extension MapScene {
         }
     }
 
+    func useSkillOnNearestMonster(_ skill: SkillInfo) {
+        guard skill.level > 0 else {
+            return
+        }
+
+        if skill.isSelfOnlySkill {
+            gameSession?.useSkill(
+                skillID: skill.skillID,
+                level: skill.level,
+                onTarget: player.objectID
+            )
+            return
+        }
+
+        let playerPosition = playerEntity.gridPosition
+
+        func distanceSquared(to entity: Entity) -> Int {
+            let position = entity.gridPosition
+            let dx = position.x - playerPosition.x
+            let dy = position.y - playerPosition.y
+            return dx * dx + dy * dy
+        }
+
+        let monsters = rootEntity.children.filter { entity in
+            entity.components[MapObjectComponent.self]?.mapObject.type == .monster
+        }
+
+        if let targetEntity = monsters.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }) {
+            engageMonster(targetEntity: targetEntity, skill: skill)
+        }
+    }
+
     func pickUpNearestItem() {
         let playerPosition = playerEntity.gridPosition
 
@@ -588,6 +620,30 @@ extension MapScene {
 
         movePlayerToward(targetEntity: targetEntity, within: 1) {
             self.gameSession?.requestAction(._repeat, onTarget: mapObject.objectID)
+        }
+    }
+
+    private func engageMonster(targetEntity: Entity, skill: SkillInfo) {
+        guard let mapObject = targetEntity.components[MapObjectComponent.self]?.mapObject else {
+            return
+        }
+
+        let targetPosition = targetEntity.gridPosition
+        let skillRange = max(skill.attackRange, 1)
+        movePlayerToward(targetEntity: targetEntity, within: skillRange) {
+            if skill.isGroundTargetedSkill {
+                self.gameSession?.useSkill(
+                    skillID: skill.skillID,
+                    level: skill.level,
+                    toGround: targetPosition
+                )
+            } else {
+                self.gameSession?.useSkill(
+                    skillID: skill.skillID,
+                    level: skill.level,
+                    onTarget: mapObject.objectID
+                )
+            }
         }
     }
 

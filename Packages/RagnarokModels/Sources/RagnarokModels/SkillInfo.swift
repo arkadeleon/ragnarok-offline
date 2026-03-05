@@ -54,6 +54,28 @@ public struct SkillInfo: Sendable, Hashable {
     }
 }
 
+extension SkillInfo {
+    func hasFlag(_ flag: SkillInfoFlag) -> Bool {
+        (self.flag & flag.rawValue) != 0
+    }
+
+    public var isPassiveSkill: Bool {
+        if flag < 0 {
+            return spCost == 0
+        }
+        return flag == SkillInfoFlag.passive.rawValue
+    }
+
+    public var isGroundTargetedSkill: Bool {
+        hasFlag(.ground) || hasFlag(.trap)
+    }
+
+    public var isSelfOnlySkill: Bool {
+        let isTargetSkill = hasFlag(.attack) || hasFlag(.support) || isGroundTargetedSkill
+        return hasFlag(._self) && !isTargetSkill
+    }
+}
+
 extension SkillInfo: Comparable {
     public static func < (lhs: SkillInfo, rhs: SkillInfo) -> Bool {
         lhs.skillID < rhs.skillID
