@@ -6,7 +6,6 @@
 //
 
 import RealityKit
-import SGLMath
 import SwiftUI
 import ThumbstickView
 
@@ -49,19 +48,17 @@ struct MapView: View {
                 }
         }
         .overlay(alignment: .bottomTrailing) {
-            ZStack {
-                MainActionButton("A", color: .red) {
+            ActionControlPadView(
+                onAttack: {
                     scene.attackNearestMonster()
-                }
-
-                SubActionButton("P", color: .green, angle: 75) {
+                },
+                onPickup: {
                     scene.pickUpNearestItem()
-                }
-
-                SubActionButton("T", color: .blue, angle: 15) {
+                },
+                onTalk: {
                     scene.talkToNearestNPC()
                 }
-            }
+            )
             .padding(.trailing, 16)
             .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
         }
@@ -203,61 +200,4 @@ struct MapView: View {
         gameSession.overlay.gauges = gauges
     }
     #endif
-}
-
-private struct MainActionButton: View {
-    var title: String
-    var color: Color
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            ZStack {
-                Circle()
-                    .fill(color.opacity(0.75))
-                    .frame(width: 72, height: 72)
-                    .shadow(color: color.opacity(0.4), radius: 5, x: 0, y: 2)
-
-                Text(title)
-                    .font(.title.bold())
-                    .foregroundStyle(.white)
-            }
-        }
-    }
-
-    init(_ title: String, color: Color, action: @escaping () -> Void) {
-        self.title = title
-        self.color = color
-        self.action = action
-    }
-}
-
-private struct SubActionButton: View {
-    var title: String
-    var color: Color
-    var angle: CGFloat
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            ZStack {
-                Circle()
-                    .fill(color.opacity(0.75))
-                    .frame(width: 56, height: 56)
-                    .shadow(color: color.opacity(0.4), radius: 5, x: 0, y: 2)
-
-                Text(title)
-                    .font(.title3.bold())
-                    .foregroundStyle(.white)
-            }
-        }
-        .offset(x: -80 * sin(radians(angle)), y: -80 * cos(radians(angle)))
-    }
-
-    init(_ title: String, color: Color, angle: CGFloat, action: @escaping () -> Void) {
-        self.title = title
-        self.color = color
-        self.angle = angle
-        self.action = action
-    }
 }
