@@ -8,6 +8,8 @@
 // Configuration settings file format documentation can be found at:
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
 
+#include "Base.xcconfig"
+
 INFOPLIST_KEY_CFBundleDisplayName = Ragnarok Offline
 MARKETING_VERSION = 1.9
 CURRENT_PROJECT_VERSION = 22
