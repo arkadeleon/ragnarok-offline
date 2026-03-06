@@ -10,9 +10,9 @@ import RagnarokFileFormats
 import RagnarokRenderers
 import RealityKit
 
-enum ModelEntityError: Error {
-    case cannotCreateMetalDevice
-}
+#if os(iOS) || os(macOS)
+import RagnarokRealitySurfaceShaders
+#endif
 
 extension Entity {
     public convenience init(
@@ -64,11 +64,6 @@ extension Entity {
         }()
 
         #if os(iOS) || os(macOS)
-        guard let device = MTLCreateSystemDefaultDevice() else {
-            throw ModelEntityError.cannotCreateMetalDevice
-        }
-        let library = try device.makeDefaultLibrary(bundle: .module)
-
         let functionConstants = MTLFunctionConstantValues()
         var lightDirection = lighting.direction
         var lightAmbient = lighting.ambient
@@ -79,11 +74,7 @@ extension Entity {
         functionConstants.setConstantValue(&lightDiffuse, type: .float3, index: 2)
         functionConstants.setConstantValue(&lightOpacity, type: .float, index: 3)
 
-        let surfaceShader = CustomMaterial.SurfaceShader(
-            named: "modelSurfaceShader",
-            in: library,
-            constantValues: functionConstants
-        )
+        let surfaceShader = SurfaceShaders.modelSurfaceShader(constantValues: functionConstants)
 
         let materials = try model.meshes.map { mesh -> any Material in
             var material = try CustomMaterial(surfaceShader: surfaceShader, lightingModel: .unlit)

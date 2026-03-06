@@ -32,13 +32,20 @@ let package = Package(
                 "ImageRendering",
                 "PerformanceMetric",
                 "RagnarokFileFormats",
+                .target(
+                    name: "RagnarokRealitySurfaceShaders",
+                    condition: .when(platforms: [.iOS, .macOS])
+                ),
                 "RagnarokRenderers",
                 "RagnarokResources",
                 "SGLMath",
                 "TextEncoding",
-            ],
+            ]
+        ),
+        .target(
+            name: "RagnarokRealitySurfaceShaders",
             resources: [
-                .process("Shaders.metal"),
+                .process("SurfaceShaders.metal"),
             ]
         ),
         .testTarget(

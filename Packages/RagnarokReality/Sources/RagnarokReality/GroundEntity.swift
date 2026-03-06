@@ -11,8 +11,11 @@ import RagnarokRenderers
 import RagnarokShaders
 import RealityKit
 
+#if os(iOS) || os(macOS)
+import RagnarokRealitySurfaceShaders
+#endif
+
 enum GroundEntityError: Error {
-    case cannotCreateMetalDevice
     case emptyGroundMesh
     case invalidGroundVertexLayout
 }
@@ -99,11 +102,6 @@ extension Entity {
         textureImages: [String : CGImage]
     ) async throws -> any Material {
         #if os(iOS) || os(macOS)
-        guard let device = MTLCreateSystemDefaultDevice() else {
-            throw GroundEntityError.cannotCreateMetalDevice
-        }
-        let library = try device.makeDefaultLibrary(bundle: .module)
-
         let textureImage = ground.textureAtlas.makeCGImage(textureImages: textureImages)
         let lightmapTextureImage = ground.lightmapAtlas.makeCGImage()
         let tileColorImage = ground.tileColorMap.makeCGImage()
@@ -120,11 +118,7 @@ extension Entity {
         functionConstants.setConstantValue(&lightOpacity, type: .float, index: 3)
         functionConstants.setConstantValue(&useLightmap, type: .bool, index: 4)
 
-        let surfaceShader = CustomMaterial.SurfaceShader(
-            named: "groundSurfaceShader",
-            in: library,
-            constantValues: functionConstants
-        )
+        let surfaceShader = SurfaceShaders.groundSurfaceShader(constantValues: functionConstants)
 
         var material = try CustomMaterial(surfaceShader: surfaceShader, lightingModel: .unlit)
 

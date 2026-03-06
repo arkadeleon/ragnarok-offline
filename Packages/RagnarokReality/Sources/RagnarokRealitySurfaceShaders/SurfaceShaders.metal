@@ -1,6 +1,6 @@
 //
-//  Ground.metal
-//  RagnarokReality
+//  SurfaceShaders.metal
+//  RagnarokRealitySurfaceShaders
 //
 //  Created by Leon Li on 2025/10/31.
 //
