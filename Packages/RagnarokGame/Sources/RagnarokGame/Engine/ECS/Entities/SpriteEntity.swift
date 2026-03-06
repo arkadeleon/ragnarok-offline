@@ -119,7 +119,34 @@ extension Entity {
             weapon: mapObject.weapon
         )
 
-        playSpriteAnimation(attackActionType, direction: direction, nextActionType: .readyToAttack)
+        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: mapObject.job)
+        let nextActionType: CharacterActionType = if availableActionTypes.contains(.readyToAttack) {
+            .readyToAttack
+        } else {
+            .idle
+        }
+
+        playSpriteAnimation(attackActionType, direction: direction, nextActionType: nextActionType)
+    }
+
+    func castSkill(direction: CharacterDirection) {
+        guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
+            return
+        }
+
+        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: mapObject.job)
+        let actionType: CharacterActionType = if availableActionTypes.contains(.skill) {
+            .skill
+        } else {
+            .attack1
+        }
+        let nextActionType: CharacterActionType = if availableActionTypes.contains(.readyToAttack) {
+            .readyToAttack
+        } else {
+            .idle
+        }
+
+        playSpriteAnimation(actionType, direction: direction, nextActionType: nextActionType)
     }
 }
 

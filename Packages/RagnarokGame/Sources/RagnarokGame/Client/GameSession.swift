@@ -642,6 +642,14 @@ final public class GameSession {
             skillList.add(from: packet)
         case let packet as PACKET_ZC_SKILLINFO_DELETE:
             skillList.delete(from: packet)
+        case _ as PACKET_ZC_USESKILL_ACK:
+            break
+        case _ as PACKET_ZC_USE_SKILL:
+            break
+        case let packet as PACKET_ZC_NOTIFY_SKILL:
+            mapScene?.onMapObjectSkillPerformed(packet)
+        case _ as PACKET_ZC_NOTIFY_GROUNDSKILL:
+            break
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.count))
@@ -824,8 +832,6 @@ final public class GameSession {
         case _ as PACKET_ZC_STATUS_CHANGE_ACK:
             break
         case _ as PACKET_ZC_NOTIFY_CARTITEM_COUNTINFO:
-            break
-        case _ as PACKET_ZC_USE_SKILL:
             break
         case _ as PACKET_ZC_PARTY_CONFIG:
             break

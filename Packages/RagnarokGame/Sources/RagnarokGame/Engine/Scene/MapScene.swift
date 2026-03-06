@@ -833,6 +833,7 @@ extension MapScene: MapEventHandlerProtocol {
             case .stand_up:
                 sourceEntity.playSpriteAnimation(.idle, direction: .south)
             case .normal, .endure, .critical:
+                // TODO: Set correct direction
                 sourceEntity.attack(direction: .south)
 
                 if let targetEntity = try await spriteEntityManager.findEntity(forObjectID: objectAction.targetObjectID) {
@@ -853,6 +854,7 @@ extension MapScene: MapEventHandlerProtocol {
                     }
                 }
             case .multi_hit, .multi_hit_endure, .multi_hit_critical:
+                // TODO: Set correct direction
                 sourceEntity.attack(direction: .south)
 
                 if let targetEntity = try await spriteEntityManager.findEntity(forObjectID: objectAction.targetObjectID) {
@@ -891,10 +893,45 @@ extension MapScene: MapEventHandlerProtocol {
                     }
                 }
             case .lucy_dodge:
+                // TODO: Set correct direction
                 sourceEntity.attack(direction: .south)
             default:
                 break
             }
+        }
+    }
+
+    func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
+        Task {
+            let sourceEntity = try await spriteEntityManager.findEntity(forObjectID: packet.AID)
+            let targetEntity = try await spriteEntityManager.findEntity(forObjectID: packet.targetID)
+
+            if let sourceEntity {
+                if let mapObject = sourceEntity.components[MapObjectComponent.self]?.mapObject, mapObject.type != .monster {
+                    // TODO: Show dialog with skill name
+                }
+
+                // TODO: Set correct direction
+                sourceEntity.castSkill(direction: .south)
+            }
+
+            if let targetEntity, packet.damage >= 0 {
+                let count = Int(packet.count)
+                let damage = Int(packet.damage)
+
+                for i in 0..<count {
+                    let damageEntity = Entity.makeDamageEntity(
+                        for: damage / count,
+                        delay: TimeInterval(packet.attackMT) + TimeInterval(200 * i),
+                        targetEntity: targetEntity
+                    )
+                    damageEntity.setParent(rootEntity)
+                }
+
+                // TODO: Play hurt animation
+            }
+
+            // TODO: Skill effect
         }
     }
 
