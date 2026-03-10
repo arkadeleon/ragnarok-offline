@@ -1,280 +1,258 @@
 # Repository Guidelines
 
-This file provides guidance to Codex when working with code in this repository.
+This file gives Codex repository-specific guidance for working in `ragnarok-offline`.
 
 ## Project Overview
 
-Ragnarok Offline is a multi-platform (iOS 18+, macOS 15+, visionOS 2+) SwiftUI application that runs the classic MMORPG Ragnarok Online completely offline. The app embeds the rAthena server (written in C++) to provide a single-player experience without requiring external servers.
+Ragnarok Offline is a multi-platform SwiftUI app for running Ragnarok Online completely offline. The app embeds the `swift-rathena` server stack in-process and layers a native SwiftUI client, database browser, simulators, and supporting tools on top.
 
-## Build and Development Commands
+Primary targets:
+- iOS 18+
+- macOS 15+
+- visionOS 2+
 
-### Building the Main Application
+The codebase mixes:
+- A top-level Xcode app target in `RagnarokOffline/`
+- Many local Swift packages in `Packages/`
+- A Swift code generator in `RagnarokOfflineGenerator/`
+- A separate optional HTTP resource server in `RagnarokOfflineRemoteClient/`
+- The `swift-rathena/` submodule containing the C++ server and its SwiftPM wrapper
+
+## High-Value Commands
+
+### Main App
 ```bash
-# Open Xcode project
+# Open the Xcode project
 open RagnarokOffline.xcodeproj
 
-# Build and run in Xcode - use the "RagnarokOffline" scheme
-# The app supports iOS, macOS, and visionOS targets
+# Main app test plan
+# RagnarokOffline/RagnarokOffline.xctestplan
 ```
+
+The app is primarily driven from Xcode. The shared scheme is `RagnarokOffline`.
 
 ### Code Generation
 ```bash
-# Regenerate Swift constants and packet definitions from C++ headers
 ./generate.sh
-
-# This runs two commands:
-# 1. generate-constants: C++ enums → Swift enums in RagnarokConstants/Generated/
-# 2. generate-packets: C++ packet structs → Swift structs in RagnarokPackets/Generated/
 ```
 
-### Testing
+`generate.sh` runs the generator in `RagnarokOfflineGenerator/` and updates:
+- `Packages/RagnarokConstants/Sources/RagnarokConstants/Generated`
+- `Packages/RagnarokPackets/Sources/RagnarokPackets/Generated`
+
+Do not hand-edit generated files unless the user explicitly asks for it. Change the generator inputs or `swift-rathena` headers instead, then regenerate.
+
+### Swift Package Builds
 ```bash
-# Run all tests via Xcode
-# Use the test plan: RagnarokOffline.xctestplan
-# This includes tests from all packages (20+ test targets)
-
-# Test individual packages with SPM
-cd Packages/RagnarokNetwork
-swift test
-
-cd Packages/RagnarokFileFormats
-swift test
+swift build --package-path Packages/RagnarokGame
+swift build --package-path Packages/RagnarokNetwork
+swift build --package-path Packages/RagnarokPackets
+swift build --package-path Packages/RagnarokReality
+swift build --package-path Packages/RagnarokRenderers
+swift build --package-path Packages/RagnarokResources
 ```
 
-### Remote Client Server (Optional)
+Use targeted package builds when validating a local change. Prefer the smallest relevant build or test scope.
+
+### Swift Package Tests
 ```bash
-# The remote client serves game resources over HTTP when local data.grf is unavailable
-cd RagnarokOfflineRemoteClient
-swift build
-swift run
-
-# Tests
-swift test
+swift test --package-path Packages/RagnarokPackets
+swift test --package-path Packages/RagnarokNetwork
+swift test --package-path Packages/RagnarokFileFormats
 ```
 
-## Architecture Overview
-
-### Multi-Layer Package Architecture
-
-The codebase uses 20+ Swift Package Manager packages organized in layers:
-
-**Low-Level Utilities:**
-- `BinaryIO` - Binary data reading/writing primitives
-- `DataCompression` - Compression/decompression
-- `TextEncoding` - Character encoding (EUC-KR, Shift-JIS)
-- `SGLMath` - 3D math operations
-- `PerformanceMetric` - Performance monitoring
-
-**File Format Layer:**
-- `GRF` - Reads Gravity Resource Format (game asset archives)
-- `RagnarokFileFormats` - Parses Ragnarok file formats:
-  - ACT (sprite actions/animations), SPR (sprite images)
-  - RSW (world/map resources), RSM (3D models)
-  - GND (ground mesh), GAT (ground altitude/walkability)
-  - STR (effect animations), PAL, IMF, INI
-
-**Resource Management:**
-- `RagnarokResources` - Unified resource loading from local files, GRF archives, or remote URLs
-  - Includes ResourceManager, caching layer, resource lookup tables
-  - Lua script execution context for resource tables
-
-**Data Layer:**
-- `RagnarokDatabase` - YAML-based game database parsing (items, jobs, monsters, skills, etc.)
-  - Uses RapidYAML to parse rAthena database files
-  - Supports Renewal and Pre-Renewal game modes
-- `RagnarokConstants` - Generated Swift enums and OptionSets from C++ (JobID, SkillID, ItemType, EquipPositions, ItemClasses, etc.)
-- `RagnarokLocalization` - Localization support for game content
-  - DataTables: SkillInfoTable, MapNameTable, StatusInfoTable, ItemInfoTable, MonsterNameTable, etc.
-  - Constants+Localization extensions for displaying localized names of enums
-
-**Networking Layer:**
-- `RagnarokNetwork` - Client-server networking
-  - `RagnarokPackets` - Packet definitions (generated from C++ structs)
-  - Client using NWConnection with async/await
-  - Sessions: LoginSession, CharSession, MapSession
-  - Event-based architecture using AsyncStream
-
-**Rendering Layer:**
-- `ImageRendering` - CGImage and platform graphics utilities
-- `RagnarokSprite` - Character sprite composition and rendering
-  - ComposedSprite assembles sprites from body parts
-  - SpriteRenderer renders animation sequences
-- `RagnarokRenderers` - Metal-based 3D rendering
-  - Metal shaders for Ground, Water, Model, Effect rendering
-- `RagnarokReality` - RealityKit integration for visionOS
-  - Converts Ragnarok 3D data to RealityKit entities
-
-**Game Engine:**
-- `RagnarokGame` - High-level game logic
-  - GameSession state machine (Login → Char Select → Map Loading → Map Loaded)
-  - MapScene for 3D map rendering, player movement, pathfinding, NPC dialogs
-  - Event handling from network layer
-  - Entity-Component-System: MapGrid, MapItemComponent, MapObjectComponent, TileComponent
-- `WorldCamera` - 3D camera system
-- `ThumbstickView` - UI controls
-
-### Main Application Structure
-
-**RagnarokOffline/** (main app target):
-- `RagnarokOfflineApp.swift` - App entry point with platform-specific window management
-- `AppModel.swift` - Central observable model managing:
-  - Resource directories (local, iCloud synced, remote cached)
-  - Server instances (Login, Char, Map, Web servers)
-  - Database, Game Session, Chat Session, Character Simulator
-- `Main/` - UI navigation structure (ContentView, SidebarView)
-- `Core/` - Reusable UI components (MetalView, ModelViewer, ImageGrid)
-- `GameClient/` - Game client UI and logic
-- `Database/` - Database browsing UI
-- `Server/` - Server management UI
-- `ChatClient/` - Chat client interface
-- `CharacterSimulator/` - Character preview tools
-- `Settings/` - App configuration using @SettingsItem property wrapper
-- `Help/` - In-app help documentation
-
-**RagnarokOfflineThumbnailExtension/** (Quick Look extension):
-- Provides thumbnail previews for Ragnarok file formats in Finder
-
-### swift-rathena Integration
-
-The `swift-rathena` submodule wraps the C++ rAthena server in Swift Package Manager:
-
-**Products (Dynamic Libraries):**
-- `rAthenaCommon` - Core server utilities and database
-- `rAthenaLogin` - Login server (account authentication)
-- `rAthenaChar` - Character server (character management)
-- `rAthenaMap` - Map server (gameplay logic)
-- `rAthenaWeb` - Web API server
-- `rAthenaResources` - Bundled configuration, databases, NPC scripts
-
-The app runs these servers in-process on macOS/iOS for offline gameplay. The servers use:
-- SQLite database (`ragnarok.sqlite3`) for accounts/characters
-- YAML databases (`db/`) for game data (parsed by RagnarokDatabase)
-- Lua/C scripts (`npc/`) for game logic
-
-### Networking Architecture
-
-**Client-Server Flow:**
-```
-GameSession
-    ├─> LoginSession → Login Server
-    │       └─> Events: loginAccepted, loginRefused
-    │
-    ├─> CharSession → Char Server
-    │       └─> Events: charServerAccepted, makeCharacterAccepted
-    │
-    └─> MapSession → Map Server
-            └─> Events: mapServerAccepted, mapChanged, playerMoved,
-                       inventoryItemsAppended, mapObjectSpawned, npcDialogReceived
+### Remote Client
+```bash
+swift build --package-path RagnarokOfflineRemoteClient
+swift test --package-path RagnarokOfflineRemoteClient
+swift run --package-path RagnarokOfflineRemoteClient
 ```
 
-- Binary protocol based on rAthena packet definitions
-- PacketRegistry maps packet type IDs to Swift structs
-- PacketEncoder/Decoder handles serialization with BinaryIO
-- AsyncStream for event delivery to UI layer
+### Generator
+```bash
+swift run --package-path RagnarokOfflineGenerator ragnarok-offline-generator
+```
 
-### Code Generation System
+### swift-rathena
+```bash
+swift build --scratch-path "$PWD/.build" --package-path swift-rathena
+swift test --package-path swift-rathena
+```
 
-The `RagnarokOfflineGenerator` executable generates Swift code from C++ headers:
+`swift-rathena` is heavier than the pure Swift packages. Only rebuild it when the change actually touches the embedded server or generated packet/constant inputs.
 
-1. **generate-constants**: Parses C++ enums → Swift enums and OptionSets in RagnarokConstants/Generated/
-   - Enums: JobID, SkillID, ItemType, MonsterMode, StatusChangeID, etc.
-   - OptionSets: EquipPositions, ItemClasses, etc.
-   - Uses SwiftSyntax for AST manipulation
+## Repository Layout
 
-2. **generate-packets**: Parses C++ packet structs → Swift structs in RagnarokPackets/Generated/
-   - Creates packet registry with type mappings
-   - Implements PacketProtocol conformance
+### Main App
 
-Run `./generate.sh` whenever the C++ headers in swift-rathena change.
+`RagnarokOffline/` contains the app target. Important areas:
+- `App/` - platform entry points (`iOSApp.swift`, `macOSApp.swift`, `visionOSApp.swift`) and `AppModel.swift`
+- `Main/` - top-level navigation and shell views
+- `GameClient/` - game client UI
+- `Database/` - database browsing UI
+- `Server/` - embedded server controls and models
+- `ChatClient/` - chat UI and session handling
+- `CharacterSimulator/` - character preview and simulation
+- `SkillSimulator/` - skill simulation UI
+- `Files/` - file browsing and file-backed models
+- `Core/` - reusable UI and rendering hosts
+- `Settings/` - app settings models and views
+- `Help/` - help content
+- `Resources/` - bundled app resources
 
-## Development Notes
+`RagnarokOfflineTests/` contains app-level tests.
 
-### Build Configurations
+### Local Swift Packages
 
-The project uses Xcode configuration files (Configurations/*.xcconfig):
-- `Development.xcconfig` - For local development
-- `TestFlight.xcconfig` - For TestFlight builds
-- `AppStore.xcconfig` - For App Store releases
+Current packages under `Packages/`:
+- `BinaryIO`
+- `DataCompression`
+- `GRF`
+- `ImageRendering`
+- `JSONViewer`
+- `PerformanceMetric`
+- `RagnarokConstants`
+- `RagnarokDatabase`
+- `RagnarokFileFormats`
+- `RagnarokGame`
+- `RagnarokLocalization`
+- `RagnarokModels`
+- `RagnarokNetwork`
+- `RagnarokPackets`
+- `RagnarokReality`
+- `RagnarokRenderers`
+- `RagnarokResources`
+- `RagnarokSprite`
+- `SGLMath`
+- `TextEncoding`
+- `ThumbstickView`
+- `WorldCamera`
 
-Feature flags are controlled via `SWIFT_ACTIVE_COMPILATION_CONDITIONS`:
-- `GAME_CLIENT_FEATURE` - Enables game client functionality (enabled in Development and TestFlight)
-- `CHAT_CLIENT_FEATURE` - Enables chat client functionality (enabled in Development only)
+### Supporting Projects
 
-### Platform-Specific Behavior
+- `RagnarokOfflineGenerator/` - Swift code generator for constants and packets
+- `RagnarokOfflineRemoteClient/` - optional HTTP resource server
+- `RagnarokOfflineThumbnailExtension/` - Finder/Quick Look thumbnails
+- `swift-rathena/` - embedded server implementation and resources
 
-The app adapts to each platform:
-- **macOS**: WindowGroup with separate windows for main UI and game window
-- **visionOS**: ImmersiveSpace for immersive game experience
-- **iOS**: Standard UIKit integration
+## Architecture Notes
 
-### Resource Management
+### App Model
 
-Resources are loaded from multiple sources (priority order):
-1. Local file system (user-provided data.grf)
-2. GRF archives (compressed game assets)
-3. Remote client (HTTP fallback when local resources unavailable)
+`RagnarokOffline/App/AppModel.swift` is the central composition root. It owns:
+- Resource directories for local, iCloud, and cached remote client data
+- Embedded login/char/map/web server models
+- Database browsing state
+- Chat, game, character simulator, and skill simulator state
 
-The ResourceManager handles caching, fallback logic, and resource lookup tables.
+When a change affects app-wide resource loading or server lifecycle, inspect `AppModel` first.
 
-### Database System
+### Embedded Server Stack
 
-Game data comes from YAML files parsed by RagnarokDatabase:
-- Supports both Renewal and Pre-Renewal modes
-- Lazy loading with caching for performance
-- Type-safe Swift models generated from YAML schemas
+The app uses products from `swift-rathena/`:
+- `rAthenaLogin`
+- `rAthenaChar`
+- `rAthenaMap`
+- `rAthenaWeb`
+- `rAthenaResources`
 
-Server data stored in:
-- SQLite database for accounts/characters
-- YAML files for items, monsters, maps, skills, etc.
+The working directory is prepared before server start and contains the SQLite database plus copied server resources. Changes to server bootstrap often touch both SwiftUI app code and `swift-rathena`.
 
-### Testing Strategy
+### Data and Resources
 
-The test plan includes tests for all packages:
-- File format parsing (GRF, SPR, ACT, RSW, etc.)
-- Network packet encoding/decoding
-- Database parsing
-- Localization data tables
-- Rendering pipelines
-- Binary I/O operations
-- Math operations
-- Sprite composition
+Main data sources:
+- GRF archives and client assets loaded through `RagnarokResources`
+- YAML game databases parsed by `RagnarokDatabase`
+- Localized display tables in `RagnarokLocalization`
+- Generated constants and packet types in `RagnarokConstants` and `RagnarokPackets`
 
-Run tests via Xcode test plan or individual package `swift test`.
+If you change packet definitions or C++ enums:
+1. Edit `swift-rathena`
+2. Run `./generate.sh`
+3. Update Swift call sites
+4. Run focused tests/builds
 
-## Common Patterns
+### Rendering and Game Logic
 
-### Adding a New File Format Parser
+- `RagnarokGame` contains high-level session and map logic
+- `RagnarokRenderers` contains Metal renderers
+- `RagnarokReality` bridges content into RealityKit for visionOS
+- `RagnarokSprite` handles 2D sprite composition
+- `WorldCamera` and `ThumbstickView` support controls and camera behavior
 
-1. Add parser to `RagnarokFileFormats`
-2. Add tests to `RagnarokFileFormatsTests`
-3. Update `ResourceManager` in `RagnarokResources` if needed
-4. Add UI views in `RagnarokOffline/Database` if browsable
+## Working Rules
 
-### Adding a New Network Packet
+### Prefer Small Validation Steps
 
-1. Define packet struct in `swift-rathena` C++ headers
-2. Run `./generate.sh` to regenerate Swift packet definitions
-3. Add packet handler in appropriate Session (LoginSession, CharSession, MapSession)
-4. Update GameSession to respond to new events
+After changes, prefer:
+- One relevant package build
+- One relevant package test
+- Xcode-only validation when the change is app-target-specific
+
+Avoid defaulting to a full project-wide rebuild unless the change crosses multiple layers.
+
+### Generated Code
+
+Treat these as generated outputs:
+- `Packages/RagnarokConstants/Sources/RagnarokConstants/Generated/**`
+- `Packages/RagnarokPackets/Sources/RagnarokPackets/Generated/**`
+
+Update their sources and regenerate instead of manually patching output.
+
+### SwiftUI and Observation
+
+The app uses modern SwiftUI with `@Observable` and `@MainActor` in key models. Match existing patterns before introducing a different state-management approach.
+
+### Package-First Debugging
+
+Many features are isolated in local packages. If a bug is clearly in parsing, networking, rendering, math, or localization, fix and validate at the package level before touching the app target.
+
+### Keep Platform Behavior Intact
+
+The app has separate entry points for iOS, macOS, and visionOS. Be careful with shared UI changes that might break:
+- macOS multi-window behavior
+- visionOS immersive flows
+- iOS-specific presentation or input assumptions
+
+## Common Change Patterns
+
+### Adding or Changing Network Packets
+
+1. Update packet definitions in `swift-rathena`
+2. Run `./generate.sh`
+3. Update handling in `RagnarokNetwork` sessions or `RagnarokGame`
+4. Test packet encoding/decoding and affected flows
+
+### Adding or Changing C++ Enums
+
+1. Update the enum in `swift-rathena`
+2. Run `./generate.sh`
+3. Update any localization or UI mapping that depends on the new case
 
 ### Adding a New Database Type
 
-1. Define YAML schema in `swift-rathena/db/`
-2. Add Swift model in `RagnarokDatabase`
-3. Add parser for the new database type
-4. Create UI browsing view in `RagnarokOffline/Database`
-5. Update DatabaseModel to include new database
-
-### Modifying C++ Server Code
-
-1. Update code in `swift-rathena` submodule
-2. If enums/packets changed, run `./generate.sh`
-3. Update Swift code to handle new behavior
-4. Test with embedded server in app
+1. Add or update schema/data in `swift-rathena/db`
+2. Extend `RagnarokDatabase`
+3. Add localized naming or display support if needed
+4. Add browsing UI under `RagnarokOffline/Database`
 
 ### Adding Localization for a Constant Type
 
-1. Add a new DataTable in `RagnarokLocalization` (e.g., `NewTypeNameTable.swift`)
-2. Add a Constants+Localization extension to provide `.localizedName` property
-3. Add localization resources to the appropriate locale bundles
-4. Add tests in `RagnarokLocalizationTests`
+1. Add a table in `RagnarokLocalization`
+2. Expose a `localizedName`-style API from the constant type or an extension
+3. Add tests for the table lookup
+
+### Modifying Resource Loading
+
+Inspect:
+- `Packages/RagnarokResources`
+- `RagnarokOffline/App/AppModel.swift`
+- `RagnarokOfflineRemoteClient/` if remote fallback behavior is involved
+
+## Practical Notes for Agents
+
+- Use `rg` for text/file discovery.
+- Read package manifests when scoping impact; package boundaries are meaningful here.
+- Expect changes in one layer to ripple into generated code, localization tables, or database browsing views.
+- If a change touches `swift-rathena`, check whether generated Swift code also needs to move.
+- If a change is only in a single package, avoid editing the Xcode project unless the user explicitly asks.
