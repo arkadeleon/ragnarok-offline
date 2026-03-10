@@ -5,35 +5,49 @@
 //  Created by Leon Li on 2025/6/9.
 //
 
-import RagnarokFileFormats
 import RagnarokResources
 import RealityKit
 import SGLMath
 import SwiftUI
 
 struct MapViewer: View {
-    var mapName: String
-    var onDone: () -> Void
-
     private let progress = Progress()
 
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var selectedMap: MapModel?
+
     var body: some View {
-        AsyncContentView {
-            try await loadEntity()
-        } content: { entity in
-            ModelViewer(entity: entity)
-        } placeholder: {
-            ProgressView(progress)
-                .progressViewStyle(.circular)
+        ZStack {
+            if let selectedMap {
+                AsyncContentView {
+                    try await loadEntity(for: selectedMap.name)
+                } content: { entity in
+                    ModelViewer(entity: entity)
+                } placeholder: {
+                    ProgressView(progress)
+                        .progressViewStyle(.circular)
+                }
+                .id(selectedMap.name)
+            }
         }
-        .navigationTitle(mapName)
+        .navigationTitle("Map Viewer")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarCancelButton(action: onDone)
+            ToolbarItem {
+                MapPicker(selection: $selectedMap)
+            }
+        }
+        .task {
+            await database.fetchMaps()
+
+            if selectedMap == nil {
+                selectedMap = database.maps.first
+            }
         }
     }
 
-    private func loadEntity() async throws -> Entity {
+    private func loadEntity(for mapName: String) async throws -> Entity {
         let world = try await ResourceManager.shared.world(mapName: "\(mapName).rsw")
 
         let worldEntity = try await Entity(from: world, resourceManager: .shared, progress: progress)

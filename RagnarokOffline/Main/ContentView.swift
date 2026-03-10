@@ -115,6 +115,9 @@ struct ContentView: View {
             SkillSimulatorView()
                 .environment(appModel.skillSimulator)
                 .environment(appModel.database)
+        case .mapViewer:
+            MapViewer()
+                .environment(appModel.database)
         case .cube:
             CubeView()
         }

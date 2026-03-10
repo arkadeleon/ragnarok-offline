@@ -14,7 +14,6 @@ struct MapDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var spawningMonsters: [SpawningMonster] = []
-    @State private var mapForMapViewer: MapModel?
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -51,19 +50,6 @@ struct MapDetailView: View {
             }
         }
         .navigationTitle(map.displayName)
-        .toolbar {
-            Button("View") {
-                mapForMapViewer = map
-            }
-        }
-        .sheet(item: $mapForMapViewer) { map in
-            NavigationStack {
-                MapViewer(mapName: map.name) {
-                    mapForMapViewer = nil
-                }
-            }
-            .presentationSizing(.page)
-        }
         .task {
             await map.fetchImage()
         }

@@ -1665,7 +1665,13 @@
         }
       }
     },
+    "Map" : {
+
+    },
     "Map Database" : {
+
+    },
+    "Map Viewer" : {
 
     },
     "Maps" : {
