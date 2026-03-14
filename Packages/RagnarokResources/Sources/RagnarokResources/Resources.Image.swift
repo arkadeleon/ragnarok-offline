@@ -24,7 +24,7 @@ extension Resources {
 
 extension ResourceManager {
     public func image(at path: ResourcePath, removesMagentaPixels: Bool = false) async throws -> Resources.Image {
-        let resourceIdentifier = "\(path)+removesMagentaPixels:\(removesMagentaPixels)"
+        let resourceIdentifier = "\(path)[removesMagentaPixels=\(removesMagentaPixels)]"
         return try await imageResourceCache.resource(forIdentifier: resourceIdentifier) { [self] in
             let data = try await self.contentsOfResource(at: path)
 

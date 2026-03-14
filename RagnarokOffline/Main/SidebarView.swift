@@ -33,6 +33,7 @@ enum SidebarItem: Hashable {
     case characterSimulator
     case skillSimulator
     case mapViewer
+    case effectViewer
     case cube
 }
 
@@ -169,6 +170,10 @@ struct SidebarView: View {
 
                 NavigationLink(value: SidebarItem.mapViewer) {
                     SidebarRow("Map Viewer", iconName: "map.fill", iconColor: .brown)
+                }
+
+                NavigationLink(value: SidebarItem.effectViewer) {
+                    SidebarRow("Effect Viewer", iconName: "fireworks", iconColor: .yellow)
                 }
 
                 #if DEBUG

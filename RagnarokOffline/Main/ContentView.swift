@@ -118,6 +118,8 @@ struct ContentView: View {
         case .mapViewer:
             MapViewer()
                 .environment(appModel.database)
+        case .effectViewer:
+            EffectViewer()
         case .cube:
             CubeView()
         }
