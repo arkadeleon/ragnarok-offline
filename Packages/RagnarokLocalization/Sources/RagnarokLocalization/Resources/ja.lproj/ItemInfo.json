@@ -89,7 +89,7 @@
   },
   "0000523" : {
     "identifiedItemDescription" : "聖霊に使うための祝福を与えた水。^000088呪い^000000を治療する事ができる。\r\n^ffffff_^000000\r\n重量 : ^7777773^000000",
-    "identifiedItemName" : "¹"
+    "identifiedItemName" : "聖水"
   },
   "0000525" : {
     "identifiedItemDescription" : "状態異常を回復してくれる神秘的な薬。\r\n―――――――――――――\r\n^000088毒・沈黙・暗黒・呪い・\r\n混乱・幻覚を回復。^000000\r\n―――――――――――――\r\n^ffffff_^000000\r\n重量 : ^77777710^000000",
@@ -359,7 +359,7 @@
   },
   "0000603" : {
     "identifiedItemDescription" : "不思議な青い光が出る古い箱。開けたら何が出るかは分からない。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "Ã­Â¢"
+    "identifiedItemName" : "古く青い箱"
   },
   "0000604" : {
     "identifiedItemDescription" : "歳月の流れで魔力を持つ事が\r\n可能になった木の枝。\r\nその不思議な力で命を\r\n持っている誰かを召喚する。\r\n―――――――――――――\r\n^FF0000以下の専用マップでのみ\r\nアイテムを使用した場合、\r\nモンスターが召喚されます\r\n　\r\n■専用マップ\r\nサモンパーク^000000\r\n―――――――――――――\r\n重量 : ^7777775^000000",
@@ -414,7 +414,7 @@
   },
   "0000617" : {
     "identifiedItemDescription" : "神秘的な紫色の古い箱。開けてみたら何かが出そうな気がする。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "Ã¢FÌ"
+    "identifiedItemName" : "古い紫色の箱"
   },
   "0000618" : {
     "identifiedItemDescription" : "古い巻物。中にはわからない文字がいっぱい書かれている。\r\n^ffffff_^000000\r\n重量 : ^7777772^000000",
@@ -1114,7 +1114,7 @@
   },
   "0000948" : {
     "identifiedItemDescription" : "のんきなくまの足の裏。格別な味と言う噂がある。収集品商人に売る事ができる。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "­ÜÌ«Ì"
+    "identifiedItemName" : "くまの足の裏"
   },
   "0000949" : {
     "identifiedItemDescription" : "最もやわらかい毛を集めたもの。高級衣類の製造に使う。収集品商人に売る事ができる。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -1418,7 +1418,7 @@
   },
   "0001025" : {
     "identifiedItemDescription" : "くもが狩りをする為に作った糸を溜めておいたもの。かなり丈夫だ。収集品商人に売ることができる。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "­àÌ"
+    "identifiedItemName" : "くもの糸"
   },
   "0001026" : {
     "identifiedItemDescription" : "小さい木の実。収集品商人に売ることができる。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -1438,7 +1438,7 @@
   },
   "0001030" : {
     "identifiedItemDescription" : "体によいと言う虎の足裏。収集品商人に売ることができる。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ÕÌ«"
+    "identifiedItemName" : "虎の足裏"
   },
   "0001031" : {
     "identifiedItemDescription" : "昆虫の鎌のような鋭い手。収集品商人に売ることができる。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -1642,15 +1642,15 @@
   },
   "0001081" : {
     "identifiedItemDescription" : "商人組合の配達用の木箱「取り扱い注意」と書いてある。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "zBpÌØ"
+    "identifiedItemName" : "配達用の木箱"
   },
   "0001082" : {
     "identifiedItemDescription" : "商人組合の配達用の木箱「取り扱い注意」と書いてある。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "zBpÌØ"
+    "identifiedItemName" : "配達用の木箱"
   },
   "0001083" : {
     "identifiedItemDescription" : "商人組合の配達用の木箱「取り扱い注意」と書いてある。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "zBpÌØ"
+    "identifiedItemName" : "配達用の木箱"
   },
   "0001084" : {
     "identifiedItemDescription" : "カプラの全てのサービスを無料で利用することができる。「１人１枚に限ります。」と書いてある。現在は利用できない。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -1682,7 +1682,7 @@
   },
   "0001091" : {
     "identifiedItemDescription" : "商人ギルドの配達用の木箱「取り扱い注意」と書いてある。\r\n^ffffff_^000000\r\n重量 : ^777777120^000000",
-    "identifiedItemName" : "zBpÌØ"
+    "identifiedItemName" : "配達用の木箱"
   },
   "0001092" : {
     "identifiedItemDescription" : "何も入ってない試験管。何かを入れることができそうだ。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -2083,15 +2083,15 @@
   },
   "0001207" : {
     "identifiedItemDescription" : "短剣\r\n系列 : ^777777短剣^000000    攻撃 : ^77777743^000000\r\n重量 : ^77777760^000000\r\n武器レベル : ^7777771^000000\r\n要求レベル : ^777777無し^000000\r\n装備 : ^777777ノービス系 ソードマン系 マジシャン系 アーチャー系 マーチャント系 シーフ系 ソウルリンカー 忍者系^000000",
-    "identifiedItemName" : "}CS[V"
+    "identifiedItemName" : "マインゴーシュ"
   },
   "0001208" : {
     "identifiedItemDescription" : "短剣\r\n系列 : ^777777短剣^000000    攻撃 : ^77777743^000000\r\n重量 : ^77777760^000000\r\n武器レベル : ^7777771^000000\r\n要求レベル : ^777777無し^000000\r\n装備 : ^777777ノービス系 ソードマン系 マジシャン系 アーチャー系 マーチャント系 シーフ系 ソウルリンカー 忍者系^000000",
-    "identifiedItemName" : "}CS[V"
+    "identifiedItemName" : "マインゴーシュ"
   },
   "0001209" : {
     "identifiedItemDescription" : "短剣\r\n系列 : ^777777短剣^000000    攻撃 : ^77777743^000000\r\n重量 : ^77777760^000000\r\n武器レベル : ^7777771^000000\r\n要求レベル : ^777777無し^000000\r\n装備 : ^777777ノービス系 ソードマン系 マジシャン系 アーチャー系 マーチャント系 シーフ系 ソウルリンカー 忍者系^000000",
-    "identifiedItemName" : "}CS[V"
+    "identifiedItemName" : "マインゴーシュ"
   },
   "0001210" : {
     "identifiedItemDescription" : "ある西側の国の短剣。\r\n系列 : ^777777短剣^000000  攻撃 : ^77777759^000000\r\n重量 : ^77777750^000000\r\n武器レベル : ^7777772^000000\r\n要求レベル : ^77777712^000000\r\n装備 : ^777777ノービス系 ソードマン系 マジシャン系 アーチャー系 マーチャント系 シーフ系 ソウルリンカー 忍者系^000000",
@@ -2227,7 +2227,7 @@
   },
   "0001243" : {
     "identifiedItemDescription" : "ノービス専用のマインゴーシュ。 秘密組織「ゲフェン砥石商会」が、砥石の販売戦略の一環として企画したものらしい。 精錬不可。\r\n系列 : ^777777短剣^000000    攻撃 : ^77777745^000000\r\n重量 : ^7777770.1^000000\r\n武器レベル : ^7777771^000000\r\n要求レベル : ^777777なし^000000\r\n装備 : ^777777ノービス系^000000",
-    "identifiedItemName" : "SÒp}CS[V"
+    "identifiedItemName" : "初心者用マインゴーシュ"
   },
   "0001244" : {
     "identifiedItemDescription" : "聖水で精錬された、悪魔の力に対抗できる短剣。\r\n悪魔形モンスターに5%の追加ダメージ。\r\nDex + 1\r\n系列 : ^777777短剣^000000    攻撃 : ^777777100^000000\r\n重量 : ^77777780^000000      属性 : ^777777聖^000000\r\n武器レベル : ^7777774^000000\r\n要求レベル : ^77777755^000000\r\n装備 : ^777777シーフ系 忍者系^000000",
@@ -2550,7 +2550,7 @@
   },
   "0001375" : {
     "identifiedItemDescription" : "長い刃を持つ戦闘用の斧。\r\n白兵戦に特化した武器だ。\r\n―――――――――――――\r\n中型モンスターからの\r\n攻撃耐性 + 13%\r\n大型モンスターからの\r\n攻撃耐性 + 15%\r\n―――――――――――――\r\n系列 : ^777777斧^000000\r\n攻撃 : ^777777200^000000\r\n重量 : ^777777250^000000\r\n武器レベル : ^7777773^000000\r\n要求レベル : ^77777770^000000\r\n装備 : ^777777転生ソードマン系 転生マーチャント系^000000",
-    "identifiedItemName" : "ofBbV"
+    "identifiedItemName" : "バルディッシュ"
   },
   "0001376" : {
     "identifiedItemDescription" : "どんな鎧でも衝撃を\r\nそのまま伝える両手斧。\r\n特殊加工された刃は、\r\n何でも破壊できる。\r\n―――――――――――――\r\nCritical + 20\r\n攻撃速度 + 5%\r\n--------------------------\r\n精錬値が高い程、追加で\r\n　Criticalが増加。\r\n--------------------------\r\nホワイトスミス、\r\nメカニック、\r\nクリエイター、\r\nジェネティックの\r\nいずれかが\r\n装備時、追加で\r\n　物理攻撃時、一定確率で\r\n　ハンマーフォールLv3\r\n　発動。\r\n――――――――――――\r\n系列 : ^777777斧^000000\r\n攻撃 : ^777777175^000000\r\n重量 : ^777777200^000000\r\n武器レベル : ^7777774^000000\r\n要求レベル : ^77777770^000000\r\n装備 : ^777777転生ソードマン系 転生マーチャント系^000000",
@@ -2979,7 +2979,7 @@
   },
   "0001526" : {
     "identifiedItemDescription" : "目の前にいる者が気に入らない場合、一発で吹き飛ばしてしまうことができそうな鈍器。\r\nアンデッドモンスターに15%の追加ダメージ\r\nアンデッドモンスターを倒した時、5%の追加経験値獲得\r\nアンデッドモンスターを低確率で瀕死にする\r\n系列 : ^777777鈍器^000000    攻撃 : ^777777145^000000\r\n重量 : ^777777100^000000\r\n武器レベル : ^7777774^000000\r\n要求レベル : ^77777740^000000\r\n装備 : ^777777アコライト系^000000",
-    "identifiedItemName" : "XbV"
+    "identifiedItemName" : "スラッシュ"
   },
   "0001527" : {
     "identifiedItemDescription" : "鉄球と言われても\r\nおかしくない程巨大な鈍器。\r\n―――――――――――――\r\n人間形、地属性、不死属性\r\nモンスターに与える\r\nダメージ + 10%\r\n―――――――――――――\r\n系列 : ^777777鈍器^000000    攻撃 : ^777777165^000000\r\n重量 : ^77777790^000000\r\n武器レベル : ^7777774^000000\r\n要求レベル : ^77777740^000000\r\n装備 : ^777777アコライト系^000000",
@@ -3277,7 +3277,7 @@
   },
   "0001630" : {
     "identifiedItemDescription" : "クリスタルで作られており、\r\n光を反射し美しく輝く。\r\n自らの持ち主を\r\n回復させる能力がある。\r\n―――――――――――――\r\nMatk + 125。\r\n―――――――――――――\r\nInt + 3。\r\n―――――――――――――\r\n回復スキルによる\r\n回復量 + 5%。\r\n―――――――――――――\r\n魔法攻撃時、\r\n低確率で\r\nHP、SP一定量回復。\r\n―――――――――――――\r\n系列 : ^777777杖^000000\r\n攻撃 : ^77777730^000000\r\n重量 : ^77777750^000000\r\n武器レベル : ^7777773^000000\r\n要求レベル : ^77777750^000000\r\n装備 : ^777777マジシャン系^000000",
-    "identifiedItemName" : "[XIuEBbV"
+    "identifiedItemName" : "リリースオブウィッシュ"
   },
   "0001631" : {
     "identifiedItemDescription" : "オーディンの\r\nルーンで作られた\r\n駆魔に特化した杖。\r\n―――――――――――――\r\nMatk + 140\r\n―――――――――――――\r\n[ホーリーライト]、\r\n[ターンアンデッド]、\r\n[マグヌスエクソシズム]の\r\n詠唱時間 - 25%\r\n―――――――――――――\r\n[博愛の守護]と\r\n共に装備時、\r\n[ホーリーステッキ]の\r\n精錬値が1上がる度に追加で\r\n[ヒール]、\r\n[サンクチュアリ]、\r\n[ポーションピッチャー]、\r\n[ハイネスヒール]、\r\n[コルセオヒール]\r\n使用時、HP回復量 + 3%\r\n―――――――――――――\r\n系列 : ^777777杖^000000\r\n攻撃 : ^77777750^000000\r\n重量 : ^77777750^000000\r\n属性 : ^777777聖^000000\r\n武器レベル : ^7777774^000000\r\n要求レベル : ^77777770^000000\r\n装備 : ^777777プリースト系 モンク系^000000",
@@ -5844,7 +5844,7 @@
   },
   "0002655" : {
     "identifiedItemDescription" : "昔、乱暴な囚人の\r\n動きを封じるため、\r\n足鎖に付けた鉄球。\r\nしかし、その囚人は\r\nこの鉄球さえ自分の\r\n武器として使ったという。\r\n―――――――――――――\r\n[足鎖]と\r\n共に装備時、追加で\r\nAtk + 50\r\n[スケルプリズナー]、\r\n[ゾンビプリズナー]から\r\n受けるダメージ - 20%\r\n―――――――――――――\r\n[大盗賊の手鎖]と\r\n共に装備時、追加で\r\nAtk + 10\r\n―――――――――――――\r\n[ローラの鎖鉄球]と\r\n共に装備時、追加で\r\n物理攻撃命中時、\r\n一定確率で5秒間、\r\n敵のDef 100%無視\r\n[ローラの鎖鉄球]の\r\n精錬値が5以上の時、\r\n精錬値が1上がる度に追加で\r\n敵のDefを無視する\r\n時間が1秒延長\r\n―――――――――――――\r\n系列 : ^777777アクセサリー^000000\r\n防御 : ^7777770^000000\r\n重量 : ^777777400^000000\r\n要求レベル : ^7777771^000000\r\n装備 : ^777777ノービス系を除く全ての職業^000000",
-    "identifiedItemName" : "hçê½S"
+    "identifiedItemName" : "血塗られた鉄球"
   },
   "0002656" : {
     "identifiedItemDescription" : "普通の鎧に強力な防御力を付与する神秘の古代技術。ただ、防御力が上がる代わりに体の動きが鈍くなる短所がある。\r\nMHP + 50\r\nアーマーと共に装備時、DEF + 5, MHP + 150。\r\n系列 : ^777777アクセサリー^000000\r\n防御 : ^7777771^000000   重量 : ^777777100^000000\r\n装備 : ^777777ソードマン系 マーチャント系 シーフ系^000000",
@@ -6579,7 +6579,7 @@
     "identifiedItemName" : "RWC2012記念ペンダント"
   },
   "0002970" : {
-    "identifiedItemName" : "pCÌÀÌ"
+    "identifiedItemName" : "パイの実の箱"
   },
   "0002971" : {
     "identifiedItemDescription" : "チェーンで繋がれた\r\n銀の懐中時計。\r\n―――――――――――――\r\n[片目眼鏡]\r\n[メモライズブック]\r\nと共に装備時、追加で\r\nMatk + 7%\r\nHP自然回復量 + 15%\r\nSP自然回復量 + 15%\r\n―――――――――――――\r\n[魔法の定石]\r\n[司書の手袋]\r\nと共に装備時、追加で\r\nInt + 5\r\nMaxHP + 700\r\n攻撃速度 + 5%\r\n―――――――――――――\r\n[古代の魔法]\r\n[司書の手袋]\r\nと共に装備時、追加で\r\nInt + 5\r\nMaxHP + 700\r\n攻撃速度 + 5%\r\n―――――――――――――\r\n系列 : ^777777アクセサリー^000000\r\n防御 : ^7777771^000000\r\n重量 : ^77777720^000000\r\n要求レベル : ^77777780^000000\r\n装備 : ^777777マジシャン系 ソウルリンカー^000000",
@@ -11435,7 +11435,7 @@
   },
   "0005674" : {
     "identifiedItemDescription" : "貯金箱が一杯になった時、\r\n中身を出す時に割るのが\r\n躊躇いそうな\r\n可愛い豚の貯金箱。\r\n―――――――――――――\r\nモンスターを倒した時、\r\n一定確率でZenyを取得。\r\n―――――――――――――\r\nスキルディレイ + 10%。\r\n―――――――――――――\r\n系列 : ^777777兜^000000\r\n防御 : ^7777773^000000\r\n位置 : ^777777上段^000000\r\n重量 : ^777777100^000000\r\n要求レベル : ^77777710^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "Ô½³ñà"
+    "identifiedItemName" : "ぶたさん貯金箱"
   },
   "0005675" : {
     "identifiedItemDescription" : "ポリンのシールで\r\n封がされている手紙。\r\n誰か宛のラブレターかも\r\nしれない。\r\n―――――――――――――\r\n植物形モンスターに与える\r\n物理ダメージ + 5%。\r\n―――――――――――――\r\nモンスターを倒した時、\r\n一定確率で\r\n[まだ熟してないリンゴ]を\r\nドロップ。\r\n―――――――――――――\r\n系列 : ^777777兜^000000\r\n防御 : ^7777770^000000\r\n位置 : ^777777下段^000000\r\n重量 : ^77777710^000000\r\n要求レベル : ^77777710^000000\r\n装備 : ^777777全ての職業^000000",
@@ -12022,7 +12022,7 @@
   },
   "0006045" : {
     "identifiedItemDescription" : "さまざまな配給品が\r\n入っている箱。\r\n生活必需品と本国からの\r\n慰問品が入っている。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "z"
+    "identifiedItemName" : "配給箱"
   },
   "0006046" : {
     "identifiedItemDescription" : "エクストラカラーチケット。\r\n^ffffff_^000000\r\nNPCに渡すと、\r\n服を染色する事が出来る。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -12067,7 +12067,7 @@
   },
   "0006076" : {
     "identifiedItemDescription" : "小型のハンマーや探知機等、\r\n鉱物や食物を採集するための\r\n道具が入っている携帯用の\r\n道具箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "gÑp¹ï"
+    "identifiedItemName" : "携帯用道具箱"
   },
   "0006077" : {
     "identifiedItemDescription" : "ミッドガルド大陸で\r\n採掘した鉱石。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -12091,7 +12091,7 @@
   },
   "0006082" : {
     "identifiedItemDescription" : "アールブヘイムの花から抽出\r\nした香水。不思議と暖かく\r\n優しい香りがする。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "A[uwCÌ"
+    "identifiedItemName" : "アールブヘイムの香水"
   },
   "0006084" : {
     "identifiedItemDescription" : "ラフィネ族が実験\r\nしていたもので、マヌクで\r\n精製されたブラディウムとは\r\n違う。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -12912,7 +12912,7 @@
   },
   "0006392" : {
     "identifiedItemDescription" : "マヌクで採取した沢山の\r\nブラディウムが詰まった箱。\r\n中身が何かわからないよう、\r\n特長の無い形をしている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ufBEÌ"
+    "identifiedItemName" : "ブラディウムの箱"
   },
   "0006393" : {
     "identifiedItemDescription" : "軽く柔らかい丸い形の羽。\r\n様々な装飾に使われている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -13019,7 +13019,7 @@
   },
   "0006437" : {
     "identifiedItemDescription" : "スカラバ分泌液から作成した\r\n不思議な香りのする香水。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "XJoÌ"
+    "identifiedItemName" : "スカラバの香水"
   },
   "0006469" : {
     "identifiedItemName" : "勇者の意思"
@@ -13232,7 +13232,7 @@
   },
   "0006552" : {
     "identifiedItemDescription" : "スプレンディッドで\r\nエクラージュに送る様々な\r\n手紙を集めて入れた箱。\r\nほとんどがお互いの安否を\r\n確認する私的な手紙だ。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "XÖÌ"
+    "identifiedItemName" : "郵便の箱"
   },
   "0006553" : {
     "identifiedItemDescription" : "木の葉を幾重にも重ねた、\r\n強度に不安を感じる\r\n橋製作用の大きな塊。\r\n大量生産のために3m、5m、\r\n10m単位で作っている。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -13240,7 +13240,7 @@
   },
   "0006554" : {
     "identifiedItemDescription" : "赤い種子と緑の種子の\r\n運搬に使用される箱。\r\n箱の裏に[取り扱い注意]と\r\n大きく書かれている。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "íqÌ"
+    "identifiedItemName" : "種子の箱"
   },
   "0006555" : {
     "identifiedItemDescription" : "誕生日を祝う際、ケーキに\r\n年齢の分差し込んで使う。\r\n長いのは10歳、短いのは1歳\r\nの意味で使われるという。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -13296,7 +13296,7 @@
   },
   "0006573" : {
     "identifiedItemDescription" : "清浄で栄養素がたっぷり\r\n含まれた海水。\r\nただし、そのまま飲むのは\r\nおすすめしない。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "Cm[w"
+    "identifiedItemName" : "海洋深層水"
   },
   "0006574" : {
     "identifiedItemDescription" : "電流を放出している触角。\r\nそのまま持つと感電する。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -13351,7 +13351,7 @@
   },
   "0006592" : {
     "identifiedItemDescription" : "ギルド砦に隠されている\r\n小さな箱。\r\n誰かにはとても重要なあれが\r\n入っているらしい。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "¬³ÈØ"
+    "identifiedItemName" : "小さな木箱"
   },
   "0006594" : {
     "identifiedItemDescription" : "ルーン魔術によって魔力が\r\n込められた青銅鋳塊。\r\n強力な魔力が感じられる。\r\n―――――――――――――\r\n重量 : ^777777100^000000",
@@ -13672,7 +13672,7 @@
   },
   "0006825" : {
     "identifiedItemDescription" : "シェルターの技術者たちの\r\n力作である空気清浄機。\r\n完成品であるため、\r\n非常に大きい。\r\n―――――――――――――\r\n^ff0000[空気清浄機の箱]は\r\nNPC売却が可能です。^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "óC´ò@Ì"
+    "identifiedItemName" : "空気清浄機の箱"
   },
   "0006826" : {
     "identifiedItemDescription" : "収穫されて間もない\r\n新鮮なブドウ。\r\n―――――――――――――\r\n^ff0000[新鮮なブドウ]は\r\nNPC売却が可能です。^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -13993,7 +13993,7 @@
   },
   "0007038" : {
     "identifiedItemDescription" : "白くて丸く巻かれている毛糸\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "Ñ"
+    "identifiedItemName" : "毛糸"
   },
   "0007039" : {
     "identifiedItemDescription" : "ノービスであることを証明する名札\r\n重量 : ^7777771^000000",
@@ -14089,7 +14089,7 @@
   },
   "0007062" : {
     "identifiedItemDescription" : "硬くて丈夫な亀の甲羅。刀でも切れなさそうな強靭さがすばらしい。\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "TÌb"
+    "identifiedItemName" : "亀の甲羅"
   },
   "0007063" : {
     "identifiedItemDescription" : "まるで起きたくない朝に自分を取り囲んでいるやわらかな布団の誘惑のような感じを与える羽毛。\r\n重量 : ^7777771^000000",
@@ -14121,7 +14121,7 @@
   },
   "0007070" : {
     "identifiedItemDescription" : "割れた亀の甲羅。予想外に高値で売れる。一時期、占星術にも使われたようだ。\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ê½b"
+    "identifiedItemName" : "割れた甲羅"
   },
   "0007071" : {
     "identifiedItemDescription" : "着古されてぼろぼろになった服。誰が着たかは分からないが売れるらしい。\r\n重量 : ^7777771^000000",
@@ -14317,7 +14317,7 @@
   },
   "0007119" : {
     "identifiedItemDescription" : "きのこやかび類を形成している組職。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "Û"
+    "identifiedItemName" : "菌糸"
   },
   "0007120" : {
     "identifiedItemDescription" : "馬の蹄に火がついてゴウゴウと燃えているもの。とても熱そうだ。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -14629,7 +14629,7 @@
   },
   "0007197" : {
     "identifiedItemDescription" : "絶対に手ではちぎれなさそうな程、丈夫な蔓。綱として使われることもある。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ävÈ"
+    "identifiedItemName" : "丈夫な蔓"
   },
   "0007198" : {
     "identifiedItemDescription" : "雨の時に、傘として使えそうな大きい葉っぱ。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -15223,7 +15223,7 @@
   },
   "0007351" : {
     "identifiedItemDescription" : "使われてからかなりの\r\n月日が経っているような\r\n古い日記帳。\r\n別に大した事でもない\r\n個人的な秘密で\r\n一杯のようだ。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "FlÌúL"
+    "identifiedItemName" : "友人の日記帳"
   },
   "0007352" : {
     "identifiedItemDescription" : "何で作られたのか裏面が透明に映る不思議な板。硬くて軽く、わからない文字が書いてある。\r\n重量 : ^7777771^000000",
@@ -15258,33 +15258,33 @@
     "identifiedItemName" : "紋章の欠片4"
   },
   "0007362" : {
-    "identifiedItemName" : "êp}bv`PbgAÌ"
+    "identifiedItemName" : "専用マップチケットAの箱"
   },
   "0007363" : {
     "identifiedItemDescription" : "「専用マップチケットB」が\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "êp}bv`PbgBÌ"
+    "identifiedItemName" : "専用マップチケットBの箱"
   },
   "0007364" : {
     "identifiedItemDescription" : "「専用マップチケットC」が\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "êp}bv`PbgCÌ"
+    "identifiedItemName" : "専用マップチケットCの箱"
   },
   "0007365" : {
     "identifiedItemDescription" : "「専用マップチケットD」が\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "êp}bv`PbgDÌ"
+    "identifiedItemName" : "専用マップチケットDの箱"
   },
   "0007366" : {
     "identifiedItemDescription" : "「専用マップチケットE」が\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "êp}bv`PbgEÌ"
+    "identifiedItemName" : "専用マップチケットEの箱"
   },
   "0007367" : {
     "identifiedItemDescription" : "「専用マップチケットG」が\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "êp}bv`PbgGÌ"
+    "identifiedItemName" : "専用マップチケットGの箱"
   },
   "0007380" : {
     "identifiedItemName" : "魔羊の呪術石"
   },
   "0007398" : {
-    "identifiedItemName" : "tà£`PbgÌ"
+    "identifiedItemName" : "春爛漫チケットの箱"
   },
   "0007416" : {
     "identifiedItemDescription" : "アサシンギルドから要請された任務の支援に、人員を派遣するために担当者が書いた推薦状。\r\n^ffffff_^000000\r\n重量 : ^7777770^000000",
@@ -15400,7 +15400,7 @@
   },
   "0007444" : {
     "identifiedItemDescription" : "古代のお金、装身具、宝石等がたくさん入っている古い宝箱。収集品商人が好みそうだ。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ó"
+    "identifiedItemName" : "宝箱"
   },
   "0007445" : {
     "identifiedItemDescription" : "大地の美しい緑を象徴した玉。東方の国ではこの玉が願いを叶えてくれるという伝説がある。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -15535,7 +15535,7 @@
   },
   "0007488" : {
     "identifiedItemDescription" : "配達用の箱。中に小麦粉と卵が入っているので、配達する時は気を付けよう。\r\n^ffffff_^000000",
-    "identifiedItemName" : "zBp"
+    "identifiedItemName" : "配達用箱"
   },
   "0007489" : {
     "identifiedItemDescription" : "キル・ハイルの別荘のスペアキー。管理人が使用する裏手口の鍵のようだ。\r\n^ffffff_^000000",
@@ -15547,7 +15547,7 @@
   },
   "0007491" : {
     "identifiedItemDescription" : "硬い鋼鉄で作られた箱で、小さな鍵穴がある。キル・ハイル氏がエリーに依頼した品物のようだ。\r\n^ffffff_^000000",
-    "identifiedItemName" : "SÌ"
+    "identifiedItemName" : "鉄の箱"
   },
   "0007492" : {
     "identifiedItemDescription" : "平たくて透明な黄色の鍵。キル・ハイル邸近くの隠し通路の扉を開けることができる。\r\n^ffffff_^000000",
@@ -15718,7 +15718,7 @@
   },
   "0007571" : {
     "identifiedItemDescription" : "^ff0000※　クエストアイテム　※^000000\r\n^ff0000紛失するとクエストが進行^000000\r\n^ff0000できなくなる可能性有り。^000000\r\n^ff0000取扱注意。^000000\r\n少女の日記。表紙に＂ブルー＂と書いてある。恐らく持ち主の名前だろう。\r\n^ffffff_^000000\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "u[ÌúL"
+    "identifiedItemName" : "ブルーの日記帳"
   },
   "0007572" : {
     "identifiedItemDescription" : "遥か遠い昔、ドワーフが\r\n作ったという説がある。\r\n本当なのかは\r\n未だに分からない。\r\n―――――――――――――\r\n^ff0000[灰色のネックレス]は\r\nNPC売却・倉庫への移動が\r\n可能です。^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -15769,7 +15769,7 @@
     "identifiedItemName" : "蝶模様の髪飾り"
   },
   "0007641" : {
-    "identifiedItemName" : "¡Ã"
+    "identifiedItemName" : "治療箱"
   },
   "0007642" : {
     "identifiedItemDescription" : "古びた血のあとが\r\nこびりついた汚いコイン。\r\n血がついてから時間が\r\n経ちすぎたため、\r\nとても血のあとを\r\n落とせそうにない。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -16461,7 +16461,7 @@
   },
   "0011011" : {
     "identifiedItemDescription" : "大賢者と称えられる\r\nバルムントの手帳。\r\n乱雑な文字でさまざまな\r\n内容が短く書かれている。\r\n大部分タナトスタワーと\r\n自分が見つけた古代遺跡に\r\n関する内容のようだ。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "ogÌè"
+    "identifiedItemName" : "バルムントの手帳"
   },
   "0011012" : {
     "identifiedItemDescription" : "司令官の印章が捺された\r\n連合軍の総括報告書。\r\n異系の生態環境・生存種族・\r\n連合軍の状況に関する資料が\r\n整理されている。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -16859,7 +16859,7 @@
   },
   "0012020" : {
     "identifiedItemDescription" : "紫色で暗い気配が漂う呪われた水。\r\n^ffffff_^000000\r\n重量 : ^7777773^000000",
-    "identifiedItemName" : "ôíê½"
+    "identifiedItemName" : "呪われた水"
   },
   "0012021" : {
     "identifiedItemName" : "サムギョブサル"
@@ -16881,35 +16881,35 @@
   },
   "0012027" : {
     "identifiedItemDescription" : "HPが9%程度回復する。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "NXNXÎ¤"
+    "identifiedItemName" : "クスクス笑う箱"
   },
   "0012028" : {
     "identifiedItemDescription" : "20秒間移動速度が増加する。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "Ì"
+    "identifiedItemName" : "雷の箱"
   },
   "0012029" : {
     "identifiedItemDescription" : "集中力向上Lv1が発動する。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "JTÈ"
+    "identifiedItemName" : "憂鬱な箱"
   },
   "0012030" : {
     "identifiedItemDescription" : "60秒間攻撃力が20程度増加する。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "¦ÝÌ"
+    "identifiedItemName" : "恨みの箱"
   },
   "0012031" : {
     "identifiedItemDescription" : "60秒間魔法攻撃力が20程度位増加する。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "°¢"
+    "identifiedItemName" : "眠い箱"
   },
   "0012032" : {
     "identifiedItemDescription" : "3分間武器に水属性が付与される。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "JÌ"
+    "identifiedItemName" : "豪雨の箱"
   },
   "0012033" : {
     "identifiedItemDescription" : "30秒間隠れた敵を発見できるようになる。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "zõÌ"
+    "identifiedItemName" : "陽光の箱"
   },
   "0012034" : {
     "identifiedItemDescription" : "SPが9%程度回復する。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : " ¦®"
+    "identifiedItemName" : "あえぐ箱"
   },
   "0012040" : {
     "identifiedItemDescription" : "卑金属を黄金に変える神秘の力を持つと言われている赤色の石。何故か暖かくて軟らかい。\r\n^ffffff_^000000\r\n重量 : ^77777730^000000",
@@ -17169,7 +17169,7 @@
   },
   "0012106" : {
     "identifiedItemDescription" : "アクセサリーが入っているきれいな宝石箱。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "óÎ"
+    "identifiedItemName" : "宝石箱"
   },
   "0012107" : {
     "identifiedItemDescription" : "素敵に包装された仮面。どの仮面が入っているのか開けて確かめてみよう。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
@@ -17185,7 +17185,7 @@
   },
   "0012110" : {
     "identifiedItemDescription" : "緊急時に使えるようにポーションが入っている箱。たまに応急処置用ではない無茶なものも入っている。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "~}"
+    "identifiedItemName" : "救急箱"
   },
   "0012111" : {
     "identifiedItemDescription" : "食べ物を風呂敷で包装しておいたもの。\r\n^ffffff_^000000\r\n重量 : ^77777720^000000",
@@ -17312,7 +17312,7 @@
   },
   "0012189" : {
     "identifiedItemDescription" : "古より伝わる赤い箱。\r\n開けてみたら何かが\r\n出そうな気がする。\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "ÃÌÔ¢"
+    "identifiedItemName" : "古の赤い箱"
   },
   "0012192" : {
     "identifiedItemDescription" : "最高のカボチャ料理を\r\n作るという職人の執念が\r\n生み出した傑作。\r\n―――――――――――――\r\nHP・SP5%回復\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -17323,7 +17323,7 @@
     "identifiedItemName" : "クリスマスケーキ"
   },
   "0012201" : {
-    "identifiedItemName" : "ÃÑ½Ô¢"
+    "identifiedItemName" : "古びた赤い箱"
   },
   "0012202" : {
     "identifiedItemName" : "タンの盛り合わせ（大）"
@@ -17569,7 +17569,7 @@
   },
   "0012356" : {
     "identifiedItemDescription" : "アーティスト・ルイーゼ\r\nが作った衣装が入った箱。\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "C[[Ìm"
+    "identifiedItemName" : "ルイーゼの洋服箱"
   },
   "0012358" : {
     "identifiedItemDescription" : "風の魔力が込めてある扇子。\r\nモンスターミョグェが好む。\r\n―――――――――――――\r\n種類 : ^777777テイミングアイテム^000000\r\n重量 : ^7777775^000000",
@@ -17697,7 +17697,7 @@
     "identifiedItemName" : "-"
   },
   "0012399" : {
-    "identifiedItemName" : "ØÈó"
+    "identifiedItemName" : "豪華な宝箱"
   },
   "0012408" : {
     "identifiedItemDescription" : "うまく投げれば、変なヒドラ\r\nを捕まえることができる\r\n不思議なボール。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
@@ -17792,7 +17792,7 @@
   },
   "0012547" : {
     "identifiedItemDescription" : "アマツ花錬祭で\r\n交換してもらった箱。\r\n開けると中から煙が……\r\n何が入っているかわからない\r\n―――――――――――――\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "Êè"
+    "identifiedItemName" : "玉手箱"
   },
   "0012548" : {
     "identifiedItemDescription" : "買い取り専用の露店を\r\n開設するためのライセンス。\r\n商人組合の印章が、\r\nどうも手描きのように\r\n見えるが……\r\n商人組合が認めている\r\nアイテムのみが\r\n買取対象になる。\r\n買取露店を1回開設する度に\r\n1枚消費する。\r\nただし、周辺にNPCや\r\nワープリンクがある場所では\r\n偽造買取露店ライセンスを\r\n使用することができない。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -17841,7 +17841,7 @@
   },
   "0012623" : {
     "identifiedItemDescription" : "開けると様々な武器の中から\r\nランダムで1つ\r\n入手できる箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "íÌ"
+    "identifiedItemName" : "高級武器の箱"
   },
   "0012624" : {
     "identifiedItemDescription" : "美味しいと評判のゼリー。\r\n熱いと溶けるので注意。\r\nHP・SP3%回復\r\n―――――――――――――\r\n重量 : ^7777775^000000",
@@ -17904,7 +17904,7 @@
   },
   "0012702" : {
     "identifiedItemDescription" : "不思議な青い光が\r\n出ているような気が\r\nしないでもない古い箱。\r\n何が入っているか\r\nわからない……\r\n―――――――――――――\r\n重量 : ^77777720^000000",
-    "identifiedItemName" : "C¿Â¢"
+    "identifiedItemName" : "気持ち青い箱"
   },
   "0012709" : {
     "identifiedItemName" : "マーブルクッキー"
@@ -18015,11 +18015,11 @@
   },
   "0012793" : {
     "identifiedItemDescription" : "戦闘薬が10個入っている箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "í¬òÌ"
+    "identifiedItemName" : "戦闘薬の箱"
   },
   "0012794" : {
     "identifiedItemDescription" : "高級戦闘薬が10個\r\n入っている箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "í¬òÌ"
+    "identifiedItemName" : "高級戦闘薬の箱"
   },
   "0012812" : {
     "identifiedItemDescription" : "雪のように真っ白なうえに、\r\n触ると冷たい不思議な\r\n花びら。\r\n雪より冷たいと言われて\r\nいるので使用には注意。\r\n他の人の服の中に入れる\r\nいたずらはその人の心臓に\r\n非常に良くない。\r\n―――――――――――――\r\n^000088発火、出血、深い睡眠、\r\n睡眠^000000を治療する\r\n―――――――――――――\r\n再使用待機時間5秒\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -18046,7 +18046,7 @@
   },
   "0012873" : {
     "identifiedItemDescription" : "攻城戦TEホワイトスリム\r\nポーションが10個入っている\r\n箱。\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "UéíTEñ"
+    "identifiedItemName" : "攻城戦TE回復箱"
   },
   "0012876" : {
     "identifiedItemDescription" : "製薬研究の頂点に立った\r\n学者ビンセントが製作した\r\nポーション。\r\nとても短い時間だが超人的な\r\n能力を使うことができる\r\nようになる。\r\n―――――――――――――\r\n瞬間的にHPを3000失うが、\r\n10秒間は絶対にスタン状態に\r\nならない\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -18078,103 +18078,103 @@
   },
   "0012888" : {
     "identifiedItemDescription" : "ギルドを支援する目的で\r\n支給される様々なアイテムが\r\n入っている箱。\r\n支給されるアイテムは\r\nその時によって違う。\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "UéíñV"
+    "identifiedItemName" : "攻城戦報酬箱"
   },
   "0012900" : {
     "identifiedItemDescription" : "戦闘教範50が\r\n10冊入っている箱。\r\n―――――――――――――\r\n^000088戦闘教範50：^000000\r\n^00008830分間、Base・Job共に^000000\r\n^000088獲得経験値 + 50%^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "í¬³Í50Ì"
+    "identifiedItemName" : "戦闘教範50の箱"
   },
   "0012901" : {
     "identifiedItemDescription" : "万が一に備えるあなたに！　生命保険証30が10枚入っている箱。\r\n^ffffff_^000000\r\n生命保険証30：30分間、1回に限り戦闘不能時のデスペナルティが発生しない。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "¶½Û¯Ø30Ì"
+    "identifiedItemName" : "生命保険証30の箱"
   },
   "0012902" : {
     "identifiedItemDescription" : "甘ったるくて歯ごたえがあるバブルガムが10個入っている箱。\r\n^ffffff_^000000\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ouKÌ"
+    "identifiedItemName" : "バブルガムの箱"
   },
   "0012903" : {
     "identifiedItemDescription" : "STR+10の料理が10個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "^Ì·èí¹iåjÌ"
+    "identifiedItemName" : "タンの盛り合わせ（大）の箱"
   },
   "0012904" : {
     "identifiedItemDescription" : "AGI+10の料理が10個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ä¥ÅT\\iåjÌ"
+    "identifiedItemName" : "茹でサソリ（大）の箱"
   },
   "0012905" : {
     "identifiedItemDescription" : "INT+10の料理が10個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "JNeE³Ìf§iåjÌ"
+    "identifiedItemName" : "カクテル・竜の吐息（大）の箱"
   },
   "0012906" : {
     "identifiedItemDescription" : "DEX+10の料理が10個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "txQ~ÌðiåjÌ"
+    "identifiedItemName" : "フベルゲルミルの酒（大）の箱"
   },
   "0012907" : {
     "identifiedItemDescription" : "LUK+10の料理が10個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ãöÏÌµÁÛ¿iåjÌ"
+    "identifiedItemName" : "九尾狐のしっぽ料理（大）の箱"
   },
   "0012908" : {
     "identifiedItemDescription" : "VIT+10の料理が10個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "sÌ`QçiåjÌ"
+    "identifiedItemName" : "不死のチゲ鍋（大）の箱"
   },
   "0012909" : {
     "identifiedItemDescription" : "カプラ職員の名刺が10枚入っている箱。名刺が入っている箱にしては大きい。\r\n^ffffff_^000000\r\nカプラの名刺：使用時、カプラの倉庫サービスを1回使用できる。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "JvÌ¼hÌ"
+    "identifiedItemName" : "カプラの名刺の箱"
   },
   "0012910" : {
     "identifiedItemDescription" : "巨大なハエの羽が\r\n10枚入っている箱。\r\n非常に軽い。\r\n―――――――――――――\r\n巨大なハエの羽：\r\nパーティーリーダーが\r\n使用時、効果が発動する。\r\nパーティーリーダーが\r\n移動した場所へ同じマップに\r\nいる全てのパーティー\r\nメンバーが移動する。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "åÈnGÌHÌ"
+    "identifiedItemName" : "巨大なハエの羽の箱"
   },
   "0012911" : {
     "identifiedItemDescription" : "キラキラスティックが\r\n1個入っている箱。\r\nわれもの注意！\r\n―――――――――――――\r\n^000088使用した場合、^000000\r\n^000088スキルを初期化してくれる^000000\r\n―――――――――――――\r\n^FF0000キラキラスティックは\r\n箱を開けたキャラクターで\r\nのみ使用可能です。\r\nあらゆる取引、移動が不可と\r\nなりますので、使用したい\r\nキャラクターで箱を開けて\r\nください^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "LLXeBbNÌ"
+    "identifiedItemName" : "キラキラスティックの箱"
   },
   "0012912" : {
     "identifiedItemDescription" : "凸面鏡が10個入っている箱。われもの注意！\r\n^ffffff_^000000\r\nよく磨かれているく凸面鏡。使用するとマップのボスモンスター出現時刻が分かる。\r\nボスモンスターが出現している場合、持続時間中ミニマップにMVPボスモンスターの位置が表示される。\r\n使用後10分間持続し、該当マップを離れるか接続を終了すれば効果は消滅する。\r\nロードオブデス、生体工学研究所03のMVPボスモンスター、魔剣士タナトスの思念体と、\r\nイベントで出現するMVPボスモンスターは感知できない。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ÊÊ¾Ì"
+    "identifiedItemName" : "凸面鏡の箱"
   },
   "0012913" : {
     "identifiedItemDescription" : "ブレッシングLv10のスクロールが20枚入っている箱。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ubVOLv10Ì"
+    "identifiedItemName" : "ブレッシングLv10の箱"
   },
   "0012914" : {
     "identifiedItemDescription" : "速度増加Lv10のスクロールが20枚入っている箱。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "¬xÁLv10Ì"
+    "identifiedItemName" : "速度増加Lv10の箱"
   },
   "0012915" : {
     "identifiedItemDescription" : "アスペルシオLv5のスクロールが20枚入っている箱。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "AXyVILv5Ì"
+    "identifiedItemName" : "アスペルシオLv5の箱"
   },
   "0012916" : {
     "identifiedItemDescription" : "アスムプティオLv5のスクロールが20枚入っている箱。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "AXveBILv5Ì"
+    "identifiedItemName" : "アスムプティオLv5の箱"
   },
   "0012917" : {
     "identifiedItemDescription" : "ウィンドウォークLv10のスクロールが20枚入っている箱。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "EBhEH[NLv10Ì"
+    "identifiedItemName" : "ウィンドウォークLv10の箱"
   },
   "0012918" : {
     "identifiedItemDescription" : "アドレナリンラッシュLv5のスクロールが20枚入っている箱。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "AhibVLv5Ì"
+    "identifiedItemName" : "アドレナリンラッシュLv5の箱"
   },
   "0012919" : {
     "identifiedItemDescription" : "^ffffff_^000000\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "gºíÌ"
+    "identifiedItemName" : "拡声器の箱"
   },
   "0012920" : {
     "identifiedItemDescription" : "濃縮エルニウムが\r\n1個入っている箱。\r\n―――――――――――――\r\n^000088防具の精錬時、\r\n通常のエルニウムより\r\n成功率が上昇する\r\nただし、+9から+10への\r\n精錬成功率は、通常の\r\nエルニウムと同率^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ZkGjEÌ"
+    "identifiedItemName" : "濃縮エルニウムの箱"
   },
   "0012921" : {
     "identifiedItemDescription" : "濃縮オリデオコンが\r\n1個入っている箱。\r\n―――――――――――――\r\n^000088武器の精錬時、\r\n通常のオリデオコンより\r\n成功率が上昇する\r\nただし、+9から+10への\r\n精錬成功率は、通常の\r\nオリデオコンと同率^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ZkIfIRÌ"
+    "identifiedItemName" : "濃縮オリデオコンの箱"
   },
   "0012922" : {
     "identifiedItemDescription" : "ジークフリードの証が10個入っている箱。\r\n^ffffff_^000000\r\nジークフリードの証：戦闘不能時、messageウィンドウ内の「^ff0000復活する[ジークフリードの証^000000]」を選択すると、その場で復活する。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "W[Nt[hÌØÌ"
+    "identifiedItemName" : "ジークフリードの証の箱"
   },
   "0012927" : {
     "identifiedItemDescription" : "アスペルシオLv5の\r\nスクロールが20枚\r\n入っている箱。\r\n聖水が無くても使用可能。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "AXyVILv5Ì"
+    "identifiedItemName" : "アスペルシオLv5の箱"
   },
   "0012928" : {
     "identifiedItemDescription" : "アスペルシオLv5の使い方が記録されたスクロール。アスペルシオLv5が使用可能になる。\r\n聖水が無くても使用可能。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
@@ -18182,95 +18182,95 @@
   },
   "0012938" : {
     "identifiedItemDescription" : "オーダーナイフ（2時間）\r\nが入った箱。\r\n―――――――――――――\r\n^FF0000使用期限^000000\r\n^FF00002011年10月25日\r\n定期メンテナンス開始まで^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "I[_[iCtÌ"
+    "identifiedItemName" : "オーダーナイフの箱"
   },
   "0012939" : {
     "identifiedItemDescription" : "カウンターダガーRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "JE^[_K[RÌ"
+    "identifiedItemName" : "カウンターダガーRの箱"
   },
   "0012941" : {
     "identifiedItemDescription" : "ポールアクスRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "|[ANXRÌ"
+    "identifiedItemName" : "ポールアクスRの箱"
   },
   "0012943" : {
     "identifiedItemDescription" : "ライトエプシロンRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "CgGvVRÌ"
+    "identifiedItemName" : "ライトエプシロンRの箱"
   },
   "0012945" : {
     "identifiedItemDescription" : "賢者の日記Rが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "«ÒÌúLRÌ"
+    "identifiedItemName" : "賢者の日記Rの箱"
   },
   "0012946" : {
     "identifiedItemDescription" : "阿修羅Rが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "¢CRÌ"
+    "identifiedItemName" : "阿修羅Rの箱"
   },
   "0012947" : {
     "identifiedItemDescription" : "名射手のりんごRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "¼ËèÌèñ²RÌ"
+    "identifiedItemName" : "名射手のりんごRの箱"
   },
   "0012948" : {
     "identifiedItemDescription" : "ウサギのヘアバンドRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ETMÌwAohRÌ"
+    "identifiedItemName" : "ウサギのヘアバンドRの箱"
   },
   "0012950" : {
     "identifiedItemDescription" : "フリーダムサークレット\r\n（2時間）が入った箱。\r\n―――――――――――――\r\n^FF0000使用期限^000000\r\n^FF00002011年10月25日\r\n定期メンテナンス開始まで^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "t[_T[NbgÌ"
+    "identifiedItemName" : "フリーダムサークレットの箱"
   },
   "0012951" : {
     "identifiedItemDescription" : "妖精の耳Rが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "d¸Ì¨RÌ"
+    "identifiedItemName" : "妖精の耳Rの箱"
   },
   "0012952" : {
     "identifiedItemDescription" : "鋼鉄の花びらRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "|SÌÔÑçRÌ"
+    "identifiedItemName" : "鋼鉄の花びらRの箱"
   },
   "0012953" : {
     "identifiedItemDescription" : "クリティカルリングRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "NeBJORÌ"
+    "identifiedItemName" : "クリティカルリングRの箱"
   },
   "0012954" : {
     "identifiedItemDescription" : "イヤリングRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "CORÌ"
+    "identifiedItemName" : "イヤリングRの箱"
   },
   "0012955" : {
     "identifiedItemDescription" : "リングRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ORÌ"
+    "identifiedItemName" : "リングRの箱"
   },
   "0012956" : {
     "identifiedItemDescription" : "ネックレスRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "lbNXRÌ"
+    "identifiedItemName" : "ネックレスRの箱"
   },
   "0012957" : {
     "identifiedItemDescription" : "グローブRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "O[uRÌ"
+    "identifiedItemName" : "グローブRの箱"
   },
   "0012958" : {
     "identifiedItemDescription" : "ブローチRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "u[`RÌ"
+    "identifiedItemName" : "ブローチRの箱"
   },
   "0012959" : {
     "identifiedItemDescription" : "ロザリオRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "UIRÌ"
+    "identifiedItemName" : "ロザリオRの箱"
   },
   "0012960" : {
     "identifiedItemDescription" : "セイフティリングRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ZCteBORÌ"
+    "identifiedItemName" : "セイフティリングRの箱"
   },
   "0012961" : {
     "identifiedItemDescription" : "マジカルコア（2時間）\r\nが入った箱。\r\n―――――――――――――\r\n^FF0000使用期限^000000\r\n^FF00002011年10月25日\r\n定期メンテナンス開始まで^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "}WJRAÌ"
+    "identifiedItemName" : "マジカルコアの箱"
   },
   "0012962" : {
     "identifiedItemDescription" : "エクストリームコア\r\n（2時間）が入った箱。\r\n―――――――――――――\r\n^FF0000使用期限^000000\r\n^FF00002011年10月25日\r\n定期メンテナンス開始まで^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "GNXg[RAÌ"
+    "identifiedItemName" : "エクストリームコアの箱"
   },
   "0012963" : {
     "identifiedItemDescription" : "ウェイクコア（2時間）\r\nが入った箱。\r\n―――――――――――――\r\n^FF0000使用期限^000000\r\n^FF00002011年10月25日\r\n定期メンテナンス開始まで^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "EFCNRAÌ"
+    "identifiedItemName" : "ウェイクコアの箱"
   },
   "0012964" : {
     "identifiedItemDescription" : "クルーエルコア（2時間）\r\nが入った箱。\r\n―――――――――――――\r\n^FF0000使用期限^000000\r\n^FF00002011年10月25日\r\n定期メンテナンス開始まで^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "N[GRAÌ"
+    "identifiedItemName" : "クルーエルコアの箱"
   },
   "0013000" : {
     "identifiedItemDescription" : "雷が落ちたなつめの木で柄を作った短剣。奇妙にも雷の力が染みこんでいる。\r\n系列 : ^777777短剣^000000    攻撃 : ^77777739^000000\r\n重量 : ^77777760^000000      属性 : ^777777風^000000\r\n武器レベル : ^7777771^000000\r\n要求レベル : ^777777なし^000000\r\n装備 : ^777777ノービス系 ソードマン系 マジシャン系 アーチャー系 マーチャント系 シーフ系 ソウルリンカー 忍者系^000000",
@@ -18314,11 +18314,11 @@
   },
   "0013010" : {
     "identifiedItemDescription" : "昔、ある人間が\r\n神様から授かったと\r\n伝えられている刀。\r\nこの刀を握ると、\r\n破壊的な衝動に駆られる。\r\n―――――――――――――\r\nMatk + 50\r\n―――――――――――――\r\n系列 : ^777777短剣^000000\r\n攻撃 : ^77777750^000000\r\n重量 : ^77777760^000000\r\n武器レベル : ^7777771^000000\r\n要求レベル : ^77777712^000000\r\n装備 : ^777777忍者系^000000",
-    "identifiedItemName" : "¢C"
+    "identifiedItemName" : "阿修羅"
   },
   "0013011" : {
     "identifiedItemDescription" : "昔、ある人間が\r\n神様から授かったと\r\n伝えられている刀。\r\nこの刀を握ると、\r\n破壊的な衝動に駆られる。\r\n―――――――――――――\r\nMatk + 50\r\n―――――――――――――\r\n系列 : ^777777短剣^000000\r\n攻撃 : ^77777750^000000\r\n重量 : ^77777760^000000\r\n武器レベル : ^7777771^000000\r\n要求レベル : ^77777712^000000\r\n装備 : ^777777忍者系^000000",
-    "identifiedItemName" : "¢C"
+    "identifiedItemName" : "阿修羅"
   },
   "0013012" : {
     "identifiedItemDescription" : "流れる水さえも斬ることが\r\nできる名刀。\r\nあまりの鋭さのため、\r\n虚空を斬れば水が\r\n染み出るという伝説がある。\r\n―――――――――――――\r\nMatk + 121\r\n―――――――――――――\r\n近接物理攻撃時、\r\n人間形モンスターに\r\nCri + 10\r\n―――――――――――――\r\n系列 : ^777777短剣^000000\r\n攻撃 : ^77777795^000000\r\n重量 : ^77777770^000000\r\n属性 : ^777777水^000000\r\n武器レベル : ^7777772^000000\r\n要求レベル : ^77777724^000000\r\n装備 : ^777777忍者系^000000",
@@ -19062,47 +19062,47 @@
   },
   "0013500" : {
     "identifiedItemDescription" : "万が一に備えるあなたに！　生命保険証60が10枚入っている箱。\r\n^ffffff_^000000\r\n生命保険証60：60分間、1回に限り戦闘不能時のデスペナルティが発生しない。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "¶½Û¯Ø60Ì"
+    "identifiedItemName" : "生命保険証60の箱"
   },
   "0013501" : {
     "identifiedItemDescription" : "色んな事を体験できる箱。\r\n役立つスクロールが数種類入っている。\r\nブレッシングLv10（15個）、速度増加Lv10（15個）、アスムプティオLv5（10個）、ウィンドウォークLv10（5個）の詰め合わせ。\r\n^ffffff_^000000\r\n重さ : ^7777771^000000",
-    "identifiedItemName" : "¨µXN[Ì"
+    "identifiedItemName" : "お試しスクロールの箱"
   },
   "0013502" : {
     "identifiedItemDescription" : "サイレンスキャット\r\n（2時間）が入った箱。\r\n―――――――――――――\r\n^FF0000使用期限^000000\r\n^FF00002011年10月25日\r\n定期メンテナンス開始まで^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "TCXLbgÌ"
+    "identifiedItemName" : "サイレンスキャットの箱"
   },
   "0013503" : {
     "identifiedItemDescription" : "マジェスティックゴートRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "}WFXeBbNS[gRÌ"
+    "identifiedItemName" : "マジェスティックゴートRの箱"
   },
   "0013505" : {
     "identifiedItemDescription" : "エクスキューショナーRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "GNXL[Vi[RÌ"
+    "identifiedItemName" : "エクスキューショナーRの箱"
   },
   "0013507" : {
     "identifiedItemDescription" : "トマホークRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "g}z[NRÌ"
+    "identifiedItemName" : "トマホークRの箱"
   },
   "0013508" : {
     "identifiedItemDescription" : "ルドラの弓Rが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "hÌ|RÌ"
+    "identifiedItemName" : "ルドラの弓Rの箱"
   },
   "0013509" : {
     "identifiedItemDescription" : "カトラスRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "JgXRÌ"
+    "identifiedItemName" : "カトラスRの箱"
   },
   "0013510" : {
     "identifiedItemDescription" : "太陽剣Rが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "¾zRÌ"
+    "identifiedItemName" : "太陽剣Rの箱"
   },
   "0013513" : {
     "identifiedItemDescription" : "月光剣Rが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "õRÌ"
+    "identifiedItemName" : "月光剣Rの箱"
   },
   "0013514" : {
     "identifiedItemDescription" : "スパナRが 1個入っている箱。破損注意！\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "XpiRÌ"
+    "identifiedItemName" : "スパナRの箱"
   },
   "0013646" : {
     "identifiedItemName" : "-"
@@ -19277,11 +19277,11 @@
   },
   "0013695" : {
     "identifiedItemDescription" : "戦闘教範25が\r\n10冊入っている箱。\r\n―――――――――――――\r\n^000088戦闘教範25：^000000\r\n^00008830分間、Base・Job共に^000000\r\n^000088獲得経験値 + 25%^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "í¬³Í25Ì"
+    "identifiedItemName" : "戦闘教範25の箱"
   },
   "0013696" : {
     "identifiedItemDescription" : "戦闘教範100が\r\n10冊入っている箱。\r\n―――――――――――――\r\n^000088戦闘教範100：^000000\r\n^00008830分間、Base・Job共に^000000\r\n^000088獲得経験値 + 100%^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "í¬³Í100Ì"
+    "identifiedItemName" : "戦闘教範100の箱"
   },
   "0013697" : {
     "identifiedItemDescription" : "-",
@@ -19300,175 +19300,175 @@
     "identifiedItemName" : "-"
   },
   "0013836" : {
-    "identifiedItemName" : "^Ì·èí¹(Áå)Ì"
+    "identifiedItemName" : "タンの盛り合わせ(特大)の箱"
   },
   "0013837" : {
     "identifiedItemDescription" : "AGI+10の料理が1個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ä¥ÅT\\(Áå)Ì"
+    "identifiedItemName" : "茹でサソリ(特大)の箱"
   },
   "0013838" : {
     "identifiedItemDescription" : "INT+10の料理が1個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "JNeE³Ìf§(Áå)Ì"
+    "identifiedItemName" : "カクテル・竜の吐息(特大)の箱"
   },
   "0013839" : {
     "identifiedItemDescription" : "DEX+10の料理が1個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "txQ~Ìð(Áå)Ì"
+    "identifiedItemName" : "フベルゲルミルの酒(特大)の箱"
   },
   "0013840" : {
     "identifiedItemDescription" : "LUK+10の料理が1個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ãöÏÌµÁÛ¿(Áå)Ì"
+    "identifiedItemName" : "九尾狐のしっぽ料理(特大)の箱"
   },
   "0013841" : {
     "identifiedItemDescription" : "VIT+10の料理が1個入っている箱。料理が腐らないように特殊処理が施されているという。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "sÌ`Qç(Áå)Ì"
+    "identifiedItemName" : "不死のチゲ鍋(特大)の箱"
   },
   "0013842" : {
     "identifiedItemDescription" : "カプラの月給明細書が1個入っている箱。\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "JvÌ¾×Ì"
+    "identifiedItemName" : "カプラの月給明細書の箱"
   },
   "0013843" : {
     "identifiedItemDescription" : "戦闘教範25が\r\n1冊入っている箱。\r\n―――――――――――――\r\n^000088戦闘教範25：^000000\r\n^00008830分間、Base・Job共に^000000\r\n^000088獲得経験値 + 25%^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "í¬³Í25(Pi)Ì"
+    "identifiedItemName" : "戦闘教範25(単品)の箱"
   },
   "0013861" : {
-    "identifiedItemName" : "í¬³Í50(4Â)Ì"
+    "identifiedItemName" : "戦闘教範50(4個)の箱"
   },
   "0013862" : {
     "identifiedItemDescription" : "色んな事を体験できる箱。\r\n役立つアイテムが\r\n数種類入っている。\r\n戦闘教範50（2個）、\r\nブレッシングLv10（15個）、\r\n速度増加Lv10（15個）\r\nの詰め合わせ。\r\n―――――――――――――\r\n^000088戦闘教範50：^000000\r\n^00008830分間、Base・Job共に^000000\r\n^000088獲得経験値 + 50%^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
     "identifiedItemName" : "トライアルボックス"
   },
   "0013870" : {
-    "identifiedItemName" : "üe¤iÌ"
+    "identifiedItemName" : "美容商品券の箱"
   },
   "0013990" : {
     "identifiedItemDescription" : "Job教範50が\r\n10冊入っている箱。\r\n―――――――――――――\r\n^000088Job教範50：^000000\r\n^00008830分間、Jobのみ^000000\r\n^000088獲得経験値 + 50%^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "Job³Í50Ì"
+    "identifiedItemName" : "Job教範50の箱"
   },
   "0014235" : {
-    "identifiedItemName" : "í¬³Í50(2Â)Ì"
+    "identifiedItemName" : "戦闘教範50(2個)の箱"
   },
   "0014236" : {
     "identifiedItemDescription" : "Str + 10の料理が\r\n20個入っている箱。\r\n料理が腐らないように\r\n特殊処理されている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "^Ì·èí¹iåj20ÂÌ"
+    "identifiedItemName" : "タンの盛り合わせ（大）20個の箱"
   },
   "0014237" : {
     "identifiedItemDescription" : "Agi + 10の料理が\r\n20個入っている箱。\r\n料理が腐らないように\r\n特殊処理されている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ä¥ÅT\\iåj20ÂÌ"
+    "identifiedItemName" : "茹でサソリ（大）20個の箱"
   },
   "0014238" : {
     "identifiedItemDescription" : "Vit + 10の料理が\r\n20個入っている箱。\r\n料理が腐らないように\r\n特殊処理されている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "sÌ`Qçiåj20ÂÌ"
+    "identifiedItemName" : "不死のチゲ鍋（大）20個の箱"
   },
   "0014239" : {
     "identifiedItemDescription" : "Int + 10の料理が\r\n20個入っている箱。\r\n料理が腐らないように\r\n特殊処理されている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "JNeE³Ìf§iåj20ÂÌ"
+    "identifiedItemName" : "カクテル・竜の吐息（大）20個の箱"
   },
   "0014240" : {
     "identifiedItemDescription" : "Dex + 10の料理が\r\n20個入っている箱。\r\n料理が腐らないように\r\n特殊処理されている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "txQ~Ìðiåj20ÂÌ"
+    "identifiedItemName" : "フベルゲルミルの酒（大）20個の箱"
   },
   "0014241" : {
     "identifiedItemDescription" : "Luk + 10の料理が\r\n20個入っている箱。\r\n料理が腐らないように\r\n特殊処理されている。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ãöÏÌµÁÛ¿iåj20ÂÌ"
+    "identifiedItemName" : "九尾狐のしっぽ料理（大）20個の箱"
   },
   "0014289" : {
     "identifiedItemDescription" : "エクストラカラーチケットが\r\n1個入っている箱。\r\n^ffffff_^000000\r\n服を染色する事が出来る。\r\n―――――――――――――\r\n^FF0000エクストラカラーチケットは\r\n箱を開けたキャラクターで\r\nのみ利用可能です。\r\nあらゆる取引、移動が不可と\r\nなりますので、使用したい\r\nキャラクターで箱を開けて\r\nください^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "GNXgJ[`PbgÌ"
+    "identifiedItemName" : "エクストラカラーチケットの箱"
   },
   "0014290" : {
     "identifiedItemDescription" : "デフォルトカラーチケットが\r\n1個入っている箱。\r\n^ffffff_^000000\r\n服を染色する事が出来る。\r\n―――――――――――――\r\n^FF0000デフォルトカラーチケットは\r\n箱を開けたキャラクターで\r\nのみ利用可能です。\r\nあらゆる取引、移動が不可と\r\nなりますので、使用したい\r\nキャラクターで箱を開けて\r\nください^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ftHgJ[`PbgÌ"
+    "identifiedItemName" : "デフォルトカラーチケットの箱"
   },
   "0014370" : {
     "identifiedItemDescription" : "女神の祝福が\r\n1個入っている箱。\r\nあなたに女神の祝福が\r\nありますように！\r\n―――――――――――――\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "_ÌjÌ"
+    "identifiedItemName" : "女神の祝福の箱"
   },
   "0014371" : {
     "identifiedItemDescription" : "天使の祝福が\r\n1個入っている箱。\r\nあなたに天使の祝福が\r\nありますように！\r\n―――――――――――――\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "VgÌjÌ"
+    "identifiedItemName" : "天使の祝福の箱"
   },
   "0014372" : {
     "identifiedItemDescription" : "パウダースノーが\r\n1個入っている箱。\r\n雪を降らせて冬を演出！\r\nこれで火を消すことは\r\nできないから注意！\r\n―――――――――――――\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "pE_[Xm[Ì"
+    "identifiedItemName" : "パウダースノーの箱"
   },
   "0014373" : {
     "identifiedItemDescription" : "リトルハートが\r\n1個入っている箱。\r\nこのアイテムであなたの\r\nキュートさが更にアップ！\r\n―――――――――――――\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "gn[gÌ"
+    "identifiedItemName" : "リトルハートの箱"
   },
   "0014374" : {
     "identifiedItemDescription" : "華麗な花火が\r\n1個入っている箱。\r\nとても美しい花火。\r\n祭りには欠かせない\r\n必須アイテム！\r\n―――――――――――――\r\n^ffffff_^000000\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ØíÈÔÎÌ"
+    "identifiedItemName" : "華麗な花火の箱"
   },
   "0014422" : {
-    "identifiedItemName" : "V[}ÌÃ¶Ì"
+    "identifiedItemName" : "シャーマンの古文書の箱"
   },
   "0014423" : {
     "identifiedItemDescription" : "折れた剣が\r\n1本入っている箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "Üê½Ì"
+    "identifiedItemName" : "折れた剣の箱"
   },
   "0014424" : {
     "identifiedItemDescription" : "ヴィゾフニルの羽が\r\n1枚入っている箱。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "B]tjÌHÌ"
+    "identifiedItemName" : "ヴィゾフニルの羽の箱"
   },
   "0014470" : {
     "identifiedItemDescription" : "キューペット\r\nナイトメアテラーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "iCgAe[ð·`PbgÌ"
+    "identifiedItemName" : "ナイトメアテラー交換チケットの箱"
   },
   "0014471" : {
     "identifiedItemDescription" : "キューペット\r\nロリルリの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "ð·`PbgÌ"
+    "identifiedItemName" : "ロリルリ交換チケットの箱"
   },
   "0014472" : {
     "identifiedItemDescription" : "キューペット\r\nゴブリンリーダーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "Su[_[ð·`PbgÌ"
+    "identifiedItemName" : "ゴブリンリーダー交換チケットの箱"
   },
   "0014473" : {
     "identifiedItemDescription" : "キューペット\r\nインキュバスの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "CLoXð·`PbgÌ"
+    "identifiedItemName" : "インキュバス交換チケットの箱"
   },
   "0014474" : {
     "identifiedItemDescription" : "キューペット\r\n雅人形の卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "ël`ð·`PbgÌ"
+    "identifiedItemName" : "雅人形交換チケットの箱"
   },
   "0014475" : {
     "identifiedItemDescription" : "キューペット\r\nウィスパーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "EBXp[ð·`PbgÌ"
+    "identifiedItemName" : "ウィスパー交換チケットの箱"
   },
   "0014476" : {
     "identifiedItemDescription" : "キューペット\r\n天仙娘々の卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "VåºXð·`PbgÌ"
+    "identifiedItemName" : "天仙娘々交換チケットの箱"
   },
   "0014477" : {
     "identifiedItemDescription" : "キューペット\r\nメデューサの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "f[Tð·`PbgÌ"
+    "identifiedItemName" : "メデューサ交換チケットの箱"
   },
   "0014478" : {
     "identifiedItemDescription" : "キューペット\r\nフレイムシューターの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "tCV[^[ð·`PbgÌ"
+    "identifiedItemName" : "フレイムシューター交換チケットの箱"
   },
   "0014479" : {
     "identifiedItemDescription" : "キューペット\r\nマリオネットの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "}Ilbgð·`PbgÌ"
+    "identifiedItemName" : "マリオネット交換チケットの箱"
   },
   "0014480" : {
     "identifiedItemDescription" : "キューペット\r\nリーフキャットの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "[tLbgð·`PbgÌ"
+    "identifiedItemName" : "リーフキャット交換チケットの箱"
   },
   "0014481" : {
     "identifiedItemDescription" : "キューペット\r\nデュラハンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "fnð·`PbgÌ"
+    "identifiedItemName" : "デュラハン交換チケットの箱"
   },
   "0014482" : {
     "identifiedItemDescription" : "キューペット\r\nカブキ忍者の卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "JuLEÒð·`PbgÌ"
+    "identifiedItemName" : "カブキ忍者交換チケットの箱"
   },
   "0014483" : {
     "identifiedItemDescription" : "キューペット\r\nゴーレムの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "S[ð·`PbgÌ"
+    "identifiedItemName" : "ゴーレム交換チケットの箱"
   },
   "0014484" : {
     "identifiedItemDescription" : "キューペット\r\nミョグェの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "~OFð·`PbgÌ"
+    "identifiedItemName" : "ミョグェ交換チケットの箱"
   },
   "0014500" : {
     "identifiedItemDescription" : "カプラセンターで発行された生命保険証。これを使うと安心して旅を続けられそうだ。\r\n60分間、1回に限り戦闘不能時のデスペナルティ（経験値減少）が発生しない。一度戦闘不能になると効力が消滅する。\r\n^ffffff_^000000\r\n重さ : ^7777771^000000",
@@ -19516,7 +19516,7 @@
   },
   "0014596" : {
     "identifiedItemDescription" : "何かが入っている箱。\r\nずっしり重たい。\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "½©ªüÁ½d¢"
+    "identifiedItemName" : "何かが入った重い箱"
   },
   "0014610" : {
     "identifiedItemDescription" : "お洒落な飾りの付いた\r\nプレゼントボックス。\r\n滅多に手に入らないらしい。\r\n―――――――――――――\r\n重量 : ^77777720^000000",
@@ -19533,7 +19533,7 @@
     "identifiedItemName" : "RJC2013カード帖"
   },
   "0014714" : {
-    "identifiedItemName" : "G^hbvÌ"
+    "identifiedItemName" : "エレメンタルドロップの箱"
   },
   "0014735" : {
     "identifiedItemName" : "コスたまPartners"
@@ -19988,7 +19988,7 @@
   },
   "0016053" : {
     "identifiedItemDescription" : "ローラがいつも\r\n持ち歩いている巨大な鉄球。\r\nどんな硬い物でも\r\n叩き潰せそうだ。\r\n―――――――――――――\r\n[血塗られた鉄球]と\r\n共に装備時、追加で\r\n物理攻撃命中時、\r\n一定確率で5秒間、\r\n敵のDef 100%無視\r\n[ローラの鎖鉄球]の\r\n精錬値が5以上の時、\r\n精錬値が1上がる度に追加で\r\n敵のDefを無視する\r\n時間が1秒延長\r\n―――――――――――――\r\n系列 : ^777777鈍器^000000\r\n攻撃 : ^777777170^000000\r\n重量 : ^777777150^000000\r\n属性 : ^777777火^000000\r\n武器レベル : ^7777774^000000\r\n要求レベル : ^777777130^000000\r\n装備 : ^7777773次職ソードマン系 3次職マーチャント系^000000",
-    "identifiedItemName" : "[Ì½S"
+    "identifiedItemName" : "ローラの鎖鉄球"
   },
   "0016055" : {
     "identifiedItemDescription" : "大地の力を帯びた鎚。\r\n\"^993300天地^000000\"の力を取り戻すことで\r\n本来の性能を発揮することが\r\nできると云われているが…。\r\n―――――――――――――\r\n[無双鎚]の\r\n精錬値が7以上の時、追加で\r\n物理攻撃時、\r\n動物・植物形モンスターに\r\n与えるダメージ + 10%\r\n風・地属性モンスターに\r\n与えるダメージ + 10%\r\n―――――――――――――\r\n[無双鎚]の\r\n精錬値が9以上の時、追加で\r\n物理攻撃時、\r\n動物・植物形モンスターに\r\n与えるダメージ + 15%\r\n風・地属性モンスターに\r\n与えるダメージ + 15%\r\n―――――――――――――\r\n系列 : ^777777鈍器^000000\r\n攻撃 : ^777777130^000000\r\n重量 : ^777777200^000000\r\n属性 : ^777777地^000000\r\n武器レベル : ^7777773^000000\r\n要求レベル : ^77777750^000000\r\n装備 : ^777777ノービス系 ソードマン系 アコライト系 マーチャント系^000000",
@@ -20000,156 +20000,156 @@
   },
   "0016156" : {
     "identifiedItemDescription" : "キューペット\r\nポリンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "|ð·`PbgÌ"
+    "identifiedItemName" : "ポリン交換チケットの箱"
   },
   "0016157" : {
     "identifiedItemDescription" : "キューペット\r\nドロップスの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "hbvXð·`PbgÌ"
+    "identifiedItemName" : "ドロップス交換チケットの箱"
   },
   "0016158" : {
     "identifiedItemDescription" : "キューペット\r\nポポリンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "||ð·`PbgÌ"
+    "identifiedItemName" : "ポポリン交換チケットの箱"
   },
   "0016159" : {
     "identifiedItemDescription" : "キューペット\r\nルナティックの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "ieBbNð·`PbgÌ"
+    "identifiedItemName" : "ルナティック交換チケットの箱"
   },
   "0016160" : {
     "identifiedItemDescription" : "キューペット\r\nピッキの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "sbLð·`PbgÌ"
+    "identifiedItemName" : "ピッキ交換チケットの箱"
   },
   "0016161" : {
     "identifiedItemDescription" : "キューペット\r\nペコペコの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "yRyRð·`PbgÌ"
+    "identifiedItemName" : "ペコペコ交換チケットの箱"
   },
   "0016162" : {
     "identifiedItemDescription" : "キューペット\r\nサベージベベの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "Tx[Wxxð·`PbgÌ"
+    "identifiedItemName" : "サベージベベ交換チケットの箱"
   },
   "0016163" : {
     "identifiedItemDescription" : "キューペット\r\nスポアの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "X|Að·`PbgÌ"
+    "identifiedItemName" : "スポア交換チケットの箱"
   },
   "0016164" : {
     "identifiedItemDescription" : "キューペット\r\nポイズンスポアの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "|CYX|Að·`PbgÌ"
+    "identifiedItemName" : "ポイズンスポア交換チケットの箱"
   },
   "0016165" : {
     "identifiedItemDescription" : "キューペット\r\nチョンチョンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "``ð·`PbgÌ"
+    "identifiedItemName" : "チョンチョン交換チケットの箱"
   },
   "0016166" : {
     "identifiedItemDescription" : "キューペット\r\nスチールチョンチョンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "X`[``ð·`PbgÌ"
+    "identifiedItemName" : "スチールチョンチョン交換チケットの箱"
   },
   "0016167" : {
     "identifiedItemDescription" : "キューペット\r\nグラウンドプティットの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "OEhveBbgð·`PbgÌ"
+    "identifiedItemName" : "グラウンドプティット交換チケットの箱"
   },
   "0016168" : {
     "identifiedItemDescription" : "キューペット\r\nデビルチの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "fr`ð·`PbgÌ"
+    "identifiedItemName" : "デビルチ交換チケットの箱"
   },
   "0016169" : {
     "identifiedItemDescription" : "キューペット\r\nイシスの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "CVXð·`PbgÌ"
+    "identifiedItemName" : "イシス交換チケットの箱"
   },
   "0016170" : {
     "identifiedItemDescription" : "キューペット\r\nスモーキーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "X[L[ð·`PbgÌ"
+    "identifiedItemName" : "スモーキー交換チケットの箱"
   },
   "0016171" : {
     "identifiedItemDescription" : "キューペット\r\nドケビの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "hPrð·`PbgÌ"
+    "identifiedItemName" : "ドケビ交換チケットの箱"
   },
   "0016172" : {
     "identifiedItemDescription" : "キューペット\r\n子デザートウルフの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "qfU[gEtð·`PbgÌ"
+    "identifiedItemName" : "子デザートウルフ交換チケットの箱"
   },
   "0016173" : {
     "identifiedItemDescription" : "キューペット\r\nヨーヨーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "[[ð·`PbgÌ"
+    "identifiedItemName" : "ヨーヨー交換チケットの箱"
   },
   "0016174" : {
     "identifiedItemDescription" : "キューペット\r\nソヒーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "\\q[ð·`PbgÌ"
+    "identifiedItemName" : "ソヒー交換チケットの箱"
   },
   "0016175" : {
     "identifiedItemDescription" : "キューペット\r\nロッカーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "bJ[ð·`PbgÌ"
+    "identifiedItemName" : "ロッカー交換チケットの箱"
   },
   "0016176" : {
     "identifiedItemDescription" : "キューペット\r\nハンターフライの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "n^[tCð·`PbgÌ"
+    "identifiedItemName" : "ハンターフライ交換チケットの箱"
   },
   "0016177" : {
     "identifiedItemDescription" : "キューペット\r\nオークウォリアーの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "I[NEHA[ð·`PbgÌ"
+    "identifiedItemName" : "オークウォリアー交換チケットの箱"
   },
   "0016178" : {
     "identifiedItemDescription" : "キューペット\r\nバフォメットJrの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "otHbgJrð·`PbgÌ"
+    "identifiedItemName" : "バフォメットJr交換チケットの箱"
   },
   "0016179" : {
     "identifiedItemDescription" : "キューペット\r\nムナックの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "ibNð·`PbgÌ"
+    "identifiedItemName" : "ムナック交換チケットの箱"
   },
   "0016180" : {
     "identifiedItemDescription" : "キューペット\r\nボンゴンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "{Sð·`PbgÌ"
+    "identifiedItemName" : "ボンゴン交換チケットの箱"
   },
   "0016181" : {
     "identifiedItemDescription" : "キューペット\r\nクリスマスゴブリンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "NX}XSuð·`PbgÌ"
+    "identifiedItemName" : "クリスマスゴブリン交換チケットの箱"
   },
   "0016182" : {
     "identifiedItemDescription" : "キューペット\r\nモチリンの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "`ð·`PbgÌ"
+    "identifiedItemName" : "モチリン交換チケットの箱"
   },
   "0016183" : {
     "identifiedItemDescription" : "キューペット\r\nジルタスの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "W^Xð·`PbgÌ"
+    "identifiedItemName" : "ジルタス交換チケットの箱"
   },
   "0016184" : {
     "identifiedItemDescription" : "キューペット\r\nアリスの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "AXð·`PbgÌ"
+    "identifiedItemName" : "アリス交換チケットの箱"
   },
   "0016570" : {
     "identifiedItemDescription" : "マッスル騎士団旅情編が\r\n1冊入っている箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "}bXRmc·îÒÌ"
+    "identifiedItemName" : "マッスル騎士団旅情編の箱"
   },
   "0016607" : {
-    "identifiedItemName" : "ouK(2Â)Ì"
+    "identifiedItemName" : "バブルガム(2個)の箱"
   },
   "0016608" : {
-    "identifiedItemName" : "ouK(4Â)Ì"
+    "identifiedItemName" : "バブルガム(4個)の箱"
   },
   "0016633" : {
     "identifiedItemDescription" : "甘ったるくて歯ごたえがある\r\nバブルガム+が\r\n10個入っている箱。\r\n――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "ouK+Ì"
+    "identifiedItemName" : "バブルガム+の箱"
   },
   "0016653" : {
     "identifiedItemDescription" : "戦闘教範75が\r\n10冊入っている箱。\r\n―――――――――――――\r\n^000088戦闘教範75：^000000\r\n^000088BaseLv130以下の^000000\r\n^000088キャラクターが^000000\r\n^000088使用した場合、^000000\r\n^00008830分間、Base・Job共に^000000\r\n^000088獲得経験値 + 75%^000000\r\n―――――――――――――\r\n^000088戦闘教範75：^000000\r\n^000088BaseLv131以上の^000000\r\n^000088キャラクターが^000000\r\n^000088使用した場合、^000000\r\n^00008830分間、Base・Job共に^000000\r\n^000088獲得経験値 + 50%^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "í¬³Í75Ì"
+    "identifiedItemName" : "戦闘教範75の箱"
   },
   "0016674" : {
-    "identifiedItemName" : "gãíèÌìÌ"
+    "identifiedItemName" : "身代わりの護符の箱"
   },
   "0016682" : {
     "identifiedItemDescription" : "騎乗用手綱が\r\n1個入っている箱。\r\n―――――――――――――\r\n^FF0000騎乗用手綱は\r\n箱を開けたキャラクターで\r\nのみ使用可能です。\r\nあらゆる取引、移動が不可と\r\nなりますので、使用したい\r\nキャラクターで箱を開けて\r\nください^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "RæpèjÌ"
+    "identifiedItemName" : "騎乗用手綱の箱"
   },
   "0017104" : {
     "identifiedItemDescription" : "改良型濃縮オリデオコンが\r\n1個入っている箱。\r\n―――――――――――――\r\n^000088レベル1の武器なら\r\n精錬値が7以上\r\nレベル2の武器なら\r\n精錬値が6以上\r\nレベル3の武器なら\r\n精錬値が5以上\r\nレベル4の武器なら\r\n精錬値が4以上のものを\r\n精錬することが可能\r\n精錬する際、失敗しても\r\n武器が消失しないかわりに\r\n精錬値が1下がる^000000\r\n―――――――――――――\r\n^000088武器の精錬時、\r\n通常のオリデオコンより\r\n成功率が上昇する\r\nただし、+9から+10への\r\n精錬成功率は、通常の\r\nオリデオコンと同率^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "üÇ^ZkIfIRÌ"
+    "identifiedItemName" : "改良型濃縮オリデオコンの箱"
   },
   "0017105" : {
     "identifiedItemDescription" : "改良型濃縮エルニウムが\r\n1個入っている箱。\r\n―――――――――――――\r\n^000088精錬値が4以上の防具を\r\n精錬することが可能\r\n精錬する際、失敗しても\r\n防具が消失しないかわりに\r\n精錬値が1下がる^000000\r\n―――――――――――――\r\n^000088防具の精錬時、\r\n通常のエルニウムより\r\n成功率が上昇する\r\nただし、+9から+10への\r\n精錬成功率は、通常の\r\nエルニウムと同率^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "üÇ^ZkGjEÌ"
+    "identifiedItemName" : "改良型濃縮エルニウムの箱"
   },
   "0017161" : {
     "identifiedItemDescription" : "キューペット\r\nドモヴォイの卵を\r\n貰う為に必要なチケットが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "hHCu[_[ÌØÌ"
+    "identifiedItemName" : "ドモヴォイブリーダーの証の箱"
   },
   "0017165" : {
     "identifiedItemDescription" : "夢見る乙女のパンケーキが\r\n50個入ったステキな箱。\r\nスウィーツ好きなら\r\n手に入れるべき一品。\r\n賞味期限が来る前に\r\n開封しよう。\r\n―――――――――――――\r\n^FF0000[パンケーキBOX]は\r\n受け取ってから168時間後に\r\n自動的に消滅します。^000000\r\n―――――――――――――\r\n^FF0000[夢見る乙女のパンケーキ]は\r\n[パンケーキBOX]を\r\n開けてから72時間後に\r\n自動的に消滅します。^000000\r\n―――――――――――――\r\n^FF0000[パンケーキBOX]は\r\nNPC売却・倉庫への移動が\r\n可能です。^000000\r\n―――――――――――――\r\n重量 : ^777777150^000000",
@@ -20157,17 +20157,17 @@
   },
   "0017183" : {
     "identifiedItemDescription" : "マジカルウォッチが\r\n1個入っている箱。\r\n―――――――――――――\r\n^FF0000このアイテムの利用期間は、\r\n2012年3月13日定期\r\nメンテナンス終了から\r\n2012年4月10日定期\r\nメンテナンス開始まで\r\nとなります^000000\r\n―――――――――――――\r\n^FF0000マジカルウォッチは\r\n箱を開けたキャラクターで\r\nのみ利用可能です。\r\nあらゆる取引、移動が不可と\r\nなりますので、使用したい\r\nキャラクターで箱を開けて\r\nください^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "}WJEHb`Ì"
+    "identifiedItemName" : "マジカルウォッチの箱"
   },
   "0017213" : {
     "identifiedItemDescription" : "古より伝わる黄色い箱。\r\n何が出るかは開けてみての\r\nお楽しみ。\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "ÃÌ©F¢"
+    "identifiedItemName" : "古の黄色い箱"
   },
   "0017214" : {
-    "identifiedItemName" : "}WJubNÌ"
+    "identifiedItemName" : "マジカルブックの箱"
   },
   "0017215" : {
-    "identifiedItemName" : "}WJubNÌ"
+    "identifiedItemName" : "マジカルブックの箱"
   },
   "0017216" : {
     "identifiedItemDescription" : "夢見る乙女のパンケーキが\r\n150個も入っている\r\nとってもステキな箱。\r\nスウィーツ好きなら\r\n並んででも手に入れるべき\r\nマストアイテム。\r\n賞味期限が来る前に\r\n開封しよう。\r\n―――――――――――――\r\n^FF0000[パンケーキBOX]は\r\n受け取ってから168時間後に\r\n自動的に消滅します。^000000\r\n―――――――――――――\r\n^FF0000[夢見る乙女のパンケーキ]は\r\n[パンケーキBOX]を\r\n開けてから72時間後に\r\n自動的に消滅します。^000000\r\n―――――――――――――\r\n^FF0000[パンケーキBOX]は\r\nNPC売却・倉庫への移動が\r\n可能です。^000000\r\n―――――――――――――\r\n重量 : ^777777450^000000",
@@ -20183,11 +20183,11 @@
   },
   "0017219" : {
     "identifiedItemDescription" : "マジカルアップルが\r\n1個入っている箱。\r\n―――――――――――――\r\n^000088マジカルアップル：\r\nリフレッシュルームにいる\r\n「術士フルール」に渡すと、\r\nステータスをリセット\r\nしてもらえる^000000\r\n―――――――――――――\r\n^000088転生職、3次職、\r\n影狼・朧、限界突破後の\r\nスーパーノービスは\r\nステータスリセット\r\nサービスを利用する際に\r\n[マジカルアップル]が\r\n必要になります^000000\r\n―――――――――――――\r\n^FF0000マジカルアップルは\r\n箱を開けたキャラクターで\r\nのみ利用可能です。\r\nあらゆる取引、移動が不可と\r\nなりますので、使用したい\r\nキャラクターで箱を開けて\r\nください。^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "}WJAbvÌ"
+    "identifiedItemName" : "マジカルアップルの箱"
   },
   "0017220" : {
     "identifiedItemDescription" : "スペシャルクエストチケット\r\nが1個入っている箱。\r\n―――――――――――――\r\n^000088スペシャル\r\nクエストチケット：\r\nルーンミッドガッツ王国の\r\n首都プロンテラにいる\r\nNPC「セラフィりん」に\r\n持って行こう。^000000\r\n―――――――――――――\r\n^FF0000このアイテムの利用期間は、\r\n2015年5月26日(火)\r\n定期メンテナンス開始まで\r\nとなります。^000000\r\n利用期間終了後に箱を\r\nあけた場合、\r\n何も出現しません。\r\n―――――――――――――\r\n^ff0000[スペシャルクエスト\r\nチケットの箱]はNPC売却・\r\n倉庫への移動が可能です。^000000\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "XyVNGXg`PbgÌ"
+    "identifiedItemName" : "スペシャルクエストチケットの箱"
   },
   "0017243" : {
     "identifiedItemDescription" : "開けると衣装装備が飛び出す\r\n不思議なたまご。\r\n―――――――――――――\r\n以下の衣装装備のいずれか\r\n1つがランダムで出現する。^0000FF\r\n・[衣装] ネコミミキャップ\r\n・[衣装] 堕天使の忘れもの\r\n・[衣装] 乙女の\r\n　　　　   ツインリボン\r\n・[衣装] リボン（赤）\r\n・[衣装] ドレスハット\r\n・[衣装] 天使の忘れもの\r\n・[衣装] マジックアイズ\r\n・[衣装] ハイビスカス\r\n・[衣装] 月桂樹の冠\r\n・[衣装] 装飾用\r\n　　　　   ジオグラファー^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -20214,18 +20214,18 @@
     "identifiedItemName" : "コスたまXmasParty"
   },
   "0017276" : {
-    "identifiedItemName" : "}WJt[Ì"
+    "identifiedItemName" : "マジカルフラワーの箱"
   },
   "0017280" : {
     "identifiedItemName" : "コスたまNewYear"
   },
   "0017289" : {
     "identifiedItemDescription" : "ヴェルゼブブの羽が\r\n1個入っている箱。\r\n―――――――――――――\r\nヴェルゼブブの羽：\r\n無限の魔力を宿す\r\nヴェルゼブブの羽。\r\n羽が消滅するまでの間は\r\n何度使ってもなくならない。\r\n―――――――――――――\r\n^000088使用すると\r\nマップ上のランダムな\r\n場所にワープする^000000\r\n―――――――――――――\r\n^FF0000ヴェルゼブブの羽は\r\n箱を開けたキャラクターで\r\nのみ利用可能です。\r\nあらゆる取引、移動が不可と\r\nなりますので、使用したい\r\nキャラクターで箱を開けて\r\nください。^000000\r\n―――――――――――――\r\n^FF0000ヴェルゼブブの羽は\r\n箱を開けてから240時間後に\r\n自動的に消滅します。^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "F[uuÌHÌ"
+    "identifiedItemName" : "ヴェルゼブブの羽の箱"
   },
   "0017290" : {
     "identifiedItemDescription" : "オルレアンのフルコースが\r\n5個入っている箱。\r\n料理が腐らないように\r\n特殊処理されている。\r\n―――――――――――――\r\nオルレアンのフルコース：\r\nAll Status + 10\r\nAtk + 30\r\nMatk + 30\r\n30分間持続\r\n―――――――――――――\r\nキャラクターが戦闘不能に\r\nなっても効果が消えない\r\n―――――――――――――\r\n^FF0000既存のスペシャル料理と\r\n効果は重複しません。^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "IAÌtR[XÌ"
+    "identifiedItemName" : "オルレアンのフルコースの箱"
   },
   "0017291" : {
     "identifiedItemName" : "コスたまGirlsSelection"
@@ -20253,7 +20253,7 @@
   },
   "0017336" : {
     "identifiedItemDescription" : "ジェレミーの美容クーポンが\r\n1個入っている箱。\r\n髪型を変更する事が出来る。\r\n―――――――――――――\r\n^000088ジェレミーの美容クーポン：\r\n衛星都市イズルードにいる\r\nシニアスタイリスト\r\n「ジェレミー」に渡すと、\r\n特別なヘアスタイルに\r\nしてもらえる^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "WF~[ÌüeN[|Ì"
+    "identifiedItemName" : "ジェレミーの美容クーポンの箱"
   },
   "0017428" : {
     "identifiedItemDescription" : "開けると衣装装備が飛び出す\r\n不思議なたまご。\r\n―――――――――――――\r\n以下の衣装装備のいずれか\r\n1つがランダムで出現する。^0000FF\r\n・[衣装] プリティラビット\r\n　　　　　フード\r\n・[衣装] フラワーポット\r\n　　　　　マスク\r\n・[衣装] ピアメット頭巾\r\n・[衣装] ラブラビット\r\n　　　　　フード\r\n・[衣装] 兎耳帽子\r\n・[衣装] ダークネスアイズ\r\n・[衣装] たれうさぎ\r\n・[衣装] サテライト\r\n　　　　　ヘアバンド\r\n・[衣装] バニーヘアバンド\r\n・[衣装] ゴールドティアラ^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -20280,7 +20280,7 @@
   },
   "0017463" : {
     "identifiedItemDescription" : "スペシャルクエストしいたけ\r\nが1個入っている箱。\r\n―――――――――――――\r\n^000088スペシャル\r\nクエストしいたけ：\r\nルーンミッドガッツ王国の\r\n首都プロンテラにいる\r\nNPC「フォーりん」に\r\n持って行こう。^000000\r\n―――――――――――――\r\n^FF0000このアイテムの利用期間は、\r\n2015年10月6日(火)\r\n定期メンテナンス開始まで\r\nとなります。^000000\r\n利用期間終了後に箱を\r\nあけた場合、\r\n何も出現しません。\r\n―――――――――――――\r\n^ff0000[スペシャルクエスト\r\nしいたけの箱]はNPC売却・\r\n倉庫への移動が可能です。^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "XyVNGXgµ¢½¯Ì"
+    "identifiedItemName" : "スペシャルクエストしいたけの箱"
   },
   "0017470" : {
     "identifiedItemName" : "コスたまHelmCollection"
@@ -20311,7 +20311,7 @@
   },
   "0017518" : {
     "identifiedItemDescription" : "ファミ通クエストチケットが\r\n1個入っている箱。\r\n―――――――――――――\r\n^FF0000このアイテムの利用期間は、\r\n2015年3月3日(火)\r\n定期メンテナンス開始まで\r\nとなります^000000\r\n利用期間終了後に箱を\r\nあけた場合、\r\n何も出現しません\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "t@~ÊNGXg`PbgÌ"
+    "identifiedItemName" : "ファミ通クエストチケットの箱"
   },
   "0017523" : {
     "identifiedItemName" : "コスたまMystic"
@@ -20348,11 +20348,11 @@
     "identifiedItemName" : "コスたまSteampunk"
   },
   "0017619" : {
-    "identifiedItemName" : "É¸B`PbgÌ"
+    "identifiedItemName" : "究極精錬チケットの箱"
   },
   "0017634" : {
     "identifiedItemDescription" : "コスチュームチェンジ\r\nチケットが1個入っている箱。\r\n対応済みの3次職の服を\r\nセカンドコスチュームに\r\n変更したり、元に戻したり\r\nすることができる。\r\n―――――――――――――\r\n^FF0000セカンドコスチュームは\r\n現在下記の職業にのみ\r\n対応しています。\r\n他の職業では、\r\nこのチケットを使用できない\r\nため注意してください。\r\n【対応職業】\r\n・ジェネティック\r\n・ギロチンクロス\r\n・メカニック\r\n・ロイヤルガード\r\n・アークビショップ^000000\r\n―――――――――――――\r\n^FF0000[コスチュームチェンジ\r\nチケットの箱]は\r\n倉庫への移動のみ可能です。\r\n^000000―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "RX`[`FW`PbgÌ"
+    "identifiedItemName" : "コスチュームチェンジチケットの箱"
   },
   "0017635" : {
     "identifiedItemName" : "コスたまHolyDarknessII"
@@ -20601,7 +20601,7 @@
   },
   "0018562" : {
     "identifiedItemDescription" : "骸骨をモチーフにした\r\n不気味なコサージュ。\r\n―――――――――――――\r\nMdef + 3\r\n―――――――――――――\r\n物理攻撃時、\r\n人間形モンスターへの\r\nダメージ + 5%\r\n―――――――――――――\r\n魔法攻撃時、\r\n人間形モンスターへの\r\nダメージ + 5%\r\n―――――――――――――\r\n人間形モンスターから\r\n受けるダメージ - 5%\r\n―――――――――――――\r\n人間形モンスターを\r\n倒した時、一定確率で\r\n「止まらない心臓」を\r\nドロップ\r\n―――――――――――――\r\n系列 : ^777777兜^000000\r\n防御 : ^7777773^000000\r\n位置 : ^777777上段^000000\r\n重量 : ^77777720^000000\r\n要求レベル : ^77777710^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "[ÌRT[W"
+    "identifiedItemName" : "骸骨のコサージュ"
   },
   "0018563" : {
     "identifiedItemName" : "ハートウイングヘアバンド"
@@ -21801,7 +21801,7 @@
   },
   "0019671" : {
     "identifiedItemDescription" : "貯金箱が一杯になった時、\r\n中身を出す時に割るのが\r\n躊躇いそうな、可愛い\r\n豚の貯金箱を模した衣装。\r\n―――――――――――――\r\n系列 : ^777777衣装^000000\r\n防御 : ^7777770^000000\r\n位置 : ^777777上段^000000\r\n重量 : ^7777770^000000\r\n要求レベル : ^7777771^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "[ß] Ô½³ñà"
+    "identifiedItemName" : "[衣装] ぶたさん貯金箱"
   },
   "0019672" : {
     "identifiedItemDescription" : "ポリンのシールで\r\n封がされている\r\n手紙を模した衣装。\r\n誰か宛の\r\nラブレターかもしれない。\r\n―――――――――――――\r\n系列 : ^777777衣装^000000\r\n防御 : ^7777770^000000\r\n位置 : ^777777下段^000000\r\n重量 : ^7777770^000000\r\n要求レベル : ^7777771^000000\r\n装備 : ^777777全ての職業^000000",
@@ -22311,7 +22311,7 @@
   },
   "0019820" : {
     "identifiedItemDescription" : "骸骨をモチーフにした\r\n不気味な\r\n衣装用のコサージュ。\r\n―――――――――――――\r\n系列 : ^777777衣装^000000\r\n防御 : ^7777770^000000\r\n位置 : ^777777上段^000000\r\n重量 : ^7777770^000000\r\n要求レベル : ^7777771^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "[ß] [ÌRT[W"
+    "identifiedItemName" : "[衣装] 骸骨のコサージュ"
   },
   "0019821" : {
     "identifiedItemDescription" : "ヒェグンが被っている\r\n衣装用の帽子。\r\n非常に古くてぼろぼろだ。\r\n―――――――――――――\r\n系列 : ^777777衣装^000000\r\n防御 : ^7777770^000000\r\n位置 : ^777777上中下段^000000\r\n重量 : ^7777770^000000\r\n要求レベル : ^7777771^000000\r\n装備 : ^777777全ての職業^000000",
@@ -22674,7 +22674,7 @@
   },
   "0019948" : {
     "identifiedItemDescription" : "頭の上でふわふわと漂う\r\n衣装用の地球。\r\n世界中の仲間たちが住む\r\n水と緑に溢れた美しい星だ。\r\n―――――――――――――\r\n系列 : ^777777衣装^000000\r\n防御 : ^7777770^000000\r\n位置 : ^777777上段^000000\r\n重量 : ^7777770^000000\r\n要求レベル : ^7777771^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "[ß] n"
+    "identifiedItemName" : "[衣装] 地球"
   },
   "0019949" : {
     "identifiedItemDescription" : "RWC2013開催を記念して\r\n作成された衣装用の帽子。\r\n―――――――――――――\r\n系列 : ^777777衣装^000000\r\n防御 : ^7777770^000000\r\n位置 : ^777777上段^000000\r\n重量 : ^7777770^000000\r\n要求レベル : ^7777771^000000\r\n装備 : ^777777全ての職業^000000",
@@ -24385,22 +24385,22 @@
   },
   "0020726" : {
     "identifiedItemDescription" : "火竜の皮から作られた\r\n外套に魔法をかけた物。\r\n―――――――――――――\r\nMaxHP + 5%\r\n―――――――――――――\r\n火属性魔法攻撃で\r\n与えるダメージ + 2%\r\n―――――――――――――\r\n精錬値が7以上の時、\r\n追加で\r\n火属性魔法攻撃で\r\n与えるダメージ + 3%\r\n―――――――――――――\r\n水属性魔法攻撃で\r\n与えるダメージ - 10%\r\n―――――――――――――\r\n系列 : ^777777肩にかける物^000000\r\n防御 : ^7777770^000000\r\n重量 : ^77777730^000000\r\n要求レベル : ^77777730^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "Î³ÌO"
+    "identifiedItemName" : "火竜の外套"
   },
   "0020728" : {
     "identifiedItemDescription" : "水竜の皮から作られた\r\n外套に魔法をかけた物。\r\n―――――――――――――\r\nMaxHP + 5%\r\n―――――――――――――\r\n水属性魔法攻撃で\r\n与えるダメージ + 2%\r\n―――――――――――――\r\n精錬値が7以上の時、\r\n追加で\r\n水属性魔法攻撃で\r\n与えるダメージ + 3%\r\n―――――――――――――\r\n風属性魔法攻撃で\r\n与えるダメージ - 10%\r\n―――――――――――――\r\n系列 : ^777777肩にかける物^000000\r\n防御 : ^7777770^000000\r\n重量 : ^77777730^000000\r\n要求レベル : ^77777730^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "³ÌO"
+    "identifiedItemName" : "水竜の外套"
   },
   "0020729" : {
     "identifiedItemDescription" : "風竜の皮から作られた\r\n外套に魔法をかけた物。\r\n―――――――――――――\r\nMaxHP + 5%\r\n―――――――――――――\r\n風属性魔法攻撃で\r\n与えるダメージ + 2%\r\n―――――――――――――\r\n精錬値が7以上の時、\r\n追加で風属性魔法攻撃で\r\n与えるダメージ + 3%\r\n―――――――――――――\r\n地属性魔法攻撃で\r\n与えるダメージ - 10%\r\n―――――――――――――\r\n系列 : ^777777肩にかける物^000000\r\n防御 : ^7777770^000000\r\n重量 : ^77777730^000000\r\n要求レベル : ^77777730^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "³ÌO"
+    "identifiedItemName" : "風竜の外套"
   },
   "0020730" : {
     "identifiedItemName" : "忠臣の頭巾"
   },
   "0020731" : {
     "identifiedItemDescription" : "地竜の皮から作られた\r\n外套に魔法をかけた物。\r\n―――――――――――――\r\nMaxHP + 5%\r\n―――――――――――――\r\n地属性魔法攻撃で\r\n与えるダメージ + 2%\r\n―――――――――――――\r\n精錬値が7以上の時、\r\n追加で地属性魔法攻撃で\r\n与えるダメージ + 3%\r\n―――――――――――――\r\n火属性魔法攻撃で\r\n与えるダメージ - 10%\r\n―――――――――――――\r\n系列 : ^777777肩にかける物^000000\r\n防御 : ^7777770^000000\r\n重量 : ^77777730^000000\r\n要求レベル : ^77777730^000000\r\n装備 : ^777777全ての職業^000000",
-    "identifiedItemName" : "n³ÌO"
+    "identifiedItemName" : "地竜の外套"
   },
   "0020734" : {
     "identifiedItemDescription" : "風の精霊の力が\r\n宿っているマント。\r\n矢玉から着用者を護るように\r\n常に風が取り巻いている。\r\n―――――――――――――\r\n風属性攻撃で\r\n受けるダメージ - 10%\r\n―――――――――――――\r\n地属性攻撃で\r\n受けるダメージ + 10%\r\n―――――――――――――\r\n遠距離物理攻撃で\r\n受けるダメージ - 5%\r\n―――――――――――――\r\n精錬値が1上がる度に、\r\n追加で遠距離物理攻撃で\r\n受けるダメージ - 1%\r\n―――――――――――――\r\n系列 : ^777777肩にかける物^000000\r\n防御 : ^77777710^000000\r\n重量 : ^77777730^000000\r\n要求レベル : ^77777770^000000\r\n装備 : ^777777全ての職業^000000",
@@ -24915,7 +24915,7 @@
   },
   "0022534" : {
     "identifiedItemDescription" : "彼女の計り知れない\r\n寂しさが作り出した\r\n固く閉じられた箱。\r\n今なら開けることができる。\r\n―――――――――――――\r\n開けると様々なアイテムの\r\n中からランダムで1つ\r\n入手できる\r\n―――――――――――――\r\n重量 : ^777777100^000000",
-    "identifiedItemName" : "Â´³ê½SÌ"
+    "identifiedItemName" : "閉ざされた心の箱"
   },
   "0022537" : {
     "identifiedItemDescription" : "モロクを倒した勇者に\r\n与えられる箱。\r\nモロクと戦った戦士達の\r\n装備品が入っている。\r\n―――――――――――――\r\n^FF0000箱を開けることで\r\nアイテムを入手可能。^000000\r\n―――――――――――――\r\n重量 : ^77777710^000000",
@@ -24930,15 +24930,15 @@
   },
   "0022567" : {
     "identifiedItemDescription" : "モロクを倒すために戦った\r\n連合軍兵士に与えられる\r\n褒賞が入った箱。\r\n―――――――――――――\r\n^FF0000箱を開けることで\r\nアイテムを入手可能。^000000\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "_NªJÜ"
+    "identifiedItemName" : "魔神モロク遠征褒賞箱"
   },
   "0022656" : {
     "identifiedItemDescription" : "主に装備品が入っている\r\n補給物資の箱。\r\n望んだ物が入ってるとは\r\n限らない……。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
-    "identifiedItemName" : "â¨Ì"
+    "identifiedItemName" : "補給物資の箱"
   },
   "0022667" : {
     "identifiedItemDescription" : "対人戦に有効なアイテムが\r\n入った箱。\r\n―――――――――――――\r\n重量 : ^77777710^000000",
-    "identifiedItemName" : "[hÎRíÁê"
+    "identifiedItemName" : "ワールド対抗戦特殊箱"
   },
   "0022679" : {
     "identifiedItemDescription" : "戦死者の「魂」というものが\r\n入っている箱。\r\nこれは本当に「魂」なのか、\r\nそして誰の「魂」なのか、\r\n知ることはできない。\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -24981,11 +24981,11 @@
     "identifiedItemName" : "レコードの破片(50日目)"
   },
   "0022696" : {
-    "identifiedItemName" : "W`Pbg(2Â)Ì"
+    "identifiedItemName" : "Wチケット(2個)の箱"
   },
   "0022698" : {
     "identifiedItemDescription" : "ワンタイムパスワード(OTP)\r\nまたはIDロック利用者が\r\n手にすることができる\r\n特別な証が入った箱。\r\nNPC「シルト」に\r\n証を見せると、特別な魔法を\r\n受けることができるようだ。\r\n―――――――――――――\r\n^FF0000[防壁強化の証の箱]は\r\nあらゆる取引、移動が\r\nできません。^000000\r\n―――――――――――――\r\n^FF0000防壁強化の証は\r\n箱を開けてから168時間後に\r\n自動的に消滅しますが、\r\n倉庫の中で期限が過ぎた場合\r\n自動的に消滅せず、\r\n倉庫から出した瞬間に\r\n消滅します。^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "hÇ­»ÌØÌ"
+    "identifiedItemName" : "防壁強化の証の箱"
   },
   "0022709" : {
     "identifiedItemName" : "リリーフポーション(小)"
@@ -25010,7 +25010,7 @@
     "identifiedItemName" : "夢見る乙女のパンケーキ"
   },
   "0022733" : {
-    "identifiedItemName" : "XyV_Wüê`PbgÌ"
+    "identifiedItemName" : "スペシャルダンジョン入場チケットの箱"
   },
   "0022778" : {
     "identifiedItemDescription" : "金色に輝くタマゴ。\r\n^FF0000タマゴを開けることで\r\nアイテムを入手可能。^000000\r\n―――――――――――――\r\n^FF0000金タマゴは\r\n倉庫への移動のみ\r\n可能です。^000000\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -25033,7 +25033,7 @@
     "identifiedItemName" : "ハッピーボックス"
   },
   "0022871" : {
-    "identifiedItemName" : "É¸B`PbgÌ"
+    "identifiedItemName" : "究極精錬チケットの箱"
   },
   "0022900" : {
     "identifiedItemName" : "ナカガヨクナール"
@@ -25122,11 +25122,11 @@
   },
   "0023035" : {
     "identifiedItemDescription" : "スペシャルダンジョン\r\n入場チケットが1個\r\n入っている箱。\r\n―――――――――――――\r\n^FF0000このアイテムの利用期間は、\r\n2015年10月20日(火)\r\n定期メンテナンス開始まで\r\nとなります。^000000\r\n利用期間終了後に箱を\r\nあけた場合、何も出現\r\nしません。\r\n―――――――――――――\r\n^FF0000スペシャルダンジョン\r\n入場チケットの箱は倉庫への\r\n移動のみ可能です。^000000\r\n―――――――――――――\r\n^FF0000スペシャルダンジョン\r\n入場チケットは\r\n箱を開けてから480時間後に\r\n自動的に消滅します。^000000\r\n―――――――――――――\r\nスペシャルダンジョン\r\n入場チケット：\r\nプロンテラにいる\r\nNPC「RJC2015親善大使」に\r\n持って行くと\r\n特別なダンジョンに\r\n入るための\r\n特別なマップに移動できる\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "XyV_Wüê`PbgÌ"
+    "identifiedItemName" : "スペシャルダンジョン入場チケットの箱"
   },
   "0023036" : {
     "identifiedItemDescription" : "LoVAコラボチケットが1個\r\n入っている箱。\r\n―――――――――――――\r\n^000088LoVAコラボチケット：\r\n時の狭間にいる\r\nNPC「ドゥクス・ティア」に\r\n持っていこう。^000000\r\n―――――――――――――\r\n^FF0000[LoVAコラボチケットの箱]は\r\nNPC売却・倉庫への移動が\r\n可能です。^000000\r\n―――――――――――――\r\n重量 : ^7777770^000000",
-    "identifiedItemName" : "LoVAR{`PbgÌ"
+    "identifiedItemName" : "LoVAコラボチケットの箱"
   },
   "0023044" : {
     "identifiedItemDescription" : "誰が作っているか分からない\r\nエルヴィラの見た目をした\r\nキャンディ。\r\nソーダ味のように見えるが\r\n実際はミント味。\r\n―――――――――――――\r\n^000088呪縛陣・スローキャスト・\r\n精神衝撃・致命的な傷・\r\n転倒・氷結\r\nの状態異常を回復^000000する\r\n―――――――――――――\r\n再使用待機時間60秒\r\n―――――――――――――\r\n重量 : ^7777771^000000",
@@ -25608,7 +25608,7 @@
     "identifiedItemName" : "神官のネックレス"
   },
   "0028388" : {
-    "identifiedItemName" : "hçê½S"
+    "identifiedItemName" : "血塗られた鉄球"
   },
   "0028389" : {
     "identifiedItemDescription" : "グラストヘイム城を\r\n守護する役割を与えられた\r\nロイヤルガードの中でも\r\n精鋭とされた者たちに\r\n密かに下賜されたと\r\n言われる指輪。\r\n城の緊急時に\r\n即座に戻れるような\r\n術式が施されていたという。\r\n近年遺物として発見されたが\r\n今でも術式の発動は\r\n可能であるようだ。\r\n―――――――――――――\r\nMdef + 3\r\n―――――――――――――\r\nMaxHP + 5%\r\n―――――――――――――\r\n詠唱時間 - 4%\r\n―――――――――――――\r\n[グラストヘイムへの帰還]\r\nLv1使用可能\r\n―――――――――――――\r\n系列 : ^777777アクセサリー^000000\r\n防御 : ^7777773^000000\r\n重量 : ^77777750^000000\r\n要求レベル : ^77777790^000000\r\n装備 : ^777777全ての職業^000000",
