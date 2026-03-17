@@ -13,15 +13,11 @@ import SwiftUI
 
 struct EffectViewer: View {
     var body: some View {
-        #if os(visionOS)
-        EmptyView()
-        #else
         AsyncContentView {
             try await loadSTR(named: "lightning.str")
         } content: { renderer in
             MetalViewContainer(renderer: renderer)
         }
-        #endif
     }
 
     private func loadSTR(named name: String) async throws -> STRRenderer {

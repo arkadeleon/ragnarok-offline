@@ -9,7 +9,7 @@ import MetalKit
 import RagnarokRenderers
 import SwiftUI
 
-#if os(iOS)
+#if canImport(UIKit)
 
 struct MetalViewContainer: UIViewRepresentable {
     var renderer: any Renderer
@@ -73,7 +73,7 @@ class MetalView: UIView, MTKViewDelegate {
     }
 }
 
-#elseif os(macOS)
+#elseif canImport(AppKit)
 
 struct MetalViewContainer: NSViewRepresentable {
     var renderer: any Renderer
@@ -133,16 +133,6 @@ class MetalView: NSView, MTKViewDelegate {
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
-    }
-}
-
-#else
-
-struct MetalViewContainer: View {
-    var renderer: any Renderer
-
-    var body: some View {
-        EmptyView()
     }
 }
 

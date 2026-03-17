@@ -53,9 +53,6 @@ struct STRFileEffectView: View {
         AsyncContentView {
             try await loadSTRFile()
         } content: { renderer in
-            #if os(visionOS)
-            EmptyView()
-            #else
             MetalViewContainer(renderer: renderer)
                 .gesture(
                     MagnificationGesture()
@@ -66,7 +63,6 @@ struct STRFileEffectView: View {
                             magnification *= value
                         }
                 )
-            #endif
         }
     }
 
