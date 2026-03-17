@@ -63,7 +63,7 @@ final class NetworkClientTests: XCTestCase {
     func testNetworkClient() async throws {
         // MARK: - Start login client
 
-        let loginClient = Client(name: "Login", address: "127.0.0.1", port: 6900)
+        let loginClient = NetworkClient(name: "Login", address: "127.0.0.1", port: 6900)
 
         loginClient.connect()
 
@@ -84,7 +84,7 @@ final class NetworkClientTests: XCTestCase {
 
         // MARK: - Connect char server
 
-        let charClient = Client(name: "Char", address: charServers[0].ip, port: charServers[0].port)
+        let charClient = NetworkClient(name: "Char", address: charServers[0].ip, port: charServers[0].port)
 
         charClient.connect()
 
@@ -140,7 +140,7 @@ final class NetworkClientTests: XCTestCase {
 
         // MARK: - Connect map server
 
-        let mapClient = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
+        let mapClient = NetworkClient(name: "Map", address: mapServer.ip, port: mapServer.port)
 
         mapClient.connect()
 

@@ -33,7 +33,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     public private(set) var account: AccountInfo
 
-    let client: Client
+    let client: NetworkClient
     let eventSubject = PassthroughSubject<CharSession.Event, Never>()
 
     public var eventPublisher: AnyPublisher<CharSession.Event, Never> {
@@ -44,13 +44,13 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
 
     public init(account: AccountInfo, charServer: CharServerInfo) {
         self.account = account
-        self.client = Client(name: "Char", address: charServer.ip, port: charServer.port)
+        self.client = NetworkClient(name: "Char", address: charServer.ip, port: charServer.port)
     }
 
     public func start() {
-        var subscription = ClientSubscription()
+        var subscription = NetworkClientSubscription()
 
-        subscription.subscribe(to: ClientError.self) { [unowned self] error in
+        subscription.subscribe(to: NetworkClientError.self) { [unowned self] error in
             let event = CharSession.Event.errorOccurred(error: error)
             self.eventSubject.send(event)
         }
@@ -116,7 +116,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         timerTask = nil
     }
 
-    private func subscribeToCharServerPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToCharServerPackets(with subscription: inout NetworkClientSubscription) {
         // 0x6b
         subscription.subscribe(to: PACKET_HC_ACCEPT_ENTER.self) { [unowned self] packet in
             let characters = packet.characters.map(CharacterInfo.init(from:))
@@ -149,7 +149,7 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToCharPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToCharPackets(with subscription: inout NetworkClientSubscription) {
         // 0x6d
         subscription.subscribe(to: PACKET_HC_ACCEPT_MAKECHAR.self) { [unowned self] packet in
             let character = CharacterInfo(from: packet.character)

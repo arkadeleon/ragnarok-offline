@@ -60,17 +60,17 @@ final class ChatSession {
     private var username: String?
 
     @ObservationIgnored
-    private var loginClient: Client?
+    private var loginClient: NetworkClient?
     @ObservationIgnored
     private var loginKeepaliveTask: Task<Void, Never>?
 
     @ObservationIgnored
-    private var charClient: Client?
+    private var charClient: NetworkClient?
     @ObservationIgnored
     private var charKeepaliveTask: Task<Void, Never>?
 
     @ObservationIgnored
-    private var mapClient: Client?
+    private var mapClient: NetworkClient?
     @ObservationIgnored
     private var mapKeepaliveTask: Task<Void, Never>?
 
@@ -164,7 +164,7 @@ final class ChatSession {
             return
         }
 
-        let client = Client(name: "LoginClient", address: serverAddress, port: serverPort)
+        let client = NetworkClient(name: "Login", address: serverAddress, port: serverPort)
 
         Task {
             for await error in client.errorStream {
@@ -249,7 +249,7 @@ final class ChatSession {
         loginClient?.disconnect()
         loginClient = nil
 
-        let client = Client(name: "CharClient", address: charServer.ip, port: charServer.port)
+        let client = NetworkClient(name: "Char", address: charServer.ip, port: charServer.port)
 
         Task {
             for await error in client.errorStream {
@@ -376,7 +376,7 @@ final class ChatSession {
         charClient?.disconnect()
         charClient = nil
 
-        let client = Client(name: "MapClient", address: mapServer.ip, port: mapServer.port)
+        let client = NetworkClient(name: "Map", address: mapServer.ip, port: mapServer.port)
 
         Task {
             for await error in client.errorStream {

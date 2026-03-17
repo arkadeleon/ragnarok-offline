@@ -1,5 +1,5 @@
 //
-//  ClientSubscription.swift
+//  NetworkClientSubscription.swift
 //  RagnarokNetwork
 //
 //  Created by Leon Li on 2025/3/26.
@@ -7,13 +7,13 @@
 
 import RagnarokPackets
 
-typealias ClientErrorHandler = @Sendable (_ error: ClientError) -> Void
+typealias NetworkClientErrorHandler = @Sendable (_ error: NetworkClientError) -> Void
 
-struct ClientSubscription {
-    var errorHandlers: [ClientErrorHandler] = []
+struct NetworkClientSubscription {
+    var errorHandlers: [NetworkClientErrorHandler] = []
     var packetHandlers: [any PacketHandlerProtocol] = []
 
-    mutating func subscribe(to type: ClientError.Type, _ handler: @escaping ClientErrorHandler) {
+    mutating func subscribe(to type: NetworkClientError.Type, _ handler: @escaping NetworkClientErrorHandler) {
         errorHandlers.append(handler)
     }
 

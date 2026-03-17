@@ -21,7 +21,7 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
         case errorOccurred(error: any Error)
     }
 
-    let client: Client
+    let client: NetworkClient
     let eventSubject = PassthroughSubject<LoginSession.Event, Never>()
 
     public var eventPublisher: AnyPublisher<LoginSession.Event, Never> {
@@ -33,13 +33,13 @@ final public class LoginSession: SessionProtocol, @unchecked Sendable {
     private var timerTask: Task<Void, Never>?
 
     public init(address: String, port: UInt16) {
-        self.client = Client(name: "Login", address: address, port: port)
+        self.client = NetworkClient(name: "Login", address: address, port: port)
     }
 
     public func start() {
-        var subscription = ClientSubscription()
+        var subscription = NetworkClientSubscription()
 
-        subscription.subscribe(to: ClientError.self) { [unowned self] error in
+        subscription.subscribe(to: NetworkClientError.self) { [unowned self] error in
             let event = LoginSession.Event.errorOccurred(error: error)
             self.eventSubject.send(event)
         }

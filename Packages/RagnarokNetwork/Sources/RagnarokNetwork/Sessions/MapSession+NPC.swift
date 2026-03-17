@@ -8,7 +8,7 @@
 import RagnarokPackets
 
 extension MapSession {
-    func subscribeToNPCPackets(with subscription: inout ClientSubscription) {
+    func subscribeToNPCPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_scriptmes`
         subscription.subscribe(to: PACKET_ZC_SAY_DIALOG.self) { [unowned self] packet in
             let event = MapSession.Event.npcDialogMessageReceived(npcID: packet.NpcID, message: packet.message)

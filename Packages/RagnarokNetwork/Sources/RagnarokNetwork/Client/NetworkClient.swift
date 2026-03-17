@@ -1,5 +1,5 @@
 //
-//  Client.swift
+//  NetworkClient.swift
 //  RagnarokNetwork
 //
 //  Created by Leon Li on 2024/8/12.
@@ -10,18 +10,18 @@ import Foundation
 import Network
 import RagnarokPackets
 
-public enum ClientError: Error, Sendable {
+public enum NetworkClientError: Error, Sendable {
     case decoding(any Error)
     case encoding(any Error)
     case network(NWError)
 }
 
-final public class Client: Sendable {
+final public class NetworkClient: Sendable {
     private let name: String
     private let connection: NWConnection
 
-    public let errorStream: AsyncStream<ClientError>
-    private let errorContinuation: AsyncStream<ClientError>.Continuation
+    public let errorStream: AsyncStream<NetworkClientError>
+    private let errorContinuation: AsyncStream<NetworkClientError>.Continuation
 
     public let packetStream: AsyncStream<any DecodablePacket>
     private let packetContinuation: AsyncStream<any DecodablePacket>.Continuation
@@ -41,7 +41,7 @@ final public class Client: Sendable {
             using: NWParameters(tls: nil, tcp: tcp)
         )
 
-        let (errorStream, errorContinuation) = AsyncStream<ClientError>.makeStream()
+        let (errorStream, errorContinuation) = AsyncStream<NetworkClientError>.makeStream()
         self.errorStream = errorStream
         self.errorContinuation = errorContinuation
 

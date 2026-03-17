@@ -10,7 +10,7 @@ import RagnarokModels
 import RagnarokPackets
 
 extension MapSession {
-    func subscribeToItemPackets(with subscription: inout ClientSubscription) {
+    func subscribeToItemPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_inventoryStart`
         subscription.subscribe(to: PACKET_ZC_INVENTORY_START.self) { [unowned self] packet in
             let event = MapSession.Event.inventoryUpdatesBegan

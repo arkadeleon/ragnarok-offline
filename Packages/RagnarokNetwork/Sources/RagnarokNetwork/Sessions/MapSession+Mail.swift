@@ -8,7 +8,7 @@
 import RagnarokPackets
 
 extension MapSession {
-    func subscribeToMailPackets(with subscription: inout ClientSubscription) {
+    func subscribeToMailPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_Mail_window`
 //        subscription.subscribe(to: ZC_MAIL_WINDOWS) { packet in
 //        }
@@ -46,7 +46,7 @@ extension MapSession {
 //        }
     }
 
-    func subscribeToRodexPackets(with subscription: inout ClientSubscription) {
+    func subscribeToRodexPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_Mail_refreshinbox`
 //        subscription.subscribe(to: ZC_ACK_MAIL_LIST) { packet in
 //        }

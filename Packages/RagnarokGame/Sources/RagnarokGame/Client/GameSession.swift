@@ -86,13 +86,13 @@ final public class GameSession {
     var overlay = MapSceneOverlay()
     var dialog: NPCDialog?
 
-    @ObservationIgnored var loginClient: Client?
+    @ObservationIgnored var loginClient: NetworkClient?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
 
-    @ObservationIgnored var charClient: Client?
+    @ObservationIgnored var charClient: NetworkClient?
     @ObservationIgnored var charKeepaliveTask: Task<Void, Never>?
 
-    @ObservationIgnored var mapClient: Client?
+    @ObservationIgnored var mapClient: NetworkClient?
     @ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?
     @ObservationIgnored var currentMapServer: MapServerInfo?
 
@@ -209,7 +209,7 @@ final public class GameSession {
             return
         }
 
-        let client = Client(
+        let client = NetworkClient(
             name: "Login",
             address: configuration.serverAddress,
             port: configuration.serverPort
@@ -348,7 +348,7 @@ final public class GameSession {
             return
         }
 
-        let client = Client(
+        let client = NetworkClient(
             name: "Char",
             address: charServer.ip,
             port: charServer.port
@@ -481,7 +481,7 @@ final public class GameSession {
 
         self.currentMapServer = mapServer
 
-        let client = Client(
+        let client = NetworkClient(
             name: "Map",
             address: mapServer.ip,
             port: mapServer.port

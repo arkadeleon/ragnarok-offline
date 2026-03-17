@@ -77,7 +77,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     public private(set) var account: AccountInfo
     public let character: CharacterInfo
 
-    let client: Client
+    let client: NetworkClient
     let eventSubject = PassthroughSubject<MapSession.Event, Never>()
 
     public var eventPublisher: AnyPublisher<MapSession.Event, Never> {
@@ -89,13 +89,13 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
     public init(account: AccountInfo, character: CharacterInfo, mapServer: MapServerInfo) {
         self.account = account
         self.character = character
-        self.client = Client(name: "Map", address: mapServer.ip, port: mapServer.port)
+        self.client = NetworkClient(name: "Map", address: mapServer.ip, port: mapServer.port)
     }
 
     public func start() {
-        var subscription = ClientSubscription()
+        var subscription = NetworkClientSubscription()
 
-        subscription.subscribe(to: ClientError.self) { [unowned self] error in
+        subscription.subscribe(to: NetworkClientError.self) { [unowned self] error in
             let event = MapSession.Event.errorOccurred(error: error)
             self.eventSubject.send(event)
         }
@@ -210,7 +210,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToMapConnectionPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToMapConnectionPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_authok`
         subscription.subscribe(to: PACKET_ZC_ACCEPT_ENTER.self) { [unowned self] packet in
             let event = MapSession.Event.mapServerAccepted
@@ -234,7 +234,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToMapPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToMapPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_changemap`
         subscription.subscribe(to: PACKET_ZC_NPCACK_MAPMOVE.self) { [unowned self] packet in
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
@@ -243,7 +243,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToAchievementPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToAchievementPackets(with subscription: inout NetworkClientSubscription) {
         // 0xa23
         subscription.subscribe(to: PACKET_ZC_ALL_ACH_LIST.self) { [unowned self] packet in
             let event = MapSession.Event.achievementListed
@@ -257,7 +257,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToMapObjectPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToMapObjectPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_spawn_unit`
         subscription.subscribe(to: packet_spawn_unit.self) { [unowned self] packet in
             let object = MapObject(from: packet)
@@ -360,13 +360,13 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
     }
 
-    private func subscribeToPartyPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToPartyPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_partyinvitationstate`
         subscription.subscribe(to: PACKET_ZC_PARTY_CONFIG.self) { packet in
         }
     }
 
-    private func subscribeToChatPackets(with subscription: inout ClientSubscription) {
+    private func subscribeToChatPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_GlobalMessage`
         subscription.subscribe(to: PACKET_ZC_NOTIFY_CHAT.self) { [unowned self] packet in
             let message = ChatMessage(
