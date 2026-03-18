@@ -46,33 +46,31 @@ public struct Effect {
                     continue
                 }
 
-                let from      = layer.keyframes[fromId]
-                let to        = toId > -1 ? layer.keyframes[toId] : nil
-                let delta     = frameIndex - from.frameIndex
-                let srcalpha  = from.sourceAlpha
-                let destalpha = from.destinationAlpha
+                let from  = layer.keyframes[fromId]
+                let to    = toId > -1 ? layer.keyframes[toId] : nil
+                let delta = frameIndex - from.frameIndex
 
                 guard from.textureIndex > -1 else {
                     continue
                 }
 
-                let textureName = layer.textures[Int(from.textureIndex)]
-
                 // Static frame (or frame that can't be updated)
                 if (toId != fromId + 1 || to?.frameIndex != from.frameIndex) {
-
                     // No other source
                     if (to != nil && lastSource <= from.frameIndex) {
                         continue
                     }
 
+                    let textureName = layer.textures[Int(from.textureIndex)]
                     let sprite = Sprite(
                         uv: from.uv,
                         xy: from.xy,
                         textureName: textureName,
                         position: from.position,
                         angle: from.angle,
-                        color: from.color
+                        color: from.color,
+                        sourceAlpha: from.sourceAlpha,
+                        destinationAlpha: from.destinationAlpha
                     )
                     sprites.append(sprite)
 
@@ -83,9 +81,32 @@ public struct Effect {
                     continue
                 }
 
-                // Morph animation
+                // Morph animation: compute texture index based on animationType
+                let textureCount = layer.textures.count
+                let rawFrame: Float
+                switch to.animationType {
+                case 1: // normal
+                    rawFrame = from.textureIndex + to.textureIndex * Float(delta)
+                case 2: // stop at end
+                    rawFrame = min(from.textureIndex + to.delay * Float(delta), Float(textureCount - 1))
+                case 3: // repeat
+                    rawFrame = (from.textureIndex + to.delay * Float(delta))
+                        .truncatingRemainder(dividingBy: Float(textureCount))
+                case 4: // reverse
+                    var r = (from.textureIndex - to.delay * Float(delta))
+                        .truncatingRemainder(dividingBy: Float(textureCount))
+                    if r < 0 {
+                        r += Float(textureCount)
+                    }
+                    rawFrame = r
+                default: // bug fix
+                    rawFrame = 0
+                }
+                let textureIndex = max(0, min(Int(rawFrame), textureCount - 1))
+                let textureName = layer.textures[textureIndex]
+
                 let uv = from.uv + to.uv * Float(delta)
-                let xy = from.xy + to.uv * Float(delta)
+                let xy = from.xy + to.xy * Float(delta)
                 let position = from.position + to.position * Float(delta)
                 let angle = from.angle + to.angle * Float(delta)
                 let color = from.color + to.color * Float(delta)
@@ -96,31 +117,11 @@ public struct Effect {
                     textureName: textureName,
                     position: position,
                     angle: angle,
-                    color: color
+                    color: color,
+                    sourceAlpha: from.sourceAlpha,
+                    destinationAlpha: from.destinationAlpha
                 )
                 sprites.append(sprite)
-
-//                switch (to.anitype) {
-//                    default: // bug fix
-//                        result.aniframe = 0;
-//                        break;
-//
-//                    case 1: // normal
-//                        result.aniframe = from.aniframe + to.aniframe * delta;
-//                        break;
-//
-//                    case 2: // Stop at end
-//                        result.aniframe = Math.min(from.aniframe + to.delay * delta, layer.texcnt - 1);
-//                        break;
-//
-//                    case 3: // Repeat
-//                        result.aniframe = (from.aniframe + to.delay * delta) % layer.texcnt;
-//                        break;
-//
-//                    case 4: // play reverse infinitly
-//                        result.aniframe = (from.aniframe - to.delay * delta) % layer.texcnt;
-//                        break;
-//                }
             }
 
             let frame = Frame(sprites: sprites)
@@ -143,6 +144,8 @@ extension Effect {
         public var position: SIMD2<Float>
         public var angle: Float
         public var color: SIMD4<Float>
+        public var sourceAlpha: Int32
+        public var destinationAlpha: Int32
 
         init(
             uv: SIMD8<Float>,
@@ -150,7 +153,9 @@ extension Effect {
             textureName: String,
             position: SIMD2<Float>,
             angle: Float,
-            color: SIMD4<Float>
+            color: SIMD4<Float>,
+            sourceAlpha: Int32,
+            destinationAlpha: Int32
         ) {
             let v0 = EffectVertex(
                 position: [xy[0], xy[4]],
@@ -176,6 +181,8 @@ extension Effect {
             self.position = position
             self.angle = angle
             self.color = color
+            self.sourceAlpha = sourceAlpha
+            self.destinationAlpha = destinationAlpha
         }
     }
 }
