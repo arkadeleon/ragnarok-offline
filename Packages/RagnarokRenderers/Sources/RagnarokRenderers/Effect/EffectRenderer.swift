@@ -9,8 +9,27 @@ import Metal
 import RagnarokShaders
 import simd
 
+func mtlBlendFactor(_ d3dBlend: Int32) -> MTLBlendFactor {
+    switch d3dBlend {
+    case 1:  .zero
+    case 2:  .one
+    case 3:  .sourceColor
+    case 4:  .oneMinusSourceColor
+    case 5:  .sourceAlpha
+    case 6:  .oneMinusSourceAlpha
+    case 7:  .destinationAlpha
+    case 8:  .oneMinusDestinationAlpha
+    case 9:  .destinationColor
+    case 10: .oneMinusDestinationColor
+    case 11: .sourceAlphaSaturated
+    case 14: .blendColor
+    case 15: .oneMinusBlendAlpha
+    default: .sourceAlpha
+    }
+}
+
 class EffectRenderer {
-    let renderPipelineState: any MTLRenderPipelineState
+    let renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState]
     let depthStencilState: (any MTLDepthStencilState)?
 
     let effect: Effect
@@ -26,25 +45,36 @@ class EffectRenderer {
     )
 
     init(device: any MTLDevice, library: any MTLLibrary, effect: Effect, textures: [String : any MTLTexture]) throws {
-        let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
+        var blendKeys: Set<SIMD2<Int32>> = []
+        for frame in effect.frames {
+            for sprite in frame.sprites {
+                let blendKey = SIMD2(sprite.sourceAlpha, sprite.destinationAlpha)
+                blendKeys.insert(blendKey)
+            }
+        }
 
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effectVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "effectFragmentShader")
+        var renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState] = [:]
+        for blendKey in blendKeys {
+            let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
+            renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effectVertexShader")
+            renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "effectFragmentShader")
 
-        renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
-        renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
-        renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
-        renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
-        renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
-        renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+            renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
+            renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
+            renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = mtlBlendFactor(blendKey.x)
+            renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = mtlBlendFactor(blendKey.x)
+            renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = mtlBlendFactor(blendKey.y)
+            renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = mtlBlendFactor(blendKey.y)
 
-        renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
+            renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
 
-        self.renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+            renderPipelineStates[blendKey] = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+        }
+        self.renderPipelineStates = renderPipelineStates
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
-        depthStencilDescriptor.isDepthWriteEnabled = true
+        depthStencilDescriptor.isDepthWriteEnabled = false
 
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
@@ -64,12 +94,16 @@ class EffectRenderer {
         let frameIndex = Int(time * CFTimeInterval(effect.fps)) % effect.frames.count
         let frame = effect.frames[frameIndex]
 
-        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         for sprite in frame.sprites {
             guard sprite.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: sprite.vertices, length: sprite.vertices.count * MemoryLayout<EffectVertex>.stride, options: []) else {
-                return
+                continue
+            }
+
+            let blendKey = SIMD2(sprite.sourceAlpha, sprite.destinationAlpha)
+            guard let renderPipelineState = renderPipelineStates[blendKey] else {
+                continue
             }
 
             var vertexUniforms = EffectVertexUniforms(
@@ -81,7 +115,7 @@ class EffectRenderer {
                 spriteOffset: sprite.position - [320, 320]
             )
             guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<EffectVertexUniforms>.stride, options: []) else {
-                return
+                continue
             }
 
             var fragmentUniforms = EffectFragmentUniforms(
@@ -92,8 +126,10 @@ class EffectRenderer {
                 fogColor: fog.color
             )
             guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<EffectFragmentUniforms>.stride, options: []) else {
-                return
+                continue
             }
+
+            renderCommandEncoder.setRenderPipelineState(renderPipelineState)
 
             renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)

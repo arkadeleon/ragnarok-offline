@@ -14,7 +14,7 @@ import SwiftUI
 struct EffectViewer: View {
     var body: some View {
         AsyncContentView {
-            try await loadSTR(named: "lightning.str")
+            try await loadSTR(named: "thunderstorm.str")
         } content: { renderer in
             MetalViewContainer(renderer: renderer)
         }
