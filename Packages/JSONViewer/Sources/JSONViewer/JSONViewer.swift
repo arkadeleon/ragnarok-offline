@@ -42,10 +42,11 @@ public struct JSONViewer: View {
         self.data = data
     }
 
-    /// Parse JSON data asynchronously
+    /// Parse JSON data asynchronously, off the main actor
     private func parseJSON() async {
         do {
-            let node = try JSONParser.parse(data: data)
+            let parser = JSONParser()
+            let node = try await parser.parse(data: data)
             self.rootNode = node
         } catch {
             self.error = error

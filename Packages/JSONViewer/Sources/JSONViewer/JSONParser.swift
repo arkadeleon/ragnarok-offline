@@ -31,16 +31,17 @@ struct JSONParser {
     }
 
     /// Threshold for chunking large arrays/objects
-    static let chunkThreshold = 100
+    private let chunkThreshold = 100
 
     /// Size of each chunk
-    static let chunkSize = 100
+    private let chunkSize = 100
 
     /// Parse JSON data into a tree of nodes
     /// - Parameter data: The JSON data to parse
     /// - Returns: Root node of the parsed tree
     /// - Throws: JSONParsingError if parsing fails
-    static func parse(data: Data) throws -> JSONNode {
+    @concurrent
+    func parse(data: Data) async throws -> JSONNode {
         let jsonObject: Any
         do {
             jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
@@ -56,7 +57,7 @@ struct JSONParser {
     ///   - value: The JSON value (Dictionary, Array, String, Number, Bool, or null)
     ///   - key: Optional key for this node
     /// - Returns: A JSONNode representing the value
-    private static func buildNode(from value: Any, key: String?) -> JSONNode {
+    private func buildNode(from value: Any, key: String?) -> JSONNode {
         // Handle null
         if value is NSNull {
             return .null(key: key)
@@ -126,7 +127,7 @@ struct JSONParser {
     ///   - nodes: The nodes to chunk
     ///   - type: The type of the parent (object or array)
     /// - Returns: Array of chunk nodes
-    private static func chunkNodes(_ nodes: [JSONNode], type: ChunkParentType) -> [JSONNode] {
+    private func chunkNodes(_ nodes: [JSONNode], type: ChunkParentType) -> [JSONNode] {
         var chunks: [JSONNode] = []
         let totalCount = nodes.count
         let numberOfChunks = (totalCount + chunkSize - 1) / chunkSize

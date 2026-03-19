@@ -12,6 +12,8 @@ struct JSONNodeRow: View {
     var node: JSONNode
     var searchText: String
 
+    @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor
+
     var body: some View {
         HStack(spacing: 6) {
             // Key (if present)
@@ -31,8 +33,15 @@ struct JSONNodeRow: View {
         .background(
             highlightColor
                 .opacity(0.2)
-                .cornerRadius(4)
+                .clipShape(.rect(cornerRadius: 4))
         )
+        .overlay {
+            if differentiateWithoutColor && matchesSearch() {
+                RoundedRectangle(cornerRadius: 4)
+                    .strokeBorder(Color.accentColor, lineWidth: 2)
+            }
+        }
+        .accessibilityElement(children: .combine)
         .contextMenu {
             if let key = node.key {
                 Button(LocalizedStringResource("Copy Key", bundle: .module)) {
@@ -49,12 +58,7 @@ struct JSONNodeRow: View {
 
     /// Highlight color if this node matches the search
     private var highlightColor: Color {
-        if searchText.isEmpty {
-            return .clear
-        }
-
-        let matches = matchesSearch()
-        return matches ? .accentColor : .clear
+        matchesSearch() ? .accentColor : .clear
     }
 
     /// Check if this node matches the search text
@@ -86,6 +90,20 @@ struct JSONNodeRow: View {
         #elseif canImport(UIKit)
         UIPasteboard.general.string = text
         #endif
+    }
+}
+
+extension JSONNode {
+    var color: Color {
+        switch payload {
+        case .object: .blue
+        case .array: .purple
+        case .chunk: .cyan
+        case .string: .green
+        case .number: .orange
+        case .boolean: .red
+        case .null: .gray
+        }
     }
 }
 

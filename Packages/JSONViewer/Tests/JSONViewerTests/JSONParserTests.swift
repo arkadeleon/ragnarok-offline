@@ -12,11 +12,11 @@ import Testing
 @Suite("JSON Parser Tests")
 struct JSONParserTests {
     @Test("Parse simple object")
-    func testParseObject() throws {
+    func testParseObject() async throws {
         let json = #"{"key": "value"}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
 
         #expect(node.key == nil) // Root has no key
         #expect(node.isObject)
@@ -33,11 +33,11 @@ struct JSONParserTests {
     }
 
     @Test("Parse array")
-    func testParseArray() throws {
+    func testParseArray() async throws {
         let json = #"[1, 2, 3]"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
 
         #expect(node.isArray)
         #expect(node.children?.count == 3)
@@ -50,11 +50,11 @@ struct JSONParserTests {
     }
 
     @Test("Parse nested structure")
-    func testParseNestedStructure() throws {
+    func testParseNestedStructure() async throws {
         let json = #"{"obj": {"arr": [1, 2]}}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
 
         #expect(node.isObject)
         #expect(node.children?.count == 1)
@@ -70,11 +70,11 @@ struct JSONParserTests {
     }
 
     @Test("Parse numbers")
-    func testParseNumbers() throws {
+    func testParseNumbers() async throws {
         let json = #"{"integer": 42, "float": 3.14}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
         let children = try #require(node.children)
 
         for child in children {
@@ -90,11 +90,11 @@ struct JSONParserTests {
     }
 
     @Test("Parse booleans")
-    func testParseBooleans() throws {
+    func testParseBooleans() async throws {
         let json = #"{"isTrue": true, "isFalse": false}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
         let children = try #require(node.children)
 
         #expect(children.count == 2)
@@ -111,11 +111,11 @@ struct JSONParserTests {
     }
 
     @Test("Parse null")
-    func testParseNull() throws {
+    func testParseNull() async throws {
         let json = #"{"nullValue": null}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
         let child = try #require(node.children?.first)
 
         #expect(child.key == "nullValue")
@@ -123,21 +123,21 @@ struct JSONParserTests {
     }
 
     @Test("Parse invalid JSON throws error")
-    func testInvalidJSON() throws {
+    func testInvalidJSON() async throws {
         let json = #"{invalid json}"#
         let data = try #require(json.data(using: .utf8))
 
-        #expect(throws: JSONParsingError.self) {
-            try JSONParser.parse(data: data)
+        await #expect(throws: JSONParsingError.self) {
+            try await JSONParser().parse(data: data)
         }
     }
 
     @Test("Parse empty structures")
-    func testEmptyStructures() throws {
+    func testEmptyStructures() async throws {
         let json = #"{"emptyObject": {}, "emptyArray": []}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
         let children = try #require(node.children)
 
         for child in children {
@@ -152,11 +152,11 @@ struct JSONParserTests {
     }
 
     @Test("Parse unicode strings")
-    func testUnicodeStrings() throws {
+    func testUnicodeStrings() async throws {
         let json = #"{"japanese": "日本語", "korean": "한국어", "emoji": "🎮"}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
         let children = try #require(node.children)
 
         #expect(children.count == 3)
@@ -175,11 +175,11 @@ struct JSONParserTests {
     }
 
     @Test("Parse large numbers")
-    func testLargeNumbers() throws {
+    func testLargeNumbers() async throws {
         let json = #"{"large": 9223372036854775807, "negative": -9223372036854775808, "double": 1.7976931348623157e+308}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
         let children = try #require(node.children)
 
         for child in children {
@@ -188,11 +188,11 @@ struct JSONParserTests {
     }
 
     @Test("Display value formatting")
-    func testDisplayValueFormatting() throws {
+    func testDisplayValueFormatting() async throws {
         let json = #"{"integer": 42, "float": 3.14, "string": "test", "bool": true, "null": null}"#
         let data = try #require(json.data(using: .utf8))
 
-        let node = try JSONParser.parse(data: data)
+        let node = try await JSONParser().parse(data: data)
         let children = try #require(node.children)
 
         for child in children {
@@ -222,7 +222,7 @@ struct JSONParserTests {
     }
 
     @Test("Large array chunking")
-    func testLargeArrayChunking() throws {
+    func testLargeArrayChunking() async throws {
         // Create an array with 250 items (should be chunked into 3 chunks: 100, 100, 50)
         var items: [Int] = []
         for i in 0..<250 {
@@ -230,7 +230,7 @@ struct JSONParserTests {
         }
 
         let jsonData = try JSONEncoder().encode(items)
-        let node = try JSONParser.parse(data: jsonData)
+        let node = try await JSONParser().parse(data: jsonData)
 
         #expect(node.isArray)
         let children = try #require(node.children)
@@ -261,7 +261,7 @@ struct JSONParserTests {
     }
 
     @Test("Large object chunking")
-    func testLargeObjectChunking() throws {
+    func testLargeObjectChunking() async throws {
         // Create an object with 250 items
         var dict: [String: Int] = [:]
         for i in 0..<250 {
@@ -269,7 +269,7 @@ struct JSONParserTests {
         }
 
         let jsonData = try JSONEncoder().encode(dict)
-        let node = try JSONParser.parse(data: jsonData)
+        let node = try await JSONParser().parse(data: jsonData)
 
         #expect(node.isObject)
         let children = try #require(node.children)
@@ -292,7 +292,7 @@ struct JSONParserTests {
     }
 
     @Test("Small array not chunked")
-    func testSmallArrayNotChunked() throws {
+    func testSmallArrayNotChunked() async throws {
         // Create an array with 50 items (should NOT be chunked)
         var items: [Int] = []
         for i in 0..<50 {
@@ -300,7 +300,7 @@ struct JSONParserTests {
         }
 
         let jsonData = try JSONEncoder().encode(items)
-        let node = try JSONParser.parse(data: jsonData)
+        let node = try await JSONParser().parse(data: jsonData)
 
         #expect(node.isArray)
         let children = try #require(node.children)
@@ -313,7 +313,7 @@ struct JSONParserTests {
     }
 
     @Test("Array at threshold not chunked")
-    func testArrayAtThresholdNotChunked() throws {
+    func testArrayAtThresholdNotChunked() async throws {
         // Create an array with exactly 100 items (at threshold, should NOT be chunked)
         var items: [Int] = []
         for i in 0..<100 {
@@ -321,7 +321,7 @@ struct JSONParserTests {
         }
 
         let jsonData = try JSONEncoder().encode(items)
-        let node = try JSONParser.parse(data: jsonData)
+        let node = try await JSONParser().parse(data: jsonData)
 
         #expect(node.isArray)
         let children = try #require(node.children)
@@ -334,7 +334,7 @@ struct JSONParserTests {
     }
 
     @Test("Array just over threshold is chunked")
-    func testArrayJustOverThresholdIsChunked() throws {
+    func testArrayJustOverThresholdIsChunked() async throws {
         // Create an array with 101 items (just over threshold, should be chunked)
         var items: [Int] = []
         for i in 0..<101 {
@@ -342,7 +342,7 @@ struct JSONParserTests {
         }
 
         let jsonData = try JSONEncoder().encode(items)
-        let node = try JSONParser.parse(data: jsonData)
+        let node = try await JSONParser().parse(data: jsonData)
 
         #expect(node.isArray)
         let children = try #require(node.children)

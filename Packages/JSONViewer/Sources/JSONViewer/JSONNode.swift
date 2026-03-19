@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 enum JSONNodePayload: Sendable {
     case object(key: String?, children: [JSONNode])
@@ -146,19 +145,5 @@ extension JSONNode {
 
     var isNull: Bool {
         if case .null = payload { true } else { false }
-    }
-}
-
-extension JSONNode {
-    var color: Color {
-        switch payload {
-        case .object: .blue
-        case .array: .purple
-        case .chunk: .cyan
-        case .string: .green
-        case .number: .orange
-        case .boolean: .red
-        case .null: .gray
-        }
     }
 }
