@@ -21,6 +21,13 @@ public class STRRenderer: Renderer {
 
         let library = RagnarokCreateShadersLibrary(device)!
         effectRenderer = try EffectRenderer(device: device, library: library, effect: effect, textures: textures)
+
+        camera.fovy = 15
+        camera.nearZ = 1
+        camera.farZ = 1000
+        camera.defaultDistance = 75
+        camera.minimumDistance = 50
+        camera.maximumDistance = 100
     }
 
     public func render(
@@ -38,8 +45,7 @@ public class STRRenderer: Renderer {
         camera.update(size: viewport.size)
 
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_translate(modelMatrix, [-10, 10, 20])
-        modelMatrix = matrix_rotate(modelMatrix, radians(270), [1, 0, 0])
+        modelMatrix = matrix_translate(modelMatrix, [0, -3, 0])
 
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix

@@ -78,7 +78,7 @@ class EffectRenderer {
                 projectionMatrix: projectionMatrix,
                 spriteAngle: matrix_identity_float4x4,
                 spritePosition: .zero,
-                spriteOffset: sprite.position
+                spriteOffset: sprite.position - [320, 320]
             )
             guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<EffectVertexUniforms>.stride, options: []) else {
                 return
