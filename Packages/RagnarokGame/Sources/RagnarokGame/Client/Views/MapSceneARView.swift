@@ -9,11 +9,51 @@ import Combine
 import RealityKit
 import SwiftUI
 
+#if os(iOS) || os(macOS)
+
+@MainActor
+private final class ARViewProjector: MapProjector {
+    let arView: ARView
+
+    init(arView: ARView) {
+        self.arView = arView
+    }
+
+    func project(_ worldPosition: SIMD3<Float>) -> CGPoint? {
+        guard var screenPoint = arView.project(worldPosition) else {
+            return nil
+        }
+        #if os(macOS)
+        screenPoint.y = arView.bounds.height - screenPoint.y
+        #endif
+        return screenPoint
+    }
+}
+
+// Syncs overlay anchor positions from RealityKit entity world positions every render frame.
+// WalkingSystem moves entities via interpolated transforms, so the per-frame sync is the only
+// way to keep HP/SP bars tracking the sprite during a walk rather than jumping to the
+// destination tile at walk start.
+@MainActor
+private func syncOverlayAnchorPositions(in arView: ARView, for mapScene: MapScene) {
+    let query = EntityQuery(where: .has(HealthPointsComponent.self))
+    for entity in arView.scene.performQuery(query) {
+        guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
+              mapScene.state.overlaySnapshot.anchors[mapObject.objectID] != nil else {
+            continue
+        }
+        let worldPosition = entity.position(relativeTo: nil)
+        mapScene.state.overlaySnapshot.anchors[mapObject.objectID]?.gaugePosition = worldPosition + [0, -0.8, 0]
+    }
+}
+
+#endif
+
 #if os(iOS)
 
 struct MapSceneARView: UIViewControllerRepresentable {
     var scene: MapScene
-    var onSceneUpdate: (ARView) -> Void
+    var onSceneUpdate: (any MapProjector) -> Void
 
     func makeUIViewController(context: Context) -> MapSceneARViewController {
         MapSceneARViewController(scene: scene, onSceneUpdate: onSceneUpdate)
@@ -25,15 +65,16 @@ struct MapSceneARView: UIViewControllerRepresentable {
 
 class MapSceneARViewController: UIViewController {
     let scene: MapScene
-    let onSceneUpdate: (ARView) -> Void
+    let onSceneUpdate: (any MapProjector) -> Void
 
     private var arView: ARView!
+    private var arViewProjector: ARViewProjector!
     private var baseAzimuth: Float = 0
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene, onSceneUpdate: @escaping (ARView) -> Void) {
+    init(scene: MapScene, onSceneUpdate: @escaping (any MapProjector) -> Void) {
         self.scene = scene
         self.onSceneUpdate = onSceneUpdate
         super.init(nibName: nil, bundle: nil)
@@ -71,6 +112,8 @@ class MapSceneARViewController: UIViewController {
 
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         arView.addGestureRecognizer(pinchGestureRecognizer)
+
+        arViewProjector = ARViewProjector(arView: arView)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,7 +121,8 @@ class MapSceneARViewController: UIViewController {
 
         sceneSubscription = arView.scene.subscribe(to: SceneEvents.Update.self) { [weak self] _ in
             if let self {
-                onSceneUpdate(arView)
+                syncOverlayAnchorPositions(in: arView, for: scene)
+                onSceneUpdate(arViewProjector)
             }
         }
     }
@@ -149,7 +193,7 @@ class MapSceneARViewController: UIViewController {
 
 struct MapSceneARView: NSViewControllerRepresentable {
     var scene: MapScene
-    var onSceneUpdate: (ARView) -> Void
+    var onSceneUpdate: (any MapProjector) -> Void
 
     func makeNSViewController(context: Context) -> MapSceneARViewController {
         MapSceneARViewController(scene: scene, onSceneUpdate: onSceneUpdate)
@@ -161,15 +205,16 @@ struct MapSceneARView: NSViewControllerRepresentable {
 
 class MapSceneARViewController: NSViewController {
     let scene: MapScene
-    let onSceneUpdate: (ARView) -> Void
+    let onSceneUpdate: (any MapProjector) -> Void
 
     private var arView: ARView!
+    private var arViewProjector: ARViewProjector!
     private var baseAzimuth: Float = 0
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene, onSceneUpdate: @escaping (ARView) -> Void) {
+    init(scene: MapScene, onSceneUpdate: @escaping (any MapProjector) -> Void) {
         self.scene = scene
         self.onSceneUpdate = onSceneUpdate
         super.init(nibName: nil, bundle: nil)
@@ -196,6 +241,8 @@ class MapSceneARViewController: NSViewController {
 
         let magnificationGestureRecognizer = NSMagnificationGestureRecognizer(target: self, action: #selector(handleMagnification(_:)))
         arView.addGestureRecognizer(magnificationGestureRecognizer)
+
+        arViewProjector = ARViewProjector(arView: arView)
     }
 
     override func viewWillAppear() {
@@ -203,7 +250,8 @@ class MapSceneARViewController: NSViewController {
 
         sceneSubscription = arView.scene.subscribe(to: SceneEvents.Update.self) { [weak self] _ in
             if let self {
-                onSceneUpdate(arView)
+                syncOverlayAnchorPositions(in: arView, for: scene)
+                onSceneUpdate(arViewProjector)
             }
         }
     }

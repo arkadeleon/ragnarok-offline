@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/3/20.
 //
 
-import RealityKit
 import SwiftUI
 
 struct MapRenderHost: View {
@@ -13,7 +12,7 @@ struct MapRenderHost: View {
     var configuration: MapRenderConfiguration
 
     #if !os(visionOS)
-    var onSceneUpdate: (ARView) -> Void
+    var onSceneUpdate: (any MapProjector) -> Void
     #endif
 
     var body: some View {

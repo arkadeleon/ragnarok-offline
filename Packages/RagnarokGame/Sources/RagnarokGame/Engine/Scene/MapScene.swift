@@ -130,6 +130,15 @@ public class MapScene {
         self.pathfinder = Pathfinder(mapGrid: mapGrid)
         self.interactionResolver = MapInteractionResolver(pathfinder: self.pathfinder)
 
+        state.overlaySnapshot.anchors[player.objectID] = MapOverlayAnchor(
+            id: player.objectID,
+            hp: character.hp,
+            maxHp: character.maxHp,
+            sp: character.sp,
+            maxSp: character.maxSp,
+            objectType: player.type
+        )
+
         GridPositionComponent.registerComponent()
         MapItemComponent.registerComponent()
         MapObjectComponent.registerComponent()
@@ -634,15 +643,19 @@ extension MapScene: MapEventHandlerProtocol {
         switch sp {
         case .hp:
             state.player.hp = Int(packet.count)
+            state.overlaySnapshot.anchors[player.objectID]?.hp = Int(packet.count)
             playerEntity.components[HealthPointsComponent.self]?.hp = Int(packet.count)
         case .maxhp:
             state.player.maxHp = Int(packet.count)
+            state.overlaySnapshot.anchors[player.objectID]?.maxHp = Int(packet.count)
             playerEntity.components[HealthPointsComponent.self]?.maxHp = Int(packet.count)
         case .sp:
             state.player.sp = Int(packet.count)
+            state.overlaySnapshot.anchors[player.objectID]?.sp = Int(packet.count)
             playerEntity.components[SpellPointsComponent.self]?.sp = Int(packet.count)
         case .maxsp:
             state.player.maxSp = Int(packet.count)
+            state.overlaySnapshot.anchors[player.objectID]?.maxSp = Int(packet.count)
             playerEntity.components[SpellPointsComponent.self]?.maxSp = Int(packet.count)
         default:
             break
@@ -653,9 +666,13 @@ extension MapScene: MapEventHandlerProtocol {
         if state.player.id == packet.GID {
             state.player.hp = Int(packet.HP)
             state.player.maxHp = Int(packet.maxHP)
+            state.overlaySnapshot.anchors[packet.GID]?.hp = Int(packet.HP)
+            state.overlaySnapshot.anchors[packet.GID]?.maxHp = Int(packet.maxHP)
         } else {
             state.objects[packet.GID]?.hp = Int(packet.HP)
             state.objects[packet.GID]?.maxHp = Int(packet.maxHP)
+            state.overlaySnapshot.anchors[packet.GID]?.hp = Int(packet.HP)
+            state.overlaySnapshot.anchors[packet.GID]?.maxHp = Int(packet.maxHP)
         }
 
         Task {
@@ -699,6 +716,15 @@ extension MapScene: MapEventHandlerProtocol {
             isVisible: object.effectState != .cloak
         )
 
+        if object.type == .monster {
+            state.overlaySnapshot.anchors[object.objectID] = MapOverlayAnchor(
+                id: object.objectID,
+                hp: object.hp,
+                maxHp: object.maxHp,
+                objectType: object.type
+            )
+        }
+
         Task {
             let (entity, isNew) = try await spriteEntityManager.entity(for: object)
 
@@ -738,6 +764,14 @@ extension MapScene: MapEventHandlerProtocol {
                 maxHp: object.maxHp,
                 isVisible: object.effectState != .cloak
             )
+            if object.type == .monster {
+                state.overlaySnapshot.anchors[object.objectID] = MapOverlayAnchor(
+                    id: object.objectID,
+                    hp: object.hp,
+                    maxHp: object.maxHp,
+                    objectType: object.type
+                )
+            }
         }
 
         Task {
@@ -791,6 +825,7 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectVanished(objectID: UInt32) {
         state.objects.removeValue(forKey: objectID)
+        state.overlaySnapshot.anchors.removeValue(forKey: objectID)
 
         Task {
             try await spriteEntityManager.removeEntity(forObjectID: objectID)
@@ -798,11 +833,39 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
-        state.objects[objectID]?.isVisible = (effectState != .cloak)
+        let isVisible = (effectState != .cloak)
+
+        if state.player.id == objectID {
+            state.player.isVisible = isVisible
+        } else {
+            state.objects[objectID]?.isVisible = isVisible
+        }
+
+        if isVisible {
+            if state.player.id == objectID {
+                state.overlaySnapshot.anchors[objectID] = MapOverlayAnchor(
+                    id: objectID,
+                    hp: state.player.hp,
+                    maxHp: state.player.maxHp,
+                    sp: state.player.sp,
+                    maxSp: state.player.maxSp,
+                    objectType: state.player.object.type
+                )
+            } else if let objectState = state.objects[objectID], objectState.object.type == .monster {
+                state.overlaySnapshot.anchors[objectID] = MapOverlayAnchor(
+                    id: objectID,
+                    hp: objectState.hp,
+                    maxHp: objectState.maxHp,
+                    objectType: objectState.object.type
+                )
+            }
+        } else {
+            state.overlaySnapshot.anchors.removeValue(forKey: objectID)
+        }
 
         Task {
             if let entity = try await spriteEntityManager.findEntity(forObjectID: objectID) {
-                entity.isEnabled = (effectState != .cloak)
+                entity.isEnabled = isVisible
             }
         }
     }

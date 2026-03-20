@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2025/3/30.
 //
 
-import RealityKit
 import SwiftUI
 import ThumbstickView
 
@@ -31,8 +30,8 @@ struct MapView: View {
             #if os(visionOS)
             MapRenderHost(scene: scene, configuration: renderConfiguration)
             #else
-            MapRenderHost(scene: scene, configuration: renderConfiguration) { arView in
-                updateOverlay(arView: arView)
+            MapRenderHost(scene: scene, configuration: renderConfiguration) { projector in
+                updateOverlay(projector: projector)
             }
             .overlay {
                 MapSceneOverlayView(overlay: gameSession.overlay)
@@ -165,40 +164,26 @@ struct MapView: View {
     }
 
     #if !os(visionOS)
-    private func updateOverlay(arView: ARView) {
+    private func updateOverlay(projector: any MapProjector) {
         var gauges: [UInt32: MapSceneOverlay.Gauge] = [:]
 
-        let query = EntityQuery(where: .has(HealthPointsComponent.self))
-        for entity in arView.scene.performQuery(query) {
-            guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
-                  let healthPointsComponent = entity.components[HealthPointsComponent.self] else {
+        for anchor in scene.state.overlaySnapshot.anchors.values {
+            guard let gaugePosition = anchor.gaugePosition,
+                  let screenPoint = projector.project(gaugePosition) else {
                 continue
             }
-
-            let worldPosition = entity.position(relativeTo: nil)
-            let gaugePosition = worldPosition + [0, -0.8, 0]
-
-            guard var screenPoint = arView.project(gaugePosition) else {
-                continue
-            }
-
-            #if os(macOS)
-            screenPoint.y = arView.bounds.height - screenPoint.y
-            #endif
-
-            let spellPointsComponent = entity.components[SpellPointsComponent.self]
 
             let gauge = MapSceneOverlay.Gauge(
-                objectID: mapObject.objectID,
-                screenPosition: screenPoint,
-                hp: healthPointsComponent.hp,
-                maxHp: healthPointsComponent.maxHp,
-                sp: spellPointsComponent?.sp,
-                maxSp: spellPointsComponent?.maxSp,
-                objectType: mapObject.type
+                objectID: anchor.id,
+                hp: anchor.hp,
+                maxHp: anchor.maxHp,
+                sp: anchor.sp,
+                maxSp: anchor.maxSp,
+                objectType: anchor.objectType,
+                screenPosition: screenPoint
             )
 
-            gauges[mapObject.objectID] = gauge
+            gauges[anchor.id] = gauge
         }
 
         gameSession.overlay.gauges = gauges

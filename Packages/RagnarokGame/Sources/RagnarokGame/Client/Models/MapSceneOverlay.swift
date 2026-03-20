@@ -13,12 +13,12 @@ import RagnarokModels
 class MapSceneOverlay {
     struct Gauge: Identifiable, Sendable {
         let objectID: UInt32
-        var screenPosition: CGPoint
         var hp: Int
         var maxHp: Int
         var sp: Int?
         var maxSp: Int?
         var objectType: MapObjectType
+        var screenPosition: CGPoint
 
         var id: UInt32 {
             objectID

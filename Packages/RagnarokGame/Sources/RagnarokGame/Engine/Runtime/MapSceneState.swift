@@ -15,6 +15,7 @@ public final class MapSceneState {
     public var items: [UInt32: MapItemState] = [:]
     public var selection: MapSelectionState = MapSelectionState()
     public var damageEffects: [MapDamageEffect] = []
+    public let overlaySnapshot = MapOverlaySnapshot()
 
     public init(player: MapObjectState) {
         self.player = player

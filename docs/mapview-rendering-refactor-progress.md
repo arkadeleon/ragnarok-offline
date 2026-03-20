@@ -528,3 +528,167 @@ Item tap gesture and raycast item-hit path call `gameSession?.pickUpItem` direct
 
 - `movePlayerToward` still reads `startPosition` from `playerEntity.gridPosition`. The player position will be moved to `state.player.gridPosition` when walking interpolation state is also tracked in the runtime layer (a later phase).
 - `LockOnComponent` is still a RealityKit `Component`. It will be moved into the RealityKit backend in Phase 8.
+
+---
+
+## Phase 5 — Extract Overlay and Projector Interfaces
+
+**Completed:** 2026-03-20
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Removed the HUD dependency on `ARView.project` and `RealityKit` from the UI layer. The runtime now owns an overlay snapshot that records which objects need gauges and their HP/SP values. A `MapProjector` protocol abstracts world-to-screen projection so `MapView` never needs to import `RealityKit`. The ARView backend implements the projector and synchronises world positions from the entity tree every render frame.
+
+### New files
+
+#### `Engine/Runtime/MapOverlayAnchor.swift`
+
+```swift
+public struct MapOverlayAnchor: Identifiable, Sendable {
+    public let id: UInt32
+    public var hp: Int
+    public var maxHp: Int
+    public var sp: Int?
+    public var maxSp: Int?
+    public var objectType: MapObjectType
+    public var gaugePosition: SIMD3<Float>?   // nil until the first frame sync
+}
+```
+
+Holds all the data needed to render one HP/SP gauge. `gaugePosition` is optional: it starts `nil` and is populated by the per-frame sync in the backend. `MapView.updateOverlay` skips any anchor whose `gaugePosition` is still `nil`, preventing a flash at world-origin before the entity is found.
+
+#### `Engine/Runtime/MapOverlaySnapshot.swift`
+
+```swift
+@MainActor
+@Observable
+public final class MapOverlaySnapshot {
+    public var anchors: [UInt32: MapOverlayAnchor] = [:]
+}
+```
+
+`@Observable` so SwiftUI can react to changes without polling. Lives on `MapSceneState` as `public let overlaySnapshot = MapOverlaySnapshot()`.
+
+#### `Client/Rendering/MapProjector.swift`
+
+```swift
+@MainActor
+public protocol MapProjector: AnyObject {
+    func project(_ worldPosition: SIMD3<Float>) -> CGPoint?
+}
+```
+
+The only backend-facing API that `MapView` calls. `MapView` never imports `RealityKit` to obtain a screen point; it asks a projector instead.
+
+### Modified files
+
+#### `Engine/Runtime/MapSceneState.swift`
+
+Added `public let overlaySnapshot = MapOverlaySnapshot()`.
+
+#### `Engine/Scene/MapScene.swift`
+
+**Anchor lifecycle** — anchors are created and removed to mirror the entity lifecycle:
+
+| Event | Action |
+|---|---|
+| `init()` | Insert player anchor with HP/SP from `CharacterInfo` |
+| `onMapObjectSpawned` (`.monster`) | Insert monster anchor |
+| `onMapObjectMoved` (first-seen, `.monster`) | Insert monster anchor in the synthesised-state else branch — without this, monsters first observed via `packet_unit_walking` would never get a gauge |
+| `onMapObjectVanished` | Remove anchor |
+| `onReceivePacket(PACKET_ZC_PAR_CHANGE)` | Update player anchor HP/SP in-place |
+| `onReceivePacket(PACKET_ZC_HP_INFO)` | Update player or monster anchor HP in-place |
+| `onMapObjectStateChanged` | Remove anchor on hide (`.cloak`), restore from current state on unhide |
+
+The visibility handler also correctly distinguishes player from monster: the player is not in `state.objects`, so the restore path checks `state.player.id == objectID` before falling through to the `state.objects` monster path. `state.player.isVisible` is now also written here, which was previously missed.
+
+Anchor `gaugePosition` is intentionally left as the default `nil` on creation. The per-frame sync in the backend fills it on the first render tick after the entity appears in the scene. There are no calls to `position(for: gridPosition)` in the overlay path — static grid positions were tried and removed because `WalkingSystem` interpolates entity positions every frame, making any grid-derived value stale the moment a walk begins.
+
+#### `Client/Rendering/MapRenderHost.swift`
+
+- Removed `import RealityKit`
+- Changed `var onSceneUpdate: (ARView) -> Void` → `var onSceneUpdate: (any MapProjector) -> Void`
+
+#### `Client/Views/MapSceneARView.swift`
+
+Added `ARViewProjector` — a private `@MainActor` class defined once under `#if os(iOS) || os(macOS)`:
+
+```swift
+private final class ARViewProjector: MapProjector {
+    func project(_ worldPosition: SIMD3<Float>) -> CGPoint? {
+        guard var screenPoint = arView.project(worldPosition) else { return nil }
+        #if os(macOS)
+        screenPoint.y = arView.bounds.height - screenPoint.y
+        #endif
+        return screenPoint
+    }
+}
+```
+
+The macOS Y-flip that previously lived in `MapView.updateOverlay` is now encapsulated here where it belongs.
+
+Both `MapSceneARViewController` implementations (`UIViewController` on iOS, `NSViewController` on macOS) now:
+- Hold `private var arViewProjector: ARViewProjector!`, created in `viewDidLoad` after `arView`
+- Call a shared `syncOverlayAnchorPositions(in:for:)` free function before `onSceneUpdate` in the `SceneEvents.Update` subscription
+
+`syncOverlayAnchorPositions` is the key piece that makes per-frame position tracking work:
+
+```swift
+@MainActor
+private func syncOverlayAnchorPositions(in arView: ARView, for mapScene: MapScene) {
+    let query = EntityQuery(where: .has(HealthPointsComponent.self))
+    for entity in arView.scene.performQuery(query) {
+        guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
+              mapScene.state.overlaySnapshot.anchors[mapObject.objectID] != nil else {
+            continue
+        }
+        let worldPosition = entity.position(relativeTo: nil)
+        mapScene.state.overlaySnapshot.anchors[mapObject.objectID]?.gaugePosition = worldPosition + [0, -0.8, 0]
+    }
+}
+```
+
+It queries the same set of entities (`HealthPointsComponent`) and uses the same offset (`-0.8` in Y) as the old `updateOverlay(arView:)`. Running before `onSceneUpdate` means positions are current by the time the projector runs. The `guard` that checks `anchors[objectID] != nil` means disabled/cloaked entities whose anchors were removed do not get positions written back in — the anchor removal in `onMapObjectStateChanged` is the authoritative hide signal.
+
+#### `Client/Views/MapView.swift`
+
+- Removed `import RealityKit`
+- Deleted `updateOverlay(arView:)` — the entity-query, `ARView.project`, and macOS Y-flip logic are all gone from this file
+- Added `updateOverlay(projector:)`:
+
+```swift
+private func updateOverlay(projector: any MapProjector) {
+    var gauges: [UInt32: MapSceneOverlay.Gauge] = [:]
+    for anchor in scene.state.overlaySnapshot.anchors.values {
+        guard let gaugePosition = anchor.gaugePosition,
+              let screenPoint = projector.project(gaugePosition) else {
+            continue
+        }
+        gauges[anchor.id] = MapSceneOverlay.Gauge(
+            objectID: anchor.id,
+            hp: anchor.hp,
+            maxHp: anchor.maxHp,
+            sp: anchor.sp,
+            maxSp: anchor.maxSp,
+            objectType: anchor.objectType,
+            screenPosition: screenPoint
+        )
+    }
+    gameSession.overlay.gauges = gauges
+}
+```
+
+No `RealityKit` types appear anywhere in this function.
+
+### What did not change
+
+- **`MapSceneOverlay`** — still the screen-space UI model read by `MapSceneOverlayView`; its structure is unchanged
+- **`GaugeView`** — unchanged
+- **Rendering behavior** — HP/SP bars display identically to before
+- **visionOS** — immersive space path is unchanged; overlay is not rendered on visionOS in this phase
+
+### Known temporary state
+
+- `syncOverlayAnchorPositions` reads `HealthPointsComponent` from the entity tree each frame. This is a deliberate transitional coupling: once Phase 8 moves entity ownership fully into the RealityKit backend, this sync will move with it and become an internal backend concern rather than straddling the boundary.
+- The `onSceneUpdate` closure type (`(any MapProjector) -> Void`) is still present on `MapRenderHost`. It will be replaced by the backend lifecycle interface in Phase 7.
