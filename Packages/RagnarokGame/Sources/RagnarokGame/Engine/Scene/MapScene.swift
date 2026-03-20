@@ -58,6 +58,7 @@ public class MapScene {
     private let tileEntityManager: TileEntityManager
 
     private let pathfinder: Pathfinder
+    private let interactionResolver: MapInteractionResolver
 
     var tileTapGesture: some Gesture {
         SpatialTapGesture()
@@ -77,7 +78,9 @@ public class MapScene {
                 if let mapObject = event.entity.components[MapObjectComponent.self]?.mapObject {
                     switch mapObject.type {
                     case .monster:
-                        engageMonster(targetEntity: event.entity)
+                        if let target = state.objects[mapObject.objectID] {
+                            engageMonster(target)
+                        }
                     case .npc:
                         gameSession?.talkToNPC(npcID: mapObject.objectID)
                     default:
@@ -125,6 +128,7 @@ public class MapScene {
         self.tileEntityManager = TileEntityManager(mapGrid: mapGrid, rootEntity: rootEntity)
 
         self.pathfinder = Pathfinder(mapGrid: mapGrid)
+        self.interactionResolver = MapInteractionResolver(pathfinder: self.pathfinder)
 
         GridPositionComponent.registerComponent()
         MapItemComponent.registerComponent()
@@ -241,7 +245,9 @@ public class MapScene {
             if let mapObject = hitEntity.components[MapObjectComponent.self]?.mapObject {
                 switch mapObject.type {
                 case .monster:
-                    engageMonster(targetEntity: hitEntity)
+                    if let target = state.objects[mapObject.objectID] {
+                        engageMonster(target)
+                    }
                 case .npc:
                     gameSession?.talkToNPC(npcID: mapObject.objectID)
                 default:
@@ -534,21 +540,8 @@ extension MapScene {
     }
 
     func attackNearestMonster() {
-        let playerPosition = playerEntity.gridPosition
-
-        func distanceSquared(to entity: Entity) -> Int {
-            let position = entity.gridPosition
-            let dx = position.x - playerPosition.x
-            let dy = position.y - playerPosition.y
-            return dx * dx + dy * dy
-        }
-
-        let monsters = rootEntity.children.filter { entity in
-            entity.components[MapObjectComponent.self]?.mapObject.type == .monster
-        }
-
-        if let targetEntity = monsters.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }) {
-            engageMonster(targetEntity: targetEntity)
+        if let target = state.nearestMonster(fromPosition: state.player.gridPosition) {
+            engageMonster(target)
         }
     }
 
@@ -566,85 +559,33 @@ extension MapScene {
             return
         }
 
-        let playerPosition = playerEntity.gridPosition
-
-        func distanceSquared(to entity: Entity) -> Int {
-            let position = entity.gridPosition
-            let dx = position.x - playerPosition.x
-            let dy = position.y - playerPosition.y
-            return dx * dx + dy * dy
-        }
-
-        let monsters = rootEntity.children.filter { entity in
-            entity.components[MapObjectComponent.self]?.mapObject.type == .monster
-        }
-
-        if let targetEntity = monsters.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }) {
-            engageMonster(targetEntity: targetEntity, skill: skill)
+        if let target = state.nearestMonster(fromPosition: state.player.gridPosition) {
+            engageMonster(target, skill: skill)
         }
     }
 
     func pickUpNearestItem() {
-        let playerPosition = playerEntity.gridPosition
-
-        func distanceSquared(to entity: Entity) -> Int {
-            let position = entity.gridPosition
-            let dx = position.x - playerPosition.x
-            let dy = position.y - playerPosition.y
-            return dx * dx + dy * dy
+        if let target = state.nearestItem(fromPosition: state.player.gridPosition) {
+            engageItem(target)
         }
-
-        let items = rootEntity.children.filter { entity in
-            entity.components.has(MapItemComponent.self)
-        }
-
-        guard let targetEntity = items.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }) else {
-            return
-        }
-
-        engageItem(targetEntity: targetEntity)
     }
 
     func talkToNearestNPC() {
-        let playerPosition = playerEntity.gridPosition
-
-        func distanceSquared(to entity: Entity) -> Int {
-            let position = entity.gridPosition
-            let dx = position.x - playerPosition.x
-            let dy = position.y - playerPosition.y
-            return dx * dx + dy * dy
-        }
-
-        let npcs = rootEntity.children.filter { entity in
-            entity.components[MapObjectComponent.self]?.mapObject.type == .npc
-        }
-
-        guard let targetEntity = npcs.min(by: { distanceSquared(to: $0) < distanceSquared(to: $1) }),
-              let mapObject = targetEntity.components[MapObjectComponent.self]?.mapObject else {
-            return
-        }
-
-        gameSession?.talkToNPC(npcID: mapObject.objectID)
-    }
-
-    private func engageMonster(targetEntity: Entity) {
-        guard let mapObject = targetEntity.components[MapObjectComponent.self]?.mapObject else {
-            return
-        }
-
-        movePlayerToward(targetEntity: targetEntity, within: 1) {
-            self.gameSession?.requestAction(._repeat, onTarget: mapObject.objectID)
+        if let target = state.nearestNPC(fromPosition: state.player.gridPosition) {
+            gameSession?.talkToNPC(npcID: target.id)
         }
     }
 
-    private func engageMonster(targetEntity: Entity, skill: SkillInfo) {
-        guard let mapObject = targetEntity.components[MapObjectComponent.self]?.mapObject else {
-            return
+    private func engageMonster(_ target: MapObjectState) {
+        movePlayerToward(targetPosition: target.gridPosition, within: 1) {
+            self.gameSession?.requestAction(._repeat, onTarget: target.id)
         }
+    }
 
-        let targetPosition = targetEntity.gridPosition
+    private func engageMonster(_ target: MapObjectState, skill: SkillInfo) {
+        let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
-        movePlayerToward(targetEntity: targetEntity, within: skillRange) {
+        movePlayerToward(targetPosition: targetPosition, within: skillRange) {
             if skill.isGroundTargetedSkill {
                 self.gameSession?.useSkill(
                     skillID: skill.skillID,
@@ -655,40 +596,31 @@ extension MapScene {
                 self.gameSession?.useSkill(
                     skillID: skill.skillID,
                     level: skill.level,
-                    onTarget: mapObject.objectID
+                    onTarget: target.id
                 )
             }
         }
     }
 
-    private func engageItem(targetEntity: Entity) {
-        guard let mapItem = targetEntity.components[MapItemComponent.self]?.mapItem else {
-            return
-        }
-
-        movePlayerToward(targetEntity: targetEntity, within: 1) {
-            self.gameSession?.pickUpItem(objectID: mapItem.objectID)
+    private func engageItem(_ target: MapItemState) {
+        movePlayerToward(targetPosition: target.gridPosition, within: 1) {
+            self.gameSession?.pickUpItem(objectID: target.id)
         }
     }
 
-    private func movePlayerToward(targetEntity: Entity, within range: Int, onArrival: @escaping () -> Void) {
+    private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping () -> Void) {
         let startPosition = playerEntity.gridPosition
-        let endPosition = targetEntity.gridPosition
-        let path = pathfinder.findPath(from: startPosition, to: endPosition, within: range)
-
-        guard !path.isEmpty else {
-            return
-        }
-
-        if path == [startPosition] {
+        switch interactionResolver.decideMovement(from: startPosition, toward: targetPosition, within: range) {
+        case .alreadyInRange:
             onArrival()
-        } else {
-            let lockOnComponent = LockOnComponent(targetEntity: targetEntity, attackRange: Float(range)) {
+        case .moveTo(let destination):
+            let lockOnComponent = LockOnComponent(attackRange: Float(range)) {
                 onArrival()
             }
             playerEntity.components.set(lockOnComponent)
-
-            gameSession?.requestMove(to: path.last ?? endPosition)
+            gameSession?.requestMove(to: destination)
+        case .noPath:
+            break
         }
     }
 }

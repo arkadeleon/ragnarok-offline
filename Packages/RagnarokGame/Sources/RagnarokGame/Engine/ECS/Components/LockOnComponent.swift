@@ -8,7 +8,6 @@
 import RealityKit
 
 struct LockOnComponent: Component {
-    var targetEntity: Entity
     var attackRange: Float
     var action: () -> Void
 }

@@ -333,5 +333,198 @@ public final class MapSceneState {
 
 ### Next phase
 
-**Phase 4 — Extract Gameplay Interaction and Targeting Logic.**
-Move `attackNearestMonster`, `pickUpNearestItem`, `talkToNearestNPC`, and `movePlayerToward` off the entity tree and onto `state` lookups.
+**Phase 5 — Extract Overlay and Projector Interfaces.**
+Remove the current HUD dependency on `ARView.project` and make projection a backend capability.
+
+---
+
+## Phase 4 — Extract Gameplay Interaction and Targeting Logic
+
+**Completed:** 2026-03-20
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Moved all nearest-target selection and movement-to-target logic off the RealityKit entity tree and onto `MapSceneState`. Gameplay logic no longer requires a backend entity to exist behind every target. The RealityKit entity tree remains as a mirrored path for rendering and walking animation.
+
+### New files
+
+#### `Engine/Runtime/MapInteractionResolver.swift`
+
+```swift
+enum MapMovementDecision {
+    case alreadyInRange
+    case moveTo(SIMD2<Int>)
+    case noPath
+}
+
+struct MapInteractionResolver {
+    let pathfinder: Pathfinder
+
+    func decideMovement(
+        from playerPosition: SIMD2<Int>,
+        toward targetPosition: SIMD2<Int>,
+        within range: Int
+    ) -> MapMovementDecision
+}
+```
+
+Pure Swift path-finding decision service. Wraps `Pathfinder` and exposes a single `decideMovement` method that returns one of three cases: already in range (call the action immediately), move to a destination (walk first), or no path found. Extracted from the body of the old `movePlayerToward(targetEntity:within:onArrival:)`.
+
+`MapMovementDecision` lives in the same file because it is the resolver's sole return type.
+
+### Modified files
+
+#### `Engine/Runtime/MapSceneState.swift`
+
+Added an extension with three targeting methods:
+
+```swift
+extension MapSceneState {
+    func nearestMonster(fromPosition position: SIMD2<Int>) -> MapObjectState?
+    func nearestNPC(fromPosition position: SIMD2<Int>) -> MapObjectState?
+    func nearestItem(fromPosition position: SIMD2<Int>) -> MapItemState?
+}
+```
+
+Each method scans the relevant state dictionary (`objects` or `items`) with an O(n) min search keyed on Chebyshev-distance squared. No entity dependency. `distanceSquared` is a private helper in the same extension.
+
+These were initially in a separate `MapTargetingService` struct, then moved here because the state already owns the data and the methods are a natural fit as queries on that state.
+
+#### `Engine/ECS/Components/LockOnComponent.swift`
+
+Removed the unused `targetEntity: Entity` field:
+
+```swift
+// Before
+struct LockOnComponent: Component {
+    var targetEntity: Entity
+    var attackRange: Float
+    var action: () -> Void
+}
+
+// After
+struct LockOnComponent: Component {
+    var attackRange: Float
+    var action: () -> Void
+}
+```
+
+`LockOnSystem` never read `targetEntity` — it only called `action()` when `WalkingComponent` was removed. The field was dead weight from the original implementation.
+
+#### `Engine/Scene/MapScene.swift`
+
+Added `private let interactionResolver: MapInteractionResolver`, initialized in `init()` after `pathfinder`.
+
+**Targeting methods** — replaced entity-tree scans with state queries:
+
+```swift
+// Before
+func attackNearestMonster() {
+    let playerPosition = playerEntity.gridPosition
+    let monsters = rootEntity.children.filter {
+        $0.components[MapObjectComponent.self]?.mapObject.type == .monster
+    }
+    if let targetEntity = monsters.min(by: { ... }) {
+        engageMonster(targetEntity: targetEntity)
+    }
+}
+
+// After
+func attackNearestMonster() {
+    if let target = state.nearestMonster(fromPosition: state.player.gridPosition) {
+        engageMonster(target)
+    }
+}
+```
+
+Same pattern for `useSkillOnNearestMonster`, `pickUpNearestItem`, and `talkToNearestNPC`.
+
+**Engage methods** — replaced entity parameters with state value types:
+
+```swift
+// Before
+private func engageMonster(targetEntity: Entity) {
+    guard let mapObject = targetEntity.components[MapObjectComponent.self]?.mapObject else { return }
+    movePlayerToward(targetEntity: targetEntity, within: 1) {
+        self.gameSession?.requestAction(._repeat, onTarget: mapObject.objectID)
+    }
+}
+
+// After
+private func engageMonster(_ target: MapObjectState) {
+    movePlayerToward(targetPosition: target.gridPosition, within: 1) {
+        self.gameSession?.requestAction(._repeat, onTarget: target.id)
+    }
+}
+```
+
+Same pattern for `engageMonster(_:skill:)` and `engageItem(_:)`.
+
+**`movePlayerToward`** — replaced entity parameter and inline path-finding with resolver dispatch:
+
+```swift
+// Before
+private func movePlayerToward(targetEntity: Entity, within range: Int, onArrival: @escaping () -> Void) {
+    let startPosition = playerEntity.gridPosition
+    let endPosition = targetEntity.gridPosition
+    let path = pathfinder.findPath(from: startPosition, to: endPosition, within: range)
+    guard !path.isEmpty else { return }
+    if path == [startPosition] {
+        onArrival()
+    } else {
+        let lockOnComponent = LockOnComponent(targetEntity: targetEntity, attackRange: Float(range)) {
+            onArrival()
+        }
+        playerEntity.components.set(lockOnComponent)
+        gameSession?.requestMove(to: path.last ?? endPosition)
+    }
+}
+
+// After
+private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping () -> Void) {
+    let startPosition = playerEntity.gridPosition
+    switch interactionResolver.decideMovement(from: startPosition, toward: targetPosition, within: range) {
+    case .alreadyInRange:
+        onArrival()
+    case .moveTo(let destination):
+        let lockOnComponent = LockOnComponent(attackRange: Float(range)) {
+            onArrival()
+        }
+        playerEntity.components.set(lockOnComponent)
+        gameSession?.requestMove(to: destination)
+    case .noPath:
+        break
+    }
+}
+```
+
+The start position is still read from `playerEntity.gridPosition` (the interpolated walking position). The target position now comes from `MapSceneState` via the state-based engage methods.
+
+**Tap gestures and raycast** — monster-hit paths now look up the state object by ID before engaging:
+
+```swift
+// Before
+case .monster:
+    engageMonster(targetEntity: hitEntity)
+
+// After
+case .monster:
+    if let target = state.objects[mapObject.objectID] {
+        engageMonster(target)
+    }
+```
+
+Item tap gesture and raycast item-hit path call `gameSession?.pickUpItem` directly (unchanged — they never went through `engageItem`).
+
+### What did not change
+
+- **`LockOnSystem`** — still fires `action()` when `WalkingComponent` is removed; entity walking still drives the visual follow
+- **`onMovementValueChanged`** — still reads `playerEntity.gridPosition` and `WalkingComponent.path` for thumbstick position; that extraction is out of Phase 4 scope
+- **Raycast item pickup** — still calls `gameSession?.pickUpItem` directly (no pathfinding); only the nearest-item button path goes through `engageItem`
+- **Rendering behavior** — identical to before
+
+### Known temporary state
+
+- `movePlayerToward` still reads `startPosition` from `playerEntity.gridPosition`. The player position will be moved to `state.player.gridPosition` when walking interpolation state is also tracked in the runtime layer (a later phase).
+- `LockOnComponent` is still a RealityKit `Component`. It will be moved into the RealityKit backend in Phase 8.
