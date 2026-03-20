@@ -91,20 +91,16 @@ Add new types:
 Modify:
 
 - `Packages/RagnarokGame/Sources/RagnarokGame/Client/Views/MapView.swift`
-- `Packages/RagnarokGame/Sources/RagnarokGame/Client/GameSession.swift`
-- `RagnarokOffline/Settings/SettingsModel.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/Client/GameView.swift`
 
 ### Deliverables
 
 - Introduce `MapRenderEngine` with:
-  - `.automatic`
   - `.metal`
   - `.realityKit`
+- Introduce `MapRenderConfiguration` with a `default` computed static property that selects `.realityKit` on visionOS and `.metal` elsewhere.
 - `MapView` stops choosing concrete render views directly and goes through `MapRenderHost`.
-- Engine selection comes from a single source, either `SettingsModel` or `GameSession`.
-- `.automatic` resolves to:
-  - `realityKit` on visionOS
-  - `metal` on iOS and macOS
+- `GameView` accepts an optional `renderConfiguration` parameter (defaults to `.default`).
 
 ### Acceptance
 
@@ -653,13 +649,13 @@ The following decisions are locked for implementation unless explicitly revised 
 - Render engine selection and render configuration remain separate from the phase payload.
 - `MapView` and `MapRenderHost` read engine selection independently from session or settings state.
 
-### 4. Automatic Engine Resolution
+### 4. Default Engine Resolution
 
-- `.automatic` always resolves by platform:
+- There is no `.automatic` case. Platform default is expressed via `MapRenderConfiguration.default`:
   - `realityKit` on visionOS
   - `metal` on iOS and macOS
 - Before the Metal backend is feature-complete, `MapRenderHost` may temporarily satisfy a `.metal` request by routing to the legacy RealityKit implementation internally.
-- That temporary routing is an implementation detail, not a change in the meaning of `.automatic`.
+- That temporary routing is an implementation detail, not a change in the meaning of `.default`.
 
 ### 5. Backend Data Contract
 

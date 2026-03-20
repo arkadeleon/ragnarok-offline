@@ -11,6 +11,7 @@ import ThumbstickView
 
 struct MapView: View {
     var scene: MapScene
+    var renderConfiguration: MapRenderConfiguration = .default
 
     @Environment(GameSession.self) private var gameSession
 
@@ -28,10 +29,9 @@ struct MapView: View {
     var body: some View {
         ZStack {
             #if os(visionOS)
-            Text("Game")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            MapRenderHost(scene: scene, configuration: renderConfiguration)
             #else
-            MapSceneARView(scene: scene) { arView in
+            MapRenderHost(scene: scene, configuration: renderConfiguration) { arView in
                 updateOverlay(arView: arView)
             }
             .overlay {
