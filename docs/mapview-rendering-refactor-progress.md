@@ -208,7 +208,130 @@ iOS and macOS blocks both:
 
 `onMovementValueChanged` is still internal to `MapScene`. It will remain so — `handle(_:)` is the stable public API. `MapInteractionIntent` is defined but not yet wired into `MapScene`; that happens in Phase 4.
 
+---
+
+## Phase 3 — Extract Scene State Models
+
+**Completed:** 2026-03-20
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Introduced an engine-agnostic scene state layer. All packet-driven events now write to `MapScene.state` first, then continue to update the RealityKit entity tree as a mirrored path. No rendering behavior changed.
+
+### New files
+
+All new files live under `Packages/RagnarokGame/Sources/RagnarokGame/Engine/Runtime/`.
+
+#### `MapObjectState.swift`
+
+```swift
+public struct MapObjectState: Identifiable, Sendable {
+    public let id: UInt32
+    public var object: MapObject
+    public var gridPosition: SIMD2<Int>
+    public var hp: Int
+    public var maxHp: Int
+    public var sp: Int?     // non-nil for the local player only
+    public var maxSp: Int?  // non-nil for the local player only
+    public var isVisible: Bool
+}
+```
+
+Mirrors the data previously scattered across `MapObjectComponent`, `GridPositionComponent`, `HealthPointsComponent`, and `SpellPointsComponent` on a RealityKit entity. No ECS dependency.
+
+#### `MapItemState.swift`
+
+```swift
+public struct MapItemState: Identifiable, Sendable {
+    public let id: UInt32
+    public var item: MapItem
+    public var gridPosition: SIMD2<Int>
+}
+```
+
+Mirrors `MapItemComponent` + `GridPositionComponent` without importing `RealityKit`.
+
+#### `MapSelectionState.swift`
+
+```swift
+public struct MapSelectionState: Sendable {
+    public var selectedPosition: SIMD2<Int>?
+}
+```
+
+Set whenever the player clicks a tile (both `tileTapGesture` and the `raycast` ground-hit path).
+
+#### `MapDamageEffect.swift`
+
+```swift
+public struct MapDamageEffect: Identifiable, Sendable {
+    public let id: UUID
+    public let targetObjectID: UInt32
+    public let amount: Int
+    public let delay: TimeInterval
+}
+```
+
+Records damage numbers as they arrive from attack and skill packets. Effects are queued in `MapSceneState.damageEffects` and consumed via `drainDamageEffects()`. The RealityKit path still creates `DamageDigitEntity` objects in parallel — the queue is not yet consumed by any backend.
+
+#### `MapSceneState.swift`
+
+```swift
+@MainActor
+@Observable
+public final class MapSceneState {
+    public var player: MapObjectState
+    public var objects: [UInt32: MapObjectState] = [:]
+    public var items: [UInt32: MapItemState] = [:]
+    public var selection: MapSelectionState = MapSelectionState()
+    public var damageEffects: [MapDamageEffect] = []
+
+    public func drainDamageEffects() -> [MapDamageEffect]
+}
+```
+
+`@Observable` so SwiftUI views can react to state changes without polling. `@MainActor` so all mutations are serialized. `objects` and `items` are keyed by object ID for O(1) access.
+
+### Modified files
+
+#### `MapScene.swift`
+
+- Added `let state: MapSceneState` (initialized in `init()` from `player` and `character`)
+- `init()` builds the initial `MapObjectState` for the player with HP, SP, and visibility from `CharacterInfo`
+- `tileTapGesture.onEnded` sets `state.selection.selectedPosition` before calling `requestMove`
+- `raycast()` sets `state.selection.selectedPosition` on ground-hit before calling `requestMove`
+- All `MapEventHandlerProtocol` methods write to `state` first:
+  - `onReceivePacket(_:PACKET_ZC_PAR_CHANGE)` — updates `state.player.hp/maxHp/sp/maxSp`
+  - `onReceivePacket(_:PACKET_ZC_HP_INFO)` — updates player or object HP in state
+  - `onPlayerMoved` — updates `state.player.gridPosition`
+  - `onMapObjectSpawned` — inserts or replaces object in `state.objects`
+  - `onMapObjectMoved` — updates or inserts object position in `state.objects`
+  - `onMapObjectStopped` — updates object grid position in `state.objects`
+  - `onMapObjectVanished` — removes object from `state.objects`
+  - `onMapObjectStateChanged` — updates `isVisible` in `state.objects`
+  - `onMapObjectActionPerformed` — appends `MapDamageEffect` entries before the entity path
+  - `onMapObjectSkillPerformed` — appends `MapDamageEffect` entries before the entity path
+  - `onItemSpawned` — inserts item into `state.items`
+  - `onItemVanished` — removes item from `state.items`
+
+#### `GameSession.swift`
+
+- Added `public var mapSceneState: MapSceneState?` as a convenience accessor (`mapScene?.state`), so callers can read object and item state without navigating the phase enum.
+
+### What did not change
+
+- **RealityKit entity tree** — all existing entity updates remain intact as the mirrored path
+- **Overlay** — `MapSceneOverlay` is still the source for HUD data; it will be replaced in Phase 5
+- **Rendering behavior** — camera, thumbstick, overlays, and visionOS immersive space are all identical to before
+
+### Known temporary state
+
+- `damageEffects` accumulates but is never drained in this phase. The Metal backend (Phase 11) will call `drainDamageEffects()` each frame. The RealityKit entity path still creates damage digit entities independently.
+- `MapSceneOverlay` (used by the HUD) is still updated separately in `MapView`; it will be retired in Phase 5 when overlay projection is extracted.
+- `state.player.gridPosition` reflects the server-confirmed destination on `onPlayerMoved`, not the interpolated position during walking.
+
 ### Next phase
 
-**Phase 3 — Observable MapScene.**
-Introduce `@Observable` on `MapScene` so SwiftUI views can react to `cameraState` changes without polling, and lay the groundwork for the camera follow target (`targetPosition`) field.
+**Phase 4 — Extract Gameplay Interaction and Targeting Logic.**
+Move `attackNearestMonster`, `pickUpNearestItem`, `talkToNearestNPC`, and `movePlayerToward` off the entity tree and onto `state` lookups.

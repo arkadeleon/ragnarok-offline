@@ -104,6 +104,10 @@ final public class GameSession {
         }
     }
 
+    public var mapSceneState: MapSceneState? {
+        mapScene?.state
+    }
+
     public init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
 

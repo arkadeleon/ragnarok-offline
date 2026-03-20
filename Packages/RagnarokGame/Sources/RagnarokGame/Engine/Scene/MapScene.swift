@@ -49,6 +49,8 @@ public class MapScene {
         }
     }
 
+    let state: MapSceneState
+
     private var playerEntity = Entity()
     private let tileSelectorEntity = Entity()
 
@@ -62,6 +64,7 @@ public class MapScene {
             .targetedToEntity(where: .has(TileComponent.self))
             .onEnded { [unowned self] event in
                 if let position = event.entity.components[TileComponent.self]?.position {
+                    state.selection.selectedPosition = position
                     gameSession?.requestMove(to: position)
                 }
             }
@@ -103,6 +106,18 @@ public class MapScene {
         self.gameSession = gameSession
 
         self.mapGrid = MapGrid(gat: world.gat)
+
+        let playerState = MapObjectState(
+            id: player.objectID,
+            object: player,
+            gridPosition: playerPosition,
+            hp: character.hp,
+            maxHp: character.maxHp,
+            sp: character.sp,
+            maxSp: character.maxSp,
+            isVisible: player.effectState != .cloak
+        )
+        self.state = MapSceneState(player: playerState)
 
         self.resourceManager = resourceManager
 
@@ -262,6 +277,7 @@ public class MapScene {
             let altitude = x1 + (x2 - x1) * yr
 
             if fabsf(altitude - point.y) < 0.5 {
+                state.selection.selectedPosition = position
                 gameSession?.requestMove(to: position)
 
                 let p0: SIMD3<Float> = [Float(position.x), cell.bottomLeftAltitude + 0.1, -Float(position.y)]
@@ -685,12 +701,16 @@ extension MapScene: MapEventHandlerProtocol {
 
         switch sp {
         case .hp:
+            state.player.hp = Int(packet.count)
             playerEntity.components[HealthPointsComponent.self]?.hp = Int(packet.count)
         case .maxhp:
+            state.player.maxHp = Int(packet.count)
             playerEntity.components[HealthPointsComponent.self]?.maxHp = Int(packet.count)
         case .sp:
+            state.player.sp = Int(packet.count)
             playerEntity.components[SpellPointsComponent.self]?.sp = Int(packet.count)
         case .maxsp:
+            state.player.maxSp = Int(packet.count)
             playerEntity.components[SpellPointsComponent.self]?.maxSp = Int(packet.count)
         default:
             break
@@ -698,6 +718,14 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onReceivePacket(_ packet: PACKET_ZC_HP_INFO) {
+        if state.player.id == packet.GID {
+            state.player.hp = Int(packet.HP)
+            state.player.maxHp = Int(packet.maxHP)
+        } else {
+            state.objects[packet.GID]?.hp = Int(packet.HP)
+            state.objects[packet.GID]?.maxHp = Int(packet.maxHP)
+        }
+
         Task {
             guard let entity = try await spriteEntityManager.findEntity(forObjectID: packet.GID) else {
                 return
@@ -709,6 +737,8 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        state.player.gridPosition = endPosition
+
         if var walkingComponent = playerEntity.components[WalkingComponent.self],
            walkingComponent.path.count > 1 {
             let startPosition = walkingComponent.path[1]
@@ -728,6 +758,15 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
+        state.objects[object.objectID] = MapObjectState(
+            id: object.objectID,
+            object: object,
+            gridPosition: position,
+            hp: object.hp,
+            maxHp: object.maxHp,
+            isVisible: object.effectState != .cloak
+        )
+
         Task {
             let (entity, isNew) = try await spriteEntityManager.entity(for: object)
 
@@ -756,6 +795,19 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        if state.objects[object.objectID] != nil {
+            state.objects[object.objectID]?.gridPosition = endPosition
+        } else {
+            state.objects[object.objectID] = MapObjectState(
+                id: object.objectID,
+                object: object,
+                gridPosition: endPosition,
+                hp: object.hp,
+                maxHp: object.maxHp,
+                isVisible: object.effectState != .cloak
+            )
+        }
+
         Task {
             let (entity, isNew) = try await spriteEntityManager.entity(for: object)
 
@@ -793,6 +845,8 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>) {
+        state.objects[objectID]?.gridPosition = position
+
         Task {
             if let entity = try await spriteEntityManager.findEntity(forObjectID: objectID) {
                 entity.transform = transform(for: position)
@@ -804,12 +858,16 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectVanished(objectID: UInt32) {
+        state.objects.removeValue(forKey: objectID)
+
         Task {
             try await spriteEntityManager.removeEntity(forObjectID: objectID)
         }
     }
 
     func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
+        state.objects[objectID]?.isVisible = (effectState != .cloak)
+
         Task {
             if let entity = try await spriteEntityManager.findEntity(forObjectID: objectID) {
                 entity.isEnabled = (effectState != .cloak)
@@ -818,6 +876,59 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
+        switch objectAction.type {
+        case .normal, .endure, .critical:
+            let damageEffect = MapDamageEffect(
+                targetObjectID: objectAction.targetObjectID,
+                amount: objectAction.damage,
+                delay: TimeInterval(objectAction.sourceSpeed)
+            )
+            state.damageEffects.append(damageEffect)
+
+            if objectAction.damage2 > 0 {
+                let damageEffect2 = MapDamageEffect(
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage2,
+                    delay: TimeInterval(objectAction.sourceSpeed) + 200 * 1.75
+                )
+                state.damageEffects.append(damageEffect2)
+            }
+        case .multi_hit, .multi_hit_endure, .multi_hit_critical:
+            let count = (objectAction.damage > 1 ? 2 : 1)
+            if count == 2 {
+                let damageEffect = MapDamageEffect(
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage / count,
+                    delay: TimeInterval(objectAction.sourceSpeed)
+                )
+                state.damageEffects.append(damageEffect)
+            }
+            if objectAction.damage2 > 0 {
+                let damageEffect = MapDamageEffect(
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage / count,
+                    delay: TimeInterval(objectAction.sourceSpeed) + 200 / 2
+                )
+                state.damageEffects.append(damageEffect)
+
+                let damageEffect2 = MapDamageEffect(
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage2,
+                    delay: TimeInterval(objectAction.sourceSpeed) + 200 * 1.75
+                )
+                state.damageEffects.append(damageEffect2)
+            } else {
+                let damageEffect = MapDamageEffect(
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage / count,
+                    delay: TimeInterval(objectAction.sourceSpeed) + 200
+                )
+                state.damageEffects.append(damageEffect)
+            }
+        default:
+            break
+        }
+
         Task {
             guard let sourceEntity = try await spriteEntityManager.findEntity(forObjectID: objectAction.sourceObjectID) else {
                 return
@@ -900,6 +1011,19 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
+        if packet.damage >= 0 {
+            let count = Int(packet.count)
+            let damage = Int(packet.damage)
+            for i in 0..<count {
+                let damageEffect = MapDamageEffect(
+                    targetObjectID: packet.targetID,
+                    amount: damage / count,
+                    delay: TimeInterval(packet.attackMT) + TimeInterval(200 * i)
+                )
+                state.damageEffects.append(damageEffect)
+            }
+        }
+
         Task {
             let sourceEntity = try await spriteEntityManager.findEntity(forObjectID: packet.AID)
             let targetEntity = try await spriteEntityManager.findEntity(forObjectID: packet.targetID)
@@ -934,6 +1058,12 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
+        state.items[item.objectID] = MapItemState(
+            id: item.objectID,
+            item: item,
+            gridPosition: position
+        )
+
         Task {
             let entity = try await Entity(from: item, resourceManager: resourceManager)
             entity.name = "\(item.objectID)"
@@ -950,6 +1080,8 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onItemVanished(objectID: UInt32) {
+        state.items.removeValue(forKey: objectID)
+
         if let entity = rootEntity.findEntity(named: "\(objectID)") {
             entity.removeFromParent()
         }
