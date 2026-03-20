@@ -44,7 +44,8 @@ struct MapView: View {
                 .padding(.leading, 16)
                 .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
                 .onReceive(timer) { _ in
-                    scene.onMovementValueChanged(movementValue: movementValue)
+                    let intent = MapInputIntent(movementValue: movementValue)
+                    scene.handle(intent)
                 }
         }
         .overlay(alignment: .bottomTrailing) {

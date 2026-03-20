@@ -33,25 +33,19 @@ public class MapScene {
     let rootEntity = Entity()
     let worldCameraEntity = Entity()
 
-    var horizontalAngle: Float = radians(0) {
+    var cameraState: MapCameraState = .default {
         didSet {
-            worldCameraEntity.components[WorldCameraComponent.self]?.azimuth = horizontalAngle
-        }
-    }
-
-    #if os(visionOS)
-    var verticalAngle: Float = radians(15)
-    #else
-    var verticalAngle: Float = radians(45) {
-        didSet {
-            worldCameraEntity.components[WorldCameraComponent.self]?.elevation = verticalAngle
-        }
-    }
-    #endif
-
-    var distance: Float = 100 {
-        didSet {
-            worldCameraEntity.components[WorldCameraComponent.self]?.radius = distance
+            if cameraState.azimuth != oldValue.azimuth {
+                worldCameraEntity.components[WorldCameraComponent.self]?.azimuth = cameraState.azimuth
+            }
+            #if !os(visionOS)
+            if cameraState.elevation != oldValue.elevation {
+                worldCameraEntity.components[WorldCameraComponent.self]?.elevation = cameraState.elevation
+            }
+            #endif
+            if cameraState.distance != oldValue.distance {
+                worldCameraEntity.components[WorldCameraComponent.self]?.radius = cameraState.distance
+            }
         }
     }
 
@@ -347,7 +341,7 @@ public class MapScene {
     private func setupWorldCamera(target: Entity) {
         // Set the available bounds for the camera orientation.
         let elevationBounds: ClosedRange<Float> = radians(15)...radians(60)
-        let initialElevation = verticalAngle
+        let initialElevation = cameraState.elevation
 
         // Create a world camera component, which acts as a target camera,
         // where it repositions the scene to orient toward the owning entity.
@@ -451,6 +445,10 @@ public class MapScene {
 }
 
 extension MapScene {
+    func handle(_ intent: MapInputIntent) {
+        onMovementValueChanged(movementValue: intent.movementValue)
+    }
+
     func onMovementValueChanged(movementValue: CGPoint) {
         let position: SIMD2<Int>
         if let path = playerEntity.components[WalkingComponent.self]?.path, path.count > 1 {
@@ -483,7 +481,7 @@ extension MapScene {
             Float(movementValue.x),
             Float(-movementValue.y)
         )
-        let angle = -horizontalAngle
+        let angle = -cameraState.azimuth
         // Rotate the joystick vector to align with the camera azimuth.
         // We use the standard 2D rotation matrix:
         // [ x' ]   [ cosθ  -sinθ ] [ x ]

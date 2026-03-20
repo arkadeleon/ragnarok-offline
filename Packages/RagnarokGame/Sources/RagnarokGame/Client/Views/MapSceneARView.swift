@@ -7,7 +7,6 @@
 
 import Combine
 import RealityKit
-import SGLMath
 import SwiftUI
 
 #if os(iOS)
@@ -29,9 +28,9 @@ class MapSceneARViewController: UIViewController {
     let onSceneUpdate: (ARView) -> Void
 
     private var arView: ARView!
-    private var horizontalAngle: Float = radians(0)
-    private var verticalAngle: Float = radians(45)
-    private var distance: Float = 100
+    private var baseAzimuth: Float = 0
+    private var baseElevation: Float = 0
+    private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
     init(scene: MapScene, onSceneUpdate: @escaping (ARView) -> Void) {
@@ -99,20 +98,19 @@ class MapSceneARViewController: UIViewController {
     }
 
     @objc func handleDoubleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
-        horizontalAngle = radians(0)
-        scene.horizontalAngle = horizontalAngle
-
-        verticalAngle = radians(45)
-        scene.verticalAngle = verticalAngle
+        scene.cameraState.azimuth = 0
+        scene.cameraState.elevation = .pi / 4
+        baseAzimuth = scene.cameraState.azimuth
+        baseElevation = scene.cameraState.elevation
     }
 
     @objc func handlePan(_ panGestureRecognizer: UIPanGestureRecognizer) {
         switch panGestureRecognizer.state {
         case .began:
-            horizontalAngle = scene.horizontalAngle
+            baseAzimuth = scene.cameraState.azimuth
         case .changed:
-            let horizontalAngle = horizontalAngle + Float(panGestureRecognizer.translation(in: arView).x) * 0.01
-            scene.horizontalAngle = horizontalAngle.truncatingRemainder(dividingBy: radians(360))
+            let azimuth = baseAzimuth + Float(panGestureRecognizer.translation(in: arView).x) * 0.01
+            scene.cameraState.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
         default:
             break
         }
@@ -121,12 +119,12 @@ class MapSceneARViewController: UIViewController {
     @objc func handleTwoFingerPan(_ panGestureRecognizer: UIPanGestureRecognizer) {
         switch panGestureRecognizer.state {
         case .began:
-            verticalAngle = scene.verticalAngle
+            baseElevation = scene.cameraState.elevation
         case .changed:
-            var verticalAngle = verticalAngle + Float(panGestureRecognizer.translation(in: arView).y) * 0.01
-            verticalAngle = max(verticalAngle, radians(15))
-            verticalAngle = min(verticalAngle, radians(60))
-            scene.verticalAngle = verticalAngle
+            var elevation = baseElevation + Float(panGestureRecognizer.translation(in: arView).y) * 0.01
+            elevation = max(elevation, .pi / 12)
+            elevation = min(elevation, .pi / 3)
+            scene.cameraState.elevation = elevation
         default:
             break
         }
@@ -135,12 +133,12 @@ class MapSceneARViewController: UIViewController {
     @objc func handlePinch(_ pinchGestureRecognizer: UIPinchGestureRecognizer) {
         switch pinchGestureRecognizer.state {
         case .began:
-            distance = scene.distance
+            baseDistance = scene.cameraState.distance
         case .changed:
-            var distance = distance * Float(1 / pinchGestureRecognizer.scale)
+            var distance = baseDistance * Float(1 / pinchGestureRecognizer.scale)
             distance = max(distance, 3)
             distance = min(distance, 120)
-            scene.distance = distance
+            scene.cameraState.distance = distance
         default:
             break
         }
@@ -166,9 +164,9 @@ class MapSceneARViewController: NSViewController {
     let onSceneUpdate: (ARView) -> Void
 
     private var arView: ARView!
-    private var horizontalAngle: Float = radians(0)
-    private var verticalAngle: Float = radians(45)
-    private var distance: Float = 100
+    private var baseAzimuth: Float = 0
+    private var baseElevation: Float = 0
+    private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
     init(scene: MapScene, onSceneUpdate: @escaping (ARView) -> Void) {
@@ -226,16 +224,16 @@ class MapSceneARViewController: NSViewController {
     @objc func handlePan(_ panGestureRecognizer: NSPanGestureRecognizer) {
         switch panGestureRecognizer.state {
         case .began:
-            horizontalAngle = scene.horizontalAngle
-            verticalAngle = scene.verticalAngle
+            baseAzimuth = scene.cameraState.azimuth
+            baseElevation = scene.cameraState.elevation
         case .changed:
-            let horizontalAngle = horizontalAngle + Float(panGestureRecognizer.translation(in: arView).x) * 0.01
-            scene.horizontalAngle = horizontalAngle.truncatingRemainder(dividingBy: radians(360))
+            let azimuth = baseAzimuth + Float(panGestureRecognizer.translation(in: arView).x) * 0.01
+            scene.cameraState.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
 
-            var verticalAngle = verticalAngle - Float(panGestureRecognizer.translation(in: arView).y) * 0.01
-            verticalAngle = max(verticalAngle, radians(15))
-            verticalAngle = min(verticalAngle, radians(60))
-            scene.verticalAngle = verticalAngle
+            var elevation = baseElevation - Float(panGestureRecognizer.translation(in: arView).y) * 0.01
+            elevation = max(elevation, .pi / 12)
+            elevation = min(elevation, .pi / 3)
+            scene.cameraState.elevation = elevation
         default:
             break
         }
@@ -244,15 +242,15 @@ class MapSceneARViewController: NSViewController {
     @objc func handleMagnification(_ magnificationGestureRecognizer: NSMagnificationGestureRecognizer) {
         switch magnificationGestureRecognizer.state {
         case .began:
-            distance = scene.distance
+            baseDistance = scene.cameraState.distance
         case .changed:
             var scale = 1 + magnificationGestureRecognizer.magnification
             scale = max(scale, .leastNonzeroMagnitude)
 
-            var distance = distance * Float(1 / scale)
+            var distance = baseDistance * Float(1 / scale)
             distance = max(distance, 3)
             distance = min(distance, 120)
-            scene.distance = distance
+            scene.cameraState.distance = distance
         default:
             break
         }

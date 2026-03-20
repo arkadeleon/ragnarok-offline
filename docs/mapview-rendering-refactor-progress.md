@@ -100,5 +100,115 @@ Pure routing view — no `@State`, no `AnyView`. Both `metalSurface` and `realit
 
 ### Next phase
 
-**Phase 2 — Extract Camera State and Input Intent.**
-Move `horizontalAngle`, `verticalAngle`, and `distance` out of `MapSceneARViewController` into a shared `MapCameraState` on `MapScene`, so both the future Metal backend and the existing RealityKit path read from the same source of truth.
+**Phase 3 — Observable MapScene.**
+Introduce `@Observable` on `MapScene` so SwiftUI views can react to `cameraState` changes without polling, and lay the groundwork for the camera follow target (`targetPosition`) field.
+
+---
+
+## Phase 2 — Extract Camera State and Input Intent
+
+**Completed:** 2026-03-20
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Consolidated the three scattered camera properties on `MapScene` (`horizontalAngle`, `verticalAngle`, `distance`) into a single `MapCameraState` value type. Defined typed intent types for input. Made `MapSceneARViewController` an input bridge instead of a camera owner. No rendering behavior changed.
+
+Also fixed a pre-existing visionOS bug: `MapScene.distance` previously defaulted to `100` but was never observed on visionOS (the `WorldCameraComponent` was hard-coded to `radius = 15` in `setupWorldCamera` with no matching source of truth). `MapCameraState.default.distance` is now `15` on visionOS, so the two are in sync.
+
+### New files
+
+All new files live under `Packages/RagnarokGame/Sources/RagnarokGame/Engine/Runtime/`. This directory is new — the three files create it implicitly. No `Package.swift` changes were needed.
+
+#### `MapCameraState.swift`
+
+```swift
+public struct MapCameraState: Sendable {
+    public var azimuth: Float     // was horizontalAngle
+    public var elevation: Float   // was verticalAngle
+    public var distance: Float
+
+    public static var `default`: MapCameraState {
+        #if os(visionOS)
+        MapCameraState(azimuth: 0, elevation: .pi / 12, distance: 15)
+        #else
+        MapCameraState(azimuth: 0, elevation: .pi / 4, distance: 100)
+        #endif
+    }
+}
+```
+
+`Float.pi / 4` = 45° (iOS/macOS default elevation), `Float.pi / 12` = 15° (visionOS). No imports beyond Swift stdlib — avoids pulling SGLMath into the runtime layer. `targetPosition: SIMD3<Float>` is reserved for Phase 3+.
+
+#### `MapInputIntent.swift`
+
+```swift
+import CoreGraphics
+
+public struct MapInputIntent: Sendable {
+    public var movementValue: CGPoint
+}
+```
+
+Typed wrapper for thumbstick/joystick input. Makes the view-to-runtime contract explicit.
+
+#### `MapInteractionIntent.swift`
+
+```swift
+import simd
+
+public enum MapInteractionIntent: Sendable {
+    case raycast(origin: SIMD3<Float>, direction: SIMD3<Float>)
+}
+```
+
+Type stub for tap/click interactions. Not yet wired into `MapScene` — that happens in Phase 4.
+
+### Modified files
+
+#### `MapScene.swift`
+
+- Removed `horizontalAngle`, `verticalAngle` (both platform variants), and `distance`
+- Added `var cameraState: MapCameraState = .default` with a `didSet` that writes only changed fields to `WorldCameraComponent` (per-field guards avoid redundant RealityKit ECS writes during gestures that only move one axis)
+- `setupWorldCamera` reads `cameraState.elevation` for the initial elevation
+- `onMovementValueChanged` reads `cameraState.azimuth` for the rotation calculation
+- Added `func handle(_ intent: MapInputIntent)` as the public input bridge; `onMovementValueChanged` stays `private`
+
+The `didSet` on `cameraState` skips the elevation write on visionOS (`#if !os(visionOS)`) because `WorldCameraComponent.elevation` has no effect in an immersive space — the system controls pitch there.
+
+#### `MapSceneARView.swift`
+
+iOS and macOS blocks both:
+- Renamed `horizontalAngle` → `baseAzimuth`, `verticalAngle` → `baseElevation`, `distance` → `baseDistance`. These instance vars are retained because UIKit/AppKit gesture handlers receive `.began` and `.changed` as separate calls with no way to pass state between them. The rename makes their role explicit: they are gesture-start baselines, not camera state.
+- All gesture handlers read from and write to `scene.cameraState` directly
+- `handleDoubleTap` (iOS) resets `scene.cameraState.azimuth = 0` and `scene.cameraState.elevation = .pi / 4`, then syncs the baselines
+- Elevation clamps changed from `radians(15)...radians(60)` to `.pi / 12 ... .pi / 3` — same values, no SGLMath dependency
+- Azimuth wrap changed from `radians(360)` to `.pi * 2` — same value, no SGLMath dependency
+- Removed `import SGLMath` (no longer used)
+
+#### `MapSceneRealityView.swift`
+
+- Removed `@State private var distance: Float = 100`
+- Added `@State private var baseDistance: Float = MapCameraState.default.distance` — seeds from the canonical default (15 on visionOS) rather than the hard-coded 100 that was wrong
+- `MagnifyGesture.onChanged` writes to `scene.cameraState.distance`
+- `MagnifyGesture.onEnded` snapshots `scene.cameraState.distance` back into `baseDistance`
+
+#### `MapView.swift`
+
+- Thumbstick timer callback changed from `scene.onMovementValueChanged(movementValue:)` to `scene.handle(MapInputIntent(movementValue:))`
+
+### What did not change
+
+- **Rendering behavior** — camera still orbits, zooms, and tilts identically on all platforms
+- **`WorldCameraComponent` write path** — still driven by `didSet`; no new observation infrastructure
+- **`GameSession` / `GameView`** — neither touches camera state
+- **visionOS immersive space** — `MapScene` is loaded the same way; only the distance default is now correct
+
+### Known temporary state
+
+`onMovementValueChanged` is still internal to `MapScene`. It will remain so — `handle(_:)` is the stable public API. `MapInteractionIntent` is defined but not yet wired into `MapScene`; that happens in Phase 4.
+
+### Next phase
+
+**Phase 3 — Observable MapScene.**
+Introduce `@Observable` on `MapScene` so SwiftUI views can react to `cameraState` changes without polling, and lay the groundwork for the camera follow target (`targetPosition`) field.

@@ -13,7 +13,7 @@ import SwiftUI
 public struct MapSceneRealityView: View {
     public var scene: MapScene
 
-    @State private var distance: Float = 100
+    @State private var baseDistance: Float = MapCameraState.default.distance
 
     public var body: some View {
         RealityView { content in
@@ -28,13 +28,13 @@ public struct MapSceneRealityView: View {
         .gesture(
             MagnifyGesture()
                 .onChanged { value in
-                    var distance = distance * Float(1 / value.magnification)
+                    var distance = baseDistance * Float(1 / value.magnification)
                     distance = max(distance, 3)
                     distance = min(distance, 120)
-                    scene.distance = distance
+                    scene.cameraState.distance = distance
                 }
                 .onEnded { value in
-                    distance = scene.distance
+                    baseDistance = scene.cameraState.distance
                 }
         )
     }
