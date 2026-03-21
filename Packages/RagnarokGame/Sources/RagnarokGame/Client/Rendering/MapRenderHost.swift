@@ -10,35 +10,23 @@ import SwiftUI
 struct MapRenderHost: View {
     var scene: MapScene
     var configuration: MapRenderConfiguration
-
-    #if !os(visionOS)
-    var onSceneUpdate: (any MapProjector) -> Void
-    #endif
+    var overlay: MapSceneOverlay?
 
     var body: some View {
         switch configuration.engine {
         case .metal:
-            metalSurface
+            renderSurface
         case .realityKit:
-            realityKitSurface
+            renderSurface
         }
     }
 
-    private var metalSurface: some View {
+    private var renderSurface: some View {
         #if os(visionOS)
         Text("Game")
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         #else
-        MapSceneARView(scene: scene, onSceneUpdate: onSceneUpdate)
-        #endif
-    }
-
-    private var realityKitSurface: some View {
-        #if os(visionOS)
-        Text("Game")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        #else
-        MapSceneARView(scene: scene, onSceneUpdate: onSceneUpdate)
+        MapRealityView(scene: scene, overlay: overlay)
         #endif
     }
 }

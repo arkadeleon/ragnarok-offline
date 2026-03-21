@@ -35,7 +35,7 @@ struct visionOSApp: App {
 
         ImmersiveSpace(id: appModel.gameSession.immersiveSpaceID) {
             if let mapScene = appModel.gameSession.mapScene {
-                MapSceneRealityView(scene: mapScene)
+                MapRealityView(scene: mapScene)
             }
         }
         .immersionStyle(selection: $immersionStyle, in: .progressive)

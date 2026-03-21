@@ -30,12 +30,10 @@ struct MapView: View {
             #if os(visionOS)
             MapRenderHost(scene: scene, configuration: renderConfiguration)
             #else
-            MapRenderHost(scene: scene, configuration: renderConfiguration) { projector in
-                updateOverlay(projector: projector)
-            }
-            .overlay {
-                MapSceneOverlayView(overlay: gameSession.overlay)
-            }
+            MapRenderHost(scene: scene, configuration: renderConfiguration, overlay: gameSession.overlay)
+                .overlay {
+                    MapSceneOverlayView(overlay: gameSession.overlay)
+                }
             #endif
         }
         .overlay(alignment: .bottomLeading) {
@@ -162,31 +160,4 @@ struct MapView: View {
             screenWidth - 16 * 2
         }
     }
-
-    #if !os(visionOS)
-    private func updateOverlay(projector: any MapProjector) {
-        var gauges: [UInt32: MapSceneOverlay.Gauge] = [:]
-
-        for anchor in scene.state.overlaySnapshot.anchors.values {
-            guard let gaugePosition = anchor.gaugePosition,
-                  let screenPoint = projector.project(gaugePosition) else {
-                continue
-            }
-
-            let gauge = MapSceneOverlay.Gauge(
-                objectID: anchor.id,
-                hp: anchor.hp,
-                maxHp: anchor.maxHp,
-                sp: anchor.sp,
-                maxSp: anchor.maxSp,
-                objectType: anchor.objectType,
-                screenPosition: screenPoint
-            )
-
-            gauges[anchor.id] = gauge
-        }
-
-        gameSession.overlay.gauges = gauges
-    }
-    #endif
 }

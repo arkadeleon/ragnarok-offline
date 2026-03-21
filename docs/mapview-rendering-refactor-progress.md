@@ -854,3 +854,214 @@ Added `RagnarokSceneAssets` as a package and target dependency.
 
 **Phase 7 — Create the RealityKit Backend Shell.**
 Define the shared backend lifecycle interface and make `MapRenderHost` instantiate a backend implementation rather than directly choosing concrete render views.
+
+---
+
+## Phase 7 — Create the RealityKit Backend Shell
+
+**Completed:** 2026-03-21
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Formalized the RealityKit rendering path as the first proper backend implementation behind a shared `MapRenderBackend` protocol. The per-frame overlay callback (`onSceneUpdate: (any MapProjector) -> Void`) that previously threaded a projector from `MapSceneARView` through `MapRenderHost` to `MapView` is eliminated. Overlay sync and projection are now unified inside the backend. No rendering behavior changed.
+
+### New files
+
+#### `Client/Rendering/MapRenderBackend.swift`
+
+```swift
+public enum MapHitTestResult: Sendable {
+    case mapObject(objectID: UInt32)
+    case item(objectID: UInt32)
+    case ground(position: SIMD2<Int>)
+}
+
+@MainActor
+public protocol MapRenderBackend: AnyObject {
+    var projector: (any MapProjector)? { get }
+
+    func attach(scene: MapScene)
+    func detach()
+
+    func applySnapshot(_ state: MapSceneState)
+
+    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult?
+}
+```
+
+Defines the backend lifecycle. `attach` and `detach` manage the scene reference. `applySnapshot` is the entry point for pushing runtime state into the backend (no-op in Phase 7 — `MapScene` still updates the entity tree directly). `hitTest` formalizes screen-point hit testing (returns `nil` in Phase 7 — gesture handlers still drive hit testing directly). `projector` provides world-to-screen projection on iOS/macOS; returns `nil` on visionOS where screen projection is not applicable.
+
+`MapHitTestResult` is the shared hit-test return type. Cases follow the unified interaction priority from the implementation decisions: map object → item → ground.
+
+#### `Client/Rendering/RealityBackend/RealityKitMapBackend.swift`
+
+```swift
+@MainActor
+final class RealityKitMapBackend: MapRenderBackend {
+    private(set) var scene: MapScene?
+    var overlay: MapSceneOverlay?
+
+    #if os(iOS) || os(macOS)
+    private var realityMapProjector: RealityMapProjector?
+    private var realityMapHitTester: RealityMapHitTester?
+    #endif
+
+    var projector: (any MapProjector)? { ... }
+
+    func attach(scene: MapScene) { ... }
+    func detach() { ... }
+    func applySnapshot(_ state: MapSceneState) { /* no-op */ }
+    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? { ... }
+
+    #if os(iOS) || os(macOS)
+    func configure(arView: ARView) { ... }
+    func syncAndProjectOverlay() { ... }
+    #endif
+}
+```
+
+First `MapRenderBackend` conformer. Platform-conditional: on iOS/macOS it owns the projector, hit tester, and per-frame overlay sync. On visionOS it is a no-op shell (no projector, no overlay sync).
+
+`configure(arView:)` is called by `MapSceneARViewController.viewDidLoad` after the `ARView` is created. It creates the `RealityMapProjector` and `RealityMapHitTester` from the live `ARView`.
+
+`syncAndProjectOverlay()` is the key method. It replaces the old two-step flow that was split across files:
+1. **Before:** `syncOverlayAnchorPositions` (free function in `MapSceneARView.swift`) synced entity world positions to overlay anchors, then `onSceneUpdate(projector)` called `MapView.updateOverlay(projector:)` to project anchors to screen positions and write `gameSession.overlay.gauges`.
+2. **After:** `syncAndProjectOverlay()` does both steps in one call. It queries entities with `HealthPointsComponent`, syncs their world positions to `overlaySnapshot.anchors`, projects them via `RealityMapProjector`, and writes the result directly to `overlay.gauges`.
+
+This eliminates the `onSceneUpdate: (any MapProjector) -> Void` callback that Phase 5 noted as temporary state on `MapRenderHost`.
+
+#### `Client/Rendering/RealityBackend/RealityMapProjector.swift`
+
+```swift
+#if os(iOS) || os(macOS)
+
+@MainActor
+final class RealityMapProjector: MapProjector {
+    let arView: ARView
+
+    func project(_ worldPosition: SIMD3<Float>) -> CGPoint? {
+        guard var screenPoint = arView.project(worldPosition) else { return nil }
+        #if os(macOS)
+        screenPoint.y = arView.bounds.height - screenPoint.y
+        #endif
+        return screenPoint
+    }
+}
+
+#endif
+```
+
+Extracted from the private `ARViewProjector` that previously lived in `MapSceneARView.swift`. Same logic including the macOS Y-flip. Now owned by the backend and accessible through `backend.projector`.
+
+#### `Client/Rendering/RealityBackend/RealityMapHitTester.swift`
+
+```swift
+#if os(iOS) || os(macOS)
+
+@MainActor
+final class RealityMapHitTester {
+    private weak var arView: ARView?
+    private weak var scene: MapScene?
+
+    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? {
+        nil
+    }
+}
+
+#endif
+```
+
+Shell for the shared hit-test interface. Returns `nil` in Phase 7. Tap and click gestures still flow through `MapSceneARViewController`'s gesture handlers → `MapScene.raycast()`. Will be wired in Phase 8 when entity ownership moves fully into the backend.
+
+#### `Client/Rendering/RealityBackend/MapRealityView.swift`
+
+```swift
+public struct MapRealityView: View {
+    var scene: MapScene
+    var overlay: MapSceneOverlay?
+
+    @State private var backend = RealityKitMapBackend()
+
+    public var body: some View {
+        #if os(visionOS)
+        MapSceneRealityView(scene: scene)
+            .onAppear { backend.attach(scene: scene) }
+            .onDisappear { backend.detach() }
+        #else
+        MapSceneARView(scene: scene, overlay: overlay, backend: backend)
+            .onDisappear { backend.detach() }
+        #endif
+    }
+
+    public init(scene: MapScene) { ... }          // public: used by visionOSApp
+    init(scene: MapScene, overlay: MapSceneOverlay?) { ... }  // internal: used by MapRenderHost
+}
+```
+
+Unified view wrapping both platform-specific surfaces. Owns the backend lifecycle via `@State`. On visionOS it wraps `MapSceneRealityView`; on iOS/macOS it wraps `MapSceneARView` and passes the backend.
+
+Two initializers: the `public init(scene:)` is used by `visionOSApp.swift` (the overlay parameter is internal to the module). The internal `init(scene:overlay:)` is used by `MapRenderHost` on iOS/macOS.
+
+On iOS/macOS, the backend is attached in `MapSceneARViewController.init` (before `viewDidLoad`), then configured with the `ARView` in `viewDidLoad`. On visionOS, the backend is attached in `.onAppear` (no ARView configuration needed).
+
+### Modified files
+
+#### `Client/Rendering/MapRenderHost.swift`
+
+- Removed `#if !os(visionOS) var onSceneUpdate: (any MapProjector) -> Void` — the per-frame callback is gone
+- Added `var overlay: MapSceneOverlay?`
+- Both `.metal` and `.realityKit` cases route to the same `renderSurface` computed property
+- `renderSurface` returns `Text("Game")` placeholder on visionOS, `MapRealityView(scene:overlay:)` on iOS/macOS
+
+The visionOS placeholder is intentional and critical: `MapView` opens an `ImmersiveSpace` on visionOS, and `visionOSApp` renders `MapRealityView` there. A RealityKit entity can only belong to one host at a time. If `MapRenderHost` also rendered `MapRealityView` on visionOS, both the window and the immersive space would call `content.add(scene.rootEntity)` and one would steal the entity from the other, causing the map to disappear or flicker.
+
+#### `Client/Views/MapSceneARView.swift`
+
+- Removed `ARViewProjector` class (extracted to `RealityMapProjector`)
+- Removed `syncOverlayAnchorPositions` free function (moved into `RealityKitMapBackend.syncAndProjectOverlay()`)
+- Both iOS and macOS `MapSceneARView` structs: replaced `onSceneUpdate: (any MapProjector) -> Void` with `overlay: MapSceneOverlay?` and `backend: RealityKitMapBackend`
+- Both `MapSceneARViewController` implementations:
+  - Removed `onSceneUpdate` and `arViewProjector` stored properties
+  - Added `backend: RealityKitMapBackend` stored property
+  - `init`: calls `backend.attach(scene:)` and sets `backend.overlay`
+  - `viewDidLoad`: calls `backend.configure(arView:)` instead of creating `ARViewProjector`
+  - Per-frame subscription: calls `backend.syncAndProjectOverlay()` instead of `syncOverlayAnchorPositions` + `onSceneUpdate`
+- Gesture handlers and raycast logic are unchanged — still drive hit testing directly
+
+#### `Client/Views/MapView.swift`
+
+- Removed `import RealityKit` (already removed in Phase 5, confirmed still absent)
+- Removed `updateOverlay(projector:)` method entirely — the backend handles overlay sync and projection internally
+- `MapRenderHost` is now created without a callback:
+  - visionOS: `MapRenderHost(scene: scene, configuration: renderConfiguration)`
+  - iOS/macOS: `MapRenderHost(scene: scene, configuration: renderConfiguration, overlay: gameSession.overlay)`
+
+#### `RagnarokOffline/App/visionOSApp.swift`
+
+- `ImmersiveSpace` body: replaced `MapSceneRealityView(scene: mapScene)` with `MapRealityView(scene: mapScene)`
+- Uses the public `init(scene:)` — no overlay parameter needed on visionOS
+
+### What did not change
+
+- **`MapSceneRealityView`** — still exists unchanged; `MapRealityView` wraps it on visionOS
+- **`MapScene`** — still owns the entity tree, still updates it directly from packets, still owns `cameraState` and `state`
+- **`MapProjector` protocol** — unchanged; `RealityMapProjector` conforms to it
+- **`MapRenderingSurface` protocol** — unchanged marker protocol from Phase 1
+- **`MapRenderEngine` / `MapRenderConfiguration`** — unchanged
+- **`Package.swift`** — no new targets or dependencies; all new files are in the existing `RagnarokGame` target
+- **Rendering behavior** — camera, thumbstick, overlays, gestures, and visionOS immersive space are all identical to before
+
+### Known temporary state
+
+- `applySnapshot(_:)` is a no-op. `MapScene` still updates the RealityKit entity tree directly from packet handlers. The backend will consume snapshots when entity ownership moves into it in Phase 8.
+- `hitTest(at:)` returns `nil`. Gesture handlers in `MapSceneARViewController` still call `MapScene.raycast()` directly. The backend's hit test will be wired in Phase 8.
+- `MapRenderHost` routes both `.metal` and `.realityKit` to the same `renderSurface` on iOS/macOS. The `.metal` case will be rewired to `MapMetalView` in Phase 9.
+- `MapRealityView` on visionOS wraps `MapSceneRealityView` without adding any backend-driven behavior. The backend is attached but idle. This will change in Phase 12 when visionOS fully adopts the backend model.
+- The `RealityBackend/` subdirectory lives inside the `RagnarokGame` target. The plan's eventual target layout (`RagnarokGameRealityBackend` as a separate SPM target) requires extracting shared types into `RagnarokGameCore` first. The directory organization anticipates that extraction.
+- `RealityKitMapBackend` is not `@Observable`. It is stored as `@State` on `MapRealityView` (used as a persistent cache, not for SwiftUI change tracking). The backend mutates `MapSceneOverlay` (which is `@Observable`) directly — that is what drives `MapSceneOverlayView` updates.
+
+### Next phase
+
+**Phase 8 — Move Existing RealityKit Responsibilities into the Backend.**
+Move all direct RealityKit ownership out of the runtime and into `RealityKitMapBackend`: root entity, camera entity, world and entity construction, tile selector rendering, sprite entity caching, gesture handling, and raycasting.
