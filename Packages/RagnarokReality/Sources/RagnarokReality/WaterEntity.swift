@@ -7,20 +7,21 @@
 
 import RagnarokRenderers
 import RagnarokResources
+import RagnarokSceneAssets
 import RealityKit
 
 extension Entity {
-    public convenience init(from water: Water, resourceManager: ResourceManager) async throws {
+    public convenience init(from asset: WaterRenderAsset) async throws {
         self.init()
 
-        if water.mesh.vertices.isEmpty {
+        if asset.water.mesh.vertices.isEmpty {
             return
         }
 
         let mesh = try await {
             var descriptor = MeshDescriptor(name: "water")
-            descriptor.positions = MeshBuffer(water.mesh.vertices.map({ $0.position }))
-            descriptor.textureCoordinates = MeshBuffer(water.mesh.vertices.map({
+            descriptor.positions = MeshBuffer(asset.water.mesh.vertices.map({ $0.position }))
+            descriptor.textureCoordinates = MeshBuffer(asset.water.mesh.vertices.map({
                 SIMD2(x: $0.textureCoordinate.x, y: $0.textureCoordinate.y)
             }))
 
@@ -33,10 +34,14 @@ extension Entity {
             return mesh
         }()
 
-        let texture = try? await resourceManager.waterTexture()
-
         let materials: [any Material]
-        if let texture {
+        if let textureImage = asset.textureImage {
+            let texture = try await TextureResource(
+                image: textureImage,
+                withName: "water",
+                options: TextureResource.CreateOptions(semantic: .color)
+            )
+
             var material = PhysicallyBasedMaterial()
             material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
             material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.2)

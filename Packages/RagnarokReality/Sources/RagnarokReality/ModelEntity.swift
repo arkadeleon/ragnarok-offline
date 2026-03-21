@@ -8,6 +8,7 @@
 import Metal
 import RagnarokFileFormats
 import RagnarokRenderers
+import RagnarokSceneAssets
 import RealityKit
 
 #if os(iOS) || os(macOS)
@@ -15,25 +16,36 @@ import RagnarokRealitySurfaceShaders
 #endif
 
 extension Entity {
-    public convenience init(
-        from resource: ModelResource,
-        name: String,
-        lighting: WorldLighting,
-        textures: [String : TextureResource]
-    ) async throws {
-        let instance = Model.createInstance(
-            position: .zero,
-            rotation: .zero,
-            scale: .one,
-            width: 0,
-            height: 0
+    public convenience init(from asset: ModelRenderAsset, lighting: WorldLighting) async throws {
+        let textures = await withTaskGroup(
+            of: (String, TextureResource?).self,
+            returning: [String : TextureResource].self
+        ) { taskGroup in
+            for (textureName, textureImage) in asset.textureImages {
+                taskGroup.addTask {
+                    let texture = try? await TextureResource(
+                        image: textureImage,
+                        withName: textureName,
+                        options: TextureResource.CreateOptions(semantic: .raw)
+                    )
+                    return (textureName, texture)
+                }
+            }
+
+            var textures: [String : TextureResource] = [:]
+            for await (textureName, texture) in taskGroup {
+                textures[textureName] = texture
+            }
+            return textures
+        }
+
+        try await self.init(
+            from: asset.model,
+            lighting: lighting,
+            textures: textures
         )
 
-        let model = Model(rsm: resource.rsm, instance: instance)
-
-        try await self.init(from: model, lighting: lighting, textures: textures)
-
-        self.name = name
+        self.name = asset.name
     }
 
     public convenience init(

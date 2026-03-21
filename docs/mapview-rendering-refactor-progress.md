@@ -692,3 +692,165 @@ No `RealityKit` types appear anywhere in this function.
 
 - `syncOverlayAnchorPositions` reads `HealthPointsComponent` from the entity tree each frame. This is a deliberate transitional coupling: once Phase 8 moves entity ownership fully into the RealityKit backend, this sync will move with it and become an internal backend concern rather than straddling the boundary.
 - The `onSceneUpdate` closure type (`(any MapProjector) -> Void`) is still present on `MapRenderHost`. It will be replaced by the backend lifecycle interface in Phase 7.
+
+---
+
+## Phase 6 — Introduce a Shared World Asset Layer
+
+**Completed:** 2026-03-21
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Introduced a new shared scene-asset package and moved world extraction out of the RealityKit world builder. `WorldEntity` no longer reaches into `WorldResource`, `RSM`, and texture files directly to build the scene graph. Instead, it asks a new `MapWorldAssetLoader` to produce a backend-agnostic `MapWorldAsset`, then rebuilds the existing RealityKit scene from that asset.
+
+This is the first step that makes the static map world consumable by more than one backend. No user-visible rendering behavior changed: the current RealityKit path still renders the same ground, water, and model content as before.
+
+### New files
+
+#### `Packages/RagnarokSceneAssets/Package.swift`
+
+Creates the new `RagnarokSceneAssets` Swift package. It depends on:
+
+- `ImageRendering`
+- `RagnarokFileFormats`
+- `RagnarokRenderers`
+- `RagnarokResources`
+
+There is intentionally no `RealityKit` dependency here. This package is the engine-agnostic boundary.
+
+#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/MapWorldAsset.swift`
+
+```swift
+public struct MapWorldAsset {
+    public var lighting: WorldLighting
+    public var ground: GroundRenderAsset
+    public var water: WaterRenderAsset
+    public var models: [ModelRenderAsset]
+}
+```
+
+Single payload representing everything the backend needs for the static world: lighting, ground, water, and model prototypes/instances.
+
+#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/GroundRenderAsset.swift`
+
+```swift
+public struct GroundRenderAsset {
+    public var ground: Ground
+    public var textureImages: [String : CGImage]
+}
+```
+
+Carries the compiled `Ground` mesh plus the decoded source texture images referenced by `gnd.textures`.
+
+#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/WaterRenderAsset.swift`
+
+```swift
+public struct WaterRenderAsset {
+    public var water: Water
+    public var textureImage: CGImage?
+}
+```
+
+Carries the compiled `Water` mesh plus the stitched 32-frame water texture strip. The strip width is always `32 * 128` pixels even if some frames are missing, matching the legacy `waterTexture()` layout so the RealityKit UV animation still lines up.
+
+#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/ModelRenderAsset.swift`
+
+```swift
+public struct ModelRenderAsset {
+    public struct Instance {
+        public var position: SIMD3<Float>
+        public var rotation: SIMD3<Float>
+        public var scale: SIMD3<Float>
+    }
+
+    public var name: String
+    public var model: Model
+    public var textureImages: [String : CGImage]
+    public var instances: [Instance]
+}
+```
+
+Represents one prototype model plus all of its placements in the world. The prototype mesh is compiled once from `RSM`; instance transforms stay separate so backends can choose whether to clone, instance-draw, or otherwise batch them later.
+
+`position` already includes the `+gnd.width/+gnd.height` world-space offset that previously lived in `WorldEntity`, so backends do not need to rediscover that conversion.
+
+#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/MapWorldAssetLoader.swift`
+
+Loads `MapWorldAsset` from `GAT`, `GND`, `RSW`, and `ResourceManager`.
+
+Important implementation details:
+
+- Preserves model-name order based on first appearance in `rsw.models`
+- Loads model files and texture file data with task groups, but decodes them into `RSM` / `CGImage` on the parent task
+- Uses `Data` as the task-group payload instead of `CGImage` to avoid strict-concurrency sendability problems in the loader
+- Updates `Progress` through `@MainActor` helper methods rather than mutating it from child tasks
+- Mirrors the old loading-progress semantics: ground textures + model textures are counted; water texture assembly is not
+
+### Modified files
+
+#### `Packages/RagnarokReality/Sources/RagnarokReality/WorldEntity.swift`
+
+- Added `import RagnarokSceneAssets`
+- Replaced the old inline world-loading path with `MapWorldAssetLoader.load(...)`
+- Ground creation now uses `worldAsset.ground`
+- Water creation now uses `worldAsset.water`
+- Model prototype creation now uses `ModelRenderAsset`
+- Model instance placement now reads `modelAsset.instances` instead of `world.rsw.models`
+
+The prototype-model stage is now **sequential**, not task-group-based. This was a deliberate strict-concurrency fix: `ModelRenderAsset` carries `CGImage`, which is not a clean `Sendable` payload for child tasks. Rather than add unsafe annotations, prototype entity creation stays sequential until the asset representation changes.
+
+#### `Packages/RagnarokReality/Sources/RagnarokReality/ModelEntity.swift`
+
+Added:
+
+```swift
+public convenience init(
+    from asset: ModelRenderAsset,
+    lighting: WorldLighting
+) async throws
+```
+
+This converts the asset’s `CGImage` dictionary into RealityKit `TextureResource`s, then reuses the existing `init(from model:lighting:textures:)` path. The backend-specific texture conversion now happens here where it belongs, not inside the shared asset loader.
+
+#### `Packages/RagnarokReality/Sources/RagnarokReality/WaterEntity.swift`
+
+Added:
+
+```swift
+public convenience init(from asset: WaterRenderAsset) async throws
+```
+
+This consumes the stitched water texture strip from the asset layer and keeps the same RealityKit material setup and `SampledAnimation` UV scrolling behavior as before.
+
+The older `init(from water:resourceManager:)` overload was left in place because it is still used by other non-refactor call sites and previews.
+
+#### `Packages/RagnarokReality/Package.swift`
+
+Added `RagnarokSceneAssets` as a package and target dependency.
+
+#### `Packages/RagnarokGame/Package.swift`
+
+Added `RagnarokSceneAssets` as a package and target dependency.
+
+`RagnarokGame` does not import it yet, but wiring it now avoids another manifest-only phase when the backend interface starts moving into the game package.
+
+### What did not change
+
+- **`WorldResource`** — still lives in `RagnarokReality`; Phase 6 only changes what happens *after* the world has been loaded from disk/GRF
+- **`GroundEntity`** — still builds the final atlas textures internally from source `CGImage`s; the asset layer stops before backend-specific `TextureResource` creation
+- **`MapScene.load(progress:)`** — still calls `Entity(from: world, resourceManager: progress:)`; the call site did not change
+- **`RSMFilePreviewView` and other preview helpers** — still use the older RealityKit model-loading helpers where appropriate
+- **Rendering behavior** — ground, water animation, and placed world models render identically to before
+
+### Known temporary state
+
+- `MapWorldAsset` is **not** `Sendable`. That is intentional for now because it contains `CGImage`s. If a later phase wants to parallelise more backend construction work, the asset package will need a different image payload or a more isolated conversion boundary.
+- `GroundRenderAsset` stores source ground textures instead of a prebuilt atlas image. This keeps the asset package closer to the renderer inputs, but it means atlas assembly is still duplicated knowledge in backend code.
+- `WorldResource` and `ModelResource` still exist in `RagnarokReality`. Phase 6 introduces the shared asset layer without yet moving all legacy resource types out of that package.
+- `ResourceManager+Texture.swift` remains in `RagnarokReality` for legacy call sites. Phase 6 does not remove that file even though `WorldEntity` no longer relies on it.
+
+### Next phase
+
+**Phase 7 — Create the RealityKit Backend Shell.**
+Define the shared backend lifecycle interface and make `MapRenderHost` instantiate a backend implementation rather than directly choosing concrete render views.
