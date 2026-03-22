@@ -13,20 +13,16 @@ struct MapRenderHost: View {
     var overlay: MapSceneOverlay?
 
     var body: some View {
-        switch configuration.engine {
-        case .metal:
-            renderSurface
-        case .realityKit:
-            renderSurface
-        }
-    }
-
-    private var renderSurface: some View {
         #if os(visionOS)
         Text("Game")
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         #else
-        MapRealityView(scene: scene, overlay: overlay)
+        switch configuration.engine {
+        case .metal:
+            MapMetalView(scene: scene, overlay: overlay)
+        case .realityKit:
+            MapRealityView(scene: scene, overlay: overlay)
+        }
         #endif
     }
 }

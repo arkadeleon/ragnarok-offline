@@ -1116,7 +1116,164 @@ Moved the remaining RealityKit ownership out of `MapScene` and into `RealityKitM
 - `MapRealityView` no longer owns the backend as `@State`; the backend now lives with the scene lifetime instead. This is fine for the current single-scene RealityKit path, but should be revisited when multiple backend implementations coexist
 - The `RealityBackend/` subdirectory still lives inside the `RagnarokGame` target. The eventual plan remains to split it into a separate target once the shared core/runtime surface is extracted
 
+---
+
+## Phase 9 — Create the Metal Backend Shell
+
+**Completed:** 2026-03-22
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Stood up the Metal backend lifecycle and wired `MapRenderHost` to route the `.metal` engine selection to a real `MapMetalView` on iOS and macOS. The view shows a blank (cleared) scene at this stage — no world geometry is connected yet. The RealityKit path is unaffected.
+
+### New files
+
+All new files live under `Client/Rendering/MetalBackend/`.
+
+#### `MetalMapProjector.swift`
+
+```swift
+@MainActor
+final class MetalMapProjector: MapProjector {
+    func project(_ worldPosition: SIMD3<Float>) -> CGPoint? {
+        nil
+    }
+}
+```
+
+Shell `MapProjector` conformer. Always returns `nil`. Phase 10 will drive this from the Metal view-projection matrix so HP/SP gauges align to screen space.
+
+#### `MetalMapHitTester.swift`
+
+```swift
+@MainActor
+final class MetalMapHitTester {
+    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? {
+        nil
+    }
+}
+```
+
+Shell hit tester. Always returns `nil`. Phase 11 will connect depth-buffer raycasting and object selection.
+
+#### `MapRuntimeRenderer.swift`
+
+```swift
+@MainActor
+final class MapRuntimeRenderer: Renderer {
+    let device: any MTLDevice
+
+    init() { ... }
+
+    func render(
+        atTime time: CFTimeInterval,
+        viewport: CGRect,
+        commandBuffer: any MTLCommandBuffer,
+        renderPassDescriptor: MTLRenderPassDescriptor
+    ) {
+        guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
+        encoder.endEncoding()
+    }
+}
+```
+
+Conforms to `Renderer` from `RagnarokRenderers`. Phase 9 body encodes an empty render pass. Phase 10 will connect ground, water, and model rendering through this type by wiring `MapWorldAsset` into render passes here.
+
+#### `MetalMapBackend.swift`
+
+```swift
+@MainActor
+final class MetalMapBackend: MapRenderBackend {
+    private(set) weak var scene: MapScene?
+    let renderer: MapRuntimeRenderer
+
+    var projector: (any MapProjector)? { metalMapProjector }
+
+    func attach(scene: MapScene) { self.scene = scene }
+    func detach() { scene = nil }
+    func applySnapshot(_ state: MapSceneState) { }
+    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? { ... }
+}
+```
+
+`MapRenderBackend` conformer for the Metal path. Owns `MapRuntimeRenderer`, `MetalMapProjector`, and `MetalMapHitTester`. `applySnapshot` is a no-op in Phase 9 — all packet-driven mutations still route exclusively through `scene.realityKitBackend`. Phase 10 will begin consuming the snapshot to drive world rendering.
+
+The backend is owned by `MapMetalView` via `@State` (the "expensive cache" pattern — it holds `MTLDevice` and a command queue, which are costly to recreate). It is not `@Observable` because `MapMetalView` does not need to re-render in response to backend state changes.
+
+#### `MapMetalView.swift`
+
+```swift
+struct MapMetalView: View {
+    var scene: MapScene
+    var overlay: MapSceneOverlay?
+
+    @State private var backend = MetalMapBackend()
+
+    var body: some View {
+        MapMetalViewContainer(renderer: backend.renderer)
+            .onAppear { backend.attach(scene: scene) }
+            .onDisappear { backend.detach() }
+    }
+}
+```
+
+SwiftUI host for the Metal backend. Contains two private platform-specific types (`MapMetalViewContainer` and `MapMTKHostView`) that are implementation details of this file, not exported types.
+
+`MapMTKHostView` extends `UIView`/`NSView`, inheriting `@MainActor` isolation. On iOS, `MTKView` drives the delegate via `CADisplayLink`, which fires on the main thread — so `draw(in:)` is always called within `@MainActor` isolation. The stored `MapRuntimeRenderer` is `@MainActor` so the call to `renderer.render(...)` in `draw(in:)` is safe without any bridging.
+
+### Modified files
+
+#### `Packages/RagnarokGame/Package.swift`
+
+Added `RagnarokRenderers` as a package and target dependency. Required so `MapRuntimeRenderer` can conform to the `Renderer` protocol.
+
+#### `Client/Rendering/MapRenderHost.swift`
+
+Replaced the single `renderSurface` computed property (which was routing both `.metal` and `.realityKit` to `MapRealityView`) with a direct `switch` in `body`:
+
+```swift
+// Before
+var body: some View {
+    switch configuration.engine {
+    case .metal:    renderSurface
+    case .realityKit: renderSurface
+    }
+}
+
+private var renderSurface: some View { ... /* always MapRealityView */ }
+
+// After
+var body: some View {
+    #if os(visionOS)
+    Text("Game").frame(maxWidth: .infinity, maxHeight: .infinity)
+    #else
+    switch configuration.engine {
+    case .metal:      MapMetalView(scene: scene, overlay: overlay)
+    case .realityKit: MapRealityView(scene: scene, overlay: overlay)
+    }
+    #endif
+}
+```
+
+The visionOS placeholder is now expressed once at the top level rather than inside each case, which makes the intent clear: visionOS never uses `MapRenderHost` for real rendering — it opens an `ImmersiveSpace` through `MapView` instead.
+
+### What did not change
+
+- **All packet-driven rendering** — still routes through `scene.realityKitBackend`. The Metal backend receives no scene events in Phase 9.
+- **`MapScene`** — unchanged.
+- **`RealityKitMapBackend`** — unchanged.
+- **`RagnarokOffline/Core/MetalView.swift`** — unchanged. It remains in the app target for non-game usages (`EffectViewer`, `STRFilePreviewView`).
+- **visionOS immersive space** — unchanged.
+
+### Known temporary state
+
+- `MapMetalView` renders a blank scene. Phase 10 will connect `MapWorldAsset` to `MapRuntimeRenderer`.
+- `MetalMapProjector.project` always returns `nil`. HP/SP overlay gauges do not appear in Metal mode.
+- `MetalMapHitTester.hitTest` always returns `nil`. Tap interaction is not wired in Metal mode.
+- `MetalMapBackend` is not stored on `MapScene`. All packet-driven mutations still go exclusively through `scene.realityKitBackend`. This changes in Phase 10 when the backend begins consuming snapshots to drive world rendering.
+
 ### Next phase
 
-**Phase 9 — Create the Metal Backend Shell.**
-Stand up `MapMetalView` / `MetalMapBackend` and rewire `MapRenderHost` so iOS/macOS can enter a backend-selected Metal host path without reintroducing `RealityKit` into the UI layer.
+**Phase 10 — Connect Static World Rendering in Metal.**
+Drive ground, water, and static model rendering from `MapWorldAsset` through `MapRuntimeRenderer`. Connect `MapCameraState` to the Metal camera matrix so the scene displays and responds to rotation and zoom.

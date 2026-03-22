@@ -20,7 +20,6 @@ import Spatial
 import SwiftUI
 import WorldCamera
 
-@MainActor
 final class RealityKitMapBackend: MapRenderBackend {
     private weak var scene: MapScene?
 
