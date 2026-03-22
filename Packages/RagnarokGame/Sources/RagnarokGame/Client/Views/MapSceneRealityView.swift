@@ -12,19 +12,20 @@ import SwiftUI
 
 public struct MapSceneRealityView: View {
     public var scene: MapScene
+    var backend: RealityKitMapBackend
 
     @State private var baseDistance: Float = MapCameraState.default.distance
 
     public var body: some View {
         RealityView { content in
-            content.add(scene.rootEntity)
+            content.add(backend.rootEntity)
         } update: { content in
         } placeholder: {
             ProgressView()
         }
-        .gesture(scene.tileTapGesture)
-        .gesture(scene.mapObjectTapGesture)
-        .gesture(scene.mapItemTapGesture)
+        .gesture(backend.tileTapGesture)
+        .gesture(backend.mapObjectTapGesture)
+        .gesture(backend.mapItemTapGesture)
         .gesture(
             MagnifyGesture()
                 .onChanged { value in
@@ -41,6 +42,7 @@ public struct MapSceneRealityView: View {
 
     public init(scene: MapScene) {
         self.scene = scene
+        self.backend = scene.realityKitBackend
     }
 }
 

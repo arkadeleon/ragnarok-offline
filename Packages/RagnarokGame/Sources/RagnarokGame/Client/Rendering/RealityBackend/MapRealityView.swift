@@ -11,22 +11,11 @@ public struct MapRealityView: View {
     var scene: MapScene
     var overlay: MapSceneOverlay?
 
-    @State private var backend = RealityKitMapBackend()
-
     public var body: some View {
         #if os(visionOS)
         MapSceneRealityView(scene: scene)
-            .onAppear {
-                backend.attach(scene: scene)
-            }
-            .onDisappear {
-                backend.detach()
-            }
         #else
-        MapSceneARView(scene: scene, overlay: overlay, backend: backend)
-            .onDisappear {
-                backend.detach()
-            }
+        MapSceneARView(scene: scene, overlay: overlay, backend: scene.realityKitBackend)
         #endif
     }
 

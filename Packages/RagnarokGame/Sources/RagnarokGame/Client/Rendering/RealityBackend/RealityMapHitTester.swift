@@ -15,15 +15,64 @@ final class RealityMapHitTester {
     private weak var arView: ARView?
     private weak var scene: MapScene?
 
-    init(arView: ARView, scene: MapScene) {
+    init(arView: ARView, scene: MapScene?) {
         self.arView = arView
         self.scene = scene
     }
 
     func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? {
-        // Phase 7: placeholder. Hit testing still happens through gesture handlers
-        // in MapSceneARViewController. This will be wired in Phase 8.
-        nil
+        guard let arView, let scene else {
+            return nil
+        }
+
+        if let hitEntity = arView.entity(at: screenPoint)?.parent {
+            if let mapObject = hitEntity.components[MapObjectComponent.self]?.mapObject {
+                return .mapObject(objectID: mapObject.objectID)
+            }
+
+            if let mapItem = hitEntity.components[MapItemComponent.self]?.mapItem {
+                return .item(objectID: mapItem.objectID)
+            }
+        }
+
+        guard let (origin, direction) = arView.ray(through: screenPoint) else {
+            return nil
+        }
+
+        return groundHit(origin: origin, direction: direction, mapGrid: scene.mapGrid)
+    }
+
+    private func groundHit(
+        origin: SIMD3<Float>,
+        direction: SIMD3<Float>,
+        mapGrid: MapGrid
+    ) -> MapHitTestResult? {
+        var point = origin
+        for i in 0..<200 {
+            point = origin + direction * Float(i)
+
+            let x = point.x
+            let y = -point.z
+            let position: SIMD2<Int> = [Int(x), Int(y)]
+
+            guard 0..<mapGrid.width ~= position.x, 0..<mapGrid.height ~= position.y else {
+                continue
+            }
+
+            let cell = mapGrid[position]
+            let xr = x.truncatingRemainder(dividingBy: 1)
+            let yr = y.truncatingRemainder(dividingBy: 1)
+
+            let x1 = cell.bottomLeftAltitude + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * xr
+            let x2 = cell.topLeftAltitude + (cell.topRightAltitude - cell.topLeftAltitude) * xr
+            let altitude = x1 + (x2 - x1) * yr
+
+            if fabsf(altitude - point.y) < 0.5 {
+                return .ground(position: position)
+            }
+        }
+
+        return nil
     }
 }
 

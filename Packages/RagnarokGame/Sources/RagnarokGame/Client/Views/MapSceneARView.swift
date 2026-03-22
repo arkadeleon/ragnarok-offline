@@ -21,6 +21,7 @@ struct MapSceneARView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ viewController: MapSceneARViewController, context: Context) {
+        backend.overlay = overlay
     }
 }
 
@@ -38,7 +39,6 @@ class MapSceneARViewController: UIViewController {
         self.scene = scene
         self.backend = backend
         super.init(nibName: nil, bundle: nil)
-        backend.attach(scene: scene)
         backend.overlay = overlay
     }
 
@@ -53,10 +53,6 @@ class MapSceneARViewController: UIViewController {
         arView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         arView.environment.background = .color(.black)
         view.addSubview(arView)
-
-        let anchorEntity = AnchorEntity(world: .zero)
-        anchorEntity.addChild(scene.rootEntity)
-        arView.scene.addAnchor(anchorEntity)
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         arView.addGestureRecognizer(tapGestureRecognizer)
@@ -96,15 +92,13 @@ class MapSceneARViewController: UIViewController {
 
     @objc func handleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
         let screenPoint = tapGestureRecognizer.location(in: arView)
-
-        if let (origin, direction) = arView.ray(through: screenPoint) {
-            scene.raycast(origin: origin, direction: direction, in: arView.scene)
+        if let result = backend.hitTest(at: screenPoint) {
+            scene.handleInteraction(result)
         }
     }
 
     @objc func handleDoubleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
-        scene.cameraState.azimuth = 0
-        scene.cameraState.elevation = .pi / 4
+        scene.resetCamera()
         baseAzimuth = scene.cameraState.azimuth
         baseElevation = scene.cameraState.elevation
     }
@@ -162,6 +156,7 @@ struct MapSceneARView: NSViewControllerRepresentable {
     }
 
     func updateNSViewController(_ viewController: MapSceneARViewController, context: Context) {
+        backend.overlay = overlay
     }
 }
 
@@ -179,7 +174,6 @@ class MapSceneARViewController: NSViewController {
         self.scene = scene
         self.backend = backend
         super.init(nibName: nil, bundle: nil)
-        backend.attach(scene: scene)
         backend.overlay = overlay
     }
 
@@ -194,10 +188,6 @@ class MapSceneARViewController: NSViewController {
         arView.autoresizingMask = [.width, .height]
         arView.environment.background = .color(.black)
         view.addSubview(arView)
-
-        let anchorEntity = AnchorEntity(world: .zero)
-        anchorEntity.addChild(scene.rootEntity)
-        arView.scene.addAnchor(anchorEntity)
 
         let panGestureRecognizer = NSPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         arView.addGestureRecognizer(panGestureRecognizer)
@@ -226,8 +216,8 @@ class MapSceneARViewController: NSViewController {
 
     override func mouseDown(with event: NSEvent) {
         let screenPoint = arView.convert(event.locationInWindow, from: nil)
-        if let (origin, direction) = arView.ray(through: screenPoint) {
-            scene.raycast(origin: origin, direction: direction, in: arView.scene)
+        if let result = backend.hitTest(at: screenPoint) {
+            scene.handleInteraction(result)
         }
     }
 

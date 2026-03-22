@@ -1042,26 +1042,81 @@ The visionOS placeholder is intentional and critical: `MapView` opens an `Immers
 - `ImmersiveSpace` body: replaced `MapSceneRealityView(scene: mapScene)` with `MapRealityView(scene: mapScene)`
 - Uses the public `init(scene:)` — no overlay parameter needed on visionOS
 
+### Phase 8
+
+Moved the remaining RealityKit ownership out of `MapScene` and into `RealityKitMapBackend`. `MapScene` is now a gameplay/runtime coordinator: it still owns runtime state (`MapSceneState` and `MapCameraState`) and interaction decisions, but it no longer owns the RealityKit entity tree, camera entity, tile selector entity, world loading, hit testing, or platform gesture wiring.
+
+#### `Engine/Scene/MapScene.swift`
+
+- Removed direct `RealityKit`, `SwiftUI`, `SpatialTapGesture`, and entity-tree ownership from `MapScene`
+- `load(progress:)` now delegates world/entity setup to `realityKitBackend.load(progress:)`
+- `unload()` now delegates to the backend and detaches the scene/backend relationship
+- Packet-driven entity mutations (`spawn`, `move`, `stop`, `vanish`, visibility changes, skill/action animation hooks, item spawn/remove, HP/SP updates) now update runtime state first, then delegate the visual/entity work to backend methods
+- `handleInteraction(_:)` remains the gameplay decision point for `MapHitTestResult`
+- Thumbstick movement no longer reads `state.player.gridPosition` blindly when the player is already moving; it asks the backend for the current movement origin (`WalkingComponent.path[1]` or the entity grid position) so follow-up move requests start from the same logical point the old entity-driven code used
+- Removed the temporary runtime-side `pendingArrivalAction` shortcut. Arrival-triggered follow-up actions now go back through backend-owned `LockOnComponent` / `LockOnSystem`, so the action fires when the visible walk actually completes rather than when the server confirms the move packet
+
+#### `Client/Rendering/RealityBackend/RealityKitMapBackend.swift`
+
+- Expanded from a shell into the owner of:
+  - `rootEntity`
+  - `worldCameraEntity`
+  - world/skybox/audio construction
+  - player/object/item entity creation and updates
+  - tile entity creation on visionOS
+  - tile selection rendering
+  - RealityKit hit testing
+  - overlay sync + projection
+  - platform-specific targeted gestures on visionOS
+- `attach(scene:)` now also prepares a reusable `Pathfinder` for the scene's `mapGrid`; walk updates no longer instantiate a fresh `Pathfinder` per movement update
+- `hitTest(at:)` is now live on iOS/macOS via `RealityMapHitTester`
+- Added `schedulePlayerArrivalAction(...)` so arrival-triggered gameplay actions stay tied to the entity walking lifecycle
+- Restored the old non-monster `performSkill` TODO context before `castSkill(direction:)`:
+  - `// TODO: Show dialog with skill name`
+- Removed the redundant `entityCache.addObjectEntity(...)` write in `load()` after the player entity was already cached by `entityCache.objectEntity(for:)`
+
+#### New backend helpers
+
+- `RealityEntityCache.swift`
+  - Replaces the old runtime-owned sprite cache responsibilities
+  - Owns object/item entity caching plus non-player template cloning
+- `RealitySpriteNodeFactory.swift`
+  - Centralizes map object and map item entity construction from `ResourceManager`
+- `RealityTileSelectionRenderer.swift`
+  - Owns the selector entity, selector texture preparation, and selected-tile mesh updates
+
+#### `Client/Views/MapSceneARView.swift`
+
+- The controller remains the input bridge, but the data flow is now:
+  - controller receives platform input
+  - backend performs hit testing
+  - controller passes `MapHitTestResult` directly to `MapScene.handleInteraction(_:)`
+- This intentionally removes the awkward temporary flow where the controller called `backend.handleInteraction(...)` only for the backend to forward back into `MapScene`
+- Per-frame `SceneEvents.Update` still drive `backend.syncAndProjectOverlay()`
+
+#### `Client/Views/MapSceneRealityView.swift`
+
+- Now renders `backend.rootEntity` rather than a `MapScene`-owned root entity
+- visionOS targeted gestures now live in the backend and forward `MapHitTestResult` semantics back to `MapScene`
+
 ### What did not change
 
-- **`MapSceneRealityView`** — still exists unchanged; `MapRealityView` wraps it on visionOS
-- **`MapScene`** — still owns the entity tree, still updates it directly from packets, still owns `cameraState` and `state`
-- **`MapProjector` protocol** — unchanged; `RealityMapProjector` conforms to it
+- **`MapScene` still owns gameplay/runtime state** — `MapSceneState`, `MapCameraState`, and interaction decisions remain outside the backend
+- **`MapProjector` protocol** — unchanged; `RealityMapProjector` still conforms to it
 - **`MapRenderingSurface` protocol** — unchanged marker protocol from Phase 1
 - **`MapRenderEngine` / `MapRenderConfiguration`** — unchanged
-- **`Package.swift`** — no new targets or dependencies; all new files are in the existing `RagnarokGame` target
-- **Rendering behavior** — camera, thumbstick, overlays, gestures, and visionOS immersive space are all identical to before
+- **`Package.swift`** — no new targets or dependencies; the new backend helpers still live under the existing `RagnarokGame` target
+- **`MapRenderHost` engine routing** — iOS/macOS still route both `.metal` and `.realityKit` through the RealityKit path until Phase 9 introduces `MapMetalView`
 
 ### Known temporary state
 
-- `applySnapshot(_:)` is a no-op. `MapScene` still updates the RealityKit entity tree directly from packet handlers. The backend will consume snapshots when entity ownership moves into it in Phase 8.
-- `hitTest(at:)` returns `nil`. Gesture handlers in `MapSceneARViewController` still call `MapScene.raycast()` directly. The backend's hit test will be wired in Phase 8.
-- `MapRenderHost` routes both `.metal` and `.realityKit` to the same `renderSurface` on iOS/macOS. The `.metal` case will be rewired to `MapMetalView` in Phase 9.
-- `MapRealityView` on visionOS wraps `MapSceneRealityView` without adding any backend-driven behavior. The backend is attached but idle. This will change in Phase 12 when visionOS fully adopts the backend model.
-- The `RealityBackend/` subdirectory lives inside the `RagnarokGame` target. The plan's eventual target layout (`RagnarokGameRealityBackend` as a separate SPM target) requires extracting shared types into `RagnarokGameCore` first. The directory organization anticipates that extraction.
-- `RealityKitMapBackend` is not `@Observable`. It is stored as `@State` on `MapRealityView` (used as a persistent cache, not for SwiftUI change tracking). The backend mutates `MapSceneOverlay` (which is `@Observable`) directly — that is what drives `MapSceneOverlayView` updates.
+- `applySnapshot(_:)` is no longer a no-op, but it is still narrow in scope: it currently syncs camera state and selected-tile rendering rather than performing a full diff-based scene sync from `MapSceneState`
+- `MapScene` still knows about the concrete `RealityKitMapBackend` type. That coupling is acceptable in the current single-backend phase, but it will need another abstraction pass before Metal becomes the primary iOS/macOS runtime
+- `MapScene` still imports `RagnarokReality` for `WorldResource`; Phase 8 removed direct `RealityKit` ownership from the runtime, but the package boundary cleanup is still pending
+- `MapRealityView` no longer owns the backend as `@State`; the backend now lives with the scene lifetime instead. This is fine for the current single-scene RealityKit path, but should be revisited when multiple backend implementations coexist
+- The `RealityBackend/` subdirectory still lives inside the `RagnarokGame` target. The eventual plan remains to split it into a separate target once the shared core/runtime surface is extracted
 
 ### Next phase
 
-**Phase 8 — Move Existing RealityKit Responsibilities into the Backend.**
-Move all direct RealityKit ownership out of the runtime and into `RealityKitMapBackend`: root entity, camera entity, world and entity construction, tile selector rendering, sprite entity caching, gesture handling, and raycasting.
+**Phase 9 — Create the Metal Backend Shell.**
+Stand up `MapMetalView` / `MetalMapBackend` and rewire `MapRenderHost` so iOS/macOS can enter a backend-selected Metal host path without reintroducing `RealityKit` into the UI layer.
