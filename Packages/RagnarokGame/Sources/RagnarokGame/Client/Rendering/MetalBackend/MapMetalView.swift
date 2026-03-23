@@ -8,7 +8,6 @@
 #if os(iOS) || os(macOS)
 
 import MetalKit
-import RagnarokRenderers
 import SwiftUI
 
 struct MapMetalView: View {
@@ -18,7 +17,7 @@ struct MapMetalView: View {
     @State private var backend = MetalMapBackend()
 
     var body: some View {
-        MapMetalViewContainer(renderer: backend.renderer)
+        MapMetalViewContainer(scene: scene, backend: backend)
             .onAppear {
                 backend.attach(scene: scene)
             }
@@ -31,26 +30,30 @@ struct MapMetalView: View {
 #if canImport(UIKit)
 
 private struct MapMetalViewContainer: UIViewRepresentable {
-    var renderer: MapRuntimeRenderer
+    var scene: MapScene
+    var backend: MetalMapBackend
 
     func makeUIView(context: Context) -> MapMTKHostView {
-        MapMTKHostView(renderer: renderer)
+        MapMTKHostView(scene: scene, backend: backend)
     }
 
     func updateUIView(_ view: MapMTKHostView, context: Context) {
+        view.update(scene: scene)
     }
 }
 
 #elseif canImport(AppKit)
 
 private struct MapMetalViewContainer: NSViewRepresentable {
-    var renderer: MapRuntimeRenderer
+    var scene: MapScene
+    var backend: MetalMapBackend
 
     func makeNSView(context: Context) -> MapMTKHostView {
-        MapMTKHostView(renderer: renderer)
+        MapMTKHostView(scene: scene, backend: backend)
     }
 
     func updateNSView(_ view: MapMTKHostView, context: Context) {
+        view.update(scene: scene)
     }
 }
 
@@ -63,19 +66,28 @@ private typealias PlatformView = NSView
 #endif
 
 private final class MapMTKHostView: PlatformView, MTKViewDelegate {
-    private let renderer: MapRuntimeRenderer
+    private weak var scene: MapScene?
+    private let backend: MetalMapBackend
     private let commandQueue: any MTLCommandQueue
+    private let renderer: MapRuntimeRenderer
+    private let mtkView: MTKView
 
-    init(renderer: MapRuntimeRenderer) {
-        self.renderer = renderer
+    private var baseAzimuth: Float = 0
+    private var baseElevation: Float = 0
+    private var baseDistance: Float = 0
+
+    init(scene: MapScene, backend: MetalMapBackend) {
+        self.scene = scene
+        self.backend = backend
+        self.renderer = backend.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
             fatalError("MapMTKHostView: failed to create Metal command queue")
         }
         self.commandQueue = commandQueue
+        self.mtkView = MTKView(frame: .zero, device: renderer.device)
 
         super.init(frame: .zero)
 
-        let mtkView = MTKView(frame: .zero, device: renderer.device)
         mtkView.delegate = self
         mtkView.colorPixelFormat = renderer.colorPixelFormat
         mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
@@ -88,11 +100,18 @@ private final class MapMTKHostView: PlatformView, MTKViewDelegate {
         mtkView.autoresizingMask = [.width, .height]
         #endif
 
+        mtkView.frame = bounds
         addSubview(mtkView)
+
+        configureGestures()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func update(scene: MapScene) {
+        self.scene = scene
     }
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
@@ -107,6 +126,8 @@ private final class MapMTKHostView: PlatformView, MTKViewDelegate {
             return
         }
 
+        backend.prepareFrame()
+
         renderer.render(
             atTime: CACurrentMediaTime(),
             viewport: view.bounds,
@@ -117,6 +138,140 @@ private final class MapMTKHostView: PlatformView, MTKViewDelegate {
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
+
+    private func configureGestures() {
+        #if canImport(UIKit)
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        mtkView.addGestureRecognizer(doubleTapGestureRecognizer)
+
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        mtkView.addGestureRecognizer(panGestureRecognizer)
+
+        let twoFingerPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTwoFingerPan(_:)))
+        twoFingerPanGestureRecognizer.minimumNumberOfTouches = 2
+        mtkView.addGestureRecognizer(twoFingerPanGestureRecognizer)
+
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        mtkView.addGestureRecognizer(pinchGestureRecognizer)
+        #elseif canImport(AppKit)
+        let panGestureRecognizer = NSPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        mtkView.addGestureRecognizer(panGestureRecognizer)
+
+        let magnificationGestureRecognizer = NSMagnificationGestureRecognizer(target: self, action: #selector(handleMagnification(_:)))
+        mtkView.addGestureRecognizer(magnificationGestureRecognizer)
+        #endif
+    }
 }
+
+#if canImport(UIKit)
+private extension MapMTKHostView {
+    @objc func handleDoubleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+        scene.resetCamera()
+        baseAzimuth = scene.cameraState.azimuth
+        baseElevation = scene.cameraState.elevation
+    }
+
+    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+
+        switch gestureRecognizer.state {
+        case .began:
+            baseAzimuth = scene.cameraState.azimuth
+        case .changed:
+            let azimuth = baseAzimuth + Float(gestureRecognizer.translation(in: mtkView).x) * 0.01
+            scene.cameraState.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
+        default:
+            break
+        }
+    }
+
+    @objc func handleTwoFingerPan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+
+        switch gestureRecognizer.state {
+        case .began:
+            baseElevation = scene.cameraState.elevation
+        case .changed:
+            var elevation = baseElevation + Float(gestureRecognizer.translation(in: mtkView).y) * 0.01
+            elevation = max(elevation, .pi / 12)
+            elevation = min(elevation, .pi / 3)
+            scene.cameraState.elevation = elevation
+        default:
+            break
+        }
+    }
+
+    @objc func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+
+        switch gestureRecognizer.state {
+        case .began:
+            baseDistance = scene.cameraState.distance
+        case .changed:
+            var distance = baseDistance * Float(1 / gestureRecognizer.scale)
+            distance = max(distance, 3)
+            distance = min(distance, 120)
+            scene.cameraState.distance = distance
+        default:
+            break
+        }
+    }
+}
+#elseif canImport(AppKit)
+private extension MapMTKHostView {
+    @objc func handlePan(_ gestureRecognizer: NSPanGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+
+        switch gestureRecognizer.state {
+        case .began:
+            baseAzimuth = scene.cameraState.azimuth
+            baseElevation = scene.cameraState.elevation
+        case .changed:
+            let azimuth = baseAzimuth + Float(gestureRecognizer.translation(in: mtkView).x) * 0.01
+            scene.cameraState.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
+
+            var elevation = baseElevation - Float(gestureRecognizer.translation(in: mtkView).y) * 0.01
+            elevation = max(elevation, .pi / 12)
+            elevation = min(elevation, .pi / 3)
+            scene.cameraState.elevation = elevation
+        default:
+            break
+        }
+    }
+
+    @objc func handleMagnification(_ gestureRecognizer: NSMagnificationGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+
+        switch gestureRecognizer.state {
+        case .began:
+            baseDistance = scene.cameraState.distance
+        case .changed:
+            var scale = 1 + gestureRecognizer.magnification
+            scale = max(scale, .leastNonzeroMagnitude)
+
+            var distance = baseDistance * Float(1 / scale)
+            distance = max(distance, 3)
+            distance = min(distance, 120)
+            scene.cameraState.distance = distance
+        default:
+            break
+        }
+    }
+}
+#endif
 
 #endif

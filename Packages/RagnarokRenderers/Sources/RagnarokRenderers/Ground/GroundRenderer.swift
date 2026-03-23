@@ -9,7 +9,7 @@ import Metal
 import RagnarokShaders
 import simd
 
-class GroundRenderer {
+public final class GroundRenderer {
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
@@ -25,7 +25,7 @@ class GroundRenderer {
         color: [1, 1, 1]
     )
 
-    let light = Light(
+    var light = Light(
         opacity: 1,
         ambient: [1, 1, 1],
         diffuse: [0, 0, 0],
@@ -59,7 +59,22 @@ class GroundRenderer {
         self.groundTexture = groundTexture
     }
 
-    func render(
+    public convenience init(device: any MTLDevice, ground: Ground, groundTexture: any MTLTexture, lighting: WorldLighting? = nil) throws {
+        let library = RagnarokCreateShadersLibrary(device)!
+        try self.init(device: device, library: library, ground: ground, groundTexture: groundTexture)
+        if let lighting {
+            updateLighting(lighting)
+        }
+    }
+
+    public func updateLighting(_ lighting: WorldLighting) {
+        light.ambient = lighting.ambient
+        light.diffuse = lighting.diffuse
+        light.direction = lighting.direction
+        light.opacity = lighting.opacity
+    }
+
+    public func render(
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,

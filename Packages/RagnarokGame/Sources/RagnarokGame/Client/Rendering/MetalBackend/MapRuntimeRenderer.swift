@@ -7,11 +7,32 @@
 
 #if os(iOS) || os(macOS)
 
+import CoreGraphics
 import Metal
 import RagnarokRenderers
+import RagnarokSceneAssets
+import SGLMath
+import simd
 
 final class MapRuntimeRenderer: Renderer {
+    private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
+    private static let fieldOfViewDegrees: Float = 15
+
+    struct RenderMatrices {
+        var modelMatrix: simd_float4x4
+        var viewMatrix: simd_float4x4
+        var projectionMatrix: simd_float4x4
+        var normalMatrix: simd_float3x3
+    }
+
     let device: any MTLDevice
+
+    private var groundRenderer: MapGroundRendererAdapter?
+    private var waterRenderer: MapWaterRendererAdapter?
+    private var modelRenderer: MapModelRendererAdapter?
+
+    private var cameraState: MapCameraState = .default
+    private var targetPosition: SIMD3<Float> = .zero
 
     init() {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -20,16 +41,105 @@ final class MapRuntimeRenderer: Renderer {
         self.device = device
     }
 
+    func setWorldAsset(_ worldAsset: MapWorldAsset?) {
+        guard let worldAsset else {
+            groundRenderer = nil
+            waterRenderer = nil
+            modelRenderer = nil
+            return
+        }
+
+        groundRenderer = try? MapGroundRendererAdapter(
+            device: device,
+            asset: worldAsset.ground,
+            lighting: worldAsset.lighting
+        )
+        waterRenderer = try? MapWaterRendererAdapter(
+            device: device,
+            asset: worldAsset.water,
+            lighting: worldAsset.lighting
+        )
+        modelRenderer = try? MapModelRendererAdapter(
+            device: device,
+            assets: worldAsset.models,
+            lighting: worldAsset.lighting
+        )
+    }
+
+    func updateCamera(cameraState: MapCameraState, targetPosition: SIMD3<Float>) {
+        self.cameraState = cameraState
+        self.targetPosition = targetPosition
+    }
+
     func render(
         atTime time: CFTimeInterval,
         viewport: CGRect,
         commandBuffer: any MTLCommandBuffer,
         renderPassDescriptor: MTLRenderPassDescriptor
     ) {
-        guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+        renderPassDescriptor.colorAttachments[0].storeAction = .store
+        if let depthAttachment = renderPassDescriptor.depthAttachment {
+            depthAttachment.loadAction = .clear
+            depthAttachment.storeAction = .dontCare
+            depthAttachment.clearDepth = 1
+        }
+
+        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
-        encoder.endEncoding()
+
+        let matrices = makeRenderMatrices(viewport: viewport)
+
+        groundRenderer?.render(
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
+        waterRenderer?.render(
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
+        modelRenderer?.render(
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
+
+        renderCommandEncoder.endEncoding()
+    }
+
+    private func makeRenderMatrices(viewport: CGRect) -> RenderMatrices {
+        let modelMatrix = makeWorldModelMatrix()
+        let worldTarget = targetPosition + Self.cameraTargetOffset
+
+        let cameraOrientation =
+            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
+            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
+        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
+        let cameraUp = cameraOrientation.act([0, 1, 0])
+
+        let viewportHeight = max(Float(viewport.height), 1)
+        let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
+        let farZ = max(cameraState.distance * 4, 1000)
+
+        return RenderMatrices(
+            modelMatrix: modelMatrix,
+            viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
+            projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
+            normalMatrix: simd_float3x3(modelMatrix).inverse.transpose
+        )
+    }
+
+    private func makeWorldModelMatrix() -> simd_float4x4 {
+        guard groundRenderer != nil else {
+            return matrix_identity_float4x4
+        }
+
+        var modelMatrix = matrix_identity_float4x4
+        modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
+        return modelMatrix
     }
 }
 

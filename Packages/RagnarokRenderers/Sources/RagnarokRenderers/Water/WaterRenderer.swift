@@ -9,7 +9,7 @@ import Metal
 import RagnarokShaders
 import simd
 
-class WaterRenderer {
+public final class WaterRenderer {
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
@@ -32,7 +32,7 @@ class WaterRenderer {
         color: [1, 1, 1]
     )
 
-    let light = Light(
+    var light = Light(
         opacity: 1,
         ambient: [1, 1, 1],
         diffuse: [0, 0, 0],
@@ -66,7 +66,22 @@ class WaterRenderer {
         self.textures = textures
     }
 
-    func render(
+    public convenience init(device: any MTLDevice, water: Water, textures: [any MTLTexture], lighting: WorldLighting? = nil) throws {
+        let library = RagnarokCreateShadersLibrary(device)!
+        try self.init(device: device, library: library, water: water, textures: textures)
+        if let lighting {
+            updateLighting(lighting)
+        }
+    }
+
+    public func updateLighting(_ lighting: WorldLighting) {
+        light.ambient = lighting.ambient
+        light.diffuse = lighting.diffuse
+        light.direction = lighting.direction
+        light.opacity = lighting.opacity
+    }
+
+    public func render(
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,

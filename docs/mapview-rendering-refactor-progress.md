@@ -1277,3 +1277,118 @@ The visionOS placeholder is now expressed once at the top level rather than insi
 
 **Phase 10 — Connect Static World Rendering in Metal.**
 Drive ground, water, and static model rendering from `MapWorldAsset` through `MapRuntimeRenderer`. Connect `MapCameraState` to the Metal camera matrix so the scene displays and responds to rotation and zoom.
+
+## Phase 10 — Connect Static World Rendering in Metal
+
+**Completed:** 2026-03-23
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Connected the Metal backend to real static map content. `MapMetalView` now renders ground, water, and static models loaded from `MapWorldAsset`, and the Metal camera follows the same `MapCameraState` as the RealityKit backend. Rotation and zoom gestures are wired on iOS and macOS, so Metal mode no longer shows only a cleared frame.
+
+This phase deliberately keeps packet-driven rendering on the Reality backend. Static world rendering is now real in Metal; dynamic objects, hit testing, and overlay projection are still deferred to Phase 11.
+
+### New files
+
+All new files live under `Client/Rendering/MetalBackend/`.
+
+#### `MapMetalTextureFactory.swift`
+
+Small Metal texture helper used by the adapters. Converts `CGImage` values from `MapWorldAsset` into `MTLTexture` instances and creates a 1x1 fallback texture when an asset image is missing. This keeps the adapter code simple and prevents the renderer setup path from failing on a missing optional texture.
+
+#### `MapGroundRendererAdapter.swift`
+
+Bridges `GroundRenderAsset` to `GroundRenderer` from `RagnarokRenderers`. Builds the atlas texture from `ground.textureAtlas.makeCGImage(textureImages:)`, then forwards draw calls using the matrices from `MapRuntimeRenderer`.
+
+#### `MapWaterRendererAdapter.swift`
+
+Bridges `WaterRenderAsset` to `WaterRenderer`. The current path uses the single water texture image from `MapWorldAsset`; animated water still works because the water renderer already animates UV/frame selection internally.
+
+#### `MapModelRendererAdapter.swift`
+
+Bridges `[ModelRenderAsset]` to `ModelRenderer`. This file does the most important conversion work in Phase 10:
+
+- It namespaces texture names per model asset to avoid collisions between different RSMs that reuse the same texture filename.
+- It materializes one `Model` per static model instance by baking the instance transform into the prototype mesh vertices.
+- It uses `instance.scale` directly and intentionally does **not** apply `ModelEntity`’s prototype normalization scale, because the Reality backend overwrites that scale during cloning. Matching the clone path is what keeps Metal and Reality model sizes aligned.
+
+### Modified files
+
+#### `Packages/RagnarokGame/Package.swift`
+
+Added a dependency on `RagnarokSceneAssets`, which is where `MapWorldAsset`, `GroundRenderAsset`, `WaterRenderAsset`, and `ModelRenderAsset` live.
+
+#### `Client/Rendering/MetalBackend/MetalMapBackend.swift`
+
+The Metal backend now owns a cancellable async load of `MapWorldAsset` using `MapWorldAssetLoader`. `attach(scene:)` starts the load, `detach()` cancels it and clears the renderer state, and `prepareFrame()` synchronizes the current camera state before every draw.
+
+`syncFrameState` uses `scene.position(for:)` for the camera target, not legacy renderer coordinates. This is intentional: the Metal camera target must be in the same world space as the Reality backend’s dynamic objects.
+
+#### `Client/Rendering/MetalBackend/MapRuntimeRenderer.swift`
+
+`MapRuntimeRenderer` is no longer a blank render-pass shell. It now owns optional ground, water, and model adapters plus the camera state used to render the static world.
+
+Important implementation choices:
+
+- The world transform matches the Reality backend’s static-world orientation by using the same effective `-180°` X rotation as `worldEntity.transform` in `RealityKitMapBackend`.
+- The camera target includes the same `[0, 0.5, 0]` target offset used by the Reality backend’s world camera.
+- The perspective FOV is `15°`, matching the `PerspectiveCameraComponent` configured in `RealityKitMapBackend`. This was important for perceptual consistency: `distance = 100` felt much farther away with the earlier wide-angle `70°` projection even though the numeric radius matched.
+
+#### `Client/Rendering/MetalBackend/MapMetalView.swift`
+
+`MapMetalView` now passes the backend itself into the `MTKView` host instead of only passing the renderer. That lets the draw loop call `backend.prepareFrame()` before encoding each frame.
+
+This file also now mirrors the RealityKit path’s camera gestures:
+
+- iOS: double-tap reset, one-finger azimuth pan, two-finger elevation pan, pinch zoom
+- macOS: pan for azimuth/elevation, magnify for zoom
+
+The goal here is not to invent a new interaction model for Metal; it is to keep `MapCameraState` the single source of truth regardless of backend.
+
+#### `Packages/RagnarokRenderers/.../GroundRenderer.swift`
+#### `Packages/RagnarokRenderers/.../WaterRenderer.swift`
+#### `Packages/RagnarokRenderers/.../ModelRenderer.swift`
+
+Added small public convenience initializers plus `updateLighting(_:)` entry points so the new Metal backend can reuse the low-level renderers directly without depending on `RSWRenderer.swift` or `Camera.swift`.
+
+This was a deliberate architectural choice for Phase 10: the refactor needs static world rendering, but it should not re-couple the new backend to the old monolithic renderer wrapper.
+
+### Coordinate-system notes
+
+This phase surfaced several easy-to-miss coordinate bugs. Future developers should keep these constraints in mind:
+
+1. **Do not use `RSWRenderer`/`Camera` as the source of truth.**
+   Phase 10 intentionally aligned Metal with the Reality backend, not with the old renderer wrapper.
+
+2. **Use `scene.position(for:)` for camera targets and dynamic-world alignment.**
+   The Metal camera target is in the same world coordinate system as RealityKit’s dynamic objects and selection overlays.
+
+3. **Use the Reality backend’s static-world transform for orientation.**
+   The correct reference is the effective transform applied by `RealityKitMapBackend` to `worldEntity`, not the older translation/rotation stack in `RSWRenderer`.
+
+4. **Do not reapply prototype model normalization in Metal.**
+   `ModelEntity` computes a normalization scale when creating the prototype entity, but `WorldEntity` overwrites the clone’s scale with `instance.scale`. Copying the normalization step into Metal makes models appear extremely small.
+
+5. **Match FOV when comparing camera distance.**
+   Equal camera radius values do not feel equal if the projection differs. Matching the Reality backend’s `15°` camera was necessary to make `distance = 100` look comparable.
+
+### What did not change
+
+- **Packet-driven scene mutations** — still route through `scene.realityKitBackend`.
+- **`MetalMapProjector`** — still returns `nil`.
+- **`MetalMapHitTester`** — still returns `nil`.
+- **visionOS immersive path** — unchanged.
+- **`MapScene` ownership model** — unchanged; `MapScene` still stores only `realityKitBackend`.
+
+### Known temporary state
+
+- Static world rendering works in Metal, but dynamic objects are still not rendered there.
+- Overlay projection is still unavailable in Metal because `MetalMapProjector` is still a shell.
+- Input hit testing is still unavailable in Metal because `MetalMapHitTester` is still a shell.
+- The Metal backend still loads its own static world on attach rather than being stored as a persistent backend on `MapScene`.
+
+### Next phase
+
+**Phase 11 — Connect Dynamic Objects, Hit Testing, and Selection in Metal.**
+Add dynamic object rendering, ground/object hit testing, and overlay projection so the Metal backend can participate in the full gameplay loop rather than only displaying the static world.
