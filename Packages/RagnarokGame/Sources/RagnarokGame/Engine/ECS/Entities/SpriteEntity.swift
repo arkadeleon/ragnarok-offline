@@ -200,27 +200,7 @@ extension Entity {
                 let sourcePosition = path[i - 1]
                 let targetPosition = path[i]
 
-                let direction: CharacterDirection = switch (targetPosition &- sourcePosition) {
-                case [0, -1]:
-                    .south
-                case [-1, -1]:
-                    .southwest
-                case [-1, 0]:
-                    .west
-                case [-1, 1]:
-                    .northwest
-                case [0, 1]:
-                    .north
-                case [1, 1]:
-                    .northeast
-                case [1, 0]:
-                    .east
-                case [1, -1]:
-                    .southeast
-                default:
-                    .south
-                }
-
+                let direction = CharacterDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
                 let speed = TimeInterval(mapObject.speed) / 1000
                 let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 

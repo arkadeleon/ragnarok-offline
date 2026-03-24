@@ -76,59 +76,36 @@ At the end of this follow-up work:
 
 ## Snapshot Contract Expansion
 
-## 1. Add explicit movement state
+## 1. Movement state ✅
 
-Add shared movement semantics to runtime state for the player, map objects, and items where applicable.
+`MapObjectState` now carries:
 
-Recommended shape:
+- `gridPosition: SIMD2<Int>` — last authoritative logical grid position (unchanged)
+- `movement: MapObjectMovementState?` — nil when stationary
 
-- `MapObjectState.gridPosition`
-  - Last authoritative logical grid position.
-- `MapObjectMovementState? movement`
-  - Optional because stationary objects should not pay the complexity cost.
-
-Suggested fields for `MapObjectMovementState`:
-
-- `path: [SIMD2<Int>]`
-- `startedAt: ContinuousClock.Instant` or another shared monotonic timestamp representation
-- `stepDuration: Duration`
-- `facing: Direction`
-- `isLooping: Bool` only if needed later for special movement types
-
-For the first pass, the minimum useful subset is:
+`MapObjectMovementState` fields (as implemented):
 
 - `from: SIMD2<Int>`
 - `to: SIMD2<Int>`
-- `startedAt`
-- `duration`
-- `facing`
+- `path: [SIMD2<Int>]` — full resolved path from `pathfinder.findPath`; includes start position as `path[0]`
+- `startedAt: ContinuousClock.Instant`
+- `duration: Duration` — summed from per-step costs; diagonal steps use `speed × √2` to match `WalkingSystem`
+- `direction: CharacterDirection` — direction of the first path step
 
-That is enough for linear interpolation and walk-facing.
+## 2. Presentation state ✅
 
-## 2. Add explicit action or animation intent
+`MapObjectState` now carries:
 
-Movement alone will not be enough once Metal grows beyond idle-south sprites.
+- `presentation: MapObjectPresentationState` — always present; initialized to `.idle/.south` on spawn
 
-Add a lightweight shared presentation intent layer, for example:
+`MapObjectPresentationState` fields (as implemented):
 
-- `MapObjectPresentationState`
-  - `action: MapObjectPresentationAction`
-  - `direction: Direction`
-  - `startedAt`
-  - optional `duration`
+- `action: CharacterActionType` — reuses the existing `RagnarokSprite` enum instead of a new parallel type
+- `direction: CharacterDirection`
+- `startedAt: ContinuousClock.Instant`
+- `duration: Duration?` — nil for open-ended states (idle, sit); set for timed actions (walk, attack)
 
-Possible actions:
-
-- `idle`
-- `walk`
-- `attack`
-- `pickup`
-- `cast`
-- `sit`
-- `dead`
-- `hit`
-
-This should describe authoritative presentation intent, not backend implementation details.
+`CharacterDirection(sourcePosition:targetPosition:)` is the shared delta-to-direction helper used by `MapScene`, `WalkingSystem`, and `SpriteEntity`.
 
 ## 3. Move camera target into shared snapshot semantics
 
@@ -190,7 +167,7 @@ Those should become runtime-state-driven decisions once the shared movement time
 
 ## Proposed Phases
 
-## Phase A: Define Shared Movement and Presentation Semantics
+## Phase A: Define Shared Movement and Presentation Semantics ✅
 
 ### Objective
 
@@ -198,34 +175,39 @@ Expand the shared snapshot so both backends have enough information to render sm
 
 ### Changes
 
-Add new runtime types:
+New runtime types added:
 
-- `MapObjectMovementState`
-- `MapObjectPresentationState`
-- supporting enums for presentation action and timing metadata
+- `MapObjectMovementState` — `from`, `to`, `path: [SIMD2<Int>]`, `startedAt: ContinuousClock.Instant`, `duration: Duration`, `direction: CharacterDirection`
+- `MapObjectPresentationState` — `action: CharacterActionType`, `direction: CharacterDirection`, `startedAt: ContinuousClock.Instant`, `duration: Duration?`
+- `CharacterDirection+Movement` — `init(sourcePosition:targetPosition:)` extension; shared by `MapScene`, `WalkingSystem`, and `SpriteEntity`
 
-Modify:
+`MapObjectPresentationAction` was not introduced; `CharacterActionType` from `RagnarokSprite` covers the same cases and is already used by the rendering layer.
 
-- `MapObjectState`
-- `MapSceneState`
-- `MapScene`
-- packet/event handlers that currently only mutate `gridPosition`
+Modified:
+
+- `MapObjectState` — added `movement: MapObjectMovementState?` and `presentation: MapObjectPresentationState`
+- `MapScene` — updated all packet-driven event handlers; `path` is resolved via `pathfinder.findPath` so duration and initial facing reflect the actual walk, including diagonal steps (`speed × √2`)
+- `MapEventHandlerProtocol` and `GameSession` — added `onMapObjectDirectionChanged` to handle `PACKET_ZC_CHANGE_DIRECTION` (was previously dropped)
 
 ### Deliverables
 
 - Runtime records movement as semantic state, not only final grid position.
-- Runtime records presentation intent such as idle/walk/attack/pickup/cast.
+- Runtime records presentation intent using `CharacterActionType` (idle/walk/attack1/pickup/sit/…).
 - Snapshot shape is sufficient for a backend to interpolate movement without reading another backend's private ECS state.
+- Turn-in-place packets update `presentation.direction` immediately.
 
 ### Acceptance
 
-- No backend-specific APIs are required to know whether an object is currently walking.
-- New movement state can describe at least the common player and monster movement cases.
+- ✅ No backend-specific APIs are required to know whether an object is currently walking.
+- ✅ Movement state covers the common player and monster movement cases.
+- ✅ Duration matches `WalkingSystem` timing (diagonal steps cost `speed × √2` ms).
+- ✅ `STOPMOVE` correctly clears movement state for the local player as well as other objects.
+- ✅ `CHANGE_DIRECTION` updates facing direction without creating spurious movement state.
 
-### Risk
+### Notes
 
-- Medium.
-- The largest risk is choosing timestamps or duration semantics that are hard to reproduce consistently across backends.
+- The plan suggested a custom `MapObjectPresentationAction` enum; `CharacterActionType` was used instead to avoid duplication with the existing sprite layer.
+- The plan listed `facing` as the field name; the implementation uses `direction` for consistency with `MapObjectPresentationState` and `CharacterDirection`.
 
 ## Phase B: Move Arrival and Follow-up Action Scheduling Into Runtime
 

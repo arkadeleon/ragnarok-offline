@@ -740,8 +740,10 @@ final public class GameSession {
             let objectID = packet.gid
             logger.info("Object \(objectID) vanished")
             mapScene?.onMapObjectVanished(objectID: objectID)
-        case _ as PACKET_ZC_CHANGE_DIRECTION:
-            break
+        case let packet as PACKET_ZC_CHANGE_DIRECTION:
+            let direction = Direction(rawValue: Int(packet.dir)) ?? .north
+            let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
+            mapScene?.onMapObjectDirectionChanged(objectID: packet.srcId, direction: direction, headDirection: headDirection)
         case _ as PACKET_ZC_SPRITE_CHANGE:
             break
         case let packet as PACKET_ZC_STATE_CHANGE:

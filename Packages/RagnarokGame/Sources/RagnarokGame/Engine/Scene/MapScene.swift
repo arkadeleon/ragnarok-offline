@@ -12,6 +12,7 @@ import RagnarokModels
 import RagnarokPackets
 import RagnarokReality
 import RagnarokResources
+import RagnarokSprite
 import SGLMath
 import simd
 
@@ -73,7 +74,12 @@ public final class MapScene {
             maxHp: character.maxHp,
             sp: character.sp,
             maxSp: character.maxSp,
-            isVisible: player.effectState != .cloak
+            isVisible: player.effectState != .cloak,
+            presentation: MapObjectPresentationState(
+                action: .idle,
+                direction: .south,
+                startedAt: .now
+            )
         )
         self.state = MapSceneState(player: playerState)
 
@@ -137,6 +143,16 @@ public final class MapScene {
             altitude,
             -Float(gridPosition.y) - 0.5,
         ]
+    }
+
+    private func movementDuration(path: [SIMD2<Int>], speed: Int) -> Duration {
+        var total: Duration = .zero
+        for i in 1..<path.count {
+            let dir = CharacterDirection(sourcePosition: path[i - 1], targetPosition: path[i])
+            let stepMs = dir.isDiagonal ? Int((Double(speed) * sqrt(2)).rounded()) : speed
+            total += .milliseconds(stepMs)
+        }
+        return total
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
@@ -357,7 +373,27 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        let now = ContinuousClock.now
+        let path = pathfinder.findPath(from: startPosition, to: endPosition)
+        let direction = path.count >= 2
+            ? CharacterDirection(sourcePosition: path[0], targetPosition: path[1])
+            : CharacterDirection(sourcePosition: startPosition, targetPosition: endPosition)
+        let duration = movementDuration(path: path, speed: state.player.object.speed)
         state.player.gridPosition = endPosition
+        state.player.movement = MapObjectMovementState(
+            from: startPosition,
+            to: endPosition,
+            path: path,
+            startedAt: now,
+            duration: duration,
+            direction: direction
+        )
+        state.player.presentation = MapObjectPresentationState(
+            action: .walk,
+            direction: direction,
+            startedAt: now,
+            duration: duration
+        )
         Task {
             await backend.movePlayer(from: startPosition, to: endPosition)
         }
@@ -370,7 +406,12 @@ extension MapScene: MapEventHandlerProtocol {
             gridPosition: position,
             hp: object.hp,
             maxHp: object.maxHp,
-            isVisible: object.effectState != .cloak
+            isVisible: object.effectState != .cloak,
+            presentation: MapObjectPresentationState(
+                action: .idle,
+                direction: CharacterDirection(direction: direction),
+                startedAt: .now
+            )
         )
 
         if object.type == .monster {
@@ -392,8 +433,30 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        let now = ContinuousClock.now
+        let path = pathfinder.findPath(from: startPosition, to: endPosition)
+        let direction = path.count >= 2
+            ? CharacterDirection(sourcePosition: path[0], targetPosition: path[1])
+            : CharacterDirection(sourcePosition: startPosition, targetPosition: endPosition)
+        let duration = movementDuration(path: path, speed: object.speed)
+        let movement = MapObjectMovementState(
+            from: startPosition,
+            to: endPosition,
+            path: path,
+            startedAt: now,
+            duration: duration,
+            direction: direction
+        )
+        let presentation = MapObjectPresentationState(
+            action: .walk,
+            direction: direction,
+            startedAt: now,
+            duration: duration
+        )
         if state.objects[object.objectID] != nil {
             state.objects[object.objectID]?.gridPosition = endPosition
+            state.objects[object.objectID]?.movement = movement
+            state.objects[object.objectID]?.presentation = presentation
         } else {
             state.objects[object.objectID] = MapObjectState(
                 id: object.objectID,
@@ -401,7 +464,9 @@ extension MapScene: MapEventHandlerProtocol {
                 gridPosition: endPosition,
                 hp: object.hp,
                 maxHp: object.maxHp,
-                isVisible: object.effectState != .cloak
+                isVisible: object.effectState != .cloak,
+                movement: movement,
+                presentation: presentation
             )
             if object.type == .monster {
                 state.overlaySnapshot.anchors[object.objectID] = MapOverlayAnchor(
@@ -423,7 +488,26 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>) {
-        state.objects[objectID]?.gridPosition = position
+        let now = ContinuousClock.now
+        if state.player.id == objectID {
+            state.player.gridPosition = position
+            state.player.movement = nil
+            state.player.presentation = MapObjectPresentationState(
+                action: .idle,
+                direction: state.player.presentation.direction,
+                startedAt: now
+            )
+        } else {
+            state.objects[objectID]?.gridPosition = position
+            state.objects[objectID]?.movement = nil
+            if let existing = state.objects[objectID] {
+                state.objects[objectID]?.presentation = MapObjectPresentationState(
+                    action: .idle,
+                    direction: existing.presentation.direction,
+                    startedAt: now
+                )
+            }
+        }
 
         Task {
             await backend.stopMapObject(objectID: objectID, position: position)
@@ -436,6 +520,14 @@ extension MapScene: MapEventHandlerProtocol {
 
         Task {
             await backend.removeMapObject(objectID: objectID)
+        }
+    }
+
+    func onMapObjectDirectionChanged(objectID: UInt32, direction: Direction, headDirection: HeadDirection) {
+        if state.player.id == objectID {
+            state.player.presentation.direction = CharacterDirection(direction: direction)
+        } else {
+            state.objects[objectID]?.presentation.direction = CharacterDirection(direction: direction)
         }
     }
 
@@ -476,6 +568,37 @@ extension MapScene: MapEventHandlerProtocol {
     }
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
+        let now = ContinuousClock.now
+        let presentationAction: CharacterActionType
+        switch objectAction.type {
+        case .sit_down:
+            presentationAction = .sit
+        case .stand_up:
+            presentationAction = .idle
+        case .pickup_item:
+            presentationAction = .pickup
+        default:
+            presentationAction = .attack1
+        }
+        let sourceDuration = Duration.milliseconds(objectAction.sourceSpeed)
+        let sourceID = objectAction.sourceObjectID
+        if state.player.id == sourceID {
+            state.player.presentation = MapObjectPresentationState(
+                action: presentationAction,
+                direction: state.player.presentation.direction,
+                startedAt: now,
+                duration: sourceDuration
+            )
+        } else if state.objects[sourceID] != nil {
+            let existingDirection = state.objects[sourceID]!.presentation.direction
+            state.objects[sourceID]?.presentation = MapObjectPresentationState(
+                action: presentationAction,
+                direction: existingDirection,
+                startedAt: now,
+                duration: sourceDuration
+            )
+        }
+
         switch objectAction.type {
         case .normal, .endure, .critical:
             let damageEffect = MapDamageEffect(

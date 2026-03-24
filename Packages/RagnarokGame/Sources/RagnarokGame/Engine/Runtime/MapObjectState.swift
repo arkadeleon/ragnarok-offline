@@ -17,6 +17,8 @@ public struct MapObjectState: Identifiable, Sendable {
     public var sp: Int?
     public var maxSp: Int?
     public var isVisible: Bool
+    public var movement: MapObjectMovementState?
+    public var presentation: MapObjectPresentationState
 
     public init(
         id: UInt32,
@@ -26,7 +28,9 @@ public struct MapObjectState: Identifiable, Sendable {
         maxHp: Int,
         sp: Int? = nil,
         maxSp: Int? = nil,
-        isVisible: Bool = true
+        isVisible: Bool = true,
+        movement: MapObjectMovementState? = nil,
+        presentation: MapObjectPresentationState
     ) {
         self.id = id
         self.object = object
@@ -36,5 +40,7 @@ public struct MapObjectState: Identifiable, Sendable {
         self.sp = sp
         self.maxSp = maxSp
         self.isVisible = isVisible
+        self.movement = movement
+        self.presentation = presentation
     }
 }
