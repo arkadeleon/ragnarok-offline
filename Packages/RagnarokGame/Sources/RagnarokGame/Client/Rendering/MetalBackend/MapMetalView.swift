@@ -17,7 +17,7 @@ struct MapMetalView: View {
     @State private var backend = MetalMapBackend()
 
     var body: some View {
-        MapMetalViewContainer(scene: scene, backend: backend)
+        MapMetalViewContainer(scene: scene, overlay: overlay, backend: backend)
             .onAppear {
                 backend.attach(scene: scene)
             }
@@ -31,6 +31,7 @@ struct MapMetalView: View {
 
 private struct MapMetalViewContainer: UIViewRepresentable {
     var scene: MapScene
+    var overlay: MapSceneOverlay?
     var backend: MetalMapBackend
 
     func makeUIView(context: Context) -> MapMTKHostView {
@@ -39,6 +40,7 @@ private struct MapMetalViewContainer: UIViewRepresentable {
 
     func updateUIView(_ view: MapMTKHostView, context: Context) {
         view.update(scene: scene)
+        backend.overlay = overlay
     }
 }
 
@@ -46,6 +48,7 @@ private struct MapMetalViewContainer: UIViewRepresentable {
 
 private struct MapMetalViewContainer: NSViewRepresentable {
     var scene: MapScene
+    var overlay: MapSceneOverlay?
     var backend: MetalMapBackend
 
     func makeNSView(context: Context) -> MapMTKHostView {
@@ -54,6 +57,7 @@ private struct MapMetalViewContainer: NSViewRepresentable {
 
     func updateNSView(_ view: MapMTKHostView, context: Context) {
         view.update(scene: scene)
+        backend.overlay = overlay
     }
 }
 
@@ -145,6 +149,10 @@ private final class MapMTKHostView: PlatformView, MTKViewDelegate {
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         mtkView.addGestureRecognizer(doubleTapGestureRecognizer)
 
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
+        mtkView.addGestureRecognizer(tapGestureRecognizer)
+
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         mtkView.addGestureRecognizer(panGestureRecognizer)
 
@@ -173,6 +181,17 @@ private extension MapMTKHostView {
         scene.resetCamera()
         baseAzimuth = scene.cameraState.azimuth
         baseElevation = scene.cameraState.elevation
+    }
+
+    @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+
+        let point = gestureRecognizer.location(in: mtkView)
+        if let result = backend.hitTest(at: point) {
+            scene.handleInteraction(result)
+        }
     }
 
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -229,6 +248,15 @@ private extension MapMTKHostView {
 }
 #elseif canImport(AppKit)
 private extension MapMTKHostView {
+    override func mouseDown(with event: NSEvent) {
+        var point = mtkView.convert(event.locationInWindow, from: nil)
+        // NSView has bottom-left origin; flip to top-left for hit testing.
+        point.y = mtkView.bounds.height - point.y
+        if let result = backend.hitTest(at: point) {
+            scene?.handleInteraction(result)
+        }
+    }
+
     @objc func handlePan(_ gestureRecognizer: NSPanGestureRecognizer) {
         guard let scene else {
             return

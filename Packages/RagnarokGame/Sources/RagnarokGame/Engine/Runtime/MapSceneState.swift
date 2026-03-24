@@ -11,8 +11,8 @@ import Observation
 @Observable
 public final class MapSceneState {
     public var player: MapObjectState
-    public var objects: [UInt32: MapObjectState] = [:]
-    public var items: [UInt32: MapItemState] = [:]
+    public var objects: [UInt32 : MapObjectState] = [:]
+    public var items: [UInt32 : MapItemState] = [:]
     public var selection: MapSelectionState = MapSelectionState()
     public var damageEffects: [MapDamageEffect] = []
     public let overlaySnapshot = MapOverlaySnapshot()

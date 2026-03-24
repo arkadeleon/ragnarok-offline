@@ -10,6 +10,7 @@
 import CoreGraphics
 import Metal
 import RagnarokRenderers
+import RagnarokResources
 import RagnarokSceneAssets
 import SGLMath
 import simd
@@ -30,9 +31,14 @@ final class MapRuntimeRenderer: Renderer {
     private var groundRenderer: MapGroundRendererAdapter?
     private var waterRenderer: MapWaterRendererAdapter?
     private var modelRenderer: MapModelRendererAdapter?
+    private(set) var spriteBillboardRenderer: SpriteBillboardRenderer?
+    private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
 
     private var cameraState: MapCameraState = .default
     private var targetPosition: SIMD3<Float> = .zero
+
+    private(set) var lastRenderMatrices: RenderMatrices?
+    private(set) var lastViewport: CGRect = .zero
 
     init() {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -46,6 +52,9 @@ final class MapRuntimeRenderer: Renderer {
             groundRenderer = nil
             waterRenderer = nil
             modelRenderer = nil
+            spriteBillboardRenderer?.cancelAllTasks()
+            spriteBillboardRenderer = nil
+            selectionOverlayRenderer = nil
             return
         }
 
@@ -64,11 +73,37 @@ final class MapRuntimeRenderer: Renderer {
             assets: worldAsset.models,
             lighting: worldAsset.lighting
         )
+        spriteBillboardRenderer = try? SpriteBillboardRenderer(device: device)
+        selectionOverlayRenderer = MetalSelectionOverlayRenderer()
+    }
+
+    func prepareDynamicRenderers(resourceManager: ResourceManager) async {
+        await selectionOverlayRenderer?.prepare(device: device, resourceManager: resourceManager)
     }
 
     func updateCamera(cameraState: MapCameraState, targetPosition: SIMD3<Float>) {
         self.cameraState = cameraState
         self.targetPosition = targetPosition
+    }
+
+    func updateObjects(
+        player: MapObjectState,
+        objects: [UInt32 : MapObjectState],
+        items: [UInt32 : MapItemState],
+        scene: MapScene,
+        resourceManager: ResourceManager
+    ) {
+        spriteBillboardRenderer?.syncObjects(
+            player: player,
+            objects: objects,
+            items: items,
+            scene: scene,
+            resourceManager: resourceManager
+        )
+    }
+
+    func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
+        selectionOverlayRenderer?.syncSelection(selectedPosition, mapGrid: mapGrid)
     }
 
     func render(
@@ -90,6 +125,8 @@ final class MapRuntimeRenderer: Renderer {
         }
 
         let matrices = makeRenderMatrices(viewport: viewport)
+        lastRenderMatrices = matrices
+        lastViewport = viewport
 
         groundRenderer?.render(
             atTime: time,
@@ -102,6 +139,17 @@ final class MapRuntimeRenderer: Renderer {
             matrices: matrices
         )
         modelRenderer?.render(
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
+        spriteBillboardRenderer?.render(
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices,
+            viewport: viewport
+        )
+        selectionOverlayRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices

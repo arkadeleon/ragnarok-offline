@@ -1392,3 +1392,111 @@ This phase surfaced several easy-to-miss coordinate bugs. Future developers shou
 
 **Phase 11 — Connect Dynamic Objects, Hit Testing, and Selection in Metal.**
 Add dynamic object rendering, ground/object hit testing, and overlay projection so the Metal backend can participate in the full gameplay loop rather than only displaying the static world.
+
+---
+
+## Phase 11 — Connect Dynamic Objects, Hit Testing, and Selection in Metal
+
+**Completed:** 2026-03-24
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Completed the Metal backend's participation in the gameplay loop. The backend now renders sprite billboards for all visible map objects and items, handles tap-to-interact on iOS and click-to-interact on macOS, shows the tile selection overlay, and projects HP/SP gauge positions to screen space. The RealityKit backend still handles gameplay scheduling (`schedulePlayerArrivalAction`, entity movement animations); the Metal backend is rendering and hit-testing only.
+
+### New shader files (`RagnarokRenderers/RagnarokShaders`)
+
+#### `Sprite/SpriteShaderTypes.h` + `SpriteShaders.metal`
+
+Billboard vertex and fragment shaders. The vertex shader extracts camera right/up vectors from the view matrix columns and positions each vertex as `spriteWorldPosition + right * x/32 + up * y/32` — no model matrix. A depth bias of `0.001 * clip.w` prevents z-fighting with ground geometry at the same world depth. The fragment shader discards pixels with `alpha < 0.01`.
+
+`SpriteVertexUniforms` uses `vector_float4` for the world position (not `vector_float3`) to avoid the 12-vs-16 byte layout mismatch between C structs and Metal constant buffers. The `.w` component is always 0.
+
+#### `Tile/TileShaderTypes.h` + `TileShaders.metal`
+
+Tile selection vertex and fragment shaders. Tile vertices are already in world space (same convention as `scene.position(for:)`), so the vertex shader applies `P × V` only — no model matrix.
+
+`Package.swift` for `RagnarokShaders` was updated to process both new `.metal` files as resources.
+
+### New Swift files (`RagnarokRenderers`)
+
+#### `Core/ShadersLibrary.swift`
+
+Exposes `public func ragnarokShadersLibrary(device:) -> (any MTLLibrary)?` as a thin wrapper around the Obj-C `RagnarokCreateShadersLibrary`. This was necessary because `RagnarokShaders` is a clang module internal to `RagnarokRenderers`; `RagnarokGame` cannot call `RagnarokCreateShadersLibrary` directly.
+
+### New Swift files (`RagnarokGame/MetalBackend`)
+
+#### `MetalRaycaster.swift`
+
+Two static functions:
+
+- `ray(through:viewport:matrices:)` — un-projects a screen point via `(P × V)⁻¹` to produce a world-space ray origin and direction. The screen point must be in top-left-origin coordinates (UIKit natural; macOS `NSView` must flip Y first with `bounds.height - point.y`).
+- `groundHit(origin:direction:mapGrid:)` — marches along the ray 200 steps and returns `.ground(position:)` when the ray altitude is within 0.5 world units of the interpolated terrain altitude. The interpolation matches `RealityMapHitTester` verbatim.
+
+No model matrix is applied to the ray: `(P × V)⁻¹` already gives world-space coordinates matching `scene.position(for:)`.
+
+#### `MetalSelectionOverlayRenderer.swift`
+
+Loads `data/texture/grid.tga` via `ResourceManager`, creates a pipeline using the tile shaders, and renders a 6-vertex quad at the selected cell with corners at `[x, alt+0.1, -y]` — matching `RealityTileSelectionRenderer`'s vertex layout exactly. The selection fades after 0.5 seconds by checking `time - selectionShowTime` in the render call.
+
+Pipeline state is created with `await device.makeRenderPipelineState(descriptor:)` because `prepare` is an async function and Swift will otherwise pick the async overload.
+
+#### `Renderers/SpriteBillboardRenderer.swift`
+
+Owns the full lifecycle for rendering map objects and items as billboard quads.
+
+For each new object ID it fires an async `Task` that loads a `ComposedSprite` (for map objects) or sprite file (for items) via `SpriteRenderer`, uploads the first idle-south frame as an `MTLTexture`, and stores the frame dimensions. Existing entries receive updated world positions and visibility each call to `syncObjects`; removed IDs cancel their load tasks immediately.
+
+During `render`, for each loaded visible entry it builds 6 vertices centered horizontally and anchored at the bottom (`y=0` is the grid cell position, `y=frameHeight` is the top), draws them, and records the screen-space bounding box in `hitBoxes` by projecting the four billboard corners through `P × V`. The `hitBoxes` dictionary is consumed by `MetalMapHitTester` between frames.
+
+**Important:** sprite frame dimensions come from `SpriteRenderer.Animation.frameWidth/frameHeight` which are in logical pixels (`scale = 2`). The billboard shader divides by 32 to convert pixels to world units.
+
+### Modified files
+
+#### `MapRuntimeRenderer.swift`
+
+Added `spriteBillboardRenderer`, `selectionOverlayRenderer`, `lastRenderMatrices`, and `lastViewport`. The last two are `private(set)` so `MetalMapProjector` and `MetalMapHitTester` can read the most recently computed values without being coupled to the render loop. Both dynamic renderers are created and destroyed alongside `setWorldAsset(_:)`. `prepareDynamicRenderers(resourceManager:)` is async and must be called after `setWorldAsset` so the selection texture loads in the background without blocking the render path.
+
+#### `MetalMapHitTester.swift`
+
+Checks sprite hit boxes first (objects before items), then falls back to ray casting. Objects and items are disambiguated by looking up the hit ID in `scene.state.objects` vs `scene.state.items`.
+
+#### `MetalMapProjector.swift`
+
+Projects a world-space position to screen coordinates using `P × V × worldPos` (no model matrix). The Y coordinate is flipped from NDC convention (`+Y up`) to screen convention (`+Y down`). Returns `nil` for positions behind the camera or outside NDC bounds.
+
+#### `MetalMapBackend.swift`
+
+- `attach(scene:)` now configures the projector and hit tester with `weak` references to the renderer and scene.
+- `syncFrameState(with:)` now calls `renderer.updateObjects` and `renderer.syncSelection` in addition to the existing camera update.
+- `syncAndProjectOverlay()` computes gauge positions from the state's grid positions (rather than from entity world positions like the Reality backend) using `scene.position(for:) + [0, -0.8, 0]`, then projects each through `MetalMapProjector` and writes into `overlay.gauges`. Called from `prepareFrame()` every draw.
+- `loadWorldAssetIfNeeded` spawns a detached `Task` after `setWorldAsset` to call `prepareDynamicRenderers` on the renderer.
+
+#### `MapMetalView.swift`
+
+- `MapMetalViewContainer` now forwards `overlay` to `backend.overlay` in `updateUIView`/`updateNSView`.
+- iOS: a single-tap gesture recognizer calls `backend.hitTest(at:)` → `scene.handleInteraction(_:)`. It is configured to require the double-tap recognizer to fail first so double-tap-to-reset-camera still works.
+- macOS: `mouseDown(with:)` override on `MapMTKHostView` flips the event Y coordinate (`bounds.height - point.y`) before passing to `hitTest`. NSView has bottom-left origin; the hit tester expects top-left.
+
+### Coordinate-space notes
+
+| Data | Space | Notes |
+|---|---|---|
+| `scene.position(for:)` | World | `[x+0.5, altitude, -y-0.5]`. Camera and ray casting use this directly. |
+| Ground/water/model geometry | RO space → world | Transformed by `-180° X modelMatrix` in shaders only. |
+| Sprite billboard anchor | World | No model matrix. `spriteWorldPosition` is the bottom-center of the billboard. |
+| `MetalMapProjector` | World → screen | `P × V × worldPos` only. |
+| `MetalRaycaster.ray()` | Screen → world | `(P × V)⁻¹`. macOS Y must be flipped before calling. |
+| Tile selection corners | World | `[x, alt+0.1, -y]`. Tile shader applies `P × V` only. |
+
+### What did not change
+
+- **Gameplay scheduling** — `scene.realityKitBackend` remains authoritative for all packet-driven mutations and entity movement animations.
+- **visionOS** — unchanged.
+- **Static world rendering** — unchanged from Phase 10.
+
+### Known temporary state after Phase 11
+
+- Sprites are static (idle-south first frame only). Walk/attack animations are deferred to a future phase.
+- Objects teleport to new grid positions; smooth interpolation is absent.
+- The RealityKit backend remains attached on iOS/macOS for gameplay scheduling even when the Metal renderer is active.
