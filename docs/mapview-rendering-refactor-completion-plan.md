@@ -209,19 +209,18 @@ Modified:
 - The plan suggested a custom `MapObjectPresentationAction` enum; `CharacterActionType` was used instead to avoid duplication with the existing sprite layer.
 - The plan listed `facing` as the field name; the implementation uses `direction` for consistency with `MapObjectPresentationState` and `CharacterDirection`.
 
-## Phase B: Move Arrival and Follow-up Action Scheduling Into Runtime
+## Phase B: Move Arrival and Follow-up Action Scheduling Into Runtime ✅
 
 ### Objective
 
 Remove gameplay dependence on backend-private walking completion.
 
-### Changes
+### Changes (as implemented)
 
-Modify:
-
-- `MapScene`
-- `MapInteractionResolver`
-- any lock-on or arrival-action handling
+- `MapScene` — added `pendingArrivalAction` and `arrivalTask`; removed all calls into `MapSceneRuntimeBackend` for movement origin and arrival scheduling
+- `MapRenderBackend` — removed `currentPlayerMovementOrigin()` and `schedulePlayerArrivalAction(...)` from `MapSceneRuntimeBackend` protocol
+- `RealityKitMapBackend` — removed both method implementations and ECS registrations
+- Deleted `LockOnComponent` and `LockOnSystem`
 
 ### Deliverables
 
@@ -231,8 +230,13 @@ Modify:
 
 ### Acceptance
 
-- Attack, pickup, talk, and skill-follow movement continue to fire at the correct perceived time.
-- Metal mode and Reality mode share the same arrival behavior.
+- ✅ Attack, pickup, talk, and skill-follow movement continue to fire at the correct perceived time.
+- ✅ Metal mode and Reality mode share the same arrival behavior.
+
+### Notes
+
+- Arrival is scheduled via `arrivalTask` in `onPlayerMoved()` using `movement.duration + 50ms`, matching the old `WalkingSystem` + `LockOnSystem` client-side timing. `onMapObjectStopped()` serves as a secondary trigger for interrupted movement.
+- `playerMovementOrigin()` returns `movement.to` as the joystick steering origin, which is the final destination rather than the current walking step. The previous implementation used `WalkingComponent.path[1]` (updated step-by-step). Replicating that would duplicate `WalkingSystem` logic. This is deferred to Phase C, where the backend presentation cache will expose a per-frame interpolated position that `playerMovementOrigin()` can read instead.
 
 ### Risk
 

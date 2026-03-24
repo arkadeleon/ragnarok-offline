@@ -32,6 +32,8 @@ public final class MapScene {
 
     private let pathfinder: Pathfinder
     private let interactionResolver: MapInteractionResolver
+    private var pendingArrivalAction: (@MainActor () -> Void)?
+    private var arrivalTask: Task<Void, Never>?
 
     var cameraState: MapCameraState = .default {
         didSet {
@@ -155,8 +157,12 @@ public final class MapScene {
         return total
     }
 
+    private func playerMovementOrigin() -> SIMD2<Int> {
+        state.player.movement?.to ?? state.player.gridPosition
+    }
+
     private func onMovementValueChanged(movementValue: CGPoint) {
-        let position = backend.currentPlayerMovementOrigin() ?? state.player.gridPosition
+        let position = playerMovementOrigin()
 
         let joystickInput = SIMD2<Float>(
             Float(movementValue.x),
@@ -280,7 +286,8 @@ public final class MapScene {
         case .alreadyInRange:
             onArrival()
         case .moveTo(let destination):
-            backend.schedulePlayerArrivalAction(within: range, onArrival: onArrival)
+            arrivalTask?.cancel()
+            pendingArrivalAction = onArrival
             gameSession?.requestMove(to: destination)
         case .noPath:
             break
@@ -394,6 +401,24 @@ extension MapScene: MapEventHandlerProtocol {
             startedAt: now,
             duration: duration
         )
+        if pendingArrivalAction != nil {
+            arrivalTask?.cancel()
+            arrivalTask = Task { @MainActor [weak self] in
+                do {
+                    try await Task.sleep(for: duration + .milliseconds(50))
+                } catch {
+                    return
+                }
+                guard let self else {
+                    return
+                }
+                if let action = pendingArrivalAction {
+                    pendingArrivalAction = nil
+                    action()
+                }
+            }
+        }
+
         Task {
             await backend.movePlayer(from: startPosition, to: endPosition)
         }
@@ -497,6 +522,13 @@ extension MapScene: MapEventHandlerProtocol {
                 direction: state.player.presentation.direction,
                 startedAt: now
             )
+
+            if let action = pendingArrivalAction {
+                arrivalTask?.cancel()
+                arrivalTask = nil
+                pendingArrivalAction = nil
+                action()
+            }
         } else {
             state.objects[objectID]?.gridPosition = position
             state.objects[objectID]?.movement = nil

@@ -35,9 +35,6 @@ protocol MapSceneRuntimeBackend: MapRenderBackend {
     func load(progress: Progress) async
     func unload()
 
-    func currentPlayerMovementOrigin() -> SIMD2<Int>?
-    func schedulePlayerArrivalAction(within range: Int, onArrival: @escaping @MainActor () -> Void)
-
     func updateHealthAndSpellPoints(for objectID: UInt32, hp: Int?, maxHp: Int?, sp: Int?, maxSp: Int?) async
 
     func movePlayer(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) async

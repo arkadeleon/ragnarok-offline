@@ -163,44 +163,6 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
         worldCameraEntity.components[WorldCameraComponent.self]?.radius = cameraState.distance
     }
 
-    func currentPlayerMovementOrigin() -> SIMD2<Int>? {
-        guard let scene,
-              let playerEntity = entityCache.loadedObjectEntity(forObjectID: scene.player.objectID) else {
-            return nil
-        }
-
-        if let walkingPath = playerEntity.components[WalkingComponent.self]?.path,
-           walkingPath.count > 1 {
-            return walkingPath[1]
-        }
-
-        return playerEntity.components[GridPositionComponent.self]?.gridPosition
-    }
-
-    func schedulePlayerArrivalAction(within range: Int, onArrival: @escaping @MainActor () -> Void) {
-        guard let scene else {
-            return
-        }
-
-        if let playerEntity = entityCache.loadedObjectEntity(forObjectID: scene.player.objectID) {
-            playerEntity.components.set(
-                LockOnComponent(attackRange: Float(range), action: onArrival)
-            )
-            return
-        }
-
-        Task { @MainActor [weak self] in
-            guard let self,
-                  let playerEntity = try? await entityCache.objectEntity(forObjectID: scene.player.objectID) else {
-                return
-            }
-
-            playerEntity.components.set(
-                LockOnComponent(attackRange: Float(range), action: onArrival)
-            )
-        }
-    }
-
     func updateHealthAndSpellPoints(
         for objectID: UInt32,
         hp: Int?,
@@ -509,9 +471,6 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
 
         DamageDigitComponent.registerComponent()
         DamageDigitSystem.registerSystem()
-
-        LockOnComponent.registerComponent()
-        LockOnSystem.registerSystem()
 
         SpriteActionComponent.registerComponent()
         SpriteActionSystem.registerSystem()
