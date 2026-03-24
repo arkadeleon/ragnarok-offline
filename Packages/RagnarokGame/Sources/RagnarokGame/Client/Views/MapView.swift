@@ -16,6 +16,7 @@ struct MapView: View {
 
     #if os(visionOS)
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     #endif
 
     @State private var screenWidth: CGFloat = 320
@@ -138,6 +139,11 @@ struct MapView: View {
         .onAppear {
             Task {
                 await openImmersiveSpace(id: gameSession.immersiveSpaceID)
+            }
+        }
+        .onDisappear {
+            Task {
+                await dismissImmersiveSpace()
             }
         }
         #endif

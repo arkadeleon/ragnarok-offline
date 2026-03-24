@@ -1500,3 +1500,105 @@ Projects a world-space position to screen coordinates using `P × V × worldPos`
 - Sprites are static (idle-south first frame only). Walk/attack animations are deferred to a future phase.
 - Objects teleport to new grid positions; smooth interpolation is absent.
 - The RealityKit backend remains attached on iOS/macOS for gameplay scheduling even when the Metal renderer is active.
+
+---
+
+## Phase 12 — Move visionOS Integration to the New Backend Interface
+
+**Completed:** 2026-03-24
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Switched the visionOS immersive path fully onto the `MapRenderBackend`-based structure. The `ImmersiveSpace` no longer depends on the legacy `MapSceneRealityView(scene:)` pattern. `MapRealityView` now owns the visionOS rendering directly, and the ImmersiveSpace lifecycle is properly managed by `MapView`. No rendering behavior changed.
+
+### Modified files
+
+#### `Client/Rendering/RealityBackend/MapRealityView.swift`
+
+The main change. On visionOS, the body previously wrapped the legacy `MapSceneRealityView(scene: scene)`. It now renders a `RealityView` directly using the backend:
+
+```swift
+#if os(visionOS)
+import RealityKit
+#endif
+
+public struct MapRealityView: View {
+    #if os(visionOS)
+    @State private var baseDistance: Float = MapCameraState.default.distance
+    #endif
+
+    public var body: some View {
+        #if os(visionOS)
+        RealityView { content in
+            content.add(scene.realityKitBackend.rootEntity)
+        } update: { _ in
+        } placeholder: {
+            ProgressView()
+        }
+        .gesture(scene.realityKitBackend.tileTapGesture)
+        .gesture(scene.realityKitBackend.mapObjectTapGesture)
+        .gesture(scene.realityKitBackend.mapItemTapGesture)
+        .gesture(
+            MagnifyGesture()
+                .onChanged { value in
+                    var distance = baseDistance * Float(1 / value.magnification)
+                    distance = max(distance, 3)
+                    distance = min(distance, 120)
+                    scene.cameraState.distance = distance
+                }
+                .onEnded { _ in
+                    baseDistance = scene.cameraState.distance
+                }
+        )
+        #else
+        MapSceneARView(scene: scene, overlay: overlay, backend: scene.realityKitBackend)
+        #endif
+    }
+}
+```
+
+- `content.add(scene.realityKitBackend.rootEntity)` adds the entity tree.
+- The three targeted gestures (`tileTapGesture`, `mapObjectTapGesture`, `mapItemTapGesture`) are applied directly. They forward `MapHitTestResult` semantics to `MapScene.handleInteraction(_:)` just as they did in `MapSceneRealityView`.
+- The `MagnifyGesture` with `@State private var baseDistance` is the pinch-to-zoom behavior from `MapSceneRealityView`, moved verbatim.
+- `@State private var baseDistance` is gated under `#if os(visionOS)` to avoid a dead stored property on iOS/macOS.
+
+#### `Client/Views/MapView.swift`
+
+Added `@Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace` and a matching `.onDisappear` handler under `#if os(visionOS)`. The ImmersiveSpace lifecycle is now symmetric:
+
+| Event | Action |
+|---|---|
+| `MapView.onAppear` | `openImmersiveSpace(id:)` |
+| `MapView.onDisappear` | `dismissImmersiveSpace()` |
+
+Previously the ImmersiveSpace stayed open when `MapView` was removed (map transition, exit). Without the dismiss, the ImmersiveSpace would show stale content from the previous map scene.
+
+#### `RagnarokOffline/App/visionOSApp.swift`
+
+Added `.environment(appModel.gameSession)` to `MapRealityView` inside the `ImmersiveSpace` body:
+
+```swift
+ImmersiveSpace(id: appModel.gameSession.immersiveSpaceID) {
+    if let mapScene = appModel.gameSession.mapScene {
+        MapRealityView(scene: mapScene)
+            .environment(appModel.gameSession)
+    }
+}
+```
+
+`ImmersiveSpace` scenes have their own SwiftUI view hierarchy, separate from the main `WindowGroup`. Without explicit environment injection, the ImmersiveSpace content would not have `GameSession` in its environment. This matches how `GameView` passes it in the window path via `.environment(gameSession)`.
+
+### What did not change
+
+- **`MapSceneRealityView`** — still exists, now unreferenced in the normal runtime path. Its removal is Phase 13 cleanup.
+- **`RealityKitMapBackend`** — unchanged. The targeted gestures, `rootEntity`, and all entity lifecycle methods remain there.
+- **`MapScene`** — still exposes `realityKitBackend` as a concrete `RealityKitMapBackend`. The runtime-layer decoupling from that concrete type is Phase 13 work.
+- **iOS/macOS rendering** — unaffected. The `#else` branch of `MapRealityView.body` still routes to `MapSceneARView`.
+- **Gameplay loop** — movement, combat, pickup, talk, and skill use all work through the same `MapScene.handleInteraction(_:)` path as before.
+
+### Known temporary state
+
+- `MapSceneRealityView` is unreferenced but not deleted. It is a Phase 13 removal target.
+- `MapScene` still stores `realityKitBackend` as a concrete type and calls its extended surface directly (`movePlayer`, `spawnMapObject`, etc.). Making the runtime backend-agnostic is Phase 13 work.
+- `MapScene.cameraState.didSet` still calls `realityKitBackend.updateCameraState(_:)` directly. This will be moved into the backend's `applySnapshot` path in Phase 13.
