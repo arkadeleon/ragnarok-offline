@@ -1602,3 +1602,168 @@ ImmersiveSpace(id: appModel.gameSession.immersiveSpaceID) {
 - `MapSceneRealityView` is unreferenced but not deleted. It is a Phase 13 removal target.
 - `MapScene` still stores `realityKitBackend` as a concrete type and calls its extended surface directly (`movePlayer`, `spawnMapObject`, etc.). Making the runtime backend-agnostic is Phase 13 work.
 - `MapScene.cameraState.didSet` still calls `realityKitBackend.updateCameraState(_:)` directly. This will be moved into the backend's `applySnapshot` path in Phase 13.
+
+---
+
+## Phase 13 — Remove Legacy Coupling and Finalize the Runtime Surface
+
+**Completed:** 2026-03-24
+**Branch:** `feature/mapview-rendering-refactor`
+
+### What was done
+
+Completed the first runtime-decoupling pass that removes `MapScene`'s direct dependency on the concrete `RealityKitMapBackend` type and deletes the last unused visionOS wrapper view. The runtime now talks to an internal backend protocol surface, camera updates flow through snapshot application, and the visionOS gesture definitions live in `MapRealityView` rather than in the backend.
+
+This does not make Metal implement the full runtime mutation surface. Instead, it isolates the remaining command-style backend API behind an internal protocol so `MapScene` no longer knows about the concrete RealityKit backend type. That keeps the current gameplay behavior intact while removing the most visible architectural coupling called out at the end of Phase 12.
+
+### Modified files
+
+#### `Client/Rendering/MapRenderBackend.swift`
+
+Added a new internal protocol:
+
+```swift
+@MainActor
+protocol MapSceneRuntimeBackend: MapRenderBackend {
+    func load(progress: Progress) async
+    func unload()
+    func currentPlayerMovementOrigin() -> SIMD2<Int>?
+    func schedulePlayerArrivalAction(within range: Int, onArrival: @escaping @MainActor () -> Void)
+    func updateHealthAndSpellPoints(...) async
+    func movePlayer(from:to:) async
+    func spawnMapObject(...) async
+    func moveMapObject(...) async
+    func stopMapObject(...) async
+    func removeMapObject(...) async
+    func setVisibility(...) async
+    func performMapObjectAction(...) async
+    func performSkill(...) async
+    func spawnItem(...) async
+    func removeItem(...) async
+}
+```
+
+This is intentionally an internal compatibility layer, not the final cross-backend contract. It captures the legacy command-style API that `MapScene` still drives directly so the runtime can stop referring to `RealityKitMapBackend` by concrete type.
+
+#### `Engine/Scene/MapScene.swift`
+
+`MapScene` no longer stores:
+
+```swift
+let realityKitBackend: RealityKitMapBackend
+```
+
+It now stores:
+
+```swift
+private let backend: any MapSceneRuntimeBackend
+```
+
+Every direct call site (`load`, `unload`, movement scheduling, object spawn/move/remove, item spawn/remove, HP/SP updates, visibility updates, skill/action playback) now routes through `backend`.
+
+Two important consequences:
+
+- `MapScene.cameraState.didSet` no longer calls `realityKitBackend.updateCameraState(_:)` directly.
+- Camera updates now flow through `backend.applySnapshot(state)`, which matches the backend-driven snapshot model introduced in earlier phases.
+
+`MapScene` also exposes:
+
+```swift
+var renderBackend: any MapRenderBackend
+var realityViewBackend: (any MapRealityViewBackend)?
+```
+
+The second property allows the UI layer to depend on a small Reality-view-facing protocol instead of on the concrete backend class.
+
+#### `Client/Rendering/RealityBackend/MapRealityViewBackend.swift`
+
+Added a small internal protocol for the Reality-hosting views:
+
+```swift
+@MainActor
+protocol MapRealityViewBackend: MapRenderBackend {
+    var rootEntity: Entity { get }
+    var overlay: MapSceneOverlay? { get set }
+    #if os(iOS) || os(macOS)
+    func configure(arView: ARView)
+    func syncAndProjectOverlay()
+    #endif
+}
+```
+
+This shrinks the UI/backend coupling down to the functionality that the SwiftUI and AR hosting views actually need.
+
+#### `Client/Rendering/RealityBackend/RealityKitMapBackend.swift`
+
+`RealityKitMapBackend` now conforms to both internal protocols:
+
+```swift
+final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend
+```
+
+The backend remains the implementation of the legacy runtime mutation surface, but the runtime and view layers now see protocol existentials instead of the concrete type.
+
+`movePlayer(from:to:)` was also simplified. It no longer receives `cameraState` as an explicit parameter and now ends with:
+
+```swift
+applySnapshot(scene.state)
+```
+
+That moves camera synchronization onto the snapshot path, which was one of the Phase 12 temporary-state items.
+
+The unused visionOS gesture properties were also removed from `RealityKitMapBackend`. After the Phase 12 visionOS migration, they were dead code:
+
+- `tileTapGesture`
+- `mapObjectTapGesture`
+- `mapItemTapGesture`
+
+#### `Client/Rendering/RealityBackend/MapRealityView.swift`
+
+The visionOS path no longer reaches through `scene.realityKitBackend` directly. It now pulls a smaller `scene.realityViewBackend` abstraction for `rootEntity`, and the three targeted gestures are defined locally in the view:
+
+- `tileTapGesture`
+- `mapObjectTapGesture`
+- `mapItemTapGesture`
+
+Those gestures still forward the same shared `MapHitTestResult` semantics to `scene.handleInteraction(_:)`.
+
+On iOS/macOS, the fallback branch now passes `scene.realityViewBackend` into `MapSceneARView` instead of the concrete backend.
+
+#### `Client/Views/MapSceneARView.swift`
+
+`MapSceneARView` and its platform controller types now accept:
+
+```swift
+var backend: any MapRealityViewBackend
+```
+
+instead of `RealityKitMapBackend`. No interaction or overlay behavior changed; this is purely a dependency-surface reduction.
+
+#### `Client/Views/MapSceneRealityView.swift`
+
+Deleted. By the end of Phase 12 it was already unreferenced in the normal runtime path. Phase 13 removes it completely so the immersive path no longer carries an unused legacy wrapper.
+
+#### `Client/GameSession.swift`
+
+Removed an unused `import RagnarokReality`.
+
+### Validation
+
+Validated with:
+
+```bash
+swift build --package-path Packages/RagnarokGame
+```
+
+Build passed after the refactor. Existing unrelated warnings in other files remained unchanged.
+
+### What did not change
+
+- **Metal backend architecture** — `MetalMapBackend` still only conforms to `MapRenderBackend`, not to `MapSceneRuntimeBackend`. This is intentional. The new runtime protocol is a compatibility layer for the remaining command-style RealityKit mutation surface, not the final shared backend contract.
+- **Gameplay behavior** — movement, click-to-move, interaction selection, skill use, and overlay updates still behave through the same `MapScene` and backend logic as before.
+- **Package graph** — this pass did not yet remove the package-level `RagnarokReality` dependency from `Packages/RagnarokGame`, because `MapScene` still uses `WorldResource` and many Reality-backed ECS/rendering types remain in the package.
+
+### Remaining temporary state
+
+- The runtime is no longer coupled to the concrete `RealityKitMapBackend` type, but it is still coupled to a Reality-shaped command API through `MapSceneRuntimeBackend`. A later cleanup can remove that compatibility layer by making the runtime publish state only and having backends consume snapshots exclusively.
+- `Packages/RagnarokGame` still contains many RealityKit-backed ECS and rendering files. This phase removed the most visible runtime/UI coupling, not the entire package-level RealityKit presence.

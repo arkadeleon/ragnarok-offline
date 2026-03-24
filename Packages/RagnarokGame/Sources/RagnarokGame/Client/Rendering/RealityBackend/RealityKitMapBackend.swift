@@ -20,7 +20,7 @@ import Spatial
 import SwiftUI
 import WorldCamera
 
-final class RealityKitMapBackend: MapRenderBackend {
+final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend {
     private weak var scene: MapScene?
 
     let rootEntity = Entity()
@@ -226,7 +226,7 @@ final class RealityKitMapBackend: MapRenderBackend {
         }
     }
 
-    func movePlayer(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>, cameraState: MapCameraState) async {
+    func movePlayer(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) async {
         guard let scene,
               let playerEntity = try? await entityCache.objectEntity(forObjectID: scene.player.objectID) else {
             return
@@ -234,7 +234,7 @@ final class RealityKitMapBackend: MapRenderBackend {
 
         updateWalkingComponent(for: playerEntity, startPosition: startPosition, endPosition: endPosition, mapGrid: scene.mapGrid)
         updateTileEntities(forCenter: endPosition, mapGrid: scene.mapGrid)
-        updateCameraState(cameraState)
+        applySnapshot(scene.state)
     }
 
     func spawnMapObject(_ object: MapObject, position: SIMD2<Int>, direction: Direction) async {
@@ -496,47 +496,6 @@ final class RealityKitMapBackend: MapRenderBackend {
             )
         }
         overlay.gauges = gauges
-    }
-    #endif
-
-    #if os(visionOS)
-    var tileTapGesture: some Gesture {
-        SpatialTapGesture()
-            .targetedToEntity(where: .has(TileComponent.self))
-            .onEnded { [weak self] event in
-                guard let self,
-                      let position = event.entity.components[TileComponent.self]?.position else {
-                    return
-                }
-
-                scene?.handleInteraction(.ground(position: position))
-            }
-    }
-
-    var mapObjectTapGesture: some Gesture {
-        SpatialTapGesture()
-            .targetedToEntity(where: .has(MapObjectComponent.self))
-            .onEnded { [weak self] event in
-                guard let self,
-                      let mapObject = event.entity.components[MapObjectComponent.self]?.mapObject else {
-                    return
-                }
-
-                scene?.handleInteraction(.mapObject(objectID: mapObject.objectID))
-            }
-    }
-
-    var mapItemTapGesture: some Gesture {
-        SpatialTapGesture()
-            .targetedToEntity(where: .has(MapItemComponent.self))
-            .onEnded { [weak self] event in
-                guard let self,
-                      let mapItem = event.entity.components[MapItemComponent.self]?.mapItem else {
-                    return
-                }
-
-                scene?.handleInteraction(.item(objectID: mapItem.objectID))
-            }
     }
     #endif
 

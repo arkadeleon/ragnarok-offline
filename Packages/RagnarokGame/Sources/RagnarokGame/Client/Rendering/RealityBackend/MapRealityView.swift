@@ -20,29 +20,37 @@ public struct MapRealityView: View {
 
     public var body: some View {
         #if os(visionOS)
-        RealityView { content in
-            content.add(scene.realityKitBackend.rootEntity)
-        } update: { _ in
-        } placeholder: {
+        if let backend = scene.realityViewBackend {
+            RealityView { content in
+                content.add(backend.rootEntity)
+            } update: { _ in
+            } placeholder: {
+                ProgressView()
+            }
+            .gesture(tileTapGesture)
+            .gesture(mapObjectTapGesture)
+            .gesture(mapItemTapGesture)
+            .gesture(
+                MagnifyGesture()
+                    .onChanged { value in
+                        var distance = baseDistance * Float(1 / value.magnification)
+                        distance = max(distance, 3)
+                        distance = min(distance, 120)
+                        scene.cameraState.distance = distance
+                    }
+                    .onEnded { _ in
+                        baseDistance = scene.cameraState.distance
+                    }
+            )
+        } else {
             ProgressView()
         }
-        .gesture(scene.realityKitBackend.tileTapGesture)
-        .gesture(scene.realityKitBackend.mapObjectTapGesture)
-        .gesture(scene.realityKitBackend.mapItemTapGesture)
-        .gesture(
-            MagnifyGesture()
-                .onChanged { value in
-                    var distance = baseDistance * Float(1 / value.magnification)
-                    distance = max(distance, 3)
-                    distance = min(distance, 120)
-                    scene.cameraState.distance = distance
-                }
-                .onEnded { _ in
-                    baseDistance = scene.cameraState.distance
-                }
-        )
         #else
-        MapSceneARView(scene: scene, overlay: overlay, backend: scene.realityKitBackend)
+        if let backend = scene.realityViewBackend {
+            MapSceneARView(scene: scene, overlay: overlay, backend: backend)
+        } else {
+            ProgressView()
+        }
         #endif
     }
 
@@ -56,3 +64,43 @@ public struct MapRealityView: View {
         self.overlay = overlay
     }
 }
+
+#if os(visionOS)
+private extension MapRealityView {
+    var tileTapGesture: some Gesture {
+        SpatialTapGesture()
+            .targetedToEntity(where: .has(TileComponent.self))
+            .onEnded { event in
+                guard let position = event.entity.components[TileComponent.self]?.position else {
+                    return
+                }
+
+                scene.handleInteraction(.ground(position: position))
+            }
+    }
+
+    var mapObjectTapGesture: some Gesture {
+        SpatialTapGesture()
+            .targetedToEntity(where: .has(MapObjectComponent.self))
+            .onEnded { event in
+                guard let mapObject = event.entity.components[MapObjectComponent.self]?.mapObject else {
+                    return
+                }
+
+                scene.handleInteraction(.mapObject(objectID: mapObject.objectID))
+            }
+    }
+
+    var mapItemTapGesture: some Gesture {
+        SpatialTapGesture()
+            .targetedToEntity(where: .has(MapItemComponent.self))
+            .onEnded { event in
+                guard let mapItem = event.entity.components[MapItemComponent.self]?.mapItem else {
+                    return
+                }
+
+                scene.handleInteraction(.item(objectID: mapItem.objectID))
+            }
+    }
+}
+#endif

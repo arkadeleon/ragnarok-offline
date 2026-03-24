@@ -27,15 +27,23 @@ public final class MapScene {
 
     let mapGrid: MapGrid
     let state: MapSceneState
-    let realityKitBackend: RealityKitMapBackend
+    private let backend: any MapSceneRuntimeBackend
 
     private let pathfinder: Pathfinder
     private let interactionResolver: MapInteractionResolver
 
     var cameraState: MapCameraState = .default {
         didSet {
-            realityKitBackend.updateCameraState(cameraState)
+            backend.applySnapshot(state)
         }
+    }
+
+    var renderBackend: any MapRenderBackend {
+        backend
+    }
+
+    var realityViewBackend: (any MapRealityViewBackend)? {
+        backend as? any MapRealityViewBackend
     }
 
     init(
@@ -71,7 +79,8 @@ public final class MapScene {
 
         self.pathfinder = Pathfinder(mapGrid: self.mapGrid)
         self.interactionResolver = MapInteractionResolver(pathfinder: self.pathfinder)
-        self.realityKitBackend = RealityKitMapBackend(resourceManager: resourceManager)
+        let backend = RealityKitMapBackend(resourceManager: resourceManager)
+        self.backend = backend
 
         state.overlaySnapshot.anchors[player.objectID] = MapOverlayAnchor(
             id: player.objectID,
@@ -82,17 +91,17 @@ public final class MapScene {
             objectType: player.type
         )
 
-        realityKitBackend.attach(scene: self)
+        backend.attach(scene: self)
     }
 
     func load(progress: Progress) async {
-        await realityKitBackend.load(progress: progress)
-        realityKitBackend.applySnapshot(state)
+        await backend.load(progress: progress)
+        backend.applySnapshot(state)
     }
 
     func unload() {
-        realityKitBackend.unload()
-        realityKitBackend.detach()
+        backend.unload()
+        backend.detach()
     }
 
     func handle(_ intent: MapInputIntent) {
@@ -112,7 +121,7 @@ public final class MapScene {
 
     func selectGround(at position: SIMD2<Int>) {
         state.selection.selectedPosition = position
-        realityKitBackend.applySnapshot(state)
+        backend.applySnapshot(state)
         gameSession?.requestMove(to: position)
     }
 
@@ -131,7 +140,7 @@ public final class MapScene {
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
-        let position = realityKitBackend.currentPlayerMovementOrigin() ?? state.player.gridPosition
+        let position = backend.currentPlayerMovementOrigin() ?? state.player.gridPosition
 
         let joystickInput = SIMD2<Float>(
             Float(movementValue.x),
@@ -255,7 +264,7 @@ public final class MapScene {
         case .alreadyInRange:
             onArrival()
         case .moveTo(let destination):
-            realityKitBackend.schedulePlayerArrivalAction(within: range, onArrival: onArrival)
+            backend.schedulePlayerArrivalAction(within: range, onArrival: onArrival)
             gameSession?.requestMove(to: destination)
         case .noPath:
             break
@@ -274,7 +283,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.hp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.hp = Int(packet.count)
             Task {
-                await realityKitBackend.updateHealthAndSpellPoints(
+                await backend.updateHealthAndSpellPoints(
                     for: player.objectID,
                     hp: Int(packet.count),
                     maxHp: nil,
@@ -286,7 +295,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.maxHp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.maxHp = Int(packet.count)
             Task {
-                await realityKitBackend.updateHealthAndSpellPoints(
+                await backend.updateHealthAndSpellPoints(
                     for: player.objectID,
                     hp: nil,
                     maxHp: Int(packet.count),
@@ -298,7 +307,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.sp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.sp = Int(packet.count)
             Task {
-                await realityKitBackend.updateHealthAndSpellPoints(
+                await backend.updateHealthAndSpellPoints(
                     for: player.objectID,
                     hp: nil,
                     maxHp: nil,
@@ -310,7 +319,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.maxSp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.maxSp = Int(packet.count)
             Task {
-                await realityKitBackend.updateHealthAndSpellPoints(
+                await backend.updateHealthAndSpellPoints(
                     for: player.objectID,
                     hp: nil,
                     maxHp: nil,
@@ -337,7 +346,7 @@ extension MapScene: MapEventHandlerProtocol {
         }
 
         Task {
-            await realityKitBackend.updateHealthAndSpellPoints(
+            await backend.updateHealthAndSpellPoints(
                 for: packet.GID,
                 hp: Int(packet.HP),
                 maxHp: Int(packet.maxHP),
@@ -350,7 +359,7 @@ extension MapScene: MapEventHandlerProtocol {
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         state.player.gridPosition = endPosition
         Task {
-            await realityKitBackend.movePlayer(from: startPosition, to: endPosition, cameraState: cameraState)
+            await backend.movePlayer(from: startPosition, to: endPosition)
         }
     }
 
@@ -374,7 +383,7 @@ extension MapScene: MapEventHandlerProtocol {
         }
 
         Task {
-            await realityKitBackend.spawnMapObject(
+            await backend.spawnMapObject(
                 object,
                 position: position,
                 direction: direction
@@ -405,7 +414,7 @@ extension MapScene: MapEventHandlerProtocol {
         }
 
         Task {
-            await realityKitBackend.moveMapObject(
+            await backend.moveMapObject(
                 object,
                 startPosition: startPosition,
                 endPosition: endPosition
@@ -417,7 +426,7 @@ extension MapScene: MapEventHandlerProtocol {
         state.objects[objectID]?.gridPosition = position
 
         Task {
-            await realityKitBackend.stopMapObject(objectID: objectID, position: position)
+            await backend.stopMapObject(objectID: objectID, position: position)
         }
     }
 
@@ -426,7 +435,7 @@ extension MapScene: MapEventHandlerProtocol {
         state.overlaySnapshot.anchors.removeValue(forKey: objectID)
 
         Task {
-            await realityKitBackend.removeMapObject(objectID: objectID)
+            await backend.removeMapObject(objectID: objectID)
         }
     }
 
@@ -462,7 +471,7 @@ extension MapScene: MapEventHandlerProtocol {
         }
 
         Task {
-            await realityKitBackend.setVisibility(forObjectID: objectID, isVisible: isVisible)
+            await backend.setVisibility(forObjectID: objectID, isVisible: isVisible)
         }
     }
 
@@ -521,7 +530,7 @@ extension MapScene: MapEventHandlerProtocol {
         }
 
         Task {
-            await realityKitBackend.performMapObjectAction(objectAction)
+            await backend.performMapObjectAction(objectAction)
         }
     }
 
@@ -540,7 +549,7 @@ extension MapScene: MapEventHandlerProtocol {
         }
 
         Task {
-            await realityKitBackend.performSkill(packet)
+            await backend.performSkill(packet)
         }
     }
 
@@ -552,7 +561,7 @@ extension MapScene: MapEventHandlerProtocol {
         )
 
         Task {
-            await realityKitBackend.spawnItem(item, position: position)
+            await backend.spawnItem(item, position: position)
         }
     }
 
@@ -560,7 +569,7 @@ extension MapScene: MapEventHandlerProtocol {
         state.items.removeValue(forKey: objectID)
 
         Task {
-            await realityKitBackend.removeItem(objectID: objectID)
+            await backend.removeItem(objectID: objectID)
         }
     }
 }
