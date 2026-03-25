@@ -22,6 +22,8 @@ final public class GameSession {
     public let windowID = "Game"
     public let immersiveSpaceID = "Game"
 
+    public let renderConfiguration: MapRenderConfiguration = .default
+
     let resourceManager: ResourceManager
 
     let itemInfoTable: ItemInfoTable
@@ -613,12 +615,15 @@ final public class GameSession {
 
                 let player = MapObject(account: account, character: character)
 
+                let renderBackend = renderConfiguration.makeBackend(resourceManager: resourceManager)
+
                 let scene = MapScene(
                     mapName: mapName,
                     world: world,
                     character: character,
                     player: player,
                     playerPosition: position,
+                    renderBackend: renderBackend,
                     resourceManager: resourceManager,
                     gameSession: self
                 )
@@ -1155,6 +1160,24 @@ extension GameSession {
         } catch {
             logger.warning("\(error)")
             return nil
+        }
+    }
+}
+
+// MARK: - Render Backend
+
+extension MapRenderConfiguration {
+    @MainActor
+    func makeBackend(resourceManager: ResourceManager) -> any MapRenderBackend {
+        switch engine {
+        case .metal:
+            #if os(iOS) || os(macOS)
+            return MetalMapBackend()
+            #else
+            fatalError("Metal engine is not supported on this platform")
+            #endif
+        case .realityKit:
+            return RealityKitMapBackend(resourceManager: resourceManager)
         }
     }
 }

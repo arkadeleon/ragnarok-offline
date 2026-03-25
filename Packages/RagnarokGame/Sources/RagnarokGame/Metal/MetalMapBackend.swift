@@ -20,7 +20,6 @@ final class MetalMapBackend: MapRenderBackend {
 
     private let metalMapProjector = MetalMapProjector()
     private let metalMapHitTester = MetalMapHitTester()
-    private var worldLoadTask: Task<Void, Never>?
 
     var projector: (any MapProjector)? {
         metalMapProjector
@@ -35,18 +34,42 @@ final class MetalMapBackend: MapRenderBackend {
         metalMapProjector.configure(renderer: renderer)
         metalMapHitTester.configure(renderer: renderer, scene: scene)
         syncFrameState(with: scene.state)
-        loadWorldAssetIfNeeded(for: scene)
     }
 
     func detach() {
-        worldLoadTask?.cancel()
-        worldLoadTask = nil
         scene = nil
         overlay = nil
         renderer.setWorldAsset(nil)
     }
 
     func load(progress: Progress) async {
+        guard let scene else {
+            return
+        }
+
+        renderer.setWorldAsset(nil)
+
+        let loader = MapWorldAssetLoader()
+
+        do {
+            let worldAsset = try await loader.load(
+                gat: scene.world.gat,
+                gnd: scene.world.gnd,
+                rsw: scene.world.rsw,
+                resourceManager: scene.resourceManager
+            )
+            guard !Task.isCancelled, self.scene === scene else {
+                return
+            }
+
+            renderer.setWorldAsset(worldAsset)
+            syncFrameState(with: scene.state)
+            await renderer.prepareDynamicRenderers(resourceManager: scene.resourceManager)
+        } catch is CancellationError {
+            return
+        } catch {
+            logger.warning("Metal map backend failed to load world asset: \(error)")
+        }
     }
 
     func unload() {
@@ -66,45 +89,6 @@ final class MetalMapBackend: MapRenderBackend {
         }
         syncFrameState(with: scene.state)
         syncAndProjectOverlay()
-    }
-
-    private func loadWorldAssetIfNeeded(for scene: MapScene) {
-        worldLoadTask?.cancel()
-        renderer.setWorldAsset(nil)
-
-        worldLoadTask = Task { [weak self, weak scene] in
-            guard let self, let scene else {
-                return
-            }
-
-            let loader = MapWorldAssetLoader()
-
-            do {
-                let worldAsset = try await loader.load(
-                    gat: scene.world.gat,
-                    gnd: scene.world.gnd,
-                    rsw: scene.world.rsw,
-                    resourceManager: scene.resourceManager
-                )
-                guard !Task.isCancelled, self.scene === scene else {
-                    return
-                }
-
-                renderer.setWorldAsset(worldAsset)
-                syncFrameState(with: scene.state)
-
-                Task { [weak self, weak scene] in
-                    guard let self, let scene else {
-                        return
-                    }
-                    await renderer.prepareDynamicRenderers(resourceManager: scene.resourceManager)
-                }
-            } catch is CancellationError {
-                return
-            } catch {
-                logger.warning("Metal map backend failed to load world asset: \(error)")
-            }
-        }
     }
 
     private func syncFrameState(with state: MapSceneState) {

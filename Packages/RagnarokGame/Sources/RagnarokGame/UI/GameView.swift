@@ -9,7 +9,6 @@ import SwiftUI
 
 public struct GameView: View {
     public var gameSession: GameSession
-    public var renderConfiguration: MapRenderConfiguration = .default
     public var onExit: () -> Void
 
     public var body: some View {
@@ -22,7 +21,7 @@ public struct GameView: View {
                 case .loading(let progress):
                     MapLoadingView(progress: progress)
                 case .loaded(let scene):
-                    MapView(scene: scene, renderConfiguration: renderConfiguration)
+                    MapView(scene: scene)
                 }
             }
         }
@@ -43,13 +42,8 @@ public struct GameView: View {
         #endif
     }
 
-    public init(
-        gameSession: GameSession,
-        renderConfiguration: MapRenderConfiguration = .default,
-        onExit: @escaping () -> Void
-    ) {
+    public init(gameSession: GameSession, onExit: @escaping () -> Void) {
         self.gameSession = gameSession
-        self.renderConfiguration = renderConfiguration
         self.onExit = onExit
     }
 }

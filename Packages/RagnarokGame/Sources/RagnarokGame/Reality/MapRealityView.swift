@@ -20,7 +20,7 @@ public struct MapRealityView: View {
 
     public var body: some View {
         #if os(visionOS)
-        if let backend = scene.realityViewBackend {
+        if let backend = scene.renderBackend as? RealityKitMapBackend {
             RealityView { content in
                 content.add(backend.rootEntity)
             } update: { _ in
@@ -43,13 +43,13 @@ public struct MapRealityView: View {
                     }
             )
         } else {
-            ProgressView()
+            EmptyView()
         }
         #else
-        if let backend = scene.realityViewBackend {
+        if let backend = scene.renderBackend as? RealityKitMapBackend {
             MapSceneARView(scene: scene, overlay: overlay, backend: backend)
         } else {
-            ProgressView()
+            EmptyView()
         }
         #endif
     }

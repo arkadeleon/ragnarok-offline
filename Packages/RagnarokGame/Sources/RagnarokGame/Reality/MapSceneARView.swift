@@ -14,7 +14,7 @@ import SwiftUI
 struct MapSceneARView: UIViewControllerRepresentable {
     var scene: MapScene
     var overlay: MapSceneOverlay?
-    var backend: any MapRealityViewBackend
+    var backend: RealityKitMapBackend
 
     func makeUIViewController(context: Context) -> MapSceneARViewController {
         MapSceneARViewController(scene: scene, overlay: overlay, backend: backend)
@@ -27,7 +27,7 @@ struct MapSceneARView: UIViewControllerRepresentable {
 
 class MapSceneARViewController: UIViewController {
     let scene: MapScene
-    let backend: any MapRealityViewBackend
+    let backend: RealityKitMapBackend
 
     private var arView: ARView!
     private var baseAzimuth: Float = 0
@@ -35,7 +35,7 @@ class MapSceneARViewController: UIViewController {
     private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene, overlay: MapSceneOverlay?, backend: any MapRealityViewBackend) {
+    init(scene: MapScene, overlay: MapSceneOverlay?, backend: RealityKitMapBackend) {
         self.scene = scene
         self.backend = backend
         super.init(nibName: nil, bundle: nil)
@@ -149,7 +149,7 @@ class MapSceneARViewController: UIViewController {
 struct MapSceneARView: NSViewControllerRepresentable {
     var scene: MapScene
     var overlay: MapSceneOverlay?
-    var backend: any MapRealityViewBackend
+    var backend: RealityKitMapBackend
 
     func makeNSViewController(context: Context) -> MapSceneARViewController {
         MapSceneARViewController(scene: scene, overlay: overlay, backend: backend)
@@ -162,7 +162,7 @@ struct MapSceneARView: NSViewControllerRepresentable {
 
 class MapSceneARViewController: NSViewController {
     let scene: MapScene
-    let backend: any MapRealityViewBackend
+    let backend: RealityKitMapBackend
 
     private var arView: ARView!
     private var baseAzimuth: Float = 0
@@ -170,7 +170,7 @@ class MapSceneARViewController: NSViewController {
     private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene, overlay: MapSceneOverlay?, backend: any MapRealityViewBackend) {
+    init(scene: MapScene, overlay: MapSceneOverlay?, backend: RealityKitMapBackend) {
         self.scene = scene
         self.backend = backend
         super.init(nibName: nil, bundle: nil)

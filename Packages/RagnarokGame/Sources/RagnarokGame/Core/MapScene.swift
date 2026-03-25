@@ -23,12 +23,12 @@ public final class MapScene {
     let character: CharacterInfo
     let player: MapObject
     let playerPosition: SIMD2<Int>
+    let renderBackend: any MapRenderBackend
     let resourceManager: ResourceManager
     weak let gameSession: GameSession?
 
     let mapGrid: MapGrid
     let state: MapSceneState
-    private let backend: any MapRenderBackend
 
     private let pathfinder: Pathfinder
     private let interactionResolver: MapInteractionResolver
@@ -41,20 +41,13 @@ public final class MapScene {
         }
     }
 
-    var renderBackend: any MapRenderBackend {
-        backend
-    }
-
-    var realityViewBackend: (any MapRealityViewBackend)? {
-        backend as? any MapRealityViewBackend
-    }
-
     init(
         mapName: String,
         world: WorldResource,
         character: CharacterInfo,
         player: MapObject,
         playerPosition: SIMD2<Int>,
+        renderBackend: any MapRenderBackend,
         resourceManager: ResourceManager,
         gameSession: GameSession
     ) {
@@ -63,6 +56,7 @@ public final class MapScene {
         self.character = character
         self.player = player
         self.playerPosition = playerPosition
+        self.renderBackend = renderBackend
         self.resourceManager = resourceManager
         self.gameSession = gameSession
 
@@ -87,8 +81,6 @@ public final class MapScene {
 
         self.pathfinder = Pathfinder(mapGrid: self.mapGrid)
         self.interactionResolver = MapInteractionResolver(pathfinder: self.pathfinder)
-        let backend = RealityKitMapBackend(resourceManager: resourceManager)
-        self.backend = backend
 
         state.overlaySnapshot.anchors[player.objectID] = MapOverlayAnchor(
             id: player.objectID,
@@ -99,17 +91,17 @@ public final class MapScene {
             objectType: player.type
         )
 
-        backend.attach(scene: self)
+        renderBackend.attach(scene: self)
     }
 
     func load(progress: Progress) async {
-        await backend.load(progress: progress)
+        await renderBackend.load(progress: progress)
         applySnapshot()
     }
 
     func unload() {
-        backend.unload()
-        backend.detach()
+        renderBackend.unload()
+        renderBackend.detach()
     }
 
     func handle(_ intent: MapInputIntent) {
@@ -163,7 +155,7 @@ public final class MapScene {
 
     private func applySnapshot() {
         state.pruneExpiredDamageEffects()
-        backend.applySnapshot(state)
+        renderBackend.applySnapshot(state)
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {

@@ -14,16 +14,12 @@ struct MapMetalView: View {
     var scene: MapScene
     var overlay: MapSceneOverlay?
 
-    @State private var backend = MetalMapBackend()
-
     var body: some View {
-        MapMetalViewContainer(scene: scene, overlay: overlay, backend: backend)
-            .onAppear {
-                backend.attach(scene: scene)
-            }
-            .onDisappear {
-                backend.detach()
-            }
+        if let backend = scene.renderBackend as? MetalMapBackend {
+            MapMetalViewContainer(scene: scene, overlay: overlay, backend: backend)
+        } else {
+            EmptyView()
+        }
     }
 }
 

@@ -19,7 +19,7 @@ import Spatial
 import SwiftUI
 import WorldCamera
 
-final class RealityKitMapBackend: MapRenderBackend, MapRealityViewBackend {
+final class RealityKitMapBackend: MapRenderBackend {
     private weak var scene: MapScene?
 
     let rootEntity = Entity()
