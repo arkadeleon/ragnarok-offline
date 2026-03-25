@@ -15,8 +15,8 @@ struct SpriteAnimationComponent: Component {
 }
 
 extension Entity {
-    func setSpriteAnimation(_ animation: SpriteAnimation) {
-        components.set(SpriteAnimationComponent(animation: animation))
+    func setSpriteAnimation(_ animation: SpriteAnimation, elapsedTime: TimeInterval = 0) {
+        components.set(SpriteAnimationComponent(animation: animation, elapsedTime: elapsedTime))
         updatePosition(for: animation)
     }
 

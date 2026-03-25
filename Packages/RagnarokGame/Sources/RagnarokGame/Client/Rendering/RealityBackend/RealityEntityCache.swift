@@ -34,6 +34,14 @@ final class RealityEntityCache {
     private var itemEntitiesByID: [UInt32 : RealityEntityPhase] = [:]
     private var templateEntitiesByJobID: [Int : RealityEntityPhase] = [:]
 
+    var objectIDs: Set<UInt32> {
+        Set(objectEntitiesByID.keys)
+    }
+
+    var itemIDs: Set<UInt32> {
+        Set(itemEntitiesByID.keys)
+    }
+
     init(factory: RealitySpriteNodeFactory) {
         self.factory = factory
     }

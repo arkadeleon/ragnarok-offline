@@ -11,6 +11,10 @@ import WorldCamera
 class SpriteActionSystem: System {
     static let query = EntityQuery(where: .has(SpriteAnimationLibraryComponent.self) && .has(SpriteActionComponent.self))
 
+    static var dependencies: [SystemDependency] {
+        [.after(MapObjectSnapshotPresentationSystem.self)]
+    }
+
     required init(scene: Scene) {
     }
 
@@ -32,6 +36,8 @@ class SpriteActionSystem: System {
                 continue
             }
 
+            let desiredElapsedTime = entity.components[SpriteAnimationTimingComponent.self]?.elapsedTime
+
             if let nextActionType = actionComponent.nextActionType,
                let animationComponent = entity.components[SpriteAnimationComponent.self],
                animationComponent.elapsedTime >= animationComponent.animation.duration {
@@ -52,8 +58,12 @@ class SpriteActionSystem: System {
             }
 
             if entity.components[SpriteAnimationComponent.self]?.animation != animation {
-                entity.setSpriteAnimation(animation)
+                entity.setSpriteAnimation(animation, elapsedTime: desiredElapsedTime ?? 0)
                 entity.generateModelAndCollisionShape(for: animation)
+            } else if let desiredElapsedTime,
+                      var animationComponent = entity.components[SpriteAnimationComponent.self] {
+                animationComponent.elapsedTime = desiredElapsedTime
+                entity.components.set(animationComponent)
             }
         }
     }

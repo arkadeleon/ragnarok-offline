@@ -33,11 +33,8 @@ class SpriteAnimationSystem: System {
                     offset: [Float(frameIndex) / Float(animation.frameCount), 0],
                     scale: [1 / Float(animation.frameCount), 1]
                 )
+                entity.components.set(animationComponent)
             }
-
-            animationComponent.elapsedTime += context.deltaTime
-
-            entity.components.set(animationComponent)
         }
     }
 }

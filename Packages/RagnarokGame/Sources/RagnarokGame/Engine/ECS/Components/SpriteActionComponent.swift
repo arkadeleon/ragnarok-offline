@@ -8,7 +8,7 @@
 import RagnarokSprite
 import RealityKit
 
-struct SpriteActionComponent: Component {
+struct SpriteActionComponent: Component, Equatable {
     var actionType: CharacterActionType
     var direction: CharacterDirection
     var headDirection: CharacterHeadDirection

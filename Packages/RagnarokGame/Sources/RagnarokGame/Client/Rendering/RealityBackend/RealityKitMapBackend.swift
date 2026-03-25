@@ -31,7 +31,7 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
     private let tileSelectionRenderer: RealityTileSelectionRenderer
 
     private let worldCameraEntity = Entity()
-    private var pathfinder: Pathfinder?
+    private var snapshotTask: Task<Void, Never>?
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
     private let tileRange = 17
 
@@ -60,13 +60,13 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
 
     func attach(scene: MapScene) {
         self.scene = scene
-        self.pathfinder = Pathfinder(mapGrid: scene.mapGrid)
     }
 
     func detach() {
+        snapshotTask?.cancel()
+        snapshotTask = nil
         scene = nil
         overlay = nil
-        pathfinder = nil
         #if os(iOS) || os(macOS)
         realityMapProjector = nil
         realityMapHitTester = nil
@@ -144,7 +144,16 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
         }
 
         updateCameraState(scene.cameraState)
+        updateTileEntities(forCenter: state.player.gridPosition, mapGrid: scene.mapGrid)
         tileSelectionRenderer.syncSelection(state.selection.selectedPosition, mapGrid: scene.mapGrid)
+
+        snapshotTask?.cancel()
+        snapshotTask = Task { @MainActor [weak self, weak scene] in
+            guard let self, let scene else {
+                return
+            }
+            await syncEntities(with: state, scene: scene)
+        }
     }
 
     func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? {
@@ -163,151 +172,9 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
         worldCameraEntity.components[WorldCameraComponent.self]?.radius = cameraState.distance
     }
 
-    func updateHealthAndSpellPoints(
-        for objectID: UInt32,
-        hp: Int?,
-        maxHp: Int?,
-        sp: Int?,
-        maxSp: Int?
-    ) async {
-        guard let entity = try? await entityCache.objectEntity(forObjectID: objectID) else {
-            return
-        }
-
-        if let hp {
-            entity.components[HealthPointsComponent.self]?.hp = hp
-        }
-        if let maxHp {
-            entity.components[HealthPointsComponent.self]?.maxHp = maxHp
-        }
-        if let sp {
-            entity.components[SpellPointsComponent.self]?.sp = sp
-        }
-        if let maxSp {
-            entity.components[SpellPointsComponent.self]?.maxSp = maxSp
-        }
-    }
-
-    func movePlayer(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) async {
-        guard let scene,
-              let playerEntity = try? await entityCache.objectEntity(forObjectID: scene.player.objectID) else {
-            return
-        }
-
-        updateWalkingComponent(for: playerEntity, startPosition: startPosition, endPosition: endPosition, mapGrid: scene.mapGrid)
-        updateTileEntities(forCenter: endPosition, mapGrid: scene.mapGrid)
-        applySnapshot(scene.state)
-    }
-
-    func spawnMapObject(_ object: MapObject, position: SIMD2<Int>, direction: Direction) async {
-        guard let scene else {
-            return
-        }
-
-        do {
-            let (entity, isNew) = try await entityCache.objectEntity(for: object)
-
-            if isNew {
-                entity.name = "\(object.objectID)"
-                entity.transform = Transform(translation: scene.position(for: position))
-                entity.isEnabled = object.effectState != .cloak
-                entity.components.set([
-                    GridPositionComponent(gridPosition: position),
-                    MapObjectComponent(mapObject: object),
-                ])
-                if object.type == .monster {
-                    entity.components.set([
-                        HealthPointsComponent(hp: object.hp, maxHp: object.maxHp),
-                    ])
-                }
-                rootEntity.addChild(entity)
-            } else {
-                entity.transform = Transform(translation: scene.position(for: position))
-                entity.components[GridPositionComponent.self]?.gridPosition = position
-                entity.components[MapObjectComponent.self]?.mapObject = object
-                entity.components.remove(WalkingComponent.self)
-            }
-
-            entity.playSpriteAnimation(.idle, direction: CharacterDirection(direction: direction))
-        } catch {
-            logger.warning("\(error)")
-        }
-    }
-
-    func moveMapObject(_ object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) async {
-        guard let scene else {
-            return
-        }
-
-        do {
-            let (entity, isNew) = try await entityCache.objectEntity(for: object)
-
-            if isNew {
-                entity.name = "\(object.objectID)"
-                entity.transform = Transform(translation: scene.position(for: endPosition))
-                entity.isEnabled = object.effectState != .cloak
-                entity.components.set([
-                    GridPositionComponent(gridPosition: startPosition),
-                    MapObjectComponent(mapObject: object),
-                ])
-                if object.type == .monster {
-                    entity.components.set([
-                        HealthPointsComponent(hp: object.hp, maxHp: object.maxHp),
-                    ])
-                }
-                rootEntity.addChild(entity)
-            } else {
-                entity.components[MapObjectComponent.self]?.mapObject = object
-            }
-
-            updateWalkingComponent(for: entity, startPosition: startPosition, endPosition: endPosition, mapGrid: scene.mapGrid)
-        } catch {
-            logger.warning("\(error)")
-        }
-    }
-
-    func stopMapObject(objectID: UInt32, position: SIMD2<Int>) async {
-        guard let scene,
-              let entity = try? await entityCache.objectEntity(forObjectID: objectID) else {
-            return
-        }
-
-        entity.transform = Transform(translation: scene.position(for: position))
-        entity.components[GridPositionComponent.self]?.gridPosition = position
-        entity.components.remove(WalkingComponent.self)
-        entity.playSpriteAnimation(.idle, direction: .south)
-    }
-
-    func removeMapObject(objectID: UInt32) async {
-        do {
-            try await entityCache.removeObjectEntity(forObjectID: objectID)
-        } catch {
-            logger.warning("\(error)")
-        }
-    }
-
-    func setVisibility(forObjectID objectID: UInt32, isVisible: Bool) async {
-        guard let entity = try? await entityCache.objectEntity(forObjectID: objectID) else {
-            return
-        }
-
-        entity.isEnabled = isVisible
-    }
-
     func performMapObjectAction(_ objectAction: MapObjectAction) async {
-        guard let sourceEntity = try? await entityCache.objectEntity(forObjectID: objectAction.sourceObjectID) else {
-            return
-        }
-
         switch objectAction.type {
-        case .pickup_item:
-            sourceEntity.playSpriteAnimation(.pickup, direction: .south, nextActionType: .idle)
-        case .sit_down:
-            sourceEntity.playSpriteAnimation(.sit, direction: .south)
-        case .stand_up:
-            sourceEntity.playSpriteAnimation(.idle, direction: .south)
         case .normal, .endure, .critical:
-            sourceEntity.attack(direction: .south)
             await renderDamageEffect(
                 targetObjectID: objectAction.targetObjectID,
                 amounts: [objectAction.damage, objectAction.damage2].filter { $0 > 0 },
@@ -317,7 +184,6 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
                 ]
             )
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
-            sourceEntity.attack(direction: .south)
             let count = objectAction.damage > 1 ? 2 : 1
             var amounts: [Int] = []
             var delays: [TimeInterval] = []
@@ -339,25 +205,13 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
                 amounts: amounts,
                 delays: delays
             )
-        case .lucy_dodge:
-            sourceEntity.attack(direction: .south)
         default:
             break
         }
     }
 
     func performSkill(_ packet: PACKET_ZC_NOTIFY_SKILL) async {
-        let sourceEntity = try? await entityCache.objectEntity(forObjectID: packet.AID)
         let targetEntity = try? await entityCache.objectEntity(forObjectID: packet.targetID)
-
-        if let sourceEntity {
-            if let mapObject = sourceEntity.components[MapObjectComponent.self]?.mapObject,
-               mapObject.type != .monster {
-                // TODO: Show dialog with skill name
-            }
-
-            sourceEntity.castSkill(direction: .south)
-        }
 
         guard let targetEntity, packet.damage >= 0 else {
             return
@@ -373,34 +227,6 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
                 targetEntity: targetEntity
             )
             damageEntity.setParent(rootEntity)
-        }
-    }
-
-    func spawnItem(_ item: MapItem, position: SIMD2<Int>) async {
-        guard let scene else {
-            return
-        }
-
-        do {
-            let entity = try await entityCache.itemEntity(for: item)
-            entity.name = "\(item.objectID)"
-            entity.transform = Transform(translation: scene.position(for: position))
-            entity.components.set([
-                GridPositionComponent(gridPosition: position),
-                MapItemComponent(mapItem: item),
-            ])
-            entity.playDefaultSpriteAnimation()
-            rootEntity.addChild(entity)
-        } catch {
-            logger.warning("\(error)")
-        }
-    }
-
-    func removeItem(objectID: UInt32) async {
-        do {
-            try await entityCache.removeItemEntity(forObjectID: objectID)
-        } catch {
-            logger.warning("\(error)")
         }
     }
 
@@ -421,19 +247,14 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
     }
 
     func syncAndProjectOverlay() {
-        guard let scene, let arView = realityMapProjector?.arView else {
+        guard let scene else {
             return
         }
 
-        let query = EntityQuery(where: .has(HealthPointsComponent.self))
-        for entity in arView.scene.performQuery(query) {
-            guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
-                  scene.state.overlaySnapshot.anchors[mapObject.objectID] != nil else {
-                continue
+        for objectID in scene.state.overlaySnapshot.anchors.keys {
+            if let worldPosition = presentationWorldPosition(for: objectID) {
+                scene.state.overlaySnapshot.anchors[objectID]?.gaugePosition = worldPosition + [0, -0.8, 0]
             }
-
-            let worldPosition = entity.position(relativeTo: nil)
-            scene.state.overlaySnapshot.anchors[mapObject.objectID]?.gaugePosition = worldPosition + [0, -0.8, 0]
         }
 
         guard let overlay, let projector = realityMapProjector else {
@@ -475,13 +296,14 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
         SpriteActionComponent.registerComponent()
         SpriteActionSystem.registerSystem()
         SpriteAnimationComponent.registerComponent()
+        SpriteAnimationTimingComponent.registerComponent()
         SpriteAnimationLibraryComponent.registerComponent()
         SpriteAnimationSystem.registerSystem()
         SpriteBillboardComponent.registerComponent()
         SpriteBillboardSystem.registerSystem()
 
-        WalkingComponent.registerComponent()
-        WalkingSystem.registerSystem()
+        MapObjectSnapshotPresentationComponent.registerComponent()
+        MapObjectSnapshotPresentationSystem.registerSystem()
 
         PlaySpriteAnimationAction.registerAction()
         PlaySpriteAnimationActionHandler.register { _ in
@@ -615,29 +437,6 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
         worldCameraEntity.position = target.position(relativeTo: parentEntity)
     }
 
-    private func updateWalkingComponent(
-        for entity: Entity,
-        startPosition: SIMD2<Int>,
-        endPosition: SIMD2<Int>,
-        mapGrid: MapGrid
-    ) {
-        guard let pathfinder else {
-            return
-        }
-
-        if var walkingComponent = entity.components[WalkingComponent.self],
-           walkingComponent.path.count > 1 {
-            let currentPosition = walkingComponent.path[1]
-            let path = pathfinder.findPath(from: currentPosition, to: endPosition)
-            walkingComponent.path = [walkingComponent.path[0]] + path
-            entity.components.set(walkingComponent)
-        } else {
-            let path = pathfinder.findPath(from: startPosition, to: endPosition)
-            let walkingComponent = WalkingComponent(path: path, mapGrid: mapGrid)
-            entity.components.set(walkingComponent)
-        }
-    }
-
     private func renderDamageEffect(targetObjectID: UInt32, amounts: [Int], delays: [TimeInterval]) async {
         guard let targetEntity = try? await entityCache.objectEntity(forObjectID: targetObjectID) else {
             return
@@ -694,5 +493,121 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
             try? FileManager.default.removeItem(at: tempURL)
             return nil
         }
+    }
+
+    private func presentationWorldPosition(for objectID: UInt32) -> SIMD3<Float>? {
+        entityCache.loadedObjectEntity(forObjectID: objectID)?.position(relativeTo: nil)
+    }
+
+    private func syncEntities(with state: MapSceneState, scene: MapScene) async {
+        let objectStates: [MapObjectState] = [state.player] + Array(state.objects.values)
+        let desiredObjectIDs = Set(objectStates.map(\.id))
+
+        for objectID in entityCache.objectIDs.subtracting(desiredObjectIDs) {
+            do {
+                try await entityCache.removeObjectEntity(forObjectID: objectID)
+            } catch {
+                logger.warning("\(error)")
+            }
+        }
+
+        for objectState in objectStates {
+            guard !Task.isCancelled else {
+                return
+            }
+            await syncObjectEntity(for: objectState, scene: scene)
+        }
+
+        let desiredItemIDs = Set(state.items.keys)
+        for objectID in entityCache.itemIDs.subtracting(desiredItemIDs) {
+            do {
+                try await entityCache.removeItemEntity(forObjectID: objectID)
+            } catch {
+                logger.warning("\(error)")
+            }
+        }
+
+        for itemState in state.items.values {
+            guard !Task.isCancelled else {
+                return
+            }
+            await syncItemEntity(for: itemState, scene: scene)
+        }
+    }
+
+    private func syncObjectEntity(for objectState: MapObjectState, scene: MapScene) async {
+        do {
+            let (entity, isNew) = try await entityCache.objectEntity(for: objectState.object)
+            guard !Task.isCancelled else {
+                return
+            }
+
+            if isNew || entity.parent == nil {
+                rootEntity.addChild(entity)
+            }
+
+            entity.name = "\(objectState.id)"
+            entity.transform = Transform(translation: presentationWorldPosition(for: objectState, scene: scene))
+            entity.isEnabled = objectState.isVisible
+            entity.components.set(GridPositionComponent(gridPosition: objectState.gridPosition))
+            entity.components.set(MapObjectComponent(mapObject: objectState.object))
+            entity.components.set(makePresentationComponent(for: objectState, scene: scene))
+
+            if scene.player.objectID == objectState.id || objectState.object.type == .monster {
+                entity.components.set(HealthPointsComponent(hp: objectState.hp, maxHp: objectState.maxHp))
+            } else {
+                entity.components.remove(HealthPointsComponent.self)
+            }
+
+            if let sp = objectState.sp, let maxSp = objectState.maxSp {
+                entity.components.set(SpellPointsComponent(sp: sp, maxSp: maxSp))
+            } else {
+                entity.components.remove(SpellPointsComponent.self)
+            }
+        } catch {
+            logger.warning("\(error)")
+        }
+    }
+
+    private func syncItemEntity(for itemState: MapItemState, scene: MapScene) async {
+        do {
+            let entity = try await entityCache.itemEntity(for: itemState.item)
+            guard !Task.isCancelled else {
+                return
+            }
+
+            let isNew = entity.parent == nil
+
+            entity.name = "\(itemState.id)"
+            entity.transform = Transform(translation: scene.position(for: itemState.gridPosition))
+            entity.components.set(GridPositionComponent(gridPosition: itemState.gridPosition))
+            entity.components.set(MapItemComponent(mapItem: itemState.item))
+
+            if isNew {
+                entity.playDefaultSpriteAnimation()
+                rootEntity.addChild(entity)
+            }
+        } catch {
+            logger.warning("\(error)")
+        }
+    }
+
+    private func makePresentationComponent(for objectState: MapObjectState, scene: MapScene) -> MapObjectSnapshotPresentationComponent {
+        return MapObjectSnapshotPresentationComponent(
+            logicalWorldPosition: scene.position(for: objectState.gridPosition),
+            timeline: MapObjectPresentationEvaluator.makePresentationTimeline(
+                for: objectState,
+                position: { scene.position(for: $0) }
+            ),
+            presentation: objectState.presentation
+        )
+    }
+
+    private func presentationWorldPosition(for objectState: MapObjectState, scene: MapScene) -> SIMD3<Float> {
+        MapObjectPresentationEvaluator.resolvedPresentation(
+            for: objectState,
+            now: .now,
+            position: { scene.position(for: $0) }
+        ).worldPosition
     }
 }

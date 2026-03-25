@@ -305,51 +305,19 @@ extension MapScene: MapEventHandlerProtocol {
         case .hp:
             state.player.hp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.hp = Int(packet.count)
-            Task {
-                await backend.updateHealthAndSpellPoints(
-                    for: player.objectID,
-                    hp: Int(packet.count),
-                    maxHp: nil,
-                    sp: nil,
-                    maxSp: nil
-                )
-            }
+            backend.applySnapshot(state)
         case .maxhp:
             state.player.maxHp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.maxHp = Int(packet.count)
-            Task {
-                await backend.updateHealthAndSpellPoints(
-                    for: player.objectID,
-                    hp: nil,
-                    maxHp: Int(packet.count),
-                    sp: nil,
-                    maxSp: nil
-                )
-            }
+            backend.applySnapshot(state)
         case .sp:
             state.player.sp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.sp = Int(packet.count)
-            Task {
-                await backend.updateHealthAndSpellPoints(
-                    for: player.objectID,
-                    hp: nil,
-                    maxHp: nil,
-                    sp: Int(packet.count),
-                    maxSp: nil
-                )
-            }
+            backend.applySnapshot(state)
         case .maxsp:
             state.player.maxSp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.maxSp = Int(packet.count)
-            Task {
-                await backend.updateHealthAndSpellPoints(
-                    for: player.objectID,
-                    hp: nil,
-                    maxHp: nil,
-                    sp: nil,
-                    maxSp: Int(packet.count)
-                )
-            }
+            backend.applySnapshot(state)
         default:
             break
         }
@@ -368,15 +336,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.overlaySnapshot.anchors[packet.GID]?.maxHp = Int(packet.maxHP)
         }
 
-        Task {
-            await backend.updateHealthAndSpellPoints(
-                for: packet.GID,
-                hp: Int(packet.HP),
-                maxHp: Int(packet.maxHP),
-                sp: nil,
-                maxSp: nil
-            )
-        }
+        backend.applySnapshot(state)
     }
 
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -419,9 +379,7 @@ extension MapScene: MapEventHandlerProtocol {
             }
         }
 
-        Task {
-            await backend.movePlayer(from: startPosition, to: endPosition)
-        }
+        backend.applySnapshot(state)
     }
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
@@ -448,13 +406,7 @@ extension MapScene: MapEventHandlerProtocol {
             )
         }
 
-        Task {
-            await backend.spawnMapObject(
-                object,
-                position: position,
-                direction: direction
-            )
-        }
+        backend.applySnapshot(state)
     }
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -503,13 +455,7 @@ extension MapScene: MapEventHandlerProtocol {
             }
         }
 
-        Task {
-            await backend.moveMapObject(
-                object,
-                startPosition: startPosition,
-                endPosition: endPosition
-            )
-        }
+        backend.applySnapshot(state)
     }
 
     func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>) {
@@ -541,18 +487,14 @@ extension MapScene: MapEventHandlerProtocol {
             }
         }
 
-        Task {
-            await backend.stopMapObject(objectID: objectID, position: position)
-        }
+        backend.applySnapshot(state)
     }
 
     func onMapObjectVanished(objectID: UInt32) {
         state.objects.removeValue(forKey: objectID)
         state.overlaySnapshot.anchors.removeValue(forKey: objectID)
 
-        Task {
-            await backend.removeMapObject(objectID: objectID)
-        }
+        backend.applySnapshot(state)
     }
 
     func onMapObjectDirectionChanged(objectID: UInt32, direction: Direction, headDirection: HeadDirection) {
@@ -561,6 +503,8 @@ extension MapScene: MapEventHandlerProtocol {
         } else {
             state.objects[objectID]?.presentation.direction = CharacterDirection(direction: direction)
         }
+
+        backend.applySnapshot(state)
     }
 
     func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
@@ -594,9 +538,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.overlaySnapshot.anchors.removeValue(forKey: objectID)
         }
 
-        Task {
-            await backend.setVisibility(forObjectID: objectID, isVisible: isVisible)
-        }
+        backend.applySnapshot(state)
     }
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -701,12 +643,43 @@ extension MapScene: MapEventHandlerProtocol {
             break
         }
 
+        backend.applySnapshot(state)
+
         Task {
             await backend.performMapObjectAction(objectAction)
         }
     }
 
     func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
+        let now = ContinuousClock.now
+        let sourceMapObject = if state.player.id == packet.AID {
+            state.player.object
+        } else {
+            state.objects[packet.AID]?.object
+        }
+
+        if let sourceMapObject {
+            let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: sourceMapObject.job)
+            let action: CharacterActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
+            let duration = Duration.milliseconds(Int(packet.attackMT))
+
+            if state.player.id == packet.AID {
+                state.player.presentation = MapObjectPresentationState(
+                    action: action,
+                    direction: state.player.presentation.direction,
+                    startedAt: now,
+                    duration: duration
+                )
+            } else if let existing = state.objects[packet.AID] {
+                state.objects[packet.AID]?.presentation = MapObjectPresentationState(
+                    action: action,
+                    direction: existing.presentation.direction,
+                    startedAt: now,
+                    duration: duration
+                )
+            }
+        }
+
         if packet.damage >= 0 {
             let count = Int(packet.count)
             let damage = Int(packet.damage)
@@ -720,6 +693,8 @@ extension MapScene: MapEventHandlerProtocol {
             }
         }
 
+        backend.applySnapshot(state)
+
         Task {
             await backend.performSkill(packet)
         }
@@ -732,16 +707,12 @@ extension MapScene: MapEventHandlerProtocol {
             gridPosition: position
         )
 
-        Task {
-            await backend.spawnItem(item, position: position)
-        }
+        backend.applySnapshot(state)
     }
 
     func onItemVanished(objectID: UInt32) {
         state.items.removeValue(forKey: objectID)
 
-        Task {
-            await backend.removeItem(objectID: objectID)
-        }
+        backend.applySnapshot(state)
     }
 }

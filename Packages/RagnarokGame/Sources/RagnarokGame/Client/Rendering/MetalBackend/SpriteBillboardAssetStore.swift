@@ -374,7 +374,7 @@ final class SpriteBillboardAssetStore {
             return nil
         }
 
-        let rawIndex = Int(seconds(elapsed) / animation.frameInterval)
+        let rawIndex = Int(elapsed.timeInterval / animation.frameInterval)
         let frameIndex: Int
         if actionRepeats(action) {
             frameIndex = rawIndex % animation.textures.count
@@ -391,11 +391,6 @@ final class SpriteBillboardAssetStore {
         case .pickup, .attack1, .hurt, .die, .attack2, .attack3, .skill:
             false
         }
-    }
-
-    private func seconds(_ duration: Duration) -> Double {
-        let components = duration.components
-        return Double(components.seconds) + Double(components.attoseconds) / 1_000_000_000_000_000_000
     }
 }
 

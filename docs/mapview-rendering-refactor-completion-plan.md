@@ -9,7 +9,7 @@ It is intentionally narrower than the original implementation plan:
 - The original plan established backend switching and the first runtime/state split.
 - This document defines how to finish the transition so both Metal and RealityKit consume the same runtime snapshot model.
 - The immediate trigger for this plan was the Metal limitation where moving objects teleported between grid cells because the shared snapshot did not yet carry enough movement semantics for backend-local interpolation.
-- Phase C now closes that Metal gap; the remaining work is primarily RealityKit rebasing and deletion of the temporary compatibility surface.
+- Phases C and D now close the Metal and RealityKit presentation gaps; the remaining work is primarily deletion of the temporary compatibility surface.
 
 ## Core Decision
 
@@ -56,17 +56,20 @@ In other words:
 
 ## Current Gaps
 
-The current codebase is still in an intentionally transitional state, but the main Metal-side gap is now closed:
+The current codebase has now completed the shared presentation rebasing on both backends, but it still retains a small transitional compatibility surface:
 
-- `MapSceneRuntimeBackend` still exposes a command-style compatibility API for RealityKit-owned movement, lock-on scheduling, and entity mutation.
-- `MetalMapBackend` now consumes shared movement and presentation semantics through backend-local presentation caches instead of coarse `gridPosition` snapshots.
+- `MapSceneRuntimeBackend` has been reduced to backend lifecycle plus effect-specific hooks (`performMapObjectAction(...)` and `performSkill(...)`).
+- `MetalMapBackend` consumes shared movement and presentation semantics through backend-local presentation caches instead of coarse `gridPosition` snapshots.
 - `MapRuntimeRenderer` now splits Metal presentation into three layers:
   - `SpriteBillboardSnapshotEvaluator` evaluates current presentation state from runtime snapshot semantics.
   - `SpriteBillboardAssetStore` owns composed sprite and animation-frame caching.
   - `SpriteBillboardRenderer` only renders `SpriteBillboardDrawable` values and computes hit boxes from the current presentation position.
-- RealityKit still owns the only real walking lifecycle through `WalkingComponent` and related systems.
+- `RealityKitMapBackend` now consumes the same shared movement and presentation semantics through backend-local entity caches and a dedicated presentation evaluation path.
+- `MapScene` now publishes snapshots directly on runtime state changes instead of mirroring spawn/move/stop/remove/update commands into RealityKit.
+- The remaining architectural gap is that action/skill effect callbacks are still expressed as backend compatibility hooks rather than fully derived shared data.
+- `playerMovementOrigin()` still returns `movement.to` as the joystick steering origin rather than a current presentation position.
 
-Those gaps mean the project now has a real shared presentation contract on Metal, but not yet on RealityKit.
+The project now has one real shared presentation contract on both Metal and RealityKit; the remaining work is cleanup of the last compatibility hooks.
 
 ## Desired End State
 
@@ -147,6 +150,14 @@ Important consequence:
 
 - `WalkingComponent` can still exist internally if useful, but it should be fed from snapshot semantics rather than being the only authoritative movement model.
 
+This is now implemented as:
+
+- persistent `Entity` ownership via `RealityEntityCache`
+- snapshot-driven sync in `RealityKitMapBackend.applySnapshot(_:)`
+- `MapObjectSnapshotPresentationComponent` for desired presentation state
+- `MapObjectSnapshotPresentationSystem` for per-frame transform and animation timing evaluation
+- overlay projection derived from backend-local presentation positions
+
 ## 2. Metal backend
 
 Metal should mirror the same presentation model without recreating entries each frame.
@@ -172,6 +183,12 @@ In particular, phase out backend-owned answers for:
 - command-style spawn/move/stop/remove hooks
 
 Those should become runtime-state-driven decisions once the shared movement timeline exists.
+
+This is now partially complete:
+
+- `currentPlayerMovementOrigin()` and `schedulePlayerArrivalAction(...)` are already gone
+- command-style spawn/move/stop/remove/update hooks are already gone
+- remaining compatibility hooks are currently limited to action/skill effect callbacks
 
 ## Proposed Phases
 
@@ -307,60 +324,92 @@ Implementation details:
 ### Notes
 
 - Automated Metal-focused tests are still pending. Validation so far has been package builds plus targeted manual verification of interpolation continuity, direction selection, overlay tracking, hit testing, and post-action pose behavior.
-- RealityKit has not yet been rebased onto the same snapshot-evaluation structure. That remains the core Phase D task.
+- RealityKit was subsequently rebased onto the same shared snapshot semantics in Phase D.
 
 ### Risk
 
 - Medium.
 - The main risk is drift between visual interpolation and gameplay timing if runtime timestamps are underspecified.
 
-## Phase D: Rebase RealityKit on the Same Snapshot Semantics
+## Phase D: Rebase RealityKit on the Same Snapshot Semantics ✅
 
 ### Objective
 
 Keep RealityKit functional while removing its hidden role as the only backend with a real movement model.
 
-### Changes
+### Changes (as implemented)
 
-Modify:
+Modified:
 
 - `RealityKitMapBackend`
-- Reality-specific ECS components and systems related to walking and action playback
+- `MapScene`
+- RealityKit-facing ECS animation systems
+
+Added / split:
+
+- `MapObjectPresentationEvaluator`
+- `MapObjectPresentationTimeline`
+- `MapObjectSnapshotPresentationComponent`
+- `MapObjectSnapshotPresentationSystem`
+- `SpriteAnimationTimingComponent`
+
+Implementation details:
+
+- `RealityKitMapBackend.applySnapshot(_:)` now treats `MapSceneState` as the authoritative input and incrementally syncs persistent entity caches for objects and items.
+- RealityKit walking is no longer driven by `WalkingComponent` / `WalkingSystem`; per-frame motion and animation timing now come from shared movement and presentation semantics.
+- `MapObjectPresentationEvaluator` is shared by Metal and RealityKit so both backends evaluate movement timing, settled actions, and animation elapsed time from the same runtime contract.
+- `MapObjectSnapshotPresentationSystem` updates entity transforms and sprite animation timing each frame from backend-local presentation data rather than imperative movement commands.
+- `SpriteActionSystem` now consumes snapshot-provided animation timing instead of owning the timing source for map-object presentation.
+- Overlay anchors now follow backend-local presentation positions on RealityKit, matching the Metal architecture.
+- `MapScene` now publishes snapshots directly on runtime state changes for movement, visibility, HP/SP, items, and presentation updates; the old spawn/move/stop/remove/update command mirroring path has been removed.
+- The only remaining RealityKit-specific compatibility hooks are `performMapObjectAction(...)` and `performSkill(...)`, which now exist only for backend-local effect rendering such as damage digits.
 
 ### Deliverables
 
-- RealityKit entities consume the same movement/presentation semantics as Metal.
-- Backend-private ECS remains an implementation detail rather than a source of truth.
-- Overlay and projector paths use presentation state local to the backend.
+- ✅ RealityKit entities consume the same movement/presentation semantics as Metal.
+- ✅ Backend-private ECS remains an implementation detail rather than a source of truth.
+- ✅ Overlay and projector paths use presentation state local to the backend.
 
 ### Acceptance
 
-- RealityKit still feels the same to the player.
-- Runtime no longer needs command-style mutation hooks to keep RealityKit visually correct.
+- ✅ RealityKit still feels the same to the player for walking, facing, and basic action playback.
+- ✅ Runtime no longer needs command-style spawn/move/stop/remove/update hooks to keep RealityKit visually correct.
+- ✅ RealityKit and Metal now share the same movement interpolation and settled-action evaluation logic.
+
+### Notes
+
+- `pickup` timing is still an area to validate carefully because the snapshot path now depends on runtime presentation timing rather than `playSpriteAnimation(..., nextActionType:)`.
+- Automated RealityKit-focused tests are still pending; validation so far has been package builds plus targeted runtime verification.
 
 ### Risk
 
-- Medium to high.
-- RealityKit currently has the deepest hidden ownership of movement lifecycle.
+- Medium.
+- The main remaining risk is drift in effect-specific or one-shot animation timing, not hidden walking ownership.
 
 ## Phase E: Delete the Compatibility Surface
 
 ### Objective
 
-Finish the refactor by removing the command-style runtime backend API.
+Finish the refactor by removing the remaining compatibility API surface.
 
 ### Changes
 
 Delete or shrink:
 
 - `MapSceneRuntimeBackend`
-- backend mutation methods that exist only to mirror packet events into RealityKit
+- backend mutation methods that still exist only for RealityKit-side effects
 
 Modify:
 
 - `MapScene`
 - `MapRenderBackend`
 - backend attach/load/applySnapshot lifecycle
+
+Current state before Phase E:
+
+- command-style spawn/move/stop/remove/update hooks have already been deleted
+- `MapSceneRuntimeBackend` currently only retains `load(progress:)`, `unload()`, `performMapObjectAction(...)`, and `performSkill(...)`
+- the remaining work is to decide whether backend-local effects become shared runtime effect snapshots or stay behind a smaller dedicated effect interface
 
 ### Deliverables
 
@@ -370,7 +419,8 @@ Modify:
 
 ### Acceptance
 
-- `MapScene` no longer issues spawn/move/remove/update commands into a backend.
+- ✅ `MapScene` no longer issues spawn/move/remove/update commands into a backend.
+- Remaining Phase E acceptance: `MapScene` no longer issues action/skill compatibility callbacks into a backend unless they are replaced by a dedicated shared effect surface.
 - Metal and RealityKit both remain functional through the same snapshot flow.
 
 ### Risk
@@ -467,11 +517,11 @@ This completion plan does not require:
 
 Implement in this order:
 
-1. shared movement and presentation semantics
-2. runtime-owned arrival scheduling
-3. Metal interpolation and animation consumption
-4. RealityKit rebasing onto the same semantics
-5. deletion of the command-style compatibility API
+1. shared movement and presentation semantics ✅
+2. runtime-owned arrival scheduling ✅
+3. Metal interpolation and animation consumption ✅
+4. RealityKit rebasing onto the same semantics ✅
+5. deletion of the remaining compatibility API
 
 That order keeps the critical path honest:
 
@@ -489,3 +539,4 @@ This plan is complete when all of the following are true:
 - runtime state carries enough meaning for both backends to render smooth motion
 - backends own interpolation and render caches locally
 - `MapSceneRuntimeBackend` is no longer the real gameplay contract
+- remaining backend-only action/skill effect hooks are either deleted or replaced by an explicit shared effect surface
