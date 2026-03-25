@@ -12,7 +12,7 @@ public struct MapObjectMovementState: Sendable {
     public var from: SIMD2<Int>
     public var to: SIMD2<Int>
     public var path: [SIMD2<Int>]
-    public var startedAt: ContinuousClock.Instant
+    public var startTime: ContinuousClock.Instant
     public var duration: Duration
     public var direction: CharacterDirection
 
@@ -20,14 +20,14 @@ public struct MapObjectMovementState: Sendable {
         from: SIMD2<Int>,
         to: SIMD2<Int>,
         path: [SIMD2<Int>],
-        startedAt: ContinuousClock.Instant,
+        startTime: ContinuousClock.Instant,
         duration: Duration,
         direction: CharacterDirection
     ) {
         self.from = from
         self.to = to
         self.path = path
-        self.startedAt = startedAt
+        self.startTime = startTime
         self.duration = duration
         self.direction = direction
     }

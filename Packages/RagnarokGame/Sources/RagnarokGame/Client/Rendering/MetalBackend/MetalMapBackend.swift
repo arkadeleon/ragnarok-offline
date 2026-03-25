@@ -8,6 +8,7 @@
 #if os(iOS) || os(macOS)
 
 import CoreGraphics
+import Foundation
 import RagnarokSceneAssets
 
 final class MetalMapBackend: MapRenderBackend {
@@ -43,6 +44,12 @@ final class MetalMapBackend: MapRenderBackend {
         scene = nil
         overlay = nil
         renderer.setWorldAsset(nil)
+    }
+
+    func load(progress: Progress) async {
+    }
+
+    func unload() {
     }
 
     func applySnapshot(_ state: MapSceneState) {

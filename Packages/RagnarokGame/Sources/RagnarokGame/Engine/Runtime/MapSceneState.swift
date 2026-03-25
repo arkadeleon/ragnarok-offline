@@ -21,10 +21,10 @@ public final class MapSceneState {
         self.player = player
     }
 
-    public func drainDamageEffects() -> [MapDamageEffect] {
-        let pending = damageEffects
-        damageEffects.removeAll(keepingCapacity: true)
-        return pending
+    func pruneExpiredDamageEffects(now: ContinuousClock.Instant = .now) {
+        damageEffects.removeAll {
+            $0.isExpired(at: now)
+        }
     }
 }
 

@@ -10,7 +10,6 @@ import CoreGraphics
 import Foundation
 import RagnarokConstants
 import RagnarokModels
-import RagnarokPackets
 import RagnarokReality
 import RagnarokResources
 import RagnarokSprite
@@ -20,7 +19,7 @@ import Spatial
 import SwiftUI
 import WorldCamera
 
-final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend {
+final class RealityKitMapBackend: MapRenderBackend, MapRealityViewBackend {
     private weak var scene: MapScene?
 
     let rootEntity = Entity()
@@ -31,6 +30,7 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
     private let tileSelectionRenderer: RealityTileSelectionRenderer
 
     private let worldCameraEntity = Entity()
+    private var renderedDamageEffectIDs: Set<UUID> = []
     private var snapshotTask: Task<Void, Never>?
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
     private let tileRange = 17
@@ -65,6 +65,7 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
     func detach() {
         snapshotTask?.cancel()
         snapshotTask = nil
+        renderedDamageEffectIDs.removeAll()
         scene = nil
         overlay = nil
         #if os(iOS) || os(macOS)
@@ -153,6 +154,10 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
                 return
             }
             await syncEntities(with: state, scene: scene)
+            guard !Task.isCancelled else {
+                return
+            }
+            await syncDamageEffects(with: state)
         }
     }
 
@@ -170,64 +175,6 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
         worldCameraEntity.components[WorldCameraComponent.self]?.elevation = cameraState.elevation
         #endif
         worldCameraEntity.components[WorldCameraComponent.self]?.radius = cameraState.distance
-    }
-
-    func performMapObjectAction(_ objectAction: MapObjectAction) async {
-        switch objectAction.type {
-        case .normal, .endure, .critical:
-            await renderDamageEffect(
-                targetObjectID: objectAction.targetObjectID,
-                amounts: [objectAction.damage, objectAction.damage2].filter { $0 > 0 },
-                delays: [
-                    TimeInterval(objectAction.sourceSpeed),
-                    TimeInterval(objectAction.sourceSpeed) + 200 * 1.75
-                ]
-            )
-        case .multi_hit, .multi_hit_endure, .multi_hit_critical:
-            let count = objectAction.damage > 1 ? 2 : 1
-            var amounts: [Int] = []
-            var delays: [TimeInterval] = []
-            if count == 2 {
-                amounts.append(objectAction.damage / count)
-                delays.append(TimeInterval(objectAction.sourceSpeed))
-            }
-            if objectAction.damage2 > 0 {
-                amounts.append(objectAction.damage / count)
-                delays.append(TimeInterval(objectAction.sourceSpeed) + 200 / 2)
-                amounts.append(objectAction.damage2)
-                delays.append(TimeInterval(objectAction.sourceSpeed) + 200 * 1.75)
-            } else {
-                amounts.append(objectAction.damage / count)
-                delays.append(TimeInterval(objectAction.sourceSpeed) + 200)
-            }
-            await renderDamageEffect(
-                targetObjectID: objectAction.targetObjectID,
-                amounts: amounts,
-                delays: delays
-            )
-        default:
-            break
-        }
-    }
-
-    func performSkill(_ packet: PACKET_ZC_NOTIFY_SKILL) async {
-        let targetEntity = try? await entityCache.objectEntity(forObjectID: packet.targetID)
-
-        guard let targetEntity, packet.damage >= 0 else {
-            return
-        }
-
-        let count = Int(packet.count)
-        let damage = Int(packet.damage)
-
-        for i in 0..<count {
-            let damageEntity = Entity.makeDamageEntity(
-                for: damage / count,
-                delay: TimeInterval(packet.attackMT) + TimeInterval(200 * i),
-                targetEntity: targetEntity
-            )
-            damageEntity.setParent(rootEntity)
-        }
     }
 
     #if os(iOS) || os(macOS)
@@ -437,19 +384,35 @@ final class RealityKitMapBackend: MapSceneRuntimeBackend, MapRealityViewBackend 
         worldCameraEntity.position = target.position(relativeTo: parentEntity)
     }
 
-    private func renderDamageEffect(targetObjectID: UInt32, amounts: [Int], delays: [TimeInterval]) async {
-        guard let targetEntity = try? await entityCache.objectEntity(forObjectID: targetObjectID) else {
-            return
+    private func syncDamageEffects(with state: MapSceneState) async {
+        let activeEffectIDs = Set(state.damageEffects.map(\.id))
+        renderedDamageEffectIDs.formIntersection(activeEffectIDs)
+
+        for effect in state.damageEffects where !renderedDamageEffectIDs.contains(effect.id) {
+            guard !Task.isCancelled else {
+                return
+            }
+
+            renderedDamageEffectIDs.insert(effect.id)
+            let rendered = await renderDamageEffect(effect)
+            if !rendered {
+                renderedDamageEffectIDs.remove(effect.id)
+            }
+        }
+    }
+
+    private func renderDamageEffect(_ effect: MapDamageEffect) async -> Bool {
+        guard let targetEntity = try? await entityCache.objectEntity(forObjectID: effect.targetObjectID) else {
+            return false
         }
 
-        for (amount, delay) in zip(amounts, delays) {
-            let damageEntity = Entity.makeDamageEntity(
-                for: amount,
-                delay: delay,
-                targetEntity: targetEntity
-            )
-            damageEntity.setParent(rootEntity)
-        }
+        let damageEntity = Entity.makeDamageEntity(
+            for: effect.amount,
+            delay: effect.delay,
+            targetEntity: targetEntity
+        )
+        damageEntity.setParent(rootEntity)
+        return true
     }
 
     private func audioResource(forMapName mapName: String, resourceManager: ResourceManager) async -> AudioResource? {

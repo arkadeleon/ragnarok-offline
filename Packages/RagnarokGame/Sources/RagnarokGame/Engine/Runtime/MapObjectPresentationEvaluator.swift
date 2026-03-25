@@ -36,7 +36,7 @@ enum MapObjectPresentationEvaluator {
             gridPath: movementState.path,
             worldPath: movementState.path.map(position),
             stepDurations: stepDurations(for: movementState.path, speed: state.object.speed),
-            startedAt: movementState.startedAt,
+            startTime: movementState.startTime,
             duration: movementState.duration,
             direction: movementState.direction
         )
@@ -81,7 +81,7 @@ enum MapObjectPresentationEvaluator {
             )
         }
 
-        let elapsed = presentation.startedAt.duration(to: now)
+        let elapsed = presentation.startTime.duration(to: now)
         if let duration = presentation.duration, elapsed >= duration {
             return PresentationSample(
                 worldPosition: worldPosition,
@@ -137,7 +137,7 @@ enum MapObjectPresentationEvaluator {
             return nil
         }
 
-        let elapsed = timeline.startedAt.duration(to: now)
+        let elapsed = timeline.startTime.duration(to: now)
         if elapsed <= .zero {
             return MovementSample(
                 worldPosition: timeline.worldPath[0],

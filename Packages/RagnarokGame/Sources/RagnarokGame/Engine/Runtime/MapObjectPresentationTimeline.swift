@@ -12,7 +12,7 @@ struct MapObjectPresentationTimeline {
     var gridPath: [SIMD2<Int>]
     var worldPath: [SIMD3<Float>]
     var stepDurations: [Duration]
-    var startedAt: ContinuousClock.Instant
+    var startTime: ContinuousClock.Instant
     var duration: Duration
     var direction: CharacterDirection
 }

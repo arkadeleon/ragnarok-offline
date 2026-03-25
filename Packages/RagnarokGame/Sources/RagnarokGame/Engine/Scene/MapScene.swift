@@ -28,7 +28,7 @@ public final class MapScene {
 
     let mapGrid: MapGrid
     let state: MapSceneState
-    private let backend: any MapSceneRuntimeBackend
+    private let backend: any MapRenderBackend
 
     private let pathfinder: Pathfinder
     private let interactionResolver: MapInteractionResolver
@@ -37,7 +37,7 @@ public final class MapScene {
 
     var cameraState: MapCameraState = .default {
         didSet {
-            backend.applySnapshot(state)
+            applySnapshot()
         }
     }
 
@@ -80,7 +80,7 @@ public final class MapScene {
             presentation: MapObjectPresentationState(
                 action: .idle,
                 direction: .south,
-                startedAt: .now
+                startTime: .now
             )
         )
         self.state = MapSceneState(player: playerState)
@@ -104,7 +104,7 @@ public final class MapScene {
 
     func load(progress: Progress) async {
         await backend.load(progress: progress)
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func unload() {
@@ -129,7 +129,7 @@ public final class MapScene {
 
     func selectGround(at position: SIMD2<Int>) {
         state.selection.selectedPosition = position
-        backend.applySnapshot(state)
+        applySnapshot()
         gameSession?.requestMove(to: position)
     }
 
@@ -159,6 +159,11 @@ public final class MapScene {
 
     private func playerMovementOrigin() -> SIMD2<Int> {
         state.player.movement?.to ?? state.player.gridPosition
+    }
+
+    private func applySnapshot() {
+        state.pruneExpiredDamageEffects()
+        backend.applySnapshot(state)
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
@@ -305,19 +310,19 @@ extension MapScene: MapEventHandlerProtocol {
         case .hp:
             state.player.hp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.hp = Int(packet.count)
-            backend.applySnapshot(state)
+            applySnapshot()
         case .maxhp:
             state.player.maxHp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.maxHp = Int(packet.count)
-            backend.applySnapshot(state)
+            applySnapshot()
         case .sp:
             state.player.sp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.sp = Int(packet.count)
-            backend.applySnapshot(state)
+            applySnapshot()
         case .maxsp:
             state.player.maxSp = Int(packet.count)
             state.overlaySnapshot.anchors[player.objectID]?.maxSp = Int(packet.count)
-            backend.applySnapshot(state)
+            applySnapshot()
         default:
             break
         }
@@ -336,7 +341,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.overlaySnapshot.anchors[packet.GID]?.maxHp = Int(packet.maxHP)
         }
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -351,14 +356,14 @@ extension MapScene: MapEventHandlerProtocol {
             from: startPosition,
             to: endPosition,
             path: path,
-            startedAt: now,
+            startTime: now,
             duration: duration,
             direction: direction
         )
         state.player.presentation = MapObjectPresentationState(
             action: .walk,
             direction: direction,
-            startedAt: now,
+            startTime: now,
             duration: duration
         )
         if pendingArrivalAction != nil {
@@ -379,7 +384,7 @@ extension MapScene: MapEventHandlerProtocol {
             }
         }
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
@@ -393,7 +398,7 @@ extension MapScene: MapEventHandlerProtocol {
             presentation: MapObjectPresentationState(
                 action: .idle,
                 direction: CharacterDirection(direction: direction),
-                startedAt: .now
+                startTime: .now
             )
         )
 
@@ -406,7 +411,7 @@ extension MapScene: MapEventHandlerProtocol {
             )
         }
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -420,14 +425,14 @@ extension MapScene: MapEventHandlerProtocol {
             from: startPosition,
             to: endPosition,
             path: path,
-            startedAt: now,
+            startTime: now,
             duration: duration,
             direction: direction
         )
         let presentation = MapObjectPresentationState(
             action: .walk,
             direction: direction,
-            startedAt: now,
+            startTime: now,
             duration: duration
         )
         if state.objects[object.objectID] != nil {
@@ -455,7 +460,7 @@ extension MapScene: MapEventHandlerProtocol {
             }
         }
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>) {
@@ -466,7 +471,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.presentation = MapObjectPresentationState(
                 action: .idle,
                 direction: state.player.presentation.direction,
-                startedAt: now
+                startTime: now
             )
 
             if let action = pendingArrivalAction {
@@ -482,19 +487,19 @@ extension MapScene: MapEventHandlerProtocol {
                 state.objects[objectID]?.presentation = MapObjectPresentationState(
                     action: .idle,
                     direction: existing.presentation.direction,
-                    startedAt: now
+                    startTime: now
                 )
             }
         }
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onMapObjectVanished(objectID: UInt32) {
         state.objects.removeValue(forKey: objectID)
         state.overlaySnapshot.anchors.removeValue(forKey: objectID)
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onMapObjectDirectionChanged(objectID: UInt32, direction: Direction, headDirection: HeadDirection) {
@@ -504,7 +509,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.objects[objectID]?.presentation.direction = CharacterDirection(direction: direction)
         }
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
@@ -538,7 +543,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.overlaySnapshot.anchors.removeValue(forKey: objectID)
         }
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -577,7 +582,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.presentation = MapObjectPresentationState(
                 action: presentationAction,
                 direction: state.player.presentation.direction,
-                startedAt: now,
+                startTime: now,
                 duration: sourceDuration
             )
         } else if state.objects[sourceID] != nil {
@@ -585,7 +590,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.objects[sourceID]?.presentation = MapObjectPresentationState(
                 action: presentationAction,
                 direction: existingDirection,
-                startedAt: now,
+                startTime: now,
                 duration: sourceDuration
             )
         }
@@ -643,11 +648,7 @@ extension MapScene: MapEventHandlerProtocol {
             break
         }
 
-        backend.applySnapshot(state)
-
-        Task {
-            await backend.performMapObjectAction(objectAction)
-        }
+        applySnapshot()
     }
 
     func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
@@ -667,14 +668,14 @@ extension MapScene: MapEventHandlerProtocol {
                 state.player.presentation = MapObjectPresentationState(
                     action: action,
                     direction: state.player.presentation.direction,
-                    startedAt: now,
+                    startTime: now,
                     duration: duration
                 )
             } else if let existing = state.objects[packet.AID] {
                 state.objects[packet.AID]?.presentation = MapObjectPresentationState(
                     action: action,
                     direction: existing.presentation.direction,
-                    startedAt: now,
+                    startTime: now,
                     duration: duration
                 )
             }
@@ -693,11 +694,7 @@ extension MapScene: MapEventHandlerProtocol {
             }
         }
 
-        backend.applySnapshot(state)
-
-        Task {
-            await backend.performSkill(packet)
-        }
+        applySnapshot()
     }
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
@@ -707,12 +704,12 @@ extension MapScene: MapEventHandlerProtocol {
             gridPosition: position
         )
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 
     func onItemVanished(objectID: UInt32) {
         state.items.removeValue(forKey: objectID)
 
-        backend.applySnapshot(state)
+        applySnapshot()
     }
 }
