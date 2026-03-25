@@ -8,7 +8,7 @@
 public struct MapRenderConfiguration: Sendable {
     public static var `default`: MapRenderConfiguration {
         #if os(visionOS)
-        MapRenderConfiguration(engine: .realityKit)
+        MapRenderConfiguration(engine: .metal)
         #else
         MapRenderConfiguration(engine: .metal)
         #endif

@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/23.
 //
 
-#if os(iOS) || os(macOS)
-
 import CoreGraphics
 import Metal
 import RagnarokRenderers
@@ -180,5 +178,3 @@ final class SpriteBillboardRenderer {
         return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }
-
-#endif

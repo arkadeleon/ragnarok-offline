@@ -1171,13 +1171,9 @@ extension MapRenderConfiguration {
     func makeBackend(resourceManager: ResourceManager) -> any MapRenderBackend {
         switch engine {
         case .metal:
-            #if os(iOS) || os(macOS)
-            return MetalMapBackend()
-            #else
-            fatalError("Metal engine is not supported on this platform")
-            #endif
+            MetalMapBackend()
         case .realityKit:
-            return RealityKitMapBackend(resourceManager: resourceManager)
+            RealityKitMapBackend(resourceManager: resourceManager)
         }
     }
 }

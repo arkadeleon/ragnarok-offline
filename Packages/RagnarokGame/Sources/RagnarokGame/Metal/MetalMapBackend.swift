@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/22.
 //
 
-#if os(iOS) || os(macOS)
-
 import CoreGraphics
 import Foundation
 import RagnarokSceneAssets
@@ -155,5 +153,3 @@ final class MetalMapBackend: MapRenderBackend {
         overlay.gauges = gauges
     }
 }
-
-#endif

@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/23.
 //
 
-#if os(iOS) || os(macOS)
-
 import Metal
 import RagnarokRenderers
 import RagnarokSceneAssets
@@ -52,5 +50,3 @@ final class MapWaterRendererAdapter {
         )
     }
 }
-
-#endif

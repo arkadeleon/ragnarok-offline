@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/22.
 //
 
-#if os(iOS) || os(macOS)
-
 import CoreGraphics
 import Metal
 import RagnarokRenderers
@@ -208,5 +206,3 @@ final class MapRuntimeRenderer: Renderer {
         return modelMatrix
     }
 }
-
-#endif

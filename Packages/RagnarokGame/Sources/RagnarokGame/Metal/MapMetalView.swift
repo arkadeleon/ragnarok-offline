@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/22.
 //
 
-#if os(iOS) || os(macOS)
-
 import MetalKit
 import SwiftUI
 
@@ -296,6 +294,4 @@ private extension MapMTKHostView {
         }
     }
 }
-#endif
-
 #endif

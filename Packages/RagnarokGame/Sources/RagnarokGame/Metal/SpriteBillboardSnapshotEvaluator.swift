@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/25.
 //
 
-#if os(iOS) || os(macOS)
-
 import Foundation
 import RagnarokModels
 import RagnarokSprite
@@ -88,5 +86,3 @@ final class SpriteBillboardSnapshotEvaluator {
         return key
     }
 }
-
-#endif

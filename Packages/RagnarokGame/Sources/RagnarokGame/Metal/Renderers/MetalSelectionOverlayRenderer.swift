@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/23.
 //
 
-#if os(iOS) || os(macOS)
-
 import Metal
 import QuartzCore
 import RagnarokRenderers
@@ -129,5 +127,3 @@ final class MetalSelectionOverlayRenderer {
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
     }
 }
-
-#endif

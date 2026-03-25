@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/25.
 //
 
-#if os(iOS) || os(macOS)
-
 import Metal
 import RagnarokModels
 import RagnarokSprite
@@ -48,5 +46,3 @@ struct SpriteBillboardSnapshot {
     var isVisible: Bool
     var content: Content
 }
-
-#endif

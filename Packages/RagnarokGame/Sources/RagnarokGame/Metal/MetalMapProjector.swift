@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/22.
 //
 
-#if os(iOS) || os(macOS)
-
 import CoreGraphics
 import simd
 
@@ -50,5 +48,3 @@ final class MetalMapProjector: MapProjector {
         return CGPoint(x: sx, y: sy)
     }
 }
-
-#endif

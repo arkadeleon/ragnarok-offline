@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/25.
 //
 
-#if os(iOS) || os(macOS)
-
 import Foundation
 import Metal
 import RagnarokModels
@@ -393,5 +391,3 @@ final class SpriteBillboardAssetStore {
         }
     }
 }
-
-#endif
