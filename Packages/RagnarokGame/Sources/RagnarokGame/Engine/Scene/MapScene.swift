@@ -601,6 +601,12 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
         let now = ContinuousClock.now
+        let sourceMapObject = if state.player.id == objectAction.sourceObjectID {
+            state.player.object
+        } else {
+            state.objects[objectAction.sourceObjectID]?.object
+        }
+
         let presentationAction: CharacterActionType
         switch objectAction.type {
         case .sit_down:
@@ -609,9 +615,20 @@ extension MapScene: MapEventHandlerProtocol {
             presentationAction = .idle
         case .pickup_item:
             presentationAction = .pickup
+        case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
+            if let sourceMapObject {
+                presentationAction = CharacterActionType.attackActionType(
+                    forJobID: sourceMapObject.job,
+                    gender: sourceMapObject.gender,
+                    weapon: sourceMapObject.weapon
+                )
+            } else {
+                presentationAction = .attack1
+            }
         default:
             presentationAction = .attack1
         }
+
         let sourceDuration = Duration.milliseconds(objectAction.sourceSpeed)
         let sourceID = objectAction.sourceObjectID
         if state.player.id == sourceID {

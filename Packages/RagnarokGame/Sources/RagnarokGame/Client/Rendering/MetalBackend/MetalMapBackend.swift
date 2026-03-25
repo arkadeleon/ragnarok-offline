@@ -105,17 +105,20 @@ final class MetalMapBackend: MapRenderBackend {
             return
         }
 
-        renderer.updateCamera(
-            cameraState: scene.cameraState,
-            targetPosition: scene.position(for: state.player.gridPosition)
-        )
-
         renderer.updateObjects(
             player: state.player,
             objects: state.objects,
             items: state.items,
             scene: scene,
             resourceManager: scene.resourceManager
+        )
+
+        let playerPresentationPosition =
+            renderer.presentationWorldPosition(for: state.player.id)
+            ?? scene.position(for: state.player.gridPosition)
+        renderer.updateCamera(
+            cameraState: scene.cameraState,
+            targetPosition: playerPresentationPosition
         )
 
         renderer.syncSelection(state.selection.selectedPosition, mapGrid: scene.mapGrid)
@@ -126,14 +129,14 @@ final class MetalMapBackend: MapRenderBackend {
             return
         }
 
-        if let gridPosition = gridPosition(for: scene.state.player.id, in: scene.state) {
+        if let worldPosition = renderer.presentationWorldPosition(for: scene.state.player.id) {
             scene.state.overlaySnapshot.anchors[scene.state.player.id]?.gaugePosition =
-                scene.position(for: gridPosition) + [0, -0.8, 0]
+                worldPosition + [0, -0.8, 0]
         }
         for (objectID, _) in scene.state.objects {
-            if let gridPosition = gridPosition(for: objectID, in: scene.state) {
+            if let worldPosition = renderer.presentationWorldPosition(for: objectID) {
                 scene.state.overlaySnapshot.anchors[objectID]?.gaugePosition =
-                    scene.position(for: gridPosition) + [0, -0.8, 0]
+                    worldPosition + [0, -0.8, 0]
             }
         }
 
@@ -159,13 +162,6 @@ final class MetalMapBackend: MapRenderBackend {
             )
         }
         overlay.gauges = gauges
-    }
-
-    private func gridPosition(for objectID: UInt32, in state: MapSceneState) -> SIMD2<Int>? {
-        if objectID == state.player.id {
-            return state.player.gridPosition
-        }
-        return state.objects[objectID]?.gridPosition
     }
 }
 

@@ -8,7 +8,8 @@ It is intentionally narrower than the original implementation plan:
 
 - The original plan established backend switching and the first runtime/state split.
 - This document defines how to finish the transition so both Metal and RealityKit consume the same runtime snapshot model.
-- The immediate trigger for this plan is the current Metal limitation where moving objects teleport between grid cells because the shared snapshot does not yet carry enough movement semantics for backend-local interpolation.
+- The immediate trigger for this plan was the Metal limitation where moving objects teleported between grid cells because the shared snapshot did not yet carry enough movement semantics for backend-local interpolation.
+- Phase C now closes that Metal gap; the remaining work is primarily RealityKit rebasing and deletion of the temporary compatibility surface.
 
 ## Core Decision
 
@@ -55,14 +56,17 @@ In other words:
 
 ## Current Gaps
 
-The current codebase is in an intentionally transitional state:
+The current codebase is still in an intentionally transitional state, but the main Metal-side gap is now closed:
 
 - `MapSceneRuntimeBackend` still exposes a command-style compatibility API for RealityKit-owned movement, lock-on scheduling, and entity mutation.
-- `MetalMapBackend` consumes `MapSceneState`, but only the coarse `gridPosition` values.
-- `SpriteBillboardRenderer` updates `worldPosition` directly from `gridPosition`, so movement appears as teleportation instead of interpolation.
+- `MetalMapBackend` now consumes shared movement and presentation semantics through backend-local presentation caches instead of coarse `gridPosition` snapshots.
+- `MapRuntimeRenderer` now splits Metal presentation into three layers:
+  - `SpriteBillboardSnapshotEvaluator` evaluates current presentation state from runtime snapshot semantics.
+  - `SpriteBillboardAssetStore` owns composed sprite and animation-frame caching.
+  - `SpriteBillboardRenderer` only renders `SpriteBillboardDrawable` values and computes hit boxes from the current presentation position.
 - RealityKit still owns the only real walking lifecycle through `WalkingComponent` and related systems.
 
-Those gaps mean the project has backend selection, but not yet a fully shared presentation contract.
+Those gaps mean the project now has a real shared presentation contract on Metal, but not yet on RealityKit.
 
 ## Desired End State
 
@@ -147,11 +151,15 @@ Important consequence:
 
 Metal should mirror the same presentation model without recreating entries each frame.
 
-- Maintain `SpriteEntry` and any future animation state keyed by object ID.
+- Maintain long-lived presentation caches keyed by object ID.
 - On snapshot apply, update desired movement/action targets.
 - On each frame, evaluate interpolation from cached semantic state into renderable `worldPosition`, frame selection, and hit boxes.
 
-The current `SpriteBillboardRenderer` already has the right lifetime model for entries; it needs richer state, not a different ownership model.
+This is now implemented in the Metal path as:
+
+- `SpriteBillboardSnapshotEvaluator` for snapshot-to-presentation evaluation
+- `SpriteBillboardAssetStore` for composed-sprite and animation-frame caching
+- `SpriteBillboardRenderer` for pure rendering and hit-box generation
 
 ## 3. Shared runtime surface
 
@@ -236,39 +244,70 @@ Remove gameplay dependence on backend-private walking completion.
 ### Notes
 
 - Arrival is scheduled via `arrivalTask` in `onPlayerMoved()` using `movement.duration + 50ms`, matching the old `WalkingSystem` + `LockOnSystem` client-side timing. `onMapObjectStopped()` serves as a secondary trigger for interrupted movement.
-- `playerMovementOrigin()` returns `movement.to` as the joystick steering origin, which is the final destination rather than the current walking step. The previous implementation used `WalkingComponent.path[1]` (updated step-by-step). Replicating that would duplicate `WalkingSystem` logic. This is deferred to Phase C, where the backend presentation cache will expose a per-frame interpolated position that `playerMovementOrigin()` can read instead.
+- `playerMovementOrigin()` still returns `movement.to` as the joystick steering origin, which is the final destination rather than the current walking step. The previous implementation used `WalkingComponent.path[1]` (updated step-by-step). Phase C did add backend-local presentation position exposure on the Metal side (`presentationWorldPosition(for:)`), but `playerMovementOrigin()` itself has not yet been rebased to consume that presentation position.
 
 ### Risk
 
 - High.
 - This is the main place where hidden dependence on RealityKit walking behavior can still leak through.
 
-## Phase C: Make Metal a Full Snapshot Consumer
+## Phase C: Make Metal a Full Snapshot Consumer ✅
 
 ### Objective
 
 Upgrade the Metal backend from coarse grid-position rendering to presentation-cache-driven motion and animation.
 
-### Changes
+### Changes (as implemented)
 
-Modify:
+Modified:
 
 - `MetalMapBackend`
 - `MapRuntimeRenderer`
 - `SpriteBillboardRenderer`
-- related hit-testing and overlay projection paths
+- related hit-testing, camera targeting, and overlay projection paths
+
+Added / split:
+
+- `SpriteBillboardSnapshotEvaluator`
+- `SpriteBillboardAssetStore`
+- `SpriteBillboardSnapshot`
+- `SpriteBillboardDrawable`
+
+Implementation details:
+
+- `MapRuntimeRenderer` now evaluates Metal presentation in three stages:
+  1. `SpriteBillboardSnapshotEvaluator` converts runtime snapshot semantics into per-object Metal snapshots with interpolated `worldPosition`, resolved animation key, and animation elapsed time.
+  2. `SpriteBillboardAssetStore` keeps long-lived composed-sprite and animation-frame caches, and resolves current `SpriteBillboardDrawable` values from those snapshots.
+  3. `SpriteBillboardRenderer` consumes drawables only; it no longer owns movement or animation semantics.
+- Movement interpolation is evaluated locally from `MapObjectMovementState` using `startedAt`, `duration`, and `path`, including diagonal step timing parity with `WalkingSystem`.
+- Walk animation phase advances from total movement elapsed time rather than resetting at each path-step boundary.
+- Visual facing is adjusted by camera azimuth before selecting animation sheets, matching RealityKit's sprite-facing logic.
+- Timed presentation fallback now preserves post-action poses where required:
+  - `sit` remains seated
+  - attacks and skills return to `readyToAttack` when the job supports it
+  - `pickup` / `hurt` still fall back to `idle`
+- `SpriteBillboardAssetStore` prefetches the current requested animation as soon as `composedSprite` finishes loading, rather than only warming `idle.south`.
+- `MetalMapBackend` and `MapRuntimeRenderer` now derive camera target and overlay anchors from current presentation positions instead of logical grid positions.
+- The sprite billboard shader and CPU-side hit-box computation now use the same horizontal basis, so rendered sprites and hit bounds stay aligned after the sprite-mirroring fix.
 
 ### Deliverables
 
-- Metal interpolates moving objects smoothly from shared movement semantics.
-- Overlay projection follows interpolated presentation positions.
-- Hit testing uses current presentation bounds, not stale grid anchors.
-- Initial animation parity supports at least idle, walk, and attack-facing transitions.
+- ✅ Metal interpolates moving objects smoothly from shared movement semantics.
+- ✅ Overlay projection follows interpolated presentation positions.
+- ✅ Hit testing uses current presentation bounds, not stale grid anchors.
+- ✅ Initial animation parity supports at least idle, walk, attack-facing transitions, and correct post-action settle poses for sit / ready stance flows.
 
 ### Acceptance
 
-- Player and monster movement in Metal no longer teleports between cells.
-- Motion timing is visually close to RealityKit for the same snapshot input.
+- ✅ Player and monster movement in Metal no longer teleports between cells.
+- ✅ Motion timing is visually close to RealityKit for the same snapshot input.
+- ✅ Camera follow and overlay anchor projection read backend-local presentation positions.
+- ✅ `SpriteBillboardRenderer` is now a pure renderer rather than a mixed rendering/presentation/cache owner.
+
+### Notes
+
+- Automated Metal-focused tests are still pending. Validation so far has been package builds plus targeted manual verification of interpolation continuity, direction selection, overlay tracking, hit testing, and post-action pose behavior.
+- RealityKit has not yet been rebased onto the same snapshot-evaluation structure. That remains the core Phase D task.
 
 ### Risk
 

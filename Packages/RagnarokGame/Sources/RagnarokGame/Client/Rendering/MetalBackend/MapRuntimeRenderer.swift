@@ -34,6 +34,10 @@ final class MapRuntimeRenderer: Renderer {
     private(set) var spriteBillboardRenderer: SpriteBillboardRenderer?
     private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
 
+    private let spriteBillboardSnapshotEvaluator = SpriteBillboardSnapshotEvaluator()
+    private var spriteBillboardSnapshots: [UInt32 : SpriteBillboardSnapshot] = [:]
+    private var spriteBillboardAssetStore: SpriteBillboardAssetStore?
+
     private var cameraState: MapCameraState = .default
     private var targetPosition: SIMD3<Float> = .zero
 
@@ -52,9 +56,12 @@ final class MapRuntimeRenderer: Renderer {
             groundRenderer = nil
             waterRenderer = nil
             modelRenderer = nil
-            spriteBillboardRenderer?.cancelAllTasks()
+            spriteBillboardAssetStore?.cancelAllTasks()
+            spriteBillboardAssetStore = nil
+            spriteBillboardRenderer?.reset()
             spriteBillboardRenderer = nil
             selectionOverlayRenderer = nil
+            spriteBillboardSnapshots.removeAll()
             return
         }
 
@@ -74,6 +81,7 @@ final class MapRuntimeRenderer: Renderer {
             lighting: worldAsset.lighting
         )
         spriteBillboardRenderer = try? SpriteBillboardRenderer(device: device)
+        spriteBillboardAssetStore = SpriteBillboardAssetStore(device: device)
         selectionOverlayRenderer = MetalSelectionOverlayRenderer()
     }
 
@@ -93,13 +101,23 @@ final class MapRuntimeRenderer: Renderer {
         scene: MapScene,
         resourceManager: ResourceManager
     ) {
-        spriteBillboardRenderer?.syncObjects(
+        let snapshots = spriteBillboardSnapshotEvaluator.evaluate(
             player: player,
             objects: objects,
             items: items,
-            scene: scene,
+            scene: scene
+        )
+        spriteBillboardSnapshots = snapshots
+        spriteBillboardAssetStore?.sync(
+            snapshots: snapshots,
             resourceManager: resourceManager
         )
+        let drawables = spriteBillboardAssetStore?.drawables(for: snapshots) ?? [:]
+        spriteBillboardRenderer?.update(drawables: drawables)
+    }
+
+    func presentationWorldPosition(for objectID: UInt32) -> SIMD3<Float>? {
+        spriteBillboardSnapshots[objectID]?.worldPosition
     }
 
     func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
