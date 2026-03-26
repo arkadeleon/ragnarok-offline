@@ -908,7 +908,7 @@ final public class GameSession {
     /// Request action on target.
     ///
     /// Send ``PACKET_CZ_REQUEST_ACT``
-    func requestAction(_ actionType: DamageType, onTarget targetID: UInt32 = 0) {
+    func requestAction(_ actionType: DamageType, onTarget targetID: GameObjectID = 0) {
         guard let mapClient else {
             return
         }
@@ -957,7 +957,7 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
-    func useSkill(skillID: Int, level: Int, onTarget targetID: UInt32) {
+    func useSkill(skillID: Int, level: Int, onTarget targetID: GameObjectID) {
         guard let mapClient else {
             return
         }
@@ -1004,7 +1004,7 @@ final public class GameSession {
 
     // MARK: - Item
 
-    func pickUpItem(objectID: UInt32) {
+    func pickUpItem(objectID: GameObjectID) {
         guard let mapClient else {
             return
         }
@@ -1051,7 +1051,7 @@ final public class GameSession {
 
     // MARK: - NPC
 
-    func talkToNPC(npcID: UInt32) {
+    func talkToNPC(npcID: GameObjectID) {
         guard let mapClient else {
             return
         }

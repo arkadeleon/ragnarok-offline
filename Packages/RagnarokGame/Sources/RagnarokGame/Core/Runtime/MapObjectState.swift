@@ -9,7 +9,7 @@ import RagnarokModels
 import simd
 
 public struct MapObjectState: Identifiable, Sendable {
-    public let id: UInt32
+    public let id: GameObjectID
     public var object: MapObject
     public var gridPosition: SIMD2<Int>
     public var hp: Int
@@ -21,7 +21,7 @@ public struct MapObjectState: Identifiable, Sendable {
     public var presentation: MapObjectPresentationState
 
     public init(
-        id: UInt32,
+        id: GameObjectID,
         object: MapObject,
         gridPosition: SIMD2<Int>,
         hp: Int,

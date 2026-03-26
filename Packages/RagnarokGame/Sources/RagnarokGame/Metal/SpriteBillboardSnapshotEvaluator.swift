@@ -14,12 +14,12 @@ import simd
 final class SpriteBillboardSnapshotEvaluator {
     func evaluate(
         player: MapObjectState,
-        objects: [UInt32 : MapObjectState],
-        items: [UInt32 : MapItemState],
+        objects: [GameObjectID : MapObjectState],
+        items: [GameObjectID : MapItemState],
         scene: MapScene
-    ) -> [UInt32 : SpriteBillboardSnapshot] {
+    ) -> [GameObjectID : SpriteBillboardSnapshot] {
         let now = ContinuousClock.now
-        var snapshots: [UInt32 : SpriteBillboardSnapshot] = [:]
+        var snapshots: [GameObjectID : SpriteBillboardSnapshot] = [:]
 
         snapshots[player.id] = snapshot(
             for: player,

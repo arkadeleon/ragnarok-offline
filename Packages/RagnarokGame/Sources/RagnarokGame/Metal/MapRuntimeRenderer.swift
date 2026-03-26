@@ -33,7 +33,7 @@ final class MapRuntimeRenderer: Renderer {
     private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
 
     private let spriteBillboardSnapshotEvaluator = SpriteBillboardSnapshotEvaluator()
-    private var spriteBillboardSnapshots: [UInt32 : SpriteBillboardSnapshot] = [:]
+    private var spriteBillboardSnapshots: [GameObjectID : SpriteBillboardSnapshot] = [:]
     private var spriteBillboardAssetStore: SpriteBillboardAssetStore?
 
     private var cameraState: MapCameraState = .default
@@ -94,8 +94,8 @@ final class MapRuntimeRenderer: Renderer {
 
     func updateObjects(
         player: MapObjectState,
-        objects: [UInt32 : MapObjectState],
-        items: [UInt32 : MapItemState],
+        objects: [GameObjectID : MapObjectState],
+        items: [GameObjectID : MapItemState],
         scene: MapScene,
         resourceManager: ResourceManager
     ) {
@@ -114,7 +114,7 @@ final class MapRuntimeRenderer: Renderer {
         spriteBillboardRenderer?.update(drawables: drawables)
     }
 
-    func presentationWorldPosition(for objectID: UInt32) -> SIMD3<Float>? {
+    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
         spriteBillboardSnapshots[objectID]?.worldPosition
     }
 

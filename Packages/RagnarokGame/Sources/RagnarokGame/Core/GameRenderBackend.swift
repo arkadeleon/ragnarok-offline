@@ -12,8 +12,8 @@ import RagnarokModels
 import simd
 
 public enum MapHitTestResult: Sendable {
-    case mapObject(objectID: UInt32)
-    case item(objectID: UInt32)
+    case mapObject(objectID: GameObjectID)
+    case item(objectID: GameObjectID)
     case ground(position: SIMD2<Int>)
 }
 

@@ -382,7 +382,7 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     private func renderDamageEffect(_ effect: MapDamageEffect) async -> Bool {
-        guard let targetEntity = try? await entityCache.objectEntity(forObjectID: effect.targetObjectID) else {
+        guard let targetEntity = try? await entityCache.objectEntity(for: effect.targetObjectID) else {
             return false
         }
 
@@ -438,8 +438,8 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    private func presentationWorldPosition(for objectID: UInt32) -> SIMD3<Float>? {
-        entityCache.loadedObjectEntity(forObjectID: objectID)?.position(relativeTo: nil)
+    private func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
+        entityCache.loadedObjectEntity(for: objectID)?.position(relativeTo: nil)
     }
 
     private func syncEntities(with state: MapSceneState, scene: MapScene) async {
@@ -448,7 +448,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
         for objectID in entityCache.objectIDs.subtracting(desiredObjectIDs) {
             do {
-                try await entityCache.removeObjectEntity(forObjectID: objectID)
+                try await entityCache.removeObjectEntity(for: objectID)
             } catch {
                 logger.warning("\(error)")
             }
@@ -464,7 +464,7 @@ final class RealityRenderBackend: GameRenderBackend {
         let desiredItemIDs = Set(state.items.keys)
         for objectID in entityCache.itemIDs.subtracting(desiredItemIDs) {
             do {
-                try await entityCache.removeItemEntity(forObjectID: objectID)
+                try await entityCache.removeItemEntity(for: objectID)
             } catch {
                 logger.warning("\(error)")
             }

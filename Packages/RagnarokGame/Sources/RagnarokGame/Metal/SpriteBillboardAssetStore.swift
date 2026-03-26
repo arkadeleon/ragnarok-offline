@@ -14,7 +14,7 @@ import RagnarokSprite
 @MainActor
 final class SpriteBillboardAssetStore {
     private struct AnimationLoadKey: Hashable {
-        let objectID: UInt32
+        let objectID: GameObjectID
         let animation: SpriteBillboardAnimationKey
     }
 
@@ -32,10 +32,10 @@ final class SpriteBillboardAssetStore {
 
     private let device: any MTLDevice
 
-    private var objectAssets: [UInt32 : ObjectAssetEntry] = [:]
-    private var itemAssets: [UInt32 : ItemAssetEntry] = [:]
-    private var objectLoadTasks: [UInt32 : Task<Void, Never>] = [:]
-    private var itemLoadTasks: [UInt32 : Task<Void, Never>] = [:]
+    private var objectAssets: [GameObjectID : ObjectAssetEntry] = [:]
+    private var itemAssets: [GameObjectID : ItemAssetEntry] = [:]
+    private var objectLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
+    private var itemLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
     private var animationLoadTasks: [AnimationLoadKey : Task<Void, Never>] = [:]
 
     init(device: any MTLDevice) {
@@ -43,7 +43,7 @@ final class SpriteBillboardAssetStore {
     }
 
     func sync(
-        snapshots: [UInt32 : SpriteBillboardSnapshot],
+        snapshots: [GameObjectID : SpriteBillboardSnapshot],
         resourceManager: ResourceManager
     ) {
         let currentIDs = Set(snapshots.keys)
@@ -77,7 +77,7 @@ final class SpriteBillboardAssetStore {
                 )
             case .item(let mapItem):
                 syncItemAssets(
-                    itemID: objectID,
+                    objectID: objectID,
                     mapItem: mapItem,
                     resourceManager: resourceManager
                 )
@@ -85,8 +85,8 @@ final class SpriteBillboardAssetStore {
         }
     }
 
-    func drawables(for snapshots: [UInt32 : SpriteBillboardSnapshot]) -> [UInt32 : SpriteBillboardDrawable] {
-        var drawables: [UInt32 : SpriteBillboardDrawable] = [:]
+    func drawables(for snapshots: [GameObjectID : SpriteBillboardSnapshot]) -> [GameObjectID : SpriteBillboardDrawable] {
+        var drawables: [GameObjectID : SpriteBillboardDrawable] = [:]
 
         for (objectID, snapshot) in snapshots {
             switch snapshot.content {
@@ -152,7 +152,7 @@ final class SpriteBillboardAssetStore {
     }
 
     private func syncObjectAssets(
-        objectID: UInt32,
+        objectID: GameObjectID,
         mapObject: MapObject,
         animationKey: SpriteBillboardAnimationKey,
         resourceManager: ResourceManager
@@ -181,28 +181,28 @@ final class SpriteBillboardAssetStore {
     }
 
     private func syncItemAssets(
-        itemID: UInt32,
+        objectID: GameObjectID,
         mapItem: MapItem,
         resourceManager: ResourceManager
     ) {
-        if itemAssets[itemID] == nil {
-            itemAssets[itemID] = ItemAssetEntry(
+        if itemAssets[objectID] == nil {
+            itemAssets[objectID] = ItemAssetEntry(
                 texture: nil,
                 frameWidth: 32,
                 frameHeight: 32
             )
         }
 
-        guard itemAssets[itemID]?.texture == nil, itemLoadTasks[itemID] == nil else {
+        guard itemAssets[objectID]?.texture == nil, itemLoadTasks[objectID] == nil else {
             return
         }
 
-        itemLoadTasks[itemID] = Task { [weak self] in
+        itemLoadTasks[objectID] = Task { [weak self] in
             guard let self else {
                 return
             }
             defer {
-                self.itemLoadTasks.removeValue(forKey: itemID)
+                self.itemLoadTasks.removeValue(forKey: objectID)
             }
 
             let scriptContext = await resourceManager.scriptContext()
@@ -224,11 +224,11 @@ final class SpriteBillboardAssetStore {
                 return
             }
 
-            self.itemAssets[itemID] = ItemAssetEntry(
+            self.itemAssets[objectID] = ItemAssetEntry(
                 texture: MapMetalTextureFactory.makeTexture(
                     from: animation.firstFrame,
                     device: self.device,
-                    label: "sprite-item-\(itemID)"
+                    label: "sprite-item-\(objectID)"
                 ),
                 frameWidth: Float(animation.frameWidth),
                 frameHeight: Float(animation.frameHeight)
@@ -237,7 +237,7 @@ final class SpriteBillboardAssetStore {
     }
 
     private func ensureComposedSpriteLoaded(
-        for objectID: UInt32,
+        for objectID: GameObjectID,
         mapObject: MapObject,
         prefetchKeys: [SpriteBillboardAnimationKey],
         resourceManager: ResourceManager
@@ -284,7 +284,7 @@ final class SpriteBillboardAssetStore {
     }
 
     private func ensureAnimationLoaded(
-        for objectID: UInt32,
+        for objectID: GameObjectID,
         animationKey: SpriteBillboardAnimationKey
     ) {
         guard let objectAsset = objectAssets[objectID],

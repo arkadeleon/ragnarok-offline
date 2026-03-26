@@ -12,8 +12,8 @@ import simd
 @Observable
 public final class MapSceneState {
     public var player: MapObjectState
-    public var objects: [UInt32 : MapObjectState] = [:]
-    public var items: [UInt32 : MapItemState] = [:]
+    public var objects: [GameObjectID : MapObjectState] = [:]
+    public var items: [GameObjectID : MapItemState] = [:]
     public var selection: SIMD2<Int>?
     public var damageEffects: [MapDamageEffect] = []
     public let overlay = MapOverlayState()

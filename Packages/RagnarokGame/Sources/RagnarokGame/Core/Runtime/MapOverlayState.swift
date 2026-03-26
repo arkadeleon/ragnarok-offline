@@ -12,11 +12,11 @@ import RagnarokModels
 @MainActor
 @Observable
 public final class MapOverlayState {
-    var gauges: [UInt32 : MapGaugeOverlay] = [:]
+    var gauges: [GameObjectID : MapGaugeOverlay] = [:]
 }
 
 struct MapGaugeOverlay: Identifiable, Sendable {
-    let objectID: UInt32
+    var id: GameObjectID
     var hp: Int
     var maxHp: Int
     var sp: Int?
@@ -25,8 +25,4 @@ struct MapGaugeOverlay: Identifiable, Sendable {
 
     var worldPosition: SIMD3<Float>?
     var screenPosition: CGPoint?
-
-    var id: UInt32 {
-        objectID
-    }
 }

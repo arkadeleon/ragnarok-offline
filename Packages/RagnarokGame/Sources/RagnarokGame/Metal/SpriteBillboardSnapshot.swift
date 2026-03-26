@@ -23,7 +23,7 @@ struct SpriteBillboardAnimationFrames {
 }
 
 struct SpriteBillboardDrawable {
-    let objectID: UInt32
+    let objectID: GameObjectID
     var texture: (any MTLTexture)?
     var frameWidth: Float
     var frameHeight: Float
@@ -41,7 +41,7 @@ struct SpriteBillboardSnapshot {
         case item(MapItem)
     }
 
-    let objectID: UInt32
+    let objectID: GameObjectID
     var worldPosition: SIMD3<Float>
     var isVisible: Bool
     var content: Content

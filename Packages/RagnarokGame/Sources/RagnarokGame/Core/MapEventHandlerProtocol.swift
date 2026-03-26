@@ -18,14 +18,14 @@ protocol MapEventHandlerProtocol {
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection)
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>)
-    func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>)
-    func onMapObjectVanished(objectID: UInt32)
-    func onMapObjectDirectionChanged(objectID: UInt32, direction: Direction, headDirection: HeadDirection)
-    func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
+    func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>)
+    func onMapObjectVanished(objectID: GameObjectID)
+    func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection)
+    func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
     func onMapObjectActionPerformed(objectAction: MapObjectAction)
 
     func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL)
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>)
-    func onItemVanished(objectID: UInt32)
+    func onItemVanished(objectID: GameObjectID)
 }

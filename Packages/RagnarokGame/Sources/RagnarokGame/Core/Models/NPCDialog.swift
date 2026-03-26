@@ -10,7 +10,7 @@ import RagnarokModels
 
 @Observable
 final class NPCDialog {
-    let npcID: UInt32
+    let npcID: GameObjectID
     var message: String
     var action: NPCDialogAction?
     var menu: [String]?
@@ -19,7 +19,7 @@ final class NPCDialog {
     @ObservationIgnored
     private var needsClear = false
 
-    init(npcID: UInt32, message: String) {
+    init(npcID: GameObjectID, message: String) {
         self.npcID = npcID
         self.message = message
     }

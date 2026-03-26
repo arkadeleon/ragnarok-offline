@@ -16,10 +16,10 @@ final class SpriteBillboardRenderer {
     private var renderPipelineState: (any MTLRenderPipelineState)?
     private var depthStencilState: (any MTLDepthStencilState)?
 
-    private var drawables: [UInt32 : SpriteBillboardDrawable] = [:]
+    private var drawables: [GameObjectID : SpriteBillboardDrawable] = [:]
 
     /// Screen-space bounding boxes (top-left origin) updated each render call.
-    private(set) var hitBoxes: [UInt32 : CGRect] = [:]
+    private(set) var hitBoxes: [GameObjectID : CGRect] = [:]
 
     init(device: any MTLDevice) throws {
         let library = ragnarokShadersLibrary(device: device)!
@@ -42,7 +42,7 @@ final class SpriteBillboardRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    func update(drawables: [UInt32 : SpriteBillboardDrawable]) {
+    func update(drawables: [GameObjectID : SpriteBillboardDrawable]) {
         self.drawables = drawables
     }
 
@@ -64,7 +64,7 @@ final class SpriteBillboardRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        var newHitBoxes: [UInt32: CGRect] = [:]
+        var newHitBoxes: [GameObjectID: CGRect] = [:]
 
         for (id, drawable) in drawables {
             guard drawable.isVisible, let texture = drawable.texture else {

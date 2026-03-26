@@ -32,18 +32,18 @@ final class SpriteEntityManager {
         }
     }
 
-    private var entitiesByObjectID: [UInt32 : EntityPhase] = [:]
+    private var entitiesByObjectID: [GameObjectID : EntityPhase] = [:]
     private var templateEntitiesByJobID: [Int : EntityPhase] = [:]
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
     }
 
-    func addEntity(_ entity: Entity, forObjectID objectID: UInt32) {
+    func addEntity(_ entity: Entity, for objectID: GameObjectID) {
         entitiesByObjectID[objectID] = .loaded(entity)
     }
 
-    func removeEntity(forObjectID objectID: UInt32) async throws {
+    func removeEntity(for objectID: GameObjectID) async throws {
         if let phase = entitiesByObjectID[objectID] {
             let entity = try await phase.entity
             entity.removeFromParent()
@@ -51,7 +51,7 @@ final class SpriteEntityManager {
         }
     }
 
-    func findEntity(forObjectID objectID: UInt32) async throws -> Entity? {
+    func findEntity(for objectID: GameObjectID) async throws -> Entity? {
         if let phase = entitiesByObjectID[objectID] {
             try await phase.entity
         } else {

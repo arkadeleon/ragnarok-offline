@@ -87,7 +87,7 @@ public final class MapScene {
         self.pathfinder = Pathfinder(mapGrid: self.mapGrid)
 
         state.overlay.gauges[player.objectID] = MapGaugeOverlay(
-            objectID: player.objectID,
+            id: player.objectID,
             hp: character.hp,
             maxHp: character.maxHp,
             sp: character.sp,
@@ -234,7 +234,7 @@ public final class MapScene {
         }
     }
 
-    private func handleMapObjectSelection(objectID: UInt32) {
+    private func handleMapObjectSelection(objectID: GameObjectID) {
         guard let target = state.objects[objectID] else {
             return
         }
@@ -411,7 +411,7 @@ extension MapScene: MapEventHandlerProtocol {
 
         if object.type == .monster {
             state.overlay.gauges[object.objectID] = MapGaugeOverlay(
-                objectID: object.objectID,
+                id: object.objectID,
                 hp: object.hp,
                 maxHp: object.maxHp,
                 objectType: object.type
@@ -459,7 +459,7 @@ extension MapScene: MapEventHandlerProtocol {
             )
             if object.type == .monster {
                 state.overlay.gauges[object.objectID] = MapGaugeOverlay(
-                    objectID: object.objectID,
+                    id: object.objectID,
                     hp: object.hp,
                     maxHp: object.maxHp,
                     objectType: object.type
@@ -470,7 +470,7 @@ extension MapScene: MapEventHandlerProtocol {
         applySnapshot()
     }
 
-    func onMapObjectStopped(objectID: UInt32, position: SIMD2<Int>) {
+    func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
         let now = ContinuousClock.now
         if state.player.id == objectID {
             state.player.gridPosition = position
@@ -502,14 +502,14 @@ extension MapScene: MapEventHandlerProtocol {
         applySnapshot()
     }
 
-    func onMapObjectVanished(objectID: UInt32) {
+    func onMapObjectVanished(objectID: GameObjectID) {
         state.objects.removeValue(forKey: objectID)
         state.overlay.gauges.removeValue(forKey: objectID)
 
         applySnapshot()
     }
 
-    func onMapObjectDirectionChanged(objectID: UInt32, direction: Direction, headDirection: HeadDirection) {
+    func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
         if state.player.id == objectID {
             state.player.presentation.direction = CharacterDirection(direction: direction)
         } else {
@@ -519,7 +519,7 @@ extension MapScene: MapEventHandlerProtocol {
         applySnapshot()
     }
 
-    func onMapObjectStateChanged(objectID: UInt32, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
+    func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
         let isVisible = effectState != .cloak
 
         if state.player.id == objectID {
@@ -531,7 +531,7 @@ extension MapScene: MapEventHandlerProtocol {
         if isVisible {
             if state.player.id == objectID {
                 state.overlay.gauges[objectID] = MapGaugeOverlay(
-                    objectID: objectID,
+                    id: objectID,
                     hp: state.player.hp,
                     maxHp: state.player.maxHp,
                     sp: state.player.sp,
@@ -540,7 +540,7 @@ extension MapScene: MapEventHandlerProtocol {
                 )
             } else if let objectState = state.objects[objectID], objectState.object.type == .monster {
                 state.overlay.gauges[objectID] = MapGaugeOverlay(
-                    objectID: objectID,
+                    id: objectID,
                     hp: objectState.hp,
                     maxHp: objectState.maxHp,
                     objectType: objectState.object.type
@@ -714,7 +714,7 @@ extension MapScene: MapEventHandlerProtocol {
         applySnapshot()
     }
 
-    func onItemVanished(objectID: UInt32) {
+    func onItemVanished(objectID: GameObjectID) {
         state.items.removeValue(forKey: objectID)
 
         applySnapshot()

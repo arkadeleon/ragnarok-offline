@@ -30,36 +30,36 @@ enum RealityEntityPhase {
 final class RealityEntityCache {
     private let factory: RealitySpriteNodeFactory
 
-    private var objectEntitiesByID: [UInt32 : RealityEntityPhase] = [:]
-    private var itemEntitiesByID: [UInt32 : RealityEntityPhase] = [:]
+    private var objectEntities: [GameObjectID : RealityEntityPhase] = [:]
+    private var itemEntities: [GameObjectID : RealityEntityPhase] = [:]
     private var templateEntitiesByJobID: [Int : RealityEntityPhase] = [:]
 
-    var objectIDs: Set<UInt32> {
-        Set(objectEntitiesByID.keys)
+    var objectIDs: Set<GameObjectID> {
+        Set(objectEntities.keys)
     }
 
-    var itemIDs: Set<UInt32> {
-        Set(itemEntitiesByID.keys)
+    var itemIDs: Set<GameObjectID> {
+        Set(itemEntities.keys)
     }
 
     init(factory: RealitySpriteNodeFactory) {
         self.factory = factory
     }
 
-    func addObjectEntity(_ entity: Entity, forObjectID objectID: UInt32) {
-        objectEntitiesByID[objectID] = .loaded(entity)
+    func addObjectEntity(_ entity: Entity, for objectID: GameObjectID) {
+        objectEntities[objectID] = .loaded(entity)
     }
 
-    func objectEntity(forObjectID objectID: UInt32) async throws -> Entity? {
-        if let phase = objectEntitiesByID[objectID] {
+    func objectEntity(for objectID: GameObjectID) async throws -> Entity? {
+        if let phase = objectEntities[objectID] {
             try await phase.entity
         } else {
             nil
         }
     }
 
-    func loadedObjectEntity(forObjectID objectID: UInt32) -> Entity? {
-        guard let phase = objectEntitiesByID[objectID] else {
+    func loadedObjectEntity(for objectID: GameObjectID) -> Entity? {
+        guard let phase = objectEntities[objectID] else {
             return nil
         }
 
@@ -71,8 +71,8 @@ final class RealityEntityCache {
         }
     }
 
-    func removeObjectEntity(forObjectID objectID: UInt32) async throws {
-        if let phase = objectEntitiesByID.removeValue(forKey: objectID) {
+    func removeObjectEntity(for objectID: GameObjectID) async throws {
+        if let phase = objectEntities.removeValue(forKey: objectID) {
             let entity = try await phase.entity
             entity.removeFromParent()
         }
@@ -88,23 +88,23 @@ final class RealityEntityCache {
     }
 
     private func playerEntity(for mapObject: MapObject) async throws -> (entity: Entity, isNew: Bool) {
-        if let phase = objectEntitiesByID[mapObject.objectID] {
+        if let phase = objectEntities[mapObject.objectID] {
             return try await (phase.entity, false)
         }
 
         let task = Task {
             try await factory.makeMapObjectEntity(for: mapObject)
         }
-        objectEntitiesByID[mapObject.objectID] = .inProgress(task)
+        objectEntities[mapObject.objectID] = .inProgress(task)
 
         let entity = try await task.value
-        objectEntitiesByID[mapObject.objectID] = .loaded(entity)
+        objectEntities[mapObject.objectID] = .loaded(entity)
 
         return (entity, true)
     }
 
     private func nonPlayerEntity(for mapObject: MapObject) async throws -> (entity: Entity, isNew: Bool) {
-        if let phase = objectEntitiesByID[mapObject.objectID] {
+        if let phase = objectEntities[mapObject.objectID] {
             return try await (phase.entity, false)
         }
 
@@ -113,10 +113,10 @@ final class RealityEntityCache {
                 let templateEntity = try await templatePhase.entity
                 return templateEntity.clone(recursive: true)
             }
-            objectEntitiesByID[mapObject.objectID] = .inProgress(cloneTask)
+            objectEntities[mapObject.objectID] = .inProgress(cloneTask)
 
             let clonedEntity = try await cloneTask.value
-            objectEntitiesByID[mapObject.objectID] = .loaded(clonedEntity)
+            objectEntities[mapObject.objectID] = .loaded(clonedEntity)
 
             return (clonedEntity, true)
         }
@@ -130,28 +130,28 @@ final class RealityEntityCache {
         templateEntitiesByJobID[mapObject.job] = .loaded(templateEntity)
 
         let clonedEntity = templateEntity.clone(recursive: true)
-        objectEntitiesByID[mapObject.objectID] = .loaded(clonedEntity)
+        objectEntities[mapObject.objectID] = .loaded(clonedEntity)
 
         return (clonedEntity, true)
     }
 
     func itemEntity(for mapItem: MapItem) async throws -> Entity {
-        if let phase = itemEntitiesByID[mapItem.objectID] {
+        if let phase = itemEntities[mapItem.objectID] {
             return try await phase.entity
         }
 
         let task = Task {
             try await factory.makeMapItemEntity(for: mapItem)
         }
-        itemEntitiesByID[mapItem.objectID] = .inProgress(task)
+        itemEntities[mapItem.objectID] = .inProgress(task)
 
         let entity = try await task.value
-        itemEntitiesByID[mapItem.objectID] = .loaded(entity)
+        itemEntities[mapItem.objectID] = .loaded(entity)
         return entity
     }
 
-    func removeItemEntity(forObjectID objectID: UInt32) async throws {
-        if let phase = itemEntitiesByID.removeValue(forKey: objectID) {
+    func removeItemEntity(for objectID: GameObjectID) async throws {
+        if let phase = itemEntities.removeValue(forKey: objectID) {
             let entity = try await phase.entity
             entity.removeFromParent()
         }

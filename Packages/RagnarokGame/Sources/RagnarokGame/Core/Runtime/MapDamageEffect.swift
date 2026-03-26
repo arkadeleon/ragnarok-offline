@@ -10,14 +10,14 @@ import Foundation
 public struct MapDamageEffect: Identifiable, Sendable {
     public let id: UUID
     public let creationTime: ContinuousClock.Instant
-    public var targetObjectID: UInt32
+    public var targetObjectID: GameObjectID
     public var amount: Int
     public var delay: TimeInterval
 
     public init(
         id: UUID = UUID(),
         creationTime: ContinuousClock.Instant = .now,
-        targetObjectID: UInt32,
+        targetObjectID: GameObjectID,
         amount: Int,
         delay: TimeInterval
     ) {
