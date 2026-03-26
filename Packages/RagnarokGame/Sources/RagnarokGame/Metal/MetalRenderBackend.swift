@@ -107,7 +107,7 @@ final class MetalRenderBackend: GameRenderBackend {
             targetPosition: playerPresentationPosition
         )
 
-        renderer.syncSelection(state.selection.selectedPosition, mapGrid: scene.mapGrid)
+        renderer.syncSelection(state.selection, mapGrid: scene.mapGrid)
     }
 
     private func syncAndProjectOverlay() {

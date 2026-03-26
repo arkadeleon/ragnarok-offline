@@ -16,6 +16,12 @@ import RagnarokSprite
 import SGLMath
 import simd
 
+private enum MapMovementDecision {
+    case alreadyInRange
+    case moveTo(SIMD2<Int>)
+    case noPath
+}
+
 @MainActor
 public final class MapScene {
     let mapName: String
@@ -31,7 +37,6 @@ public final class MapScene {
     let state: MapSceneState
 
     private let pathfinder: Pathfinder
-    private let interactionResolver: MapInteractionResolver
     private var pendingArrivalAction: (@MainActor () -> Void)?
     private var arrivalTask: Task<Void, Never>?
 
@@ -80,7 +85,6 @@ public final class MapScene {
         self.state = MapSceneState(player: playerState)
 
         self.pathfinder = Pathfinder(mapGrid: self.mapGrid)
-        self.interactionResolver = MapInteractionResolver(pathfinder: self.pathfinder)
 
         state.overlay.gauges[player.objectID] = MapGaugeOverlay(
             objectID: player.objectID,
@@ -104,8 +108,8 @@ public final class MapScene {
         renderBackend.detach()
     }
 
-    func handle(_ intent: MapInputIntent) {
-        onMovementValueChanged(movementValue: intent.movementValue)
+    func handleMovement(_ movementValue: CGPoint) {
+        onMovementValueChanged(movementValue: movementValue)
     }
 
     func handleInteraction(_ result: MapHitTestResult) {
@@ -120,7 +124,7 @@ public final class MapScene {
     }
 
     func selectGround(at position: SIMD2<Int>) {
-        state.selection.selectedPosition = position
+        state.selection = position
         applySnapshot()
         gameSession?.requestMove(to: position)
     }
@@ -277,9 +281,20 @@ public final class MapScene {
         }
     }
 
+    private func decideMovement(from playerPosition: SIMD2<Int>, toward targetPosition: SIMD2<Int>, within range: Int) -> MapMovementDecision {
+        let path = pathfinder.findPath(from: playerPosition, to: targetPosition, within: range)
+        if path.isEmpty {
+            return .noPath
+        } else if path == [playerPosition] {
+            return .alreadyInRange
+        } else {
+            return .moveTo(path.last ?? targetPosition)
+        }
+    }
+
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
         let startPosition = state.player.gridPosition
-        switch interactionResolver.decideMovement(from: startPosition, toward: targetPosition, within: range) {
+        switch decideMovement(from: startPosition, toward: targetPosition, within: range) {
         case .alreadyInRange:
             onArrival()
         case .moveTo(let destination):

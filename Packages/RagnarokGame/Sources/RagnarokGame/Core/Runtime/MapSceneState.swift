@@ -6,6 +6,7 @@
 //
 
 import Observation
+import simd
 
 @MainActor
 @Observable
@@ -13,7 +14,7 @@ public final class MapSceneState {
     public var player: MapObjectState
     public var objects: [UInt32 : MapObjectState] = [:]
     public var items: [UInt32 : MapItemState] = [:]
-    public var selection: MapSelectionState = MapSelectionState()
+    public var selection: SIMD2<Int>?
     public var damageEffects: [MapDamageEffect] = []
     public let overlay = MapOverlayState()
 

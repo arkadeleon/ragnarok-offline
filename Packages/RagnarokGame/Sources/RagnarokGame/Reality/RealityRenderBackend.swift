@@ -143,7 +143,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
         updateCameraState(scene.cameraState)
         updateTileEntities(forCenter: state.player.gridPosition, mapGrid: scene.mapGrid)
-        tileSelectionRenderer.syncSelection(state.selection.selectedPosition, mapGrid: scene.mapGrid)
+        tileSelectionRenderer.syncSelection(state.selection, mapGrid: scene.mapGrid)
 
         snapshotTask?.cancel()
         snapshotTask = Task { @MainActor [weak self, weak scene] in
