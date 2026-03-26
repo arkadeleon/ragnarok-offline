@@ -22,7 +22,7 @@ final public class GameSession {
     public let windowID = "Game"
     public let immersiveSpaceID = "Game"
 
-    public let renderConfiguration: MapRenderConfiguration = .default
+    public let renderConfiguration: GameRenderConfiguration = .default
 
     let resourceManager: ResourceManager
 
@@ -1166,14 +1166,14 @@ extension GameSession {
 
 // MARK: - Render Backend
 
-extension MapRenderConfiguration {
+extension GameRenderConfiguration {
     @MainActor
-    func makeBackend(resourceManager: ResourceManager) -> any MapRenderBackend {
+    func makeBackend(resourceManager: ResourceManager) -> any GameRenderBackend {
         switch engine {
         case .metal:
-            MetalMapBackend()
+            MetalRenderBackend()
         case .realityKit:
-            RealityKitMapBackend(resourceManager: resourceManager)
+            RealityRenderBackend(resourceManager: resourceManager)
         }
     }
 }

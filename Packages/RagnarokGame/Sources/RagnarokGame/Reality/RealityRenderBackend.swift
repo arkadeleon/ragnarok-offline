@@ -1,5 +1,5 @@
 //
-//  RealityKitMapBackend.swift
+//  RealityRenderBackend.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/21.
@@ -19,7 +19,7 @@ import Spatial
 import SwiftUI
 import WorldCamera
 
-final class RealityKitMapBackend: MapRenderBackend {
+final class RealityRenderBackend: GameRenderBackend {
     private weak var scene: MapScene?
 
     let rootEntity = Entity()

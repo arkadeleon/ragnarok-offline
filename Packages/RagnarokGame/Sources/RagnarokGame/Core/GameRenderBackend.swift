@@ -1,5 +1,5 @@
 //
-//  MapRenderBackend.swift
+//  GameRenderBackend.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/21.
@@ -18,11 +18,12 @@ public enum MapHitTestResult: Sendable {
 }
 
 @MainActor
-public protocol MapRenderBackend: AnyObject {
+public protocol GameRenderBackend: AnyObject {
     var projector: (any MapProjector)? { get }
 
     func attach(scene: MapScene)
     func detach()
+
     func load(progress: Progress) async
     func unload()
 

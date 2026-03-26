@@ -5,9 +5,7 @@
 //  Created by Leon Li on 2026/3/21.
 //
 
-#if os(visionOS)
 import RealityKit
-#endif
 import SwiftUI
 
 public struct MapRealityView: View {
@@ -20,7 +18,7 @@ public struct MapRealityView: View {
 
     public var body: some View {
         #if os(visionOS)
-        if let backend = scene.renderBackend as? RealityKitMapBackend {
+        if let backend = scene.renderBackend as? RealityRenderBackend {
             RealityView { content in
                 content.add(backend.rootEntity)
             } update: { _ in
@@ -46,7 +44,7 @@ public struct MapRealityView: View {
             EmptyView()
         }
         #else
-        if let backend = scene.renderBackend as? RealityKitMapBackend {
+        if let backend = scene.renderBackend as? RealityRenderBackend {
             MapSceneARView(scene: scene, overlay: overlay, backend: backend)
         } else {
             EmptyView()

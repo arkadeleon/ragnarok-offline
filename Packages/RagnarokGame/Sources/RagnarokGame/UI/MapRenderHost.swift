@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MapRenderHost: View {
     var scene: MapScene
-    var configuration: MapRenderConfiguration
+    var configuration: GameRenderConfiguration
     var overlay: MapSceneOverlay?
 
     var body: some View {

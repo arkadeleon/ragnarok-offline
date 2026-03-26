@@ -13,7 +13,7 @@ struct MapMetalView: View {
     var overlay: MapSceneOverlay?
 
     var body: some View {
-        if let backend = scene.renderBackend as? MetalMapBackend {
+        if let backend = scene.renderBackend as? MetalRenderBackend {
             MapMetalViewContainer(scene: scene, overlay: overlay, backend: backend)
         } else {
             EmptyView()
@@ -26,7 +26,7 @@ struct MapMetalView: View {
 private struct MapMetalViewContainer: UIViewRepresentable {
     var scene: MapScene
     var overlay: MapSceneOverlay?
-    var backend: MetalMapBackend
+    var backend: MetalRenderBackend
 
     func makeUIView(context: Context) -> MapMTKHostView {
         MapMTKHostView(scene: scene, backend: backend)
@@ -43,7 +43,7 @@ private struct MapMetalViewContainer: UIViewRepresentable {
 private struct MapMetalViewContainer: NSViewRepresentable {
     var scene: MapScene
     var overlay: MapSceneOverlay?
-    var backend: MetalMapBackend
+    var backend: MetalRenderBackend
 
     func makeNSView(context: Context) -> MapMTKHostView {
         MapMTKHostView(scene: scene, backend: backend)
@@ -65,7 +65,7 @@ private typealias PlatformView = NSView
 
 private final class MapMTKHostView: PlatformView, MTKViewDelegate {
     private weak var scene: MapScene?
-    private let backend: MetalMapBackend
+    private let backend: MetalRenderBackend
     private let commandQueue: any MTLCommandQueue
     private let renderer: MapRuntimeRenderer
     private let mtkView: MTKView
@@ -74,7 +74,7 @@ private final class MapMTKHostView: PlatformView, MTKViewDelegate {
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
 
-    init(scene: MapScene, backend: MetalMapBackend) {
+    init(scene: MapScene, backend: MetalRenderBackend) {
         self.scene = scene
         self.backend = backend
         self.renderer = backend.renderer

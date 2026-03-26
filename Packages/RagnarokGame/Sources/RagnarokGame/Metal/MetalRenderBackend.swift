@@ -1,5 +1,5 @@
 //
-//  MetalMapBackend.swift
+//  MetalRenderBackend.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/22.
@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import RagnarokSceneAssets
 
-final class MetalMapBackend: MapRenderBackend {
+final class MetalRenderBackend: GameRenderBackend {
     private(set) weak var scene: MapScene?
 
     let renderer: MapRuntimeRenderer

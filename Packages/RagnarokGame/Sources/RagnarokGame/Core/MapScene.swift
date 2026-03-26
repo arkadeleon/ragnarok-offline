@@ -23,7 +23,7 @@ public final class MapScene {
     let character: CharacterInfo
     let player: MapObject
     let playerPosition: SIMD2<Int>
-    let renderBackend: any MapRenderBackend
+    let renderBackend: any GameRenderBackend
     let resourceManager: ResourceManager
     weak let gameSession: GameSession?
 
@@ -47,7 +47,7 @@ public final class MapScene {
         character: CharacterInfo,
         player: MapObject,
         playerPosition: SIMD2<Int>,
-        renderBackend: any MapRenderBackend,
+        renderBackend: any GameRenderBackend,
         resourceManager: ResourceManager,
         gameSession: GameSession
     ) {
