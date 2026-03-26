@@ -24,8 +24,6 @@ final class RealityRenderBackend: GameRenderBackend {
 
     let rootEntity = Entity()
 
-    var overlay: MapSceneOverlay?
-
     private let entityCache: RealityEntityCache
     private let tileSelectionRenderer: RealityTileSelectionRenderer
 
@@ -67,7 +65,6 @@ final class RealityRenderBackend: GameRenderBackend {
         snapshotTask = nil
         renderedDamageEffectIDs.removeAll()
         scene = nil
-        overlay = nil
         #if os(iOS) || os(macOS)
         realityMapProjector = nil
         realityMapHitTester = nil
@@ -194,38 +191,21 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func syncAndProjectOverlay() {
-        guard let scene else {
+        guard let scene, let projector = realityMapProjector else {
             return
         }
 
-        for objectID in scene.state.overlaySnapshot.anchors.keys {
-            if let worldPosition = presentationWorldPosition(for: objectID) {
-                scene.state.overlaySnapshot.anchors[objectID]?.gaugePosition = worldPosition + [0, -0.8, 0]
-            }
-        }
-
-        guard let overlay, let projector = realityMapProjector else {
-            return
-        }
-
-        var gauges: [UInt32: MapSceneOverlay.Gauge] = [:]
-        for anchor in scene.state.overlaySnapshot.anchors.values {
-            guard let gaugePosition = anchor.gaugePosition,
-                  let screenPoint = projector.project(gaugePosition) else {
+        for objectID in scene.state.overlay.gauges.keys {
+            guard var worldPosition = presentationWorldPosition(for: objectID) else {
                 continue
             }
 
-            gauges[anchor.id] = MapSceneOverlay.Gauge(
-                objectID: anchor.id,
-                hp: anchor.hp,
-                maxHp: anchor.maxHp,
-                sp: anchor.sp,
-                maxSp: anchor.maxSp,
-                objectType: anchor.objectType,
-                screenPosition: screenPoint
-            )
+            worldPosition += [0, -0.8, 0]
+            scene.state.overlay.gauges[objectID]?.worldPosition = worldPosition
+
+            let screenPosition = projector.project(worldPosition)
+            scene.state.overlay.gauges[objectID]?.screenPosition = screenPosition
         }
-        overlay.gauges = gauges
     }
     #endif
 

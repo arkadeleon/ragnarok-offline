@@ -30,9 +30,9 @@ struct MapView: View {
             #if os(visionOS)
             MapRenderHost(scene: scene, configuration: gameSession.renderConfiguration)
             #else
-            MapRenderHost(scene: scene, configuration: gameSession.renderConfiguration, overlay: gameSession.overlay)
+            MapRenderHost(scene: scene, configuration: gameSession.renderConfiguration)
                 .overlay {
-                    MapSceneOverlayView(overlay: gameSession.overlay)
+                    MapOverlayView(overlay: scene.state.overlay)
                 }
             #endif
         }

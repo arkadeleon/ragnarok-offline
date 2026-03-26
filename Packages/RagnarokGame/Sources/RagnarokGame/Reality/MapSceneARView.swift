@@ -13,15 +13,13 @@ import SwiftUI
 
 struct MapSceneARView: UIViewControllerRepresentable {
     var scene: MapScene
-    var overlay: MapSceneOverlay?
     var backend: RealityRenderBackend
 
     func makeUIViewController(context: Context) -> MapSceneARViewController {
-        MapSceneARViewController(scene: scene, overlay: overlay, backend: backend)
+        MapSceneARViewController(scene: scene, backend: backend)
     }
 
     func updateUIViewController(_ viewController: MapSceneARViewController, context: Context) {
-        backend.overlay = overlay
     }
 }
 
@@ -35,11 +33,10 @@ class MapSceneARViewController: UIViewController {
     private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene, overlay: MapSceneOverlay?, backend: RealityRenderBackend) {
+    init(scene: MapScene, backend: RealityRenderBackend) {
         self.scene = scene
         self.backend = backend
         super.init(nibName: nil, bundle: nil)
-        backend.overlay = overlay
     }
 
     required init?(coder: NSCoder) {
@@ -148,15 +145,13 @@ class MapSceneARViewController: UIViewController {
 
 struct MapSceneARView: NSViewControllerRepresentable {
     var scene: MapScene
-    var overlay: MapSceneOverlay?
     var backend: RealityRenderBackend
 
     func makeNSViewController(context: Context) -> MapSceneARViewController {
-        MapSceneARViewController(scene: scene, overlay: overlay, backend: backend)
+        MapSceneARViewController(scene: scene, backend: backend)
     }
 
     func updateNSViewController(_ viewController: MapSceneARViewController, context: Context) {
-        backend.overlay = overlay
     }
 }
 
@@ -170,11 +165,10 @@ class MapSceneARViewController: NSViewController {
     private var baseDistance: Float = 0
     private var sceneSubscription: (any Cancellable)?
 
-    init(scene: MapScene, overlay: MapSceneOverlay?, backend: RealityRenderBackend) {
+    init(scene: MapScene, backend: RealityRenderBackend) {
         self.scene = scene
         self.backend = backend
         super.init(nibName: nil, bundle: nil)
-        backend.overlay = overlay
     }
 
     required init?(coder: NSCoder) {

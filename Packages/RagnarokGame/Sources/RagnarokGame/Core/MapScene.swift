@@ -82,8 +82,8 @@ public final class MapScene {
         self.pathfinder = Pathfinder(mapGrid: self.mapGrid)
         self.interactionResolver = MapInteractionResolver(pathfinder: self.pathfinder)
 
-        state.overlaySnapshot.anchors[player.objectID] = MapOverlayAnchor(
-            id: player.objectID,
+        state.overlay.gauges[player.objectID] = MapGaugeOverlay(
+            objectID: player.objectID,
             hp: character.hp,
             maxHp: character.maxHp,
             sp: character.sp,
@@ -301,19 +301,19 @@ extension MapScene: MapEventHandlerProtocol {
         switch sp {
         case .hp:
             state.player.hp = Int(packet.count)
-            state.overlaySnapshot.anchors[player.objectID]?.hp = Int(packet.count)
+            state.overlay.gauges[player.objectID]?.hp = Int(packet.count)
             applySnapshot()
         case .maxhp:
             state.player.maxHp = Int(packet.count)
-            state.overlaySnapshot.anchors[player.objectID]?.maxHp = Int(packet.count)
+            state.overlay.gauges[player.objectID]?.maxHp = Int(packet.count)
             applySnapshot()
         case .sp:
             state.player.sp = Int(packet.count)
-            state.overlaySnapshot.anchors[player.objectID]?.sp = Int(packet.count)
+            state.overlay.gauges[player.objectID]?.sp = Int(packet.count)
             applySnapshot()
         case .maxsp:
             state.player.maxSp = Int(packet.count)
-            state.overlaySnapshot.anchors[player.objectID]?.maxSp = Int(packet.count)
+            state.overlay.gauges[player.objectID]?.maxSp = Int(packet.count)
             applySnapshot()
         default:
             break
@@ -324,13 +324,13 @@ extension MapScene: MapEventHandlerProtocol {
         if state.player.id == packet.GID {
             state.player.hp = Int(packet.HP)
             state.player.maxHp = Int(packet.maxHP)
-            state.overlaySnapshot.anchors[packet.GID]?.hp = Int(packet.HP)
-            state.overlaySnapshot.anchors[packet.GID]?.maxHp = Int(packet.maxHP)
+            state.overlay.gauges[packet.GID]?.hp = Int(packet.HP)
+            state.overlay.gauges[packet.GID]?.maxHp = Int(packet.maxHP)
         } else {
             state.objects[packet.GID]?.hp = Int(packet.HP)
             state.objects[packet.GID]?.maxHp = Int(packet.maxHP)
-            state.overlaySnapshot.anchors[packet.GID]?.hp = Int(packet.HP)
-            state.overlaySnapshot.anchors[packet.GID]?.maxHp = Int(packet.maxHP)
+            state.overlay.gauges[packet.GID]?.hp = Int(packet.HP)
+            state.overlay.gauges[packet.GID]?.maxHp = Int(packet.maxHP)
         }
 
         applySnapshot()
@@ -395,8 +395,8 @@ extension MapScene: MapEventHandlerProtocol {
         )
 
         if object.type == .monster {
-            state.overlaySnapshot.anchors[object.objectID] = MapOverlayAnchor(
-                id: object.objectID,
+            state.overlay.gauges[object.objectID] = MapGaugeOverlay(
+                objectID: object.objectID,
                 hp: object.hp,
                 maxHp: object.maxHp,
                 objectType: object.type
@@ -443,8 +443,8 @@ extension MapScene: MapEventHandlerProtocol {
                 presentation: presentation
             )
             if object.type == .monster {
-                state.overlaySnapshot.anchors[object.objectID] = MapOverlayAnchor(
-                    id: object.objectID,
+                state.overlay.gauges[object.objectID] = MapGaugeOverlay(
+                    objectID: object.objectID,
                     hp: object.hp,
                     maxHp: object.maxHp,
                     objectType: object.type
@@ -489,7 +489,7 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectVanished(objectID: UInt32) {
         state.objects.removeValue(forKey: objectID)
-        state.overlaySnapshot.anchors.removeValue(forKey: objectID)
+        state.overlay.gauges.removeValue(forKey: objectID)
 
         applySnapshot()
     }
@@ -515,8 +515,8 @@ extension MapScene: MapEventHandlerProtocol {
 
         if isVisible {
             if state.player.id == objectID {
-                state.overlaySnapshot.anchors[objectID] = MapOverlayAnchor(
-                    id: objectID,
+                state.overlay.gauges[objectID] = MapGaugeOverlay(
+                    objectID: objectID,
                     hp: state.player.hp,
                     maxHp: state.player.maxHp,
                     sp: state.player.sp,
@@ -524,15 +524,15 @@ extension MapScene: MapEventHandlerProtocol {
                     objectType: state.player.object.type
                 )
             } else if let objectState = state.objects[objectID], objectState.object.type == .monster {
-                state.overlaySnapshot.anchors[objectID] = MapOverlayAnchor(
-                    id: objectID,
+                state.overlay.gauges[objectID] = MapGaugeOverlay(
+                    objectID: objectID,
                     hp: objectState.hp,
                     maxHp: objectState.maxHp,
                     objectType: objectState.object.type
                 )
             }
         } else {
-            state.overlaySnapshot.anchors.removeValue(forKey: objectID)
+            state.overlay.gauges.removeValue(forKey: objectID)
         }
 
         applySnapshot()

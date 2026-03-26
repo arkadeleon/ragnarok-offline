@@ -14,8 +14,6 @@ final class MetalRenderBackend: GameRenderBackend {
 
     let renderer: MapRuntimeRenderer
 
-    var overlay: MapSceneOverlay?
-
     private let metalMapProjector = MetalMapProjector()
     private let metalMapHitTester = MetalMapHitTester()
 
@@ -36,7 +34,6 @@ final class MetalRenderBackend: GameRenderBackend {
 
     func detach() {
         scene = nil
-        overlay = nil
         renderer.setWorldAsset(nil)
     }
 
@@ -118,38 +115,16 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
-        if let worldPosition = renderer.presentationWorldPosition(for: scene.state.player.id) {
-            scene.state.overlaySnapshot.anchors[scene.state.player.id]?.gaugePosition =
-                worldPosition + [0, -0.8, 0]
-        }
-        for (objectID, _) in scene.state.objects {
-            if let worldPosition = renderer.presentationWorldPosition(for: objectID) {
-                scene.state.overlaySnapshot.anchors[objectID]?.gaugePosition =
-                    worldPosition + [0, -0.8, 0]
-            }
-        }
-
-        guard let overlay else {
-            return
-        }
-
-        var gauges: [UInt32 : MapSceneOverlay.Gauge] = [:]
-        for anchor in scene.state.overlaySnapshot.anchors.values {
-            guard let gaugePosition = anchor.gaugePosition,
-                  let screenPoint = metalMapProjector.project(gaugePosition) else {
+        for objectID in scene.state.overlay.gauges.keys {
+            guard var worldPosition = renderer.presentationWorldPosition(for: objectID) else {
                 continue
             }
 
-            gauges[anchor.id] = MapSceneOverlay.Gauge(
-                objectID: anchor.id,
-                hp: anchor.hp,
-                maxHp: anchor.maxHp,
-                sp: anchor.sp,
-                maxSp: anchor.maxSp,
-                objectType: anchor.objectType,
-                screenPosition: screenPoint
-            )
+            worldPosition += [0, -0.8, 0]
+            scene.state.overlay.gauges[objectID]?.worldPosition = worldPosition
+
+            let screenPosition = metalMapProjector.project(worldPosition)
+            scene.state.overlay.gauges[objectID]?.screenPosition = screenPosition
         }
-        overlay.gauges = gauges
     }
 }

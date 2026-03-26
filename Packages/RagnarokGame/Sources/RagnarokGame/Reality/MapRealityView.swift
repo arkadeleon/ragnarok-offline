@@ -10,7 +10,6 @@ import SwiftUI
 
 public struct MapRealityView: View {
     var scene: MapScene
-    var overlay: MapSceneOverlay?
 
     #if os(visionOS)
     @State private var baseDistance: Float = MapCameraState.default.distance
@@ -45,7 +44,7 @@ public struct MapRealityView: View {
         }
         #else
         if let backend = scene.renderBackend as? RealityRenderBackend {
-            MapSceneARView(scene: scene, overlay: overlay, backend: backend)
+            MapSceneARView(scene: scene, backend: backend)
         } else {
             EmptyView()
         }
@@ -54,12 +53,6 @@ public struct MapRealityView: View {
 
     public init(scene: MapScene) {
         self.scene = scene
-        self.overlay = nil
-    }
-
-    init(scene: MapScene, overlay: MapSceneOverlay?) {
-        self.scene = scene
-        self.overlay = overlay
     }
 }
 

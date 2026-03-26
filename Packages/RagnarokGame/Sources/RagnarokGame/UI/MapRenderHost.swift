@@ -10,18 +10,17 @@ import SwiftUI
 struct MapRenderHost: View {
     var scene: MapScene
     var configuration: GameRenderConfiguration
-    var overlay: MapSceneOverlay?
 
     var body: some View {
         switch configuration.engine {
         case .metal:
-            MapMetalView(scene: scene, overlay: overlay)
+            MapMetalView(scene: scene)
         case .realityKit:
             #if os(visionOS)
             Text("Game")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             #else
-            MapRealityView(scene: scene, overlay: overlay)
+            MapRealityView(scene: scene)
             #endif
         }
     }

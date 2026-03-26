@@ -10,11 +10,10 @@ import SwiftUI
 
 struct MapMetalView: View {
     var scene: MapScene
-    var overlay: MapSceneOverlay?
 
     var body: some View {
         if let backend = scene.renderBackend as? MetalRenderBackend {
-            MapMetalViewContainer(scene: scene, overlay: overlay, backend: backend)
+            MapMetalViewContainer(scene: scene, backend: backend)
         } else {
             EmptyView()
         }
@@ -25,7 +24,6 @@ struct MapMetalView: View {
 
 private struct MapMetalViewContainer: UIViewRepresentable {
     var scene: MapScene
-    var overlay: MapSceneOverlay?
     var backend: MetalRenderBackend
 
     func makeUIView(context: Context) -> MapMTKHostView {
@@ -34,7 +32,6 @@ private struct MapMetalViewContainer: UIViewRepresentable {
 
     func updateUIView(_ view: MapMTKHostView, context: Context) {
         view.update(scene: scene)
-        backend.overlay = overlay
     }
 }
 
@@ -42,7 +39,6 @@ private struct MapMetalViewContainer: UIViewRepresentable {
 
 private struct MapMetalViewContainer: NSViewRepresentable {
     var scene: MapScene
-    var overlay: MapSceneOverlay?
     var backend: MetalRenderBackend
 
     func makeNSView(context: Context) -> MapMTKHostView {
@@ -51,7 +47,6 @@ private struct MapMetalViewContainer: NSViewRepresentable {
 
     func updateNSView(_ view: MapMTKHostView, context: Context) {
         view.update(scene: scene)
-        backend.overlay = overlay
     }
 }
 
