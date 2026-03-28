@@ -22,9 +22,7 @@ spriteBillboardVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
 {
     SpriteVertex in = vertices[vertexIndex];
 
-    // `lookAt` in SGLMath stores a handedness-flipped horizontal basis here, so negate it
-    // before using it to expand the billboard quad or the sprite will be mirrored.
-    float3 cameraRight = -float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
+    float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp    = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
 
     // 1 world unit = 32 pixels.

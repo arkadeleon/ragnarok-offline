@@ -21,10 +21,23 @@ final class MapGroundRendererAdapter {
         lighting: WorldLighting
     ) throws {
         let textureImage = asset.ground.textureAtlas.makeCGImage(textureImages: asset.textureImages)
+        let lightmapTextureImage = asset.ground.lightmapAtlas.makeCGImage()
+        let tileColorImage = asset.ground.tileColorMap.makeCGImage()
+
         let groundTexture = MapMetalTextureFactory.makeTexture(
             from: textureImage,
             device: device,
             label: "map-ground-atlas"
+        )
+        let lightmapTexture = MapMetalTextureFactory.makeTexture(
+            from: lightmapTextureImage,
+            device: device,
+            label: "map-ground-lightmap"
+        )
+        let tileColorTexture = MapMetalTextureFactory.makeTexture(
+            from: tileColorImage,
+            device: device,
+            label: "map-ground-tile-color"
         )
 
         guard let groundTexture else {
@@ -36,6 +49,9 @@ final class MapGroundRendererAdapter {
             device: device,
             ground: asset.ground,
             groundTexture: groundTexture,
+            lightmapTexture: lightmapTexture,
+            tileColorTexture: tileColorTexture,
+            useLightmap: lightmapTextureImage != nil,
             lighting: lighting
         )
     }

@@ -83,10 +83,11 @@ public func perspective(_ fov: Float, _ aspect: Float, _ near: Float, _ far: Flo
     return simd_float4x4(columns: (X, Y, Z, W))
 }
 
+/// Left-handed look-at matrix (Metal/DirectX convention: +X right, +Y up, +Z into screen).
 public func lookAt(_ eye: simd_float3, _ center: simd_float3, _ up: simd_float3) -> simd_float4x4 {
     let f = simd_normalize(center - eye)
-    let s = simd_normalize(simd_cross(up, f))
-    let u = simd_cross(f, s)
+    let s = simd_normalize(simd_cross(f, up))
+    let u = simd_cross(s, f)
 
     let r30 = -simd_dot(s, eye)
     let r31 = -simd_dot(u, eye)

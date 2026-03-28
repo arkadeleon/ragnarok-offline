@@ -126,7 +126,7 @@ final class SpriteBillboardRenderer {
     ) -> CGRect? {
         let pv = matrices.projectionMatrix * matrices.viewMatrix
 
-        let right = -SIMD3<Float>(
+        let right = SIMD3<Float>(
             matrices.viewMatrix[0][0],
             matrices.viewMatrix[1][0],
             matrices.viewMatrix[2][0]

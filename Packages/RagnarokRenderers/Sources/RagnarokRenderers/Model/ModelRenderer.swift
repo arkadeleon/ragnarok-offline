@@ -88,7 +88,7 @@ public final class ModelRenderer {
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
-            lightDirection: [0, 1, 0],
+            lightDirection: light.direction,
             normalMatrix: normalMatrix
         )
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: []) else {

@@ -23,9 +23,9 @@ modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
                   constant ModelVertexUniforms &uniforms [[buffer(1)]])
 {
     ModelVertex in = vertices[vertexIndex];
-    float4 lDirection = uniforms.modelMatrix * float4(uniforms.lightDirection, 0.0);
-    float3 dirVector = normalize(lDirection.xyz);
-    float dotProduct = dot(uniforms.normalMatrix * in.normal, dirVector);
+    float3 worldNormal = normalize(uniforms.normalMatrix * in.normal);
+    float3 lightDirection = normalize(uniforms.lightDirection);
+    float dotProduct = dot(worldNormal, lightDirection);
 
     RasterizerData out;
     out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
@@ -51,7 +51,7 @@ modelFragmentShader(RasterizerData in [[stage_in]],
     float3 diffuse = uniforms.lightDiffuse * in.lightWeighting;
     float4 lightColor = float4(ambient + diffuse, 1.0);
 
-    color = color * clamp(lightColor, 0.0, 1.0);
+    color.rgb *= clamp(lightColor.rgb, 0.0, 1.0);
     color.a *= in.alpha;
 
     if (uniforms.fogUse) {

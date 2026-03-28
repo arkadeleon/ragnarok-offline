@@ -15,6 +15,9 @@ public final class GroundRenderer {
 
     let ground: Ground
     let groundTexture: any MTLTexture
+    let lightmapTexture: (any MTLTexture)?
+    let tileColorTexture: (any MTLTexture)?
+    let useLightmap: Bool
 
     let fog = Fog(
         use: false,
@@ -32,7 +35,15 @@ public final class GroundRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: any MTLDevice, library: any MTLLibrary, ground: Ground, groundTexture: any MTLTexture) throws {
+    init(
+        device: any MTLDevice,
+        library: any MTLLibrary,
+        ground: Ground,
+        groundTexture: any MTLTexture,
+        lightmapTexture: (any MTLTexture)? = nil,
+        tileColorTexture: (any MTLTexture)? = nil,
+        useLightmap: Bool = false
+    ) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
@@ -57,11 +68,30 @@ public final class GroundRenderer {
 
         self.ground = ground
         self.groundTexture = groundTexture
+        self.lightmapTexture = lightmapTexture
+        self.tileColorTexture = tileColorTexture
+        self.useLightmap = useLightmap
     }
 
-    public convenience init(device: any MTLDevice, ground: Ground, groundTexture: any MTLTexture, lighting: WorldLighting? = nil) throws {
+    public convenience init(
+        device: any MTLDevice,
+        ground: Ground,
+        groundTexture: any MTLTexture,
+        lightmapTexture: (any MTLTexture)? = nil,
+        tileColorTexture: (any MTLTexture)? = nil,
+        useLightmap: Bool = false,
+        lighting: WorldLighting? = nil
+    ) throws {
         let library = RagnarokCreateShadersLibrary(device)!
-        try self.init(device: device, library: library, ground: ground, groundTexture: groundTexture)
+        try self.init(
+            device: device,
+            library: library,
+            ground: ground,
+            groundTexture: groundTexture,
+            lightmapTexture: lightmapTexture,
+            tileColorTexture: tileColorTexture,
+            useLightmap: useLightmap
+        )
         if let lighting {
             updateLighting(lighting)
         }
@@ -101,7 +131,7 @@ public final class GroundRenderer {
         }
 
         var fragmentUniforms = GroundFragmentUniforms(
-            lightMapUse: 1,
+            lightMapUse: useLightmap ? 1 : 0,
             fogUse: fog.use && fog.exist ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,
@@ -123,8 +153,8 @@ public final class GroundRenderer {
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
         renderCommandEncoder.setFragmentTexture(groundTexture, index: 0)
-        renderCommandEncoder.setFragmentTexture(groundTexture, index: 1)
-        renderCommandEncoder.setFragmentTexture(groundTexture, index: 2)
+        renderCommandEncoder.setFragmentTexture(lightmapTexture, index: 1)
+        renderCommandEncoder.setFragmentTexture(tileColorTexture, index: 2)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }

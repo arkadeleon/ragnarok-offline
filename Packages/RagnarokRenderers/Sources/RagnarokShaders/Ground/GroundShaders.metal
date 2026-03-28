@@ -24,9 +24,9 @@ groundVertexShader(const device GroundVertex *vertices [[buffer(0)]],
                    constant GroundVertexUniforms &uniforms [[buffer(1)]])
 {
     GroundVertex in = vertices[vertexIndex];
-    float4 lDirection = uniforms.viewMatrix * uniforms.modelMatrix * float4(uniforms.lightDirection, 0.0);
-    float3 dirVector = normalize(lDirection.xyz);
-    float dotProduct = dot(uniforms.normalMatrix * in.normal, dirVector);
+    float3 worldNormal = normalize(uniforms.normalMatrix * in.normal);
+    float3 lightDirection = normalize(uniforms.lightDirection);
+    float dotProduct = dot(worldNormal, lightDirection);
 
     RasterizerData out;
     out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
@@ -46,14 +46,13 @@ groundFragmentShader(RasterizerData in [[stage_in]],
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 texture = colorTexture.sample(textureSampler, in.textureCoordinate);
-    return texture;
     float lightWeight = 1.0;
 
     if (texture.a == 0.0) {
         discard_fragment();
     }
 
-    if (in.tileColorCoordinate.x != 0.0 && in.tileColorCoordinate.y != 0.0) {
+    if (in.tileColorCoordinate.x != 0.0 || in.tileColorCoordinate.y != 0.0) {
         texture *= tileColor.sample(textureSampler, in.tileColorCoordinate);
         lightWeight = in.lightWeighting;
     }
@@ -65,12 +64,12 @@ groundFragmentShader(RasterizerData in [[stage_in]],
 
     if (uniforms.lightMapUse) {
         float4 lightmapColor = lightmap.sample(textureSampler, in.lightmapCoordinate);
-        float4 lightColor = float4((ambient + diffuse) * lightmapColor.a, 1.0);
-        float4 colorMap = float4(lightmapColor.rgb, 0.0);
-        color = texture * clamp(lightColor, 0.0, 1.0) + colorMap;
+        float3 lightColor = clamp((ambient + diffuse) * lightmapColor.a, 0.0, 1.0);
+        float3 rgb = texture.rgb * lightColor + clamp(lightmapColor.rgb, 0.0, 1.0);
+        color = float4(clamp(rgb, 0.0, 1.0), texture.a);
     } else {
-        float4 lightColor = float4(ambient + diffuse, 1.0);
-        color = texture * clamp(lightColor, 0.0, 1.0);
+        float3 lightColor = clamp(ambient + diffuse, 0.0, 1.0);
+        color = float4(texture.rgb * lightColor, texture.a);
     }
 
     if (uniforms.fogUse) {
