@@ -6,7 +6,7 @@
 //
 
 import RagnarokFileFormats
-import RagnarokReality
+import RagnarokRendering
 import RagnarokResources
 import RealityKit
 import SGLMath

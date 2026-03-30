@@ -7,9 +7,8 @@
 
 import MetalKit
 import RagnarokFileFormats
-import RagnarokRenderers
+import RagnarokRendering
 import RagnarokResources
-import RagnarokSceneAssets
 import SwiftUI
 
 struct EffectViewer: View {

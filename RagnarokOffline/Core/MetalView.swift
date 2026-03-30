@@ -6,7 +6,7 @@
 //
 
 import MetalKit
-import RagnarokRenderers
+import RagnarokMetalRendering
 import SwiftUI
 
 #if canImport(UIKit)

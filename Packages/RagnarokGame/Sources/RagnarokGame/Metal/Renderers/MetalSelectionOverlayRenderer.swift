@@ -7,7 +7,7 @@
 
 import Metal
 import QuartzCore
-import RagnarokRenderers
+import RagnarokMetalRendering
 import RagnarokResources
 import RagnarokShaders
 import simd

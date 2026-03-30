@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Metal
-import RagnarokRenderers
+import RagnarokMetalRendering
 import RagnarokResources
 import RagnarokSceneAssets
 import SGLMath

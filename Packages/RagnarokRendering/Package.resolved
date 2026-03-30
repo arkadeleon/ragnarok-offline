@@ -1,0 +1,15 @@
+{
+  "originHash" : "9243328e92181093f1b216ea0814243cca14191b006e32fbe2518f4512908390",
+  "pins" : [
+    {
+      "identity" : "swift-lua",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/swift-lua.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "06ee34fc258592f582e8a8fe4562ec2801023efc"
+      }
+    }
+  ],
+  "version" : 3
+}

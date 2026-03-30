@@ -14,65 +14,9 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Packages\/RagnarokConstants",
-        "identifier" : "RagnarokConstantsTests",
-        "name" : "RagnarokConstantsTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/TextEncoding",
-        "identifier" : "TextEncodingTests",
-        "name" : "TextEncodingTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/RagnarokRenderers",
-        "identifier" : "RagnarokRenderersTests",
-        "name" : "RagnarokRenderersTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/RagnarokSprite",
-        "identifier" : "RagnarokSpriteTests",
-        "name" : "RagnarokSpriteTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/JSONViewer",
-        "identifier" : "JSONViewerTests",
-        "name" : "JSONViewerTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/RagnarokDatabase",
-        "identifier" : "RagnarokDatabaseTests",
-        "name" : "RagnarokDatabaseTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:RagnarokOffline.xcodeproj",
-        "identifier" : "3558A3C02DFC25AD0038DFC3",
-        "name" : "RagnarokOfflineTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/RagnarokLocalization",
-        "identifier" : "RagnarokLocalizationTests",
-        "name" : "RagnarokLocalizationTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/RagnarokReality",
-        "identifier" : "RagnarokRealityTests",
-        "name" : "RagnarokRealityTests"
+        "containerPath" : "container:Packages\/PerformanceMetric",
+        "identifier" : "PerformanceMetricTests",
+        "name" : "PerformanceMetricTests"
       }
     },
     {
@@ -84,16 +28,23 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/PerformanceMetric",
-        "identifier" : "PerformanceMetricTests",
-        "name" : "PerformanceMetricTests"
+        "containerPath" : "container:Packages\/BinaryIO",
+        "identifier" : "BinaryIOTests",
+        "name" : "BinaryIOTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/BinaryIO",
-        "identifier" : "BinaryIOTests",
-        "name" : "BinaryIOTests"
+        "containerPath" : "container:Packages\/RagnarokSprite",
+        "identifier" : "RagnarokSpriteTests",
+        "name" : "RagnarokSpriteTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokDatabase",
+        "identifier" : "RagnarokDatabaseTests",
+        "name" : "RagnarokDatabaseTests"
       }
     },
     {
@@ -105,30 +56,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/SGLMath",
-        "identifier" : "SGLMathTests",
-        "name" : "SGLMathTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/RagnarokRenderers",
+        "containerPath" : "container:Packages\/RagnarokRendering",
         "identifier" : "RagnarokShadersTests",
         "name" : "RagnarokShadersTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/RagnarokResources",
-        "identifier" : "RagnarokResourcesTests",
-        "name" : "RagnarokResourcesTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/DataCompression",
-        "identifier" : "DataCompressionTests",
-        "name" : "DataCompressionTests"
       }
     },
     {
@@ -140,9 +70,30 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/RagnarokPackets",
-        "identifier" : "RagnarokPacketsTests",
-        "name" : "RagnarokPacketsTests"
+        "containerPath" : "container:RagnarokOffline.xcodeproj",
+        "identifier" : "3558A3C02DFC25AD0038DFC3",
+        "name" : "RagnarokOfflineTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokConstants",
+        "identifier" : "RagnarokConstantsTests",
+        "name" : "RagnarokConstantsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokLocalization",
+        "identifier" : "RagnarokLocalizationTests",
+        "name" : "RagnarokLocalizationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokRendering",
+        "identifier" : "RagnarokSceneAssetsTests",
+        "name" : "RagnarokSceneAssetsTests"
       }
     },
     {
@@ -157,6 +108,62 @@
         "containerPath" : "container:Packages\/GRF",
         "identifier" : "GRFTests",
         "name" : "GRFTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/JSONViewer",
+        "identifier" : "JSONViewerTests",
+        "name" : "JSONViewerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokPackets",
+        "identifier" : "RagnarokPacketsTests",
+        "name" : "RagnarokPacketsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/SGLMath",
+        "identifier" : "SGLMathTests",
+        "name" : "SGLMathTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokRendering",
+        "identifier" : "RagnarokRealityRenderingTests",
+        "name" : "RagnarokRealityRenderingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/TextEncoding",
+        "identifier" : "TextEncodingTests",
+        "name" : "TextEncodingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/DataCompression",
+        "identifier" : "DataCompressionTests",
+        "name" : "DataCompressionTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokRendering",
+        "identifier" : "RagnarokMetalRenderingTests",
+        "name" : "RagnarokMetalRenderingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokResources",
+        "identifier" : "RagnarokResourcesTests",
+        "name" : "RagnarokResourcesTests"
       }
     }
   ],

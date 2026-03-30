@@ -1,0 +1,74 @@
+//
+//  WaterEntity.swift
+//  RagnarokRealityRendering
+//
+//  Created by Leon Li on 2025/9/29.
+//
+
+import RagnarokResources
+import RagnarokSceneAssets
+import RealityKit
+
+extension Entity {
+    public convenience init(from asset: WaterRenderAsset) async throws {
+        self.init()
+
+        if asset.water.mesh.vertices.isEmpty {
+            return
+        }
+
+        let mesh = try await {
+            var descriptor = MeshDescriptor(name: "water")
+            descriptor.positions = MeshBuffer(asset.water.mesh.vertices.map({ $0.position }))
+            descriptor.textureCoordinates = MeshBuffer(asset.water.mesh.vertices.map({
+                SIMD2(x: $0.textureCoordinate.x, y: $0.textureCoordinate.y)
+            }))
+
+            let indices = (0..<descriptor.positions.count).map(UInt32.init)
+            descriptor.primitives = .triangles(indices)
+
+            descriptor.materials = .allFaces(0)
+
+            let mesh = try await MeshResource(from: [descriptor])
+            return mesh
+        }()
+
+        let materials: [any Material]
+        if let textureImage = asset.textureImage {
+            let texture = try await TextureResource(
+                image: textureImage,
+                withName: "water",
+                options: TextureResource.CreateOptions(semantic: .color)
+            )
+
+            var material = PhysicallyBasedMaterial()
+            material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
+            material.roughness = PhysicallyBasedMaterial.Roughness(floatLiteral: 0.2)
+            material.textureCoordinateTransform = PhysicallyBasedMaterial.TextureCoordinateTransform(scale: [1 / Float(32), 1])
+            materials = [material]
+        } else {
+            let material = SimpleMaterial()
+            materials = [material]
+        }
+
+        components.set([
+            ModelComponent(mesh: mesh, materials: materials),
+            OpacityComponent(opacity: 0.6),
+        ])
+
+        let frames: [SIMD2<Float>] = (0..<32).map { frameIndex in
+            [Float(frameIndex) / 32, 0]
+        }
+        let animationDefinition = SampledAnimation(
+            frames: frames,
+            name: "flow",
+            tweenMode: .hold,
+            frameInterval: 1 / 30,
+            isAdditive: false,
+            bindTarget: .material(0).textureCoordinate.offset,
+            repeatMode: .repeat
+        )
+        let animationResource = try AnimationResource.generate(with: animationDefinition)
+        playAnimation(animationResource)
+    }
+}
