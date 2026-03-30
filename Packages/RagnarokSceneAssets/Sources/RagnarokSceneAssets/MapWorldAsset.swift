@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/21.
 //
 
-import RagnarokRenderers
-
 public struct MapWorldAsset {
     public var ground: GroundRenderAsset
     public var water: WaterRenderAsset

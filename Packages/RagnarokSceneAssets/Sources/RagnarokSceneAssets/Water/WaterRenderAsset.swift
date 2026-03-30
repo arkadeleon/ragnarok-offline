@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import RagnarokRenderers
 
 public struct WaterRenderAsset {
     public var water: Water

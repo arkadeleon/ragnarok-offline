@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import RagnarokRenderers
 import simd
 
 public struct ModelRenderAsset {

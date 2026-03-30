@@ -19,7 +19,6 @@ let package = Package(
     dependencies: [
         .package(path: "../PerformanceMetric"),
         .package(path: "../RagnarokFileFormats"),
-        .package(path: "../RagnarokRenderers"),
         .package(path: "../RagnarokResources"),
         .package(path: "../RagnarokSceneAssets"),
         .package(path: "../SGLMath"),
@@ -34,7 +33,6 @@ let package = Package(
                     name: "RagnarokRealitySurfaceShaders",
                     condition: .when(platforms: [.iOS, .macOS])
                 ),
-                "RagnarokRenderers",
                 "RagnarokResources",
                 "RagnarokSceneAssets",
                 "SGLMath",

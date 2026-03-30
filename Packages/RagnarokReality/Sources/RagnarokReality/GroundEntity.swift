@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Metal
-import RagnarokRenderers
+import RagnarokSceneAssets
 import RagnarokShaders
 import RealityKit
 

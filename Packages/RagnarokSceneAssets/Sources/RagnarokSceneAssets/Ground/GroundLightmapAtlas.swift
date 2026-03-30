@@ -1,6 +1,6 @@
 //
 //  GroundLightmapAtlas.swift
-//  RagnarokRenderers
+//  RagnarokSceneAssets
 //
 //  Created by Leon Li on 2026/2/9.
 //

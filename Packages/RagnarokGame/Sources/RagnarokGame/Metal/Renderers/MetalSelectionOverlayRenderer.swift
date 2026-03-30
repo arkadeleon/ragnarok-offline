@@ -30,7 +30,7 @@ final class MetalSelectionOverlayRenderer {
             )
         }
 
-        let library = ragnarokShadersLibrary(device: device)!
+        let library = RagnarokCreateShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "tileVertexShader")

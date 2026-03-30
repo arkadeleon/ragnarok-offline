@@ -8,7 +8,6 @@
 import CoreGraphics
 import Foundation
 import RagnarokFileFormats
-import RagnarokRenderers
 import RagnarokResources
 
 public struct MapWorldAssetLoader: Sendable {

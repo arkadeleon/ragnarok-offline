@@ -1,27 +1,21 @@
 //
-//  WaterRenderer.swift
+//  ModelRenderer.swift
 //  RagnarokRenderers
 //
-//  Created by Leon Li on 2020/7/15.
+//  Created by Leon Li on 2020/6/29.
 //
 
 import Metal
+import RagnarokSceneAssets
 import RagnarokShaders
 import simd
 
-public final class WaterRenderer {
+public final class ModelRenderer {
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
-    let water: Water
-    let textures: [any MTLTexture]
-
-    var waveSpeed: Float = 0
-    var waveHeight: Float = 0
-    var wavePitch: Float = 0
-    var waterLevel: Float = 0
-    var animSpeed: Float = 1
-    var waterOpacity: Float = 0.6
+    let models: [Model]
+    let textures: [String : any MTLTexture]
 
     let fog = Fog(
         use: false,
@@ -39,11 +33,11 @@ public final class WaterRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: any MTLDevice, library: any MTLLibrary, water: Water, textures: [any MTLTexture]) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, models: [Model], textures: [String : any MTLTexture]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "waterFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "modelVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "modelFragmentShader")
 
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
@@ -62,13 +56,13 @@ public final class WaterRenderer {
 
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
-        self.water = water
+        self.models = models
         self.textures = textures
     }
 
-    public convenience init(device: any MTLDevice, water: Water, textures: [any MTLTexture], lighting: WorldLighting? = nil) throws {
+    public convenience init(device: any MTLDevice, models: [Model], textures: [String : any MTLTexture], lighting: WorldLighting? = nil) throws {
         let library = RagnarokCreateShadersLibrary(device)!
-        try self.init(device: device, library: library, water: water, textures: textures)
+        try self.init(device: device, library: library, models: models, textures: textures)
         if let lighting {
             updateLighting(lighting)
         }
@@ -86,53 +80,55 @@ public final class WaterRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4
+        projectionMatrix: simd_float4x4,
+        normalMatrix: simd_float3x3
     ) {
         let device = renderCommandEncoder.device
 
-        let frame = Float(time * 60)
-
-        guard water.mesh.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: water.mesh.vertices, length: water.mesh.vertices.count * MemoryLayout<WaterVertex>.stride, options: []) else {
-            return
-        }
-
-        var vertexUniforms = WaterVertexUniforms(
+        var vertexUniforms = ModelVertexUniforms(
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
-            waveHeight: waveHeight,
-            wavePitch: wavePitch,
-            waterOffset: frame * waveSpeed.truncatingRemainder(dividingBy: 360) - 180
+            lightDirection: light.direction,
+            normalMatrix: normalMatrix
         )
-        guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<WaterVertexUniforms>.stride, options: []) else {
+        guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: []) else {
             return
         }
 
-        var fragmentUniforms = WaterFragmentUniforms(
-            fogUse: fog.use && fog.exist ? 1 : 0,
+        var fragmentUniforms = ModelFragmentUniforms(
+            fogUse: fog.use ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,
             fogColor: fog.color,
             lightAmbient: light.ambient,
             lightDiffuse: light.diffuse,
-            lightOpacity: light.opacity,
-            opacity: waterOpacity
+            lightOpacity: light.opacity
         )
-        guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<WaterFragmentUniforms>.stride, options: []) else {
+        guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, options: []) else {
             return
         }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        let texture = textures[Int(frame / animSpeed) % textures.count]
-        renderCommandEncoder.setFragmentTexture(texture, index: 0)
+        for model in models {
+            for mesh in model.meshes where mesh.vertices.count > 0 {
+                guard let vertexBuffer = device.makeBuffer(bytes: mesh.vertices, length: mesh.vertices.count * MemoryLayout<ModelVertex>.stride, options: []) else {
+                    continue
+                }
 
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: water.mesh.vertices.count)
+                renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+
+                let texture = textures[mesh.textureName]
+                renderCommandEncoder.setFragmentTexture(texture, index: 0)
+
+                renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertices.count)
+            }
+        }
     }
 }

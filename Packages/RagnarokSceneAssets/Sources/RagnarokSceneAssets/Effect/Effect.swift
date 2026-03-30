@@ -1,6 +1,6 @@
 //
 //  Effect.swift
-//  RagnarokRenderers
+//  RagnarokSceneAssets
 //
 //  Created by Leon Li on 2023/11/24.
 //

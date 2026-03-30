@@ -8,6 +8,7 @@
 import MetalKit
 import RagnarokFileFormats
 import RagnarokRenderers
+import RagnarokSceneAssets
 import SwiftUI
 
 struct STRFilePreviewView: View {

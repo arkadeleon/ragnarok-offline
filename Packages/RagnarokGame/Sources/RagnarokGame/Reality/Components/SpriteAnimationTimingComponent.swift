@@ -2,7 +2,7 @@
 //  SpriteAnimationTimingComponent.swift
 //  RagnarokGame
 //
-//  Created by Codex on 2026/3/25.
+//  Created by Leon Li on 2026/3/25.
 //
 
 import Foundation

@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "RagnarokSceneAssets",
     platforms: [
-        .macOS(.v15),
-        .iOS(.v18),
+        .macOS(.v13),
+        .iOS(.v16),
         .visionOS(.v2),
     ],
     products: [
@@ -19,8 +19,10 @@ let package = Package(
     dependencies: [
         .package(path: "../ImageRendering"),
         .package(path: "../RagnarokFileFormats"),
-        .package(path: "../RagnarokRenderers"),
         .package(path: "../RagnarokResources"),
+        .package(path: "../RagnarokShaders"),
+        .package(path: "../SGLMath"),
+        .package(path: "../TextEncoding"),
     ],
     targets: [
         .target(
@@ -28,8 +30,10 @@ let package = Package(
             dependencies: [
                 "ImageRendering",
                 "RagnarokFileFormats",
-                "RagnarokRenderers",
                 "RagnarokResources",
+                "RagnarokShaders",
+                "SGLMath",
+                "TextEncoding",
             ]
         ),
         .testTarget(

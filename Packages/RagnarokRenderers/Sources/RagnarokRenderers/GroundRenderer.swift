@@ -6,6 +6,7 @@
 //
 
 import Metal
+import RagnarokSceneAssets
 import RagnarokShaders
 import simd
 

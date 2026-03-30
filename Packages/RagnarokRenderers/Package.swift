@@ -18,6 +18,8 @@ let package = Package(
     dependencies: [
         .package(path: "../ImageRendering"),
         .package(path: "../RagnarokFileFormats"),
+        .package(path: "../RagnarokSceneAssets"),
+        .package(path: "../RagnarokShaders"),
         .package(path: "../SGLMath"),
     ],
     targets: [
@@ -26,28 +28,14 @@ let package = Package(
             dependencies: [
                 "ImageRendering",
                 "RagnarokFileFormats",
+                "RagnarokSceneAssets",
                 "RagnarokShaders",
                 "SGLMath",
-            ]
-        ),
-        .target(
-            name: "RagnarokShaders",
-            resources: [
-                .process("Effect/EffectShaders.metal"),
-                .process("Ground/GroundShaders.metal"),
-                .process("Model/ModelShaders.metal"),
-                .process("Sprite/SpriteShaders.metal"),
-                .process("Tile/TileShaders.metal"),
-                .process("Water/WaterShaders.metal"),
             ]
         ),
         .testTarget(
             name: "RagnarokRenderersTests",
             dependencies: ["RagnarokRenderers"]
-        ),
-        .testTarget(
-            name: "RagnarokShadersTests",
-            dependencies: ["RagnarokShaders"]
         ),
     ]
 )

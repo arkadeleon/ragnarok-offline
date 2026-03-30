@@ -22,7 +22,7 @@ final class SpriteBillboardRenderer {
     private(set) var hitBoxes: [GameObjectID : CGRect] = [:]
 
     init(device: any MTLDevice) throws {
-        let library = ragnarokShadersLibrary(device: device)!
+        let library = RagnarokCreateShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteBillboardVertexShader")

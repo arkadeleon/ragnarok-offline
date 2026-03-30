@@ -6,8 +6,8 @@
 //
 
 import RagnarokFileFormats
-import RagnarokRenderers
 import RagnarokResources
+import RagnarokSceneAssets
 import RealityKit
 import SGLMath
 import SwiftUI
