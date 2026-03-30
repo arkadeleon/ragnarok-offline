@@ -7,7 +7,7 @@
 
 import Metal
 import RagnarokMetalRendering
-import RagnarokSceneAssets
+import RagnarokRenderAssets
 import simd
 
 final class MapGroundRendererAdapter {

@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2026/2/11.
 //
 
-import SwiftUI
 import RagnarokConstants
+import SwiftUI
 
 struct SkillSimulatorView: View {
     private struct SkillGroup: Identifiable {

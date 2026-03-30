@@ -38,7 +38,7 @@ Target outcome:
    - Combat and interaction decisions
    - Overlay data
 
-2. `RagnarokSceneAssets`
+2. `RagnarokRenderAssets`
    - Engine-agnostic map and sprite asset loading
    - Shared input format for both RealityKit and Metal backends
 
@@ -288,21 +288,21 @@ Replace direct RealityKit world construction with engine-agnostic world assets.
 
 Add a new package:
 
-- `Packages/RagnarokSceneAssets/Package.swift`
+- `Packages/RagnarokRenderAssets/Package.swift`
 
 Add new types:
 
-- `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/MapWorldAsset.swift`
-- `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/GroundRenderAsset.swift`
-- `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/WaterRenderAsset.swift`
-- `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/ModelRenderAsset.swift`
-- `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/MapWorldAssetLoader.swift`
+- `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/MapWorldAsset.swift`
+- `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/GroundRenderAsset.swift`
+- `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/WaterRenderAsset.swift`
+- `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/ModelRenderAsset.swift`
+- `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/MapWorldAssetLoader.swift`
 
 Modify:
 
 - `Packages/RagnarokReality/Sources/RagnarokReality/WorldEntity.swift`
 - `Packages/RagnarokGame/Package.swift`
-- `Packages/RagnarokSceneAssets/Package.swift`
+- `Packages/RagnarokRenderAssets/Package.swift`
 - `Packages/RagnarokReality/Package.swift`
 
 ### Deliverables
@@ -627,14 +627,14 @@ The following decisions are locked for implementation unless explicitly revised 
 ### 1. Packaging Strategy
 
 - Use a multi-target `Packages/RagnarokGame` package for runtime, UI, and backend implementation.
-- Keep `RagnarokSceneAssets` as a separate package at `Packages/RagnarokSceneAssets`.
+- Keep `RagnarokRenderAssets` as a separate package at `Packages/RagnarokRenderAssets`.
 - The `Packages/RagnarokGame` target layout is:
   - `RagnarokGameCore`
   - `RagnarokGameUI`
   - `RagnarokGameRealityBackend`
   - `RagnarokGameMetalBackend`
   - `RagnarokGame` as an optional aggregation target for app-facing imports
-- `Packages/RagnarokSceneAssets` exposes the `RagnarokSceneAssets` product and is consumed by both backend targets.
+- `Packages/RagnarokRenderAssets` exposes the `RagnarokRenderAssets` product and is consumed by both backend targets.
 - Move the current Metal host bridge from `RagnarokOffline/Core/MetalView.swift` into `RagnarokGameMetalBackend`.
 
 ### 2. Runtime Root Type
@@ -737,7 +737,7 @@ Prefer the smallest relevant validation for each phase:
 
 1. `swift build --package-path Packages/RagnarokGame`
 2. `swift build --package-path Packages/RagnarokRenderers`
-3. When `RagnarokSceneAssets` is introduced, also run `swift build --package-path Packages/RagnarokSceneAssets`
+3. When `RagnarokRenderAssets` is introduced, also run `swift build --package-path Packages/RagnarokRenderAssets`
 4. Validate visionOS-specific changes through the Xcode scheme and immersive path
 
 ### Runtime Checks

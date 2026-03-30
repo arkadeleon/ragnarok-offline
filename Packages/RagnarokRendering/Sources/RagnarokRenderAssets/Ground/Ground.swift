@@ -1,6 +1,6 @@
 //
 //  Ground.swift
-//  RagnarokSceneAssets
+//  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2023/11/27.
 //

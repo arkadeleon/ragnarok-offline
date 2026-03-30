@@ -24,8 +24,8 @@ let package = Package(
             targets: ["RagnarokRealityRendering"]
         ),
         .library(
-            name: "RagnarokSceneAssets",
-            targets: ["RagnarokSceneAssets"]
+            name: "RagnarokRenderAssets",
+            targets: ["RagnarokRenderAssets"]
         ),
         .library(
             name: "RagnarokShaders",
@@ -46,7 +46,7 @@ let package = Package(
             dependencies: [
                 "RagnarokMetalRendering",
                 "RagnarokRealityRendering",
-                "RagnarokSceneAssets",
+                "RagnarokRenderAssets",
                 "RagnarokShaders",
             ]
         ),
@@ -55,7 +55,7 @@ let package = Package(
             dependencies: [
                 "ImageRendering",
                 "RagnarokFileFormats",
-                "RagnarokSceneAssets",
+                "RagnarokRenderAssets",
                 "RagnarokShaders",
                 "SGLMath",
             ]
@@ -70,7 +70,7 @@ let package = Package(
                     condition: .when(platforms: [.iOS, .macOS])
                 ),
                 "RagnarokResources",
-                "RagnarokSceneAssets",
+                "RagnarokRenderAssets",
                 "SGLMath",
             ]
         ),
@@ -81,7 +81,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "RagnarokSceneAssets",
+            name: "RagnarokRenderAssets",
             dependencies: [
                 "ImageRendering",
                 "RagnarokFileFormats",
@@ -111,8 +111,8 @@ let package = Package(
             dependencies: ["RagnarokRealityRendering"]
         ),
         .testTarget(
-            name: "RagnarokSceneAssetsTests",
-            dependencies: ["RagnarokSceneAssets"]
+            name: "RagnarokRenderAssetsTests",
+            dependencies: ["RagnarokRenderAssets"]
         ),
         .testTarget(
             name: "RagnarokShadersTests",

@@ -7,7 +7,7 @@
 
 import Metal
 import RagnarokFileFormats
-import RagnarokSceneAssets
+import RagnarokRenderAssets
 import RealityKit
 
 #if os(iOS) || os(macOS)

@@ -8,8 +8,8 @@
 import CoreGraphics
 import Metal
 import RagnarokMetalRendering
+import RagnarokRenderAssets
 import RagnarokResources
-import RagnarokSceneAssets
 import SGLMath
 import simd
 

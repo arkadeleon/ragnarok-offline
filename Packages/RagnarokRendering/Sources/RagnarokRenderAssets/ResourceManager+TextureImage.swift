@@ -1,6 +1,6 @@
 //
 //  ResourceManager+TextureImage.swift
-//  RagnarokSceneAssets
+//  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2025/9/28.
 //

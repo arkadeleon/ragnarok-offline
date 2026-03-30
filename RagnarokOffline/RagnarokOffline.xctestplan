@@ -92,8 +92,8 @@
     {
       "target" : {
         "containerPath" : "container:Packages\/RagnarokRendering",
-        "identifier" : "RagnarokSceneAssetsTests",
-        "name" : "RagnarokSceneAssetsTests"
+        "identifier" : "RagnarokRenderAssetsTests",
+        "name" : "RagnarokRenderAssetsTests"
       }
     },
     {

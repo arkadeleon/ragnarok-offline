@@ -1,12 +1,12 @@
 //
 //  GroundLightmapAtlas.swift
-//  RagnarokSceneAssets
+//  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/2/9.
 //
 
-import Foundation
 import CoreGraphics
+import Foundation
 import RagnarokFileFormats
 
 public struct GroundLightmapAtlas {

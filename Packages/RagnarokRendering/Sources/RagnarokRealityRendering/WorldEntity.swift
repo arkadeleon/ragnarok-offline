@@ -6,8 +6,8 @@
 //
 
 import Foundation
+import RagnarokRenderAssets
 import RagnarokResources
-import RagnarokSceneAssets
 import RealityKit
 import SGLMath
 

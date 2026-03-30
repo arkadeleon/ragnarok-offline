@@ -708,9 +708,9 @@ This is the first step that makes the static map world consumable by more than o
 
 ### New files
 
-#### `Packages/RagnarokSceneAssets/Package.swift`
+#### `Packages/RagnarokRenderAssets/Package.swift`
 
-Creates the new `RagnarokSceneAssets` Swift package. It depends on:
+Creates the new `RagnarokRenderAssets` Swift package. It depends on:
 
 - `ImageRendering`
 - `RagnarokFileFormats`
@@ -719,7 +719,7 @@ Creates the new `RagnarokSceneAssets` Swift package. It depends on:
 
 There is intentionally no `RealityKit` dependency here. This package is the engine-agnostic boundary.
 
-#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/MapWorldAsset.swift`
+#### `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/MapWorldAsset.swift`
 
 ```swift
 public struct MapWorldAsset {
@@ -732,7 +732,7 @@ public struct MapWorldAsset {
 
 Single payload representing everything the backend needs for the static world: lighting, ground, water, and model prototypes/instances.
 
-#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/GroundRenderAsset.swift`
+#### `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/GroundRenderAsset.swift`
 
 ```swift
 public struct GroundRenderAsset {
@@ -743,7 +743,7 @@ public struct GroundRenderAsset {
 
 Carries the compiled `Ground` mesh plus the decoded source texture images referenced by `gnd.textures`.
 
-#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/WaterRenderAsset.swift`
+#### `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/WaterRenderAsset.swift`
 
 ```swift
 public struct WaterRenderAsset {
@@ -754,7 +754,7 @@ public struct WaterRenderAsset {
 
 Carries the compiled `Water` mesh plus the stitched 32-frame water texture strip. The strip width is always `32 * 128` pixels even if some frames are missing, matching the legacy `waterTexture()` layout so the RealityKit UV animation still lines up.
 
-#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/ModelRenderAsset.swift`
+#### `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/ModelRenderAsset.swift`
 
 ```swift
 public struct ModelRenderAsset {
@@ -775,7 +775,7 @@ Represents one prototype model plus all of its placements in the world. The prot
 
 `position` already includes the `+gnd.width/+gnd.height` world-space offset that previously lived in `WorldEntity`, so backends do not need to rediscover that conversion.
 
-#### `Packages/RagnarokSceneAssets/Sources/RagnarokSceneAssets/MapWorldAssetLoader.swift`
+#### `Packages/RagnarokRenderAssets/Sources/RagnarokRenderAssets/MapWorldAssetLoader.swift`
 
 Loads `MapWorldAsset` from `GAT`, `GND`, `RSW`, and `ResourceManager`.
 
@@ -791,7 +791,7 @@ Important implementation details:
 
 #### `Packages/RagnarokReality/Sources/RagnarokReality/WorldEntity.swift`
 
-- Added `import RagnarokSceneAssets`
+- Added `import RagnarokRenderAssets`
 - Replaced the old inline world-loading path with `MapWorldAssetLoader.load(...)`
 - Ground creation now uses `worldAsset.ground`
 - Water creation now uses `worldAsset.water`
@@ -827,11 +827,11 @@ The older `init(from water:resourceManager:)` overload was left in place because
 
 #### `Packages/RagnarokReality/Package.swift`
 
-Added `RagnarokSceneAssets` as a package and target dependency.
+Added `RagnarokRenderAssets` as a package and target dependency.
 
 #### `Packages/RagnarokGame/Package.swift`
 
-Added `RagnarokSceneAssets` as a package and target dependency.
+Added `RagnarokRenderAssets` as a package and target dependency.
 
 `RagnarokGame` does not import it yet, but wiring it now avoids another manifest-only phase when the backend interface starts moving into the game package.
 
@@ -1317,7 +1317,7 @@ Bridges `[ModelRenderAsset]` to `ModelRenderer`. This file does the most importa
 
 #### `Packages/RagnarokGame/Package.swift`
 
-Added a dependency on `RagnarokSceneAssets`, which is where `MapWorldAsset`, `GroundRenderAsset`, `WaterRenderAsset`, and `ModelRenderAsset` live.
+Added a dependency on `RagnarokRenderAssets`, which is where `MapWorldAsset`, `GroundRenderAsset`, `WaterRenderAsset`, and `ModelRenderAsset` live.
 
 #### `Client/Rendering/MetalBackend/MetalMapBackend.swift`
 

@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import RagnarokSceneAssets
+import RagnarokRenderAssets
 
 final class MetalRenderBackend: GameRenderBackend {
     private(set) weak var scene: MapScene?

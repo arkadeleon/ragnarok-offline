@@ -10,8 +10,8 @@ import Foundation
 import RagnarokConstants
 import RagnarokModels
 import RagnarokPackets
+import RagnarokRenderAssets
 import RagnarokResources
-import RagnarokSceneAssets
 import RagnarokSprite
 import SGLMath
 import simd

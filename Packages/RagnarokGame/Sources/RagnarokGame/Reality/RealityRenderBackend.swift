@@ -11,8 +11,8 @@ import Foundation
 import RagnarokConstants
 import RagnarokModels
 import RagnarokRealityRendering
+import RagnarokRenderAssets
 import RagnarokResources
-import RagnarokSceneAssets
 import RagnarokSprite
 import RealityKit
 import SGLMath

@@ -1,6 +1,6 @@
 //
 //  WaterRenderAsset.swift
-//  RagnarokSceneAssets
+//  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/3/21.
 //
