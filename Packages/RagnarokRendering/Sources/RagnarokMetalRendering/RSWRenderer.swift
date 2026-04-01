@@ -23,7 +23,7 @@ public class RSWRenderer: Renderer {
         device: any MTLDevice,
         ground: Ground,
         water: Water,
-        models: [Model],
+        models: [RSMModel],
         groundTexture: any MTLTexture,
         waterTextures: [any MTLTexture],
         modelTextures: [String : any MTLTexture]

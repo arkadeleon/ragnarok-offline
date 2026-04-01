@@ -1,20 +1,20 @@
 //
-//  MapWorldAsset.swift
+//  WorldAsset.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/3/21.
 //
 
-public struct MapWorldAsset {
+public struct WorldAsset {
     public var ground: GroundRenderAsset
     public var water: WaterRenderAsset
-    public var models: [ModelRenderAsset]
+    public var models: [RSMModelRenderAsset]
     public var lighting: WorldLighting
 
     public init(
         ground: GroundRenderAsset,
         water: WaterRenderAsset,
-        models: [ModelRenderAsset],
+        models: [RSMModelRenderAsset],
         lighting: WorldLighting
     ) {
         self.ground = ground

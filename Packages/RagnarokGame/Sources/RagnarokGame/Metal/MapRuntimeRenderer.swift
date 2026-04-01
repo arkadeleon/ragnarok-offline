@@ -49,7 +49,7 @@ final class MapRuntimeRenderer: Renderer {
         self.device = device
     }
 
-    func setWorldAsset(_ worldAsset: MapWorldAsset?) {
+    func setWorldAsset(_ worldAsset: WorldAsset?) {
         guard let worldAsset else {
             groundRenderer = nil
             waterRenderer = nil

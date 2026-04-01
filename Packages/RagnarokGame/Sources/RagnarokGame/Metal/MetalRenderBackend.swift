@@ -44,10 +44,10 @@ final class MetalRenderBackend: GameRenderBackend {
 
         renderer.setWorldAsset(nil)
 
-        let loader = MapWorldAssetLoader()
+        let worldAssetLoader = WorldAssetLoader()
 
         do {
-            let worldAsset = try await loader.load(
+            let worldAsset = try await worldAssetLoader.load(
                 gat: scene.world.gat,
                 gnd: scene.world.gnd,
                 rsw: scene.world.rsw,

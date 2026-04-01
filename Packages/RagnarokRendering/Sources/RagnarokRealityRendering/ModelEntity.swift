@@ -15,12 +15,12 @@ import RagnarokRealitySurfaceShaders
 #endif
 
 extension Entity {
-    public convenience init(from asset: ModelRenderAsset, lighting: WorldLighting) async throws {
+    public convenience init(from modelAsset: RSMModelRenderAsset, lighting: WorldLighting) async throws {
         let textures = await withTaskGroup(
             of: (String, TextureResource?).self,
             returning: [String : TextureResource].self
         ) { taskGroup in
-            for (textureName, textureImage) in asset.textureImages {
+            for (textureName, textureImage) in modelAsset.textureImages {
                 taskGroup.addTask {
                     let texture = try? await TextureResource(
                         image: textureImage,
@@ -39,16 +39,16 @@ extension Entity {
         }
 
         try await self.init(
-            from: asset.model,
+            from: modelAsset.model,
             lighting: lighting,
             textures: textures
         )
 
-        self.name = asset.name
+        self.name = modelAsset.name
     }
 
     public convenience init(
-        from model: Model,
+        from model: RSMModel,
         lighting: WorldLighting,
         textures: [String : TextureResource]
     ) async throws {

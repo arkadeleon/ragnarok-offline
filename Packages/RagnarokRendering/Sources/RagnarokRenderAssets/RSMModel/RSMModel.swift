@@ -1,5 +1,5 @@
 //
-//  Model.swift
+//  RSMModel.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2023/11/27.
@@ -10,12 +10,12 @@ import RagnarokShaders
 import SGLMath
 import simd
 
-public struct ModelMesh {
+public struct RSMModelMesh: Sendable {
     public var vertices: [ModelVertex] = []
     public var textureName: String
 }
 
-public struct ModelBoundingBox {
+public struct RSMModelBoundingBox: Sendable {
     public var min: SIMD3<Float> = [.infinity, .infinity, .infinity]
     public var max: SIMD3<Float> = [-.infinity, -.infinity, -.infinity]
 
@@ -28,14 +28,42 @@ public struct ModelBoundingBox {
     }
 }
 
-public struct Model {
-    public var meshes: [ModelMesh] = []
-    public var boundingBox: ModelBoundingBox
+public struct RSMModelInstance: Sendable {
+    public static let identity = RSMModelInstance(position: .zero, rotation: .zero, scale: .one)
 
-    public init(rsm: RSM, instance: simd_float4x4) {
-        boundingBox = ModelBoundingBox()
+    public var position: SIMD3<Float>
+    public var rotation: SIMD3<Float>
+    public var scale: SIMD3<Float>
 
-        let wrappers = rsm.nodes.map(ModelNodeWrapper.init)
+    public var matrix: simd_float4x4 {
+        var matrix = matrix_identity_float4x4
+        matrix = matrix_translate(matrix, [position[0], position[1], position[2]])
+        matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
+        matrix = matrix_rotate(matrix, radians(rotation[0]), [1, 0, 0])  // rotateX
+        matrix = matrix_rotate(matrix, radians(rotation[1]), [0, 1, 0])  // rotateY
+        matrix = matrix_scale(matrix, scale)
+        return matrix
+    }
+
+    public init(position: SIMD3<Float>, rotation: SIMD3<Float>, scale: SIMD3<Float>) {
+        self.position = position
+        self.rotation = rotation
+        self.scale = scale
+    }
+}
+
+public struct RSMModel: Sendable {
+    public var meshes: [RSMModelMesh] = []
+    public var boundingBox: RSMModelBoundingBox
+
+    public var textureNames: Set<String> {
+        Set(meshes.map(\.textureName))
+    }
+
+    public init(rsm: RSM, instance: RSMModelInstance = .identity) {
+        boundingBox = RSMModelBoundingBox()
+
+        let wrappers = rsm.nodes.map(RSMModelNodeWrapper.init)
         let rootWrapper = wrappers.first { $0.node.name == rsm.rootNodes.first }
 
         for parent in wrappers {
@@ -50,46 +78,36 @@ public struct Model {
 
         for i in 0..<3 {
             for wrapper in wrappers {
-                boundingBox.max[i] = max(boundingBox.max[i], wrapper.box.max[i])
-                boundingBox.min[i] = min(boundingBox.min[i], wrapper.box.min[i])
+                boundingBox.max[i] = max(boundingBox.max[i], wrapper.boundingBox.max[i])
+                boundingBox.min[i] = min(boundingBox.min[i], wrapper.boundingBox.min[i])
             }
         }
 
         for wrapper in wrappers {
-            let ms = wrapper.compile(rsm: rsm, instance_matrix: instance, boundingBox: boundingBox)
+            let ms = wrapper.compile(rsm: rsm, instance_matrix: instance.matrix, boundingBox: boundingBox)
             for (textureName, vertices) in ms {
-                let mesh = ModelMesh(vertices: vertices, textureName: textureName)
+                let mesh = RSMModelMesh(vertices: vertices, textureName: textureName)
                 meshes.append(mesh)
             }
         }
     }
-
-    public static func createInstance(position: SIMD3<Float>, rotation: SIMD3<Float>, scale: SIMD3<Float>, width: Float, height: Float) -> simd_float4x4 {
-        var matrix = matrix_identity_float4x4
-        matrix = matrix_translate(matrix, [position[0] + width, position[1], position[2] + height])
-        matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])  // rotateZ
-        matrix = matrix_rotate(matrix, radians(rotation[0]), [1, 0, 0])  // rotateX
-        matrix = matrix_rotate(matrix, radians(rotation[1]), [0, 1, 0])  // rotateY
-        matrix = matrix_scale(matrix, scale)
-        return matrix
-    }
 }
 
-class ModelNodeWrapper {
+class RSMModelNodeWrapper {
     let node: RSM.Node
 
-    var box = ModelBoundingBox()
+    var boundingBox = RSMModelBoundingBox()
 
-    weak var parent: ModelNodeWrapper?
-    var children: [ModelNodeWrapper] = []
+    weak var parent: RSMModelNodeWrapper?
+    var children: [RSMModelNodeWrapper] = []
 
     var transformForChildren = matrix_identity_float4x4
 
     var worldTransformForChildren: simd_float4x4 {
         if let parent {
-            return parent.worldTransformForChildren * transformForChildren
+            parent.worldTransformForChildren * transformForChildren
         } else {
-            return transformForChildren
+            transformForChildren
         }
     }
 
@@ -97,9 +115,9 @@ class ModelNodeWrapper {
 
     var worldTransform: simd_float4x4 {
         if let parent {
-            return parent.worldTransformForChildren * transform
+            parent.worldTransformForChildren * transform
         } else {
-            return transform
+            transform
         }
     }
 
@@ -107,12 +125,12 @@ class ModelNodeWrapper {
         self.node = node
     }
 
-    func addChild(_ child: ModelNodeWrapper) {
+    func addChild(_ child: RSMModelNodeWrapper) {
         children.append(child)
         child.parent = self
     }
 
-    func calcBoundingBox(wrappers: [ModelNodeWrapper]) {
+    func calcBoundingBox(wrappers: [RSMModelNodeWrapper]) {
         transformForChildren = matrix_identity_float4x4
         transformForChildren = matrix_translate(transformForChildren, node.position)
 
@@ -141,8 +159,8 @@ class ModelNodeWrapper {
             let vertex = matrix * SIMD4<Float>(vertex, 1)
 
             for j in 0..<3 {
-                box.min[j] = min(vertex[j], box.min[j])
-                box.max[j] = max(vertex[j], box.max[j])
+                boundingBox.min[j] = min(vertex[j], boundingBox.min[j])
+                boundingBox.max[j] = max(vertex[j], boundingBox.max[j])
             }
         }
 
@@ -151,7 +169,7 @@ class ModelNodeWrapper {
         }
     }
 
-    func compile(rsm: RSM, instance_matrix: simd_float4x4, boundingBox: ModelBoundingBox) -> [String : [ModelVertex]] {
+    func compile(rsm: RSM, instance_matrix: simd_float4x4, boundingBox: RSMModelBoundingBox) -> [String : [ModelVertex]] {
         var shadeGroup = [[SIMD3<Float>]](repeating: [], count: 32)
         var shadeGroupUsed = [Bool](repeating: false, count: 32)
 

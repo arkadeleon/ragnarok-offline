@@ -14,7 +14,7 @@ public final class ModelRenderer {
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
-    let models: [Model]
+    let models: [RSMModel]
     let textures: [String : any MTLTexture]
 
     let fog = Fog(
@@ -33,7 +33,7 @@ public final class ModelRenderer {
         direction: [0, 1, 0]
     )
 
-    init(device: any MTLDevice, library: any MTLLibrary, models: [Model], textures: [String : any MTLTexture]) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, models: [RSMModel], textures: [String : any MTLTexture]) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
 
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "modelVertexShader")
@@ -60,7 +60,7 @@ public final class ModelRenderer {
         self.textures = textures
     }
 
-    public convenience init(device: any MTLDevice, models: [Model], textures: [String : any MTLTexture], lighting: WorldLighting? = nil) throws {
+    public convenience init(device: any MTLDevice, models: [RSMModel], textures: [String : any MTLTexture], lighting: WorldLighting? = nil) throws {
         let library = RagnarokCreateShadersLibrary(device)!
         try self.init(device: device, library: library, models: models, textures: textures)
         if let lighting {

@@ -65,12 +65,10 @@ struct RSMFileModelView: View {
         let data = try await file.contents()
         let rsm = try RSM(data: data)
 
-        let instance = Model.createInstance(
+        let instance = RSMModelInstance(
             position: .zero,
             rotation: .zero,
-            scale: [-0.25, -0.25, -0.25],
-            width: 0,
-            height: 0
+            scale: [-0.25, -0.25, -0.25]
         )
 
         var textureNames: Set<String> = []
@@ -85,7 +83,7 @@ struct RSMFileModelView: View {
             progress.completedUnitCount += 1
         }
 
-        let model = Model(rsm: rsm, instance: instance)
+        let model = RSMModel(rsm: rsm, instance: instance)
         let modelEntity = try await Entity(from: model, lighting: .preview, textures: textures)
         return modelEntity
     }

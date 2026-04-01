@@ -17,7 +17,7 @@ public class RSMRenderer: Renderer {
 
     public let camera = Camera()
 
-    public init(device: any MTLDevice, model: Model, textures: [String : any MTLTexture]) throws {
+    public init(device: any MTLDevice, model: RSMModel, textures: [String : any MTLTexture]) throws {
         self.device = device
 
         let library = RagnarokCreateShadersLibrary(device)!

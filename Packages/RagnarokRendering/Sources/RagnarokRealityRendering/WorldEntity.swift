@@ -15,7 +15,7 @@ extension Entity {
     public convenience init(from world: WorldResource, resourceManager: ResourceManager, progress: Progress) async throws {
         self.init()
 
-        let worldAssetLoader = MapWorldAssetLoader()
+        let worldAssetLoader = WorldAssetLoader()
 
         metric.beginMeasuring("Load world assets")
 

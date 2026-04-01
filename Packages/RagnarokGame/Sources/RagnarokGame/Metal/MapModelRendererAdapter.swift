@@ -15,11 +15,11 @@ final class MapModelRendererAdapter {
 
     init(
         device: any MTLDevice,
-        assets: [ModelRenderAsset],
+        assets: [RSMModelRenderAsset],
         lighting: WorldLighting
     ) throws {
-        let textures = ModelRenderAsset.makeTextures(from: assets, device: device)
-        let models = ModelRenderAsset.makeModels(from: assets)
+        let textures = RSMModelRenderAsset.makeTextures(from: assets, device: device)
+        let models = RSMModelRenderAsset.makeModels(from: assets)
 
         self.renderer = try ModelRenderer(
             device: device,
@@ -45,9 +45,9 @@ final class MapModelRendererAdapter {
     }
 }
 
-extension ModelRenderAsset {
+extension RSMModelRenderAsset {
     static func makeTextures(
-        from assets: [ModelRenderAsset],
+        from assets: [RSMModelRenderAsset],
         device: any MTLDevice
     ) -> [String : any MTLTexture] {
         var textures: [String : any MTLTexture] = [:]
@@ -74,15 +74,15 @@ extension ModelRenderAsset {
         return textures
     }
 
-    static func makeModels(from assets: [ModelRenderAsset]) -> [Model] {
-        var models: [Model] = []
+    static func makeModels(from modelAssets: [RSMModelRenderAsset]) -> [RSMModel] {
+        var models: [RSMModel] = []
 
-        for (assetIndex, asset) in assets.enumerated() {
-            let namespace = textureNamespace(for: asset, assetIndex: assetIndex)
-            for instance in asset.instances {
+        for (assetIndex, modelAsset) in modelAssets.enumerated() {
+            let namespace = textureNamespace(for: modelAsset, assetIndex: assetIndex)
+            for instance in modelAsset.instances {
                 models.append(
                     instantiatedModel(
-                        from: asset.model,
+                        from: modelAsset.model,
                         instance: instance,
                         textureNamespace: namespace
                     )
@@ -94,17 +94,11 @@ extension ModelRenderAsset {
     }
 
     private static func instantiatedModel(
-        from prototype: Model,
-        instance: ModelRenderAsset.Instance,
+        from prototype: RSMModel,
+        instance: RSMModelInstance,
         textureNamespace: String
-    ) -> Model {
-        let instanceMatrix = Model.createInstance(
-            position: instance.position,
-            rotation: instance.rotation,
-            scale: instance.scale,
-            width: 0,
-            height: 0
-        )
+    ) -> RSMModel {
+        let instanceMatrix = instance.matrix
         let normalMatrix = simd_float3x3(instanceMatrix).inverse.transpose
 
         var model = prototype
@@ -136,9 +130,9 @@ extension ModelRenderAsset {
     }
 
     private static func textureNamespace(
-        for asset: ModelRenderAsset,
+        for modelAsset: RSMModelRenderAsset,
         assetIndex: Int
     ) -> String {
-        "\(assetIndex)::\(asset.name)::"
+        "\(assetIndex)::\(modelAsset.name)::"
     }
 }
