@@ -72,11 +72,5 @@ groundFragmentShader(RasterizerData in [[stage_in]],
         color = float4(texture.rgb * lightColor, texture.a);
     }
 
-    if (uniforms.fogUse) {
-        float depth = in.position.z / in.position.w;
-        float fogFactor = smoothstep(uniforms.fogNear, uniforms.fogFar, depth);
-        color = mix(color, float4(uniforms.fogColor, color.w), fogFactor);
-    }
-
     return color;
 }

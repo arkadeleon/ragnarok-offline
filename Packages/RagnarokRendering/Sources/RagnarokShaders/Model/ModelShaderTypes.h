@@ -24,11 +24,6 @@ typedef struct {
 } ModelVertexUniforms;
 
 typedef struct {
-    int fogUse;
-    float fogNear;
-    float fogFar;
-    vector_float3 fogColor;
-
     vector_float3 lightAmbient;
     vector_float3 lightDiffuse;
     float lightOpacity;

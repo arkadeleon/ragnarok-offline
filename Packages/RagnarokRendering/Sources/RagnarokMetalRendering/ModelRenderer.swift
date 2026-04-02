@@ -17,15 +17,6 @@ public final class ModelRenderer {
     let models: [RSMModel]
     let textures: [String : any MTLTexture]
 
-    let fog = Fog(
-        use: false,
-        exist: true,
-        far: 30,
-        near: 80,
-        factor: 1,
-        color: [1, 1, 1]
-    )
-
     var light = Light(
         opacity: 1,
         ambient: [1, 1, 1],
@@ -97,10 +88,6 @@ public final class ModelRenderer {
         }
 
         var fragmentUniforms = ModelFragmentUniforms(
-            fogUse: fog.use ? 1 : 0,
-            fogNear: fog.near,
-            fogFar: fog.far,
-            fogColor: fog.color,
             lightAmbient: light.ambient,
             lightDiffuse: light.diffuse,
             lightOpacity: light.opacity

@@ -70,11 +70,5 @@ effectFragmentShader(RasterizerData in [[stage_in]],
 
     color = color * uniforms.spriteColor;
 
-    if (uniforms.fogUse) {
-        float depth = in.position.z / in.position.w;
-        float fogFactor = smoothstep(uniforms.fogNear, uniforms.fogFar, depth);
-        color = mix(color, float4(uniforms.fogColor, color.w), fogFactor);
-    }
-
     return color;
 }

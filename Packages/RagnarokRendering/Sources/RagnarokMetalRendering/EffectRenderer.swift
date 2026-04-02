@@ -36,15 +36,6 @@ class EffectRenderer {
     let effect: Effect
     let textures: [String : any MTLTexture]
 
-    let fog = Fog(
-        use: false,
-        exist: true,
-        far: 30,
-        near: 80,
-        factor: 1,
-        color: [1, 1, 1]
-    )
-
     init(device: any MTLDevice, library: any MTLLibrary, effect: Effect, textures: [String : any MTLTexture]) throws {
         var blendKeys: Set<SIMD2<Int32>> = []
         for frame in effect.frames {
@@ -120,11 +111,7 @@ class EffectRenderer {
             }
 
             var fragmentUniforms = EffectFragmentUniforms(
-                spriteColor: sprite.color,
-                fogUse: fog.use && fog.exist ? 1 : 0,
-                fogNear: fog.near,
-                fogFar: fog.far,
-                fogColor: fog.color
+                spriteColor: sprite.color
             )
             guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<EffectFragmentUniforms>.stride, options: []) else {
                 continue

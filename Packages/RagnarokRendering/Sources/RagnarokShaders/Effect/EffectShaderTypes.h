@@ -24,9 +24,4 @@ typedef struct {
 
 typedef struct {
     vector_float4 spriteColor;
-
-    int fogUse;
-    float fogNear;
-    float fogFar;
-    vector_float3 fogColor;
 } EffectFragmentUniforms;

@@ -41,11 +41,5 @@ waterFragmentShader(RasterizerData in [[stage_in]],
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 color = float4(colorTexture.sample(textureSampler, in.textureCoordinate).rgb, uniforms.opacity);
 
-    if (uniforms.fogUse) {
-        float depth = in.position.z / in.position.w;
-        float fogFactor = smoothstep(uniforms.fogNear, uniforms.fogFar, depth);
-        color = mix(color, float4(uniforms.fogColor, color.w), fogFactor);
-    }
-
     return color;
 }

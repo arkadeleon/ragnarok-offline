@@ -54,11 +54,5 @@ modelFragmentShader(RasterizerData in [[stage_in]],
     color.rgb *= clamp(lightColor.rgb, 0.0, 1.0);
     color.a *= in.alpha;
 
-    if (uniforms.fogUse) {
-        float depth = in.position.z / in.position.w;
-        float fogFactor = smoothstep(uniforms.fogNear, uniforms.fogFar, depth);
-        color = mix(color, float4(uniforms.fogColor, color.w), fogFactor);
-    }
-
     return color;
 }

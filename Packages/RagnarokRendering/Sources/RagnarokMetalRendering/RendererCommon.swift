@@ -8,15 +8,6 @@
 import Metal
 import simd
 
-struct Fog {
-    var use: Bool
-    var exist: Bool
-    var far: Float
-    var near: Float
-    var factor: Float
-    var color: SIMD3<Float>
-}
-
 struct Light {
     var opacity: Float
     var ambient: SIMD3<Float>

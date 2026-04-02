@@ -20,15 +20,6 @@ public final class GroundRenderer {
     let tileColorTexture: (any MTLTexture)?
     let useLightmap: Bool
 
-    let fog = Fog(
-        use: false,
-        exist: true,
-        far: 30,
-        near: 80,
-        factor: 1,
-        color: [1, 1, 1]
-    )
-
     var light = Light(
         opacity: 1,
         ambient: [1, 1, 1],
@@ -133,10 +124,6 @@ public final class GroundRenderer {
 
         var fragmentUniforms = GroundFragmentUniforms(
             lightMapUse: useLightmap ? 1 : 0,
-            fogUse: fog.use && fog.exist ? 1 : 0,
-            fogNear: fog.near,
-            fogFar: fog.far,
-            fogColor: fog.color,
             lightAmbient: light.ambient,
             lightDiffuse: light.diffuse,
             lightOpacity: light.opacity
