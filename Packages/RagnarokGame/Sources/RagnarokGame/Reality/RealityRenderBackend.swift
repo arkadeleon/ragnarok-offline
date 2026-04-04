@@ -62,13 +62,12 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func detach() {
-        snapshotTask?.cancel()
-        snapshotTask = nil
-        renderedDamageEffectIDs.removeAll()
+        teardownSceneState()
         scene = nil
         #if os(iOS) || os(macOS)
         realityMapProjector = nil
         realityMapHitTester = nil
+        anchorEntity?.removeFromParent()
         anchorEntity = nil
         #endif
     }
@@ -78,11 +77,15 @@ final class RealityRenderBackend: GameRenderBackend {
             return
         }
 
-        if let worldEntity = try? await Entity(from: scene.world, resourceManager: scene.resourceManager, progress: progress) {
+        teardownSceneState()
+
+        let worldEntity = try? await Entity(from: scene.world, resourceManager: scene.resourceManager, progress: progress)
+        if let worldEntity {
             worldEntity.name = scene.mapName
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
 
-            if let audioResource = await audioResource(forMapName: scene.mapName, resourceManager: scene.resourceManager) {
+            let audioResource = await audioResource(forMapName: scene.mapName, resourceManager: scene.resourceManager)
+            if let audioResource {
                 worldEntity.components.set(AudioLibraryComponent(resources: [
                     "BGM": audioResource
                 ]))
@@ -98,7 +101,8 @@ final class RealityRenderBackend: GameRenderBackend {
             mapWidth: scene.mapGrid.width,
             mapHeight: scene.mapGrid.height
         )
-        if let skyboxEntity = try? await SkyboxEntity(configuration: skyboxConfiguration) {
+        let skyboxEntity = try? await SkyboxEntity(configuration: skyboxConfiguration)
+        if let skyboxEntity {
             skyboxEntity.name = "skybox"
             rootEntity.addChild(skyboxEntity)
         }
@@ -130,11 +134,12 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func unload() {
-        guard let scene,
-              let worldEntity = rootEntity.findEntity(named: scene.mapName) else {
-            return
+        if let scene,
+           let worldEntity = rootEntity.findEntity(named: scene.mapName) {
+            worldEntity.stopAllAudio()
         }
-        worldEntity.stopAllAudio()
+
+        teardownSceneState()
     }
 
     func applySnapshot(_ state: MapSceneState) {
@@ -296,6 +301,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private func setupLighting(world: WorldResource) {
         let lightEntity = Entity()
+        lightEntity.name = "light"
 
         let diffuse = [
             world.rsw.light.diffuseRed,
@@ -331,6 +337,26 @@ final class RealityRenderBackend: GameRenderBackend {
 
         lightEntity.look(at: target, from: position, relativeTo: nil)
         rootEntity.addChild(lightEntity)
+    }
+
+    private func teardownSceneState() {
+        snapshotTask?.cancel()
+        snapshotTask = nil
+
+        renderedDamageEffectIDs.removeAll()
+        tileSelectionRenderer.entity.isEnabled = false
+        worldCameraEntity.removeFromParent()
+        for child in Array(worldCameraEntity.children) {
+            child.removeFromParent()
+        }
+        entityCache.clear()
+
+        for child in Array(rootEntity.children) where child !== tileSelectionRenderer.entity {
+            child.stopAllAudio()
+            child.removeFromParent()
+        }
+
+        tileEntities.removeAll()
     }
 
     private func setupWorldCamera(target: Entity, cameraState: MapCameraState) {

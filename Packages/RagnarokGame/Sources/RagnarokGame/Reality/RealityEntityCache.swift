@@ -156,4 +156,34 @@ final class RealityEntityCache {
             entity.removeFromParent()
         }
     }
+
+    func clear() {
+        for phase in objectEntities.values {
+            switch phase {
+            case .inProgress(let task):
+                task.cancel()
+            case .loaded(let entity):
+                entity.removeFromParent()
+            }
+        }
+
+        for phase in itemEntities.values {
+            switch phase {
+            case .inProgress(let task):
+                task.cancel()
+            case .loaded(let entity):
+                entity.removeFromParent()
+            }
+        }
+
+        for phase in templateEntitiesByJobID.values {
+            if case .inProgress(let task) = phase {
+                task.cancel()
+            }
+        }
+
+        objectEntities.removeAll()
+        itemEntities.removeAll()
+        templateEntitiesByJobID.removeAll()
+    }
 }
