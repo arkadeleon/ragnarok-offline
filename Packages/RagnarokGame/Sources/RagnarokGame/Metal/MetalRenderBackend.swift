@@ -98,6 +98,7 @@ final class MetalRenderBackend: GameRenderBackend {
             scene: scene,
             resourceManager: scene.resourceManager
         )
+        renderer.updateDamageEffects(state.damageEffects, scene: scene)
 
         let playerPresentationPosition =
             renderer.presentationWorldPosition(for: state.player.id)

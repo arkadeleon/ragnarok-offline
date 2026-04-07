@@ -45,26 +45,29 @@ Result:
 - reloading or re-entering a map should not accumulate stale Reality children under `rootEntity`
 - Reality `unload()` / `detach()` behavior is now much closer to the Metal reset path
 
+### Phase 2: Metal damage-effect rendering
+
+Metal damage digits are no longer a known parity gap.
+
+Current implementation:
+
+- `MetalRenderBackend.syncFrameState(with:)` now forwards `state.damageEffects` into `MapRuntimeRenderer`
+- `MapRuntimeRenderer` now owns a dedicated `MetalDamageEffectRenderer`
+- the Metal effect renderer keeps effect ownership keyed by `MapDamageEffect.id`, matching the same shared-state diffing model used by Reality
+- new Metal effects resolve their start position from the current presentation position when available, with a grid-position fallback if the target snapshot is not yet available
+- Metal renders damage digits as world-space billboards using the existing sprite billboard shader path rather than a separate screen-space overlay system
+- digit textures are generated for both numeric damage and `MISS`, with Metal-side color parity for miss, player-target damage, and non-player-target damage
+- animation timing follows the shared `MapDamageEffect` timing model, including delayed multi-hit playback
+- unloading the Metal world now also resets the transient damage-effect renderer state
+
+Result:
+
+- damage, miss, and delayed multi-hit feedback now appear on Metal
+- combat feedback is much closer across Metal and Reality, even though the two backends still use different rendering primitives internally
+
 ## Confirmed Gaps
 
-### 1. Damage digits are Reality-only
-
-Shared runtime already publishes `MapSceneState.damageEffects`, but only `RealityRenderBackend` consumes it.
-
-Evidence:
-
-- `MapScene` appends `MapDamageEffect` into shared state.
-- `RealityRenderBackend.applySnapshot(_:)` calls `syncDamageEffects(with:)`.
-- there is no Metal-side equivalent renderer, cache, or overlay pass.
-
-Impact:
-
-- combat feedback is inconsistent across backends
-- Metal currently loses a gameplay-visible effect that the runtime already knows about
-
-Priority: P0
-
-### 2. Scene ambience is not aligned
+### 1. Scene ambience is not aligned
 
 Reality currently owns several environment features that Metal does not reproduce:
 
@@ -84,7 +87,7 @@ Impact:
 
 Priority: P1
 
-### 3. visionOS HUD / overlay parity is missing
+### 2. visionOS HUD / overlay parity is missing
 
 Overlay gauge projection exists for Metal and for Reality on iOS/macOS, but not for Reality on visionOS.
 
@@ -101,7 +104,7 @@ Impact:
 
 Priority: P1
 
-### 4. visionOS camera interaction is not aligned with the other paths
+### 3. visionOS camera interaction is not aligned with the other paths
 
 The Reality path on visionOS currently supports tap interaction and pinch-style distance changes, but not the full camera controls exposed elsewhere.
 
@@ -118,7 +121,7 @@ Impact:
 
 Priority: P1
 
-### 5. Host integration is intentionally split on visionOS, but not yet unified
+### 4. Host integration is intentionally split on visionOS, but not yet unified
 
 On visionOS, `MapRenderHost` does not actually present the Reality scene in-place; the real rendering happens through the app's `ImmersiveSpace`.
 
@@ -159,17 +162,21 @@ Acceptance:
 
 ### Phase 2: Add Metal damage-effect rendering
 
+Status:
+
+- implemented
+
 Objective:
 
 - make combat feedback consistent across backends
 
-Changes:
+Implemented changes:
 
 - introduce a Metal-side damage-effect renderer fed from `MapSceneState.damageEffects`
 - keep effect ownership keyed by `MapDamageEffect.id`, similar to Reality's diffing model
-- decide whether the Metal implementation should be:
-  - a world-space billboard pass, or
-  - a screen-space overlay pass projected from backend presentation positions
+- implement the Metal path as a world-space billboard pass reusing the existing sprite billboard shader pipeline
+- resolve effect anchors from backend presentation positions with a grid-position fallback when snapshots are not yet ready
+- generate transient text textures for numeric damage and `MISS`
 
 Acceptance:
 
@@ -247,15 +254,14 @@ Acceptance:
 
 Recommended order:
 
-1. Phase 2: Metal damage effects
-2. Phase 3: environment parity
-3. Phase 4: visionOS product-surface parity decisions
-4. Phase 5: validation and guardrails
+1. Phase 3: environment parity
+2. Phase 4: visionOS product-surface parity decisions
+3. Phase 5: validation and guardrails
 
 Rationale:
 
-- damage effects are the clearest gameplay-visible missing feature
-- environment parity is important, but less blocking than combat feedback
+- Phase 2 is now complete, so the highest-value remaining work starts with environment parity
+- environment parity is important because backend choice still changes map ambience
 - visionOS needs product decisions as much as code changes
 
 ## Out Of Scope For This Plan

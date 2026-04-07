@@ -31,6 +31,7 @@ final class MapRuntimeRenderer: Renderer {
     private var modelRenderer: MapModelRendererAdapter?
     private(set) var spriteBillboardRenderer: SpriteBillboardRenderer?
     private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
+    private var damageEffectRenderer: MetalDamageEffectRenderer?
 
     private let spriteBillboardSnapshotEvaluator = SpriteBillboardSnapshotEvaluator()
     private var spriteBillboardSnapshots: [GameObjectID : SpriteBillboardSnapshot] = [:]
@@ -47,6 +48,7 @@ final class MapRuntimeRenderer: Renderer {
             fatalError("MapRuntimeRenderer: Metal is not available on this device")
         }
         self.device = device
+        self.damageEffectRenderer = try? MetalDamageEffectRenderer(device: device)
     }
 
     func setWorldAsset(_ worldAsset: WorldAsset?) {
@@ -59,6 +61,7 @@ final class MapRuntimeRenderer: Renderer {
             spriteBillboardRenderer?.reset()
             spriteBillboardRenderer = nil
             selectionOverlayRenderer = nil
+            damageEffectRenderer?.reset()
             spriteBillboardSnapshots.removeAll()
             return
         }
@@ -122,6 +125,30 @@ final class MapRuntimeRenderer: Renderer {
         selectionOverlayRenderer?.syncSelection(selectedPosition, mapGrid: mapGrid)
     }
 
+    func updateDamageEffects(_ damageEffects: [MapDamageEffect], scene: MapScene) {
+        damageEffectRenderer?.sync(with: damageEffects) { [weak self] effect in
+            guard let self else {
+                return nil
+            }
+
+            guard let startPosition = self.presentationWorldPosition(for: effect.targetObjectID)
+                ?? self.fallbackWorldPosition(for: effect.targetObjectID, scene: scene) else {
+                return nil
+            }
+
+            let targetObjectType = if effect.targetObjectID == scene.state.player.id {
+                scene.state.player.object.type
+            } else {
+                scene.state.objects[effect.targetObjectID]?.object.type
+            }
+
+            return MetalDamageEffectRenderer.ResolvedTarget(
+                startPosition: startPosition,
+                isPlayerTarget: targetObjectType == .pc
+            )
+        }
+    }
+
     func render(
         atTime time: CFTimeInterval,
         viewport: CGRect,
@@ -170,8 +197,24 @@ final class MapRuntimeRenderer: Renderer {
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
+        damageEffectRenderer?.render(
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
 
         renderCommandEncoder.endEncoding()
+    }
+
+    private func fallbackWorldPosition(for objectID: GameObjectID, scene: MapScene) -> SIMD3<Float>? {
+        if objectID == scene.state.player.id {
+            return scene.position(for: scene.state.player.gridPosition)
+        }
+
+        guard let objectState = scene.state.objects[objectID] else {
+            return nil
+        }
+
+        return scene.position(for: objectState.gridPosition)
     }
 
     private func makeRenderMatrices(viewport: CGRect) -> RenderMatrices {
