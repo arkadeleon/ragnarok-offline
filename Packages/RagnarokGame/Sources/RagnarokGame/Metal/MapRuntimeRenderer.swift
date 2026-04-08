@@ -22,10 +22,12 @@ final class MapRuntimeRenderer: Renderer {
         var viewMatrix: simd_float4x4
         var projectionMatrix: simd_float4x4
         var normalMatrix: simd_float3x3
+        var cameraPosition: SIMD3<Float>
     }
 
     let device: any MTLDevice
 
+    private var skyboxRenderer: MetalSkyboxRenderer?
     private var groundRenderer: MapGroundRendererAdapter?
     private var waterRenderer: MapWaterRendererAdapter?
     private var modelRenderer: MapModelRendererAdapter?
@@ -53,6 +55,7 @@ final class MapRuntimeRenderer: Renderer {
 
     func setWorldAsset(_ worldAsset: WorldAsset?) {
         guard let worldAsset else {
+            skyboxRenderer = nil
             groundRenderer = nil
             waterRenderer = nil
             modelRenderer = nil
@@ -88,6 +91,13 @@ final class MapRuntimeRenderer: Renderer {
 
     func prepareDynamicRenderers(resourceManager: ResourceManager) async {
         await selectionOverlayRenderer?.prepare(device: device, resourceManager: resourceManager)
+    }
+
+    func setSkyboxConfiguration(_ configuration: SkyboxConfiguration) {
+        if skyboxRenderer == nil {
+            skyboxRenderer = try? MetalSkyboxRenderer(device: device)
+        }
+        skyboxRenderer?.configure(with: configuration)
     }
 
     func updateCamera(cameraState: MapCameraState, targetPosition: SIMD3<Float>) {
@@ -171,6 +181,12 @@ final class MapRuntimeRenderer: Renderer {
         lastRenderMatrices = matrices
         lastViewport = viewport
 
+        skyboxRenderer?.render(
+            renderCommandEncoder: renderCommandEncoder,
+            projectionMatrix: matrices.projectionMatrix,
+            viewMatrix: matrices.viewMatrix,
+            cameraPosition: matrices.cameraPosition
+        )
         groundRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
@@ -235,7 +251,8 @@ final class MapRuntimeRenderer: Renderer {
             modelMatrix: modelMatrix,
             viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
             projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
-            normalMatrix: simd_float3x3(modelMatrix).inverse.transpose
+            normalMatrix: simd_float3x3(modelMatrix).inverse.transpose,
+            cameraPosition: cameraPosition
         )
     }
 

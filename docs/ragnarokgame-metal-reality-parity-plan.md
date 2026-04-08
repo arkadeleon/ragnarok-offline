@@ -185,17 +185,22 @@ Acceptance:
 
 ### Phase 3: Align environment features
 
+Status:
+
+- implemented
+
 Objective:
 
 - stop backend choice from changing map ambience
 
-Changes:
+Implemented changes:
 
-- move map BGM ownership out of Reality-only code, or provide an equivalent Metal-side path
-- decide whether skybox should become:
-  - a shared environment service, or
-  - a Metal-specific sky dome renderer matching the generated Reality skybox
-- review whether any lighting parameters derived from `RSW.Light` should be normalized into shared environment inputs
+- extracted `SkyboxConfiguration` and `angularDistance` from `SkyboxEntity.swift` into a new shared `Core/SkyboxConfiguration.swift` accessible by both backends
+- added `MetalSkyboxRenderer`: renders a full-screen gradient quad as the first draw call of each frame, before ground/water/models, using a new `skyboxVertexShader` / `skyboxFragmentShader` pair that computes the three-point sky gradient (top → horizon → bottom) in the fragment shader from uniform colors
+- `MapRuntimeRenderer` now owns a `MetalSkyboxRenderer` and exposes `setSkyboxConfiguration(_:)` to configure it; clearing the world asset also clears the skybox
+- `MetalRenderBackend.load(progress:)` now generates a `SkyboxConfiguration` from `RSW.Light` (same logic as Reality) and passes it to the renderer after loading the world asset
+- added `AVAudioPlayer`-based BGM playback to `MetalRenderBackend`: `load(progress:)` looks up the map BGM via `MP3NameTable`, loads the data from the resource manager, and starts looping playback; `unload()` and `detach()` stop the player
+- lighting parameters from `RSW.Light` are already normalized into the shared `WorldLighting` struct consumed by both backends — no further normalization needed
 
 Acceptance:
 
@@ -254,14 +259,12 @@ Acceptance:
 
 Recommended order:
 
-1. Phase 3: environment parity
-2. Phase 4: visionOS product-surface parity decisions
-3. Phase 5: validation and guardrails
+1. Phase 4: visionOS product-surface parity decisions
+2. Phase 5: validation and guardrails
 
 Rationale:
 
-- Phase 2 is now complete, so the highest-value remaining work starts with environment parity
-- environment parity is important because backend choice still changes map ambience
+- Phase 3 is now complete, so the remaining work is visionOS product decisions and validation
 - visionOS needs product decisions as much as code changes
 
 ## Out Of Scope For This Plan

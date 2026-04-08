@@ -97,6 +97,7 @@ let package = Package(
                 .process("Effect/EffectShaders.metal"),
                 .process("Ground/GroundShaders.metal"),
                 .process("Model/ModelShaders.metal"),
+                .process("Skybox/SkyboxShaders.metal"),
                 .process("Sprite/SpriteShaders.metal"),
                 .process("Tile/TileShaders.metal"),
                 .process("Water/WaterShaders.metal"),

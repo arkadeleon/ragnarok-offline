@@ -5,9 +5,11 @@
 //  Created by Leon Li on 2026/3/22.
 //
 
+import AVFAudio
 import CoreGraphics
 import Foundation
 import RagnarokRenderAssets
+import RagnarokResources
 
 final class MetalRenderBackend: GameRenderBackend {
     private(set) weak var scene: MapScene?
@@ -16,6 +18,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     private let metalMapProjector = MetalMapProjector()
     private let metalMapHitTester = MetalMapHitTester()
+    private var bgmPlayer: AVAudioPlayer?
 
     var projector: (any MapProjector)? {
         metalMapProjector
@@ -33,6 +36,8 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func detach() {
+        bgmPlayer?.stop()
+        bgmPlayer = nil
         scene = nil
         renderer.setWorldAsset(nil)
     }
@@ -58,6 +63,19 @@ final class MetalRenderBackend: GameRenderBackend {
             }
 
             renderer.setWorldAsset(worldAsset)
+
+            let skyboxConfiguration = SkyboxConfiguration.generate(
+                light: scene.world.rsw.light,
+                mapWidth: scene.mapGrid.width,
+                mapHeight: scene.mapGrid.height
+            )
+            renderer.setSkyboxConfiguration(skyboxConfiguration)
+
+            bgmPlayer?.stop()
+            bgmPlayer = await loadBGMPlayer(forMapName: scene.mapName, resourceManager: scene.resourceManager)
+            bgmPlayer?.numberOfLoops = -1
+            bgmPlayer?.play()
+
             syncFrameState(with: scene.state)
             await renderer.prepareDynamicRenderers(resourceManager: scene.resourceManager)
         } catch is CancellationError {
@@ -68,6 +86,8 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func unload() {
+        bgmPlayer?.stop()
+        bgmPlayer = nil
     }
 
     func applySnapshot(_ state: MapSceneState) {
@@ -109,6 +129,20 @@ final class MetalRenderBackend: GameRenderBackend {
         )
 
         renderer.syncSelection(state.selection, mapGrid: scene.mapGrid)
+    }
+
+    private func loadBGMPlayer(forMapName mapName: String, resourceManager: ResourceManager) async -> AVAudioPlayer? {
+        let mp3NameTable = await resourceManager.mp3NameTable()
+        guard let mp3Name = mp3NameTable.mp3Name(forMapName: mapName) else {
+            return nil
+        }
+
+        let bgmPath = ResourcePath(components: ["BGM", mp3Name])
+        guard let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) else {
+            return nil
+        }
+
+        return try? AVAudioPlayer(data: bgmData)
     }
 
     private func syncAndProjectOverlay() {
