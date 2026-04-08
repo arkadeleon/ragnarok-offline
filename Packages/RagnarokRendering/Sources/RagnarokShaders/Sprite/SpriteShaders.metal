@@ -16,9 +16,9 @@ typedef struct {
 } RasterizerData;
 
 vertex RasterizerData
-spriteBillboardVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
-                            unsigned int vertexIndex [[vertex_id]],
-                            constant SpriteVertexUniforms &uniforms [[buffer(1)]])
+spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
+                   unsigned int vertexIndex [[vertex_id]],
+                   constant SpriteVertexUniforms &uniforms [[buffer(1)]])
 {
     SpriteVertex in = vertices[vertexIndex];
 
@@ -43,8 +43,8 @@ spriteBillboardVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
 }
 
 fragment float4
-spriteBillboardFragmentShader(RasterizerData in [[stage_in]],
-                              texture2d<float> colorTexture [[texture(0)]])
+spriteFragmentShader(RasterizerData in [[stage_in]],
+                     texture2d<float> colorTexture [[texture(0)]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 color = colorTexture.sample(textureSampler, in.textureCoordinate);

@@ -1,5 +1,5 @@
 //
-//  SpriteBillboardSnapshotEvaluator.swift
+//  SpriteSnapshotEvaluator.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/25.
@@ -11,15 +11,15 @@ import RagnarokSprite
 import simd
 
 @MainActor
-final class SpriteBillboardSnapshotEvaluator {
+final class SpriteSnapshotEvaluator {
     func evaluate(
         player: MapObjectState,
         objects: [GameObjectID : MapObjectState],
         items: [GameObjectID : MapItemState],
         scene: MapScene
-    ) -> [GameObjectID : SpriteBillboardSnapshot] {
+    ) -> [GameObjectID : SpriteSnapshot] {
         let now = ContinuousClock.now
-        var snapshots: [GameObjectID : SpriteBillboardSnapshot] = [:]
+        var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
         snapshots[player.id] = snapshot(
             for: player,
@@ -36,7 +36,7 @@ final class SpriteBillboardSnapshotEvaluator {
         }
 
         for (itemID, itemState) in items {
-            snapshots[itemID] = SpriteBillboardSnapshot(
+            snapshots[itemID] = SpriteSnapshot(
                 objectID: itemID,
                 worldPosition: scene.position(for: itemState.gridPosition),
                 isVisible: true,
@@ -51,19 +51,19 @@ final class SpriteBillboardSnapshotEvaluator {
         for state: MapObjectState,
         now: ContinuousClock.Instant,
         scene: MapScene
-    ) -> SpriteBillboardSnapshot {
+    ) -> SpriteSnapshot {
         let presentationSample = MapObjectPresentationEvaluator.resolvedPresentation(
             for: state,
             now: now,
             position: { scene.position(for: $0) }
         )
 
-        let visualAnimationKey = SpriteBillboardAnimationKey(
+        let visualAnimationKey = SpriteAnimationKey(
             action: presentationSample.action,
             direction: presentationSample.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
         )
 
-        return SpriteBillboardSnapshot(
+        return SpriteSnapshot(
             objectID: state.id,
             worldPosition: presentationSample.worldPosition,
             isVisible: state.isVisible,
@@ -76,12 +76,12 @@ final class SpriteBillboardSnapshotEvaluator {
     }
 
     private func sanitizedAnimationKey(
-        _ key: SpriteBillboardAnimationKey,
+        _ key: SpriteAnimationKey,
         for mapObject: MapObject
-    ) -> SpriteBillboardAnimationKey {
+    ) -> SpriteAnimationKey {
         let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: mapObject.job)
         guard availableActionTypes.contains(key.action) else {
-            return SpriteBillboardAnimationKey(action: .idle, direction: key.direction)
+            return SpriteAnimationKey(action: .idle, direction: key.direction)
         }
         return key
     }

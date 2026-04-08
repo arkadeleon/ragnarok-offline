@@ -48,8 +48,8 @@ final class MetalDamageEffectRenderer {
         let library = RagnarokCreateShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteBillboardVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "spriteBillboardFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "spriteFragmentShader")
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha

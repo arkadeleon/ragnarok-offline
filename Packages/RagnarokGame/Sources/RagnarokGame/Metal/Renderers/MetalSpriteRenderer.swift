@@ -1,5 +1,5 @@
 //
-//  SpriteBillboardRenderer.swift
+//  MetalSpriteRenderer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/23.
@@ -12,11 +12,11 @@ import RagnarokShaders
 import simd
 
 @MainActor
-final class SpriteBillboardRenderer {
+final class MetalSpriteRenderer {
     private var renderPipelineState: (any MTLRenderPipelineState)?
     private var depthStencilState: (any MTLDepthStencilState)?
 
-    private var drawables: [GameObjectID : SpriteBillboardDrawable] = [:]
+    private var drawables: [GameObjectID : SpriteDrawable] = [:]
 
     /// Screen-space bounding boxes (top-left origin) updated each render call.
     private(set) var hitBoxes: [GameObjectID : CGRect] = [:]
@@ -25,8 +25,8 @@ final class SpriteBillboardRenderer {
         let library = RagnarokCreateShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteBillboardVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "spriteBillboardFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "spriteFragmentShader")
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
@@ -42,7 +42,7 @@ final class SpriteBillboardRenderer {
         self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    func update(drawables: [GameObjectID : SpriteBillboardDrawable]) {
+    func update(drawables: [GameObjectID : SpriteDrawable]) {
         self.drawables = drawables
     }
 
@@ -120,7 +120,7 @@ final class SpriteBillboardRenderer {
     }
 
     private func computeHitBox(
-        for entry: SpriteBillboardDrawable,
+        for entry: SpriteDrawable,
         matrices: MapRuntimeRenderer.RenderMatrices,
         viewport: CGRect
     ) -> CGRect? {

@@ -22,9 +22,9 @@ final class MetalMapHitTester {
             return nil
         }
 
-        let spriteBillboardRenderer = renderer.spriteBillboardRenderer
+        let spriteRenderer = renderer.spriteRenderer
 
-        if let hitBoxes = spriteBillboardRenderer?.hitBoxes {
+        if let hitBoxes = spriteRenderer?.hitBoxes {
             for (objectID, rect) in hitBoxes {
                 guard rect.contains(screenPoint) else {
                     continue

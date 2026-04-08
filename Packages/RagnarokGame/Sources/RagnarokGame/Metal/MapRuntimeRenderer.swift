@@ -31,13 +31,13 @@ final class MapRuntimeRenderer: Renderer {
     private var groundRenderer: MapGroundRendererAdapter?
     private var waterRenderer: MapWaterRendererAdapter?
     private var modelRenderer: MapModelRendererAdapter?
-    private(set) var spriteBillboardRenderer: SpriteBillboardRenderer?
+    private(set) var spriteRenderer: MetalSpriteRenderer?
     private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
     private var damageEffectRenderer: MetalDamageEffectRenderer?
 
-    private let spriteBillboardSnapshotEvaluator = SpriteBillboardSnapshotEvaluator()
-    private var spriteBillboardSnapshots: [GameObjectID : SpriteBillboardSnapshot] = [:]
-    private var spriteBillboardAssetStore: SpriteBillboardAssetStore?
+    private let spriteSnapshotEvaluator = SpriteSnapshotEvaluator()
+    private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
+    private var spriteAssetStore: SpriteAssetStore?
 
     private var cameraState: MapCameraState = .default
     private var targetPosition: SIMD3<Float> = .zero
@@ -59,13 +59,13 @@ final class MapRuntimeRenderer: Renderer {
             groundRenderer = nil
             waterRenderer = nil
             modelRenderer = nil
-            spriteBillboardAssetStore?.cancelAllTasks()
-            spriteBillboardAssetStore = nil
-            spriteBillboardRenderer?.reset()
-            spriteBillboardRenderer = nil
+            spriteAssetStore?.cancelAllTasks()
+            spriteAssetStore = nil
+            spriteRenderer?.reset()
+            spriteRenderer = nil
             selectionOverlayRenderer = nil
             damageEffectRenderer?.reset()
-            spriteBillboardSnapshots.removeAll()
+            spriteSnapshots.removeAll()
             return
         }
 
@@ -84,8 +84,8 @@ final class MapRuntimeRenderer: Renderer {
             assets: worldAsset.models,
             lighting: worldAsset.lighting
         )
-        spriteBillboardRenderer = try? SpriteBillboardRenderer(device: device)
-        spriteBillboardAssetStore = SpriteBillboardAssetStore(device: device)
+        spriteRenderer = try? MetalSpriteRenderer(device: device)
+        spriteAssetStore = SpriteAssetStore(device: device)
         selectionOverlayRenderer = MetalSelectionOverlayRenderer()
     }
 
@@ -112,23 +112,23 @@ final class MapRuntimeRenderer: Renderer {
         scene: MapScene,
         resourceManager: ResourceManager
     ) {
-        let snapshots = spriteBillboardSnapshotEvaluator.evaluate(
+        let snapshots = spriteSnapshotEvaluator.evaluate(
             player: player,
             objects: objects,
             items: items,
             scene: scene
         )
-        spriteBillboardSnapshots = snapshots
-        spriteBillboardAssetStore?.sync(
+        spriteSnapshots = snapshots
+        spriteAssetStore?.sync(
             snapshots: snapshots,
             resourceManager: resourceManager
         )
-        let drawables = spriteBillboardAssetStore?.drawables(for: snapshots) ?? [:]
-        spriteBillboardRenderer?.update(drawables: drawables)
+        let drawables = spriteAssetStore?.drawables(for: snapshots) ?? [:]
+        spriteRenderer?.update(drawables: drawables)
     }
 
     func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
-        spriteBillboardSnapshots[objectID]?.worldPosition
+        spriteSnapshots[objectID]?.worldPosition
     }
 
     func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
@@ -202,7 +202,7 @@ final class MapRuntimeRenderer: Renderer {
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
-        spriteBillboardRenderer?.render(
+        spriteRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices,

@@ -1,5 +1,5 @@
 //
-//  SpriteBillboardAssetStore.swift
+//  SpriteAssetStore.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/25.
@@ -12,16 +12,16 @@ import RagnarokResources
 import RagnarokSprite
 
 @MainActor
-final class SpriteBillboardAssetStore {
+final class SpriteAssetStore {
     private struct AnimationLoadKey: Hashable {
         let objectID: GameObjectID
-        let animation: SpriteBillboardAnimationKey
+        let animation: SpriteAnimationKey
     }
 
     private struct ObjectAssetEntry {
         var mapObject: MapObject
         var composedSprite: ComposedSprite?
-        var animations: [SpriteBillboardAnimationKey : SpriteBillboardAnimationFrames]
+        var animations: [SpriteAnimationKey : SpriteAnimationFrames]
     }
 
     private struct ItemAssetEntry {
@@ -43,7 +43,7 @@ final class SpriteBillboardAssetStore {
     }
 
     func sync(
-        snapshots: [GameObjectID : SpriteBillboardSnapshot],
+        snapshots: [GameObjectID : SpriteSnapshot],
         resourceManager: ResourceManager
     ) {
         let currentIDs = Set(snapshots.keys)
@@ -85,16 +85,16 @@ final class SpriteBillboardAssetStore {
         }
     }
 
-    func drawables(for snapshots: [GameObjectID : SpriteBillboardSnapshot]) -> [GameObjectID : SpriteBillboardDrawable] {
-        var drawables: [GameObjectID : SpriteBillboardDrawable] = [:]
+    func drawables(for snapshots: [GameObjectID : SpriteSnapshot]) -> [GameObjectID : SpriteDrawable] {
+        var drawables: [GameObjectID : SpriteDrawable] = [:]
 
         for (objectID, snapshot) in snapshots {
             switch snapshot.content {
             case .mapObject(_, let animationKey, let animationElapsed):
                 let fallbackKeys = [
                     animationKey,
-                    SpriteBillboardAnimationKey(action: .idle, direction: animationKey.direction),
-                    SpriteBillboardAnimationKey(action: .idle, direction: .south),
+                    SpriteAnimationKey(action: .idle, direction: animationKey.direction),
+                    SpriteAnimationKey(action: .idle, direction: .south),
                 ]
                 guard let objectAsset = objectAssets[objectID],
                       let resolved = resolvedAnimation(
@@ -105,7 +105,7 @@ final class SpriteBillboardAssetStore {
                     continue
                 }
 
-                drawables[objectID] = SpriteBillboardDrawable(
+                drawables[objectID] = SpriteDrawable(
                     objectID: objectID,
                     texture: resolved.texture,
                     frameWidth: resolved.frames.frameWidth,
@@ -119,7 +119,7 @@ final class SpriteBillboardAssetStore {
                     continue
                 }
 
-                drawables[objectID] = SpriteBillboardDrawable(
+                drawables[objectID] = SpriteDrawable(
                     objectID: objectID,
                     texture: itemAsset.texture,
                     frameWidth: itemAsset.frameWidth,
@@ -154,7 +154,7 @@ final class SpriteBillboardAssetStore {
     private func syncObjectAssets(
         objectID: GameObjectID,
         mapObject: MapObject,
-        animationKey: SpriteBillboardAnimationKey,
+        animationKey: SpriteAnimationKey,
         resourceManager: ResourceManager
     ) {
         let prefetchKeys = prefetchAnimationKeys(for: animationKey)
@@ -239,7 +239,7 @@ final class SpriteBillboardAssetStore {
     private func ensureComposedSpriteLoaded(
         for objectID: GameObjectID,
         mapObject: MapObject,
-        prefetchKeys: [SpriteBillboardAnimationKey],
+        prefetchKeys: [SpriteAnimationKey],
         resourceManager: ResourceManager
     ) {
         guard objectAssets[objectID]?.composedSprite == nil, objectLoadTasks[objectID] == nil else {
@@ -274,18 +274,18 @@ final class SpriteBillboardAssetStore {
     }
 
     private func prefetchAnimationKeys(
-        for animationKey: SpriteBillboardAnimationKey
-    ) -> [SpriteBillboardAnimationKey] {
+        for animationKey: SpriteAnimationKey
+    ) -> [SpriteAnimationKey] {
         [
             animationKey,
-            SpriteBillboardAnimationKey(action: .idle, direction: animationKey.direction),
-            SpriteBillboardAnimationKey(action: .idle, direction: .south),
+            SpriteAnimationKey(action: .idle, direction: animationKey.direction),
+            SpriteAnimationKey(action: .idle, direction: .south),
         ]
     }
 
     private func ensureAnimationLoaded(
         for objectID: GameObjectID,
-        animationKey: SpriteBillboardAnimationKey
+        animationKey: SpriteAnimationKey
     ) {
         guard let objectAsset = objectAssets[objectID],
               objectAsset.animations[animationKey] == nil,
@@ -330,9 +330,9 @@ final class SpriteBillboardAssetStore {
 
     private func resolvedAnimation(
         from objectAsset: ObjectAssetEntry,
-        candidateKeys: [SpriteBillboardAnimationKey],
+        candidateKeys: [SpriteAnimationKey],
         elapsed: Duration
-    ) -> (frames: SpriteBillboardAnimationFrames, texture: (any MTLTexture)?)? {
+    ) -> (frames: SpriteAnimationFrames, texture: (any MTLTexture)?)? {
         for key in candidateKeys {
             guard let frames = objectAsset.animations[key],
                   let texture = texture(for: frames, action: key.action, elapsed: elapsed) else {
@@ -347,7 +347,7 @@ final class SpriteBillboardAssetStore {
     private func makeAnimationFrames(
         from animation: SpriteRenderer.Animation,
         labelPrefix: String
-    ) -> SpriteBillboardAnimationFrames {
+    ) -> SpriteAnimationFrames {
         let textures = animation.frames.enumerated().map { index, frame in
             MapMetalTextureFactory.makeTexture(
                 from: frame,
@@ -355,7 +355,7 @@ final class SpriteBillboardAssetStore {
                 label: "\(labelPrefix)-frame-\(index)"
             )
         }
-        return SpriteBillboardAnimationFrames(
+        return SpriteAnimationFrames(
             textures: textures,
             frameWidth: Float(animation.frameWidth),
             frameHeight: Float(animation.frameHeight),
@@ -364,7 +364,7 @@ final class SpriteBillboardAssetStore {
     }
 
     private func texture(
-        for animation: SpriteBillboardAnimationFrames,
+        for animation: SpriteAnimationFrames,
         action: CharacterActionType,
         elapsed: Duration
     ) -> (any MTLTexture)? {
