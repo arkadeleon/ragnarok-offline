@@ -89,7 +89,7 @@ class MapSceneARViewController: UIViewController {
 
     @objc func handleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
         let screenPoint = tapGestureRecognizer.location(in: arView)
-        if let result = backend.hitTest(at: screenPoint) {
+        if let result = backend.hitTest(screenPoint) {
             scene.handleInteraction(result)
         }
     }
@@ -210,7 +210,7 @@ class MapSceneARViewController: NSViewController {
 
     override func mouseDown(with event: NSEvent) {
         let screenPoint = arView.convert(event.locationInWindow, from: nil)
-        if let result = backend.hitTest(at: screenPoint) {
+        if let result = backend.hitTest(screenPoint) {
             scene.handleInteraction(result)
         }
     }

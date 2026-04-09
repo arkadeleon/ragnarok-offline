@@ -1,27 +1,33 @@
 //
-//  RealityMapHitTester.swift
+//  RealityRenderBackend+Projecting.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2026/3/21.
+//  Created by Leon Li on 2026/4/9.
 //
 
-#if os(iOS) || os(macOS)
-
 import CoreGraphics
-import RealityKit
+import simd
 
-@MainActor
-final class RealityMapHitTester {
-    private weak var arView: ARView?
-    private weak var scene: MapScene?
+#if os(iOS) || os(macOS)
+extension RealityRenderBackend: GameCoordinateSpaceProjecting {
+    func project(_ worldPoint: SIMD3<Float>) -> CGPoint? {
+        guard let arView, var screenPoint = arView.project(worldPoint) else {
+            return nil
+        }
 
-    init(arView: ARView, scene: MapScene?) {
-        self.arView = arView
-        self.scene = scene
+        #if os(macOS)
+        screenPoint.y = arView.bounds.height - screenPoint.y
+        #endif
+
+        return screenPoint
     }
 
-    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? {
-        guard let arView, let scene else {
+    func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)? {
+        arView?.ray(through: screenPoint)
+    }
+
+    func hitTest(_ screenPoint: CGPoint) -> GameHitTestResult? {
+        guard let scene, let arView else {
             return nil
         }
 
@@ -35,7 +41,7 @@ final class RealityMapHitTester {
             }
         }
 
-        guard let (origin, direction) = arView.ray(through: screenPoint) else {
+        guard let (origin, direction) = ray(through: screenPoint) else {
             return nil
         }
 
@@ -46,14 +52,13 @@ final class RealityMapHitTester {
         origin: SIMD3<Float>,
         direction: SIMD3<Float>,
         mapGrid: MapGrid
-    ) -> MapHitTestResult? {
-        var point = origin
+    ) -> GameHitTestResult? {
         for i in 0..<200 {
-            point = origin + direction * Float(i)
+            let point = origin + direction * Float(i)
 
             let x = point.x
             let y = -point.z
-            let position: SIMD2<Int> = [Int(x), Int(y)]
+            let position = SIMD2<Int>(Int(x), Int(y))
 
             guard 0..<mapGrid.width ~= position.x, 0..<mapGrid.height ~= position.y else {
                 continue
@@ -75,5 +80,4 @@ final class RealityMapHitTester {
         return nil
     }
 }
-
 #endif

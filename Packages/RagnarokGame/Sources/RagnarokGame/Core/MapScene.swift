@@ -112,7 +112,7 @@ public final class MapScene {
         onMovementValueChanged(movementValue: movementValue)
     }
 
-    func handleInteraction(_ result: MapHitTestResult) {
+    func handleInteraction(_ result: GameHitTestResult) {
         switch result {
         case .ground(let position):
             selectGround(at: position)

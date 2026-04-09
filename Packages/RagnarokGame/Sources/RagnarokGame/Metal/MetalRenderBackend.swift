@@ -6,7 +6,6 @@
 //
 
 import AVFAudio
-import CoreGraphics
 import Foundation
 import RagnarokRenderAssets
 import RagnarokResources
@@ -17,13 +16,7 @@ final class MetalRenderBackend: GameRenderBackend {
     let resourceManager: ResourceManager
     let renderer: MapRuntimeRenderer
 
-    private let metalMapProjector = MetalMapProjector()
-    private let metalMapHitTester = MetalMapHitTester()
     private var bgmPlayer: AVAudioPlayer?
-
-    var projector: (any MapProjector)? {
-        metalMapProjector
-    }
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
@@ -32,8 +25,6 @@ final class MetalRenderBackend: GameRenderBackend {
 
     func attach(scene: MapScene) {
         self.scene = scene
-        metalMapProjector.configure(renderer: renderer)
-        metalMapHitTester.configure(renderer: renderer, scene: scene)
         syncFrameState(with: scene.state)
     }
 
@@ -96,10 +87,6 @@ final class MetalRenderBackend: GameRenderBackend {
         syncFrameState(with: state)
     }
 
-    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? {
-        metalMapHitTester.hitTest(at: screenPoint)
-    }
-
     func prepareFrame() {
         guard let scene else {
             return
@@ -159,7 +146,7 @@ final class MetalRenderBackend: GameRenderBackend {
             worldPosition += [0, -0.8, 0]
             scene.state.overlay.gauges[objectID]?.worldPosition = worldPosition
 
-            let screenPosition = metalMapProjector.project(worldPosition)
+            let screenPosition = project(worldPosition)
             scene.state.overlay.gauges[objectID]?.screenPosition = screenPosition
         }
     }

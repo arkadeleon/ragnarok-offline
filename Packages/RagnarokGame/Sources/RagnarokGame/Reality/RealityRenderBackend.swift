@@ -21,7 +21,7 @@ import SwiftUI
 import WorldCamera
 
 final class RealityRenderBackend: GameRenderBackend {
-    private weak var scene: MapScene?
+    weak var scene: MapScene?
 
     let rootEntity = Entity()
 
@@ -35,18 +35,9 @@ final class RealityRenderBackend: GameRenderBackend {
     private let tileRange = 17
 
     #if os(iOS) || os(macOS)
-    private var realityMapProjector: RealityMapProjector?
-    private var realityMapHitTester: RealityMapHitTester?
+    weak var arView: ARView?
     private var anchorEntity: AnchorEntity?
     #endif
-
-    var projector: (any MapProjector)? {
-        #if os(iOS) || os(macOS)
-        realityMapProjector
-        #else
-        nil
-        #endif
-    }
 
     init(resourceManager: ResourceManager) {
         let factory = RealitySpriteNodeFactory(resourceManager: resourceManager)
@@ -65,8 +56,7 @@ final class RealityRenderBackend: GameRenderBackend {
         teardownSceneState()
         scene = nil
         #if os(iOS) || os(macOS)
-        realityMapProjector = nil
-        realityMapHitTester = nil
+        arView = nil
         anchorEntity?.removeFromParent()
         anchorEntity = nil
         #endif
@@ -164,14 +154,6 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    func hitTest(at screenPoint: CGPoint) -> MapHitTestResult? {
-        #if os(iOS) || os(macOS)
-        realityMapHitTester?.hitTest(at: screenPoint)
-        #else
-        nil
-        #endif
-    }
-
     func updateCameraState(_ cameraState: MapCameraState) {
         worldCameraEntity.components[WorldCameraComponent.self]?.azimuth = cameraState.azimuth
         #if !os(visionOS)
@@ -192,12 +174,11 @@ final class RealityRenderBackend: GameRenderBackend {
             arView.scene.addAnchor(anchorEntity)
         }
 
-        realityMapProjector = RealityMapProjector(arView: arView)
-        realityMapHitTester = RealityMapHitTester(arView: arView, scene: scene)
+        self.arView = arView
     }
 
     func syncAndProjectOverlay() {
-        guard let scene, let projector = realityMapProjector else {
+        guard let scene else {
             return
         }
 
@@ -209,7 +190,7 @@ final class RealityRenderBackend: GameRenderBackend {
             worldPosition += [0, -0.8, 0]
             scene.state.overlay.gauges[objectID]?.worldPosition = worldPosition
 
-            let screenPosition = projector.project(worldPosition)
+            let screenPosition = project(worldPosition)
             scene.state.overlay.gauges[objectID]?.screenPosition = screenPosition
         }
     }

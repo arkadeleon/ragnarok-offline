@@ -178,7 +178,7 @@ private extension MapMTKHostView {
         }
 
         let point = gestureRecognizer.location(in: mtkView)
-        if let result = backend.hitTest(at: point) {
+        if let result = backend.hitTest(point) {
             scene.handleInteraction(result)
         }
     }
@@ -241,7 +241,7 @@ private extension MapMTKHostView {
         var point = mtkView.convert(event.locationInWindow, from: nil)
         // NSView has bottom-left origin; flip to top-left for hit testing.
         point.y = mtkView.bounds.height - point.y
-        if let result = backend.hitTest(at: point) {
+        if let result = backend.hitTest(point) {
             scene?.handleInteraction(result)
         }
     }
