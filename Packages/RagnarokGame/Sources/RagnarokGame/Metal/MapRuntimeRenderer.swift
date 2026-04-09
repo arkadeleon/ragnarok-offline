@@ -26,6 +26,7 @@ final class MapRuntimeRenderer: Renderer {
     }
 
     let device: any MTLDevice
+    let resourceManager: ResourceManager
 
     private var skyboxRenderer: MetalSkyboxRenderer?
     private var groundRenderer: MapGroundRendererAdapter?
@@ -45,11 +46,12 @@ final class MapRuntimeRenderer: Renderer {
     private(set) var lastRenderMatrices: RenderMatrices?
     private(set) var lastViewport: CGRect = .zero
 
-    init() {
+    init(resourceManager: ResourceManager) {
         guard let device = MTLCreateSystemDefaultDevice() else {
             fatalError("MapRuntimeRenderer: Metal is not available on this device")
         }
         self.device = device
+        self.resourceManager = resourceManager
         self.damageEffectRenderer = try? MetalDamageEffectRenderer(device: device)
     }
 
@@ -85,12 +87,26 @@ final class MapRuntimeRenderer: Renderer {
             lighting: worldAsset.lighting
         )
         spriteRenderer = try? MetalSpriteRenderer(device: device)
-        spriteAssetStore = SpriteAssetStore(device: device)
-        selectionOverlayRenderer = MetalSelectionOverlayRenderer()
+        spriteAssetStore = SpriteAssetStore(device: device, resourceManager: resourceManager)
+        selectionOverlayRenderer = nil
     }
 
-    func prepareDynamicRenderers(resourceManager: ResourceManager) async {
-        await selectionOverlayRenderer?.prepare(device: device, resourceManager: resourceManager)
+    func prepareDynamicRenderers() async {
+        let path = ResourcePath.textureDirectory.appending(["grid.tga"])
+        guard let image = try? await resourceManager.image(at: path),
+              let selectionTexture = MapMetalTextureFactory.makeTexture(
+                from: image.cgImage,
+                device: device,
+                label: "tile-selector"
+              ) else {
+            selectionOverlayRenderer = nil
+            return
+        }
+
+        selectionOverlayRenderer = try? MetalSelectionOverlayRenderer(
+            device: device,
+            selectionTexture: selectionTexture
+        )
     }
 
     func setSkyboxConfiguration(_ configuration: SkyboxConfiguration) {
@@ -109,8 +125,7 @@ final class MapRuntimeRenderer: Renderer {
         player: MapObjectState,
         objects: [GameObjectID : MapObjectState],
         items: [GameObjectID : MapItemState],
-        scene: MapScene,
-        resourceManager: ResourceManager
+        scene: MapScene
     ) {
         let snapshots = spriteSnapshotEvaluator.evaluate(
             player: player,
@@ -119,10 +134,7 @@ final class MapRuntimeRenderer: Renderer {
             scene: scene
         )
         spriteSnapshots = snapshots
-        spriteAssetStore?.sync(
-            snapshots: snapshots,
-            resourceManager: resourceManager
-        )
+        spriteAssetStore?.sync(snapshots: snapshots)
         let drawables = spriteAssetStore?.drawables(for: snapshots) ?? [:]
         spriteRenderer?.update(drawables: drawables)
     }

@@ -31,6 +31,7 @@ final class SpriteAssetStore {
     }
 
     private let device: any MTLDevice
+    private let resourceManager: ResourceManager
 
     private var objectAssets: [GameObjectID : ObjectAssetEntry] = [:]
     private var itemAssets: [GameObjectID : ItemAssetEntry] = [:]
@@ -38,14 +39,12 @@ final class SpriteAssetStore {
     private var itemLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
     private var animationLoadTasks: [AnimationLoadKey : Task<Void, Never>] = [:]
 
-    init(device: any MTLDevice) {
+    init(device: any MTLDevice, resourceManager: ResourceManager) {
         self.device = device
+        self.resourceManager = resourceManager
     }
 
-    func sync(
-        snapshots: [GameObjectID : SpriteSnapshot],
-        resourceManager: ResourceManager
-    ) {
+    func sync(snapshots: [GameObjectID : SpriteSnapshot]) {
         let currentIDs = Set(snapshots.keys)
 
         for objectID in Set(objectAssets.keys).subtracting(currentIDs) {
@@ -72,14 +71,12 @@ final class SpriteAssetStore {
                 syncObjectAssets(
                     objectID: objectID,
                     mapObject: mapObject,
-                    animationKey: animationKey,
-                    resourceManager: resourceManager
+                    animationKey: animationKey
                 )
             case .item(let mapItem):
                 syncItemAssets(
                     objectID: objectID,
-                    mapItem: mapItem,
-                    resourceManager: resourceManager
+                    mapItem: mapItem
                 )
             }
         }
@@ -154,8 +151,7 @@ final class SpriteAssetStore {
     private func syncObjectAssets(
         objectID: GameObjectID,
         mapObject: MapObject,
-        animationKey: SpriteAnimationKey,
-        resourceManager: ResourceManager
+        animationKey: SpriteAnimationKey
     ) {
         let prefetchKeys = prefetchAnimationKeys(for: animationKey)
 
@@ -171,8 +167,7 @@ final class SpriteAssetStore {
         ensureComposedSpriteLoaded(
             for: objectID,
             mapObject: mapObject,
-            prefetchKeys: prefetchKeys,
-            resourceManager: resourceManager
+            prefetchKeys: prefetchKeys
         )
 
         for key in prefetchKeys {
@@ -182,8 +177,7 @@ final class SpriteAssetStore {
 
     private func syncItemAssets(
         objectID: GameObjectID,
-        mapItem: MapItem,
-        resourceManager: ResourceManager
+        mapItem: MapItem
     ) {
         if itemAssets[objectID] == nil {
             itemAssets[objectID] = ItemAssetEntry(
@@ -239,8 +233,7 @@ final class SpriteAssetStore {
     private func ensureComposedSpriteLoaded(
         for objectID: GameObjectID,
         mapObject: MapObject,
-        prefetchKeys: [SpriteAnimationKey],
-        resourceManager: ResourceManager
+        prefetchKeys: [SpriteAnimationKey]
     ) {
         guard objectAssets[objectID]?.composedSprite == nil, objectLoadTasks[objectID] == nil else {
             return

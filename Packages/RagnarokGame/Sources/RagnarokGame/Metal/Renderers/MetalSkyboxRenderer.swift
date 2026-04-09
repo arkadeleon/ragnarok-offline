@@ -13,8 +13,10 @@ import simd
 @MainActor
 final class MetalSkyboxRenderer {
     private let device: any MTLDevice
-    private var renderPipelineState: (any MTLRenderPipelineState)?
-    private var depthStencilState: (any MTLDepthStencilState)?
+
+    private let renderPipelineState: (any MTLRenderPipelineState)?
+    private let depthStencilState: (any MTLDepthStencilState)?
+
     private var uniformsBuffer: (any MTLBuffer)?
     private var configuration: SkyboxConfiguration?
 

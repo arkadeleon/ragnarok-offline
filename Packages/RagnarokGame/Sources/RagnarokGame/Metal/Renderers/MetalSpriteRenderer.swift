@@ -13,8 +13,10 @@ import simd
 
 @MainActor
 final class MetalSpriteRenderer {
-    private var renderPipelineState: (any MTLRenderPipelineState)?
-    private var depthStencilState: (any MTLDepthStencilState)?
+    private let device: any MTLDevice
+
+    private let renderPipelineState: (any MTLRenderPipelineState)?
+    private let depthStencilState: (any MTLDepthStencilState)?
 
     private var drawables: [GameObjectID : SpriteDrawable] = [:]
 
@@ -22,6 +24,8 @@ final class MetalSpriteRenderer {
     private(set) var hitBoxes: [GameObjectID : CGRect] = [:]
 
     init(device: any MTLDevice) throws {
+        self.device = device
+
         let library = RagnarokCreateShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()

@@ -8,27 +8,23 @@
 import Metal
 import QuartzCore
 import RagnarokMetalRendering
-import RagnarokResources
 import RagnarokShaders
 import simd
 
 @MainActor
 final class MetalSelectionOverlayRenderer {
-    private var renderPipelineState: (any MTLRenderPipelineState)?
-    private var depthStencilState: (any MTLDepthStencilState)?
-    private var selectionTexture: (any MTLTexture)?
+    private let device: any MTLDevice
+    private let selectionTexture: any MTLTexture
+
+    private let renderPipelineState: any MTLRenderPipelineState
+    private let depthStencilState: any MTLDepthStencilState
+
     private var vertices: [TileVertex] = []
     private var selectionShowTime: CFTimeInterval = -.infinity
 
-    func prepare(device: any MTLDevice, resourceManager: ResourceManager) async {
-        let path = ResourcePath.textureDirectory.appending(["grid.tga"])
-        if let image = try? await resourceManager.image(at: path) {
-            selectionTexture = MapMetalTextureFactory.makeTexture(
-                from: image.cgImage,
-                device: device,
-                label: "tile-selector"
-            )
-        }
+    init(device: any MTLDevice, selectionTexture: any MTLTexture) throws {
+        self.device = device
+        self.selectionTexture = selectionTexture
 
         let library = RagnarokCreateShadersLibrary(device)!
 
@@ -43,12 +39,16 @@ final class MetalSelectionOverlayRenderer {
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
-        renderPipelineState = try? await device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+        self.renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
         depthStencilDescriptor.isDepthWriteEnabled = false
-        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+        guard let depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor) else {
+            struct MetalSelectionOverlayRendererError: Error {}
+            throw MetalSelectionOverlayRendererError()
+        }
+        self.depthStencilState = depthStencilState
     }
 
     func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
@@ -85,10 +85,7 @@ final class MetalSelectionOverlayRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MapRuntimeRenderer.RenderMatrices
     ) {
-        guard let renderPipelineState,
-              let depthStencilState,
-              let texture = selectionTexture,
-              !vertices.isEmpty else {
+        guard !vertices.isEmpty else {
             return
         }
 
@@ -123,7 +120,7 @@ final class MetalSelectionOverlayRenderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
         renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
-        renderCommandEncoder.setFragmentTexture(texture, index: 0)
+        renderCommandEncoder.setFragmentTexture(selectionTexture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
     }
 }

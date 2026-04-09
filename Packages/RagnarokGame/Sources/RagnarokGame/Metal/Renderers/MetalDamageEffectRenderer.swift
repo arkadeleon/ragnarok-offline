@@ -38,8 +38,9 @@ final class MetalDamageEffectRenderer {
 
     private let device: any MTLDevice
 
-    private var renderPipelineState: (any MTLRenderPipelineState)?
-    private var depthStencilState: (any MTLDepthStencilState)?
+    private let renderPipelineState: (any MTLRenderPipelineState)?
+    private let depthStencilState: (any MTLDepthStencilState)?
+
     private var entries: [UUID : EffectEntry] = [:]
 
     init(device: any MTLDevice) throws {

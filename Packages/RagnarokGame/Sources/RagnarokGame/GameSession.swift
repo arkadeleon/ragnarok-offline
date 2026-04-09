@@ -1168,7 +1168,7 @@ extension GameRenderConfiguration {
     func makeBackend(resourceManager: ResourceManager) -> any GameRenderBackend {
         switch engine {
         case .metal:
-            MetalRenderBackend()
+            MetalRenderBackend(resourceManager: resourceManager)
         case .realityKit:
             RealityRenderBackend(resourceManager: resourceManager)
         }

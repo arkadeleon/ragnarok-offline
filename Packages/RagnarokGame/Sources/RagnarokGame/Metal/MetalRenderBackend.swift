@@ -14,6 +14,7 @@ import RagnarokResources
 final class MetalRenderBackend: GameRenderBackend {
     private(set) weak var scene: MapScene?
 
+    let resourceManager: ResourceManager
     let renderer: MapRuntimeRenderer
 
     private let metalMapProjector = MetalMapProjector()
@@ -24,8 +25,9 @@ final class MetalRenderBackend: GameRenderBackend {
         metalMapProjector
     }
 
-    init() {
-        self.renderer = MapRuntimeRenderer()
+    init(resourceManager: ResourceManager) {
+        self.resourceManager = resourceManager
+        self.renderer = MapRuntimeRenderer(resourceManager: resourceManager)
     }
 
     func attach(scene: MapScene) {
@@ -72,12 +74,12 @@ final class MetalRenderBackend: GameRenderBackend {
             renderer.setSkyboxConfiguration(skyboxConfiguration)
 
             bgmPlayer?.stop()
-            bgmPlayer = await loadBGMPlayer(forMapName: scene.mapName, resourceManager: scene.resourceManager)
+            bgmPlayer = await loadBGMPlayer(forMapName: scene.mapName)
             bgmPlayer?.numberOfLoops = -1
             bgmPlayer?.play()
 
             syncFrameState(with: scene.state)
-            await renderer.prepareDynamicRenderers(resourceManager: scene.resourceManager)
+            await renderer.prepareDynamicRenderers()
         } catch is CancellationError {
             return
         } catch {
@@ -115,8 +117,7 @@ final class MetalRenderBackend: GameRenderBackend {
             player: state.player,
             objects: state.objects,
             items: state.items,
-            scene: scene,
-            resourceManager: scene.resourceManager
+            scene: scene
         )
         renderer.updateDamageEffects(state.damageEffects, scene: scene)
 
@@ -131,7 +132,7 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.syncSelection(state.selection, mapGrid: scene.mapGrid)
     }
 
-    private func loadBGMPlayer(forMapName mapName: String, resourceManager: ResourceManager) async -> AVAudioPlayer? {
+    private func loadBGMPlayer(forMapName mapName: String) async -> AVAudioPlayer? {
         let mp3NameTable = await resourceManager.mp3NameTable()
         guard let mp3Name = mp3NameTable.mp3Name(forMapName: mapName) else {
             return nil
