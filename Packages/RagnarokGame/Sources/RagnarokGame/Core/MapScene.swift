@@ -154,7 +154,11 @@ public final class MapScene {
     }
 
     private func playerMovementOrigin() -> SIMD2<Int> {
-        state.player.movement?.to ?? state.player.gridPosition
+        if let path = state.player.movement?.path, path.count > 1 {
+            return path[1]
+        } else {
+            return state.player.gridPosition
+        }
     }
 
     private func applySnapshot() {
