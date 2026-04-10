@@ -85,7 +85,7 @@ final class MetalDamageEffectRenderer {
             let string = effect.amount == 0 ? "MISS" : "\(effect.amount)"
             let color = color(for: effect, isPlayerTarget: resolvedTarget.isPlayerTarget)
             let image = makeImage(for: string, color: color)
-            let texture = MapMetalTextureFactory.makeTexture(
+            let texture = MetalTextureFactory.makeTexture(
                 from: image,
                 device: device,
                 label: "damage-effect-\(effect.id.uuidString)"

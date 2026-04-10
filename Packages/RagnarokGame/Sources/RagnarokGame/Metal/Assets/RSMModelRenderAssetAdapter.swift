@@ -1,47 +1,23 @@
 //
-//  MapModelRendererAdapter.swift
+//  RSMModelRenderAssetAdapter.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/23.
 //
 
 import Metal
-import RagnarokMetalRendering
 import RagnarokRenderAssets
 import simd
 
-final class MapModelRendererAdapter {
-    private let renderer: ModelRenderer
+final class RSMModelRenderAssetAdapter {
+    let assets: [RSMModelRenderAsset]
+    let textures: [String : any MTLTexture]
+    let models: [RSMModel]
 
-    init(
-        device: any MTLDevice,
-        assets: [RSMModelRenderAsset],
-        lighting: WorldLighting
-    ) throws {
-        let textures = RSMModelRenderAsset.makeTextures(from: assets, device: device)
-        let models = RSMModelRenderAsset.makeModels(from: assets)
-
-        self.renderer = try ModelRenderer(
-            device: device,
-            models: models,
-            textures: textures,
-            lighting: lighting
-        )
-    }
-
-    func render(
-        atTime time: CFTimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MapRuntimeRenderer.RenderMatrices
-    ) {
-        renderer.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: matrices.modelMatrix,
-            viewMatrix: matrices.viewMatrix,
-            projectionMatrix: matrices.projectionMatrix,
-            normalMatrix: matrices.normalMatrix
-        )
+    init(device: any MTLDevice, assets: [RSMModelRenderAsset]) {
+        self.assets = assets
+        self.textures = RSMModelRenderAsset.makeTextures(from: assets, device: device)
+        self.models = RSMModelRenderAsset.makeModels(from: assets)
     }
 }
 
@@ -60,7 +36,7 @@ extension RSMModelRenderAsset {
                     continue
                 }
 
-                let texture = MapMetalTextureFactory.makeTexture(
+                let texture = MetalTextureFactory.makeTexture(
                     from: textureImage,
                     device: device,
                     label: namespacedTextureName

@@ -31,7 +31,7 @@ public class RSWRenderer: Renderer {
         self.device = device
 
         let library = RagnarokCreateShadersLibrary(device)!
-        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground, groundTexture: groundTexture)
+        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground, baseColorTexture: groundTexture)
         waterRenderer = try WaterRenderer(device: device, library: library, water: water, textures: waterTextures)
         modelRenderer = try ModelRenderer(device: device, library: library, models: models, textures: modelTextures)
 

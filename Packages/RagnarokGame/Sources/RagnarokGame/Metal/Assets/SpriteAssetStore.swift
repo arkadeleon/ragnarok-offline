@@ -219,7 +219,7 @@ final class SpriteAssetStore {
             }
 
             self.itemAssets[objectID] = ItemAssetEntry(
-                texture: MapMetalTextureFactory.makeTexture(
+                texture: MetalTextureFactory.makeTexture(
                     from: animation.firstFrame,
                     device: self.device,
                     label: "sprite-item-\(objectID)"
@@ -342,7 +342,7 @@ final class SpriteAssetStore {
         labelPrefix: String
     ) -> SpriteAnimationFrames {
         let textures = animation.frames.enumerated().map { index, frame in
-            MapMetalTextureFactory.makeTexture(
+            MetalTextureFactory.makeTexture(
                 from: frame,
                 device: device,
                 label: "\(labelPrefix)-frame-\(index)"

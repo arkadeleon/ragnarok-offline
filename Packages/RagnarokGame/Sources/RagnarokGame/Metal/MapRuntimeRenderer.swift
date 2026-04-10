@@ -29,9 +29,9 @@ final class MapRuntimeRenderer: Renderer {
     let resourceManager: ResourceManager
 
     private var skyboxRenderer: MetalSkyboxRenderer?
-    private var groundRenderer: MapGroundRendererAdapter?
-    private var waterRenderer: MapWaterRendererAdapter?
-    private var modelRenderer: MapModelRendererAdapter?
+    private var groundRenderer: GroundRenderer?
+    private var waterRenderer: WaterRenderer?
+    private var modelRenderer: ModelRenderer?
     private(set) var spriteRenderer: MetalSpriteRenderer?
     private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
     private var damageEffectRenderer: MetalDamageEffectRenderer?
@@ -71,21 +71,36 @@ final class MapRuntimeRenderer: Renderer {
             return
         }
 
-        groundRenderer = try? MapGroundRendererAdapter(
+        let groundAdapter = GroundRenderAssetAdapter(
             device: device,
-            asset: worldAsset.ground,
+            asset: worldAsset.ground
+        )
+        groundRenderer = try? GroundRenderer(
+            device: device,
+            ground: groundAdapter.asset.ground,
+            baseColorTexture: groundAdapter.baseColorTexture,
+            lightmapTexture: groundAdapter.lightmapTexture,
+            tileColorTexture: groundAdapter.tileColorTexture,
             lighting: worldAsset.lighting
         )
-        waterRenderer = try? MapWaterRendererAdapter(
+
+        let waterAdapter = WaterRenderAssetAdapter(device: device, asset: worldAsset.water)
+        let waterTextures = waterAdapter.texture.map { [$0] } ?? []
+        waterRenderer = try? WaterRenderer(
             device: device,
-            asset: worldAsset.water,
+            water: waterAdapter.asset.water,
+            textures: waterTextures,
             lighting: worldAsset.lighting
         )
-        modelRenderer = try? MapModelRendererAdapter(
+
+        let modelAdapter = RSMModelRenderAssetAdapter(device: device, assets: worldAsset.models)
+        modelRenderer = try? ModelRenderer(
             device: device,
-            assets: worldAsset.models,
+            models: modelAdapter.models,
+            textures: modelAdapter.textures,
             lighting: worldAsset.lighting
         )
+
         spriteRenderer = try? MetalSpriteRenderer(device: device)
         spriteAssetStore = SpriteAssetStore(device: device, resourceManager: resourceManager)
         selectionOverlayRenderer = nil
@@ -94,7 +109,7 @@ final class MapRuntimeRenderer: Renderer {
     func prepareDynamicRenderers() async {
         let path = ResourcePath.textureDirectory.appending(["grid.tga"])
         guard let image = try? await resourceManager.image(at: path),
-              let selectionTexture = MapMetalTextureFactory.makeTexture(
+              let selectionTexture = MetalTextureFactory.makeTexture(
                 from: image.cgImage,
                 device: device,
                 label: "tile-selector"
@@ -202,17 +217,25 @@ final class MapRuntimeRenderer: Renderer {
         groundRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
+            modelMatrix: matrices.modelMatrix,
+            viewMatrix: matrices.viewMatrix,
+            projectionMatrix: matrices.projectionMatrix,
+            normalMatrix: matrices.normalMatrix
         )
         waterRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
+            modelMatrix: matrices.modelMatrix,
+            viewMatrix: matrices.viewMatrix,
+            projectionMatrix: matrices.projectionMatrix
         )
         modelRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
+            modelMatrix: matrices.modelMatrix,
+            viewMatrix: matrices.viewMatrix,
+            projectionMatrix: matrices.projectionMatrix,
+            normalMatrix: matrices.normalMatrix
         )
         spriteRenderer?.render(
             atTime: time,

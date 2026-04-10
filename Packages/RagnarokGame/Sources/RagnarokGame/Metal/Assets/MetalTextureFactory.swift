@@ -1,5 +1,5 @@
 //
-//  MapMetalTextureFactory.swift
+//  MetalTextureFactory.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/23.
@@ -9,7 +9,7 @@ import CoreGraphics
 import Metal
 import MetalKit
 
-enum MapMetalTextureFactory {
+enum MetalTextureFactory {
     static func makeTexture(
         from image: CGImage?,
         device: any MTLDevice,
