@@ -30,7 +30,7 @@ public class WaterRenderResource {
     var waterOpacity: Float = 0.6
 
     public init(device: any MTLDevice, asset: WaterRenderAsset) {
-        let vertices = asset.water.mesh.vertices
+        let vertices = asset.mesh.vertices
         vertexCount = vertices.count
         if vertexCount > 0 {
             vertexBuffer = device.makeBuffer(

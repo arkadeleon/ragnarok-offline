@@ -22,6 +22,8 @@ public struct GroundRenderAsset {
 
     public var mesh: GroundMesh
 
+    public var lighting: WorldLighting
+
     public var textureAtlas: GroundTextureAtlas
     public var lightmapAtlas: GroundLightmapAtlas
     public var tileColorMap: GroundTileColorMap
@@ -30,14 +32,14 @@ public struct GroundRenderAsset {
     public var lightmapTextureImage: CGImage?
     public var tileColorTextureImage: CGImage?
 
-    public var lighting: WorldLighting
-
-    public init(gat: GAT, gnd: GND, textureImages: [String : CGImage], lighting: WorldLighting) {
+    public init(gat: GAT, gnd: GND, lighting: WorldLighting, textureImages: [String : CGImage]) {
         width = Int(gat.width)
         height = Int(gat.height)
         altitude = gat.tileAt(x: width / 2, y: height / 2).averageAltitude
 
         mesh = GroundMesh()
+
+        self.lighting = lighting
 
         textureAtlas = GroundTextureAtlas(gnd: gnd)
         lightmapAtlas = GroundLightmapAtlas(lightmap: gnd.lightmap)
@@ -46,8 +48,6 @@ public struct GroundRenderAsset {
         baseColorTextureImage = textureAtlas.makeCGImage(textureImages: textureImages)
         lightmapTextureImage = lightmapAtlas.makeCGImage()
         tileColorTextureImage = tileColorMap.makeCGImage()
-
-        self.lighting = lighting
 
         let width = Int(gnd.width)
         let height = Int(gnd.height)

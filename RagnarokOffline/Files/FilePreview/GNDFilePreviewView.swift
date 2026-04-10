@@ -102,8 +102,8 @@ struct GNDFileGroundView: View {
         let groundAsset = GroundRenderAsset(
             gat: gat,
             gnd: gnd,
-            textureImages: textureImages,
-            lighting: .preview
+            lighting: .preview,
+            textureImages: textureImages
         )
         let groundEntity = try await Entity(from: groundAsset)
 
