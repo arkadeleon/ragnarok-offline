@@ -33,11 +33,7 @@ extension Entity {
 
         metric.beginMeasuring("Load ground entity")
 
-        let groundEntity = try await Entity(
-            from: worldAsset.ground.ground,
-            lighting: worldAsset.lighting,
-            textureImages: worldAsset.ground.textureImages
-        )
+        let groundEntity = try await Entity(from: worldAsset.ground)
         addChild(groundEntity, preservingWorldTransform: true)
 
         metric.endMeasuring("Load ground entity")

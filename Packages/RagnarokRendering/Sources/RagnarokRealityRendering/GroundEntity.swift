@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2025/9/28.
 //
 
-import CoreGraphics
 import Metal
 import RagnarokRenderAssets
 import RagnarokShaders
@@ -21,21 +20,17 @@ enum GroundEntityError: Error {
 }
 
 extension Entity {
-    public convenience init(
-        from ground: Ground,
-        lighting: WorldLighting,
-        textureImages: [String : CGImage],
-    ) async throws {
+    public convenience init(from groundAsset: GroundRenderAsset) async throws {
         self.init()
 
-        let mesh = try makeMeshResource(ground: ground)
-        let material = try await makeMaterial(ground: ground, lighting: lighting, textureImages: textureImages)
+        let mesh = try makeMesh(groundAsset: groundAsset)
+        let material = try await makeMaterial(groundAsset: groundAsset)
 
         components.set(ModelComponent(mesh: mesh, materials: [material]))
     }
 
-    private func makeMeshResource(ground: Ground) throws -> MeshResource {
-        let vertexCount = ground.mesh.vertices.count
+    private func makeMesh(groundAsset: GroundRenderAsset) throws -> MeshResource {
+        let vertexCount = groundAsset.mesh.vertices.count
         guard vertexCount > 0 else {
             throw GroundEntityError.emptyGroundMesh
         }
@@ -66,7 +61,7 @@ extension Entity {
         let lowLevelMesh = try LowLevelMesh(descriptor: descriptor)
 
         lowLevelMesh.replaceUnsafeMutableBytes(bufferIndex: 0) { rawBuffer in
-            ground.mesh.vertices.withUnsafeBytes { sourceBuffer in
+            groundAsset.mesh.vertices.withUnsafeBytes { sourceBuffer in
                 rawBuffer[0..<sourceBuffer.count].copyBytes(from: sourceBuffer)
             }
         }
@@ -79,13 +74,13 @@ extension Entity {
         }
 
         var bounds = BoundingBox.empty
-        for vertex in ground.mesh.vertices {
+        for vertex in groundAsset.mesh.vertices {
             bounds.formUnion(vertex.position)
         }
 
         let part = LowLevelMesh.Part(
             indexOffset: 0,
-            indexCount: ground.mesh.vertices.count,
+            indexCount: groundAsset.mesh.vertices.count,
             topology: .triangle,
             materialIndex: 0,
             bounds: bounds
@@ -96,22 +91,14 @@ extension Entity {
         return meshResource
     }
 
-    private func makeMaterial(
-        ground: Ground,
-        lighting: WorldLighting,
-        textureImages: [String : CGImage]
-    ) async throws -> any Material {
+    private func makeMaterial(groundAsset: GroundRenderAsset) async throws -> any Material {
         #if os(iOS) || os(macOS)
-        let textureImage = ground.textureAtlas.makeCGImage(textureImages: textureImages)
-        let lightmapTextureImage = ground.lightmapAtlas.makeCGImage()
-        let tileColorImage = ground.tileColorMap.makeCGImage()
-
         let functionConstants = MTLFunctionConstantValues()
-        var lightDirection = lighting.direction
-        var lightAmbient = lighting.ambient
-        var lightDiffuse = lighting.diffuse
-        var lightOpacity = lighting.opacity
-        var useLightmap = lightmapTextureImage != nil
+        var lightDirection = groundAsset.lighting.direction
+        var lightAmbient = groundAsset.lighting.ambient
+        var lightDiffuse = groundAsset.lighting.diffuse
+        var lightOpacity = groundAsset.lighting.opacity
+        var useLightmap = groundAsset.lightmapTextureImage != nil
         functionConstants.setConstantValue(&lightDirection, type: .float3, index: 0)
         functionConstants.setConstantValue(&lightAmbient, type: .float3, index: 1)
         functionConstants.setConstantValue(&lightDiffuse, type: .float3, index: 2)
@@ -122,16 +109,16 @@ extension Entity {
 
         var material = try CustomMaterial(surfaceShader: surfaceShader, lightingModel: .unlit)
 
-        if let textureImage {
+        if let textureImage = groundAsset.baseColorTextureImage {
             let texture = try await TextureResource(
                 image: textureImage,
-                withName: "ground-texture",
+                withName: "ground-base-color-texture",
                 options: TextureResource.CreateOptions(semantic: .raw)
             )
             material.baseColor = CustomMaterial.BaseColor(texture: CustomMaterial.Texture(texture))
         }
 
-        if let lightmapTextureImage {
+        if let lightmapTextureImage = groundAsset.lightmapTextureImage {
             let lightmapTexture = try await TextureResource(
                 image: lightmapTextureImage,
                 withName: "ground-lightmap-texture",
@@ -140,7 +127,7 @@ extension Entity {
             material.custom.texture = CustomMaterial.Texture(lightmapTexture)
         }
 
-        if let tileColorImage {
+        if let tileColorImage = groundAsset.tileColorTextureImage {
             let tileColorTexture = try await TextureResource(
                 image: tileColorImage,
                 withName: "ground-tile-color-texture",
@@ -153,10 +140,10 @@ extension Entity {
         #else
         var material = PhysicallyBasedMaterial()
 
-        if let textureImage = ground.textureAtlas.makeCGImage(textureImages: textureImages) {
+        if let textureImage = groundAsset.baseColorTextureImage {
             let texture = try await TextureResource(
                 image: textureImage,
-                withName: "ground-texture",
+                withName: "ground-base-color-texture",
                 options: TextureResource.CreateOptions(semantic: .color)
             )
             material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))

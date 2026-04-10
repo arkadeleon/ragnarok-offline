@@ -23,7 +23,6 @@ public struct WorldAssetLoader: Sendable {
         let uniqueModelNames = Set(rsw.models.map(\.modelName))
         let modelResources = await resourceManager.models(forNames: uniqueModelNames)
 
-        let ground = Ground(gat: gat, gnd: gnd)
         let water = Water(gnd: gnd, rsw: rsw)
         let lighting = WorldLighting(light: rsw.light)
 
@@ -58,9 +57,10 @@ public struct WorldAssetLoader: Sendable {
         async let waterTextureImage = resourceManager.waterTextureImage()
 
         let groundAsset = GroundRenderAsset(
-            ground: ground,
-            lighting: lighting,
-            textureImages: await groundTextureImages
+            gat: gat,
+            gnd: gnd,
+            textureImages: await groundTextureImages,
+            lighting: lighting
         )
 
         let waterAsset = WaterRenderAsset(

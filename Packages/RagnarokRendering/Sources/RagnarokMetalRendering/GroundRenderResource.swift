@@ -25,7 +25,7 @@ public class GroundRenderResource {
     )
 
     public init(device: any MTLDevice, asset: GroundRenderAsset) {
-        let vertices = asset.ground.mesh.vertices
+        let vertices = asset.mesh.vertices
         vertexCount = vertices.count
         vertexBuffer = device.makeBuffer(
             bytes: vertices,
@@ -33,25 +33,22 @@ public class GroundRenderResource {
             options: []
         )
 
-        let baseColorTextureImage = asset.ground.textureAtlas.makeCGImage(textureImages: asset.textureImages)
         baseColorTexture = MetalTextureFactory.makeTexture(
-            from: baseColorTextureImage,
+            from: asset.baseColorTextureImage,
             device: device,
-            label: "ground-base-color"
+            label: "ground-base-color-texture"
         )
 
-        let lightmapTextureImage = asset.ground.lightmapAtlas.makeCGImage()
         lightmapTexture = MetalTextureFactory.makeTexture(
-            from: lightmapTextureImage,
+            from: asset.lightmapTextureImage,
             device: device,
-            label: "ground-lightmap"
+            label: "ground-lightmap-texture"
         )
 
-        let tileColorImage = asset.ground.tileColorMap.makeCGImage()
         tileColorTexture = MetalTextureFactory.makeTexture(
-            from: tileColorImage,
+            from: asset.tileColorTextureImage,
             device: device,
-            label: "ground-tile-color"
+            label: "ground-tile-color-texture"
         )
 
         light.ambient = asset.lighting.ambient

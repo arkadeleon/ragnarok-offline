@@ -13,7 +13,7 @@ import SGLMath
 public class RSWRenderer: Renderer {
     public let device: any MTLDevice
 
-    let ground: Ground
+    let groundAsset: GroundRenderAsset
     let groundResource: GroundRenderResource
     let groundRenderer: GroundRenderer
 
@@ -31,8 +31,8 @@ public class RSWRenderer: Renderer {
         modelAssets: [RSMModelRenderAsset]
     ) throws {
         self.device = device
+        self.groundAsset = groundAsset
 
-        ground = groundAsset.ground
         groundResource = GroundRenderResource(device: device, asset: groundAsset)
         waterResource = WaterRenderResource(device: device, asset: waterAsset)
         modelResources = modelAssets.map { asset in
@@ -45,7 +45,7 @@ public class RSWRenderer: Renderer {
         modelRenderer = try RSMModelRenderer(device: device, library: library)
 
         camera = Camera()
-        camera.defaultDistance = -ground.altitude / 5 + 200
+        camera.defaultDistance = -groundAsset.altitude / 5 + 200
         camera.minimumDistance = camera.defaultDistance - 190
         camera.maximumDistance = camera.defaultDistance + 200
         camera.farZ = 500
@@ -68,7 +68,7 @@ public class RSWRenderer: Renderer {
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_scale(modelMatrix, [1, -1, 1])
         modelMatrix = matrix_rotate(modelMatrix, radians(90), [1, 0, 0])
-        modelMatrix = matrix_translate(modelMatrix, [-Float(ground.width / 2), 0, -Float(ground.height / 2)])
+        modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix
