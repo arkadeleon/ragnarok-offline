@@ -6,7 +6,6 @@
 //
 
 import Metal
-import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
@@ -14,84 +13,32 @@ public final class GroundRenderer {
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
-    let ground: Ground
-    let baseColorTexture: (any MTLTexture)?
-    let lightmapTexture: (any MTLTexture)?
-    let tileColorTexture: (any MTLTexture)?
-
-    var light = Light(
-        opacity: 1,
-        ambient: [1, 1, 1],
-        diffuse: [0, 0, 0],
-        direction: [0, 1, 0]
-    )
-
-    init(
-        device: any MTLDevice,
-        library: any MTLLibrary,
-        ground: Ground,
-        baseColorTexture: (any MTLTexture)?,
-        lightmapTexture: (any MTLTexture)? = nil,
-        tileColorTexture: (any MTLTexture)? = nil
-    ) throws {
+    init(device: any MTLDevice, library: any MTLLibrary) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "groundFragmentShader")
-
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
-
         renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
-
-        self.renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+        renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
         depthStencilDescriptor.isDepthWriteEnabled = true
-
-        self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
-
-        self.ground = ground
-        self.baseColorTexture = baseColorTexture
-        self.lightmapTexture = lightmapTexture
-        self.tileColorTexture = tileColorTexture
+        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    public convenience init(
-        device: any MTLDevice,
-        ground: Ground,
-        baseColorTexture: (any MTLTexture)?,
-        lightmapTexture: (any MTLTexture)? = nil,
-        tileColorTexture: (any MTLTexture)? = nil,
-        lighting: WorldLighting? = nil
-    ) throws {
+    public convenience init(device: any MTLDevice) throws {
         let library = RagnarokCreateShadersLibrary(device)!
-        try self.init(
-            device: device,
-            library: library,
-            ground: ground,
-            baseColorTexture: baseColorTexture,
-            lightmapTexture: lightmapTexture,
-            tileColorTexture: tileColorTexture
-        )
-        if let lighting {
-            updateLighting(lighting)
-        }
-    }
-
-    public func updateLighting(_ lighting: WorldLighting) {
-        light.ambient = lighting.ambient
-        light.diffuse = lighting.diffuse
-        light.direction = lighting.direction
-        light.opacity = lighting.opacity
+        try self.init(device: device, library: library)
     }
 
     public func render(
+        resource: GroundRenderResource,
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
@@ -101,8 +48,7 @@ public final class GroundRenderer {
     ) {
         let device = renderCommandEncoder.device
 
-        let vertices = ground.mesh.vertices
-        guard vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<GroundVertex>.stride, options: []) else {
+        guard resource.vertexCount > 0 else {
             return
         }
 
@@ -110,7 +56,7 @@ public final class GroundRenderer {
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
-            lightDirection: light.direction,
+            lightDirection: resource.light.direction,
             normalMatrix: normalMatrix
         )
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: []) else {
@@ -118,10 +64,10 @@ public final class GroundRenderer {
         }
 
         var fragmentUniforms = GroundFragmentUniforms(
-            lightMapUse: lightmapTexture == nil ? 0 : 1,
-            lightAmbient: light.ambient,
-            lightDiffuse: light.diffuse,
-            lightOpacity: light.opacity
+            lightMapUse: resource.lightmapTexture == nil ? 0 : 1,
+            lightAmbient: resource.light.ambient,
+            lightDiffuse: resource.light.diffuse,
+            lightOpacity: resource.light.opacity
         )
         guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, options: []) else {
             return
@@ -130,15 +76,15 @@ public final class GroundRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        renderCommandEncoder.setFragmentTexture(baseColorTexture, index: 0)
-        renderCommandEncoder.setFragmentTexture(lightmapTexture, index: 1)
-        renderCommandEncoder.setFragmentTexture(tileColorTexture, index: 2)
+        renderCommandEncoder.setFragmentTexture(resource.baseColorTexture, index: 0)
+        renderCommandEncoder.setFragmentTexture(resource.lightmapTexture, index: 1)
+        renderCommandEncoder.setFragmentTexture(resource.tileColorTexture, index: 2)
 
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 }

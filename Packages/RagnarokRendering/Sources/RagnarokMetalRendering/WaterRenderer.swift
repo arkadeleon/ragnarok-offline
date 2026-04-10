@@ -6,7 +6,6 @@
 //
 
 import Metal
-import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
@@ -14,66 +13,32 @@ public final class WaterRenderer {
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
-    let water: Water
-    let textures: [any MTLTexture]
-
-    var waveSpeed: Float = 0
-    var waveHeight: Float = 0
-    var wavePitch: Float = 0
-    var waterLevel: Float = 0
-    var animSpeed: Float = 1
-    var waterOpacity: Float = 0.6
-
-    var light = Light(
-        opacity: 1,
-        ambient: [1, 1, 1],
-        diffuse: [0, 0, 0],
-        direction: [0, 1, 0]
-    )
-
-    init(device: any MTLDevice, library: any MTLLibrary, water: Water, textures: [any MTLTexture]) throws {
+    init(device: any MTLDevice, library: any MTLLibrary) throws {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "waterFragmentShader")
-
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
-
         renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
-
-        self.renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+        renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
         depthStencilDescriptor.isDepthWriteEnabled = true
-
-        self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
-
-        self.water = water
-        self.textures = textures
+        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    public convenience init(device: any MTLDevice, water: Water, textures: [any MTLTexture], lighting: WorldLighting? = nil) throws {
+    public convenience init(device: any MTLDevice) throws {
         let library = RagnarokCreateShadersLibrary(device)!
-        try self.init(device: device, library: library, water: water, textures: textures)
-        if let lighting {
-            updateLighting(lighting)
-        }
-    }
-
-    public func updateLighting(_ lighting: WorldLighting) {
-        light.ambient = lighting.ambient
-        light.diffuse = lighting.diffuse
-        light.direction = lighting.direction
-        light.opacity = lighting.opacity
+        try self.init(device: device, library: library)
     }
 
     public func render(
+        resource: WaterRenderResource,
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
@@ -84,7 +49,7 @@ public final class WaterRenderer {
 
         let frame = Float(time * 60)
 
-        guard water.mesh.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: water.mesh.vertices, length: water.mesh.vertices.count * MemoryLayout<WaterVertex>.stride, options: []) else {
+        guard resource.vertexCount > 0, !resource.textures.isEmpty else {
             return
         }
 
@@ -92,19 +57,19 @@ public final class WaterRenderer {
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
-            waveHeight: waveHeight,
-            wavePitch: wavePitch,
-            waterOffset: frame * waveSpeed.truncatingRemainder(dividingBy: 360) - 180
+            waveHeight: resource.waveHeight,
+            wavePitch: resource.wavePitch,
+            waterOffset: frame * resource.waveSpeed.truncatingRemainder(dividingBy: 360) - 180
         )
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<WaterVertexUniforms>.stride, options: []) else {
             return
         }
 
         var fragmentUniforms = WaterFragmentUniforms(
-            lightAmbient: light.ambient,
-            lightDiffuse: light.diffuse,
-            lightOpacity: light.opacity,
-            opacity: waterOpacity
+            lightAmbient: resource.light.ambient,
+            lightDiffuse: resource.light.diffuse,
+            lightOpacity: resource.light.opacity,
+            opacity: resource.waterOpacity
         )
         guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<WaterFragmentUniforms>.stride, options: []) else {
             return
@@ -113,14 +78,14 @@ public final class WaterRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        let texture = textures[Int(frame / animSpeed) % textures.count]
+        let texture = resource.textures[Int(frame / resource.animSpeed) % resource.textures.count]
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: water.mesh.vertices.count)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 }

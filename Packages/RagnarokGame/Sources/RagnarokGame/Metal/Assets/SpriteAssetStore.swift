@@ -7,6 +7,7 @@
 
 import Foundation
 import Metal
+import RagnarokMetalRendering
 import RagnarokModels
 import RagnarokResources
 import RagnarokSprite

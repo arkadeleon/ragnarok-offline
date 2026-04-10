@@ -9,6 +9,7 @@ import CoreGraphics
 import CoreText
 import Foundation
 import Metal
+import RagnarokMetalRendering
 import RagnarokShaders
 import simd
 

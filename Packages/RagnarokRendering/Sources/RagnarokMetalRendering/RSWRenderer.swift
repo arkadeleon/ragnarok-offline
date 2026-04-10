@@ -13,7 +13,11 @@ import SGLMath
 public class RSWRenderer: Renderer {
     public let device: any MTLDevice
 
+    let ground: Ground
+    let groundResource: GroundRenderResource
     let groundRenderer: GroundRenderer
+
+    let waterResource: WaterRenderResource
     let waterRenderer: WaterRenderer
     let modelRenderer: ModelRenderer
 
@@ -21,18 +25,20 @@ public class RSWRenderer: Renderer {
 
     public init(
         device: any MTLDevice,
-        ground: Ground,
-        water: Water,
+        groundAsset: GroundRenderAsset,
+        waterAsset: WaterRenderAsset,
         models: [RSMModel],
-        groundTexture: any MTLTexture,
-        waterTextures: [any MTLTexture],
         modelTextures: [String : any MTLTexture]
     ) throws {
         self.device = device
 
+        ground = groundAsset.ground
+        groundResource = GroundRenderResource(device: device, asset: groundAsset)
+        waterResource = WaterRenderResource(device: device, asset: waterAsset)
+
         let library = RagnarokCreateShadersLibrary(device)!
-        groundRenderer = try GroundRenderer(device: device, library: library, ground: ground, baseColorTexture: groundTexture)
-        waterRenderer = try WaterRenderer(device: device, library: library, water: water, textures: waterTextures)
+        groundRenderer = try GroundRenderer(device: device, library: library)
+        waterRenderer = try WaterRenderer(device: device, library: library)
         modelRenderer = try ModelRenderer(device: device, library: library, models: models, textures: modelTextures)
 
         camera = Camera()
@@ -54,8 +60,6 @@ public class RSWRenderer: Renderer {
 
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        let ground = groundRenderer.ground
-
         camera.update(size: viewport.size)
 
         var modelMatrix = matrix_identity_float4x4
@@ -73,6 +77,7 @@ public class RSWRenderer: Renderer {
         }
 
         groundRenderer.render(
+            resource: groundResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
@@ -82,6 +87,7 @@ public class RSWRenderer: Renderer {
         )
 
         waterRenderer.render(
+            resource: waterResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,

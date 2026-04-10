@@ -59,11 +59,13 @@ public struct WorldAssetLoader: Sendable {
 
         let groundAsset = GroundRenderAsset(
             ground: ground,
+            lighting: lighting,
             textureImages: await groundTextureImages
         )
 
         let waterAsset = WaterRenderAsset(
             water: water,
+            lighting: lighting,
             textureImage: try? await waterTextureImage
         )
 

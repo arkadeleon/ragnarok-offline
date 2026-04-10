@@ -28,6 +28,9 @@ final class MapRuntimeRenderer: Renderer {
     let device: any MTLDevice
     let resourceManager: ResourceManager
 
+    private var groundResource: GroundRenderResource?
+    private var waterResource: WaterRenderResource?
+
     private var skyboxRenderer: MetalSkyboxRenderer?
     private var groundRenderer: GroundRenderer?
     private var waterRenderer: WaterRenderer?
@@ -57,6 +60,8 @@ final class MapRuntimeRenderer: Renderer {
 
     func setWorldAsset(_ worldAsset: WorldAsset?) {
         guard let worldAsset else {
+            groundResource = nil
+            waterResource = nil
             skyboxRenderer = nil
             groundRenderer = nil
             waterRenderer = nil
@@ -71,27 +76,11 @@ final class MapRuntimeRenderer: Renderer {
             return
         }
 
-        let groundAdapter = GroundRenderAssetAdapter(
-            device: device,
-            asset: worldAsset.ground
-        )
-        groundRenderer = try? GroundRenderer(
-            device: device,
-            ground: groundAdapter.asset.ground,
-            baseColorTexture: groundAdapter.baseColorTexture,
-            lightmapTexture: groundAdapter.lightmapTexture,
-            tileColorTexture: groundAdapter.tileColorTexture,
-            lighting: worldAsset.lighting
-        )
+        groundResource = GroundRenderResource(device: device, asset: worldAsset.ground)
+        groundRenderer = try? GroundRenderer(device: device)
 
-        let waterAdapter = WaterRenderAssetAdapter(device: device, asset: worldAsset.water)
-        let waterTextures = waterAdapter.texture.map { [$0] } ?? []
-        waterRenderer = try? WaterRenderer(
-            device: device,
-            water: waterAdapter.asset.water,
-            textures: waterTextures,
-            lighting: worldAsset.lighting
-        )
+        waterResource = WaterRenderResource(device: device, asset: worldAsset.water)
+        waterRenderer = try? WaterRenderer(device: device)
 
         let modelAdapter = RSMModelRenderAssetAdapter(device: device, assets: worldAsset.models)
         modelRenderer = try? ModelRenderer(
@@ -214,21 +203,30 @@ final class MapRuntimeRenderer: Renderer {
             viewMatrix: matrices.viewMatrix,
             cameraPosition: matrices.cameraPosition
         )
-        groundRenderer?.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: matrices.modelMatrix,
-            viewMatrix: matrices.viewMatrix,
-            projectionMatrix: matrices.projectionMatrix,
-            normalMatrix: matrices.normalMatrix
-        )
-        waterRenderer?.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: matrices.modelMatrix,
-            viewMatrix: matrices.viewMatrix,
-            projectionMatrix: matrices.projectionMatrix
-        )
+
+        if let groundResource, let groundRenderer {
+            groundRenderer.render(
+                resource: groundResource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix,
+                normalMatrix: matrices.normalMatrix
+            )
+        }
+
+        if let waterResource, let waterRenderer {
+            waterRenderer.render(
+                resource: waterResource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix
+            )
+        }
+
         modelRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
