@@ -49,11 +49,12 @@ extension Entity {
 
         var modelEntitiesByName: [String : Entity] = [:]
         for modelAsset in worldAsset.models {
+            if modelEntitiesByName[modelAsset.name] != nil {
+                continue
+            }
+
             do {
-                let modelEntity = try await Entity(
-                    from: modelAsset,
-                    lighting: worldAsset.lighting
-                )
+                let modelEntity = try await Entity(from: modelAsset)
                 modelEntitiesByName[modelAsset.name] = modelEntity
             } catch {
                 logger.warning("\(error)")

@@ -13,13 +13,7 @@ import RagnarokResources
 public struct WorldAssetLoader: Sendable {
     public init() {}
 
-    public func load(
-        gat: GAT,
-        gnd: GND,
-        rsw: RSW,
-        resourceManager: ResourceManager,
-        progress: Progress? = nil
-    ) async throws -> WorldAsset {
+    public func load(gat: GAT, gnd: GND, rsw: RSW, resourceManager: ResourceManager, progress: Progress? = nil) async throws -> WorldAsset {
         let uniqueModelNames = Set(rsw.models.map(\.modelName))
         let modelResources = await resourceManager.models(forNames: uniqueModelNames)
 
@@ -27,7 +21,7 @@ public struct WorldAssetLoader: Sendable {
 
         var modelTextureNames: Set<String> = []
         for (_, modelResource) in modelResources {
-            modelTextureNames.formUnion(modelResource.model.textureNames)
+            modelTextureNames.formUnion(modelResource.textureNames)
         }
 
         if let progress {
@@ -70,20 +64,30 @@ public struct WorldAssetLoader: Sendable {
         )
 
         let sharedModelTextureImages = await modelTextureImages
-        let modelAssets: [RSMModelRenderAsset] = rsw.models.compactMap { model in
-            let modelName = model.modelName
 
-            guard let modelResource = modelResources[modelName] else {
-                return nil
-            }
-
-            let textureImages = modelResource.model.textureNames.reduce(into: [String : CGImage]()) { textureImages, textureName in
+        var prototypeModelAssetsByName: [String : RSMModelRenderAsset] = [:]
+        for (modelName, modelResource) in modelResources {
+            let textureImages = modelResource.textureNames.reduce(into: [String : CGImage]()) { textureImages, textureName in
                 if let textureImage = sharedModelTextureImages[textureName] {
                     textureImages[textureName] = textureImage
                 }
             }
 
-            let instance = RSMModelInstance(
+            prototypeModelAssetsByName[modelName] = RSMModelRenderAsset(
+                name: modelName,
+                rsm: modelResource.rsm,
+                instance: .identity,
+                lighting: lighting,
+                textureImages: textureImages,
+            )
+        }
+
+        let modelAssets: [RSMModelRenderAsset] = rsw.models.compactMap { model in
+            guard var modelAsset = prototypeModelAssetsByName[model.modelName] else {
+                return nil
+            }
+
+            modelAsset.instance = RSMModelInstance(
                 position: [
                     model.position.x + Float(gnd.width),
                     model.position.y,
@@ -91,14 +95,6 @@ public struct WorldAssetLoader: Sendable {
                 ],
                 rotation: model.rotation,
                 scale: model.scale
-            )
-
-            let modelAsset = RSMModelRenderAsset(
-                name: modelName,
-                model: modelResource.model,
-                instance: instance,
-                lighting: lighting,
-                textureImages: textureImages,
             )
             return modelAsset
         }

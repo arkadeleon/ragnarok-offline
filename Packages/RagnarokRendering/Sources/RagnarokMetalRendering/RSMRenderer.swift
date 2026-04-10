@@ -21,7 +21,7 @@ public class RSMRenderer: Renderer {
 
     public init(device: any MTLDevice, asset: RSMModelRenderAsset) throws {
         self.device = device
-        modelBoundingBox = asset.model.boundingBox
+        modelBoundingBox = asset.boundingBox
         modelResource = RSMModelRenderResource(device: device, asset: asset)
 
         let library = RagnarokCreateShadersLibrary(device)!

@@ -1,5 +1,5 @@
 //
-//  ModelEntity.swift
+//  RSMModelEntity.swift
 //  RagnarokRealityRendering
 //
 //  Created by Leon Li on 2025/2/26.
@@ -15,7 +15,7 @@ import RagnarokRealitySurfaceShaders
 #endif
 
 extension Entity {
-    public convenience init(from modelAsset: RSMModelRenderAsset, lighting: WorldLighting) async throws {
+    public convenience init(from modelAsset: RSMModelRenderAsset) async throws {
         let textures = await withTaskGroup(
             of: (String, TextureResource?).self,
             returning: [String : TextureResource].self
@@ -38,25 +38,11 @@ extension Entity {
             return textures
         }
 
-        try await self.init(
-            from: modelAsset.model,
-            lighting: lighting,
-            textures: textures
-        )
-
-        self.name = modelAsset.name
-    }
-
-    public convenience init(
-        from model: RSMModel,
-        lighting: WorldLighting,
-        textures: [String : TextureResource]
-    ) async throws {
         self.init()
 
         let mesh = try await {
             var descriptors: [MeshDescriptor] = []
-            for (index, mesh) in model.meshes.enumerated() {
+            for (index, mesh) in modelAsset.meshes.enumerated() {
                 var descriptor = MeshDescriptor(name: mesh.textureName)
                 descriptor.positions = MeshBuffer(mesh.vertices.map({ $0.position }))
                 descriptor.normals = MeshBuffer(mesh.vertices.map({ $0.normal }))
@@ -76,10 +62,10 @@ extension Entity {
 
         #if os(iOS) || os(macOS)
         let functionConstants = MTLFunctionConstantValues()
-        var lightDirection = lighting.direction
-        var lightAmbient = lighting.ambient
-        var lightDiffuse = lighting.diffuse
-        var lightOpacity = lighting.opacity
+        var lightDirection = modelAsset.lighting.direction
+        var lightAmbient = modelAsset.lighting.ambient
+        var lightDiffuse = modelAsset.lighting.diffuse
+        var lightOpacity = modelAsset.lighting.opacity
         functionConstants.setConstantValue(&lightDirection, type: .float3, index: 0)
         functionConstants.setConstantValue(&lightAmbient, type: .float3, index: 1)
         functionConstants.setConstantValue(&lightDiffuse, type: .float3, index: 2)
@@ -87,7 +73,7 @@ extension Entity {
 
         let surfaceShader = SurfaceShaders.modelSurfaceShader(constantValues: functionConstants)
 
-        let materials = try model.meshes.map { mesh -> any Material in
+        let materials = try modelAsset.meshes.map { mesh -> any Material in
             var material = try CustomMaterial(surfaceShader: surfaceShader, lightingModel: .unlit)
             material.opacityThreshold = 0.9999
             material.blending = .transparent(opacity: 1.0)
@@ -99,7 +85,7 @@ extension Entity {
             return material
         }
         #else
-        let materials = try model.meshes.map { mesh -> any Material in
+        let materials = try modelAsset.meshes.map { mesh -> any Material in
             if let texture = textures[mesh.textureName] {
                 var material = PhysicallyBasedMaterial()
                 material.baseColor = PhysicallyBasedMaterial.BaseColor(texture: MaterialParameters.Texture(texture))
@@ -116,7 +102,9 @@ extension Entity {
 
         components.set(ModelComponent(mesh: mesh, materials: materials))
 
-        let scale = 2 / model.boundingBox.range.max()
+        let scale = 2 / modelAsset.boundingBox.range.max()
         self.scale = [scale, scale, scale]
+
+        self.name = modelAsset.name
     }
 }

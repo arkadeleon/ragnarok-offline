@@ -28,13 +28,13 @@ public class RSMModelRenderResource {
 
     public init(device: any MTLDevice, asset: RSMModelRenderAsset) {
         let textures = Self.makeTextures(from: asset, device: device)
-        let model = Self.instantiatedModel(
-            from: asset.model,
+        let meshes = Self.instantiatedMeshes(
+            from: asset.meshes,
             instance: asset.instance,
             textureNamespace: Self.textureNamespace(for: asset)
         )
 
-        self.meshes = model.meshes.map { mesh in
+        self.meshes = meshes.map { mesh in
             MeshResource(
                 vertexCount: mesh.vertices.count,
                 vertexBuffer: device.makeBuffer(
@@ -80,16 +80,15 @@ extension RSMModelRenderResource {
         return textures
     }
 
-    private static func instantiatedModel(
-        from prototype: RSMModel,
+    private static func instantiatedMeshes(
+        from prototypeMeshes: [RSMModelMesh],
         instance: RSMModelInstance,
         textureNamespace: String
-    ) -> RSMModel {
+    ) -> [RSMModelMesh] {
         let instanceMatrix = instance.matrix
         let normalMatrix = simd_float3x3(instanceMatrix).inverse.transpose
 
-        var model = prototype
-        model.meshes = prototype.meshes.map { prototypeMesh in
+        return prototypeMeshes.map { prototypeMesh in
             var mesh = prototypeMesh
             mesh.textureName = textureNamespace + prototypeMesh.textureName
             mesh.vertices = prototypeMesh.vertices.map { prototypeVertex in
@@ -112,8 +111,6 @@ extension RSMModelRenderResource {
             }
             return mesh
         }
-
-        return model
     }
 
     private static func textureNamespace(for asset: RSMModelRenderAsset) -> String {

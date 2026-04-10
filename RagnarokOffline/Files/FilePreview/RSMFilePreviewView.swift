@@ -6,7 +6,7 @@
 //
 
 import RagnarokFileFormats
-import RagnarokRenderAssets
+import RagnarokRendering
 import RagnarokResources
 import RealityKit
 import SwiftUI
@@ -79,12 +79,19 @@ struct RSMFileModelView: View {
         progress.totalUnitCount = Int64(textureNames.count)
         progress.completedUnitCount = 0
 
-        let textures = await ResourceManager.shared.textures(forNames: textureNames, removesMagentaPixels: true) { _, _ in
+        let textureImages = await ResourceManager.shared.textureImages(forNames: textureNames, removesMagentaPixels: true) { _, _ in
             progress.completedUnitCount += 1
         }
 
-        let model = RSMModel(rsm: rsm, instance: instance)
-        let modelEntity = try await Entity(from: model, lighting: .preview, textures: textures)
+        let modelAsset = RSMModelRenderAsset(
+            name: file.name,
+            rsm: rsm,
+            instance: instance,
+            lighting: .preview,
+            textureImages: textureImages
+        )
+        let modelEntity = try await Entity(from: modelAsset)
+        modelEntity.scale *= instance.scale
         return modelEntity
     }
 }

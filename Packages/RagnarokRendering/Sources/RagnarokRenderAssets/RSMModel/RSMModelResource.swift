@@ -9,10 +9,12 @@ import RagnarokFileFormats
 import RagnarokResources
 
 final public class RSMModelResource: Sendable {
-    public let model: RSMModel
+    public let rsm: RSM
+    public let textureNames: Set<String>
 
-    public init(model: RSMModel) {
-        self.model = model
+    public init(rsm: RSM) {
+        self.rsm = rsm
+        self.textureNames = Set(rsm.nodes.flatMap(\.textures))
     }
 }
 
@@ -51,8 +53,7 @@ extension ResourceManager {
     public func model(at path: ResourcePath) async throws -> RSMModelResource {
         let data = try await contentsOfResource(at: path)
         let rsm = try RSM(data: data)
-        let model = RSMModel(rsm: rsm)
-        let modelResource = RSMModelResource(model: model)
+        let modelResource = RSMModelResource(rsm: rsm)
         return modelResource
     }
 }
