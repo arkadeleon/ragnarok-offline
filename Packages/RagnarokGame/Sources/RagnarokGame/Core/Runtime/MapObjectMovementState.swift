@@ -15,6 +15,7 @@ public struct MapObjectMovementState: Sendable {
     public var startTime: ContinuousClock.Instant
     public var duration: Duration
     public var direction: CharacterDirection
+    public var animationElapsedOffset: Duration
 
     public init(
         from: SIMD2<Int>,
@@ -22,7 +23,8 @@ public struct MapObjectMovementState: Sendable {
         path: [SIMD2<Int>],
         startTime: ContinuousClock.Instant,
         duration: Duration,
-        direction: CharacterDirection
+        direction: CharacterDirection,
+        animationElapsedOffset: Duration = .zero
     ) {
         self.from = from
         self.to = to
@@ -30,5 +32,6 @@ public struct MapObjectMovementState: Sendable {
         self.startTime = startTime
         self.duration = duration
         self.direction = direction
+        self.animationElapsedOffset = animationElapsedOffset
     }
 }

@@ -15,4 +15,5 @@ struct MapObjectPresentationTimeline {
     var startTime: ContinuousClock.Instant
     var duration: Duration
     var direction: CharacterDirection
+    var animationElapsedOffset: Duration
 }

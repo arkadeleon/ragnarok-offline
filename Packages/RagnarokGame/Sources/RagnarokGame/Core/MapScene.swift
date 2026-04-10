@@ -357,6 +357,14 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
+
+        let animationElapsedOffset: Duration
+        if let existingMovement = state.player.movement {
+            animationElapsedOffset = existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
+        } else {
+            animationElapsedOffset = .zero
+        }
+
         let path = pathfinder.findPath(from: startPosition, to: endPosition)
         let direction = path.count >= 2
             ? CharacterDirection(sourcePosition: path[0], targetPosition: path[1])
@@ -369,7 +377,8 @@ extension MapScene: MapEventHandlerProtocol {
             path: path,
             startTime: now,
             duration: duration,
-            direction: direction
+            direction: direction,
+            animationElapsedOffset: animationElapsedOffset
         )
         state.player.presentation = MapObjectPresentationState(
             action: .walk,

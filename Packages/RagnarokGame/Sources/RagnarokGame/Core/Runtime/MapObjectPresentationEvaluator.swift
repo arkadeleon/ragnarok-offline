@@ -38,7 +38,8 @@ enum MapObjectPresentationEvaluator {
             stepDurations: stepDurations(for: movementState.path, speed: state.object.speed),
             startTime: movementState.startTime,
             duration: movementState.duration,
-            direction: movementState.direction
+            direction: movementState.direction,
+            animationElapsedOffset: movementState.animationElapsedOffset
         )
     }
 
@@ -142,7 +143,7 @@ enum MapObjectPresentationEvaluator {
             return MovementSample(
                 worldPosition: timeline.worldPath[0],
                 direction: timeline.direction,
-                totalElapsed: .zero,
+                totalElapsed: timeline.animationElapsedOffset,
                 isMoving: true
             )
         }
@@ -175,7 +176,7 @@ enum MapObjectPresentationEvaluator {
                 return MovementSample(
                     worldPosition: mix(source, target, t: fraction),
                     direction: direction,
-                    totalElapsed: elapsed,
+                    totalElapsed: elapsed + timeline.animationElapsedOffset,
                     isMoving: true
                 )
             }
