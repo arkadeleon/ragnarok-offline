@@ -11,18 +11,21 @@ import simd
 public struct RSMModelRenderAsset {
     public var name: String
     public var model: RSMModel
+    public var instance: RSMModelInstance
+    public var lighting: WorldLighting
     public var textureImages: [String : CGImage]
-    public var instances: [RSMModelInstance]
 
     public init(
         name: String,
         model: RSMModel,
+        instance: RSMModelInstance,
+        lighting: WorldLighting,
         textureImages: [String : CGImage],
-        instances: [RSMModelInstance]
     ) {
         self.name = name
         self.model = model
+        self.instance = instance
+        self.lighting = lighting
         self.textureImages = textureImages
-        self.instances = instances
     }
 }

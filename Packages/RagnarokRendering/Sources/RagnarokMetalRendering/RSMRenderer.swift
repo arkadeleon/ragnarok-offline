@@ -13,15 +13,19 @@ import SGLMath
 public class RSMRenderer: Renderer {
     public let device: any MTLDevice
 
-    let modelRenderer: ModelRenderer
+    let modelBoundingBox: RSMModelBoundingBox
+    let modelResource: RSMModelRenderResource
+    let modelRenderer: RSMModelRenderer
 
     public let camera = Camera()
 
-    public init(device: any MTLDevice, model: RSMModel, textures: [String : any MTLTexture]) throws {
+    public init(device: any MTLDevice, asset: RSMModelRenderAsset) throws {
         self.device = device
+        modelBoundingBox = asset.model.boundingBox
+        modelResource = RSMModelRenderResource(device: device, asset: asset)
 
         let library = RagnarokCreateShadersLibrary(device)!
-        modelRenderer = try ModelRenderer(device: device, library: library, models: [model], textures: textures)
+        modelRenderer = try RSMModelRenderer(device: device, library: library)
     }
 
     public func render(
@@ -36,8 +40,7 @@ public class RSMRenderer: Renderer {
 
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        let model = modelRenderer.models[0]
-        let scale = 2 / model.boundingBox.range.max()
+        let scale = 2 / modelBoundingBox.range.max()
 
         camera.update(size: viewport.size)
 
@@ -56,6 +59,7 @@ public class RSMRenderer: Renderer {
         }
 
         modelRenderer.render(
+            resource: modelResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,

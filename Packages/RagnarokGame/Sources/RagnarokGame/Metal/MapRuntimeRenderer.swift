@@ -30,11 +30,12 @@ final class MapRuntimeRenderer: Renderer {
 
     private var groundResource: GroundRenderResource?
     private var waterResource: WaterRenderResource?
+    private var modelResources: [RSMModelRenderResource] = []
 
     private var skyboxRenderer: MetalSkyboxRenderer?
     private var groundRenderer: GroundRenderer?
     private var waterRenderer: WaterRenderer?
-    private var modelRenderer: ModelRenderer?
+    private var modelRenderer: RSMModelRenderer?
     private(set) var spriteRenderer: MetalSpriteRenderer?
     private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
     private var damageEffectRenderer: MetalDamageEffectRenderer?
@@ -62,6 +63,8 @@ final class MapRuntimeRenderer: Renderer {
         guard let worldAsset else {
             groundResource = nil
             waterResource = nil
+            modelResources = []
+
             skyboxRenderer = nil
             groundRenderer = nil
             waterRenderer = nil
@@ -82,13 +85,10 @@ final class MapRuntimeRenderer: Renderer {
         waterResource = WaterRenderResource(device: device, asset: worldAsset.water)
         waterRenderer = try? WaterRenderer(device: device)
 
-        let modelAdapter = RSMModelRenderAssetAdapter(device: device, assets: worldAsset.models)
-        modelRenderer = try? ModelRenderer(
-            device: device,
-            models: modelAdapter.models,
-            textures: modelAdapter.textures,
-            lighting: worldAsset.lighting
-        )
+        modelResources = worldAsset.models.map { modelAsset in
+            RSMModelRenderResource(device: device, asset: modelAsset)
+        }
+        modelRenderer = try? RSMModelRenderer(device: device)
 
         spriteRenderer = try? MetalSpriteRenderer(device: device)
         spriteAssetStore = SpriteAssetStore(device: device, resourceManager: resourceManager)
@@ -227,25 +227,33 @@ final class MapRuntimeRenderer: Renderer {
             )
         }
 
-        modelRenderer?.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: matrices.modelMatrix,
-            viewMatrix: matrices.viewMatrix,
-            projectionMatrix: matrices.projectionMatrix,
-            normalMatrix: matrices.normalMatrix
-        )
+        if let modelRenderer {
+            for modelResource in modelResources {
+                modelRenderer.render(
+                    resource: modelResource,
+                    atTime: time,
+                    renderCommandEncoder: renderCommandEncoder,
+                    modelMatrix: matrices.modelMatrix,
+                    viewMatrix: matrices.viewMatrix,
+                    projectionMatrix: matrices.projectionMatrix,
+                    normalMatrix: matrices.normalMatrix
+                )
+            }
+        }
+
         spriteRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices,
             viewport: viewport
         )
+
         selectionOverlayRenderer?.render(
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
+
         damageEffectRenderer?.render(
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices

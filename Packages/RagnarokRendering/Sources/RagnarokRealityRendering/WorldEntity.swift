@@ -75,18 +75,17 @@ extension Entity {
                 continue
             }
 
-            for instance in modelAsset.instances {
-                let clonedModelEntity = modelEntity.clone(recursive: true)
+            let clonedModelEntity = modelEntity.clone(recursive: true)
+            let instance = modelAsset.instance
 
-                clonedModelEntity.position = instance.position
-                clonedModelEntity.orientation =
-                    simd_quatf(angle: radians(instance.rotation.z), axis: [0, 0, 1]) *
-                    simd_quatf(angle: radians(instance.rotation.x), axis: [1, 0, 0]) *
-                    simd_quatf(angle: radians(instance.rotation.y), axis: [0, 1, 0])
-                clonedModelEntity.scale = instance.scale
+            clonedModelEntity.position = instance.position
+            clonedModelEntity.orientation =
+                simd_quatf(angle: radians(instance.rotation.z), axis: [0, 0, 1]) *
+                simd_quatf(angle: radians(instance.rotation.x), axis: [1, 0, 0]) *
+                simd_quatf(angle: radians(instance.rotation.y), axis: [0, 1, 0])
+            clonedModelEntity.scale = instance.scale
 
-                addChild(clonedModelEntity, preservingWorldTransform: true)
-            }
+            addChild(clonedModelEntity, preservingWorldTransform: true)
         }
 
         metric.endMeasuring("Load model entities")

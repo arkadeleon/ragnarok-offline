@@ -70,12 +70,12 @@ public struct WorldAssetLoader: Sendable {
         )
 
         let sharedModelTextureImages = await modelTextureImages
-        let modelAssets: [RSMModelRenderAsset] = uniqueModelNames.compactMap { modelName in
+        let modelAssets: [RSMModelRenderAsset] = rsw.models.compactMap { model in
+            let modelName = model.modelName
+
             guard let modelResource = modelResources[modelName] else {
                 return nil
             }
-
-            let prototype = modelResource.model
 
             let textureImages = modelResource.model.textureNames.reduce(into: [String : CGImage]()) { textureImages, textureName in
                 if let textureImage = sharedModelTextureImages[textureName] {
@@ -83,27 +83,22 @@ public struct WorldAssetLoader: Sendable {
                 }
             }
 
-            let instances = rsw.models
-                .filter {
-                    $0.modelName == modelName
-                }
-                .map { model in
-                    RSMModelInstance(
-                        position: [
-                            model.position.x + Float(gnd.width),
-                            model.position.y,
-                            model.position.z + Float(gnd.height),
-                        ],
-                        rotation: model.rotation,
-                        scale: model.scale
-                    )
-                }
+            let instance = RSMModelInstance(
+                position: [
+                    model.position.x + Float(gnd.width),
+                    model.position.y,
+                    model.position.z + Float(gnd.height),
+                ],
+                rotation: model.rotation,
+                scale: model.scale
+            )
 
             let modelAsset = RSMModelRenderAsset(
                 name: modelName,
-                model: prototype,
+                model: modelResource.model,
+                instance: instance,
+                lighting: lighting,
                 textureImages: textureImages,
-                instances: instances
             )
             return modelAsset
         }

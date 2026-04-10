@@ -32,11 +32,15 @@ public class WaterRenderResource {
     public init(device: any MTLDevice, asset: WaterRenderAsset) {
         let vertices = asset.water.mesh.vertices
         vertexCount = vertices.count
-        vertexBuffer = device.makeBuffer(
-            bytes: vertices,
-            length: vertices.count * MemoryLayout<WaterVertex>.stride,
-            options: []
-        )
+        if vertexCount > 0 {
+            vertexBuffer = device.makeBuffer(
+                bytes: vertices,
+                length: vertices.count * MemoryLayout<WaterVertex>.stride,
+                options: []
+            )
+        } else {
+            vertexBuffer = nil
+        }
 
         let texture = asset.textureImage.flatMap {
             MetalTextureFactory.makeTexture(from: $0, device: device, label: "water")

@@ -19,7 +19,8 @@ public class RSWRenderer: Renderer {
 
     let waterResource: WaterRenderResource
     let waterRenderer: WaterRenderer
-    let modelRenderer: ModelRenderer
+    let modelResources: [RSMModelRenderResource]
+    let modelRenderer: RSMModelRenderer
 
     public let camera: Camera
 
@@ -27,19 +28,21 @@ public class RSWRenderer: Renderer {
         device: any MTLDevice,
         groundAsset: GroundRenderAsset,
         waterAsset: WaterRenderAsset,
-        models: [RSMModel],
-        modelTextures: [String : any MTLTexture]
+        modelAssets: [RSMModelRenderAsset]
     ) throws {
         self.device = device
 
         ground = groundAsset.ground
         groundResource = GroundRenderResource(device: device, asset: groundAsset)
         waterResource = WaterRenderResource(device: device, asset: waterAsset)
+        modelResources = modelAssets.map { asset in
+            RSMModelRenderResource(device: device, asset: asset)
+        }
 
         let library = RagnarokCreateShadersLibrary(device)!
         groundRenderer = try GroundRenderer(device: device, library: library)
         waterRenderer = try WaterRenderer(device: device, library: library)
-        modelRenderer = try ModelRenderer(device: device, library: library, models: models, textures: modelTextures)
+        modelRenderer = try RSMModelRenderer(device: device, library: library)
 
         camera = Camera()
         camera.defaultDistance = -ground.altitude / 5 + 200
@@ -95,14 +98,17 @@ public class RSWRenderer: Renderer {
             projectionMatrix: projectionMatrix
         )
 
-        modelRenderer.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
-        )
+        for modelResource in modelResources {
+            modelRenderer.render(
+                resource: modelResource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: modelMatrix,
+                viewMatrix: viewMatrix,
+                projectionMatrix: projectionMatrix,
+                normalMatrix: normalMatrix
+            )
+        }
 
         renderCommandEncoder.endEncoding()
     }
