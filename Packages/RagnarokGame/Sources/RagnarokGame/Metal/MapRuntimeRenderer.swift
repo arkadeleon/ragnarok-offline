@@ -42,6 +42,7 @@ final class MapRuntimeRenderer: Renderer {
 
     private let spriteSnapshotEvaluator = SpriteSnapshotEvaluator()
     private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
+    private(set) var spriteDrawables: [GameObjectID : SpriteDrawable] = [:]
     private var spriteAssetStore: SpriteAssetStore?
 
     private var cameraState: MapCameraState = .default
@@ -71,11 +72,11 @@ final class MapRuntimeRenderer: Renderer {
             modelRenderer = nil
             spriteAssetStore?.cancelAllTasks()
             spriteAssetStore = nil
-            spriteRenderer?.reset()
             spriteRenderer = nil
             selectionOverlayRenderer = nil
             damageEffectRenderer?.reset()
             spriteSnapshots.removeAll()
+            spriteDrawables.removeAll()
             return
         }
 
@@ -139,8 +140,7 @@ final class MapRuntimeRenderer: Renderer {
         )
         spriteSnapshots = snapshots
         spriteAssetStore?.sync(snapshots: snapshots)
-        let drawables = spriteAssetStore?.drawables(for: snapshots) ?? [:]
-        spriteRenderer?.update(drawables: drawables)
+        spriteDrawables = spriteAssetStore?.drawables(for: snapshots) ?? [:]
     }
 
     func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
@@ -242,10 +242,10 @@ final class MapRuntimeRenderer: Renderer {
         }
 
         spriteRenderer?.render(
+            drawables: spriteDrawables,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices,
-            viewport: viewport
+            matrices: matrices
         )
 
         selectionOverlayRenderer?.render(

@@ -79,9 +79,10 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
             return nil
         }
 
-        let spriteRenderer = renderer.spriteRenderer
+        if let matrices = renderer.lastRenderMatrices {
+            let viewport = renderer.lastViewport
+            let hitBoxes = spriteHitBoxes(matrices: matrices, viewport: viewport)
 
-        if let hitBoxes = spriteRenderer?.hitBoxes {
             for (objectID, rect) in hitBoxes {
                 guard rect.contains(screenPoint) else {
                     continue
@@ -105,6 +106,84 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
         }
 
         return groundHit(origin: origin, direction: direction, mapGrid: scene.mapGrid)
+    }
+
+    private func spriteHitBoxes(
+        matrices: MapRuntimeRenderer.RenderMatrices,
+        viewport: CGRect
+    ) -> [GameObjectID : CGRect] {
+        guard viewport.width > 0, viewport.height > 0 else {
+            return [:]
+        }
+
+        var hitBoxes: [GameObjectID : CGRect] = [:]
+        for (objectID, drawable) in renderer.spriteDrawables {
+            guard drawable.isVisible,
+                  let rect = spriteHitBox(for: drawable, matrices: matrices, viewport: viewport) else {
+                continue
+            }
+            hitBoxes[objectID] = rect
+        }
+        return hitBoxes
+    }
+
+    private func spriteHitBox(
+        for drawable: SpriteDrawable,
+        matrices: MapRuntimeRenderer.RenderMatrices,
+        viewport: CGRect
+    ) -> CGRect? {
+        let pv = matrices.projectionMatrix * matrices.viewMatrix
+
+        let right = SIMD3<Float>(
+            matrices.viewMatrix[0][0],
+            matrices.viewMatrix[1][0],
+            matrices.viewMatrix[2][0]
+        )
+        let up = SIMD3<Float>(
+            matrices.viewMatrix[0][1],
+            matrices.viewMatrix[1][1],
+            matrices.viewMatrix[2][1]
+        )
+
+        let halfWidth = drawable.frameWidth / 2
+        let height = drawable.frameHeight
+        let scale: Float = 1.0 / 32.0
+
+        let corners: [SIMD3<Float>] = [
+            drawable.worldPosition + (-right * halfWidth) * scale,
+            drawable.worldPosition + (right * halfWidth) * scale,
+            drawable.worldPosition + (-right * halfWidth + up * height) * scale,
+            drawable.worldPosition + (right * halfWidth + up * height) * scale,
+        ]
+
+        var minX = CGFloat.infinity
+        var minY = CGFloat.infinity
+        var maxX = -CGFloat.infinity
+        var maxY = -CGFloat.infinity
+
+        for corner in corners {
+            let clip = pv * SIMD4<Float>(corner, 1)
+            guard clip.w > 0 else {
+                return nil
+            }
+
+            let ndcX = clip.x / clip.w
+            let ndcY = clip.y / clip.w
+
+            let screenX = viewport.minX + CGFloat((ndcX + 1) * 0.5) * viewport.width
+            let screenY = viewport.minY + CGFloat((1 - ndcY) * 0.5) * viewport.height
+
+            minX = min(minX, screenX)
+            minY = min(minY, screenY)
+            maxX = max(maxX, screenX)
+            maxY = max(maxY, screenY)
+        }
+
+        guard minX < maxX, minY < maxY else {
+            return nil
+        }
+
+        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 
     func groundHit(

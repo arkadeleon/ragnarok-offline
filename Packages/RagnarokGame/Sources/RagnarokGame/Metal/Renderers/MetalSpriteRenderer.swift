@@ -5,9 +5,7 @@
 //  Created by Leon Li on 2026/3/23.
 //
 
-import CoreGraphics
 import Metal
-import RagnarokMetalRendering
 import RagnarokShaders
 import simd
 
@@ -17,11 +15,6 @@ final class MetalSpriteRenderer {
 
     private let renderPipelineState: (any MTLRenderPipelineState)?
     private let depthStencilState: (any MTLDepthStencilState)?
-
-    private var drawables: [GameObjectID : SpriteDrawable] = [:]
-
-    /// Screen-space bounding boxes (top-left origin) updated each render call.
-    private(set) var hitBoxes: [GameObjectID : CGRect] = [:]
 
     init(device: any MTLDevice) throws {
         self.device = device
@@ -38,28 +31,19 @@ final class MetalSpriteRenderer {
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-        self.renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+        renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
         depthStencilDescriptor.isDepthWriteEnabled = false
-        self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
-    }
-
-    func update(drawables: [GameObjectID : SpriteDrawable]) {
-        self.drawables = drawables
-    }
-
-    func reset() {
-        drawables.removeAll()
-        hitBoxes.removeAll()
+        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
     func render(
+        drawables: [GameObjectID : SpriteDrawable],
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MapRuntimeRenderer.RenderMatrices,
-        viewport: CGRect
+        matrices: MapRuntimeRenderer.RenderMatrices
     ) {
         guard let renderPipelineState, let depthStencilState else {
             return
@@ -68,9 +52,7 @@ final class MetalSpriteRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        var newHitBoxes: [GameObjectID: CGRect] = [:]
-
-        for (id, drawable) in drawables {
+        for (_, drawable) in drawables {
             guard drawable.isVisible, let texture = drawable.texture else {
                 continue
             }
@@ -114,71 +96,6 @@ final class MetalSpriteRenderer {
             renderCommandEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
             renderCommandEncoder.setFragmentTexture(texture, index: 0)
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
-
-            if let hitBox = computeHitBox(for: drawable, matrices: matrices, viewport: viewport) {
-                newHitBoxes[id] = hitBox
-            }
         }
-
-        hitBoxes = newHitBoxes
-    }
-
-    private func computeHitBox(
-        for entry: SpriteDrawable,
-        matrices: MapRuntimeRenderer.RenderMatrices,
-        viewport: CGRect
-    ) -> CGRect? {
-        let pv = matrices.projectionMatrix * matrices.viewMatrix
-
-        let right = SIMD3<Float>(
-            matrices.viewMatrix[0][0],
-            matrices.viewMatrix[1][0],
-            matrices.viewMatrix[2][0]
-        )
-        let up = SIMD3<Float>(
-            matrices.viewMatrix[0][1],
-            matrices.viewMatrix[1][1],
-            matrices.viewMatrix[2][1]
-        )
-
-        let halfW = entry.frameWidth / 2
-        let h = entry.frameHeight
-        let scale: Float = 1.0 / 32.0
-
-        let corners: [SIMD3<Float>] = [
-            entry.worldPosition + (-right * halfW + up * 0) * scale,
-            entry.worldPosition + ( right * halfW + up * 0) * scale,
-            entry.worldPosition + (-right * halfW + up * h) * scale,
-            entry.worldPosition + ( right * halfW + up * h) * scale,
-        ]
-
-        var minX = CGFloat.infinity
-        var minY = CGFloat.infinity
-        var maxX = -CGFloat.infinity
-        var maxY = -CGFloat.infinity
-
-        for corner in corners {
-            let clip = pv * SIMD4<Float>(corner, 1)
-            guard clip.w > 0 else {
-                return nil
-            }
-
-            let ndcX = clip.x / clip.w
-            let ndcY = clip.y / clip.w
-
-            let sx = viewport.minX + CGFloat((ndcX + 1) * 0.5) * viewport.width
-            let sy = viewport.minY + CGFloat((1 - ndcY) * 0.5) * viewport.height
-
-            minX = min(minX, sx)
-            minY = min(minY, sy)
-            maxX = max(maxX, sx)
-            maxY = max(maxY, sy)
-        }
-
-        guard minX < maxX, minY < maxY else {
-            return nil
-        }
-
-        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
     }
 }
