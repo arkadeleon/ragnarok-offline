@@ -1,5 +1,5 @@
 //
-//  Effect.swift
+//  STREffect.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2023/11/24.
@@ -8,7 +8,7 @@
 import RagnarokFileFormats
 import RagnarokShaders
 
-public struct Effect {
+public struct STREffect {
     public var fps: Int
     public var frames: [Frame] = []
 
@@ -130,13 +130,13 @@ public struct Effect {
     }
 }
 
-extension Effect {
+extension STREffect {
     public struct Frame {
         public var sprites: [Sprite] = []
     }
 }
 
-extension Effect {
+extension STREffect {
     public struct Sprite {
         public var vertices: [EffectVertex] = []
         public var textureName: String

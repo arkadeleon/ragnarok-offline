@@ -13,15 +13,15 @@ import SGLMath
 public class STRRenderer: Renderer {
     public let device: any MTLDevice
 
-    let effectRenderer: EffectRenderer
+    let effectRenderer: STREffectRenderer
 
     public let camera = Camera()
 
-    public init(device: any MTLDevice, effect: Effect, textures: [String : any MTLTexture]) throws {
+    public init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
         self.device = device
 
         let library = RagnarokCreateShadersLibrary(device)!
-        effectRenderer = try EffectRenderer(device: device, library: library, effect: effect, textures: textures)
+        effectRenderer = try STREffectRenderer(device: device, library: library, effect: effect, textures: textures)
 
         camera.fovy = 15
         camera.nearZ = 1

@@ -1,5 +1,5 @@
 //
-//  EffectRenderer.swift
+//  STREffectRenderer.swift
 //  RagnarokMetalRendering
 //
 //  Created by Leon Li on 2023/11/24.
@@ -29,14 +29,14 @@ func mtlBlendFactor(_ d3dBlend: Int32) -> MTLBlendFactor {
     }
 }
 
-class EffectRenderer {
+class STREffectRenderer {
     let renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState]
     let depthStencilState: (any MTLDepthStencilState)?
 
-    let effect: Effect
+    let effect: STREffect
     let textures: [String : any MTLTexture]
 
-    init(device: any MTLDevice, library: any MTLLibrary, effect: Effect, textures: [String : any MTLTexture]) throws {
+    init(device: any MTLDevice, library: any MTLLibrary, effect: STREffect, textures: [String : any MTLTexture]) throws {
         var blendKeys: Set<SIMD2<Int32>> = []
         for frame in effect.frames {
             for sprite in frame.sprites {

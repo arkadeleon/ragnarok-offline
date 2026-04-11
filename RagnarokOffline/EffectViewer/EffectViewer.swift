@@ -25,7 +25,7 @@ struct EffectViewer: View {
         let path = ResourcePath.effectDirectory.appending(name)
         let data = try await resourceManager.contentsOfResource(at: path)
         let str = try STR(data: data)
-        let effect = Effect(str: str)
+        let effect = STREffect(str: str)
 
         let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = MTKTextureLoader(device: device)

@@ -73,7 +73,7 @@ struct STRFileEffectView: View {
 
         let data = try await file.contents()
         let str = try STR(data: data)
-        let effect = Effect(str: str)
+        let effect = STREffect(str: str)
 
         let device = MTLCreateSystemDefaultDevice()!
         let textureLoader = MTKTextureLoader(device: device)
