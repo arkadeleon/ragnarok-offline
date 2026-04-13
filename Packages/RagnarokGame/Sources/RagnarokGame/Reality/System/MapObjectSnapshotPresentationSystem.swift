@@ -13,6 +13,8 @@ import simd
 class MapObjectSnapshotPresentationSystem: System {
     static let query = EntityQuery(where: .has(MapObjectSnapshotPresentationComponent.self) && .has(MapObjectComponent.self))
 
+    private let sampler = MapObjectPresentationSampler()
+
     required init(scene: Scene) {
     }
 
@@ -26,7 +28,7 @@ class MapObjectSnapshotPresentationSystem: System {
                 continue
             }
 
-            let sample = MapObjectPresentationEvaluator.resolvedPresentation(
+            let sample = sampler.sample(
                 logicalWorldPosition: component.logicalWorldPosition,
                 timeline: component.timeline,
                 presentation: component.presentation,

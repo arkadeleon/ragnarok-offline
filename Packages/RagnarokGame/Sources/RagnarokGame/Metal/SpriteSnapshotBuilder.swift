@@ -1,5 +1,5 @@
 //
-//  SpriteSnapshotEvaluator.swift
+//  SpriteSnapshotBuilder.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/25.
@@ -11,8 +11,10 @@ import RagnarokSprite
 import simd
 
 @MainActor
-final class SpriteSnapshotEvaluator {
-    func evaluate(
+final class SpriteSnapshotBuilder {
+    private let sampler = MapObjectPresentationSampler()
+
+    func build(
         player: MapObjectState,
         objects: [GameObjectID : MapObjectState],
         items: [GameObjectID : MapItemState],
@@ -52,10 +54,10 @@ final class SpriteSnapshotEvaluator {
         now: ContinuousClock.Instant,
         scene: MapScene
     ) -> SpriteSnapshot {
-        let presentationSample = MapObjectPresentationEvaluator.resolvedPresentation(
+        let presentationSample = sampler.sample(
             for: state,
-            now: now,
-            position: { scene.position(for: $0) }
+            position: { scene.position(for: $0) },
+            now: now
         )
 
         let visualAnimationKey = SpriteAnimationKey(

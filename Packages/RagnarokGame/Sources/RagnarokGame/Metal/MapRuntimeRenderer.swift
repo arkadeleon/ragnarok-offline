@@ -40,7 +40,7 @@ final class MapRuntimeRenderer: Renderer {
     private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
     private var damageEffectRenderer: MetalDamageEffectRenderer?
 
-    private let spriteSnapshotEvaluator = SpriteSnapshotEvaluator()
+    private let spriteSnapshotBuilder = SpriteSnapshotBuilder()
     private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
     private(set) var spriteDrawables: [GameObjectID : SpriteDrawable] = [:]
     private var spriteAssetStore: SpriteAssetStore?
@@ -132,7 +132,7 @@ final class MapRuntimeRenderer: Renderer {
         items: [GameObjectID : MapItemState],
         scene: MapScene
     ) {
-        let snapshots = spriteSnapshotEvaluator.evaluate(
+        let snapshots = spriteSnapshotBuilder.build(
             player: player,
             objects: objects,
             items: items,

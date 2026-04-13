@@ -27,6 +27,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private let entityCache: RealityEntityCache
     private let tileSelectionRenderer: RealityTileSelectionRenderer
+    private let sampler = MapObjectPresentationSampler()
 
     private let worldCameraEntity = Entity()
     private var renderedDamageEffectIDs: Set<UUID> = []
@@ -546,19 +547,16 @@ final class RealityRenderBackend: GameRenderBackend {
     private func makePresentationComponent(for objectState: MapObjectState, scene: MapScene) -> MapObjectSnapshotPresentationComponent {
         return MapObjectSnapshotPresentationComponent(
             logicalWorldPosition: scene.position(for: objectState.gridPosition),
-            timeline: MapObjectPresentationEvaluator.makePresentationTimeline(
-                for: objectState,
-                position: { scene.position(for: $0) }
-            ),
+            timeline: MapObjectMovementTimeline(for: objectState, position: { scene.position(for: $0) }),
             presentation: objectState.presentation
         )
     }
 
     private func presentationWorldPosition(for objectState: MapObjectState, scene: MapScene) -> SIMD3<Float> {
-        MapObjectPresentationEvaluator.resolvedPresentation(
+        sampler.sample(
             for: objectState,
-            now: .now,
-            position: { scene.position(for: $0) }
+            position: { scene.position(for: $0) },
+            now: .now
         ).worldPosition
     }
 }
