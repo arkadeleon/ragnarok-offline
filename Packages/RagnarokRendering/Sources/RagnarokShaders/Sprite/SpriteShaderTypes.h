@@ -10,6 +10,7 @@
 typedef struct {
     vector_float2 position;
     vector_float2 textureCoordinate;
+    vector_float4 color;
 } SpriteVertex;
 
 typedef struct {

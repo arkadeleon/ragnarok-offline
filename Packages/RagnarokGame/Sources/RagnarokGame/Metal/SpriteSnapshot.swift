@@ -7,6 +7,7 @@
 
 import Metal
 import RagnarokModels
+import RagnarokShaders
 import RagnarokSprite
 import simd
 
@@ -15,18 +16,10 @@ struct SpriteAnimationKey: Hashable {
     var direction: CharacterDirection
 }
 
-struct SpriteAnimationFrames {
-    var textures: [(any MTLTexture)?]
-    var frameWidth: Float
-    var frameHeight: Float
-    var frameInterval: TimeInterval
-}
-
-struct SpriteDrawable {
+struct SpriteLayerDrawable {
     let objectID: GameObjectID
-    var texture: (any MTLTexture)?
-    var frameWidth: Float
-    var frameHeight: Float
+    var vertices: [SpriteVertex]
+    var texture: any MTLTexture
     var worldPosition: SIMD3<Float>
     var isVisible: Bool
 }
@@ -36,6 +29,7 @@ struct SpriteSnapshot {
         case mapObject(
             mapObject: MapObject,
             animationKey: SpriteAnimationKey,
+            headDirection: CharacterHeadDirection,
             animationElapsed: Duration
         )
         case item(MapItem)

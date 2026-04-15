@@ -72,6 +72,7 @@ final class SpriteSnapshotBuilder {
             content: .mapObject(
                 mapObject: state.object,
                 animationKey: sanitizedAnimationKey(visualAnimationKey, for: state.object),
+                headDirection: presentationSample.headDirection,
                 animationElapsed: presentationSample.animationElapsed
             )
         )

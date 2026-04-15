@@ -165,14 +165,15 @@ final class MetalDamageEffectRenderer {
             let frameWidth = entry.frameWidth * scale
             let frameHeight = entry.frameHeight * scale
             let halfW = frameWidth / 2
+            let color = SIMD4<Float>(repeating: 1)
 
             var vertices: [SpriteVertex] = [
-                SpriteVertex(position: [-halfW, 0], textureCoordinate: [0, 1]),
-                SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1]),
-                SpriteVertex(position: [-halfW, frameHeight], textureCoordinate: [0, 0]),
-                SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1]),
-                SpriteVertex(position: [ halfW, frameHeight], textureCoordinate: [1, 0]),
-                SpriteVertex(position: [-halfW, frameHeight], textureCoordinate: [0, 0]),
+                SpriteVertex(position: [-halfW, 0], textureCoordinate: [0, 1], color: color),
+                SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1], color: color),
+                SpriteVertex(position: [-halfW, frameHeight], textureCoordinate: [0, 0], color: color),
+                SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1], color: color),
+                SpriteVertex(position: [ halfW, frameHeight], textureCoordinate: [1, 0], color: color),
+                SpriteVertex(position: [-halfW, frameHeight], textureCoordinate: [0, 0], color: color),
             ]
             guard let vertexBuffer = device.makeBuffer(
                 bytes: &vertices,

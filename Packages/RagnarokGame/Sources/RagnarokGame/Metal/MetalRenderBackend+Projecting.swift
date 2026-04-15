@@ -117,18 +117,22 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
         }
 
         var hitBoxes: [GameObjectID : CGRect] = [:]
-        for (objectID, drawable) in renderer.spriteDrawables {
+        for drawable in renderer.spriteDrawables {
             guard drawable.isVisible,
                   let rect = spriteHitBox(for: drawable, matrices: matrices, viewport: viewport) else {
                 continue
             }
-            hitBoxes[objectID] = rect
+            if let existing = hitBoxes[drawable.objectID] {
+                hitBoxes[drawable.objectID] = existing.union(rect)
+            } else {
+                hitBoxes[drawable.objectID] = rect
+            }
         }
         return hitBoxes
     }
 
     private func spriteHitBox(
-        for drawable: SpriteDrawable,
+        for drawable: SpriteLayerDrawable,
         matrices: MapRuntimeRenderer.RenderMatrices,
         viewport: CGRect
     ) -> CGRect? {
@@ -145,23 +149,17 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
             matrices.viewMatrix[2][1]
         )
 
-        let halfWidth = drawable.frameWidth / 2
-        let height = drawable.frameHeight
         let scale: Float = 1.0 / 32.0
-
-        let corners: [SIMD3<Float>] = [
-            drawable.worldPosition + (-right * halfWidth) * scale,
-            drawable.worldPosition + (right * halfWidth) * scale,
-            drawable.worldPosition + (-right * halfWidth + up * height) * scale,
-            drawable.worldPosition + (right * halfWidth + up * height) * scale,
-        ]
 
         var minX = CGFloat.infinity
         var minY = CGFloat.infinity
         var maxX = -CGFloat.infinity
         var maxY = -CGFloat.infinity
 
-        for corner in corners {
+        for vertex in drawable.vertices {
+            let corner = drawable.worldPosition +
+                right * vertex.position.x * scale +
+                up * vertex.position.y * scale
             let clip = pv * SIMD4<Float>(corner, 1)
             guard clip.w > 0 else {
                 return nil

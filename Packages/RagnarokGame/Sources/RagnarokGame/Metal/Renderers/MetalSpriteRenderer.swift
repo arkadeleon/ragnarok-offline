@@ -40,7 +40,7 @@ final class MetalSpriteRenderer {
     }
 
     func render(
-        drawables: [GameObjectID : SpriteDrawable],
+        drawables: [SpriteLayerDrawable],
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MapRuntimeRenderer.RenderMatrices
@@ -52,24 +52,12 @@ final class MetalSpriteRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        for (_, drawable) in drawables {
-            guard drawable.isVisible, let texture = drawable.texture else {
+        for drawable in drawables {
+            guard drawable.isVisible else {
                 continue
             }
 
-            let halfW = drawable.frameWidth / 2
-            let h = drawable.frameHeight
-
-            var vertices: [SpriteVertex] = [
-                SpriteVertex(position: [-halfW, 0], textureCoordinate: [0, 1]),
-                SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1]),
-                SpriteVertex(position: [-halfW, h], textureCoordinate: [0, 0]),
-                SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1]),
-                SpriteVertex(position: [ halfW, h], textureCoordinate: [1, 0]),
-                SpriteVertex(position: [-halfW, h], textureCoordinate: [0, 0]),
-            ]
-
-            let device = renderCommandEncoder.device
+            var vertices = drawable.vertices
 
             guard let vertexBuffer = device.makeBuffer(
                 bytes: &vertices,
@@ -94,7 +82,7 @@ final class MetalSpriteRenderer {
 
             renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             renderCommandEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
-            renderCommandEncoder.setFragmentTexture(texture, index: 0)
+            renderCommandEncoder.setFragmentTexture(drawable.texture, index: 0)
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
         }
     }

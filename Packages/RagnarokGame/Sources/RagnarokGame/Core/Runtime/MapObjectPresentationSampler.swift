@@ -14,6 +14,7 @@ struct MapObjectPresentationSampler {
         var worldPosition: SIMD3<Float>
         var action: CharacterActionType
         var direction: CharacterDirection
+        var headDirection: CharacterHeadDirection
         var animationElapsed: Duration
     }
 
@@ -48,6 +49,7 @@ struct MapObjectPresentationSampler {
                 worldPosition: worldPosition,
                 action: .walk,
                 direction: movementSample.direction,
+                headDirection: presentation.headDirection,
                 animationElapsed: movementSample.totalElapsed
             )
         }
@@ -58,6 +60,7 @@ struct MapObjectPresentationSampler {
                 worldPosition: worldPosition,
                 action: settledAction(after: presentation.action, for: mapObject),
                 direction: presentation.direction,
+                headDirection: presentation.headDirection,
                 animationElapsed: elapsed - duration
             )
         }
@@ -66,6 +69,7 @@ struct MapObjectPresentationSampler {
             worldPosition: worldPosition,
             action: presentation.action,
             direction: presentation.direction,
+            headDirection: presentation.headDirection,
             animationElapsed: elapsed
         )
     }

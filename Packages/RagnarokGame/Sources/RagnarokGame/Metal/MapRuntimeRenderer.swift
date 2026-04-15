@@ -42,7 +42,7 @@ final class MapRuntimeRenderer: Renderer {
 
     private let spriteSnapshotBuilder = SpriteSnapshotBuilder()
     private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
-    private(set) var spriteDrawables: [GameObjectID : SpriteDrawable] = [:]
+    private(set) var spriteDrawables: [SpriteLayerDrawable] = []
     private var spriteAssetStore: SpriteAssetStore?
 
     private var cameraState: MapCameraState = .default
@@ -140,7 +140,7 @@ final class MapRuntimeRenderer: Renderer {
         )
         spriteSnapshots = snapshots
         spriteAssetStore?.sync(snapshots: snapshots)
-        spriteDrawables = spriteAssetStore?.drawables(for: snapshots) ?? [:]
+        spriteDrawables = spriteAssetStore?.drawables(for: snapshots) ?? []
     }
 
     func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {

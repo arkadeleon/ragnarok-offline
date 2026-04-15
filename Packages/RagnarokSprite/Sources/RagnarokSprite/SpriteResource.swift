@@ -32,7 +32,7 @@ final public class SpriteResource: Sendable {
         )
     }
 
-    func image(for layer: ACT.Layer) -> CGImage? {
+    public func image(for layer: ACT.Layer) -> CGImage? {
         guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)) else {
             return nil
         }

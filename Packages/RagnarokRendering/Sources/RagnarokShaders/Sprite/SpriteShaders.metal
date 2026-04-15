@@ -13,6 +13,7 @@ using namespace metal;
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
+    float4 color;
 } RasterizerData;
 
 vertex RasterizerData
@@ -39,6 +40,7 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
     RasterizerData out;
     out.position = clipPos;
     out.textureCoordinate = in.textureCoordinate;
+    out.color = in.color;
     return out;
 }
 
@@ -51,5 +53,5 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
     if (color.a < 0.01) {
         discard_fragment();
     }
-    return color;
+    return color * in.color;
 }

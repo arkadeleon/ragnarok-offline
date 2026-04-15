@@ -12,8 +12,8 @@ final public class ComposedSprite: Sendable {
     public let configuration: ComposedSprite.Configuration
     let resourceManager: ResourceManager
 
-    let parts: [ComposedSprite.Part]
-    let imf: IMF?
+    public let parts: [ComposedSprite.Part]
+    public let imf: IMF?
 
     var mainPart: ComposedSprite.Part? {
         parts.first {
@@ -46,11 +46,23 @@ final public class ComposedSprite: Sendable {
             imf = nil
         }
     }
+
+    public init(
+        configuration: ComposedSprite.Configuration,
+        resourceManager: ResourceManager,
+        parts: [ComposedSprite.Part],
+        imf: IMF? = nil
+    ) {
+        self.configuration = configuration
+        self.resourceManager = resourceManager
+        self.parts = parts
+        self.imf = imf
+    }
 }
 
 extension ComposedSprite {
-    struct Part {
-        enum Semantic {
+    public struct Part: Sendable {
+        public enum Semantic: Sendable {
             case main
             case playerBody
             case playerHead
@@ -61,15 +73,15 @@ extension ComposedSprite {
             case shadow
         }
 
-        var sprite: SpriteResource
-        var semantic: ComposedSprite.Part.Semantic
-        var orderBySemantic = 0
+        public var sprite: SpriteResource
+        public var semantic: ComposedSprite.Part.Semantic
+        public var orderBySemantic = 0
 
-        var parent: SpriteResource?
+        public var parent: SpriteResource?
 
-        var scaleFactor: Double = 1
+        public var scaleFactor: Double = 1
 
-        init(sprite: SpriteResource, semantic: ComposedSprite.Part.Semantic, orderBySemantic: Int = 0) {
+        public init(sprite: SpriteResource, semantic: ComposedSprite.Part.Semantic, orderBySemantic: Int = 0) {
             self.sprite = sprite
             self.semantic = semantic
             self.orderBySemantic = orderBySemantic

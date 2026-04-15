@@ -79,6 +79,7 @@ public final class MapScene {
             presentation: MapObjectPresentationState(
                 action: .idle,
                 direction: .south,
+                headDirection: .lookForward,
                 startTime: .now
             )
         )
@@ -383,6 +384,7 @@ extension MapScene: MapEventHandlerProtocol {
         state.player.presentation = MapObjectPresentationState(
             action: .walk,
             direction: direction,
+            headDirection: state.player.presentation.headDirection,
             startTime: now,
             duration: duration
         )
@@ -418,6 +420,7 @@ extension MapScene: MapEventHandlerProtocol {
             presentation: MapObjectPresentationState(
                 action: .idle,
                 direction: CharacterDirection(direction: direction),
+                headDirection: CharacterHeadDirection(headDirection: headDirection),
                 startTime: .now
             )
         )
@@ -449,17 +452,26 @@ extension MapScene: MapEventHandlerProtocol {
             duration: duration,
             direction: direction
         )
-        let presentation = MapObjectPresentationState(
-            action: .walk,
-            direction: direction,
-            startTime: now,
-            duration: duration
-        )
-        if state.objects[object.objectID] != nil {
-            state.objects[object.objectID]?.gridPosition = endPosition
-            state.objects[object.objectID]?.movement = movement
-            state.objects[object.objectID]?.presentation = presentation
+        if var objectState = state.objects[object.objectID] {
+            let presentation = MapObjectPresentationState(
+                action: .walk,
+                direction: direction,
+                headDirection: objectState.presentation.headDirection,
+                startTime: now,
+                duration: duration
+            )
+            objectState.gridPosition = endPosition
+            objectState.movement = movement
+            objectState.presentation = presentation
+            state.objects[object.objectID] = objectState
         } else {
+            let presentation = MapObjectPresentationState(
+                action: .walk,
+                direction: direction,
+                headDirection: .lookForward,
+                startTime: now,
+                duration: duration
+            )
             state.objects[object.objectID] = MapObjectState(
                 id: object.objectID,
                 object: object,
@@ -491,6 +503,7 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.presentation = MapObjectPresentationState(
                 action: .idle,
                 direction: state.player.presentation.direction,
+                headDirection: state.player.presentation.headDirection,
                 startTime: now
             )
 
@@ -500,16 +513,16 @@ extension MapScene: MapEventHandlerProtocol {
                 pendingArrivalAction = nil
                 action()
             }
-        } else {
-            state.objects[objectID]?.gridPosition = position
-            state.objects[objectID]?.movement = nil
-            if let existing = state.objects[objectID] {
-                state.objects[objectID]?.presentation = MapObjectPresentationState(
-                    action: .idle,
-                    direction: existing.presentation.direction,
-                    startTime: now
-                )
-            }
+        } else if var objectState = state.objects[objectID] {
+            objectState.gridPosition = position
+            objectState.movement = nil
+            objectState.presentation = MapObjectPresentationState(
+                action: .idle,
+                direction: objectState.presentation.direction,
+                headDirection: objectState.presentation.headDirection,
+                startTime: now
+            )
+            state.objects[objectID] = objectState
         }
 
         applySnapshot()
@@ -525,8 +538,11 @@ extension MapScene: MapEventHandlerProtocol {
     func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
         if state.player.id == objectID {
             state.player.presentation.direction = CharacterDirection(direction: direction)
-        } else {
-            state.objects[objectID]?.presentation.direction = CharacterDirection(direction: direction)
+            state.player.presentation.headDirection = CharacterHeadDirection(headDirection: headDirection)
+        } else if var objectState = state.objects[objectID] {
+            objectState.presentation.direction = CharacterDirection(direction: direction)
+            objectState.presentation.headDirection = CharacterHeadDirection(headDirection: headDirection)
+            state.objects[objectID] = objectState
         }
 
         applySnapshot()
@@ -602,17 +618,19 @@ extension MapScene: MapEventHandlerProtocol {
             state.player.presentation = MapObjectPresentationState(
                 action: presentationAction,
                 direction: state.player.presentation.direction,
+                headDirection: state.player.presentation.headDirection,
                 startTime: now,
                 duration: sourceDuration
             )
-        } else if state.objects[sourceID] != nil {
-            let existingDirection = state.objects[sourceID]!.presentation.direction
-            state.objects[sourceID]?.presentation = MapObjectPresentationState(
+        } else if var objectState = state.objects[sourceID] {
+            objectState.presentation = MapObjectPresentationState(
                 action: presentationAction,
-                direction: existingDirection,
+                direction: objectState.presentation.direction,
+                headDirection: objectState.presentation.headDirection,
                 startTime: now,
                 duration: sourceDuration
             )
+            state.objects[sourceID] = objectState
         }
 
         switch objectAction.type {
@@ -688,16 +706,19 @@ extension MapScene: MapEventHandlerProtocol {
                 state.player.presentation = MapObjectPresentationState(
                     action: action,
                     direction: state.player.presentation.direction,
+                    headDirection: state.player.presentation.headDirection,
                     startTime: now,
                     duration: duration
                 )
-            } else if let existing = state.objects[packet.AID] {
-                state.objects[packet.AID]?.presentation = MapObjectPresentationState(
+            } else if var objectState = state.objects[packet.AID] {
+                objectState.presentation = MapObjectPresentationState(
                     action: action,
-                    direction: existing.presentation.direction,
+                    direction: objectState.presentation.direction,
+                    headDirection: objectState.presentation.headDirection,
                     startTime: now,
                     duration: duration
                 )
+                state.objects[packet.AID] = objectState
             }
         }
 
