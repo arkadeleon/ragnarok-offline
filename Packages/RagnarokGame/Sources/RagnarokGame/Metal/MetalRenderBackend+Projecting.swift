@@ -128,6 +128,20 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
                 hitBoxes[drawable.objectID] = rect
             }
         }
+
+        // Apply minimum hit area: 30pt for items, 60pt for others.
+        for (objectID, rect) in hitBoxes {
+            let minSize: CGFloat = scene?.state.items[objectID] != nil ? 30 : 60
+            var hitBox = rect
+            if hitBox.width < minSize {
+                hitBox = hitBox.insetBy(dx: (hitBox.width - minSize) / 2, dy: 0)
+            }
+            if hitBox.height < minSize {
+                hitBox = hitBox.insetBy(dx: 0, dy: (hitBox.height - minSize) / 2)
+            }
+            hitBoxes[objectID] = hitBox
+        }
+
         return hitBoxes
     }
 
@@ -151,37 +165,51 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
 
         let scale: Float = 1.0 / 32.0
 
-        var minX = CGFloat.infinity
-        var minY = CGFloat.infinity
-        var maxX = -CGFloat.infinity
-        var maxY = -CGFloat.infinity
+        var minSpriteX = Float.infinity
+        var minSpriteY = Float.infinity
+        var maxSpriteX = -Float.infinity
+        var maxSpriteY = -Float.infinity
 
         for vertex in drawable.vertices {
-            let corner = drawable.worldPosition +
-                right * vertex.position.x * scale +
-                up * vertex.position.y * scale
+            minSpriteX = min(minSpriteX, vertex.position.x)
+            minSpriteY = min(minSpriteY, vertex.position.y)
+            maxSpriteX = max(maxSpriteX, vertex.position.x)
+            maxSpriteY = max(maxSpriteY, vertex.position.y)
+        }
+
+        guard minSpriteX < maxSpriteX, minSpriteY < maxSpriteY else {
+            return nil
+        }
+
+        // Project only the top-left and bottom-right corners.
+        func projectCorner(_ spriteX: Float, _ spriteY: Float) -> CGPoint? {
+            let corner = drawable.worldPosition + right * spriteX * scale + up * spriteY * scale
             let clip = pv * SIMD4<Float>(corner, 1)
             guard clip.w > 0 else {
                 return nil
             }
-
             let ndcX = clip.x / clip.w
             let ndcY = clip.y / clip.w
-
             let screenX = viewport.minX + CGFloat((ndcX + 1) * 0.5) * viewport.width
             let screenY = viewport.minY + CGFloat((1 - ndcY) * 0.5) * viewport.height
-
-            minX = min(minX, screenX)
-            minY = min(minY, screenY)
-            maxX = max(maxX, screenX)
-            maxY = max(maxY, screenY)
+            return CGPoint(x: screenX, y: screenY)
         }
 
-        guard minX < maxX, minY < maxY else {
+        guard let topLeft = projectCorner(minSpriteX, maxSpriteY),
+              let bottomRight = projectCorner(maxSpriteX, minSpriteY) else {
             return nil
         }
 
-        return CGRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+        let x = min(topLeft.x, bottomRight.x)
+        let y = min(topLeft.y, bottomRight.y)
+        let width = abs(bottomRight.x - topLeft.x)
+        let height = abs(bottomRight.y - topLeft.y)
+
+        guard width > 0, height > 0 else {
+            return nil
+        }
+
+        return CGRect(x: x, y: y, width: width, height: height)
     }
 
     func groundHit(
