@@ -39,6 +39,7 @@ public final class MapScene {
     private let pathfinder: Pathfinder
     private var pendingArrivalAction: (@MainActor () -> Void)?
     private var arrivalTask: Task<Void, Never>?
+    private var delayedSoundTasks: [UUID : Task<Void, Never>] = [:]
 
     var cameraState: MapCameraState = .default {
         didSet {
@@ -105,6 +106,10 @@ public final class MapScene {
     }
 
     func unload() {
+        arrivalTask?.cancel()
+        arrivalTask = nil
+        pendingArrivalAction = nil
+        cancelDelayedSoundTasks()
         renderBackend.unload()
         renderBackend.detach()
     }
@@ -309,6 +314,50 @@ public final class MapScene {
         case .noPath:
             break
         }
+    }
+
+    private func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        if state.player.id == objectID {
+            state.player.gridPosition
+        } else {
+            state.objects[objectID]?.gridPosition
+        }
+    }
+
+    private func mapObject(for objectID: GameObjectID) -> MapObject? {
+        if state.player.id == objectID {
+            state.player.object
+        } else {
+            state.objects[objectID]?.object
+        }
+    }
+
+    private func scheduleDelayedSound(_ filename: String, at position: SIMD2<Int>, after delay: Duration) {
+        let taskID = UUID()
+        delayedSoundTasks[taskID] = Task { @MainActor [weak self] in
+            defer {
+                self?.delayedSoundTasks[taskID] = nil
+            }
+
+            do {
+                try await Task.sleep(for: delay)
+            } catch {
+                return
+            }
+
+            guard let self, !Task.isCancelled else {
+                return
+            }
+
+            renderBackend.playSound(filename, at: position)
+        }
+    }
+
+    private func cancelDelayedSoundTasks() {
+        for task in delayedSoundTasks.values {
+            task.cancel()
+        }
+        delayedSoundTasks.removeAll()
     }
 }
 
@@ -584,20 +633,20 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
         let now = ContinuousClock.now
-        let sourceMapObject = if state.player.id == objectAction.sourceObjectID {
-            state.player.object
-        } else {
-            state.objects[objectAction.sourceObjectID]?.object
-        }
+        let sourceMapObject = mapObject(for: objectAction.sourceObjectID)
 
         let presentationAction: CharacterActionType
+        let isAttackAction: Bool
         switch objectAction.type {
         case .sit_down:
             presentationAction = .sit
+            isAttackAction = false
         case .stand_up:
             presentationAction = .idle
+            isAttackAction = false
         case .pickup_item:
             presentationAction = .pickup
+            isAttackAction = false
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
             if let sourceMapObject {
                 presentationAction = CharacterActionType.attackActionType(
@@ -608,8 +657,10 @@ extension MapScene: MapEventHandlerProtocol {
             } else {
                 presentationAction = .attack1
             }
+            isAttackAction = true
         default:
             presentationAction = .attack1
+            isAttackAction = false
         }
 
         let sourceDuration = Duration.milliseconds(objectAction.sourceSpeed)
@@ -631,6 +682,42 @@ extension MapScene: MapEventHandlerProtocol {
                 duration: sourceDuration
             )
             state.objects[sourceID] = objectState
+        }
+
+        if isAttackAction,
+           let sourceMapObject,
+           CharacterJob(rawValue: sourceMapObject.job).isPlayer,
+           let sourcePosition = gridPosition(for: objectAction.sourceObjectID),
+           let filename = WeaponSoundTable.attackSoundFilenames(
+               for: WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
+           ).randomElement() {
+            renderBackend.playSound(filename, at: sourcePosition)
+        }
+
+        if isAttackAction,
+           objectAction.damage > 0,
+           let targetMapObject = mapObject(for: objectAction.targetObjectID),
+           let targetPosition = gridPosition(for: objectAction.targetObjectID) {
+            let hitFilename: String?
+            let targetJob = CharacterJob(rawValue: targetMapObject.job)
+
+            if targetJob.isPlayer {
+                hitFilename = JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
+            } else if let sourceMapObject, CharacterJob(rawValue: sourceMapObject.job).isPlayer {
+                let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
+                let weaponHitFilename = WeaponHitSoundTable.hitSoundFilenames(for: weaponType).randomElement()
+                hitFilename = weaponHitFilename ?? JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
+            } else {
+                hitFilename = JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
+            }
+
+            if let hitFilename {
+                scheduleDelayedSound(
+                    hitFilename,
+                    at: targetPosition,
+                    after: .milliseconds(objectAction.sourceSpeed)
+                )
+            }
         }
 
         switch objectAction.type {

@@ -23,7 +23,9 @@ import WorldCamera
 final class RealityRenderBackend: GameRenderBackend {
     weak var scene: MapScene?
 
+    let resourceManager: ResourceManager
     let rootEntity = Entity()
+    let transientSoundEntityName = "__transient_sound__"
 
     private let entityCache: RealityEntityCache
     private let tileSelectionRenderer: RealityTileSelectionRenderer
@@ -35,12 +37,18 @@ final class RealityRenderBackend: GameRenderBackend {
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
     private let tileRange = 17
 
+    var soundEffectResourceCache: [String : AudioBufferResource] = [:]
+    var soundEffectResourceLoadTasks: [String : Task<AudioBufferResource?, Never>] = [:]
+    var soundEffectPlaybackTasks: [UUID : Task<Void, Never>] = [:]
+    var transientSoundCleanupTasks: [UUID : Task<Void, Never>] = [:]
+
     #if os(iOS) || os(macOS)
     weak var arView: ARView?
     private var anchorEntity: AnchorEntity?
     #endif
 
     init(resourceManager: ResourceManager) {
+        self.resourceManager = resourceManager
         let factory = RealitySpriteNodeFactory(resourceManager: resourceManager)
         self.entityCache = RealityEntityCache(factory: factory)
         self.tileSelectionRenderer = RealityTileSelectionRenderer(resourceManager: resourceManager)
@@ -54,6 +62,7 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func detach() {
+        stopSoundEffects()
         teardownSceneState()
         scene = nil
         #if os(iOS) || os(macOS)
@@ -130,6 +139,7 @@ final class RealityRenderBackend: GameRenderBackend {
             worldEntity.stopAllAudio()
         }
 
+        stopSoundEffects()
         teardownSceneState()
     }
 
@@ -415,36 +425,12 @@ final class RealityRenderBackend: GameRenderBackend {
             return nil
         }
 
-        guard let audioBuffer = audioBuffer(with: bgmData) else {
+        guard let audioBuffer = AVAudioPCMBuffer.load(from: bgmData) else {
             return nil
         }
 
         let configuration = AudioBufferResource.Configuration(shouldLoop: true)
         return try? AudioBufferResource(buffer: audioBuffer, configuration: configuration)
-    }
-
-    private func audioBuffer(with data: Data) -> AVAudioBuffer? {
-        let uuid = UUID().uuidString
-        let tempURL = URL.temporaryDirectory.appending(path: uuid)
-
-        do {
-            try data.write(to: tempURL)
-            let audioFile = try AVAudioFile(forReading: tempURL)
-            let buffer = AVAudioPCMBuffer(
-                pcmFormat: audioFile.processingFormat,
-                frameCapacity: AVAudioFrameCount(audioFile.length)
-            )
-
-            if let buffer {
-                try audioFile.read(into: buffer)
-            }
-
-            try? FileManager.default.removeItem(at: tempURL)
-            return buffer
-        } catch {
-            try? FileManager.default.removeItem(at: tempURL)
-            return nil
-        }
     }
 
     private func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {

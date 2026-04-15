@@ -16,7 +16,13 @@ final class MetalRenderBackend: GameRenderBackend {
     let resourceManager: ResourceManager
     let renderer: MapRuntimeRenderer
 
-    private var bgmPlayer: AVAudioPlayer?
+    var bgmPlayer: AVAudioPlayer?
+
+    var soundEffectDataCache: [String : Data] = [:]
+    var soundEffectDataLoadTasks: [String : Task<Data?, Never>] = [:]
+    var soundEffectPlaybackTasks: [UUID : Task<Void, Never>] = [:]
+    var activeSoundEffectPlayers: [UUID : AVAudioPlayer] = [:]
+    var soundEffectCleanupTasks: [UUID : Task<Void, Never>] = [:]
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
@@ -31,6 +37,7 @@ final class MetalRenderBackend: GameRenderBackend {
     func detach() {
         bgmPlayer?.stop()
         bgmPlayer = nil
+        stopSoundEffects()
         scene = nil
         renderer.setWorldAsset(nil)
     }
@@ -81,6 +88,7 @@ final class MetalRenderBackend: GameRenderBackend {
     func unload() {
         bgmPlayer?.stop()
         bgmPlayer = nil
+        stopSoundEffects()
     }
 
     func applySnapshot(_ state: MapSceneState) {
@@ -131,6 +139,13 @@ final class MetalRenderBackend: GameRenderBackend {
         }
 
         return try? AVAudioPlayer(data: bgmData)
+    }
+
+    func finishSoundEffectPlayback(id: UUID) {
+        activeSoundEffectPlayers[id]?.stop()
+        activeSoundEffectPlayers[id] = nil
+        soundEffectCleanupTasks[id]?.cancel()
+        soundEffectCleanupTasks[id] = nil
     }
 
     private func syncAndProjectOverlay() {
