@@ -96,7 +96,7 @@ class SpritePathGenerator {
             let isSuitMadogear = isMadogear && madoType == .suit
             let madogearJobName = isSuitMadogear ? suitMadogearJobName(for: job) : ""
 
-            guard var jobName = jobNameForWeapon(job.rawValue) else {
+            guard var jobName = JobWeaponNameTable.name(for: job.rawValue) else {
                 return nil
             }
 
@@ -147,7 +147,7 @@ class SpritePathGenerator {
             return nil
         }
 
-        if let shieldName = shieldName(shield) {
+        if let shieldName = ShieldNameTable.name(for: shield) {
             return ResourcePath.spriteDirectory.appending([K2L("방패"), jobName, "\(jobName)_\(gender.name)\(shieldName)"])
         } else {
             return ResourcePath.spriteDirectory.appending([K2L("방패"), jobName, "\(jobName)_\(gender.name)_\(shield)" + K2L("_방패")])
@@ -189,7 +189,7 @@ class SpritePathGenerator {
             return ResourcePath.paletteDirectory.appending([K2L("몸"), "\(jobName)_\(gender.name)_\(clothesColor)"])
         }
 
-        guard let jobName = jobNameForPalette(job.rawValue) else {
+        guard let jobName = JobPaletteNameTable.name(for: job.rawValue) else {
             return nil
         }
 
@@ -210,7 +210,7 @@ class SpritePathGenerator {
             return ResourcePath.paletteDirectory.appending([K2L("몸"), "costume_\(costumeID)", "\(jobName)_\(gender.name)_\(clothesColor)_\(costumeID)"])
         }
 
-        guard let jobName = jobNameForPalette(job.rawValue) else {
+        guard let jobName = JobPaletteNameTable.name(for: job.rawValue) else {
             return nil
         }
 
@@ -243,7 +243,7 @@ class SpritePathGenerator {
             return ["data", "imf", "\(jobName)_\(gender.name)"]
         }
 
-        guard let jobName = jobNameForIMF(job.rawValue) else {
+        guard let jobName = IMFNameTable.name(for: job.rawValue) else {
             return nil
         }
 
@@ -255,7 +255,7 @@ class SpritePathGenerator {
             if job.isMadogear && madoType == .suit {
                 suitMadogearJobName(for: job)
             } else {
-                jobNameForSprite(job.rawValue)
+                JobNameTable.name(for: job.rawValue)
             }
         } else {
             scriptContext.jobName(forJobID: job.rawValue)

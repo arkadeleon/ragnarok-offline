@@ -21,7 +21,7 @@ extension ComposedSprite {
             let configuration = configuration
             let resourceManager = resourceManager
 
-            let parts = try await withThrowingTaskGroup(
+            var parts = try await withThrowingTaskGroup(
                 of: ComposedSprite.Part?.self,
                 returning: [ComposedSprite.Part].self
             ) { taskGroup in
@@ -133,6 +133,12 @@ extension ComposedSprite {
                 }
 
                 return parts
+            }
+
+            if configuration.job.isBabyPlayer {
+                for i in parts.indices {
+                    parts[i].scaleFactor *= 0.75
+                }
             }
 
             return parts

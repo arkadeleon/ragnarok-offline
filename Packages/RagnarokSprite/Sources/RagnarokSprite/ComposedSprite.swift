@@ -158,7 +158,7 @@ extension ComposedSprite {
 
 extension ComposedSprite {
     public func zIndex(
-        for part: Part,
+        for part: ComposedSprite.Part,
         direction: CharacterDirection,
         actionIndex: Int,
         frameIndex: Int,
