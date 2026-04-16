@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/3.
 //
 
-import TextEncoding
+import RagnarokCore
 import XCTest
 @testable import RagnarokResources
 

@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2023/11/14.
 //
 
-import ImageRendering
 import QuartzCore
+import RagnarokCore
 
 public struct ACTAnimation: Sendable {
     public let frames: [CGImage?]

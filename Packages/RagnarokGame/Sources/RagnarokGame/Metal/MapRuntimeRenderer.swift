@@ -7,10 +7,10 @@
 
 import CoreGraphics
 import Metal
+import RagnarokCore
 import RagnarokMetalRendering
 import RagnarokRenderAssets
 import RagnarokResources
-import SGLMath
 import simd
 
 final class MapRuntimeRenderer: Renderer {

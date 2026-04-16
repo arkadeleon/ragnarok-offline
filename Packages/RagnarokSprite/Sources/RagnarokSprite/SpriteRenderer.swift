@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import ImageRendering
+import RagnarokCore
 import RagnarokResources
 
 final public class SpriteRenderer: Sendable {

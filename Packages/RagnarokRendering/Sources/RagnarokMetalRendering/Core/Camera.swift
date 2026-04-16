@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import SGLMath
+import RagnarokCore
 import simd
 
 public class Camera {

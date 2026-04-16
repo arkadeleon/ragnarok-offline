@@ -1,6 +1,6 @@
 //
 //  String.Encoding+KoreanEUC.swift
-//  TextEncoding
+//  RagnarokCore
 //
 //  Created by Leon Li on 2023/4/8.
 //

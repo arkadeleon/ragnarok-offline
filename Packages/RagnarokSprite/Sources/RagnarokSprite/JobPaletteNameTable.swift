@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2026/4/16.
 //
 
-import TextEncoding
+import RagnarokCore
 
 // Ported from zrenderer:
 // https://github.com/zhad3/zrenderer/blob/main/resolver_data/job_pal_names.txt

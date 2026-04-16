@@ -1,6 +1,6 @@
 //
 //  Locale+Korean.swift
-//  TextEncoding
+//  RagnarokCore
 //
 //  Created by Leon Li on 2024/10/24.
 //

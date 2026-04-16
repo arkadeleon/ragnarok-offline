@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2020/6/16.
 //
 
-import ImageRendering
 import MetalKit
+import RagnarokCore
 
 extension MTKTextureLoader {
     public func newTexture(bmpData: Data) -> (any MTLTexture)? {

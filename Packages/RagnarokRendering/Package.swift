@@ -33,12 +33,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../ImageRendering"),
-        .package(path: "../PerformanceMetric"),
+        .package(path: "../RagnarokCore"),
         .package(path: "../RagnarokFileFormats"),
         .package(path: "../RagnarokResources"),
-        .package(path: "../SGLMath"),
-        .package(path: "../TextEncoding"),
     ],
     targets: [
         .target(
@@ -53,17 +50,16 @@ let package = Package(
         .target(
             name: "RagnarokMetalRendering",
             dependencies: [
-                "ImageRendering",
+                "RagnarokCore",
                 "RagnarokFileFormats",
                 "RagnarokRenderAssets",
                 "RagnarokShaders",
-                "SGLMath",
             ]
         ),
         .target(
             name: "RagnarokRealityRendering",
             dependencies: [
-                "PerformanceMetric",
+                "RagnarokCore",
                 "RagnarokFileFormats",
                 .target(
                     name: "RagnarokRealitySurfaceShaders",
@@ -71,7 +67,6 @@ let package = Package(
                 ),
                 "RagnarokResources",
                 "RagnarokRenderAssets",
-                "SGLMath",
             ]
         ),
         .target(
@@ -83,12 +78,10 @@ let package = Package(
         .target(
             name: "RagnarokRenderAssets",
             dependencies: [
-                "ImageRendering",
+                "RagnarokCore",
                 "RagnarokFileFormats",
                 "RagnarokResources",
                 "RagnarokShaders",
-                "SGLMath",
-                "TextEncoding",
             ]
         ),
         .target(

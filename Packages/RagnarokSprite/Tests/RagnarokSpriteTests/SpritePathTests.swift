@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/2/13.
 //
 
+import RagnarokCore
 import RagnarokResources
-import TextEncoding
 import XCTest
 @testable import RagnarokSprite
 

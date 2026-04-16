@@ -6,9 +6,9 @@
 //
 
 import CoreGraphics
+import RagnarokCore
 import RagnarokFileFormats
 import RagnarokShaders
-import SGLMath
 import simd
 
 public struct GroundMesh {

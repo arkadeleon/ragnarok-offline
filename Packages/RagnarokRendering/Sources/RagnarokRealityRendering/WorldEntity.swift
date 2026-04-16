@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import RagnarokCore
 import RagnarokRenderAssets
 import RagnarokResources
 import RealityKit
-import SGLMath
 
 extension Entity {
     public convenience init(from world: WorldResource, resourceManager: ResourceManager, progress: Progress) async throws {

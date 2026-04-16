@@ -6,9 +6,8 @@
 //
 
 import CoreGraphics
-import ImageRendering
+import RagnarokCore
 import RagnarokResources
-import TextEncoding
 
 private enum WaterTextureImageError: Error {
     case cannotCreateImage

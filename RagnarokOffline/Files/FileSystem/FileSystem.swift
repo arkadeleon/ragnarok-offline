@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/5/24.
 //
 
+import RagnarokCore
 import SwiftUI
-import TextEncoding
 
 final class FileSystem: Sendable {
     func canExtractFile(_ file: File) -> Bool {

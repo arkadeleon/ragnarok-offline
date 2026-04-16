@@ -5,11 +5,11 @@
 //  Created by Leon Li on 2024/4/25.
 //
 
+import RagnarokCore
 import RagnarokFileFormats
 import RagnarokRendering
 import RagnarokResources
 import RealityKit
-import SGLMath
 import SwiftUI
 
 struct RSWFilePreviewView: View {

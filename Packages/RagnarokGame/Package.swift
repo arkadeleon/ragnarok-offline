@@ -17,9 +17,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../ImageRendering"),
-        .package(path: "../PerformanceMetric"),
         .package(path: "../RagnarokConstants"),
+        .package(path: "../RagnarokCore"),
         .package(path: "../RagnarokFileFormats"),
         .package(path: "../RagnarokLocalization"),
         .package(path: "../RagnarokModels"),
@@ -28,18 +27,15 @@ let package = Package(
         .package(path: "../RagnarokRendering"),
         .package(path: "../RagnarokResources"),
         .package(path: "../RagnarokSprite"),
-        .package(path: "../SGLMath"),
         .package(path: "../ThumbstickView"),
-        .package(path: "../TextEncoding"),
         .package(path: "../WorldCamera"),
     ],
     targets: [
         .target(
             name: "RagnarokGame",
             dependencies: [
-                "ImageRendering",
-                "PerformanceMetric",
                 "RagnarokConstants",
+                "RagnarokCore",
                 "RagnarokFileFormats",
                 "RagnarokLocalization",
                 "RagnarokModels",
@@ -48,8 +44,6 @@ let package = Package(
                 "RagnarokRendering",
                 "RagnarokResources",
                 "RagnarokSprite",
-                "SGLMath",
-                "TextEncoding",
                 "ThumbstickView",
                 "WorldCamera",
             ]

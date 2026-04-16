@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import ImageRendering
+import RagnarokCore
 import RealityKit
 
 enum SkyboxError: Error {

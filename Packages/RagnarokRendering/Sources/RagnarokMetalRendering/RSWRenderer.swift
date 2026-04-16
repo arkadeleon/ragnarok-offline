@@ -6,8 +6,8 @@
 //
 
 import Metal
+import RagnarokCore
 import RagnarokRenderAssets
-import SGLMath
 import simd
 
 public class RSWRenderer: Renderer {

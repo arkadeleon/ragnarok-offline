@@ -17,16 +17,14 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
-        .package(path: "../ImageRendering"),
-        .package(path: "../PerformanceMetric"),
+        .package(path: "../RagnarokCore"),
     ],
     targets: [
         .target(
             name: "RagnarokFileFormats",
             dependencies: [
                 "BinaryIO",
-                "ImageRendering",
-                "PerformanceMetric",
+                "RagnarokCore",
             ]
         ),
         .testTarget(

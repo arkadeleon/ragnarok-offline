@@ -1,6 +1,6 @@
 //
 //  CGImage+Data.swift
-//  ImageRendering
+//  RagnarokCore
 //
 //  Created by Leon Li on 2024/2/23.
 //

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TextEncoding
+import RagnarokCore
 
 public func K2L(_ path: ResourcePath) -> ResourcePath {
     let components = path.components.map(K2L)

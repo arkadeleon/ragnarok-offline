@@ -6,7 +6,7 @@
 //
 
 import OSLog
-import PerformanceMetric
+import RagnarokCore
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "RagnarokFileFormats")
 let metric = PerformanceMetric(logger: logger)

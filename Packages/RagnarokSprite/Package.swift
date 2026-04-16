@@ -17,18 +17,18 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../RagnarokConstants"),
+        .package(path: "../RagnarokCore"),
         .package(path: "../RagnarokFileFormats"),
         .package(path: "../RagnarokResources"),
-        .package(path: "../TextEncoding"),
     ],
     targets: [
         .target(
             name: "RagnarokSprite",
             dependencies: [
                 "RagnarokConstants",
+                "RagnarokCore",
                 "RagnarokFileFormats",
                 "RagnarokResources",
-                "TextEncoding",
             ]
         ),
         .testTarget(

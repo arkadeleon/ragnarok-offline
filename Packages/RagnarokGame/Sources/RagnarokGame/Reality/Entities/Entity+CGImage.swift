@@ -5,10 +5,10 @@
 //  Created by Leon Li on 2024/12/24.
 //
 
-import ImageRendering
 import Metal
 import MetalKit
 import RagnarokConstants
+import RagnarokCore
 import RagnarokFileFormats
 import RealityKit
 

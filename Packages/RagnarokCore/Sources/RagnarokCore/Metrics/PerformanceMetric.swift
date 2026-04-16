@@ -1,6 +1,6 @@
 //
 //  PerformanceMetric.swift
-//  PerformanceMetric
+//  RagnarokCore
 //
 //  Created by Leon Li on 2025/3/21.
 //

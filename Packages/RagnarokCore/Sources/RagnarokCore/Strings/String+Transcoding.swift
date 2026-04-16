@@ -1,6 +1,6 @@
 //
 //  String+Transcoding.swift
-//  TextEncoding
+//  RagnarokCore
 //
 //  Created by Leon Li on 2024/4/1.
 //

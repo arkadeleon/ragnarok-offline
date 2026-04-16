@@ -6,7 +6,7 @@
 //
 
 import RagnarokConstants
-import TextEncoding
+import RagnarokCore
 
 // Ported from roBrowserLegacy:
 // https://github.com/MrAntares/roBrowserLegacy/blob/master/src/DB/Items/WeaponHitSoundTable.js

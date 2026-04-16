@@ -14,20 +14,6 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Packages\/PerformanceMetric",
-        "identifier" : "PerformanceMetricTests",
-        "name" : "PerformanceMetricTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/ImageRendering",
-        "identifier" : "ImageRenderingTests",
-        "name" : "ImageRenderingTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Packages\/BinaryIO",
         "identifier" : "BinaryIOTests",
         "name" : "BinaryIOTests"
@@ -126,23 +112,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/SGLMath",
-        "identifier" : "SGLMathTests",
-        "name" : "SGLMathTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Packages\/RagnarokRendering",
         "identifier" : "RagnarokRealityRenderingTests",
         "name" : "RagnarokRealityRenderingTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Packages\/TextEncoding",
-        "identifier" : "TextEncodingTests",
-        "name" : "TextEncodingTests"
       }
     },
     {
@@ -164,6 +136,20 @@
         "containerPath" : "container:Packages\/RagnarokResources",
         "identifier" : "RagnarokResourcesTests",
         "name" : "RagnarokResourcesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokCore",
+        "identifier" : "RagnarokCoreTests",
+        "name" : "RagnarokCoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokModels",
+        "identifier" : "RagnarokModelsTests",
+        "name" : "RagnarokModelsTests"
       }
     }
   ],

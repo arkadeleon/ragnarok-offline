@@ -4,20 +4,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "SGLMath",
+    name: "RagnarokCore",
+    platforms: [
+        .macOS(.v13),
+        .iOS(.v16),
+    ],
     products: [
         .library(
-            name: "SGLMath",
-            targets: ["SGLMath"]
+            name: "RagnarokCore",
+            targets: ["RagnarokCore"]
         ),
     ],
     targets: [
         .target(
-            name: "SGLMath"
+            name: "RagnarokCore"
         ),
         .testTarget(
-            name: "SGLMathTests",
-            dependencies: ["SGLMath"]
+            name: "RagnarokCoreTests",
+            dependencies: ["RagnarokCore"]
         ),
     ]
 )

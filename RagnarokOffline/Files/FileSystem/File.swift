@@ -8,8 +8,8 @@
 import Foundation
 import GRF
 import Observation
+import RagnarokCore
 import RagnarokResources
-import TextEncoding
 import UniformTypeIdentifiers
 
 enum FileError: Error {

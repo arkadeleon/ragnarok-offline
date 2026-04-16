@@ -7,8 +7,8 @@
 
 import Foundation
 import GRF
+import RagnarokCore
 import RagnarokResources
-import TextEncoding
 
 extension File {
     static func previewFolder() -> File {

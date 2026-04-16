@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2025/11/13.
 //
 
+import RagnarokCore
 import RealityKit
-import SGLMath
 import WorldCamera
 
 class DamageDigitSystem: System {

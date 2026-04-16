@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import ImageRendering
+import RagnarokCore
 import RagnarokResources
 import RagnarokSprite
 import RealityKit

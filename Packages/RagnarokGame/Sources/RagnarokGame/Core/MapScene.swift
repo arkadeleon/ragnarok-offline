@@ -8,12 +8,12 @@
 import CoreGraphics
 import Foundation
 import RagnarokConstants
+import RagnarokCore
 import RagnarokModels
 import RagnarokPackets
 import RagnarokRenderAssets
 import RagnarokResources
 import RagnarokSprite
-import SGLMath
 import simd
 
 private enum MapMovementDecision {

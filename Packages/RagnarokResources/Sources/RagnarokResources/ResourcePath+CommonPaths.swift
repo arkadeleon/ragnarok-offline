@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/9/26.
 //
 
-import TextEncoding
+import RagnarokCore
 
 extension ResourcePath {
     public static let scriptDirectory: ResourcePath = ["data", "luafiles514", "lua files"]

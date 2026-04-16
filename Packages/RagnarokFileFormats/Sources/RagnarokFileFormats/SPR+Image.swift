@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Foundation
-import ImageRendering
+import RagnarokCore
 
 extension SPR {
     public func imagesBySpriteType(palette: PAL? = nil) -> [SPR.SpriteType : [CGImage?]] {

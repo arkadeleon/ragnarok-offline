@@ -6,11 +6,11 @@
 //
 
 import Foundation
+import RagnarokCore
 import RagnarokModels
 import RagnarokResources
 import RagnarokSprite
 import RealityKit
-import SGLMath
 
 class SpriteEntity: Entity {
     required init() {

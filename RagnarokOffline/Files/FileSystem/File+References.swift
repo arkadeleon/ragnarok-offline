@@ -7,9 +7,9 @@
 
 import Foundation
 import GRF
+import RagnarokCore
 import RagnarokFileFormats
 import RagnarokResources
-import TextEncoding
 
 extension File {
     var hasReferences: Bool {

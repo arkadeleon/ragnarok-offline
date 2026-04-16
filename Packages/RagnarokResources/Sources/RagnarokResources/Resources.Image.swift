@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import ImageRendering
+import RagnarokCore
 
 enum ImageResourceError: Error {
     case cannotCreateImage
