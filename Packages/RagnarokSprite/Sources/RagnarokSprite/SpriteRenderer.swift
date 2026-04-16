@@ -48,7 +48,7 @@ final public class SpriteRenderer: Sendable {
 
         let frameInterval: CGFloat
         if let action = sprite.act.action(at: actionIndex) {
-            frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
+            frameInterval = CGFloat(action.frameInterval)
         } else {
             frameInterval = 1 / 12
         }
@@ -133,7 +133,7 @@ final public class SpriteRenderer: Sendable {
         let frameInterval: CGFloat
         if let mainPart = composedSprite.mainPart,
            let action = mainPart.sprite.act.action(at: actionIndex) {
-            frameInterval = CGFloat(action.animationSpeed) * 25 / 1000
+            frameInterval = CGFloat(action.frameInterval)
         } else {
             frameInterval = 1 / 12
         }
@@ -175,9 +175,8 @@ final public class SpriteRenderer: Sendable {
             // Sort action nodes.
             var sortedActionNodes: [(SpriteRenderNode, zIndex: Int)] = []
             for (actionNode, part) in actionNodes {
-                let zIndex = zIndex(
-                    forComposedSprite: composedSprite,
-                    part: part,
+                let zIndex = composedSprite.zIndex(
+                    for: part,
                     direction: direction,
                     actionIndex: actionIndex,
                     frameIndex: frameIndex,
@@ -212,91 +211,6 @@ final public class SpriteRenderer: Sendable {
         }
 
         return (frames, bounds)
-    }
-
-    private func zIndex(
-        forComposedSprite composedSprite: ComposedSprite,
-        part: ComposedSprite.Part,
-        direction: CharacterDirection,
-        actionIndex: Int,
-        frameIndex: Int,
-        scriptContext: ScriptContext
-    ) -> Int {
-        if part.semantic == .shadow {
-            return -1
-        }
-
-        let configuration = composedSprite.configuration
-        let imf = composedSprite.imf
-
-        let isNorth = switch direction {
-        case .west, .northwest, .north, .northeast: true
-        case .south, .southwest, .east, .southeast: false
-        }
-
-        let zIndexForGarment: () -> Int = {
-            let drawOnTop = scriptContext.drawOnTop(
-                forRobeID: configuration.garment,
-                genderID: configuration.gender.rawValue,
-                jobID: configuration.job.rawValue,
-                actionIndex: actionIndex,
-                frameIndex: frameIndex
-            )
-            if drawOnTop {
-                let isTopLayer = scriptContext.isTopLayer(forRobeID: configuration.garment)
-                if isTopLayer {
-                    return 25
-                } else {
-                    return isNorth ? 16 : 11
-                }
-            } else {
-                return 5
-            }
-        }
-
-        if isNorth {
-            switch part.semantic {
-            case .playerBody:
-                return 15
-            case .playerHead:
-                if let imf, let priority = imf.priority(at: [1, actionIndex, frameIndex]), priority == 1 {
-                    return 14
-                } else {
-                    return 20
-                }
-            case .weapon:
-                return 30 - (2 - part.orderBySemantic)
-            case .shield:
-                return 10
-            case .headgear:
-                return 25 - (3 - part.orderBySemantic)
-            case .garment:
-                return zIndexForGarment()
-            default:
-                return 0
-            }
-        } else {
-            switch part.semantic {
-            case .playerBody:
-                return 10
-            case .playerHead:
-                if let imf, let priority = imf.priority(at: [1, actionIndex, frameIndex]), priority == 1 {
-                    return 9
-                } else {
-                    return 15
-                }
-            case .weapon:
-                return 25 - (2 - part.orderBySemantic)
-            case .shield:
-                return 30
-            case .headgear:
-                return 20 - (3 - part.orderBySemantic)
-            case .garment:
-                return zIndexForGarment()
-            default:
-                return 0
-            }
-        }
     }
 
     // MARK: - Render Frame Node

@@ -58,27 +58,12 @@ extension SpriteRenderNode {
             return
         }
 
-        var startFrameIndex = action.frames.startIndex
-        var endFrameIndex = action.frames.endIndex
-
-        if actionType == .idle || actionType == .sit {
-            switch part.semantic {
-            case .playerBody:
-                startFrameIndex = headDirection.rawValue
-                endFrameIndex = startFrameIndex + 1
-            case .playerHead, .headgear:
-                let frameCount = action.frames.count / 3
-                startFrameIndex = headDirection.rawValue * frameCount
-                endFrameIndex = startFrameIndex + frameCount
-            default:
-                break
-            }
-        }
+        let frameRange = part.frameRange(action: action, actionType: actionType, headDirection: headDirection)
 
         var bounds: CGRect = .null
         var children: [SpriteRenderNode] = []
 
-        for frameIndex in startFrameIndex..<endFrameIndex {
+        for frameIndex in frameRange {
             let frameNode = SpriteRenderNode(frameNodeWithPart: part, actionType: actionType, actionIndex: actionIndex, frameIndex: frameIndex, scale: scale)
             children.append(frameNode)
             bounds = bounds.union(frameNode.bounds)
@@ -94,25 +79,13 @@ extension SpriteRenderNode {
             return
         }
 
-        var parentOffset: SIMD2<Int32> = .zero
-
-        if let parent = part.parent {
-            var parentFrameIndex = frameIndex
-
-            if part.semantic == .headgear && (actionType == .idle || actionType == .sit) {
-                let frameCount = action.frames.count / 3
-                parentFrameIndex = frameIndex / frameCount
-            }
-
-            if let parentFrame = parent.act.frame(at: [actionIndex, parentFrameIndex]),
-               let parentAnchorPoint = parentFrame.anchorPoints.first {
-                parentOffset = [parentAnchorPoint.x, parentAnchorPoint.y]
-            }
-
-            if let anchorPoint = frame.anchorPoints.first {
-                parentOffset &-= [anchorPoint.x, anchorPoint.y]
-            }
-        }
+        let parentOffset = part.parentOffset(
+            actionType: actionType,
+            action: action,
+            actionIndex: actionIndex,
+            absoluteFrameIndex: frameIndex,
+            frame: frame
+        )
 
         var bounds: CGRect = .null
         var children: [SpriteRenderNode] = []

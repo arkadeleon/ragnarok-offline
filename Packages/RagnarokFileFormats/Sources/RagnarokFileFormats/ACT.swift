@@ -55,6 +55,10 @@ extension ACT {
         public var frames: [ACT.Frame] = []
         public var animationSpeed: Float = 6
 
+        public var frameInterval: Float {
+            animationSpeed * 25 / 1000
+        }
+
         public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             let frameCount = try decoder.decode(Int32.self)
             for _ in 0..<frameCount {
