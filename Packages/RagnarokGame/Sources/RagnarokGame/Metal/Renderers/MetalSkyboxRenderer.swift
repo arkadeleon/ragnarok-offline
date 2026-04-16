@@ -13,8 +13,7 @@ import simd
 @MainActor
 final class MetalSkyboxRenderer {
     private let device: any MTLDevice
-
-    private let renderPipelineState: (any MTLRenderPipelineState)?
+    private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
     private var uniformsBuffer: (any MTLBuffer)?
@@ -23,7 +22,7 @@ final class MetalSkyboxRenderer {
     init(device: any MTLDevice) throws {
         self.device = device
 
-        let library = RagnarokCreateShadersLibrary(device)!
+        let library = RagnarokShadersLibrary(device)!
 
         let descriptor = MTLRenderPipelineDescriptor()
         descriptor.vertexFunction = library.makeFunction(name: "skyboxVertexShader")
@@ -54,10 +53,7 @@ final class MetalSkyboxRenderer {
         viewMatrix: simd_float4x4,
         cameraPosition: SIMD3<Float>
     ) {
-        guard let renderPipelineState,
-              let depthStencilState,
-              let uniformsBuffer,
-              let configuration else {
+        guard let uniformsBuffer, let configuration else {
             return
         }
 

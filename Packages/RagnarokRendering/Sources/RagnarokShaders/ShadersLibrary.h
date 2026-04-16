@@ -7,4 +7,4 @@
 
 #import <Metal/Metal.h>
 
-id<MTLLibrary> RagnarokCreateShadersLibrary(id<MTLDevice> device);
+id<MTLLibrary> RagnarokShadersLibrary(id<MTLDevice> device);

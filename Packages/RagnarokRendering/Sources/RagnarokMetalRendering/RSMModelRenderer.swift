@@ -10,10 +10,15 @@ import RagnarokShaders
 import simd
 
 public final class RSMModelRenderer {
+    let device: any MTLDevice
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice, library: any MTLLibrary) throws {
+    public init(device: any MTLDevice) throws {
+        self.device = device
+
+        let library = RagnarokShadersLibrary(device)!
+
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "modelVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "modelFragmentShader")
@@ -32,11 +37,6 @@ public final class RSMModelRenderer {
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    public convenience init(device: any MTLDevice) throws {
-        let library = RagnarokCreateShadersLibrary(device)!
-        try self.init(device: device, library: library)
-    }
-
     public func render(
         resource: RSMModelRenderResource,
         atTime time: CFTimeInterval,
@@ -46,8 +46,6 @@ public final class RSMModelRenderer {
         projectionMatrix: simd_float4x4,
         normalMatrix: simd_float3x3
     ) {
-        let device = renderCommandEncoder.device
-
         var vertexUniforms = ModelVertexUniforms(
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,

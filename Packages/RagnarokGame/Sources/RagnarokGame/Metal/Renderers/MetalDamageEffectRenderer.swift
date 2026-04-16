@@ -38,8 +38,7 @@ final class MetalDamageEffectRenderer {
     }
 
     private let device: any MTLDevice
-
-    private let renderPipelineState: (any MTLRenderPipelineState)?
+    private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
     private var entries: [UUID : EffectEntry] = [:]
@@ -47,7 +46,7 @@ final class MetalDamageEffectRenderer {
     init(device: any MTLDevice) throws {
         self.device = device
 
-        let library = RagnarokCreateShadersLibrary(device)!
+        let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteVertexShader")
@@ -115,10 +114,6 @@ final class MetalDamageEffectRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MapRuntimeRenderer.RenderMatrices
     ) {
-        guard let renderPipelineState, let depthStencilState else {
-            return
-        }
-
         let now = ContinuousClock.now
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)

@@ -7,8 +7,8 @@
 
 import Metal
 import RagnarokRenderAssets
-import RagnarokShaders
 import SGLMath
+import simd
 
 public class RSWRenderer: Renderer {
     public let device: any MTLDevice
@@ -39,10 +39,9 @@ public class RSWRenderer: Renderer {
             RSMModelRenderResource(device: device, asset: asset)
         }
 
-        let library = RagnarokCreateShadersLibrary(device)!
-        groundRenderer = try GroundRenderer(device: device, library: library)
-        waterRenderer = try WaterRenderer(device: device, library: library)
-        modelRenderer = try RSMModelRenderer(device: device, library: library)
+        groundRenderer = try GroundRenderer(device: device)
+        waterRenderer = try WaterRenderer(device: device)
+        modelRenderer = try RSMModelRenderer(device: device)
 
         camera = Camera()
         camera.defaultDistance = -groundAsset.altitude / 5 + 200

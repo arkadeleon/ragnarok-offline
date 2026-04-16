@@ -14,19 +14,17 @@ import simd
 @MainActor
 final class MetalSelectionOverlayRenderer {
     private let device: any MTLDevice
-    private let selectionTexture: any MTLTexture
-
     private let renderPipelineState: any MTLRenderPipelineState
-    private let depthStencilState: any MTLDepthStencilState
+    private let depthStencilState: (any MTLDepthStencilState)?
 
     private var vertices: [TileVertex] = []
+    private let selectionTexture: any MTLTexture
     private var selectionShowTime: CFTimeInterval = -.infinity
 
     init(device: any MTLDevice, selectionTexture: any MTLTexture) throws {
         self.device = device
-        self.selectionTexture = selectionTexture
 
-        let library = RagnarokCreateShadersLibrary(device)!
+        let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "tileVertexShader")
@@ -38,17 +36,14 @@ final class MetalSelectionOverlayRenderer {
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-
-        self.renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+        renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
         depthStencilDescriptor.isDepthWriteEnabled = false
-        guard let depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor) else {
-            struct MetalSelectionOverlayRendererError: Error {}
-            throw MetalSelectionOverlayRendererError()
-        }
-        self.depthStencilState = depthStencilState
+        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+
+        self.selectionTexture = selectionTexture
     }
 
     func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
@@ -92,8 +87,6 @@ final class MetalSelectionOverlayRenderer {
         guard time - selectionShowTime < 0.5 else {
             return
         }
-
-        let device = renderCommandEncoder.device
 
         var vertices = vertices
         guard let vertexBuffer = device.makeBuffer(

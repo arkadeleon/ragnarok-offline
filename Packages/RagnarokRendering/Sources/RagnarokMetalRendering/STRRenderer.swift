@@ -7,8 +7,8 @@
 
 import Metal
 import RagnarokRenderAssets
-import RagnarokShaders
 import SGLMath
+import simd
 
 public class STRRenderer: Renderer {
     public let device: any MTLDevice
@@ -20,8 +20,7 @@ public class STRRenderer: Renderer {
     public init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
         self.device = device
 
-        let library = RagnarokCreateShadersLibrary(device)!
-        effectRenderer = try STREffectRenderer(device: device, library: library, effect: effect, textures: textures)
+        effectRenderer = try STREffectRenderer(device: device, effect: effect, textures: textures)
 
         camera.fovy = 15
         camera.nearZ = 1

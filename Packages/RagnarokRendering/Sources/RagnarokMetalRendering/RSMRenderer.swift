@@ -7,8 +7,8 @@
 
 import Metal
 import RagnarokRenderAssets
-import RagnarokShaders
 import SGLMath
+import simd
 
 public class RSMRenderer: Renderer {
     public let device: any MTLDevice
@@ -21,11 +21,10 @@ public class RSMRenderer: Renderer {
 
     public init(device: any MTLDevice, asset: RSMModelRenderAsset) throws {
         self.device = device
+
         modelBoundingBox = asset.boundingBox
         modelResource = RSMModelRenderResource(device: device, asset: asset)
-
-        let library = RagnarokCreateShadersLibrary(device)!
-        modelRenderer = try RSMModelRenderer(device: device, library: library)
+        modelRenderer = try RSMModelRenderer(device: device)
     }
 
     public func render(

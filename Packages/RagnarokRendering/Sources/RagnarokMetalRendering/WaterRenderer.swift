@@ -10,10 +10,15 @@ import RagnarokShaders
 import simd
 
 public final class WaterRenderer {
+    let device: any MTLDevice
     let renderPipelineState: any MTLRenderPipelineState
     let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice, library: any MTLLibrary) throws {
+    public init(device: any MTLDevice) throws {
+        self.device = device
+
+        let library = RagnarokShadersLibrary(device)!
+
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "waterFragmentShader")
@@ -32,11 +37,6 @@ public final class WaterRenderer {
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    public convenience init(device: any MTLDevice) throws {
-        let library = RagnarokCreateShadersLibrary(device)!
-        try self.init(device: device, library: library)
-    }
-
     public func render(
         resource: WaterRenderResource,
         atTime time: CFTimeInterval,
@@ -45,8 +45,6 @@ public final class WaterRenderer {
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4
     ) {
-        let device = renderCommandEncoder.device
-
         let frame = Float(time * 60)
 
         guard resource.vertexCount > 0, !resource.textures.isEmpty else {

@@ -30,13 +30,18 @@ func mtlBlendFactor(_ d3dBlend: Int32) -> MTLBlendFactor {
 }
 
 class STREffectRenderer {
+    let device: any MTLDevice
     let renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState]
     let depthStencilState: (any MTLDepthStencilState)?
 
     let effect: STREffect
     let textures: [String : any MTLTexture]
 
-    init(device: any MTLDevice, library: any MTLLibrary, effect: STREffect, textures: [String : any MTLTexture]) throws {
+    init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
+        self.device = device
+
+        let library = RagnarokShadersLibrary(device)!
+
         var blendKeys: Set<SIMD2<Int32>> = []
         for frame in effect.frames {
             for sprite in frame.sprites {
@@ -81,8 +86,6 @@ class STREffectRenderer {
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4
     ) {
-        let device = renderCommandEncoder.device
-
         let frameIndex = Int(time * CFTimeInterval(effect.fps)) % effect.frames.count
         let frame = effect.frames[frameIndex]
 

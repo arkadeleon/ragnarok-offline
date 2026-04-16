@@ -12,14 +12,13 @@ import simd
 @MainActor
 final class MetalSpriteRenderer {
     private let device: any MTLDevice
-
-    private let renderPipelineState: (any MTLRenderPipelineState)?
+    private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
     init(device: any MTLDevice) throws {
         self.device = device
 
-        let library = RagnarokCreateShadersLibrary(device)!
+        let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteVertexShader")
@@ -45,10 +44,6 @@ final class MetalSpriteRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MapRuntimeRenderer.RenderMatrices
     ) {
-        guard let renderPipelineState, let depthStencilState else {
-            return
-        }
-
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
