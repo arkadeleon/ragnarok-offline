@@ -8,10 +8,9 @@
 import AVFAudio
 import Foundation
 import RagnarokResources
-import simd
 
 extension MetalRenderBackend {
-    func playSound(_ filename: String, at _: SIMD2<Int>) {
+    func playSound(_ filename: String, on objectID: GameObjectID) {
         Task { @MainActor [weak self] in
             guard let self else { return }
             guard let wavData = await soundEffectData(for: filename) else { return }

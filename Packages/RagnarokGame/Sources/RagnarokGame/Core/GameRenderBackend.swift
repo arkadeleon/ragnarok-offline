@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import simd
 
 @MainActor
 public protocol GameRenderBackend: AnyObject {
@@ -18,9 +17,9 @@ public protocol GameRenderBackend: AnyObject {
 
     func applySnapshot(_ state: MapSceneState)
 
-    func playSound(_ filename: String, at position: SIMD2<Int>)
+    func playSound(_ filename: String, on objectID: GameObjectID)
 }
 
 public extension GameRenderBackend {
-    func playSound(_ filename: String, at position: SIMD2<Int>) {}
+    func playSound(_ filename: String, on objectID: GameObjectID) {}
 }

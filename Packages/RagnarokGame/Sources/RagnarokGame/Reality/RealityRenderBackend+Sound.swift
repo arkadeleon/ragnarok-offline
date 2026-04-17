@@ -9,14 +9,14 @@ import AVFAudio
 import Foundation
 import RagnarokResources
 import RealityKit
-import simd
 
 extension RealityRenderBackend {
-    func playSound(_ filename: String, at position: SIMD2<Int>) {
+    func playSound(_ filename: String, on objectID: GameObjectID) {
         Task { @MainActor [weak self] in
             guard let self else { return }
             guard let resource = await soundEffectResource(for: filename) else { return }
-            play(resource, at: position)
+            guard let entity = entityCache.loadedObjectEntity(for: objectID) else { return }
+            entity.playAudio(resource)
         }
     }
 
@@ -25,12 +25,6 @@ extension RealityRenderBackend {
             task.cancel()
         }
         soundEffectResourceLoadTasks.removeAll()
-
-        for child in Array(rootEntity.children) where child.name == transientSoundEntityName {
-            child.stopAllAudio()
-            child.removeFromParent()
-        }
-
         soundEffectResourceCache.removeAll()
     }
 
@@ -70,24 +64,5 @@ extension RealityRenderBackend {
         }
 
         return resource
-    }
-
-    private func play(_ resource: AudioBufferResource, at gridPosition: SIMD2<Int>) {
-        guard let scene else {
-            return
-        }
-
-        let entity = Entity()
-        entity.name = transientSoundEntityName
-        entity.position = scene.position(for: gridPosition)
-        rootEntity.addChild(entity)
-        entity.playAudio(resource)
-
-        Task { @MainActor [weak entity] in
-            try? await Task.sleep(for: .seconds(3))
-            guard let entity else { return }
-            entity.stopAllAudio()
-            entity.removeFromParent()
-        }
     }
 }

@@ -329,14 +329,6 @@ public final class MapScene {
             state.objects[objectID]?.object
         }
     }
-
-    private func scheduleDelayedSound(_ filename: String, at position: SIMD2<Int>, after delay: Duration) {
-        Task { @MainActor [weak self] in
-            try? await Task.sleep(for: delay)
-            guard let self else { return }
-            renderBackend.playSound(filename, at: position)
-        }
-    }
 }
 
 extension MapScene: MapEventHandlerProtocol {
@@ -665,17 +657,15 @@ extension MapScene: MapEventHandlerProtocol {
         if isAttackAction,
            let sourceMapObject,
            CharacterJob(rawValue: sourceMapObject.job).isPlayer,
-           let sourcePosition = gridPosition(for: objectAction.sourceObjectID),
            let filename = WeaponSoundTable.attackSoundFilenames(
                for: WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
            ).randomElement() {
-            renderBackend.playSound(filename, at: sourcePosition)
+            renderBackend.playSound(filename, on: objectAction.sourceObjectID)
         }
 
         if isAttackAction,
            objectAction.damage > 0,
-           let targetMapObject = mapObject(for: objectAction.targetObjectID),
-           let targetPosition = gridPosition(for: objectAction.targetObjectID) {
+           let targetMapObject = mapObject(for: objectAction.targetObjectID) {
             let hitFilename: String?
             let targetJob = CharacterJob(rawValue: targetMapObject.job)
 
@@ -690,11 +680,11 @@ extension MapScene: MapEventHandlerProtocol {
             }
 
             if let hitFilename {
-                scheduleDelayedSound(
-                    hitFilename,
-                    at: targetPosition,
-                    after: .milliseconds(objectAction.sourceSpeed)
-                )
+                Task { @MainActor [weak self] in
+                    try? await Task.sleep(for: .milliseconds(objectAction.sourceSpeed))
+                    guard let self else { return }
+                    renderBackend.playSound(hitFilename, on: objectAction.targetObjectID)
+                }
             }
         }
 

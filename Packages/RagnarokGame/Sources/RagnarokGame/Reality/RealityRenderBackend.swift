@@ -24,10 +24,10 @@ final class RealityRenderBackend: GameRenderBackend {
     weak var scene: MapScene?
 
     let resourceManager: ResourceManager
-    let rootEntity = Entity()
-    let transientSoundEntityName = "__transient_sound__"
 
-    private let entityCache: RealityEntityCache
+    let rootEntity = Entity()
+    let entityCache: RealityEntityCache
+
     private let tileSelectionRenderer: RealityTileSelectionRenderer
     private let sampler = MapObjectPresentationSampler()
 
