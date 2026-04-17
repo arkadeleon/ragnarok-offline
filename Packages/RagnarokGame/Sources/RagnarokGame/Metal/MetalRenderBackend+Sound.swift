@@ -12,43 +12,18 @@ import simd
 
 extension MetalRenderBackend {
     func playSound(_ filename: String, at _: SIMD2<Int>) {
-        let taskID = UUID()
-        soundEffectPlaybackTasks[taskID] = Task { @MainActor [weak self] in
-            defer {
-                self?.soundEffectPlaybackTasks[taskID] = nil
-            }
-
-            guard let self else {
-                return
-            }
-
-            guard let wavData = await soundEffectData(for: filename) else {
-                return
-            }
-
-            guard !Task.isCancelled else {
-                return
-            }
-
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            guard let wavData = await soundEffectData(for: filename) else { return }
             play(wavData)
         }
     }
 
     func stopSoundEffects() {
-        for task in soundEffectPlaybackTasks.values {
-            task.cancel()
-        }
-        soundEffectPlaybackTasks.removeAll()
-
         for task in soundEffectDataLoadTasks.values {
             task.cancel()
         }
         soundEffectDataLoadTasks.removeAll()
-
-        for task in soundEffectCleanupTasks.values {
-            task.cancel()
-        }
-        soundEffectCleanupTasks.removeAll()
 
         for player in activeSoundEffectPlayers.values {
             player.stop()
@@ -101,14 +76,10 @@ extension MetalRenderBackend {
             return
         }
 
-        soundEffectCleanupTasks[playbackID] = Task { @MainActor [weak self] in
-            do {
-                try await Task.sleep(for: .seconds(cleanupDelay))
-            } catch {
-                return
-            }
-
-            self?.finishSoundEffectPlayback(id: playbackID)
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .seconds(cleanupDelay))
+            guard let self else { return }
+            finishSoundEffectPlayback(id: playbackID)
         }
     }
 }

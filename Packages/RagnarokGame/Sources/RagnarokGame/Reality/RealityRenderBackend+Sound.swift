@@ -13,43 +13,18 @@ import simd
 
 extension RealityRenderBackend {
     func playSound(_ filename: String, at position: SIMD2<Int>) {
-        let taskID = UUID()
-        soundEffectPlaybackTasks[taskID] = Task { @MainActor [weak self] in
-            defer {
-                self?.soundEffectPlaybackTasks[taskID] = nil
-            }
-
-            guard let self else {
-                return
-            }
-
-            guard let resource = await soundEffectResource(for: filename) else {
-                return
-            }
-
-            guard !Task.isCancelled else {
-                return
-            }
-
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            guard let resource = await soundEffectResource(for: filename) else { return }
             play(resource, at: position)
         }
     }
 
     func stopSoundEffects() {
-        for task in soundEffectPlaybackTasks.values {
-            task.cancel()
-        }
-        soundEffectPlaybackTasks.removeAll()
-
         for task in soundEffectResourceLoadTasks.values {
             task.cancel()
         }
         soundEffectResourceLoadTasks.removeAll()
-
-        for task in transientSoundCleanupTasks.values {
-            task.cancel()
-        }
-        transientSoundCleanupTasks.removeAll()
 
         for child in Array(rootEntity.children) where child.name == transientSoundEntityName {
             child.stopAllAudio()
@@ -108,22 +83,9 @@ extension RealityRenderBackend {
         rootEntity.addChild(entity)
         entity.playAudio(resource)
 
-        let taskID = UUID()
-        transientSoundCleanupTasks[taskID] = Task { @MainActor [weak self, weak entity] in
-            defer {
-                self?.transientSoundCleanupTasks[taskID] = nil
-            }
-
-            do {
-                try await Task.sleep(for: .seconds(3))
-            } catch {
-                return
-            }
-
-            guard let entity else {
-                return
-            }
-
+        Task { @MainActor [weak entity] in
+            try? await Task.sleep(for: .seconds(3))
+            guard let entity else { return }
             entity.stopAllAudio()
             entity.removeFromParent()
         }

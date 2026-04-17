@@ -20,9 +20,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     var soundEffectDataCache: [String : Data] = [:]
     var soundEffectDataLoadTasks: [String : Task<Data?, Never>] = [:]
-    var soundEffectPlaybackTasks: [UUID : Task<Void, Never>] = [:]
     var activeSoundEffectPlayers: [UUID : AVAudioPlayer] = [:]
-    var soundEffectCleanupTasks: [UUID : Task<Void, Never>] = [:]
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
@@ -144,8 +142,6 @@ final class MetalRenderBackend: GameRenderBackend {
     func finishSoundEffectPlayback(id: UUID) {
         activeSoundEffectPlayers[id]?.stop()
         activeSoundEffectPlayers[id] = nil
-        soundEffectCleanupTasks[id]?.cancel()
-        soundEffectCleanupTasks[id] = nil
     }
 
     private func syncAndProjectOverlay() {

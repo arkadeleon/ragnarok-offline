@@ -39,7 +39,6 @@ public final class MapScene {
     private let pathfinder: Pathfinder
     private var pendingArrivalAction: (@MainActor () -> Void)?
     private var arrivalTask: Task<Void, Never>?
-    private var delayedSoundTasks: [UUID : Task<Void, Never>] = [:]
 
     var cameraState: MapCameraState = .default {
         didSet {
@@ -109,7 +108,6 @@ public final class MapScene {
         arrivalTask?.cancel()
         arrivalTask = nil
         pendingArrivalAction = nil
-        cancelDelayedSoundTasks()
         renderBackend.unload()
         renderBackend.detach()
     }
@@ -333,31 +331,11 @@ public final class MapScene {
     }
 
     private func scheduleDelayedSound(_ filename: String, at position: SIMD2<Int>, after delay: Duration) {
-        let taskID = UUID()
-        delayedSoundTasks[taskID] = Task { @MainActor [weak self] in
-            defer {
-                self?.delayedSoundTasks[taskID] = nil
-            }
-
-            do {
-                try await Task.sleep(for: delay)
-            } catch {
-                return
-            }
-
-            guard let self, !Task.isCancelled else {
-                return
-            }
-
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: delay)
+            guard let self else { return }
             renderBackend.playSound(filename, at: position)
         }
-    }
-
-    private func cancelDelayedSoundTasks() {
-        for task in delayedSoundTasks.values {
-            task.cancel()
-        }
-        delayedSoundTasks.removeAll()
     }
 }
 

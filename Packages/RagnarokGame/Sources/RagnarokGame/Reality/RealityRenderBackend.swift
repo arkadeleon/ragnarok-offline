@@ -39,8 +39,6 @@ final class RealityRenderBackend: GameRenderBackend {
 
     var soundEffectResourceCache: [String : AudioBufferResource] = [:]
     var soundEffectResourceLoadTasks: [String : Task<AudioBufferResource?, Never>] = [:]
-    var soundEffectPlaybackTasks: [UUID : Task<Void, Never>] = [:]
-    var transientSoundCleanupTasks: [UUID : Task<Void, Never>] = [:]
 
     #if os(iOS) || os(macOS)
     weak var arView: ARView?
