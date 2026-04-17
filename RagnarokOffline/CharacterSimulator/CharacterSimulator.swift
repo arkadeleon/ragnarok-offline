@@ -25,9 +25,9 @@ final class CharacterSimulator {
         var headBottom: ItemModel?
         var garment: ItemModel?
 
-        var actionType: CharacterActionType
-        var direction: CharacterDirection
-        var headDirection: CharacterHeadDirection
+        var actionType: SpriteActionType
+        var direction: SpriteDirection
+        var headDirection: SpriteHeadDirection
 
         var headgears: [Int] {
             [headTop, headMid, headBottom].map {
@@ -54,15 +54,15 @@ final class CharacterSimulator {
         }
 
         mutating func rotateClockwise() {
-            let count = CharacterDirection.allCases.count
+            let count = SpriteDirection.allCases.count
             let rawValue = (direction.rawValue + 1) % count
-            direction = CharacterDirection(rawValue: rawValue)!
+            direction = SpriteDirection(rawValue: rawValue)!
         }
 
         mutating func rotateCounterClockwise() {
-            let count = CharacterDirection.allCases.count
+            let count = SpriteDirection.allCases.count
             let rawValue = (direction.rawValue + count - 1) % count
-            direction = CharacterDirection(rawValue: rawValue)!
+            direction = SpriteDirection(rawValue: rawValue)!
         }
     }
 

@@ -79,7 +79,7 @@ final class RealityEntityCache {
     }
 
     func objectEntity(for mapObject: MapObject) async throws -> (entity: Entity, isNew: Bool) {
-        let job = CharacterJob(rawValue: mapObject.job)
+        let job = SpriteJob(rawValue: mapObject.job)
         if job.isPlayer {
             return try await playerEntity(for: mapObject)
         } else {

@@ -1,5 +1,5 @@
 //
-//  CharacterDirection.swift
+//  SpriteDirection.swift
 //  RagnarokSprite
 //
 //  Created by Leon Li on 2025/5/7.
@@ -7,7 +7,7 @@
 
 import RagnarokConstants
 
-public enum CharacterDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
+public enum SpriteDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
     case south
     case southwest
     case west
@@ -68,9 +68,9 @@ public enum CharacterDirection: Int, CaseIterable, CustomStringConvertible, Send
         }
     }
 
-    public func adjustedForCameraAzimuth(_ azimuth: Float) -> CharacterDirection {
+    public func adjustedForCameraAzimuth(_ azimuth: Float) -> SpriteDirection {
         let offset = Int((-azimuth / (.pi / 4)).rounded())
         let adjusted = ((rawValue + offset) % 8 + 8) % 8
-        return CharacterDirection(rawValue: adjusted)!
+        return SpriteDirection(rawValue: adjusted)!
     }
 }

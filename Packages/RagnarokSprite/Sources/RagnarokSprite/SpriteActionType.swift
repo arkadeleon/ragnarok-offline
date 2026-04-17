@@ -1,11 +1,11 @@
 //
-//  CharacterActionType.swift
+//  SpriteActionType.swift
 //  RagnarokSprite
 //
 //  Created by Leon Li on 2025/5/6.
 //
 
-public enum CharacterActionType: String, CaseIterable, CustomStringConvertible, Sendable {
+public enum SpriteActionType: String, CaseIterable, CustomStringConvertible, Sendable {
     case idle
     case walk
     case sit
@@ -52,9 +52,9 @@ public enum CharacterActionType: String, CaseIterable, CustomStringConvertible, 
     }
 }
 
-extension CharacterActionType {
-    public static func availableActionTypes(forJobID jobID: Int) -> [CharacterActionType] {
-        let job = CharacterJob(rawValue: jobID)
+extension SpriteActionType {
+    public static func availableActionTypes(forJobID jobID: Int) -> [SpriteActionType] {
+        let job = SpriteJob(rawValue: jobID)
 
         if job.isPlayer {
             return [.idle, .walk, .sit, .pickup, .readyToAttack, .attack1, .hurt, .freeze, .die, .freeze2, .attack2, .attack3, .skill]
@@ -67,14 +67,14 @@ extension CharacterActionType {
     }
 }
 
-extension CharacterActionType {
-    public func calculateActionIndex(forJobID jobID: Int, direction: CharacterDirection) -> Int {
-        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: jobID)
+extension SpriteActionType {
+    public func calculateActionIndex(forJobID jobID: Int, direction: SpriteDirection) -> Int {
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: jobID)
         guard let index = availableActionTypes.firstIndex(of: self) else {
             return -1
         }
 
-        let actionIndex = index * CharacterDirection.allCases.count + direction.rawValue
+        let actionIndex = index * SpriteDirection.allCases.count + direction.rawValue
         return actionIndex
     }
 }

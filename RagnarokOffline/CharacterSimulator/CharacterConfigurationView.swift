@@ -110,13 +110,13 @@ struct CharacterConfigurationView: View {
 
             Section {
                 Picker("Action", selection: $characterSimulator.configuration.actionType) {
-                    ForEach(CharacterActionType.availableActionTypes(forJobID: characterSimulator.configuration.jobID.rawValue), id: \.rawValue) { actionType in
+                    ForEach(SpriteActionType.availableActionTypes(forJobID: characterSimulator.configuration.jobID.rawValue), id: \.rawValue) { actionType in
                         Text(actionType.description).tag(actionType)
                     }
                 }
 
                 Picker("Head Direction", selection: $characterSimulator.configuration.headDirection) {
-                    ForEach(CharacterHeadDirection.allCases, id: \.rawValue) { headDirection in
+                    ForEach(SpriteHeadDirection.allCases, id: \.rawValue) { headDirection in
                         Text(headDirection.description).tag(headDirection)
                     }
                 }

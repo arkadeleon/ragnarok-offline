@@ -8,16 +8,16 @@
 import RagnarokSprite
 
 public struct MapObjectPresentationState: Sendable {
-    public var action: CharacterActionType
-    public var direction: CharacterDirection
-    public var headDirection: CharacterHeadDirection
+    public var action: SpriteActionType
+    public var direction: SpriteDirection
+    public var headDirection: SpriteHeadDirection
     public var startTime: ContinuousClock.Instant
     public var duration: Duration?
 
     public init(
-        action: CharacterActionType,
-        direction: CharacterDirection,
-        headDirection: CharacterHeadDirection,
+        action: SpriteActionType,
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection,
         startTime: ContinuousClock.Instant,
         duration: Duration? = nil
     ) {

@@ -82,7 +82,7 @@ final class SpriteSnapshotBuilder {
         _ key: SpriteAnimationKey,
         for mapObject: MapObject
     ) -> SpriteAnimationKey {
-        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: mapObject.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
         guard availableActionTypes.contains(key.action) else {
             return SpriteAnimationKey(action: .idle, direction: key.direction)
         }

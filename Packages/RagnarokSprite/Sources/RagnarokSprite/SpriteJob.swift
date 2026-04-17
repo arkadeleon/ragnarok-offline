@@ -1,11 +1,11 @@
 //
-//  CharacterJob.swift
+//  SpriteJob.swift
 //  RagnarokSprite
 //
 //  Created by Leon Li on 2025/2/12.
 //
 
-public struct CharacterJob: RawRepresentable, ExpressibleByIntegerLiteral, Hashable, Sendable {
+public struct SpriteJob: RawRepresentable, ExpressibleByIntegerLiteral, Hashable, Sendable {
     public let rawValue: Int
 
     public init(rawValue: Int) {
@@ -17,7 +17,7 @@ public struct CharacterJob: RawRepresentable, ExpressibleByIntegerLiteral, Hasha
     }
 }
 
-extension CharacterJob {
+extension SpriteJob {
     public var isPlayer: Bool {
         switch rawValue {
         case 0..<45: true

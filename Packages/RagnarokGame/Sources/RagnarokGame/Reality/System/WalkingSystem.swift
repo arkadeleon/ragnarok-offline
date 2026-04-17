@@ -34,7 +34,7 @@ class WalkingSystem: System {
             let sourceGridPosition = path[0]
             let targetGridPosition = path[1]
 
-            let direction = CharacterDirection(sourcePosition: sourceGridPosition, targetPosition: targetGridPosition)
+            let direction = SpriteDirection(sourcePosition: sourceGridPosition, targetPosition: targetGridPosition)
             let speed = TimeInterval(mapObject.speed) / 1000
             let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 

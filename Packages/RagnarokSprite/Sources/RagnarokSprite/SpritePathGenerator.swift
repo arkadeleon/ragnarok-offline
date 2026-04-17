@@ -20,7 +20,7 @@ class SpritePathGenerator {
         ResourcePath.spriteDirectory.appending("shadow")
     }
 
-    func generatePlayerBodySpritePath(job: CharacterJob, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    func generatePlayerBodySpritePath(job: SpriteJob, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -36,7 +36,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generateAlternatePlayerBodySpritePath(job: CharacterJob, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
+    func generateAlternatePlayerBodySpritePath(job: SpriteJob, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -52,7 +52,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generatePlayerHeadSpritePath(job: CharacterJob, hairStyle: Int, gender: Gender) -> ResourcePath? {
+    func generatePlayerHeadSpritePath(job: SpriteJob, hairStyle: Int, gender: Gender) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -64,7 +64,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generateNonPlayerSpritePath(job: CharacterJob) -> ResourcePath? {
+    func generateNonPlayerSpritePath(job: SpriteJob) -> ResourcePath? {
         guard !job.isPlayer else {
             return nil
         }
@@ -86,7 +86,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generateWeaponSpritePath(job: CharacterJob, weapon: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    func generateWeaponSpritePath(job: SpriteJob, weapon: Int, isSlash: Bool = false, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer || job.isMercenary else {
             return nil
         }
@@ -138,7 +138,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generateShieldSpritePath(job: CharacterJob, shield: Int, gender: Gender) -> ResourcePath? {
+    func generateShieldSpritePath(job: SpriteJob, shield: Int, gender: Gender) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -162,7 +162,7 @@ class SpritePathGenerator {
         return ResourcePath.spriteDirectory.appending([K2L("악세사리"), gender.name, "\(gender.name)\(accessoryName)"])
     }
 
-    func generateGarmentSpritePath(job: CharacterJob, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) -> ResourcePath? {
+    func generateGarmentSpritePath(job: SpriteJob, garment: Int, gender: Gender, checkEnglish: Bool = false, useFallback: Bool = false) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -179,7 +179,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generatePlayerBodyPalettePath(job: CharacterJob, clothesColor: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    func generatePlayerBodyPalettePath(job: SpriteJob, clothesColor: Int, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -200,7 +200,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generateAlternatePlayerBodyPalettePath(job: CharacterJob, clothesColor: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
+    func generateAlternatePlayerBodyPalettePath(job: SpriteJob, clothesColor: Int, gender: Gender, costumeID: Int, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -221,7 +221,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generatePlayerHeadPalettePath(job: CharacterJob, hairStyle: Int, hairColor: Int, gender: Gender) -> ResourcePath? {
+    func generatePlayerHeadPalettePath(job: SpriteJob, hairStyle: Int, hairColor: Int, gender: Gender) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -233,7 +233,7 @@ class SpritePathGenerator {
         }
     }
 
-    func generateIMFPath(job: CharacterJob, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
+    func generateIMFPath(job: SpriteJob, gender: Gender, madoType: MadoType = .robot) -> ResourcePath? {
         guard job.isPlayer else {
             return nil
         }
@@ -250,7 +250,7 @@ class SpritePathGenerator {
         return ["data", "imf", "\(jobName)_\(gender.name)"]
     }
 
-    private func jobSpriteName(for job: CharacterJob, madoType: MadoType = .robot) -> String? {
+    private func jobSpriteName(for job: SpriteJob, madoType: MadoType = .robot) -> String? {
         if job.isPlayer {
             if job.isMadogear && madoType == .suit {
                 suitMadogearJobName(for: job)
@@ -262,7 +262,7 @@ class SpritePathGenerator {
         }
     }
 
-    private func suitMadogearJobName(for job: CharacterJob) -> String {
+    private func suitMadogearJobName(for job: SpriteJob) -> String {
         switch job.rawValue {
         case 4086, 4087, 4112:
             K2L("마도아머")

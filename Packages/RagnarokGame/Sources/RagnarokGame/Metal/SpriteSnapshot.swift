@@ -12,8 +12,8 @@ import RagnarokSprite
 import simd
 
 struct SpriteAnimationKey: Hashable {
-    var action: CharacterActionType
-    var direction: CharacterDirection
+    var action: SpriteActionType
+    var direction: SpriteDirection
 }
 
 struct SpriteLayerDrawable {
@@ -29,7 +29,7 @@ struct SpriteSnapshot {
         case mapObject(
             mapObject: MapObject,
             animationKey: SpriteAnimationKey,
-            headDirection: CharacterHeadDirection,
+            headDirection: SpriteHeadDirection,
             animationElapsed: Duration
         )
         case item(MapItem)

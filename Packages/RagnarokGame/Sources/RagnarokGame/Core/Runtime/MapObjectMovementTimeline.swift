@@ -12,7 +12,7 @@ import simd
 struct MapObjectMovementTimeline {
     struct MovementSample {
         var worldPosition: SIMD3<Float>
-        var direction: CharacterDirection
+        var direction: SpriteDirection
         var totalElapsed: Duration
         var isMoving: Bool
     }
@@ -22,7 +22,7 @@ struct MapObjectMovementTimeline {
     private let stepDurations: [Duration]
     private let startTime: ContinuousClock.Instant
     private let duration: Duration
-    private let direction: CharacterDirection
+    private let direction: SpriteDirection
     private let animationElapsedOffset: Duration
 
     init?(for state: MapObjectState, position: (SIMD2<Int>) -> SIMD3<Float>) {
@@ -32,7 +32,7 @@ struct MapObjectMovementTimeline {
 
         let path = movementState.path
         let stepDurations: [Duration] = (1..<path.count).map { index in
-            let direction = CharacterDirection(sourcePosition: path[index - 1], targetPosition: path[index])
+            let direction = SpriteDirection(sourcePosition: path[index - 1], targetPosition: path[index])
             let stepMilliseconds = direction.isDiagonal ? Int((Double(state.object.speed) * sqrt(2)).rounded()) : state.object.speed
             return .milliseconds(stepMilliseconds)
         }
@@ -83,7 +83,7 @@ struct MapObjectMovementTimeline {
                 let fraction = Float(min(max(stepElapsed.timeInterval / stepSeconds, 0), 1))
                 let source = worldPath[index]
                 let target = worldPath[index + 1]
-                let direction = CharacterDirection(
+                let direction = SpriteDirection(
                     sourcePosition: gridPath[index],
                     targetPosition: gridPath[index + 1]
                 )

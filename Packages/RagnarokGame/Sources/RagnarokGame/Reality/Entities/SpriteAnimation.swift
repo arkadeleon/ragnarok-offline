@@ -67,9 +67,9 @@ struct SpriteAnimation: Equatable, Sendable {
 
 extension SpriteAnimation {
     static func animationName(
-        for actionType: CharacterActionType,
-        direction: CharacterDirection,
-        headDirection: CharacterHeadDirection
+        for actionType: SpriteActionType,
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection
     ) -> String {
         "\(actionType).\(direction).\(headDirection)"
     }
@@ -81,11 +81,11 @@ extension SpriteAnimation {
         ) { taskGroup in
             let spriteRenderer = SpriteRenderer()
 
-            let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
+            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: composedSprite.configuration.job.rawValue)
 
             for actionType in availableActionTypes {
-                for direction in CharacterDirection.allCases {
-                    let headDirection: CharacterHeadDirection = .lookForward
+                for direction in SpriteDirection.allCases {
+                    let headDirection: SpriteHeadDirection = .lookForward
 
                     taskGroup.addTask {
                         let animationName = animationName(

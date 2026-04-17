@@ -12,9 +12,9 @@ import simd
 struct MapObjectPresentationSampler {
     struct PresentationSample {
         var worldPosition: SIMD3<Float>
-        var action: CharacterActionType
-        var direction: CharacterDirection
-        var headDirection: CharacterHeadDirection
+        var action: SpriteActionType
+        var direction: SpriteDirection
+        var headDirection: SpriteHeadDirection
         var animationElapsed: Duration
     }
 
@@ -74,12 +74,12 @@ struct MapObjectPresentationSampler {
         )
     }
 
-    private func settledAction(after action: CharacterActionType, for mapObject: MapObject) -> CharacterActionType {
+    private func settledAction(after action: SpriteActionType, for mapObject: MapObject) -> SpriteActionType {
         switch action {
         case .sit:
             return .sit
         case .attack1, .attack2, .attack3, .skill:
-            let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: mapObject.job)
+            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
             return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
         case .freeze, .freeze2, .die:
             return action

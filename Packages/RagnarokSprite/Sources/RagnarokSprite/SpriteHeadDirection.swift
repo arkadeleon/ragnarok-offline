@@ -1,5 +1,5 @@
 //
-//  CharacterHeadDirection.swift
+//  SpriteHeadDirection.swift
 //  RagnarokSprite
 //
 //  Created by Leon Li on 2025/5/7.
@@ -7,7 +7,7 @@
 
 import RagnarokConstants
 
-public enum CharacterHeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
+public enum SpriteHeadDirection: Int, CaseIterable, CustomStringConvertible, Sendable {
     case lookForward
     case lookRight
     case lookLeft

@@ -88,9 +88,9 @@ extension Entity {
     }
 
     func playSpriteAnimation(
-        _ actionType: CharacterActionType,
-        direction: CharacterDirection,
-        nextActionType: CharacterActionType? = nil
+        _ actionType: SpriteActionType,
+        direction: SpriteDirection,
+        nextActionType: SpriteActionType? = nil
     ) {
         guard let spriteEntity = findEntity(named: "sprite") else {
             return
@@ -108,19 +108,19 @@ extension Entity {
         spriteEntity.components.remove(SpriteAnimationComponent.self)
     }
 
-    func attack(direction: CharacterDirection) {
+    func attack(direction: SpriteDirection) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
             return
         }
 
-        let attackActionType = CharacterActionType.attackActionType(
+        let attackActionType = SpriteActionType.attackActionType(
             forJobID: mapObject.job,
             gender: mapObject.gender,
             weapon: mapObject.weapon
         )
 
-        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: mapObject.job)
-        let nextActionType: CharacterActionType = if availableActionTypes.contains(.readyToAttack) {
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
+        let nextActionType: SpriteActionType = if availableActionTypes.contains(.readyToAttack) {
             .readyToAttack
         } else {
             .idle
@@ -129,18 +129,18 @@ extension Entity {
         playSpriteAnimation(attackActionType, direction: direction, nextActionType: nextActionType)
     }
 
-    func castSkill(direction: CharacterDirection) {
+    func castSkill(direction: SpriteDirection) {
         guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
             return
         }
 
-        let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: mapObject.job)
-        let actionType: CharacterActionType = if availableActionTypes.contains(.skill) {
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
+        let actionType: SpriteActionType = if availableActionTypes.contains(.skill) {
             .skill
         } else {
             .attack1
         }
-        let nextActionType: CharacterActionType = if availableActionTypes.contains(.readyToAttack) {
+        let nextActionType: SpriteActionType = if availableActionTypes.contains(.readyToAttack) {
             .readyToAttack
         } else {
             .idle
@@ -200,7 +200,7 @@ extension Entity {
                 let sourcePosition = path[i - 1]
                 let targetPosition = path[i]
 
-                let direction = CharacterDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
+                let direction = SpriteDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
                 let speed = TimeInterval(mapObject.speed) / 1000
                 let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 

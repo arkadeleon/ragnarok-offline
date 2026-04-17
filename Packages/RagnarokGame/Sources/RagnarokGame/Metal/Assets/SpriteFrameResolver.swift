@@ -20,7 +20,7 @@ struct SpriteFrameResolver {
         let objectID: GameObjectID
         let composedSprite: ComposedSprite
         let animationKey: SpriteAnimationKey
-        let headDirection: CharacterHeadDirection
+        let headDirection: SpriteHeadDirection
         let elapsed: Duration
         let partTextures: SpritePartTextures
         let scriptContext: ScriptContext?
@@ -184,7 +184,7 @@ struct SpriteFrameResolver {
         ]
     }
 
-    private func actionRepeats(_ action: CharacterActionType) -> Bool {
+    private func actionRepeats(_ action: SpriteActionType) -> Bool {
         switch action {
         case .idle, .walk, .sit, .readyToAttack, .freeze, .freeze2:
             true

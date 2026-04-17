@@ -150,7 +150,7 @@ public final class MapScene {
     private func movementDuration(path: [SIMD2<Int>], speed: Int) -> Duration {
         var total: Duration = .zero
         for i in 1..<path.count {
-            let dir = CharacterDirection(sourcePosition: path[i - 1], targetPosition: path[i])
+            let dir = SpriteDirection(sourcePosition: path[i - 1], targetPosition: path[i])
             let stepMs = dir.isDiagonal ? Int((Double(speed) * sqrt(2)).rounded()) : speed
             total += .milliseconds(stepMs)
         }
@@ -387,8 +387,8 @@ extension MapScene: MapEventHandlerProtocol {
 
         let path = pathfinder.findPath(from: startPosition, to: endPosition)
         let direction = path.count >= 2
-            ? CharacterDirection(sourcePosition: path[0], targetPosition: path[1])
-            : CharacterDirection(sourcePosition: startPosition, targetPosition: endPosition)
+            ? SpriteDirection(sourcePosition: path[0], targetPosition: path[1])
+            : SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition)
         let duration = movementDuration(path: path, speed: state.player.object.speed)
         state.player.gridPosition = endPosition
         state.player.movement = MapObjectMovementState(
@@ -438,8 +438,8 @@ extension MapScene: MapEventHandlerProtocol {
             isVisible: object.effectState != .cloak,
             presentation: MapObjectPresentationState(
                 action: .idle,
-                direction: CharacterDirection(direction: direction),
-                headDirection: CharacterHeadDirection(headDirection: headDirection),
+                direction: SpriteDirection(direction: direction),
+                headDirection: SpriteHeadDirection(headDirection: headDirection),
                 startTime: .now
             )
         )
@@ -460,8 +460,8 @@ extension MapScene: MapEventHandlerProtocol {
         let now = ContinuousClock.now
         let path = pathfinder.findPath(from: startPosition, to: endPosition)
         let direction = path.count >= 2
-            ? CharacterDirection(sourcePosition: path[0], targetPosition: path[1])
-            : CharacterDirection(sourcePosition: startPosition, targetPosition: endPosition)
+            ? SpriteDirection(sourcePosition: path[0], targetPosition: path[1])
+            : SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition)
         let duration = movementDuration(path: path, speed: object.speed)
         let movement = MapObjectMovementState(
             from: startPosition,
@@ -556,11 +556,11 @@ extension MapScene: MapEventHandlerProtocol {
 
     func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
         if state.player.id == objectID {
-            state.player.presentation.direction = CharacterDirection(direction: direction)
-            state.player.presentation.headDirection = CharacterHeadDirection(headDirection: headDirection)
+            state.player.presentation.direction = SpriteDirection(direction: direction)
+            state.player.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
         } else if var objectState = state.objects[objectID] {
-            objectState.presentation.direction = CharacterDirection(direction: direction)
-            objectState.presentation.headDirection = CharacterHeadDirection(headDirection: headDirection)
+            objectState.presentation.direction = SpriteDirection(direction: direction)
+            objectState.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
             state.objects[objectID] = objectState
         }
 
@@ -605,7 +605,7 @@ extension MapScene: MapEventHandlerProtocol {
         let now = ContinuousClock.now
         let sourceMapObject = mapObject(for: objectAction.sourceObjectID)
 
-        let presentationAction: CharacterActionType
+        let presentationAction: SpriteActionType
         let isAttackAction: Bool
         switch objectAction.type {
         case .sit_down:
@@ -619,7 +619,7 @@ extension MapScene: MapEventHandlerProtocol {
             isAttackAction = false
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
             if let sourceMapObject {
-                presentationAction = CharacterActionType.attackActionType(
+                presentationAction = SpriteActionType.attackActionType(
                     forJobID: sourceMapObject.job,
                     gender: sourceMapObject.gender,
                     weapon: sourceMapObject.weapon
@@ -656,7 +656,7 @@ extension MapScene: MapEventHandlerProtocol {
 
         if isAttackAction,
            let sourceMapObject,
-           CharacterJob(rawValue: sourceMapObject.job).isPlayer,
+           SpriteJob(rawValue: sourceMapObject.job).isPlayer,
            let filename = WeaponSoundTable.attackSoundFilenames(
                for: WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
            ).randomElement() {
@@ -667,11 +667,11 @@ extension MapScene: MapEventHandlerProtocol {
            objectAction.damage > 0,
            let targetMapObject = mapObject(for: objectAction.targetObjectID) {
             let hitFilename: String?
-            let targetJob = CharacterJob(rawValue: targetMapObject.job)
+            let targetJob = SpriteJob(rawValue: targetMapObject.job)
 
             if targetJob.isPlayer {
                 hitFilename = JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
-            } else if let sourceMapObject, CharacterJob(rawValue: sourceMapObject.job).isPlayer {
+            } else if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
                 let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
                 let weaponHitFilename = WeaponHitSoundTable.hitSoundFilenames(for: weaponType).randomElement()
                 hitFilename = weaponHitFilename ?? JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
@@ -753,8 +753,8 @@ extension MapScene: MapEventHandlerProtocol {
         }
 
         if let sourceMapObject {
-            let availableActionTypes = CharacterActionType.availableActionTypes(forJobID: sourceMapObject.job)
-            let action: CharacterActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
+            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceMapObject.job)
+            let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(Int(packet.attackMT))
 
             if state.player.id == packet.AID {

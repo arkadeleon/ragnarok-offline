@@ -1,5 +1,5 @@
 //
-//  CharacterDirection+Movement.swift
+//  SpriteDirection+Movement.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/24.
@@ -8,7 +8,7 @@
 import RagnarokSprite
 import simd
 
-extension CharacterDirection {
+extension SpriteDirection {
     init(sourcePosition: SIMD2<Int>, targetPosition: SIMD2<Int>) {
         switch targetPosition &- sourcePosition {
         case [0, -1]:

@@ -9,7 +9,7 @@ import RagnarokConstants
 
 extension ComposedSprite {
     public struct Configuration: Equatable, Sendable {
-        public let job: CharacterJob
+        public let job: SpriteJob
         public var gender: Gender
         public var hairStyle: Int
         public var hairColor: Int
@@ -22,7 +22,7 @@ extension ComposedSprite {
         public var madoType: MadoType
 
         public init(jobID: Int) {
-            self.job = CharacterJob(rawValue: jobID)
+            self.job = SpriteJob(rawValue: jobID)
             self.gender = .male
             self.hairStyle = 1
             self.hairColor = -1

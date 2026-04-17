@@ -1,5 +1,5 @@
 //
-//  CharacterActionType+WeaponType.swift
+//  SpriteActionType+WeaponType.swift
 //  RagnarokSprite
 //
 //  Created by Leon Li on 2026/2/4.
@@ -7,11 +7,11 @@
 
 import RagnarokConstants
 
-extension CharacterActionType {
-    static func attackActionType(for baseJobID: JobID, gender: Gender, weaponType: WeaponType) -> CharacterActionType {
+extension SpriteActionType {
+    static func attackActionType(for baseJobID: JobID, gender: Gender, weaponType: WeaponType) -> SpriteActionType {
         let isFemale = gender == .female
 
-        let attackActionType: CharacterActionType = switch baseJobID {
+        let attackActionType: SpriteActionType = switch baseJobID {
         case .novice:
             if isFemale {
                 switch weaponType {
@@ -295,7 +295,7 @@ extension CharacterActionType {
         return attackActionType
     }
 
-    public static func attackActionType(forJobID jobID: Int, gender: Gender, weapon: Int) -> CharacterActionType {
+    public static func attackActionType(forJobID jobID: Int, gender: Gender, weapon: Int) -> SpriteActionType {
         guard let jobID = JobID(rawValue: jobID), let weaponType = WeaponType(rawValue: weapon) else {
             return .attack1
         }

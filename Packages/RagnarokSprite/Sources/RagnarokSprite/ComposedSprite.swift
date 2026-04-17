@@ -90,8 +90,8 @@ extension ComposedSprite {
 
         public func frameRange(
             action: ACT.Action,
-            actionType: CharacterActionType,
-            headDirection: CharacterHeadDirection
+            actionType: SpriteActionType,
+            headDirection: SpriteHeadDirection
         ) -> Range<Int> {
             guard !action.frames.isEmpty else {
                 return 0..<0
@@ -122,7 +122,7 @@ extension ComposedSprite {
         }
 
         public func parentOffset(
-            actionType: CharacterActionType,
+            actionType: SpriteActionType,
             action: ACT.Action,
             actionIndex: Int,
             absoluteFrameIndex: Int,
@@ -159,7 +159,7 @@ extension ComposedSprite {
 extension ComposedSprite {
     public func zIndex(
         for part: ComposedSprite.Part,
-        direction: CharacterDirection,
+        direction: SpriteDirection,
         actionIndex: Int,
         frameIndex: Int,
         scriptContext: ScriptContext?
