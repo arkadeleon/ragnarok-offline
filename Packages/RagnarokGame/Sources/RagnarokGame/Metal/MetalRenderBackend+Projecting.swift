@@ -211,36 +211,4 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
 
         return CGRect(x: x, y: y, width: width, height: height)
     }
-
-    func groundHit(
-        origin: SIMD3<Float>,
-        direction: SIMD3<Float>,
-        mapGrid: MapGrid
-    ) -> GameHitTestResult? {
-        for i in 0..<200 {
-            let point = origin + direction * Float(i)
-
-            let x = point.x
-            let y = -point.z
-            let position = SIMD2<Int>(Int(x), Int(y))
-
-            guard mapGrid.contains(position) else {
-                continue
-            }
-
-            let cell = mapGrid[position]
-            let xr = x.truncatingRemainder(dividingBy: 1)
-            let yr = y.truncatingRemainder(dividingBy: 1)
-
-            let x1 = cell.bottomLeftAltitude + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * xr
-            let x2 = cell.topLeftAltitude + (cell.topRightAltitude - cell.topLeftAltitude) * xr
-            let altitude = x1 + (x2 - x1) * yr
-
-            if fabsf(altitude - point.y) < 0.5 {
-                return .ground(position: position)
-            }
-        }
-
-        return nil
-    }
 }
