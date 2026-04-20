@@ -7,6 +7,7 @@
 
 import RagnarokConstants
 import RagnarokModels
+import RagnarokResources
 import RagnarokSprite
 import RealityKit
 
@@ -28,7 +29,7 @@ enum RealityEntityPhase {
 
 @MainActor
 final class RealityEntityCache {
-    private let factory: RealitySpriteNodeFactory
+    private let resourceManager: ResourceManager
 
     private var objectEntities: [GameObjectID : RealityEntityPhase] = [:]
     private var itemEntities: [GameObjectID : RealityEntityPhase] = [:]
@@ -42,8 +43,8 @@ final class RealityEntityCache {
         Set(itemEntities.keys)
     }
 
-    init(factory: RealitySpriteNodeFactory) {
-        self.factory = factory
+    init(resourceManager: ResourceManager) {
+        self.resourceManager = resourceManager
     }
 
     func addObjectEntity(_ entity: Entity, for objectID: GameObjectID) {
@@ -93,7 +94,7 @@ final class RealityEntityCache {
         }
 
         let task = Task {
-            try await factory.makeMapObjectEntity(for: mapObject)
+            try await Entity(from: mapObject, resourceManager: resourceManager)
         }
         objectEntities[mapObject.objectID] = .inProgress(task)
 
@@ -122,7 +123,7 @@ final class RealityEntityCache {
         }
 
         let templateTask = Task {
-            try await factory.makeMapObjectEntity(for: mapObject)
+            try await Entity(from: mapObject, resourceManager: resourceManager)
         }
         templateEntitiesByJobID[mapObject.job] = .inProgress(templateTask)
 
@@ -141,7 +142,7 @@ final class RealityEntityCache {
         }
 
         let task = Task {
-            try await factory.makeMapItemEntity(for: mapItem)
+            try await Entity(from: mapItem, resourceManager: resourceManager)
         }
         itemEntities[mapItem.objectID] = .inProgress(task)
 

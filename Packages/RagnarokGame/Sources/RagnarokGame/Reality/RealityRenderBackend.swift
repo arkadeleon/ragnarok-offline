@@ -47,8 +47,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
-        let factory = RealitySpriteNodeFactory(resourceManager: resourceManager)
-        self.entityCache = RealityEntityCache(factory: factory)
+        self.entityCache = RealityEntityCache(resourceManager: resourceManager)
         self.tileSelectionRenderer = RealityTileSelectionRenderer(resourceManager: resourceManager)
 
         registerRealityComponents()
