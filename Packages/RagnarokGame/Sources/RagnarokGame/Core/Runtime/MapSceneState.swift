@@ -22,6 +22,14 @@ public final class MapSceneState {
         self.player = player
     }
 
+    func object(for objectID: GameObjectID) -> MapObjectState? {
+        if player.id == objectID {
+            player
+        } else {
+            objects[objectID]
+        }
+    }
+
     func pruneExpiredDamageEffects(now: ContinuousClock.Instant = .now) {
         damageEffects.removeAll {
             $0.isExpired(at: now)

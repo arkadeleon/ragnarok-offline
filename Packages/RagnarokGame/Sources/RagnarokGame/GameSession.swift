@@ -659,7 +659,7 @@ final public class GameSession {
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.count))
             }
-            mapScene?.onReceivePacket(packet)
+            mapScene?.onPlayerParameterChanged(packet)
         case let packet as PACKET_ZC_LONGPAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.amount))
@@ -758,7 +758,7 @@ final public class GameSession {
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
             messageCenter.addMessage(for: objectAction, account: account)
         case let packet as PACKET_ZC_HP_INFO:
-            mapScene?.onReceivePacket(packet)
+            mapScene?.onMapObjectHealthUpdated(packet)
         case let packet as PACKET_ZC_SAY_DIALOG:
             if let dialog, dialog.npcID == packet.NpcID {
                 dialog.clearIfNeeded()
