@@ -170,7 +170,7 @@ extension ComposedSprite.Configuration {
         }
 
         let hairStyle = self.hairStyle
-        if 0..<hairStyles.count ~= hairStyle {
+        if hairStyles.indices.contains(hairStyle) {
             self.hairStyle = hairStyles[hairStyle]
         }
     }

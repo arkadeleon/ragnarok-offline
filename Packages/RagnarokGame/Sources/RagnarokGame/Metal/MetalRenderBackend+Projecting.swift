@@ -224,7 +224,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
             let y = -point.z
             let position = SIMD2<Int>(Int(x), Int(y))
 
-            guard 0..<mapGrid.width ~= position.x, 0..<mapGrid.height ~= position.y else {
+            guard mapGrid.contains(position) else {
                 continue
             }
 

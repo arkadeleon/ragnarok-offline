@@ -88,8 +88,7 @@ extension Entity {
 //        for entity in entities {
 //            guard let actionSpriteComponent = entity.components[ActionsComponent.self],
 //                  var spriteComponent = entity.components[SpriteComponent.self],
-//                  let startTime = actionSpriteComponent.actionStartTime
-//            else {
+//                  let startTime = actionSpriteComponent.actionStartTime else {
 //                continue
 //            }
 //

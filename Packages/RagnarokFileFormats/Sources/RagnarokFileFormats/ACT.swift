@@ -163,7 +163,7 @@ extension ACT {
 
 extension ACT {
     public func action(at actionIndex: Int) -> ACT.Action? {
-        guard 0..<actions.count ~= actionIndex else {
+        guard actions.indices.contains(actionIndex) else {
             return nil
         }
 
@@ -175,12 +175,12 @@ extension ACT {
         let actionIndex = indexPath[0]
         let frameIndex = indexPath[1]
 
-        guard 0..<actions.count ~= actionIndex else {
+        guard actions.indices.contains(actionIndex) else {
             return nil
         }
 
         let action = actions[actionIndex]
-        guard 0..<action.frames.count ~= frameIndex else {
+        guard action.frames.indices.contains(frameIndex) else {
             return nil
         }
 

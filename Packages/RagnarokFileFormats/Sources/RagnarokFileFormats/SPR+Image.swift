@@ -32,7 +32,7 @@ extension SPR {
     }
 
     public func imageForSprite(at index: Int, palette: PAL? = nil) -> CGImage? {
-        guard 0..<sprites.count ~= index else {
+        guard sprites.indices.contains(index) else {
             return nil
         }
 

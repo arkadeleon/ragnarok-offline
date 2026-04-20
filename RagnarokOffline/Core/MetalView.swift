@@ -59,8 +59,7 @@ class MetalView: UIView, MTKViewDelegate {
         }
 
         guard let drawable = view.currentDrawable,
-              let renderPassDescriptor = view.currentRenderPassDescriptor
-        else {
+              let renderPassDescriptor = view.currentRenderPassDescriptor else {
             return
         }
 
@@ -122,8 +121,7 @@ class MetalView: NSView, MTKViewDelegate {
         }
 
         guard let drawable = view.currentDrawable,
-              let renderPassDescriptor = view.currentRenderPassDescriptor
-        else {
+              let renderPassDescriptor = view.currentRenderPassDescriptor else {
             return
         }
 

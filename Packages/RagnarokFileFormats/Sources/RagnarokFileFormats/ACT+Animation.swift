@@ -37,13 +37,13 @@ extension ACT.Action {
         for frame in frames {
             for layer in frame.layers {
                 guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
-                      let spriteImages = imagesBySpriteType[spriteType]
-                else {
+                      let spriteImages = imagesBySpriteType[spriteType] else {
                     continue
                 }
 
                 let spriteIndex = Int(layer.spriteIndex)
-                guard 0..<spriteImages.count ~= spriteIndex, let image = spriteImages[spriteIndex] else {
+                guard spriteImages.indices.contains(spriteIndex),
+                      let image = spriteImages[spriteIndex] else {
                     continue
                 }
 
@@ -79,7 +79,7 @@ extension ACT.Frame {
                 guard let spriteImages = imagesBySpriteType[spriteType] else {
                     return nil
                 }
-                guard 0..<spriteImages.count ~= spriteIndex else {
+                guard spriteImages.indices.contains(spriteIndex) else {
                     return nil
                 }
                 let image = spriteImages[spriteIndex]

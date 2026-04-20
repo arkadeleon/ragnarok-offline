@@ -268,8 +268,9 @@ final class RealityRenderBackend: GameRenderBackend {
 
                 tileEntity.components.set(TileComponent(position: [x, y]))
 
-                if 0..<mapGrid.width ~= x && 0..<mapGrid.height ~= y {
-                    let cell = mapGrid[[x, y]]
+                let position = SIMD2(x, y)
+                if mapGrid.contains(position) {
+                    let cell = mapGrid[position]
                     tileEntity.position = [
                         Float(x) + 0.5,
                         cell.averageAltitude + 0.0001,

@@ -53,8 +53,9 @@ struct WorldCameraSystem: System {
             updatingSystemWhen: .rendering
         )
         guard let trackingCamera = trackingTargets.first(where: { _ in true }),
-              var cameraComponent = trackingCamera.components[WorldCameraComponent.self]
-        else { return }
+              var cameraComponent = trackingCamera.components[WorldCameraComponent.self] else {
+            return
+        }
 
         if simd_length(cameraComponent.continuousMotion) > 0 {
             cameraComponent.updateWith(joystickMotion: cameraComponent.continuousMotion)

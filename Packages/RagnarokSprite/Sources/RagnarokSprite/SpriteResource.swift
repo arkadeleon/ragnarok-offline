@@ -48,7 +48,7 @@ final public class SpriteResource: Sendable {
 
         switch spriteType {
         case .indexed:
-            guard 0..<indexedSpriteCount ~= spriteIndex else {
+            guard (0..<indexedSpriteCount).contains(spriteIndex) else {
                 return nil
             }
 
@@ -68,7 +68,7 @@ final public class SpriteResource: Sendable {
                 return image
             }
         case .rgba:
-            guard 0..<rgbaSpriteCount ~= spriteIndex else {
+            guard (0..<rgbaSpriteCount).contains(spriteIndex) else {
                 return nil
             }
 

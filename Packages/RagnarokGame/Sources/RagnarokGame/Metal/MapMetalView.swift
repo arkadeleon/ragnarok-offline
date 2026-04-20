@@ -111,11 +111,9 @@ private final class MapMTKHostView: PlatformView, MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
-        guard
-            let commandBuffer = commandQueue.makeCommandBuffer(),
-            let drawable = view.currentDrawable,
-            let renderPassDescriptor = view.currentRenderPassDescriptor
-        else {
+        guard let commandBuffer = commandQueue.makeCommandBuffer(),
+              let drawable = view.currentDrawable,
+              let renderPassDescriptor = view.currentRenderPassDescriptor else {
             return
         }
 

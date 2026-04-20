@@ -77,17 +77,17 @@ extension IMF {
         let actionIndex = indexPath[1]
         let frameIndex = indexPath[2]
 
-        guard 0..<layers.count ~= layerIndex else {
+        guard layers.indices.contains(layerIndex) else {
             return nil
         }
 
         let layer = layers[layerIndex]
-        guard 0..<layer.actions.count ~= actionIndex else {
+        guard layer.actions.indices.contains(actionIndex) else {
             return nil
         }
 
         let action = layer.actions[actionIndex]
-        guard 0..<action.frames.count ~= frameIndex else {
+        guard action.frames.indices.contains(frameIndex) else {
             return nil
         }
 

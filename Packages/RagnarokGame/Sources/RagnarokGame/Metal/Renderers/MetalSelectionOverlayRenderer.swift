@@ -47,16 +47,14 @@ final class MetalSelectionOverlayRenderer {
     }
 
     func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
-        guard let pos = selectedPosition,
-              0..<mapGrid.width ~= pos.x,
-              0..<mapGrid.height ~= pos.y else {
+        guard let position = selectedPosition, mapGrid.contains(position) else {
             vertices = []
             return
         }
 
-        let cell = mapGrid[pos]
-        let x = Float(pos.x)
-        let y = Float(pos.y)
+        let cell = mapGrid[position]
+        let x = Float(position.x)
+        let y = Float(position.y)
 
         // +0.1 vertical offset keeps the overlay above the tile surface.
         let p0 = SIMD3<Float>(x, cell.bottomLeftAltitude + 0.1, -y)

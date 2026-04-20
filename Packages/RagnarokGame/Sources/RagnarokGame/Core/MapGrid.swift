@@ -46,4 +46,8 @@ struct MapGrid {
         let index = position.x + position.y * width
         return cells[index]
     }
+
+    func contains(_ position: SIMD2<Int>) -> Bool {
+        (0..<width).contains(position.x) && (0..<height).contains(position.y)
+    }
 }

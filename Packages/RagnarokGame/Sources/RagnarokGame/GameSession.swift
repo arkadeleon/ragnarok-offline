@@ -1132,7 +1132,7 @@ final public class GameSession {
 
 extension GameSession {
     func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
-        guard 0..<characters.count ~= slot else {
+        guard characters.indices.contains(slot) else {
             return nil
         }
 

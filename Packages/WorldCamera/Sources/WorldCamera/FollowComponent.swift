@@ -33,8 +33,9 @@ struct FollowSystem: System {
     func update(context: SceneUpdateContext) {
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
             guard let component = entity.components[FollowComponent.self],
-                  let target = context.scene.findEntity(id: component.currentTarget)
-            else { continue }
+                  let target = context.scene.findEntity(id: component.currentTarget) else {
+                continue
+            }
 
             let targetPosition = target.position(relativeTo: entity.parent)
             entity.position = mix(entity.position, targetPosition,
