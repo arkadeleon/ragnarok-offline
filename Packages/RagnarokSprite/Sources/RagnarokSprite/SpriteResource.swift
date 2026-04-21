@@ -132,4 +132,14 @@ extension ResourceManager {
         let sprite = SpriteResource(act: act, spr: spr, pal: pal)
         return sprite
     }
+
+    public func itemSprite(forItemID itemID: Int) async throws -> SpriteResource {
+        let scriptContext = await scriptContext
+        guard let itemResourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
+            throw ResourceError.scriptContextIncomplete("identifiedItemResourceName")
+        }
+        let path = ResourcePath.generateItemSpritePath(itemResourceName: itemResourceName)
+        let sprite = try await sprite(at: path)
+        return sprite
+    }
 }

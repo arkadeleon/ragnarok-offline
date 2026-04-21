@@ -167,7 +167,7 @@ final public class SpriteRenderer: Sendable {
             frameCount = max(frameCount, actionNode.0.children.count)
         }
 
-        let scriptContext = await composedSprite.resourceManager.scriptContext()
+        let scriptContext = await composedSprite.resourceManager.scriptContext
 
         var frames: [CGImage?] = []
 

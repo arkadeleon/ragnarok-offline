@@ -186,14 +186,10 @@ private struct EquipmentSlotImage: View {
         }
         .frame(width: 26, height: 26)
         .task(id: equippedItem?.itemID) {
-            guard let equippedItem else {
+            if let equippedItem {
+                iconImage = try? await gameSession.resourceManager.itemIconImage(forItemID: equippedItem.itemID)
+            } else {
                 iconImage = nil
-                return
-            }
-            let resourceManager = gameSession.resourceManager
-            let scriptContext = await resourceManager.scriptContext()
-            if let path = ResourcePath.generateItemIconImagePath(itemID: equippedItem.itemID, scriptContext: scriptContext) {
-                iconImage = try? await resourceManager.image(at: path, removesMagentaPixels: true)
             }
         }
     }

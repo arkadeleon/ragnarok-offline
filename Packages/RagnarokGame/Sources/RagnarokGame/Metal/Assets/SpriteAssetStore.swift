@@ -45,11 +45,11 @@ final class SpriteAssetStore {
     init(device: any MTLDevice, resourceManager: ResourceManager) {
         self.device = device
         self.resourceManager = resourceManager
-        ensureScriptContextLoaded()
+        loadScriptContextIfNeeded()
     }
 
     func sync(snapshots: [GameObjectID : SpriteSnapshot]) {
-        ensureScriptContextLoaded()
+        loadScriptContextIfNeeded()
 
         let currentIDs = Set(snapshots.keys)
 
@@ -234,10 +234,6 @@ final class SpriteAssetStore {
         guard itemAssets[objectID]?.composedSprite == nil, itemLoadTasks[objectID] == nil else {
             return
         }
-        guard let scriptContext else {
-            ensureScriptContextLoaded()
-            return
-        }
 
         itemLoadTasks[objectID] = Task { [weak self] in
             guard let self else {
@@ -247,11 +243,7 @@ final class SpriteAssetStore {
                 self.itemLoadTasks.removeValue(forKey: objectID)
             }
 
-            guard let path = ResourcePath.generateItemSpritePath(
-                itemID: Int(mapItem.itemID),
-                scriptContext: scriptContext
-            ),
-            let sprite = try? await self.resourceManager.sprite(at: path) else {
+            guard let sprite = try? await self.resourceManager.itemSprite(forItemID: Int(mapItem.itemID)) else {
                 return
             }
 
@@ -274,7 +266,7 @@ final class SpriteAssetStore {
         }
     }
 
-    private func ensureScriptContextLoaded() {
+    private func loadScriptContextIfNeeded() {
         guard scriptContext == nil, scriptContextLoadTask == nil else {
             return
         }
@@ -284,11 +276,7 @@ final class SpriteAssetStore {
                 return
             }
 
-            let scriptContext = await self.resourceManager.scriptContext()
-            guard !Task.isCancelled else {
-                return
-            }
-
+            let scriptContext = await self.resourceManager.scriptContext
             self.scriptContext = scriptContext
             self.scriptContextLoadTask = nil
         }

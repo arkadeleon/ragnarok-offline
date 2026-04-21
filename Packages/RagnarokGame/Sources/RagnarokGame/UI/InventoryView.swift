@@ -209,11 +209,7 @@ private struct InventoryItemView: View {
         }
         .frame(width: 32, height: 32)
         .task(id: item.itemID) {
-            let resourceManager = gameSession.resourceManager
-            let scriptContext = await resourceManager.scriptContext()
-            if let path = ResourcePath.generateItemIconImagePath(itemID: item.itemID, scriptContext: scriptContext) {
-                iconImage = try? await resourceManager.image(at: path, removesMagentaPixels: true)
-            }
+            iconImage = try? await gameSession.resourceManager.itemIconImage(forItemID: item.itemID)
         }
     }
 }

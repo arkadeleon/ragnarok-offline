@@ -40,3 +40,35 @@ extension ResourceManager {
         }
     }
 }
+
+extension ResourceManager {
+    public func itemIconImage(forItemID itemID: Int) async throws -> Resources.Image {
+        let scriptContext = await scriptContext
+        guard let itemResourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
+            throw ResourceError.scriptContextIncomplete("identifiedItemResourceName")
+        }
+        let path = ResourcePath.generateItemIconImagePath(itemResourceName: itemResourceName)
+        let image = try await image(at: path, removesMagentaPixels: true)
+        return image
+    }
+
+    public func itemPreviewImage(forItemID itemID: Int) async throws -> Resources.Image {
+        let scriptContext = await scriptContext
+        guard let itemResourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
+            throw ResourceError.scriptContextIncomplete("identifiedItemResourceName")
+        }
+        let path = ResourcePath.generateItemPreviewImagePath(itemResourceName: itemResourceName)
+        let image = try await image(at: path, removesMagentaPixels: true)
+        return image
+    }
+
+    public func statusIconImage(forStatusID statusID: Int) async throws -> Resources.Image {
+        let scriptContext = await scriptContext
+        guard let statusIconName = scriptContext.statusIconName(forStatusID: statusID) else {
+            throw ResourceError.scriptContextIncomplete("statusIconName")
+        }
+        let path = ResourcePath.effectDirectory.appending(statusIconName)
+        let image = try await image(at: path)
+        return image
+    }
+}

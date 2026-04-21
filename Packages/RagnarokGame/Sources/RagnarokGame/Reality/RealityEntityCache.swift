@@ -94,7 +94,7 @@ final class RealityEntityCache {
         }
 
         let task = Task {
-            try await Entity(from: mapObject, resourceManager: resourceManager)
+            try await Entity(from: mapObject, using: resourceManager)
         }
         objectEntities[mapObject.objectID] = .inProgress(task)
 
@@ -123,7 +123,7 @@ final class RealityEntityCache {
         }
 
         let templateTask = Task {
-            try await Entity(from: mapObject, resourceManager: resourceManager)
+            try await Entity(from: mapObject, using: resourceManager)
         }
         templateEntitiesByJobID[mapObject.job] = .inProgress(templateTask)
 
@@ -142,7 +142,7 @@ final class RealityEntityCache {
         }
 
         let task = Task {
-            try await Entity(from: mapItem, resourceManager: resourceManager)
+            try await Entity(from: mapItem, using: resourceManager)
         }
         itemEntities[mapItem.objectID] = .inProgress(task)
 

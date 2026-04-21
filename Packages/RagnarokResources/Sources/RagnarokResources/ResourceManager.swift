@@ -8,13 +8,16 @@
 import Foundation
 import GRF
 
-enum ResourceError: LocalizedError {
+public enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)
+    case scriptContextIncomplete(String)
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .resourceNotFound(let path):
             String(localized: "Resource not found at \(path.components.joined(separator: "/"))")
+        case .scriptContextIncomplete(let call):
+            String(localized: "Script context incomplete: \(call)")
         }
     }
 }
@@ -28,6 +31,13 @@ final public class ResourceManager: Sendable {
     public let localURL: URL
     public let remoteURL: URL?
     public let remoteCacheURL: URL?
+
+    private let scriptContextLoader = ScriptContextLoader()
+    public var scriptContext: ScriptContext {
+        get async {
+            await scriptContextLoader.scriptContext(using: self)
+        }
+    }
 
     let cache = ResourceCache()
     let imageResourceCache = ThrowingResourceCache<Resources.Image>()

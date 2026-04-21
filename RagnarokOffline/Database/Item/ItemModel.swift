@@ -158,18 +158,14 @@ final class ItemModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let scriptContext = await ResourceManager.shared.scriptContext()
-            if let path = ResourcePath.generateItemIconImagePath(itemID: item.id, scriptContext: scriptContext) {
-                iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
-            }
+            iconImage = try? await ResourceManager.shared.itemIconImage(forItemID: item.id)
         }
     }
 
     @MainActor
     func fetchPreviewImage() async {
-        let scriptContext = await ResourceManager.shared.scriptContext()
-        if let previewImagePath = ResourcePath.generateItemPreviewImagePath(itemID: item.id, scriptContext: scriptContext) {
-            previewImage = try? await ResourceManager.shared.image(at: previewImagePath, removesMagentaPixels: true)
+        if previewImage == nil {
+            previewImage = try? await ResourceManager.shared.itemPreviewImage(forItemID: item.id)
         }
     }
 }

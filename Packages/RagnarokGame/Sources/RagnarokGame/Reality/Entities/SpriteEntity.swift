@@ -45,33 +45,34 @@ class SpriteEntity: Entity {
 }
 
 extension Entity {
-    convenience init(from mapObject: MapObject, resourceManager: ResourceManager) async throws {
+    convenience init(from mapObject: MapObject, using resourceManager: ResourceManager) async throws {
         self.init()
 
-        let configuration = ComposedSprite.Configuration(mapObject: mapObject)
-        let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-        let animations = await SpriteAnimation.animations(for: composedSprite)
+        do {
+            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
+            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+            let animations = await SpriteAnimation.animations(for: composedSprite)
 
-        let spriteEntity = SpriteEntity(animations: animations)
-        spriteEntity.name = "sprite"
-        addChild(spriteEntity)
-
-//        let hpEntity = try await Entity.loadHP()
-//        hpEntity.position = [0, -1, 0.5]
-//        addChild(hpEntity)
+            let spriteEntity = SpriteEntity(animations: animations)
+            spriteEntity.name = "sprite"
+            addChild(spriteEntity)
+        } catch {
+            logger.warning("\(error)")
+        }
     }
 
-    convenience init(from mapItem: MapItem, resourceManager: ResourceManager) async throws {
+    convenience init(from mapItem: MapItem, using resourceManager: ResourceManager) async throws {
         self.init()
 
-        let scriptContext = await resourceManager.scriptContext()
-        if let path = ResourcePath.generateItemSpritePath(itemID: Int(mapItem.itemID), scriptContext: scriptContext) {
-            let sprite = try await resourceManager.sprite(at: path)
+        do {
+            let sprite = try await resourceManager.itemSprite(forItemID: Int(mapItem.itemID))
             let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
 
             let spriteEntity = SpriteEntity(animation: animation)
             spriteEntity.name = "sprite"
             addChild(spriteEntity)
+        } catch {
+            logger.warning("\(error)")
         }
     }
 }

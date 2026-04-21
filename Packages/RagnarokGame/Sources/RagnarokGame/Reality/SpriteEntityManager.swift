@@ -74,7 +74,7 @@ final class SpriteEntityManager {
         }
 
         let task = Task {
-            try await Entity(from: mapObject, resourceManager: resourceManager)
+            try await Entity(from: mapObject, using: resourceManager)
         }
 
         entitiesByObjectID[mapObject.objectID] = .inProgress(task)
@@ -108,7 +108,7 @@ final class SpriteEntityManager {
         }
 
         let templateTask = Task {
-            try await Entity(from: mapObject, resourceManager: resourceManager)
+            try await Entity(from: mapObject, using: resourceManager)
         }
 
         templateEntitiesByJobID[mapObject.job] = .inProgress(templateTask)
