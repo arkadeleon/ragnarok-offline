@@ -295,6 +295,7 @@ public let HEADER_CZ_REQ_STYLE_CLOSE: Int16 = 0xa48
 public let HEADER_ZC_SUMMON_HP_INIT: Int16 = 0xb6b
 public let HEADER_ZC_SUMMON_HP_UPDATE: Int16 = 0xb6c
 public let HEADER_ZC_REPUTE_INFO: Int16 = 0xb8d
+public let HEADER_ZC_REPUTE_OPEN: Int16 = 0xb8e
 public let HEADER_ZC_UI_OPEN_V3: Int16 = 0xb9a
 public let HEADER_ZC_TARGET_SPIRITS: Int16 = 0xb68
 public let HEADER_ZC_FRIENDS_LIST: Int16 = 0x201
@@ -12237,6 +12238,30 @@ public struct PACKET_ZC_REPUTE_INFO: CodablePacket {
         try encoder.encode(packetLength)
         try encoder.encode(success)
         try encoder.encode(list)
+    }
+}
+
+public struct PACKET_ZC_REPUTE_OPEN: CodablePacket {
+    public static var size: Int {
+        (2 + 8 + 4 + 4)
+    }
+    public var packetType: Int16 = 0
+    public var table: UInt64 = 0
+    public var type: UInt32 = 0
+    public var mode: UInt32 = 0
+    public init() {
+    }
+    public init(from decoder: BinaryDecoder) throws {
+        packetType = try decoder.decode(Int16.self)
+        table = try decoder.decode(UInt64.self)
+        type = try decoder.decode(UInt32.self)
+        mode = try decoder.decode(UInt32.self)
+    }
+    public func encode(to encoder: BinaryEncoder) throws {
+        try encoder.encode(packetType)
+        try encoder.encode(table)
+        try encoder.encode(type)
+        try encoder.encode(mode)
     }
 }
 
