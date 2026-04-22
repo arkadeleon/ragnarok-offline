@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/3/22.
 //
 
-import AVFAudio
 import Foundation
 import RagnarokRenderAssets
 import RagnarokResources
@@ -14,17 +13,14 @@ final class MetalRenderBackend: GameRenderBackend {
     private(set) weak var scene: MapScene?
 
     let resourceManager: ResourceManager
+
     let renderer: MetalMapRenderer
-
-    var bgmPlayer: AVAudioPlayer?
-
-    var soundEffectDataCache: [String : Data] = [:]
-    var soundEffectDataLoadTasks: [String : Task<Data?, Never>] = [:]
-    var activeSoundEffectPlayers: [UUID : AVAudioPlayer] = [:]
+    let audioPlayer: MetalMapAudioPlayer
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
         self.renderer = MetalMapRenderer(resourceManager: resourceManager)
+        self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
     }
 
     func attach(scene: MapScene) {
@@ -33,9 +29,7 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func detach() {
-        bgmPlayer?.stop()
-        bgmPlayer = nil
-        stopSoundEffects()
+        audioPlayer.stopAll()
         scene = nil
         renderer.setWorldAsset(nil)
     }
@@ -69,10 +63,7 @@ final class MetalRenderBackend: GameRenderBackend {
             )
             renderer.setSkyboxConfiguration(skyboxConfiguration)
 
-            bgmPlayer?.stop()
-            bgmPlayer = await loadBGMPlayer(forMapName: scene.mapName)
-            bgmPlayer?.numberOfLoops = -1
-            bgmPlayer?.play()
+            await audioPlayer.playBGM(forMapName: scene.mapName)
 
             syncFrameState(with: scene.state)
             await renderer.prepare()
@@ -84,13 +75,15 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func unload() {
-        bgmPlayer?.stop()
-        bgmPlayer = nil
-        stopSoundEffects()
+        audioPlayer.stopAll()
     }
 
     func applySnapshot(_ state: MapSceneState) {
         syncFrameState(with: state)
+    }
+
+    func playSound(named soundName: String, on objectID: GameObjectID) {
+        audioPlayer.playSound(named: soundName)
     }
 
     func prepareFrame() {
@@ -123,25 +116,6 @@ final class MetalRenderBackend: GameRenderBackend {
         )
 
         renderer.syncSelection(state.selection, mapGrid: scene.mapGrid)
-    }
-
-    private func loadBGMPlayer(forMapName mapName: String) async -> AVAudioPlayer? {
-        let mp3NameTable = await resourceManager.mp3NameTable()
-        guard let mp3Name = mp3NameTable.mp3Name(forMapName: mapName) else {
-            return nil
-        }
-
-        let bgmPath = ResourcePath(components: ["BGM", mp3Name])
-        guard let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) else {
-            return nil
-        }
-
-        return try? AVAudioPlayer(data: bgmData)
-    }
-
-    func finishSoundEffectPlayback(id: UUID) {
-        activeSoundEffectPlayers[id]?.stop()
-        activeSoundEffectPlayers[id] = nil
     }
 
     private func syncAndProjectOverlay() {

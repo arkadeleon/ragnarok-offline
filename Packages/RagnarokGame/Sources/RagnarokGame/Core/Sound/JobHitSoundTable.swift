@@ -294,7 +294,7 @@ enum JobHitSoundTable {
         4348: ["player_metal.wav"],       // ROYAL_GUARD2_2ND
     ]
 
-    static func hitSoundFilenames(forJob job: Int) -> [String] {
+    static func hitSoundNames(forJob job: Int) -> [String] {
         table[job] ?? ["player_clothes.wav"]
     }
 }

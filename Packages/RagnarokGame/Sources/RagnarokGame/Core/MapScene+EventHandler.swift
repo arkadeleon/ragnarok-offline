@@ -347,31 +347,31 @@ extension MapScene {
         if isAttackAction {
             if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
                 let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
-                let filename = WeaponSoundTable.attackSoundFilenames(for: weaponType).randomElement()
-                if let filename {
-                    renderBackend.playSound(filename, on: objectAction.sourceObjectID)
+                let soundName = WeaponSoundTable.attackSoundNames(for: weaponType).randomElement()
+                if let soundName {
+                    renderBackend.playSound(named: soundName, on: objectAction.sourceObjectID)
                 }
             }
 
             if objectAction.damage > 0, let targetMapObject = state.object(for: objectAction.targetObjectID)?.object {
-                let hitFilename: String?
+                let hitSoundName: String?
                 let targetJob = SpriteJob(rawValue: targetMapObject.job)
 
                 if targetJob.isPlayer {
-                    hitFilename = JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
+                    hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
                 } else if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
                     let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
-                    let weaponHitFilename = WeaponHitSoundTable.hitSoundFilenames(for: weaponType).randomElement()
-                    hitFilename = weaponHitFilename ?? JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
+                    let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: weaponType).randomElement()
+                    hitSoundName = weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
                 } else {
-                    hitFilename = JobHitSoundTable.hitSoundFilenames(forJob: targetMapObject.job).randomElement()
+                    hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
                 }
 
-                if let hitFilename {
+                if let hitSoundName {
                     Task { @MainActor [weak self] in
                         try? await Task.sleep(for: .milliseconds(objectAction.sourceSpeed))
                         guard let self else { return }
-                        renderBackend.playSound(hitFilename, on: objectAction.targetObjectID)
+                        renderBackend.playSound(named: hitSoundName, on: objectAction.targetObjectID)
                     }
                 }
             }

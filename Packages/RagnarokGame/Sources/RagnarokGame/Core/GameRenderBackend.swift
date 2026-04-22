@@ -17,9 +17,5 @@ public protocol GameRenderBackend: AnyObject {
 
     func applySnapshot(_ state: MapSceneState)
 
-    func playSound(_ filename: String, on objectID: GameObjectID)
-}
-
-public extension GameRenderBackend {
-    func playSound(_ filename: String, on objectID: GameObjectID) {}
+    func playSound(named soundName: String, on objectID: GameObjectID)
 }

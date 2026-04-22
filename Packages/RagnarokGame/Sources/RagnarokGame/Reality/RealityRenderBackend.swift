@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/3/21.
 //
 
-import AVFAudio
 import CoreGraphics
 import Foundation
 import RagnarokConstants
@@ -27,6 +26,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     let rootEntity = Entity()
     let entityCache: RealityEntityCache
+    let audioPlayer: RealityMapAudioPlayer
 
     private let tileSelectionRenderer: RealityTileSelectionRenderer
     private let sampler = MapObjectPresentationSampler()
@@ -37,9 +37,6 @@ final class RealityRenderBackend: GameRenderBackend {
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
     private let tileRange = 17
 
-    var soundEffectResourceCache: [String : AudioBufferResource] = [:]
-    var soundEffectResourceLoadTasks: [String : Task<AudioBufferResource?, Never>] = [:]
-
     #if os(iOS) || os(macOS)
     weak var arView: ARView?
     private var anchorEntity: AnchorEntity?
@@ -48,6 +45,7 @@ final class RealityRenderBackend: GameRenderBackend {
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
         self.entityCache = RealityEntityCache(resourceManager: resourceManager)
+        self.audioPlayer = RealityMapAudioPlayer(resourceManager: resourceManager, entityCache: entityCache)
         self.tileSelectionRenderer = RealityTileSelectionRenderer(resourceManager: resourceManager)
 
         registerRealityComponents()
@@ -59,7 +57,7 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func detach() {
-        stopSoundEffects()
+        audioPlayer.stopSoundEffects()
         teardownSceneState()
         scene = nil
         #if os(iOS) || os(macOS)
@@ -81,14 +79,7 @@ final class RealityRenderBackend: GameRenderBackend {
             worldEntity.name = scene.mapName
             worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
 
-            let audioResource = await audioResource(forMapName: scene.mapName, resourceManager: scene.resourceManager)
-            if let audioResource {
-                worldEntity.components.set(AudioLibraryComponent(resources: [
-                    "BGM": audioResource
-                ]))
-                worldEntity.components.set(AmbientAudioComponent())
-                worldEntity.playAudio(audioResource)
-            }
+            await audioPlayer.playBGM(forMapName: scene.mapName, on: worldEntity)
 
             rootEntity.addChild(worldEntity)
         }
@@ -136,7 +127,7 @@ final class RealityRenderBackend: GameRenderBackend {
             worldEntity.stopAllAudio()
         }
 
-        stopSoundEffects()
+        audioPlayer.stopSoundEffects()
         teardownSceneState()
     }
 
@@ -160,6 +151,10 @@ final class RealityRenderBackend: GameRenderBackend {
             }
             await syncDamageEffects(with: state)
         }
+    }
+
+    func playSound(named soundName: String, on objectID: GameObjectID) {
+        audioPlayer.playSound(named: soundName, on: objectID)
     }
 
     func updateCameraState(_ cameraState: MapCameraState) {
@@ -410,25 +405,6 @@ final class RealityRenderBackend: GameRenderBackend {
         )
         damageEntity.setParent(rootEntity)
         return true
-    }
-
-    private func audioResource(forMapName mapName: String, resourceManager: ResourceManager) async -> AudioResource? {
-        let mp3NameTable = await resourceManager.mp3NameTable()
-        guard let mp3Name = mp3NameTable.mp3Name(forMapName: mapName) else {
-            return nil
-        }
-
-        let bgmPath = ResourcePath(components: ["BGM", mp3Name])
-        guard let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) else {
-            return nil
-        }
-
-        guard let audioBuffer = AVAudioPCMBuffer.load(from: bgmData) else {
-            return nil
-        }
-
-        let configuration = AudioBufferResource.Configuration(shouldLoop: true)
-        return try? AudioBufferResource(buffer: audioBuffer, configuration: configuration)
     }
 
     private func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {

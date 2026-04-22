@@ -38,7 +38,7 @@ enum WeaponSoundTable {
         .w_huuma: ["attack_sword.wav"],
     ]
 
-    static func attackSoundFilenames(for weaponType: WeaponType) -> [String] {
+    static func attackSoundNames(for weaponType: WeaponType) -> [String] {
         table[weaponType] ?? []
     }
 }

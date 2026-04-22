@@ -39,7 +39,7 @@ enum WeaponHitSoundTable {
         .w_shield: ["_hit_mace.wav"],
     ]
 
-    static func hitSoundFilenames(for weaponType: WeaponType) -> [String] {
+    static func hitSoundNames(for weaponType: WeaponType) -> [String] {
         (table[weaponType] ?? []).map(K2L)
     }
 }
