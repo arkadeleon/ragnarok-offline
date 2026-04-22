@@ -76,7 +76,7 @@ final class MetalSelectionOverlayRenderer {
     func render(
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MapRuntimeRenderer.RenderMatrices
+        matrices: MetalMapRenderer.RenderMatrices
     ) {
         guard !vertices.isEmpty else {
             return

@@ -1,5 +1,5 @@
 //
-//  MapRuntimeRenderer.swift
+//  MetalMapRenderer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/22.
@@ -13,7 +13,7 @@ import RagnarokRenderAssets
 import RagnarokResources
 import simd
 
-final class MapRuntimeRenderer: Renderer {
+final class MetalMapRenderer: Renderer {
     private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
     private static let fieldOfViewDegrees: Float = 15
 

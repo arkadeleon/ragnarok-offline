@@ -109,7 +109,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
     }
 
     private func spriteHitBoxes(
-        matrices: MapRuntimeRenderer.RenderMatrices,
+        matrices: MetalMapRenderer.RenderMatrices,
         viewport: CGRect
     ) -> [GameObjectID : CGRect] {
         guard viewport.width > 0, viewport.height > 0 else {
@@ -147,7 +147,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
 
     private func spriteHitBox(
         for drawable: SpriteLayerDrawable,
-        matrices: MapRuntimeRenderer.RenderMatrices,
+        matrices: MetalMapRenderer.RenderMatrices,
         viewport: CGRect
     ) -> CGRect? {
         let pv = matrices.projectionMatrix * matrices.viewMatrix

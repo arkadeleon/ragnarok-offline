@@ -62,7 +62,7 @@ private final class MapMTKHostView: PlatformView, MTKViewDelegate {
     private weak var scene: MapScene?
     private let backend: MetalRenderBackend
     private let commandQueue: any MTLCommandQueue
-    private let renderer: MapRuntimeRenderer
+    private let renderer: MetalMapRenderer
     private let mtkView: MTKView
 
     private var baseAzimuth: Float = 0

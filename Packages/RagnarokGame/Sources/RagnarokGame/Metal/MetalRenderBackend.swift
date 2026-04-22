@@ -14,7 +14,7 @@ final class MetalRenderBackend: GameRenderBackend {
     private(set) weak var scene: MapScene?
 
     let resourceManager: ResourceManager
-    let renderer: MapRuntimeRenderer
+    let renderer: MetalMapRenderer
 
     var bgmPlayer: AVAudioPlayer?
 
@@ -24,7 +24,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
-        self.renderer = MapRuntimeRenderer(resourceManager: resourceManager)
+        self.renderer = MetalMapRenderer(resourceManager: resourceManager)
     }
 
     func attach(scene: MapScene) {

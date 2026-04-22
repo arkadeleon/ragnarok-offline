@@ -112,7 +112,7 @@ final class MetalDamageEffectRenderer {
 
     func render(
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MapRuntimeRenderer.RenderMatrices
+        matrices: MetalMapRenderer.RenderMatrices
     ) {
         let now = ContinuousClock.now
 

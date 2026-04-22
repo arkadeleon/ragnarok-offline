@@ -42,7 +42,7 @@ final class MetalSpriteRenderer {
         drawables: [SpriteLayerDrawable],
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MapRuntimeRenderer.RenderMatrices
+        matrices: MetalMapRenderer.RenderMatrices
     ) {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
