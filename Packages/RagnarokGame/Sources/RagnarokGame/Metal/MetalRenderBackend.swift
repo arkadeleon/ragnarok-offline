@@ -75,7 +75,7 @@ final class MetalRenderBackend: GameRenderBackend {
             bgmPlayer?.play()
 
             syncFrameState(with: scene.state)
-            await renderer.prepareDynamicRenderers()
+            await renderer.prepare()
         } catch is CancellationError {
             return
         } catch {

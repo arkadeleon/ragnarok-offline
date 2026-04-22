@@ -33,24 +33,21 @@ final class SpriteAssetStore {
 
     private let device: any MTLDevice
     private let resourceManager: ResourceManager
+    private let scriptContext: ScriptContext
     private let frameResolver = SpriteFrameResolver()
 
     private var objectAssets: [GameObjectID : ObjectAssetEntry] = [:]
     private var objectLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
     private var itemAssets: [GameObjectID : ItemAssetEntry] = [:]
     private var itemLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
-    private var scriptContext: ScriptContext?
-    private var scriptContextLoadTask: Task<Void, Never>?
 
-    init(device: any MTLDevice, resourceManager: ResourceManager) {
+    init(device: any MTLDevice, resourceManager: ResourceManager, scriptContext: ScriptContext) {
         self.device = device
         self.resourceManager = resourceManager
-        loadScriptContextIfNeeded()
+        self.scriptContext = scriptContext
     }
 
     func sync(snapshots: [GameObjectID : SpriteSnapshot]) {
-        loadScriptContextIfNeeded()
-
         let currentIDs = Set(snapshots.keys)
 
         for objectID in Set(objectAssets.keys).subtracting(currentIDs) {
@@ -171,14 +168,11 @@ final class SpriteAssetStore {
         for task in itemLoadTasks.values {
             task.cancel()
         }
-        scriptContextLoadTask?.cancel()
 
         objectLoadTasks.removeAll()
         itemLoadTasks.removeAll()
-        scriptContextLoadTask = nil
         objectAssets.removeAll()
         itemAssets.removeAll()
-        scriptContext = nil
     }
 
     private func syncObjectAssets(objectID: GameObjectID, mapObject: MapObject) {
@@ -263,22 +257,6 @@ final class SpriteAssetStore {
                 device: self.device,
                 composedSprite: composedSprite
             )
-        }
-    }
-
-    private func loadScriptContextIfNeeded() {
-        guard scriptContext == nil, scriptContextLoadTask == nil else {
-            return
-        }
-
-        scriptContextLoadTask = Task { [weak self] in
-            guard let self else {
-                return
-            }
-
-            let scriptContext = await self.resourceManager.scriptContext
-            self.scriptContext = scriptContext
-            self.scriptContextLoadTask = nil
         }
     }
 }

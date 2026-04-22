@@ -23,7 +23,7 @@ struct SpriteFrameResolver {
         let headDirection: SpriteHeadDirection
         let elapsed: Duration
         let partTextures: SpritePartTextures
-        let scriptContext: ScriptContext?
+        let scriptContext: ScriptContext
         let worldPosition: SIMD3<Float>
         let isVisible: Bool
     }

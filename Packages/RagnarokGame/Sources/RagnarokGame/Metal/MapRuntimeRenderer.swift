@@ -92,26 +92,27 @@ final class MapRuntimeRenderer: Renderer {
         modelRenderer = try? RSMModelRenderer(device: device)
 
         spriteRenderer = try? MetalSpriteRenderer(device: device)
-        spriteAssetStore = SpriteAssetStore(device: device, resourceManager: resourceManager)
         selectionOverlayRenderer = nil
     }
 
-    func prepareDynamicRenderers() async {
+    func prepare() async {
         let path = ResourcePath.textureDirectory.appending(["grid.tga"])
-        guard let image = try? await resourceManager.image(at: path),
-              let selectionTexture = MetalTextureFactory.makeTexture(
+        if let image = try? await resourceManager.image(at: path),
+           let selectionTexture = MetalTextureFactory.makeTexture(
                 from: image.cgImage,
                 device: device,
                 label: "tile-selector"
-              ) else {
+           ) {
+            selectionOverlayRenderer = try? MetalSelectionOverlayRenderer(
+                device: device,
+                selectionTexture: selectionTexture
+            )
+        } else {
             selectionOverlayRenderer = nil
-            return
         }
 
-        selectionOverlayRenderer = try? MetalSelectionOverlayRenderer(
-            device: device,
-            selectionTexture: selectionTexture
-        )
+        let scriptContext = await resourceManager.scriptContext
+        spriteAssetStore = SpriteAssetStore(device: device, resourceManager: resourceManager, scriptContext: scriptContext)
     }
 
     func setSkyboxConfiguration(_ configuration: SkyboxConfiguration) {

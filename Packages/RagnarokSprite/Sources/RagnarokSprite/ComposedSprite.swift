@@ -162,7 +162,7 @@ extension ComposedSprite {
         direction: SpriteDirection,
         actionIndex: Int,
         frameIndex: Int,
-        scriptContext: ScriptContext?
+        scriptContext: ScriptContext
     ) -> Int {
         if part.semantic == .shadow {
             return -1
@@ -174,9 +174,6 @@ extension ComposedSprite {
         }
 
         let zIndexForGarment: () -> Int = { [configuration] in
-            guard let scriptContext else {
-                return 5
-            }
             let drawOnTop = scriptContext.drawOnTop(
                 forRobeID: configuration.garment,
                 genderID: configuration.gender.rawValue,
