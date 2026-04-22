@@ -1,5 +1,5 @@
 //
-//  MapMetalView.swift
+//  MetalMapView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/22.
@@ -8,12 +8,12 @@
 import MetalKit
 import SwiftUI
 
-struct MapMetalView: View {
+struct MetalMapView: View {
     var scene: MapScene
 
     var body: some View {
         if let backend = scene.renderBackend as? MetalRenderBackend {
-            MapMetalViewContainer(scene: scene, backend: backend)
+            MetalMapViewContainer(scene: scene, backend: backend)
         } else {
             EmptyView()
         }
@@ -22,7 +22,7 @@ struct MapMetalView: View {
 
 #if canImport(UIKit)
 
-private struct MapMetalViewContainer: UIViewRepresentable {
+private struct MetalMapViewContainer: UIViewRepresentable {
     var scene: MapScene
     var backend: MetalRenderBackend
 
@@ -37,7 +37,7 @@ private struct MapMetalViewContainer: UIViewRepresentable {
 
 #elseif canImport(AppKit)
 
-private struct MapMetalViewContainer: NSViewRepresentable {
+private struct MetalMapViewContainer: NSViewRepresentable {
     var scene: MapScene
     var backend: MetalRenderBackend
 

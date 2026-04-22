@@ -1,5 +1,5 @@
 //
-//  MapRealityView.swift
+//  RealityMapView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/21.
@@ -8,7 +8,7 @@
 import RealityKit
 import SwiftUI
 
-public struct MapRealityView: View {
+public struct RealityMapView: View {
     var scene: MapScene
 
     #if os(visionOS)
@@ -44,7 +44,7 @@ public struct MapRealityView: View {
         }
         #else
         if let backend = scene.renderBackend as? RealityRenderBackend {
-            MapSceneARView(scene: scene, backend: backend)
+            RealityVirtualMapView(scene: scene, backend: backend)
         } else {
             EmptyView()
         }
@@ -57,7 +57,7 @@ public struct MapRealityView: View {
 }
 
 #if os(visionOS)
-private extension MapRealityView {
+private extension RealityMapView {
     var tileTapGesture: some Gesture {
         SpatialTapGesture()
             .targetedToEntity(where: .has(TileComponent.self))

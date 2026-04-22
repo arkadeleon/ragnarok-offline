@@ -14,13 +14,13 @@ struct MapRenderHost: View {
     var body: some View {
         switch configuration.engine {
         case .metal:
-            MapMetalView(scene: scene)
+            MetalMapView(scene: scene)
         case .realityKit:
             #if os(visionOS)
             Text("Game")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             #else
-            MapRealityView(scene: scene)
+            RealityMapView(scene: scene)
             #endif
         }
     }

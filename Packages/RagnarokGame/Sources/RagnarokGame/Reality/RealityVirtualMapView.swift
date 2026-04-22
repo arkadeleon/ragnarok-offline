@@ -1,5 +1,5 @@
 //
-//  MapSceneARView.swift
+//  RealityVirtualMapView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2025/8/7.
@@ -11,19 +11,19 @@ import SwiftUI
 
 #if os(iOS)
 
-struct MapSceneARView: UIViewControllerRepresentable {
+struct RealityVirtualMapView: UIViewControllerRepresentable {
     var scene: MapScene
     var backend: RealityRenderBackend
 
-    func makeUIViewController(context: Context) -> MapSceneARViewController {
-        MapSceneARViewController(scene: scene, backend: backend)
+    func makeUIViewController(context: Context) -> RealityVirtualMapViewController {
+        RealityVirtualMapViewController(scene: scene, backend: backend)
     }
 
-    func updateUIViewController(_ viewController: MapSceneARViewController, context: Context) {
+    func updateUIViewController(_ viewController: RealityVirtualMapViewController, context: Context) {
     }
 }
 
-class MapSceneARViewController: UIViewController {
+class RealityVirtualMapViewController: UIViewController {
     let scene: MapScene
     let backend: RealityRenderBackend
 
@@ -143,19 +143,19 @@ class MapSceneARViewController: UIViewController {
 
 #elseif os(macOS)
 
-struct MapSceneARView: NSViewControllerRepresentable {
+struct RealityVirtualMapView: NSViewControllerRepresentable {
     var scene: MapScene
     var backend: RealityRenderBackend
 
-    func makeNSViewController(context: Context) -> MapSceneARViewController {
-        MapSceneARViewController(scene: scene, backend: backend)
+    func makeNSViewController(context: Context) -> RealityVirtualMapViewController {
+        RealityVirtualMapViewController(scene: scene, backend: backend)
     }
 
-    func updateNSViewController(_ viewController: MapSceneARViewController, context: Context) {
+    func updateNSViewController(_ viewController: RealityVirtualMapViewController, context: Context) {
     }
 }
 
-class MapSceneARViewController: NSViewController {
+class RealityVirtualMapViewController: NSViewController {
     let scene: MapScene
     let backend: RealityRenderBackend
 
