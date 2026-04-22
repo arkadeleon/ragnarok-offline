@@ -50,4 +50,13 @@ struct MapGrid {
     func contains(_ position: SIMD2<Int>) -> Bool {
         (0..<width).contains(position.x) && (0..<height).contains(position.y)
     }
+
+    func worldPosition(for gridPosition: SIMD2<Int>) -> SIMD3<Float> {
+        let altitude = self[gridPosition].averageAltitude
+        return [
+            Float(gridPosition.x) + 0.5,
+            altitude,
+            -Float(gridPosition.y) - 0.5,
+        ]
+    }
 }

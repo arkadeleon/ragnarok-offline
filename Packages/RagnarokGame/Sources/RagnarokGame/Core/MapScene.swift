@@ -139,15 +139,6 @@ public final class MapScene {
         cameraState.elevation = .pi / 4
     }
 
-    func position(for gridPosition: SIMD2<Int>) -> SIMD3<Float> {
-        let altitude = mapGrid[gridPosition].averageAltitude
-        return [
-            Float(gridPosition.x) + 0.5,
-            altitude,
-            -Float(gridPosition.y) - 0.5,
-        ]
-    }
-
     private func playerMovementOrigin() -> SIMD2<Int> {
         if let path = state.player.movement?.path, path.count > 1 {
             return path[1]

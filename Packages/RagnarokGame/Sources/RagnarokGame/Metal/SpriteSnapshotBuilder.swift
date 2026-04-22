@@ -40,7 +40,7 @@ final class SpriteSnapshotBuilder {
         for (itemID, itemState) in items {
             snapshots[itemID] = SpriteSnapshot(
                 objectID: itemID,
-                worldPosition: scene.position(for: itemState.gridPosition),
+                worldPosition: scene.mapGrid.worldPosition(for: itemState.gridPosition),
                 isVisible: true,
                 content: .item(itemState.item)
             )
@@ -56,7 +56,7 @@ final class SpriteSnapshotBuilder {
     ) -> SpriteSnapshot {
         let presentationSample = sampler.sample(
             for: state,
-            position: { scene.position(for: $0) },
+            position: { scene.mapGrid.worldPosition(for: $0) },
             now: now
         )
 

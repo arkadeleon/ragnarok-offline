@@ -102,7 +102,7 @@ final class RealityRenderBackend: GameRenderBackend {
         do {
             let (playerEntity, _) = try await entityCache.objectEntity(for: scene.player)
             playerEntity.name = "\(scene.player.objectID)"
-            playerEntity.transform = Transform(translation: scene.position(for: scene.playerPosition))
+            playerEntity.transform = Transform(translation: scene.mapGrid.worldPosition(for: scene.playerPosition))
             playerEntity.isEnabled = scene.player.effectState != .cloak
             playerEntity.components.set([
                 GridPositionComponent(gridPosition: scene.playerPosition),
@@ -146,9 +146,6 @@ final class RealityRenderBackend: GameRenderBackend {
                 return
             }
             await syncEntities(with: state, scene: scene)
-            guard !Task.isCancelled else {
-                return
-            }
             await syncDamageEffects(with: state)
         }
     }
@@ -398,6 +395,10 @@ final class RealityRenderBackend: GameRenderBackend {
             return false
         }
 
+        guard !Task.isCancelled else {
+            return false
+        }
+
         let damageEntity = Entity.makeDamageEntity(
             for: effect.amount,
             delay: effect.delay,
@@ -427,6 +428,7 @@ final class RealityRenderBackend: GameRenderBackend {
             guard !Task.isCancelled else {
                 return
             }
+
             await syncObjectEntity(for: objectState, scene: scene)
         }
 
@@ -443,6 +445,7 @@ final class RealityRenderBackend: GameRenderBackend {
             guard !Task.isCancelled else {
                 return
             }
+
             await syncItemEntity(for: itemState, scene: scene)
         }
     }
@@ -459,11 +462,21 @@ final class RealityRenderBackend: GameRenderBackend {
             }
 
             entity.name = "\(objectState.id)"
-            entity.transform = Transform(translation: presentationWorldPosition(for: objectState, scene: scene))
+            entity.transform = Transform(
+                translation: sampler.sample(
+                    for: objectState,
+                    position: { scene.mapGrid.worldPosition(for: $0) },
+                    now: .now
+                ).worldPosition
+            )
             entity.isEnabled = objectState.isVisible
             entity.components.set(GridPositionComponent(gridPosition: objectState.gridPosition))
             entity.components.set(MapObjectComponent(mapObject: objectState.object))
-            entity.components.set(makePresentationComponent(for: objectState, scene: scene))
+            entity.components.set(MapObjectSnapshotPresentationComponent(
+                logicalWorldPosition: scene.mapGrid.worldPosition(for: objectState.gridPosition),
+                timeline: MapObjectMovementTimeline(for: objectState, position: { scene.mapGrid.worldPosition(for: $0) }),
+                presentation: objectState.presentation
+            ))
 
             if scene.player.objectID == objectState.id || objectState.object.type == .monster {
                 entity.components.set(HealthPointsComponent(hp: objectState.hp, maxHp: objectState.maxHp))
@@ -491,7 +504,7 @@ final class RealityRenderBackend: GameRenderBackend {
             let isNew = entity.parent == nil
 
             entity.name = "\(itemState.id)"
-            entity.transform = Transform(translation: scene.position(for: itemState.gridPosition))
+            entity.transform = Transform(translation: scene.mapGrid.worldPosition(for: itemState.gridPosition))
             entity.components.set(GridPositionComponent(gridPosition: itemState.gridPosition))
             entity.components.set(MapItemComponent(mapItem: itemState.item))
 
@@ -502,21 +515,5 @@ final class RealityRenderBackend: GameRenderBackend {
         } catch {
             logger.warning("\(error)")
         }
-    }
-
-    private func makePresentationComponent(for objectState: MapObjectState, scene: MapScene) -> MapObjectSnapshotPresentationComponent {
-        return MapObjectSnapshotPresentationComponent(
-            logicalWorldPosition: scene.position(for: objectState.gridPosition),
-            timeline: MapObjectMovementTimeline(for: objectState, position: { scene.position(for: $0) }),
-            presentation: objectState.presentation
-        )
-    }
-
-    private func presentationWorldPosition(for objectState: MapObjectState, scene: MapScene) -> SIMD3<Float> {
-        sampler.sample(
-            for: objectState,
-            position: { scene.position(for: $0) },
-            now: .now
-        ).worldPosition
     }
 }

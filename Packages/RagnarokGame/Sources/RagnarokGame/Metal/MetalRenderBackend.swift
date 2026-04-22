@@ -97,7 +97,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
         let playerPresentationPosition =
             renderer.presentationWorldPosition(for: state.player.id)
-            ?? scene.position(for: state.player.gridPosition)
+            ?? scene.mapGrid.worldPosition(for: state.player.gridPosition)
         renderer.updateCamera(
             cameraState: scene.cameraState,
             targetPosition: playerPresentationPosition

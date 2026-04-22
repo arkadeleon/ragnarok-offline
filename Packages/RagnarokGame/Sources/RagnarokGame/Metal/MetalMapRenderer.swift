@@ -241,15 +241,11 @@ final class MetalMapRenderer: Renderer {
     }
 
     private func fallbackWorldPosition(for objectID: GameObjectID, scene: MapScene) -> SIMD3<Float>? {
-        if objectID == scene.state.player.id {
-            return scene.position(for: scene.state.player.gridPosition)
-        }
-
-        guard let objectState = scene.state.objects[objectID] else {
+        if let gridPosition = scene.state.object(for: objectID)?.gridPosition {
+            return scene.mapGrid.worldPosition(for: gridPosition)
+        } else {
             return nil
         }
-
-        return scene.position(for: objectState.gridPosition)
     }
 
     private func makeRenderMatrices(viewport: CGRect) -> RenderMatrices {

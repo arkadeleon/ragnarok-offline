@@ -205,10 +205,6 @@ final class SpriteAssetStore {
                 return
             }
 
-            guard !Task.isCancelled else {
-                return
-            }
-
             self.objectAssets[objectID]?.composedSprite = composedSprite
             self.objectAssets[objectID]?.partTextures = SpritePartTextures(
                 device: self.device,
@@ -238,10 +234,6 @@ final class SpriteAssetStore {
             }
 
             guard let sprite = try? await self.resourceManager.itemSprite(forItemID: Int(mapItem.itemID)) else {
-                return
-            }
-
-            guard !Task.isCancelled else {
                 return
             }
 
