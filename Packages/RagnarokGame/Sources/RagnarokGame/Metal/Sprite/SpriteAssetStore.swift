@@ -47,7 +47,7 @@ final class SpriteAssetStore {
         self.scriptContext = scriptContext
     }
 
-    func sync(snapshots: [GameObjectID : SpriteSnapshot]) {
+    func sync(snapshots: [GameObjectID : SpriteSnapshot]) -> [SpriteLayerDrawable] {
         let currentIDs = Set(snapshots.keys)
 
         for objectID in Set(objectAssets.keys).subtracting(currentIDs) {
@@ -70,95 +70,8 @@ final class SpriteAssetStore {
                 syncItemAssets(objectID: objectID, mapItem: mapItem)
             }
         }
-    }
 
-    func drawables(for snapshots: [GameObjectID : SpriteSnapshot]) -> [SpriteLayerDrawable] {
-        var groups: [DrawableGroup] = []
-        groups.reserveCapacity(snapshots.count)
-
-        for (objectID, snapshot) in snapshots {
-            switch snapshot.content {
-            case .mapObject(_, let animationKey, let headDirection, let animationElapsed):
-                guard let objectAsset = objectAssets[objectID],
-                      let composedSprite = objectAsset.composedSprite,
-                      let partTextures = objectAsset.partTextures else {
-                    continue
-                }
-
-                let fallbackKeys = [
-                    animationKey,
-                    SpriteAnimationKey(action: .idle, direction: animationKey.direction),
-                    SpriteAnimationKey(action: .idle, direction: .south),
-                ]
-
-                guard let resolvedDrawables = fallbackKeys.lazy.compactMap({ key in
-                    let input = SpriteFrameResolver.ResolveInput(
-                        objectID: objectID,
-                        composedSprite: composedSprite,
-                        animationKey: key,
-                        headDirection: headDirection,
-                        elapsed: animationElapsed,
-                        partTextures: partTextures,
-                        scriptContext: self.scriptContext,
-                        worldPosition: snapshot.worldPosition,
-                        isVisible: snapshot.isVisible
-                    )
-                    let drawables = self.frameResolver.resolve(input)
-                    return drawables.isEmpty ? nil : drawables
-                }).first else {
-                    continue
-                }
-
-                groups.append(
-                    DrawableGroup(
-                        depth: snapshot.worldPosition.z,
-                        objectID: objectID,
-                        drawables: resolvedDrawables
-                    )
-                )
-
-            case .item:
-                guard let itemAsset = itemAssets[objectID],
-                      let composedSprite = itemAsset.composedSprite,
-                      let partTextures = itemAsset.partTextures else {
-                    continue
-                }
-
-                let input = SpriteFrameResolver.ResolveInput(
-                    objectID: objectID,
-                    composedSprite: composedSprite,
-                    animationKey: SpriteAnimationKey(action: .idle, direction: .south),
-                    headDirection: .lookForward,
-                    elapsed: .zero,
-                    partTextures: partTextures,
-                    scriptContext: scriptContext,
-                    worldPosition: snapshot.worldPosition,
-                    isVisible: snapshot.isVisible
-                )
-                let drawables = frameResolver.resolve(input)
-                guard !drawables.isEmpty else {
-                    continue
-                }
-
-                groups.append(
-                    DrawableGroup(
-                        depth: snapshot.worldPosition.z,
-                        objectID: objectID,
-                        drawables: drawables
-                    )
-                )
-            }
-        }
-
-        groups.sort {
-            if $0.depth == $1.depth {
-                $0.objectID < $1.objectID
-            } else {
-                $0.depth < $1.depth
-            }
-        }
-
-        return groups.flatMap(\.drawables)
+        return drawables(for: snapshots)
     }
 
     func cancelAllTasks() {
@@ -250,5 +163,94 @@ final class SpriteAssetStore {
                 composedSprite: composedSprite
             )
         }
+    }
+
+    private func drawables(for snapshots: [GameObjectID : SpriteSnapshot]) -> [SpriteLayerDrawable] {
+        var groups: [DrawableGroup] = []
+        groups.reserveCapacity(snapshots.count)
+
+        for (objectID, snapshot) in snapshots {
+            switch snapshot.content {
+            case .mapObject(_, let animationKey, let headDirection, let animationElapsed):
+                guard let objectAsset = objectAssets[objectID],
+                      let composedSprite = objectAsset.composedSprite,
+                      let partTextures = objectAsset.partTextures else {
+                    continue
+                }
+
+                let fallbackKeys = [
+                    animationKey,
+                    SpriteAnimationKey(action: .idle, direction: animationKey.direction),
+                    SpriteAnimationKey(action: .idle, direction: .south),
+                ]
+
+                guard let resolvedDrawables = fallbackKeys.lazy.compactMap({ key in
+                    let input = SpriteFrameResolver.ResolveInput(
+                        objectID: objectID,
+                        composedSprite: composedSprite,
+                        animationKey: key,
+                        headDirection: headDirection,
+                        elapsed: animationElapsed,
+                        partTextures: partTextures,
+                        scriptContext: self.scriptContext,
+                        worldPosition: snapshot.worldPosition,
+                        isVisible: snapshot.isVisible
+                    )
+                    let drawables = self.frameResolver.resolve(input)
+                    return drawables.isEmpty ? nil : drawables
+                }).first else {
+                    continue
+                }
+
+                groups.append(
+                    DrawableGroup(
+                        depth: snapshot.worldPosition.z,
+                        objectID: objectID,
+                        drawables: resolvedDrawables
+                    )
+                )
+
+            case .item:
+                guard let itemAsset = itemAssets[objectID],
+                      let composedSprite = itemAsset.composedSprite,
+                      let partTextures = itemAsset.partTextures else {
+                    continue
+                }
+
+                let input = SpriteFrameResolver.ResolveInput(
+                    objectID: objectID,
+                    composedSprite: composedSprite,
+                    animationKey: SpriteAnimationKey(action: .idle, direction: .south),
+                    headDirection: .lookForward,
+                    elapsed: .zero,
+                    partTextures: partTextures,
+                    scriptContext: scriptContext,
+                    worldPosition: snapshot.worldPosition,
+                    isVisible: snapshot.isVisible
+                )
+                let drawables = frameResolver.resolve(input)
+                guard !drawables.isEmpty else {
+                    continue
+                }
+
+                groups.append(
+                    DrawableGroup(
+                        depth: snapshot.worldPosition.z,
+                        objectID: objectID,
+                        drawables: drawables
+                    )
+                )
+            }
+        }
+
+        groups.sort {
+            if $0.depth == $1.depth {
+                $0.objectID < $1.objectID
+            } else {
+                $0.depth < $1.depth
+            }
+        }
+
+        return groups.flatMap(\.drawables)
     }
 }

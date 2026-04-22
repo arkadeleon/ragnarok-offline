@@ -105,8 +105,7 @@ final class MetalMapRenderer: Renderer {
             scene: scene
         )
         spriteSnapshots = snapshots
-        spriteAssetStore?.sync(snapshots: snapshots)
-        spriteDrawables = spriteAssetStore?.drawables(for: snapshots) ?? []
+        spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
     }
 
     func updateDamageEffects(_ damageEffects: [MapDamageEffect], scene: MapScene) {

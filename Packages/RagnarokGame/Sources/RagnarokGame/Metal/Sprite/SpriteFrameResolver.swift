@@ -14,6 +14,14 @@ import RagnarokShaders
 import RagnarokSprite
 import simd
 
+struct SpriteLayerDrawable {
+    let objectID: GameObjectID
+    var vertices: [SpriteVertex]
+    var texture: any MTLTexture
+    var worldPosition: SIMD3<Float>
+    var isVisible: Bool
+}
+
 @MainActor
 struct SpriteFrameResolver {
     struct ResolveInput {
