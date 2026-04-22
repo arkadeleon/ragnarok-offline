@@ -1,5 +1,5 @@
 //
-//  MetalSelectionOverlayRenderer.swift
+//  MetalTileSelectorRenderer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/23.
@@ -7,21 +7,16 @@
 
 import Metal
 import QuartzCore
-import RagnarokMetalRendering
 import RagnarokShaders
 import simd
 
 @MainActor
-final class MetalSelectionOverlayRenderer {
+final class MetalTileSelectorRenderer {
     private let device: any MTLDevice
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    private var vertices: [TileVertex] = []
-    private let selectionTexture: any MTLTexture
-    private var selectionShowTime: CFTimeInterval = -.infinity
-
-    init(device: any MTLDevice, selectionTexture: any MTLTexture) throws {
+    init(device: any MTLDevice) throws {
         self.device = device
 
         let library = RagnarokShadersLibrary(device)!
@@ -42,56 +37,19 @@ final class MetalSelectionOverlayRenderer {
         depthStencilDescriptor.depthCompareFunction = .lessEqual
         depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
-
-        self.selectionTexture = selectionTexture
-    }
-
-    func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
-        guard let position = selectedPosition, mapGrid.contains(position) else {
-            vertices = []
-            return
-        }
-
-        let cell = mapGrid[position]
-        let x = Float(position.x)
-        let y = Float(position.y)
-
-        // +0.1 vertical offset keeps the overlay above the tile surface.
-        let p0 = SIMD3<Float>(x, cell.bottomLeftAltitude + 0.1, -y)
-        let p1 = SIMD3<Float>(x + 1, cell.bottomRightAltitude + 0.1, -y)
-        let p2 = SIMD3<Float>(x + 1, cell.topRightAltitude + 0.1, -(y + 1))
-        let p3 = SIMD3<Float>(x, cell.topLeftAltitude + 0.1, -(y + 1))
-
-        vertices = [
-            TileVertex(position: p0, textureCoordinate: [0, 0]),
-            TileVertex(position: p1, textureCoordinate: [1, 0]),
-            TileVertex(position: p2, textureCoordinate: [1, 1]),
-            TileVertex(position: p2, textureCoordinate: [1, 1]),
-            TileVertex(position: p3, textureCoordinate: [0, 1]),
-            TileVertex(position: p0, textureCoordinate: [0, 0]),
-        ]
-        selectionShowTime = CACurrentMediaTime()
     }
 
     func render(
+        resource: TileSelectorRenderResource,
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MetalMapRenderer.RenderMatrices
     ) {
-        guard !vertices.isEmpty else {
+        guard resource.vertexCount > 0 else {
             return
         }
 
-        guard time - selectionShowTime < 0.5 else {
-            return
-        }
-
-        var vertices = vertices
-        guard let vertexBuffer = device.makeBuffer(
-            bytes: &vertices,
-            length: vertices.count * MemoryLayout<TileVertex>.stride,
-            options: []
-        ) else {
+        guard time - resource.selectionShowTime < 0.5 else {
             return
         }
 
@@ -109,9 +67,9 @@ final class MetalSelectionOverlayRenderer {
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
-        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
-        renderCommandEncoder.setFragmentTexture(selectionTexture, index: 0)
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
+        renderCommandEncoder.setFragmentTexture(resource.selectionTexture, index: 0)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 }

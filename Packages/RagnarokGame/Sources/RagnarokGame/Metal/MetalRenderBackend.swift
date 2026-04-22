@@ -17,9 +17,9 @@ final class MetalRenderBackend: GameRenderBackend {
     let renderer: MetalMapRenderer
     let audioPlayer: MetalMapAudioPlayer
 
-    init(resourceManager: ResourceManager) {
+    init(resourceManager: ResourceManager) throws {
         self.resourceManager = resourceManager
-        self.renderer = MetalMapRenderer(resourceManager: resourceManager)
+        self.renderer = try MetalMapRenderer(resourceManager: resourceManager)
         self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
     }
 
@@ -31,7 +31,6 @@ final class MetalRenderBackend: GameRenderBackend {
     func detach() {
         audioPlayer.stopAll()
         scene = nil
-        renderer.setWorldAsset(nil)
     }
 
     func load(progress: Progress) async {
@@ -39,36 +38,24 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
-        renderer.setWorldAsset(nil)
-
-        let worldAssetLoader = WorldAssetLoader()
-
         do {
+            let worldAssetLoader = WorldAssetLoader()
             let worldAsset = try await worldAssetLoader.load(
                 gat: scene.world.gat,
                 gnd: scene.world.gnd,
                 rsw: scene.world.rsw,
                 resourceManager: scene.resourceManager
             )
-            guard !Task.isCancelled, self.scene === scene else {
-                return
-            }
-
-            renderer.setWorldAsset(worldAsset)
-
             let skyboxConfiguration = SkyboxConfiguration.generate(
                 light: scene.world.rsw.light,
                 mapWidth: scene.mapGrid.width,
                 mapHeight: scene.mapGrid.height
             )
-            renderer.setSkyboxConfiguration(skyboxConfiguration)
+            await renderer.prepareRenderResources(worldAsset: worldAsset, skyboxConfiguration: skyboxConfiguration)
 
             await audioPlayer.playBGM(forMapName: scene.mapName)
 
             syncFrameState(with: scene.state)
-            await renderer.prepare()
-        } catch is CancellationError {
-            return
         } catch {
             logger.warning("Metal map backend failed to load world asset: \(error)")
         }
@@ -76,6 +63,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     func unload() {
         audioPlayer.stopAll()
+        renderer.spriteAssetStore?.cancelAllTasks()
     }
 
     func applySnapshot(_ state: MapSceneState) {

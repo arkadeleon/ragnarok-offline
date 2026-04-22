@@ -28,22 +28,25 @@ final class MetalMapRenderer: Renderer {
     let device: any MTLDevice
     let resourceManager: ResourceManager
 
+    private let skyboxRenderer: SkyboxRenderer
+    private let groundRenderer: GroundRenderer
+    private let waterRenderer: WaterRenderer
+    private let modelRenderer: RSMModelRenderer
+    private let spriteRenderer: MetalSpriteRenderer
+    private let damageEffectRenderer: MetalDamageEffectRenderer
+    private let tileSelectorRenderer: MetalTileSelectorRenderer
+
+    private var skyboxResource: SkyboxRenderResource?
     private var groundResource: GroundRenderResource?
     private var waterResource: WaterRenderResource?
     private var modelResources: [RSMModelRenderResource] = []
-
-    private var skyboxRenderer: MetalSkyboxRenderer?
-    private var groundRenderer: GroundRenderer?
-    private var waterRenderer: WaterRenderer?
-    private var modelRenderer: RSMModelRenderer?
-    private(set) var spriteRenderer: MetalSpriteRenderer?
-    private var selectionOverlayRenderer: MetalSelectionOverlayRenderer?
-    private var damageEffectRenderer: MetalDamageEffectRenderer?
+    private var damageEffectResources: [UUID : DamageEffectRenderResource] = [:]
+    private var tileSelectorResource: TileSelectorRenderResource?
 
     private let spriteSnapshotBuilder = SpriteSnapshotBuilder()
     private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
     private(set) var spriteDrawables: [SpriteLayerDrawable] = []
-    private var spriteAssetStore: SpriteAssetStore?
+    private(set) var spriteAssetStore: SpriteAssetStore?
 
     private var cameraState: MapCameraState = .default
     private var targetPosition: SIMD3<Float> = .zero
@@ -51,75 +54,37 @@ final class MetalMapRenderer: Renderer {
     private(set) var lastRenderMatrices: RenderMatrices?
     private(set) var lastViewport: CGRect = .zero
 
-    init(resourceManager: ResourceManager) {
+    init(resourceManager: ResourceManager) throws {
         guard let device = MTLCreateSystemDefaultDevice() else {
             fatalError("MapRuntimeRenderer: Metal is not available on this device")
         }
         self.device = device
         self.resourceManager = resourceManager
-        self.damageEffectRenderer = try? MetalDamageEffectRenderer(device: device)
+
+        skyboxRenderer = try SkyboxRenderer(device: device)
+        groundRenderer = try GroundRenderer(device: device)
+        waterRenderer = try WaterRenderer(device: device)
+        modelRenderer = try RSMModelRenderer(device: device)
+        spriteRenderer = try MetalSpriteRenderer(device: device)
+        damageEffectRenderer = try MetalDamageEffectRenderer(device: device)
+        tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
     }
 
-    func setWorldAsset(_ worldAsset: WorldAsset?) {
-        guard let worldAsset else {
-            groundResource = nil
-            waterResource = nil
-            modelResources = []
-
-            skyboxRenderer = nil
-            groundRenderer = nil
-            waterRenderer = nil
-            modelRenderer = nil
-            spriteAssetStore?.cancelAllTasks()
-            spriteAssetStore = nil
-            spriteRenderer = nil
-            selectionOverlayRenderer = nil
-            damageEffectRenderer?.reset()
-            spriteSnapshots.removeAll()
-            spriteDrawables.removeAll()
-            return
-        }
+    func prepareRenderResources(worldAsset: WorldAsset, skyboxConfiguration: SkyboxConfiguration) async {
+        skyboxResource = SkyboxRenderResource(device: device, configuration: skyboxConfiguration)
 
         groundResource = GroundRenderResource(device: device, asset: worldAsset.ground)
-        groundRenderer = try? GroundRenderer(device: device)
-
         waterResource = WaterRenderResource(device: device, asset: worldAsset.water)
-        waterRenderer = try? WaterRenderer(device: device)
-
         modelResources = worldAsset.models.map { modelAsset in
             RSMModelRenderResource(device: device, asset: modelAsset)
         }
-        modelRenderer = try? RSMModelRenderer(device: device)
 
-        spriteRenderer = try? MetalSpriteRenderer(device: device)
-        selectionOverlayRenderer = nil
-    }
-
-    func prepare() async {
         let path = ResourcePath.textureDirectory.appending(["grid.tga"])
-        if let image = try? await resourceManager.image(at: path),
-           let selectionTexture = MetalTextureFactory.makeTexture(
-                from: image.cgImage,
-                device: device,
-                label: "tile-selector"
-           ) {
-            selectionOverlayRenderer = try? MetalSelectionOverlayRenderer(
-                device: device,
-                selectionTexture: selectionTexture
-            )
-        } else {
-            selectionOverlayRenderer = nil
-        }
+        let image = try? await resourceManager.image(at: path)
+        tileSelectorResource = TileSelectorRenderResource(device: device, image: image?.cgImage)
 
         let scriptContext = await resourceManager.scriptContext
         spriteAssetStore = SpriteAssetStore(device: device, resourceManager: resourceManager, scriptContext: scriptContext)
-    }
-
-    func setSkyboxConfiguration(_ configuration: SkyboxConfiguration) {
-        if skyboxRenderer == nil {
-            skyboxRenderer = try? MetalSkyboxRenderer(device: device)
-        }
-        skyboxRenderer?.configure(with: configuration)
     }
 
     func updateCamera(cameraState: MapCameraState, targetPosition: SIMD3<Float>) {
@@ -144,23 +109,14 @@ final class MetalMapRenderer: Renderer {
         spriteDrawables = spriteAssetStore?.drawables(for: snapshots) ?? []
     }
 
-    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
-        spriteSnapshots[objectID]?.worldPosition
-    }
-
-    func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
-        selectionOverlayRenderer?.syncSelection(selectedPosition, mapGrid: mapGrid)
-    }
-
     func updateDamageEffects(_ damageEffects: [MapDamageEffect], scene: MapScene) {
-        damageEffectRenderer?.sync(with: damageEffects) { [weak self] effect in
-            guard let self else {
-                return nil
-            }
+        let activeEffectIDs = Set(damageEffects.map(\.id))
+        damageEffectResources = damageEffectResources.filter { activeEffectIDs.contains($0.key) }
 
-            guard let startPosition = self.presentationWorldPosition(for: effect.targetObjectID)
-                ?? self.fallbackWorldPosition(for: effect.targetObjectID, scene: scene) else {
-                return nil
+        for effect in damageEffects where damageEffectResources[effect.id] == nil {
+            guard let startPosition = presentationWorldPosition(for: effect.targetObjectID)
+                ?? fallbackWorldPosition(for: effect.targetObjectID, scene: scene) else {
+                continue
             }
 
             let targetObjectType = if effect.targetObjectID == scene.state.player.id {
@@ -169,11 +125,25 @@ final class MetalMapRenderer: Renderer {
                 scene.state.objects[effect.targetObjectID]?.object.type
             }
 
-            return MetalDamageEffectRenderer.ResolvedTarget(
+            let resolvedTarget = DamageEffectRenderResource.ResolvedTarget(
                 startPosition: startPosition,
                 isPlayerTarget: targetObjectType == .pc
             )
+
+            damageEffectResources[effect.id] = DamageEffectRenderResource(
+                device: device,
+                effect: effect,
+                resolvedTarget: resolvedTarget
+            )
         }
+    }
+
+    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
+        spriteSnapshots[objectID]?.worldPosition
+    }
+
+    func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
+        tileSelectorResource?.syncSelection(selectedPosition, mapGrid: mapGrid)
     }
 
     func render(
@@ -198,14 +168,17 @@ final class MetalMapRenderer: Renderer {
         lastRenderMatrices = matrices
         lastViewport = viewport
 
-        skyboxRenderer?.render(
-            renderCommandEncoder: renderCommandEncoder,
-            projectionMatrix: matrices.projectionMatrix,
-            viewMatrix: matrices.viewMatrix,
-            cameraPosition: matrices.cameraPosition
-        )
+        if let skyboxResource {
+            skyboxRenderer.render(
+                resource: skyboxResource,
+                renderCommandEncoder: renderCommandEncoder,
+                projectionMatrix: matrices.projectionMatrix,
+                viewMatrix: matrices.viewMatrix,
+                cameraPosition: matrices.cameraPosition
+            )
+        }
 
-        if let groundResource, let groundRenderer {
+        if let groundResource {
             groundRenderer.render(
                 resource: groundResource,
                 atTime: time,
@@ -217,7 +190,7 @@ final class MetalMapRenderer: Renderer {
             )
         }
 
-        if let waterResource, let waterRenderer {
+        if let waterResource {
             waterRenderer.render(
                 resource: waterResource,
                 atTime: time,
@@ -228,37 +201,41 @@ final class MetalMapRenderer: Renderer {
             )
         }
 
-        if let modelRenderer {
-            for modelResource in modelResources {
-                modelRenderer.render(
-                    resource: modelResource,
-                    atTime: time,
-                    renderCommandEncoder: renderCommandEncoder,
-                    modelMatrix: matrices.modelMatrix,
-                    viewMatrix: matrices.viewMatrix,
-                    projectionMatrix: matrices.projectionMatrix,
-                    normalMatrix: matrices.normalMatrix
-                )
-            }
+        for modelResource in modelResources {
+            modelRenderer.render(
+                resource: modelResource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix,
+                normalMatrix: matrices.normalMatrix
+            )
         }
 
-        spriteRenderer?.render(
+        spriteRenderer.render(
             drawables: spriteDrawables,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
 
-        selectionOverlayRenderer?.render(
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
-        )
+        for damageEffectResource in damageEffectResources.values.sorted(by: { $0.creationTime < $1.creationTime }) {
+            damageEffectRenderer.render(
+                resource: damageEffectResource,
+                renderCommandEncoder: renderCommandEncoder,
+                matrices: matrices
+            )
+        }
 
-        damageEffectRenderer?.render(
-            renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
-        )
+        if let tileSelectorResource {
+            tileSelectorRenderer.render(
+                resource: tileSelectorResource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                matrices: matrices
+            )
+        }
 
         renderCommandEncoder.endEncoding()
     }
@@ -299,10 +276,6 @@ final class MetalMapRenderer: Renderer {
     }
 
     private func makeWorldModelMatrix() -> simd_float4x4 {
-        guard groundRenderer != nil else {
-            return matrix_identity_float4x4
-        }
-
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         return modelMatrix

@@ -612,7 +612,7 @@ final public class GameSession {
 
                 let player = MapObject(account: account, character: character)
 
-                let renderBackend = renderConfiguration.makeBackend(resourceManager: resourceManager)
+                let renderBackend = try renderConfiguration.makeBackend(resourceManager: resourceManager)
 
                 let scene = MapScene(
                     mapName: mapName,
@@ -1165,10 +1165,10 @@ extension GameSession {
 
 extension GameRenderConfiguration {
     @MainActor
-    func makeBackend(resourceManager: ResourceManager) -> any GameRenderBackend {
+    func makeBackend(resourceManager: ResourceManager) throws -> any GameRenderBackend {
         switch engine {
         case .metal:
-            MetalRenderBackend(resourceManager: resourceManager)
+            try MetalRenderBackend(resourceManager: resourceManager)
         case .realityKit:
             RealityRenderBackend(resourceManager: resourceManager)
         }
