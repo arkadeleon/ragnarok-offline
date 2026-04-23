@@ -49,12 +49,12 @@ final class MetalDamageEffectRenderer {
             return
         }
 
-        let elapsed = (now - resource.creationTime).timeInterval
+        let elapsed = now - resource.creationTime
         guard elapsed >= resource.delay else {
             return
         }
 
-        let t = Float((elapsed - resource.delay) / resource.duration)
+        let t = Float((elapsed - resource.delay).timeInterval / resource.duration.timeInterval)
         guard t >= 0, t < 1 else {
             return
         }

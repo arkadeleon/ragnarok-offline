@@ -25,7 +25,7 @@ struct DamageDigitComponent: Component {
 }
 
 extension Entity {
-    static func makeDamageEntity(for damage: Int, delay: TimeInterval, targetEntity: Entity) -> Entity {
+    static func makeDamageEntity(for damage: Int, delay: Duration, targetEntity: Entity) -> Entity {
         let damageEntity = Entity()
 
         if damage == 0 {
@@ -33,7 +33,7 @@ extension Entity {
                 digit: .miss,
                 color: .yellow,
                 duration: 0.8,
-                delay: delay / 1000,
+                delay: delay.timeInterval,
                 startPosition: targetEntity.position(relativeTo: nil)
             )
             damageEntity.components.set(damageDigitComponent)
@@ -42,7 +42,7 @@ extension Entity {
                 digit: .damage(damage),
                 color: targetEntity.components[MapObjectComponent.self]?.mapObject.type == .pc ? .red : .white,
                 duration: 1.5,
-                delay: delay / 1000,
+                delay: delay.timeInterval,
                 startPosition: targetEntity.position(relativeTo: nil)
             )
             damageEntity.components.set(damageDigitComponent)

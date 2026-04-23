@@ -12,14 +12,14 @@ public struct MapDamageEffect: Identifiable, Sendable {
     public let creationTime: ContinuousClock.Instant
     public var targetObjectID: GameObjectID
     public var amount: Int
-    public var delay: TimeInterval
+    public var delay: Duration
 
     public init(
         id: UUID = UUID(),
         creationTime: ContinuousClock.Instant = .now,
         targetObjectID: GameObjectID,
         amount: Int,
-        delay: TimeInterval
+        delay: Duration
     ) {
         self.id = id
         self.creationTime = creationTime
@@ -30,7 +30,6 @@ public struct MapDamageEffect: Identifiable, Sendable {
 
     func isExpired(at now: ContinuousClock.Instant) -> Bool {
         let animationDuration: Duration = amount == 0 ? .milliseconds(800) : .milliseconds(1500)
-        let delayDuration = Duration.milliseconds(Int(delay.rounded(.up)))
-        return now - creationTime > delayDuration + animationDuration + .seconds(1)
+        return now - creationTime > delay + animationDuration + .seconds(1)
     }
 }

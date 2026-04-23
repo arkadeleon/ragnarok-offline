@@ -45,10 +45,10 @@ struct SpriteFrameResolver {
         if case .once(let settledAction) = input.animation.completion,
            let duration = onceDuration(for: input),
            input.animation.action != settledAction,
-           input.animation.elapsed.timeInterval >= duration {
+           input.animation.elapsed >= duration {
             var settledInput = input
             settledInput.animation.action = settledAction
-            settledInput.animation.elapsed = .milliseconds(Int(((input.animation.elapsed.timeInterval - duration) * 1000).rounded()))
+            settledInput.animation.elapsed = input.animation.elapsed - duration
             settledInput.animation.completion = .indefinite
             return resolve(settledInput)
         }
@@ -210,13 +210,13 @@ struct SpriteFrameResolver {
         }
     }
 
-    private func onceDuration(for input: ResolveInput) -> TimeInterval? {
+    private func onceDuration(for input: ResolveInput) -> Duration? {
         let actionIndex = input.animation.action.calculateActionIndex(
             forJobID: input.composedSprite.configuration.job.rawValue,
             direction: input.animation.direction
         )
 
-        var duration: TimeInterval?
+        var duration: Duration?
         for part in input.composedSprite.parts {
             let partActionIndex = (part.semantic == .shadow ? 0 : actionIndex)
             guard let action = part.sprite.act.action(at: partActionIndex), !action.frames.isEmpty else {
@@ -232,8 +232,8 @@ struct SpriteFrameResolver {
                 continue
             }
 
-            let partDuration = TimeInterval(action.frameInterval) * TimeInterval(frameRange.count)
-            duration = max(duration ?? 0, partDuration)
+            let partDuration: Duration = .seconds(Double(action.frameInterval) * Double(frameRange.count))
+            duration = max(duration ?? .zero, partDuration)
         }
 
         return duration

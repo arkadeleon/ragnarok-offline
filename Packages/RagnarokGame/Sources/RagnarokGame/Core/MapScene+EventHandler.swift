@@ -357,7 +357,7 @@ extension MapScene {
             let damageEffect = MapDamageEffect(
                 targetObjectID: objectAction.targetObjectID,
                 amount: objectAction.damage,
-                delay: TimeInterval(objectAction.sourceSpeed)
+                delay: .milliseconds(objectAction.sourceSpeed)
             )
             state.damageEffects.append(damageEffect)
 
@@ -365,7 +365,7 @@ extension MapScene {
                 let damageEffect2 = MapDamageEffect(
                     targetObjectID: objectAction.targetObjectID,
                     amount: objectAction.damage2,
-                    delay: TimeInterval(objectAction.sourceSpeed) + 200 * 1.75
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
                 state.damageEffects.append(damageEffect2)
             }
@@ -375,7 +375,7 @@ extension MapScene {
                 let damageEffect = MapDamageEffect(
                     targetObjectID: objectAction.targetObjectID,
                     amount: objectAction.damage / count,
-                    delay: TimeInterval(objectAction.sourceSpeed)
+                    delay: .milliseconds(objectAction.sourceSpeed)
                 )
                 state.damageEffects.append(damageEffect)
             }
@@ -383,21 +383,21 @@ extension MapScene {
                 let damageEffect = MapDamageEffect(
                     targetObjectID: objectAction.targetObjectID,
                     amount: objectAction.damage / count,
-                    delay: TimeInterval(objectAction.sourceSpeed) + 200 / 2
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                 )
                 state.damageEffects.append(damageEffect)
 
                 let damageEffect2 = MapDamageEffect(
                     targetObjectID: objectAction.targetObjectID,
                     amount: objectAction.damage2,
-                    delay: TimeInterval(objectAction.sourceSpeed) + 200 * 1.75
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
                 state.damageEffects.append(damageEffect2)
             } else {
                 let damageEffect = MapDamageEffect(
                     targetObjectID: objectAction.targetObjectID,
                     amount: objectAction.damage / count,
-                    delay: TimeInterval(objectAction.sourceSpeed) + 200
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                 )
                 state.damageEffects.append(damageEffect)
             }
@@ -449,7 +449,7 @@ extension MapScene {
                 let damageEffect = MapDamageEffect(
                     targetObjectID: packet.targetID,
                     amount: damage / count,
-                    delay: TimeInterval(packet.attackMT) + TimeInterval(200 * i)
+                    delay: .milliseconds(Int(packet.attackMT)) + .milliseconds(200 * i)
                 )
                 state.damageEffects.append(damageEffect)
             }

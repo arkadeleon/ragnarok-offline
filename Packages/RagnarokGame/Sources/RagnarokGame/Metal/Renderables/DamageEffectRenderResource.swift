@@ -27,8 +27,8 @@ final class DamageEffectRenderResource {
     let id: UUID
     let creationTime: ContinuousClock.Instant
     let kind: EffectKind
-    let delay: TimeInterval
-    let duration: TimeInterval
+    let delay: Duration
+    let duration: Duration
     let startPosition: SIMD3<Float>
     let texture: (any MTLTexture)?
     let frameWidth: Float
@@ -51,8 +51,8 @@ final class DamageEffectRenderResource {
         self.id = effect.id
         self.creationTime = effect.creationTime
         self.kind = effect.amount == 0 ? .miss : .damage
-        self.delay = effect.delay / 1000
-        self.duration = effect.amount == 0 ? 0.8 : 1.5
+        self.delay = effect.delay
+        self.duration = effect.amount == 0 ? .milliseconds(800) : .milliseconds(1500)
         self.startPosition = resolvedTarget.startPosition
         self.texture = texture
         self.frameWidth = size.x
