@@ -21,6 +21,7 @@ final class MetalRenderBackend: GameRenderBackend {
     private let spriteSnapshotBuilder = SpriteSnapshotBuilder()
     private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
     private var spriteAssetStore: SpriteAssetStore?
+    private var damageEffectSpriteSet: DamageEffectSpriteSet?
 
     init(resourceManager: ResourceManager) throws {
         self.resourceManager = resourceManager
@@ -139,9 +140,13 @@ final class MetalRenderBackend: GameRenderBackend {
             RSMModelRenderResource(device: renderer.device, asset: modelAsset)
         }
 
-        let path = ResourcePath.textureDirectory.appending(["grid.tga"])
-        let image = try? await resourceManager.image(at: path)
-        renderer.tileSelectorResource = TileSelectorRenderResource(device: renderer.device, image: image?.cgImage)
+        do {
+            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
+            let image = try await resourceManager.image(at: path)
+            renderer.tileSelectorResource = TileSelectorRenderResource(device: renderer.device, image: image.cgImage)
+        } catch {
+            logger.warning("Metal backend failed to load grid.tga: \(error)")
+        }
 
         let scriptContext = await resourceManager.scriptContext
         spriteAssetStore = SpriteAssetStore(
@@ -149,12 +154,20 @@ final class MetalRenderBackend: GameRenderBackend {
             resourceManager: resourceManager,
             scriptContext: scriptContext
         )
+
+        do {
+            damageEffectSpriteSet = try await DamageEffectSpriteSet(resourceManager: resourceManager)
+        } catch {
+            damageEffectSpriteSet = nil
+            logger.warning("Metal backend failed to load damage effect sprites: \(error)")
+        }
     }
 
     private func clearRenderResources() {
         spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
+        damageEffectSpriteSet = nil
 
         renderer.skyboxResource = nil
         renderer.groundResource = nil
@@ -185,6 +198,10 @@ final class MetalRenderBackend: GameRenderBackend {
         let activeEffectIDs = Set(damageEffects.map(\.id))
         renderer.damageEffectResources = renderer.damageEffectResources.filter { activeEffectIDs.contains($0.key) }
 
+        guard let damageEffectSpriteSet else {
+            return
+        }
+
         for effect in damageEffects where renderer.damageEffectResources[effect.id] == nil {
             guard let startPosition = spriteSnapshots[effect.targetObjectID]?.worldPosition
                 ?? fallbackWorldPosition(for: effect.targetObjectID, scene: scene) else {
@@ -205,7 +222,8 @@ final class MetalRenderBackend: GameRenderBackend {
             renderer.damageEffectResources[effect.id] = DamageEffectRenderResource(
                 device: renderer.device,
                 effect: effect,
-                resolvedTarget: resolvedTarget
+                resolvedTarget: resolvedTarget,
+                spriteSet: damageEffectSpriteSet
             )
         }
     }

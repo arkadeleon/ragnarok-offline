@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/4/22.
 //
 
-import CoreGraphics
-import CoreText
 import Foundation
 import Metal
 import RagnarokMetalRendering
@@ -33,11 +31,16 @@ final class DamageEffectRenderResource {
     let texture: (any MTLTexture)?
     let frameWidth: Float
     let frameHeight: Float
+    let spriteScale: SIMD2<Float>
+    let color: SIMD4<Float>
 
-    init(device: any MTLDevice, effect: MapDamageEffect, resolvedTarget: ResolvedTarget) {
-        let string = effect.amount == 0 ? "MISS" : "\(effect.amount)"
-        let color = Self.color(for: effect, isPlayerTarget: resolvedTarget.isPlayerTarget)
-        let image = Self.makeImage(for: string, color: color)
+    init(
+        device: any MTLDevice,
+        effect: MapDamageEffect,
+        resolvedTarget: ResolvedTarget,
+        spriteSet: DamageEffectSpriteSet
+    ) {
+        let image = spriteSet.image(for: effect.amount)
         let texture = MetalTextureFactory.makeTexture(
             from: image,
             device: device,
@@ -57,54 +60,11 @@ final class DamageEffectRenderResource {
         self.texture = texture
         self.frameWidth = size.x
         self.frameHeight = size.y
-    }
-
-    private static func color(for effect: MapDamageEffect, isPlayerTarget: Bool) -> CGColor {
-        if effect.amount == 0 {
-            return CGColor(red: 1, green: 1, blue: 0, alpha: 1)
+        self.spriteScale = spriteSet.scale
+        self.color = if resolvedTarget.isPlayerTarget {
+            [1, 0, 0, 1]
+        } else {
+            [1, 1, 1, 1]
         }
-
-        if isPlayerTarget {
-            return CGColor(red: 1, green: 0.25, blue: 0.25, alpha: 1)
-        }
-
-        return CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-    }
-
-    private static func makeImage(for string: String, color: CGColor) -> CGImage? {
-        let fontSize: CGFloat = string == "MISS" ? 18 : 20
-        let font = CTFontCreateWithName("Menlo-Bold" as CFString, fontSize, nil)
-        let attributes: [NSAttributedString.Key : Any] = [
-            kCTFontAttributeName as NSAttributedString.Key: font,
-            kCTForegroundColorAttributeName as NSAttributedString.Key: color
-        ]
-        let attributedString = NSAttributedString(string: string, attributes: attributes)
-        let line = CTLineCreateWithAttributedString(attributedString)
-        let bounds = CTLineGetBoundsWithOptions(line, [.useGlyphPathBounds, .useOpticalBounds]).integral
-        let padding: CGFloat = 6
-        let width = max(Int(ceil(bounds.width + padding * 2)), 1)
-        let height = max(Int(ceil(bounds.height + padding * 2)), 1)
-
-        guard let context = CGContext(
-            data: nil,
-            width: width,
-            height: height,
-            bitsPerComponent: 8,
-            bytesPerRow: 0,
-            space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-        ) else {
-            return nil
-        }
-
-        context.clear(CGRect(x: 0, y: 0, width: width, height: height))
-        context.textPosition = CGPoint(
-            x: padding - bounds.minX,
-            y: padding - bounds.minY
-        )
-        context.setTextDrawingMode(.fill)
-        CTLineDraw(line, context)
-
-        return context.makeImage()
     }
 }

@@ -63,7 +63,7 @@ final class MetalDamageEffectRenderer {
         let worldPosition: SIMD3<Float>
         switch resource.kind {
         case .miss:
-            scale = 2.5
+            scale = 0.5
             worldPosition = [
                 resource.startPosition.x,
                 resource.startPosition.y + 3.5 + 7 * t,
@@ -82,18 +82,20 @@ final class MetalDamageEffectRenderer {
             return
         }
 
-        let frameWidth = resource.frameWidth * scale
-        let frameHeight = resource.frameHeight * scale
+        let frameWidth = resource.frameWidth * resource.spriteScale.x * scale
+        let frameHeight = resource.frameHeight * resource.spriteScale.y * scale
         let halfW = frameWidth / 2
-        let color = SIMD4<Float>(repeating: 1)
+        let halfH = frameHeight / 2
+        var color = resource.color
+        color.w *= 1 - t
 
         var vertices: [SpriteVertex] = [
-            SpriteVertex(position: [-halfW, 0], textureCoordinate: [0, 1], color: color),
-            SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1], color: color),
-            SpriteVertex(position: [-halfW, frameHeight], textureCoordinate: [0, 0], color: color),
-            SpriteVertex(position: [ halfW, 0], textureCoordinate: [1, 1], color: color),
-            SpriteVertex(position: [ halfW, frameHeight], textureCoordinate: [1, 0], color: color),
-            SpriteVertex(position: [-halfW, frameHeight], textureCoordinate: [0, 0], color: color),
+            SpriteVertex(position: [-halfW, -halfH], textureCoordinate: [0, 1], color: color),
+            SpriteVertex(position: [ halfW, -halfH], textureCoordinate: [1, 1], color: color),
+            SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: color),
+            SpriteVertex(position: [ halfW, -halfH], textureCoordinate: [1, 1], color: color),
+            SpriteVertex(position: [ halfW,  halfH], textureCoordinate: [1, 0], color: color),
+            SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: color),
         ]
         guard let vertexBuffer = device.makeBuffer(
             bytes: &vertices,
