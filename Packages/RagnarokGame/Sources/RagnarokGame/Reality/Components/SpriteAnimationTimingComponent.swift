@@ -9,5 +9,5 @@ import Foundation
 import RealityKit
 
 struct SpriteAnimationTimingComponent: Component {
-    var elapsedTime: TimeInterval
+    var animation: MapObjectAnimationState
 }

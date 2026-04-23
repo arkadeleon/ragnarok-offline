@@ -12,10 +12,7 @@ import simd
 struct MapObjectPresentationSampler {
     struct PresentationSample {
         var worldPosition: SIMD3<Float>
-        var action: SpriteActionType
-        var direction: SpriteDirection
-        var headDirection: SpriteHeadDirection
-        var animationElapsed: Duration
+        var animation: MapObjectAnimationState
     }
 
     func sample(
@@ -29,7 +26,6 @@ struct MapObjectPresentationSampler {
             logicalWorldPosition: logicalWorldPosition,
             timeline: timeline,
             presentation: state.presentation,
-            mapObject: state.object,
             now: now
         )
     }
@@ -38,53 +34,50 @@ struct MapObjectPresentationSampler {
         logicalWorldPosition: SIMD3<Float>,
         timeline: MapObjectMovementTimeline?,
         presentation: MapObjectPresentationState,
-        mapObject: MapObject,
         now: ContinuousClock.Instant
     ) -> PresentationSample {
         let movementSample = timeline?.sample(at: now, logicalWorldPosition: logicalWorldPosition)
         let worldPosition = movementSample?.worldPosition ?? logicalWorldPosition
 
         if let movementSample, movementSample.isMoving {
-            return PresentationSample(
-                worldPosition: worldPosition,
+            let animation = MapObjectAnimationState(
                 action: .walk,
                 direction: movementSample.direction,
                 headDirection: presentation.headDirection,
-                animationElapsed: movementSample.totalElapsed
+                elapsed: movementSample.totalElapsed,
+                completion: .indefinite
+            )
+            return PresentationSample(
+                worldPosition: worldPosition,
+                animation: animation
             )
         }
 
         let elapsed = presentation.startTime.duration(to: now)
-        if let duration = presentation.duration, elapsed >= duration {
-            return PresentationSample(
-                worldPosition: worldPosition,
-                action: settledAction(after: presentation.action, for: mapObject),
+        if case .after(let duration, let settledAction) = presentation.completion, elapsed >= duration {
+            let animation = MapObjectAnimationState(
+                action: settledAction,
                 direction: presentation.direction,
                 headDirection: presentation.headDirection,
-                animationElapsed: elapsed - duration
+                elapsed: elapsed - duration,
+                completion: .indefinite
+            )
+            return PresentationSample(
+                worldPosition: worldPosition,
+                animation: animation
             )
         }
 
-        return PresentationSample(
-            worldPosition: worldPosition,
+        let animation = MapObjectAnimationState(
             action: presentation.action,
             direction: presentation.direction,
             headDirection: presentation.headDirection,
-            animationElapsed: elapsed
+            elapsed: elapsed,
+            completion: presentation.completion
         )
-    }
-
-    private func settledAction(after action: SpriteActionType, for mapObject: MapObject) -> SpriteActionType {
-        switch action {
-        case .sit:
-            return .sit
-        case .attack1, .attack2, .attack3, .skill:
-            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
-            return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
-        case .freeze, .freeze2, .die:
-            return action
-        case .idle, .walk, .pickup, .readyToAttack, .hurt:
-            return .idle
-        }
+        return PresentationSample(
+            worldPosition: worldPosition,
+            animation: animation
+        )
     }
 }

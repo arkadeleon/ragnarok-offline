@@ -74,7 +74,7 @@ extension MapScene {
             direction: direction,
             headDirection: state.player.presentation.headDirection,
             startTime: now,
-            duration: duration
+            completion: .after(duration, settledAction: .idle)
         )
 
         if pendingArrivalAction != nil {
@@ -124,7 +124,8 @@ extension MapScene {
                 action: .idle,
                 direction: SpriteDirection(direction: direction),
                 headDirection: SpriteHeadDirection(headDirection: headDirection),
-                startTime: .now
+                startTime: .now,
+                completion: .indefinite
             )
         )
 
@@ -164,7 +165,7 @@ extension MapScene {
                 direction: direction,
                 headDirection: objectState.presentation.headDirection,
                 startTime: now,
-                duration: duration
+                completion: .after(duration, settledAction: .idle)
             )
             objectState.gridPosition = endPosition
             objectState.movement = movement
@@ -176,7 +177,7 @@ extension MapScene {
                 direction: direction,
                 headDirection: .lookForward,
                 startTime: now,
-                duration: duration
+                completion: .after(duration, settledAction: .idle)
             )
             state.objects[object.objectID] = MapObjectState(
                 id: object.objectID,
@@ -212,7 +213,8 @@ extension MapScene {
                 action: .idle,
                 direction: state.player.presentation.direction,
                 headDirection: state.player.presentation.headDirection,
-                startTime: now
+                startTime: now,
+                completion: .indefinite
             )
 
             if let action = pendingArrivalAction {
@@ -228,7 +230,8 @@ extension MapScene {
                 action: .idle,
                 direction: objectState.presentation.direction,
                 headDirection: objectState.presentation.headDirection,
-                startTime: now
+                startTime: now,
+                completion: .indefinite
             )
             state.objects[objectID] = objectState
         }
@@ -317,14 +320,26 @@ extension MapScene {
             .attack1
         }
 
-        let sourceDuration = Duration.milliseconds(objectAction.sourceSpeed)
+        let completion: MapObjectAnimationCompletion = switch presentationAction {
+        case .pickup:
+            .once(settledAction: .idle)
+        case .sit:
+            .indefinite
+        case .freeze, .freeze2, .die:
+            .after(.milliseconds(objectAction.sourceSpeed), settledAction: presentationAction)
+        case .attack1, .attack2, .attack3, .skill:
+            .after(.milliseconds(objectAction.sourceSpeed), settledAction: afterAttackAction(for: sourceMapObject))
+        case .idle, .walk, .readyToAttack, .hurt:
+            .after(.milliseconds(objectAction.sourceSpeed), settledAction: .idle)
+        }
+
         if state.player.id == sourceID {
             state.player.presentation = MapObjectPresentationState(
                 action: presentationAction,
                 direction: state.player.presentation.direction,
                 headDirection: state.player.presentation.headDirection,
                 startTime: now,
-                duration: sourceDuration
+                completion: completion
             )
         } else if var objectState = state.objects[sourceID] {
             objectState.presentation = MapObjectPresentationState(
@@ -332,7 +347,7 @@ extension MapScene {
                 direction: objectState.presentation.direction,
                 headDirection: objectState.presentation.headDirection,
                 startTime: now,
-                duration: sourceDuration
+                completion: completion
             )
             state.objects[sourceID] = objectState
         }
@@ -405,6 +420,7 @@ extension MapScene {
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceMapObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(Int(packet.attackMT))
+            let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
             if state.player.id == objectID {
                 state.player.presentation = MapObjectPresentationState(
@@ -412,7 +428,7 @@ extension MapScene {
                     direction: state.player.presentation.direction,
                     headDirection: state.player.presentation.headDirection,
                     startTime: now,
-                    duration: duration
+                    completion: .after(duration, settledAction: settledAction)
                 )
             } else if var objectState = state.objects[objectID] {
                 objectState.presentation = MapObjectPresentationState(
@@ -420,7 +436,7 @@ extension MapScene {
                     direction: objectState.presentation.direction,
                     headDirection: objectState.presentation.headDirection,
                     startTime: now,
-                    duration: duration
+                    completion: .after(duration, settledAction: settledAction)
                 )
                 state.objects[objectID] = objectState
             }
@@ -468,6 +484,15 @@ extension MapScene {
             total += .milliseconds(stepMs)
         }
         return total
+    }
+
+    func afterAttackAction(for mapObject: MapObject?) -> SpriteActionType {
+        guard let mapObject else {
+            return .idle
+        }
+
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
+        return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
     }
 
     func playSound(for objectAction: MapObjectAction) {

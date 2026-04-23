@@ -22,8 +22,7 @@ class MapObjectSnapshotPresentationSystem: System {
         let now = ContinuousClock.now
 
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
-            guard let mapObject = entity.components[MapObjectComponent.self]?.mapObject,
-                  let component = entity.components[MapObjectSnapshotPresentationComponent.self],
+            guard let component = entity.components[MapObjectSnapshotPresentationComponent.self],
                   let spriteEntity = entity.findEntity(named: "sprite") else {
                 continue
             }
@@ -32,22 +31,22 @@ class MapObjectSnapshotPresentationSystem: System {
                 logicalWorldPosition: component.logicalWorldPosition,
                 timeline: component.timeline,
                 presentation: component.presentation,
-                mapObject: mapObject,
                 now: now
             )
             entity.position = sample.worldPosition
 
+            let animation = sample.animation
             let actionComponent = SpriteActionComponent(
-                actionType: sample.action,
-                direction: sample.direction,
-                headDirection: .lookForward
+                actionType: animation.action,
+                direction: animation.direction,
+                headDirection: animation.headDirection
             )
             if spriteEntity.components[SpriteActionComponent.self] != actionComponent {
                 spriteEntity.components.set(actionComponent)
             }
 
             spriteEntity.components.set(
-                SpriteAnimationTimingComponent(elapsedTime: sample.animationElapsed.timeInterval)
+                SpriteAnimationTimingComponent(animation: animation)
             )
         }
     }

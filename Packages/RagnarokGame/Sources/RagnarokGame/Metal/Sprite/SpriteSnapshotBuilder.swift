@@ -41,24 +41,20 @@ final class SpriteSnapshotBuilder {
             position: { scene.mapGrid.worldPosition(for: $0) },
             now: now
         )
-        let visualDirection = presentationSample.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
+
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: state.object.job)
 
-        var animationKey = SpriteAnimationKey(action: presentationSample.action, direction: visualDirection)
-        if !availableActionTypes.contains(animationKey.action) {
-            animationKey.action = .idle
+        var animation = presentationSample.animation
+        animation.direction = animation.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
+        if !availableActionTypes.contains(animation.action) {
+            animation.action = .idle
         }
 
         return SpriteSnapshot(
             objectID: state.id,
             worldPosition: presentationSample.worldPosition,
             isVisible: state.isVisible,
-            content: .mapObject(
-                mapObject: state.object,
-                animationKey: animationKey,
-                headDirection: presentationSample.headDirection,
-                animationElapsed: presentationSample.animationElapsed
-            )
+            content: .mapObject(mapObject: state.object, animation: animation)
         )
     }
 

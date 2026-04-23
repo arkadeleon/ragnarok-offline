@@ -27,9 +27,7 @@ struct SpriteFrameResolver {
     struct ResolveInput {
         let objectID: GameObjectID
         let composedSprite: ComposedSprite
-        let animationKey: SpriteAnimationKey
-        let headDirection: SpriteHeadDirection
-        let elapsed: Duration
+        var animation: MapObjectAnimationState
         let partTextures: SpritePartTextures
         let scriptContext: ScriptContext
         let worldPosition: SIMD3<Float>
@@ -44,9 +42,20 @@ struct SpriteFrameResolver {
     }
 
     func resolve(_ input: ResolveInput) -> [SpriteLayerDrawable] {
-        let actionIndex = input.animationKey.action.calculateActionIndex(
+        if case .once(let settledAction) = input.animation.completion,
+           let duration = onceDuration(for: input),
+           input.animation.action != settledAction,
+           input.animation.elapsed.timeInterval >= duration {
+            var settledInput = input
+            settledInput.animation.action = settledAction
+            settledInput.animation.elapsed = .milliseconds(Int(((input.animation.elapsed.timeInterval - duration) * 1000).rounded()))
+            settledInput.animation.completion = .indefinite
+            return resolve(settledInput)
+        }
+
+        let actionIndex = input.animation.action.calculateActionIndex(
             forJobID: input.composedSprite.configuration.job.rawValue,
-            direction: input.animationKey.direction
+            direction: input.animation.direction
         )
 
         var resolvedLayers: [ResolvedLayer] = []
@@ -60,17 +69,17 @@ struct SpriteFrameResolver {
 
             let frameRange = part.frameRange(
                 action: action,
-                actionType: input.animationKey.action,
-                headDirection: input.headDirection
+                actionType: input.animation.action,
+                headDirection: input.animation.headDirection
             )
             guard !frameRange.isEmpty else {
                 continue
             }
 
             let frameInterval = TimeInterval(action.frameInterval)
-            let rawFrameIndex = Int(input.elapsed.timeInterval / frameInterval)
+            let rawFrameIndex = Int(input.animation.elapsed.timeInterval / frameInterval)
             let localFrameIndex: Int
-            if actionRepeats(input.animationKey.action) {
+            if actionRepeats(input.animation.action) {
                 localFrameIndex = rawFrameIndex % frameRange.count
             } else {
                 localFrameIndex = min(rawFrameIndex, frameRange.count - 1)
@@ -83,13 +92,13 @@ struct SpriteFrameResolver {
 
             let zIndex = input.composedSprite.zIndex(
                 for: part,
-                direction: input.animationKey.direction,
+                direction: input.animation.direction,
                 actionIndex: actionIndex,
                 frameIndex: absoluteFrameIndex,
                 scriptContext: input.scriptContext
             )
             let parentOffset = part.parentOffset(
-                actionType: input.animationKey.action,
+                actionType: input.animation.action,
                 action: action,
                 actionIndex: partActionIndex,
                 absoluteFrameIndex: absoluteFrameIndex,
@@ -199,5 +208,34 @@ struct SpriteFrameResolver {
         case .pickup, .attack1, .hurt, .die, .attack2, .attack3, .skill:
             false
         }
+    }
+
+    private func onceDuration(for input: ResolveInput) -> TimeInterval? {
+        let actionIndex = input.animation.action.calculateActionIndex(
+            forJobID: input.composedSprite.configuration.job.rawValue,
+            direction: input.animation.direction
+        )
+
+        var duration: TimeInterval?
+        for part in input.composedSprite.parts {
+            let partActionIndex = (part.semantic == .shadow ? 0 : actionIndex)
+            guard let action = part.sprite.act.action(at: partActionIndex), !action.frames.isEmpty else {
+                continue
+            }
+
+            let frameRange = part.frameRange(
+                action: action,
+                actionType: input.animation.action,
+                headDirection: input.animation.headDirection
+            )
+            guard !frameRange.isEmpty else {
+                continue
+            }
+
+            let partDuration = TimeInterval(action.frameInterval) * TimeInterval(frameRange.count)
+            duration = max(duration ?? 0, partDuration)
+        }
+
+        return duration
     }
 }

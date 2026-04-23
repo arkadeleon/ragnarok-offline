@@ -64,7 +64,7 @@ final class SpriteAssetStore {
 
         for (objectID, snapshot) in snapshots {
             switch snapshot.content {
-            case .mapObject(let mapObject, _, _, _):
+            case .mapObject(let mapObject, _):
                 syncObjectAssets(objectID: objectID, mapObject: mapObject)
             case .item(let mapItem):
                 syncItemAssets(objectID: objectID, mapItem: mapItem)
@@ -171,7 +171,7 @@ final class SpriteAssetStore {
 
         for (objectID, snapshot) in snapshots {
             switch snapshot.content {
-            case .mapObject(_, let animationKey, let headDirection, let animationElapsed):
+            case .mapObject(_, let animation):
                 guard let objectAsset = objectAssets[objectID],
                       let composedSprite = objectAsset.composedSprite,
                       let partTextures = objectAsset.partTextures else {
@@ -179,18 +179,20 @@ final class SpriteAssetStore {
                 }
 
                 let fallbackKeys = [
-                    animationKey,
-                    SpriteAnimationKey(action: .idle, direction: animationKey.direction),
+                    SpriteAnimationKey(action: animation.action, direction: animation.direction),
+                    SpriteAnimationKey(action: .idle, direction: animation.direction),
                     SpriteAnimationKey(action: .idle, direction: .south),
                 ]
 
                 guard let resolvedDrawables = fallbackKeys.lazy.compactMap({ key in
+                    var fallbackAnimation = animation
+                    fallbackAnimation.action = key.action
+                    fallbackAnimation.direction = key.direction
+
                     let input = SpriteFrameResolver.ResolveInput(
                         objectID: objectID,
                         composedSprite: composedSprite,
-                        animationKey: key,
-                        headDirection: headDirection,
-                        elapsed: animationElapsed,
+                        animation: fallbackAnimation,
                         partTextures: partTextures,
                         scriptContext: self.scriptContext,
                         worldPosition: snapshot.worldPosition,
@@ -217,12 +219,17 @@ final class SpriteAssetStore {
                     continue
                 }
 
+                let animation = MapObjectAnimationState(
+                    action: .idle,
+                    direction: .south,
+                    headDirection: .lookForward,
+                    elapsed: .zero,
+                    completion: .indefinite
+                )
                 let input = SpriteFrameResolver.ResolveInput(
                     objectID: objectID,
                     composedSprite: composedSprite,
-                    animationKey: SpriteAnimationKey(action: .idle, direction: .south),
-                    headDirection: .lookForward,
-                    elapsed: .zero,
+                    animation: animation,
                     partTextures: partTextures,
                     scriptContext: scriptContext,
                     worldPosition: snapshot.worldPosition,

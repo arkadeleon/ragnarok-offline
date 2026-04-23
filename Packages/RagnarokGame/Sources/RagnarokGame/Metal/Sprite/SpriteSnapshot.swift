@@ -16,12 +16,7 @@ struct SpriteAnimationKey: Hashable {
 
 struct SpriteSnapshot {
     enum Content {
-        case mapObject(
-            mapObject: MapObject,
-            animationKey: SpriteAnimationKey,
-            headDirection: SpriteHeadDirection,
-            animationElapsed: Duration
-        )
+        case mapObject(mapObject: MapObject, animation: MapObjectAnimationState)
         case item(MapItem)
     }
 

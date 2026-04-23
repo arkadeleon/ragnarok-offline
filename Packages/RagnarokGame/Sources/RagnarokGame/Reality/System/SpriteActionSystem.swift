@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/1/28.
 //
 
+import RagnarokSprite
 import RealityKit
 import WorldCamera
 
@@ -36,7 +37,7 @@ class SpriteActionSystem: System {
                 continue
             }
 
-            let desiredElapsedTime = entity.components[SpriteAnimationTimingComponent.self]?.elapsedTime
+            let desiredAnimation = entity.components[SpriteAnimationTimingComponent.self]?.animation
 
             if let nextActionType = actionComponent.nextActionType,
                let animationComponent = entity.components[SpriteAnimationComponent.self],
@@ -48,13 +49,27 @@ class SpriteActionSystem: System {
             }
 
             let visualDirection = actionComponent.direction.adjustedForCameraAzimuth(azimuth)
-            let animationName = SpriteAnimation.animationName(
-                for: actionComponent.actionType,
-                direction: visualDirection,
-                headDirection: actionComponent.headDirection
-            )
-            guard let animation = animations[animationName] else {
+            func spriteAnimation(for actionType: SpriteActionType) -> SpriteAnimation? {
+                let animationName = SpriteAnimation.animationName(
+                    for: actionType,
+                    direction: visualDirection,
+                    headDirection: actionComponent.headDirection
+                )
+                return animations[animationName]
+            }
+
+            guard var animation = spriteAnimation(for: actionComponent.actionType) else {
                 continue
+            }
+
+            var desiredElapsedTime = desiredAnimation?.elapsed.timeInterval
+            if let desiredAnimation,
+               case .once(let settledActionType) = desiredAnimation.completion,
+               let settledAnimation = spriteAnimation(for: settledActionType),
+               actionComponent.actionType != settledActionType,
+               desiredAnimation.elapsed.timeInterval >= animation.duration {
+                desiredElapsedTime = desiredAnimation.elapsed.timeInterval - animation.duration
+                animation = settledAnimation
             }
 
             if entity.components[SpriteAnimationComponent.self]?.animation != animation {

@@ -81,7 +81,8 @@ public final class MapScene {
                 action: .idle,
                 direction: .south,
                 headDirection: .lookForward,
-                startTime: .now
+                startTime: .now,
+                completion: .indefinite
             )
         )
         self.state = MapSceneState(player: playerState)
