@@ -296,32 +296,25 @@ extension MapScene {
         let sourceID = objectAction.sourceObjectID
         let sourceMapObject = state.object(for: sourceID)?.object
 
-        let presentationAction: SpriteActionType
-        let isAttackAction: Bool
-        switch objectAction.type {
+        let presentationAction: SpriteActionType = switch objectAction.type {
         case .sit_down:
-            presentationAction = .sit
-            isAttackAction = false
+            .sit
         case .stand_up:
-            presentationAction = .idle
-            isAttackAction = false
+            .idle
         case .pickup_item:
-            presentationAction = .pickup
-            isAttackAction = false
+            .pickup
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
             if let sourceMapObject {
-                presentationAction = SpriteActionType.attackActionType(
+                SpriteActionType.attackActionType(
                     forJobID: sourceMapObject.job,
                     gender: sourceMapObject.gender,
                     weapon: sourceMapObject.weapon
                 )
             } else {
-                presentationAction = .attack1
+                .attack1
             }
-            isAttackAction = true
         default:
-            presentationAction = .attack1
-            isAttackAction = false
+            .attack1
         }
 
         let sourceDuration = Duration.milliseconds(objectAction.sourceSpeed)
@@ -342,39 +335,6 @@ extension MapScene {
                 duration: sourceDuration
             )
             state.objects[sourceID] = objectState
-        }
-
-        if isAttackAction {
-            if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
-                let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
-                let soundName = WeaponSoundTable.attackSoundNames(for: weaponType).randomElement()
-                if let soundName {
-                    renderBackend.playSound(named: soundName, on: objectAction.sourceObjectID)
-                }
-            }
-
-            if objectAction.damage > 0, let targetMapObject = state.object(for: objectAction.targetObjectID)?.object {
-                let hitSoundName: String?
-                let targetJob = SpriteJob(rawValue: targetMapObject.job)
-
-                if targetJob.isPlayer {
-                    hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
-                } else if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
-                    let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
-                    let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: weaponType).randomElement()
-                    hitSoundName = weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
-                } else {
-                    hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
-                }
-
-                if let hitSoundName {
-                    Task { @MainActor [weak self] in
-                        try? await Task.sleep(for: .milliseconds(objectAction.sourceSpeed))
-                        guard let self else { return }
-                        renderBackend.playSound(named: hitSoundName, on: objectAction.targetObjectID)
-                    }
-                }
-            }
         }
 
         switch objectAction.type {
@@ -431,6 +391,8 @@ extension MapScene {
         }
 
         applySnapshot()
+
+        playSound(for: objectAction)
     }
 
     func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
@@ -506,5 +468,52 @@ extension MapScene {
             total += .milliseconds(stepMs)
         }
         return total
+    }
+
+    func playSound(for objectAction: MapObjectAction) {
+        let isAttackAction = switch objectAction.type {
+        case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
+            true
+        default:
+            false
+        }
+
+        guard isAttackAction else {
+            return
+        }
+
+        let sourceMapObject = state.object(for: objectAction.sourceObjectID)?.object
+        let targetMapObject = state.object(for: objectAction.targetObjectID)?.object
+
+        if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
+            let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
+            let soundName = WeaponSoundTable.attackSoundNames(for: weaponType).randomElement()
+            if let soundName {
+                renderBackend.playSound(named: soundName, on: objectAction.sourceObjectID)
+            }
+        }
+
+        if let targetMapObject, objectAction.damage > 0 {
+            let targetJob = SpriteJob(rawValue: targetMapObject.job)
+
+            let hitSoundName: String?
+            if targetJob.isPlayer {
+                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
+            } else if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
+                let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
+                let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: weaponType).randomElement()
+                hitSoundName = weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
+            } else {
+                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
+            }
+
+            if let hitSoundName {
+                Task { @MainActor [weak self] in
+                    try? await Task.sleep(for: .milliseconds(objectAction.sourceSpeed))
+                    guard let self else { return }
+                    renderBackend.playSound(named: hitSoundName, on: objectAction.targetObjectID)
+                }
+            }
+        }
     }
 }
