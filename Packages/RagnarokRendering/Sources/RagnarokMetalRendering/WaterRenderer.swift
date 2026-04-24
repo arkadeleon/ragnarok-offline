@@ -57,7 +57,7 @@ public final class WaterRenderer {
             projectionMatrix: projectionMatrix,
             waveHeight: resource.waveHeight,
             wavePitch: resource.wavePitch,
-            waterOffset: frame * resource.waveSpeed.truncatingRemainder(dividingBy: 360) - 180
+            waterOffset: (frame * resource.waveSpeed).truncatingRemainder(dividingBy: 360) - 180
         )
         guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<WaterVertexUniforms>.stride, options: []) else {
             return
@@ -81,7 +81,7 @@ public final class WaterRenderer {
 
         renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-        let texture = resource.textures[Int(frame / resource.animSpeed) % resource.textures.count]
+        let texture = resource.textures[Int(frame / resource.waterAnimationSpeed) % resource.textures.count]
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)

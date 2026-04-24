@@ -9,10 +9,6 @@ import CoreGraphics
 import RagnarokCore
 import RagnarokResources
 
-private enum WaterTextureImageError: Error {
-    case cannotCreateImage
-}
-
 extension ResourceManager {
     public func textureImages(
         forNames textureNames: some Collection<String>,
@@ -41,13 +37,13 @@ extension ResourceManager {
         }
     }
 
-    public func waterTextureImage() async throws -> CGImage {
-        let textureImage = await withTaskGroup(
+    public func waterTextureImages(type waterType: Int32) async -> [CGImage] {
+        await withTaskGroup(
             of: (Int, Resources.Image?).self,
-            returning: CGImage?.self
+            returning: [CGImage].self
         ) { taskGroup in
             for i in 0..<32 {
-                let textureName = String(format: "water%03d.jpg", i)
+                let textureName = String(format: "water%d%02d.jpg", waterType, i)
                 let texturePath = ResourcePath.textureDirectory.appending([K2L("워터"), textureName])
                 taskGroup.addTask {
                     let image = try? await self.image(at: texturePath)
@@ -55,28 +51,20 @@ extension ResourceManager {
                 }
             }
 
-            var textureImages: [Int : Resources.Image?] = [:]
+            var textureImages: [Int : Resources.Image] = [:]
             for await (index, image) in taskGroup {
-                textureImages[index] = image
-            }
-
-            let size = CGSize(width: 128 * textureImages.count, height: 128)
-            let renderer = CGImageRenderer(size: size, flipped: false)
-            let image = renderer.image { cgContext in
-                for textureIndex in 0..<textureImages.count {
-                    if let image = textureImages[textureIndex], let image {
-                        let rect = CGRect(x: 128 * textureIndex, y: 0, width: 128, height: 128)
-                        cgContext.draw(image.cgImage, in: rect)
-                    }
+                if let image {
+                    textureImages[index] = image
                 }
             }
-            return image
-        }
 
-        guard let textureImage else {
-            throw WaterTextureImageError.cannotCreateImage
+            var images: [CGImage] = []
+            for i in 0..<32 {
+                if let image = textureImages[i] {
+                    images.append(image.cgImage)
+                }
+            }
+            return images
         }
-
-        return textureImage
     }
 }

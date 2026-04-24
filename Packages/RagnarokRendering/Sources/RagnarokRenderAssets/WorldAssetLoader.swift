@@ -47,7 +47,8 @@ public struct WorldAssetLoader: Sendable {
             }
         }
 
-        async let waterTextureImage = resourceManager.waterTextureImage()
+        let waterParameters = WaterParameters(gnd: gnd, rsw: rsw)
+        async let waterTextureImages = resourceManager.waterTextureImages(type: waterParameters.type)
 
         let groundAsset = GroundRenderAsset(
             gat: gat,
@@ -58,9 +59,9 @@ public struct WorldAssetLoader: Sendable {
 
         let waterAsset = WaterRenderAsset(
             gnd: gnd,
-            rsw: rsw,
+            parameters: waterParameters,
             lighting: lighting,
-            textureImage: try? await waterTextureImage
+            textureImages: await waterTextureImages
         )
 
         let sharedModelTextureImages = await modelTextureImages

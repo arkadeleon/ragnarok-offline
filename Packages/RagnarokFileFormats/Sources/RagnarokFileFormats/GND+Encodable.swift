@@ -16,6 +16,7 @@ extension GND: Encodable {
         case lightmap
         case surfaces
         case cubes
+        case water
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -29,6 +30,7 @@ extension GND: Encodable {
         try container.encode(lightmap, forKey: .lightmap)
         try container.encode(surfaces, forKey: .surfaces)
         try container.encode(cubes, forKey: .cubes)
+        try container.encodeIfPresent(water, forKey: .water)
     }
 }
 
@@ -86,5 +88,53 @@ extension GND.Cube: Encodable {
         try container.encode(topSurfaceIndex, forKey: .topSurfaceIndex)
         try container.encode(frontSurfaceIndex, forKey: .frontSurfaceIndex)
         try container.encode(rightSurfaceIndex, forKey: .rightSurfaceIndex)
+    }
+}
+
+extension GND.Water: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case level
+        case type
+        case waveHeight
+        case waveSpeed
+        case wavePitch
+        case animationSpeed
+        case splitWidth
+        case splitHeight
+        case zones
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(level, forKey: .level)
+        try container.encode(type, forKey: .type)
+        try container.encode(waveHeight, forKey: .waveHeight)
+        try container.encode(waveSpeed, forKey: .waveSpeed)
+        try container.encode(wavePitch, forKey: .wavePitch)
+        try container.encode(animationSpeed, forKey: .animationSpeed)
+        try container.encode(splitWidth, forKey: .splitWidth)
+        try container.encode(splitHeight, forKey: .splitHeight)
+        try container.encode(zones, forKey: .zones)
+    }
+}
+
+extension GND.Water.Zone: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case level
+        case type
+        case waveHeight
+        case waveSpeed
+        case wavePitch
+        case animationSpeed
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(level, forKey: .level)
+        try container.encode(type, forKey: .type)
+        try container.encode(waveHeight, forKey: .waveHeight)
+        try container.encode(waveSpeed, forKey: .waveSpeed)
+        try container.encode(wavePitch, forKey: .wavePitch)
+        try container.encode(animationSpeed, forKey: .animationSpeed)
     }
 }

@@ -14,14 +14,11 @@ public struct GND: FileFormat {
     public var width: Int32
     public var height: Int32
     public var zoom: Float
-
     public var textures: [String] = []
-
     public var lightmap: GND.Lightmap
-
     public var surfaces: [GND.Surface] = []
-
     public var cubes: [GND.Cube] = []
+    public var water: GND.Water?
 
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
@@ -67,6 +64,10 @@ public struct GND: FileFormat {
         for _ in 0..<cubeCount {
             let cube = try decoder.decode(GND.Cube.self)
             cubes.append(cube)
+        }
+
+        if version >= "1.8" {
+            water = try decoder.decode(GND.Water.self, configuration: version)
         }
     }
 }
@@ -124,6 +125,10 @@ extension GND {
         public var frontSurfaceIndex: Int32
         public var rightSurfaceIndex: Int32
 
+        public var lowestAltitude: Float {
+            [bottomLeftAltitude, bottomRightAltitude, topLeftAltitude, topRightAltitude].max()!
+        }
+
         public init(from decoder: BinaryDecoder) throws {
             bottomLeftAltitude = try decoder.decode(Float.self)
             bottomRightAltitude = try decoder.decode(Float.self)
@@ -137,8 +142,53 @@ extension GND {
     }
 }
 
-extension GND.Cube {
-    public var lowestAltitude: Float {
-        [bottomLeftAltitude, bottomRightAltitude, topLeftAltitude, topRightAltitude].max()!
+extension GND {
+    public struct Water: BinaryDecodableWithConfiguration, Sendable {
+        public struct Zone: BinaryDecodable, Sendable {
+            public var level: Float
+            public var type: Int32
+            public var waveHeight: Float
+            public var waveSpeed: Float
+            public var wavePitch: Float
+            public var animationSpeed: Int32
+
+            public init(from decoder: BinaryDecoder) throws {
+                level = try decoder.decode(Float.self)
+                type = try decoder.decode(Int32.self)
+                waveHeight = try decoder.decode(Float.self)
+                waveSpeed = try decoder.decode(Float.self)
+                wavePitch = try decoder.decode(Float.self)
+                animationSpeed = try decoder.decode(Int32.self)
+            }
+        }
+
+        public var level: Float
+        public var type: Int32
+        public var waveHeight: Float
+        public var waveSpeed: Float
+        public var wavePitch: Float
+        public var animationSpeed: Int32
+        public var splitWidth: Int32
+        public var splitHeight: Int32
+        public var zones: [GND.Water.Zone] = []
+
+        public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
+            level = try decoder.decode(Float.self)
+            type = try decoder.decode(Int32.self)
+            waveHeight = try decoder.decode(Float.self)
+            waveSpeed = try decoder.decode(Float.self)
+            wavePitch = try decoder.decode(Float.self)
+            animationSpeed = try decoder.decode(Int32.self)
+            splitWidth = try decoder.decode(Int32.self)
+            splitHeight = try decoder.decode(Int32.self)
+
+            if version >= "1.9" {
+                let zoneCount = splitWidth * splitHeight
+                for _ in 0..<zoneCount {
+                    let zone = try decoder.decode(GND.Water.Zone.self)
+                    zones.append(zone)
+                }
+            }
+        }
     }
 }
