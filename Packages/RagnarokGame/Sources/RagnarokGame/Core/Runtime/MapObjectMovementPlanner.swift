@@ -1,0 +1,97 @@
+//
+//  MapObjectMovementPlanner.swift
+//  RagnarokGame
+//
+//  Created by Leon Li on 2026/4/24.
+//
+
+import RagnarokSprite
+import simd
+
+struct MapObjectMovementPlanner {
+    private let findPath: (SIMD2<Int>, SIMD2<Int>) -> [SIMD2<Int>]
+
+    init(pathfinder: Pathfinder) {
+        self.init { startPosition, endPosition in
+            pathfinder.findPath(from: startPosition, to: endPosition)
+        }
+    }
+
+    init(findPath: @escaping (SIMD2<Int>, SIMD2<Int>) -> [SIMD2<Int>]) {
+        self.findPath = findPath
+    }
+
+    func replan(
+        existingMovement: MapObjectMovementState?,
+        existingSpeed: Int?,
+        incomingStartPosition: SIMD2<Int>,
+        incomingEndPosition: SIMD2<Int>,
+        incomingSpeed: Int,
+        at now: ContinuousClock.Instant
+    ) -> MapObjectMovementState {
+        let incomingPath = findPath(incomingStartPosition, incomingEndPosition)
+        let fallbackDirection = if incomingPath.count >= 2 {
+            SpriteDirection(sourcePosition: incomingPath[0], targetPosition: incomingPath[1])
+        } else {
+            SpriteDirection(sourcePosition: incomingStartPosition, targetPosition: incomingEndPosition)
+        }
+        let fallbackAnimationElapsedOffset = if let existingMovement {
+            existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
+        } else {
+            Duration.zero
+        }
+        let fallbackDuration = movementDuration(path: incomingPath, speed: incomingSpeed)
+        let fallbackMovement = MapObjectMovementState(
+            startPosition: incomingStartPosition,
+            endPosition: incomingEndPosition,
+            path: incomingPath,
+            startTime: now,
+            duration: fallbackDuration,
+            direction: fallbackDirection,
+            animationElapsedOffset: fallbackAnimationElapsedOffset
+        )
+
+        guard let existingMovement,
+              let existingSpeed,
+              let nextPosition = existingMovement.nextPosition(speed: existingSpeed, at: now) else {
+            return fallbackMovement
+        }
+
+        let suffixPath = findPath(nextPosition, incomingEndPosition)
+        guard !suffixPath.isEmpty else {
+            return fallbackMovement
+        }
+
+        let prefixPath = Array(existingMovement.path.prefix { $0 != nextPosition }) + [nextPosition]
+        let fullPath = prefixPath + Array(suffixPath.dropFirst())
+        let duration = movementDuration(path: fullPath, speed: incomingSpeed)
+        let direction = if fullPath.count >= 2 {
+            SpriteDirection(
+                sourcePosition: fullPath[fullPath.count - 2],
+                targetPosition: fullPath[fullPath.count - 1]
+            )
+        } else {
+            fallbackDirection
+        }
+
+        return MapObjectMovementState(
+            startPosition: existingMovement.startPosition,
+            endPosition: incomingEndPosition,
+            path: fullPath,
+            startTime: existingMovement.startTime,
+            duration: duration,
+            direction: direction,
+            animationElapsedOffset: existingMovement.animationElapsedOffset
+        )
+    }
+
+    func movementDuration(path: [SIMD2<Int>], speed: Int) -> Duration {
+        var total: Duration = .zero
+        for index in 1..<path.count {
+            let direction = SpriteDirection(sourcePosition: path[index - 1], targetPosition: path[index])
+            let stepMilliseconds = direction.isDiagonal ? Int((Double(speed) * sqrt(2)).rounded()) : speed
+            total += .milliseconds(stepMilliseconds)
+        }
+        return total
+    }
+}

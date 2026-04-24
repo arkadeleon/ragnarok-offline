@@ -46,37 +46,33 @@ extension MapScene {
 
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
-        let movementPlan = movementPlan(
-            for: state.player,
-            speed: state.player.object.speed,
-            startPosition: startPosition,
-            endPosition: endPosition,
+
+        let movementPlanner = MapObjectMovementPlanner(pathfinder: pathfinder)
+        let movement = movementPlanner.replan(
+            existingMovement: state.player.movement,
+            existingSpeed: state.player.object.speed,
+            incomingStartPosition: startPosition,
+            incomingEndPosition: endPosition,
+            incomingSpeed: state.player.object.speed,
             at: now
         )
-        let direction = movementPlan.direction
+        let remainingDuration = movement.remainingDuration(at: now)
+        let direction = movement.direction
 
         state.player.gridPosition = endPosition
-        state.player.movement = MapObjectMovementState(
-            from: movementPlan.from,
-            to: endPosition,
-            path: movementPlan.path,
-            startTime: movementPlan.startTime,
-            duration: movementPlan.duration,
-            direction: direction,
-            animationElapsedOffset: movementPlan.animationElapsedOffset
-        )
+        state.player.movement = movement
         state.player.presentation = MapObjectPresentationState(
             action: .walk,
             direction: direction,
             headDirection: state.player.presentation.headDirection,
             startTime: now,
-            completion: .after(movementPlan.remainingDuration, settledAction: .idle)
+            completion: .after(remainingDuration, settledAction: .idle)
         )
 
         if pendingArrivalAction != nil {
             arrivalTask?.cancel()
             arrivalTask = Task { @MainActor [weak self] in
-                try await Task.sleep(for: movementPlan.remainingDuration + .milliseconds(50))
+                try await Task.sleep(for: remainingDuration + .milliseconds(50))
                 guard let self else { return }
                 if let action = pendingArrivalAction {
                     pendingArrivalAction = nil
@@ -139,24 +135,19 @@ extension MapScene {
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
-        let movementPlan = movementPlan(
-            for: state.objects[object.objectID],
-            speed: object.speed,
-            startPosition: startPosition,
-            endPosition: endPosition,
+        let existingObjectState = state.objects[object.objectID]
+
+        let movementPlanner = MapObjectMovementPlanner(pathfinder: pathfinder)
+        let movement = movementPlanner.replan(
+            existingMovement: existingObjectState?.movement,
+            existingSpeed: existingObjectState?.object.speed,
+            incomingStartPosition: startPosition,
+            incomingEndPosition: endPosition,
+            incomingSpeed: object.speed,
             at: now
         )
-        let direction = movementPlan.direction
-
-        let movement = MapObjectMovementState(
-            from: movementPlan.from,
-            to: endPosition,
-            path: movementPlan.path,
-            startTime: movementPlan.startTime,
-            duration: movementPlan.duration,
-            direction: direction,
-            animationElapsedOffset: movementPlan.animationElapsedOffset
-        )
+        let remainingDuration = movement.remainingDuration(at: now)
+        let direction = movement.direction
 
         if var objectState = state.objects[object.objectID] {
             let presentation = MapObjectPresentationState(
@@ -164,7 +155,7 @@ extension MapScene {
                 direction: direction,
                 headDirection: objectState.presentation.headDirection,
                 startTime: now,
-                completion: .after(movementPlan.remainingDuration, settledAction: .idle)
+                completion: .after(remainingDuration, settledAction: .idle)
             )
             objectState.gridPosition = endPosition
             objectState.movement = movement
@@ -176,7 +167,7 @@ extension MapScene {
                 direction: direction,
                 headDirection: .lookForward,
                 startTime: now,
-                completion: .after(movementPlan.remainingDuration, settledAction: .idle)
+                completion: .after(remainingDuration, settledAction: .idle)
             )
             state.objects[object.objectID] = MapObjectState(
                 id: object.objectID,
@@ -475,92 +466,6 @@ extension MapScene {
 }
 
 extension MapScene {
-    private struct MovementPlan {
-        var from: SIMD2<Int>
-        var path: [SIMD2<Int>]
-        var direction: SpriteDirection
-        var startTime: ContinuousClock.Instant
-        var duration: Duration
-        var remainingDuration: Duration
-        var animationElapsedOffset: Duration
-    }
-
-    private func movementPlan(
-        for objectState: MapObjectState?,
-        speed: Int,
-        startPosition: SIMD2<Int>,
-        endPosition: SIMD2<Int>,
-        at now: ContinuousClock.Instant
-    ) -> MovementPlan {
-        let newPath = pathfinder.findPath(from: startPosition, to: endPosition)
-        let fallbackDirection = if newPath.count >= 2 {
-            SpriteDirection(sourcePosition: newPath[0], targetPosition: newPath[1])
-        } else {
-            SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition)
-        }
-        let existingMovement = objectState?.movement
-        let fallbackAnimationElapsedOffset = if let existingMovement {
-            existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
-        } else {
-            Duration.zero
-        }
-        let fallbackDuration = movementDuration(path: newPath, speed: speed)
-        let fallbackPlan = MovementPlan(
-            from: startPosition,
-            path: newPath,
-            direction: fallbackDirection,
-            startTime: now,
-            duration: fallbackDuration,
-            remainingDuration: fallbackDuration,
-            animationElapsedOffset: fallbackAnimationElapsedOffset
-        )
-
-        guard let objectState,
-              let existingMovement,
-              let nextPosition = existingMovement.nextPosition(speed: objectState.object.speed, at: now) else {
-            return fallbackPlan
-        }
-
-        let suffixPath = pathfinder.findPath(from: nextPosition, to: endPosition)
-        guard !suffixPath.isEmpty else {
-            return fallbackPlan
-        }
-
-        let prefixPath = Array(existingMovement.path.prefix { $0 != nextPosition }) + [nextPosition]
-        let fullPath = prefixPath + Array(suffixPath.dropFirst())
-        let duration = movementDuration(path: fullPath, speed: speed)
-        let elapsed = max(existingMovement.startTime.duration(to: now), .zero)
-        let remainingDuration = max(duration - elapsed, .zero)
-        let direction = if fullPath.count >= 2 {
-            SpriteDirection(
-                sourcePosition: fullPath[fullPath.count - 2],
-                targetPosition: fullPath[fullPath.count - 1]
-            )
-        } else {
-            fallbackDirection
-        }
-
-        return MovementPlan(
-            from: existingMovement.from,
-            path: fullPath,
-            direction: direction,
-            startTime: existingMovement.startTime,
-            duration: duration,
-            remainingDuration: remainingDuration,
-            animationElapsedOffset: existingMovement.animationElapsedOffset
-        )
-    }
-
-    private func movementDuration(path: [SIMD2<Int>], speed: Int) -> Duration {
-        var total: Duration = .zero
-        for i in 1..<path.count {
-            let direction = SpriteDirection(sourcePosition: path[i - 1], targetPosition: path[i])
-            let stepMs = direction.isDiagonal ? Int((Double(speed) * sqrt(2)).rounded()) : speed
-            total += .milliseconds(stepMs)
-        }
-        return total
-    }
-
     private func afterAttackAction(for mapObject: MapObject?) -> SpriteActionType {
         guard let mapObject else {
             return .idle
