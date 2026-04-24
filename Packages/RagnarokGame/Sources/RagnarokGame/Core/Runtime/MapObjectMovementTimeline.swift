@@ -9,6 +9,60 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
+private struct MapObjectMovementPathProgress {
+    struct ActiveStep {
+        var index: Int
+        var elapsed: Duration
+        var accumulated: Duration
+        var stepDuration: Duration
+    }
+
+    let stepDurations: [Duration]
+    let startTime: ContinuousClock.Instant
+    let duration: Duration
+
+    init(
+        path: [SIMD2<Int>],
+        speed: Int,
+        startTime: ContinuousClock.Instant,
+        duration: Duration
+    ) {
+        self.stepDurations = (1..<path.count).map { index in
+            let direction = SpriteDirection(sourcePosition: path[index - 1], targetPosition: path[index])
+            let stepMilliseconds = direction.isDiagonal ? Int((Double(speed) * sqrt(2)).rounded()) : speed
+            return .milliseconds(stepMilliseconds)
+        }
+        self.startTime = startTime
+        self.duration = duration
+    }
+
+    func activeStep(at now: ContinuousClock.Instant) -> ActiveStep? {
+        let elapsed = startTime.duration(to: now)
+        guard elapsed > .zero, elapsed < duration else {
+            return nil
+        }
+
+        var accumulated: Duration = .zero
+        for index in stepDurations.indices {
+            let stepDuration = stepDurations[index]
+            let nextAccumulated = accumulated + stepDuration
+
+            if elapsed < nextAccumulated {
+                return ActiveStep(
+                    index: index,
+                    elapsed: elapsed,
+                    accumulated: accumulated,
+                    stepDuration: stepDuration
+                )
+            }
+
+            accumulated = nextAccumulated
+        }
+
+        return nil
+    }
+}
+
 struct MapObjectMovementTimeline {
     struct MovementSample {
         var worldPosition: SIMD3<Float>
@@ -24,6 +78,7 @@ struct MapObjectMovementTimeline {
     private let duration: Duration
     private let direction: SpriteDirection
     private let animationElapsedOffset: Duration
+    private let progress: MapObjectMovementPathProgress
 
     init?(for state: MapObjectState, position: (SIMD2<Int>) -> SIMD3<Float>) {
         guard let movementState = state.movement, movementState.path.count >= 2 else {
@@ -31,19 +86,21 @@ struct MapObjectMovementTimeline {
         }
 
         let path = movementState.path
-        let stepDurations: [Duration] = (1..<path.count).map { index in
-            let direction = SpriteDirection(sourcePosition: path[index - 1], targetPosition: path[index])
-            let stepMilliseconds = direction.isDiagonal ? Int((Double(state.object.speed) * sqrt(2)).rounded()) : state.object.speed
-            return .milliseconds(stepMilliseconds)
-        }
+        let progress = MapObjectMovementPathProgress(
+            path: path,
+            speed: state.object.speed,
+            startTime: movementState.startTime,
+            duration: movementState.duration
+        )
 
         self.gridPath = path
         self.worldPath = path.map(position)
-        self.stepDurations = stepDurations
+        self.stepDurations = progress.stepDurations
         self.startTime = movementState.startTime
         self.duration = movementState.duration
         self.direction = movementState.direction
         self.animationElapsedOffset = movementState.animationElapsedOffset
+        self.progress = progress
     }
 
     func sample(at now: ContinuousClock.Instant, logicalWorldPosition: SIMD3<Float>) -> MovementSample? {
@@ -72,31 +129,23 @@ struct MapObjectMovementTimeline {
             )
         }
 
-        var accumulated: Duration = .zero
-        for index in stepDurations.indices {
-            let stepDuration = stepDurations[index]
-            let nextAccumulated = accumulated + stepDuration
+        if let step = progress.activeStep(at: now) {
+            let stepElapsed = step.elapsed - step.accumulated
+            let stepSeconds = max(step.stepDuration.timeInterval, .leastNonzeroMagnitude)
+            let fraction = Float(min(max(stepElapsed.timeInterval / stepSeconds, 0), 1))
+            let source = worldPath[step.index]
+            let target = worldPath[step.index + 1]
+            let direction = SpriteDirection(
+                sourcePosition: gridPath[step.index],
+                targetPosition: gridPath[step.index + 1]
+            )
 
-            if elapsed < nextAccumulated {
-                let stepElapsed = elapsed - accumulated
-                let stepSeconds = max(stepDuration.timeInterval, .leastNonzeroMagnitude)
-                let fraction = Float(min(max(stepElapsed.timeInterval / stepSeconds, 0), 1))
-                let source = worldPath[index]
-                let target = worldPath[index + 1]
-                let direction = SpriteDirection(
-                    sourcePosition: gridPath[index],
-                    targetPosition: gridPath[index + 1]
-                )
-
-                return MovementSample(
-                    worldPosition: mix(source, target, t: fraction),
-                    direction: direction,
-                    totalElapsed: elapsed + animationElapsedOffset,
-                    isMoving: true
-                )
-            }
-
-            accumulated = nextAccumulated
+            return MovementSample(
+                worldPosition: mix(source, target, t: fraction),
+                direction: direction,
+                totalElapsed: elapsed + animationElapsedOffset,
+                isMoving: true
+            )
         }
 
         return MovementSample(
@@ -105,5 +154,29 @@ struct MapObjectMovementTimeline {
             totalElapsed: duration,
             isMoving: false
         )
+    }
+}
+
+extension MapObjectMovementState {
+    func nextPosition(speed: Int, at now: ContinuousClock.Instant) -> SIMD2<Int>? {
+        guard path.count >= 2 else {
+            return nil
+        }
+
+        if startTime.duration(to: now) <= .zero {
+            return path[1]
+        }
+
+        let progress = MapObjectMovementPathProgress(
+            path: path,
+            speed: speed,
+            startTime: startTime,
+            duration: duration,
+        )
+        guard let step = progress.activeStep(at: now) else {
+            return nil
+        }
+
+        return path[step.index + 1]
     }
 }

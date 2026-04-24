@@ -141,8 +141,9 @@ public final class MapScene {
     }
 
     private func playerMovementOrigin() -> SIMD2<Int> {
-        if let path = state.player.movement?.path, path.count > 1 {
-            return path[1]
+        if let movement = state.player.movement,
+           let nextPosition = movement.nextPosition(speed: state.player.object.speed, at: .now) {
+            return nextPosition
         } else {
             return state.player.gridPosition
         }
