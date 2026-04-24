@@ -76,30 +76,32 @@ struct MapObjectMovementTimeline {
     private let stepDurations: [Duration]
     private let startTime: ContinuousClock.Instant
     private let duration: Duration
-    private let direction: SpriteDirection
+    private let initialDirection: SpriteDirection
+    private let finalDirection: SpriteDirection
     private let animationElapsedOffset: Duration
     private let progress: MapObjectMovementPathProgress
 
     init?(for state: MapObjectState, position: (SIMD2<Int>) -> SIMD3<Float>) {
-        guard let movementState = state.movement, movementState.path.count >= 2 else {
+        guard let movement = state.movement, movement.path.count >= 2 else {
             return nil
         }
 
-        let path = movementState.path
+        let path = movement.path
         let progress = MapObjectMovementPathProgress(
             path: path,
             speed: state.object.speed,
-            startTime: movementState.startTime,
-            duration: movementState.duration
+            startTime: movement.startTime,
+            duration: movement.duration
         )
 
         self.gridPath = path
         self.worldPath = path.map(position)
         self.stepDurations = progress.stepDurations
-        self.startTime = movementState.startTime
-        self.duration = movementState.duration
-        self.direction = movementState.direction
-        self.animationElapsedOffset = movementState.animationElapsedOffset
+        self.startTime = movement.startTime
+        self.duration = movement.duration
+        self.initialDirection = movement.initialDirection
+        self.finalDirection = movement.finalDirection
+        self.animationElapsedOffset = movement.animationElapsedOffset
         self.progress = progress
     }
 
@@ -114,7 +116,7 @@ struct MapObjectMovementTimeline {
         if elapsed <= .zero {
             return MovementSample(
                 worldPosition: worldPath[0],
-                direction: direction,
+                direction: initialDirection,
                 totalElapsed: animationElapsedOffset,
                 isMoving: true
             )
@@ -123,7 +125,7 @@ struct MapObjectMovementTimeline {
         if elapsed >= duration {
             return MovementSample(
                 worldPosition: worldPath.last ?? logicalWorldPosition,
-                direction: direction,
+                direction: finalDirection,
                 totalElapsed: duration,
                 isMoving: false
             )
@@ -150,7 +152,7 @@ struct MapObjectMovementTimeline {
 
         return MovementSample(
             worldPosition: worldPath.last ?? logicalWorldPosition,
-            direction: direction,
+            direction: finalDirection,
             totalElapsed: duration,
             isMoving: false
         )

@@ -30,11 +30,6 @@ struct MapObjectMovementPlanner {
         at now: ContinuousClock.Instant
     ) -> MapObjectMovementState {
         let incomingPath = findPath(incomingStartPosition, incomingEndPosition)
-        let fallbackDirection = if incomingPath.count >= 2 {
-            SpriteDirection(sourcePosition: incomingPath[0], targetPosition: incomingPath[1])
-        } else {
-            SpriteDirection(sourcePosition: incomingStartPosition, targetPosition: incomingEndPosition)
-        }
         let fallbackAnimationElapsedOffset = if let existingMovement {
             existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
         } else {
@@ -47,7 +42,6 @@ struct MapObjectMovementPlanner {
             path: incomingPath,
             startTime: now,
             duration: fallbackDuration,
-            direction: fallbackDirection,
             animationElapsedOffset: fallbackAnimationElapsedOffset
         )
 
@@ -65,14 +59,6 @@ struct MapObjectMovementPlanner {
         let prefixPath = Array(existingMovement.path.prefix { $0 != nextPosition }) + [nextPosition]
         let fullPath = prefixPath + Array(suffixPath.dropFirst())
         let duration = movementDuration(path: fullPath, speed: incomingSpeed)
-        let direction = if fullPath.count >= 2 {
-            SpriteDirection(
-                sourcePosition: fullPath[fullPath.count - 2],
-                targetPosition: fullPath[fullPath.count - 1]
-            )
-        } else {
-            fallbackDirection
-        }
 
         return MapObjectMovementState(
             startPosition: existingMovement.startPosition,
@@ -80,7 +66,6 @@ struct MapObjectMovementPlanner {
             path: fullPath,
             startTime: existingMovement.startTime,
             duration: duration,
-            direction: direction,
             animationElapsedOffset: existingMovement.animationElapsedOffset
         )
     }

@@ -57,7 +57,7 @@ extension MapScene {
             at: now
         )
         let remainingDuration = movement.remainingDuration(at: now)
-        let direction = movement.direction
+        let direction = movement.finalDirection
 
         state.player.gridPosition = endPosition
         state.player.movement = movement
@@ -147,7 +147,7 @@ extension MapScene {
             at: now
         )
         let remainingDuration = movement.remainingDuration(at: now)
-        let direction = movement.direction
+        let direction = movement.finalDirection
 
         if var objectState = state.objects[object.objectID] {
             let presentation = MapObjectPresentationState(
