@@ -30,10 +30,10 @@ public struct GroundTileColorMap {
                 let index = (x + y * width) * 4
                 let color = gnd.surfaces[Int(cube.topSurfaceIndex)].color
 
-                data[index + 0] = color.alpha
-                data[index + 1] = color.red
-                data[index + 2] = color.green
-                data[index + 3] = color.blue
+                data[index + 0] = color.red
+                data[index + 1] = color.green
+                data[index + 2] = color.blue
+                data[index + 3] = color.alpha
             }
         }
 

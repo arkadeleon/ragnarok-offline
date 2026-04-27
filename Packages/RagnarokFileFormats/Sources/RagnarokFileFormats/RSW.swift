@@ -11,6 +11,7 @@ import Foundation
 public struct RSW: FileFormat {
     public var header: String
     public var version: FileFormatVersion
+    public var buildNumber: UInt32?
     public var files: RSW.Files
     public var water: RSW.Water
     public var light: RSW.Light
@@ -31,8 +32,9 @@ public struct RSW: FileFormat {
         version = FileFormatVersion(major: major, minor: minor)
 
         if version >= "2.5" {
-            // Build number
-            _ = try decoder.decode(UInt32.self)
+            buildNumber = try decoder.decode(UInt32.self)
+        } else {
+            buildNumber = nil
         }
 
         if version >= "2.2" {
@@ -48,13 +50,25 @@ public struct RSW: FileFormat {
 
         boundingBox = try decoder.decode(RSW.BoundingBox.self, configuration: version)
 
+        if version >= "2.7" {
+            let count = try decoder.decode(Int32.self)
+            for _ in 0..<count {
+                // Unknown data
+                _ = try decoder.decode(Int32.self)
+            }
+        }
+
         let objectCount = try decoder.decode(Int32.self)
 
         for _ in 0..<objectCount {
             let objectType = try RSW.Objects.ObjectType(rawValue: decoder.decode(Int32.self))
             switch objectType {
             case .model:
-                let model = try decoder.decode(RSW.Objects.Model.self, configuration: version)
+                let configuration = RSW.Objects.Model.BinaryDecodingConfiguration(
+                    version: version,
+                    buildNumber: buildNumber
+                )
+                let model = try decoder.decode(RSW.Objects.Model.self, configuration: configuration)
                 models.append(model)
             case .light:
                 let light = try decoder.decode(RSW.Objects.Light.self, configuration: version)
@@ -81,16 +95,13 @@ extension RSW {
 
         public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
             ini = try decoder.decode(String.self, lengthOfBytes: 40)
-
             gnd = try decoder.decode(String.self, lengthOfBytes: 40)
-
+            gat = try decoder.decode(String.self, lengthOfBytes: 40)
             if version >= "1.4" {
-                gat = try decoder.decode(String.self, lengthOfBytes: 40)
+                src = try decoder.decode(String.self, lengthOfBytes: 40)
             } else {
-                gat = ""
+                src = ""
             }
-
-            src = try decoder.decode(String.self, lengthOfBytes: 40)
         }
     }
 }
@@ -217,6 +228,11 @@ extension RSW {
         }
 
         public struct Model: BinaryDecodableWithConfiguration, Sendable {
+            public struct BinaryDecodingConfiguration {
+                public var version: FileFormatVersion
+                public var buildNumber: UInt32?
+            }
+
             public var name: String
             public var animationType: Int32
             public var animationSpeed: Float
@@ -227,7 +243,9 @@ extension RSW {
             public var rotation: SIMD3<Float>
             public var scale: SIMD3<Float>
 
-            public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
+            public init(from decoder: BinaryDecoder, configuration: BinaryDecodingConfiguration) throws {
+                let version = configuration.version
+
                 if version >= "1.3" {
                     name = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .isoLatin1)
                     animationType = try decoder.decode(Int32.self)
@@ -238,6 +256,16 @@ extension RSW {
                     animationType = 0
                     animationSpeed = 1
                     blockType = 0
+                }
+
+                if version >= "2.6", let buildNumber = configuration.buildNumber, buildNumber >= 186 {
+                    // Unknown data
+                    _ = try decoder.decode(Int8.self)
+                }
+
+                if version >= "2.7" {
+                    // Unknown data
+                    _ = try decoder.decode(Int32.self)
                 }
 
                 modelName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
@@ -263,9 +291,9 @@ extension RSW {
         public struct Light: BinaryDecodableWithConfiguration, Sendable {
             public var name: String
             public var position: SIMD3<Float>
-            public var diffuseRed: Float
-            public var diffuseGreen: Float
-            public var diffuseBlue: Float
+            public var diffuseRed: Int32
+            public var diffuseGreen: Int32
+            public var diffuseBlue: Int32
             public var range: Float
 
             public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
@@ -275,9 +303,9 @@ extension RSW {
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,
                 ]
-                diffuseRed = try decoder.decode(Float.self)
-                diffuseGreen = try decoder.decode(Float.self)
-                diffuseBlue = try decoder.decode(Float.self)
+                diffuseRed = try decoder.decode(Int32.self)
+                diffuseGreen = try decoder.decode(Int32.self)
+                diffuseBlue = try decoder.decode(Int32.self)
                 range = try decoder.decode(Float.self)
             }
         }

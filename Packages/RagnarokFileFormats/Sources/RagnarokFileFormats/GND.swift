@@ -105,10 +105,10 @@ extension GND {
             textureIndex = try decoder.decode(Int16.self)
             lightmapIndex = try decoder.decode(Int16.self)
 
-            let alpha = try decoder.decode(UInt8.self)
-            let red = try decoder.decode(UInt8.self)
-            let green = try decoder.decode(UInt8.self)
             let blue = try decoder.decode(UInt8.self)
+            let green = try decoder.decode(UInt8.self)
+            let red = try decoder.decode(UInt8.self)
+            let alpha = try decoder.decode(UInt8.self)
             color = RGBAColor(red: red, green: green, blue: blue, alpha: alpha)
         }
     }

@@ -9,6 +9,7 @@ extension RSW: Encodable {
     enum CodingKeys: String, CodingKey {
         case header
         case version
+        case buildNumber
         case files
         case water
         case light
@@ -23,6 +24,7 @@ extension RSW: Encodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(header, forKey: .header)
         try container.encode(version.description, forKey: .version)
+        try container.encodeIfPresent(buildNumber, forKey: .buildNumber)
         try container.encode(files, forKey: .files)
         try container.encode(water, forKey: .water)
         try container.encode(light, forKey: .light)
