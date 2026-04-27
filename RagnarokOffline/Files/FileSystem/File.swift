@@ -251,7 +251,7 @@ extension File {
             true
         case let utType where utType.conforms(to: .audio):
             true
-        case .act, .gat, .gnd, .rsm, .rsw, .spr, .str:
+        case .act, .gat, .gnd, .rsm, .rsm2, .rsw, .spr, .str:
             true
         default:
             false

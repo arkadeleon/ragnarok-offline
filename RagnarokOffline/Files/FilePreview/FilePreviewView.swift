@@ -31,7 +31,7 @@ struct FilePreviewView: View {
                 GNDFilePreviewView(file: file)
             case .imf:
                 FileJSONViewer(file: file)
-            case .rsm:
+            case .rsm, .rsm2:
                 RSMFilePreviewView(file: file)
             case .rsw:
                 RSWFilePreviewView(file: file)

@@ -30,7 +30,7 @@ extension File {
             "mountain.2"
         case .imf:
             "square.stack.3d.up"
-        case .rsm:
+        case .rsm, .rsm2:
             "cube"
         case .rsw:
             "map"

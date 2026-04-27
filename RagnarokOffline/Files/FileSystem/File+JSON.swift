@@ -11,7 +11,7 @@ import RagnarokFileFormats
 extension File {
     var jsonRepresentable: Bool {
         switch utType {
-        case .act, .gat, .gnd, .imf, .rsm, .rsw, .spr, .str:
+        case .act, .gat, .gnd, .imf, .rsm, .rsm2, .rsw, .spr, .str:
             true
         default:
             false
@@ -50,7 +50,7 @@ extension File {
             let imf = try IMF(data: data)
             let json = try encoder.encode(imf)
             return json
-        case .rsm:
+        case .rsm, .rsm2:
             let rsm = try RSM(data: data)
             let json = try encoder.encode(rsm)
             return json

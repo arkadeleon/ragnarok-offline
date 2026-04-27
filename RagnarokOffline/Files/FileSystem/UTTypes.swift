@@ -19,6 +19,7 @@ extension UTType {
     static let imf = UTType(exportedAs: "kr.co.gravity.imf")
     static let pal = UTType(exportedAs: "kr.co.gravity.pal")
     static let rsm = UTType(exportedAs: "kr.co.gravity.rsm")
+    static let rsm2 = UTType(exportedAs: "kr.co.gravity.rsm2")
     static let rsw = UTType(exportedAs: "kr.co.gravity.rsw")
     static let spr = UTType(exportedAs: "kr.co.gravity.spr")
     static let str = UTType(exportedAs: "kr.co.gravity.str")

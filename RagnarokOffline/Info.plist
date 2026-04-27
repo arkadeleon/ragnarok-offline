@@ -86,6 +86,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>kr.co.gravity.rsm</string>
+				<string>kr.co.gravity.rsm2</string>
 			</array>
 		</dict>
 		<dict>
@@ -323,6 +324,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>rsm</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Model 2</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>kr.co.gravity.rsm2</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>rsm2</string>
 				</array>
 			</dict>
 		</dict>
