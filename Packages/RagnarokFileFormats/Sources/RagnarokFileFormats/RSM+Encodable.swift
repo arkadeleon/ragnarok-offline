@@ -14,7 +14,7 @@ extension RSM: Encodable {
         case alpha
         case rootNodes
         case nodes
-        case scaleKeyframes
+        case positionKeyframes
         case volumeBoxes
     }
 
@@ -27,7 +27,7 @@ extension RSM: Encodable {
         try container.encode(alpha, forKey: .alpha)
         try container.encode(rootNodes, forKey: .rootNodes)
         try container.encode(nodes, forKey: .nodes)
-        try container.encode(scaleKeyframes, forKey: .scaleKeyframes)
+        try container.encode(positionKeyframes, forKey: .positionKeyframes)
         try container.encode(volumeBoxes, forKey: .volumeBoxes)
     }
 }
@@ -49,6 +49,7 @@ extension RSM.Node: Encodable {
         case scaleKeyframes
         case rotationKeyframes
         case positionKeyframes
+        case textureKeyframeGroups
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -68,6 +69,7 @@ extension RSM.Node: Encodable {
         try container.encode(scaleKeyframes, forKey: .scaleKeyframes)
         try container.encode(rotationKeyframes, forKey: .rotationKeyframes)
         try container.encode(positionKeyframes, forKey: .positionKeyframes)
+        try container.encode(textureKeyframeGroups, forKey: .textureKeyframeGroups)
     }
 }
 
@@ -83,6 +85,88 @@ extension RSM.Node.TextureVertex: Encodable {
         try container.encode(color, forKey: .color)
         try container.encode(u, forKey: .u)
         try container.encode(v, forKey: .v)
+    }
+}
+
+extension RSM.Node.ScaleKeyframe: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case frame
+        case scale
+        case data
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(frame, forKey: .frame)
+        try container.encode(scale, forKey: .scale)
+        try container.encode(data, forKey: .data)
+    }
+}
+
+extension RSM.Node.RotationKeyframe: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case frame
+        case quaternion
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(frame, forKey: .frame)
+        try container.encode(quaternion.vector, forKey: .quaternion)
+    }
+}
+
+extension RSM.Node.PositionKeyframe: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case frame
+        case position
+        case data
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(frame, forKey: .frame)
+        try container.encode(position, forKey: .position)
+        try container.encode(data, forKey: .data)
+    }
+}
+
+extension RSM.Node.TextureKeyframeGroup: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case textureIndex
+        case textureAnimations
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(textureIndex, forKey: .textureIndex)
+        try container.encode(textureAnimations, forKey: .textureAnimations)
+    }
+}
+
+extension RSM.Node.TextureAnimation: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case type
+        case keyframes
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(type, forKey: .type)
+        try container.encode(keyframes, forKey: .keyframes)
+    }
+}
+
+extension RSM.Node.TextureAnimationKeyframe: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case frame
+        case offset
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(frame, forKey: .frame)
+        try container.encode(offset, forKey: .offset)
     }
 }
 
@@ -104,34 +188,6 @@ extension RSM.Face: Encodable {
         try container.encode(padding, forKey: .padding)
         try container.encode(twoSided, forKey: .twoSided)
         try container.encode(smoothGroup, forKey: .smoothGroup)
-    }
-}
-
-extension RSM.ScaleKeyframe: Encodable {
-    enum CodingKeys: String, CodingKey {
-        case frame
-        case scale
-        case data
-    }
-
-    public func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(frame, forKey: .frame)
-        try container.encode(scale, forKey: .scale)
-        try container.encode(data, forKey: .data)
-    }
-}
-
-extension RSM.RotationKeyframe: Encodable {
-    enum CodingKeys: String, CodingKey {
-        case frame
-        case quaternion
-    }
-
-    public func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(frame, forKey: .frame)
-        try container.encode(quaternion.vector, forKey: .quaternion)
     }
 }
 

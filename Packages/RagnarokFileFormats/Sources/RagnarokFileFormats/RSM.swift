@@ -19,14 +19,14 @@ public struct RSM: FileFormat {
     public var rootNodes: [String] = []
     public var nodes: [RSM.Node] = []
 
-    public var scaleKeyframes: [RSM.ScaleKeyframe] = []
+    public var positionKeyframes: [RSM.PositionKeyframe] = []
 
     public var volumeBoxes: [RSM.VolumeBox] = []
 
     public init(from decoder: BinaryDecoder) throws {
         header = try decoder.decode(String.self, lengthOfBytes: 4)
-        guard header == "GRSM" else {
-            throw FileFormatError.invalidHeader(header, expected: "GRSM")
+        guard header == "GRSM" || header == "GRSX" else {
+            throw FileFormatError.invalidHeader(header, expected: "GRSM or GRSX")
         }
 
         let major = try decoder.decode(UInt8.self)
@@ -98,10 +98,10 @@ public struct RSM: FileFormat {
         }
 
         if version < "1.6" {
-            let scaleKeyframeCount = try decoder.decode(Int32.self)
-            for _ in 0..<scaleKeyframeCount {
-                let keyframe = try decoder.decode(RSM.ScaleKeyframe.self)
-                scaleKeyframes.append(keyframe)
+            let positionKeyframeCount = try decoder.decode(Int32.self)
+            for _ in 0..<positionKeyframeCount {
+                let keyframe = try decoder.decode(RSM.PositionKeyframe.self)
+                positionKeyframes.append(keyframe)
             }
         }
 
@@ -153,9 +153,10 @@ extension RSM {
 
         public var faces: [RSM.Face] = []
 
-        public var scaleKeyframes: [RSM.ScaleKeyframe] = []
-        public var rotationKeyframes: [RSM.RotationKeyframe] = []
-        public var positionKeyframes: [RSM.PositionKeyframe] = []
+        public var scaleKeyframes: [RSM.Node.ScaleKeyframe] = []
+        public var rotationKeyframes: [RSM.Node.RotationKeyframe] = []
+        public var positionKeyframes: [RSM.Node.PositionKeyframe] = []
+        public var textureKeyframeGroups: [RSM.Node.TextureKeyframeGroup] = []
 
         public init(from decoder: BinaryDecoder, configuration: BinaryDecodingConfiguration) throws {
             let version = configuration.version
@@ -267,40 +268,30 @@ extension RSM {
             if version >= "1.6" {
                 let scaleKeyframeCount = try decoder.decode(Int32.self)
                 for _ in 0..<scaleKeyframeCount {
-                    let keyframe = try decoder.decode(RSM.ScaleKeyframe.self)
+                    let keyframe = try decoder.decode(RSM.Node.ScaleKeyframe.self)
                     scaleKeyframes.append(keyframe)
                 }
             }
 
             let rotationKeyframeCount = try decoder.decode(Int32.self)
             for _ in 0..<rotationKeyframeCount {
-                let keyframe = try decoder.decode(RSM.RotationKeyframe.self)
+                let keyframe = try decoder.decode(RSM.Node.RotationKeyframe.self)
                 rotationKeyframes.append(keyframe)
             }
 
             if version >= "2.2" {
                 let positionKeyframeCount = try decoder.decode(Int32.self)
                 for _ in 0..<positionKeyframeCount {
-                    let keyframe = try decoder.decode(RSM.PositionKeyframe.self)
+                    let keyframe = try decoder.decode(RSM.Node.PositionKeyframe.self)
                     positionKeyframes.append(keyframe)
                 }
             }
 
             if version >= "2.3" {
-                let textureAnimationCount = try decoder.decode(Int32.self)
-                for _ in 0..<textureAnimationCount {
-                    let textureIndex = try decoder.decode(Int32.self)
-
-                    let textureAnimationCount = try decoder.decode(Int32.self)
-                    for _ in 0..<textureAnimationCount {
-                        let type = try decoder.decode(Int32.self)
-
-                        let frameCount = try decoder.decode(Int32.self)
-                        for _ in 0..<frameCount {
-                            let frame = try decoder.decode(Int32.self)
-                            let data = try decoder.decode(Float.self)
-                        }
-                    }
+                let textureKeyframeGroupCount = try decoder.decode(Int32.self)
+                for _ in 0..<textureKeyframeGroupCount {
+                    let textureKeyframeGroup = try decoder.decode(RSM.Node.TextureKeyframeGroup.self)
+                    textureKeyframeGroups.append(textureKeyframeGroup)
                 }
             }
         }
@@ -358,7 +349,7 @@ extension RSM {
     }
 }
 
-extension RSM {
+extension RSM.Node {
     public struct ScaleKeyframe: BinaryDecodable, Sendable {
         public var frame: Int32
         public var scale: SIMD3<Float>
@@ -403,6 +394,64 @@ extension RSM {
                 decoder.decode(Float.self),
             ]
             data = try decoder.decode(Int32.self)
+        }
+    }
+
+    public struct TextureKeyframeGroup: BinaryDecodable, Sendable {
+        public var textureIndex: Int32
+        public var textureAnimations: [RSM.Node.TextureAnimation] = []
+
+        public init(from decoder: BinaryDecoder) throws {
+            textureIndex = try decoder.decode(Int32.self)
+
+            let textureAnimationCount = try decoder.decode(Int32.self)
+            for _ in 0..<textureAnimationCount {
+                let textureAnimation = try decoder.decode(RSM.Node.TextureAnimation.self)
+                textureAnimations.append(textureAnimation)
+            }
+        }
+    }
+
+    public struct TextureAnimation: BinaryDecodable, Sendable {
+        public var type: Int32
+        public var keyframes: [RSM.Node.TextureAnimationKeyframe] = []
+
+        public init(from decoder: BinaryDecoder) throws {
+            type = try decoder.decode(Int32.self)
+
+            let keyframeCount = try decoder.decode(Int32.self)
+            for _ in 0..<keyframeCount {
+                let keyframe = try decoder.decode(RSM.Node.TextureAnimationKeyframe.self)
+                keyframes.append(keyframe)
+            }
+        }
+    }
+
+    public struct TextureAnimationKeyframe: BinaryDecodable, Sendable {
+        public var frame: Int32
+        public var offset: Float
+
+        public init(from decoder: BinaryDecoder) throws {
+            frame = try decoder.decode(Int32.self)
+            offset = try decoder.decode(Float.self)
+        }
+    }
+}
+
+extension RSM {
+    public struct PositionKeyframe: BinaryDecodable, Sendable {
+        public var frame: Int32
+        public var position: SIMD3<Float>
+        public var data: Float
+
+        public init(from decoder: BinaryDecoder) throws {
+            frame = try decoder.decode(Int32.self)
+            position = try [
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+                decoder.decode(Float.self),
+            ]
+            data = try decoder.decode(Float.self)
         }
     }
 }
