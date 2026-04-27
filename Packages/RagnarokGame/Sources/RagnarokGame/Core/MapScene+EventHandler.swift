@@ -47,7 +47,7 @@ extension MapScene {
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
 
-        let movementPlanner = MapObjectMovementPlanner(pathfinder: pathfinder)
+        let movementPlanner = MapObjectMovementPlanner(pathFinder: pathFinder)
         let movement = movementPlanner.replan(
             existingMovement: state.player.movement,
             existingSpeed: state.player.object.speed,
@@ -137,7 +137,7 @@ extension MapScene {
         let now = ContinuousClock.now
         let existingObjectState = state.objects[object.objectID]
 
-        let movementPlanner = MapObjectMovementPlanner(pathfinder: pathfinder)
+        let movementPlanner = MapObjectMovementPlanner(pathFinder: pathFinder)
         let movement = movementPlanner.replan(
             existingMovement: existingObjectState?.movement,
             existingSpeed: existingObjectState?.object.speed,

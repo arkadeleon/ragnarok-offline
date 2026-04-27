@@ -1,5 +1,5 @@
 //
-//  Pathfinder.swift
+//  PathFinder.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2025/6/17.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class Pathfinder {
+final class PathFinder {
     let mapGrid: MapGrid
 
     // Small tolerance so floating point noise does not break tie-breaking logic

@@ -36,7 +36,7 @@ public final class MapScene {
     let mapGrid: MapGrid
     let state: MapSceneState
 
-    let pathfinder: Pathfinder
+    let pathFinder: PathFinder
 
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
@@ -87,7 +87,7 @@ public final class MapScene {
         )
         self.state = MapSceneState(player: playerState)
 
-        self.pathfinder = Pathfinder(mapGrid: self.mapGrid)
+        self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
         state.overlay.gauges[player.objectID] = MapGaugeOverlay(
             id: player.objectID,
@@ -274,7 +274,7 @@ public final class MapScene {
     }
 
     private func decideMovement(from playerPosition: SIMD2<Int>, toward targetPosition: SIMD2<Int>, within range: Int) -> MapMovementDecision {
-        let path = pathfinder.findPath(from: playerPosition, to: targetPosition, within: range)
+        let path = pathFinder.findPath(from: playerPosition, to: targetPosition, within: range)
         if path.isEmpty {
             return .noPath
         } else if path == [playerPosition] {

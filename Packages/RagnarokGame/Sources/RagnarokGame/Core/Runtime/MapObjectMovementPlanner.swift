@@ -11,9 +11,9 @@ import simd
 struct MapObjectMovementPlanner {
     private let findPath: (SIMD2<Int>, SIMD2<Int>) -> [SIMD2<Int>]
 
-    init(pathfinder: Pathfinder) {
+    init(pathFinder: PathFinder) {
         self.init { startPosition, endPosition in
-            pathfinder.findPath(from: startPosition, to: endPosition)
+            pathFinder.findPath(from: startPosition, to: endPosition)
         }
     }
 
