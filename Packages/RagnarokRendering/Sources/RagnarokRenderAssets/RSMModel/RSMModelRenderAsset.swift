@@ -307,8 +307,8 @@ final class RSMModelNodeWrapper {
                     position: vert[positionIndex],
                     normal: norm[faceIndex],
                     textureCoordinate: [
-                        node.tvertices[textureVertexIndex].u,
-                        node.tvertices[textureVertexIndex].v,
+                        node.tvertices[textureVertexIndex].u * 0.98 + 0.01,
+                        node.tvertices[textureVertexIndex].v * 0.98 + 0.01,
                     ],
                     alpha: Float(alpha) / 255
                 )
@@ -334,8 +334,8 @@ final class RSMModelNodeWrapper {
                     position: vert[positionIndex],
                     normal: normals[positionIndex],
                     textureCoordinate: [
-                        node.tvertices[textureVertexIndex].u,
-                        node.tvertices[textureVertexIndex].v,
+                        node.tvertices[textureVertexIndex].u * 0.98 + 0.01,
+                        node.tvertices[textureVertexIndex].v * 0.98 + 0.01,
                     ],
                     alpha: Float(alpha) / 255
                 )
