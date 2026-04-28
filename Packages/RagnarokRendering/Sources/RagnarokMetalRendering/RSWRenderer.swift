@@ -97,17 +97,15 @@ public class RSWRenderer: Renderer {
             projectionMatrix: projectionMatrix
         )
 
-        for modelResource in modelResources {
-            modelRenderer.render(
-                resource: modelResource,
-                atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: modelMatrix,
-                viewMatrix: viewMatrix,
-                projectionMatrix: projectionMatrix,
-                normalMatrix: normalMatrix
-            )
-        }
+        modelRenderer.render(
+            resources: modelResources,
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
+            projectionMatrix: projectionMatrix,
+            normalMatrix: normalMatrix
+        )
 
         renderCommandEncoder.endEncoding()
     }

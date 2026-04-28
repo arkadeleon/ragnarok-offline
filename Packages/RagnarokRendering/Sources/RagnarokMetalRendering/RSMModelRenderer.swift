@@ -38,7 +38,7 @@ public final class RSMModelRenderer {
     }
 
     public func render(
-        resource: RSMModelRenderResource,
+        resources: [RSMModelRenderResource],
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
@@ -46,31 +46,37 @@ public final class RSMModelRenderer {
         projectionMatrix: simd_float4x4,
         normalMatrix: simd_float3x3
     ) {
-        var vertexUniforms = ModelVertexUniforms(
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            lightDirection: resource.light.direction,
-            normalMatrix: normalMatrix
-        )
-
-        var fragmentUniforms = ModelFragmentUniforms(
-            lightAmbient: resource.light.ambient,
-            lightDiffuse: resource.light.diffuse,
-            lightOpacity: resource.light.opacity
-        )
+        guard !resources.isEmpty else {
+            return
+        }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, index: 1)
-        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
+        for resource in resources {
+            var vertexUniforms = ModelVertexUniforms(
+                modelMatrix: modelMatrix,
+                viewMatrix: viewMatrix,
+                projectionMatrix: projectionMatrix,
+                lightDirection: resource.light.direction,
+                normalMatrix: normalMatrix
+            )
 
-        for mesh in resource.meshes where mesh.vertexCount > 0 {
-            renderCommandEncoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)
-            renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+            var fragmentUniforms = ModelFragmentUniforms(
+                lightAmbient: resource.light.ambient,
+                lightDiffuse: resource.light.diffuse,
+                lightOpacity: resource.light.opacity
+            )
 
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertexCount)
+            renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, index: 1)
+            renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
+
+            for mesh in resource.meshes where mesh.vertexCount > 0 {
+                renderCommandEncoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)
+                renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+
+                renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertexCount)
+            }
         }
     }
 }

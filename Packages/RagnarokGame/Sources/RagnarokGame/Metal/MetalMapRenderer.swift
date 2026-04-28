@@ -123,17 +123,15 @@ final class MetalMapRenderer: Renderer {
             )
         }
 
-        for modelResource in modelResources {
-            modelRenderer.render(
-                resource: modelResource,
-                atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
-                normalMatrix: matrices.normalMatrix
-            )
-        }
+        modelRenderer.render(
+            resources: modelResources,
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            modelMatrix: matrices.modelMatrix,
+            viewMatrix: matrices.viewMatrix,
+            projectionMatrix: matrices.projectionMatrix,
+            normalMatrix: matrices.normalMatrix
+        )
 
         spriteRenderer.render(
             drawables: spriteDrawables,

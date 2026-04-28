@@ -58,7 +58,7 @@ public class RSMRenderer: Renderer {
         }
 
         modelRenderer.render(
-            resource: modelResource,
+            resources: [modelResource],
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
