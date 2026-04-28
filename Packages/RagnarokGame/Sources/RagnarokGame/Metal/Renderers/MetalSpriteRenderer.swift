@@ -40,10 +40,14 @@ final class MetalSpriteRenderer {
 
     func render(
         drawables: [SpriteLayerDrawable],
-        atTime time: CFTimeInterval,
+        damageEffects: [DamageEffectRenderResource],
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MetalMapRenderer.RenderMatrices
     ) {
+        guard !drawables.isEmpty || !damageEffects.isEmpty else {
+            return
+        }
+
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
@@ -51,19 +55,48 @@ final class MetalSpriteRenderer {
             guard drawable.isVisible else {
                 continue
             }
-
-            var uniforms = SpriteVertexUniforms(
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
-                spriteWorldPosition: SIMD4<Float>(drawable.worldPosition, 0)
+            encode(
+                vertices: drawable.vertices,
+                worldPosition: drawable.worldPosition,
+                texture: drawable.texture,
+                renderCommandEncoder: renderCommandEncoder,
+                matrices: matrices
             )
-
-            drawable.vertices.withUnsafeBytes { bytes in
-                renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
-            }
-            renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
-            renderCommandEncoder.setFragmentTexture(drawable.texture, index: 0)
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
         }
+
+        let now = ContinuousClock.now
+        for resource in damageEffects {
+            guard let snapshot = resource.snapshot(at: now) else {
+                continue
+            }
+            encode(
+                vertices: snapshot.vertices,
+                worldPosition: snapshot.worldPosition,
+                texture: snapshot.texture,
+                renderCommandEncoder: renderCommandEncoder,
+                matrices: matrices
+            )
+        }
+    }
+
+    private func encode(
+        vertices: [SpriteVertex],
+        worldPosition: SIMD3<Float>,
+        texture: any MTLTexture,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        matrices: MetalMapRenderer.RenderMatrices
+    ) {
+        var uniforms = SpriteVertexUniforms(
+            viewMatrix: matrices.viewMatrix,
+            projectionMatrix: matrices.projectionMatrix,
+            spriteWorldPosition: SIMD4<Float>(worldPosition, 0)
+        )
+
+        vertices.withUnsafeBytes { bytes in
+            renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
+        }
+        renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
+        renderCommandEncoder.setFragmentTexture(texture, index: 0)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
     }
 }

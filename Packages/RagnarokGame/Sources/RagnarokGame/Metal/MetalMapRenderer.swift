@@ -30,7 +30,6 @@ final class MetalMapRenderer: Renderer {
     private let waterRenderer: WaterRenderer
     private let modelRenderer: RSMModelRenderer
     private let spriteRenderer: MetalSpriteRenderer
-    private let damageEffectRenderer: MetalDamageEffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
 
     var skyboxResource: SkyboxRenderResource?
@@ -58,7 +57,6 @@ final class MetalMapRenderer: Renderer {
         waterRenderer = try WaterRenderer(device: device)
         modelRenderer = try RSMModelRenderer(device: device)
         spriteRenderer = try MetalSpriteRenderer(device: device)
-        damageEffectRenderer = try MetalDamageEffectRenderer(device: device)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
     }
 
@@ -133,20 +131,13 @@ final class MetalMapRenderer: Renderer {
             normalMatrix: matrices.normalMatrix
         )
 
+        let sortedDamageEffects = damageEffectResources.values.sorted { $0.creationTime < $1.creationTime }
         spriteRenderer.render(
             drawables: spriteDrawables,
-            atTime: time,
+            damageEffects: sortedDamageEffects,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
-
-        for damageEffectResource in damageEffectResources.values.sorted(by: { $0.creationTime < $1.creationTime }) {
-            damageEffectRenderer.render(
-                resource: damageEffectResource,
-                renderCommandEncoder: renderCommandEncoder,
-                matrices: matrices
-            )
-        }
 
         if let tileSelectorResource {
             tileSelectorRenderer.render(

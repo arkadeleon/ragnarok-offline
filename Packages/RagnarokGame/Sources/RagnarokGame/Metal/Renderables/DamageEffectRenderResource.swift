@@ -8,6 +8,7 @@
 import Foundation
 import Metal
 import RagnarokMetalRendering
+import RagnarokShaders
 import simd
 
 @MainActor
@@ -20,6 +21,12 @@ final class DamageEffectRenderResource {
     enum EffectKind {
         case miss
         case damage
+    }
+
+    struct Snapshot {
+        var vertices: [SpriteVertex]
+        var worldPosition: SIMD3<Float>
+        var texture: any MTLTexture
     }
 
     let id: UUID
@@ -66,5 +73,60 @@ final class DamageEffectRenderResource {
         } else {
             [1, 1, 1, 1]
         }
+    }
+
+    func snapshot(at now: ContinuousClock.Instant) -> Snapshot? {
+        guard let texture else {
+            return nil
+        }
+
+        let elapsed = now - creationTime
+        guard elapsed >= delay else {
+            return nil
+        }
+
+        let t = Float((elapsed - delay).timeInterval / duration.timeInterval)
+        guard t >= 0, t < 1 else {
+            return nil
+        }
+
+        let scale: Float
+        let worldPosition: SIMD3<Float>
+        switch kind {
+        case .miss:
+            scale = 0.5
+            worldPosition = [
+                startPosition.x,
+                startPosition.y + 3.5 + 7 * t,
+                startPosition.z,
+            ]
+        case .damage:
+            scale = 4 * (1 - t)
+            worldPosition = [
+                startPosition.x + 4 * t,
+                startPosition.y + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
+                startPosition.z - 4 * t,
+            ]
+        }
+
+        guard scale > 0 else {
+            return nil
+        }
+
+        let halfW = frameWidth * spriteScale.x * scale / 2
+        let halfH = frameHeight * spriteScale.y * scale / 2
+        var vertexColor = color
+        vertexColor.w *= 1 - t
+
+        let vertices: [SpriteVertex] = [
+            SpriteVertex(position: [-halfW, -halfH], textureCoordinate: [0, 1], color: vertexColor),
+            SpriteVertex(position: [ halfW, -halfH], textureCoordinate: [1, 1], color: vertexColor),
+            SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: vertexColor),
+            SpriteVertex(position: [ halfW, -halfH], textureCoordinate: [1, 1], color: vertexColor),
+            SpriteVertex(position: [ halfW,  halfH], textureCoordinate: [1, 0], color: vertexColor),
+            SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: vertexColor),
+        ]
+
+        return Snapshot(vertices: vertices, worldPosition: worldPosition, texture: texture)
     }
 }
