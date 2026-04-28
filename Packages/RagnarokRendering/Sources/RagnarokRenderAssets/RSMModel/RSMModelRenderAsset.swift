@@ -76,39 +76,49 @@ public struct RSMModelRenderAsset {
         self.instance = instance
         self.lighting = lighting
         self.textureImages = textureImages
-        boundingBox = RSMModelBoundingBox()
 
-        let wrappers = rsm.nodes.map(RSMModelNodeWrapper.init)
-        let rootWrapper = wrappers.first { $0.node.name == rsm.rootNodes.first }
+        // Build node hierarchy.
+        let wrappers = rsm.buildNodeHierarchy()
 
-        for parent in wrappers {
-            for child in wrappers {
-                if child.node.parentName == parent.node.name && parent.node.name != parent.node.parentName {
-                    parent.addChild(child)
-                }
-            }
-        }
+        // Set up transforms and bounding boxes for each node.
+        let rootWrapper = wrappers.first(where: { $0.node.name == rsm.rootNodes.first })
+        rootWrapper?.prepareTransforms()
 
-        rootWrapper?.calcBoundingBox(wrappers: wrappers)
-
-        for i in 0..<3 {
-            for wrapper in wrappers {
+        var boundingBox = RSMModelBoundingBox()
+        for wrapper in wrappers {
+            for i in 0..<3 {
                 boundingBox.max[i] = max(boundingBox.max[i], wrapper.boundingBox.max[i])
                 boundingBox.min[i] = min(boundingBox.min[i], wrapper.boundingBox.min[i])
             }
         }
+        self.boundingBox = boundingBox
 
+        // Compile mesh vertices for each node.
+        var meshes: [RSMModelMesh] = []
         for wrapper in wrappers {
-            let compiledMeshes = wrapper.compile(
-                rsm: rsm,
-                instanceMatrix: matrix_identity_float4x4,
-                boundingBox: boundingBox
-            )
+            let compiledMeshes = wrapper.compile(rsm: rsm, instanceMatrix: matrix_identity_float4x4, boundingBox: boundingBox)
             for (textureName, vertices) in compiledMeshes {
                 let mesh = RSMModelMesh(vertices: vertices, textureName: textureName)
                 meshes.append(mesh)
             }
         }
+        self.meshes = meshes
+    }
+}
+
+extension RSM {
+    fileprivate func buildNodeHierarchy() -> [RSMModelNodeWrapper] {
+        let wrappers = nodes.map(RSMModelNodeWrapper.init)
+        let wrappersByName = Dictionary(grouping: wrappers, by: \.node.name)
+        for wrapper in wrappers {
+            guard let parents = wrappersByName[wrapper.node.parentName] else {
+                continue
+            }
+            for parent in parents where parent.node.name != parent.node.parentName {
+                parent.addChild(wrapper)
+            }
+        }
+        return wrappers
     }
 }
 
@@ -149,7 +159,7 @@ final class RSMModelNodeWrapper {
         child.parent = self
     }
 
-    func calcBoundingBox(wrappers: [RSMModelNodeWrapper]) {
+    func prepareTransforms() {
         transformForChildren = matrix_identity_float4x4
         transformForChildren = matrix_translate(transformForChildren, node.position)
 
@@ -171,16 +181,15 @@ final class RSMModelNodeWrapper {
 
         let matrix = worldTransform
         for vertex in node.vertices {
-            let vertex = matrix * SIMD4<Float>(vertex, 1)
-
-            for j in 0..<3 {
-                boundingBox.min[j] = min(vertex[j], boundingBox.min[j])
-                boundingBox.max[j] = max(vertex[j], boundingBox.max[j])
+            let transformedVertex = matrix * SIMD4<Float>(vertex, 1)
+            for i in 0..<3 {
+                boundingBox.min[i] = min(transformedVertex[i], boundingBox.min[i])
+                boundingBox.max[i] = max(transformedVertex[i], boundingBox.max[i])
             }
         }
 
         for child in children {
-            child.calcBoundingBox(wrappers: wrappers)
+            child.prepareTransforms()
         }
     }
 
@@ -237,8 +246,7 @@ final class RSMModelNodeWrapper {
     }
 
     func calcNormal_FLAT(out: inout [SIMD3<Float>], normalMat: simd_float4x4, groupUsed: inout [Bool]) {
-        var index = 0
-        for face in node.faces {
+        for (faceIndex, face) in node.faces.enumerated() {
             let faceNormal = calcNormal(
                 node.vertices[Int(face.vertexIndices[0])],
                 node.vertices[Int(face.vertexIndices[1])],
@@ -246,11 +254,9 @@ final class RSMModelNodeWrapper {
             )
 
             let transformedNormal = normalMat * SIMD4<Float>(faceNormal, 1)
-            out[index] = [transformedNormal.x, transformedNormal.y, transformedNormal.z]
+            out[faceIndex] = [transformedNormal.x, transformedNormal.y, transformedNormal.z]
 
             groupUsed[Int(face.smoothGroup[0])] = true
-
-            index += 1
         }
     }
 
@@ -263,30 +269,24 @@ final class RSMModelNodeWrapper {
             group[smoothGroupIndex] = [SIMD3<Float>](repeating: .zero, count: node.vertices.count)
             var groupNormals = group[smoothGroupIndex]
 
-            var vertexIndex = 0
-            for originalVertexIndex in 0..<node.vertices.count {
+            for vertexIndex in node.vertices.indices {
                 var x: Float = 0
                 var y: Float = 0
                 var z: Float = 0
 
-                var faceIndex = 0
-                for face in node.faces {
+                for (faceIndex, face) in node.faces.enumerated() {
                     if face.smoothGroup[0] == smoothGroupIndex &&
-                        (face.vertexIndices[0] == originalVertexIndex ||
-                         face.vertexIndices[1] == originalVertexIndex ||
-                         face.vertexIndices[2] == originalVertexIndex) {
+                        (face.vertexIndices[0] == vertexIndex ||
+                         face.vertexIndices[1] == vertexIndex ||
+                         face.vertexIndices[2] == vertexIndex) {
                         x += normal[faceIndex].x
                         y += normal[faceIndex].y
                         z += normal[faceIndex].z
                     }
-
-                    faceIndex += 1
                 }
 
                 let length = 1 / sqrtf(x * x + y * y + z * z)
                 groupNormals[vertexIndex] = [x * length, y * length, z * length]
-
-                vertexIndex += 1
             }
 
             group[smoothGroupIndex] = groupNormals
@@ -294,8 +294,7 @@ final class RSMModelNodeWrapper {
     }
 
     func generate_mesh_FLAT(vert: [SIMD3<Float>], norm: [SIMD3<Float>], alpha: UInt8, mesh: inout [String : [ModelVertex]]) {
-        var faceIndex = 0
-        for face in node.faces {
+        for (faceIndex, face) in node.faces.enumerated() {
             let textureIndex = Int(face.textureIndex)
             let textureName = node.textures[textureIndex]
 
@@ -314,8 +313,6 @@ final class RSMModelNodeWrapper {
                 )
                 mesh[textureName]?.append(vertex)
             }
-
-            faceIndex += 1
         }
     }
 
