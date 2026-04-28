@@ -57,9 +57,6 @@ public final class GroundRenderer {
             lightDirection: resource.light.direction,
             normalMatrix: normalMatrix
         )
-        guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, options: []) else {
-            return
-        }
 
         var fragmentUniforms = GroundFragmentUniforms(
             lightMapUse: resource.lightmapTexture == nil ? 0 : 1,
@@ -67,18 +64,14 @@ public final class GroundRenderer {
             lightDiffuse: resource.light.diffuse,
             lightOpacity: resource.light.opacity
         )
-        guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, options: []) else {
-            return
-        }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
+        renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, index: 1)
 
-        renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
-
+        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, index: 0)
         renderCommandEncoder.setFragmentTexture(resource.baseColorTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(resource.lightmapTexture, index: 1)
         renderCommandEncoder.setFragmentTexture(resource.tileColorTexture, index: 2)

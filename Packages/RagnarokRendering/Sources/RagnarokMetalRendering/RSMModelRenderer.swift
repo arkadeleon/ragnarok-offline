@@ -53,24 +53,18 @@ public final class RSMModelRenderer {
             lightDirection: resource.light.direction,
             normalMatrix: normalMatrix
         )
-        guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, options: []) else {
-            return
-        }
 
         var fragmentUniforms = ModelFragmentUniforms(
             lightAmbient: resource.light.ambient,
             lightDiffuse: resource.light.diffuse,
             lightOpacity: resource.light.opacity
         )
-        guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, options: []) else {
-            return
-        }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
-        renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, index: 1)
+        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
 
         for mesh in resource.meshes where mesh.vertexCount > 0 {
             renderCommandEncoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)

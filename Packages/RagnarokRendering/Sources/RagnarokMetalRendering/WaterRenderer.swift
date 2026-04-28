@@ -59,9 +59,6 @@ public final class WaterRenderer {
             wavePitch: resource.wavePitch,
             waterOffset: (frame * resource.waveSpeed).truncatingRemainder(dividingBy: 360) - 180
         )
-        guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<WaterVertexUniforms>.stride, options: []) else {
-            return
-        }
 
         var fragmentUniforms = WaterFragmentUniforms(
             lightAmbient: resource.light.ambient,
@@ -69,19 +66,16 @@ public final class WaterRenderer {
             lightOpacity: resource.light.opacity,
             opacity: resource.waterOpacity
         )
-        guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<WaterFragmentUniforms>.stride, options: []) else {
-            return
-        }
+
+        let texture = resource.textures[Int(frame / resource.waterAnimationSpeed) % resource.textures.count]
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
+        renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<WaterVertexUniforms>.stride, index: 1)
 
-        renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
-
-        let texture = resource.textures[Int(frame / resource.waterAnimationSpeed) % resource.textures.count]
+        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<WaterFragmentUniforms>.stride, index: 0)
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)

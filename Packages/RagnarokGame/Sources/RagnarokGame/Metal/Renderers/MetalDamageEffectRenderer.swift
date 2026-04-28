@@ -89,7 +89,7 @@ final class MetalDamageEffectRenderer {
         var color = resource.color
         color.w *= 1 - t
 
-        var vertices: [SpriteVertex] = [
+        let vertices: [SpriteVertex] = [
             SpriteVertex(position: [-halfW, -halfH], textureCoordinate: [0, 1], color: color),
             SpriteVertex(position: [ halfW, -halfH], textureCoordinate: [1, 1], color: color),
             SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: color),
@@ -97,31 +97,20 @@ final class MetalDamageEffectRenderer {
             SpriteVertex(position: [ halfW,  halfH], textureCoordinate: [1, 0], color: color),
             SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: color),
         ]
-        guard let vertexBuffer = device.makeBuffer(
-            bytes: &vertices,
-            length: vertices.count * MemoryLayout<SpriteVertex>.stride,
-            options: []
-        ) else {
-            return
-        }
 
         var uniforms = SpriteVertexUniforms(
             viewMatrix: matrices.viewMatrix,
             projectionMatrix: matrices.projectionMatrix,
             spriteWorldPosition: SIMD4<Float>(worldPosition, 0)
         )
-        guard let uniformsBuffer = device.makeBuffer(
-            bytes: &uniforms,
-            length: MemoryLayout<SpriteVertexUniforms>.stride,
-            options: []
-        ) else {
-            return
-        }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
-        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
+
+        vertices.withUnsafeBytes { bytes in
+            renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
+        }
+        renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
     }

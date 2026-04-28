@@ -57,18 +57,11 @@ final class MetalTileSelectorRenderer {
             viewMatrix: matrices.viewMatrix,
             projectionMatrix: matrices.projectionMatrix
         )
-        guard let uniformsBuffer = device.makeBuffer(
-            bytes: &uniforms,
-            length: MemoryLayout<TileVertexUniforms>.stride,
-            options: []
-        ) else {
-            return
-        }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBuffer(uniformsBuffer, offset: 0, index: 1)
+        renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<TileVertexUniforms>.stride, index: 1)
         renderCommandEncoder.setFragmentTexture(resource.selectionTexture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
