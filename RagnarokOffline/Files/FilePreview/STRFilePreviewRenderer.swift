@@ -1,16 +1,17 @@
 //
-//  STRRenderer.swift
-//  RagnarokMetalRendering
+//  STRFilePreviewRenderer.swift
+//  RagnarokOffline
 //
 //  Created by Leon Li on 2023/11/24.
 //
 
 import Metal
 import RagnarokCore
+import RagnarokMetalRendering
 import RagnarokRenderAssets
 import simd
 
-public class STRRenderer: Renderer {
+public class STRFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
 
     let effectRenderer: STREffectRenderer

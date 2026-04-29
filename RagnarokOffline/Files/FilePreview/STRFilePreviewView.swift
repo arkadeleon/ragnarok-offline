@@ -66,7 +66,7 @@ struct STRFileEffectView: View {
         }
     }
 
-    private func loadSTRFile() async throws -> STRRenderer {
+    private func loadSTRFile() async throws -> STRFilePreviewRenderer {
         guard case .grfArchiveNode(let grfArchive, let node) = file.node, !node.isDirectory else {
             throw FileError.fileIsDirectory
         }
@@ -97,7 +97,7 @@ struct STRFileEffectView: View {
             }
         }
 
-        let renderer = try STRRenderer(device: device, effect: effect, textures: textures)
+        let renderer = try STRFilePreviewRenderer(device: device, effect: effect, textures: textures)
         return renderer
     }
 }

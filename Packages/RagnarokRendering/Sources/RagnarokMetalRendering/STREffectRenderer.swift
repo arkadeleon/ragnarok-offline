@@ -29,7 +29,7 @@ func mtlBlendFactor(_ d3dBlend: Int32) -> MTLBlendFactor {
     }
 }
 
-class STREffectRenderer {
+public class STREffectRenderer {
     let device: any MTLDevice
     let renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState]
     let depthStencilState: (any MTLDepthStencilState)?
@@ -37,7 +37,7 @@ class STREffectRenderer {
     let effect: STREffect
     let textures: [String : any MTLTexture]
 
-    init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
+    public init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
         self.device = device
 
         let library = RagnarokShadersLibrary(device)!
@@ -79,7 +79,7 @@ class STREffectRenderer {
         self.textures = textures
     }
 
-    func render(
+    public func render(
         atTime time: CFTimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,

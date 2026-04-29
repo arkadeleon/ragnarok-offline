@@ -1,16 +1,17 @@
 //
-//  RSWRenderer.swift
-//  RagnarokMetalRendering
+//  RSWFilePreviewRenderer.swift
+//  RagnarokOffline
 //
 //  Created by Leon Li on 2020/7/15.
 //
 
 import Metal
 import RagnarokCore
+import RagnarokMetalRendering
 import RagnarokRenderAssets
 import simd
 
-public class RSWRenderer: Renderer {
+public class RSWFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
 
     let groundAsset: GroundRenderAsset

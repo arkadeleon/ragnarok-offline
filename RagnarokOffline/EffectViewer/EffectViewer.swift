@@ -20,7 +20,7 @@ struct EffectViewer: View {
         }
     }
 
-    private func loadSTR(named name: String) async throws -> STRRenderer {
+    private func loadSTR(named name: String) async throws -> STRFilePreviewRenderer {
         let resourceManager = ResourceManager.shared
         let path = ResourcePath.effectDirectory.appending(name)
         let data = try await resourceManager.contentsOfResource(at: path)
@@ -52,7 +52,7 @@ struct EffectViewer: View {
             }
         }
 
-        let renderer = try STRRenderer(device: device, effect: effect, textures: textures)
+        let renderer = try STRFilePreviewRenderer(device: device, effect: effect, textures: textures)
         return renderer
     }
 }
