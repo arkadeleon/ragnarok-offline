@@ -10,7 +10,7 @@ import SwiftUI
 struct FileGridCell: View {
     var file: File
 
-    @State private var subtitle: String?
+    @State private var subtitle: AttributedString?
 
     var body: some View {
         ImageGridCell(title: file.name) {
@@ -28,10 +28,10 @@ struct FileGridCell: View {
     private func loadSubtitle() async {
         if file.isDirectory {
             let fileCount = await file.fileCount()
-            subtitle = String(localized: LocalizedStringResource("^[\(fileCount) item](inflect: true)"))
+            subtitle = AttributedString(localized: "^[\(fileCount) item](inflect: true)")
         } else {
             let fileSize = await file.size()
-            subtitle = fileSize.formatted(.byteCount(style: .file))
+            subtitle = AttributedString(fileSize.formatted(.byteCount(style: .file)))
         }
     }
 }
