@@ -24,6 +24,11 @@ typedef struct {
 } ModelVertexUniforms;
 
 typedef struct {
+    matrix_float4x4 modelMatrix;
+    matrix_float3x3 normalMatrix;
+} ModelInstanceUniforms;
+
+typedef struct {
     vector_float3 lightAmbient;
     vector_float3 lightDiffuse;
     float lightOpacity;

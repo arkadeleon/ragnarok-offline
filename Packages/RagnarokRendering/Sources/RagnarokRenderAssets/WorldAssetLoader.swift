@@ -83,12 +83,15 @@ public struct WorldAssetLoader: Sendable {
             )
         }
 
-        let modelAssets: [RSMModelRenderAsset] = rsw.models.compactMap { model in
-            guard var modelAsset = prototypeModelAssetsByName[model.modelName] else {
-                return nil
+        var modelNamesInWorldOrder: [String] = []
+        var seenModelNames: Set<String> = []
+        var modelInstancesByName: [String : [RSMModelInstance]] = [:]
+        for model in rsw.models {
+            if seenModelNames.insert(model.modelName).inserted {
+                modelNamesInWorldOrder.append(model.modelName)
             }
 
-            modelAsset.instance = RSMModelInstance(
+            let instance = RSMModelInstance(
                 position: [
                     model.position.x + Float(gnd.width),
                     model.position.y,
@@ -97,13 +100,21 @@ public struct WorldAssetLoader: Sendable {
                 rotation: model.rotation,
                 scale: model.scale
             )
-            return modelAsset
+            modelInstancesByName[model.modelName, default: []].append(instance)
+        }
+
+        let modelGroups: [RSMModelAssetGroup] = modelNamesInWorldOrder.compactMap { modelName in
+            guard let prototype = prototypeModelAssetsByName[modelName],
+                  let instances = modelInstancesByName[modelName] else {
+                return nil
+            }
+            return RSMModelAssetGroup(prototype: prototype, instances: instances)
         }
 
         let worldAsset = WorldAsset(
             ground: groundAsset,
             water: waterAsset,
-            models: modelAssets,
+            modelGroups: modelGroups,
             lighting: lighting
         )
         return worldAsset

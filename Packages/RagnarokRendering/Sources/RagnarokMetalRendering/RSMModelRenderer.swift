@@ -54,6 +54,11 @@ public final class RSMModelRenderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         for resource in resources {
+            guard resource.instanceCount > 0,
+                  let instanceBuffer = resource.instanceBuffer else {
+                continue
+            }
+
             var vertexUniforms = ModelVertexUniforms(
                 modelMatrix: modelMatrix,
                 viewMatrix: viewMatrix,
@@ -69,13 +74,19 @@ public final class RSMModelRenderer {
             )
 
             renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, index: 1)
+            renderCommandEncoder.setVertexBuffer(instanceBuffer, offset: 0, index: 2)
             renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
 
             for mesh in resource.meshes where mesh.vertexCount > 0 {
                 renderCommandEncoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)
                 renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
 
-                renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.vertexCount)
+                renderCommandEncoder.drawPrimitives(
+                    type: .triangle,
+                    vertexStart: 0,
+                    vertexCount: mesh.vertexCount,
+                    instanceCount: resource.instanceCount
+                )
             }
         }
     }

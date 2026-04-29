@@ -48,14 +48,10 @@ extension Entity {
         metric.beginMeasuring("Load prototype model entities")
 
         var modelEntitiesByName: [String : Entity] = [:]
-        for modelAsset in worldAsset.models {
-            if modelEntitiesByName[modelAsset.name] != nil {
-                continue
-            }
-
+        for modelGroup in worldAsset.modelGroups {
             do {
-                let modelEntity = try await Entity(from: modelAsset)
-                modelEntitiesByName[modelAsset.name] = modelEntity
+                let modelEntity = try await Entity(from: modelGroup.prototype)
+                modelEntitiesByName[modelGroup.prototype.name] = modelEntity
             } catch {
                 logger.warning("\(error)")
             }
@@ -67,22 +63,23 @@ extension Entity {
 
         metric.beginMeasuring("Load model entities")
 
-        for modelAsset in worldAsset.models {
-            guard let modelEntity = modelEntitiesByName[modelAsset.name] else {
+        for modelGroup in worldAsset.modelGroups {
+            guard let modelEntity = modelEntitiesByName[modelGroup.prototype.name] else {
                 continue
             }
 
-            let clonedModelEntity = modelEntity.clone(recursive: true)
-            let instance = modelAsset.instance
+            for instance in modelGroup.instances {
+                let clonedModelEntity = modelEntity.clone(recursive: true)
 
-            clonedModelEntity.position = instance.position
-            clonedModelEntity.orientation =
-                simd_quatf(angle: radians(instance.rotation.z), axis: [0, 0, 1]) *
-                simd_quatf(angle: radians(instance.rotation.x), axis: [1, 0, 0]) *
-                simd_quatf(angle: radians(instance.rotation.y), axis: [0, 1, 0])
-            clonedModelEntity.scale = instance.scale
+                clonedModelEntity.position = instance.position
+                clonedModelEntity.orientation =
+                    simd_quatf(angle: radians(instance.rotation.z), axis: [0, 0, 1]) *
+                    simd_quatf(angle: radians(instance.rotation.x), axis: [1, 0, 0]) *
+                    simd_quatf(angle: radians(instance.rotation.y), axis: [0, 1, 0])
+                clonedModelEntity.scale = instance.scale
 
-            addChild(clonedModelEntity, preservingWorldTransform: true)
+                addChild(clonedModelEntity, preservingWorldTransform: true)
+            }
         }
 
         metric.endMeasuring("Load model entities")

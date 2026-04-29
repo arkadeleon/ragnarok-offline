@@ -20,15 +20,18 @@ typedef struct {
 vertex RasterizerData
 modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
                   unsigned int vertexIndex [[vertex_id]],
-                  constant ModelVertexUniforms &uniforms [[buffer(1)]])
+                  constant ModelVertexUniforms &uniforms [[buffer(1)]],
+                  const device ModelInstanceUniforms *instances [[buffer(2)]],
+                  unsigned int instanceIndex [[instance_id]])
 {
     ModelVertex in = vertices[vertexIndex];
-    float3 worldNormal = normalize(uniforms.normalMatrix * in.normal);
+    ModelInstanceUniforms instance = instances[instanceIndex];
+    float3 worldNormal = normalize(uniforms.normalMatrix * instance.normalMatrix * in.normal);
     float3 lightDirection = normalize(uniforms.lightDirection);
     float dotProduct = dot(worldNormal, lightDirection);
 
     RasterizerData out;
-    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
+    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * instance.modelMatrix * float4(in.position, 1.0);
     out.textureCoordinate = in.textureCoordinate;
     out.lightWeighting = max(dotProduct, 0.5);
     out.alpha = in.alpha;

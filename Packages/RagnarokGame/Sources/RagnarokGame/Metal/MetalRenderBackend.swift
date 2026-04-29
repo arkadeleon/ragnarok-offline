@@ -136,8 +136,12 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.skyboxResource = SkyboxRenderResource(device: renderer.device, configuration: skyboxConfiguration)
         renderer.groundResource = GroundRenderResource(device: renderer.device, asset: worldAsset.ground)
         renderer.waterResource = WaterRenderResource(device: renderer.device, asset: worldAsset.water)
-        renderer.modelResources = worldAsset.models.map { modelAsset in
-            RSMModelRenderResource(device: renderer.device, asset: modelAsset)
+        renderer.modelResources = worldAsset.modelGroups.map { modelGroup in
+            RSMModelRenderResource(
+                device: renderer.device,
+                prototype: modelGroup.prototype,
+                instances: modelGroup.instances
+            )
         }
 
         do {

@@ -18,6 +18,8 @@ public class RSMModelRenderResource {
     }
 
     let meshes: [RSMModelRenderResource.MeshResource]
+    let instanceCount: Int
+    let instanceBuffer: (any MTLBuffer)?
 
     var light = Light(
         opacity: 1,
@@ -26,15 +28,15 @@ public class RSMModelRenderResource {
         direction: [0, 1, 0]
     )
 
-    public init(device: any MTLDevice, asset: RSMModelRenderAsset) {
-        let textures = Self.makeTextures(from: asset, device: device)
-        let meshes = Self.instantiatedMeshes(
-            from: asset.meshes,
-            instance: asset.instance,
-            textureNamespace: Self.textureNamespace(for: asset)
-        )
+    public convenience init(device: any MTLDevice, asset: RSMModelRenderAsset) {
+        self.init(device: device, prototype: asset, instances: [asset.instance])
+    }
 
-        self.meshes = meshes.map { mesh in
+    public init(device: any MTLDevice, prototype asset: RSMModelRenderAsset, instances: [RSMModelInstance]) {
+        let textures = Self.makeTextures(from: asset, device: device)
+        let textureNamespace = Self.textureNamespace(for: asset)
+
+        self.meshes = asset.meshes.map { mesh in
             MeshResource(
                 vertexCount: mesh.vertices.count,
                 vertexBuffer: device.makeBuffer(
@@ -42,9 +44,11 @@ public class RSMModelRenderResource {
                     length: mesh.vertices.count * MemoryLayout<ModelVertex>.stride,
                     options: []
                 ),
-                texture: textures[mesh.textureName]
+                texture: textures[textureNamespace + mesh.textureName]
             )
         }
+        self.instanceCount = instances.count
+        self.instanceBuffer = Self.makeInstanceBuffer(device: device, instances: instances)
 
         light.ambient = asset.lighting.ambient
         light.diffuse = asset.lighting.diffuse
@@ -54,6 +58,29 @@ public class RSMModelRenderResource {
 }
 
 extension RSMModelRenderResource {
+    private static func makeInstanceBuffer(
+        device: any MTLDevice,
+        instances: [RSMModelInstance]
+    ) -> (any MTLBuffer)? {
+        guard !instances.isEmpty else {
+            return nil
+        }
+
+        let instanceUniforms = instances.map { instance in
+            let modelMatrix = instance.matrix
+            return ModelInstanceUniforms(
+                modelMatrix: modelMatrix,
+                normalMatrix: simd_float3x3(modelMatrix).inverse.transpose
+            )
+        }
+
+        return device.makeBuffer(
+            bytes: instanceUniforms,
+            length: instanceUniforms.count * MemoryLayout<ModelInstanceUniforms>.stride,
+            options: []
+        )
+    }
+
     private static func makeTextures(
         from asset: RSMModelRenderAsset,
         device: any MTLDevice
@@ -78,39 +105,6 @@ extension RSMModelRenderResource {
         }
 
         return textures
-    }
-
-    private static func instantiatedMeshes(
-        from prototypeMeshes: [RSMModelMesh],
-        instance: RSMModelInstance,
-        textureNamespace: String
-    ) -> [RSMModelMesh] {
-        let instanceMatrix = instance.matrix
-        let normalMatrix = simd_float3x3(instanceMatrix).inverse.transpose
-
-        return prototypeMeshes.map { prototypeMesh in
-            var mesh = prototypeMesh
-            mesh.textureName = textureNamespace + prototypeMesh.textureName
-            mesh.vertices = prototypeMesh.vertices.map { prototypeVertex in
-                var vertex = prototypeVertex
-
-                let transformedPosition = instanceMatrix * SIMD4<Float>(prototypeVertex.position, 1)
-                vertex.position = SIMD3(
-                    transformedPosition.x,
-                    transformedPosition.y,
-                    transformedPosition.z
-                )
-
-                let transformedNormal = normalMatrix * prototypeVertex.normal
-                let normalLength = simd_length_squared(transformedNormal)
-                if normalLength > .leastNonzeroMagnitude {
-                    vertex.normal = simd_normalize(transformedNormal)
-                }
-
-                return vertex
-            }
-            return mesh
-        }
     }
 
     private static func textureNamespace(for asset: RSMModelRenderAsset) -> String {
