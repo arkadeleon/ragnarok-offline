@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         .package(path: "../GRF"),
         .package(path: "../RagnarokCore"),
-        .package(url: "https://github.com/arkadeleon/swift-lua.git", branch: "master"),
+        .package(url: "https://github.com/arkadeleon/ragnarok-lua.git", branch: "master"),
     ],
     targets: [
         .target(
@@ -26,7 +26,7 @@ let package = Package(
             dependencies: [
                 "GRF",
                 "RagnarokCore",
-                .product(name: "Lua", package: "swift-lua"),
+                .product(name: "RagnarokLua", package: "ragnarok-lua"),
             ]
         ),
         .testTarget(

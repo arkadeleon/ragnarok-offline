@@ -1,13 +1,13 @@
 {
-  "originHash" : "fd3f41251b6bcb5a4e7e52de1b84e4f8107c3a3ec44169ffa83411545bef6f59",
+  "originHash" : "a3a598c95b07c5271eee17b344de082bbb8bd19fcbe35d66be4630bad722446f",
   "pins" : [
     {
-      "identity" : "swift-lua",
+      "identity" : "ragnarok-lua",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/swift-lua.git",
+      "location" : "https://github.com/arkadeleon/ragnarok-lua.git",
       "state" : {
         "branch" : "master",
-        "revision" : "06ee34fc258592f582e8a8fe4562ec2801023efc"
+        "revision" : "a43c463e2c20c30561ba4c16592666c63e93268a"
       }
     }
   ],

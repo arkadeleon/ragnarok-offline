@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/3/3.
 //
 
-@preconcurrency import Lua
+@preconcurrency import RagnarokLua
 
 final public class ScriptContext: Sendable {
     let context: LuaContext

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/24.
 //
 
-import Lua
+import RagnarokLua
 import SwiftUI
 
 struct TextFilePreviewView: View {

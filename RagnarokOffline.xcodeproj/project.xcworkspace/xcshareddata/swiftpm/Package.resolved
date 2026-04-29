@@ -1,22 +1,22 @@
 {
-  "originHash" : "9303faf242ca00749721f92fc05f9a19089ea2f9082cf33798065d6378328fbc",
+  "originHash" : "4c6855f67c29ab1eb7c4181c08073b341acb221f7fe3cc665e4c98adf5385c88",
   "pins" : [
+    {
+      "identity" : "ragnarok-lua",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/arkadeleon/ragnarok-lua.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "a43c463e2c20c30561ba4c16592666c63e93268a"
+      }
+    },
     {
       "identity" : "swift-highlight",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/arkadeleon/swift-highlight.git",
       "state" : {
         "branch" : "master",
-        "revision" : "9845457449b2fd24ff9dedbb9aa71320cf6c7831"
-      }
-    },
-    {
-      "identity" : "swift-lua",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/swift-lua.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "06ee34fc258592f582e8a8fe4562ec2801023efc"
+        "revision" : "a269f550c20c0d9e2f885e93fc63d7d53eb09311"
       }
     },
     {
@@ -25,7 +25,7 @@
       "location" : "https://github.com/arkadeleon/swift-rapidyaml.git",
       "state" : {
         "branch" : "master",
-        "revision" : "9e92115ed1da77bdb2396e90f15f5eb42584b824"
+        "revision" : "b7acfea86f169611d8dd80047225b0a4abd1b052"
       }
     }
   ],
