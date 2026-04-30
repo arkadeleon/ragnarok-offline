@@ -42,8 +42,7 @@ extension File {
         case .regularFile(let url):
             var referenceFiles: [File] = []
             for textureName in gnd.textures {
-                let components = textureName.split(separator: "\\").map(String.init).map(L2K)
-                let texturePath = ResourcePath.textureDirectory.appending(components)
+                let texturePath = ResourcePath.textureDirectory.appending(subpath: L2K(textureName))
                 let textureURL = url.deletingLastPathComponent().deletingLastPathComponent().appending(path: texturePath)
                 guard FileManager.default.fileExists(atPath: textureURL.path(percentEncoded: false)) else {
                     continue
@@ -78,8 +77,7 @@ extension File {
         case .regularFile(let url):
             var referenceFiles: [File] = []
             for model in rsw.models {
-                let components = model.modelName.split(separator: "\\").map(String.init).map(L2K)
-                let modelPath = ResourcePath.modelDirectory.appending(components)
+                let modelPath = ResourcePath.modelDirectory.appending(subpath: L2K(model.modelName))
                 let modelURL = url.deletingLastPathComponent().deletingLastPathComponent().appending(path: modelPath)
                 guard FileManager.default.fileExists(atPath: modelURL.path(percentEncoded: false)) else {
                     continue

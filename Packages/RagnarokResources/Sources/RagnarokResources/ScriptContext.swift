@@ -281,7 +281,7 @@ extension ResourceManager {
 
     fileprivate func script(at path: ResourcePath) async -> Data? {
         do {
-            let path = ResourcePath.scriptDirectory.appending(path).appendingPathExtension("lub")
+            let path = ResourcePath.scriptDirectory.appending(path: path).appendingPathExtension("lub")
             let data = try await contentsOfResource(at: path)
             return data
         } catch {

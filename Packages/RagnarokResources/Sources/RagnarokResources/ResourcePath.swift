@@ -29,8 +29,17 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
         self.components = elements
     }
 
-    public func appending(_ path: ResourcePath) -> ResourcePath {
+    public func appending(path: ResourcePath) -> ResourcePath {
         ResourcePath(components: components + path.components)
+    }
+
+    public func appending(subpath: String) -> ResourcePath {
+        let components = subpath.split(separator: "\\").map(String.init)
+        if components.isEmpty {
+            return appending(subpath)
+        } else {
+            return appending(components)
+        }
     }
 
     public func appending(_ component: String) -> ResourcePath {
@@ -49,6 +58,10 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
             components.append(lastComponent)
         }
         return ResourcePath(components: components)
+    }
+
+    public func removingLastComponent() -> ResourcePath {
+        ResourcePath(components: components.dropLast())
     }
 }
 

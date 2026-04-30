@@ -21,8 +21,7 @@ extension ResourceManager {
         ) { taskGroup in
             for textureName in textureNames {
                 taskGroup.addTask {
-                    let components = textureName.split(separator: "\\").map(String.init)
-                    let texturePath = ResourcePath.textureDirectory.appending(components)
+                    let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
                     let textureImage = try? await self.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
                     return (textureName, textureImage)
                 }

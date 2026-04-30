@@ -44,8 +44,7 @@ extension ResourceManager {
     }
 
     public func model(forName modelName: String) async throws -> RSMModelResource {
-        let components = modelName.split(separator: "\\").map(String.init)
-        let modelPath = ResourcePath.modelDirectory.appending(components)
+        let modelPath = ResourcePath.modelDirectory.appending(subpath: modelName)
         let modelResource = try await model(at: modelPath)
         return modelResource
     }

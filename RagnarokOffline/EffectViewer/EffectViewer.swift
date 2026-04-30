@@ -38,10 +38,7 @@ struct EffectViewer: View {
                     continue
                 }
 
-                var components = path.components
-                components.removeLast()
-                components.append(contentsOf: textureName.split(separator: "\\").map(String.init))
-                let texturePath = ResourcePath(components: components)
+                let texturePath = path.removingLastComponent().appending(subpath: textureName)
                 guard let data = try? await resourceManager.contentsOfResource(at: texturePath) else {
                     continue
                 }
