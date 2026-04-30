@@ -15,7 +15,6 @@ public final class MapSceneState {
     public var objects: [GameObjectID : MapObjectState] = [:]
     public var items: [GameObjectID : MapItemState] = [:]
     public var selection: SIMD2<Int>?
-    public var damageEffects: [MapDamageEffect] = []
     public let overlay = MapOverlayState()
 
     public init(player: MapObjectState) {
@@ -27,12 +26,6 @@ public final class MapSceneState {
             player
         } else {
             objects[objectID]
-        }
-    }
-
-    func pruneExpiredDamageEffects(now: ContinuousClock.Instant = .now) {
-        damageEffects.removeAll {
-            $0.isExpired(at: now)
         }
     }
 }

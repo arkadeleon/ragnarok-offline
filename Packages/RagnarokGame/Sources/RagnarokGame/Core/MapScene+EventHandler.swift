@@ -342,61 +342,9 @@ extension MapScene {
             state.objects[sourceID] = objectState
         }
 
-        switch objectAction.type {
-        case .normal, .endure, .critical:
-            let damageEffect = MapDamageEffect(
-                targetObjectID: objectAction.targetObjectID,
-                amount: objectAction.damage,
-                delay: .milliseconds(objectAction.sourceSpeed)
-            )
-            state.damageEffects.append(damageEffect)
-
-            if objectAction.damage2 > 0 {
-                let damageEffect2 = MapDamageEffect(
-                    targetObjectID: objectAction.targetObjectID,
-                    amount: objectAction.damage2,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
-                )
-                state.damageEffects.append(damageEffect2)
-            }
-        case .multi_hit, .multi_hit_endure, .multi_hit_critical:
-            let count = objectAction.damage > 1 ? 2 : 1
-            if count == 2 {
-                let damageEffect = MapDamageEffect(
-                    targetObjectID: objectAction.targetObjectID,
-                    amount: objectAction.damage / count,
-                    delay: .milliseconds(objectAction.sourceSpeed)
-                )
-                state.damageEffects.append(damageEffect)
-            }
-            if objectAction.damage2 > 0 {
-                let damageEffect = MapDamageEffect(
-                    targetObjectID: objectAction.targetObjectID,
-                    amount: objectAction.damage / count,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
-                )
-                state.damageEffects.append(damageEffect)
-
-                let damageEffect2 = MapDamageEffect(
-                    targetObjectID: objectAction.targetObjectID,
-                    amount: objectAction.damage2,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
-                )
-                state.damageEffects.append(damageEffect2)
-            } else {
-                let damageEffect = MapDamageEffect(
-                    targetObjectID: objectAction.targetObjectID,
-                    amount: objectAction.damage / count,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
-                )
-                state.damageEffects.append(damageEffect)
-            }
-        default:
-            break
-        }
-
         applySnapshot()
 
+        addDamageEffects(for: objectAction, now: now)
         playSound(for: objectAction)
     }
 
@@ -432,20 +380,21 @@ extension MapScene {
             }
         }
 
+        applySnapshot()
+
         if packet.damage >= 0 {
             let count = Int(packet.count)
             let damage = Int(packet.damage)
             for i in 0..<count {
                 let damageEffect = MapDamageEffect(
+                    creationTime: now,
                     targetObjectID: packet.targetID,
                     amount: damage / count,
                     delay: .milliseconds(Int(packet.attackMT)) + .milliseconds(200 * i)
                 )
-                state.damageEffects.append(damageEffect)
+                renderBackend.addDamageEffect(damageEffect)
             }
         }
-
-        applySnapshot()
     }
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
@@ -473,6 +422,67 @@ extension MapScene {
 
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
         return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
+    }
+
+    private func addDamageEffects(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
+        switch objectAction.type {
+        case .normal, .endure, .critical:
+            let damageEffect = MapDamageEffect(
+                creationTime: now,
+                targetObjectID: objectAction.targetObjectID,
+                amount: objectAction.damage,
+                delay: .milliseconds(objectAction.sourceSpeed)
+            )
+            renderBackend.addDamageEffect(damageEffect)
+
+            if objectAction.damage2 > 0 {
+                let damageEffect2 = MapDamageEffect(
+                    creationTime: now,
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage2,
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
+                )
+                renderBackend.addDamageEffect(damageEffect2)
+            }
+        case .multi_hit, .multi_hit_endure, .multi_hit_critical:
+            let count = objectAction.damage > 1 ? 2 : 1
+            if count == 2 {
+                let damageEffect = MapDamageEffect(
+                    creationTime: now,
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage / count,
+                    delay: .milliseconds(objectAction.sourceSpeed)
+                )
+                renderBackend.addDamageEffect(damageEffect)
+            }
+            if objectAction.damage2 > 0 {
+                let damageEffect = MapDamageEffect(
+                    creationTime: now,
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage / count,
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
+                )
+                renderBackend.addDamageEffect(damageEffect)
+
+                let damageEffect2 = MapDamageEffect(
+                    creationTime: now,
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage2,
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
+                )
+                renderBackend.addDamageEffect(damageEffect2)
+            } else {
+                let damageEffect = MapDamageEffect(
+                    creationTime: now,
+                    targetObjectID: objectAction.targetObjectID,
+                    amount: objectAction.damage / count,
+                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
+                )
+                renderBackend.addDamageEffect(damageEffect)
+            }
+        default:
+            break
+        }
     }
 
     private func playSound(for objectAction: MapObjectAction) {

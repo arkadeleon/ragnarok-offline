@@ -16,7 +16,7 @@ public struct MapDamageEffect: Identifiable, Sendable {
 
     public init(
         id: UUID = UUID(),
-        creationTime: ContinuousClock.Instant = .now,
+        creationTime: ContinuousClock.Instant,
         targetObjectID: GameObjectID,
         amount: Int,
         delay: Duration

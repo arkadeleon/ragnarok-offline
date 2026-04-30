@@ -65,6 +65,10 @@ final class MetalRenderBackend: GameRenderBackend {
         syncFrameState(with: state)
     }
 
+    func addDamageEffect(_ effect: MapDamageEffect) {
+        renderDamageEffect(effect)
+    }
+
     func playSound(named soundName: String, on objectID: GameObjectID) {
         audioPlayer.playSound(named: soundName)
     }
@@ -82,13 +86,14 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
+        removeExpiredDamageEffects()
+
         updateObjects(
             player: state.player,
             objects: state.objects,
             items: state.items,
             scene: scene
         )
-        updateDamageEffects(state.damageEffects, scene: scene)
 
         let playerPresentationPosition =
             spriteSnapshots[state.player.id]?.worldPosition
@@ -198,37 +203,43 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
     }
 
-    private func updateDamageEffects(_ damageEffects: [MapDamageEffect], scene: MapScene) {
-        let activeEffectIDs = Set(damageEffects.map(\.id))
-        renderer.damageEffectResources = renderer.damageEffectResources.filter { activeEffectIDs.contains($0.key) }
-
-        guard let damageEffectSpriteSet else {
+    private func renderDamageEffect(_ effect: MapDamageEffect) {
+        guard let scene, let damageEffectSpriteSet else {
             return
         }
 
-        for effect in damageEffects where renderer.damageEffectResources[effect.id] == nil {
-            guard let startPosition = spriteSnapshots[effect.targetObjectID]?.worldPosition
-                ?? fallbackWorldPosition(for: effect.targetObjectID, scene: scene) else {
-                continue
-            }
+        guard renderer.damageEffectResources[effect.id] == nil else {
+            return
+        }
 
-            let targetObjectType = if effect.targetObjectID == scene.state.player.id {
-                scene.state.player.object.type
-            } else {
-                scene.state.objects[effect.targetObjectID]?.object.type
-            }
+        guard let startPosition = spriteSnapshots[effect.targetObjectID]?.worldPosition
+            ?? fallbackWorldPosition(for: effect.targetObjectID, scene: scene) else {
+            return
+        }
 
-            let resolvedTarget = DamageEffectRenderResource.ResolvedTarget(
-                startPosition: startPosition,
-                isPlayerTarget: targetObjectType == .pc
-            )
+        let targetObjectType = if effect.targetObjectID == scene.state.player.id {
+            scene.state.player.object.type
+        } else {
+            scene.state.objects[effect.targetObjectID]?.object.type
+        }
 
-            renderer.damageEffectResources[effect.id] = DamageEffectRenderResource(
-                device: renderer.device,
-                effect: effect,
-                resolvedTarget: resolvedTarget,
-                spriteSet: damageEffectSpriteSet
-            )
+        let resolvedTarget = DamageEffectRenderResource.ResolvedTarget(
+            startPosition: startPosition,
+            isPlayerTarget: targetObjectType == .pc
+        )
+
+        renderer.damageEffectResources[effect.id] = DamageEffectRenderResource(
+            device: renderer.device,
+            effect: effect,
+            resolvedTarget: resolvedTarget,
+            spriteSet: damageEffectSpriteSet
+        )
+    }
+
+    private func removeExpiredDamageEffects() {
+        let now = ContinuousClock.now
+        renderer.damageEffectResources = renderer.damageEffectResources.filter { _, resource in
+            !resource.isExpired(at: now)
         }
     }
 

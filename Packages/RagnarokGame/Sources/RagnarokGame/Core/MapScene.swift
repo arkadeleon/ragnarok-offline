@@ -150,7 +150,6 @@ public final class MapScene {
     }
 
     func applySnapshot() {
-        state.pruneExpiredDamageEffects()
         renderBackend.applySnapshot(state)
     }
 

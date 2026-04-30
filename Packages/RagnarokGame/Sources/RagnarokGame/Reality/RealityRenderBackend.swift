@@ -32,7 +32,6 @@ final class RealityRenderBackend: GameRenderBackend {
     private let sampler = MapObjectPresentationSampler()
 
     private let worldCameraEntity = Entity()
-    private var renderedDamageEffectIDs: Set<UUID> = []
     private var snapshotTask: Task<Void, Never>?
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
     private let tileRange = 17
@@ -146,8 +145,16 @@ final class RealityRenderBackend: GameRenderBackend {
                 return
             }
             await syncEntities(with: state, scene: scene)
-            await syncDamageEffects(with: state)
         }
+    }
+
+    func addDamageEffect(_ effect: MapDamageEffect) {
+        let damageEntity = Entity.makeDamageEntity(
+            for: effect.amount,
+            delay: effect.delay,
+            targetObjectID: effect.targetObjectID
+        )
+        damageEntity.setParent(rootEntity)
     }
 
     func playSound(named soundName: String, on objectID: GameObjectID) {
@@ -325,7 +332,6 @@ final class RealityRenderBackend: GameRenderBackend {
         snapshotTask?.cancel()
         snapshotTask = nil
 
-        renderedDamageEffectIDs.removeAll()
         tileSelectionRenderer.entity.isEnabled = false
         worldCameraEntity.removeFromParent()
         for child in Array(worldCameraEntity.children) {
@@ -371,41 +377,6 @@ final class RealityRenderBackend: GameRenderBackend {
         let parentEntity = simulationEntity ?? target.parent
         worldCameraEntity.setParent(parentEntity)
         worldCameraEntity.position = target.position(relativeTo: parentEntity)
-    }
-
-    private func syncDamageEffects(with state: MapSceneState) async {
-        let activeEffectIDs = Set(state.damageEffects.map(\.id))
-        renderedDamageEffectIDs.formIntersection(activeEffectIDs)
-
-        for effect in state.damageEffects where !renderedDamageEffectIDs.contains(effect.id) {
-            guard !Task.isCancelled else {
-                return
-            }
-
-            renderedDamageEffectIDs.insert(effect.id)
-            let rendered = await renderDamageEffect(effect)
-            if !rendered {
-                renderedDamageEffectIDs.remove(effect.id)
-            }
-        }
-    }
-
-    private func renderDamageEffect(_ effect: MapDamageEffect) async -> Bool {
-        guard let targetEntity = try? await entityCache.objectEntity(for: effect.targetObjectID) else {
-            return false
-        }
-
-        guard !Task.isCancelled else {
-            return false
-        }
-
-        let damageEntity = Entity.makeDamageEntity(
-            for: effect.amount,
-            delay: effect.delay,
-            targetEntity: targetEntity
-        )
-        damageEntity.setParent(rootEntity)
-        return true
     }
 
     private func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {

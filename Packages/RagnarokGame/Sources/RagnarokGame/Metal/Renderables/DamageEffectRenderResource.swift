@@ -85,7 +85,8 @@ final class DamageEffectRenderResource {
             return nil
         }
 
-        let t = Float((elapsed - delay).timeInterval / duration.timeInterval)
+        let animationElapsed = elapsed - delay
+        let t = Float(animationElapsed.timeInterval / duration.timeInterval)
         guard t >= 0, t < 1 else {
             return nil
         }
@@ -128,5 +129,9 @@ final class DamageEffectRenderResource {
         ]
 
         return Snapshot(vertices: vertices, worldPosition: worldPosition, texture: texture)
+    }
+
+    func isExpired(at now: ContinuousClock.Instant) -> Bool {
+        now - creationTime > delay + duration + .seconds(1)
     }
 }

@@ -17,5 +17,6 @@ public protocol GameRenderBackend: AnyObject {
 
     func applySnapshot(_ state: MapSceneState)
 
+    func addDamageEffect(_ effect: MapDamageEffect)
     func playSound(named soundName: String, on objectID: GameObjectID)
 }

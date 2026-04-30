@@ -11,6 +11,7 @@ import WorldCamera
 
 class DamageDigitSystem: System {
     static let query = EntityQuery(where: .has(DamageDigitComponent.self))
+    static let targetQuery = EntityQuery(where: .has(MapObjectComponent.self))
 
     required init(scene: Scene) {
     }
@@ -36,7 +37,39 @@ class DamageDigitSystem: System {
             component.elapsedTime += context.deltaTime
             entity.components.set(component)
 
+            let expiredTime = component.delay + component.duration + 1
+            if component.elapsedTime > expiredTime {
+                entity.removeFromParent()
+                continue
+            }
+
             if component.elapsedTime < component.delay {
+                continue
+            }
+
+            if component.startPosition == nil {
+                let targetEntity: Entity?
+                if let targetEntityID = component.targetEntityID {
+                    targetEntity = context.scene.findEntity(id: targetEntityID)
+                } else {
+                    targetEntity = context.entities(matching: Self.targetQuery, updatingSystemWhen: .rendering).first { entity in
+                        entity.components[MapObjectComponent.self]?.mapObject.objectID == component.targetObjectID
+                    }
+                }
+
+                guard let targetEntity else {
+                    continue
+                }
+
+                component.targetEntityID = targetEntity.id
+                component.startPosition = targetEntity.position(relativeTo: nil)
+                if case .damage = component.digit {
+                    component.color = targetEntity.components[MapObjectComponent.self]?.mapObject.type == .pc ? .red : .white
+                }
+                entity.components.set(component)
+            }
+
+            guard let startPosition = component.startPosition else {
                 continue
             }
 
@@ -63,14 +96,14 @@ class DamageDigitSystem: System {
 
             switch component.digit {
             case .miss:
-                var position = component.startPosition
+                var position = startPosition
                 position.y += 3.5 + 7 * t
                 entity.position = position
 
                 let scale: Float = 2.5
                 entity.scale = [scale, scale / cosf(elevation), scale]
             case .damage:
-                var position = component.startPosition
+                var position = startPosition
                 position.x += 4 * t
                 position.y += 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5
                 position.z -= 4 * t

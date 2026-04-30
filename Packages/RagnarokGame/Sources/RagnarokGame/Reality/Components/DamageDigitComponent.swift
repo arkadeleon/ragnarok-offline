@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RagnarokModels
 import RealityKit
 
 struct DamageDigitComponent: Component {
@@ -21,11 +22,13 @@ struct DamageDigitComponent: Component {
     var delay: TimeInterval
     var elapsedTime: TimeInterval = 0
 
-    var startPosition: SIMD3<Float>
+    var targetObjectID: GameObjectID
+    var targetEntityID: Entity.ID?
+    var startPosition: SIMD3<Float>?
 }
 
 extension Entity {
-    static func makeDamageEntity(for damage: Int, delay: Duration, targetEntity: Entity) -> Entity {
+    static func makeDamageEntity(for damage: Int, delay: Duration, targetObjectID: GameObjectID) -> Entity {
         let damageEntity = Entity()
 
         if damage == 0 {
@@ -34,16 +37,15 @@ extension Entity {
                 color: .yellow,
                 duration: 0.8,
                 delay: delay.timeInterval,
-                startPosition: targetEntity.position(relativeTo: nil)
+                targetObjectID: targetObjectID
             )
             damageEntity.components.set(damageDigitComponent)
         } else {
             let damageDigitComponent = DamageDigitComponent(
                 digit: .damage(damage),
-                color: targetEntity.components[MapObjectComponent.self]?.mapObject.type == .pc ? .red : .white,
                 duration: 1.5,
                 delay: delay.timeInterval,
-                startPosition: targetEntity.position(relativeTo: nil)
+                targetObjectID: targetObjectID
             )
             damageEntity.components.set(damageDigitComponent)
         }
