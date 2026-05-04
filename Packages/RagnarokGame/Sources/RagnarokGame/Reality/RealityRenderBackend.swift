@@ -387,7 +387,7 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     private func syncEntities(with state: MapSceneState, scene: MapScene) async {
-        let objectStates: [MapObjectState] = [state.player] + Array(state.objects.values)
+        let objectStates = Array(state.objects.values)
         let desiredObjectIDs = Set(objectStates.map(\.id))
 
         for objectID in entityCache.objectIDs.subtracting(desiredObjectIDs) {

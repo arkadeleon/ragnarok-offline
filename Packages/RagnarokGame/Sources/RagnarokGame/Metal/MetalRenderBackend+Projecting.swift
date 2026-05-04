@@ -87,7 +87,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
                 guard rect.contains(screenPoint) else {
                     continue
                 }
-                if scene.state.objects[objectID] != nil || objectID == scene.state.player.id {
+                if scene.state.objects[objectID] != nil {
                     return .mapObject(objectID: objectID)
                 }
             }

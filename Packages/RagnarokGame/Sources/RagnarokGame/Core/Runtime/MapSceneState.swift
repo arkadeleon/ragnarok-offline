@@ -11,21 +11,27 @@ import simd
 @MainActor
 @Observable
 public final class MapSceneState {
-    public var player: MapObjectState
-    public var objects: [GameObjectID : MapObjectState] = [:]
+    public let playerID: GameObjectID
+    public var objects: [GameObjectID : MapObjectState]
     public var items: [GameObjectID : MapItemState] = [:]
     public let overlay = MapOverlayState()
 
-    public init(player: MapObjectState) {
-        self.player = player
+    public var player: MapObjectState {
+        get {
+            guard let player = objects[playerID] else {
+                preconditionFailure("MapSceneState.objects must contain the player.")
+            }
+            return player
+        }
+        set {
+            precondition(newValue.id == playerID, "MapSceneState.player must keep the original player ID.")
+            objects[playerID] = newValue
+        }
     }
 
-    func object(for objectID: GameObjectID) -> MapObjectState? {
-        if player.id == objectID {
-            player
-        } else {
-            objects[objectID]
-        }
+    public init(player: MapObjectState) {
+        self.playerID = player.id
+        self.objects = [player.id: player]
     }
 }
 

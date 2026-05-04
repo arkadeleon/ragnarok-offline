@@ -14,7 +14,6 @@ final class SpriteSnapshotBuilder {
     private let sampler = MapObjectPresentationSampler()
 
     func build(
-        player: MapObjectState,
         objects: [GameObjectID : MapObjectState],
         items: [GameObjectID : MapItemState],
         scene: MapScene
@@ -23,7 +22,6 @@ final class SpriteSnapshotBuilder {
 
         var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
-        snapshots[player.id] = snapshot(for: player, now: now, scene: scene)
         for (objectID, objectState) in objects {
             snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)
         }

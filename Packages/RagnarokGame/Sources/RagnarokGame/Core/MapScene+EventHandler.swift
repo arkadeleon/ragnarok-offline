@@ -89,17 +89,13 @@ extension MapScene {
         let hp = Int(packet.HP)
         let maxHp = Int(packet.maxHP)
 
-        if state.player.id == packet.GID {
-            state.player.hp = hp
-            state.player.maxHp = maxHp
-            state.overlay.gauges[objectID]?.hp = hp
-            state.overlay.gauges[objectID]?.maxHp = maxHp
-        } else {
-            state.objects[objectID]?.hp = hp
-            state.objects[objectID]?.maxHp = maxHp
-            state.overlay.gauges[objectID]?.hp = hp
-            state.overlay.gauges[objectID]?.maxHp = maxHp
+        if var objectState = state.objects[objectID] {
+            objectState.hp = hp
+            objectState.maxHp = maxHp
+            state.objects[objectID] = objectState
         }
+        state.overlay.gauges[objectID]?.hp = hp
+        state.overlay.gauges[objectID]?.maxHp = maxHp
 
         applySnapshot()
     }
@@ -196,24 +192,7 @@ extension MapScene {
     func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
         let now = ContinuousClock.now
 
-        if state.player.id == objectID {
-            state.player.gridPosition = position
-            state.player.movement = nil
-            state.player.presentation = MapObjectPresentationState(
-                action: .idle,
-                direction: state.player.presentation.direction,
-                headDirection: state.player.presentation.headDirection,
-                startTime: now,
-                completion: .indefinite
-            )
-
-            if let action = pendingArrivalAction {
-                arrivalTask?.cancel()
-                arrivalTask = nil
-                pendingArrivalAction = nil
-                action()
-            }
-        } else if var objectState = state.objects[objectID] {
+        if var objectState = state.objects[objectID] {
             objectState.gridPosition = position
             objectState.movement = nil
             objectState.presentation = MapObjectPresentationState(
@@ -226,21 +205,29 @@ extension MapScene {
             state.objects[objectID] = objectState
         }
 
+        if objectID == state.playerID, let action = pendingArrivalAction {
+            arrivalTask?.cancel()
+            arrivalTask = nil
+            pendingArrivalAction = nil
+            action()
+        }
+
         applySnapshot()
     }
 
     func onMapObjectVanished(objectID: GameObjectID) {
-        state.objects.removeValue(forKey: objectID)
+        if objectID == state.playerID {
+            // TODO: player death
+        } else {
+            state.objects.removeValue(forKey: objectID)
+        }
         state.overlay.gauges.removeValue(forKey: objectID)
 
         applySnapshot()
     }
 
     func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
-        if state.player.id == objectID {
-            state.player.presentation.direction = SpriteDirection(direction: direction)
-            state.player.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
-        } else if var objectState = state.objects[objectID] {
+        if var objectState = state.objects[objectID] {
             objectState.presentation.direction = SpriteDirection(direction: direction)
             objectState.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
             state.objects[objectID] = objectState
@@ -252,27 +239,19 @@ extension MapScene {
     func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
         let isVisible = effectState != .cloak
 
-        if state.player.id == objectID {
-            state.player.isVisible = isVisible
-        } else {
-            state.objects[objectID]?.isVisible = isVisible
+        if var objectState = state.objects[objectID] {
+            objectState.isVisible = isVisible
+            state.objects[objectID] = objectState
         }
 
         if isVisible {
-            if state.player.id == objectID {
-                state.overlay.gauges[objectID] = MapGaugeOverlay(
-                    id: objectID,
-                    hp: state.player.hp,
-                    maxHp: state.player.maxHp,
-                    sp: state.player.sp,
-                    maxSp: state.player.maxSp,
-                    objectType: state.player.object.type
-                )
-            } else if let objectState = state.objects[objectID], objectState.object.type == .monster {
+            if let objectState = state.objects[objectID], objectID == state.playerID || objectState.object.type == .monster {
                 state.overlay.gauges[objectID] = MapGaugeOverlay(
                     id: objectID,
                     hp: objectState.hp,
                     maxHp: objectState.maxHp,
+                    sp: objectState.sp,
+                    maxSp: objectState.maxSp,
                     objectType: objectState.object.type
                 )
             }
@@ -287,7 +266,7 @@ extension MapScene {
         let now = ContinuousClock.now
 
         let sourceID = objectAction.sourceObjectID
-        let sourceMapObject = state.object(for: sourceID)?.object
+        let sourceMapObject = state.objects[sourceID]?.object
 
         let presentationAction: SpriteActionType = switch objectAction.type {
         case .sit_down:
@@ -323,15 +302,7 @@ extension MapScene {
             .after(.milliseconds(objectAction.sourceSpeed), settledAction: .idle)
         }
 
-        if state.player.id == sourceID {
-            state.player.presentation = MapObjectPresentationState(
-                action: presentationAction,
-                direction: state.player.presentation.direction,
-                headDirection: state.player.presentation.headDirection,
-                startTime: now,
-                completion: completion
-            )
-        } else if var objectState = state.objects[sourceID] {
+        if var objectState = state.objects[sourceID] {
             objectState.presentation = MapObjectPresentationState(
                 action: presentationAction,
                 direction: objectState.presentation.direction,
@@ -352,7 +323,7 @@ extension MapScene {
         let objectID = packet.AID
 
         let now = ContinuousClock.now
-        let sourceMapObject = state.object(for: objectID)?.object
+        let sourceMapObject = state.objects[objectID]?.object
 
         if let sourceMapObject {
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceMapObject.job)
@@ -360,15 +331,7 @@ extension MapScene {
             let duration = Duration.milliseconds(Int(packet.attackMT))
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            if state.player.id == objectID {
-                state.player.presentation = MapObjectPresentationState(
-                    action: action,
-                    direction: state.player.presentation.direction,
-                    headDirection: state.player.presentation.headDirection,
-                    startTime: now,
-                    completion: .after(duration, settledAction: settledAction)
-                )
-            } else if var objectState = state.objects[objectID] {
+            if var objectState = state.objects[objectID] {
                 objectState.presentation = MapObjectPresentationState(
                     action: action,
                     direction: objectState.presentation.direction,
@@ -497,8 +460,8 @@ extension MapScene {
             return
         }
 
-        let sourceMapObject = state.object(for: objectAction.sourceObjectID)?.object
-        let targetMapObject = state.object(for: objectAction.targetObjectID)?.object
+        let sourceMapObject = state.objects[objectAction.sourceObjectID]?.object
+        let targetMapObject = state.objects[objectAction.targetObjectID]?.object
 
         if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
             let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist

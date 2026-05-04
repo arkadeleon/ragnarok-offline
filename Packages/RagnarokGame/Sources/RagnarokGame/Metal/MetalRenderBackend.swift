@@ -93,14 +93,13 @@ final class MetalRenderBackend: GameRenderBackend {
         removeExpiredDamageEffects()
 
         updateObjects(
-            player: state.player,
             objects: state.objects,
             items: state.items,
             scene: scene
         )
 
         let playerPresentationPosition =
-            spriteSnapshots[state.player.id]?.worldPosition
+            spriteSnapshots[state.playerID]?.worldPosition
             ?? scene.mapGrid.worldPosition(for: state.player.gridPosition)
         renderer.updateCamera(
             cameraState: scene.cameraState,
@@ -190,13 +189,11 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     private func updateObjects(
-        player: MapObjectState,
         objects: [GameObjectID : MapObjectState],
         items: [GameObjectID : MapItemState],
         scene: MapScene
     ) {
         let snapshots = spriteSnapshotBuilder.build(
-            player: player,
             objects: objects,
             items: items,
             scene: scene
@@ -219,11 +216,7 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
-        let targetObjectType = if effect.targetObjectID == scene.state.player.id {
-            scene.state.player.object.type
-        } else {
-            scene.state.objects[effect.targetObjectID]?.object.type
-        }
+        let targetObjectType = scene.state.objects[effect.targetObjectID]?.object.type
 
         let resolvedTarget = DamageEffectRenderResource.ResolvedTarget(
             startPosition: startPosition,
@@ -246,7 +239,7 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     private func fallbackWorldPosition(for objectID: GameObjectID, scene: MapScene) -> SIMD3<Float>? {
-        if let gridPosition = scene.state.object(for: objectID)?.gridPosition {
+        if let gridPosition = scene.state.objects[objectID]?.gridPosition {
             return scene.mapGrid.worldPosition(for: gridPosition)
         } else {
             return nil
