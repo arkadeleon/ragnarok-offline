@@ -9,8 +9,7 @@ import AVFAudio
 import Foundation
 import RagnarokResources
 
-@MainActor
-final class MetalMapAudioPlayer {
+final class MetalMapAudioPlayer: GameAudioPlayer {
     private let resourceManager: ResourceManager
 
     private var bgmPlayer: AVAudioPlayer?
@@ -20,6 +19,7 @@ final class MetalMapAudioPlayer {
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
+        super.init()
     }
 
     func playBGM(forMapName mapName: String) async {

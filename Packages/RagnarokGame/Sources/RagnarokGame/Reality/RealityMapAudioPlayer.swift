@@ -10,8 +10,7 @@ import Foundation
 import RagnarokResources
 import RealityKit
 
-@MainActor
-final class RealityMapAudioPlayer {
+final class RealityMapAudioPlayer: GameAudioPlayer {
     private let resourceManager: ResourceManager
     private unowned let entityCache: RealityEntityCache
 
@@ -21,6 +20,7 @@ final class RealityMapAudioPlayer {
     init(resourceManager: ResourceManager, entityCache: RealityEntityCache) {
         self.resourceManager = resourceManager
         self.entityCache = entityCache
+        super.init()
     }
 
     func playBGM(forMapName mapName: String, on worldEntity: Entity) async {
