@@ -130,8 +130,7 @@ public final class MapScene {
     }
 
     func selectGround(at position: SIMD2<Int>) {
-        state.selection = position
-        applySnapshot()
+        renderBackend.showSelection(at: position, mapGrid: mapGrid)
         gameSession?.requestMove(to: position)
     }
 

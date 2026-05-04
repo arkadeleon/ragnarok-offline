@@ -14,7 +14,6 @@ public final class MapSceneState {
     public var player: MapObjectState
     public var objects: [GameObjectID : MapObjectState] = [:]
     public var items: [GameObjectID : MapItemState] = [:]
-    public var selection: SIMD2<Int>?
     public let overlay = MapOverlayState()
 
     public init(player: MapObjectState) {

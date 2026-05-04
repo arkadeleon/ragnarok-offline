@@ -137,7 +137,6 @@ final class RealityRenderBackend: GameRenderBackend {
 
         updateCameraState(scene.cameraState)
         updateTileEntities(forCenter: state.player.gridPosition, mapGrid: scene.mapGrid)
-        tileSelectionRenderer.syncSelection(state.selection, mapGrid: scene.mapGrid)
 
         snapshotTask?.cancel()
         snapshotTask = Task { @MainActor [weak self, weak scene] in
@@ -146,6 +145,10 @@ final class RealityRenderBackend: GameRenderBackend {
             }
             await syncEntities(with: state, scene: scene)
         }
+    }
+
+    func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
+        tileSelectionRenderer.showSelection(at: position, in: mapGrid)
     }
 
     func addDamageEffect(_ effect: MapDamageEffect) {
@@ -332,7 +335,7 @@ final class RealityRenderBackend: GameRenderBackend {
         snapshotTask?.cancel()
         snapshotTask = nil
 
-        tileSelectionRenderer.entity.isEnabled = false
+        tileSelectionRenderer.hideSelection()
         worldCameraEntity.removeFromParent()
         for child in Array(worldCameraEntity.children) {
             child.removeFromParent()

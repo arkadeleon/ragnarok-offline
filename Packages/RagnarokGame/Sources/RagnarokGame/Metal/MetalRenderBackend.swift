@@ -65,6 +65,10 @@ final class MetalRenderBackend: GameRenderBackend {
         syncFrameState(with: state)
     }
 
+    func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
+        renderer.tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
+    }
+
     func addDamageEffect(_ effect: MapDamageEffect) {
         renderDamageEffect(effect)
     }
@@ -102,8 +106,6 @@ final class MetalRenderBackend: GameRenderBackend {
             cameraState: scene.cameraState,
             targetPosition: playerPresentationPosition
         )
-
-        renderer.tileSelectorResource?.syncSelection(state.selection, mapGrid: scene.mapGrid)
     }
 
     private func syncAndProjectOverlay() {

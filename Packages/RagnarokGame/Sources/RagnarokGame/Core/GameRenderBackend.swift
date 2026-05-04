@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import simd
 
 @MainActor
-public protocol GameRenderBackend: AnyObject {
+protocol GameRenderBackend: AnyObject {
     func attach(scene: MapScene)
     func detach()
 
@@ -17,6 +18,7 @@ public protocol GameRenderBackend: AnyObject {
 
     func applySnapshot(_ state: MapSceneState)
 
+    func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
     func addDamageEffect(_ effect: MapDamageEffect)
     func playSound(named soundName: String, on objectID: GameObjectID)
 }

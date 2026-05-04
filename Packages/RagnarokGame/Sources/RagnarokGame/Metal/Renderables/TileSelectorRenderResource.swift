@@ -33,8 +33,8 @@ final class TileSelectorRenderResource {
         }
     }
 
-    func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
-        guard let position = selectedPosition, mapGrid.contains(position) else {
+    func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
+        guard mapGrid.contains(position) else {
             clearSelection()
             return
         }

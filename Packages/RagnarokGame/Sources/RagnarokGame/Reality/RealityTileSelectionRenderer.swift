@@ -47,7 +47,7 @@ final class RealityTileSelectionRenderer {
     }
 
     func showSelection(at position: SIMD2<Int>, in mapGrid: MapGrid) {
-        guard isPrepared else {
+        guard isPrepared, mapGrid.contains(position) else {
             return
         }
 
@@ -88,12 +88,7 @@ final class RealityTileSelectionRenderer {
         }
     }
 
-    func syncSelection(_ selectedPosition: SIMD2<Int>?, mapGrid: MapGrid) {
-        guard let position = selectedPosition, mapGrid.contains(position) else {
-            entity.isEnabled = false
-            return
-        }
-
-        showSelection(at: position, in: mapGrid)
+    func hideSelection() {
+        entity.isEnabled = false
     }
 }
