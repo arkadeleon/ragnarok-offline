@@ -22,7 +22,7 @@ final class MetalRenderBackend: GameRenderBackend {
     private let spriteSnapshotBuilder = SpriteSnapshotBuilder()
     private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
     private var spriteAssetStore: SpriteAssetStore?
-    private var damageEffectSpriteSet: DamageEffectSpriteSet?
+    private var combatTextSpriteSet: CombatTextSpriteSet?
     private var effectAssetStore: EffectAssetStore?
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
@@ -72,8 +72,8 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
     }
 
-    func addDamageEffect(_ effect: MapDamageEffect) {
-        renderDamageEffect(effect)
+    func addCombatText(_ combatText: MapCombatText) {
+        renderCombatText(combatText)
     }
 
     func addEffect(_ effect: MapEffect) {
@@ -97,7 +97,7 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
-        removeExpiredDamageEffects()
+        removeExpiredCombatTexts()
         removeExpiredEffects()
 
         updateObjects(
@@ -174,10 +174,10 @@ final class MetalRenderBackend: GameRenderBackend {
         )
 
         do {
-            damageEffectSpriteSet = try await DamageEffectSpriteSet(resourceManager: resourceManager)
+            combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
         } catch {
-            damageEffectSpriteSet = nil
-            logger.warning("Metal backend failed to load damage effect sprites: \(error)")
+            combatTextSpriteSet = nil
+            logger.warning("Metal backend failed to load combat text sprites: \(error)")
         }
 
         effectAssetStore = EffectAssetStore(
@@ -190,7 +190,7 @@ final class MetalRenderBackend: GameRenderBackend {
         spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
-        damageEffectSpriteSet = nil
+        combatTextSpriteSet = nil
         for task in effectLoadTasks.values {
             task.cancel()
         }
@@ -203,7 +203,7 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.waterResource = nil
         renderer.modelResources.removeAll()
         renderer.spriteDrawables.removeAll()
-        renderer.damageEffectResources.removeAll()
+        renderer.combatTextResources.removeAll()
         renderer.effectResources.removeAll()
         renderer.tileSelectorResource = nil
     }
@@ -222,32 +222,25 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
     }
 
-    private func renderDamageEffect(_ effect: MapDamageEffect) {
-        guard let scene, let damageEffectSpriteSet else {
+    private func renderCombatText(_ combatText: MapCombatText) {
+        guard let scene, let combatTextSpriteSet else {
             return
         }
 
-        guard renderer.damageEffectResources[effect.id] == nil else {
+        guard renderer.combatTextResources[combatText.id] == nil else {
             return
         }
 
-        guard let startPosition = spriteSnapshots[effect.targetObjectID]?.worldPosition
-            ?? fallbackWorldPosition(for: effect.targetObjectID, scene: scene) else {
+        guard let startPosition = spriteSnapshots[combatText.target.id]?.worldPosition
+            ?? fallbackWorldPosition(for: combatText.target.id, scene: scene) else {
             return
         }
 
-        let targetObjectType = scene.state.objects[effect.targetObjectID]?.object.type
-
-        let resolvedTarget = DamageEffectRenderResource.ResolvedTarget(
-            startPosition: startPosition,
-            isPlayerTarget: targetObjectType == .pc
-        )
-
-        renderer.damageEffectResources[effect.id] = DamageEffectRenderResource(
+        renderer.combatTextResources[combatText.id] = CombatTextRenderResource(
             device: renderer.device,
-            effect: effect,
-            resolvedTarget: resolvedTarget,
-            spriteSet: damageEffectSpriteSet
+            combatText: combatText,
+            startPosition: startPosition,
+            spriteSet: combatTextSpriteSet
         )
     }
 
@@ -291,9 +284,9 @@ final class MetalRenderBackend: GameRenderBackend {
         }
     }
 
-    private func removeExpiredDamageEffects() {
+    private func removeExpiredCombatTexts() {
         let now = ContinuousClock.now
-        renderer.damageEffectResources = renderer.damageEffectResources.filter { _, resource in
+        renderer.combatTextResources = renderer.combatTextResources.filter { _, resource in
             !resource.isExpired(at: now)
         }
     }

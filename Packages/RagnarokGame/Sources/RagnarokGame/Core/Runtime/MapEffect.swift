@@ -18,7 +18,6 @@ public struct MapEffect: Identifiable, Sendable {
     public let delay: Duration
 
     public init(
-        id: UUID = UUID(),
         effectID: Int,
         effectDefinition: EffectDefinition,
         creationTime: ContinuousClock.Instant,
@@ -26,7 +25,7 @@ public struct MapEffect: Identifiable, Sendable {
         attachedObjectID: GameObjectID?,
         delay: Duration = .zero
     ) {
-        self.id = id
+        self.id = UUID()
         self.effectID = effectID
         self.effectDefinition = effectDefinition
         self.creationTime = creationTime

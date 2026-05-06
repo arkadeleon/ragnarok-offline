@@ -315,7 +315,7 @@ extension MapScene {
 
         applySnapshot()
 
-        addDamageEffects(for: objectAction, now: now)
+        addCombatTexts(for: objectAction, now: now)
         playSound(for: objectAction)
     }
 
@@ -348,14 +348,19 @@ extension MapScene {
         if packet.damage >= 0 {
             let count = Int(packet.count)
             let damage = Int(packet.damage)
+            let target = MapCombatText.Target(
+                id: packet.targetID,
+                isPlayer: state.objects[packet.targetID]?.object.type == .pc
+            )
+
             for i in 0..<count {
-                let damageEffect = MapDamageEffect(
+                let combatText = MapCombatText(
                     creationTime: now,
-                    targetObjectID: packet.targetID,
+                    target: target,
                     amount: damage / count,
                     delay: .milliseconds(Int(packet.attackMT)) + .milliseconds(200 * i)
                 )
-                renderBackend.addDamageEffect(damageEffect)
+                renderBackend.addCombatText(combatText)
             }
         }
 
@@ -412,61 +417,66 @@ extension MapScene {
         return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
     }
 
-    private func addDamageEffects(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
+    private func addCombatTexts(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
+        let target = MapCombatText.Target(
+            id: objectAction.targetObjectID,
+            isPlayer: state.objects[objectAction.targetObjectID]?.object.type == .pc
+        )
+
         switch objectAction.type {
         case .normal, .endure, .critical:
-            let damageEffect = MapDamageEffect(
+            let combatText = MapCombatText(
                 creationTime: now,
-                targetObjectID: objectAction.targetObjectID,
+                target: target,
                 amount: objectAction.damage,
                 delay: .milliseconds(objectAction.sourceSpeed)
             )
-            renderBackend.addDamageEffect(damageEffect)
+            renderBackend.addCombatText(combatText)
 
             if objectAction.damage2 > 0 {
-                let damageEffect2 = MapDamageEffect(
+                let combatText2 = MapCombatText(
                     creationTime: now,
-                    targetObjectID: objectAction.targetObjectID,
+                    target: target,
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                renderBackend.addDamageEffect(damageEffect2)
+                renderBackend.addCombatText(combatText2)
             }
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
             if count == 2 {
-                let damageEffect = MapDamageEffect(
+                let combatText = MapCombatText(
                     creationTime: now,
-                    targetObjectID: objectAction.targetObjectID,
+                    target: target,
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed)
                 )
-                renderBackend.addDamageEffect(damageEffect)
+                renderBackend.addCombatText(combatText)
             }
             if objectAction.damage2 > 0 {
-                let damageEffect = MapDamageEffect(
+                let combatText = MapCombatText(
                     creationTime: now,
-                    targetObjectID: objectAction.targetObjectID,
+                    target: target,
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                 )
-                renderBackend.addDamageEffect(damageEffect)
+                renderBackend.addCombatText(combatText)
 
-                let damageEffect2 = MapDamageEffect(
+                let combatText2 = MapCombatText(
                     creationTime: now,
-                    targetObjectID: objectAction.targetObjectID,
+                    target: target,
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                renderBackend.addDamageEffect(damageEffect2)
+                renderBackend.addCombatText(combatText2)
             } else {
-                let damageEffect = MapDamageEffect(
+                let combatText = MapCombatText(
                     creationTime: now,
-                    targetObjectID: objectAction.targetObjectID,
+                    target: target,
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                 )
-                renderBackend.addDamageEffect(damageEffect)
+                renderBackend.addCombatText(combatText)
             }
         default:
             break

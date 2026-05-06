@@ -151,13 +151,9 @@ final class RealityRenderBackend: GameRenderBackend {
         tileSelectionRenderer.showSelection(at: position, in: mapGrid)
     }
 
-    func addDamageEffect(_ effect: MapDamageEffect) {
-        let damageEntity = Entity.makeDamageEntity(
-            for: effect.amount,
-            delay: effect.delay,
-            targetObjectID: effect.targetObjectID
-        )
-        damageEntity.setParent(rootEntity)
+    func addCombatText(_ combatText: MapCombatText) {
+        let combatTextEntity = Entity.makeCombatTextEntity(for: combatText)
+        combatTextEntity.setParent(rootEntity)
     }
 
     func addEffect(_ effect: MapEffect) {
@@ -217,8 +213,8 @@ final class RealityRenderBackend: GameRenderBackend {
         HealthPointsComponent.registerComponent()
         SpellPointsComponent.registerComponent()
 
-        DamageDigitComponent.registerComponent()
-        DamageDigitSystem.registerSystem()
+        CombatTextComponent.registerComponent()
+        CombatTextSystem.registerSystem()
 
         SpriteActionComponent.registerComponent()
         SpriteActionSystem.registerSystem()

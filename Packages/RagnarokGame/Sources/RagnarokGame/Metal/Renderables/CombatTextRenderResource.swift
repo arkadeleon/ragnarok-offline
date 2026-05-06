@@ -1,5 +1,5 @@
 //
-//  DamageEffectRenderResource.swift
+//  CombatTextRenderResource.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/4/22.
@@ -12,28 +12,14 @@ import RagnarokShaders
 import simd
 
 @MainActor
-final class DamageEffectRenderResource {
-    struct ResolvedTarget {
-        var startPosition: SIMD3<Float>
-        var isPlayerTarget: Bool
-    }
-
-    enum EffectKind {
-        case miss
-        case damage
-    }
-
+final class CombatTextRenderResource {
     struct Snapshot {
         var vertices: [SpriteVertex]
         var worldPosition: SIMD3<Float>
         var texture: any MTLTexture
     }
 
-    let id: UUID
-    let creationTime: ContinuousClock.Instant
-    let kind: EffectKind
-    let delay: Duration
-    let duration: Duration
+    let combatText: MapCombatText
     let startPosition: SIMD3<Float>
     let texture: (any MTLTexture)?
     let frameWidth: Float
@@ -43,32 +29,28 @@ final class DamageEffectRenderResource {
 
     init(
         device: any MTLDevice,
-        effect: MapDamageEffect,
-        resolvedTarget: ResolvedTarget,
-        spriteSet: DamageEffectSpriteSet
+        combatText: MapCombatText,
+        startPosition: SIMD3<Float>,
+        spriteSet: CombatTextSpriteSet
     ) {
-        let image = spriteSet.image(for: effect.amount)
+        let image = spriteSet.image(for: combatText.amount)
         let texture = MetalTextureFactory.makeTexture(
             from: image,
             device: device,
-            label: "damage-effect-\(effect.id.uuidString)"
+            label: "combat-text-\(combatText.id.uuidString)"
         )
 
         let size = image.map {
             SIMD2<Float>(Float($0.width), Float($0.height))
         } ?? SIMD2<Float>(64, 24)
 
-        self.id = effect.id
-        self.creationTime = effect.creationTime
-        self.kind = effect.amount == 0 ? .miss : .damage
-        self.delay = effect.delay
-        self.duration = effect.amount == 0 ? .milliseconds(800) : .milliseconds(1500)
-        self.startPosition = resolvedTarget.startPosition
+        self.combatText = combatText
+        self.startPosition = startPosition
         self.texture = texture
         self.frameWidth = size.x
         self.frameHeight = size.y
         self.spriteScale = spriteSet.scale
-        self.color = if resolvedTarget.isPlayerTarget {
+        self.color = if combatText.target.isPlayer {
             [1, 0, 0, 1]
         } else {
             [1, 1, 1, 1]
@@ -80,20 +62,20 @@ final class DamageEffectRenderResource {
             return nil
         }
 
-        let elapsed = now - creationTime
-        guard elapsed >= delay else {
+        let elapsed = now - combatText.creationTime
+        guard elapsed >= combatText.delay else {
             return nil
         }
 
-        let animationElapsed = elapsed - delay
-        let t = Float(animationElapsed.timeInterval / duration.timeInterval)
+        let animationElapsed = elapsed - combatText.delay
+        let t = Float(animationElapsed.timeInterval / combatText.duration.timeInterval)
         guard t >= 0, t < 1 else {
             return nil
         }
 
         let scale: Float
         let worldPosition: SIMD3<Float>
-        switch kind {
+        switch combatText.kind {
         case .miss:
             scale = 0.5
             worldPosition = [
@@ -132,6 +114,6 @@ final class DamageEffectRenderResource {
     }
 
     func isExpired(at now: ContinuousClock.Instant) -> Bool {
-        now - creationTime > delay + duration + .seconds(1)
+        now - combatText.creationTime > combatText.delay + combatText.duration + .seconds(1)
     }
 }

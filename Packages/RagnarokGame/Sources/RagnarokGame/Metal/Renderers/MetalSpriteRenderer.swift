@@ -40,11 +40,11 @@ final class MetalSpriteRenderer {
 
     func render(
         drawables: [SpriteLayerDrawable],
-        damageEffects: [DamageEffectRenderResource],
+        combatTextResources: [CombatTextRenderResource],
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MetalMapRenderer.RenderMatrices
     ) {
-        guard !drawables.isEmpty || !damageEffects.isEmpty else {
+        guard !drawables.isEmpty || !combatTextResources.isEmpty else {
             return
         }
 
@@ -65,7 +65,7 @@ final class MetalSpriteRenderer {
         }
 
         let now = ContinuousClock.now
-        for resource in damageEffects {
+        for resource in combatTextResources {
             guard let snapshot = resource.snapshot(at: now) else {
                 continue
             }

@@ -1,5 +1,5 @@
 //
-//  DamageDigitSystem.swift
+//  CombatTextSystem.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2025/11/13.
@@ -9,8 +9,8 @@ import RagnarokCore
 import RealityKit
 import WorldCamera
 
-class DamageDigitSystem: System {
-    static let query = EntityQuery(where: .has(DamageDigitComponent.self))
+class CombatTextSystem: System {
+    static let query = EntityQuery(where: .has(CombatTextComponent.self))
     static let targetQuery = EntityQuery(where: .has(MapObjectComponent.self))
 
     required init(scene: Scene) {
@@ -30,20 +30,20 @@ class DamageDigitSystem: System {
         let elevation = worldCameraComponent.elevation
 
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
-            guard var component = entity.components[DamageDigitComponent.self] else {
+            guard var component = entity.components[CombatTextComponent.self] else {
                 continue
             }
 
             component.elapsedTime += context.deltaTime
             entity.components.set(component)
 
-            let expiredTime = component.delay + component.duration + 1
+            let expiredTime = component.combatText.delay.timeInterval + component.combatText.duration.timeInterval + 1
             if component.elapsedTime > expiredTime {
                 entity.removeFromParent()
                 continue
             }
 
-            if component.elapsedTime < component.delay {
+            if component.elapsedTime < component.combatText.delay.timeInterval {
                 continue
             }
 
@@ -53,7 +53,7 @@ class DamageDigitSystem: System {
                     targetEntity = context.scene.findEntity(id: targetEntityID)
                 } else {
                     targetEntity = context.entities(matching: Self.targetQuery, updatingSystemWhen: .rendering).first { entity in
-                        entity.components[MapObjectComponent.self]?.mapObject.objectID == component.targetObjectID
+                        entity.components[MapObjectComponent.self]?.mapObject.objectID == component.combatText.target.id
                     }
                 }
 
@@ -63,9 +63,6 @@ class DamageDigitSystem: System {
 
                 component.targetEntityID = targetEntity.id
                 component.startPosition = targetEntity.position(relativeTo: nil)
-                if case .damage = component.digit {
-                    component.color = targetEntity.components[MapObjectComponent.self]?.mapObject.type == .pc ? .red : .white
-                }
                 entity.components.set(component)
             }
 
@@ -74,9 +71,9 @@ class DamageDigitSystem: System {
             }
 
             if !entity.components.has(ModelComponent.self) {
-                let string = switch component.digit {
+                let string = switch component.combatText.kind {
                 case .miss: "MISS"
-                case .damage(let damage): "\(damage)"
+                case .damage: "\(component.combatText.amount)"
                 }
                 let mesh = MeshResource.generateText(
                     string,
@@ -87,14 +84,17 @@ class DamageDigitSystem: System {
                 entity.components.set(ModelComponent(mesh: mesh, materials: [material]))
             }
 
-            let t = Float((component.elapsedTime - component.delay) / component.duration)
+            let t = Float(
+                (component.elapsedTime - component.combatText.delay.timeInterval) /
+                component.combatText.duration.timeInterval
+            )
 
             if t >= 1 {
                 entity.removeFromParent()
                 continue
             }
 
-            switch component.digit {
+            switch component.combatText.kind {
             case .miss:
                 var position = startPosition
                 position.y += 3.5 + 7 * t

@@ -1,5 +1,5 @@
 //
-//  DamageEffectSpriteSet.swift
+//  CombatTextSpriteSet.swift
 //  RagnarokGame
 //
 //  Created by Li, Leon on 2026/4/23.
@@ -12,7 +12,7 @@ import RagnarokResources
 import RagnarokSprite
 import simd
 
-struct DamageEffectSpriteSet: Sendable {
+struct CombatTextSpriteSet: Sendable {
     private static let digitPadding = 2
 
     let digitImages: [CGImage?]
