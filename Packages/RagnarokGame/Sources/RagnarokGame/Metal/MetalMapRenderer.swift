@@ -38,6 +38,7 @@ final class MetalMapRenderer: Renderer {
     var modelResources: [RSMModelRenderResource] = []
     var spriteDrawables: [SpriteLayerDrawable] = []
     var damageEffectResources: [UUID : DamageEffectRenderResource] = [:]
+    var effectResources: [UUID : STREffectRenderResource] = [:]
     var tileSelectorResource: TileSelectorRenderResource?
 
     private var cameraState: MapCameraState = .default
@@ -138,6 +139,18 @@ final class MetalMapRenderer: Renderer {
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
+
+        let now = ContinuousClock.now
+        let sortedEffects = effectResources.values
+            .filter { !$0.isExpired(at: now) }
+            .sorted { $0.creationTime < $1.creationTime }
+        for resource in sortedEffects {
+            resource.render(
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                matrices: matrices
+            )
+        }
 
         if let tileSelectorResource {
             tileSelectorRenderer.render(

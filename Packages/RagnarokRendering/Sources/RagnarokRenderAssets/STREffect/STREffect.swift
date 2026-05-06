@@ -10,14 +10,14 @@ import RagnarokShaders
 
 public struct STREffect {
     public var fps: Int
-    public var frames: [Frame] = []
+    public var frames: [STREffect.Frame] = []
 
     public init(str: STR) {
         fps = Int(str.fps)
 
         let frameCount = str.maxKeyframeIndex + 1
         for frameIndex in 0..<frameCount {
-            var sprites: [Sprite] = []
+            var sprites: [STREffect.Sprite] = []
 
             for layer in str.layers {
                 var lastFrame = 0
@@ -62,7 +62,7 @@ public struct STREffect {
                     }
 
                     let textureName = layer.textures[Int(from.textureIndex)]
-                    let sprite = Sprite(
+                    let sprite = STREffect.Sprite(
                         uv: from.uv,
                         xy: from.xy,
                         textureName: textureName,
@@ -111,7 +111,7 @@ public struct STREffect {
                 let angle = from.angle + to.angle * Float(delta)
                 let color = from.color + to.color * Float(delta)
 
-                let sprite = Sprite(
+                let sprite = STREffect.Sprite(
                     uv: uv,
                     xy: xy,
                     textureName: textureName,
@@ -124,7 +124,7 @@ public struct STREffect {
                 sprites.append(sprite)
             }
 
-            let frame = Frame(sprites: sprites)
+            let frame = STREffect.Frame(sprites: sprites)
             frames.append(frame)
         }
     }
@@ -132,7 +132,7 @@ public struct STREffect {
 
 extension STREffect {
     public struct Frame {
-        public var sprites: [Sprite] = []
+        public var sprites: [STREffect.Sprite] = []
     }
 }
 

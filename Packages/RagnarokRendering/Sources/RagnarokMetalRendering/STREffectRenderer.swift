@@ -84,7 +84,8 @@ public class STREffectRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4
+        projectionMatrix: simd_float4x4,
+        spritePosition: SIMD3<Float> = .zero
     ) {
         let frameIndex = Int(time * CFTimeInterval(effect.fps)) % effect.frames.count
         let frame = effect.frames[frameIndex]
@@ -106,7 +107,7 @@ public class STREffectRenderer {
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
                 spriteAngle: matrix_identity_float4x4,
-                spritePosition: .zero,
+                spritePosition: spritePosition,
                 spriteOffset: sprite.position - [320, 320]
             )
             guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<EffectVertexUniforms>.stride, options: []) else {

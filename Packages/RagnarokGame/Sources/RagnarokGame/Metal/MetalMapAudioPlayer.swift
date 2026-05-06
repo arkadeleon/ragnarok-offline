@@ -29,8 +29,11 @@ final class MetalMapAudioPlayer: GameAudioPlayer {
         bgmPlayer?.play()
     }
 
-    func playSound(named soundName: String) {
-        Task { @MainActor [weak self] in
+    func playSound(named soundName: String, after delay: Duration = .zero) {
+        Task { [weak self] in
+            if delay > .zero {
+                try await Task.sleep(for: delay)
+            }
             guard let self else { return }
             guard let wavData = await soundEffectData(for: soundName) else { return }
             play(wavData)

@@ -358,6 +358,9 @@ extension MapScene {
                 renderBackend.addDamageEffect(damageEffect)
             }
         }
+
+        addSkillHitEffects(for: packet)
+        addSkillEffects(for: packet)
     }
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
@@ -374,6 +377,28 @@ extension MapScene {
         state.items.removeValue(forKey: objectID)
 
         applySnapshot()
+    }
+
+    func onGroundSkillCast(_ packet: PACKET_ZC_NOTIFY_GROUNDSKILL) {
+        guard let skillID = SkillID(rawValue: Int(packet.SKID)) else {
+            return
+        }
+
+        let position = SIMD2(Int(packet.xPos), Int(packet.yPos))
+        guard mapGrid.contains(position) else {
+            return
+        }
+
+        let now = ContinuousClock.now
+        for effectID in SkillEffectTable.effectIDs(for: skillID) {
+            addEffects(
+                forEffectID: effectID,
+                creationTime: now,
+                gridPosition: position,
+                attachedObjectID: nil,
+                delay: .zero
+            )
+        }
     }
 }
 
@@ -445,6 +470,70 @@ extension MapScene {
             }
         default:
             break
+        }
+    }
+
+    private func addSkillHitEffects(for packet: PACKET_ZC_NOTIFY_SKILL) {
+        guard packet.damage > 0,
+              let skillID = SkillID(rawValue: Int(packet.SKID)),
+              let targetPosition = state.objects[packet.targetID]?.gridPosition else {
+            return
+        }
+
+        let now = ContinuousClock.now
+        let count = max(1, Int(packet.count))
+        for hitEffectID in SkillEffectTable.hitEffectIDs(for: skillID) {
+            for i in 0..<count {
+                addEffects(
+                    forEffectID: hitEffectID,
+                    creationTime: now,
+                    gridPosition: targetPosition,
+                    attachedObjectID: packet.targetID,
+                    delay: .milliseconds(Int(packet.attackMT)) + .milliseconds(200 * i)
+                )
+            }
+        }
+    }
+
+    private func addSkillEffects(for packet: PACKET_ZC_NOTIFY_SKILL) {
+        guard let skillID = SkillID(rawValue: Int(packet.SKID)),
+              let _ = state.objects[packet.AID],
+              let target = state.objects[packet.targetID],
+              let damageType = DamageType(rawValue: Int(packet.action)),
+              damageType != .splash, damageType != .splash_endure else {
+            return
+        }
+
+        let now = ContinuousClock.now
+        for effectID in SkillEffectTable.effectIDs(for: skillID) {
+            addEffects(
+                forEffectID: effectID,
+                creationTime: now,
+                gridPosition: target.gridPosition,
+                attachedObjectID: packet.targetID,
+                delay: .milliseconds(Int(packet.attackMT))
+            )
+        }
+    }
+
+    private func addEffects(
+        forEffectID effectID: Int,
+        creationTime: ContinuousClock.Instant,
+        gridPosition: SIMD2<Int>,
+        attachedObjectID: GameObjectID?,
+        delay: Duration
+    ) {
+        let definitions = EffectTable.definitions(forEffectID: effectID)
+        for definition in definitions {
+            let effect = MapEffect(
+                effectID: effectID,
+                effectDefinition: definition.resolved(),
+                creationTime: creationTime,
+                gridPosition: gridPosition,
+                attachedObjectID: attachedObjectID,
+                delay: delay
+            )
+            renderBackend.addEffect(effect)
         }
     }
 

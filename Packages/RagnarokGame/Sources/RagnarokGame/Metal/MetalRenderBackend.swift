@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Metal
 import RagnarokMetalRendering
 import RagnarokRenderAssets
 import RagnarokResources
@@ -22,6 +23,8 @@ final class MetalRenderBackend: GameRenderBackend {
     private var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
     private var spriteAssetStore: SpriteAssetStore?
     private var damageEffectSpriteSet: DamageEffectSpriteSet?
+    private var effectAssetStore: EffectAssetStore?
+    private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     init(resourceManager: ResourceManager) throws {
         self.resourceManager = resourceManager
@@ -73,6 +76,10 @@ final class MetalRenderBackend: GameRenderBackend {
         renderDamageEffect(effect)
     }
 
+    func addEffect(_ effect: MapEffect) {
+        renderEffect(effect)
+    }
+
     func playSound(named soundName: String, on objectID: GameObjectID) {
         audioPlayer.playSound(named: soundName)
     }
@@ -91,6 +98,7 @@ final class MetalRenderBackend: GameRenderBackend {
         }
 
         removeExpiredDamageEffects()
+        removeExpiredEffects()
 
         updateObjects(
             objects: state.objects,
@@ -171,6 +179,11 @@ final class MetalRenderBackend: GameRenderBackend {
             damageEffectSpriteSet = nil
             logger.warning("Metal backend failed to load damage effect sprites: \(error)")
         }
+
+        effectAssetStore = EffectAssetStore(
+            device: renderer.device,
+            resourceManager: resourceManager
+        )
     }
 
     private func clearRenderResources() {
@@ -178,6 +191,12 @@ final class MetalRenderBackend: GameRenderBackend {
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
         damageEffectSpriteSet = nil
+        for task in effectLoadTasks.values {
+            task.cancel()
+        }
+        effectAssetStore?.cancelAllTasks()
+        effectAssetStore = nil
+        effectLoadTasks.removeAll()
 
         renderer.skyboxResource = nil
         renderer.groundResource = nil
@@ -185,6 +204,7 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.modelResources.removeAll()
         renderer.spriteDrawables.removeAll()
         renderer.damageEffectResources.removeAll()
+        renderer.effectResources.removeAll()
         renderer.tileSelectorResource = nil
     }
 
@@ -231,9 +251,56 @@ final class MetalRenderBackend: GameRenderBackend {
         )
     }
 
+    private func renderEffect(_ effect: MapEffect) {
+        guard let scene else {
+            return
+        }
+
+        if let soundName = effect.effectDefinition.soundName {
+            audioPlayer.playSound(named: soundName, after: effect.delay)
+        }
+
+        let worldPosition = scene.mapGrid.worldPosition(for: effect.gridPosition)
+        let effectID = effect.id
+
+        effectLoadTasks[effectID] = Task { [weak self] in
+            guard let self else {
+                return
+            }
+            defer {
+                self.effectLoadTasks[effectID] = nil
+            }
+
+            do {
+                guard let effectAssetStore else {
+                    return
+                }
+
+                let asset = try await effectAssetStore.asset(for: effect.effectDefinition)
+
+                renderer.effectResources[effectID] = try STREffectRenderResource(
+                    device: renderer.device,
+                    effect: effect,
+                    strEffect: asset.effect,
+                    textures: asset.textures,
+                    worldPosition: worldPosition
+                )
+            } catch {
+                logger.warning("Metal backend failed to load effect \(effect.effectID): \(error)")
+            }
+        }
+    }
+
     private func removeExpiredDamageEffects() {
         let now = ContinuousClock.now
         renderer.damageEffectResources = renderer.damageEffectResources.filter { _, resource in
+            !resource.isExpired(at: now)
+        }
+    }
+
+    private func removeExpiredEffects() {
+        let now = ContinuousClock.now
+        renderer.effectResources = renderer.effectResources.filter { _, resource in
             !resource.isExpired(at: now)
         }
     }

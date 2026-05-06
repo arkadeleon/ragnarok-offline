@@ -653,8 +653,8 @@ final public class GameSession {
             break
         case let packet as PACKET_ZC_NOTIFY_SKILL:
             mapScene?.onMapObjectSkillPerformed(packet)
-        case _ as PACKET_ZC_NOTIFY_GROUNDSKILL:
-            break
+        case let packet as PACKET_ZC_NOTIFY_GROUNDSKILL:
+            mapScene?.onGroundSkillCast(packet)
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.count))

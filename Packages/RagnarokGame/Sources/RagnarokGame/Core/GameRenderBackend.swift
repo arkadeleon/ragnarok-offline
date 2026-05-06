@@ -20,5 +20,6 @@ protocol GameRenderBackend: AnyObject {
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
     func addDamageEffect(_ effect: MapDamageEffect)
+    func addEffect(_ effect: MapEffect)
     func playSound(named soundName: String, on objectID: GameObjectID)
 }

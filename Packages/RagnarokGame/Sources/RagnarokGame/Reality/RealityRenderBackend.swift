@@ -160,6 +160,9 @@ final class RealityRenderBackend: GameRenderBackend {
         damageEntity.setParent(rootEntity)
     }
 
+    func addEffect(_ effect: MapEffect) {
+    }
+
     func playSound(named soundName: String, on objectID: GameObjectID) {
         audioPlayer.playSound(named: soundName, on: objectID)
     }
