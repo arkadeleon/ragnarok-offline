@@ -20,23 +20,31 @@ struct CombatTextComponent: Component {
 
 extension Entity {
     static func makeCombatTextEntity(for combatText: MapCombatText) -> Entity {
-        let combatTextEntity = Entity()
-
-        switch combatText.kind {
+        let combatTextComponent = switch combatText.kind {
         case .miss:
-            let combatTextComponent = CombatTextComponent(
+            CombatTextComponent(
                 combatText: combatText,
                 color: .yellow,
             )
-            combatTextEntity.components.set(combatTextComponent)
         case .damage:
-            let combatTextComponent = CombatTextComponent(
+            CombatTextComponent(
                 combatText: combatText,
                 color: combatText.target.isPlayer ? .red : .white
             )
-            combatTextEntity.components.set(combatTextComponent)
+        case .hpRecovery:
+            CombatTextComponent(
+                combatText: combatText,
+                color: .green
+            )
+        case .spRecovery:
+            CombatTextComponent(
+                combatText: combatText,
+                color: .blue
+            )
         }
 
+        let combatTextEntity = Entity()
+        combatTextEntity.components.set(combatTextComponent)
         return combatTextEntity
     }
 }

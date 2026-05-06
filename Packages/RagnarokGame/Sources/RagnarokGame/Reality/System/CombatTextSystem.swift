@@ -73,7 +73,7 @@ class CombatTextSystem: System {
             if !entity.components.has(ModelComponent.self) {
                 let string = switch component.combatText.kind {
                 case .miss: "MISS"
-                case .damage: "\(component.combatText.amount)"
+                case .damage, .hpRecovery, .spRecovery: "\(component.combatText.amount)"
                 }
                 let mesh = MeshResource.generateText(
                     string,
@@ -110,6 +110,13 @@ class CombatTextSystem: System {
                 entity.position = position
 
                 let scale = 4 * (1 - t)
+                entity.scale = [scale, scale / cosf(elevation), scale]
+            case .hpRecovery, .spRecovery:
+                var position = startPosition
+                position.y += 2 + (t < 0.4 ? 0 : (t - 0.4) * 5)
+                entity.position = position
+
+                let scale = max((1 - t * 2) * 3, 0.8)
                 entity.scale = [scale, scale / cosf(elevation), scale]
             }
 

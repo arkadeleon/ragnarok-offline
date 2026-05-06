@@ -678,6 +678,23 @@ final public class GameSession {
             }
         case _ as PACKET_ZC_ATTACK_RANGE:
             break
+        case let packet as PACKET_ZC_RECOVERY:
+            if let statusProperty = StatusProperty(rawValue: Int(packet.type)) {
+                switch statusProperty {
+                case .hp:
+                    let amount = Int(packet.amount)
+                    let hp = min(playerStatus.hp + amount, playerStatus.maxHp)
+                    playerStatus.hp = hp
+                    mapScene?.onPlayerHealthPointsRecovered(hp: hp, amount: amount)
+                case .sp:
+                    let amount = Int(packet.amount)
+                    let sp = min(playerStatus.sp + amount, playerStatus.maxSp)
+                    playerStatus.sp = sp
+                    mapScene?.onPlayerSpellPointsRecovered(sp: sp, amount: amount)
+                default:
+                    break
+                }
+            }
         case let packet as PACKET_ZC_NOTIFY_EXP:
             messageCenter.addMessage(for: packet)
         case _ as PACKET_ZC_INVENTORY_START:

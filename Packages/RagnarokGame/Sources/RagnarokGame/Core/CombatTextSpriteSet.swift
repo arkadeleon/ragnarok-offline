@@ -43,13 +43,13 @@ struct CombatTextSpriteSet: Sendable {
         }
     }
 
-    func image(for amount: Int) -> CGImage? {
-        if amount == 0 {
-            return missImage
+    func digitImage(for amount: Int) -> CGImage? {
+        guard amount >= 0 else {
+            return nil
         }
 
-        guard amount > 0 else {
-            return nil
+        if amount == 0 {
+            return digitImages.indices.contains(0) ? digitImages[0] : nil
         }
 
         let digits = String(amount).compactMap(\.wholeNumberValue)

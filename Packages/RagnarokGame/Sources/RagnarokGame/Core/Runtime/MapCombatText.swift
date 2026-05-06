@@ -13,9 +13,11 @@ public struct MapCombatText: Identifiable, Sendable {
         public let isPlayer: Bool
     }
 
-    public enum Kind: Sendable {
+    public enum Kind: Sendable, Equatable {
         case miss
         case damage
+        case hpRecovery
+        case spRecovery
     }
 
     public let id: UUID
@@ -30,14 +32,20 @@ public struct MapCombatText: Identifiable, Sendable {
         creationTime: ContinuousClock.Instant,
         target: MapCombatText.Target,
         amount: Int,
+        kind: MapCombatText.Kind? = nil,
         delay: Duration
     ) {
         self.id = UUID()
         self.creationTime = creationTime
         self.target = target
         self.amount = amount
-        self.kind = amount == 0 ? .miss : .damage
+        self.kind = kind ?? (amount == 0 ? .miss : .damage)
         self.delay = delay
-        self.duration = amount == 0 ? .milliseconds(800) : .milliseconds(1500)
+        self.duration = switch self.kind {
+        case .miss:
+            .milliseconds(800)
+        case .damage, .hpRecovery, .spRecovery:
+            .milliseconds(1500)
+        }
     }
 }

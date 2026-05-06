@@ -44,6 +44,38 @@ extension MapScene {
         }
     }
 
+    func onPlayerHealthPointsRecovered(hp: Int, amount: Int) {
+        state.player.hp = hp
+        state.overlay.gauges[player.objectID]?.hp = hp
+
+        applySnapshot()
+
+        let combatText = MapCombatText(
+            creationTime: .now,
+            target: MapCombatText.Target(id: player.objectID, isPlayer: true),
+            amount: amount,
+            kind: .hpRecovery,
+            delay: .zero
+        )
+        renderBackend.addCombatText(combatText)
+    }
+
+    func onPlayerSpellPointsRecovered(sp: Int, amount: Int) {
+        state.player.sp = sp
+        state.overlay.gauges[player.objectID]?.sp = sp
+
+        applySnapshot()
+
+        let combatText = MapCombatText(
+            creationTime: .now,
+            target: MapCombatText.Target(id: player.objectID, isPlayer: true),
+            amount: amount,
+            kind: .spRecovery,
+            delay: .zero
+        )
+        renderBackend.addCombatText(combatText)
+    }
+
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
 

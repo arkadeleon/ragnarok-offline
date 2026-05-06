@@ -33,7 +33,12 @@ final class CombatTextRenderResource {
         startPosition: SIMD3<Float>,
         spriteSet: CombatTextSpriteSet
     ) {
-        let image = spriteSet.image(for: combatText.amount)
+        let image = switch combatText.kind {
+        case .miss:
+            spriteSet.missImage
+        case .damage, .hpRecovery, .spRecovery:
+            spriteSet.digitImage(for: combatText.amount)
+        }
         let texture = MetalTextureFactory.makeTexture(
             from: image,
             device: device,
@@ -50,10 +55,17 @@ final class CombatTextRenderResource {
         self.frameWidth = size.x
         self.frameHeight = size.y
         self.spriteScale = spriteSet.scale
-        self.color = if combatText.target.isPlayer {
-            [1, 0, 0, 1]
-        } else {
-            [1, 1, 1, 1]
+        self.color = switch combatText.kind {
+        case .hpRecovery:
+            [0, 1, 0, 1]
+        case .spRecovery:
+            [0.13, 0.19, 0.75, 1]
+        case .miss, .damage:
+            if combatText.target.isPlayer {
+                [1, 0, 0, 1]
+            } else {
+                [1, 1, 1, 1]
+            }
         }
     }
 
@@ -89,6 +101,13 @@ final class CombatTextRenderResource {
                 startPosition.x + 4 * t,
                 startPosition.y + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
                 startPosition.z - 4 * t,
+            ]
+        case .hpRecovery, .spRecovery:
+            scale = max((1 - t * 2) * 3, 0.8)
+            worldPosition = [
+                startPosition.x,
+                startPosition.y + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
+                startPosition.z,
             ]
         }
 
