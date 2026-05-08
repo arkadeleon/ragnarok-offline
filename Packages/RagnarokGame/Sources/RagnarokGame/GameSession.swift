@@ -222,8 +222,7 @@ final public class GameSession {
         // Handle error stream
         Task {
             for await error in client.errorStream {
-                let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
-                errorMessages.append(errorMessage)
+                logger.warning("\(error)")
             }
         }
 
@@ -361,8 +360,7 @@ final public class GameSession {
         // Handle error stream
         Task {
             for await error in client.errorStream {
-                let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
-                errorMessages.append(errorMessage)
+                logger.warning("\(error)")
             }
         }
 
@@ -418,8 +416,11 @@ final public class GameSession {
             let character = CharacterInfo(from: packet.character)
             characters.append(character)
             phase = .login(.characterSelect(characters))
-        case _ as PACKET_HC_REFUSE_MAKECHAR:
-            break
+        case let packet as PACKET_HC_REFUSE_MAKECHAR:
+            let message = MakeCharRefusedMessage(from: packet)
+            let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            errorMessages.append(errorMessage)
         case _ as PACKET_HC_ACCEPT_DELETECHAR:
             break
         case _ as PACKET_HC_REFUSE_DELETECHAR:
@@ -494,8 +495,7 @@ final public class GameSession {
         // Handle error stream
         Task {
             for await error in client.errorStream {
-                let errorMessage = GameSession.ErrorMessage(content: error.localizedDescription)
-                errorMessages.append(errorMessage)
+                logger.warning("\(error)")
             }
         }
 

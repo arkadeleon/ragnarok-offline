@@ -23,7 +23,18 @@ struct LoginFlowView: View {
                             .frame(width: proxy.size.width, height: proxy.size.height)
                     }
 
-                    VStack(spacing: 0) {
+                    switch loginPhase {
+                    case .login:
+                        LoginView()
+                    case .charServerList(let charServers):
+                        CharServerListView(charServers: charServers)
+                    case .characterSelect(let characters):
+                        CharacterSelectView(characters: characters)
+                    case .characterMake(let slot):
+                        CharacterMakeView(slot: slot)
+                    }
+
+                    ZStack {
                         ForEach(gameSession.errorMessages.reversed()) { errorMessage in
                             MessageBoxView(errorMessage.content)
                                 .overlay(alignment: .bottomTrailing) {
@@ -36,18 +47,8 @@ struct LoginFlowView: View {
                                     .padding(.vertical, 4)
                                 }
                         }
-
-                        switch loginPhase {
-                        case .login:
-                            LoginView()
-                        case .charServerList(let charServers):
-                            CharServerListView(charServers: charServers)
-                        case .characterSelect(let characters):
-                            CharacterSelectView(characters: characters)
-                        case .characterMake(let slot):
-                            CharacterMakeView(slot: slot)
-                        }
                     }
+                    .offset(y: -120)
                 }
             }
         }
