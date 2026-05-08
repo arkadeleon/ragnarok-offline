@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 public let HEADER_ZC_MAIL_RECEIVE: Int16 = 0x24a
 
@@ -19,7 +20,7 @@ public struct PACKET_ZC_MAIL_RECEIVE: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         mailID = try decoder.decode(UInt32.self)
-        title = try decoder.decode(String.self, lengthOfBytes: 40)
-        sender = try decoder.decode(String.self, lengthOfBytes: 24)
+        title = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
+        sender = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
 }

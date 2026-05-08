@@ -16,7 +16,7 @@ public struct GAT: FileFormat {
     public var tiles: [GAT.Tile] = []
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decode(String.self, lengthOfBytes: 4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .ascii)
         guard header == "GRAT" else {
             throw FileFormatError.invalidHeader(header, expected: "GRAT")
         }

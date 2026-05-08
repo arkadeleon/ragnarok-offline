@@ -132,7 +132,7 @@ public class BinaryDecoder {
         return bytes
     }
 
-    public func decode(_ type: String.Type, lengthOfBytes: Int, encoding: String.Encoding = .ascii) throws -> String {
+    public func decode(_ type: String.Type, lengthOfBytes: Int, encoding: String.Encoding) throws -> String {
         var bytes = [UInt8](repeating: 0, count: lengthOfBytes)
         try bytes.withUnsafeMutableBytes { pointer in
             _ = try stream.read(pointer.baseAddress!, count: lengthOfBytes)

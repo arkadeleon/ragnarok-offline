@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 @available(*, deprecated, message: "Use HEADER_HC_NOTIFY_ZONESVR instead.")
 public let _HEADER_HC_NOTIFY_ZONESVR: Int16 = PACKET_VERSION >= 20170315 ? 0xac5 : 0x71
@@ -22,7 +23,7 @@ public struct _PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         charID = try decoder.decode(UInt32.self)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         ip = try decoder.decode(UInt32.self)
         port = try decoder.decode(UInt16.self)
 

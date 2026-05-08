@@ -17,7 +17,7 @@ public struct SPR: FileFormat {
     public var palette: PAL?
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decode(String.self, lengthOfBytes: 2)
+        header = try decoder.decode(String.self, lengthOfBytes: 2, encoding: .ascii)
         guard header == "SP" else {
             throw FileFormatError.invalidHeader(header, expected: "SP")
         }

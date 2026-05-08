@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 /// See `logclif_auth_failed`
 @available(*, deprecated, message: "Use generated struct instead.")
@@ -38,6 +39,6 @@ public struct _PACKET_AC_REFUSE_LOGIN: _DecodablePacket {
             errorCode = UInt32(try decoder.decode(UInt8.self))
         }
 
-        unblockTime = try decoder.decode(String.self, lengthOfBytes: 20)
+        unblockTime = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
     }
 }

@@ -46,6 +46,7 @@ struct GeneratePacketsCommand: ParsableCommand {
         //
         
         import BinaryIO
+        import Foundation
         
         """
 

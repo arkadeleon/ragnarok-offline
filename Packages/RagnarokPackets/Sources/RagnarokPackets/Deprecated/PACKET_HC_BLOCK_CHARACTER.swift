@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 @available(*, deprecated, message: "Use HEADER_HC_BLOCK_CHARACTER instead.")
 public let _HEADER_HC_BLOCK_CHARACTER: Int16 = 0x20d
@@ -38,7 +39,7 @@ extension _PACKET_HC_BLOCK_CHARACTER {
 
         public init(from decoder: BinaryDecoder) throws {
             charID = try decoder.decode(UInt32.self)
-            szExpireDate = try decoder.decode(String.self, lengthOfBytes: 20)
+            szExpireDate = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
         }
     }
 }

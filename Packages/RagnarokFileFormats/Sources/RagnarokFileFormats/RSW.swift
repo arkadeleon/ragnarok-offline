@@ -22,7 +22,7 @@ public struct RSW: FileFormat {
     public var effects: [RSW.Objects.Effect] = []
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decode(String.self, lengthOfBytes: 4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .ascii)
         guard header == "GRSW" else {
             throw FileFormatError.invalidHeader(header, expected: "GRSW")
         }
@@ -94,11 +94,11 @@ extension RSW {
         public var src: String
 
         public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
-            ini = try decoder.decode(String.self, lengthOfBytes: 40)
-            gnd = try decoder.decode(String.self, lengthOfBytes: 40)
-            gat = try decoder.decode(String.self, lengthOfBytes: 40)
+            ini = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
+            gnd = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
+            gat = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
             if version >= "1.4" {
-                src = try decoder.decode(String.self, lengthOfBytes: 40)
+                src = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
             } else {
                 src = ""
             }
@@ -322,7 +322,7 @@ extension RSW {
 
             public init(from decoder: BinaryDecoder, configuration version: FileFormatVersion) throws {
                 name = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .isoLatin1)
-                waveName = try decoder.decode(String.self, lengthOfBytes: 80)
+                waveName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .ascii)
                 position = try [
                     decoder.decode(Float.self) / 5,
                     decoder.decode(Float.self) / 5,

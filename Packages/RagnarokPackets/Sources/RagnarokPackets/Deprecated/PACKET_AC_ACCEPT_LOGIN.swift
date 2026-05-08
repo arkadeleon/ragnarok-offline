@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 /// See `logclif_auth_ok`
 @available(*, deprecated, message: "Use generated struct instead.")
@@ -47,7 +48,7 @@ public struct _PACKET_AC_ACCEPT_LOGIN: _DecodablePacket {
         accountID = try decoder.decode(UInt32.self)
         loginID2 = try decoder.decode(UInt32.self)
         lastLoginIP = try decoder.decode(UInt32.self)
-        lastLoginTime = try decoder.decode(String.self, lengthOfBytes: 26)
+        lastLoginTime = try decoder.decode(String.self, lengthOfBytes: 26, encoding: .utf8)
         sex = try decoder.decode(UInt8.self)
 
         if PACKET_VERSION >= 20170315 {
@@ -77,7 +78,7 @@ extension _PACKET_AC_ACCEPT_LOGIN {
         public init(from decoder: BinaryDecoder) throws {
             ip = try decoder.decode(UInt32.self)
             port = try decoder.decode(UInt16.self)
-            name = try decoder.decode(String.self, lengthOfBytes: 20)
+            name = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
             userCount = try decoder.decode(UInt16.self)
             state = try decoder.decode(UInt16.self)
             property = try decoder.decode(UInt16.self)

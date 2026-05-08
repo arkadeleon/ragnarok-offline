@@ -16,7 +16,7 @@ public struct STR: FileFormat {
     public var layers: [STR.Layer] = []
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decode(String.self, lengthOfBytes: 4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .ascii)
         guard header == "STRM" else {
             throw FileFormatError.invalidHeader(header, expected: "STRM")
         }
@@ -49,7 +49,7 @@ extension STR {
         public init(from decoder: BinaryDecoder) throws {
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let texture = try decoder.decode(String.self, lengthOfBytes: 128)
+                let texture = try decoder.decode(String.self, lengthOfBytes: 128, encoding: .ascii)
                 textures.append(texture)
             }
 

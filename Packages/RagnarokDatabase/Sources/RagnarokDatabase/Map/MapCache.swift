@@ -32,7 +32,7 @@ extension MapCache {
         var data: [UInt8]
 
         init(from decoder: BinaryDecoder) throws {
-            name = try decoder.decode(String.self, lengthOfBytes: 12)
+            name = try decoder.decode(String.self, lengthOfBytes: 12, encoding: .ascii)
             xs = try decoder.decode(Int16.self)
             ys = try decoder.decode(Int16.self)
 

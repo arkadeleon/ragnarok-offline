@@ -15,7 +15,7 @@ public struct ACT: FileFormat {
     public var sounds: [String] = []
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decode(String.self, lengthOfBytes: 2)
+        header = try decoder.decode(String.self, lengthOfBytes: 2, encoding: .ascii)
         guard header == "AC" else {
             throw FileFormatError.invalidHeader(header, expected: "AC")
         }
@@ -37,7 +37,7 @@ public struct ACT: FileFormat {
         if version >= "2.1" {
             let soundCount = try decoder.decode(Int32.self)
             for _ in 0..<soundCount {
-                let sound = try decoder.decode(String.self, lengthOfBytes: 40)
+                let sound = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
                 sounds.append(sound)
             }
 

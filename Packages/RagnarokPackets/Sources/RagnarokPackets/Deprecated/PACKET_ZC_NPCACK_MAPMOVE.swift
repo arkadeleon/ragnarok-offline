@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 /// See `clif_changemap`
 @available(*, deprecated, message: "Use generated struct instead.")
@@ -25,7 +26,7 @@ public struct _PACKET_ZC_NPCACK_MAPMOVE: _DecodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         try decoder.decodePacketType(Self.self)
 
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         x = try decoder.decode(UInt16.self)
         y = try decoder.decode(UInt16.self)
     }

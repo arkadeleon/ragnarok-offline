@@ -21,7 +21,7 @@ public struct GND: FileFormat {
     public var water: GND.Water?
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decode(String.self, lengthOfBytes: 4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .ascii)
         guard header == "GRGN" else {
             throw FileFormatError.invalidHeader(header, expected: "GRGN")
         }

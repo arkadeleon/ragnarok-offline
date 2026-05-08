@@ -31,7 +31,7 @@ public struct FixedLengthString: Sendable {
         }
     }
 
-    public init(lengthOfBytes: Int, encoding: String.Encoding = .ascii) {
+    public init(lengthOfBytes: Int, encoding: String.Encoding) {
         self.lengthOfBytes = lengthOfBytes
         self.encoding = encoding
     }

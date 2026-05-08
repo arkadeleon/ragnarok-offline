@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 @available(*, deprecated, message: "Use generated struct instead.")
 public struct _CharInfo: BinaryDecodable, Sendable {
@@ -157,7 +158,7 @@ public struct _CharInfo: BinaryDecodable, Sendable {
         accessory3 = try decoder.decode(UInt16.self)
         headPalette = try decoder.decode(UInt16.self)
         bodyPalette = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         str = try decoder.decode(UInt8.self)
         agi = try decoder.decode(UInt8.self)
         vit = try decoder.decode(UInt8.self)
@@ -170,7 +171,7 @@ public struct _CharInfo: BinaryDecodable, Sendable {
 
         if (PACKET_VERSION >= 20100720 && PACKET_VERSION <= 20100727) || 
             PACKET_VERSION >= 20100803 {
-            mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+            mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         } else {
             mapName = ""
         }

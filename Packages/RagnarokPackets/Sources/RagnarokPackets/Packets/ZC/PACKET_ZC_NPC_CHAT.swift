@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 public let HEADER_ZC_NPC_CHAT: Int16 = 0x2c1
 
@@ -21,6 +22,6 @@ public struct PACKET_ZC_NPC_CHAT: DecodablePacket {
         packetLength = try decoder.decode(Int16.self)
         accountID = try decoder.decode(UInt32.self)
         color = try decoder.decode(UInt32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: Int(packetLength - 12))
+        message = try decoder.decode(String.self, lengthOfBytes: Int(packetLength - 12), encoding: .utf8)
     }
 }

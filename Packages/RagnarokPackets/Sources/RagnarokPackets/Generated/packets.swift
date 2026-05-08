@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 public let HEADER_CA_LOGIN: Int16 = 0x64
 public let HEADER_CH_SELECT_CHAR: Int16 = 0x66
@@ -629,9 +630,9 @@ public struct PACKET_CA_LOGIN: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var username: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var password: String
     public var clienttype: UInt8 = 0
     public init() {
@@ -639,15 +640,15 @@ public struct PACKET_CA_LOGIN: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         version = try decoder.decode(UInt32.self)
-        username = try decoder.decode(String.self, lengthOfBytes: 24)
-        password = try decoder.decode(String.self, lengthOfBytes: 24)
+        username = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        password = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         clienttype = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encode(username, lengthOfBytes: 24)
-        try encoder.encode(password, lengthOfBytes: 24)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(password, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(clienttype)
     }
 }
@@ -675,7 +676,7 @@ public struct PACKET_CH_MAKE_CHAR: CodablePacket {
         (2 + 24 + 1 + 2 + 2 + 4 + 1)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var slot: UInt8 = 0
     public var hair_color: UInt16 = 0
@@ -686,7 +687,7 @@ public struct PACKET_CH_MAKE_CHAR: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         slot = try decoder.decode(UInt8.self)
         hair_color = try decoder.decode(UInt16.self)
         hair_style = try decoder.decode(UInt16.self)
@@ -695,7 +696,7 @@ public struct PACKET_CH_MAKE_CHAR: CodablePacket {
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(slot)
         try encoder.encode(hair_color)
         try encoder.encode(hair_style)
@@ -710,19 +711,19 @@ public struct PACKET_CH_DELETE_CHAR: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 50)
+    @FixedLengthString(lengthOfBytes: 50, encoding: .utf8)
     public var key: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         CID = try decoder.decode(UInt32.self)
-        key = try decoder.decode(String.self, lengthOfBytes: 50)
+        key = try decoder.decode(String.self, lengthOfBytes: 50, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(CID)
-        try encoder.encode(key, lengthOfBytes: 50)
+        try encoder.encode(key, lengthOfBytes: 50, encoding: .utf8)
     }
 }
 
@@ -732,7 +733,7 @@ public struct PACKET_AC_ACCEPT_LOGIN_sub: BinaryDecodable, BinaryEncodable, Send
     }
     public var ip: UInt32 = 0
     public var port: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 20)
+    @FixedLengthString(lengthOfBytes: 20, encoding: .utf8)
     public var name: String
     public var users: UInt16 = 0
     public var type: UInt16 = 0
@@ -744,7 +745,7 @@ public struct PACKET_AC_ACCEPT_LOGIN_sub: BinaryDecodable, BinaryEncodable, Send
     public init(from decoder: BinaryDecoder) throws {
         ip = try decoder.decode(UInt32.self)
         port = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 20)
+        name = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
         users = try decoder.decode(UInt16.self)
         type = try decoder.decode(UInt16.self)
         new_ = try decoder.decode(UInt16.self)
@@ -753,7 +754,7 @@ public struct PACKET_AC_ACCEPT_LOGIN_sub: BinaryDecodable, BinaryEncodable, Send
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(ip)
         try encoder.encode(port)
-        try encoder.encode(name, lengthOfBytes: 20)
+        try encoder.encode(name, lengthOfBytes: 20, encoding: .utf8)
         try encoder.encode(users)
         try encoder.encode(type)
         try encoder.encode(new_)
@@ -771,10 +772,10 @@ public struct PACKET_AC_ACCEPT_LOGIN: CodablePacket {
     public var AID: UInt32 = 0
     public var login_id2: UInt32 = 0
     public var last_ip: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 26)
+    @FixedLengthString(lengthOfBytes: 26, encoding: .utf8)
     public var last_login: String
     public var sex: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 17)
+    @FixedLengthString(lengthOfBytes: 17, encoding: .utf8)
     public var token: String
     public var char_servers: [PACKET_AC_ACCEPT_LOGIN_sub] = []
     public init() {
@@ -786,9 +787,9 @@ public struct PACKET_AC_ACCEPT_LOGIN: CodablePacket {
         AID = try decoder.decode(UInt32.self)
         login_id2 = try decoder.decode(UInt32.self)
         last_ip = try decoder.decode(UInt32.self)
-        last_login = try decoder.decode(String.self, lengthOfBytes: 26)
+        last_login = try decoder.decode(String.self, lengthOfBytes: 26, encoding: .utf8)
         sex = try decoder.decode(UInt8.self)
-        token = try decoder.decode(String.self, lengthOfBytes: 17)
+        token = try decoder.decode(String.self, lengthOfBytes: 17, encoding: .utf8)
         char_servers = try decoder.decode([PACKET_AC_ACCEPT_LOGIN_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 4 + 4 + 4 + 26 + 1 + 17)) / PACKET_AC_ACCEPT_LOGIN_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -798,9 +799,9 @@ public struct PACKET_AC_ACCEPT_LOGIN: CodablePacket {
         try encoder.encode(AID)
         try encoder.encode(login_id2)
         try encoder.encode(last_ip)
-        try encoder.encode(last_login, lengthOfBytes: 26)
+        try encoder.encode(last_login, lengthOfBytes: 26, encoding: .utf8)
         try encoder.encode(sex)
-        try encoder.encode(token, lengthOfBytes: 17)
+        try encoder.encode(token, lengthOfBytes: 17, encoding: .utf8)
         try encoder.encode(char_servers)
     }
 }
@@ -811,19 +812,19 @@ public struct PACKET_AC_REFUSE_LOGIN: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var error: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 20)
+    @FixedLengthString(lengthOfBytes: 20, encoding: .utf8)
     public var unblock_time: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         error = try decoder.decode(UInt32.self)
-        unblock_time = try decoder.decode(String.self, lengthOfBytes: 20)
+        unblock_time = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(error)
-        try encoder.encode(unblock_time, lengthOfBytes: 20)
+        try encoder.encode(unblock_time, lengthOfBytes: 20, encoding: .utf8)
     }
 }
 
@@ -836,7 +837,7 @@ public struct PACKET_HC_ACCEPT_ENTER: CodablePacket {
     public var total: UInt8 = 0
     public var premium_start: UInt8 = 0
     public var premium_end: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 20)
+    @FixedLengthString(lengthOfBytes: 20, encoding: .utf8)
     public var `extension`: String
     public var characters: [CHARACTER_INFO] = []
     public init() {
@@ -847,7 +848,7 @@ public struct PACKET_HC_ACCEPT_ENTER: CodablePacket {
         total = try decoder.decode(UInt8.self)
         premium_start = try decoder.decode(UInt8.self)
         premium_end = try decoder.decode(UInt8.self)
-        `extension` = try decoder.decode(String.self, lengthOfBytes: 20)
+        `extension` = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
         characters = try decoder.decode([CHARACTER_INFO].self, count: (Int(packetLength) - (2 + 2 + 1 + 1 + 1 + 20)) / CHARACTER_INFO.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -856,7 +857,7 @@ public struct PACKET_HC_ACCEPT_ENTER: CodablePacket {
         try encoder.encode(total)
         try encoder.encode(premium_start)
         try encoder.encode(premium_end)
-        try encoder.encode(`extension`, lengthOfBytes: 20)
+        try encoder.encode(`extension`, lengthOfBytes: 20, encoding: .utf8)
         try encoder.encode(characters)
     }
 }
@@ -954,29 +955,29 @@ public struct PACKET_HC_NOTIFY_ZONESVR: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapname: String
     public var ip: UInt32 = 0
     public var port: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 128)
+    @FixedLengthString(lengthOfBytes: 128, encoding: .utf8)
     public var domain: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         CID = try decoder.decode(UInt32.self)
-        mapname = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapname = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         ip = try decoder.decode(UInt32.self)
         port = try decoder.decode(UInt16.self)
-        domain = try decoder.decode(String.self, lengthOfBytes: 128)
+        domain = try decoder.decode(String.self, lengthOfBytes: 128, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(CID)
-        try encoder.encode(mapname, lengthOfBytes: 16)
+        try encoder.encode(mapname, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(ip)
         try encoder.encode(port)
-        try encoder.encode(domain, lengthOfBytes: 128)
+        try encoder.encode(domain, lengthOfBytes: 128, encoding: .utf8)
     }
 }
 
@@ -1043,12 +1044,12 @@ public struct PACKET_AC_ACK_HASH: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        salt = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+        salt = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(salt)
+        try encoder.encode(salt, encoding: .utf8)
     }
 }
 
@@ -1058,7 +1059,7 @@ public struct PACKET_CA_LOGIN2: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var username: String
     @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
@@ -1068,14 +1069,14 @@ public struct PACKET_CA_LOGIN2: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         version = try decoder.decode(UInt32.self)
-        username = try decoder.decode(String.self, lengthOfBytes: 24)
+        username = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         passwordMD5 = try decoder.decode([UInt8].self, count: 16)
         clienttype = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encode(username, lengthOfBytes: 24)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(passwordMD5)
         try encoder.encode(clienttype)
     }
@@ -1087,7 +1088,7 @@ public struct PACKET_CA_LOGIN3: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var username: String
     @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
@@ -1098,7 +1099,7 @@ public struct PACKET_CA_LOGIN3: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         version = try decoder.decode(UInt32.self)
-        username = try decoder.decode(String.self, lengthOfBytes: 24)
+        username = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         passwordMD5 = try decoder.decode([UInt8].self, count: 16)
         clienttype = try decoder.decode(UInt8.self)
         clientinfo = try decoder.decode(UInt8.self)
@@ -1106,7 +1107,7 @@ public struct PACKET_CA_LOGIN3: CodablePacket {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encode(username, lengthOfBytes: 24)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(passwordMD5)
         try encoder.encode(clienttype)
         try encoder.encode(clientinfo)
@@ -1118,17 +1119,17 @@ public struct PACKET_CA_CONNECT_INFO_CHANGED: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -1137,17 +1138,17 @@ public struct PACKET_CA_EXE_HASHCHECK: CodablePacket {
         (2 + 16)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var hash: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        hash = try decoder.decode(String.self, lengthOfBytes: 16)
+        hash = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(hash, lengthOfBytes: 16)
+        try encoder.encode(hash, lengthOfBytes: 16, encoding: .utf8)
     }
 }
 
@@ -1156,17 +1157,17 @@ public struct PACKET_HC_BLOCK_CHARACTER_sub: BinaryDecodable, BinaryEncodable, S
         (4 + 20)
     }
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 20)
+    @FixedLengthString(lengthOfBytes: 20, encoding: .utf8)
     public var unblock_time: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         CID = try decoder.decode(UInt32.self)
-        unblock_time = try decoder.decode(String.self, lengthOfBytes: 20)
+        unblock_time = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(CID)
-        try encoder.encode(unblock_time, lengthOfBytes: 20)
+        try encoder.encode(unblock_time, lengthOfBytes: 20, encoding: .utf8)
     }
 }
 
@@ -1197,34 +1198,34 @@ public struct PACKET_CA_LOGIN_PCBANG: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var username: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var password: String
     public var clienttype: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var ip: String
-    @FixedLengthString(lengthOfBytes: 13)
+    @FixedLengthString(lengthOfBytes: 13, encoding: .utf8)
     public var mac: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         version = try decoder.decode(UInt32.self)
-        username = try decoder.decode(String.self, lengthOfBytes: 24)
-        password = try decoder.decode(String.self, lengthOfBytes: 24)
+        username = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        password = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         clienttype = try decoder.decode(UInt8.self)
-        ip = try decoder.decode(String.self, lengthOfBytes: 16)
-        mac = try decoder.decode(String.self, lengthOfBytes: 13)
+        ip = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
+        mac = try decoder.decode(String.self, lengthOfBytes: 13, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encode(username, lengthOfBytes: 24)
-        try encoder.encode(password, lengthOfBytes: 24)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(password, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(clienttype)
-        try encoder.encode(ip, lengthOfBytes: 16)
-        try encoder.encode(mac, lengthOfBytes: 13)
+        try encoder.encode(ip, lengthOfBytes: 16, encoding: .utf8)
+        try encoder.encode(mac, lengthOfBytes: 13, encoding: .utf8)
     }
 }
 
@@ -1234,30 +1235,30 @@ public struct PACKET_CA_LOGIN4: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var username: String
     @FixedSizeArray(size: 16, initialValue: 0)
     public var passwordMD5: [UInt8]
     public var clienttype: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 13)
+    @FixedLengthString(lengthOfBytes: 13, encoding: .utf8)
     public var mac: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         version = try decoder.decode(UInt32.self)
-        username = try decoder.decode(String.self, lengthOfBytes: 24)
+        username = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         passwordMD5 = try decoder.decode([UInt8].self, count: 16)
         clienttype = try decoder.decode(UInt8.self)
-        mac = try decoder.decode(String.self, lengthOfBytes: 13)
+        mac = try decoder.decode(String.self, lengthOfBytes: 13, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encode(username, lengthOfBytes: 24)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(passwordMD5)
         try encoder.encode(clienttype)
-        try encoder.encode(mac, lengthOfBytes: 13)
+        try encoder.encode(mac, lengthOfBytes: 13, encoding: .utf8)
     }
 }
 
@@ -1268,7 +1269,7 @@ public struct PACKET_CH_REQ_IS_VALID_CHARNAME: CodablePacket {
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var new_name: String
     public init() {
     }
@@ -1276,13 +1277,13 @@ public struct PACKET_CH_REQ_IS_VALID_CHARNAME: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
         CID = try decoder.decode(UInt32.self)
-        new_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        new_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(AID)
         try encoder.encode(CID)
-        try encoder.encode(new_name, lengthOfBytes: 24)
+        try encoder.encode(new_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -1310,19 +1311,19 @@ public struct PACKET_CH_REQ_CHANGE_CHARNAME: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var new_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         CID = try decoder.decode(UInt32.self)
-        new_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        new_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(CID)
-        try encoder.encode(new_name, lengthOfBytes: 24)
+        try encoder.encode(new_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -1350,14 +1351,14 @@ public struct PACKET_CA_LOGIN_CHANNEL: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var version: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var username: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var password: String
     public var clienttype: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var ip: String
-    @FixedLengthString(lengthOfBytes: 13)
+    @FixedLengthString(lengthOfBytes: 13, encoding: .utf8)
     public var mac: String
     public var is_gravity: UInt8 = 0
     public init() {
@@ -1365,21 +1366,21 @@ public struct PACKET_CA_LOGIN_CHANNEL: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         version = try decoder.decode(UInt32.self)
-        username = try decoder.decode(String.self, lengthOfBytes: 24)
-        password = try decoder.decode(String.self, lengthOfBytes: 24)
+        username = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        password = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         clienttype = try decoder.decode(UInt8.self)
-        ip = try decoder.decode(String.self, lengthOfBytes: 16)
-        mac = try decoder.decode(String.self, lengthOfBytes: 13)
+        ip = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
+        mac = try decoder.decode(String.self, lengthOfBytes: 13, encoding: .utf8)
         is_gravity = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encode(username, lengthOfBytes: 24)
-        try encoder.encode(password, lengthOfBytes: 24)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(password, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(clienttype)
-        try encoder.encode(ip, lengthOfBytes: 16)
-        try encoder.encode(mac, lengthOfBytes: 13)
+        try encoder.encode(ip, lengthOfBytes: 16, encoding: .utf8)
+        try encoder.encode(mac, lengthOfBytes: 13, encoding: .utf8)
         try encoder.encode(is_gravity)
     }
 }
@@ -1392,13 +1393,13 @@ public struct PACKET_CA_SSO_LOGIN_REQ: CodablePacket {
     public var packetLength: Int16 = 0
     public var version: UInt32 = 0
     public var clienttype: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var username: String
-    @FixedLengthString(lengthOfBytes: 27)
+    @FixedLengthString(lengthOfBytes: 27, encoding: .utf8)
     public var password: String
-    @FixedLengthString(lengthOfBytes: 17)
+    @FixedLengthString(lengthOfBytes: 17, encoding: .utf8)
     public var mac: String
-    @FixedLengthString(lengthOfBytes: 15)
+    @FixedLengthString(lengthOfBytes: 15, encoding: .utf8)
     public var ip: String
     public var token: String = ""
     public init() {
@@ -1408,22 +1409,22 @@ public struct PACKET_CA_SSO_LOGIN_REQ: CodablePacket {
         packetLength = try decoder.decode(Int16.self)
         version = try decoder.decode(UInt32.self)
         clienttype = try decoder.decode(UInt8.self)
-        username = try decoder.decode(String.self, lengthOfBytes: 24)
-        password = try decoder.decode(String.self, lengthOfBytes: 27)
-        mac = try decoder.decode(String.self, lengthOfBytes: 17)
-        ip = try decoder.decode(String.self, lengthOfBytes: 15)
-        token = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 1 + 24 + 27 + 17 + 15)))
+        username = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        password = try decoder.decode(String.self, lengthOfBytes: 27, encoding: .utf8)
+        mac = try decoder.decode(String.self, lengthOfBytes: 17, encoding: .utf8)
+        ip = try decoder.decode(String.self, lengthOfBytes: 15, encoding: .utf8)
+        token = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 1 + 24 + 27 + 17 + 15)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(version)
         try encoder.encode(clienttype)
-        try encoder.encode(username, lengthOfBytes: 24)
-        try encoder.encode(password, lengthOfBytes: 27)
-        try encoder.encode(mac, lengthOfBytes: 17)
-        try encoder.encode(ip, lengthOfBytes: 15)
-        try encoder.encode(token)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(password, lengthOfBytes: 27, encoding: .utf8)
+        try encoder.encode(mac, lengthOfBytes: 17, encoding: .utf8)
+        try encoder.encode(ip, lengthOfBytes: 15, encoding: .utf8)
+        try encoder.encode(token, encoding: .utf8)
     }
 }
 
@@ -1475,19 +1476,19 @@ public struct PACKET_CH_DELETE_CHAR3: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 6)
+    @FixedLengthString(lengthOfBytes: 6, encoding: .utf8)
     public var birthdate: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         CID = try decoder.decode(UInt32.self)
-        birthdate = try decoder.decode(String.self, lengthOfBytes: 6)
+        birthdate = try decoder.decode(String.self, lengthOfBytes: 6, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(CID)
-        try encoder.encode(birthdate, lengthOfBytes: 6)
+        try encoder.encode(birthdate, lengthOfBytes: 6, encoding: .utf8)
     }
 }
 
@@ -1562,7 +1563,7 @@ public struct PACKET_HC_ACCEPT_ENTER2: CodablePacket {
     public var billing: UInt8 = 0
     public var producible: UInt8 = 0
     public var total: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 20)
+    @FixedLengthString(lengthOfBytes: 20, encoding: .utf8)
     public var `extension`: String
     public init() {
     }
@@ -1574,7 +1575,7 @@ public struct PACKET_HC_ACCEPT_ENTER2: CodablePacket {
         billing = try decoder.decode(UInt8.self)
         producible = try decoder.decode(UInt8.self)
         total = try decoder.decode(UInt8.self)
-        `extension` = try decoder.decode(String.self, lengthOfBytes: 20)
+        `extension` = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -1584,7 +1585,7 @@ public struct PACKET_HC_ACCEPT_ENTER2: CodablePacket {
         try encoder.encode(billing)
         try encoder.encode(producible)
         try encoder.encode(total)
-        try encoder.encode(`extension`, lengthOfBytes: 20)
+        try encoder.encode(`extension`, lengthOfBytes: 20, encoding: .utf8)
     }
 }
 
@@ -1593,17 +1594,17 @@ public struct PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME_sub: BinaryDecodable, BinaryEn
         (4 + 16)
     }
     public var status: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var map: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         status = try decoder.decode(Int32.self)
-        map = try decoder.decode(String.self, lengthOfBytes: 16)
+        map = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(status)
-        try encoder.encode(map, lengthOfBytes: 16)
+        try encoder.encode(map, lengthOfBytes: 16, encoding: .utf8)
     }
 }
 
@@ -1655,19 +1656,19 @@ public struct PACKET_CH_SECOND_PASSWD_ACK: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var pin: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
-        pin = try decoder.decode(String.self, lengthOfBytes: 4)
+        pin = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(AID)
-        try encoder.encode(pin, lengthOfBytes: 4)
+        try encoder.encode(pin, lengthOfBytes: 4, encoding: .utf8)
     }
 }
 
@@ -1701,19 +1702,19 @@ public struct PACKET_CH_MAKE_SECOND_PASSWD: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var pin: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
-        pin = try decoder.decode(String.self, lengthOfBytes: 4)
+        pin = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(AID)
-        try encoder.encode(pin, lengthOfBytes: 4)
+        try encoder.encode(pin, lengthOfBytes: 4, encoding: .utf8)
     }
 }
 
@@ -1723,23 +1724,23 @@ public struct PACKET_CH_EDIT_SECOND_PASSWD: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var old_pin: String
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var new_pin: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
-        old_pin = try decoder.decode(String.self, lengthOfBytes: 4)
-        new_pin = try decoder.decode(String.self, lengthOfBytes: 4)
+        old_pin = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
+        new_pin = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(AID)
-        try encoder.encode(old_pin, lengthOfBytes: 4)
-        try encoder.encode(new_pin, lengthOfBytes: 4)
+        try encoder.encode(old_pin, lengthOfBytes: 4, encoding: .utf8)
+        try encoder.encode(new_pin, lengthOfBytes: 4, encoding: .utf8)
     }
 }
 
@@ -1889,9 +1890,9 @@ public struct PACKET_TC_RESULT: CodablePacket {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var type: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 20)
+    @FixedLengthString(lengthOfBytes: 20, encoding: .utf8)
     public var unknown1: String
-    @FixedLengthString(lengthOfBytes: 6)
+    @FixedLengthString(lengthOfBytes: 6, encoding: .utf8)
     public var unknown2: String
     public init() {
     }
@@ -1899,15 +1900,15 @@ public struct PACKET_TC_RESULT: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         type = try decoder.decode(UInt32.self)
-        unknown1 = try decoder.decode(String.self, lengthOfBytes: 20)
-        unknown2 = try decoder.decode(String.self, lengthOfBytes: 6)
+        unknown1 = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
+        unknown2 = try decoder.decode(String.self, lengthOfBytes: 6, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(type)
-        try encoder.encode(unknown1, lengthOfBytes: 20)
-        try encoder.encode(unknown2, lengthOfBytes: 6)
+        try encoder.encode(unknown1, lengthOfBytes: 20, encoding: .utf8)
+        try encoder.encode(unknown2, lengthOfBytes: 6, encoding: .utf8)
     }
 }
 
@@ -2325,7 +2326,7 @@ public struct packet_spawn_unit: CodablePacket {
     public var HP: Int32 = 0
     public var isBoss: UInt8 = 0
     public var body: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
@@ -2365,7 +2366,7 @@ public struct packet_spawn_unit: CodablePacket {
         HP = try decoder.decode(Int32.self)
         isBoss = try decoder.decode(UInt8.self)
         body = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -2403,7 +2404,7 @@ public struct packet_spawn_unit: CodablePacket {
         try encoder.encode(HP)
         try encoder.encode(isBoss)
         try encoder.encode(body)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2448,7 +2449,7 @@ public struct packet_unit_walking: CodablePacket {
     public var HP: Int32 = 0
     public var isBoss: UInt8 = 0
     public var body: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
@@ -2489,7 +2490,7 @@ public struct packet_unit_walking: CodablePacket {
         HP = try decoder.decode(Int32.self)
         isBoss = try decoder.decode(UInt8.self)
         body = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -2528,7 +2529,7 @@ public struct packet_unit_walking: CodablePacket {
         try encoder.encode(HP)
         try encoder.encode(isBoss)
         try encoder.encode(body)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2573,7 +2574,7 @@ public struct packet_idle_unit: CodablePacket {
     public var HP: Int32 = 0
     public var isBoss: UInt8 = 0
     public var body: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
@@ -2614,7 +2615,7 @@ public struct packet_idle_unit: CodablePacket {
         HP = try decoder.decode(Int32.self)
         isBoss = try decoder.decode(UInt8.self)
         body = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -2653,7 +2654,7 @@ public struct packet_idle_unit: CodablePacket {
         try encoder.encode(HP)
         try encoder.encode(isBoss)
         try encoder.encode(body)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2783,19 +2784,19 @@ public struct packet_bgqueue_ack: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         type = try decoder.decode(UInt8.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(type)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2805,19 +2806,19 @@ public struct packet_bgqueue_notice_delete: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         type = try decoder.decode(UInt8.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(type)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2827,19 +2828,19 @@ public struct packet_bgqueue_register: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var type: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         type = try decoder.decode(Int16.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(type)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2848,19 +2849,19 @@ public struct packet_bgqueue_update_info: CodablePacket {
         (2 + 24 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
     public var position: Int32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         position = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(position)
     }
 }
@@ -2870,17 +2871,17 @@ public struct packet_bgqueue_checkstate: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2889,17 +2890,17 @@ public struct packet_bgqueue_revoke_req: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2909,23 +2910,23 @@ public struct packet_bgqueue_battlebegin_ack: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var result: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var game_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         result = try decoder.decode(UInt8.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
-        game_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        game_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(result)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
-        try encoder.encode(game_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(game_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -2934,19 +2935,19 @@ public struct packet_bgqueue_notify_entry: CodablePacket {
         (2 + 24 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var position: Int32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         position = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(position)
     }
 }
@@ -2956,21 +2957,21 @@ public struct packet_bgqueue_battlebegins: CodablePacket {
         (2 + 24 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bg_name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var game_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        bg_name = try decoder.decode(String.self, lengthOfBytes: 24)
-        game_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        bg_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        game_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(bg_name, lengthOfBytes: 24)
-        try encoder.encode(game_name, lengthOfBytes: 24)
+        try encoder.encode(bg_name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(game_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -3001,7 +3002,7 @@ public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: CodablePacket {
     public var type: UInt8 = 0
     public var ItemID: UInt32 = 0
     public var len: Int8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var Name: String
     public var boxItemID_len: Int8 = 0
     public var BoxItemID: UInt32 = 0
@@ -3013,7 +3014,7 @@ public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: CodablePacket {
         type = try decoder.decode(UInt8.self)
         ItemID = try decoder.decode(UInt32.self)
         len = try decoder.decode(Int8.self)
-        Name = try decoder.decode(String.self, lengthOfBytes: 24)
+        Name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         boxItemID_len = try decoder.decode(Int8.self)
         BoxItemID = try decoder.decode(UInt32.self)
     }
@@ -3023,7 +3024,7 @@ public struct PACKET_ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN_item: CodablePacket {
         try encoder.encode(type)
         try encoder.encode(ItemID)
         try encoder.encode(len)
-        try encoder.encode(Name, lengthOfBytes: 24)
+        try encoder.encode(Name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(boxItemID_len)
         try encoder.encode(BoxItemID)
     }
@@ -3038,10 +3039,10 @@ public struct packet_item_drop_announce: CodablePacket {
     public var type: UInt8 = 0
     public var ItemID: UInt32 = 0
     public var len: Int8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var Name: String
     public var monsterNameLen: Int8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var monsterName: String
     public init() {
     }
@@ -3051,9 +3052,9 @@ public struct packet_item_drop_announce: CodablePacket {
         type = try decoder.decode(UInt8.self)
         ItemID = try decoder.decode(UInt32.self)
         len = try decoder.decode(Int8.self)
-        Name = try decoder.decode(String.self, lengthOfBytes: 24)
+        Name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         monsterNameLen = try decoder.decode(Int8.self)
-        monsterName = try decoder.decode(String.self, lengthOfBytes: 24)
+        monsterName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -3061,9 +3062,9 @@ public struct packet_item_drop_announce: CodablePacket {
         try encoder.encode(type)
         try encoder.encode(ItemID)
         try encoder.encode(len)
-        try encoder.encode(Name, lengthOfBytes: 24)
+        try encoder.encode(Name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(monsterNameLen)
-        try encoder.encode(monsterName, lengthOfBytes: 24)
+        try encoder.encode(monsterName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -3439,13 +3440,13 @@ public struct PACKET_ZC_INVENTORY_START: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         invType = try decoder.decode(UInt8.self)
-        name = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 1)))
+        name = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 1)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(invType)
-        try encoder.encode(name)
+        try encoder.encode(name, encoding: .utf8)
     }
 }
 
@@ -3572,7 +3573,7 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var characterName: String
     public var job: Int16 = 0
     public var head: Int16 = 0
@@ -3590,7 +3591,7 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        characterName = try decoder.decode(String.self, lengthOfBytes: 24)
+        characterName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         job = try decoder.decode(Int16.self)
         head = try decoder.decode(Int16.self)
         accessory = try decoder.decode(Int16.self)
@@ -3606,7 +3607,7 @@ public struct PACKET_ZC_EQUIPWIN_MICROSCOPE: CodablePacket {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(characterName, lengthOfBytes: 24)
+        try encoder.encode(characterName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(job)
         try encoder.encode(head)
         try encoder.encode(accessory)
@@ -3693,7 +3694,7 @@ public struct packet_graffiti_entry: CodablePacket {
     public var job: UInt8 = 0
     public var isVisible: UInt8 = 0
     public var isContens: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 80)
+    @FixedLengthString(lengthOfBytes: 80, encoding: .utf8)
     public var msg: String
     public init() {
     }
@@ -3706,7 +3707,7 @@ public struct packet_graffiti_entry: CodablePacket {
         job = try decoder.decode(UInt8.self)
         isVisible = try decoder.decode(UInt8.self)
         isContens = try decoder.decode(UInt8.self)
-        msg = try decoder.decode(String.self, lengthOfBytes: 80)
+        msg = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -3717,7 +3718,7 @@ public struct packet_graffiti_entry: CodablePacket {
         try encoder.encode(job)
         try encoder.encode(isVisible)
         try encoder.encode(isContens)
-        try encoder.encode(msg, lengthOfBytes: 80)
+        try encoder.encode(msg, lengthOfBytes: 80, encoding: .utf8)
     }
 }
 
@@ -3771,17 +3772,17 @@ public struct packet_gm_monster_item: CodablePacket {
         (2 + 100)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 100)
+    @FixedLengthString(lengthOfBytes: 100, encoding: .utf8)
     public var str: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        str = try decoder.decode(String.self, lengthOfBytes: 100)
+        str = try decoder.decode(String.self, lengthOfBytes: 100, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(str, lengthOfBytes: 100)
+        try encoder.encode(str, lengthOfBytes: 100, encoding: .utf8)
     }
 }
 
@@ -4038,7 +4039,7 @@ public struct packet_mission_info_sub: BinaryDecodable, BinaryEncodable, Sendabl
     public var levelMax: Int16 = 0
     public var huntCount: Int16 = 0
     public var maxCount: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var mobName: String
     public init() {
     }
@@ -4051,7 +4052,7 @@ public struct packet_mission_info_sub: BinaryDecodable, BinaryEncodable, Sendabl
         levelMax = try decoder.decode(Int16.self)
         huntCount = try decoder.decode(Int16.self)
         maxCount = try decoder.decode(Int16.self)
-        mobName = try decoder.decode(String.self, lengthOfBytes: 24)
+        mobName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(huntIdent)
@@ -4062,7 +4063,7 @@ public struct packet_mission_info_sub: BinaryDecodable, BinaryEncodable, Sendabl
         try encoder.encode(levelMax)
         try encoder.encode(huntCount)
         try encoder.encode(maxCount)
-        try encoder.encode(mobName, lengthOfBytes: 24)
+        try encoder.encode(mobName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -4099,12 +4100,12 @@ public struct packet_chat_message: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -4114,7 +4115,7 @@ public struct packet_whisper_message: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var message: String = ""
     public init() {
@@ -4122,14 +4123,14 @@ public struct packet_whisper_message: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 24)))
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 24)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(name, lengthOfBytes: 24)
-        try encoder.encode(message)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -4217,17 +4218,17 @@ public struct PACKET_CZ_REQ_OPEN_WRITE_MAIL: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var receiveName: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        receiveName = try decoder.decode(String.self, lengthOfBytes: 24)
+        receiveName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(receiveName, lengthOfBytes: 24)
+        try encoder.encode(receiveName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -4236,19 +4237,19 @@ public struct PACKET_ZC_ACK_OPEN_WRITE_MAIL: CodablePacket {
         (2 + 24 + 1)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var receiveName: String
     public var result: Int8 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        receiveName = try decoder.decode(String.self, lengthOfBytes: 24)
+        receiveName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         result = try decoder.decode(Int8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(receiveName, lengthOfBytes: 24)
+        try encoder.encode(receiveName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(result)
     }
 }
@@ -4307,9 +4308,9 @@ public struct PACKET_CZ_SEND_MAIL: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var receiveName: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var senderName: String
     public var zeny: Int64 = 0
     public var Titlelength: Int16 = 0
@@ -4321,24 +4322,24 @@ public struct PACKET_CZ_SEND_MAIL: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        receiveName = try decoder.decode(String.self, lengthOfBytes: 24)
-        senderName = try decoder.decode(String.self, lengthOfBytes: 24)
+        receiveName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        senderName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         zeny = try decoder.decode(Int64.self)
         Titlelength = try decoder.decode(Int16.self)
         TextcontentsLength = try decoder.decode(Int16.self)
         receiver_char_id = try decoder.decode(Int32.self)
-        string = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 24 + 24 + 8 + 2 + 2 + 4)))
+        string = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 24 + 24 + 8 + 2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(receiveName, lengthOfBytes: 24)
-        try encoder.encode(senderName, lengthOfBytes: 24)
+        try encoder.encode(receiveName, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(senderName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(zeny)
         try encoder.encode(Titlelength)
         try encoder.encode(TextcontentsLength)
         try encoder.encode(receiver_char_id)
-        try encoder.encode(string)
+        try encoder.encode(string, encoding: .utf8)
     }
 }
 
@@ -4365,17 +4366,17 @@ public struct PACKET_CZ_CHECKNAME1: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var Name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        Name = try decoder.decode(String.self, lengthOfBytes: 24)
+        Name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(Name, lengthOfBytes: 24)
+        try encoder.encode(Name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -4384,19 +4385,19 @@ public struct PACKET_CZ_CHECKNAME2: CodablePacket {
         (2 + 24 + 1)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var Name: String
     public var own_char: Int8 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        Name = try decoder.decode(String.self, lengthOfBytes: 24)
+        Name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         own_char = try decoder.decode(Int8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(Name, lengthOfBytes: 24)
+        try encoder.encode(Name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(own_char)
     }
 }
@@ -4409,7 +4410,7 @@ public struct PACKET_ZC_CHECKNAME: CodablePacket {
     public var CharId: Int32 = 0
     public var Class: Int16 = 0
     public var BaseLevel: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var Name: String
     public init() {
     }
@@ -4418,14 +4419,14 @@ public struct PACKET_ZC_CHECKNAME: CodablePacket {
         CharId = try decoder.decode(Int32.self)
         Class = try decoder.decode(Int16.self)
         BaseLevel = try decoder.decode(Int16.self)
-        Name = try decoder.decode(String.self, lengthOfBytes: 24)
+        Name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(CharId)
         try encoder.encode(Class)
         try encoder.encode(BaseLevel)
-        try encoder.encode(Name, lengthOfBytes: 24)
+        try encoder.encode(Name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -4605,7 +4606,7 @@ public struct PACKET_ZC_ACK_READ_RODEX: CodablePacket {
         TextcontentsLength = try decoder.decode(Int16.self)
         zeny = try decoder.decode(Int64.self)
         ItemCnt = try decoder.decode(Int8.self)
-        Textcontent = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 1 + 8 + 2 + 8 + 1)))
+        Textcontent = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 1 + 8 + 2 + 8 + 1)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -4615,7 +4616,7 @@ public struct PACKET_ZC_ACK_READ_RODEX: CodablePacket {
         try encoder.encode(TextcontentsLength)
         try encoder.encode(zeny)
         try encoder.encode(ItemCnt)
-        try encoder.encode(Textcontent)
+        try encoder.encode(Textcontent, encoding: .utf8)
     }
 }
 
@@ -4843,11 +4844,11 @@ public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: CodablePacket {
     public var x: Int16 = 0
     public var y: Int16 = 0
     public var offline: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var partyName: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var playerName: String
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapName: String
     public var sharePickup: Int8 = 0
     public var shareLoot: Int8 = 0
@@ -4863,9 +4864,9 @@ public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: CodablePacket {
         x = try decoder.decode(Int16.self)
         y = try decoder.decode(Int16.self)
         offline = try decoder.decode(UInt8.self)
-        partyName = try decoder.decode(String.self, lengthOfBytes: 24)
-        playerName = try decoder.decode(String.self, lengthOfBytes: 24)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        partyName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        playerName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         sharePickup = try decoder.decode(Int8.self)
         shareLoot = try decoder.decode(Int8.self)
     }
@@ -4879,9 +4880,9 @@ public struct PACKET_ZC_ADD_MEMBER_TO_GROUP: CodablePacket {
         try encoder.encode(x)
         try encoder.encode(y)
         try encoder.encode(offline)
-        try encoder.encode(partyName, lengthOfBytes: 24)
-        try encoder.encode(playerName, lengthOfBytes: 24)
-        try encoder.encode(mapName, lengthOfBytes: 16)
+        try encoder.encode(partyName, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(playerName, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(mapName, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(sharePickup)
         try encoder.encode(shareLoot)
     }
@@ -4893,9 +4894,9 @@ public struct PACKET_ZC_GROUP_LIST_SUB: BinaryDecodable, BinaryEncodable, Sendab
     }
     public var AID: UInt32 = 0
     public var GID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var playerName: String
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapName: String
     public var leader: UInt8 = 0
     public var offline: UInt8 = 0
@@ -4906,8 +4907,8 @@ public struct PACKET_ZC_GROUP_LIST_SUB: BinaryDecodable, BinaryEncodable, Sendab
     public init(from decoder: BinaryDecoder) throws {
         AID = try decoder.decode(UInt32.self)
         GID = try decoder.decode(UInt32.self)
-        playerName = try decoder.decode(String.self, lengthOfBytes: 24)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        playerName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         leader = try decoder.decode(UInt8.self)
         offline = try decoder.decode(UInt8.self)
         class_ = try decoder.decode(Int16.self)
@@ -4916,8 +4917,8 @@ public struct PACKET_ZC_GROUP_LIST_SUB: BinaryDecodable, BinaryEncodable, Sendab
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(AID)
         try encoder.encode(GID)
-        try encoder.encode(playerName, lengthOfBytes: 24)
-        try encoder.encode(mapName, lengthOfBytes: 16)
+        try encoder.encode(playerName, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(mapName, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(leader)
         try encoder.encode(offline)
         try encoder.encode(class_)
@@ -4931,7 +4932,7 @@ public struct PACKET_ZC_GROUP_LIST: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var partyName: String
     public var members: [PACKET_ZC_GROUP_LIST_SUB] = []
     public init() {
@@ -4939,13 +4940,13 @@ public struct PACKET_ZC_GROUP_LIST: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        partyName = try decoder.decode(String.self, lengthOfBytes: 24)
+        partyName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         members = try decoder.decode([PACKET_ZC_GROUP_LIST_SUB].self, count: (Int(packetLength) - (2 + 2 + 24)) / PACKET_ZC_GROUP_LIST_SUB.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(partyName, lengthOfBytes: 24)
+        try encoder.encode(partyName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(members)
     }
 }
@@ -4957,11 +4958,11 @@ public struct PACKET_ZC_CLANINFO: CodablePacket {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var ClanID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var ClanName: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var MasterName: String
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var Map: String
     public var AllyCount: UInt8 = 0
     public var AntagonistCount: UInt8 = 0
@@ -4971,9 +4972,9 @@ public struct PACKET_ZC_CLANINFO: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         ClanID = try decoder.decode(UInt32.self)
-        ClanName = try decoder.decode(String.self, lengthOfBytes: 24)
-        MasterName = try decoder.decode(String.self, lengthOfBytes: 24)
-        Map = try decoder.decode(String.self, lengthOfBytes: 16)
+        ClanName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        MasterName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        Map = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         AllyCount = try decoder.decode(UInt8.self)
         AntagonistCount = try decoder.decode(UInt8.self)
     }
@@ -4981,9 +4982,9 @@ public struct PACKET_ZC_CLANINFO: CodablePacket {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(ClanID)
-        try encoder.encode(ClanName, lengthOfBytes: 24)
-        try encoder.encode(MasterName, lengthOfBytes: 24)
-        try encoder.encode(Map, lengthOfBytes: 16)
+        try encoder.encode(ClanName, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(MasterName, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(Map, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(AllyCount)
         try encoder.encode(AntagonistCount)
     }
@@ -5031,7 +5032,7 @@ public struct PACKET_ZC_NOTIFY_CLAN_CHAT: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var MemberName: String
     public var Message: String = ""
     public init() {
@@ -5039,14 +5040,14 @@ public struct PACKET_ZC_NOTIFY_CLAN_CHAT: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        MemberName = try decoder.decode(String.self, lengthOfBytes: 24)
-        Message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 24)))
+        MemberName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        Message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 24)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(MemberName, lengthOfBytes: 24)
-        try encoder.encode(Message)
+        try encoder.encode(MemberName, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(Message, encoding: .utf8)
     }
 }
 
@@ -5061,7 +5062,7 @@ public struct packet_quest_hunt_sub: BinaryDecodable, BinaryEncodable, Sendable 
     public var levelMin: Int16 = 0
     public var levelMax: Int16 = 0
     public var huntCount: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var mobName: String
     public init() {
     }
@@ -5073,7 +5074,7 @@ public struct packet_quest_hunt_sub: BinaryDecodable, BinaryEncodable, Sendable 
         levelMin = try decoder.decode(Int16.self)
         levelMax = try decoder.decode(Int16.self)
         huntCount = try decoder.decode(Int16.self)
-        mobName = try decoder.decode(String.self, lengthOfBytes: 24)
+        mobName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(huntIdent)
@@ -5083,7 +5084,7 @@ public struct packet_quest_hunt_sub: BinaryDecodable, BinaryEncodable, Sendable 
         try encoder.encode(levelMin)
         try encoder.encode(levelMax)
         try encoder.encode(huntCount)
-        try encoder.encode(mobName, lengthOfBytes: 24)
+        try encoder.encode(mobName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -5230,13 +5231,13 @@ public struct PACKET_ZC_FORMATSTRING_MSG: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         MessageId = try decoder.decode(UInt16.self)
-        MessageString = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2)))
+        MessageString = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(MessageId)
-        try encoder.encode(MessageString)
+        try encoder.encode(MessageString, encoding: .utf8)
     }
 }
 
@@ -5256,14 +5257,14 @@ public struct PACKET_ZC_FORMATSTRING_MSG_COLOR: CodablePacket {
         packetLength = try decoder.decode(Int16.self)
         messageId = try decoder.decode(UInt16.self)
         color = try decoder.decode(UInt32.self)
-        messageString = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 4)))
+        messageString = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(messageId)
         try encoder.encode(color)
-        try encoder.encode(messageString)
+        try encoder.encode(messageString, encoding: .utf8)
     }
 }
 
@@ -5374,19 +5375,19 @@ public struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST: CodablePacket {
         (2 + 16 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapName: String
     public var ItemID: UInt32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         ItemID = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(mapName, lengthOfBytes: 16)
+        try encoder.encode(mapName, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(ItemID)
     }
 }
@@ -5523,19 +5524,19 @@ public struct packet_ZC_REFUSE_LOGIN: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var error_code: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 20)
+    @FixedLengthString(lengthOfBytes: 20, encoding: .utf8)
     public var block_date: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         error_code = try decoder.decode(UInt32.self)
-        block_date = try decoder.decode(String.self, lengthOfBytes: 20)
+        block_date = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(error_code)
-        try encoder.encode(block_date, lengthOfBytes: 20)
+        try encoder.encode(block_date, lengthOfBytes: 20, encoding: .utf8)
     }
 }
 
@@ -5553,13 +5554,13 @@ public struct PACKET_ZC_NOTIFY_CHAT: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         GID = try decoder.decode(UInt32.self)
-        Message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        Message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(GID)
-        try encoder.encode(Message)
+        try encoder.encode(Message, encoding: .utf8)
     }
 }
 
@@ -5575,12 +5576,12 @@ public struct PACKET_ZC_NOTIFY_PLAYERCHAT: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        Message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+        Message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(Message)
+        try encoder.encode(Message, encoding: .utf8)
     }
 }
 
@@ -6097,7 +6098,7 @@ public struct PACKET_ZC_PROPERTY_HOMUN: CodablePacket {
         (2 + 24 + 1 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 2 + 4 + 4 + 4 + 4 + 8 + 8 + 2 + 2)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var flags: UInt8 = 0
     public var level: UInt16 = 0
@@ -6123,7 +6124,7 @@ public struct PACKET_ZC_PROPERTY_HOMUN: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         flags = try decoder.decode(UInt8.self)
         level = try decoder.decode(UInt16.self)
         hunger = try decoder.decode(UInt16.self)
@@ -6147,7 +6148,7 @@ public struct PACKET_ZC_PROPERTY_HOMUN: CodablePacket {
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(flags)
         try encoder.encode(level)
         try encoder.encode(hunger)
@@ -6507,7 +6508,7 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: CodablePacket {
     public var packetLength: Int16 = 0
     public var zenyLimit: UInt32 = 0
     public var result: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 80)
+    @FixedLengthString(lengthOfBytes: 80, encoding: .utf8)
     public var storeName: String
     public var items: [PACKET_CZ_REQ_OPEN_BUYING_STORE_sub] = []
     public init() {
@@ -6517,7 +6518,7 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: CodablePacket {
         packetLength = try decoder.decode(Int16.self)
         zenyLimit = try decoder.decode(UInt32.self)
         result = try decoder.decode(UInt8.self)
-        storeName = try decoder.decode(String.self, lengthOfBytes: 80)
+        storeName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .utf8)
         items = try decoder.decode([PACKET_CZ_REQ_OPEN_BUYING_STORE_sub].self, count: (Int(packetLength) - (2 + 2 + 4 + 1 + 80)) / PACKET_CZ_REQ_OPEN_BUYING_STORE_sub.size)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -6525,7 +6526,7 @@ public struct PACKET_CZ_REQ_OPEN_BUYING_STORE: CodablePacket {
         try encoder.encode(packetLength)
         try encoder.encode(zenyLimit)
         try encoder.encode(result)
-        try encoder.encode(storeName, lengthOfBytes: 80)
+        try encoder.encode(storeName, lengthOfBytes: 80, encoding: .utf8)
         try encoder.encode(items)
     }
 }
@@ -7201,7 +7202,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: BinaryDecodable, BinaryEncoda
     }
     public var storeId: UInt32 = 0
     public var AID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 80)
+    @FixedLengthString(lengthOfBytes: 80, encoding: .utf8)
     public var shopName: String
     public var itemId: UInt32 = 0
     public var itemType: UInt8 = 0
@@ -7217,7 +7218,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: BinaryDecodable, BinaryEncoda
     public init(from decoder: BinaryDecoder) throws {
         storeId = try decoder.decode(UInt32.self)
         AID = try decoder.decode(UInt32.self)
-        shopName = try decoder.decode(String.self, lengthOfBytes: 80)
+        shopName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .utf8)
         itemId = try decoder.decode(UInt32.self)
         itemType = try decoder.decode(UInt8.self)
         price = try decoder.decode(UInt32.self)
@@ -7230,7 +7231,7 @@ public struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub: BinaryDecodable, BinaryEncoda
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(storeId)
         try encoder.encode(AID)
-        try encoder.encode(shopName, lengthOfBytes: 80)
+        try encoder.encode(shopName, lengthOfBytes: 80, encoding: .utf8)
         try encoder.encode(itemId)
         try encoder.encode(itemType)
         try encoder.encode(price)
@@ -7366,19 +7367,19 @@ public struct packet_reqname_ack: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var gid: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         gid = try decoder.decode(Int32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(gid)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -7388,13 +7389,13 @@ public struct PACKET_ZC_ACK_REQNAMEALL: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var gid: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var party_name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var guild_name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var position_name: String
     public var title_id: Int32 = 0
     public init() {
@@ -7402,19 +7403,19 @@ public struct PACKET_ZC_ACK_REQNAMEALL: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         gid = try decoder.decode(Int32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
-        party_name = try decoder.decode(String.self, lengthOfBytes: 24)
-        guild_name = try decoder.decode(String.self, lengthOfBytes: 24)
-        position_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        party_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        guild_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        position_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         title_id = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(gid)
-        try encoder.encode(name, lengthOfBytes: 24)
-        try encoder.encode(party_name, lengthOfBytes: 24)
-        try encoder.encode(guild_name, lengthOfBytes: 24)
-        try encoder.encode(position_name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(party_name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(guild_name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(position_name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(title_id)
     }
 }
@@ -7426,9 +7427,9 @@ public struct PACKET_ZC_ACK_REQNAMEALL_NPC: CodablePacket {
     public var packetType: Int16 = 0
     public var gid: Int32 = 0
     public var groupId: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var title: String
     public init() {
     }
@@ -7436,15 +7437,15 @@ public struct PACKET_ZC_ACK_REQNAMEALL_NPC: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         gid = try decoder.decode(Int32.self)
         groupId = try decoder.decode(Int32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
-        title = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        title = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(gid)
         try encoder.encode(groupId)
-        try encoder.encode(name, lengthOfBytes: 24)
-        try encoder.encode(title, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(title, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -7470,15 +7471,15 @@ public struct PACKET_ZC_WARPLIST_sub: BinaryDecodable, BinaryEncodable, Sendable
     public static var size: Int {
         (16)
     }
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var map: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        map = try decoder.decode(String.self, lengthOfBytes: 16)
+        map = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(map, lengthOfBytes: 16)
+        try encoder.encode(map, lengthOfBytes: 16, encoding: .utf8)
     }
 }
 
@@ -7541,13 +7542,13 @@ public struct PACKET_ZC_GUILD_POSITION: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
-        position = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        position = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(AID)
-        try encoder.encode(position)
+        try encoder.encode(position, encoding: .utf8)
     }
 }
 
@@ -7577,25 +7578,25 @@ public struct PACKET_ZC_ACK_BAN_GUILD1: CodablePacket {
         (2 + 24 + 40 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var reason: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var account_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
-        reason = try decoder.decode(String.self, lengthOfBytes: 40)
-        account_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        reason = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
+        account_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
-        try encoder.encode(reason, lengthOfBytes: 40)
-        try encoder.encode(account_name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(reason, lengthOfBytes: 40, encoding: .utf8)
+        try encoder.encode(account_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -7604,21 +7605,21 @@ public struct PACKET_ZC_ACK_BAN_GUILD2: CodablePacket {
         (2 + 24 + 40)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var reason: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
-        reason = try decoder.decode(String.self, lengthOfBytes: 40)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        reason = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
-        try encoder.encode(reason, lengthOfBytes: 40)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(reason, lengthOfBytes: 40, encoding: .utf8)
     }
 }
 
@@ -7627,19 +7628,19 @@ public struct PACKET_ZC_ACK_BAN_GUILD3: CodablePacket {
         (2 + 40 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var reason: String
     public var GID: UInt32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        reason = try decoder.decode(String.self, lengthOfBytes: 40)
+        reason = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
         GID = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(reason, lengthOfBytes: 40)
+        try encoder.encode(reason, lengthOfBytes: 40, encoding: .utf8)
         try encoder.encode(GID)
     }
 }
@@ -7649,21 +7650,21 @@ public struct PACKET_ZC_ACK_LEAVE_GUILD1: CodablePacket {
         (2 + 24 + 40)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var reason: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
-        reason = try decoder.decode(String.self, lengthOfBytes: 40)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        reason = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
-        try encoder.encode(reason, lengthOfBytes: 40)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(reason, lengthOfBytes: 40, encoding: .utf8)
     }
 }
 
@@ -7673,19 +7674,19 @@ public struct PACKET_ZC_ACK_LEAVE_GUILD2: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var GID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var reason: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         GID = try decoder.decode(UInt32.self)
-        reason = try decoder.decode(String.self, lengthOfBytes: 40)
+        reason = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(GID)
-        try encoder.encode(reason, lengthOfBytes: 40)
+        try encoder.encode(reason, lengthOfBytes: 40, encoding: .utf8)
     }
 }
 
@@ -7878,13 +7879,13 @@ public struct PACKET_ZC_DEBUGMSG: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         color = try decoder.decode(Int32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(color)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -8344,19 +8345,19 @@ public struct PACKET_ZC_ROLE_CHANGE: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var flag: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         flag = try decoder.decode(Int32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(flag)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -8365,21 +8366,21 @@ public struct PACKET_ZC_BAN_LIST_sub: BinaryDecodable, BinaryEncodable, Sendable
         (4 + 40 + 24)
     }
     public var char_id: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var message: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var char_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         char_id = try decoder.decode(Int32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: 40)
-        char_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        message = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
+        char_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(char_id)
-        try encoder.encode(message, lengthOfBytes: 40)
-        try encoder.encode(char_name, lengthOfBytes: 24)
+        try encoder.encode(message, lengthOfBytes: 40, encoding: .utf8)
+        try encoder.encode(char_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -8634,7 +8635,7 @@ public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: CodablePacket {
         (2 + 24 + 4 + 1 + 1)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var itemId: UInt32 = 0
     public var refine_level: Int8 = 0
@@ -8643,14 +8644,14 @@ public struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         itemId = try decoder.decode(UInt32.self)
         refine_level = try decoder.decode(Int8.self)
         status = try decoder.decode(Int8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(itemId)
         try encoder.encode(refine_level)
         try encoder.encode(status)
@@ -8834,19 +8835,19 @@ public struct PACKET_ZC_TALKBOX_CHATCONTENTS: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var aid: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 21)
+    @FixedLengthString(lengthOfBytes: 21, encoding: .utf8)
     public var message: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         aid = try decoder.decode(UInt32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: 21)
+        message = try decoder.decode(String.self, lengthOfBytes: 21, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(aid)
-        try encoder.encode(message, lengthOfBytes: 21)
+        try encoder.encode(message, lengthOfBytes: 21, encoding: .utf8)
     }
 }
 
@@ -9253,7 +9254,7 @@ public struct PACKET_ZC_AUTORUN_SKILL: CodablePacket {
     public var skill_lv: UInt16 = 0
     public var skill_sp: UInt16 = 0
     public var skill_range: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var skill_name: String
     public var up_flag: Int8 = 0
     public init() {
@@ -9265,7 +9266,7 @@ public struct PACKET_ZC_AUTORUN_SKILL: CodablePacket {
         skill_lv = try decoder.decode(UInt16.self)
         skill_sp = try decoder.decode(UInt16.self)
         skill_range = try decoder.decode(UInt16.self)
-        skill_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        skill_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         up_flag = try decoder.decode(Int8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -9275,7 +9276,7 @@ public struct PACKET_ZC_AUTORUN_SKILL: CodablePacket {
         try encoder.encode(skill_lv)
         try encoder.encode(skill_sp)
         try encoder.encode(skill_range)
-        try encoder.encode(skill_name, lengthOfBytes: 24)
+        try encoder.encode(skill_name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(up_flag)
     }
 }
@@ -9671,13 +9672,13 @@ public struct PACKET_ZC_GUILD_INFO: CodablePacket {
     public var honor: Int32 = 0
     public var virtue: Int32 = 0
     public var emblemVersion: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var guildname: String
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var manageLand: String
     public var zeny: Int32 = 0
     public var masterGID: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var masterName: String
     public init() {
     }
@@ -9694,11 +9695,11 @@ public struct PACKET_ZC_GUILD_INFO: CodablePacket {
         honor = try decoder.decode(Int32.self)
         virtue = try decoder.decode(Int32.self)
         emblemVersion = try decoder.decode(Int32.self)
-        guildname = try decoder.decode(String.self, lengthOfBytes: 24)
-        manageLand = try decoder.decode(String.self, lengthOfBytes: 16)
+        guildname = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        manageLand = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         zeny = try decoder.decode(Int32.self)
         masterGID = try decoder.decode(Int32.self)
-        masterName = try decoder.decode(String.self, lengthOfBytes: 24)
+        masterName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -9713,11 +9714,11 @@ public struct PACKET_ZC_GUILD_INFO: CodablePacket {
         try encoder.encode(honor)
         try encoder.encode(virtue)
         try encoder.encode(emblemVersion)
-        try encoder.encode(guildname, lengthOfBytes: 24)
-        try encoder.encode(manageLand, lengthOfBytes: 16)
+        try encoder.encode(guildname, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(manageLand, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(zeny)
         try encoder.encode(masterGID)
-        try encoder.encode(masterName, lengthOfBytes: 24)
+        try encoder.encode(masterName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -9838,19 +9839,19 @@ public struct PACKET_CZ_REQ_UPLOAD_MACRO_DETECTOR: CodablePacket {
         (2 + 16 + 2)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var answer: String
     public var imageSize: UInt16 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        answer = try decoder.decode(String.self, lengthOfBytes: 16)
+        answer = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         imageSize = try decoder.decode(UInt16.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(answer, lengthOfBytes: 16)
+        try encoder.encode(answer, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(imageSize)
     }
 }
@@ -9860,19 +9861,19 @@ public struct PACKET_ZC_ACK_UPLOAD_MACRO_DETECTOR: CodablePacket {
         (2 + 4 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var captchaKey: String
     public var captchaFlag: Int32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4)
+        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
         captchaFlag = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(captchaKey, lengthOfBytes: 4)
+        try encoder.encode(captchaKey, lengthOfBytes: 4, encoding: .utf8)
         try encoder.encode(captchaFlag)
     }
 }
@@ -9883,7 +9884,7 @@ public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var captchaKey: String
     public var imageData: String = ""
     public init() {
@@ -9891,14 +9892,14 @@ public struct PACKET_CZ_UPLOAD_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4)
-        imageData = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
+        imageData = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(captchaKey, lengthOfBytes: 4)
-        try encoder.encode(imageData)
+        try encoder.encode(captchaKey, lengthOfBytes: 4, encoding: .utf8)
+        try encoder.encode(imageData, encoding: .utf8)
     }
 }
 
@@ -9959,19 +9960,19 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var imageSize: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var captchaKey: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         imageSize = try decoder.decode(UInt16.self)
-        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4)
+        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(imageSize)
-        try encoder.encode(captchaKey, lengthOfBytes: 4)
+        try encoder.encode(captchaKey, lengthOfBytes: 4, encoding: .utf8)
     }
 }
 
@@ -9981,7 +9982,7 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var captchaKey: String
     public var imageData: String = ""
     public init() {
@@ -9989,14 +9990,14 @@ public struct PACKET_ZC_APPLY_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4)
-        imageData = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
+        imageData = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(captchaKey, lengthOfBytes: 4)
-        try encoder.encode(imageData)
+        try encoder.encode(captchaKey, lengthOfBytes: 4, encoding: .utf8)
+        try encoder.encode(imageData, encoding: .utf8)
     }
 }
 
@@ -10041,17 +10042,17 @@ public struct PACKET_CZ_ACK_ANSWER_MACRO_DETECTOR: CodablePacket {
         (2 + 16)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var answer: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        answer = try decoder.decode(String.self, lengthOfBytes: 16)
+        answer = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(answer, lengthOfBytes: 16)
+        try encoder.encode(answer, lengthOfBytes: 16, encoding: .utf8)
     }
 }
 
@@ -10098,7 +10099,7 @@ public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: CodablePacket {
     public var packetType: Int16 = 0
     public var captchaFlag: Int32 = 0
     public var imageSize: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var captchaKey: String
     public init() {
     }
@@ -10106,13 +10107,13 @@ public struct PACKET_ZC_ACK_PREVIEW_MACRO_DETECTOR: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         captchaFlag = try decoder.decode(Int32.self)
         imageSize = try decoder.decode(UInt16.self)
-        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4)
+        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(captchaFlag)
         try encoder.encode(imageSize)
-        try encoder.encode(captchaKey, lengthOfBytes: 4)
+        try encoder.encode(captchaKey, lengthOfBytes: 4, encoding: .utf8)
     }
 }
 
@@ -10122,7 +10123,7 @@ public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 4)
+    @FixedLengthString(lengthOfBytes: 4, encoding: .utf8)
     public var captchaKey: String
     public var imageData: String = ""
     public init() {
@@ -10130,14 +10131,14 @@ public struct PACKET_ZC_PREVIEW_MACRO_DETECTOR_CAPTCHA: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4)
-        imageData = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        captchaKey = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .utf8)
+        imageData = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(captchaKey, lengthOfBytes: 4)
-        try encoder.encode(imageData)
+        try encoder.encode(captchaKey, lengthOfBytes: 4, encoding: .utf8)
+        try encoder.encode(imageData, encoding: .utf8)
     }
 }
 
@@ -10210,19 +10211,19 @@ public struct PACKET_ZC_PARTY_JOIN_REQ: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var GRID: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var groupName: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         GRID = try decoder.decode(Int32.self)
-        groupName = try decoder.decode(String.self, lengthOfBytes: 24)
+        groupName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(GRID)
-        try encoder.encode(groupName, lengthOfBytes: 24)
+        try encoder.encode(groupName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -10231,19 +10232,19 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK: CodablePacket {
         (2 + 24 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var characterName: String
     public var result: Int32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        characterName = try decoder.decode(String.self, lengthOfBytes: 24)
+        characterName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         result = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(characterName, lengthOfBytes: 24)
+        try encoder.encode(characterName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(result)
     }
 }
@@ -10262,13 +10263,13 @@ public struct PACKET_ZC_NOTIFY_CHAT_PARTY: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         AID = try decoder.decode(Int32.self)
-        chatMsg = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        chatMsg = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(AID)
-        try encoder.encode(chatMsg)
+        try encoder.encode(chatMsg, encoding: .utf8)
     }
 }
 
@@ -10350,7 +10351,7 @@ public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var AID: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var characterName: String
     public var result: Int8 = 0
     public init() {
@@ -10358,13 +10359,13 @@ public struct PACKET_ZC_DELETE_MEMBER_FROM_GROUP: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         AID = try decoder.decode(Int32.self)
-        characterName = try decoder.decode(String.self, lengthOfBytes: 24)
+        characterName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         result = try decoder.decode(Int8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(AID)
-        try encoder.encode(characterName, lengthOfBytes: 24)
+        try encoder.encode(characterName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(result)
     }
 }
@@ -10593,7 +10594,7 @@ public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: CodablePacket {
         (2 + 24 + 4 + 2 + 1)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var itemId: UInt32 = 0
     public var grade: Int16 = 0
@@ -10602,14 +10603,14 @@ public struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         itemId = try decoder.decode(UInt32.self)
         grade = try decoder.decode(Int16.self)
         status = try decoder.decode(Int8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(itemId)
         try encoder.encode(grade)
         try encoder.encode(status)
@@ -10621,19 +10622,19 @@ public struct PACKET_ZC_SHOW_IMAGE: CodablePacket {
         (2 + 64 + 1)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 64)
+    @FixedLengthString(lengthOfBytes: 64, encoding: .utf8)
     public var image: String
     public var type: UInt8 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        image = try decoder.decode(String.self, lengthOfBytes: 64)
+        image = try decoder.decode(String.self, lengthOfBytes: 64, encoding: .utf8)
         type = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(image, lengthOfBytes: 64)
+        try encoder.encode(image, lengthOfBytes: 64, encoding: .utf8)
         try encoder.encode(type)
     }
 }
@@ -10645,7 +10646,7 @@ public struct PACKET_ZC_WHISPER: CodablePacket {
     public var packetType: Int16 = 0
     public var packetLength: Int16 = 0
     public var senderGID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var sender: String
     public var isAdmin: UInt8 = 0
     public var message: String = ""
@@ -10655,17 +10656,17 @@ public struct PACKET_ZC_WHISPER: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         senderGID = try decoder.decode(UInt32.self)
-        sender = try decoder.decode(String.self, lengthOfBytes: 24)
+        sender = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         isAdmin = try decoder.decode(UInt8.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 24 + 1)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 24 + 1)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(senderGID)
-        try encoder.encode(sender, lengthOfBytes: 24)
+        try encoder.encode(sender, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(isAdmin)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -10679,7 +10680,7 @@ public struct PACKET_ZC_UPDATE_GDID: CodablePacket {
     public var mode: UInt32 = 0
     public var isMaster: UInt8 = 0
     public var interSid: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var guildName: String
     public init() {
     }
@@ -10690,7 +10691,7 @@ public struct PACKET_ZC_UPDATE_GDID: CodablePacket {
         mode = try decoder.decode(UInt32.self)
         isMaster = try decoder.decode(UInt8.self)
         interSid = try decoder.decode(Int32.self)
-        guildName = try decoder.decode(String.self, lengthOfBytes: 24)
+        guildName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -10699,7 +10700,7 @@ public struct PACKET_ZC_UPDATE_GDID: CodablePacket {
         try encoder.encode(mode)
         try encoder.encode(isMaster)
         try encoder.encode(interSid)
-        try encoder.encode(guildName, lengthOfBytes: 24)
+        try encoder.encode(guildName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -10795,7 +10796,7 @@ public struct PACKET_ZC_PROPERTY_PET: CodablePacket {
         (2 + 24 + 1 + 2 + 2 + 2 + 2 + 2)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var szName: String
     public var bModified: Int8 = 0
     public var nLevel: Int16 = 0
@@ -10807,7 +10808,7 @@ public struct PACKET_ZC_PROPERTY_PET: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        szName = try decoder.decode(String.self, lengthOfBytes: 24)
+        szName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         bModified = try decoder.decode(Int8.self)
         nLevel = try decoder.decode(Int16.self)
         nFullness = try decoder.decode(Int16.self)
@@ -10817,7 +10818,7 @@ public struct PACKET_ZC_PROPERTY_PET: CodablePacket {
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(szName, lengthOfBytes: 24)
+        try encoder.encode(szName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(bModified)
         try encoder.encode(nLevel)
         try encoder.encode(nFullness)
@@ -10928,13 +10929,13 @@ public struct PACKET_ZC_SAY_DIALOG: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         NpcID = try decoder.decode(UInt32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(NpcID)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -10952,13 +10953,13 @@ public struct PACKET_ZC_SAY_DIALOG2: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         NpcID = try decoder.decode(UInt32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(NpcID)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -11003,17 +11004,17 @@ public struct PACKET_ZC_PLAY_NPC_BGM: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var bgm: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        bgm = try decoder.decode(String.self, lengthOfBytes: 24)
+        bgm = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(bgm, lengthOfBytes: 24)
+        try encoder.encode(bgm, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -11043,7 +11044,7 @@ public struct PACKET_ZC_SOUND: CodablePacket {
         (2 + 24 + 1 + 4 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var act: UInt8 = 0
     public var term: UInt32 = 0
@@ -11052,14 +11053,14 @@ public struct PACKET_ZC_SOUND: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         act = try decoder.decode(UInt8.self)
         term = try decoder.decode(UInt32.self)
         AID = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(act)
         try encoder.encode(term)
         try encoder.encode(AID)
@@ -11072,19 +11073,19 @@ public struct PACKET_ZC_BUYING_STORE_ENTRY: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var makerAID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 80)
+    @FixedLengthString(lengthOfBytes: 80, encoding: .utf8)
     public var storeName: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         makerAID = try decoder.decode(UInt32.self)
-        storeName = try decoder.decode(String.self, lengthOfBytes: 80)
+        storeName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(makerAID)
-        try encoder.encode(storeName, lengthOfBytes: 80)
+        try encoder.encode(storeName, lengthOfBytes: 80, encoding: .utf8)
     }
 }
 
@@ -11094,19 +11095,19 @@ public struct PACKET_ZC_STORE_ENTRY: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var makerAID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 80)
+    @FixedLengthString(lengthOfBytes: 80, encoding: .utf8)
     public var storeName: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         makerAID = try decoder.decode(UInt32.self)
-        storeName = try decoder.decode(String.self, lengthOfBytes: 80)
+        storeName = try decoder.decode(String.self, lengthOfBytes: 80, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(makerAID)
-        try encoder.encode(storeName, lengthOfBytes: 80)
+        try encoder.encode(storeName, lengthOfBytes: 80, encoding: .utf8)
     }
 }
 
@@ -11412,17 +11413,17 @@ public struct PACKET_CZ_DYNAMICNPC_CREATE_REQUEST: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -11549,7 +11550,7 @@ public struct PACKET_ZC_GUILD_EMBLEM_IMG: CodablePacket {
         result = try decoder.decode(UInt16.self)
         guild_id = try decoder.decode(Int32.self)
         emblem_id = try decoder.decode(UInt32.self)
-        emblem_data = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 4 + 4)))
+        emblem_data = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 4 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -11557,7 +11558,7 @@ public struct PACKET_ZC_GUILD_EMBLEM_IMG: CodablePacket {
         try encoder.encode(result)
         try encoder.encode(guild_id)
         try encoder.encode(emblem_id)
-        try encoder.encode(emblem_data)
+        try encoder.encode(emblem_data, encoding: .utf8)
     }
 }
 
@@ -11587,9 +11588,9 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: CodablePacket {
         (2 + 24 + 24 + 4 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var player_name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var party_name: String
     public var AID: Int32 = 0
     public var result: Int32 = 0
@@ -11597,15 +11598,15 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_RESULT: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        player_name = try decoder.decode(String.self, lengthOfBytes: 24)
-        party_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        player_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        party_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         AID = try decoder.decode(Int32.self)
         result = try decoder.decode(Int32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(player_name, lengthOfBytes: 24)
-        try encoder.encode(party_name, lengthOfBytes: 24)
+        try encoder.encode(player_name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(party_name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(AID)
         try encoder.encode(result)
     }
@@ -11618,7 +11619,7 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: CodablePacket {
     public var packetType: Int16 = 0
     public var GRID: Int32 = 0
     public var AID: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var groupName: String
     public var level: Int16 = 0
     public var job: Int16 = 0
@@ -11628,7 +11629,7 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         GRID = try decoder.decode(Int32.self)
         AID = try decoder.decode(Int32.self)
-        groupName = try decoder.decode(String.self, lengthOfBytes: 24)
+        groupName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         level = try decoder.decode(Int16.self)
         job = try decoder.decode(Int16.self)
     }
@@ -11636,7 +11637,7 @@ public struct PACKET_ZC_ADVENTURER_AGENCY_JOIN_REQ: CodablePacket {
         try encoder.encode(packetType)
         try encoder.encode(GRID)
         try encoder.encode(AID)
-        try encoder.encode(groupName, lengthOfBytes: 24)
+        try encoder.encode(groupName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(level)
         try encoder.encode(job)
     }
@@ -11940,9 +11941,9 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: BinaryDecodable, BinaryEncodab
     public var IsIdentified: UInt8 = 0
     public var itemType: UInt16 = 0
     public var slot: EQUIPSLOTINFO = EQUIPSLOTINFO()
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var time: String
     public var attribute: UInt8 = 0
     public init() {
@@ -11957,8 +11958,8 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: BinaryDecodable, BinaryEncodab
         IsIdentified = try decoder.decode(UInt8.self)
         itemType = try decoder.decode(UInt16.self)
         slot = try decoder.decode(EQUIPSLOTINFO.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
-        time = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        time = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         attribute = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -11971,8 +11972,8 @@ public struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub: BinaryDecodable, BinaryEncodab
         try encoder.encode(IsIdentified)
         try encoder.encode(itemType)
         try encoder.encode(slot)
-        try encoder.encode(name, lengthOfBytes: 24)
-        try encoder.encode(time, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(time, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(attribute)
     }
 }
@@ -12058,12 +12059,12 @@ public struct PACKET_ZC_BROADCAST: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -12089,7 +12090,7 @@ public struct PACKET_ZC_BROADCAST2: CodablePacket {
         fontSize = try decoder.decode(Int16.self)
         fontAlign = try decoder.decode(Int16.self)
         fontY = try decoder.decode(Int16.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 2 + 2 + 2 + 2)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 2 + 2 + 2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -12099,7 +12100,7 @@ public struct PACKET_ZC_BROADCAST2: CodablePacket {
         try encoder.encode(fontSize)
         try encoder.encode(fontAlign)
         try encoder.encode(fontY)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -12316,19 +12317,19 @@ public struct PACKET_ZC_FRIENDS_LIST_sub: BinaryDecodable, BinaryEncodable, Send
     }
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         AID = try decoder.decode(UInt32.self)
         CID = try decoder.decode(UInt32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(AID)
         try encoder.encode(CID)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -12580,7 +12581,7 @@ public struct PACKET_ZC_REQ_EXCHANGE_ITEM: CodablePacket {
         (2 + 24 + 4 + 2)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var requesterName: String
     public var targetId: UInt32 = 0
     public var targetLv: UInt16 = 0
@@ -12588,13 +12589,13 @@ public struct PACKET_ZC_REQ_EXCHANGE_ITEM: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        requesterName = try decoder.decode(String.self, lengthOfBytes: 24)
+        requesterName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         targetId = try decoder.decode(UInt32.self)
         targetLv = try decoder.decode(UInt16.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(requesterName, lengthOfBytes: 24)
+        try encoder.encode(requesterName, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(targetId)
         try encoder.encode(targetLv)
     }
@@ -12650,17 +12651,17 @@ public struct PACKET_ZC_COUPLENAME: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -12692,7 +12693,7 @@ public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: CodablePacket {
     public var packetType: Int16 = 0
     public var CID: UInt32 = 0
     public var AID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var x: UInt16 = 0
     public var y: UInt16 = 0
@@ -12702,7 +12703,7 @@ public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         CID = try decoder.decode(UInt32.self)
         AID = try decoder.decode(UInt32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         x = try decoder.decode(UInt16.self)
         y = try decoder.decode(UInt16.self)
     }
@@ -12710,7 +12711,7 @@ public struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN: CodablePacket {
         try encoder.encode(packetType)
         try encoder.encode(CID)
         try encoder.encode(AID)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(x)
         try encoder.encode(y)
     }
@@ -12745,9 +12746,9 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: CodablePacket {
         (2 + 24 + 24 + 4 + 4)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var player_name: String
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var party_name: String
     public var AID: UInt32 = 0
     public var refused: UInt32 = 0
@@ -12755,15 +12756,15 @@ public struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        player_name = try decoder.decode(String.self, lengthOfBytes: 24)
-        party_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        player_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
+        party_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         AID = try decoder.decode(UInt32.self)
         refused = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(player_name, lengthOfBytes: 24)
-        try encoder.encode(party_name, lengthOfBytes: 24)
+        try encoder.encode(player_name, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(party_name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(AID)
         try encoder.encode(refused)
     }
@@ -12913,7 +12914,7 @@ public struct PACKET_ZC_BOSS_INFO: CodablePacket {
     public var minMinutes: UInt16 = 0
     public var maxHours: UInt16 = 0
     public var maxMinutes: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 51)
+    @FixedLengthString(lengthOfBytes: 51, encoding: .utf8)
     public var name: String
     public init() {
     }
@@ -12926,7 +12927,7 @@ public struct PACKET_ZC_BOSS_INFO: CodablePacket {
         minMinutes = try decoder.decode(UInt16.self)
         maxHours = try decoder.decode(UInt16.self)
         maxMinutes = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 51)
+        name = try decoder.decode(String.self, lengthOfBytes: 51, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -12937,7 +12938,7 @@ public struct PACKET_ZC_BOSS_INFO: CodablePacket {
         try encoder.encode(minMinutes)
         try encoder.encode(maxHours)
         try encoder.encode(maxMinutes)
-        try encoder.encode(name, lengthOfBytes: 51)
+        try encoder.encode(name, lengthOfBytes: 51, encoding: .utf8)
     }
 }
 
@@ -13270,7 +13271,7 @@ public struct PACKET_ZC_HOSKILLINFO_LIST_sub: BinaryDecodable, BinaryEncodable, 
     public var level: UInt16 = 0
     public var sp: UInt16 = 0
     public var range: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var upgradable: UInt8 = 0
     public init() {
@@ -13282,7 +13283,7 @@ public struct PACKET_ZC_HOSKILLINFO_LIST_sub: BinaryDecodable, BinaryEncodable, 
         level = try decoder.decode(UInt16.self)
         sp = try decoder.decode(UInt16.self)
         range = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         upgradable = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -13292,7 +13293,7 @@ public struct PACKET_ZC_HOSKILLINFO_LIST_sub: BinaryDecodable, BinaryEncodable, 
         try encoder.encode(level)
         try encoder.encode(sp)
         try encoder.encode(range)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(upgradable)
     }
 }
@@ -13399,7 +13400,7 @@ public struct PACKET_ZC_NPCACK_MAPMOVE: CodablePacket {
         (2 + 16 + 2 + 2)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapName: String
     public var xPos: UInt16 = 0
     public var yPos: UInt16 = 0
@@ -13407,13 +13408,13 @@ public struct PACKET_ZC_NPCACK_MAPMOVE: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         xPos = try decoder.decode(UInt16.self)
         yPos = try decoder.decode(UInt16.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(mapName, lengthOfBytes: 16)
+        try encoder.encode(mapName, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(xPos)
         try encoder.encode(yPos)
     }
@@ -13424,33 +13425,33 @@ public struct PACKET_ZC_NPCACK_SERVERMOVE: CodablePacket {
         (2 + 16 + 2 + 2 + 4 + 2 + 128)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapName: String
     public var xPos: UInt16 = 0
     public var yPos: UInt16 = 0
     public var ip: UInt32 = 0
     public var port: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 128)
+    @FixedLengthString(lengthOfBytes: 128, encoding: .utf8)
     public var domain: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         xPos = try decoder.decode(UInt16.self)
         yPos = try decoder.decode(UInt16.self)
         ip = try decoder.decode(UInt32.self)
         port = try decoder.decode(UInt16.self)
-        domain = try decoder.decode(String.self, lengthOfBytes: 128)
+        domain = try decoder.decode(String.self, lengthOfBytes: 128, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(mapName, lengthOfBytes: 16)
+        try encoder.encode(mapName, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(xPos)
         try encoder.encode(yPos)
         try encoder.encode(ip)
         try encoder.encode(port)
-        try encoder.encode(domain, lengthOfBytes: 128)
+        try encoder.encode(domain, lengthOfBytes: 128, encoding: .utf8)
     }
 }
 
@@ -13570,13 +13571,13 @@ public struct PACKET_ZC_MENU_LIST: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         npcId = try decoder.decode(UInt32.self)
-        menu = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        menu = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(npcId)
-        try encoder.encode(menu)
+        try encoder.encode(menu, encoding: .utf8)
     }
 }
 
@@ -13661,19 +13662,19 @@ public struct PACKET_ZC_REQ_ALLY_GUILD: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var inviterId: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var inviterGuildName: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         inviterId = try decoder.decode(UInt32.self)
-        inviterGuildName = try decoder.decode(String.self, lengthOfBytes: 24)
+        inviterGuildName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(inviterId)
-        try encoder.encode(inviterGuildName, lengthOfBytes: 24)
+        try encoder.encode(inviterGuildName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -13814,7 +13815,7 @@ public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub: BinaryDecodable, Bina
     public var mode: Int32 = 0
     public var ranking: Int32 = 0
     public var payRate: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var posName: String
     public init() {
     }
@@ -13823,14 +13824,14 @@ public struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub: BinaryDecodable, Bina
         mode = try decoder.decode(Int32.self)
         ranking = try decoder.decode(Int32.self)
         payRate = try decoder.decode(Int32.self)
-        posName = try decoder.decode(String.self, lengthOfBytes: 24)
+        posName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(positionID)
         try encoder.encode(mode)
         try encoder.encode(ranking)
         try encoder.encode(payRate)
-        try encoder.encode(posName, lengthOfBytes: 24)
+        try encoder.encode(posName, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -13891,12 +13892,12 @@ public struct PACKET_ZC_GUILD_CHAT: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -14234,7 +14235,7 @@ public struct PACKET_ZC_CHANGE_CHATROOM: CodablePacket {
         limit = try decoder.decode(UInt16.self)
         users = try decoder.decode(UInt16.self)
         flag = try decoder.decode(UInt8.self)
-        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 4 + 2 + 2 + 1)))
+        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 4 + 2 + 2 + 1)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -14244,7 +14245,7 @@ public struct PACKET_ZC_CHANGE_CHATROOM: CodablePacket {
         try encoder.encode(limit)
         try encoder.encode(users)
         try encoder.encode(flag)
-        try encoder.encode(title)
+        try encoder.encode(title, encoding: .utf8)
     }
 }
 
@@ -14472,17 +14473,17 @@ public struct PACKET_ZC_ENTER_ROOM_sub: BinaryDecodable, BinaryEncodable, Sendab
         (4 + 24)
     }
     public var flag: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         flag = try decoder.decode(UInt32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(flag)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -14920,7 +14921,7 @@ public struct PACKET_CZ_REQ_BAN_GUILD: CodablePacket {
     public var guild_id: UInt32 = 0
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var message: String
     public init() {
     }
@@ -14929,14 +14930,14 @@ public struct PACKET_CZ_REQ_BAN_GUILD: CodablePacket {
         guild_id = try decoder.decode(UInt32.self)
         AID = try decoder.decode(UInt32.self)
         CID = try decoder.decode(UInt32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: 40)
+        message = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(guild_id)
         try encoder.encode(AID)
         try encoder.encode(CID)
-        try encoder.encode(message, lengthOfBytes: 40)
+        try encoder.encode(message, lengthOfBytes: 40, encoding: .utf8)
     }
 }
 
@@ -14948,7 +14949,7 @@ public struct PACKET_CZ_REQ_LEAVE_GUILD: CodablePacket {
     public var guild_id: UInt32 = 0
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var message: String
     public init() {
     }
@@ -14957,14 +14958,14 @@ public struct PACKET_CZ_REQ_LEAVE_GUILD: CodablePacket {
         guild_id = try decoder.decode(UInt32.self)
         AID = try decoder.decode(UInt32.self)
         CID = try decoder.decode(UInt32.self)
-        message = try decoder.decode(String.self, lengthOfBytes: 40)
+        message = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(guild_id)
         try encoder.encode(AID)
         try encoder.encode(CID)
-        try encoder.encode(message, lengthOfBytes: 40)
+        try encoder.encode(message, lengthOfBytes: 40, encoding: .utf8)
     }
 }
 
@@ -14973,17 +14974,17 @@ public struct PACKET_CZ_REQ_DISORGANIZE_GUILD: CodablePacket {
         (2 + 40)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 40)
+    @FixedLengthString(lengthOfBytes: 40, encoding: .utf8)
     public var key: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        key = try decoder.decode(String.self, lengthOfBytes: 40)
+        key = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(key, lengthOfBytes: 40)
+        try encoder.encode(key, lengthOfBytes: 40, encoding: .utf8)
     }
 }
 
@@ -15071,19 +15072,19 @@ public struct PACKET_ZC_REQ_JOIN_GUILD: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var guild_id: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var guild_name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         guild_id = try decoder.decode(UInt32.self)
-        guild_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        guild_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(guild_id)
-        try encoder.encode(guild_name, lengthOfBytes: 24)
+        try encoder.encode(guild_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -15113,21 +15114,21 @@ public struct PACKET_ZC_GUILD_NOTICE: CodablePacket {
         (2 + 60 + 120)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 60)
+    @FixedLengthString(lengthOfBytes: 60, encoding: .utf8)
     public var subject: String
-    @FixedLengthString(lengthOfBytes: 120)
+    @FixedLengthString(lengthOfBytes: 120, encoding: .utf8)
     public var notice: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        subject = try decoder.decode(String.self, lengthOfBytes: 60)
-        notice = try decoder.decode(String.self, lengthOfBytes: 120)
+        subject = try decoder.decode(String.self, lengthOfBytes: 60, encoding: .utf8)
+        notice = try decoder.decode(String.self, lengthOfBytes: 120, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(subject, lengthOfBytes: 60)
-        try encoder.encode(notice, lengthOfBytes: 120)
+        try encoder.encode(subject, lengthOfBytes: 60, encoding: .utf8)
+        try encoder.encode(notice, lengthOfBytes: 120, encoding: .utf8)
     }
 }
 
@@ -15136,17 +15137,17 @@ public struct PACKET_CZ_REQ_JOIN_GUILD2: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -15210,19 +15211,19 @@ public struct PACKET_CZ_REQ_EXPEL_GROUP_MEMBER: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var AID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         AID = try decoder.decode(UInt32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(AID)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -15231,17 +15232,17 @@ public struct PACKET_CZ_PARTY_JOIN_REQ: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -15423,19 +15424,19 @@ public struct PACKET_ZC_MEMBER_NEWENTRY: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var count: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         count = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(count)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -15445,7 +15446,7 @@ public struct PACKET_ZC_MEMBER_EXIT: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var count: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var kicked: UInt8 = 0
     public init() {
@@ -15453,13 +15454,13 @@ public struct PACKET_ZC_MEMBER_EXIT: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         count = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         kicked = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(count)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(kicked)
     }
 }
@@ -15469,7 +15470,7 @@ public struct PACKET_CZ_MOVETO_MAP: CodablePacket {
         (2 + 16 + 2 + 2)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var map: String
     public var x: UInt16 = 0
     public var y: UInt16 = 0
@@ -15477,13 +15478,13 @@ public struct PACKET_CZ_MOVETO_MAP: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        map = try decoder.decode(String.self, lengthOfBytes: 16)
+        map = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         x = try decoder.decode(UInt16.self)
         y = try decoder.decode(UInt16.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(map, lengthOfBytes: 16)
+        try encoder.encode(map, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(x)
         try encoder.encode(y)
     }
@@ -15501,12 +15502,12 @@ public struct PACKET_CZ_BROADCAST: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -15560,7 +15561,7 @@ public struct PACKET_CZ_CREATE_CHATROOM: CodablePacket {
     public var packetLength: Int16 = 0
     public var limit: UInt16 = 0
     public var type: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 8)
+    @FixedLengthString(lengthOfBytes: 8, encoding: .utf8)
     public var password: String
     public var title: String = ""
     public init() {
@@ -15570,16 +15571,16 @@ public struct PACKET_CZ_CREATE_CHATROOM: CodablePacket {
         packetLength = try decoder.decode(Int16.self)
         limit = try decoder.decode(UInt16.self)
         type = try decoder.decode(UInt8.self)
-        password = try decoder.decode(String.self, lengthOfBytes: 8)
-        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 1 + 8)))
+        password = try decoder.decode(String.self, lengthOfBytes: 8, encoding: .utf8)
+        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 1 + 8)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(limit)
         try encoder.encode(type)
-        try encoder.encode(password, lengthOfBytes: 8)
-        try encoder.encode(title)
+        try encoder.encode(password, lengthOfBytes: 8, encoding: .utf8)
+        try encoder.encode(title, encoding: .utf8)
     }
 }
 
@@ -15821,17 +15822,17 @@ public struct PACKET_ZC_ACK_RANKING_sub: BinaryDecodable, BinaryEncodable, Senda
     public static var size: Int {
         (24 + 4)
     }
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var points: UInt32 = 0
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         points = try decoder.decode(UInt32.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(points)
     }
 }
@@ -15983,7 +15984,7 @@ public struct PACKET_CZ_AUCTION_ITEM_SEARCH: CodablePacket {
     public var packetType: Int16 = 0
     public var type: UInt16 = 0
     public var auction_id: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var text: String
     public var page: UInt16 = 0
     public init() {
@@ -15992,14 +15993,14 @@ public struct PACKET_CZ_AUCTION_ITEM_SEARCH: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         type = try decoder.decode(UInt16.self)
         auction_id = try decoder.decode(UInt32.self)
-        text = try decoder.decode(String.self, lengthOfBytes: 24)
+        text = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         page = try decoder.decode(UInt16.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(type)
         try encoder.encode(auction_id)
-        try encoder.encode(text, lengthOfBytes: 24)
+        try encoder.encode(text, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(page)
     }
 }
@@ -16089,7 +16090,7 @@ public struct PACKET_ZC_ROOM_NEWENTRY: CodablePacket {
         limit = try decoder.decode(UInt16.self)
         users = try decoder.decode(UInt16.self)
         type = try decoder.decode(UInt8.self)
-        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 4 + 2 + 2 + 1)))
+        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4 + 4 + 2 + 2 + 1)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
@@ -16099,7 +16100,7 @@ public struct PACKET_ZC_ROOM_NEWENTRY: CodablePacket {
         try encoder.encode(limit)
         try encoder.encode(users)
         try encoder.encode(type)
-        try encoder.encode(title)
+        try encoder.encode(title, encoding: .utf8)
     }
 }
 
@@ -16176,7 +16177,7 @@ public struct PACKET_ZC_ACK_REQNAME_BYGID: CodablePacket {
     public var packetType: Int16 = 0
     public var flag: UInt16 = 0
     public var CID: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
@@ -16184,13 +16185,13 @@ public struct PACKET_ZC_ACK_REQNAME_BYGID: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         flag = try decoder.decode(UInt16.self)
         CID = try decoder.decode(UInt32.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(flag)
         try encoder.encode(CID)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -16319,7 +16320,7 @@ public struct PACKET_ZC_UPDATE_MAPINFO: CodablePacket {
     public var x: Int16 = 0
     public var y: Int16 = 0
     public var type: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapname: String
     public init() {
     }
@@ -16328,14 +16329,14 @@ public struct PACKET_ZC_UPDATE_MAPINFO: CodablePacket {
         x = try decoder.decode(Int16.self)
         y = try decoder.decode(Int16.self)
         type = try decoder.decode(Int16.self)
-        mapname = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapname = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(x)
         try encoder.encode(y)
         try encoder.encode(type)
-        try encoder.encode(mapname, lengthOfBytes: 16)
+        try encoder.encode(mapname, lengthOfBytes: 16, encoding: .utf8)
     }
 }
 
@@ -16345,19 +16346,19 @@ public struct PACKET_CZ_REQ_ENTER_ROOM: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var chat_id: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 8)
+    @FixedLengthString(lengthOfBytes: 8, encoding: .utf8)
     public var password: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         chat_id = try decoder.decode(UInt32.self)
-        password = try decoder.decode(String.self, lengthOfBytes: 8)
+        password = try decoder.decode(String.self, lengthOfBytes: 8, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(chat_id)
-        try encoder.encode(password, lengthOfBytes: 8)
+        try encoder.encode(password, lengthOfBytes: 8, encoding: .utf8)
     }
 }
 
@@ -16369,7 +16370,7 @@ public struct PACKET_CZ_CHANGE_CHATROOM: CodablePacket {
     public var packetLength: Int16 = 0
     public var limit: UInt16 = 0
     public var type: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 8)
+    @FixedLengthString(lengthOfBytes: 8, encoding: .utf8)
     public var password: String
     public var title: String = ""
     public init() {
@@ -16379,16 +16380,16 @@ public struct PACKET_CZ_CHANGE_CHATROOM: CodablePacket {
         packetLength = try decoder.decode(Int16.self)
         limit = try decoder.decode(UInt16.self)
         type = try decoder.decode(UInt8.self)
-        password = try decoder.decode(String.self, lengthOfBytes: 8)
-        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 1 + 8)))
+        password = try decoder.decode(String.self, lengthOfBytes: 8, encoding: .utf8)
+        title = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 2 + 1 + 8)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(limit)
         try encoder.encode(type)
-        try encoder.encode(password, lengthOfBytes: 8)
-        try encoder.encode(title)
+        try encoder.encode(password, lengthOfBytes: 8, encoding: .utf8)
+        try encoder.encode(title, encoding: .utf8)
     }
 }
 
@@ -16440,19 +16441,19 @@ public struct PACKET_CZ_SELECT_WARPPOINT: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var skill_id: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapname: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         skill_id = try decoder.decode(Int16.self)
-        mapname = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapname = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(skill_id)
-        try encoder.encode(mapname, lengthOfBytes: 16)
+        try encoder.encode(mapname, lengthOfBytes: 16, encoding: .utf8)
     }
 }
 
@@ -16491,13 +16492,13 @@ public struct PACKET_CZ_INPUT_EDITDLGSTR: CodablePacket {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
         GID = try decoder.decode(Int32.self)
-        value = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)))
+        value = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2 + 4)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
         try encoder.encode(GID)
-        try encoder.encode(value)
+        try encoder.encode(value, encoding: .utf8)
     }
 }
 
@@ -16645,12 +16646,12 @@ public struct PACKET_CZ_LOCALBROADCAST: CodablePacket {
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         packetLength = try decoder.decode(Int16.self)
-        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)))
+        message = try decoder.decode(String.self, lengthOfBytes: (Int(packetLength) - (2 + 2)), encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(packetLength)
-        try encoder.encode(message)
+        try encoder.encode(message, encoding: .utf8)
     }
 }
 
@@ -16683,7 +16684,7 @@ public struct PACKET_ZC_FRIENDS_STATE: CodablePacket {
     public var AID: UInt32 = 0
     public var CID: UInt32 = 0
     public var offline: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
@@ -16692,14 +16693,14 @@ public struct PACKET_ZC_FRIENDS_STATE: CodablePacket {
         AID = try decoder.decode(UInt32.self)
         CID = try decoder.decode(UInt32.self)
         offline = try decoder.decode(UInt8.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(AID)
         try encoder.encode(CID)
         try encoder.encode(offline)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -16708,17 +16709,17 @@ public struct PACKET_CZ_MAKE_GROUP: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -16727,7 +16728,7 @@ public struct PACKET_CZ_MAKE_GROUP2: CodablePacket {
         (2 + 24 + 1 + 1)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var item_pickup: UInt8 = 0
     public var item_share: UInt8 = 0
@@ -16735,13 +16736,13 @@ public struct PACKET_CZ_MAKE_GROUP2: CodablePacket {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         item_pickup = try decoder.decode(UInt8.self)
         item_share = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(item_pickup)
         try encoder.encode(item_share)
     }
@@ -16752,17 +16753,17 @@ public struct PACKET_CZ_GM_CHECKER: CodablePacket {
         (2 + 16)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapname: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        mapname = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapname = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(mapname, lengthOfBytes: 16)
+        try encoder.encode(mapname, lengthOfBytes: 16, encoding: .utf8)
     }
 }
 
@@ -16825,17 +16826,17 @@ public struct PACKET_ZC_DIVORCE: CodablePacket {
         (2 + 24)
     }
     public var packetType: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -16926,19 +16927,19 @@ public struct PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN: CodablePacket {
     }
     public var packetType: Int16 = 0
     public var type: UInt8 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         packetType = try decoder.decode(Int16.self)
         type = try decoder.decode(UInt8.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(type)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -17115,15 +17116,15 @@ public struct PACKET_ZC_WHISPER_LIST_sub: BinaryDecodable, BinaryEncodable, Send
     public static var size: Int {
         (24)
     }
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -17350,7 +17351,7 @@ public struct CHARACTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public var accessory3: Int16 = 0
     public var headpalette: Int16 = 0
     public var bodypalette: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var Str: UInt8 = 0
     public var Agi: UInt8 = 0
@@ -17361,7 +17362,7 @@ public struct CHARACTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public var CharNum: UInt8 = 0
     public var hairColor: UInt8 = 0
     public var bIsChangedCharName: Int16 = 0
-    @FixedLengthString(lengthOfBytes: 16)
+    @FixedLengthString(lengthOfBytes: 16, encoding: .utf8)
     public var mapName: String
     public var DelRevDate: Int32 = 0
     public var robePalette: Int32 = 0
@@ -17399,7 +17400,7 @@ public struct CHARACTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         accessory3 = try decoder.decode(Int16.self)
         headpalette = try decoder.decode(Int16.self)
         bodypalette = try decoder.decode(Int16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         Str = try decoder.decode(UInt8.self)
         Agi = try decoder.decode(UInt8.self)
         Vit = try decoder.decode(UInt8.self)
@@ -17409,7 +17410,7 @@ public struct CHARACTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         CharNum = try decoder.decode(UInt8.self)
         hairColor = try decoder.decode(UInt8.self)
         bIsChangedCharName = try decoder.decode(Int16.self)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         DelRevDate = try decoder.decode(Int32.self)
         robePalette = try decoder.decode(Int32.self)
         chr_slot_changeCnt = try decoder.decode(Int32.self)
@@ -17445,7 +17446,7 @@ public struct CHARACTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         try encoder.encode(accessory3)
         try encoder.encode(headpalette)
         try encoder.encode(bodypalette)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(Str)
         try encoder.encode(Agi)
         try encoder.encode(Vit)
@@ -17455,7 +17456,7 @@ public struct CHARACTER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         try encoder.encode(CharNum)
         try encoder.encode(hairColor)
         try encoder.encode(bIsChangedCharName)
-        try encoder.encode(mapName, lengthOfBytes: 16)
+        try encoder.encode(mapName, lengthOfBytes: 16, encoding: .utf8)
         try encoder.encode(DelRevDate)
         try encoder.encode(robePalette)
         try encoder.encode(chr_slot_changeCnt)
@@ -17740,7 +17741,7 @@ public struct GUILD_MEMBER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     public var currentState: Int32 = 0
     public var positionID: Int32 = 0
     public var lastLoginTime: UInt32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var char_name: String
     public init() {
     }
@@ -17756,7 +17757,7 @@ public struct GUILD_MEMBER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         currentState = try decoder.decode(Int32.self)
         positionID = try decoder.decode(Int32.self)
         lastLoginTime = try decoder.decode(UInt32.self)
-        char_name = try decoder.decode(String.self, lengthOfBytes: 24)
+        char_name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(AID)
@@ -17770,7 +17771,7 @@ public struct GUILD_MEMBER_INFO: BinaryDecodable, BinaryEncodable, Sendable {
         try encoder.encode(currentState)
         try encoder.encode(positionID)
         try encoder.encode(lastLoginTime)
-        try encoder.encode(char_name, lengthOfBytes: 24)
+        try encoder.encode(char_name, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -17783,7 +17784,7 @@ public struct GUILD_SKILLDATA: BinaryDecodable, BinaryEncodable, Sendable {
     public var level: UInt16 = 0
     public var sp: UInt16 = 0
     public var range2: UInt16 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var name: String
     public var upFlag: UInt8 = 0
     public init() {
@@ -17794,7 +17795,7 @@ public struct GUILD_SKILLDATA: BinaryDecodable, BinaryEncodable, Sendable {
         level = try decoder.decode(UInt16.self)
         sp = try decoder.decode(UInt16.self)
         range2 = try decoder.decode(UInt16.self)
-        name = try decoder.decode(String.self, lengthOfBytes: 24)
+        name = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
         upFlag = try decoder.decode(UInt8.self)
     }
     public func encode(to encoder: BinaryEncoder) throws {
@@ -17803,7 +17804,7 @@ public struct GUILD_SKILLDATA: BinaryDecodable, BinaryEncodable, Sendable {
         try encoder.encode(level)
         try encoder.encode(sp)
         try encoder.encode(range2)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(upFlag)
     }
 }
@@ -17814,19 +17815,19 @@ public struct RELATED_GUILD_INFO: BinaryDecodable, BinaryEncodable, Sendable {
     }
     public var relation: Int32 = 0
     public var GDID: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var guildname: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         relation = try decoder.decode(Int32.self)
         GDID = try decoder.decode(Int32.self)
-        guildname = try decoder.decode(String.self, lengthOfBytes: 24)
+        guildname = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(relation)
         try encoder.encode(GDID)
-        try encoder.encode(guildname, lengthOfBytes: 24)
+        try encoder.encode(guildname, lengthOfBytes: 24, encoding: .utf8)
     }
 }
 
@@ -17903,18 +17904,18 @@ public struct RANKLIST: BinaryDecodable, BinaryEncodable, Sendable {
     public static var size: Int {
         (10 + (4 * 10))
     }
-    @FixedLengthString(lengthOfBytes: 10)
+    @FixedLengthString(lengthOfBytes: 10, encoding: .utf8)
     public var names: String
     @FixedSizeArray(size: 10, initialValue: 0)
     public var points: [UInt32]
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
-        names = try decoder.decode(String.self, lengthOfBytes: 10)
+        names = try decoder.decode(String.self, lengthOfBytes: 10, encoding: .utf8)
         points = try decoder.decode([UInt32].self, count: 10)
     }
     public func encode(to encoder: BinaryEncoder) throws {
-        try encoder.encode(names, lengthOfBytes: 10)
+        try encoder.encode(names, lengthOfBytes: 10, encoding: .utf8)
         try encoder.encode(points)
     }
 }
@@ -17951,16 +17952,16 @@ public struct PACKET_ZC_POSITION_ID_NAME_INFO_sub: BinaryDecodable, BinaryEncoda
         (4 + 24)
     }
     public var positionID: Int32 = 0
-    @FixedLengthString(lengthOfBytes: 24)
+    @FixedLengthString(lengthOfBytes: 24, encoding: .utf8)
     public var posName: String
     public init() {
     }
     public init(from decoder: BinaryDecoder) throws {
         positionID = try decoder.decode(Int32.self)
-        posName = try decoder.decode(String.self, lengthOfBytes: 24)
+        posName = try decoder.decode(String.self, lengthOfBytes: 24, encoding: .utf8)
     }
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(positionID)
-        try encoder.encode(posName, lengthOfBytes: 24)
+        try encoder.encode(posName, lengthOfBytes: 24, encoding: .utf8)
     }
 }

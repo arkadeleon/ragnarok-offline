@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 /// See `logclif_parse_keepalive`
 @available(*, deprecated, message: "Use generated struct instead.")
@@ -26,6 +27,6 @@ public struct _PACKET_CA_CONNECT_INFO_CHANGED: _EncodablePacket {
 
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
     }
 }

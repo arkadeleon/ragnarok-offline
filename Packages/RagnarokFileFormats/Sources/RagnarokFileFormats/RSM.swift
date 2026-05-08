@@ -24,7 +24,7 @@ public struct RSM: FileFormat {
     public var volumeBoxes: [RSM.VolumeBox] = []
 
     public init(from decoder: BinaryDecoder) throws {
-        header = try decoder.decode(String.self, lengthOfBytes: 4)
+        header = try decoder.decode(String.self, lengthOfBytes: 4, encoding: .ascii)
         guard header == "GRSM" || header == "GRSX" else {
             throw FileFormatError.invalidHeader(header, expected: "GRSM or GRSX")
         }
@@ -52,7 +52,7 @@ public struct RSM: FileFormat {
             let rootNodeCount = try decoder.decode(Int32.self)
             for _ in 0..<rootNodeCount {
                 let nodeNameLength = try decoder.decode(Int32.self)
-                let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength))
+                let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength), encoding: .ascii)
                 rootNodes.append(rootNodeName)
             }
         } else if version >= "2.2" {
@@ -69,7 +69,7 @@ public struct RSM: FileFormat {
             let rootNodeCount = try decoder.decode(Int32.self)
             for _ in 0..<rootNodeCount {
                 let nodeNameLength = try decoder.decode(Int32.self)
-                let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength))
+                let rootNodeName = try decoder.decode(String.self, lengthOfBytes: Int(nodeNameLength), encoding: .ascii)
                 rootNodes.append(rootNodeName)
             }
         } else {
@@ -82,7 +82,7 @@ public struct RSM: FileFormat {
                 textures.append(textureName)
             }
 
-            let rootNodeName = try decoder.decode(String.self, lengthOfBytes: 40)
+            let rootNodeName = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
             rootNodes.append(rootNodeName)
         }
 
@@ -163,20 +163,20 @@ extension RSM {
 
             if version >= "2.2" {
                 let nameLength = try decoder.decode(Int32.self)
-                name = try decoder.decode(String.self, lengthOfBytes: Int(nameLength))
+                name = try decoder.decode(String.self, lengthOfBytes: Int(nameLength), encoding: .ascii)
 
                 let parentNameLength = try decoder.decode(Int32.self)
-                parentName = try decoder.decode(String.self, lengthOfBytes: Int(parentNameLength))
+                parentName = try decoder.decode(String.self, lengthOfBytes: Int(parentNameLength), encoding: .ascii)
             } else {
-                name = try decoder.decode(String.self, lengthOfBytes: 40)
-                parentName = try decoder.decode(String.self, lengthOfBytes: 40)
+                name = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
+                parentName = try decoder.decode(String.self, lengthOfBytes: 40, encoding: .ascii)
             }
 
             if version >= "2.3" {
                 let textureCount = try decoder.decode(Int32.self)
                 for _ in 0..<textureCount {
                     let textureNameLength = try decoder.decode(Int32.self)
-                    let textureName = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength))
+                    let textureName = try decoder.decode(String.self, lengthOfBytes: Int(textureNameLength), encoding: .isoLatin1)
                     textures.append(textureName)
                 }
             } else {

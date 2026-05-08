@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 @available(*, deprecated, message: "Use generated struct instead.")
 public struct _AccessibleMapInfo: BinaryDecodable, Sendable {
@@ -14,6 +15,6 @@ public struct _AccessibleMapInfo: BinaryDecodable, Sendable {
 
     public init(from decoder: BinaryDecoder) throws {
         status = try decoder.decode(UInt32.self)
-        mapName = try decoder.decode(String.self, lengthOfBytes: 16)
+        mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
     }
 }

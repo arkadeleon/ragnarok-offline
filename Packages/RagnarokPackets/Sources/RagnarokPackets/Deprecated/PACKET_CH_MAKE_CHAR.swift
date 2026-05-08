@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 @available(*, deprecated, message: "Use HEADER_CH_MAKE_CHAR instead.")
 public let _HEADER_CH_MAKE_CHAR: Int16 = {
@@ -41,7 +42,7 @@ public struct _PACKET_CH_MAKE_CHAR: EncodablePacket {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
 
-        try encoder.encode(name, lengthOfBytes: 24)
+        try encoder.encode(name, lengthOfBytes: 24, encoding: .utf8)
 
         if PACKET_VERSION < 20120307 {
             try encoder.encode(str)

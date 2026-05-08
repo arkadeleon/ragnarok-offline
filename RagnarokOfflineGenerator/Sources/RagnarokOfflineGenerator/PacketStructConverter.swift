@@ -39,7 +39,7 @@ class PacketStructConverter {
                     """)
                 case .fixedLengthString(let lengthOfBytes):
                     properties.append("""
-                        @FixedLengthString(lengthOfBytes: \(lengthOfBytes))
+                        @FixedLengthString(lengthOfBytes: \(lengthOfBytes), encoding: .utf8)
                         public var \(field.name): \(field.type.annotation)
                     """)
                 }
@@ -69,11 +69,11 @@ class PacketStructConverter {
                     }
                     let remaining = "(Int(packetLength) - (\(sizes.joined(separator: " + "))))"
                     decodeExpr = """
-                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(remaining))
+                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(remaining), encoding: .utf8)
                     """
                 case .fixedLengthString(let lengthOfBytes):
                     decodeExpr = """
-                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(lengthOfBytes))
+                            \(field.name) = try decoder.decode(String.self, lengthOfBytes: \(lengthOfBytes), encoding: .utf8)
                     """
                 }
                 if structDecl.name == "packet_quest_add_header", field.name == "objectives" {
@@ -84,13 +84,17 @@ class PacketStructConverter {
                 decodes.append(decodeExpr)
 
                 switch field.type {
-                case .structure, .array, .fixedSizeArray, .string:
+                case .structure, .array, .fixedSizeArray:
                     encodes.append("""
                             try encoder.encode(\(field.name))
                     """)
+                case .string:
+                    encodes.append("""
+                            try encoder.encode(\(field.name), encoding: .utf8)
+                    """)
                 case .fixedLengthString(let lengthOfBytes):
                     encodes.append("""
-                            try encoder.encode(\(field.name), lengthOfBytes: \(lengthOfBytes))
+                            try encoder.encode(\(field.name), lengthOfBytes: \(lengthOfBytes), encoding: .utf8)
                     """)
                 }
             }

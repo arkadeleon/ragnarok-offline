@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 public let HEADER_ZC_NOTIFY_PLAYERCHAT: Int16 = 0x8e
 
@@ -27,6 +28,6 @@ public struct _PACKET_ZC_NOTIFY_PLAYERCHAT: _DecodablePacket {
 
         let packetLength = try decoder.decode(Int16.self)
 
-        message = try decoder.decode(String.self, lengthOfBytes: Int(packetLength - 4))
+        message = try decoder.decode(String.self, lengthOfBytes: Int(packetLength - 4), encoding: .utf8)
     }
 }

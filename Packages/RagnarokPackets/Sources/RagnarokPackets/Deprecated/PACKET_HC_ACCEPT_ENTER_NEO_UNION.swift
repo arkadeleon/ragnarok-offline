@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 @available(*, deprecated, message: "Use HEADER_HC_ACCEPT_ENTER instead.")
 public let _HEADER_HC_ACCEPT_ENTER_NEO_UNION: Int16 = 0x6b
@@ -41,7 +42,7 @@ public struct _PACKET_HC_ACCEPT_ENTER_NEO_UNION: DecodablePacket {
             premiumSlots = 0
         }
 
-        _ = try decoder.decode(String.self, lengthOfBytes: 20)
+        _ = try decoder.decode(String.self, lengthOfBytes: 20, encoding: .utf8)
 
         chars = []
         for _ in 0..<charCount {

@@ -6,6 +6,7 @@
 //
 
 import BinaryIO
+import Foundation
 
 /// See `logclif_parse_reqauth_raw`
 @available(*, deprecated, message: "Use generated struct instead.")
@@ -33,8 +34,8 @@ public struct _PACKET_CA_LOGIN: _EncodablePacket {
     public func encode(to encoder: BinaryEncoder) throws {
         try encoder.encode(packetType)
         try encoder.encode(version)
-        try encoder.encode(username, lengthOfBytes: 24)
-        try encoder.encode(password, lengthOfBytes: 24)
+        try encoder.encode(username, lengthOfBytes: 24, encoding: .utf8)
+        try encoder.encode(password, lengthOfBytes: 24, encoding: .utf8)
         try encoder.encode(clientType)
     }
 }

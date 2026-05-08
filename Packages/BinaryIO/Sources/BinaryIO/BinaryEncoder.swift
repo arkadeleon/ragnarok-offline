@@ -97,7 +97,7 @@ public class BinaryEncoder {
         }
     }
 
-    public func encode(_ value: String, encoding: String.Encoding = .ascii) throws {
+    public func encode(_ value: String, encoding: String.Encoding) throws {
         guard let data = value.data(using: encoding) else {
             throw BinaryEncodingError.invalidEncoding(encoding)
         }
@@ -106,7 +106,7 @@ public class BinaryEncoder {
         }
     }
 
-    public func encode(_ value: String, lengthOfBytes: Int, encoding: String.Encoding = .ascii) throws {
+    public func encode(_ value: String, lengthOfBytes: Int, encoding: String.Encoding) throws {
         guard var data = value.data(using: encoding) else {
             throw BinaryEncodingError.invalidEncoding(encoding)
         }
