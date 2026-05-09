@@ -122,20 +122,7 @@ Completed acceptance:
 
 ## Confirmed Gaps
 
-### 1. Character selection is fixed to the first three array entries
-
-Current `CharacterSelectView` stores three independent optional characters and loads `characters[0]`, `characters[1]`, and `characters[2]`.
-
-roBrowserLegacy indexes characters by `CharNum`, supports multiple pages of three slots, tracks max slots, shows current page and total pages, and remembers the selected slot.
-
-Impact:
-
-- characters with `charNum > 2` are not reachable
-- empty slots can be wrong when the server returns sparse slot indexes
-- character creation can target the wrong slot
-- users cannot page through all available slots
-
-Priority: P0
+### 1. Character selection is fixed to the first three array entries - Fixed in Phase 3
 
 ### 2. Character deletion is not wired through
 
@@ -394,28 +381,26 @@ Implemented:
 - routed login refusal, login ban, char refusal, char ban, map unavailable, and map refusal to consistent message-box errors
 - preserved character-creation cancel returning to character select
 
-### Phase 3: Replace fixed three-character storage with slot paging
+### Phase 3: Replace fixed three-character storage with slot paging - Complete
 
 Objective:
 
 - match old UI slot behavior while preserving SwiftUI structure
 
-Changes:
+Implemented in:
 
-- store characters by `charNum`
-- compute max slots from packet metadata when available, otherwise infer from highest `charNum` and fall back to 9
-- show three slots per page
-- add left/right page controls
-- show current page / total page count
-- show character count / max slots
-- persist last selected slot using `@AppStorage` or a small session preference
-- load character animations by visible slot, not by array index
+- `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharacterSelectView.swift`
 
-Likely files:
+Current behavior:
 
-- `CharacterSelectView.swift`
-- `GameSession.swift`
-- `CharacterInfo.swift` if additional slot metadata becomes useful
+- `GameSession` stores `maxCharacterSlots` (from `PACKET_HC_ACCEPT_ENTER.total`, inferred from highest slot, or defaulted to 9) and `selectedCharacterSlot` (session-level selection persisted across character-make/back)
+- `GameSession.characterAnimation(forSlot:)` now looks up by `charNum` instead of array index
+- `CharacterSelectView` builds a `[Int: CharacterInfo]` dictionary keyed by `charNum` and computes 3-slot pages from `maxCharacterSlots`
+- Left/right page arrows appear when `totalPages > 1`; changing page resets the selection to the first slot of the new page
+- Animations are loaded lazily per page and cached in `animationsBySlot`; the cache updates when the page changes or characters are added
+- After `PACKET_HC_ACCEPT_MAKECHAR`, `selectedCharacterSlot` is set to the new character's slot and the view jumps to the correct page via `onChange`
+- `resetLoginPhase()` resets both `selectedCharacterSlot` and `maxCharacterSlots`
 
 Acceptance:
 

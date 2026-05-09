@@ -14,92 +14,90 @@ struct CharacterSelectView: View {
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var character1: CharacterInfo?
-    @State private var characterAnimation1: SpriteRenderer.Animation?
-
-    @State private var character2: CharacterInfo?
-    @State private var characterAnimation2: SpriteRenderer.Animation?
-
-    @State private var character3: CharacterInfo?
-    @State private var characterAnimation3: SpriteRenderer.Animation?
-
-    @State private var selectedSlot: Int?
+    @State private var characterAnimationsBySlot: [Int : SpriteRenderer.Animation] = [:]
     @State private var showingCancelConfirmation = false
 
-    private var selectedCharacter: CharacterInfo? {
-        guard let selectedSlot else {
-            return nil
-        }
+    private let slotsPerPage = 3
 
-        switch selectedSlot {
-        case 0:
-            return character1
-        case 1:
-            return character2
-        case 2:
-            return character3
-        default:
-            return nil
-        }
+    private var charactersBySlot: [Int: CharacterInfo] {
+        Dictionary(uniqueKeysWithValues: characters.map { ($0.charNum, $0) })
+    }
+
+    private var selectedCharacter: CharacterInfo? {
+        charactersBySlot[gameSession.selectedCharacterSlot]
+    }
+
+    private var currentPage: Int {
+        gameSession.selectedCharacterSlot / slotsPerPage
+    }
+
+    private var totalPages: Int {
+        max(1, (gameSession.maxCharacterSlots + slotsPerPage - 1) / slotsPerPage)
     }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
             GameImage("login_interface/win_select.bmp")
 
-            Button {
-                selectedSlot = 0
-            } label: {
-                ZStack {
-                    if selectedSlot == 0 {
-                        GameImage("login_interface/box_select.bmp")
+            VStack(spacing: 0) {
+                HStack(alignment: .center, spacing: 0) {
+                    Button {
+                        let newSlot = (gameSession.selectedCharacterSlot - 1 + gameSession.maxCharacterSlots) % gameSession.maxCharacterSlots
+                        gameSession.selectedCharacterSlot = newSlot
+                    } label: {
+                        GameImage("scroll1left.bmp")
+                            .frame(width: 36, height: 36)
+                    }
+                    .buttonStyle(.borderless)
+
+                    Spacer()
+
+                    HStack(spacing: 24) {
+                        ForEach(0..<slotsPerPage, id: \.self) { position in
+                            let slot = currentPage * slotsPerPage + position
+                            if slot < gameSession.maxCharacterSlots {
+                                Button {
+                                    gameSession.selectedCharacterSlot = slot
+                                } label: {
+                                    ZStack {
+                                        if gameSession.selectedCharacterSlot == slot {
+                                            GameImage("login_interface/box_select.bmp")
+                                        }
+                                        if let characterAnimation = characterAnimationsBySlot[slot],
+                                           let firstFrame = characterAnimation.firstFrame {
+                                            Image(decorative: firstFrame, scale: 2)
+                                                .offset(y: 10)
+                                        }
+                                    }
+                                    .frame(width: 139, height: 144)
+                                }
+                                .buttonStyle(.borderless)
+                            } else {
+                                Color.clear
+                                    .frame(width: 139, height: 144)
+                            }
+                        }
                     }
 
-                    if let image = characterAnimation1?.firstFrame {
-                        Image(decorative: image, scale: 2)
-                            .offset(y: 10)
+                    Spacer()
+
+                    Button {
+                        let newSlot = (gameSession.selectedCharacterSlot + 1) % gameSession.maxCharacterSlots
+                        gameSession.selectedCharacterSlot = newSlot
+                    } label: {
+                        GameImage("scroll1right.bmp")
+                            .frame(width: 36, height: 36)
                     }
+                    .buttonStyle(.borderless)
                 }
-                .frame(width: 139, height: 144)
+
+                Text("\(currentPage + 1) / \(totalPages)")
+                    .font(.game())
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 1)
             }
-            .buttonStyle(.borderless)
-            .offset(x: 56, y: 40)
-
-            Button {
-                selectedSlot = 1
-            } label: {
-                ZStack {
-                    if selectedSlot == 1 {
-                        GameImage("login_interface/box_select.bmp")
-                    }
-
-                    if let image = characterAnimation2?.firstFrame {
-                        Image(decorative: image, scale: 2)
-                            .offset(y: 10)
-                    }
-                }
-                .frame(width: 139, height: 144)
-            }
-            .buttonStyle(.borderless)
-            .offset(x: 220, y: 40)
-
-            Button {
-                selectedSlot = 2
-            } label: {
-                ZStack {
-                    if selectedSlot == 2 {
-                        GameImage("login_interface/box_select.bmp")
-                    }
-
-                    if let image = characterAnimation3?.firstFrame {
-                        Image(decorative: image, scale: 2)
-                            .offset(y: 10)
-                    }
-                }
-                .frame(width: 139, height: 144)
-            }
-            .buttonStyle(.borderless)
-            .offset(x: 382, y: 40)
+            .frame(width: 576)
+            .offset(y: 40)
 
             if let selectedCharacter {
                 VStack(spacing: 1) {
@@ -145,15 +143,15 @@ struct CharacterSelectView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
-                if let selectedSlot, selectedCharacter == nil {
+                if selectedCharacter == nil {
                     GameButton("btn_make.bmp") {
-                        gameSession.makeCharacter(slot: selectedSlot)
+                        gameSession.makeCharacter(slot: gameSession.selectedCharacterSlot)
                     }
                 }
 
-                if let selectedCharacter {
+                if selectedCharacter != nil {
                     GameButton("btn_ok.bmp") {
-                        gameSession.selectCharacter(slot: selectedCharacter.charNum)
+                        gameSession.selectCharacter(slot: gameSession.selectedCharacterSlot)
                     }
                 }
 
@@ -182,17 +180,24 @@ struct CharacterSelectView: View {
                     }
             }
         }
-        .task {
-            character1 = characters.count > 0 ? characters[0] : nil
-            characterAnimation1 = await gameSession.characterAnimation(forSlot: 0)
+        .task(id: currentPage) {
+            await loadCharacterAnimationsForCurrentPage()
         }
-        .task {
-            character2 = characters.count > 1 ? characters[1] : nil
-            characterAnimation2 = await gameSession.characterAnimation(forSlot: 1)
+        .task(id: characters.map(\.charNum).sorted()) {
+            await loadCharacterAnimationsForCurrentPage()
         }
-        .task {
-            character3 = characters.count > 2 ? characters[2] : nil
-            characterAnimation3 = await gameSession.characterAnimation(forSlot: 2)
+    }
+
+    private func loadCharacterAnimationsForCurrentPage() async {
+        let startSlot = currentPage * slotsPerPage
+        let endSlot = min(startSlot + slotsPerPage, gameSession.maxCharacterSlots)
+        for slot in startSlot..<endSlot {
+            guard charactersBySlot[slot] != nil, characterAnimationsBySlot[slot] == nil else {
+                continue
+            }
+            if let characterAnimation = await gameSession.characterAnimation(forSlot: slot) {
+                characterAnimationsBySlot[slot] = characterAnimation
+            }
         }
     }
 }

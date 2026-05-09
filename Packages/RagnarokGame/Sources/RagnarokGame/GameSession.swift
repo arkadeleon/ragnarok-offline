@@ -97,6 +97,9 @@ final public class GameSession {
     private(set) var characters: [CharacterInfo] = []
     private(set) var character: CharacterInfo?
 
+    var selectedCharacterSlot: Int = 0
+    private(set) var maxCharacterSlots: Int = 9
+
     var playerStatus = CharacterStatus()
     let inventory = Inventory()
     let skillList = SkillList()
@@ -221,6 +224,8 @@ final public class GameSession {
         characters = []
         character = nil
         currentMapServer = nil
+        selectedCharacterSlot = 0
+        maxCharacterSlots = 9
 
         phase = .login(.login)
     }
@@ -458,6 +463,15 @@ final public class GameSession {
         case let packet as PACKET_HC_ACCEPT_ENTER:
             let characters = packet.characters.map(CharacterInfo.init(from:))
             self.characters = characters
+
+            let maxSlots = Int(packet.total)
+            if maxSlots > 0 {
+                maxCharacterSlots = maxSlots
+            } else {
+                let highestSlot = characters.map(\.charNum).max() ?? -1
+                maxCharacterSlots = max(highestSlot + 1, 9)
+            }
+
             phase = .login(.characterSelect(characters))
         case _ as PACKET_HC_REFUSE_ENTER:
             switch phase {
@@ -497,6 +511,7 @@ final public class GameSession {
         case let packet as PACKET_HC_ACCEPT_MAKECHAR:
             let character = CharacterInfo(from: packet.character)
             characters.append(character)
+            selectedCharacterSlot = character.charNum
             phase = .login(.characterSelect(characters))
         case let packet as PACKET_HC_REFUSE_MAKECHAR:
             let message = MakeCharRefusedMessage(from: packet)
@@ -1247,11 +1262,10 @@ final public class GameSession {
 
 extension GameSession {
     func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
-        guard characters.indices.contains(slot) else {
+        guard let character = characters.first(where: { $0.charNum == slot }) else {
             return nil
         }
-
-        return await characterAnimation(for: characters[slot])
+        return await characterAnimation(for: character)
     }
 
     func characterAnimation(for character: CharacterInfo) async -> SpriteRenderer.Animation? {
