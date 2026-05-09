@@ -55,9 +55,12 @@ final public class GameSession {
 
     public enum LoginPhase {
         case login
+        case loggingIn
         case charServerList(_ charServers: [CharServerInfo])
+        case connectingCharServer(_ charServer: CharServerInfo)
         case characterSelect(_ characters: [CharacterInfo])
         case characterMake(_ slot: Int)
+        case waitingForMapServer(_ slot: Int)
     }
 
     public enum MapPhase {
@@ -194,11 +197,17 @@ final public class GameSession {
     // MARK: - Login Client
 
     func login(username: String, password: String) {
+        guard case .login(.login) = phase else {
+            return
+        }
+
         startLoginClient()
 
         guard let loginClient else {
             return
         }
+
+        phase = .login(.loggingIn)
 
         self.username = username
 
@@ -250,6 +259,8 @@ final public class GameSession {
                 selectCharServer(charServers[0])
             } else if charServers.count > 1 {
                 phase = .login(.charServerList(charServers))
+            } else {
+                phase = .login(.login)
             }
 
             startLoginKeepalive()
@@ -258,11 +269,13 @@ final public class GameSession {
             let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID, arguments: message.unblockTime)
             let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
             errorMessages.append(errorMessage)
+            phase = .login(.login)
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)
             let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
             let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
             errorMessages.append(errorMessage)
+            phase = .login(.login)
         default:
             break
         }
@@ -299,6 +312,8 @@ final public class GameSession {
         loginClient?.disconnect()
         loginClient = nil
 
+        phase = .login(.connectingCharServer(charServer))
+
         startCharClient(charServer)
     }
 
@@ -314,9 +329,11 @@ final public class GameSession {
     ///
     /// Send ``PACKET_CH_SELECT_CHAR``
     func selectCharacter(slot: Int) {
-        guard let charClient else {
+        guard case .login(.characterSelect) = phase, let charClient else {
             return
         }
+
+        phase = .login(.waitingForMapServer(slot))
 
         let packet = PacketFactory.CH_SELECT_CHAR(slot: slot)
         charClient.sendPacket(packet)
@@ -338,7 +355,7 @@ final public class GameSession {
     ///
     /// Send ``PACKET_CH_DELETE_CHAR3``
     func deleteCharacter(charID: UInt32) {
-        guard let charClient else {
+        guard case .login(.characterSelect) = phase, let charClient else {
             return
         }
 
@@ -348,7 +365,7 @@ final public class GameSession {
 
     private func startCharClient(_ charServer: CharServerInfo) {
         guard let account else {
-            return
+            preconditionFailure("startCharClient called before account was set")
         }
 
         let client = NetworkClient(
@@ -396,7 +413,8 @@ final public class GameSession {
             self.characters = characters
             phase = .login(.characterSelect(characters))
         case _ as PACKET_HC_REFUSE_ENTER:
-            break
+            // TODO: Show message box with error.
+            phase = .login(.login)
         case let packet as PACKET_HC_NOTIFY_ZONESVR:
             if let character = characters.first(where: { $0.charID == packet.CID }) {
                 self.character = character
@@ -479,7 +497,7 @@ final public class GameSession {
 
     private func startMapClient(character: CharacterInfo, mapServer: MapServerInfo) {
         guard let account else {
-            return
+            preconditionFailure("startMapClient called before account was set")
         }
 
         playerStatus = CharacterStatus(from: character)

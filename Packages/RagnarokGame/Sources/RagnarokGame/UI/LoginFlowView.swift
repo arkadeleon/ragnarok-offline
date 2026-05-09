@@ -26,12 +26,18 @@ struct LoginFlowView: View {
                     switch loginPhase {
                     case .login:
                         LoginView()
+                    case .loggingIn:
+                        LoginLoadingView()
                     case .charServerList(let charServers):
                         CharServerListView(charServers: charServers)
+                    case .connectingCharServer:
+                        LoginLoadingView()
                     case .characterSelect(let characters):
                         CharacterSelectView(characters: characters)
                     case .characterMake(let slot):
                         CharacterMakeView(slot: slot)
+                    case .waitingForMapServer:
+                        LoginLoadingView()
                     }
 
                     ZStack {
