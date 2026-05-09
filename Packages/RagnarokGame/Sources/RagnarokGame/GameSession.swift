@@ -28,6 +28,7 @@ final public class GameSession {
 
     let itemInfoTable: ItemInfoTable
     let skillInfoTable: SkillInfoTable
+    let mapNameTable: MapNameTable
     let messageStringTable: MessageStringTable
 
     public struct Configuration: Codable, Hashable {
@@ -134,6 +135,7 @@ final public class GameSession {
 
         self.itemInfoTable = ItemInfoTable()
         self.skillInfoTable = SkillInfoTable()
+        self.mapNameTable = MapNameTable()
         self.messageStringTable = MessageStringTable()
 
         self.messageCenter = MessageCenter(

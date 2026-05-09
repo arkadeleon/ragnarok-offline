@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2024/9/10.
 //
 
+import RagnarokConstants
+import RagnarokLocalization
 import RagnarokModels
 import RagnarokSprite
 import SwiftUI
@@ -104,11 +106,12 @@ struct CharacterSelectView: View {
                 VStack(spacing: 1) {
                     Group {
                         Text(selectedCharacter.name)
-                        Text(selectedCharacter.job.formatted())
+                        Text(jobName(for: selectedCharacter))
                         Text(selectedCharacter.level.formatted())
                         Text(selectedCharacter.exp.formatted())
                         Text(selectedCharacter.hp.formatted())
                         Text(selectedCharacter.sp.formatted())
+                        Text(mapName(for: selectedCharacter))
                     }
                     .gameText()
                     .frame(width: 95, height: 15)
@@ -211,6 +214,24 @@ struct CharacterSelectView: View {
                 characterAnimationsBySlot.removeValue(forKey: slot)
             }
         }
+    }
+
+    private func jobName(for character: CharacterInfo) -> String {
+        guard let jobID = JobID(rawValue: character.job),
+              let jobName = gameSession.messageStringTable.localizedJobName(for: jobID) else {
+            return ""
+        }
+        return jobName
+    }
+
+    private func mapName(for character: CharacterInfo) -> String {
+        guard !character.mapName.isEmpty else {
+            return ""
+        }
+        guard let mapName = gameSession.mapNameTable.localizedMapName(forMapName: character.mapName) else {
+            return character.mapName
+        }
+        return mapName
     }
 
     private func loadCharacterAnimationsForCurrentPage() async {

@@ -475,23 +475,24 @@ Acceptance:
 - deletion refusal leaves the character intact and shows a message
 - deletion reservation and cancellation do not leave the UI disabled
 
-### Phase 6: Improve character detail display
+### Phase 6: Improve character detail display - Complete
 
 Objective:
 
 - match the old UI information density
 
-Changes:
+Implemented in:
 
-- show job name instead of raw job ID
-- show last map display name if a localization / map-name table is available
-- show current page and slot count metadata from Phase 3
-- preserve existing six-stat and HP/SP display
+- `Packages/RagnarokLocalization/Sources/RagnarokLocalization/MessageStringTable+JobName.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharacterSelectView.swift`
 
-Likely files:
+Current behavior:
 
-- `CharacterSelectView.swift`
-- `RagnarokLocalization` or `RagnarokResources` helpers for job and map names, depending on existing APIs
+- `MessageStringTable+JobName.swift` moved from the app target to `RagnarokLocalization`, making `localizedJobName(for:)` available as a `public` API
+- `GameSession` now holds `mapNameTable: MapNameTable` initialized alongside the other localization tables
+- `CharacterSelectView` displays the localized job name via `messageStringTable.localizedJobName(for:)`, falling back to the raw job ID if the job is unknown
+- `CharacterSelectView` displays the localized map name via `mapNameTable.localizedMapName(forMapName:)`, falling back to the raw map name if the map is unknown; the field is empty for characters with no map
 
 Acceptance:
 

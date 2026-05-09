@@ -1,15 +1,14 @@
 //
 //  MessageStringTable+JobName.swift
-//  RagnarokOffline
+//  RagnarokLocalization
 //
 //  Created by Leon Li on 2025/9/26.
 //
 
 import RagnarokConstants
-import RagnarokLocalization
 
 extension MessageStringTable {
-    func localizedJobName(for jobID: JobID) -> String? {
+    public func localizedJobName(for jobID: JobID) -> String? {
         switch jobID {
         case .novice:
             localizedMessageString(forID: 1680)
