@@ -260,9 +260,9 @@ final public class CharSession: SessionProtocol, @unchecked Sendable {
     /// Send ``PACKET_CH_DELETE_CHAR3``
     ///
     /// Receive ``PACKET_HC_DELETE_CHAR3``
-    public func deleteCharacter(charID: UInt32) {
+    public func deleteCharacter(charID: UInt32, birthdate: String) {
         // `chclif_parse_char_delete2_accept`
-        let packet = PacketFactory.CH_DELETE_CHAR3(charID: charID)
+        let packet = PacketFactory.CH_DELETE_CHAR3(charID: charID, birthdate: birthdate)
         client.sendPacket(packet)
     }
 

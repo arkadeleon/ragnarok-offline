@@ -397,13 +397,13 @@ final public class GameSession {
 
     /// Delete character.
     ///
-    /// Send ``PACKET_CH_DELETE_CHAR3``
+    /// Send ``PACKET_CH_DELETE_CHAR3_RESERVED``, then ``PACKET_CH_DELETE_CHAR3`` on success.
     func deleteCharacter(charID: UInt32) {
         guard case .login(.characterSelect) = phase, let charClient else {
             return
         }
 
-        let packet = PacketFactory.CH_DELETE_CHAR3(charID: charID)
+        let packet = PacketFactory.CH_DELETE_CHAR3_RESERVED(charID: charID)
         charClient.sendPacket(packet)
     }
 
@@ -522,15 +522,27 @@ final public class GameSession {
             break
         case _ as PACKET_HC_REFUSE_DELETECHAR:
             break
+        case let packet as PACKET_HC_DELETE_CHAR3_RESERVED:
+            if packet.result == 1 {
+                let packet = PacketFactory.CH_DELETE_CHAR3(charID: packet.CID, birthdate: "")
+                charClient?.sendPacket(packet)
+            } else {
+                let message = DeleteCharReservedMessage(from: packet)
+                let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                errorMessages.append(errorMessage)
+            }
         case let packet as PACKET_HC_DELETE_CHAR3:
             if packet.result == 1 {
-                // Delete character accepted
+                characters.removeAll(where: { $0.charID == packet.CID })
+                phase = .login(.characterSelect(characters))
             } else {
-                // Delete character refused
+                let message = DeleteCharMessage(from: packet)
+                let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+                errorMessages.append(errorMessage)
             }
         case _ as PACKET_HC_DELETE_CHAR3_CANCEL:
-            break
-        case _ as PACKET_HC_DELETE_CHAR3_RESERVED:
             break
         case _ as PACKET_HC_ACCEPT_ENTER2:
             break

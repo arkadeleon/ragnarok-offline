@@ -124,7 +124,7 @@ Completed acceptance:
 
 ### 1. Character selection is fixed to the first three array entries - Fixed in Phase 3
 
-### 2. Character deletion is not wired through
+### 2. Character deletion is not wired through - Fixed in Phase 5
 
 The current delete button is disabled in `CharacterSelectView`.
 
@@ -148,7 +148,7 @@ Impact:
 
 Priority: P0
 
-### 3. Chunked / modern character-list packets are ignored
+### 3. Chunked / modern character-list packets are ignored - Not applicable
 
 The current flow primarily handles `PACKET_HC_ACCEPT_ENTER`.
 
@@ -409,37 +409,43 @@ Acceptance:
 - creating a character uses the selected empty slot
 - selected character persists across returning to character select
 
-### Phase 4: Support chunked character-list packets
+### Phase 4: Support chunked character-list packets - Dropped
 
-Objective:
+Investigation of the embedded rAthena server (PACKETVER 20211103) showed this phase is not applicable:
 
-- support both the current simple list and the roBrowserLegacy modern/chunked list path
+- `HC_ACCEPT_ENTER` (0x6b) still carries all character data even on PACKETVER >= 20130000
+- `HC_ACCEPT_ENTER2` (0x82d) sends slot metadata only and does not change the character list path
+- `HC_CHARLIST_NOTIFY` (0x9a0) sends `char_slots / 3` as a page count; it is informational and requires no reply
+- `HC_ACK_CHARINFO_PER_PAGE` (0xb72) is only sent in response to an explicit `CH_CHARLIST_REQ` from the client and is not part of the initial login sequence
 
-Changes:
+No code changes are needed. The existing `HC_ACCEPT_ENTER` handler already handles the complete character list correctly.
 
-- handle `PACKET_HC_ACCEPT_ENTER2` / header packet metadata when available
-- handle list chunk packets and append characters to the current char-list accumulator
-- handle `PACKET_HC_CHARLIST_NOTIFY` by sending `PACKET_CH_CHARLIST_REQ` the required number of times
-- transition to character select only when the initial list is complete enough to render
-- preserve max-slot metadata for Phase 3 UI
-
-Likely files:
-
-- `GameSession.swift`
-- `Packages/RagnarokNetwork/Sources/RagnarokNetwork/PacketFactory.swift`
-- generated packets already include `PACKET_CH_CHARLIST_REQ`; add factory helpers if needed
-
-Acceptance:
-
-- simple `HC_ACCEPT_ENTER` still works
-- chunked lists populate the same `characters` array
-- max slots and visible slots are correct with both list styles
-
-### Phase 5: Implement character deletion
+### Phase 5: Implement character deletion - Complete
 
 Objective:
 
 - make deletion usable and keep local state consistent with the char server
+
+Implemented in:
+
+- `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharacterSelectView.swift`
+- `Packages/RagnarokNetwork/Sources/RagnarokNetwork/PacketFactory.swift`
+- `Packages/RagnarokNetwork/Sources/RagnarokNetwork/Sessions/CharSession.swift`
+
+Current behavior:
+
+- `PacketFactory` adds `CH_DELETE_CHAR3_RESERVED(charID:)`, `CH_DELETE_CHAR3(charID:birthdate:)`, and `CH_DELETE_CHAR3_CANCEL(charID:)` factory methods; `CharSession.deleteCharacter` updated accordingly
+- `GameSession.pendingDeleteCharID: UInt32?` tracks the character awaiting birthdate confirmation; reset in `resetLoginPhase()`
+- `deleteCharacter(charID:)` now sends `CH_DELETE_CHAR3_RESERVED` (the initial two-step request)
+- `confirmDeleteCharacter(birthdate:)` sends `CH_DELETE_CHAR3` using the stored `pendingDeleteCharID`
+- `cancelDeleteCharacter()` sends `CH_DELETE_CHAR3_CANCEL` and clears `pendingDeleteCharID`
+- `HC_DELETE_CHAR3_RESERVED` result=1 sets `pendingDeleteCharID` triggering the birthdate dialog; other results show localized error messages (IDs 0x718–0x71b)
+- `HC_DELETE_CHAR3` result=1 removes the character from `characters` and refreshes character select; other results clear `pendingDeleteCharID` and show localized error messages (IDs 0x718–0x71e)
+- `HC_DELETE_CHAR3_CANCEL` result=1 clears `pendingDeleteCharID`
+- `CharacterSelectView` delete button is enabled for occupied slots; disabled while `pendingDeleteCharID` is non-nil
+- First overlay shows delete confirmation (message ID 18); after server reservation succeeds, second overlay shows birthdate `TextField` (YYMMDD) with OK/Cancel
+- Animation cache for deleted slot is removed on character list change
 
 Changes:
 

@@ -68,11 +68,20 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CH_DELETE_CHAR3_RESERVED` | `chclif_parse_char_delete2_req` |
+    public static func CH_DELETE_CHAR3_RESERVED(charID: UInt32) -> PACKET_CH_DELETE_CHAR3_RESERVED {
+        var packet = PACKET_CH_DELETE_CHAR3_RESERVED()
+        packet.packetType = HEADER_CH_DELETE_CHAR3_RESERVED
+        packet.CID = charID
+        return packet
+    }
+
     /// | `PACKET_CH_DELETE_CHAR3` | `chclif_parse_char_delete2_accept` |
-    public static func CH_DELETE_CHAR3(charID: UInt32) -> PACKET_CH_DELETE_CHAR3 {
+    public static func CH_DELETE_CHAR3(charID: UInt32, birthdate: String) -> PACKET_CH_DELETE_CHAR3 {
         var packet = PACKET_CH_DELETE_CHAR3()
         packet.packetType = HEADER_CH_DELETE_CHAR3
         packet.CID = charID
+        packet.birthdate = birthdate
         return packet
     }
 

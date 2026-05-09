@@ -15,6 +15,7 @@ struct CharacterSelectView: View {
     @Environment(GameSession.self) private var gameSession
 
     @State private var characterAnimationsBySlot: [Int : SpriteRenderer.Animation] = [:]
+    @State private var showingDeleteConfirmation = false
     @State private var showingCancelConfirmation = false
 
     private let slotsPerPage = 3
@@ -134,8 +135,8 @@ struct CharacterSelectView: View {
             HStack(spacing: 3) {
                 if selectedCharacter != nil {
                     GameButton("btn_del.bmp") {
+                        showingDeleteConfirmation = true
                     }
-                    .disabled(true)
                 }
             }
             .padding(.horizontal, 5)
@@ -163,7 +164,25 @@ struct CharacterSelectView: View {
             .padding(.vertical, 4)
         }
         .overlay(alignment: .center) {
-            if showingCancelConfirmation {
+            if showingDeleteConfirmation {
+                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 19))
+                    .overlay(alignment: .bottomTrailing) {
+                        HStack(spacing: 3) {
+                            GameButton("btn_ok.bmp") {
+                                if let charID = selectedCharacter?.charID {
+                                    gameSession.deleteCharacter(charID: charID)
+                                }
+                                showingDeleteConfirmation = false
+                            }
+
+                            GameButton("btn_cancel.bmp") {
+                                showingDeleteConfirmation = false
+                            }
+                        }
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 4)
+                    }
+            } else if showingCancelConfirmation {
                 MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 17))
                     .overlay(alignment: .bottomTrailing) {
                         HStack(spacing: 3) {
@@ -185,6 +204,12 @@ struct CharacterSelectView: View {
         }
         .task(id: characters.map(\.charNum).sorted()) {
             await loadCharacterAnimationsForCurrentPage()
+        }
+        .onChange(of: characters.map(\.charNum).sorted()) { oldValue, newValue in
+            let removedSlots = Set(oldValue).subtracting(newValue)
+            for slot in removedSlots {
+                characterAnimationsBySlot.removeValue(forKey: slot)
+            }
         }
     }
 
