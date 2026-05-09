@@ -71,8 +71,23 @@ final public class GameSession {
     public private(set) var phase: GameSession.Phase = .login(.login)
 
     struct ErrorMessage: Identifiable {
+        typealias Action = @MainActor (_ gameSession: GameSession, _ errorMessage: GameSession.ErrorMessage) -> Void
+
         let id = UUID()
         let content: String
+        let action: GameSession.ErrorMessage.Action
+
+        init(content: String, action: GameSession.ErrorMessage.Action? = nil) {
+            self.content = content
+            self.action = action ?? { gameSession, errorMessage in
+                gameSession.removeErrorMessage(errorMessage)
+            }
+        }
+
+        @MainActor
+        func performAction(in gameSession: GameSession) {
+            action(gameSession, self)
+        }
     }
 
     private var username: String?
@@ -172,24 +187,40 @@ final public class GameSession {
         }
     }
 
-    func stopAllSessions() {
-        mapKeepaliveTask?.cancel()
-        mapKeepaliveTask = nil
+    func stopAllClients() {
+        stopMapClient()
+        stopCharClient()
+        stopLoginClient()
 
-        mapClient?.disconnect()
-        mapClient = nil
+        resetLoginPhase()
+    }
 
-        charKeepaliveTask?.cancel()
-        charKeepaliveTask = nil
+    func exitCurrentPhase() {
+        switch phase {
+        case .login(.login):
+            stopAllClients()
+        case .login(.loggingIn), .login(.charServerList):
+            stopLoginClient()
+            resetLoginPhase()
+        case .login(.connectingCharServer), .login(.characterSelect):
+            stopCharClient()
+            resetLoginPhase()
+        case .login(.characterMake):
+            phase = .login(.characterSelect(characters))
+        case .login(.waitingForMapServer):
+            stopMapClient()
+            stopCharClient()
+            resetLoginPhase()
+        case .map:
+            stopAllClients()
+        }
+    }
 
-        charClient?.disconnect()
-        charClient = nil
-
-        loginKeepaliveTask?.cancel()
-        loginKeepaliveTask = nil
-
-        loginClient?.disconnect()
-        loginClient = nil
+    private func resetLoginPhase() {
+        account = nil
+        characters = []
+        character = nil
+        currentMapServer = nil
 
         phase = .login(.login)
     }
@@ -247,6 +278,14 @@ final public class GameSession {
         self.loginClient = client
     }
 
+    private func stopLoginClient() {
+        loginKeepaliveTask?.cancel()
+        loginKeepaliveTask = nil
+
+        loginClient?.disconnect()
+        loginClient = nil
+    }
+
     private func handleLoginPacket(_ packet: any DecodablePacket) {
         switch packet {
         case let packet as PACKET_AC_ACCEPT_LOGIN:
@@ -265,17 +304,25 @@ final public class GameSession {
 
             startLoginKeepalive()
         case let packet as PACKET_AC_REFUSE_LOGIN:
+            stopLoginClient()
+
             let message = LoginRefusedMessage(from: packet)
             let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID, arguments: message.unblockTime)
-            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                gameSession.removeErrorMessage(errorMessage)
+                gameSession.resetLoginPhase()
+            }
             errorMessages.append(errorMessage)
-            phase = .login(.login)
         case let packet as PACKET_SC_NOTIFY_BAN:
+            stopLoginClient()
+
             let message = BannedMessage(from: packet)
             let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
-            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                gameSession.removeErrorMessage(errorMessage)
+                gameSession.resetLoginPhase()
+            }
             errorMessages.append(errorMessage)
-            phase = .login(.login)
         default:
             break
         }
@@ -306,11 +353,7 @@ final public class GameSession {
     // MARK: - Char Client
 
     func selectCharServer(_ charServer: CharServerInfo) {
-        loginKeepaliveTask?.cancel()
-        loginKeepaliveTask = nil
-
-        loginClient?.disconnect()
-        loginClient = nil
+        stopLoginClient()
 
         phase = .login(.connectingCharServer(charServer))
 
@@ -319,10 +362,6 @@ final public class GameSession {
 
     func makeCharacter(slot: Int) {
         phase = .login(.characterMake(slot))
-    }
-
-    func cancelMakeCharacter() {
-        phase = .login(.characterSelect(characters))
     }
 
     /// Select character.
@@ -406,6 +445,14 @@ final public class GameSession {
         startCharKeepalive()
     }
 
+    private func stopCharClient() {
+        charKeepaliveTask?.cancel()
+        charKeepaliveTask = nil
+
+        charClient?.disconnect()
+        charClient = nil
+    }
+
     private func handleCharPacket(_ packet: any DecodablePacket) {
         switch packet {
         case let packet as PACKET_HC_ACCEPT_ENTER:
@@ -413,23 +460,40 @@ final public class GameSession {
             self.characters = characters
             phase = .login(.characterSelect(characters))
         case _ as PACKET_HC_REFUSE_ENTER:
-            // TODO: Show message box with error.
-            phase = .login(.login)
+            switch phase {
+            case .login(.waitingForMapServer):
+                let localizedMessage = messageStringTable.localizedMessageString(forID: 9)
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                    gameSession.removeErrorMessage(errorMessage)
+                    gameSession.phase = .login(.characterSelect(gameSession.characters))
+                }
+                errorMessages.append(errorMessage)
+            default:
+                stopCharClient()
+
+                let localizedMessage = messageStringTable.localizedMessageString(forID: 9)
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                    gameSession.removeErrorMessage(errorMessage)
+                    gameSession.resetLoginPhase()
+                }
+                errorMessages.append(errorMessage)
+            }
         case let packet as PACKET_HC_NOTIFY_ZONESVR:
             if let character = characters.first(where: { $0.charID == packet.CID }) {
                 self.character = character
                 let mapServer = MapServerInfo(from: packet)
 
-                charKeepaliveTask?.cancel()
-                charKeepaliveTask = nil
-
-                charClient?.disconnect()
-                charClient = nil
+                stopCharClient()
 
                 startMapClient(character: character, mapServer: mapServer)
             }
         case _ as PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME:
-            break
+            let localizedMessage = messageStringTable.localizedMessageString(forID: 1811)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                gameSession.removeErrorMessage(errorMessage)
+                gameSession.phase = .login(.characterSelect(gameSession.characters))
+            }
+            errorMessages.append(errorMessage)
         case let packet as PACKET_HC_ACCEPT_MAKECHAR:
             let character = CharacterInfo(from: packet.character)
             characters.append(character)
@@ -462,9 +526,14 @@ final public class GameSession {
         case _ as PACKET_HC_BLOCK_CHARACTER:
             break
         case let packet as PACKET_SC_NOTIFY_BAN:
+            stopCharClient()
+
             let message = BannedMessage(from: packet)
             let localizedMessage = messageStringTable.localizedMessageString(forID: message.messageID)
-            let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                gameSession.removeErrorMessage(errorMessage)
+                gameSession.resetLoginPhase()
+            }
             errorMessages.append(errorMessage)
         default:
             break
@@ -556,52 +625,39 @@ final public class GameSession {
         startMapKeepalive()
     }
 
-    /// Keep alive.
-    ///
-    /// Send ``PACKET_CZ_REQUEST_TIME`` every 10 seconds.
-    private func startMapKeepalive() {
-        guard let mapClient else {
-            return
-        }
+    private func stopMapClient() {
+        mapKeepaliveTask?.cancel()
+        mapKeepaliveTask = nil
 
-        let startTime = Date.now
-
-        mapKeepaliveTask = Task {
-            do {
-                while !Task.isCancelled {
-                    try await Task.sleep(for: .seconds(10))
-
-                    let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
-                    mapClient.sendPacket(packet)
-                }
-            } catch {
-                logger.warning("\(error)")
-            }
-        }
+        mapClient?.disconnect()
+        mapClient = nil
     }
 
     private func handleMapPacket(_ packet: any DecodablePacket) {
         switch packet {
         case _ as PACKET_ZC_ACCEPT_ENTER:
             break
+        case _ as PACKET_ZC_REFUSE_ENTER:
+            stopMapClient()
+
+            let localizedMessage = messageStringTable.localizedMessageString(forID: 9)
+            let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                gameSession.removeErrorMessage(errorMessage)
+                gameSession.resetLoginPhase()
+            }
+            errorMessages.append(errorMessage)
         case let packet as PACKET_ZC_RESTART_ACK:
             if packet.type == 1 {
-                mapKeepaliveTask?.cancel()
-                mapKeepaliveTask = nil
+                stopMapClient()
 
-                mapClient?.disconnect()
-                mapClient = nil
-
+                currentMapServer = nil
                 phase = .login(.characterSelect(characters))
             }
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
             if packet.result == 0 {
-                mapKeepaliveTask?.cancel()
-                mapKeepaliveTask = nil
+                stopMapClient()
 
-                mapClient?.disconnect()
-                mapClient = nil
-
+                currentMapServer = nil
                 phase = .login(.characterSelect(characters))
             }
         case let packet as PACKET_ZC_AID:
@@ -885,6 +941,30 @@ final public class GameSession {
             break
         default:
             break
+        }
+    }
+
+    /// Keep alive.
+    ///
+    /// Send ``PACKET_CZ_REQUEST_TIME`` every 10 seconds.
+    private func startMapKeepalive() {
+        guard let mapClient else {
+            return
+        }
+
+        let startTime = Date.now
+
+        mapKeepaliveTask = Task {
+            do {
+                while !Task.isCancelled {
+                    try await Task.sleep(for: .seconds(10))
+
+                    let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
+                    mapClient.sendPacket(packet)
+                }
+            } catch {
+                logger.warning("\(error)")
+            }
         }
     }
 

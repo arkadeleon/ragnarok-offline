@@ -24,6 +24,7 @@ struct CharacterSelectView: View {
     @State private var characterAnimation3: SpriteRenderer.Animation?
 
     @State private var selectedSlot: Int?
+    @State private var showingCancelConfirmation = false
 
     private var selectedCharacter: CharacterInfo? {
         guard let selectedSlot else {
@@ -133,7 +134,7 @@ struct CharacterSelectView: View {
         .frame(width: 576, height: 342)
         .overlay(alignment: .bottomLeading) {
             HStack(spacing: 3) {
-                if let selectedCharacter {
+                if selectedCharacter != nil {
                     GameButton("btn_del.bmp") {
                     }
                     .disabled(true)
@@ -157,10 +158,29 @@ struct CharacterSelectView: View {
                 }
 
                 GameButton("btn_cancel.bmp") {
+                    showingCancelConfirmation = true
                 }
             }
             .padding(.horizontal, 5)
             .padding(.vertical, 4)
+        }
+        .overlay(alignment: .center) {
+            if showingCancelConfirmation {
+                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 17))
+                    .overlay(alignment: .bottomTrailing) {
+                        HStack(spacing: 3) {
+                            GameButton("btn_ok.bmp") {
+                                gameSession.exitCurrentPhase()
+                            }
+
+                            GameButton("btn_cancel.bmp") {
+                                showingCancelConfirmation = false
+                            }
+                        }
+                        .padding(.horizontal, 5)
+                        .padding(.vertical, 4)
+                    }
+            }
         }
         .task {
             character1 = characters.count > 0 ? characters[0] : nil

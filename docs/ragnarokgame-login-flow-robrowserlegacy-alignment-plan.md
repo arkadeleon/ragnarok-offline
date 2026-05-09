@@ -92,6 +92,34 @@ Phase 1 intentionally does not complete:
 - common error-routing helpers
 - cancel / back navigation
 
+### Phase 2: Completed
+
+Implemented in:
+
+- `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharServerListView.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharacterSelectView.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharacterMakeView.swift`
+
+Current behavior:
+
+- `GameSession.exitCurrentPhase()` is the single phase-exit entry point for login-flow screens
+- server-list cancel stops the login keepalive, disconnects the login client, clears login-flow state, and returns to login
+- character-select cancel shows a confirmation message box before calling `GameSession.exitCurrentPhase()`, which stops the char keepalive, disconnects the char client, clears login-flow state, and returns to login
+- character-creation cancel calls `GameSession.exitCurrentPhase()` and continues to return to character select
+- login refusal, login ban, char refusal, char ban, map unavailable, and map refusal now append localized message-box errors consistently
+- `GameSession.ErrorMessage` owns the OK button action, with dismissal as the default action
+- refusal and unavailable errors keep the current phase visible until OK is clicked, then their message action performs the recovery transition
+- char-server refusal stops the stale char connection and returns to login with a localized error
+- map unavailable from the char server clears the map wait loading phase and returns to character select with a localized error
+- map-server refusal after map handoff stops the map connection and returns to login, because the char connection has already been closed by that point
+
+Completed acceptance:
+
+- server-list, character-select, and character-creation cancel buttons now have deterministic behavior
+- canceling login or character-select phases leaves no active stale client for that phase
+- refusal and unavailable responses show message-box errors consistently
+
 ## Confirmed Gaps
 
 ### 1. Character selection is fixed to the first three array entries
@@ -157,7 +185,7 @@ Priority: P0
 
 Current refused login and login-ban packets append error messages and return to the login screen. Char-server refusal also clears the loading screen by returning to login.
 
-Remaining protocol-level refusal handling is still incomplete: char-server refusal has no user-facing message, map-server unavailable packets are ignored, and related recovery paths are not routed through shared error presentation.
+Phase 2 now covers the main recovery paths by showing localized message-box errors for char-server refusal, map-server unavailable packets, and map-server refusal.
 
 roBrowserLegacy re-appends the appropriate UI after refused login and unavailable map responses.
 
@@ -325,7 +353,7 @@ Deferred to later phases:
 - shared handling for protocol-level refusal messages
 - cleanup of stale login or char clients on cancel paths
 
-### Phase 2: Fix cancel, back, and failure recovery
+### Phase 2: Fix cancel, back, and failure recovery - Complete
 
 Objective:
 
@@ -356,6 +384,15 @@ Acceptance:
 - every cancel button does something deterministic
 - ESC/back-equivalent behavior can be layered on top without changing session semantics
 - canceling a phase leaves no active stale client for that phase
+
+Implemented:
+
+- added `GameSession.exitCurrentPhase()` as the unified phase-exit entry point
+- added client-stop helpers in `GameSession`
+- routed server-list, character-select, and character-creation cancel buttons through `GameSession.exitCurrentPhase()`
+- kept character-select confirmation in the view before calling `GameSession.exitCurrentPhase()`
+- routed login refusal, login ban, char refusal, char ban, map unavailable, and map refusal to consistent message-box errors
+- preserved character-creation cancel returning to character select
 
 ### Phase 3: Replace fixed three-character storage with slot paging
 

@@ -30,10 +30,14 @@ struct CharServerListView: View {
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
                 GameButton("btn_ok.bmp") {
-                    gameSession.selectCharServer(charServers[0])
+                    if let charServer = charServers.first {
+                        gameSession.selectCharServer(charServer)
+                    }
                 }
+                .disabled(charServers.isEmpty)
 
                 GameButton("btn_cancel.bmp") {
+                    gameSession.exitCurrentPhase()
                 }
             }
             .padding(.horizontal, 5)

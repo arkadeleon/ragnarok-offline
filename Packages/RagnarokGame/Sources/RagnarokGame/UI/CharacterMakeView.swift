@@ -168,7 +168,7 @@ struct CharacterMakeView: View {
                 .disabled(character.name.isEmpty)
 
                 GameButton("btn_cancel.bmp") {
-                    gameSession.cancelMakeCharacter()
+                    gameSession.exitCurrentPhase()
                 }
             }
             .padding(.horizontal, 5)

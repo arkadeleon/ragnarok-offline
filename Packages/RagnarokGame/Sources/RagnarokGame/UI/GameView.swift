@@ -27,7 +27,7 @@ public struct GameView: View {
         }
         .environment(gameSession)
         .environment(\.exitGame, ExitGameAction {
-            gameSession.stopAllSessions()
+            gameSession.stopAllClients()
             onExit()
         })
         .persistentSystemOverlays(.hidden)
