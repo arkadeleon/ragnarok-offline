@@ -16,6 +16,7 @@ struct CharacterMakeView: View {
 
     @State private var character = CharacterInfo()
     @State private var characterAnimation: SpriteRenderer.Animation?
+    @State private var startDate: Date = .now
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -33,34 +34,37 @@ struct CharacterMakeView: View {
 
             Group {
                 GameButton("scroll0up.bmp") {
-                    if character.headPalette == 8 {
-                        character.headPalette = 0
-                    } else {
-                        character.headPalette += 1
-                    }
+                    character.headPalette = (character.headPalette + 1) % 10
                 }
                 .offset(x: 87, y: 105)
 
                 GameButton("scroll1left.bmp") {
-                    character.head -= 1
+                    character.head = character.head <= 2 ? 26 : character.head - 1
                 }
                 .offset(x: 47, y: 135)
-                .disabled(character.head == 0)
 
                 GameButton("scroll1right.bmp") {
-                    character.head += 1
+                    character.head = character.head >= 26 ? 2 : character.head + 1
                 }
                 .offset(x: 127, y: 135)
-                .disabled(character.head == 12)
             }
             .frame(width: 13, height: 13)
 
-            Canvas { context, size in
-                if let characterAnimation, let firstFrame = characterAnimation.firstFrame {
-                    var rect = CGRect(x: 0, y: 0, width: characterAnimation.frameWidth, height: characterAnimation.frameHeight)
-                    rect.origin.x = (size.width - characterAnimation.frameWidth) / 2
-                    rect.origin.y = (size.height - characterAnimation.frameHeight) / 2
-                    context.draw(Image(decorative: firstFrame, scale: 2), in: rect)
+            TimelineView(.periodic(from: .now, by: 0.1)) { timelineContext in
+                Canvas { graphicsContext, size in
+                    if let characterAnimation {
+                        let frames = characterAnimation.frames
+                        let frameInterval = Double(characterAnimation.frameInterval)
+                        let elapsed = timelineContext.date.timeIntervalSince(startDate)
+                        let frameIndex = Int(elapsed / frameInterval) % frames.count
+                        if frames.indices.contains(frameIndex), let frame = frames[frameIndex] {
+                            let image = Image(decorative: frame, scale: 2)
+                            var rect = CGRect(x: 0, y: 0, width: characterAnimation.frameWidth, height: characterAnimation.frameHeight)
+                            rect.origin.x = (size.width - characterAnimation.frameWidth) / 2
+                            rect.origin.y = (size.height - characterAnimation.frameHeight) / 2
+                            graphicsContext.draw(image, in: rect)
+                        }
+                    }
                 }
             }
             .frame(width: 65, height: 110)
@@ -68,7 +72,7 @@ struct CharacterMakeView: View {
 
             Group {
                 GameButton("login_interface/arw-str0.bmp") {
-                    if character.str != 9 {
+                    if character.str < 9 && character.int > 1 {
                         character.str += 1
                         character.int -= 1
                     }
@@ -76,7 +80,7 @@ struct CharacterMakeView: View {
                 .offset(x: 270, y: 50)
 
                 GameButton("login_interface/arw-agi0.bmp") {
-                    if character.agi != 9 {
+                    if character.agi < 9 && character.luk > 1 {
                         character.agi += 1
                         character.luk -= 1
                     }
@@ -84,7 +88,7 @@ struct CharacterMakeView: View {
                 .offset(x: 191, y: 103)
 
                 GameButton("login_interface/arw-vit0.bmp") {
-                    if character.vit != 9 {
+                    if character.vit < 9 && character.dex > 1 {
                         character.vit += 1
                         character.dex -= 1
                     }
@@ -92,7 +96,7 @@ struct CharacterMakeView: View {
                 .offset(x: 348, y: 104)
 
                 GameButton("login_interface/arw-int0.bmp") {
-                    if character.int != 9 {
+                    if character.int < 9 && character.str > 1 {
                         character.int += 1
                         character.str -= 1
                     }
@@ -100,7 +104,7 @@ struct CharacterMakeView: View {
                 .offset(x: 270, y: 243)
 
                 GameButton("login_interface/arw-dex0.bmp") {
-                    if character.dex != 9 {
+                    if character.dex < 9 && character.vit > 1 {
                         character.dex += 1
                         character.vit -= 1
                     }
@@ -108,7 +112,7 @@ struct CharacterMakeView: View {
                 .offset(x: 191, y: 190)
 
                 GameButton("login_interface/arw-luk0.bmp") {
-                    if character.luk != 9 {
+                    if character.luk < 9 && character.agi > 1 {
                         character.luk += 1
                         character.agi -= 1
                     }
@@ -176,7 +180,7 @@ struct CharacterMakeView: View {
         }
         .task {
             character.job = 0           // Novice
-            character.head = 0          // First hair style in the list
+            character.head = 2          // First hair style in the list
             character.headPalette = 0   // Default hair color
             character.str = 5
             character.agi = 5
@@ -191,7 +195,17 @@ struct CharacterMakeView: View {
             }
         }
         .task(id: "\(character.head), \(character.headPalette)") {
-            characterAnimation = await gameSession.characterAnimation(for: character)
+            let directions = SpriteDirection.allCases
+            var directionIndex = 0
+            while !Task.isCancelled {
+                let direction = directions[directionIndex % directions.count]
+                if let characterAnimation = await gameSession.characterAnimation(for: character, direction: direction) {
+                    self.characterAnimation = characterAnimation
+                    startDate = .now
+                }
+                try? await Task.sleep(for: .seconds(1))
+                directionIndex += 1
+            }
         }
     }
 }

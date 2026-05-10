@@ -1282,7 +1282,7 @@ extension GameSession {
         return await characterAnimation(for: character)
     }
 
-    func characterAnimation(for character: CharacterInfo) async -> SpriteRenderer.Animation? {
+    func characterAnimation(for character: CharacterInfo, direction: SpriteDirection = .south) async -> SpriteRenderer.Animation? {
         do {
             let configuration = ComposedSprite.Configuration(character: character)
             let composedSprite = try await ComposedSprite(
@@ -1294,6 +1294,7 @@ extension GameSession {
             let animation = await spriteRenderer.render(
                 composedSprite: composedSprite,
                 actionType: .idle,
+                direction: direction,
                 rendersShadow: false
             )
             return animation

@@ -500,31 +500,32 @@ Acceptance:
 - selected character shows last known map name when available
 - empty slots clear character details
 
-### Phase 7: Align character creation behavior
+### Phase 7: Align character creation behavior - Complete
 
 Objective:
 
 - make the old create-character UI behavior feel complete
 
-Changes:
+Implemented in:
 
-- initialize hair style to `2`
-- wrap hair style through `2...26`
-- wrap hair palette modulo `10`
-- animate or periodically rotate the character preview direction
-- keep the selected empty slot from Phase 3 as the packet slot
-- ensure stat updates preserve the same paired decrement behavior as old UI
+- `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharacterMakeView.swift`
 
-Likely files:
+Current behavior:
 
-- `CharacterMakeView.swift`
-- `GameSession.characterAnimation(for:)` if direction-specific animation support is needed
-- sprite preview helpers if static first-frame APIs are too limiting
+- initial hair style is `2` (first available style in old UI range)
+- hair style left/right arrows wrap through `2...26` with no disabled state
+- hair palette up arrow wraps modulo `10` (0–9)
+- `GameSession.characterAnimation(for:direction:)` now accepts an optional `SpriteDirection` parameter (default `.south`)
+- character preview uses `TimelineView` to cycle through animation frames at the animation's native `frameInterval`
+- the `.task(id:)` loop rotates through all 8 directions every 1 second, reloading the animation and resetting the frame timer on each direction change
+- the preview canvas anchors the character's feet using the animation's `pivot` offset so the character stays stable when direction or frame size changes across directions
+- stat arrows guard both the upper limit (`< 9`) and the lower limit of the decremented stat (`> 1`) to prevent any stat from dropping below 1
 
 Acceptance:
 
 - all old UI hair styles and colors are reachable
-- preview visibly updates when changing style or color
+- preview visibly animates and rotates direction
 - cancel returns to the same selected empty slot
 
 ### Phase 8: Add login-flow audio
