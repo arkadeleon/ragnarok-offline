@@ -155,6 +155,7 @@ struct CharacterSelectView: View {
 
                 if selectedCharacter != nil {
                     GameButton("btn_ok.bmp") {
+                        gameSession.loginAudioPlayer.playButtonSound()
                         gameSession.selectCharacter(slot: gameSession.selectedCharacterSlot)
                     }
                 }

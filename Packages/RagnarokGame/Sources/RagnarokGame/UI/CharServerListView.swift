@@ -31,6 +31,7 @@ struct CharServerListView: View {
             HStack(spacing: 3) {
                 GameButton("btn_ok.bmp") {
                     if let charServer = charServers.first {
+                        gameSession.loginAudioPlayer.playButtonSound()
                         gameSession.selectCharServer(charServer)
                     }
                 }

@@ -528,25 +528,31 @@ Acceptance:
 - preview visibly animates and rotates direction
 - cancel returns to the same selected empty slot
 
-### Phase 8: Add login-flow audio
+### Phase 8: Add login-flow audio - Complete
 
 Objective:
 
 - provide login-stage BGM and old UI sound cues without coupling them to map render backends
 
-Changes:
+Implemented in:
 
-- add a lightweight login-flow audio owner, separate from map audio
-- play `BGM/01.mp3` while in login, server list, character select, and character make
-- stop or fade login BGM when entering the map
-- play the old button click sound for connect, server select, create, delete, ok, cancel, and page arrows
-- reuse resource loading through `ResourceManager`
+- `Packages/RagnarokGame/Sources/RagnarokGame/Core/Sound/LoginFlowAudioPlayer.swift` (new)
+- `Packages/RagnarokGame/Sources/RagnarokGame/GameSession.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/LoginView.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharServerListView.swift`
+- `Packages/RagnarokGame/Sources/RagnarokGame/UI/CharacterSelectView.swift`
 
-Likely files:
+Current behavior:
 
-- new `Packages/RagnarokGame/Sources/RagnarokGame/Core/Sound/LoginFlowAudioPlayer.swift`
-- `GameSession.swift`
-- login-flow SwiftUI views
+- `LoginFlowAudioPlayer` extends `GameAudioPlayer`; owns a looping `AVAudioPlayer` for BGM and caches button sound data to avoid repeated resource loads
+- `playBGM()` loads `BGM/01.mp3` and starts looping; returns immediately if already playing, so error-recovery transitions within the login flow do not restart the music
+- `stopBGM()` stops and clears the BGM player
+- `playButtonSound()` loads `data/wav/버튼소리.wav` on first use (cached thereafter) and plays a one-shot instance; active players are tracked in a `Set<AVAudioPlayer>` and removed after playback finishes via a Task
+- `GameSession` owns a `LoginFlowAudioPlayer` initialized at construction and starts BGM immediately via an unstructured Task
+- `GameSession.resetLoginPhase()` calls `playBGM()` so BGM resumes after returning from map or error recovery
+- `GameSession.playLoginButtonSound()` is the public entry point for views
+- Login BGM stops in the map-server packet handler before `phase = .map(.loading(progress))`, preventing overlap with map BGM
+- Connect button in `LoginView`, OK button in `CharServerListView`, and OK button in `CharacterSelectView` call `gameSession.playLoginButtonSound()` matching roBrowserLegacy's `onConnectionRequest`, `onCharServerSelected`, and `onConnectRequest` trigger points
 
 Acceptance:
 

@@ -50,6 +50,7 @@ struct LoginView: View {
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
                 GameButton("login_interface/btn_connect.bmp") {
+                    gameSession.loginAudioPlayer.playButtonSound()
                     gameSession.login(
                         username: username,
                         password: password

@@ -108,6 +108,8 @@ final public class GameSession {
     var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
 
+    @ObservationIgnored let loginAudioPlayer: LoginFlowAudioPlayer
+
     @ObservationIgnored var loginClient: NetworkClient?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
 
@@ -142,6 +144,8 @@ final public class GameSession {
             itemInfoTable: itemInfoTable,
             messageStringTable: messageStringTable
         )
+
+        self.loginAudioPlayer = LoginFlowAudioPlayer(resourceManager: resourceManager)
     }
 
     // MARK: - Public

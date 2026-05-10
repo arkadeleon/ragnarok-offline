@@ -59,6 +59,14 @@ struct LoginFlowView: View {
             }
         }
         .ignoresSafeArea()
+        .onAppear {
+            Task {
+                await gameSession.loginAudioPlayer.playBGM()
+            }
+        }
+        .onDisappear {
+            gameSession.loginAudioPlayer.stopBGM()
+        }
     }
 }
 
