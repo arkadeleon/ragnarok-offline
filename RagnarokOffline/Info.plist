@@ -177,18 +177,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSUbiquitousContainers</key>
-	<dict>
-		<key>iCloud.com.github.arkadeleon.ragnarok-offline</key>
-		<dict>
-			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
-			<true/>
-			<key>NSUbiquitousContainerName</key>
-			<string>Ragnarok Offline</string>
-			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-			<string>ANY</string>
-		</dict>
-	</dict>
 	<key>UIFileSharingEnabled</key>
 	<true/>
 	<key>UTExportedTypeDeclarations</key>

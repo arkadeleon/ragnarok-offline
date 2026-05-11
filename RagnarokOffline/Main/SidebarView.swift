@@ -10,7 +10,6 @@ import SwiftUI
 
 enum SidebarItem: Hashable {
     case clientLocalFiles
-    case clientSyncedFiles(File)
     case clientCachedFiles
     case gameClient
     case chatClient
@@ -58,12 +57,6 @@ struct SidebarView: View {
             Section(isExpanded: $isClientSectionExpanded) {
                 NavigationLink(value: SidebarItem.clientLocalFiles) {
                     SidebarRow("Local Files", iconName: "folder.fill", iconColor: .blue)
-                }
-
-                if let clientSyncedDirectory = appModel.clientSyncedDirectory {
-                    NavigationLink(value: SidebarItem.clientSyncedFiles(clientSyncedDirectory)) {
-                        SidebarRow("Synced Files", iconName: "folder.fill", iconColor: .blue)
-                    }
                 }
 
                 NavigationLink(value: SidebarItem.clientCachedFiles) {

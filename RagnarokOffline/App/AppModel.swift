@@ -27,7 +27,6 @@ final class AppModel {
     let settings = SettingsModel()
 
     let clientLocalDirectory = File(node: .directory(localClientURL), location: .client)
-    var clientSyncedDirectory: File?
     let clientCachedDirectory = File(node: .directory(remoteClientCacheURL), location: .client)
 
     let serverDirectory = File(node: .directory(serverWorkingDirectoryURL), location: .server)
@@ -54,22 +53,6 @@ final class AppModel {
             serverAddress: settings.serverAddress,
             serverPort: settings.serverPort
         )
-
-        Task.detached {
-            let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)
-            guard let containerURL else {
-                return
-            }
-
-            let documentsURL = containerURL.appending(component: "Documents")
-            let dataURL = documentsURL.appending(component: "data")
-
-            try? FileManager.default.createDirectory(at: dataURL, withIntermediateDirectories: true)
-
-            Task { @MainActor in
-                self.clientSyncedDirectory = File(node: .directory(documentsURL), location: .client)
-            }
-        }
     }
 
     func startServer(_ server: ServerModel) async throws {

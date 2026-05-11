@@ -58,8 +58,6 @@ struct ContentView: View {
         switch item {
         case .clientLocalFiles:
             FilesView("Local Files", directory: appModel.clientLocalDirectory)
-        case .clientSyncedFiles(let directory):
-            FilesView("Synced Files", directory: directory)
         case .clientCachedFiles:
             FilesView("Cached Files", directory: appModel.clientCachedDirectory)
         case .gameClient:

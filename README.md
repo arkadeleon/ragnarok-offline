@@ -48,5 +48,3 @@ visionOS Simulator | No certificate or provisioning profile is required.
 Connected iPhone or iPad | Requires Xcode signing with an Apple ID or Apple Developer Program team. A real device must trust the developer profile and the bundle identifier must be unique to your team.
 Connected Apple Vision Pro | Requires Xcode signing with an Apple Developer Program team and a valid provisioning profile for the device.
 macOS distribution outside Xcode | Requires a Developer ID certificate and notarization if you want other Macs to run the app without Gatekeeper warnings.
-
-The main app currently includes iCloud entitlements for the container `iCloud.com.github.arkadeleon.ragnarok-offline`. Simulator builds usually do not need you to create this container. Real-device builds and distributed builds need an iCloud container registered under your own Apple Developer team, or you need to remove the iCloud capability for local testing.

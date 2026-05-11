@@ -140,7 +140,7 @@ Current packages under `Packages/`:
 ### App Model
 
 `RagnarokOffline/App/AppModel.swift` is the central composition root. It owns:
-- Resource directories for local, iCloud, and cached remote client data
+- Resource directories for local and cached remote client data
 - Embedded login/char/map/web server models
 - Database browsing state
 - Chat, game, character simulator, and skill simulator state
