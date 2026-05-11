@@ -11,11 +11,14 @@ struct FilesView: View {
     var titleKey: LocalizedStringKey?
     var directory: File
 
+    @Environment(\.fileSystem) private var fileSystem
+
     @State private var loadStatus: LoadStatus = .notYetLoaded
     @State private var searchText = ""
     @State private var files: [File] = []
     @State private var filteredFiles: [File] = []
 
+    @State private var isExtracting = false
     @State private var isFileImporterPresented = false
 
     var body: some View {
@@ -24,12 +27,12 @@ struct FilesView: View {
                 NavigationLink(value: file) {
                     FileGridCell(file: file)
                 }
-                .fileContextMenu(file: file, onDelete: onDeleteFile)
+                .fileContextMenu(file: file, onExtract: onExtractFile, onDelete: onDeleteFile)
             } else {
                 NavigationLink(value: file) {
                     FileGridCell(file: file)
                 }
-                .fileContextMenu(file: file, onDelete: onDeleteFile)
+                .fileContextMenu(file: file, onExtract: onExtractFile, onDelete: onDeleteFile)
             }
         }
         .background(.background)
@@ -47,6 +50,11 @@ struct FilesView: View {
         .overlay {
             if loadStatus == .loaded && filteredFiles.isEmpty {
                 ContentUnavailableView("No Files", systemImage: "folder.fill")
+            }
+        }
+        .overlay {
+            if isExtracting {
+                ProgressHUD()
             }
         }
         .fileImporter(
@@ -127,6 +135,26 @@ struct FilesView: View {
         } else {
             filteredFiles = files.filter { file in
                 file.name.localizedStandardContains(searchText)
+            }
+        }
+    }
+
+    private func onExtractFile(_ file: File) {
+        guard !isExtracting else {
+            return
+        }
+
+        isExtracting = true
+
+        Task {
+            defer {
+                isExtracting = false
+            }
+
+            do {
+                try await fileSystem.extractFile(file)
+            } catch {
+                logger.warning("\(error)")
             }
         }
     }

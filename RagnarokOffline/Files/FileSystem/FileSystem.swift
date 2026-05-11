@@ -5,17 +5,18 @@
 //  Created by Leon Li on 2024/5/24.
 //
 
-import RagnarokCore
 import SwiftUI
 
 final class FileSystem: Sendable {
+    private let fileExtractor = FileExtractor()
+
     func canExtractFile(_ file: File) -> Bool {
         guard file.location == .client else {
             return false
         }
 
         switch file.node {
-        case .grfArchiveNode(_, let node) where !node.isDirectory:
+        case .grfArchiveNode:
             return true
         default:
             return false
@@ -23,22 +24,7 @@ final class FileSystem: Sendable {
     }
 
     func extractFile(_ file: File) async throws {
-        guard file.location == .client else {
-            return
-        }
-
-        guard case .grfArchiveNode(let grfArchive, let node) = file.node, !node.isDirectory else {
-            return
-        }
-
-        let contents = try await grfArchive.contentsOfEntryNode(at: node.path)
-
-        let path = node.path.components.map(L2K).joined(separator: "/")
-        let url = grfArchive.url.deletingLastPathComponent().appending(path: path)
-        let directory = url.deletingLastPathComponent()
-
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try contents.write(to: url)
+        try await fileExtractor.extract(file)
     }
 
     func canDeleteFile(_ file: File) -> Bool {

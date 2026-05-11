@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FileContextMenu: ViewModifier {
     var file: File
+    var onExtract: ((File) -> Void)?
     var onDelete: ((File) -> Void)?
 
     @Environment(\.fileSystem) private var fileSystem
@@ -25,15 +26,9 @@ struct FileContextMenu: ViewModifier {
                 }
 
                 Section {
-                    if fileSystem.canExtractFile(file) {
+                    if fileSystem.canExtractFile(file), let onExtract {
                         Button {
-                            Task {
-                                do {
-                                    try await fileSystem.extractFile(file)
-                                } catch {
-                                    logger.warning("\(error)")
-                                }
-                            }
+                            onExtract(file)
                         } label: {
                             Label("Extract", systemImage: "arrow.up.bin")
                         }
@@ -63,8 +58,12 @@ struct FileContextMenu: ViewModifier {
 }
 
 extension View {
-    func fileContextMenu(file: File, onDelete: ((File) -> Void)? = nil) -> some View {
-        modifier(FileContextMenu(file: file, onDelete: onDelete))
+    func fileContextMenu(
+        file: File,
+        onExtract: ((File) -> Void)? = nil,
+        onDelete: ((File) -> Void)? = nil
+    ) -> some View {
+        modifier(FileContextMenu(file: file, onExtract: onExtract, onDelete: onDelete))
     }
 }
 
