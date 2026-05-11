@@ -45,9 +45,11 @@ struct LoginFlowView: View {
                             MessageBoxView(errorMessage.content)
                                 .overlay(alignment: .bottomTrailing) {
                                     HStack(spacing: 3) {
-                                        GameButton("btn_ok.bmp") {
+                                        Button("OK") {
                                             errorMessage.performAction(in: gameSession)
                                         }
+                                        .buttonStyle(.game)
+                                        .frame(width: 42, height: 20)
                                     }
                                     .padding(.horizontal, 5)
                                     .padding(.vertical, 4)

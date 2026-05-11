@@ -16,54 +16,54 @@ struct OptionsView: View {
             GameTitleBar()
 
             VStack(spacing: 3) {
-                // Resurrection
-                GameButton("esc_05a.bmp") {
+                Button("Resurrection") {
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
                 .disabled(true)
 
-                // Return to last save point
-                GameButton("esc_04a.bmp") {
+                Button("Return to last save point") {
                     gameSession.returnToLastSavePoint()
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
                 .disabled(true)
 
-                // Character Select
-                GameButton("esc_01a.bmp") {
+                Button("Character Select") {
                     gameSession.returnToCharacterSelect()
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
 
-                // Settings
-                GameButton("esc_06a.bmp") {
+                Button("Settings") {
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
                 .disabled(true)
 
-                // Sound
-                GameButton("esc_07a.bmp") {
+                Button("Sound") {
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
                 .disabled(true)
 
-                // BM/Shortcut Settings
-                GameButton("esc_08a.bmp") {
+                Button("BM/Shortcut Settings") {
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
                 .disabled(true)
 
-                // Exit to Windows
-                GameButton("esc_03a.bmp") {
+                Button("Exit to Windows") {
                     gameSession.requestExit()
                     exitGame()
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
 
-                // Return to game
-                GameButton("esc_02a.bmp") {
+                Button("Return to game") {
                 }
-                .frame(height: 20)
+                .buttonStyle(.game)
+                .frame(width: 220, height: 20)
             }
             .frame(maxWidth: .infinity)
             .padding(.top, 20)

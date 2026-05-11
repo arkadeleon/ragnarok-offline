@@ -166,14 +166,18 @@ struct CharacterMakeView: View {
         .frame(width: 576, height: 342)
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
-                GameButton("btn_make.bmp") {
+                Button("make") {
                     gameSession.createCharacter(character)
                 }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
                 .disabled(character.name.isEmpty)
 
-                GameButton("btn_cancel.bmp") {
+                Button("cancel") {
                     gameSession.exitCurrentPhase()
                 }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
             }
             .padding(.horizontal, 5)
             .padding(.vertical, 4)

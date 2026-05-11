@@ -29,17 +29,21 @@ struct CharServerListView: View {
         .frame(width: 280, height: 120)
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
-                GameButton("btn_ok.bmp") {
+                Button("OK") {
                     if let charServer = charServers.first {
                         gameSession.loginAudioPlayer.playButtonSound()
                         gameSession.selectCharServer(charServer)
                     }
                 }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
                 .disabled(charServers.isEmpty)
 
-                GameButton("btn_cancel.bmp") {
+                Button("cancel") {
                     gameSession.exitCurrentPhase()
                 }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
             }
             .padding(.horizontal, 5)
             .padding(.vertical, 4)

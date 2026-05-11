@@ -137,9 +137,11 @@ struct CharacterSelectView: View {
         .overlay(alignment: .bottomLeading) {
             HStack(spacing: 3) {
                 if selectedCharacter != nil {
-                    GameButton("btn_del.bmp") {
+                    Button("del") {
                         showingDeleteConfirmation = true
                     }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
                 }
             }
             .padding(.horizontal, 5)
@@ -148,21 +150,27 @@ struct CharacterSelectView: View {
         .overlay(alignment: .bottomTrailing) {
             HStack(spacing: 3) {
                 if selectedCharacter == nil {
-                    GameButton("btn_make.bmp") {
+                    Button("make") {
                         gameSession.makeCharacter(slot: gameSession.selectedCharacterSlot)
                     }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
                 }
 
                 if selectedCharacter != nil {
-                    GameButton("btn_ok.bmp") {
+                    Button("OK") {
                         gameSession.loginAudioPlayer.playButtonSound()
                         gameSession.selectCharacter(slot: gameSession.selectedCharacterSlot)
                     }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
                 }
 
-                GameButton("btn_cancel.bmp") {
+                Button("cancel") {
                     showingCancelConfirmation = true
                 }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
             }
             .padding(.horizontal, 5)
             .padding(.vertical, 4)
@@ -172,16 +180,20 @@ struct CharacterSelectView: View {
                 MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 19))
                     .overlay(alignment: .bottomTrailing) {
                         HStack(spacing: 3) {
-                            GameButton("btn_ok.bmp") {
+                            Button("OK") {
                                 if let charID = selectedCharacter?.charID {
                                     gameSession.deleteCharacter(charID: charID)
                                 }
                                 showingDeleteConfirmation = false
                             }
+                            .buttonStyle(.game)
+                            .frame(width: 42, height: 20)
 
-                            GameButton("btn_cancel.bmp") {
+                            Button("cancel") {
                                 showingDeleteConfirmation = false
                             }
+                            .buttonStyle(.game)
+                            .frame(width: 42, height: 20)
                         }
                         .padding(.horizontal, 5)
                         .padding(.vertical, 4)
@@ -190,13 +202,17 @@ struct CharacterSelectView: View {
                 MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 17))
                     .overlay(alignment: .bottomTrailing) {
                         HStack(spacing: 3) {
-                            GameButton("btn_ok.bmp") {
+                            Button("OK") {
                                 gameSession.exitCurrentPhase()
                             }
+                            .buttonStyle(.game)
+                            .frame(width: 42, height: 20)
 
-                            GameButton("btn_cancel.bmp") {
+                            Button("cancel") {
                                 showingCancelConfirmation = false
                             }
+                            .buttonStyle(.game)
+                            .frame(width: 42, height: 20)
                         }
                         .padding(.horizontal, 5)
                         .padding(.vertical, 4)
