@@ -16,13 +16,6 @@ struct LoginFlowView: View {
         GeometryReader { proxy in
             ScrollView([.horizontal, .vertical]) {
                 ZStack {
-                    GameImage("bgi_temp.bmp") { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: proxy.size.width, height: proxy.size.height)
-                    }
-
                     switch loginPhase {
                     case .login:
                         LoginView()
@@ -58,6 +51,15 @@ struct LoginFlowView: View {
                     }
                     .offset(y: -120)
                 }
+                .frame(minWidth: proxy.size.width, minHeight: proxy.size.height)
+            }
+            .scrollBounceBehavior(.basedOnSize, axes: [.horizontal, .vertical])
+        }
+        .background {
+            GameImage("bgi_temp.bmp") { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
             }
         }
         .ignoresSafeArea()
