@@ -46,6 +46,28 @@ final class AppModel {
     let gameSession = GameSession(resourceManager: .shared)
 
     @ObservationIgnored
+    private let serverConfiguration = ServerConfiguration(
+        char_conf: """
+            login_ip: 127.0.0.1
+            stdout_with_ansisequence: yes
+            char_name_option: 0
+            char_del_delay: 0
+            pincode_enabled: no
+            """,
+        login_conf: """
+            stdout_with_ansisequence: yes
+            new_account: yes
+            """,
+        map_conf: """
+            char_ip: 127.0.0.1
+            stdout_with_ansisequence: yes
+            """,
+        web_conf: """
+            stdout_with_ansisequence: yes
+            """
+    )
+
+    @ObservationIgnored
     private var serversToResume: [ServerModel] = []
 
     init() {
@@ -56,12 +78,12 @@ final class AppModel {
     }
 
     func startServer(_ server: ServerModel) async throws {
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
         _ = await server.start()
     }
 
     func startAllServers() async throws {
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
         await startServers(allServers)
     }
 
@@ -83,7 +105,7 @@ final class AppModel {
         let servers = serversToResume
         serversToResume.removeAll()
 
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL)
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
         await startServers(servers)
     }
 

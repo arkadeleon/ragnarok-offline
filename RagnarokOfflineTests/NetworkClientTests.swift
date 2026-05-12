@@ -28,7 +28,24 @@ final class NetworkClientTests: XCTestCase {
         }
 
         let serverResourceManager = ServerResourceManager()
-        try await serverResourceManager.prepareWorkingDirectory(at: workingDirectoryURL)
+        let serverConfiguration = ServerConfiguration(
+            char_conf: """
+                login_ip: 127.0.0.1
+                char_name_option: 0
+                char_del_delay: 0
+                pincode_enabled: no
+                """,
+            login_conf: """
+                new_account: yes
+                """,
+            map_conf: """
+                char_ip: 127.0.0.1
+                """
+        )
+        try await serverResourceManager.prepareWorkingDirectory(
+            at: workingDirectoryURL,
+            configuration: serverConfiguration
+        )
 
         Task {
             let messages = NotificationCenter.default.notifications(named: .ServerDidOutputData)
