@@ -16,6 +16,7 @@ struct TextFilePreviewView: View {
             try await loadTextFile()
         } content: { text in
             HighlightTextView(text: text)
+                .ignoresSafeArea()
         }
     }
 

@@ -16,9 +16,8 @@ struct ImageFilePreviewView: View {
         AsyncContentView {
             try await loadImageFile()
         } content: { image in
-            Image(image, scale: 1, label: Text(file.name))
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            ZoomableImageView(image: image)
+                .ignoresSafeArea()
         }
     }
 
