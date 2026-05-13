@@ -6,15 +6,44 @@
 //
 
 import Foundation
+import Observation
 
+@MainActor
 @Observable
 final class SettingsModel {
     @ObservationIgnored
-    @SettingsItem("client.remote_client", defaultValue: true) var remoteClient: Bool
+    private let defaults: UserDefaults
 
-    @ObservationIgnored
-    @SettingsItem("client.server_address", defaultValue: "127.0.0.1") var serverAddress: String
+    var remoteClient: Bool {
+        didSet {
+            defaults.set(remoteClient, forKey: Key.remoteClient)
+        }
+    }
 
-    @ObservationIgnored
-    @SettingsItem("client.server_port", defaultValue: "6900") var serverPort: String
+    var serverAddress: String {
+        didSet {
+            defaults.set(serverAddress, forKey: Key.serverAddress)
+        }
+    }
+
+    var serverPort: String {
+        didSet {
+            defaults.set(serverPort, forKey: Key.serverPort)
+        }
+    }
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        remoteClient = defaults.object(forKey: Key.remoteClient) as? Bool ?? true
+        serverAddress = defaults.string(forKey: Key.serverAddress) ?? "127.0.0.1"
+        serverPort = defaults.string(forKey: Key.serverPort) ?? "6900"
+    }
+}
+
+private extension SettingsModel {
+    enum Key {
+        static let remoteClient = "client.remote_client"
+        static let serverAddress = "client.server_address"
+        static let serverPort = "client.server_port"
+    }
 }

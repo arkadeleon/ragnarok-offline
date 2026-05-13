@@ -13,15 +13,11 @@ struct SettingsView: View {
     @Environment(SettingsModel.self) private var settings
 
     var body: some View {
-        let remoteClient = Binding {
-            settings.remoteClient
-        } set: {
-            settings.remoteClient = $0
-        }
+        @Bindable var settings = settings
 
         Form {
             Section("Client") {
-                Toggle("Remote Client", isOn: remoteClient)
+                Toggle("Remote Client", isOn: $settings.remoteClient)
             }
         }
         .navigationTitle("Settings")
