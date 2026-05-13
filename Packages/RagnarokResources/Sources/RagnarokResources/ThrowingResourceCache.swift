@@ -53,4 +53,8 @@ actor ThrowingResourceCache<R: Resource> {
             throw error
         }
     }
+
+    func clear() {
+        resources.removeAll()
+    }
 }

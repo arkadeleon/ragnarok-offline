@@ -12,21 +12,20 @@ import RagnarokResources
 
 extension ResourceManager {
     static let previewing = ResourceManager(
-        localURL: localClientURL,
-        remoteURL: remoteClientURL,
-        remoteCacheURL: remoteClientCacheURL
+        localClient: LocalResourceClient(url: localClientURL),
+        remoteClient: RemoteResourceClient(url: remoteClientURL, cacheURL: remoteClientCacheURL)
     )
 }
 
 extension File {
     static func previewFolder() -> File {
-        let url = ResourceManager.previewing.localURL.appending(path: "data")
+        let url = localClientURL.appending(path: "data")
         let file = File(node: .directory(url), location: .client)
         return file
     }
 
     static func previewGRF() -> File {
-        let url = ResourceManager.previewing.localURL.appending(path: "data.grf")
+        let url = localClientURL.appending(path: "data.grf")
         let grfArchive = GRFArchive(url: url)
         let file = File(node: .grfArchive(grfArchive), location: .client)
         return file

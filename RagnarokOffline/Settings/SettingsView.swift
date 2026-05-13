@@ -17,7 +17,7 @@ struct SettingsView: View {
 
         Form {
             Section("Client") {
-                Toggle("Remote Client", isOn: $settings.remoteClient)
+                Toggle("Remote Client", isOn: $settings.isRemoteClientEnabled)
             }
         }
         .navigationTitle("Settings")

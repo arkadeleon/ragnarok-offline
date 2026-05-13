@@ -47,4 +47,8 @@ actor ResourceCache {
 
         return resource as! R
     }
+
+    func clear() {
+        resources.removeAll()
+    }
 }

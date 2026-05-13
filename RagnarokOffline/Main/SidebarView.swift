@@ -59,8 +59,10 @@ struct SidebarView: View {
                     SidebarRow("Local Files", iconName: "folder.fill", iconColor: .blue)
                 }
 
-                NavigationLink(value: SidebarItem.clientCachedFiles) {
-                    SidebarRow("Cached Files", iconName: "folder.fill", iconColor: .blue)
+                if appModel.settings.isRemoteClientEnabled {
+                    NavigationLink(value: SidebarItem.clientCachedFiles) {
+                        SidebarRow("Cached Files", iconName: "folder.fill", iconColor: .blue)
+                    }
                 }
 
                 NavigationLink(value: SidebarItem.gameClient) {
@@ -228,6 +230,11 @@ struct SidebarView: View {
             #else
             .navigationTransition(.zoom(sourceID: "menu", in: menuNamespace))
             #endif
+        }
+        .onChange(of: appModel.settings.isRemoteClientEnabled) { _, newValue in
+            if !newValue, selection?.wrappedValue == .clientCachedFiles {
+                selection?.wrappedValue = .clientLocalFiles
+            }
         }
     }
 }

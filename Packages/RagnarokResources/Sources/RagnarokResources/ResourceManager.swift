@@ -28,9 +28,8 @@ public enum ResourceLocator: Sendable {
 }
 
 final public class ResourceManager: Sendable {
-    public let localURL: URL
-    public let remoteURL: URL?
-    public let remoteCacheURL: URL?
+    public let localClient: LocalResourceClient
+    public let remoteClient: RemoteResourceClient?
 
     private let scriptContextLoader = ScriptContextLoader()
     public var scriptContext: ScriptContext {
@@ -42,78 +41,35 @@ final public class ResourceManager: Sendable {
     let cache = ResourceCache()
     let imageResourceCache = ThrowingResourceCache<Resources.Image>()
 
-    private let localGRFArchives: [GRFArchive]
+    public init(localClient: LocalResourceClient, remoteClient: RemoteResourceClient? = nil) {
+        self.localClient = localClient
+        self.remoteClient = remoteClient
+    }
 
-    public init(localURL: URL, remoteURL: URL? = nil, remoteCacheURL: URL? = nil) {
-        self.localURL = localURL
-        self.remoteURL = remoteURL
-        self.remoteCacheURL = remoteCacheURL
-
-        let dataGRFURL = localURL.appending(path: "data.grf")
-        localGRFArchives = [
-            GRFArchive(url: dataGRFURL),
-        ]
+    public func setRemoteClientEnabled(_ isEnabled: Bool) async {
+        await remoteClient?.setEnabled(isEnabled)
+        await clearCaches()
     }
 
     public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
-        let fileURL = localURL.absoluteURL.appending(path: L2K(path))
-        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            return .url(fileURL)
-        }
+        try await localClient.locatorOfResource(at: path)
+    }
 
-        let grfPath = GRFPath(components: path.components)
-        for grfArchive in localGRFArchives {
-            if let entryNode = await grfArchive.entryNode(at: grfPath) {
-                return .grfArchiveNode(grfArchive, entryNode)
+    public func contentsOfResource(at path: ResourcePath) async throws -> Data {
+        do {
+            return try await localClient.contentsOfResource(at: path)
+        } catch ResourceError.resourceNotFound {
+            if let remoteClient {
+                return try await remoteClient.contentsOfResource(at: path)
             }
         }
 
         throw ResourceError.resourceNotFound(path)
     }
 
-    public func contentsOfResource(at path: ResourcePath) async throws -> Data {
-        let fileURL = localURL.absoluteURL.appending(path: L2K(path))
-        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            let data = try Data(contentsOf: fileURL)
-            return data
-        }
-
-        let grfPath = GRFPath(components: path.components)
-        for grfArchive in localGRFArchives {
-            if let entryNode = await grfArchive.entryNode(at: grfPath) {
-                let data = try await grfArchive.contentsOfEntryNode(at: entryNode.path)
-                return data
-            }
-        }
-
-        if let remoteCacheURL {
-            let cachedFileURL = remoteCacheURL.absoluteURL.appending(path: L2K(path))
-            if FileManager.default.fileExists(atPath: cachedFileURL.path(percentEncoded: false)) {
-                let data = try Data(contentsOf: cachedFileURL)
-                return data
-            }
-        }
-
-        if let remoteURL {
-            logger.info("Start downloading resource: \(path)")
-
-            let remoteResourceURL = remoteURL.appending(path: path)
-            let request = URLRequest(url: remoteResourceURL, cachePolicy: .reloadIgnoringLocalCacheData)
-            let (data, response) = try await URLSession.shared.data(for: request)
-
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw ResourceError.resourceNotFound(path)
-            }
-
-            if let remoteCacheURL {
-                let cachedFileURL = remoteCacheURL.appending(path: L2K(path))
-                try? FileManager.default.createDirectory(at: cachedFileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-                try? data.write(to: cachedFileURL)
-            }
-
-            return data
-        }
-
-        throw ResourceError.resourceNotFound(path)
+    private func clearCaches() async {
+        await scriptContextLoader.clear()
+        await cache.clear()
+        await imageResourceCache.clear()
     }
 }

@@ -15,7 +15,7 @@ import rAthenaResources
 import rAthenaWeb
 
 let localClientURL = URL.documentsDirectory
-let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")
+let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")!
 let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
 let serverWorkingDirectoryURL = URL.libraryDirectory.appending(path: "rathena", directoryHint: .isDirectory)
 
@@ -73,14 +73,27 @@ final class AppModel {
 
     init() {
         let settings = SettingsModel()
-        let resourceManager = ResourceManager(
-            localURL: localClientURL,
-            remoteURL: settings.remoteClient ? remoteClientURL : nil,
-            remoteCacheURL: settings.remoteClient ? remoteClientCacheURL : nil
+
+        let localClient = LocalResourceClient(url: localClientURL)
+        let remoteClient = RemoteResourceClient(
+            url: remoteClientURL,
+            cacheURL: remoteClientCacheURL,
+            isEnabled: settings.isRemoteClientEnabled
         )
+        let resourceManager = ResourceManager(
+            localClient: localClient,
+            remoteClient: remoteClient
+        )
+
+        settings.remoteClientDidChange = { isEnabled in
+            Task {
+                await resourceManager.setRemoteClientEnabled(isEnabled)
+            }
+        }
 
         self.settings = settings
         self.resourceManager = resourceManager
+
         database = DatabaseModel(mode: .renewal, resourceManager: resourceManager)
         characterSimulator = CharacterSimulator(resourceManager: resourceManager)
         chatSession = ChatSession(

@@ -8,42 +8,44 @@
 import Foundation
 import Observation
 
+private enum SettingsKey {
+    static let isRemoteClientEnabled = "client.remote_client"
+    static let serverAddress = "client.server_address"
+    static let serverPort = "client.server_port"
+}
+
 @MainActor
 @Observable
 final class SettingsModel {
     @ObservationIgnored
     private let defaults: UserDefaults
 
-    var remoteClient: Bool {
+    @ObservationIgnored
+    var remoteClientDidChange: ((Bool) -> Void)?
+
+    var isRemoteClientEnabled: Bool {
         didSet {
-            defaults.set(remoteClient, forKey: Key.remoteClient)
+            defaults.set(isRemoteClientEnabled, forKey: SettingsKey.isRemoteClientEnabled)
+            remoteClientDidChange?(isRemoteClientEnabled)
         }
     }
 
     var serverAddress: String {
         didSet {
-            defaults.set(serverAddress, forKey: Key.serverAddress)
+            defaults.set(serverAddress, forKey: SettingsKey.serverAddress)
         }
     }
 
     var serverPort: String {
         didSet {
-            defaults.set(serverPort, forKey: Key.serverPort)
+            defaults.set(serverPort, forKey: SettingsKey.serverPort)
         }
     }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        remoteClient = defaults.object(forKey: Key.remoteClient) as? Bool ?? true
-        serverAddress = defaults.string(forKey: Key.serverAddress) ?? "127.0.0.1"
-        serverPort = defaults.string(forKey: Key.serverPort) ?? "6900"
-    }
-}
-
-private extension SettingsModel {
-    enum Key {
-        static let remoteClient = "client.remote_client"
-        static let serverAddress = "client.server_address"
-        static let serverPort = "client.server_port"
+        isRemoteClientEnabled = defaults.object(forKey: SettingsKey.isRemoteClientEnabled) as? Bool ?? true
+        serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
+        serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
     }
 }

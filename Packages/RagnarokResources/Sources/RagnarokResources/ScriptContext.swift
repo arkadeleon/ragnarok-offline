@@ -107,6 +107,10 @@ actor ScriptContextLoader {
         return value
     }
 
+    func clear() {
+        phase = nil
+    }
+
     private func load(using resourceManager: ResourceManager) async -> ScriptContext {
         let context = LuaContext()
 

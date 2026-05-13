@@ -9,7 +9,7 @@ import Foundation
 
 extension ResourceManager {
     public static let testing = ResourceManager(
-        localURL: Bundle.main.resourceURL!,
-        remoteURL: URL(string: "http://127.0.0.1:8080/client")
+        localClient: LocalResourceClient(url: Bundle.main.resourceURL!),
+        remoteClient: RemoteResourceClient(url: URL(string: "http://127.0.0.1:8080/client")!)
     )
 }
