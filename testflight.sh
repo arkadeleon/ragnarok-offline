@@ -9,6 +9,7 @@ SCHEME="RagnarokOffline"
 PROJECT="RagnarokOffline.xcodeproj"
 XCCONFIG="Configurations/TestFlight.xcconfig"
 BUILD_DIR="build/testflight"
+export ASC_UPLOAD_TIMEOUT="${ASC_UPLOAD_TIMEOUT:-600s}"
 # ───────────────────────────────────────────────────────────────────────────────
 
 RED='\033[0;31m'
@@ -140,8 +141,6 @@ archive_ios() {
 
     log "[iOS] Uploading to TestFlight..."
     asc builds upload --app "$APP_ID" --ipa "$ipa" --version "$MARKETING_VERSION" --build-number "$BUILD_NUMBER"
-
-    distribute "iOS" "IOS"
 }
 
 # ── macOS ──────────────────────────────────────────────────────────────────────
@@ -202,15 +201,24 @@ archive_macos() {
 
     log "[macOS] Uploading to TestFlight..."
     asc builds upload --app "$APP_ID" --pkg "$pkg" --version "$MARKETING_VERSION" --build-number "$BUILD_NUMBER"
-
-    distribute "macOS" "MAC_OS"
 }
 
 # ── Dispatch ───────────────────────────────────────────────────────────────────
 case "$PLATFORM" in
-    ios)   archive_ios ;;
-    macos) archive_macos ;;
-    all)   archive_ios; archive_macos ;;
+    ios)
+        archive_ios
+        distribute "iOS" "IOS"
+        ;;
+    macos)
+        archive_macos
+        distribute "macOS" "MAC_OS"
+        ;;
+    all)
+        archive_ios
+        archive_macos
+        distribute "iOS" "IOS"
+        distribute "macOS" "MAC_OS"
+        ;;
 esac
 
 log "All done. Build $BUILD_NUMBER is live in TestFlight."
