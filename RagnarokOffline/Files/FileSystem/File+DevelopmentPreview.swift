@@ -10,64 +10,72 @@ import GRF
 import RagnarokCore
 import RagnarokResources
 
+extension ResourceManager {
+    static let previewing = ResourceManager(
+        localURL: localClientURL,
+        remoteURL: remoteClientURL,
+        remoteCacheURL: remoteClientCacheURL
+    )
+}
+
 extension File {
     static func previewFolder() -> File {
-        let url = ResourceManager.shared.localURL.appending(path: "data")
+        let url = ResourceManager.previewing.localURL.appending(path: "data")
         let file = File(node: .directory(url), location: .client)
         return file
     }
 
     static func previewGRF() -> File {
-        let url = ResourceManager.shared.localURL.appending(path: "data.grf")
+        let url = ResourceManager.previewing.localURL.appending(path: "data.grf")
         let grfArchive = GRFArchive(url: url)
         let file = File(node: .grfArchive(grfArchive), location: .client)
         return file
     }
 
     static func previewACT() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "sprite", "cursors.act"])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "sprite", "cursors.act"])
         let file = File(locator)
         return file
     }
 
     static func previewGAT() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "iz_int.gat"])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "iz_int.gat"])
         let file = File(locator)
         return file
     }
 
     static func previewWideGAT() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "1@4sac.gat"])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "1@4sac.gat"])
         let file = File(locator)
         return file
     }
 
     static func previewTallGAT() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "1@adv.gat"])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "1@adv.gat"])
         let file = File(locator)
         return file
     }
 
     static func previewGND() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "iz_int.gnd"])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "iz_int.gnd"])
         let file = File(locator)
         return file
     }
 
     static func previewRSM() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "model", K2L("내부소품"), K2L("철다리.rsm")])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "model", K2L("내부소품"), K2L("철다리.rsm")])
         let file = File(locator)
         return file
     }
 
     static func previewRSW() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "iz_int.rsw"])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "iz_int.rsw"])
         let file = File(locator)
         return file
     }
 
     static func previewSPR() async throws -> File {
-        let locator = try await ResourceManager.shared.locatorOfResource(at: ["data", "sprite", "cursors.spr"])
+        let locator = try await ResourceManager.previewing.locatorOfResource(at: ["data", "sprite", "cursors.spr"])
         let file = File(locator)
         return file
     }

@@ -42,7 +42,7 @@ struct ContentView: View {
         }
         .sheet(item: $incomingFile) { file in
             NavigationStack {
-                FilePreviewView(file: file)
+                FilePreviewView(file: file, resourceManager: appModel.resourceManager)
                     .toolbar {
                         ToolbarCancelButton {
                             incomingFile = nil
@@ -114,10 +114,10 @@ struct ContentView: View {
                 .environment(appModel.skillSimulator)
                 .environment(appModel.database)
         case .mapViewer:
-            MapViewer()
+            MapViewer(resourceManager: appModel.resourceManager)
                 .environment(appModel.database)
         case .effectViewer:
-            EffectViewer()
+            EffectViewer(resourceManager: appModel.resourceManager)
         case .cube:
             CubeView()
         }
@@ -131,7 +131,7 @@ extension View {
                 if file.hasFiles {
                     FilesView(directory: file)
                 } else {
-                    FilePreviewView(file: file)
+                    FilePreviewView(file: file, resourceManager: appModel.resourceManager)
                 }
             }
             .navigationDestination(for: FileGroup.self) { fileGroup in

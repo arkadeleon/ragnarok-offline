@@ -6,6 +6,7 @@
 //
 
 import RagnarokConstants
+import RagnarokResources
 import SwiftUI
 
 struct SkillSimulatorView: View {
@@ -180,6 +181,6 @@ struct SkillSimulatorView: View {
     NavigationStack {
         SkillSimulatorView()
     }
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
     .environment(SkillSimulator())
 }

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct StatusChangeDatabaseView: View {
@@ -62,7 +63,7 @@ struct StatusChangeDatabaseView: View {
         StatusChangeDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .prerenewal))
+    .environment(DatabaseModel(mode: .prerenewal, resourceManager: .previewing))
 }
 
 #Preview("Renewal Status Change Database") {
@@ -70,5 +71,5 @@ struct StatusChangeDatabaseView: View {
         StatusChangeDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

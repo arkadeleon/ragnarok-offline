@@ -173,7 +173,9 @@ struct GameClientView: View {
 }
 
 #Preview {
+    let appModel = AppModel()
+
     GameClientView()
-        .environment(GameSession(resourceManager: .shared))
-        .environment(SettingsModel())
+        .environment(appModel.gameSession)
+        .environment(appModel.settings)
 }

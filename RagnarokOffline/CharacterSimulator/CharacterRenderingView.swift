@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/5/13.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct CharacterRenderingView: View {
@@ -49,5 +50,5 @@ struct CharacterRenderingView: View {
 
 #Preview {
     CharacterRenderingView()
-        .environment(CharacterSimulator())
+        .environment(CharacterSimulator(resourceManager: .previewing))
 }

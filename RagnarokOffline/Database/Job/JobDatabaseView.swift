@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/1/5.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct JobDatabaseView: View {
@@ -52,7 +53,7 @@ struct JobDatabaseView: View {
         JobDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .prerenewal))
+    .environment(DatabaseModel(mode: .prerenewal, resourceManager: .previewing))
 }
 
 #Preview("Renewal Job Database") {
@@ -60,5 +61,5 @@ struct JobDatabaseView: View {
         JobDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

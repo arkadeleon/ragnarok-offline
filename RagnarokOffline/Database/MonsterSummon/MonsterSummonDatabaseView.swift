@@ -6,6 +6,7 @@
 //
 
 import RagnarokDatabase
+import RagnarokResources
 import SwiftUI
 
 struct MonsterSummonDatabaseView: View {
@@ -70,7 +71,7 @@ struct MonsterSummonDatabaseView: View {
         MonsterSummonDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .prerenewal))
+    .environment(DatabaseModel(mode: .prerenewal, resourceManager: .previewing))
 }
 
 #Preview("Renewal Monster Summon Database") {
@@ -78,5 +79,5 @@ struct MonsterSummonDatabaseView: View {
         MonsterSummonDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

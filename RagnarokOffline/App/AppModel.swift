@@ -24,7 +24,8 @@ let serverWorkingDirectoryURL = URL.libraryDirectory.appending(path: "rathena", 
 final class AppModel {
     let mainWindowID = "Main"
 
-    let settings = SettingsModel()
+    let settings: SettingsModel
+    let resourceManager: ResourceManager
 
     let clientLocalDirectory = File(node: .directory(localClientURL), location: .client)
     let clientCachedDirectory = File(node: .directory(remoteClientCacheURL), location: .client)
@@ -37,13 +38,13 @@ final class AppModel {
     let mapServer = ServerModel(server: MapServer.shared)
     let webServer = ServerModel(server: WebServer.shared)
 
-    let database = DatabaseModel(mode: .renewal)
+    let database: DatabaseModel
 
-    let characterSimulator = CharacterSimulator()
+    let characterSimulator: CharacterSimulator
     let skillSimulator = SkillSimulator()
 
     let chatSession: ChatSession
-    let gameSession = GameSession(resourceManager: .shared)
+    let gameSession: GameSession
 
     @ObservationIgnored
     private let serverConfiguration = ServerConfiguration(
@@ -71,10 +72,22 @@ final class AppModel {
     private var serversToResume: [ServerModel] = []
 
     init() {
+        let settings = SettingsModel()
+        let resourceManager = ResourceManager(
+            localURL: localClientURL,
+            remoteURL: settings.remoteClient ? remoteClientURL : nil,
+            remoteCacheURL: settings.remoteClient ? remoteClientCacheURL : nil
+        )
+
+        self.settings = settings
+        self.resourceManager = resourceManager
+        database = DatabaseModel(mode: .renewal, resourceManager: resourceManager)
+        characterSimulator = CharacterSimulator(resourceManager: resourceManager)
         chatSession = ChatSession(
             serverAddress: settings.serverAddress,
             serverPort: settings.serverPort
         )
+        gameSession = GameSession(resourceManager: resourceManager)
     }
 
     func startServer(_ server: ServerModel) async throws {
@@ -136,12 +149,4 @@ final class AppModel {
     private var allServers: [ServerModel] {
         [loginServer, charServer, mapServer, webServer]
     }
-}
-
-extension ResourceManager {
-    static let shared = ResourceManager(
-        localURL: localClientURL,
-        remoteURL: remoteClientURL,
-        remoteCacheURL: remoteClientCacheURL
-    )
 }

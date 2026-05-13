@@ -16,6 +16,7 @@ import RagnarokResources
 final class SkillModel {
     private let mode: DatabaseMode
     private let skill: Skill
+    private let resourceManager: ResourceManager
 
     let localizedName: String?
     let localizedDescription: String?
@@ -52,11 +53,12 @@ final class SkillModel {
         return attributes
     }
 
-    init(mode: DatabaseMode, skill: Skill, localizedName: String?, localizedDescription: String?) {
+    init(mode: DatabaseMode, skill: Skill, localizedName: String?, localizedDescription: String?, resourceManager: ResourceManager) {
         self.mode = mode
         self.skill = skill
         self.localizedName = localizedName
         self.localizedDescription = localizedDescription
+        self.resourceManager = resourceManager
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Skill, Value>) -> Value {
@@ -67,7 +69,7 @@ final class SkillModel {
     func fetchIconImage() async {
         if iconImage == nil {
             let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skill.aegisName)
-            iconImage = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
+            iconImage = try? await resourceManager.image(at: path, removesMagentaPixels: true)
         }
     }
 }

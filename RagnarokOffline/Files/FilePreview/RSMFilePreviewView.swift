@@ -13,6 +13,7 @@ import SwiftUI
 
 struct RSMFilePreviewView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     private enum ViewMode {
         case model
@@ -25,7 +26,7 @@ struct RSMFilePreviewView: View {
         Group {
             switch viewMode {
             case .model:
-                RSMFileModelView(file: file)
+                RSMFileModelView(file: file, resourceManager: resourceManager)
             case .tree:
                 FileJSONViewer(file: file)
             }
@@ -47,6 +48,7 @@ struct RSMFilePreviewView: View {
 
 struct RSMFileModelView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     private let progress = Progress()
 
@@ -79,7 +81,7 @@ struct RSMFileModelView: View {
         progress.totalUnitCount = Int64(textureNames.count)
         progress.completedUnitCount = 0
 
-        let textureImages = await ResourceManager.shared.textureImages(forNames: textureNames, removesMagentaPixels: true) { _, _ in
+        let textureImages = await resourceManager.textureImages(forNames: textureNames, removesMagentaPixels: true) { _, _ in
             progress.completedUnitCount += 1
         }
 
@@ -100,7 +102,7 @@ struct RSMFileModelView: View {
     AsyncContentView {
         try await File.previewRSM()
     } content: { file in
-        RSMFilePreviewView(file: file)
+        RSMFilePreviewView(file: file, resourceManager: .previewing)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

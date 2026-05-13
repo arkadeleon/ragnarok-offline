@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/3/10.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct MapPicker: View {
@@ -105,5 +106,5 @@ struct MapPicker: View {
     @Previewable @State var selection: MapModel? = nil
 
     MapPicker(selection: $selection)
-        .environment(DatabaseModel(mode: .renewal))
+        .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

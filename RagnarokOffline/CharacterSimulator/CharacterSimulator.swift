@@ -7,6 +7,7 @@
 
 import Observation
 import RagnarokConstants
+import RagnarokResources
 import RagnarokSprite
 
 @MainActor
@@ -66,6 +67,8 @@ final class CharacterSimulator {
         }
     }
 
+    private let resourceManager: ResourceManager
+
     var configuration = CharacterSimulator.Configuration() {
         didSet {
             Task {
@@ -77,13 +80,17 @@ final class CharacterSimulator {
     var composedSprite: ComposedSprite?
     var animation: SpriteRenderer.Animation?
 
+    init(resourceManager: ResourceManager) {
+        self.resourceManager = resourceManager
+    }
+
     func renderSprite() async {
         let configuration = ComposedSprite.Configuration(configuration: self.configuration)
         if let composedSprite, composedSprite.configuration == configuration {
             // Do nothing
         } else {
             do {
-                composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: .shared)
+                composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
             } catch {
                 logger.warning("Composed sprite error: \(error)")
             }

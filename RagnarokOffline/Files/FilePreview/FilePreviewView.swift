@@ -5,10 +5,12 @@
 //  Created by Leon Li on 2024/4/26.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct FilePreviewView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     var body: some View {
         Group {
@@ -28,13 +30,13 @@ struct FilePreviewView: View {
             case .gat:
                 GATFilePreviewView(file: file)
             case .gnd:
-                GNDFilePreviewView(file: file)
+                GNDFilePreviewView(file: file, resourceManager: resourceManager)
             case .imf:
                 FileJSONViewer(file: file)
             case .rsm, .rsm2:
-                RSMFilePreviewView(file: file)
+                RSMFilePreviewView(file: file, resourceManager: resourceManager)
             case .rsw:
-                RSWFilePreviewView(file: file)
+                RSWFilePreviewView(file: file, resourceManager: resourceManager)
             case .spr:
                 SPRFilePreviewView(file: file)
             case .str:
@@ -57,7 +59,7 @@ struct FilePreviewView: View {
     AsyncContentView {
         try await File.previewRSW()
     } content: { file in
-        FilePreviewView(file: file)
+        FilePreviewView(file: file, resourceManager: .previewing)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

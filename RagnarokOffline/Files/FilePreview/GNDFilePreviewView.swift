@@ -14,6 +14,7 @@ import SwiftUI
 
 struct GNDFilePreviewView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     private enum ViewMode {
         case ground
@@ -26,7 +27,7 @@ struct GNDFilePreviewView: View {
         Group {
             switch viewMode {
             case .ground:
-                GNDFileGroundView(file: file)
+                GNDFileGroundView(file: file, resourceManager: resourceManager)
             case .tree:
                 FileJSONViewer(file: file)
             }
@@ -41,7 +42,7 @@ struct GNDFilePreviewView: View {
                 }
 
                 NavigationLink {
-                    GNDFileTextureAtlasView(file: file)
+                    GNDFileTextureAtlasView(file: file, resourceManager: resourceManager)
                 } label: {
                     Label(String("Texture Atlas"), systemImage: "photo")
                 }
@@ -60,6 +61,7 @@ struct GNDFilePreviewView: View {
 
 struct GNDFileGroundView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     private let progress = Progress()
 
@@ -95,7 +97,7 @@ struct GNDFileGroundView: View {
         progress.totalUnitCount = Int64(gnd.textures.count)
         progress.completedUnitCount = 0
 
-        let textureImages = await ResourceManager.shared.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
             progress.completedUnitCount += 1
         }
 
@@ -123,6 +125,7 @@ struct GNDFileGroundView: View {
 
 struct GNDFileTextureAtlasView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     private let progress = Progress()
 
@@ -146,7 +149,7 @@ struct GNDFileTextureAtlasView: View {
         progress.totalUnitCount = Int64(gnd.textures.count)
         progress.completedUnitCount = 0
 
-        let textureImages = await ResourceManager.shared.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
             progress.completedUnitCount += 1
         }
 
@@ -189,7 +192,7 @@ struct GNDFileLightmapAtlasView: View {
     AsyncContentView {
         try await File.previewGND()
     } content: { file in
-        GNDFilePreviewView(file: file)
+        GNDFilePreviewView(file: file, resourceManager: .previewing)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

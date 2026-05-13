@@ -40,6 +40,7 @@ final class JobModel {
 
     private let mode: DatabaseMode
     private let job: Job
+    private let resourceManager: ResourceManager
 
     let localizedName: String?
     let skillTree: SkillTree?
@@ -107,11 +108,12 @@ final class JobModel {
         return jobLevels
     }
 
-    init(mode: DatabaseMode, job: Job, localizedName: String?, skillTree: SkillTree?) {
+    init(mode: DatabaseMode, job: Job, localizedName: String?, skillTree: SkillTree?, resourceManager: ResourceManager) {
         self.mode = mode
         self.job = job
         self.localizedName = localizedName
         self.skillTree = skillTree
+        self.resourceManager = resourceManager
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Job, Value>) -> Value {
@@ -127,7 +129,7 @@ final class JobModel {
         let composedSprite: ComposedSprite
         do {
             let configuration = ComposedSprite.Configuration.random(jobID: job.id.rawValue)
-            composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: .shared)
+            composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
         } catch {
             logger.warning("Composed sprite error: \(error)")
             return

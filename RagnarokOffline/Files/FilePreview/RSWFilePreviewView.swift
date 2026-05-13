@@ -14,6 +14,7 @@ import SwiftUI
 
 struct RSWFilePreviewView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     private enum ViewMode {
         case world
@@ -26,7 +27,7 @@ struct RSWFilePreviewView: View {
         Group {
             switch viewMode {
             case .world:
-                RSWFileWorldView(file: file)
+                RSWFileWorldView(file: file, resourceManager: resourceManager)
             case .tree:
                 FileJSONViewer(file: file)
             }
@@ -48,6 +49,7 @@ struct RSWFilePreviewView: View {
 
 struct RSWFileWorldView: View {
     var file: File
+    var resourceManager: ResourceManager
 
     private let progress = Progress()
 
@@ -93,7 +95,7 @@ struct RSWFileWorldView: View {
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
 
-        let worldEntity = try await Entity(from: world, resourceManager: .shared, progress: progress)
+        let worldEntity = try await Entity(from: world, resourceManager: resourceManager, progress: progress)
 
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))
@@ -113,7 +115,7 @@ struct RSWFileWorldView: View {
     AsyncContentView {
         try await File.previewRSW()
     } content: { file in
-        RSWFilePreviewView(file: file)
+        RSWFilePreviewView(file: file, resourceManager: .previewing)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

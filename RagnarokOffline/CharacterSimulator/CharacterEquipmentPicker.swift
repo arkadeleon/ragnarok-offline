@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/8/26.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct CharacterEquipmentPicker: View {
@@ -146,5 +147,5 @@ struct CharacterEquipmentPicker: View {
             selection: $selection
         )
     }
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

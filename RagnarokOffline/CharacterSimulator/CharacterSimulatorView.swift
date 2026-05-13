@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/12/25.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct CharacterSimulatorView: View {
@@ -45,6 +46,6 @@ struct CharacterSimulatorView: View {
     NavigationStack {
         CharacterSimulatorView()
     }
-    .environment(CharacterSimulator())
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(CharacterSimulator(resourceManager: .previewing))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

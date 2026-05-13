@@ -11,6 +11,8 @@ import RealityKit
 import SwiftUI
 
 struct MapViewer: View {
+    var resourceManager: ResourceManager
+
     private let progress = Progress()
 
     @Environment(DatabaseModel.self) private var database
@@ -48,9 +50,9 @@ struct MapViewer: View {
     }
 
     private func loadEntity(for mapName: String) async throws -> Entity {
-        let world = try await ResourceManager.shared.world(mapName: "\(mapName).rsw")
+        let world = try await resourceManager.world(mapName: "\(mapName).rsw")
 
-        let worldEntity = try await Entity(from: world, resourceManager: .shared, progress: progress)
+        let worldEntity = try await Entity(from: world, resourceManager: resourceManager, progress: progress)
 
         let translation = simd_float4x4(translation: [-Float(world.gat.width / 2), 0, -Float(world.gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))

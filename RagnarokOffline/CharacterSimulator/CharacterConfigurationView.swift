@@ -7,6 +7,7 @@
 
 import RagnarokConstants
 import RagnarokLocalization
+import RagnarokResources
 import RagnarokSprite
 import SwiftUI
 
@@ -128,6 +129,6 @@ struct CharacterConfigurationView: View {
 
 #Preview {
     CharacterConfigurationView()
-        .environment(CharacterSimulator())
-        .environment(DatabaseModel(mode: .renewal))
+        .environment(CharacterSimulator(resourceManager: .previewing))
+        .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

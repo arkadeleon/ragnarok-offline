@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/1/2.
 //
 
+import RagnarokResources
 import SwiftUI
 
 struct SkillDatabaseView: View {
@@ -82,7 +83,7 @@ struct SkillDatabaseView: View {
         SkillDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .prerenewal))
+    .environment(DatabaseModel(mode: .prerenewal, resourceManager: .previewing))
 }
 
 #Preview("Renewal Skill Database") {
@@ -90,5 +91,5 @@ struct SkillDatabaseView: View {
         SkillDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

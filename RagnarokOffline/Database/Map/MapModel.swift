@@ -15,6 +15,7 @@ import RagnarokResources
 final class MapModel {
     private let mode: DatabaseMode
     private let map: Map
+    private let resourceManager: ResourceManager
 
     let localizedName: String?
 
@@ -24,10 +25,11 @@ final class MapModel {
         localizedName ?? map.name
     }
 
-    init(mode: DatabaseMode, map: Map, localizedName: String?) {
+    init(mode: DatabaseMode, map: Map, localizedName: String?, resourceManager: ResourceManager) {
         self.mode = mode
         self.map = map
         self.localizedName = localizedName
+        self.resourceManager = resourceManager
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Map, Value>) -> Value {
@@ -38,7 +40,7 @@ final class MapModel {
     func fetchImage() async {
         if image == nil {
             let path = ResourcePath.generateMapImagePath(mapName: map.name)
-            image = try? await ResourceManager.shared.image(at: path, removesMagentaPixels: true)
+            image = try? await resourceManager.image(at: path, removesMagentaPixels: true)
         }
     }
 }

@@ -18,6 +18,7 @@ import RagnarokResources
 final class ItemModel {
     private let mode: DatabaseMode
     private let item: Item
+    private let resourceManager: ResourceManager
 
     let localizedName: String?
     let localizedDescription: String?
@@ -144,11 +145,12 @@ final class ItemModel {
             .joined(separator: "\n")
     }
 
-    init(mode: DatabaseMode, item: Item, localizedName: String?, localizedDescription: String?) {
+    init(mode: DatabaseMode, item: Item, localizedName: String?, localizedDescription: String?, resourceManager: ResourceManager) {
         self.mode = mode
         self.item = item
         self.localizedName = localizedName
         self.localizedDescription = localizedDescription
+        self.resourceManager = resourceManager
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Item, Value>) -> Value {
@@ -158,14 +160,14 @@ final class ItemModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            iconImage = try? await ResourceManager.shared.itemIconImage(forItemID: item.id)
+            iconImage = try? await resourceManager.itemIconImage(forItemID: item.id)
         }
     }
 
     @MainActor
     func fetchPreviewImage() async {
         if previewImage == nil {
-            previewImage = try? await ResourceManager.shared.itemPreviewImage(forItemID: item.id)
+            previewImage = try? await resourceManager.itemPreviewImage(forItemID: item.id)
         }
     }
 }

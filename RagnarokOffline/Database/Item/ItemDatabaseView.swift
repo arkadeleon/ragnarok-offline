@@ -6,6 +6,7 @@
 //
 
 import RagnarokLocalization
+import RagnarokResources
 import SwiftUI
 
 struct ItemDatabaseView: View {
@@ -104,7 +105,7 @@ struct ItemDatabaseView: View {
         ItemDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .prerenewal))
+    .environment(DatabaseModel(mode: .prerenewal, resourceManager: .previewing))
 }
 
 #Preview("Renewal Item Database") {
@@ -112,5 +113,5 @@ struct ItemDatabaseView: View {
         ItemDatabaseView()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(DatabaseModel(mode: .renewal))
+    .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

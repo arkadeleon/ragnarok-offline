@@ -18,6 +18,7 @@ import RagnarokSprite
 final class MonsterModel {
     private let mode: DatabaseMode
     private let monster: Monster
+    private let resourceManager: ResourceManager
 
     let localizedName: String?
 
@@ -102,10 +103,11 @@ final class MonsterModel {
             .joined(separator: "\n")
     }
 
-    init(mode: DatabaseMode, monster: Monster, localizedName: String?) {
+    init(mode: DatabaseMode, monster: Monster, localizedName: String?, resourceManager: ResourceManager) {
         self.mode = mode
         self.monster = monster
         self.localizedName = localizedName
+        self.resourceManager = resourceManager
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<Monster, Value>) -> Value {
@@ -121,7 +123,7 @@ final class MonsterModel {
         let composedSprite: ComposedSprite
         do {
             let configuration = ComposedSprite.Configuration(jobID: monster.id)
-            composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: .shared)
+            composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
         } catch {
             logger.warning("Composed sprite error: \(error)")
             return

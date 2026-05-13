@@ -16,6 +16,7 @@ import RagnarokResources
 final class StatusChangeModel {
     private let mode: DatabaseMode
     private let statusChange: StatusChange
+    private let resourceManager: ResourceManager
 
     let localizedDescription: String?
 
@@ -38,10 +39,11 @@ final class StatusChangeModel {
         return attributes
     }
 
-    init(mode: DatabaseMode, statusChange: StatusChange, localizedDescription: String?) {
+    init(mode: DatabaseMode, statusChange: StatusChange, localizedDescription: String?, resourceManager: ResourceManager) {
         self.mode = mode
         self.statusChange = statusChange
         self.localizedDescription = localizedDescription
+        self.resourceManager = resourceManager
     }
 
     subscript<Value>(dynamicMember keyPath: KeyPath<StatusChange, Value>) -> Value {
@@ -51,7 +53,7 @@ final class StatusChangeModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            iconImage = try? await ResourceManager.shared.statusIconImage(forStatusID: statusChange.icon.rawValue)
+            iconImage = try? await resourceManager.statusIconImage(forStatusID: statusChange.icon.rawValue)
         }
     }
 

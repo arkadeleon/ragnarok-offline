@@ -12,6 +12,8 @@ import RagnarokResources
 import SwiftUI
 
 struct EffectViewer: View {
+    var resourceManager: ResourceManager
+
     var body: some View {
         AsyncContentView {
             try await loadSTR(named: "thunderstorm.str")
@@ -21,7 +23,6 @@ struct EffectViewer: View {
     }
 
     private func loadSTR(named name: String) async throws -> STRFilePreviewRenderer {
-        let resourceManager = ResourceManager.shared
         let path = ResourcePath.effectDirectory.appending(name)
         let data = try await resourceManager.contentsOfResource(at: path)
         let str = try STR(data: data)

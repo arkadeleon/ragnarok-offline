@@ -9,6 +9,7 @@ import Foundation
 import RagnarokConstants
 import RagnarokDatabase
 import RagnarokLocalization
+import RagnarokResources
 import rAthenaResources
 
 struct DropItem: Identifiable {
@@ -52,6 +53,7 @@ struct SpawningMonster: Identifiable {
 @Observable
 final class DatabaseModel {
     let mode: DatabaseMode
+    let resourceManager: ResourceManager
 
     var items: [ItemModel] = []
     var itemsByID: [Int : ItemModel] = [:]
@@ -97,8 +99,9 @@ final class DatabaseModel {
     @ObservationIgnored private var statusChangeDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var npcDatabaseTask: Task<Void, Never>?
 
-    init(mode: DatabaseMode) {
+    init(mode: DatabaseMode, resourceManager: ResourceManager) {
         self.mode = mode
+        self.resourceManager = resourceManager
 
         itemInfoTable = ItemInfoTable()
         mapNameTable = MapNameTable()
@@ -129,7 +132,7 @@ final class DatabaseModel {
             self.items = items.map { item in
                 let localizedName = itemInfoTable.localizedIdentifiedItemName(forItemID: item.id)
                 let localizedDescription = itemInfoTable.localizedIdentifiedItemDescription(forItemID: item.id)
-                let model = ItemModel(mode: mode, item: item, localizedName: localizedName, localizedDescription: localizedDescription)
+                let model = ItemModel(mode: mode, item: item, localizedName: localizedName, localizedDescription: localizedDescription, resourceManager: resourceManager)
                 return model
             }
 
@@ -198,7 +201,7 @@ final class DatabaseModel {
             self.jobs = jobs.map { job in
                 let localizedName = messageStringTable.localizedJobName(for: job.id)
                 let skillTree = skillTrees.first(where: { $0.job == job.id })
-                let model = JobModel(mode: mode, job: job, localizedName: localizedName, skillTree: skillTree)
+                let model = JobModel(mode: mode, job: job, localizedName: localizedName, skillTree: skillTree, resourceManager: resourceManager)
                 return model
             }
         }
@@ -228,7 +231,7 @@ final class DatabaseModel {
 
             self.maps = maps.map { map in
                 let localizedName = mapNameTable.localizedMapName(forMapName: map.name)
-                let model = MapModel(mode: mode, map: map, localizedName: localizedName)
+                let model = MapModel(mode: mode, map: map, localizedName: localizedName, resourceManager: resourceManager)
                 return model
             }
 
@@ -286,7 +289,7 @@ final class DatabaseModel {
 
             self.monsters = monsters.map { monster in
                 let localizedName = monsterNameTable.localizedMonsterName(forMonsterID: monster.id)
-                let model = MonsterModel(mode: mode, monster: monster, localizedName: localizedName)
+                let model = MonsterModel(mode: mode, monster: monster, localizedName: localizedName, resourceManager: resourceManager)
                 return model
             }
 
@@ -460,7 +463,7 @@ final class DatabaseModel {
             self.skills = skills.map { skill in
                 let localizedName = skillInfoTable.localizedSkillName(forSkillID: skill.id)
                 let localizedDescription = skillInfoTable.localizedSkillDescription(forSkillID: skill.id)
-                let model = SkillModel(mode: mode, skill: skill, localizedName: localizedName, localizedDescription: localizedDescription)
+                let model = SkillModel(mode: mode, skill: skill, localizedName: localizedName, localizedDescription: localizedDescription, resourceManager: resourceManager)
                 return model
             }
 
@@ -524,7 +527,7 @@ final class DatabaseModel {
 
             self.statusChanges = statusChanges.map { statusChange in
                 let localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)
-                let model = StatusChangeModel(mode: mode, statusChange: statusChange, localizedDescription: localizedDescription)
+                let model = StatusChangeModel(mode: mode, statusChange: statusChange, localizedDescription: localizedDescription, resourceManager: resourceManager)
                 return model
             }
 
