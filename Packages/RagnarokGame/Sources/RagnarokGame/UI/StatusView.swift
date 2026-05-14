@@ -9,12 +9,17 @@ import SwiftUI
 
 struct StatusView: View {
     var status: CharacterStatus
+    var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
 
     var body: some View {
         VStack(spacing: 0) {
             GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
 
             HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: 6) {

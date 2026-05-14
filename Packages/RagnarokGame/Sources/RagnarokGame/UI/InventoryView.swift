@@ -17,6 +17,7 @@ private enum InventoryTab {
 
 struct InventoryView: View {
     var inventory: Inventory
+    var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
 
@@ -40,6 +41,10 @@ struct InventoryView: View {
         ZStack {
             VStack(spacing: 0) {
                 GameTitleBar()
+                    .overlay(alignment: .trailing) {
+                        GameWindowCloseButton(action: onClose)
+                            .padding(.horizontal, 5)
+                    }
 
                 VStack(spacing: 0) {
                     tabBar

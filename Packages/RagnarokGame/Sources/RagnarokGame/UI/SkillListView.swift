@@ -12,6 +12,7 @@ import SwiftUI
 
 struct SkillListView: View {
     var skillList: SkillList
+    var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
 
@@ -20,6 +21,10 @@ struct SkillListView: View {
     var body: some View {
         VStack(spacing: 0) {
             GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
 
             ScrollView {
                 LazyVStack(spacing: 0) {

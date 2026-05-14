@@ -11,9 +11,15 @@ import RagnarokResources
 import SwiftUI
 
 struct EquipmentView: View {
+    var onClose: () -> Void = {}
+
     var body: some View {
         VStack(spacing: 0) {
             GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
 
             HStack(spacing: 0) {
                 VStack(spacing: 0) {

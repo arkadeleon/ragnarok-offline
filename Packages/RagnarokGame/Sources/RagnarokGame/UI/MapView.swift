@@ -107,18 +107,28 @@ struct MapView: View {
                 #endif
         }
         .overlay(alignment: .center) {
-            if let presentedMenuItem {
-                switch presentedMenuItem {
+            if let item = presentedMenuItem {
+                switch item {
                 case .status:
-                    StatusView(status: gameSession.playerStatus)
+                    StatusView(status: gameSession.playerStatus) {
+                        presentedMenuItem = nil
+                    }
                 case .equipment:
-                    EquipmentView()
+                    EquipmentView {
+                        presentedMenuItem = nil
+                    }
                 case .inventory:
-                    InventoryView(inventory: gameSession.inventory)
+                    InventoryView(inventory: gameSession.inventory) {
+                        presentedMenuItem = nil
+                    }
                 case .skill:
-                    SkillListView(skillList: gameSession.skillList)
+                    SkillListView(skillList: gameSession.skillList) {
+                        presentedMenuItem = nil
+                    }
                 case .options:
-                    OptionsView()
+                    OptionsView {
+                        presentedMenuItem = nil
+                    }
                 }
             }
         }

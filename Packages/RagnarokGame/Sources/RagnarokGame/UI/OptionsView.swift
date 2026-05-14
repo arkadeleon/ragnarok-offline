@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct OptionsView: View {
+    var onClose: () -> Void = {}
+
     @Environment(GameSession.self) private var gameSession
     @Environment(\.exitGame) private var exitGame
 
     var body: some View {
         VStack(spacing: 0) {
             GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
 
             VStack(spacing: 3) {
                 if isPlayerDead {
@@ -56,11 +62,6 @@ struct OptionsView: View {
                     Button("Exit") {
                         gameSession.requestExit()
                         exitGame()
-                    }
-                    .buttonStyle(.game)
-                    .frame(width: 220, height: 20)
-
-                    Button("Return to game") {
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
