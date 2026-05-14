@@ -12,6 +12,8 @@ import simd
 @Observable
 public final class MapSceneState {
     public let playerID: GameObjectID
+    public var isPlayerDead = false
+
     public var objects: [GameObjectID : MapObjectState]
     public var items: [GameObjectID : MapItemState] = [:]
     public let overlay = MapOverlayState()

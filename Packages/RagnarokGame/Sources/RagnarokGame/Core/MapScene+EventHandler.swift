@@ -245,14 +245,42 @@ extension MapScene {
         applySnapshot()
     }
 
-    func onMapObjectVanished(objectID: GameObjectID) {
-        if objectID == state.playerID {
-            // TODO: player death
-        } else {
+    func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
+        switch type {
+        case 1 where objectID == state.playerID:
+            if var playerState = state.objects[objectID] {
+                playerState.presentation = MapObjectPresentationState(
+                    action: .die,
+                    direction: playerState.presentation.direction,
+                    headDirection: playerState.presentation.headDirection,
+                    startTime: .now,
+                    completion: .indefinite
+                )
+                state.objects[objectID] = playerState
+            }
+            state.isPlayerDead = true
+            state.overlay.gauges.removeValue(forKey: objectID)
+        default:
             state.objects.removeValue(forKey: objectID)
+            state.overlay.gauges.removeValue(forKey: objectID)
         }
-        state.overlay.gauges.removeValue(forKey: objectID)
+        applySnapshot()
+    }
 
+    func onMapObjectResurrected(objectID: GameObjectID) {
+        if var objectState = state.objects[objectID] {
+            objectState.presentation = MapObjectPresentationState(
+                action: .idle,
+                direction: objectState.presentation.direction,
+                headDirection: objectState.presentation.headDirection,
+                startTime: .now,
+                completion: .indefinite
+            )
+            state.objects[objectID] = objectState
+        }
+        if objectID == state.playerID {
+            state.isPlayerDead = false
+        }
         applySnapshot()
     }
 

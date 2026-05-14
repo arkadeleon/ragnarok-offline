@@ -127,6 +127,11 @@ struct MapView: View {
                 NPCDialogView(dialog: dialog)
             }
         }
+        .onChange(of: scene.state.isPlayerDead) { _, newValue in
+            if newValue {
+                presentedMenuItem = .options
+            }
+        }
         .ignoresSafeArea()
         .onGeometryChange(for: CGFloat.self) { geometryProxy in
             geometryProxy.size.width + geometryProxy.safeAreaInsets.leading + geometryProxy.safeAreaInsets.trailing

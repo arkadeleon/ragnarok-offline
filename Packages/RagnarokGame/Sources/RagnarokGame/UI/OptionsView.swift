@@ -16,67 +16,68 @@ struct OptionsView: View {
             GameTitleBar()
 
             VStack(spacing: 3) {
-                Button("Resurrection") {
-                }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
-                .disabled(true)
+                if isPlayerDead {
+                    Button("Resurrection") {
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
 
-                Button("Return to last save point") {
-                    gameSession.returnToLastSavePoint()
-                }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
-                .disabled(true)
+                    Button("Return to last save point") {
+                        gameSession.returnToLastSavePoint()
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                } else {
+                    Button("Character Select") {
+                        gameSession.returnToCharacterSelect()
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
 
-                Button("Character Select") {
-                    gameSession.returnToCharacterSelect()
-                }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
+                    Button("Settings") {
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
 
-                Button("Settings") {
-                }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
-                .disabled(true)
+                    Button("Sound") {
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
 
-                Button("Sound") {
-                }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
-                .disabled(true)
+                    Button("BM/Shortcut Settings") {
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
 
-                Button("BM/Shortcut Settings") {
-                }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
-                .disabled(true)
+                    Button("Exit") {
+                        gameSession.requestExit()
+                        exitGame()
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
 
-                Button("Exit to Windows") {
-                    gameSession.requestExit()
-                    exitGame()
+                    Button("Return to game") {
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
                 }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
-
-                Button("Return to game") {
-                }
-                .buttonStyle(.game)
-                .frame(width: 220, height: 20)
             }
             .frame(maxWidth: .infinity)
-            .padding(.top, 20)
-            .padding(.bottom, 6)
+            .padding(.vertical, 20)
             .background(.white)
             .clipShape(
-                UnevenRoundedRectangle(
-                    bottomLeadingRadius: 3,
-                    bottomTrailingRadius: 3
-                )
+                UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
             )
         }
         .frame(width: 280)
+    }
+
+    private var isPlayerDead: Bool {
+        gameSession.mapSceneState?.isPlayerDead ?? false
     }
 }
 
