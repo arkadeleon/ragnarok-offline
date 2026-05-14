@@ -76,7 +76,6 @@ public final class MapScene {
             maxHp: character.maxHp,
             sp: character.sp,
             maxSp: character.maxSp,
-            isVisible: player.effectState != .cloak,
             presentation: MapObjectPresentationState(
                 action: .idle,
                 direction: .south,
@@ -141,7 +140,7 @@ public final class MapScene {
 
     private func playerMovementOrigin() -> SIMD2<Int> {
         if let movement = state.player.movement,
-           let nextPosition = movement.nextPosition(speed: state.player.object.speed, at: .now) {
+           let nextPosition = movement.nextPosition(speed: state.player.speed, at: .now) {
             return nextPosition
         } else {
             return state.player.gridPosition
@@ -229,7 +228,7 @@ public final class MapScene {
             return
         }
 
-        switch target.object.type {
+        switch target.type {
         case .monster:
             engageMonster(target)
         case .npc:

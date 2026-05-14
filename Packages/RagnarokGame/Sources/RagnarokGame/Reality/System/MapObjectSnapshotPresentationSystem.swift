@@ -11,7 +11,7 @@ import RealityKit
 import simd
 
 class MapObjectSnapshotPresentationSystem: System {
-    static let query = EntityQuery(where: .has(MapObjectSnapshotPresentationComponent.self) && .has(MapObjectComponent.self))
+    static let query = EntityQuery(where: .has(MapObjectSnapshotPresentationComponent.self) && .has(MapObjectStateComponent.self))
 
     private let sampler = MapObjectPresentationSampler()
 

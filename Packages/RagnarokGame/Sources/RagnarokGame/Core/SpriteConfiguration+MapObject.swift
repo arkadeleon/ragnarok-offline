@@ -40,7 +40,7 @@ extension ComposedSprite.Configuration {
 
     init(objectState: MapObjectState) {
         self.init(jobID: objectState.job)
-        self.gender = objectState.object.gender
+        self.gender = objectState.gender
         self.hairStyle = objectState.hairStyle
         self.hairColor = objectState.hairColor
         self.clothesColor = objectState.clothesColor

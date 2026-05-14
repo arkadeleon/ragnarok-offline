@@ -8,7 +8,7 @@
 import RagnarokConstants
 
 extension ComposedSprite {
-    public struct Configuration: Equatable, Sendable {
+    public struct Configuration: Hashable, Sendable {
         public let job: SpriteJob
         public var gender: Gender
         public var hairStyle: Int

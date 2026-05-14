@@ -95,13 +95,11 @@ final class SpriteAssetStore {
                 composedSprite: nil,
                 partTextures: nil
             )
-        } else if objectAssets[objectID]?.composedSprite != nil {
-            if objectAssets[objectID]?.configuration != configuration {
-                objectLoadTasks[objectID]?.cancel()
-                objectLoadTasks.removeValue(forKey: objectID)
-                objectAssets[objectID]?.composedSprite = nil
-                objectAssets[objectID]?.partTextures = nil
-            }
+        } else if objectAssets[objectID]?.configuration != configuration {
+            objectLoadTasks[objectID]?.cancel()
+            objectLoadTasks.removeValue(forKey: objectID)
+            objectAssets[objectID]?.composedSprite = nil
+            objectAssets[objectID]?.partTextures = nil
         }
         objectAssets[objectID]?.configuration = configuration
 
@@ -121,6 +119,10 @@ final class SpriteAssetStore {
                 configuration: configuration,
                 resourceManager: self.resourceManager
             ) else {
+                return
+            }
+
+            guard self.objectAssets[objectID]?.configuration == configuration else {
                 return
             }
 

@@ -45,6 +45,21 @@ class SpriteEntity: Entity {
 }
 
 extension Entity {
+    convenience init(configuration: ComposedSprite.Configuration, using resourceManager: ResourceManager) async throws {
+        self.init()
+
+        do {
+            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+            let animations = await SpriteAnimation.animations(for: composedSprite)
+
+            let spriteEntity = SpriteEntity(animations: animations)
+            spriteEntity.name = "sprite"
+            addChild(spriteEntity)
+        } catch {
+            logger.warning("\(error)")
+        }
+    }
+
     convenience init(from mapObject: MapObject, using resourceManager: ResourceManager) async throws {
         self.init()
 
@@ -110,17 +125,17 @@ extension Entity {
     }
 
     func attack(direction: SpriteDirection) {
-        guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
+        guard let objectState = components[MapObjectStateComponent.self]?.objectState else {
             return
         }
 
         let attackActionType = SpriteActionType.attackActionType(
-            forJobID: mapObject.job,
-            gender: mapObject.gender,
-            weapon: mapObject.weapon
+            forJobID: objectState.job,
+            gender: objectState.gender,
+            weapon: objectState.weapon
         )
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: objectState.job)
         let nextActionType: SpriteActionType = if availableActionTypes.contains(.readyToAttack) {
             .readyToAttack
         } else {
@@ -131,11 +146,11 @@ extension Entity {
     }
 
     func castSkill(direction: SpriteDirection) {
-        guard let mapObject = components[MapObjectComponent.self]?.mapObject else {
+        guard let objectState = components[MapObjectStateComponent.self]?.objectState else {
             return
         }
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: objectState.job)
         let actionType: SpriteActionType = if availableActionTypes.contains(.skill) {
             .skill
         } else {
@@ -188,7 +203,7 @@ extension Entity {
             return
         }
 
-        guard let mapObject = components[MapObjectComponent.self]?.mapObject,
+        guard let objectState = components[MapObjectStateComponent.self]?.objectState,
               let animations = spriteEntity.components[SpriteAnimationLibraryComponent.self]?.animations else {
             return
         }
@@ -202,7 +217,7 @@ extension Entity {
                 let targetPosition = path[i]
 
                 let direction = SpriteDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
-                let speed = TimeInterval(mapObject.speed) / 1000
+                let speed = TimeInterval(objectState.speed) / 1000
                 let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 
                 let animationName = SpriteAnimation.animationName(

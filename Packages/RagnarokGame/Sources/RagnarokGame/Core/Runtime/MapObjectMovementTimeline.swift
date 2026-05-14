@@ -89,7 +89,7 @@ struct MapObjectMovementTimeline {
         let path = movement.path
         let progress = MapObjectMovementPathProgress(
             path: path,
-            speed: state.object.speed,
+            speed: state.speed,
             startTime: movement.startTime,
             duration: movement.duration
         )

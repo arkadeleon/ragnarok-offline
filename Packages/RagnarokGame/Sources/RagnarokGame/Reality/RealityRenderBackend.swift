@@ -99,15 +99,16 @@ final class RealityRenderBackend: GameRenderBackend {
         await tileSelectionRenderer.prepare()
 
         do {
-            let (playerEntity, _) = try await entityCache.objectEntity(for: scene.player)
-            playerEntity.name = "\(scene.player.objectID)"
+            let playerState = scene.state.player
+            let (playerEntity, _) = try await entityCache.objectEntity(for: playerState)
+            playerEntity.name = "\(playerState.id)"
             playerEntity.transform = Transform(translation: scene.mapGrid.worldPosition(for: scene.playerPosition))
-            playerEntity.isEnabled = scene.player.effectState != .cloak
+            playerEntity.isEnabled = playerState.effectState != .cloak
             playerEntity.components.set([
                 GridPositionComponent(gridPosition: scene.playerPosition),
-                MapObjectComponent(mapObject: scene.player),
-                HealthPointsComponent(hp: scene.character.hp, maxHp: scene.character.maxHp),
-                SpellPointsComponent(sp: scene.character.sp, maxSp: scene.character.maxSp),
+                MapObjectStateComponent(objectState: playerState),
+                HealthPointsComponent(hp: playerState.hp, maxHp: playerState.maxHp),
+                SpellPointsComponent(sp: playerState.sp ?? 0, maxSp: playerState.maxSp ?? 0),
             ])
             playerEntity.playSpriteAnimation(.idle, direction: .south)
             rootEntity.addChild(playerEntity)
@@ -208,7 +209,7 @@ final class RealityRenderBackend: GameRenderBackend {
     private func registerRealityComponents() {
         GridPositionComponent.registerComponent()
         MapItemComponent.registerComponent()
-        MapObjectComponent.registerComponent()
+        MapObjectStateComponent.registerComponent()
         TileComponent.registerComponent()
         HealthPointsComponent.registerComponent()
         SpellPointsComponent.registerComponent()
@@ -425,7 +426,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private func syncObjectEntity(for objectState: MapObjectState, scene: MapScene) async {
         do {
-            let (entity, isNew) = try await entityCache.objectEntity(for: objectState.object)
+            let (entity, isNew) = try await entityCache.objectEntity(for: objectState)
             guard !Task.isCancelled else {
                 return
             }
@@ -442,16 +443,16 @@ final class RealityRenderBackend: GameRenderBackend {
                     now: .now
                 ).worldPosition
             )
-            entity.isEnabled = objectState.isVisible
+            entity.isEnabled = objectState.effectState != .cloak
             entity.components.set(GridPositionComponent(gridPosition: objectState.gridPosition))
-            entity.components.set(MapObjectComponent(mapObject: objectState.object))
+            entity.components.set(MapObjectStateComponent(objectState: objectState))
             entity.components.set(MapObjectSnapshotPresentationComponent(
                 logicalWorldPosition: scene.mapGrid.worldPosition(for: objectState.gridPosition),
                 timeline: MapObjectMovementTimeline(for: objectState, position: { scene.mapGrid.worldPosition(for: $0) }),
                 presentation: objectState.presentation
             ))
 
-            if scene.player.objectID == objectState.id || objectState.object.type == .monster {
+            if scene.player.objectID == objectState.id || objectState.type == .monster {
                 entity.components.set(HealthPointsComponent(hp: objectState.hp, maxHp: objectState.maxHp))
             } else {
                 entity.components.remove(HealthPointsComponent.self)

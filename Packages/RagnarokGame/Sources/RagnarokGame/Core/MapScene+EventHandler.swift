@@ -82,10 +82,10 @@ extension MapScene {
         let movementPlanner = MapObjectMovementPlanner(pathFinder: pathFinder)
         let movement = movementPlanner.replan(
             existingMovement: state.player.movement,
-            existingSpeed: state.player.object.speed,
+            existingSpeed: state.player.speed,
             incomingStartPosition: startPosition,
             incomingEndPosition: endPosition,
-            incomingSpeed: state.player.object.speed,
+            incomingSpeed: state.player.speed,
             at: now
         )
         let remainingDuration = movement.remainingDuration(at: now)
@@ -139,7 +139,6 @@ extension MapScene {
             gridPosition: position,
             hp: object.hp,
             maxHp: object.maxHp,
-            isVisible: object.effectState != .cloak,
             presentation: MapObjectPresentationState(
                 action: .idle,
                 direction: SpriteDirection(direction: direction),
@@ -168,7 +167,7 @@ extension MapScene {
         let movementPlanner = MapObjectMovementPlanner(pathFinder: pathFinder)
         let movement = movementPlanner.replan(
             existingMovement: existingObjectState?.movement,
-            existingSpeed: existingObjectState?.object.speed,
+            existingSpeed: existingObjectState?.speed,
             incomingStartPosition: startPosition,
             incomingEndPosition: endPosition,
             incomingSpeed: object.speed,
@@ -203,7 +202,6 @@ extension MapScene {
                 gridPosition: endPosition,
                 hp: object.hp,
                 maxHp: object.maxHp,
-                isVisible: object.effectState != .cloak,
                 movement: movement,
                 presentation: presentation
             )
@@ -272,19 +270,21 @@ extension MapScene {
         let isVisible = effectState != .cloak
 
         if var objectState = state.objects[objectID] {
-            objectState.isVisible = isVisible
+            objectState.bodyState = bodyState
+            objectState.healthState = healthState
+            objectState.effectState = effectState
             state.objects[objectID] = objectState
         }
 
         if isVisible {
-            if let objectState = state.objects[objectID], objectID == state.playerID || objectState.object.type == .monster {
+            if let objectState = state.objects[objectID], objectID == state.playerID || objectState.type == .monster {
                 state.overlay.gauges[objectID] = MapGaugeOverlay(
                     id: objectID,
                     hp: objectState.hp,
                     maxHp: objectState.maxHp,
                     sp: objectState.sp,
                     maxSp: objectState.maxSp,
-                    objectType: objectState.object.type
+                    objectType: objectState.type
                 )
             }
         } else {
@@ -338,7 +338,7 @@ extension MapScene {
         let now = ContinuousClock.now
 
         let sourceID = objectAction.sourceObjectID
-        let sourceMapObject = state.objects[sourceID]?.object
+        let sourceState = state.objects[sourceID]
 
         let presentationAction: SpriteActionType = switch objectAction.type {
         case .sit_down:
@@ -348,11 +348,11 @@ extension MapScene {
         case .pickup_item:
             .pickup
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
-            if let sourceMapObject {
+            if let sourceState {
                 SpriteActionType.attackActionType(
-                    forJobID: sourceMapObject.job,
-                    gender: sourceMapObject.gender,
-                    weapon: sourceMapObject.weapon
+                    forJobID: sourceState.job,
+                    gender: sourceState.gender,
+                    weapon: sourceState.weapon
                 )
             } else {
                 .attack1
@@ -369,7 +369,7 @@ extension MapScene {
         case .freeze, .freeze2, .die:
             .after(.milliseconds(objectAction.sourceSpeed), settledAction: presentationAction)
         case .attack1, .attack2, .attack3, .skill:
-            .after(.milliseconds(objectAction.sourceSpeed), settledAction: afterAttackAction(for: sourceMapObject))
+            .after(.milliseconds(objectAction.sourceSpeed), settledAction: afterAttackAction(for: sourceState))
         case .idle, .walk, .readyToAttack, .hurt:
             .after(.milliseconds(objectAction.sourceSpeed), settledAction: .idle)
         }
@@ -395,10 +395,10 @@ extension MapScene {
         let objectID = packet.AID
 
         let now = ContinuousClock.now
-        let sourceMapObject = state.objects[objectID]?.object
+        let sourceState = state.objects[objectID]
 
-        if let sourceMapObject {
-            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceMapObject.job)
+        if let sourceState {
+            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceState.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(Int(packet.attackMT))
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
@@ -422,7 +422,7 @@ extension MapScene {
             let damage = Int(packet.damage)
             let target = MapCombatText.Target(
                 id: packet.targetID,
-                isPlayer: state.objects[packet.targetID]?.object.type == .pc
+                isPlayer: state.objects[packet.targetID]?.type == .pc
             )
 
             for i in 0..<count {
@@ -480,19 +480,19 @@ extension MapScene {
 }
 
 extension MapScene {
-    private func afterAttackAction(for mapObject: MapObject?) -> SpriteActionType {
-        guard let mapObject else {
+    private func afterAttackAction(for objectState: MapObjectState?) -> SpriteActionType {
+        guard let objectState else {
             return .idle
         }
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: mapObject.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: objectState.job)
         return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
     }
 
     private func addCombatTexts(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
         let target = MapCombatText.Target(
             id: objectAction.targetObjectID,
-            isPlayer: state.objects[objectAction.targetObjectID]?.object.type == .pc
+            isPlayer: state.objects[objectAction.targetObjectID]?.type == .pc
         )
 
         switch objectAction.type {
@@ -631,29 +631,29 @@ extension MapScene {
             return
         }
 
-        let sourceMapObject = state.objects[objectAction.sourceObjectID]?.object
-        let targetMapObject = state.objects[objectAction.targetObjectID]?.object
+        let sourceState = state.objects[objectAction.sourceObjectID]
+        let targetState = state.objects[objectAction.targetObjectID]
 
-        if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
-            let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
+        if let sourceState, SpriteJob(rawValue: sourceState.job).isPlayer {
+            let weaponType = WeaponType(rawValue: sourceState.weapon) ?? .w_fist
             let soundName = WeaponSoundTable.attackSoundNames(for: weaponType).randomElement()
             if let soundName {
                 renderBackend.playSound(named: soundName, on: objectAction.sourceObjectID)
             }
         }
 
-        if let targetMapObject, objectAction.damage > 0 {
-            let targetJob = SpriteJob(rawValue: targetMapObject.job)
+        if let targetState, objectAction.damage > 0 {
+            let targetJob = SpriteJob(rawValue: targetState.job)
 
             let hitSoundName: String?
             if targetJob.isPlayer {
-                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
-            } else if let sourceMapObject, SpriteJob(rawValue: sourceMapObject.job).isPlayer {
-                let weaponType = WeaponType(rawValue: sourceMapObject.weapon) ?? .w_fist
+                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetState.job).randomElement()
+            } else if let sourceState, SpriteJob(rawValue: sourceState.job).isPlayer {
+                let weaponType = WeaponType(rawValue: sourceState.weapon) ?? .w_fist
                 let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: weaponType).randomElement()
-                hitSoundName = weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
+                hitSoundName = weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetState.job).randomElement()
             } else {
-                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetMapObject.job).randomElement()
+                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetState.job).randomElement()
             }
 
             if let hitSoundName {

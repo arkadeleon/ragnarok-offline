@@ -51,7 +51,7 @@ final class SpriteSnapshotBuilder {
         return SpriteSnapshot(
             objectID: state.id,
             worldPosition: presentationSample.worldPosition,
-            isVisible: state.isVisible,
+            isVisible: state.effectState != .cloak,
             content: .mapObject(configuration: ComposedSprite.Configuration(objectState: state), animation: animation)
         )
     }

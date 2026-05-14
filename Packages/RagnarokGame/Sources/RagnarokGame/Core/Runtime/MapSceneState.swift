@@ -39,7 +39,7 @@ extension MapSceneState {
     func nearestMonster(fromPosition position: SIMD2<Int>) -> MapObjectState? {
         objects.values
             .filter {
-                $0.object.type == .monster
+                $0.type == .monster
             }
             .min {
                 distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
@@ -49,7 +49,7 @@ extension MapSceneState {
     func nearestNPC(fromPosition position: SIMD2<Int>) -> MapObjectState? {
         objects.values
             .filter {
-                $0.object.type == .npc
+                $0.type == .npc
             }
             .min {
                 distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
