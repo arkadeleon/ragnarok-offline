@@ -55,6 +55,33 @@ final class AppModel {
             char_del_delay: 0
             pincode_enabled: no
             """,
+        groups: """
+            Header:
+              Type: PLAYER_GROUP_DB
+              Version: 1
+
+            Body:
+              - Id: 0
+                Commands:
+                  alive: true
+                  autoloot: true
+                  jobchange: true
+                  baselevelup: true
+                  heal: true
+                  joblevelup: true
+                  mapmove: true
+                  monster: true
+                  mount_peco: true
+                  agi: true
+                  dex: true
+                  int: true
+                  luk: true
+                  str: true
+                  vit: true
+                  zeny: true
+                Permissions:
+                  any_warp: true
+            """,
         login_conf: """
             stdout_with_ansisequence: yes
             new_account: yes

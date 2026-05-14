@@ -18,17 +18,20 @@ struct ChatBoxView: View {
     enum MessageGroup {
         case chat
         case packet
+        case command
 
         var title: String {
             switch self {
             case .chat: "Chat"
             case .packet: "Packet"
+            case .command: "Command"
             }
         }
     }
 
     static let perMessageHeight: CGFloat = 14
     static let messageHeaderHeight: CGFloat = 22
+    static let chatInputHeight: CGFloat = 36
 
     static func contentHeight(for viewStyle: ViewStyle) -> CGFloat {
         switch viewStyle {
@@ -62,16 +65,13 @@ struct ChatBoxView: View {
                     #endif
                     .disableAutocorrection(true)
                     .gameText()
-                    .frame(height: 36)
+                    .padding(.horizontal, 6)
+                    .frame(height: ChatBoxView.chatInputHeight)
                     .background(Color.white.opacity(0.8))
                     .clipShape(RoundedRectangle(cornerRadius: 3))
                     .focused($isFocused)
-                    .onTapGesture {
-                        isFocused = true
-                    }
                     .onSubmit {
-                        gameSession.sendMessage(message)
-                        message = ""
+                        send(message)
                     }
             }
 
@@ -80,6 +80,7 @@ struct ChatBoxView: View {
                     HStack(spacing: 0) {
                         MessageGroupButton(group: .chat, selection: $messageGroup)
                         MessageGroupButton(group: .packet, selection: $messageGroup)
+                        MessageGroupButton(group: .command, selection: $messageGroup)
                     }
                     .frame(height: ChatBoxView.messageHeaderHeight)
 
@@ -94,6 +95,10 @@ struct ChatBoxView: View {
                         ChatMessageListView(messages: gameSession.messageCenter.messages)
                     case .packet:
                         PacketMessageListView(messages: gameSession.packetMessages)
+                    case .command:
+                        AtCommandShortcutListView(groups: AtCommandShortcutGroup.allGroups) { shortcut in
+                            send(shortcut.command)
+                        }
                     }
                 }
                 .frame(height: ChatBoxView.perMessageHeight * CGFloat(ChatBoxView.messageCount(for: viewStyle)))
@@ -112,6 +117,15 @@ struct ChatBoxView: View {
         }
         .geometryGroup()
         .animation(.spring(duration: 0.25), value: viewStyle)
+    }
+
+    private func send(_ message: String) {
+        guard !message.isEmpty else {
+            return
+        }
+
+        gameSession.sendMessage(message)
+        self.message = ""
     }
 }
 
@@ -183,6 +197,45 @@ private struct PacketMessageListView: View {
         case .incoming:
             "[Recv] " + String(describing: type(of: message.packet))
         }
+    }
+}
+
+private struct AtCommandShortcutListView: View {
+    var groups: [AtCommandShortcutGroup]
+    var shortcutAction: (AtCommandShortcut) -> Void
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 6) {
+                ForEach(groups) { group in
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(group.title)
+                            .gameText(size: 10, color: .white.opacity(0.7))
+
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 72), spacing: 3)], spacing: 3) {
+                            ForEach(group.shortcuts) { shortcut in
+                                Button {
+                                    shortcutAction(shortcut)
+                                } label: {
+                                    Text(shortcut.title)
+                                        .gameText(color: .white)
+                                        .lineLimit(1)
+                                        .padding(.horizontal, 6)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 22)
+                                        .background(Color.white.opacity(0.12))
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(8)
+        }
+        .scrollIndicators(.hidden)
     }
 }
 
