@@ -123,7 +123,7 @@ public final class MapScene {
             selectGround(at: position)
         case .mapObject(let objectID):
             handleMapObjectSelection(objectID: objectID)
-        case .item(let objectID):
+        case .mapItem(let objectID):
             gameSession?.pickUpItem(objectID: objectID)
         }
     }

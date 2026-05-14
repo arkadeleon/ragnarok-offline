@@ -10,12 +10,12 @@ import simd
 
 public struct MapItemState: Identifiable, Sendable {
     public let id: GameObjectID
-    public var item: MapItem
+    public var itemID: Int
     public var gridPosition: SIMD2<Int>
 
-    public init(id: GameObjectID, item: MapItem, gridPosition: SIMD2<Int>) {
-        self.id = id
-        self.item = item
+    public init(item: MapItem, gridPosition: SIMD2<Int>) {
+        self.id = item.objectID
+        self.itemID = Int(item.itemID)
         self.gridPosition = gridPosition
     }
 }

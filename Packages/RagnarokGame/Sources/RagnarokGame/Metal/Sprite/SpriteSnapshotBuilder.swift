@@ -61,7 +61,7 @@ final class SpriteSnapshotBuilder {
             objectID: state.id,
             worldPosition: scene.mapGrid.worldPosition(for: state.gridPosition),
             isVisible: true,
-            content: .item(state.item)
+            content: .mapItem(itemID: state.itemID)
         )
     }
 }

@@ -66,8 +66,8 @@ final class SpriteAssetStore {
             switch snapshot.content {
             case .mapObject(let configuration, _):
                 syncObjectAssets(objectID: objectID, configuration: configuration)
-            case .item(let mapItem):
-                syncItemAssets(objectID: objectID, mapItem: mapItem)
+            case .mapItem(let itemID):
+                syncItemAssets(objectID: objectID, itemID: itemID)
             }
         }
 
@@ -134,7 +134,7 @@ final class SpriteAssetStore {
         }
     }
 
-    private func syncItemAssets(objectID: GameObjectID, mapItem: MapItem) {
+    private func syncItemAssets(objectID: GameObjectID, itemID: Int) {
         if itemAssets[objectID] == nil {
             itemAssets[objectID] = ItemAssetEntry(
                 composedSprite: nil,
@@ -154,7 +154,7 @@ final class SpriteAssetStore {
                 self.itemLoadTasks.removeValue(forKey: objectID)
             }
 
-            guard let sprite = try? await self.resourceManager.itemSprite(forItemID: Int(mapItem.itemID)) else {
+            guard let sprite = try? await self.resourceManager.itemSprite(forItemID: itemID) else {
                 return
             }
 
@@ -220,7 +220,7 @@ final class SpriteAssetStore {
                     )
                 )
 
-            case .item:
+            case .mapItem:
                 guard let itemAsset = itemAssets[objectID],
                       let composedSprite = itemAsset.composedSprite,
                       let partTextures = itemAsset.partTextures else {

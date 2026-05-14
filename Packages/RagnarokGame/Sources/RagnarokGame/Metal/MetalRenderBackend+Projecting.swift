@@ -96,7 +96,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
                     continue
                 }
                 if scene.state.items[objectID] != nil {
-                    return .item(objectID: objectID)
+                    return .mapItem(objectID: objectID)
                 }
             }
         }

@@ -206,7 +206,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private func registerRealityComponents() {
         GridPositionComponent.registerComponent()
-        MapItemComponent.registerComponent()
+        MapItemStateComponent.registerComponent()
         MapObjectStateComponent.registerComponent()
         TileComponent.registerComponent()
 
@@ -454,7 +454,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private func syncItemEntity(for itemState: MapItemState, scene: MapScene) async {
         do {
-            let entity = try await entityCache.itemEntity(for: itemState.item)
+            let entity = try await entityCache.itemEntity(for: itemState)
             guard !Task.isCancelled else {
                 return
             }
@@ -464,7 +464,7 @@ final class RealityRenderBackend: GameRenderBackend {
             entity.name = "\(itemState.id)"
             entity.transform = Transform(translation: scene.mapGrid.worldPosition(for: itemState.gridPosition))
             entity.components.set(GridPositionComponent(gridPosition: itemState.gridPosition))
-            entity.components.set(MapItemComponent(mapItem: itemState.item))
+            entity.components.set(MapItemStateComponent(itemState: itemState))
 
             if isNew {
                 entity.playDefaultSpriteAnimation()

@@ -36,8 +36,8 @@ extension RealityRenderBackend: GameCoordinateSpaceProjecting {
                 return .mapObject(objectID: objectState.id)
             }
 
-            if let mapItem = hitEntity.components[MapItemComponent.self]?.mapItem {
-                return .item(objectID: mapItem.objectID)
+            if let itemState = hitEntity.components[MapItemStateComponent.self]?.itemState {
+                return .mapItem(objectID: itemState.id)
             }
         }
 

@@ -10,7 +10,7 @@ import simd
 
 public enum GameHitTestResult: Sendable {
     case mapObject(objectID: GameObjectID)
-    case item(objectID: GameObjectID)
+    case mapItem(objectID: GameObjectID)
     case ground(position: SIMD2<Int>)
 }
 

@@ -76,11 +76,11 @@ extension Entity {
         }
     }
 
-    convenience init(from mapItem: MapItem, using resourceManager: ResourceManager) async throws {
+    convenience init(forItemID itemID: Int, using resourceManager: ResourceManager) async throws {
         self.init()
 
         do {
-            let sprite = try await resourceManager.itemSprite(forItemID: Int(mapItem.itemID))
+            let sprite = try await resourceManager.itemSprite(forItemID: itemID)
             let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
 
             let spriteEntity = SpriteEntity(animation: animation)
