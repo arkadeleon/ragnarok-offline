@@ -29,7 +29,7 @@ struct MapObjectMovementPlanner {
         incomingSpeed: Int,
         at now: ContinuousClock.Instant
     ) -> MapObjectMovementState {
-        let incomingPath = findPath(incomingStartPosition, incomingEndPosition)
+        let incomingPath = movementPath(from: incomingStartPosition, to: incomingEndPosition)
         let fallbackAnimationElapsedOffset = if let existingMovement {
             existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
         } else {
@@ -51,11 +51,7 @@ struct MapObjectMovementPlanner {
             return fallbackMovement
         }
 
-        let suffixPath = findPath(nextPosition, incomingEndPosition)
-        guard !suffixPath.isEmpty else {
-            return fallbackMovement
-        }
-
+        let suffixPath = movementPath(from: nextPosition, to: incomingEndPosition)
         let prefixPath = Array(existingMovement.path.prefix { $0 != nextPosition }) + [nextPosition]
         let fullPath = prefixPath + Array(suffixPath.dropFirst())
         let duration = movementDuration(path: fullPath, speed: incomingSpeed)
@@ -71,6 +67,10 @@ struct MapObjectMovementPlanner {
     }
 
     func movementDuration(path: [SIMD2<Int>], speed: Int) -> Duration {
+        guard path.count >= 2 else {
+            return .zero
+        }
+
         var total: Duration = .zero
         for index in 1..<path.count {
             let direction = SpriteDirection(sourcePosition: path[index - 1], targetPosition: path[index])
@@ -78,5 +78,32 @@ struct MapObjectMovementPlanner {
             total += .milliseconds(stepMilliseconds)
         }
         return total
+    }
+
+    private func movementPath(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) -> [SIMD2<Int>] {
+        let path = findPath(startPosition, endPosition)
+        if !path.isEmpty {
+            return path
+        }
+
+        if startPosition == endPosition {
+            return [startPosition]
+        } else {
+            return fallbackMovementPath(from: startPosition, to: endPosition)
+        }
+    }
+
+    private func fallbackMovementPath(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) -> [SIMD2<Int>] {
+        var path = [startPosition]
+        var currentPosition = startPosition
+
+        while currentPosition != endPosition {
+            let delta = endPosition &- currentPosition
+            currentPosition.x += delta.x.signum()
+            currentPosition.y += delta.y.signum()
+            path.append(currentPosition)
+        }
+
+        return path
     }
 }
