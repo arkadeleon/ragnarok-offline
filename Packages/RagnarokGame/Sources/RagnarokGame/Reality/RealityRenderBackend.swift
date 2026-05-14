@@ -107,8 +107,6 @@ final class RealityRenderBackend: GameRenderBackend {
             playerEntity.components.set([
                 GridPositionComponent(gridPosition: scene.playerPosition),
                 MapObjectStateComponent(objectState: playerState),
-                HealthPointsComponent(hp: playerState.hp, maxHp: playerState.maxHp),
-                SpellPointsComponent(sp: playerState.sp ?? 0, maxSp: playerState.maxSp ?? 0),
             ])
             playerEntity.playSpriteAnimation(.idle, direction: .south)
             rootEntity.addChild(playerEntity)
@@ -211,8 +209,6 @@ final class RealityRenderBackend: GameRenderBackend {
         MapItemComponent.registerComponent()
         MapObjectStateComponent.registerComponent()
         TileComponent.registerComponent()
-        HealthPointsComponent.registerComponent()
-        SpellPointsComponent.registerComponent()
 
         CombatTextComponent.registerComponent()
         CombatTextSystem.registerSystem()
@@ -451,18 +447,6 @@ final class RealityRenderBackend: GameRenderBackend {
                 timeline: MapObjectMovementTimeline(for: objectState, position: { scene.mapGrid.worldPosition(for: $0) }),
                 presentation: objectState.presentation
             ))
-
-            if scene.player.objectID == objectState.id || objectState.type == .monster {
-                entity.components.set(HealthPointsComponent(hp: objectState.hp, maxHp: objectState.maxHp))
-            } else {
-                entity.components.remove(HealthPointsComponent.self)
-            }
-
-            if let sp = objectState.sp, let maxSp = objectState.maxSp {
-                entity.components.set(SpellPointsComponent(sp: sp, maxSp: maxSp))
-            } else {
-                entity.components.remove(SpellPointsComponent.self)
-            }
         } catch {
             logger.warning("\(error)")
         }
