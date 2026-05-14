@@ -36,20 +36,20 @@ final public class PacketDecoder {
                     let packet = try registeredPacket.init(from: decoder)
                     packets.append(packet)
                 } catch {
-                    logger.warning("Failed to decode packet 0x\(UInt16(packetType)): \(error)")
+                    logger.warning("Failed to decode packet 0x\(UInt16(bitPattern: packetType), format: .hex): \(error)")
                 }
             } else if let entry = packetDatabase.entriesByPacketType[packetType] {
                 if entry.packetLength == -1 {
                     let packetType = try decoder.decode(Int16.self)
                     let packetLength = try decoder.decode(Int16.self)
                     _ = try decoder.decode([UInt8].self, count: Int(packetLength - 2 - 2))
-                    logger.info("Unimplemented packet: 0x\(UInt16(packetType), format: .hex), length: \(packetLength)")
+                    logger.info("Unimplemented packet: 0x\(UInt16(bitPattern: packetType), format: .hex), length: \(packetLength)")
                 } else {
                     _ = try decoder.decode([UInt8].self, count: Int(entry.packetLength))
-                    logger.info("Unimplemented packet: 0x\(UInt16(entry.packetType), format: .hex), length: \(entry.packetLength)")
+                    logger.info("Unimplemented packet: 0x\(UInt16(bitPattern: entry.packetType), format: .hex), length: \(entry.packetLength)")
                 }
             } else {
-                logger.info("Unknown packet: 0x\(UInt16(packetType), format: .hex), remaining bytes: \(stream.length - stream.position)")
+                logger.info("Unknown packet: 0x\(UInt16(bitPattern: packetType), format: .hex), remaining bytes: \(stream.length - stream.position)")
                 break
             }
         }
