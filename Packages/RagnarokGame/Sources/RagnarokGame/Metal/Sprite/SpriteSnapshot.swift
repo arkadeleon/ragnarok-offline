@@ -16,7 +16,7 @@ struct SpriteAnimationKey: Hashable {
 
 struct SpriteSnapshot {
     enum Content {
-        case mapObject(mapObject: MapObject, animation: MapObjectAnimationState)
+        case mapObject(configuration: ComposedSprite.Configuration, animation: MapObjectAnimationState)
         case item(MapItem)
     }
 

@@ -40,7 +40,7 @@ final class SpriteSnapshotBuilder {
             now: now
         )
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: state.object.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: state.job)
 
         var animation = presentationSample.animation
         animation.direction = animation.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
@@ -52,7 +52,7 @@ final class SpriteSnapshotBuilder {
             objectID: state.id,
             worldPosition: presentationSample.worldPosition,
             isVisible: state.isVisible,
-            content: .mapObject(mapObject: state.object, animation: animation)
+            content: .mapObject(configuration: ComposedSprite.Configuration(objectState: state), animation: animation)
         )
     }
 

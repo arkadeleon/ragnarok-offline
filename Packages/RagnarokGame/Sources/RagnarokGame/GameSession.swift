@@ -870,8 +870,8 @@ final public class GameSession {
             let direction = Direction(rawValue: Int(packet.dir)) ?? .north
             let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
             mapScene?.onMapObjectDirectionChanged(objectID: packet.srcId, direction: direction, headDirection: headDirection)
-        case _ as PACKET_ZC_SPRITE_CHANGE:
-            break
+        case let packet as PACKET_ZC_SPRITE_CHANGE:
+            mapScene?.onMapObjectSpriteChanged(packet)
         case let packet as PACKET_ZC_STATE_CHANGE:
             let bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
             let healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none

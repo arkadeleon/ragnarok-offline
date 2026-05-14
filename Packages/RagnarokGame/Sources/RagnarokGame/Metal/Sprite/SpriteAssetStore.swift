@@ -19,7 +19,7 @@ final class SpriteAssetStore {
     }
 
     private struct ObjectAssetEntry {
-        var mapObject: MapObject
+        var configuration: ComposedSprite.Configuration
         var composedSprite: ComposedSprite?
         var partTextures: SpritePartTextures?
     }
@@ -64,8 +64,8 @@ final class SpriteAssetStore {
 
         for (objectID, snapshot) in snapshots {
             switch snapshot.content {
-            case .mapObject(let mapObject, _):
-                syncObjectAssets(objectID: objectID, mapObject: mapObject)
+            case .mapObject(let configuration, _):
+                syncObjectAssets(objectID: objectID, configuration: configuration)
             case .item(let mapItem):
                 syncItemAssets(objectID: objectID, mapItem: mapItem)
             }
@@ -88,15 +88,22 @@ final class SpriteAssetStore {
         itemAssets.removeAll()
     }
 
-    private func syncObjectAssets(objectID: GameObjectID, mapObject: MapObject) {
+    private func syncObjectAssets(objectID: GameObjectID, configuration: ComposedSprite.Configuration) {
         if objectAssets[objectID] == nil {
             objectAssets[objectID] = ObjectAssetEntry(
-                mapObject: mapObject,
+                configuration: configuration,
                 composedSprite: nil,
                 partTextures: nil
             )
+        } else if objectAssets[objectID]?.composedSprite != nil {
+            if objectAssets[objectID]?.configuration != configuration {
+                objectLoadTasks[objectID]?.cancel()
+                objectLoadTasks.removeValue(forKey: objectID)
+                objectAssets[objectID]?.composedSprite = nil
+                objectAssets[objectID]?.partTextures = nil
+            }
         }
-        objectAssets[objectID]?.mapObject = mapObject
+        objectAssets[objectID]?.configuration = configuration
 
         guard objectAssets[objectID]?.composedSprite == nil, objectLoadTasks[objectID] == nil else {
             return
@@ -110,7 +117,6 @@ final class SpriteAssetStore {
                 self.objectLoadTasks.removeValue(forKey: objectID)
             }
 
-            let configuration = ComposedSprite.Configuration(mapObject: mapObject)
             guard let composedSprite = try? await ComposedSprite(
                 configuration: configuration,
                 resourceManager: self.resourceManager

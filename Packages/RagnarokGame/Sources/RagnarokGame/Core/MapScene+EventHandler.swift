@@ -294,6 +294,46 @@ extension MapScene {
         applySnapshot()
     }
 
+    func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
+        let objectID = packet.AID
+        guard var objectState = state.objects[objectID] else {
+            return
+        }
+
+        guard let look = Look(rawValue: Int(packet.type)) else {
+            return
+        }
+
+        switch look {
+        case .base:
+            objectState.job = Int(packet.val)
+        case .hair:
+            objectState.hairStyle = Int(packet.val)
+        case .weapon:
+            objectState.weapon = Int(packet.val)
+            objectState.shield = Int(packet.val2)
+        case .head_bottom:
+            objectState.headBottom = Int(packet.val)
+        case .head_top:
+            objectState.headTop = Int(packet.val)
+        case .head_mid:
+            objectState.headMid = Int(packet.val)
+        case .hair_color:
+            objectState.hairColor = Int(packet.val)
+        case .clothes_color:
+            objectState.clothesColor = Int(packet.val)
+        case .shield:
+            objectState.shield = Int(packet.val)
+        case .robe:
+            objectState.garment = Int(packet.val)
+        default:
+            return
+        }
+
+        state.objects[objectID] = objectState
+        applySnapshot()
+    }
+
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
         let now = ContinuousClock.now
 

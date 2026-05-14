@@ -211,6 +211,15 @@ let allConstantConversions: [ConstantConversion] = [
         ],
         outputType: "StatusProperty"
     ),
+    .cEnum(
+        source: "map/map.hpp",
+        type: "_look",
+        prefix: "LOOK_",
+        exclude: [
+            "LOOK_MAX",
+        ],
+        outputType: "Look"
+    ),
     // MARK: - map/mob.hpp
     .cEnum(
         source: "map/mob.hpp",
