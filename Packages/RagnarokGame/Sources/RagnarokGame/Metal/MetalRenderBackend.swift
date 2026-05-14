@@ -49,7 +49,7 @@ final class MetalRenderBackend: GameRenderBackend {
         }
 
         do {
-            try await prepareRenderResources(scene: scene)
+            try await prepareRenderResources(scene: scene, progress: progress)
 
             await audioPlayer.playBGM(forMapName: scene.mapName)
 
@@ -133,13 +133,14 @@ final class MetalRenderBackend: GameRenderBackend {
         }
     }
 
-    private func prepareRenderResources(scene: MapScene) async throws {
+    private func prepareRenderResources(scene: MapScene, progress: Progress) async throws {
         let worldAssetLoader = WorldAssetLoader()
         let worldAsset = try await worldAssetLoader.load(
             gat: scene.world.gat,
             gnd: scene.world.gnd,
             rsw: scene.world.rsw,
-            resourceManager: resourceManager
+            resourceManager: resourceManager,
+            progress: progress
         )
         let skyboxConfiguration = SkyboxConfiguration.generate(
             light: scene.world.rsw.light,
