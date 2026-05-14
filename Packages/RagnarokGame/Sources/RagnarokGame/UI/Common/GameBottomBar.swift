@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GameBottomBar: View {
+    var height: CGFloat
+
     var body: some View {
         GeometryReader { geometry in
             let stripeCount = max(0, Int((geometry.size.height + 2) / 4))
@@ -25,7 +27,11 @@ struct GameBottomBar: View {
             .background(Color.white)
             .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
         }
-        .frame(height: 21)
+        .frame(height: height)
+    }
+
+    init(height: CGFloat = 21) {
+        self.height = height
     }
 }
 

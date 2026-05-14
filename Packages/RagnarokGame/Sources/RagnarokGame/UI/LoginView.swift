@@ -15,60 +15,81 @@ struct LoginView: View {
     @AppStorage("game.password") private var password = ""
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            GameImage("login_interface/win_login.bmp")
+        GameWindow {
+            VStack(alignment: .leading, spacing: 13) {
+                HStack(spacing: 10) {
+                    Text("ID")
+                        .font(.game(weight: .bold))
+                        .foregroundStyle(Color.gameProminentLabel)
+                        .frame(width: 70, alignment: .trailing)
 
-            TextField(String(), text: $username)
-                .textFieldStyle(.plain)
-                #if !os(macOS)
-                .textInputAutocapitalization(.never)
-                #endif
-                .disableAutocorrection(true)
-                .gameText()
-                .frame(width: 123, height: 18)
-                .offset(x: 93, y: 29)
+                    TextField(String(), text: $username)
+                        .textFieldStyle(.plain)
+                        #if !os(macOS)
+                        .textInputAutocapitalization(.never)
+                        #endif
+                        .disableAutocorrection(true)
+                        .gameText()
+                        .padding(.horizontal, 3)
+                        .frame(width: 127, height: 18)
+                        .background(Color.gameSecondaryBoxBackground)
+                        .overlay {
+                            Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1)
+                        }
 
-            TextField(String(), text: $password)
-                .textFieldStyle(.plain)
-                #if !os(macOS)
-                .textInputAutocapitalization(.never)
-                #endif
-                .disableAutocorrection(true)
-                .gameText()
-                .frame(width: 123, height: 18)
-                .offset(x: 93, y: 61)
-
-            Button {
-            } label: {
-                GameImage("login_interface/chk_saveoff.bmp")
-            }
-            .buttonStyle(.borderless)
-            .frame(width: 38, height: 10)
-            .offset(x: 232, y: 32)
-        }
-        .frame(width: 280, height: 120)
-        .overlay(alignment: .bottomTrailing) {
-            HStack(spacing: 3) {
-                Button("login") {
-                    gameSession.loginAudioPlayer.playButtonSound()
-                    gameSession.login(
-                        username: username,
-                        password: password
-                    )
+                    Spacer()
                 }
-                .buttonStyle(.game)
-                .frame(width: 42, height: 20)
-                .disabled(!isValidUsername || !isValidPassword)
 
-                Button("exit") {
-                    exitGame()
+                HStack(spacing: 10) {
+                    Text("Password")
+                        .font(.game(weight: .bold))
+                        .foregroundStyle(Color.gameProminentLabel)
+                        .frame(width: 70, alignment: .trailing)
+
+                    TextField(String(), text: $password)
+                        .textFieldStyle(.plain)
+                        #if !os(macOS)
+                        .textInputAutocapitalization(.never)
+                        #endif
+                        .disableAutocorrection(true)
+                        .gameText()
+                        .padding(.horizontal, 3)
+                        .frame(width: 127, height: 18)
+                        .background(Color.gameSecondaryBoxBackground)
+                        .overlay {
+                            Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1)
+                        }
+
+                    Spacer()
                 }
-                .buttonStyle(.game)
-                .frame(width: 42, height: 20)
             }
-            .padding(.horizontal, 5)
-            .padding(.vertical, 4)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 13)
+        } bottomBar: {
+            GameBottomBar(height: 28)
+                .overlay(alignment: .trailing) {
+                    HStack(spacing: 3) {
+                        Button("login") {
+                            gameSession.loginAudioPlayer.playButtonSound()
+                            gameSession.login(
+                                username: username,
+                                password: password
+                            )
+                        }
+                        .buttonStyle(.game)
+                        .frame(width: 42, height: 20)
+                        .disabled(!isValidUsername || !isValidPassword)
+
+                        Button("exit") {
+                            exitGame()
+                        }
+                        .buttonStyle(.game)
+                        .frame(width: 42, height: 20)
+                    }
+                    .padding(.horizontal, 5)
+                }
         }
+        .frame(width: 280)
     }
 
     private var isValidUsername: Bool {

@@ -11,13 +11,15 @@ struct MessageBoxView: View {
     var message: String
 
     var body: some View {
-        ZStack {
-            GameImage("win_msgbox.bmp")
-
+        GameWindow {
             Text(message)
-                .gameText()
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 10)
+                .frame(height: 82)
         }
-        .frame(width: 280, height: 120)
+        .frame(width: 280)
     }
 
     init(_ message: String) {
