@@ -23,17 +23,17 @@ struct GameBottomBar: View {
                     }
                 }
             }
-            .background(Color.white)
-            .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
-            .overlay {
-                UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
-                    .strokeBorder(Color.gameBoxBorder, lineWidth: 1 / displayScale)
-            }
-            .overlay(alignment: .top) {
-                Rectangle().fill(Color.gameBoxBorder).frame(height: 1)
-            }
         }
         .frame(height: height)
+        .background(Color.white)
+        .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
+        .overlay {
+            UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
+                .strokeBorder(Color.gameBoxBorder, lineWidth: 1 / displayScale)
+        }
+        .overlay(alignment: .top) {
+            Rectangle().fill(Color.gameBoxBorder).frame(height: 1 / displayScale)
+        }
     }
 
     init(height: CGFloat = 21) {

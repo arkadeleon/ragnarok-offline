@@ -14,13 +14,7 @@ struct OptionsView: View {
     @Environment(\.exitGame) private var exitGame
 
     var body: some View {
-        VStack(spacing: 0) {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
-
+        GameWindow {
             VStack(spacing: 3) {
                 if isPlayerDead {
                     Button("Resurrection") {
@@ -67,12 +61,13 @@ struct OptionsView: View {
                     .frame(width: 220, height: 20)
                 }
             }
-            .frame(maxWidth: .infinity)
             .padding(.vertical, 20)
-            .background(.white)
-            .clipShape(
-                UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
-            )
+        } titleBar: {
+            GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
         }
         .frame(width: 280)
     }
