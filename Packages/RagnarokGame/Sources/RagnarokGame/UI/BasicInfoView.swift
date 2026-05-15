@@ -14,82 +14,144 @@ struct BasicInfoView: View {
     var status: CharacterStatus
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            GameImage("basic_interface/basewin_bg2.bmp")
+        GameWindow {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(character.name)
+                    .gameText()
+                    .padding(.leading, 10)
 
-            Text(character.name)
-                .gameText()
-                .offset(x: 10, y: 20)
+                Text(JobID(rawValue: character.job)?.stringValue ?? "")
+                    .gameText()
+                    .padding(.leading, 10)
 
-            Text(JobID(rawValue: character.job)?.stringValue ?? "")
-                .gameText()
-                .offset(x: 10, y: 33)
-
-            VStack {
-                Text(verbatim: "HP")
-                Text(verbatim: "SP")
-            }
-            .gameText()
-            .offset(x: 15, y: 50)
-
-            VStack {
-                Group {
-                    Text(verbatim: "\(status.hp) / \(status.maxHp)")
-                    Text(verbatim: "\(status.sp) / \(status.maxSp)")
-                }
-                .gameText(size: 10)
-                .frame(width: 135, height: 8)
-            }
-            .offset(x: 35, y: 53)
-
-            Text(verbatim: "Base Lv. \(status.baseLevel)")
-                .gameText()
-                .offset(x: 15, y: 86)
-
-            ProgressView(value: baseExp)
-                .progressViewStyle(.linear)
-                .frame(width: 110, height: 6)
-                .offset(x: 84, y: 89)
-
-            Text(verbatim: "Job Lv. \(status.jobLevel)")
-                .gameText()
-                .offset(x: 15, y: 97)
-
-            ProgressView(value: jobExp)
-                .progressViewStyle(.linear)
-                .frame(width: 110, height: 6)
-                .offset(x: 84, y: 101)
-
-            VStack {
                 Spacer()
+                    .frame(height: 4)
 
-                HStack {
-                    Spacer()
+                BasicInfoHPSPBar(
+                    label: "HP",
+                    current: Int(status.hp),
+                    max: Int(status.maxHp),
+                    topColor: Color(#colorLiteral(red: 0.50, green: 0.90, blue: 0.55, alpha: 1)),
+                    bottomColor: Color(#colorLiteral(red: 0.75, green: 1.0, blue: 0.80, alpha: 1))
+                )
 
-                    Text(verbatim: "Weight : \(status.weight) / \(status.maxWeight) Zeny : \(status.zeny)")
-                        .gameText()
-                        .padding(.bottom, 3)
-                        .padding(.trailing, 5)
+                Spacer()
+                    .frame(height: 4)
+
+                BasicInfoHPSPBar(
+                    label: "SP",
+                    current: Int(status.sp),
+                    max: Int(status.maxSp),
+                    topColor: Color(#colorLiteral(red: 0.40, green: 0.65, blue: 0.95, alpha: 1)),
+                    bottomColor: Color(#colorLiteral(red: 0.65, green: 0.85, blue: 1.0, alpha: 1))
+                )
+
+                Spacer()
+                    .frame(height: 4)
+
+                VStack(spacing: 0) {
+                    BasicInfoExpBar(
+                        label: "Base Lv. \(status.baseLevel)",
+                        fraction: baseExp
+                    )
+
+                    BasicInfoExpBar(
+                        label: "Job Lv.  \(status.jobLevel)",
+                        fraction: jobExp
+                    )
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 3).fill(Color(#colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9176470588, alpha: 1))))
+                .padding(.horizontal, 6)
+                .padding(.vertical, 4)
+            }
+            .padding(.top, 3)
+        } bottomBar: {
+            GameBottomBar()
+                .overlay(alignment: .trailing) {
+                    Text(verbatim: "Weight: \(status.weight)/\(status.maxWeight)  Zeny: \(status.zeny)")
+                        .gameText(size: 10)
+                        .padding(.horizontal, 5)
+                }
+        }
+        .frame(width: 220)
+    }
+
+    private var baseExp: CGFloat {
+        status.baseExpNext > 0 ? CGFloat(status.baseExp) / CGFloat(status.baseExpNext) : 0
+    }
+
+    private var jobExp: CGFloat {
+        status.jobExpNext > 0 ? CGFloat(status.jobExp) / CGFloat(status.jobExpNext) : 0
+    }
+}
+
+private struct BasicInfoHPSPBar: View {
+    var label: String
+    var current: Int
+    var max: Int
+    var topColor: Color
+    var bottomColor: Color
+
+    var body: some View {
+        HStack(spacing: 0) {
+            Text(verbatim: label)
+                .gameText()
+                .frame(width: 20, alignment: .leading)
+
+            GeometryReader { geometry in
+                let fraction = max > 0 ? geometry.size.width * CGFloat(current) / CGFloat(max) : 0
+                ZStack(alignment: .leading) {
+                    Color(#colorLiteral(red: 0.8431372549, green: 0.8588235294, blue: 0.8745098039, alpha: 1))
+                    LinearGradient(
+                        colors: [topColor, bottomColor],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(width: fraction)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 4)
+                        .strokeBorder(Color(#colorLiteral(red: 0.3686274510, green: 0.3725490196, blue: 0.3803921569, alpha: 1)), lineWidth: 1)
+                }
+                .overlay {
+                    Text(verbatim: "\(current)/\(max)")
+                        .gameText(size: 9)
                 }
             }
+            .frame(width: 135, height: 8)
         }
-        .frame(width: 220, height: 135)
+        .padding(.leading, 15)
     }
+}
 
-    private var baseExp: Float {
-        if status.baseExpNext > 0 {
-            Float(status.baseExp) / Float(status.baseExpNext)
-        } else {
-            0
-        }
-    }
+private struct BasicInfoExpBar: View {
+    var label: String
+    var fraction: CGFloat
 
-    private var jobExp: Float {
-        if status.jobExpNext > 0 {
-            Float(status.jobExp) / Float(status.jobExpNext)
-        } else {
-            0
+    var body: some View {
+        HStack(spacing: 0) {
+            Text(verbatim: label)
+                .gameText()
+                .frame(width: 69, alignment: .leading)
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    Color.white
+                    Color(#colorLiteral(red: 0.2588235294, green: 0.3843137255, blue: 0.6470588235, alpha: 1))
+                        .frame(width: geo.size.width * Swift.max(0, Swift.min(1, fraction)))
+                }
+                .overlay {
+                    Rectangle().strokeBorder(
+                        Color(#colorLiteral(red: 0.6862745098, green: 0.6862745098, blue: 0.6862745098, alpha: 1)),
+                        lineWidth: 1
+                    )
+                }
+            }
+            .frame(width: 110, height: 4)
         }
+        .padding(.leading, 15)
     }
 }
 
