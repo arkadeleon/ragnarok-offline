@@ -18,7 +18,7 @@ struct MapViewer: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var selectedMap: MapModel?
-    @State private var dragOffset: CGPoint = .zero
+    @State private var dragStartOffset: CGPoint?
     @State private var magnification: CGFloat = 1
 
     var body: some View {
@@ -31,15 +31,17 @@ struct MapViewer: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
+                                    let startOffset = dragStartOffset ?? renderer.camera.panOffset
+                                    dragStartOffset = startOffset
+
                                     let offset = CGPoint(
-                                        x: dragOffset.x + value.translation.width,
-                                        y: dragOffset.y + value.translation.height
+                                        x: startOffset.x + value.translation.width,
+                                        y: startOffset.y + value.translation.height
                                     )
-                                    renderer.camera.pan(offset: CGPoint(x: offset.x, y: -offset.y))
+                                    renderer.camera.pan(offset: offset)
                                 }
-                                .onEnded { value in
-                                    dragOffset.x += value.translation.width
-                                    dragOffset.y += value.translation.height
+                                .onEnded { _ in
+                                    dragStartOffset = nil
                                 }
                         )
                         .simultaneousGesture(
@@ -49,6 +51,12 @@ struct MapViewer: View {
                                 }
                                 .onEnded { value in
                                     magnification *= value.magnification
+                                }
+                        )
+                        .simultaneousGesture(
+                            SpatialTapGesture()
+                                .onEnded { value in
+                                    renderer.focusTile(at: value.location)
                                 }
                         )
                 } placeholder: {
@@ -73,7 +81,7 @@ struct MapViewer: View {
             }
         }
         .onChange(of: selectedMap?.name) {
-            dragOffset = .zero
+            dragStartOffset = nil
             magnification = 1
         }
     }

@@ -21,10 +21,20 @@ public class OrbitalCamera {
     public var nearZ: Float = 0.1
     public var farZ: Float = 100.0
     public var sensitivity: Float = 0.1
+    public var animationDuration: CFTimeInterval = 0.25
 
     public private(set) var aspectRatio: Float = 1.0
 
     private let defaultDistance: Float
+
+    private struct TargetAnimation {
+        var startTarget: SIMD3<Float>
+        var endTarget: SIMD3<Float>
+        var startTime: CFTimeInterval?
+        var duration: CFTimeInterval
+    }
+
+    private var targetAnimation: TargetAnimation?
 
     public var viewMatrix: simd_float4x4 {
         let orientation =
@@ -39,6 +49,10 @@ public class OrbitalCamera {
         perspective(radians(fovy), aspectRatio, nearZ, farZ)
     }
 
+    public var panOffset: CGPoint {
+        CGPoint(x: CGFloat(-target.x / sensitivity), y: CGFloat(-target.z / sensitivity))
+    }
+
     public init(distance: Float) {
         self.distance = distance
         self.defaultDistance = distance
@@ -48,14 +62,39 @@ public class OrbitalCamera {
         aspectRatio = Float(size.width / size.height)
     }
 
+    public func update(atTime time: CFTimeInterval) {
+        guard var animation = targetAnimation else { return }
+        if animation.startTime == nil {
+            animation.startTime = time
+            targetAnimation = animation
+        }
+        guard let startTime = animation.startTime else { return }
+        let progress = min(Float((time - startTime) / animation.duration), 1)
+        let eased = 1 - pow(1 - progress, 3)
+        target = animation.startTarget + (animation.endTarget - animation.startTarget) * eased
+        if progress >= 1 {
+            targetAnimation = nil
+        }
+    }
+
     public func pan(offset: CGPoint) {
+        targetAnimation = nil
         target.x = -Float(offset.x) * sensitivity
-        target.z = Float(offset.y) * sensitivity
+        target.z = -Float(offset.y) * sensitivity
     }
 
     public func zoom(magnification: CGFloat) {
         var d = defaultDistance / Float(magnification)
         d = max(minimumDistance, min(d, maximumDistance))
         distance = d
+    }
+
+    public func animatePan(to newTarget: SIMD3<Float>) {
+        targetAnimation = TargetAnimation(
+            startTarget: target,
+            endTarget: newTarget,
+            startTime: nil,
+            duration: animationDuration
+        )
     }
 }
