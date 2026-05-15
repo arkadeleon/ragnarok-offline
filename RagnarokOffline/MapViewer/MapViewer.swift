@@ -35,7 +35,7 @@ struct MapViewer: View {
                                         x: dragOffset.x + value.translation.width,
                                         y: dragOffset.y + value.translation.height
                                     )
-                                    renderer.camera.move(offset: CGPoint(x: offset.x, y: -offset.y))
+                                    renderer.camera.pan(offset: CGPoint(x: offset.x, y: -offset.y))
                                 }
                                 .onEnded { value in
                                     dragOffset.x += value.translation.width
@@ -45,10 +45,7 @@ struct MapViewer: View {
                         .simultaneousGesture(
                             MagnifyGesture()
                                 .onChanged { value in
-                                    renderer.camera.update(
-                                        magnification: magnification * value.magnification,
-                                        dragTranslation: .zero
-                                    )
+                                    renderer.camera.zoom(magnification: magnification * value.magnification)
                                 }
                                 .onEnded { value in
                                     magnification *= value.magnification

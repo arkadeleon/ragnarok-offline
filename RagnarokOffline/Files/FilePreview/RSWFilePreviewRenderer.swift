@@ -23,7 +23,7 @@ public class RSWFilePreviewRenderer: Renderer {
     let modelResources: [RSMModelRenderResource]
     let modelRenderer: RSMModelRenderer
 
-    public let camera: Camera
+    public let camera: OrbitalCamera
 
     public init(device: any MTLDevice, worldAsset: WorldAsset) throws {
         self.device = device
@@ -43,10 +43,11 @@ public class RSWFilePreviewRenderer: Renderer {
         waterRenderer = try WaterRenderer(device: device)
         modelRenderer = try RSMModelRenderer(device: device)
 
-        camera = Camera()
-        camera.defaultDistance = -groundAsset.altitude / 5 + 200
-        camera.minimumDistance = camera.defaultDistance - 190
-        camera.maximumDistance = camera.defaultDistance + 200
+        let defaultDistance = -groundAsset.altitude / 5 + 200
+        camera = OrbitalCamera(distance: defaultDistance)
+        camera.elevation = .pi / 2
+        camera.minimumDistance = defaultDistance - 190
+        camera.maximumDistance = defaultDistance + 200
         camera.farZ = 500
     }
 
@@ -65,8 +66,7 @@ public class RSWFilePreviewRenderer: Renderer {
         camera.update(size: viewport.size)
 
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_scale(modelMatrix, [1, -1, 1])
-        modelMatrix = matrix_rotate(modelMatrix, radians(90), [1, 0, 0])
+        modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
         let viewMatrix = camera.viewMatrix
