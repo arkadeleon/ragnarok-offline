@@ -25,19 +25,18 @@ public class RSWFilePreviewRenderer: Renderer {
 
     public let camera: Camera
 
-    public init(
-        device: any MTLDevice,
-        groundAsset: GroundRenderAsset,
-        waterAsset: WaterRenderAsset,
-        modelAssets: [RSMModelRenderAsset]
-    ) throws {
+    public init(device: any MTLDevice, worldAsset: WorldAsset) throws {
         self.device = device
-        self.groundAsset = groundAsset
+        self.groundAsset = worldAsset.ground
 
         groundResource = GroundRenderResource(device: device, asset: groundAsset)
-        waterResource = WaterRenderResource(device: device, asset: waterAsset)
-        modelResources = modelAssets.map { asset in
-            RSMModelRenderResource(device: device, asset: asset)
+        waterResource = WaterRenderResource(device: device, asset: worldAsset.water)
+        modelResources = worldAsset.modelGroups.map { modelGroup in
+            RSMModelRenderResource(
+                device: device,
+                prototype: modelGroup.prototype,
+                instances: modelGroup.instances
+            )
         }
 
         groundRenderer = try GroundRenderer(device: device)

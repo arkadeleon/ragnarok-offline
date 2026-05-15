@@ -5,9 +5,9 @@
 //  Created by Leon Li on 2025/6/9.
 //
 
-import RagnarokCore
+import Metal
+import RagnarokRenderAssets
 import RagnarokResources
-import RealityKit
 import SwiftUI
 
 struct MapViewer: View {
@@ -23,9 +23,9 @@ struct MapViewer: View {
         ZStack {
             if let selectedMap {
                 AsyncContentView {
-                    try await loadEntity(for: selectedMap.name)
-                } content: { entity in
-                    ModelViewer(entity: entity)
+                    try await loadRenderer(for: selectedMap.name)
+                } content: { renderer in
+                    MetalViewContainer(renderer: renderer)
                 } placeholder: {
                     ProgressView(progress)
                         .progressViewStyle(.circular)
@@ -49,20 +49,19 @@ struct MapViewer: View {
         }
     }
 
-    private func loadEntity(for mapName: String) async throws -> Entity {
+    private func loadRenderer(for mapName: String) async throws -> RSWFilePreviewRenderer {
         let world = try await resourceManager.world(mapName: "\(mapName).rsw")
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(
+            gat: world.gat,
+            gnd: world.gnd,
+            rsw: world.rsw,
+            resourceManager: resourceManager,
+            progress: progress
+        )
 
-        let worldEntity = try await Entity(from: world, resourceManager: resourceManager, progress: progress)
-
-        let translation = simd_float4x4(translation: [-Float(world.gat.width / 2), 0, -Float(world.gat.height / 2)])
-        let rotation = simd_float4x4(rotationX: radians(-90))
-        let scaleFactor = 2 / Float(max(world.gat.width, world.gat.height))
-        let scale = simd_float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
-        worldEntity.transform.matrix = scale * rotation * translation
-
-        let entity = Entity()
-        entity.addChild(worldEntity)
-
-        return entity
+        let device = MTLCreateSystemDefaultDevice()!
+        let renderer = try RSWFilePreviewRenderer(device: device, worldAsset: worldAsset)
+        return renderer
     }
 }

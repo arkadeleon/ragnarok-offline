@@ -8,6 +8,11 @@
 public struct RSMModelAssetGroup {
     public var prototype: RSMModelRenderAsset
     public var instances: [RSMModelInstance]
+
+    public init(prototype: RSMModelRenderAsset, instances: [RSMModelInstance]) {
+        self.prototype = prototype
+        self.instances = instances
+    }
 }
 
 public struct WorldAsset {
