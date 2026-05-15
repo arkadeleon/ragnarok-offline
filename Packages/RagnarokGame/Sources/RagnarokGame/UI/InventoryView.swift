@@ -39,26 +39,17 @@ struct InventoryView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
+            GameWindow {
+                VStack(spacing: 0) {
+                    tabBar
+                    itemGrid
+                }
+            } titleBar: {
                 GameTitleBar()
                     .overlay(alignment: .trailing) {
                         GameWindowCloseButton(action: onClose)
                             .padding(.horizontal, 5)
                     }
-
-                VStack(spacing: 0) {
-                    tabBar
-                    itemGrid
-                }
-                .background(Color.white)
-                .overlay(alignment: .leading) {
-                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-                }
-                .overlay(alignment: .trailing) {
-                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-                }
-
-                GameBottomBar()
             }
             .geometryGroup()
             .blur(radius: selectedItem == nil ? 0 : 5)

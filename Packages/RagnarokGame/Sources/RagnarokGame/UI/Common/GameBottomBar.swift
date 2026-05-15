@@ -10,6 +10,8 @@ import SwiftUI
 struct GameBottomBar: View {
     var height: CGFloat
 
+    @Environment(\.displayScale) private var displayScale
+
     var body: some View {
         GeometryReader { geometry in
             let stripeCount = max(0, Int((geometry.size.height + 2) / 4))
@@ -20,12 +22,16 @@ struct GameBottomBar: View {
                         Color(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)).frame(height: 2)
                     }
                 }
-
-                UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
-                    .strokeBorder(Color.gameBoxBorder, lineWidth: 1)
             }
             .background(Color.white)
             .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
+            .overlay {
+                UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
+                    .strokeBorder(Color.gameBoxBorder, lineWidth: 1 / displayScale)
+            }
+            .overlay(alignment: .top) {
+                Rectangle().fill(Color.gameBoxBorder).frame(height: 1)
+            }
         }
         .frame(height: height)
     }

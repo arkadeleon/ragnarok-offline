@@ -14,13 +14,7 @@ struct StatusView: View {
     @Environment(GameSession.self) private var gameSession
 
     var body: some View {
-        VStack(spacing: 0) {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
-
+        GameWindow {
             HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: 6) {
                     PrimaryStatRow("Str", value: status.str, value2: status.str2, value3: status.str3) {
@@ -69,15 +63,12 @@ struct StatusView: View {
                 .padding(.trailing, 6)
             }
             .padding(.vertical, 6)
-            .background(Color.white)
-            .overlay(alignment: .leading) {
-                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-            }
-            .overlay(alignment: .trailing) {
-                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-            }
-
-            GameBottomBar()
+        } titleBar: {
+            GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
         }
         .frame(width: 320)
     }

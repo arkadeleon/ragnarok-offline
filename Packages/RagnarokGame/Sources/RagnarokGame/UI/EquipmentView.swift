@@ -14,13 +14,7 @@ struct EquipmentView: View {
     var onClose: () -> Void = {}
 
     var body: some View {
-        VStack(spacing: 0) {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
-
+        GameWindow {
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
                     EquipmentLeftSlotRow(label: "head", location: .head_top)
@@ -51,15 +45,12 @@ struct EquipmentView: View {
                 .frame(width: 120)
             }
             .frame(height: 134)
-            .background(Color.white)
-            .overlay(alignment: .leading) {
-                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-            }
-            .overlay(alignment: .trailing) {
-                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-            }
-
-            GameBottomBar()
+        } titleBar: {
+            GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
         }
         .frame(width: 320)
     }

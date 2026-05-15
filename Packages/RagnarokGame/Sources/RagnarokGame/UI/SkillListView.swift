@@ -19,13 +19,7 @@ struct SkillListView: View {
     @State private var selectedSkillID: Int?
 
     var body: some View {
-        VStack(spacing: 0) {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
-
+        GameWindow {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     ForEach(skillList.sortedSkills, id: \.skillID) { skill in
@@ -39,14 +33,13 @@ struct SkillListView: View {
                 }
             }
             .frame(height: 220)
-            .background(Color.white)
-            .overlay(alignment: .leading) {
-                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-            }
-            .overlay(alignment: .trailing) {
-                Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
-            }
-
+        } titleBar: {
+            GameTitleBar()
+                .overlay(alignment: .trailing) {
+                    GameWindowCloseButton(action: onClose)
+                        .padding(.horizontal, 5)
+                }
+        } bottomBar: {
             GameBottomBar()
                 .overlay(alignment: .leading) {
                     Text(verbatim: "Skill Points: \(gameSession.playerStatus.skillPoint)")
