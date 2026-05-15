@@ -18,6 +18,8 @@ struct MapViewer: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var selectedMap: MapModel?
+    @State private var dragOffset: CGPoint = .zero
+    @State private var magnification: CGFloat = 1
 
     var body: some View {
         ZStack {
@@ -26,6 +28,32 @@ struct MapViewer: View {
                     try await loadRenderer(for: selectedMap.name)
                 } content: { renderer in
                     MetalViewContainer(renderer: renderer)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    let offset = CGPoint(
+                                        x: dragOffset.x + value.translation.width,
+                                        y: dragOffset.y + value.translation.height
+                                    )
+                                    renderer.camera.move(offset: CGPoint(x: offset.x, y: -offset.y))
+                                }
+                                .onEnded { value in
+                                    dragOffset.x += value.translation.width
+                                    dragOffset.y += value.translation.height
+                                }
+                        )
+                        .simultaneousGesture(
+                            MagnifyGesture()
+                                .onChanged { value in
+                                    renderer.camera.update(
+                                        magnification: magnification * value.magnification,
+                                        dragTranslation: .zero
+                                    )
+                                }
+                                .onEnded { value in
+                                    magnification *= value.magnification
+                                }
+                        )
                 } placeholder: {
                     ProgressView(progress)
                         .progressViewStyle(.circular)
@@ -46,6 +74,10 @@ struct MapViewer: View {
             if selectedMap == nil {
                 selectedMap = database.maps.first
             }
+        }
+        .onChange(of: selectedMap?.name) {
+            dragOffset = .zero
+            magnification = 1
         }
     }
 
