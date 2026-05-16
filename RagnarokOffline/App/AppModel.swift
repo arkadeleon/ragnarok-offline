@@ -137,8 +137,10 @@ final class AppModel {
         guard !FileManager.default.fileExists(atPath: helpFileURL.path) else {
             return
         }
-        let helpContent = String(localized: "HELP_DESCRIPTION", table: "Help")
-        try? helpContent.write(to: helpFileURL, atomically: true, encoding: .utf8)
+        guard let bundleURL = Bundle.main.url(forResource: "HELP", withExtension: "md") else {
+            return
+        }
+        try? FileManager.default.copyItem(at: bundleURL, to: helpFileURL)
     }
 
     func startServer(_ server: ServerModel) async throws {

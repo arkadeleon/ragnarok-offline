@@ -25,38 +25,45 @@ struct MarkdownFilePreviewView: View {
         let lines = markdown.components(separatedBy: "\n")
         var blocks: [String] = []
         var inOrderedList = false
+        var inUnorderedList = false
 
-        func closeList() {
+        func closeLists() {
             if inOrderedList {
                 blocks.append("</ol>")
                 inOrderedList = false
+            }
+            if inUnorderedList {
+                blocks.append("</ul>")
+                inUnorderedList = false
             }
         }
 
         for line in lines {
             if line.hasPrefix("## ") {
-                closeList()
+                closeLists()
                 blocks.append("<h2>\(inlineHTML(String(line.dropFirst(3))))</h2>")
             } else if line.hasPrefix("# ") {
-                closeList()
+                closeLists()
                 blocks.append("<h1>\(inlineHTML(String(line.dropFirst(2))))</h1>")
             } else if line == "---" {
-                closeList()
+                closeLists()
                 blocks.append("<hr>")
             } else if let match = line.wholeMatch(of: /\d+\. (.+)/) {
-                if !inOrderedList {
-                    blocks.append("<ol>")
-                    inOrderedList = true
-                }
+                if inUnorderedList { blocks.append("</ul>"); inUnorderedList = false }
+                if !inOrderedList { blocks.append("<ol>"); inOrderedList = true }
+                blocks.append("<li>\(inlineHTML(String(match.output.1)))</li>")
+            } else if let match = line.wholeMatch(of: /- (.+)/) {
+                if inOrderedList { blocks.append("</ol>"); inOrderedList = false }
+                if !inUnorderedList { blocks.append("<ul>"); inUnorderedList = true }
                 blocks.append("<li>\(inlineHTML(String(match.output.1)))</li>")
             } else if line.isEmpty {
-                closeList()
+                closeLists()
             } else {
-                closeList()
+                closeLists()
                 blocks.append("<p>\(inlineHTML(line))</p>")
             }
         }
-        closeList()
+        closeLists()
 
         let body = blocks.joined(separator: "\n")
         return """
@@ -77,7 +84,7 @@ struct MarkdownFilePreviewView: View {
             h1 { font-size: 1.4em; margin: 0 0 0.5em; }
             h2 { font-size: 1.15em; margin: 1.4em 0 0.4em; }
             p { margin: 0.5em 0; }
-            ol { padding-left: 1.5em; margin: 0.4em 0; }
+            ol, ul { padding-left: 1.5em; margin: 0.4em 0; }
             li { margin: 0.25em 0; }
             hr { border: none; border-top: 1px solid rgba(127,127,127,0.3); margin: 1.2em 0; }
             code {
