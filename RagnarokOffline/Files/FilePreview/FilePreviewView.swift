@@ -15,6 +15,8 @@ struct FilePreviewView: View {
     var body: some View {
         Group {
             switch file.utType {
+            case let utType where utType.identifier ==  "net.daringfireball.markdown":
+                MarkdownFilePreviewView(file: file)
             case let utType where utType.conforms(to: .text):
                 TextFilePreviewView(file: file)
             case .lua, .lub:
