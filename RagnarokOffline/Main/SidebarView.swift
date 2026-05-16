@@ -47,9 +47,8 @@ struct SidebarView: View {
     @AppStorage("databaseSectionExpanded") private var isDatabaseSectionExpanded = true
     @AppStorage("toolsSectionExpanded") private var isToolsSectionExpanded = true
 
-    @Namespace private var menuNamespace
+    @Namespace private var settingsNamespace
 
-    @State private var isHelpPresented = false
     @State private var isSettingsPresented = false
 
     var body: some View {
@@ -187,36 +186,12 @@ struct SidebarView: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isToolsSectionExpanded)
         .navigationTitle(String("Ragnarok Offline"))
         .toolbar {
-            Menu {
-                Button {
-                    isHelpPresented.toggle()
-                } label: {
-                    Label("Help", systemImage: "questionmark.circle")
-                }
-
-                #if DEBUG
-                Button {
-                    isSettingsPresented.toggle()
-                } label: {
-                    Label("Settings", systemImage: "gearshape")
-                }
-                #endif
+            Button {
+                isSettingsPresented.toggle()
             } label: {
-                Image(systemName: "ellipsis")
+                Image(systemName: "gearshape")
             }
-            .matchedTransitionSource(id: "menu", in: menuNamespace)
-        }
-        .sheet(isPresented: $isHelpPresented) {
-            NavigationStack {
-                HelpView {
-                    isHelpPresented.toggle()
-                }
-            }
-            #if os(macOS)
-            .navigationTransition(.automatic)
-            #else
-            .navigationTransition(.zoom(sourceID: "menu", in: menuNamespace))
-            #endif
+            .matchedTransitionSource(id: "settings", in: settingsNamespace)
         }
         .sheet(isPresented: $isSettingsPresented) {
             NavigationStack {
@@ -228,7 +203,7 @@ struct SidebarView: View {
             #if os(macOS)
             .navigationTransition(.automatic)
             #else
-            .navigationTransition(.zoom(sourceID: "menu", in: menuNamespace))
+            .navigationTransition(.zoom(sourceID: "settings", in: settingsNamespace))
             #endif
         }
         .onChange(of: appModel.settings.isRemoteClientEnabled) { _, newValue in

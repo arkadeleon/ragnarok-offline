@@ -128,6 +128,17 @@ final class AppModel {
             serverPort: settings.serverPort
         )
         gameSession = GameSession(resourceManager: resourceManager)
+
+        setupHelpFile()
+    }
+
+    private func setupHelpFile() {
+        let helpFileURL = localClientURL.appending(component: "HELP.md")
+        guard !FileManager.default.fileExists(atPath: helpFileURL.path) else {
+            return
+        }
+        let helpContent = String(localized: "HELP_DESCRIPTION", table: "Help")
+        try? helpContent.write(to: helpFileURL, atomically: true, encoding: .utf8)
     }
 
     func startServer(_ server: ServerModel) async throws {
