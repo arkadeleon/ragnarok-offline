@@ -64,6 +64,12 @@ struct MapViewer: View {
                         .progressViewStyle(.circular)
                 }
                 .id(selectedMap.name)
+            } else {
+                ContentUnavailableView {
+                    Label("No Map Selected", systemImage: "map")
+                } description: {
+                    Text("Choose a map to view")
+                }
             }
         }
         .navigationTitle("Map Viewer")
@@ -75,10 +81,6 @@ struct MapViewer: View {
         }
         .task {
             await database.fetchMaps()
-
-            if selectedMap == nil {
-                selectedMap = database.maps.first
-            }
         }
         .onChange(of: selectedMap?.name) {
             dragStartOffset = nil

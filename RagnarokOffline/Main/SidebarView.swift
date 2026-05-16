@@ -166,9 +166,11 @@ struct SidebarView: View {
                     SidebarRow("Map Viewer", iconName: "map.fill", iconColor: .brown)
                 }
 
+                #if DEBUG
                 NavigationLink(value: SidebarItem.effectViewer) {
                     SidebarRow("Effect Viewer", iconName: "fireworks", iconColor: .yellow)
                 }
+                #endif
 
                 #if DEBUG
                 NavigationLink(value: SidebarItem.cube) {
