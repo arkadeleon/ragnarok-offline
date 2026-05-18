@@ -71,6 +71,10 @@ struct ServerView: View {
                 .disabled(startDisabled)
             }
 
+            if #available(iOS 26.0, macOS 26.0, *) {
+                ToolbarSpacer()
+            }
+
             ToolbarItem {
                 Button {
                     server.clearConsole()
