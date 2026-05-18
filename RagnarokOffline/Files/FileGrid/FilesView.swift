@@ -102,7 +102,7 @@ struct FilesView: View {
 
             ToolbarItem {
                 Button {
-                    NSWorkspace.shared.activateFileViewerSelecting([directory.url])
+                    NSWorkspace.shared.open(directory.url)
                 } label: {
                     Image(systemName: "folder")
                 }
