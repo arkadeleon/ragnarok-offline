@@ -48,15 +48,11 @@ struct GameClientIntroView: View {
                 }
             } label: {
                 Text("Join Beta")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
+                    .font(.title3)
+                    .fontWeight(.medium)
                     .frame(maxWidth: .infinity)
-                    .padding(12)
-                    .background(Color.accentColor)
-                    .cornerRadius(8)
-                    .disabled(betaLink == nil)
             }
+            .adaptiveProminentButtonStyle()
             .disabled(betaLink == nil)
         }
         .padding(.horizontal, 32)

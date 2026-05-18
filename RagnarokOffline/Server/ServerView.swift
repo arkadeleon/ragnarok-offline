@@ -42,10 +42,14 @@ struct ServerView: View {
                         }
                     } label: {
                         Label("Start Server", systemImage: "play.fill")
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .padding(.horizontal)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
+                    .adaptiveProminentButtonStyle()
                 }
+                .padding(.horizontal, 32)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .background(.background)
@@ -71,9 +75,11 @@ struct ServerView: View {
                 .disabled(startDisabled)
             }
 
+            #if os(iOS) || os(macOS)
             if #available(iOS 26.0, macOS 26.0, *) {
                 ToolbarSpacer()
             }
+            #endif
 
             ToolbarItem {
                 Button {

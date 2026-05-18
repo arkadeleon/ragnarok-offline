@@ -44,63 +44,54 @@ struct GameClientView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: 16) {
                 TipView(serverStartupTip)
                 TipView(accountRegistrationTip)
 
-                VStack(spacing: 12) {
-                    VStack(spacing: 0) {
-                        HStack {
-                            Text("Server Address")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            TextField(String(), text: $serverAddress)
-                                .multilineTextAlignment(.trailing)
-                                .focused($focusedField, equals: .serverAddress)
-                                .textFieldStyle(.plain)
-                        }
-                        .padding(12)
-
-                        Divider()
-
-                        HStack {
-                            Text("Server Port")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            TextField(String(), text: $serverPort)
-                                .multilineTextAlignment(.trailing)
-                                .focused($focusedField, equals: .serverPort)
-                                .textFieldStyle(.plain)
-                        }
-                        .padding(12)
+                VStack(spacing: 0) {
+                    HStack {
+                        Text("Server Address")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        TextField(String(), text: $serverAddress)
+                            .multilineTextAlignment(.trailing)
+                            .focused($focusedField, equals: .serverAddress)
+                            .textFieldStyle(.plain)
                     }
-                    .background(.background.secondary)
-                    .cornerRadius(8)
+                    .padding(12)
+                    .frame(height: 50)
 
-                    Button {
-                        focusedField = nil
+                    Divider()
 
-                        Task {
-                            await startGameSession()
-                        }
-                    } label: {
-                        Text("Start")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(12)
-                            .background(Color.accentColor)
-                            .cornerRadius(8)
-                            .disabled(connectionState == .testing)
+                    HStack {
+                        Text("Server Port")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        TextField(String(), text: $serverPort)
+                            .multilineTextAlignment(.trailing)
+                            .focused($focusedField, equals: .serverPort)
+                            .textFieldStyle(.plain)
                     }
-                    .padding(.top, 8)
-                    .disabled(connectionState == .testing)
+                    .padding(12)
+                    .frame(height: 50)
                 }
-                .padding(16)
-                .background(.background)
+                .background(.background.secondary)
                 .cornerRadius(12)
-                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
+
+                Button {
+                    focusedField = nil
+
+                    Task {
+                        await startGameSession()
+                    }
+                } label: {
+                    Text("Start")
+                        .font(.title3)
+                        .fontWeight(.medium)
+                        .frame(maxWidth: .infinity)
+                }
+                .adaptiveProminentButtonStyle()
+                .disabled(connectionState == .testing)
 
                 if connectionState == .testing {
                     ProgressView()
