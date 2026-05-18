@@ -38,11 +38,7 @@ struct MapPicker: View {
                 mapList
             }
             .presentationSizing(.form)
-            #if os(macOS)
-            .navigationTransition(.automatic)
-            #else
-            .navigationTransition(.zoom(sourceID: "map", in: mapNamespace))
-            #endif
+            .adaptiveNavigationTransition(sourceID: "map", in: mapNamespace)
         }
     }
 
@@ -68,7 +64,7 @@ struct MapPicker: View {
         .navigationTitle("Map")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarCancelButton {
+            ToolbarDoneButton {
                 isPicking = false
             }
         }

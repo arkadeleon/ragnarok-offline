@@ -12,11 +12,15 @@ struct ToolbarCancelButton: ToolbarContent {
 
     var body: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
+            #if os(iOS)
             if #available(iOS 26.0, *) {
                 Button("Cancel", systemImage: "xmark", action: action)
             } else {
                 Button("Cancel", action: action)
             }
+            #else
+            Button("Cancel", action: action)
+            #endif
         }
     }
 }
@@ -26,11 +30,15 @@ struct ToolbarDoneButton: ToolbarContent {
 
     var body: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
+            #if os(iOS)
             if #available(iOS 26.0, *) {
                 Button("Done", systemImage: "checkmark", action: action)
             } else {
                 Button("Done", action: action)
             }
+            #else
+            Button("Done", action: action)
+            #endif
         }
     }
 }

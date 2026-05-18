@@ -73,11 +73,7 @@ struct ItemDatabaseView: View {
             NavigationStack {
                 ItemDatabaseFilterView(filter: filter)
             }
-            #if os(macOS)
-            .navigationTransition(.automatic)
-            #else
-            .navigationTransition(.zoom(sourceID: "filter", in: filterNamespace))
-            #endif
+            .adaptiveNavigationTransition(sourceID: "filter", in: filterNamespace)
         }
         .task(id: filter.identifier) {
             await database.fetchItems()

@@ -41,11 +41,7 @@ struct CharacterEquipmentPicker: View {
                 itemList
             }
             .presentationSizing(.form)
-            #if os(macOS)
-            .navigationTransition(.automatic)
-            #else
-            .navigationTransition(.zoom(sourceID: "equipment", in: equipmentNamespace))
-            #endif
+            .adaptiveNavigationTransition(sourceID: "equipment", in: equipmentNamespace)
         }
     }
 
@@ -88,7 +84,7 @@ struct CharacterEquipmentPicker: View {
         .navigationTitle(titleKey)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarCancelButton {
+            ToolbarDoneButton {
                 isPicking = false
             }
         }

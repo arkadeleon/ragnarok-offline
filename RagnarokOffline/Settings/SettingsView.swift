@@ -32,7 +32,7 @@ struct SettingsView: View {
         .navigationTitle("Settings")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarCancelButton(action: onDone)
+            ToolbarDoneButton(action: onDone)
         }
     }
 }

@@ -202,11 +202,7 @@ struct SidebarView: View {
                 }
                 .environment(appModel.settings)
             }
-            #if os(macOS)
-            .navigationTransition(.automatic)
-            #else
-            .navigationTransition(.zoom(sourceID: "settings", in: settingsNamespace))
-            #endif
+            .adaptiveNavigationTransition(sourceID: "settings", in: settingsNamespace)
         }
         .onChange(of: appModel.settings.isRemoteClientEnabled) { _, newValue in
             if !newValue, selection?.wrappedValue == .clientCachedFiles {
