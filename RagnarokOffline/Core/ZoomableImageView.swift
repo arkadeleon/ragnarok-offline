@@ -44,10 +44,6 @@ final class ZoomableImageScrollView: UIScrollView, UIScrollViewDelegate {
 
         imageView.contentMode = .scaleAspectFit
         addSubview(imageView)
-
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
-        doubleTapGesture.numberOfTapsRequired = 2
-        addGestureRecognizer(doubleTapGesture)
     }
 
     @available(*, unavailable)
@@ -114,26 +110,6 @@ final class ZoomableImageScrollView: UIScrollView, UIScrollViewDelegate {
             right: horizontalInset
         )
     }
-
-    @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
-        guard imageSize.width > 0, imageSize.height > 0 else {
-            return
-        }
-
-        if zoomScale > minimumZoomScale * 1.01 {
-            setZoomScale(minimumZoomScale, animated: true)
-        } else {
-            let tapLocation = gesture.location(in: imageView)
-            let targetScale = min(maximumZoomScale, max(minimumZoomScale * 2.5, 1))
-            zoom(to: zoomRect(for: targetScale, centeredAt: tapLocation), animated: true)
-        }
-    }
-
-    private func zoomRect(for scale: CGFloat, centeredAt center: CGPoint) -> CGRect {
-        let size = CGSize(width: bounds.width / scale, height: bounds.height / scale)
-        let origin = CGPoint(x: center.x - size.width / 2, y: center.y - size.height / 2)
-        return CGRect(origin: origin, size: size)
-    }
 }
 
 #elseif canImport(AppKit)
@@ -170,10 +146,6 @@ final class ZoomableImageScrollView: NSScrollView {
         documentView = imageView
 
         imageView.imageScaling = .scaleProportionallyUpOrDown
-
-        let doubleClickGesture = NSClickGestureRecognizer(target: self, action: #selector(handleDoubleClick(_:)))
-        doubleClickGesture.numberOfClicksRequired = 2
-        addGestureRecognizer(doubleClickGesture)
     }
 
     @available(*, unavailable)
@@ -216,19 +188,6 @@ final class ZoomableImageScrollView: NSScrollView {
             hasAppliedInitialMagnification = true
         } else if magnification < minimumScale {
             magnification = minimumScale
-        }
-    }
-
-    @objc private func handleDoubleClick(_ gesture: NSClickGestureRecognizer) {
-        guard imageSize.width > 0, imageSize.height > 0 else {
-            return
-        }
-
-        if magnification > minMagnification * 1.01 {
-            setMagnification(minMagnification, centeredAt: gesture.location(in: imageView))
-        } else {
-            let targetScale = min(maxMagnification, max(minMagnification * 2.5, 1))
-            setMagnification(targetScale, centeredAt: gesture.location(in: imageView))
         }
     }
 }
