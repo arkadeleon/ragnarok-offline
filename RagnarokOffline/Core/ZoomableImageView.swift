@@ -11,65 +11,107 @@ import SwiftUI
 
 import UIKit
 
-struct ZoomableImageView: UIViewRepresentable {
+struct ZoomableImageView: UIViewControllerRepresentable {
     var image: CGImage
 
-    func makeUIView(context: Context) -> ZoomableImageScrollView {
-        ZoomableImageScrollView()
+    func makeUIViewController(context: Context) -> ZoomableImageViewController {
+        ZoomableImageViewController(image: image)
     }
 
-    func updateUIView(_ scrollView: ZoomableImageScrollView, context: Context) {
-        scrollView.setImage(image)
+    func updateUIViewController(_ viewController: ZoomableImageViewController, context: Context) {
     }
 }
 
-final class ZoomableImageScrollView: UIScrollView, UIScrollViewDelegate {
-    private let imageView = UIImageView()
-    private var imageSize: CGSize = .zero
-    private var currentImage: CGImage?
+final class ZoomableImageViewController: UIViewController, UIScrollViewDelegate {
+    private let image: CGImage
+    private var scrollView: UIScrollView!
+    private var imageView: UIImageView!
     private var hasAppliedInitialZoom = false
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        delegate = self
-        backgroundColor = .clear
-        bounces = true
-        bouncesZoom = true
-        contentInsetAdjustmentBehavior = .never
-        decelerationRate = .fast
-        delaysContentTouches = false
-        showsHorizontalScrollIndicator = false
-        showsVerticalScrollIndicator = false
-
-        imageView.contentMode = .scaleAspectFit
-        addSubview(imageView)
+    init(image: CGImage) {
+        self.image = image
+        super.init(nibName: nil, bundle: nil)
     }
 
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setImage(_ image: CGImage) {
-        guard currentImage !== image else {
-            return
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-        currentImage = image
-        imageSize = CGSize(width: image.width, height: image.height)
+        scrollView = UIScrollView(frame: view.bounds)
+        scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        scrollView.delegate = self
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.decelerationRate = .fast
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(scrollView)
+
+        imageView = UIImageView()
+        scrollView.addSubview(imageView)
+
+        // Set image
+        let imageSize = CGSize(width: image.width, height: image.height)
         imageView.image = UIImage(cgImage: image, scale: 1, orientation: .up)
         imageView.frame = CGRect(origin: .zero, size: imageSize)
-        contentSize = imageSize
-        hasAppliedInitialZoom = false
-        setNeedsLayout()
+        scrollView.contentSize = imageSize
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
         updateZoomScales()
         centerImage()
     }
+
+    private func updateZoomScales() {
+        let imageSize = CGSize(width: image.width, height: image.height)
+        let scrollViewSize = scrollView.bounds.size
+
+        guard imageSize.width > 0, imageSize.height > 0, scrollViewSize.width > 0, scrollViewSize.height > 0 else {
+            return
+        }
+
+        let fitScale = min(scrollViewSize.width / imageSize.width, scrollViewSize.height / imageSize.height)
+        let minimumScale = min(fitScale / 4, 1)
+        let maximumScale = max(fitScale * 16, 1)
+
+        scrollView.minimumZoomScale = minimumScale
+        scrollView.maximumZoomScale = maximumScale
+
+        if !hasAppliedInitialZoom {
+            scrollView.zoomScale = fitScale
+            hasAppliedInitialZoom = true
+        } else if scrollView.zoomScale < minimumScale {
+            scrollView.zoomScale = minimumScale
+        } else if scrollView.zoomScale > maximumScale {
+            scrollView.zoomScale = maximumScale
+        }
+    }
+
+    private func centerImage() {
+        var horizontalInset: CGFloat = 0
+        var verticalInset: CGFloat = 0
+
+        if scrollView.contentSize.width < scrollView.bounds.width {
+            horizontalInset = (scrollView.bounds.width - scrollView.contentSize.width) / 2
+        }
+
+        if scrollView.contentSize.height < scrollView.bounds.height {
+            verticalInset = (scrollView.bounds.height - scrollView.contentSize.height) / 2
+        }
+
+        scrollView.contentInset = UIEdgeInsets(
+            top: verticalInset,
+            left: horizontalInset,
+            bottom: verticalInset,
+            right: horizontalInset
+        )
+    }
+
+    // MARK: - UIScrollViewDelegate
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
@@ -78,116 +120,92 @@ final class ZoomableImageScrollView: UIScrollView, UIScrollViewDelegate {
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         centerImage()
     }
-
-    private func updateZoomScales() {
-        guard imageSize.width > 0, imageSize.height > 0, bounds.width > 0, bounds.height > 0 else {
-            return
-        }
-
-        let fitScale = min(bounds.width / imageSize.width, bounds.height / imageSize.height)
-        let minimumScale = max(fitScale, 0.01)
-        let maximumScale = max(minimumScale * 8, 8)
-
-        minimumZoomScale = minimumScale
-        maximumZoomScale = maximumScale
-
-        if !hasAppliedInitialZoom {
-            zoomScale = minimumScale
-            hasAppliedInitialZoom = true
-        } else if zoomScale < minimumScale {
-            zoomScale = minimumScale
-        }
-    }
-
-    private func centerImage() {
-        let zoomedImageSize = CGSize(width: imageSize.width * zoomScale, height: imageSize.height * zoomScale)
-        let horizontalInset = max((bounds.width - zoomedImageSize.width) / 2, 0)
-        let verticalInset = max((bounds.height - zoomedImageSize.height) / 2, 0)
-        contentInset = UIEdgeInsets(
-            top: verticalInset,
-            left: horizontalInset,
-            bottom: verticalInset,
-            right: horizontalInset
-        )
-    }
 }
 
 #elseif canImport(AppKit)
 
 import AppKit
 
-struct ZoomableImageView: NSViewRepresentable {
+struct ZoomableImageView: NSViewControllerRepresentable {
     var image: CGImage
 
-    func makeNSView(context: Context) -> ZoomableImageScrollView {
-        ZoomableImageScrollView()
+    func makeNSViewController(context: Context) -> ZoomableImageViewController {
+        ZoomableImageViewController(image: image)
     }
 
-    func updateNSView(_ scrollView: ZoomableImageScrollView, context: Context) {
-        scrollView.setImage(image)
+    func updateNSViewController(_ viewController: ZoomableImageViewController, context: Context) {
     }
 }
 
-final class ZoomableImageScrollView: NSScrollView {
-    private let imageView = NSImageView()
-    private var imageSize: CGSize = .zero
-    private var currentImage: CGImage?
+final class ZoomableImageViewController: NSViewController {
+    private let image: CGImage
+    private var scrollView: NSScrollView!
+    private var imageView: NSImageView!
     private var hasAppliedInitialMagnification = false
 
-    override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-
-        drawsBackground = false
-        allowsMagnification = true
-        usesPredominantAxisScrolling = false
-        hasHorizontalScroller = true
-        hasVerticalScroller = true
-        autohidesScrollers = true
-        documentView = imageView
-
-        imageView.imageScaling = .scaleProportionallyUpOrDown
+    init(image: CGImage) {
+        self.image = image
+        super.init(nibName: nil, bundle: nil)
     }
 
-    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setImage(_ image: CGImage) {
-        guard currentImage !== image else {
-            return
-        }
-
-        currentImage = image
-        imageSize = CGSize(width: image.width, height: image.height)
-        imageView.image = NSImage(cgImage: image, size: imageSize)
-        imageView.frame = CGRect(origin: .zero, size: imageSize)
-        hasAppliedInitialMagnification = false
-        needsLayout = true
+    override func loadView() {
+        view = NSView()
     }
 
-    override func layout() {
-        super.layout()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        scrollView = NSScrollView(frame: view.bounds)
+        scrollView.autoresizingMask = [.width, .height]
+        scrollView.drawsBackground = false
+        scrollView.allowsMagnification = true
+        scrollView.usesPredominantAxisScrolling = false
+        scrollView.hasHorizontalScroller = true
+        scrollView.hasVerticalScroller = true
+        scrollView.autohidesScrollers = true
+        view.addSubview(scrollView)
+
+        imageView = NSImageView()
+        scrollView.documentView = imageView
+
+        // Set image
+        let imageSize = CGSize(width: image.width, height: image.height)
+        imageView.image = NSImage(cgImage: image, size: imageSize)
+        imageView.frame = CGRect(origin: .zero, size: imageSize)
+    }
+
+    override func viewDidLayout() {
+        super.viewDidLayout()
+
         updateMagnificationLimits()
     }
 
     private func updateMagnificationLimits() {
-        guard imageSize.width > 0, imageSize.height > 0, contentView.bounds.width > 0, contentView.bounds.height > 0 else {
+        let imageSize = CGSize(width: image.width, height: image.height)
+        let scrollViewSize = scrollView.contentView.bounds.size
+
+        guard imageSize.width > 0, imageSize.height > 0, scrollViewSize.width > 0, scrollViewSize.height > 0 else {
             return
         }
 
-        let fitScale = min(contentView.bounds.width / imageSize.width, contentView.bounds.height / imageSize.height)
-        let minimumScale = max(fitScale, 0.01)
-        let maximumScale = max(minimumScale * 8, 8)
+        let fitScale = min(scrollViewSize.width / imageSize.width, scrollViewSize.height / imageSize.height)
+        let minimumScale = min(fitScale / 4, 1)
+        let maximumScale = max(fitScale * 16, 1)
 
-        minMagnification = minimumScale
-        maxMagnification = maximumScale
+        scrollView.minMagnification = minimumScale
+        scrollView.maxMagnification = maximumScale
 
         if !hasAppliedInitialMagnification {
-            magnification = minimumScale
+            scrollView.magnification = fitScale
             hasAppliedInitialMagnification = true
-        } else if magnification < minimumScale {
-            magnification = minimumScale
+        } else if scrollView.magnification < minimumScale {
+            scrollView.magnification = minimumScale
+        } else if scrollView.magnification > maximumScale {
+            scrollView.magnification = maximumScale
         }
     }
 }
