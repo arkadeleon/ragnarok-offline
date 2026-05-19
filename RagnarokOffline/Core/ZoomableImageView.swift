@@ -9,8 +9,6 @@ import SwiftUI
 
 #if canImport(UIKit)
 
-import UIKit
-
 struct ZoomableImageView: UIViewControllerRepresentable {
     var image: CGImage
 
@@ -123,8 +121,6 @@ final class ZoomableImageViewController: UIViewController, UIScrollViewDelegate 
 }
 
 #elseif canImport(AppKit)
-
-import AppKit
 
 struct ZoomableImageView: NSViewControllerRepresentable {
     var image: CGImage

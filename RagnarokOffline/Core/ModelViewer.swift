@@ -176,9 +176,7 @@ class ARModelViewerController: UIViewController {
     }
 }
 
-#endif
-
-#if os(macOS)
+#elseif os(macOS)
 
 struct ARModelViewer: NSViewControllerRepresentable {
     var entity: Entity
@@ -292,9 +290,7 @@ class ARModelViewerController: NSViewController {
     }
 }
 
-#endif
-
-#if os(visionOS)
+#elseif os(visionOS)
 
 struct ModelViewer: View {
     var entity: Entity

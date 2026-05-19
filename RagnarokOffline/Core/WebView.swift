@@ -8,22 +8,7 @@
 import SwiftUI
 import WebKit
 
-#if os(macOS)
-
-struct WebView: NSViewRepresentable {
-    let htmlString: String
-    let baseURL: URL?
-
-    func makeNSView(context: Context) -> WKWebView {
-        WKWebView()
-    }
-
-    func updateNSView(_ webView: WKWebView, context: Context) {
-        webView.loadHTMLString(htmlString, baseURL: baseURL)
-    }
-}
-
-#else
+#if canImport(UIKit)
 
 struct WebView: UIViewRepresentable {
     let htmlString: String
@@ -34,6 +19,21 @@ struct WebView: UIViewRepresentable {
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {
+        webView.loadHTMLString(htmlString, baseURL: baseURL)
+    }
+}
+
+#elseif canImport(AppKit)
+
+struct WebView: NSViewRepresentable {
+    let htmlString: String
+    let baseURL: URL?
+
+    func makeNSView(context: Context) -> WKWebView {
+        WKWebView()
+    }
+
+    func updateNSView(_ webView: WKWebView, context: Context) {
         webView.loadHTMLString(htmlString, baseURL: baseURL)
     }
 }
