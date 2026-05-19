@@ -10,11 +10,10 @@ import SwiftUI
 /// Displays the JSON tree using hierarchical List
 struct JSONTreeView: View {
     var node: JSONNode
-    var searchText: String
 
     var body: some View {
         List(displayNodes, children: \.children) { item in
-            JSONNodeRow(node: item, searchText: searchText)
+            JSONNodeRow(node: item)
         }
         .listStyle(.plain)
     }
@@ -51,18 +50,6 @@ struct JSONTreeView: View {
                 .string(key: "[2]", value: "morocc")
             ]),
             .null(key: "metadata")
-        ]),
-        searchText: ""
-    )
-}
-
-#Preview("With Search") {
-    JSONTreeView(
-        node: .object(key: nil, children: [
-            .string(key: "username", value: "player123"),
-            .number(key: "userId", value: 12345),
-            .string(key: "email", value: "user@example.com")
-        ]),
-        searchText: "user"
+        ])
     )
 }

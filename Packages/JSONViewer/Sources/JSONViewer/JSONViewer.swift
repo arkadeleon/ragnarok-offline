@@ -13,23 +13,18 @@ public struct JSONViewer: View {
 
     @State private var rootNode: JSONNode?
     @State private var error: (any Error)?
-    @State private var searchText = ""
 
     public var body: some View {
         Group {
             if let error {
-                // Error state
                 ContentUnavailableView {
                     Label(LocalizedStringResource("Failed to Parse JSON", bundle: .module), systemImage: "exclamationmark.triangle")
                 } description: {
                     Text(error.localizedDescription)
                 }
             } else if let rootNode {
-                // Content state
-                JSONTreeView(node: rootNode, searchText: searchText)
-                    .searchable(text: $searchText, prompt: LocalizedStringResource("Search keys and values", bundle: .module))
+                JSONTreeView(node: rootNode)
             } else {
-                // Loading state
                 ProgressView(LocalizedStringResource("Parsing JSON...", bundle: .module))
             }
         }
