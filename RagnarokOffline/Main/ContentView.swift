@@ -10,35 +10,22 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(AppModel.self) private var appModel
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
-    @State private var selectedItem: SidebarItem? = .clientLocalFiles
+    @State private var selectedItem: SidebarItem?
     @State private var incomingFile: File?
 
     var body: some View {
-        AdaptiveView {
-            NavigationStack {
-                SidebarView(selection: nil)
-                    .navigationDestination(for: SidebarItem.self) { item in
-                        detailView(for: item)
-                            .toolbarTitleDisplayMode(.inline)
-                    }
-                    .navigationDestinations(appModel: appModel)
-            }
-        } regular: {
-            NavigationSplitView {
-                SidebarView(selection: $selectedItem)
-            } detail: {
-                if let item = selectedItem {
-                    NavigationStack {
-                        detailView(for: item)
-                            .toolbarTitleDisplayMode(.inline)
-                            .navigationDestinations(appModel: appModel)
-                    }
+        NavigationSplitView {
+            SidebarView(selection: $selectedItem)
+        } detail: {
+            if let item = selectedItem {
+                NavigationStack {
+                    detailView(for: item)
+                        .toolbarTitleDisplayMode(.inline)
+                        .navigationDestinations(appModel: appModel)
                 }
             }
-        }
-        .onOpenURL { url in
-            incomingFile = File(node: .regularFile(url), location: .external)
         }
         .sheet(item: $incomingFile) { file in
             NavigationStack {
@@ -51,10 +38,18 @@ struct ContentView: View {
             }
             .presentationSizing(.page)
         }
+        .onAppear {
+            selectDefaultItemIfNeeded()
+        }
+        .onChange(of: sizeClass) {
+            selectDefaultItemIfNeeded()
+        }
+        .onOpenURL { url in
+            incomingFile = File(node: .regularFile(url), location: .external)
+        }
     }
 
-    @ViewBuilder
-    private func detailView(for item: SidebarItem) -> some View {
+    @ViewBuilder private func detailView(for item: SidebarItem) -> some View {
         switch item {
         case .clientLocalFiles:
             FilesView("Local Files", directory: appModel.clientLocalDirectory)
@@ -122,12 +117,17 @@ struct ContentView: View {
             CubeView()
         }
     }
+
+    private func selectDefaultItemIfNeeded() {
+        if sizeClass != .compact, selectedItem == nil {
+            selectedItem = .clientLocalFiles
+        }
+    }
 }
 
 extension View {
     func navigationDestinations(appModel: AppModel) -> some View {
-        self
-            .navigationDestination(for: File.self) { file in
+        self.navigationDestination(for: File.self) { file in
                 if file.hasFiles {
                     FilesView(directory: file)
                 } else {
