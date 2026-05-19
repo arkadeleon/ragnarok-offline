@@ -13,7 +13,13 @@ struct FilesView: View {
 
     @Environment(\.fileSystem) private var fileSystem
 
-    @State private var loadStatus: LoadStatus = .notYetLoaded
+    private enum LoadingState {
+        case idle
+        case loading
+        case loaded
+    }
+
+    @State private var loadingState: LoadingState = .idle
     @State private var searchText = ""
     @State private var files: [File] = []
     @State private var filteredFiles: [File] = []
@@ -43,12 +49,12 @@ struct FilesView: View {
             await reload()
         }
         .overlay {
-            if loadStatus == .loading {
+            if loadingState == .loading {
                 ProgressView()
             }
         }
         .overlay {
-            if loadStatus == .loaded && filteredFiles.isEmpty {
+            if loadingState == .loaded && filteredFiles.isEmpty {
                 ContentUnavailableView("No Files", systemImage: "folder.fill")
             }
         }
@@ -112,16 +118,16 @@ struct FilesView: View {
     }
 
     private func load() async {
-        guard loadStatus == .notYetLoaded else {
+        guard loadingState == .idle else {
             return
         }
 
-        loadStatus = .loading
+        loadingState = .loading
 
         files = await directory.files()
         filterFiles(searchText: searchText)
 
-        loadStatus = .loaded
+        loadingState = .loaded
     }
 
     private func reload() async {

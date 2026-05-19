@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-enum AsyncContentStatus<Value> {
-    case notYetLoaded
+enum AsyncContentState<Value> {
+    case idle
     case loading
     case loaded(Value)
     case failed(any Error)
@@ -19,12 +19,12 @@ struct AsyncContentView<Value, Content, Placeholder>: View where Value: Sendable
     var content: (Value) -> Content
     var placeholder: () -> Placeholder
 
-    @State private var status: AsyncContentStatus<Value> = .notYetLoaded
+    @State private var state: AsyncContentState<Value> = .idle
 
     var body: some View {
         ZStack {
-            switch status {
-            case .notYetLoaded:
+            switch state {
+            case .idle:
                 EmptyView()
             case .loading:
                 placeholder()
@@ -37,13 +37,13 @@ struct AsyncContentView<Value, Content, Placeholder>: View where Value: Sendable
             }
         }
         .task {
-            status = .loading
+            state = .loading
 
             do {
                 let value = try await load()
-                status = .loaded(value)
+                state = .loaded(value)
             } catch {
-                status = .failed(error)
+                state = .failed(error)
             }
         }
     }
