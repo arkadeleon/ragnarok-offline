@@ -12,8 +12,8 @@ struct JSONTreeView: View {
     var node: JSONNode
 
     var body: some View {
-        List(displayNodes, children: \.children) { item in
-            JSONNodeRow(node: item)
+        List(displayNodes, children: \.children) { node in
+            JSONNodeRow(node: node)
         }
         .listStyle(.plain)
     }
