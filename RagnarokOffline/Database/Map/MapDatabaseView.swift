@@ -39,13 +39,19 @@ struct MapDatabaseView: View {
             .listStyle(.plain)
         }
         .background(.background)
-        .navigationTitle("Map Database")
+        .navigationTitle(Text("Map Database", tableName: "Database"))
         .adaptiveSearch(text: $searchText)
         .overlay {
             if database.maps.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredMaps.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "map.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "map.fill")
+                    }
+                }
             }
         }
         .task(id: "\(searchText)") {

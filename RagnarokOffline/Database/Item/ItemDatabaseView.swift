@@ -52,12 +52,18 @@ struct ItemDatabaseView: View {
             .listStyle(.plain)
         }
         .background(.background)
-        .navigationTitle("Item Database")
+        .navigationTitle(Text("Item Database", tableName: "Database"))
         .adaptiveSearch(text: $filter.searchText)
         .toolbar {
             ToolbarItem {
-                Button("Filter", systemImage: "line.3.horizontal.decrease") {
+                Button {
                     isFilterPresented.toggle()
+                } label: {
+                    Label {
+                        Text("Filter", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "line.3.horizontal.decrease")
+                    }
                 }
                 .matchedTransitionSource(id: "filter", in: filterNamespace)
             }
@@ -66,7 +72,13 @@ struct ItemDatabaseView: View {
             if database.items.isEmpty {
                 ProgressView()
             } else if !filter.isEmpty && filteredItems.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "leaf.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "leaf.fill")
+                    }
+                }
             }
         }
         .sheet(isPresented: $isFilterPresented) {

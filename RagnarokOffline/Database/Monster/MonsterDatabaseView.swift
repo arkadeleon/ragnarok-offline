@@ -26,12 +26,18 @@ struct MonsterDatabaseView: View {
             }
         }
         .background(.background)
-        .navigationTitle("Monster Database")
+        .navigationTitle(Text("Monster Database", tableName: "Database"))
         .adaptiveSearch(text: $filter.searchText)
         .toolbar {
             ToolbarItem {
-                Button("Filter", systemImage: "line.3.horizontal.decrease") {
+                Button {
                     isFilterPresented.toggle()
+                } label: {
+                    Label {
+                        Text("Filter", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "line.3.horizontal.decrease")
+                    }
                 }
                 .matchedTransitionSource(id: "filter", in: filterNamespace)
             }
@@ -40,7 +46,13 @@ struct MonsterDatabaseView: View {
             if database.monsters.isEmpty {
                 ProgressView()
             } else if !filter.isEmpty && filteredMonsters.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "pawprint.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "pawprint.fill")
+                    }
+                }
             }
         }
         .sheet(isPresented: $isFilterPresented) {

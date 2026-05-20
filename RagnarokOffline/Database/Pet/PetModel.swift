@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/5/8.
 //
 
+import Foundation
 import Observation
 import RagnarokDatabase
 
@@ -31,22 +32,22 @@ final class PetModel {
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: "Fullness", value: pet.fullness))
-        attributes.append(.init(name: "Hungry Delay", value: pet.hungryDelay))
-        attributes.append(.init(name: "Hunger Increase", value: pet.hungerIncrease))
+        attributes.append(.init(name: LocalizedStringResource("Fullness", table: "Database"), value: pet.fullness))
+        attributes.append(.init(name: LocalizedStringResource("Hungry Delay", table: "Database"), value: pet.hungryDelay))
+        attributes.append(.init(name: LocalizedStringResource("Hunger Increase", table: "Database"), value: pet.hungerIncrease))
 
-        attributes.append(.init(name: "Intimacy Start", value: pet.intimacyStart))
-        attributes.append(.init(name: "Intimacy Fed", value: pet.intimacyFed))
-        attributes.append(.init(name: "Intimacy Overfed", value: pet.intimacyOverfed))
-        attributes.append(.init(name: "Intimacy Hungry", value: pet.intimacyHungry))
-        attributes.append(.init(name: "Intimacy OwnerDie", value: pet.intimacyOwnerDie))
+        attributes.append(.init(name: LocalizedStringResource("Intimacy Start", table: "Database"), value: pet.intimacyStart))
+        attributes.append(.init(name: LocalizedStringResource("Intimacy Fed", table: "Database"), value: pet.intimacyFed))
+        attributes.append(.init(name: LocalizedStringResource("Intimacy Overfed", table: "Database"), value: pet.intimacyOverfed))
+        attributes.append(.init(name: LocalizedStringResource("Intimacy Hungry", table: "Database"), value: pet.intimacyHungry))
+        attributes.append(.init(name: LocalizedStringResource("Intimacy OwnerDie", table: "Database"), value: pet.intimacyOwnerDie))
 
-        attributes.append(.init(name: "Capture Rate", value: pet.captureRate))
-        attributes.append(.init(name: "Special Performance", value: pet.specialPerformance))
-        attributes.append(.init(name: "Attack Rate", value: pet.attackRate))
-        attributes.append(.init(name: "Retaliate Rate", value: pet.retaliateRate))
-        attributes.append(.init(name: "Change Target Rate", value: pet.changeTargetRate))
-        attributes.append(.init(name: "Allow Auto Feed", value: pet.allowAutoFeed))
+        attributes.append(.init(name: LocalizedStringResource("Capture Rate", table: "Database"), value: pet.captureRate))
+        attributes.append(.init(name: LocalizedStringResource("Special Performance", table: "Database"), value: pet.specialPerformance))
+        attributes.append(.init(name: LocalizedStringResource("Attack Rate", table: "Database"), value: pet.attackRate))
+        attributes.append(.init(name: LocalizedStringResource("Retaliate Rate", table: "Database"), value: pet.retaliateRate))
+        attributes.append(.init(name: LocalizedStringResource("Change Target Rate", table: "Database"), value: pet.changeTargetRate))
+        attributes.append(.init(name: LocalizedStringResource("Allow Auto Feed", table: "Database"), value: pet.allowAutoFeed))
 
         return attributes
     }

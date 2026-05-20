@@ -30,7 +30,7 @@ struct MonsterSummonDatabaseView: View {
                         Text(monsterSummon.default)
                             .frame(minWidth: 120, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
-                        Text(monsterSummon.summon.count.formatted() + " monsters")
+                        Text(monsterSummon.summon.count.formatted() + " " + String(localized: LocalizedStringResource("monsters", table: "Database")))
                             .frame(minWidth: 120, maxWidth: .infinity, alignment: .leading)
                             .foregroundStyle(Color.secondary)
                     }
@@ -39,13 +39,19 @@ struct MonsterSummonDatabaseView: View {
             .listStyle(.plain)
         }
         .background(.background)
-        .navigationTitle("Monster Summon Database")
+        .navigationTitle(Text("Monster Summon Database", tableName: "Database"))
         .adaptiveSearch(text: $searchText)
         .overlay {
             if database.monsterSummons.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredMonsterSummons.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "pawprint.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "pawprint.fill")
+                    }
+                }
             }
         }
         .task(id: "\(searchText)") {

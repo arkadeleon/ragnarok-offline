@@ -22,7 +22,7 @@ struct DatabaseRecordAttribute: Identifiable {
 
     init(name: LocalizedStringResource, value: Bool) {
         self.name = name
-        self.value = value ? String(localized: "Yes") : String(localized: "No")
+        self.value = value ? String(localized: LocalizedStringResource("Yes", table: "Database")) : String(localized: LocalizedStringResource("No", table: "Database"))
     }
 
     init(name: LocalizedStringResource, value: Int) {

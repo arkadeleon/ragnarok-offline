@@ -32,7 +32,7 @@ struct MapDetailView: View {
             .stretchy()
 
             if !spawningMonsters.isEmpty {
-                DatabaseRecordSectionView("Monsters") {
+                DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(spawningMonsters) { spawningMonster in
                             NavigationLink(value: spawningMonster.monster) {
@@ -46,6 +46,8 @@ struct MapDetailView: View {
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
+                } header: {
+                    Text("Monsters", tableName: "Database")
                 }
             }
         }

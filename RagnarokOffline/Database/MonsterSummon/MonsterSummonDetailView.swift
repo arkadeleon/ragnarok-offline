@@ -16,7 +16,7 @@ struct MonsterSummonDetailView: View {
     var body: some View {
         DatabaseRecordDetailView {
             if let defaultMonster = monsterSummon.defaultMonster {
-                DatabaseRecordSectionView("Default") {
+                DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         NavigationLink(value: defaultMonster) {
                             ImageGridCell(title: defaultMonster.displayName) {
@@ -25,11 +25,13 @@ struct MonsterSummonDetailView: View {
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
+                } header: {
+                    Text("Default", tableName: "Database")
                 }
             }
 
             if let summonMonsters = monsterSummon.summonMonsters {
-                DatabaseRecordSectionView("Summon") {
+                DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(summonMonsters) { summonMonster in
                             NavigationLink(value: summonMonster.monster) {
@@ -43,6 +45,8 @@ struct MonsterSummonDetailView: View {
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
+                } header: {
+                    Text("Summon", tableName: "Database")
                 }
             }
         }

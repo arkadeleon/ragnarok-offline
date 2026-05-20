@@ -31,7 +31,7 @@ struct ItemDatabaseFilterView: View {
                         }
                     }
                 } header: {
-                    SectionHeaderView("Type")
+                    SectionHeaderView(LocalizedStringResource("Type", table: "Database"))
                 }
 
                 if filter.itemType == .weapon {
@@ -44,7 +44,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        SectionHeaderView("Weapon Type")
+                        SectionHeaderView(LocalizedStringResource("Weapon Type", table: "Database"))
                             .padding(.top)
                     }
                 }
@@ -59,7 +59,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        SectionHeaderView("Ammo Type")
+                        SectionHeaderView(LocalizedStringResource("Ammo Type", table: "Database"))
                             .padding(.top)
                     }
                 }
@@ -74,7 +74,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        SectionHeaderView("Card Type")
+                        SectionHeaderView(LocalizedStringResource("Card Type", table: "Database"))
                             .padding(.top)
                     }
                 }
@@ -93,7 +93,7 @@ struct ItemDatabaseFilterView: View {
                             }
                         }
                     } header: {
-                        SectionHeaderView("Locations")
+                        SectionHeaderView(LocalizedStringResource("Locations", table: "Database"))
                             .padding(.top)
                     }
                 }

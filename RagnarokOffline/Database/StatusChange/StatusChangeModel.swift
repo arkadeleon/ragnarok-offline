@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import Foundation
 import Observation
 import RagnarokConstants
 import RagnarokDatabase
@@ -33,8 +34,8 @@ final class StatusChangeModel {
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: "Status", value: statusChange.status.stringValue))
-        attributes.append(.init(name: "Icon", value: statusChange.icon.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Status", table: "Database"), value: statusChange.status.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Icon", table: "Database"), value: statusChange.icon.stringValue))
 
         return attributes
     }

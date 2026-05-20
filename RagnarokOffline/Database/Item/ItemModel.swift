@@ -61,62 +61,62 @@ final class ItemModel {
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: "ID", value: "#\(item.id)"))
-        attributes.append(.init(name: "Aegis Name", value: item.aegisName))
-        attributes.append(.init(name: "Name", value: item.name))
-        attributes.append(.init(name: "Type", value: item.type.localizedName))
+        attributes.append(.init(name: LocalizedStringResource("ID", table: "Database"), value: "#\(item.id)"))
+        attributes.append(.init(name: LocalizedStringResource("Aegis Name", table: "Database"), value: item.aegisName))
+        attributes.append(.init(name: LocalizedStringResource("Name", table: "Database"), value: item.name))
+        attributes.append(.init(name: LocalizedStringResource("Type", table: "Database"), value: item.type.localizedName))
 
         switch item.subType {
         case .none:
             break
         case .weapon(let weaponType):
-            attributes.append(.init(name: "Weapon Type", value: weaponType.localizedName))
+            attributes.append(.init(name: LocalizedStringResource("Weapon Type", table: "Database"), value: weaponType.localizedName))
         case .ammo(let ammoType):
-            attributes.append(.init(name: "Ammo Type", value: ammoType.stringValue))
+            attributes.append(.init(name: LocalizedStringResource("Ammo Type", table: "Database"), value: ammoType.stringValue))
         case .card(let cardType):
-            attributes.append(.init(name: "Card Type", value: cardType.stringValue))
+            attributes.append(.init(name: LocalizedStringResource("Card Type", table: "Database"), value: cardType.stringValue))
         }
 
-        attributes.append(.init(name: "Buy", value: item.buy.formatted() + "z"))
-        attributes.append(.init(name: "Sell", value: item.sell.formatted() + "z"))
-        attributes.append(.init(name: "Weight", value: Double(item.weight) / 10))
+        attributes.append(.init(name: LocalizedStringResource("Buy", table: "Database"), value: item.buy.formatted() + "z"))
+        attributes.append(.init(name: LocalizedStringResource("Sell", table: "Database"), value: item.sell.formatted() + "z"))
+        attributes.append(.init(name: LocalizedStringResource("Weight", table: "Database"), value: Double(item.weight) / 10))
 
         switch item.type {
         case .weapon:
-            attributes.append(.init(name: "Attack", value: item.attack))
-            attributes.append(.init(name: "Magic Attack", value: item.magicAttack))
-            attributes.append(.init(name: "Attack Range", value: item.range))
-            attributes.append(.init(name: "Slots", value: item.slots))
+            attributes.append(.init(name: LocalizedStringResource("Attack", table: "Database"), value: item.attack))
+            attributes.append(.init(name: LocalizedStringResource("Magic Attack", table: "Database"), value: item.magicAttack))
+            attributes.append(.init(name: LocalizedStringResource("Attack Range", table: "Database"), value: item.range))
+            attributes.append(.init(name: LocalizedStringResource("Slots", table: "Database"), value: item.slots))
         case .armor:
-            attributes.append(.init(name: "Defense", value: item.defense))
-            attributes.append(.init(name: "Slots", value: item.slots))
+            attributes.append(.init(name: LocalizedStringResource("Defense", table: "Database"), value: item.defense))
+            attributes.append(.init(name: LocalizedStringResource("Slots", table: "Database"), value: item.slots))
         default:
             break
         }
 
         switch item.type {
         case .weapon, .armor:
-            attributes.append(.init(name: "Gender", value: item.gender.localizedName))
+            attributes.append(.init(name: LocalizedStringResource("Gender", table: "Database"), value: item.gender.localizedName))
         default:
             break
         }
 
         switch item.type {
         case .weapon:
-            attributes.append(.init(name: "Weapon Level", value: item.weaponLevel))
+            attributes.append(.init(name: LocalizedStringResource("Weapon Level", table: "Database"), value: item.weaponLevel))
         case .armor:
-            attributes.append(.init(name: "Armor Level", value: item.armorLevel))
+            attributes.append(.init(name: LocalizedStringResource("Armor Level", table: "Database"), value: item.armorLevel))
         default:
             break
         }
 
         switch item.type {
         case .weapon, .armor:
-            attributes.append(.init(name: "Minimum Level", value: item.equipLevelMin))
-            attributes.append(.init(name: "Maximum Level", value: item.equipLevelMax))
-            attributes.append(.init(name: "Refinable", value: item.refineable))
-            attributes.append(.init(name: "Gradable", value: item.gradable))
-            attributes.append(.init(name: "View", value: item.view))
+            attributes.append(.init(name: LocalizedStringResource("Minimum Level", table: "Database"), value: item.equipLevelMin))
+            attributes.append(.init(name: LocalizedStringResource("Maximum Level", table: "Database"), value: item.equipLevelMax))
+            attributes.append(.init(name: LocalizedStringResource("Refinable", table: "Database"), value: item.refineable))
+            attributes.append(.init(name: LocalizedStringResource("Gradable", table: "Database"), value: item.gradable))
+            attributes.append(.init(name: LocalizedStringResource("View", table: "Database"), value: item.view))
         default:
             break;
         }

@@ -28,12 +28,16 @@ struct JobDetailView: View {
             .frame(height: 200)
             .stretchy()
 
-            DatabaseRecordSectionView("Info", attributes: job.attributes)
+            DatabaseRecordSectionView(attributes: job.attributes) {
+                Text("Info", tableName: "Database")
+            }
 
-            DatabaseRecordSectionView("Base ASPD", attributes: job.baseASPD)
+            DatabaseRecordSectionView(attributes: job.baseASPD) {
+                Text("Base ASPD", tableName: "Database")
+            }
 
             if !skills.isEmpty {
-                DatabaseRecordSectionView("Skills") {
+                DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(skills) { skill in
                             NavigationLink(value: skill) {
@@ -41,6 +45,8 @@ struct JobDetailView: View {
                             }
                         }
                     }
+                } header: {
+                    Text("Skills", tableName: "Database")
                 }
             }
 
@@ -67,16 +73,16 @@ struct JobDetailView: View {
                 }
             } header: {
                 HStack {
-                    Text("Base Level")
+                    Text("Base Level", tableName: "Database")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("Base Exp")
+                    Text("Base Exp", tableName: "Database")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("Base HP")
+                    Text("Base HP", tableName: "Database")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("Base SP")
+                    Text("Base SP", tableName: "Database")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 }
             }
@@ -104,13 +110,13 @@ struct JobDetailView: View {
                 }
             } header: {
                 HStack {
-                    Text("Job Level")
+                    Text("Job Level", tableName: "Database")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("Job Exp")
+                    Text("Job Exp", tableName: "Database")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    Text("Bonus Stats")
+                    Text("Bonus Stats", tableName: "Database")
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
                     Text(verbatim: "")

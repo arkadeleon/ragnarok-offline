@@ -12,10 +12,14 @@ struct SkillDetailView: View {
 
     var body: some View {
         DatabaseRecordDetailView {
-            DatabaseRecordSectionView("Info", attributes: skill.attributes)
+            DatabaseRecordSectionView(attributes: skill.attributes) {
+                Text("Info", tableName: "Database")
+            }
 
             if let localizedDescription = skill.localizedDescription {
-                DatabaseRecordSectionView("Description", text: AttributedString(description: localizedDescription))
+                DatabaseRecordSectionView(text: AttributedString(description: localizedDescription)) {
+                    Text("Description", tableName: "Database")
+                }
             }
         }
         .navigationTitle(skill.displayName)

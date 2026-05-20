@@ -31,13 +31,19 @@ struct StatusChangeDatabaseView: View {
             .listStyle(.plain)
         }
         .background(.background)
-        .navigationTitle("Status Change Database")
+        .navigationTitle(Text("Status Change Database", tableName: "Database"))
         .adaptiveSearch(text: $searchText)
         .overlay {
             if database.statusChanges.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredStatusChanges.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "moon.zzz.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "moon.zzz.fill")
+                    }
+                }
             }
         }
         .task(id: "\(searchText)") {

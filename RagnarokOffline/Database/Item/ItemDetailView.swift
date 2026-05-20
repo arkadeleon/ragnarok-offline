@@ -31,34 +31,50 @@ struct ItemDetailView: View {
             .frame(height: 200)
             .stretchy()
 
-            DatabaseRecordSectionView("Info", attributes: item.attributes)
+            DatabaseRecordSectionView(attributes: item.attributes) {
+                Text("Info", tableName: "Database")
+            }
 
             if item.type == .weapon || item.type == .armor {
-                DatabaseRecordSectionView("Jobs", text: item.jobs)
+                DatabaseRecordSectionView(text: item.jobs) {
+                    Text("Jobs", tableName: "Database")
+                }
 
-                DatabaseRecordSectionView("Classes", text: item.classes)
+                DatabaseRecordSectionView(text: item.classes) {
+                    Text("Classes", tableName: "Database")
+                }
 
-                DatabaseRecordSectionView("Locations", text: item.displayLocations)
+                DatabaseRecordSectionView(text: item.displayLocations) {
+                    Text("Locations", tableName: "Database")
+                }
             }
 
             if let localizedDescription = item.localizedDescription {
-                DatabaseRecordSectionView("Description", text: AttributedString(description: localizedDescription))
+                DatabaseRecordSectionView(text: AttributedString(description: localizedDescription)) {
+                    Text("Description", tableName: "Database")
+                }
             }
 
             if let script = item.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                DatabaseRecordSectionView("Script", text: script, monospaced: true)
+                DatabaseRecordSectionView(text: script, monospaced: true) {
+                    Text("Script", tableName: "Database")
+                }
             }
 
             if let equipScript = item.equipScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                DatabaseRecordSectionView("Equip Script", text: equipScript, monospaced: true)
+                DatabaseRecordSectionView(text: equipScript, monospaced: true) {
+                    Text("Equip Script", tableName: "Database")
+                }
             }
 
             if let unEquipScript = item.unEquipScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                DatabaseRecordSectionView("Unequip Script", text: unEquipScript, monospaced: true)
+                DatabaseRecordSectionView(text: unEquipScript, monospaced: true) {
+                    Text("Unequip Script", tableName: "Database")
+                }
             }
 
             if !droppingMonsters.isEmpty {
-                DatabaseRecordSectionView("Dropped By") {
+                DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(droppingMonsters) { droppingMonster in
                             NavigationLink(value: droppingMonster.monster) {
@@ -72,6 +88,8 @@ struct ItemDetailView: View {
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
+                } header: {
+                    Text("Dropped By", tableName: "Database")
                 }
             }
         }

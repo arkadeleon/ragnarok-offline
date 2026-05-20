@@ -168,67 +168,7 @@
     "Actions" : {
 
     },
-    "Aegis Name" : {
-
-    },
-    "Agi" : {
-
-    },
-    "AI" : {
-
-    },
-    "Allow Auto Feed" : {
-
-    },
     "Altitude" : {
-
-    },
-    "Ammo Type" : {
-
-    },
-    "AP Factor" : {
-
-    },
-    "AP Increase" : {
-
-    },
-    "Armor Level" : {
-
-    },
-    "Attack" : {
-
-    },
-    "Attack Delay" : {
-
-    },
-    "Attack Motion" : {
-
-    },
-    "Attack Range" : {
-
-    },
-    "Attack Rate" : {
-
-    },
-    "Base ASPD" : {
-
-    },
-    "Base Attack" : {
-
-    },
-    "Base Exp" : {
-
-    },
-    "Base HP" : {
-
-    },
-    "Base Level" : {
-
-    },
-    "Base Magic Attack" : {
-
-    },
-    "Base SP" : {
 
     },
     "Beta Access Required" : {
@@ -312,12 +252,6 @@
           }
         }
       }
-    },
-    "Bonus Stats" : {
-
-    },
-    "Buy" : {
-
     },
     "Cached Files" : {
       "localizations" : {
@@ -483,15 +417,6 @@
         }
       }
     },
-    "Capture Rate" : {
-
-    },
-    "Card Type" : {
-
-    },
-    "Change Target Rate" : {
-
-    },
     "Character Simulator" : {
       "localizations" : {
         "de" : {
@@ -573,9 +498,6 @@
           }
         }
       }
-    },
-    "Chase Range" : {
-
     },
     "Chat Client" : {
       "localizations" : {
@@ -659,12 +581,6 @@
         }
       }
     },
-    "Class" : {
-
-    },
-    "Classes" : {
-
-    },
     "Client" : {
       "localizations" : {
         "de" : {
@@ -746,15 +662,6 @@
           }
         }
       }
-    },
-    "Client Attack Motion" : {
-
-    },
-    "Damage Motion" : {
-
-    },
-    "Damage Taken" : {
-
     },
     "Database" : {
       "localizations" : {
@@ -838,91 +745,6 @@
         }
       }
     },
-    "Default" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Standard"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Predeterminado"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Par défaut"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Default"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Predefinito"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "デフォルト"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "기본값"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Padrão"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "По умолчанию"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ค่าเริ่มต้น"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Varsayılan"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "默认"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "預設"
-          }
-        }
-      }
-    },
-    "Defense" : {
-
-    },
     "Delete" : {
       "localizations" : {
         "de" : {
@@ -1004,12 +826,6 @@
           }
         }
       }
-    },
-    "Description" : {
-
-    },
-    "Dex" : {
-
     },
     "Done" : {
       "localizations" : {
@@ -1093,31 +909,7 @@
         }
       }
     },
-    "Dropped By" : {
-
-    },
-    "Drops" : {
-
-    },
     "Effect" : {
-
-    },
-    "Element" : {
-
-    },
-    "Element Level" : {
-
-    },
-    "End on End" : {
-
-    },
-    "End on Start" : {
-
-    },
-    "End Return" : {
-
-    },
-    "Equip Script" : {
 
     },
     "Extract" : {
@@ -1201,15 +993,6 @@
           }
         }
       }
-    },
-    "Fail" : {
-
-    },
-    "Filter" : {
-
-    },
-    "Fullness" : {
-
     },
     "Game" : {
 
@@ -1378,73 +1161,13 @@
         }
       }
     },
-    "Gender" : {
-
-    },
-    "Gradable" : {
-
-    },
     "Ground" : {
-
-    },
-    "HP" : {
-
-    },
-    "HP Factor" : {
-
-    },
-    "HP Increase" : {
-
-    },
-    "Hunger Increase" : {
-
-    },
-    "Hungry Delay" : {
-
-    },
-    "Icon" : {
-
-    },
-    "ID" : {
-
-    },
-    "Info" : {
-
-    },
-    "Int" : {
-
-    },
-    "Intimacy Fed" : {
-
-    },
-    "Intimacy Hungry" : {
-
-    },
-    "Intimacy Overfed" : {
-
-    },
-    "Intimacy OwnerDie" : {
-
-    },
-    "Intimacy Start" : {
 
     },
     "Item Database" : {
 
     },
-    "Items" : {
-
-    },
     "Job Database" : {
-
-    },
-    "Job Exp" : {
-
-    },
-    "Job Level" : {
-
-    },
-    "Jobs" : {
 
     },
     "Join Beta" : {
@@ -1529,9 +1252,6 @@
         }
       }
     },
-    "Level" : {
-
-    },
     "Local Files" : {
       "localizations" : {
         "de" : {
@@ -1613,21 +1333,6 @@
           }
         }
       }
-    },
-    "Locations" : {
-
-    },
-    "Luk" : {
-
-    },
-    "Magic Attack" : {
-
-    },
-    "Magic Defense" : {
-
-    },
-    "Magic Resistance" : {
-
     },
     "Make sure all the servers are running before starting the game client." : {
       "localizations" : {
@@ -1878,55 +1583,16 @@
         }
       }
     },
-    "Maps" : {
-
-    },
-    "Max Weight" : {
-
-    },
-    "Maximum Attack" : {
-
-    },
-    "Maximum Level" : {
-
-    },
     "Message" : {
 
     },
-    "Minimum Attack" : {
-
-    },
-    "Minimum Level" : {
-
-    },
     "Model" : {
-
-    },
-    "Modes" : {
-
-    },
-    "Monster" : {
 
     },
     "Monster Database" : {
 
     },
     "Monster Summon Database" : {
-
-    },
-    "Monsters" : {
-
-    },
-    "MVP Drops" : {
-
-    },
-    "MVP Exp" : {
-
-    },
-    "Name" : {
-
-    },
-    "No" : {
 
     },
     "No Files" : {
@@ -2011,104 +1677,13 @@
         }
       }
     },
-    "No Results" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Ergebnisse"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin resultados"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aucun résultat"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tidak ada hasil"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun risultato"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "結果なし"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "결과 없음"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nenhum resultado"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Нет результатов"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ไม่พบผลลัพธ์"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sonuç yok"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有结果"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "沒有結果"
-          }
-        }
-      }
-    },
     "Pet Database" : {
-
-    },
-    "Race" : {
-
-    },
-    "Race Groups" : {
 
     },
     "Ragnarok Offline" : {
 
     },
     "References" : {
-
-    },
-    "Refinable" : {
 
     },
     "Remote Client" : {
@@ -2276,18 +1851,6 @@
       }
     },
     "Reset" : {
-
-    },
-    "Resistance" : {
-
-    },
-    "Retaliate Rate" : {
-
-    },
-    "Script" : {
-
-    },
-    "Sell" : {
 
     },
     "Send" : {
@@ -2627,13 +2190,7 @@
         }
       }
     },
-    "Size" : {
-
-    },
     "Skill Database" : {
-
-    },
-    "Skill Range" : {
 
     },
     "Skill Simulator" : {
@@ -2717,24 +2274,6 @@
           }
         }
       }
-    },
-    "Skills" : {
-
-    },
-    "Slots" : {
-
-    },
-    "SP" : {
-
-    },
-    "SP Factor" : {
-
-    },
-    "SP Increase" : {
-
-    },
-    "Special Performance" : {
-
     },
     "Sprites" : {
 
@@ -2823,24 +2362,6 @@
           }
         }
       }
-    },
-    "Status" : {
-
-    },
-    "Status Change Database" : {
-
-    },
-    "Str" : {
-
-    },
-    "Summon" : {
-
-    },
-    "Support Script" : {
-
-    },
-    "Target Type" : {
-
     },
     "The **Game Client** allows you to explore and walk through the game world." : {
       "localizations" : {
@@ -3091,12 +2612,6 @@
     "Tree" : {
 
     },
-    "Type" : {
-
-    },
-    "Unequip Script" : {
-
-    },
     "Unsupported File" : {
 
     },
@@ -3182,31 +2697,10 @@
         }
       }
     },
-    "View" : {
-
-    },
     "View Mode" : {
 
     },
-    "Vit" : {
-
-    },
-    "Walk Speed" : {
-
-    },
-    "Weapon Level" : {
-
-    },
-    "Weapon Type" : {
-
-    },
-    "Weight" : {
-
-    },
     "World" : {
-
-    },
-    "Yes" : {
 
     }
   },

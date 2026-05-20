@@ -28,38 +28,25 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
         self.header = header
     }
 
-    init(_ titleKey: LocalizedStringKey, @ViewBuilder content: @escaping () -> Content) where Header == Text {
-        self.content = content
-        self.header = {
-            Text(titleKey)
-        }
-    }
-
-    init(_ titleKey: LocalizedStringKey, text: String, monospaced: Bool = false) where Content == DatabaseRecordSectionTextContent, Header == Text {
+    init(text: String, monospaced: Bool = false, @ViewBuilder header: @escaping () -> Header) where Content == DatabaseRecordSectionTextContent {
         self.content = {
             DatabaseRecordSectionTextContent(text: text, monospaced: monospaced)
         }
-        self.header = {
-            Text(titleKey)
-        }
+        self.header = header
     }
 
-    init(_ titleKey: LocalizedStringKey, text: AttributedString) where Content == DatabaseRecordSectionTextContent, Header == Text {
+    init(text: AttributedString, @ViewBuilder header: @escaping () -> Header) where Content == DatabaseRecordSectionTextContent {
         self.content = {
             DatabaseRecordSectionTextContent(text: text)
         }
-        self.header = {
-            Text(titleKey)
-        }
+        self.header = header
     }
 
-    init(_ titleKey: LocalizedStringKey, attributes: [DatabaseRecordAttribute]) where Content == DatabaseRecordSectionAttributesContent, Header == Text {
+    init(attributes: [DatabaseRecordAttribute], @ViewBuilder header: @escaping () -> Header) where Content == DatabaseRecordSectionAttributesContent {
         self.content = {
             DatabaseRecordSectionAttributesContent(attributes: attributes)
         }
-        self.header = {
-            Text(titleKey)
-        }
+        self.header = header
     }
 }
 
@@ -100,7 +87,7 @@ struct DatabaseRecordSectionAttributesContent: View {
 }
 
 #Preview {
-    DatabaseRecordSectionView("Info") {
+    DatabaseRecordSectionView {
         Grid {
             GridRow {
                 LabeledContent("ID", value: "#1002")
@@ -111,16 +98,20 @@ struct DatabaseRecordSectionAttributesContent: View {
                 LabeledContent("HP", value: "55")
             }
         }
+    } header: {
+        Text("Info")
     }
     .padding()
 }
 
 #Preview {
-    DatabaseRecordSectionView("Info", attributes: [
+    DatabaseRecordSectionView(attributes: [
         DatabaseRecordAttribute(name: "ID", value: "#1002"),
         DatabaseRecordAttribute(name: "Name", value: "Poring"),
         DatabaseRecordAttribute(name: "Level", value: 1),
         DatabaseRecordAttribute(name: "HP", value: 55),
-    ])
+    ]) {
+        Text("Info")
+    }
     .padding()
 }

@@ -42,13 +42,19 @@ struct SkillDatabaseView: View {
             .listStyle(.plain)
         }
         .background(.background)
-        .navigationTitle("Skill Database")
+        .navigationTitle(Text("Skill Database", tableName: "Database"))
         .adaptiveSearch(text: $searchText)
         .overlay {
             if database.skills.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredSkills.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "arrow.up.heart.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "arrow.up.heart.fill")
+                    }
+                }
             }
         }
         .task(id: "\(searchText)") {

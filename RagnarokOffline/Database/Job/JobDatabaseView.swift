@@ -21,13 +21,19 @@ struct JobDatabaseView: View {
             }
         }
         .background(.background)
-        .navigationTitle("Job Database")
+        .navigationTitle(Text("Job Database", tableName: "Database"))
         .adaptiveSearch(text: $searchText)
         .overlay {
             if database.jobs.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredJobs.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "person.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "person.fill")
+                    }
+                }
             }
         }
         .task(id: "\(searchText)") {

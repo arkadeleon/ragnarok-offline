@@ -31,7 +31,7 @@ struct MonsterDatabaseFilterView: View {
                         }
                     }
                 } header: {
-                    SectionHeaderView("Size")
+                    SectionHeaderView(LocalizedStringResource("Size", table: "Database"))
                 }
 
                 Section {
@@ -43,7 +43,7 @@ struct MonsterDatabaseFilterView: View {
                         }
                     }
                 } header: {
-                    SectionHeaderView("Race")
+                    SectionHeaderView(LocalizedStringResource("Race", table: "Database"))
                         .padding(.top)
                 }
 
@@ -56,7 +56,7 @@ struct MonsterDatabaseFilterView: View {
                         }
                     }
                 } header: {
-                    SectionHeaderView("Element")
+                    SectionHeaderView(LocalizedStringResource("Element", table: "Database"))
                         .padding(.top)
                 }
             }

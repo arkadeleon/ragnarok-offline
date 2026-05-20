@@ -16,7 +16,7 @@ struct PetDetailView: View {
     var body: some View {
         DatabaseRecordDetailView {
             if let monster = pet.monster {
-                DatabaseRecordSectionView("Monster") {
+                DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         NavigationLink(value: monster) {
                             ImageGridCell(title: monster.displayName) {
@@ -25,42 +25,52 @@ struct PetDetailView: View {
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
+                } header: {
+                    Text("Monster", tableName: "Database")
                 }
             }
 
-            DatabaseRecordSectionView("Items") {
+            DatabaseRecordSectionView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                     if let tameItem = pet.tameItem {
                         NavigationLink(value: tameItem) {
-                            ItemCell(item: tameItem, secondaryText: "(Tame Item)")
+                            ItemCell(item: tameItem, secondaryText: String(localized: LocalizedStringResource("(Tame Item)", table: "Database")))
                         }
                     }
                     if let eggItem = pet.eggItem {
                         NavigationLink(value: eggItem) {
-                            ItemCell(item: eggItem, secondaryText: "(Egg Item)")
+                            ItemCell(item: eggItem, secondaryText: String(localized: LocalizedStringResource("(Egg Item)", table: "Database")))
                         }
                     }
                     if let equipItem = pet.equipItem {
                         NavigationLink(value: equipItem) {
-                            ItemCell(item: equipItem, secondaryText: "(Equip Item)")
+                            ItemCell(item: equipItem, secondaryText: String(localized: LocalizedStringResource("(Equip Item)", table: "Database")))
                         }
                     }
                     if let foodItem = pet.foodItem {
                         NavigationLink(value: foodItem) {
-                            ItemCell(item: foodItem, secondaryText: "(Food Item)")
+                            ItemCell(item: foodItem, secondaryText: String(localized: LocalizedStringResource("(Food Item)", table: "Database")))
                         }
                     }
                 }
+            } header: {
+                Text("Items", tableName: "Database")
             }
 
-            DatabaseRecordSectionView("Info", attributes: pet.attributes)
+            DatabaseRecordSectionView(attributes: pet.attributes) {
+                Text("Info", tableName: "Database")
+            }
 
             if let script = pet.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                DatabaseRecordSectionView("Script", text: script, monospaced: true)
+                DatabaseRecordSectionView(text: script, monospaced: true) {
+                    Text("Script", tableName: "Database")
+                }
             }
 
             if let supportScript = pet.supportScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                DatabaseRecordSectionView("Support Script", text: supportScript, monospaced: true)
+                DatabaseRecordSectionView(text: supportScript, monospaced: true) {
+                    Text("Support Script", tableName: "Database")
+                }
             }
         }
         .navigationTitle(pet.displayName)

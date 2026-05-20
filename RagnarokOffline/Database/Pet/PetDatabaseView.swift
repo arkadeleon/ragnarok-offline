@@ -25,13 +25,19 @@ struct PetDatabaseView: View {
             }
         }
         .background(.background)
-        .navigationTitle("Pet Database")
+        .navigationTitle(Text("Pet Database", tableName: "Database"))
         .adaptiveSearch(text: $searchText)
         .overlay {
             if database.pets.isEmpty {
                 ProgressView()
             } else if !searchText.isEmpty && filteredPets.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "pawprint.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "pawprint.fill")
+                    }
+                }
             }
         }
         .task(id: "\(searchText)") {

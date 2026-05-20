@@ -22,9 +22,9 @@ struct SectionHeaderView<Content>: View where Content: View {
         self.content = content
     }
 
-    init(_ titleKey: LocalizedStringResource) where Content == Text {
+    init(_ titleResource: LocalizedStringResource) where Content == Text {
         content = {
-            Text(titleKey)
+            Text(titleResource)
         }
     }
 }
