@@ -61,7 +61,7 @@ struct MapPicker: View {
             }
         }
         .listStyle(.plain)
-        .navigationTitle("Map")
+        .navigationTitle(Text("Map", tableName: "MapViewer"))
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarDoneButton {
@@ -73,7 +73,13 @@ struct MapPicker: View {
             if maps.isEmpty {
                 ProgressView()
             } else if filteredMaps.isEmpty {
-                ContentUnavailableView("No Results", systemImage: "map.fill")
+                ContentUnavailableView {
+                    Label {
+                        Text("No Results", tableName: "MapViewer")
+                    } icon: {
+                        Image(systemName: "map.fill")
+                    }
+                }
             }
         }
         .task(id: searchText) {

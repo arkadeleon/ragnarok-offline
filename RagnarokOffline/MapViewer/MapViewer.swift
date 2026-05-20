@@ -66,13 +66,17 @@ struct MapViewer: View {
                 .id(selectedMap.name)
             } else {
                 ContentUnavailableView {
-                    Label("No Map Selected", systemImage: "map")
+                    Label {
+                        Text("No Map Selected", tableName: "MapViewer")
+                    } icon: {
+                        Image(systemName: "map")
+                    }
                 } description: {
-                    Text("Choose a map to view")
+                    Text("Choose a map to view", tableName: "MapViewer")
                 }
             }
         }
-        .navigationTitle("Map Viewer")
+        .navigationTitle(Text("Map Viewer", tableName: "MapViewer"))
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem {
