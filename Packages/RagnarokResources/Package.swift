@@ -27,6 +27,9 @@ let package = Package(
                 "GRF",
                 "RagnarokCore",
                 .product(name: "RagnarokLua", package: "ragnarok-lua"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(

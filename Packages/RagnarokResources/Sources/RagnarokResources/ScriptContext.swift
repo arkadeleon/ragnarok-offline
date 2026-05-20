@@ -16,11 +16,6 @@ final public class ScriptContext: Sendable {
         self.contextQueue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.script-context")
     }
 
-    public func identifiedItemResourceName(forItemID itemID: Int) -> String? {
-        let result = call("identifiedItemResourceName", with: [itemID], to: String.self)
-        return result
-    }
-
     public func accessoryName(forAccessoryID accessoryID: Int) -> String? {
         let result = call("ReqAccName", with: [accessoryID], to: String.self)
         return result
@@ -114,8 +109,6 @@ actor ScriptContextLoader {
     private func load(using resourceManager: ResourceManager) async -> ScriptContext {
         let context = LuaContext()
 
-        async let itemInfo = resourceManager.itemInfoScript()
-
         async let accessoryid = resourceManager.script(at: ["datainfo", "accessoryid"])
         async let accname = resourceManager.script(at: ["datainfo", "accname"])
         async let accname_f = resourceManager.script(at: ["datainfo", "accname_f"])
@@ -155,8 +148,6 @@ actor ScriptContextLoader {
         async let offsetitempos_f = resourceManager.script(at: ["offsetitempos", "offsetitempos_f"])
         async let offsetitempos = resourceManager.script(at: ["offsetitempos", "offsetitempos"])
 
-        await loadScript(itemInfo, in: context)
-
         await loadScript(accessoryid, in: context)
         await loadScript(accname, in: context)
         await loadScript(accname_f, in: context)
@@ -195,22 +186,6 @@ actor ScriptContextLoader {
 
         await loadScript(offsetitempos_f, in: context)
         await loadScript(offsetitempos, in: context)
-
-        do {
-            try context.parse("""
-            function unidentifiedItemResourceName(itemID)
-                return tbl[itemID]["unidentifiedResourceName"]
-            end
-            function identifiedItemResourceName(itemID)
-                return tbl[itemID]["identifiedResourceName"]
-            end
-            function itemSlotCount(itemID)
-                return tbl[itemID]["slotCount"]
-            end
-            """)
-        } catch {
-            logger.warning("\(error)")
-        }
 
         do {
             try context.parse("""
@@ -272,17 +247,6 @@ actor ScriptContextLoader {
 }
 
 extension ResourceManager {
-    fileprivate func itemInfoScript() async -> Data? {
-        do {
-            let path = ResourcePath(components: ["System", "itemInfo.lub"])
-            let data = try await contentsOfResource(at: path)
-            return data
-        } catch {
-            logger.warning("\(error)")
-            return nil
-        }
-    }
-
     fileprivate func script(at path: ResourcePath) async -> Data? {
         do {
             let path = ResourcePath.scriptDirectory.appending(path: path).appendingPathExtension("lub")

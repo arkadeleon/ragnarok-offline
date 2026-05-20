@@ -43,8 +43,8 @@ extension ResourceManager {
 
 extension ResourceManager {
     public func itemIconImage(forItemID itemID: Int) async throws -> Resources.Image {
-        let scriptContext = await scriptContext
-        guard let itemResourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
+        let itemCommonInfoTable = await itemCommonInfoTable()
+        guard let itemResourceName = itemCommonInfoTable.identifiedItemResourceName(forItemID: itemID) else {
             throw ResourceError.scriptContextIncomplete("identifiedItemResourceName")
         }
         let path = ResourcePath.generateItemIconImagePath(itemResourceName: itemResourceName)
@@ -53,8 +53,8 @@ extension ResourceManager {
     }
 
     public func itemPreviewImage(forItemID itemID: Int) async throws -> Resources.Image {
-        let scriptContext = await scriptContext
-        guard let itemResourceName = scriptContext.identifiedItemResourceName(forItemID: itemID) else {
+        let itemCommonInfoTable = await itemCommonInfoTable()
+        guard let itemResourceName = itemCommonInfoTable.identifiedItemResourceName(forItemID: itemID) else {
             throw ResourceError.scriptContextIncomplete("identifiedItemResourceName")
         }
         let path = ResourcePath.generateItemPreviewImagePath(itemResourceName: itemResourceName)

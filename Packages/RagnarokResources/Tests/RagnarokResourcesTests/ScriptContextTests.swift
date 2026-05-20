@@ -18,11 +18,6 @@ final class ScriptContextTests: XCTestCase {
         }
     }
 
-    func testItemResourceName() async throws {
-        let redPotion = await scriptContext.identifiedItemResourceName(forItemID: 501)
-        XCTAssertEqual(redPotion, K2L("빨간포션"))
-    }
-
     func testAccessoryName() async throws {
         let goggles = await scriptContext.accessoryName(forAccessoryID: 1)
         XCTAssertEqual(goggles, K2L("_고글"))

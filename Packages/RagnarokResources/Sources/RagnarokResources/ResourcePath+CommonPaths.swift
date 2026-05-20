@@ -18,20 +18,24 @@ extension ResourcePath {
 }
 
 extension ResourcePath {
+
+    /// - Parameter itemResourceName: The original Korean item resource name.
     public static func generateItemSpritePath(itemResourceName: String) -> ResourcePath {
-        ResourcePath.spriteDirectory.appending([K2L("아이템"), "\(itemResourceName)"])
+        ResourcePath.spriteDirectory.appending([K2L("아이템"), "\(K2L(itemResourceName))"])
     }
 
     public static func generateSkillSpritePath(skillAegisName: String) -> ResourcePath {
         ResourcePath.spriteDirectory.appending([K2L("아이템"), "\(skillAegisName)"])
     }
 
+    /// - Parameter itemResourceName: The original Korean item resource name.
     public static func generateItemIconImagePath(itemResourceName: String) -> ResourcePath {
-        ResourcePath.userInterfaceDirectory.appending(["item", "\(itemResourceName).bmp"])
+        ResourcePath.userInterfaceDirectory.appending(["item", "\(K2L(itemResourceName)).bmp"])
     }
 
+    /// - Parameter itemResourceName: The original Korean item resource name.
     public static func generateItemPreviewImagePath(itemResourceName: String) -> ResourcePath {
-        ResourcePath.userInterfaceDirectory.appending(["collection", "\(itemResourceName).bmp"])
+        ResourcePath.userInterfaceDirectory.appending(["collection", "\(K2L(itemResourceName)).bmp"])
     }
 
     public static func generateSkillIconImagePath(skillAegisName: String) -> ResourcePath {
