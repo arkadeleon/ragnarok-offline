@@ -35,7 +35,7 @@ struct CharacterSimulatorView: View {
             .background(.background)
             .toolbarTitleDisplayMode(.automatic)
         }
-        .navigationTitle("Character Simulator")
+        .navigationTitle(Text("Character Simulator", tableName: "CharacterSimulator"))
         .task {
             await characterSimulator.renderSprite()
         }

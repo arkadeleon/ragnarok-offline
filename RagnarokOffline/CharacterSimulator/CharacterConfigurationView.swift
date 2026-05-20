@@ -19,40 +19,50 @@ struct CharacterConfigurationView: View {
 
         Form {
             Section {
-                Picker("Job", selection: $characterSimulator.configuration.jobID) {
+                Picker(selection: $characterSimulator.configuration.jobID) {
                     ForEach(JobID.allCases, id: \.rawValue) { jobID in
                         Text(jobID.stringValue).tag(jobID)
                     }
+                } label: {
+                    Text("Job", tableName: "CharacterSimulator")
                 }
 
-                Picker("Gender", selection: $characterSimulator.configuration.gender) {
+                Picker(selection: $characterSimulator.configuration.gender) {
                     Text(Gender.female.localizedName).tag(Gender.female)
                     Text(Gender.male.localizedName).tag(Gender.male)
+                } label: {
+                    Text("Gender", tableName: "CharacterSimulator")
                 }
 
-                Picker("Hair Style", selection: $characterSimulator.configuration.hairStyle) {
+                Picker(selection: $characterSimulator.configuration.hairStyle) {
                     // 1...42
                     ForEach(1..<43) { hairStyle in
                         Text(hairStyle.formatted()).tag(hairStyle)
                     }
+                } label: {
+                    Text("Hair Style", tableName: "CharacterSimulator")
                 }
 
-                Picker("Hair Color", selection: $characterSimulator.configuration.hairColor) {
-                    Text("Default").tag(-1)
+                Picker(selection: $characterSimulator.configuration.hairColor) {
+                    Text("Default", tableName: "CharacterSimulator").tag(-1)
 
                     // 0...8
                     ForEach(0..<9) { hairColor in
                         Text(hairColor.formatted()).tag(hairColor)
                     }
+                } label: {
+                    Text("Hair Color", tableName: "CharacterSimulator")
                 }
 
-                Picker("Clothes Color", selection: $characterSimulator.configuration.clothesColor) {
-                    Text("Default").tag(-1)
+                Picker(selection: $characterSimulator.configuration.clothesColor) {
+                    Text("Default", tableName: "CharacterSimulator").tag(-1)
 
                     // 0...7
                     ForEach(0..<8) { clothesColor in
                         Text(clothesColor.formatted()).tag(clothesColor)
                     }
+                } label: {
+                    Text("Clothes Color", tableName: "CharacterSimulator")
                 }
             }
 
@@ -66,7 +76,7 @@ struct CharacterConfigurationView: View {
                 }
 
                 Picker(selection: $characterSimulator.configuration.shield) {
-                    Text("None").tag(0)
+                    Text("None", tableName: "CharacterSimulator").tag(0)
 
                     // 1...4
                     ForEach(1..<5) { shield in
@@ -77,7 +87,7 @@ struct CharacterConfigurationView: View {
                 }
 
                 CharacterEquipmentPicker(
-                    "Head Top",
+                    LocalizedStringResource("Head Top", table: "CharacterSimulator"),
                     predicate: { item in
                         item.type == .armor && item.locations.contains(.head_top)
                     },
@@ -85,7 +95,7 @@ struct CharacterConfigurationView: View {
                 )
 
                 CharacterEquipmentPicker(
-                    "Head Mid",
+                    LocalizedStringResource("Head Mid", table: "CharacterSimulator"),
                     predicate: { item in
                         item.type == .armor && item.locations.contains(.head_mid)
                     },
@@ -93,7 +103,7 @@ struct CharacterConfigurationView: View {
                 )
 
                 CharacterEquipmentPicker(
-                    "Head Bottom",
+                    LocalizedStringResource("Head Bottom", table: "CharacterSimulator"),
                     predicate: { item in
                         item.type == .armor && item.locations.contains(.head_low)
                     },
@@ -101,7 +111,7 @@ struct CharacterConfigurationView: View {
                 )
 
                 CharacterEquipmentPicker(
-                    "Garment",
+                    LocalizedStringResource("Garment", table: "CharacterSimulator"),
                     predicate: { item in
                         item.type == .armor && item.locations.contains(.garment) && item.view > 0
                     },
@@ -110,16 +120,20 @@ struct CharacterConfigurationView: View {
             }
 
             Section {
-                Picker("Action", selection: $characterSimulator.configuration.actionType) {
+                Picker(selection: $characterSimulator.configuration.actionType) {
                     ForEach(SpriteActionType.availableActionTypes(forJobID: characterSimulator.configuration.jobID.rawValue), id: \.rawValue) { actionType in
                         Text(actionType.description).tag(actionType)
                     }
+                } label: {
+                    Text("Action", tableName: "CharacterSimulator")
                 }
 
-                Picker("Head Direction", selection: $characterSimulator.configuration.headDirection) {
+                Picker(selection: $characterSimulator.configuration.headDirection) {
                     ForEach(SpriteHeadDirection.allCases, id: \.rawValue) { headDirection in
                         Text(headDirection.description).tag(headDirection)
                     }
+                } label: {
+                    Text("Head Direction", tableName: "CharacterSimulator")
                 }
             }
         }

@@ -165,9 +165,6 @@
         }
       }
     },
-    "Action" : {
-
-    },
     "Actions" : {
 
     },
@@ -835,9 +832,6 @@
     "Client Attack Motion" : {
 
     },
-    "Clothes Color" : {
-
-    },
     "Damage Motion" : {
 
     },
@@ -1466,9 +1460,6 @@
         }
       }
     },
-    "Garment" : {
-
-    },
     "Gender" : {
 
     },
@@ -1476,24 +1467,6 @@
 
     },
     "Ground" : {
-
-    },
-    "Hair Color" : {
-
-    },
-    "Hair Style" : {
-
-    },
-    "Head Bottom" : {
-
-    },
-    "Head Direction" : {
-
-    },
-    "Head Mid" : {
-
-    },
-    "Head Top" : {
 
     },
     "HP" : {
@@ -1542,9 +1515,6 @@
 
     },
     "Items" : {
-
-    },
-    "Job" : {
 
     },
     "Job Database" : {
@@ -2283,88 +2253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "沒有結果"
-          }
-        }
-      }
-    },
-    "None" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ninguno"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aucun"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tidak ada"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessuno"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "なし"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "없음"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nenhum"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Нет"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ไม่มี"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yok"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "無"
           }
         }
       }

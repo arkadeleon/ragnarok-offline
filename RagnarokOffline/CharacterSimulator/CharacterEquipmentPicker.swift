@@ -9,7 +9,7 @@ import RagnarokResources
 import SwiftUI
 
 struct CharacterEquipmentPicker: View {
-    var titleKey: LocalizedStringKey
+    var titleResource: LocalizedStringResource
     var predicate: (ItemModel) -> Bool
     @Binding var selection: ItemModel?
 
@@ -23,18 +23,20 @@ struct CharacterEquipmentPicker: View {
     @State private var filteredItems: [ItemModel] = []
 
     var body: some View {
-        LabeledContent(titleKey) {
+        LabeledContent {
             Button {
                 isPicking = true
             } label: {
                 if let selection {
                     Text(selection.displayName)
                 } else {
-                    Text("None")
+                    Text("None", tableName: "CharacterSimulator")
                 }
             }
             .buttonStyle(.bordered)
             .matchedTransitionSource(id: "equipment", in: equipmentNamespace)
+        } label: {
+            Text(titleResource)
         }
         .sheet(isPresented: $isPicking) {
             NavigationStack {
@@ -52,7 +54,7 @@ struct CharacterEquipmentPicker: View {
                 isPicking = false
             } label: {
                 HStack {
-                    Text("None")
+                    Text("None", tableName: "CharacterSimulator")
                         .foregroundStyle(Color.primary)
 
                     Spacer()
@@ -81,7 +83,7 @@ struct CharacterEquipmentPicker: View {
             }
         }
         .listStyle(.plain)
-        .navigationTitle(titleKey)
+        .navigationTitle(titleResource)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarDoneButton {
@@ -104,8 +106,8 @@ struct CharacterEquipmentPicker: View {
         }
     }
 
-    init(_ titleKey: LocalizedStringKey, predicate: @escaping (ItemModel) -> Bool, selection: Binding<ItemModel?>) {
-        self.titleKey = titleKey
+    init(_ titleResource: LocalizedStringResource, predicate: @escaping (ItemModel) -> Bool, selection: Binding<ItemModel?>) {
+        self.titleResource = titleResource
         self.predicate = predicate
         _selection = selection
     }
