@@ -25,9 +25,8 @@ Tekan **Win + R**, ketik `cmd`, tekan Enter, lalu ketik `ipconfig`. Catat **IPv4
 
 Salin item berikut ke **On My iPhone/iPad → Ragnarok Offline** (tekan lama setiap item → **Copy**, navigasi ke tujuan → **Paste**):
 
-- **data.grf** (dari folder root kRO)
-- Folder **BGM** (dari folder root kRO)
-- Folder **System** (dari folder root kRO)
+- **data.grf**
+- Folder **BGM**
 
 ---
 

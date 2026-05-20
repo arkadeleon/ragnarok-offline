@@ -25,9 +25,8 @@
 
 Die folgenden Elemente in **Auf meinem iPhone/iPad → Ragnarok Offline** kopieren (lange drücken → **Kopieren**, zum Ziel navigieren → **Einsetzen**):
 
-- **data.grf** (aus dem kRO-Stammordner)
-- **BGM**-Ordner (aus dem kRO-Stammordner)
-- **System**-Ordner (aus dem kRO-Stammordner)
+- **data.grf**
+- **BGM**-Ordner
 
 ---
 

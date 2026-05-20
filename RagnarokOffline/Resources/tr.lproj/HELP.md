@@ -25,9 +25,8 @@
 
 Aşağıdaki öğeleri **iPhone/iPad'imde → Ragnarok Offline**'a kopyala (her öğeye uzun bas → **Kopyala**, hedefe git → **Yapıştır**):
 
-- **data.grf** (kRO kök klasöründen)
-- **BGM** klasörü (kRO kök klasöründen)
-- **System** klasörü (kRO kök klasöründen)
+- **data.grf**
+- **BGM** klasörü
 
 ---
 

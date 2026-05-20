@@ -25,9 +25,8 @@
 
 將以下內容複製到**我的 iPhone/iPad → Ragnarok Offline**（長按每個項目 → **拷貝**，導航到目標位置 → **貼上**）：
 
-- **data.grf**（來自 kRO 根目錄）
-- **BGM** 資料夾（來自 kRO 根目錄）
-- **System** 資料夾（來自 kRO 根目錄）
+- **data.grf**
+- **BGM** 資料夾
 
 ---
 

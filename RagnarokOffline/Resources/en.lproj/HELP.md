@@ -25,9 +25,8 @@ Press **Win + R**, type `cmd`, press Enter, then type `ipconfig`. Note the **IPv
 
 Copy the following to **On My iPhone/iPad → Ragnarok Offline** (long-press each item → **Copy**, navigate to destination → **Paste**):
 
-- **data.grf** (from the kRO root folder)
-- **BGM** folder (from the kRO root folder)
-- **System** folder (from the kRO root folder)
+- **data.grf**
+- **BGM** folder
 
 ---
 

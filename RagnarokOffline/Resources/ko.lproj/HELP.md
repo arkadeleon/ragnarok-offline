@@ -25,9 +25,8 @@
 
 다음 항목을 **내 iPhone/iPad → Ragnarok Offline**으로 복사한다 (각 항목을 길게 누르기 → **복사**, 목적지로 이동 → **붙여넣기**):
 
-- **data.grf** (kRO 루트 폴더에서)
-- **BGM** 폴더 (kRO 루트 폴더에서)
-- **System** 폴더 (kRO 루트 폴더에서)
+- **data.grf**
+- **BGM** 폴더
 
 ---
 

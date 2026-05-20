@@ -25,9 +25,8 @@ Premi **Win + R**, digita `cmd`, premi Invio, quindi digita `ipconfig`. Annota l
 
 Copia i seguenti elementi in **Su iPhone/iPad → Ragnarok Offline** (tieni premuto ogni elemento → **Copia**, vai alla destinazione → **Incolla**):
 
-- **data.grf** (dalla cartella radice kRO)
-- Cartella **BGM** (dalla cartella radice kRO)
-- Cartella **System** (dalla cartella radice kRO)
+- **data.grf**
+- Cartella **BGM**
 
 ---
 
