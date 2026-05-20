@@ -6,7 +6,10 @@
 //
 
 import Combine
-import rAthenaCommon
+import rAthenaChar
+import rAthenaLogin
+import rAthenaMap
+import rAthenaWeb
 
 @MainActor
 @Observable
@@ -90,6 +93,23 @@ final class ServerModel {
             return result
         case .clear:
             return []
+        }
+    }
+}
+
+extension ServerModel {
+    var nameResource: LocalizedStringResource {
+        switch server {
+        case is LoginServer:
+            LocalizedStringResource("Login Server", table: "Server")
+        case is CharServer:
+            LocalizedStringResource("Char Server", table: "Server")
+        case is MapServer:
+            LocalizedStringResource("Map Server", table: "Server")
+        case is WebServer:
+            LocalizedStringResource("Web Server", table: "Server")
+        default:
+            LocalizedStringResource("Server", table: "Server")
         }
     }
 }

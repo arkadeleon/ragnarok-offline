@@ -14,7 +14,7 @@ struct SidebarServerRow: View {
     var body: some View {
         HStack {
             Label {
-                Text(server.name)
+                Text(server.nameResource)
             } icon: {
                 SidebarIcon(name: "server.rack", color: .gray)
             }

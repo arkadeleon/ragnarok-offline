@@ -61,7 +61,7 @@ struct ServerView: View {
             }
         }
         .background(.background)
-        .navigationTitle(server.name)
+        .navigationTitle(server.nameResource)
         .toolbar {
             ToolbarItemGroup {
                 Button {
