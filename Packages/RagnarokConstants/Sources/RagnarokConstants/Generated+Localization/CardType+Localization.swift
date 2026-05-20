@@ -1,12 +1,11 @@
 //
 //  CardType+Localization.swift
-//  RagnarokLocalization
+//  RagnarokConstants
 //
 //  Created by Leon Li on 2025/12/26.
 //
 
 import Foundation
-import RagnarokConstants
 
 extension CardType {
     public var localizedName: LocalizedStringResource {

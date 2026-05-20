@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
-import RagnarokLocalization
+import RagnarokConstants
 import RagnarokResources
 import SwiftUI
 

@@ -5,6 +5,11 @@ import PackageDescription
 
 let package = Package(
     name: "RagnarokConstants",
+    defaultLocalization: "en",
+    platforms: [
+        .macOS(.v13),
+        .iOS(.v16),
+    ],
     products: [
         .library(
             name: "RagnarokConstants",
@@ -13,7 +18,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "RagnarokConstants"
+            name: "RagnarokConstants",
+            resources: [
+                .process("Resources"),
+            ]
         ),
         .testTarget(
             name: "RagnarokConstantsTests",

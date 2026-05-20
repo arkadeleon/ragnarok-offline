@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/12/24.
 //
 
-import RagnarokLocalization
+import RagnarokConstants
 import SwiftUI
 
 struct MonsterDatabaseFilterView: View {

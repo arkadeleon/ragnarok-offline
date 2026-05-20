@@ -9,7 +9,6 @@ import CoreGraphics
 import Observation
 import RagnarokConstants
 import RagnarokDatabase
-import RagnarokLocalization
 import RagnarokResources
 import RagnarokSprite
 import rAthenaCommon

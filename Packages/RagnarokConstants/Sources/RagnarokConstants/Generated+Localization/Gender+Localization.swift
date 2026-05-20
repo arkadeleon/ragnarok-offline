@@ -1,12 +1,11 @@
 //
 //  Gender+Localization.swift
-//  RagnarokLocalization
+//  RagnarokConstants
 //
 //  Created by Leon Li on 2025/7/9.
 //
 
 import Foundation
-import RagnarokConstants
 
 extension Gender {
     public var localizedName: LocalizedStringResource {
