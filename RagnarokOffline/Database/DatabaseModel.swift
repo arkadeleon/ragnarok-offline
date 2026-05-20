@@ -199,7 +199,7 @@ final class DatabaseModel {
             }
 
             self.jobs = jobs.map { job in
-                let localizedName = messageStringTable.localizedJobName(for: job.id)
+                let localizedName = job.id.localizedName.map { String(localized: $0) }
                 let skillTree = skillTrees.first(where: { $0.job == job.id })
                 let model = JobModel(mode: mode, job: job, localizedName: localizedName, skillTree: skillTree, resourceManager: resourceManager)
                 return model

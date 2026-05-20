@@ -1,63 +1,63 @@
 //
-//  MessageStringTable+JobName.swift
-//  RagnarokLocalization
+//  JobID+Localization.swift
+//  RagnarokConstants
 //
-//  Created by Leon Li on 2025/9/26.
+//  Created by Leon Li on 2026/5/20.
 //
 
-import RagnarokConstants
+import Foundation
 
-extension MessageStringTable {
-    public func localizedJobName(for jobID: JobID) -> String? {
-        switch jobID {
+extension JobID {
+    public var localizedName: LocalizedStringResource? {
+        switch self {
         case .novice:
-            localizedMessageString(forID: 1680)
+            LocalizedStringResource("Novice", table: "JobID", bundle: .module)
         case .swordman:
-            localizedMessageString(forID: 1629)
+            LocalizedStringResource("Swordman", table: "JobID", bundle: .module)
         case .mage:
-            localizedMessageString(forID: 1630)
+            LocalizedStringResource("Mage", table: "JobID", bundle: .module)
         case .archer:
-            localizedMessageString(forID: 1631)
+            LocalizedStringResource("Archer", table: "JobID", bundle: .module)
         case .acolyte:
-            localizedMessageString(forID: 1632)
+            LocalizedStringResource("Acolyte", table: "JobID", bundle: .module)
         case .merchant:
-            localizedMessageString(forID: 1633)
+            LocalizedStringResource("Merchant", table: "JobID", bundle: .module)
         case .thief:
-            localizedMessageString(forID: 1634)
+            LocalizedStringResource("Thief", table: "JobID", bundle: .module)
         case .knight, .knight2:
-            localizedMessageString(forID: 1635)
+            LocalizedStringResource("Knight", table: "JobID", bundle: .module)
         case .priest:
-            localizedMessageString(forID: 1636)
+            LocalizedStringResource("Priest", table: "JobID", bundle: .module)
         case .wizard:
-            localizedMessageString(forID: 1637)
+            LocalizedStringResource("Wizard", table: "JobID", bundle: .module)
         case .blacksmith:
-            localizedMessageString(forID: 1638)
+            LocalizedStringResource("BlackSmith", table: "JobID", bundle: .module)
         case .hunter:
-            localizedMessageString(forID: 1639)
+            LocalizedStringResource("Hunter", table: "JobID", bundle: .module)
         case .assassin:
-            localizedMessageString(forID: 1640)
+            LocalizedStringResource("Assassin", table: "JobID", bundle: .module)
         case .crusader, .crusader2:
-            localizedMessageString(forID: 1641)
+            LocalizedStringResource("Crusader", table: "JobID", bundle: .module)
         case .monk:
-            localizedMessageString(forID: 1642)
+            LocalizedStringResource("Monk", table: "JobID", bundle: .module)
         case .sage:
-            localizedMessageString(forID: 1643)
+            LocalizedStringResource("Sage", table: "JobID", bundle: .module)
         case .rogue:
-            localizedMessageString(forID: 1644)
+            LocalizedStringResource("Rogue", table: "JobID", bundle: .module)
         case .alchemist:
-            localizedMessageString(forID: 1645)
+            LocalizedStringResource("Alchemist", table: "JobID", bundle: .module)
         case .bard:
-            localizedMessageString(forID: 1646)
+            LocalizedStringResource("Bard", table: "JobID", bundle: .module)
         case .dancer:
-            localizedMessageString(forID: 1647)
+            LocalizedStringResource("Dancer", table: "JobID", bundle: .module)
         case .wedding:
             nil
         case .super_novice:
-            localizedMessageString(forID: 1682)
+            LocalizedStringResource("Super Novice", table: "JobID", bundle: .module)
         case .gunslinger:
-            localizedMessageString(forID: 1683)
+            LocalizedStringResource("Gunslinger", table: "JobID", bundle: .module)
         case .ninja:
-            localizedMessageString(forID: 1684)
+            LocalizedStringResource("Ninja", table: "JobID", bundle: .module)
         case .xmas:
             nil
         case .summer:
@@ -69,45 +69,45 @@ extension MessageStringTable {
         case .summer2:
             nil
         case .novice_high:
-            localizedMessageString(forID: 1681)
+            LocalizedStringResource("High Novice", table: "JobID", bundle: .module)
         case .swordman_high:
-            localizedMessageString(forID: 1661)
+            LocalizedStringResource("High Swordman", table: "JobID", bundle: .module)
         case .mage_high:
-            localizedMessageString(forID: 1662)
+            LocalizedStringResource("High Mage", table: "JobID", bundle: .module)
         case .archer_high:
-            localizedMessageString(forID: 1663)
+            LocalizedStringResource("High Archer", table: "JobID", bundle: .module)
         case .acolyte_high:
-            localizedMessageString(forID: 1664)
+            LocalizedStringResource("High Acolyte", table: "JobID", bundle: .module)
         case .merchant_high:
-            localizedMessageString(forID: 1665)
+            LocalizedStringResource("High Merchant", table: "JobID", bundle: .module)
         case .thief_high:
-            localizedMessageString(forID: 1666)
+            LocalizedStringResource("High Thief", table: "JobID", bundle: .module)
         case .lord_knight, .lord_knight2:
-            localizedMessageString(forID: 1667)
+            LocalizedStringResource("Lord Knight", table: "JobID", bundle: .module)
         case .high_priest:
-            localizedMessageString(forID: 1668)
+            LocalizedStringResource("High Priest", table: "JobID", bundle: .module)
         case .high_wizard:
-            localizedMessageString(forID: 1669)
+            LocalizedStringResource("High Wizard", table: "JobID", bundle: .module)
         case .whitesmith:
-            localizedMessageString(forID: 1670)
+            LocalizedStringResource("WhiteSmith", table: "JobID", bundle: .module)
         case .sniper:
-            localizedMessageString(forID: 1671)
+            LocalizedStringResource("Sniper", table: "JobID", bundle: .module)
         case .assassin_cross:
-            localizedMessageString(forID: 1672)
+            LocalizedStringResource("Assassin Cross", table: "JobID", bundle: .module)
         case .paladin, .paladin2:
-            localizedMessageString(forID: 1673)
+            LocalizedStringResource("Paladin", table: "JobID", bundle: .module)
         case .champion:
-            localizedMessageString(forID: 1674)
+            LocalizedStringResource("Champion", table: "JobID", bundle: .module)
         case .professor:
-            localizedMessageString(forID: 1675)
+            LocalizedStringResource("Professor", table: "JobID", bundle: .module)
         case .stalker:
-            localizedMessageString(forID: 1676)
+            LocalizedStringResource("Stalker", table: "JobID", bundle: .module)
         case .creator:
-            localizedMessageString(forID: 1677)
+            LocalizedStringResource("Creator", table: "JobID", bundle: .module)
         case .clown:
-            localizedMessageString(forID: 1678)
+            LocalizedStringResource("Clown", table: "JobID", bundle: .module)
         case .gypsy:
-            localizedMessageString(forID: 1679)
+            LocalizedStringResource("Gypsy", table: "JobID", bundle: .module)
         case .baby:
             nil
         case .baby_swordman:
@@ -155,11 +155,11 @@ extension MessageStringTable {
         case .super_baby:
             nil
         case .taekwon:
-            localizedMessageString(forID: 1685)
+            LocalizedStringResource("Taekwon Boy/Girl", table: "JobID", bundle: .module)
         case .star_gladiator, .star_gladiator2:
-            localizedMessageString(forID: 1686)
+            LocalizedStringResource("Taekwon Master", table: "JobID", bundle: .module)
         case .soul_linker:
-            localizedMessageString(forID: 1687)
+            LocalizedStringResource("Soul Linker", table: "JobID", bundle: .module)
         case .gangsi:
             nil
         case .death_knight:
@@ -167,31 +167,31 @@ extension MessageStringTable {
         case .dark_collector:
             nil
         case .rune_knight, .rune_knight_t, .rune_knight2, .rune_knight_t2:
-            localizedMessageString(forID: 1648)
+            LocalizedStringResource("Rune Knight", table: "JobID", bundle: .module)
         case .warlock, .warlock_t:
-            localizedMessageString(forID: 1649)
+            LocalizedStringResource("Warlock", table: "JobID", bundle: .module)
         case .ranger, .ranger_t, .ranger2, .ranger_t2:
-            localizedMessageString(forID: 1650)
+            LocalizedStringResource("Ranger", table: "JobID", bundle: .module)
         case .arch_bishop, .arch_bishop_t:
-            localizedMessageString(forID: 1651)
+            LocalizedStringResource("Archbishop", table: "JobID", bundle: .module)
         case .mechanic, .mechanic_t, .mechanic2, .mechanic_t2:
-            localizedMessageString(forID: 1652)
+            LocalizedStringResource("Mechanic", table: "JobID", bundle: .module)
         case .guillotine_cross, .guillotine_cross_t:
-            localizedMessageString(forID: 1653)
+            LocalizedStringResource("Guillotine Cross", table: "JobID", bundle: .module)
         case .royal_guard, .royal_guard_t, .royal_guard2, .royal_guard_t2:
-            localizedMessageString(forID: 1654)
+            LocalizedStringResource("Royal Guard", table: "JobID", bundle: .module)
         case .sorcerer, .sorcerer_t:
-            localizedMessageString(forID: 1655)
+            LocalizedStringResource("Sorcerer", table: "JobID", bundle: .module)
         case .minstrel, .minstrel_t:
-            localizedMessageString(forID: 1656)
+            LocalizedStringResource("Minstrel", table: "JobID", bundle: .module)
         case .wanderer, .wanderer_t:
-            localizedMessageString(forID: 1657)
+            LocalizedStringResource("Wanderer", table: "JobID", bundle: .module)
         case .sura, .sura_t:
-            localizedMessageString(forID: 1658)
+            LocalizedStringResource("Sura", table: "JobID", bundle: .module)
         case .genetic, .genetic_t:
-            localizedMessageString(forID: 1659)
+            LocalizedStringResource("Genetic", table: "JobID", bundle: .module)
         case .shadow_chaser, .shadow_chaser_t:
-            localizedMessageString(forID: 1660)
+            LocalizedStringResource("Shadow Chaser", table: "JobID", bundle: .module)
         case .baby_rune_knight:
             nil
         case .baby_warlock:

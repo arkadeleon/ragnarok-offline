@@ -16,13 +16,10 @@ let package = Package(
             targets: ["RagnarokLocalization"]
         ),
     ],
-    dependencies: [
-        .package(path: "../RagnarokConstants"),
-    ],
     targets: [
         .target(
             name: "RagnarokLocalization",
-            dependencies: ["RagnarokConstants"],
+            dependencies: [],
             resources: [
                 .process("Resources"),
             ]

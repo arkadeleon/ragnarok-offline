@@ -235,10 +235,10 @@ struct CharacterSelectView: View {
 
     private func jobName(for character: CharacterInfo) -> String {
         guard let jobID = JobID(rawValue: character.job),
-              let jobName = gameSession.messageStringTable.localizedJobName(for: jobID) else {
+              let name = jobID.localizedName else {
             return ""
         }
-        return jobName
+        return String(localized: name)
     }
 
     private func mapName(for character: CharacterInfo) -> String {
