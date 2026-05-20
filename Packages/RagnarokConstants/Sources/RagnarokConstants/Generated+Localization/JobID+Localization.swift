@@ -15,7 +15,7 @@ extension JobID {
         case .swordman:
             LocalizedStringResource("Swordman", table: "JobID", bundle: .module)
         case .mage:
-            LocalizedStringResource("Mage", table: "JobID", bundle: .module)
+            LocalizedStringResource("Magician", table: "JobID", bundle: .module)
         case .archer:
             LocalizedStringResource("Archer", table: "JobID", bundle: .module)
         case .acolyte:
@@ -31,7 +31,7 @@ extension JobID {
         case .wizard:
             LocalizedStringResource("Wizard", table: "JobID", bundle: .module)
         case .blacksmith:
-            LocalizedStringResource("BlackSmith", table: "JobID", bundle: .module)
+            LocalizedStringResource("Blacksmith", table: "JobID", bundle: .module)
         case .hunter:
             LocalizedStringResource("Hunter", table: "JobID", bundle: .module)
         case .assassin:
@@ -89,7 +89,7 @@ extension JobID {
         case .high_wizard:
             LocalizedStringResource("High Wizard", table: "JobID", bundle: .module)
         case .whitesmith:
-            LocalizedStringResource("WhiteSmith", table: "JobID", bundle: .module)
+            LocalizedStringResource("Whitesmith", table: "JobID", bundle: .module)
         case .sniper:
             LocalizedStringResource("Sniper", table: "JobID", bundle: .module)
         case .assassin_cross:
@@ -155,9 +155,9 @@ extension JobID {
         case .super_baby:
             nil
         case .taekwon:
-            LocalizedStringResource("Taekwon Boy/Girl", table: "JobID", bundle: .module)
+            LocalizedStringResource("Taekwon", table: "JobID", bundle: .module)
         case .star_gladiator, .star_gladiator2:
-            LocalizedStringResource("Taekwon Master", table: "JobID", bundle: .module)
+            LocalizedStringResource("Star Gladiator", table: "JobID", bundle: .module)
         case .soul_linker:
             LocalizedStringResource("Soul Linker", table: "JobID", bundle: .module)
         case .gangsi:
@@ -173,7 +173,7 @@ extension JobID {
         case .ranger, .ranger_t, .ranger2, .ranger_t2:
             LocalizedStringResource("Ranger", table: "JobID", bundle: .module)
         case .arch_bishop, .arch_bishop_t:
-            LocalizedStringResource("Archbishop", table: "JobID", bundle: .module)
+            LocalizedStringResource("Arch Bishop", table: "JobID", bundle: .module)
         case .mechanic, .mechanic_t, .mechanic2, .mechanic_t2:
             LocalizedStringResource("Mechanic", table: "JobID", bundle: .module)
         case .guillotine_cross, .guillotine_cross_t:
@@ -187,7 +187,7 @@ extension JobID {
         case .wanderer, .wanderer_t:
             LocalizedStringResource("Wanderer", table: "JobID", bundle: .module)
         case .sura, .sura_t:
-            LocalizedStringResource("Sura", table: "JobID", bundle: .module)
+            LocalizedStringResource("Shura", table: "JobID", bundle: .module)
         case .genetic, .genetic_t:
             LocalizedStringResource("Genetic", table: "JobID", bundle: .module)
         case .shadow_chaser, .shadow_chaser_t:
@@ -227,17 +227,17 @@ extension JobID {
         case .baby_mechanic2:
             nil
         case .super_novice_e:
-            nil
+            LocalizedStringResource("Expanded Super Novice", table: "JobID", bundle: .module)
         case .super_baby_e:
             nil
         case .kagerou:
-            nil
+            LocalizedStringResource("Kagerou", table: "JobID", bundle: .module)
         case .oboro:
-            nil
+            LocalizedStringResource("Oboro", table: "JobID", bundle: .module)
         case .rebellion:
-            nil
+            LocalizedStringResource("Rebellion", table: "JobID", bundle: .module)
         case .summoner:
-            nil
+            LocalizedStringResource("Summoner", table: "JobID", bundle: .module)
         case .baby_summoner:
             nil
         case .baby_ninja:
@@ -259,67 +259,67 @@ extension JobID {
         case .baby_star_gladiator2:
             nil
         case .star_emperor:
-            nil
+            LocalizedStringResource("Star Emperor", table: "JobID", bundle: .module)
         case .soul_reaper:
-            nil
+            LocalizedStringResource("Soul Reaper", table: "JobID", bundle: .module)
         case .baby_star_emperor:
             nil
         case .baby_soul_reaper:
             nil
         case .star_emperor2:
-            nil
+            LocalizedStringResource("Star Emperor", table: "JobID", bundle: .module)
         case .baby_star_emperor2:
             nil
         case .dragon_knight:
-            nil
+            LocalizedStringResource("Dragon Knight", table: "JobID", bundle: .module)
         case .meister:
-            nil
+            LocalizedStringResource("Meister", table: "JobID", bundle: .module)
         case .shadow_cross:
-            nil
+            LocalizedStringResource("Shadow Cross", table: "JobID", bundle: .module)
         case .arch_mage:
-            nil
+            LocalizedStringResource("Arch Mage", table: "JobID", bundle: .module)
         case .cardinal:
-            nil
+            LocalizedStringResource("Cardinal", table: "JobID", bundle: .module)
         case .windhawk:
-            nil
+            LocalizedStringResource("Wind Hawk", table: "JobID", bundle: .module)
         case .imperial_guard:
-            nil
+            LocalizedStringResource("Imperial Guard", table: "JobID", bundle: .module)
         case .biolo:
-            nil
+            LocalizedStringResource("Biolo", table: "JobID", bundle: .module)
         case .abyss_chaser:
-            nil
+            LocalizedStringResource("Abyss Chaser", table: "JobID", bundle: .module)
         case .elemental_master:
-            nil
+            LocalizedStringResource("Elemental Master", table: "JobID", bundle: .module)
         case .inquisitor:
-            nil
+            LocalizedStringResource("Inquisitor", table: "JobID", bundle: .module)
         case .troubadour:
-            nil
+            LocalizedStringResource("Troubadour", table: "JobID", bundle: .module)
         case .trouvere:
-            nil
+            LocalizedStringResource("Trouvere", table: "JobID", bundle: .module)
         case .windhawk2:
-            nil
+            LocalizedStringResource("Wind Hawk", table: "JobID", bundle: .module)
         case .meister2:
-            nil
+            LocalizedStringResource("Meister", table: "JobID", bundle: .module)
         case .dragon_knight2:
-            nil
+            LocalizedStringResource("Dragon Knight", table: "JobID", bundle: .module)
         case .imperial_guard2:
-            nil
+            LocalizedStringResource("Imperial Guard", table: "JobID", bundle: .module)
         case .sky_emperor:
-            nil
+            LocalizedStringResource("Sky Emperor", table: "JobID", bundle: .module)
         case .soul_ascetic:
-            nil
+            LocalizedStringResource("Soul Ascetic", table: "JobID", bundle: .module)
         case .shinkiro:
-            nil
+            LocalizedStringResource("Shinkiro", table: "JobID", bundle: .module)
         case .shiranui:
-            nil
+            LocalizedStringResource("Shiranui", table: "JobID", bundle: .module)
         case .night_watch:
-            nil
+            LocalizedStringResource("Night Watch", table: "JobID", bundle: .module)
         case .hyper_novice:
-            nil
+            LocalizedStringResource("Hyper Novice", table: "JobID", bundle: .module)
         case .spirit_handler:
-            nil
+            LocalizedStringResource("Spirit Handler", table: "JobID", bundle: .module)
         case .sky_emperor2:
-            nil
+            LocalizedStringResource("Sky Emperor", table: "JobID", bundle: .module)
         case .rune_knight_2nd:
             nil
         case .mechanic_2nd:
