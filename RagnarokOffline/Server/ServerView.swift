@@ -32,19 +32,27 @@ struct ServerView: View {
 
             if server.status == .notStarted {
                 ContentUnavailableView {
-                    Label("Server Not Started", systemImage: "server.rack")
+                    Label {
+                        Text("Server Not Started", tableName: "Server")
+                    } icon: {
+                        Image(systemName: "server.rack")
+                    }
                 } description: {
-                    Text("Tap Start to run the server")
+                    Text("Tap Start to run the server", tableName: "Server")
                 } actions: {
                     Button {
                         Task {
                             try await appModel.startServer(server)
                         }
                     } label: {
-                        Label("Start Server", systemImage: "play.fill")
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .padding(.horizontal)
+                        Label {
+                            Text("Start Server", tableName: "Server")
+                        } icon: {
+                            Image(systemName: "play.fill")
+                        }
+                        .font(.title3)
+                        .fontWeight(.medium)
+                        .padding(.horizontal)
                     }
                     .adaptiveProminentButtonStyle()
                 }

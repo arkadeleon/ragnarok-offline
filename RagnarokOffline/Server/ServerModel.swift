@@ -121,11 +121,11 @@ extension ServerModel {
 
         var localizedStringResource: LocalizedStringResource {
             switch self {
-            case .notStarted: "NOT STARTED"
-            case .starting: "STARTING"
-            case .running: "RUNNING"
-            case .stopping: "STOPPING"
-            case .stopped: "STOPPED"
+            case .notStarted: LocalizedStringResource("NOT STARTED", table: "Server")
+            case .starting: LocalizedStringResource("STARTING", table: "Server")
+            case .running: LocalizedStringResource("RUNNING", table: "Server")
+            case .stopping: LocalizedStringResource("STOPPING", table: "Server")
+            case .stopped: LocalizedStringResource("STOPPED", table: "Server")
             }
         }
     }
