@@ -85,7 +85,7 @@ struct GameClientView: View {
                         await startGameSession()
                     }
                 } label: {
-                    Text("Start")
+                    Text("Start Game")
                         .font(.title3)
                         .fontWeight(.medium)
                         .frame(maxWidth: .infinity)

@@ -686,7 +686,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Basis data"
+            "value" : "Database"
           }
         },
         "it" : {
@@ -995,7 +995,86 @@
       }
     },
     "Game" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spiel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juego"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeu"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gioco"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲーム"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jogo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игра"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oyun"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "游戏"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "遊戲"
+          }
+        }
+      }
     },
     "Game Client" : {
       "localizations" : {
@@ -1020,7 +1099,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klien permainan"
+            "value" : "Klien game"
           }
         },
         "it" : {
@@ -1084,79 +1163,79 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spielressourcen werden für Datenbank-Icons und -Vorschauen, Charakter-Sprites und den Beta-Game-Client verwendet. Wenn der Remote-Client aktiviert ist, werden Ressourcen vom Remote-Server heruntergeladen und lokal zwischengespeichert. Wenn du bereits Client-Dateien wie data.grf hast, kannst du den Remote-Client deaktivieren und stattdessen lokale Dateien verwenden."
+            "value" : "Spielressourcen werden für Datenbank-Icons und Vorschauen, Charakter-Sprites und den Beta-Spiel-Client verwendet. Wenn Remote Client aktiviert ist, werden Ressourcen vom Remote-Server geladen und lokal zwischengespeichert. Wenn du bereits Clientdateien wie data.grf hast, kannst du Remote Client deaktivieren und stattdessen lokale Dateien verwenden."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los recursos del juego se usan para iconos y vistas previas de la base de datos, sprites de personajes y el cliente de juego en beta. Cuando el cliente remoto está activado, los recursos se descargan del servidor remoto y se almacenan en caché localmente. Si ya tienes archivos de cliente como data.grf, puedes desactivar el cliente remoto y usar archivos locales en su lugar."
+            "value" : "Los recursos del juego se usan para iconos y vistas previas de la base de datos, sprites de personajes y el cliente de juego beta. Cuando Remote Client está activado, los recursos se descargan del servidor remoto y se almacenan en caché localmente. Si ya tienes archivos del cliente, como data.grf, puedes desactivar Remote Client y usar archivos locales."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les ressources du jeu sont utilisées pour les icônes et aperçus de la base de données, les sprites de personnages et le client de jeu bêta. Lorsque le client distant est activé, les ressources sont téléchargées depuis le serveur distant et mises en cache localement. Si vous disposez déjà de fichiers client comme data.grf, vous pouvez désactiver le client distant et utiliser des fichiers locaux à la place."
+            "value" : "Les ressources du jeu sont utilisées pour les icônes et aperçus de la base de données, les sprites de personnages et le client de jeu bêta. Lorsque Remote Client est activé, les ressources sont téléchargées depuis le serveur distant et mises en cache localement. Si vous avez déjà des fichiers client comme data.grf, vous pouvez désactiver Remote Client et utiliser des fichiers locaux."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sumber daya game digunakan untuk ikon dan pratinjau database, sprite karakter, dan Game Client versi beta. Saat Remote Client diaktifkan, sumber daya diunduh dari server jarak jauh dan disimpan dalam cache lokal. Jika Anda sudah memiliki file klien seperti data.grf, Anda dapat menonaktifkan Remote Client dan menggunakan file lokal sebagai gantinya."
+            "value" : "Resource game digunakan untuk ikon dan pratinjau database, sprite karakter, dan klien game beta. Saat Remote Client aktif, resource diunduh dari server remote dan disimpan di cache lokal. Jika Anda sudah memiliki file klien seperti data.grf, Anda dapat menonaktifkan Remote Client dan memakai file lokal."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le risorse di gioco vengono utilizzate per icone e anteprime del database, sprite dei personaggi e il client di gioco beta. Quando il client remoto è abilitato, le risorse vengono scaricate dal server remoto e memorizzate nella cache locale. Se hai già file client come data.grf, puoi disabilitare il client remoto e usare invece file locali."
+            "value" : "Le risorse di gioco vengono usate per icone e anteprime del database, sprite dei personaggi e il client di gioco beta. Quando Remote Client è attivo, le risorse vengono scaricate dal server remoto e memorizzate nella cache locale. Se hai già file client come data.grf, puoi disattivare Remote Client e usare file locali."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームリソースは、データベースのアイコンやプレビュー、キャラクタースプライト、ベータ版ゲームクライアントに使用されます。リモートクライアントを有効にすると、リソースはリモートサーバーからダウンロードされ、ローカルにキャッシュされます。data.grf などのクライアントファイルをすでにお持ちの場合は、リモートクライアントを無効にしてローカルファイルを使用できます。"
+            "value" : "ゲームリソースは、データベースのアイコンとプレビュー、キャラクタースプライト、ベータ版ゲームクライアントに使用されます。Remote Client が有効な場合、リソースはリモートサーバーからダウンロードされ、ローカルにキャッシュされます。data.grf などのクライアントファイルを既に持っている場合は、Remote Client を無効にしてローカルファイルを使用できます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임 리소스는 데이터베이스 아이콘과 미리보기, 캐릭터 스프라이트, 베타 게임 클라이언트에 사용됩니다. 원격 클라이언트를 활성화하면 리소스가 원격 서버에서 다운로드되어 로컬에 캐시됩니다. data.grf 같은 클라이언트 파일이 이미 있다면 원격 클라이언트를 비활성화하고 로컬 파일을 대신 사용할 수 있습니다."
+            "value" : "게임 리소스는 데이터베이스 아이콘과 미리보기, 캐릭터 스프라이트, 베타 게임 클라이언트에 사용됩니다. Remote Client가 활성화되면 리소스를 원격 서버에서 다운로드해 로컬에 캐시합니다. data.grf 같은 클라이언트 파일이 이미 있다면 Remote Client를 비활성화하고 로컬 파일을 사용할 수 있습니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Os recursos do jogo são usados para ícones e visualizações do banco de dados, sprites de personagens e o cliente de jogo em beta. Quando o cliente remoto está ativado, os recursos são baixados do servidor remoto e armazenados em cache localmente. Se você já tiver arquivos de cliente como data.grf, pode desativar o cliente remoto e usar arquivos locais."
+            "value" : "Os recursos do jogo são usados para ícones e prévias do banco de dados, sprites de personagens e o cliente de jogo beta. Quando o Remote Client está ativado, os recursos são baixados do servidor remoto e armazenados em cache localmente. Se você já tem arquivos do cliente, como data.grf, pode desativar o Remote Client e usar arquivos locais."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Игровые ресурсы используются для значков и превью базы данных, спрайтов персонажей и бета-версии игрового клиента. Когда удалённый клиент включён, ресурсы загружаются с удалённого сервера и кэшируются локально. Если у вас уже есть файлы клиента, например data.grf, вы можете отключить удалённый клиент и использовать локальные файлы."
+            "value" : "Игровые ресурсы используются для значков и предпросмотра базы данных, спрайтов персонажей и бета-версии игрового клиента. Когда Remote Client включен, ресурсы загружаются с удаленного сервера и кэшируются локально. Если у вас уже есть клиентские файлы, например data.grf, можно отключить Remote Client и использовать локальные файлы."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ทรัพยากรเกมใช้สำหรับไอคอนและตัวอย่างในฐานข้อมูล สไปรต์ตัวละคร และ Game Client เวอร์ชันเบต้า เมื่อเปิดใช้ Remote Client ทรัพยากรจะถูกดาวน์โหลดจากเซิร์ฟเวอร์ระยะไกลและแคชไว้ในเครื่อง หากคุณมีไฟล์ไคลเอนต์อยู่แล้ว เช่น data.grf คุณสามารถปิด Remote Client และใช้ไฟล์ในเครื่องแทนได้"
+            "value" : "ทรัพยากรเกมใช้สำหรับไอคอนและภาพตัวอย่างของฐานข้อมูล สไปรต์ตัวละคร และไคลเอนต์เกมรุ่นเบต้า เมื่อเปิดใช้ Remote Client ระบบจะดาวน์โหลดทรัพยากรจากเซิร์ฟเวอร์ระยะไกลและแคชไว้ในเครื่อง หากคุณมีไฟล์ไคลเอนต์อยู่แล้ว เช่น data.grf คุณสามารถปิด Remote Client และใช้ไฟล์ในเครื่องแทนได้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyun kaynakları veritabanı simgeleri ve önizlemeleri, karakter spriteları ve beta Oyun İstemcisi için kullanılır. Uzak İstemci etkinleştirildiğinde kaynaklar uzak sunucudan indirilir ve yerel olarak önbelleğe alınır. data.grf gibi istemci dosyalarınız zaten varsa Uzak İstemci'yi devre dışı bırakıp bunun yerine yerel dosyaları kullanabilirsiniz."
+            "value" : "Oyun kaynakları veritabanı simgeleri ve önizlemeleri, karakter sprite’ları ve beta oyun istemcisi için kullanılır. Remote Client etkinken kaynaklar uzak sunucudan indirilir ve yerel olarak önbelleğe alınır. data.grf gibi istemci dosyalarınız zaten varsa Remote Client’ı kapatıp yerel dosyaları kullanabilirsiniz."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏资源用于数据库图标和预览、角色精灵，以及 Beta 版游戏客户端。启用远程客户端后，资源会从远程服务器下载并缓存到本地。如果你已经有 data.grf 等客户端文件，可以停用远程客户端并改用本地文件。"
+            "value" : "游戏资源用于数据库图标和预览、角色精灵图以及 beta 游戏客户端。启用 Remote Client 后，资源会从远程服务器下载并缓存在本地。如果你已有 data.grf 等客户端文件，可以关闭 Remote Client 并改用本地文件。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "遊戲資源用於資料庫圖示和預覽、角色精靈，以及 Beta 版遊戲用戶端。啟用遠端用戶端後，資源會從遠端伺服器下載並快取至本機。如果你已經有 data.grf 等用戶端檔案，可以停用遠端用戶端並改用本機檔案。"
+            "value" : "遊戲資源用於資料庫圖示和預覽、角色精靈圖以及 beta 遊戲客戶端。啟用 Remote Client 後，資源會從遠端伺服器下載並快取在本機。如果你已有 data.grf 等客戶端檔案，可以關閉 Remote Client 並改用本機檔案。"
           }
         }
       }
@@ -1165,10 +1244,168 @@
 
     },
     "Item Database" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item-Datenbank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de datos de objetos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de données des objets"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database Item"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database oggetti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アイテムデータベース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아이템 데이터베ース"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banco de dados de itens"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "База предметов"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฐานข้อมูลไอเทม"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eşya veritabanı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "道具数据库"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "道具資料庫"
+          }
+        }
+      }
     },
     "Job Database" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Job-Datenbank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de datos de jobs"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de données des jobs"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database Job"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database job"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "職業データベース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직업 데이터베ース"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banco de dados de classes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "База профессий"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฐานข้อมูลอาชีพ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meslek veritabanı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "职业数据库"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "職業資料庫"
+          }
+        }
+      }
     },
     "Join Beta" : {
       "localizations" : {
@@ -1351,13 +1588,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Assurez-vous que tous les serveurs sont en cours d'exécution avant de démarrer le client de jeu."
+            "value" : "Assurez-vous que tous les serveurs sont en cours d’exécution avant de démarrer le client de jeu."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pastikan semua server sudah berjalan sebelum memulai klien permainan."
+            "value" : "Pastikan semua server sudah berjalan sebelum memulai klien game."
           }
         },
         "it" : {
@@ -1499,7 +1736,86 @@
       }
     },
     "Map Database" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Karten-Datenbank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de datos de mapas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de données des cartes"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database Map"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database mappe"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マップデータベース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "맵 데이터베이스"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banco de dados de mapas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "База карт"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฐานข้อมูลแผนที่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harita veritabanı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地图数据库"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地圖資料庫"
+          }
+        }
+      }
     },
     "Map Viewer" : {
       "localizations" : {
@@ -1590,10 +1906,168 @@
 
     },
     "Monster Database" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monster-Datenbank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de datos de monstruos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de données des monstres"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database Monster"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database mostri"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モンスターデータベース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "몬스터 데이터베이스"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banco de dados de monstros"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "База монстров"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฐานข้อมูลมอนสเตอร์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canavar veritabanı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "魔物数据库"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "魔物資料庫"
+          }
+        }
+      }
     },
     "Monster Summon Database" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monsterbeschwörungs-Datenbank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de datos de invocación de monstruos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de données des invocations de monstres"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database Summon Monster"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database summon mostri"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モンスター召喚データベース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "몬스터 소환 데이터베ース"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banco de dados de invocação de monstros"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "База призыва монстров"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฐานข้อมูลเรียกมอนสเตอร์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canavar çağırma veritabanı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "魔物召唤数据库"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "魔物召喚資料庫"
+          }
+        }
+      }
     },
     "No Files" : {
       "localizations" : {
@@ -1678,7 +2152,86 @@
       }
     },
     "Pet Database" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet-Datenbank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de datos de pets"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de données des familiers"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database Pet"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database pet"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ペットデータベース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "펫 데이터베ース"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banco de dados de pets"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "База питомцев"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฐานข้อมูลสัตว์เลี้ยง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet veritabanı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物数据库"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "寵物資料庫"
+          }
+        }
+      }
     },
     "Ragnarok Offline" : {
 
@@ -1851,7 +2404,86 @@
       }
     },
     "Reset" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restablecer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réinitialiser"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リセット"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "초기화"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redefinir"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сбросить"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีเซ็ต"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıfırla"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置"
+          }
+        }
+      }
     },
     "Send" : {
 
@@ -1939,7 +2571,86 @@
       }
     },
     "Server Address" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serveradresse"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dirección del servidor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adresse du serveur"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alamat server"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indirizzo server"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サーバーアドレス"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서버 주소"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endereço do servidor"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Адрес сервера"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ที่อยู่เซิร์ฟเวอร์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu adresi"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器地址"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "伺服器位址"
+          }
+        }
+      }
     },
     "Server Files" : {
       "localizations" : {
@@ -2024,7 +2735,86 @@
       }
     },
     "Server Port" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serverport"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puerto del servidor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port du serveur"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port server"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porta server"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サーバーポート"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서버 포트"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porta do servidor"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Порт сервера"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พอร์ตเซิร์ฟเวอร์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu portu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器端口"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "伺服器連接埠"
+          }
+        }
+      }
     },
     "Settings" : {
       "localizations" : {
@@ -2191,7 +2981,86 @@
       }
     },
     "Skill Database" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skill-Datenbank"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de datos de skills"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base de données des skills"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database Skill"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database skill"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スキルデータベース"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스킬 데이터베ース"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Banco de dados de habilidades"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "База навыков"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ฐานข้อมูลสกิล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yetenek veritabanı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "技能数据库"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "技能資料庫"
+          }
+        }
+      }
     },
     "Skill Simulator" : {
       "localizations" : {
@@ -2278,9 +3147,6 @@
     "Sprites" : {
 
     },
-    "Start" : {
-
-    },
     "Start All Servers" : {
       "localizations" : {
         "de" : {
@@ -2363,84 +3229,166 @@
         }
       }
     },
-    "The **Game Client** allows you to explore and walk through the game world." : {
+    "Start Game" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der **Spiel-Client** ermöglicht es dir, die Spielwelt zu erkunden und darin umherzugehen."
+            "value" : "Spiel starten"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El **cliente de juego** te permite explorar y recorrer el mundo del juego."
+            "value" : "Iniciar juego"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le **client de jeu** vous permet d'explorer et de parcourir le monde du jeu."
+            "value" : "Démarrer le jeu"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Klien permainan** memungkinkan Anda menjelajah dan berjalan di dalam dunia permainan."
+            "value" : "Mulai game"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il **client di gioco** ti consente di esplorare e attraversare il mondo di gioco."
+            "value" : "Avvia gioco"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**ゲームクライアント**を使えばゲームの世界を探索して歩き回ることができます。"
+            "value" : "ゲーム開始"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**게임 클라이언트**를 통해 게임 세계를 탐험하고 돌아다닐 수 있습니다."
+            "value" : "게임 시작"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O **cliente de jogo** permite explorar e caminhar pelo mundo do jogo."
+            "value" : "Iniciar jogo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Игровой клиент** позволяет исследовать и перемещаться по игровому миру."
+            "value" : "Запустить игру"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**ไคลเอนต์เกม** ช่วยให้คุณสำรวจและเดินชมโลกภายในเกมได้"
+            "value" : "เริ่มเกม"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Oyun istemcisi** oyun dünyasını keşfetmenizi ve içinde dolaşmanızı sağlar."
+            "value" : "Oyunu başlat"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**游戏客户端** 让你探索并行走在游戏世界中。"
+            "value" : "开始游戏"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**遊戲客戶端** 讓你探索並漫步於遊戲世界中。"
+            "value" : "開始遊戲"
+          }
+        }
+      }
+    },
+    "The **Game Client** allows you to explore and walk through the game world." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit dem **Spiel-Client** kannst du die Ragnarok-Welt erkunden und darin umherlaufen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El **cliente de juego** te permite explorar y recorrer el mundo de Ragnarok."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le **client de jeu** vous permet d’explorer et de parcourir le monde de Ragnarok."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Klien game** memungkinkan Anda menjelajahi dan berjalan di dunia Ragnarok."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il **client di gioco** ti permette di esplorare e attraversare il mondo di Ragnarok."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ゲームクライアント**を使うと、Ragnarokの世界を探索して歩き回れます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**게임 클라이언트**를 통해 Ragnarok 세계를 탐험하고 돌아다닐 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O **cliente de jogo** permite explorar e caminhar pelo mundo de Ragnarok."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Игровой клиент** позволяет исследовать мир Ragnarok и перемещаться по нему."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ไคลเอนต์เกม** ช่วยให้คุณสำรวจและเดินทางในโลกของ Ragnarok ได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Oyun istemcisi** Ragnarok dünyasını keşfetmenizi ve içinde dolaşmanızı sağlar."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**游戏客户端** 可让你探索并行走于 Ragnarok 世界。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**遊戲客戶端** 可讓你探索並行走於 Ragnarok 世界。"
           }
         }
       }
@@ -2613,20 +3561,99 @@
 
     },
     "Unsupported File" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht unterstützte Datei"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo no compatible"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichier non pris en charge"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File tidak didukung"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File non supportato"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未対応ファイル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지원되지 않는 파일"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquivo não suportado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неподдерживаемый файл"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไฟล์ไม่รองรับ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desteklenmeyen dosya"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持的文件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支援的檔案"
+          }
+        }
+      }
     },
     "Use _M/_F to register new accounts on the server." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verwende _M/_F, um neue Konten auf dem Server zu registrieren."
+            "value" : "Verwende _M/_F, um neue Accounts auf dem Server zu registrieren."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usa _M/_F para registrar nuevas cuentas en el servidor."
+            "value" : "Usa _M/_F para registrar cuentas nuevas en el servidor."
           }
         },
         "fr" : {
@@ -2680,7 +3707,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sunucuda yeni hesaplar kaydetmek için _M/_F kullanın."
+            "value" : "Sunucuda yeni hesaplar oluşturmak için _M/_F kullanın."
           }
         },
         "zh-Hans" : {
