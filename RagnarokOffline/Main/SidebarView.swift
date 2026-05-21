@@ -9,8 +9,8 @@ import StoreKit
 import SwiftUI
 
 enum SidebarItem: Hashable {
-    case clientLocalFiles
-    case clientCachedFiles
+    case localClientFiles
+    case remoteClientFiles
     case gameClient
     case chatClient
 
@@ -54,13 +54,13 @@ struct SidebarView: View {
     var body: some View {
         List(selection: selection) {
             Section(isExpanded: $isClientSectionExpanded) {
-                NavigationLink(value: SidebarItem.clientLocalFiles) {
-                    SidebarRow("Local Files", iconName: "folder.fill", iconColor: .blue)
+                NavigationLink(value: SidebarItem.localClientFiles) {
+                    SidebarRow("Local Client Files", iconName: "folder.fill", iconColor: .blue)
                 }
 
                 if appModel.settings.isRemoteClientEnabled {
-                    NavigationLink(value: SidebarItem.clientCachedFiles) {
-                        SidebarRow("Cached Files", iconName: "folder.fill", iconColor: .blue)
+                    NavigationLink(value: SidebarItem.remoteClientFiles) {
+                        SidebarRow("Remote Client Files", iconName: "folder.fill", iconColor: .blue)
                     }
                 }
 
@@ -205,8 +205,8 @@ struct SidebarView: View {
             .adaptiveNavigationTransition(sourceID: "settings", in: settingsNamespace)
         }
         .onChange(of: appModel.settings.isRemoteClientEnabled) { _, newValue in
-            if !newValue, selection?.wrappedValue == .clientCachedFiles {
-                selection?.wrappedValue = .clientLocalFiles
+            if !newValue, selection?.wrappedValue == .remoteClientFiles {
+                selection?.wrappedValue = .localClientFiles
             }
         }
     }

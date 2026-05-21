@@ -27,8 +27,8 @@ final class AppModel {
     let settings: SettingsModel
     let resourceManager: ResourceManager
 
-    let clientLocalDirectory = File(node: .directory(localClientURL), location: .client)
-    let clientCachedDirectory = File(node: .directory(remoteClientCacheURL), location: .client)
+    let localClientDirectory = File(node: .directory(localClientURL), location: .client)
+    let remoteClientCacheDirectory = File(node: .directory(remoteClientCacheURL), location: .client)
 
     let serverDirectory = File(node: .directory(serverWorkingDirectoryURL), location: .server)
 

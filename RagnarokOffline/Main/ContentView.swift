@@ -51,10 +51,10 @@ struct ContentView: View {
 
     @ViewBuilder private func detailView(for item: SidebarItem) -> some View {
         switch item {
-        case .clientLocalFiles:
-            FilesView("Local Files", directory: appModel.clientLocalDirectory)
-        case .clientCachedFiles:
-            FilesView("Cached Files", directory: appModel.clientCachedDirectory)
+        case .localClientFiles:
+            FilesView("Local Client Files", directory: appModel.localClientDirectory)
+        case .remoteClientFiles:
+            FilesView("Remote Client Files", directory: appModel.remoteClientCacheDirectory)
         case .gameClient:
             #if GAME_CLIENT_FEATURE
             GameClientView()
@@ -120,7 +120,7 @@ struct ContentView: View {
 
     private func selectDefaultItemIfNeeded() {
         if sizeClass != .compact, selectedItem == nil {
-            selectedItem = .clientLocalFiles
+            selectedItem = .localClientFiles
         }
     }
 }

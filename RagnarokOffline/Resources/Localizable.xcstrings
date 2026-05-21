@@ -1,6 +1,88 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "**Remote Client** is planned to require a subscription in a future update to help cover server costs. Local client will continue to work without a subscription." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Remote-Client** soll in einem zukünftigen Update ein Abonnement erfordern, um die Serverkosten zu decken. Der lokale Client funktioniert auch ohne Abonnement weiterhin."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Está previsto que **Cliente remoto** requiera una suscripción en una futura actualización para ayudar a cubrir los costos del servidor. El cliente local seguirá funcionando sin suscripción."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Client distant** devrait nécessiter un abonnement dans une future mise à jour pour aider à couvrir les coûts du serveur. Le client local continuera de fonctionner sans abonnement."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Klien jarak jauh** direncanakan memerlukan langganan dalam pembaruan mendatang untuk membantu menutupi biaya server. Klien lokal akan tetap berfungsi tanpa langganan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "È previsto che **Client remoto** richieda un abbonamento in un futuro aggiornamento per contribuire a coprire i costi del server. Il client locale continuerà a funzionare senza abbonamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**リモートクライアント**は今後のアップデートでサーバー費用を補うためにサブスクリプションが必要になる予定です。ローカルクライアントはサブスクリプションなしで引き続き使用できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**원격 클라이언트**는 향후 업데이트에서 서버 비용을 충당하기 위해 구독이 필요하도록 변경될 예정입니다. 로컬 클라이언트는 구독 없이도 계속 사용할 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Está previsto que o **Cliente remoto** exija uma assinatura em uma atualização futura para ajudar a cobrir os custos do servidor. O cliente local continuará funcionando sem assinatura."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В будущем обновлении планируется ввести подписку для **Удалённого клиента**, чтобы помочь покрыть расходы на сервер. Локальный клиент продолжит работать без подписки."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "มีแผนให้**ไคลเอนต์ระยะไกล**ต้องใช้การสมัครสมาชิกในการอัปเดตในอนาคตเพื่อช่วยครอบคลุมค่าใช้จ่ายเซิร์ฟเวอร์ ไคลเอนต์ในเครื่องจะยังคงใช้งานได้โดยไม่ต้องสมัครสมาชิก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Uzak İstemci**'nin gelecekteki bir güncellemede sunucu maliyetlerini karşılamaya yardımcı olmak için abonelik gerektirmesi planlanıyor. Yerel istemci abonelik olmadan çalışmaya devam edecek."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**远程客户端**计划在未来更新中改为需要订阅，以帮助支付服务器费用。本地客户端无需订阅仍可正常使用。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**遠端用戶端**計劃在未來更新中改為需要訂閱，以協助支付伺服器費用。本機用戶端無需訂閱仍可正常使用。"
+          }
+        }
+      }
+    },
     "^[%lld item](inflect: true)" : {
       "localizations" : {
         "de" : {
@@ -249,88 +331,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "需要測試資格"
-          }
-        }
-      }
-    },
-    "Cached Files" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zwischengespeicherte Dateien"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Archivos en caché"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fichiers en cache"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Berkas cache"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "File nella cache"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "キャッシュファイル"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "캐시 파일"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arquivos em cache"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кэшированные файлы"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ไฟล์แคช"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Önbelleğe alınan dosyalar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "缓存文件"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "快取檔案"
           }
         }
       }
@@ -1158,84 +1158,84 @@
         }
       }
     },
-    "Game resources are used for database icons and previews, character sprites, and the beta Game Client. When Remote Client is enabled, resources are downloaded from the remote server and cached locally. If you already have client files such as data.grf, you can disable Remote Client and use local files instead." : {
+    "Game resources are required for item / skill icons, character / monster sprites, and the beta Game Client. When **Remote Client** is enabled, resources are downloaded from the remote server and cached locally in **Remote Client Files**. If you already have client files such as data.grf, you can disable **Remote Client** and use local client instead." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spielressourcen werden für Datenbank-Icons und Vorschauen, Charakter-Sprites und den Beta-Spiel-Client verwendet. Wenn Remote Client aktiviert ist, werden Ressourcen vom Remote-Server geladen und lokal zwischengespeichert. Wenn du bereits Clientdateien wie data.grf hast, kannst du Remote Client deaktivieren und stattdessen lokale Dateien verwenden."
+            "value" : "Spielressourcen werden für Item- / Skill-Icons, Charakter- / Monster-Sprites und den Beta-Spiel-Client benötigt. Wenn **Remote-Client** aktiviert ist, werden Ressourcen vom Remote-Server heruntergeladen und lokal in den **Remote-Client-Dateien** gespeichert. Wenn du bereits Clientdateien wie data.grf hast, kannst du **Remote-Client** deaktivieren und stattdessen den lokalen Client verwenden."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los recursos del juego se usan para iconos y vistas previas de la base de datos, sprites de personajes y el cliente de juego beta. Cuando Remote Client está activado, los recursos se descargan del servidor remoto y se almacenan en caché localmente. Si ya tienes archivos del cliente, como data.grf, puedes desactivar Remote Client y usar archivos locales."
+            "value" : "Los recursos del juego son necesarios para los iconos de objetos / habilidades, los sprites de personajes / monstruos y el cliente de juego beta. Cuando **Cliente remoto** está activado, los recursos se descargan del servidor remoto y se almacenan localmente en **Archivos de Cliente remoto**. Si ya tienes archivos del cliente, como data.grf, puedes desactivar **Cliente remoto** y usar el cliente local."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les ressources du jeu sont utilisées pour les icônes et aperçus de la base de données, les sprites de personnages et le client de jeu bêta. Lorsque Remote Client est activé, les ressources sont téléchargées depuis le serveur distant et mises en cache localement. Si vous avez déjà des fichiers client comme data.grf, vous pouvez désactiver Remote Client et utiliser des fichiers locaux."
+            "value" : "Les ressources du jeu sont requises pour les icônes d’objets / compétences, les sprites de personnages / monstres et le client de jeu bêta. Lorsque **Client distant** est activé, les ressources sont téléchargées depuis le serveur distant et mises en cache localement dans **Fichiers de Client distant**. Si vous avez déjà des fichiers client comme data.grf, vous pouvez désactiver **Client distant** et utiliser le client local."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Resource game digunakan untuk ikon dan pratinjau database, sprite karakter, dan klien game beta. Saat Remote Client aktif, resource diunduh dari server remote dan disimpan di cache lokal. Jika Anda sudah memiliki file klien seperti data.grf, Anda dapat menonaktifkan Remote Client dan memakai file lokal."
+            "value" : "Resource game diperlukan untuk ikon item / skill, sprite karakter / monster, dan klien game beta. Saat **Klien jarak jauh** aktif, resource diunduh dari server remote dan disimpan secara lokal di **File Klien Jarak Jauh**. Jika Anda sudah memiliki file klien seperti data.grf, Anda dapat menonaktifkan **Klien jarak jauh** dan menggunakan klien lokal."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le risorse di gioco vengono usate per icone e anteprime del database, sprite dei personaggi e il client di gioco beta. Quando Remote Client è attivo, le risorse vengono scaricate dal server remoto e memorizzate nella cache locale. Se hai già file client come data.grf, puoi disattivare Remote Client e usare file locali."
+            "value" : "Le risorse di gioco sono necessarie per le icone di oggetti / abilità, gli sprite di personaggi / mostri e il client di gioco beta. Quando **Client remoto** è attivo, le risorse vengono scaricate dal server remoto e salvate localmente in **File di Client remoto**. Se hai già file client come data.grf, puoi disattivare **Client remoto** e usare il client locale."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームリソースは、データベースのアイコンとプレビュー、キャラクタースプライト、ベータ版ゲームクライアントに使用されます。Remote Client が有効な場合、リソースはリモートサーバーからダウンロードされ、ローカルにキャッシュされます。data.grf などのクライアントファイルを既に持っている場合は、Remote Client を無効にしてローカルファイルを使用できます。"
+            "value" : "ゲームリソースは、アイテム / スキルアイコン、キャラクター / モンスタースプライト、ベータ版ゲームクライアントに必要です。**リモートクライアント**が有効な場合、リソースはリモートサーバーからダウンロードされ、**リモートクライアントファイル**にローカル保存されます。data.grf などのクライアントファイルを既に持っている場合は、**リモートクライアント**を無効にしてローカルクライアントを使用できます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임 리소스는 데이터베이스 아이콘과 미리보기, 캐릭터 스프라이트, 베타 게임 클라이언트에 사용됩니다. Remote Client가 활성화되면 리소스를 원격 서버에서 다운로드해 로컬에 캐시합니다. data.grf 같은 클라이언트 파일이 이미 있다면 Remote Client를 비활성화하고 로컬 파일을 사용할 수 있습니다."
+            "value" : "게임 리소스는 아이템 / 스킬 아이콘, 캐릭터 / 몬스터 스프라이트, 베타 게임 클라이언트에 필요합니다. **원격 클라이언트**가 활성화되면 리소스를 원격 서버에서 다운로드해 **원격 클라이언트 파일**에 로컬로 저장합니다. data.grf 같은 클라이언트 파일이 이미 있다면 **원격 클라이언트**를 비활성화하고 로컬 클라이언트를 사용할 수 있습니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Os recursos do jogo são usados para ícones e prévias do banco de dados, sprites de personagens e o cliente de jogo beta. Quando o Remote Client está ativado, os recursos são baixados do servidor remoto e armazenados em cache localmente. Se você já tem arquivos do cliente, como data.grf, pode desativar o Remote Client e usar arquivos locais."
+            "value" : "Os recursos do jogo são necessários para ícones de itens / habilidades, sprites de personagens / monstros e o cliente de jogo beta. Quando o **Cliente remoto** está ativado, os recursos são baixados do servidor remoto e armazenados localmente em **Arquivos do Cliente remoto**. Se você já tem arquivos do cliente, como data.grf, pode desativar o **Cliente remoto** e usar o cliente local."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Игровые ресурсы используются для значков и предпросмотра базы данных, спрайтов персонажей и бета-версии игрового клиента. Когда Remote Client включен, ресурсы загружаются с удаленного сервера и кэшируются локально. Если у вас уже есть клиентские файлы, например data.grf, можно отключить Remote Client и использовать локальные файлы."
+            "value" : "Игровые ресурсы необходимы для иконок предметов / навыков, спрайтов персонажей / монстров и бета-версии игрового клиента. Когда **Удалённый клиент** включен, ресурсы загружаются с удалённого сервера и сохраняются локально в **файлах удалённого клиента**. Если у вас уже есть клиентские файлы, например data.grf, можно отключить **Удалённый клиент** и использовать локальный клиент."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ทรัพยากรเกมใช้สำหรับไอคอนและภาพตัวอย่างของฐานข้อมูล สไปรต์ตัวละคร และไคลเอนต์เกมรุ่นเบต้า เมื่อเปิดใช้ Remote Client ระบบจะดาวน์โหลดทรัพยากรจากเซิร์ฟเวอร์ระยะไกลและแคชไว้ในเครื่อง หากคุณมีไฟล์ไคลเอนต์อยู่แล้ว เช่น data.grf คุณสามารถปิด Remote Client และใช้ไฟล์ในเครื่องแทนได้"
+            "value" : "ทรัพยากรเกมจำเป็นสำหรับไอคอนไอเทม / สกิล สไปรต์ตัวละคร / มอนสเตอร์ และไคลเอนต์เกมรุ่นเบต้า เมื่อเปิดใช้**ไคลเอนต์ระยะไกล** ระบบจะดาวน์โหลดทรัพยากรจากเซิร์ฟเวอร์ระยะไกลและบันทึกไว้ในเครื่องใน**ไฟล์ไคลเอนต์ระยะไกล** หากคุณมีไฟล์ไคลเอนต์อยู่แล้ว เช่น data.grf คุณสามารถปิด**ไคลเอนต์ระยะไกล**และใช้ไคลเอนต์ในเครื่องแทนได้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyun kaynakları veritabanı simgeleri ve önizlemeleri, karakter sprite’ları ve beta oyun istemcisi için kullanılır. Remote Client etkinken kaynaklar uzak sunucudan indirilir ve yerel olarak önbelleğe alınır. data.grf gibi istemci dosyalarınız zaten varsa Remote Client’ı kapatıp yerel dosyaları kullanabilirsiniz."
+            "value" : "Oyun kaynakları öğe / beceri simgeleri, karakter / canavar sprite’ları ve beta oyun istemcisi için gereklidir. **Uzak İstemci** etkinken kaynaklar uzak sunucudan indirilir ve **Uzak İstemci Dosyaları**’na yerel olarak kaydedilir. data.grf gibi istemci dosyalarınız zaten varsa **Uzak İstemci**’yi kapatıp yerel istemciyi kullanabilirsiniz."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏资源用于数据库图标和预览、角色精灵图以及 beta 游戏客户端。启用 Remote Client 后，资源会从远程服务器下载并缓存在本地。如果你已有 data.grf 等客户端文件，可以关闭 Remote Client 并改用本地文件。"
+            "value" : "游戏资源用于物品 / 技能图标、角色 / 怪物精灵图以及 beta 游戏客户端。启用**远程客户端**后，资源会从远程服务器下载并缓存到本地的**远程客户端文件**中。如果你已有 data.grf 等客户端文件，可以关闭**远程客户端**并改用本地客户端。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "遊戲資源用於資料庫圖示和預覽、角色精靈圖以及 beta 遊戲客戶端。啟用 Remote Client 後，資源會從遠端伺服器下載並快取在本機。如果你已有 data.grf 等客戶端檔案，可以關閉 Remote Client 並改用本機檔案。"
+            "value" : "遊戲資源用於物品 / 技能圖示、角色 / 怪物精靈圖以及 beta 遊戲客戶端。啟用**遠端用戶端**後，資源會從遠端伺服器下載並快取至本機的**遠端用戶端檔案**中。如果你已有 data.grf 等客戶端檔案，可以關閉**遠端用戶端**並改用本機用戶端。"
           }
         }
       }
@@ -1489,84 +1489,84 @@
         }
       }
     },
-    "Local Files" : {
+    "Local Client Files" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lokale Dateien"
+            "value" : "Lokale Client-Dateien"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Archivos locales"
+            "value" : "Archivos de cliente local"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fichiers locaux"
+            "value" : "Fichiers de client local"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Berkas lokal"
+            "value" : "File Klien Lokal"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "File locali"
+            "value" : "File di client locale"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ローカルファイル"
+            "value" : "ローカルクライアントファイル"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "로컬 파일"
+            "value" : "로컬 클라이언트 파일"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Arquivos locais"
+            "value" : "Arquivos do cliente local"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Локальные файлы"
+            "value" : "Файлы локального клиента"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไฟล์ในเครื่อง"
+            "value" : "ไฟล์ไคลเอนต์ในเครื่อง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yerel dosyalar"
+            "value" : "Yerel İstemci Dosyaları"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本地文件"
+            "value" : "本地客户端文件"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本機檔案"
+            "value" : "本機用戶端檔案"
           }
         }
       }
@@ -2321,84 +2321,84 @@
         }
       }
     },
-    "Remote Client is planned to require a subscription in a future update to help cover server costs. Local client files will continue to work without a subscription." : {
+    "Remote Client Files" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Für den Remote-Client ist geplant, in einem zukünftigen Update ein Abonnement zu erfordern, um die Serverkosten mitzutragen. Lokale Client-Dateien funktionieren weiterhin ohne Abonnement."
+            "value" : "Remote-Client-Dateien"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Está previsto que el cliente remoto requiera una suscripción en una actualización futura para ayudar a cubrir los costos del servidor. Los archivos de cliente locales seguirán funcionando sin suscripción."
+            "value" : "Archivos de Cliente remoto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le client distant devrait nécessiter un abonnement dans une future mise à jour afin d'aider à couvrir les coûts du serveur. Les fichiers client locaux continueront de fonctionner sans abonnement."
+            "value" : "Fichiers de Client distant"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remote Client direncanakan memerlukan langganan dalam pembaruan mendatang untuk membantu menutupi biaya server. File klien lokal akan tetap berfungsi tanpa langganan."
+            "value" : "File Klien Jarak Jauh"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "È previsto che il client remoto richieda un abbonamento in un futuro aggiornamento per contribuire a coprire i costi del server. I file client locali continueranno a funzionare senza abbonamento."
+            "value" : "File di Client remoto"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "リモートクライアントは、今後のアップデートでサーバー費用を補うためにサブスクリプションが必要になる予定です。ローカルのクライアントファイルは、サブスクリプションなしでも引き続き使用できます。"
+            "value" : "リモートクライアントファイル"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "원격 클라이언트는 향후 업데이트에서 서버 비용을 충당하기 위해 구독이 필요하도록 변경될 예정입니다. 로컬 클라이언트 파일은 구독 없이도 계속 사용할 수 있습니다."
+            "value" : "원격 클라이언트 파일"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Está previsto que o cliente remoto exija uma assinatura em uma atualização futura para ajudar a cobrir os custos do servidor. Os arquivos de cliente locais continuarão funcionando sem assinatura."
+            "value" : "Arquivos do Cliente remoto"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Планируется, что в будущем обновлении для удалённого клиента потребуется подписка, чтобы помочь покрыть расходы на сервер. Локальные файлы клиента продолжат работать без подписки."
+            "value" : "Файлы удалённого клиента"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "มีแผนให้ Remote Client ต้องใช้การสมัครสมาชิกในการอัปเดตในอนาคตเพื่อช่วยครอบคลุมค่าใช้จ่ายเซิร์ฟเวอร์ ไฟล์ไคลเอนต์ในเครื่องจะยังคงใช้งานได้โดยไม่ต้องสมัครสมาชิก"
+            "value" : "ไฟล์ไคลเอนต์ระยะไกล"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci'nin gelecekteki bir güncellemede sunucu maliyetlerini karşılamaya yardımcı olmak için abonelik gerektirmesi planlanıyor. Yerel istemci dosyaları abonelik olmadan çalışmaya devam edecek."
+            "value" : "Uzak İstemci Dosyaları"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "远程客户端计划在未来更新中改为需要订阅，以帮助支付服务器费用。本地客户端文件无需订阅也会继续可用。"
+            "value" : "远程客户端文件"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "遠端用戶端計劃在未來更新中改為需要訂閱，以協助支付伺服器費用。本機用戶端檔案無需訂閱也會繼續可用。"
+            "value" : "遠端用戶端檔案"
           }
         }
       }
