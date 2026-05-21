@@ -58,10 +58,10 @@ struct GameClientView: View {
                             .focused($focusedField, equals: .serverAddress)
                             .textFieldStyle(.plain)
                     }
-                    .padding(12)
-                    .frame(height: 50)
+                    .padding()
 
                     Divider()
+                        .padding(.horizontal)
 
                     HStack {
                         Text("Server Port")
@@ -72,8 +72,7 @@ struct GameClientView: View {
                             .focused($focusedField, equals: .serverPort)
                             .textFieldStyle(.plain)
                     }
-                    .padding(12)
-                    .frame(height: 50)
+                    .padding()
                 }
                 .background(.background.secondary)
                 .cornerRadius(12)
