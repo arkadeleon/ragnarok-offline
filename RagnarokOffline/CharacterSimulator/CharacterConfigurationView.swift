@@ -86,34 +86,22 @@ struct CharacterConfigurationView: View {
                 }
 
                 CharacterEquipmentPicker(
-                    LocalizedStringResource("Head Top", table: "CharacterSimulator"),
-                    predicate: { item in
-                        item.type == .armor && item.locations.contains(.head_top)
-                    },
+                    category: .headTop,
                     selection: $characterSimulator.configuration.headTop
                 )
 
                 CharacterEquipmentPicker(
-                    LocalizedStringResource("Head Mid", table: "CharacterSimulator"),
-                    predicate: { item in
-                        item.type == .armor && item.locations.contains(.head_mid)
-                    },
+                    category: .headMid,
                     selection: $characterSimulator.configuration.headMid
                 )
 
                 CharacterEquipmentPicker(
-                    LocalizedStringResource("Head Bottom", table: "CharacterSimulator"),
-                    predicate: { item in
-                        item.type == .armor && item.locations.contains(.head_low)
-                    },
+                    category: .headBottom,
                     selection: $characterSimulator.configuration.headBottom
                 )
 
                 CharacterEquipmentPicker(
-                    LocalizedStringResource("Garment", table: "CharacterSimulator"),
-                    predicate: { item in
-                        item.type == .armor && item.locations.contains(.garment) && item.view > 0
-                    },
+                    category: .garment,
                     selection: $characterSimulator.configuration.garment
                 )
             }

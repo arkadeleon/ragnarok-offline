@@ -16,7 +16,7 @@ struct CharacterRenderingView: View {
             if let animation = characterSimulator.animation {
                 AnimatedImageView(animatedImage: AnimatedImage(animation: animation))
                     .offset(x: -animation.pivot.x, y: -animation.pivot.y)
-                    .offset(y: 50)
+                    .offset(y: 40)
                     .scaleEffect(2)
             }
 
