@@ -1,53 +1,28 @@
 //
-//  MapPicker.swift
+//  MapViewerMapListView.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2026/3/10.
+//  Created by Leon Li on 2026/5/21.
 //
 
-import RagnarokResources
 import SwiftUI
 
-struct MapPicker: View {
+struct MapViewerMapListView: View {
     @Binding var selection: MapModel?
 
     @Environment(DatabaseModel.self) private var database
+    @Environment(\.dismiss) private var dismiss
 
-    @Namespace private var mapNamespace
-
-    @State private var isPicking = false
     @State private var searchText = ""
     @State private var maps: [MapModel] = []
     @State private var filteredMaps: [MapModel] = []
 
     var body: some View {
-        Button {
-            isPicking = true
-        } label: {
-            HStack {
-                Image(systemName: "map")
-
-                if let selection {
-                    Text(selection.displayName)
-                }
-            }
-        }
-        .matchedTransitionSource(id: "map", in: mapNamespace)
-        .sheet(isPresented: $isPicking) {
-            NavigationStack {
-                mapList
-            }
-            .presentationSizing(.form)
-            .adaptiveNavigationTransition(sourceID: "map", in: mapNamespace)
-        }
-    }
-
-    private var mapList: some View {
         List {
             ForEach(filteredMaps) { map in
                 Button {
                     selection = map
-                    isPicking = false
+                    dismiss()
                 } label: {
                     HStack {
                         MapCell(map: map)
@@ -57,7 +32,9 @@ struct MapPicker: View {
                                 .foregroundStyle(.link)
                         }
                     }
+                    .contentShape(Rectangle())
                 }
+                .buttonStyle(.plain)
             }
         }
         .listStyle(.plain)
@@ -65,7 +42,7 @@ struct MapPicker: View {
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarDoneButton {
-                isPicking = false
+                dismiss()
             }
         }
         .adaptiveSearch(text: $searchText)
@@ -107,6 +84,6 @@ struct MapPicker: View {
 #Preview {
     @Previewable @State var selection: MapModel? = nil
 
-    MapPicker(selection: $selection)
+    MapViewerMapListView(selection: $selection)
         .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
 }

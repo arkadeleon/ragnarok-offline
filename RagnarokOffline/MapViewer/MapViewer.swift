@@ -5,65 +5,22 @@
 //  Created by Leon Li on 2025/6/9.
 //
 
-import Metal
-import RagnarokRenderAssets
 import RagnarokResources
 import SwiftUI
 
 struct MapViewer: View {
     var resourceManager: ResourceManager
 
-    private let progress = Progress()
+    @Namespace private var mapNamespace
 
-    @Environment(DatabaseModel.self) private var database
-
+    @State private var isPicking = false
     @State private var selectedMap: MapModel?
-    @State private var dragStartOffset: CGPoint?
-    @State private var magnification: CGFloat = 1
 
     var body: some View {
         ZStack {
             if let selectedMap {
-                AsyncContentView {
-                    try await loadRenderer(for: selectedMap.name)
-                } content: { renderer in
-                    MetalViewContainer(renderer: renderer)
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    let startOffset = dragStartOffset ?? renderer.camera.panOffset
-                                    dragStartOffset = startOffset
-
-                                    let offset = CGPoint(
-                                        x: startOffset.x + value.translation.width,
-                                        y: startOffset.y + value.translation.height
-                                    )
-                                    renderer.camera.pan(offset: offset)
-                                }
-                                .onEnded { _ in
-                                    dragStartOffset = nil
-                                }
-                        )
-                        .simultaneousGesture(
-                            MagnifyGesture()
-                                .onChanged { value in
-                                    renderer.camera.zoom(magnification: magnification * value.magnification)
-                                }
-                                .onEnded { value in
-                                    magnification *= value.magnification
-                                }
-                        )
-                        .simultaneousGesture(
-                            SpatialTapGesture()
-                                .onEnded { value in
-                                    renderer.focusTile(at: value.location)
-                                }
-                        )
-                } placeholder: {
-                    ProgressView(progress)
-                        .progressViewStyle(.circular)
-                }
-                .id(selectedMap.name)
+                MapViewerMapRenderingView(map: selectedMap, resourceManager: resourceManager)
+                    .id(selectedMap.name)
             } else {
                 ContentUnavailableView {
                     Label {
@@ -73,38 +30,47 @@ struct MapViewer: View {
                     }
                 } description: {
                     Text("Choose a map to view", tableName: "MapViewer")
+                } actions: {
+                    Button {
+                        isPicking = true
+                    } label: {
+                        Label {
+                            Text("Choose a Map", tableName: "MapViewer")
+                        } icon: {
+                            Image(systemName: "map")
+                        }
+                        .font(.title3)
+                        .fontWeight(.medium)
+                        .padding(.horizontal)
+                    }
+                    .adaptiveProminentButtonStyle()
+                    .matchedTransitionSource(id: "map", in: mapNamespace)
                 }
             }
         }
         .navigationTitle(Text("Map Viewer", tableName: "MapViewer"))
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem {
-                MapPicker(selection: $selectedMap)
+            if let selectedMap {
+                ToolbarItem {
+                    Button {
+                        isPicking = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "map")
+                            Text(selectedMap.displayName)
+                        }
+                    }
+                    .matchedTransitionSource(id: "map", in: mapNamespace)
+                }
             }
         }
-        .task {
-            await database.fetchMaps()
+        .sheet(isPresented: $isPicking) {
+            NavigationStack {
+                MapViewerMapListView(selection: $selectedMap)
+            }
+            .presentationSizing(.form)
+            .adaptiveNavigationTransition(sourceID: "map", in: mapNamespace)
         }
-        .onChange(of: selectedMap?.name) {
-            dragStartOffset = nil
-            magnification = 1
-        }
-    }
-
-    private func loadRenderer(for mapName: String) async throws -> RSWFilePreviewRenderer {
-        let world = try await resourceManager.world(mapName: "\(mapName).rsw")
-        let worldAssetLoader = WorldAssetLoader()
-        let worldAsset = try await worldAssetLoader.load(
-            gat: world.gat,
-            gnd: world.gnd,
-            rsw: world.rsw,
-            resourceManager: resourceManager,
-            progress: progress
-        )
-
-        let device = MTLCreateSystemDefaultDevice()!
-        let renderer = try RSWFilePreviewRenderer(device: device, worldAsset: worldAsset)
-        return renderer
     }
 }
