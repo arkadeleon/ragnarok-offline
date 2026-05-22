@@ -70,7 +70,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         isTerminating = true
 
         Task {
-            await appModel.stopAllServers()
+            await appModel.serverManager.stopAllServers()
             NSApp.reply(toApplicationShouldTerminate: true)
         }
 

@@ -69,13 +69,13 @@ struct ContentView: View {
         case .serverFiles:
             FilesView("Server Files", directory: appModel.serverDirectory)
         case .loginServer:
-            ServerView(server: appModel.loginServer)
+            ServerView(server: appModel.serverManager.loginServer, serverManager: appModel.serverManager)
         case .charServer:
-            ServerView(server: appModel.charServer)
+            ServerView(server: appModel.serverManager.charServer, serverManager: appModel.serverManager)
         case .mapServer:
-            ServerView(server: appModel.mapServer)
+            ServerView(server: appModel.serverManager.mapServer, serverManager: appModel.serverManager)
         case .webServer:
-            ServerView(server: appModel.webServer)
+            ServerView(server: appModel.serverManager.webServer, serverManager: appModel.serverManager)
         case .itemDatabase:
             ItemDatabaseView()
                 .environment(appModel.database)

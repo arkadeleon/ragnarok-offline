@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ServerView: View {
     var server: ServerModel
-
-    @Environment(AppModel.self) private var appModel
+    var serverManager: ServerManager
 
     private var startDisabled: Bool {
         switch server.status {
@@ -42,7 +41,7 @@ struct ServerView: View {
                 } actions: {
                     Button {
                         Task {
-                            try await appModel.startServer(server)
+                            try await serverManager.startServer(server)
                         }
                     } label: {
                         Label {
@@ -66,7 +65,7 @@ struct ServerView: View {
             ToolbarItemGroup {
                 Button {
                     Task {
-                        await appModel.stopServer(server)
+                        await serverManager.stopServer(server)
                     }
                 } label: {
                     Image(systemName: "stop.fill")
@@ -75,7 +74,7 @@ struct ServerView: View {
 
                 Button {
                     Task {
-                        try await appModel.startServer(server)
+                        try await serverManager.startServer(server)
                     }
                 } label: {
                     Image(systemName: "play.fill")
@@ -101,8 +100,7 @@ struct ServerView: View {
 }
 
 #Preview {
-    let appModel = AppModel()
+    let serverManager = ServerManager()
 
-    ServerView(server: appModel.loginServer)
-        .environment(appModel)
+    ServerView(server: serverManager.loginServer, serverManager: serverManager)
 }

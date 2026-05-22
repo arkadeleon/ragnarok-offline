@@ -20,13 +20,13 @@ struct iOSApp: App {
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
                     Task {
                         let backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Pause Servers")
-                        await appModel.pauseServers()
+                        await appModel.serverManager.pauseServers()
                         UIApplication.shared.endBackgroundTask(backgroundTaskID)
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                     Task {
-                        try await appModel.resumeServers()
+                        try await appModel.serverManager.resumeServers()
                     }
                 }
         }

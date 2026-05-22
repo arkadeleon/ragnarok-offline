@@ -83,19 +83,19 @@ struct SidebarView: View {
                 }
 
                 NavigationLink(value: SidebarItem.loginServer) {
-                    SidebarServerRow(server: appModel.loginServer)
+                    SidebarServerRow(server: appModel.serverManager.loginServer)
                 }
 
                 NavigationLink(value: SidebarItem.charServer) {
-                    SidebarServerRow(server: appModel.charServer)
+                    SidebarServerRow(server: appModel.serverManager.charServer)
                 }
 
                 NavigationLink(value: SidebarItem.mapServer) {
-                    SidebarServerRow(server: appModel.mapServer)
+                    SidebarServerRow(server: appModel.serverManager.mapServer)
                 }
 
                 NavigationLink(value: SidebarItem.webServer) {
-                    SidebarServerRow(server: appModel.webServer)
+                    SidebarServerRow(server: appModel.serverManager.webServer)
                 }
             } header: {
                 SectionHeaderView("Server")
@@ -103,7 +103,7 @@ struct SidebarView: View {
             .sectionActions {
                 Button {
                     Task {
-                        try await appModel.startAllServers()
+                        try await appModel.serverManager.startAllServers()
                         requestReview()
                     }
                 } label: {

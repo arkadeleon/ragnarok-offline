@@ -5,19 +5,14 @@
 //  Created by Leon Li on 2025/7/3.
 //
 
+import Foundation
 import Observation
 import RagnarokGame
 import RagnarokResources
-import rAthenaChar
-import rAthenaLogin
-import rAthenaMap
-import rAthenaResources
-import rAthenaWeb
 
 let localClientURL = URL.documentsDirectory
 let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")!
 let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
-let serverWorkingDirectoryURL = URL.libraryDirectory.appending(path: "rathena", directoryHint: .isDirectory)
 
 @MainActor
 @Observable
@@ -29,74 +24,16 @@ final class AppModel {
 
     let localClientDirectory = File(node: .directory(localClientURL), location: .client)
     let remoteClientCacheDirectory = File(node: .directory(remoteClientCacheURL), location: .client)
+    let gameSession: GameSession
+    let chatSession: ChatSession
 
     let serverDirectory = File(node: .directory(serverWorkingDirectoryURL), location: .server)
-
-    let serverResourceManager = ServerResourceManager()
-    let loginServer = ServerModel(server: LoginServer.shared)
-    let charServer = ServerModel(server: CharServer.shared)
-    let mapServer = ServerModel(server: MapServer.shared)
-    let webServer = ServerModel(server: WebServer.shared)
+    let serverManager = ServerManager()
 
     let database: DatabaseModel
 
     let characterSimulator: CharacterSimulator
-    let skillSimulator = SkillSimulator()
-
-    let chatSession: ChatSession
-    let gameSession: GameSession
-
-    @ObservationIgnored
-    private let serverConfiguration = ServerConfiguration(
-        char_conf: """
-            login_ip: 127.0.0.1
-            stdout_with_ansisequence: yes
-            char_name_option: 0
-            char_del_delay: 0
-            pincode_enabled: no
-            """,
-        groups: """
-            Header:
-              Type: PLAYER_GROUP_DB
-              Version: 1
-
-            Body:
-              - Id: 0
-                Commands:
-                  alive: true
-                  autoloot: true
-                  jobchange: true
-                  baselevelup: true
-                  heal: true
-                  joblevelup: true
-                  mapmove: true
-                  monster: true
-                  mount_peco: true
-                  agi: true
-                  dex: true
-                  int: true
-                  luk: true
-                  str: true
-                  vit: true
-                  zeny: true
-                Permissions:
-                  any_warp: true
-            """,
-        login_conf: """
-            stdout_with_ansisequence: yes
-            new_account: yes
-            """,
-        map_conf: """
-            char_ip: 127.0.0.1
-            stdout_with_ansisequence: yes
-            """,
-        web_conf: """
-            stdout_with_ansisequence: yes
-            """
-    )
-
-    @ObservationIgnored
-    private var serversToResume: [ServerModel] = []
+    let skillSimulator: SkillSimulator
 
     init() {
         let settings = SettingsModel()
@@ -121,13 +58,16 @@ final class AppModel {
         self.settings = settings
         self.resourceManager = resourceManager
 
-        database = DatabaseModel(mode: .renewal, resourceManager: resourceManager)
-        characterSimulator = CharacterSimulator(resourceManager: resourceManager)
+        gameSession = GameSession(resourceManager: resourceManager)
         chatSession = ChatSession(
             serverAddress: settings.serverAddress,
             serverPort: settings.serverPort
         )
-        gameSession = GameSession(resourceManager: resourceManager)
+
+        database = DatabaseModel(mode: .renewal, resourceManager: resourceManager)
+
+        characterSimulator = CharacterSimulator(resourceManager: resourceManager)
+        skillSimulator = SkillSimulator()
 
         setupHelpFile()
     }
@@ -141,65 +81,5 @@ final class AppModel {
             return
         }
         try? FileManager.default.copyItem(at: bundleURL, to: helpFileURL)
-    }
-
-    func startServer(_ server: ServerModel) async throws {
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
-        _ = await server.start()
-    }
-
-    func startAllServers() async throws {
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
-        await startServers(allServers)
-    }
-
-    func stopServer(_ server: ServerModel) async {
-        _ = await server.stop()
-    }
-
-    func stopAllServers() async {
-        serversToResume.removeAll()
-        await stopServers(allServers)
-    }
-
-    func pauseServers() async {
-        serversToResume = runningServers()
-        await stopServers(serversToResume)
-    }
-
-    func resumeServers() async throws {
-        let servers = serversToResume
-        serversToResume.removeAll()
-
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
-        await startServers(servers)
-    }
-
-    private func startServers(_ servers: [ServerModel]) async {
-        await withTaskGroup(of: Void.self) { taskGroup in
-            for server in servers {
-                taskGroup.addTask {
-                    _ = await server.start()
-                }
-            }
-        }
-    }
-
-    private func stopServers(_ servers: [ServerModel]) async {
-        await withTaskGroup(of: Void.self) { taskGroup in
-            for server in servers {
-                taskGroup.addTask {
-                    _ = await server.stop()
-                }
-            }
-        }
-    }
-
-    private func runningServers() -> [ServerModel] {
-        allServers.filter({ $0.status == .running })
-    }
-
-    private var allServers: [ServerModel] {
-        [loginServer, charServer, mapServer, webServer]
     }
 }
