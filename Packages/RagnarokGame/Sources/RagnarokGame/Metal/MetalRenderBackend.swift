@@ -76,7 +76,7 @@ final class MetalRenderBackend: GameRenderBackend {
         renderCombatText(combatText)
     }
 
-    func addEffect(_ effect: MapEffect) {
+    func addEffect(_ effect: MapSceneEffect) {
         renderEffect(effect)
     }
 
@@ -245,7 +245,7 @@ final class MetalRenderBackend: GameRenderBackend {
         )
     }
 
-    private func renderEffect(_ effect: MapEffect) {
+    private func renderEffect(_ effect: MapSceneEffect) {
         guard let scene else {
             return
         }

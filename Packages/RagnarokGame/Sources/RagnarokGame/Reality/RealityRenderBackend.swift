@@ -155,7 +155,7 @@ final class RealityRenderBackend: GameRenderBackend {
         combatTextEntity.setParent(rootEntity)
     }
 
-    func addEffect(_ effect: MapEffect) {
+    func addEffect(_ effect: MapSceneEffect) {
     }
 
     func playSound(named soundName: String, on objectID: GameObjectID) {

@@ -634,7 +634,7 @@ extension MapScene {
     ) {
         let definitions = EffectTable.definitions(forEffectID: effectID)
         for definition in definitions {
-            let effect = MapEffect(
+            let effect = MapSceneEffect(
                 effectID: effectID,
                 effectDefinition: definition.resolved(),
                 creationTime: creationTime,

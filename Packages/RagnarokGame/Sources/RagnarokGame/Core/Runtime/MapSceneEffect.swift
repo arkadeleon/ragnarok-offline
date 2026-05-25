@@ -8,7 +8,7 @@
 import Foundation
 import simd
 
-public struct MapEffect: Identifiable, Sendable {
+public struct MapSceneEffect: Identifiable, Sendable {
     public let id: UUID
     public let effectID: Int
     public let effectDefinition: EffectDefinition
