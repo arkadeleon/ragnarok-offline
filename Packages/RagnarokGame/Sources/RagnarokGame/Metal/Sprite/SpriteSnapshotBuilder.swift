@@ -15,7 +15,7 @@ final class SpriteSnapshotBuilder {
 
     func build(
         objects: [GameObjectID : MapObjectState],
-        items: [GameObjectID : MapItemState],
+        items: [GameObjectID : MapSceneItem],
         scene: MapScene
     ) -> [GameObjectID : SpriteSnapshot] {
         let now = ContinuousClock.now
@@ -26,8 +26,8 @@ final class SpriteSnapshotBuilder {
             snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)
         }
 
-        for (itemID, itemState) in items {
-            snapshots[itemID] = snapshot(for: itemState, scene: scene)
+        for (objectID, item) in items {
+            snapshots[objectID] = snapshot(for: item, scene: scene)
         }
 
         return snapshots
@@ -56,12 +56,12 @@ final class SpriteSnapshotBuilder {
         )
     }
 
-    private func snapshot(for state: MapItemState, scene: MapScene) -> SpriteSnapshot {
+    private func snapshot(for item: MapSceneItem, scene: MapScene) -> SpriteSnapshot {
         SpriteSnapshot(
-            objectID: state.id,
-            worldPosition: scene.mapGrid.worldPosition(for: state.gridPosition),
+            objectID: item.objectID,
+            worldPosition: scene.mapGrid.worldPosition(for: item.gridPosition),
             isVisible: true,
-            content: .mapItem(itemID: state.itemID)
+            content: .mapItem(itemID: item.itemID)
         )
     }
 }

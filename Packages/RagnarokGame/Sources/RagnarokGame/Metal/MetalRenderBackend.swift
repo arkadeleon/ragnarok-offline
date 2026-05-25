@@ -211,7 +211,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     private func updateObjects(
         objects: [GameObjectID : MapObjectState],
-        items: [GameObjectID : MapItemState],
+        items: [GameObjectID : MapSceneItem],
         scene: MapScene
     ) {
         let snapshots = spriteSnapshotBuilder.build(

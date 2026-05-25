@@ -206,8 +206,8 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private func registerRealityComponents() {
         GridPositionComponent.registerComponent()
-        MapItemStateComponent.registerComponent()
         MapObjectStateComponent.registerComponent()
+        MapSceneItemComponent.registerComponent()
         TileComponent.registerComponent()
 
         CombatTextComponent.registerComponent()
@@ -411,12 +411,12 @@ final class RealityRenderBackend: GameRenderBackend {
             }
         }
 
-        for itemState in state.items.values {
+        for item in state.items.values {
             guard !Task.isCancelled else {
                 return
             }
 
-            await syncItemEntity(for: itemState, scene: scene)
+            await syncItemEntity(for: item, scene: scene)
         }
     }
 
@@ -452,19 +452,19 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    private func syncItemEntity(for itemState: MapItemState, scene: MapScene) async {
+    private func syncItemEntity(for item: MapSceneItem, scene: MapScene) async {
         do {
-            let entity = try await entityCache.itemEntity(for: itemState)
+            let entity = try await entityCache.itemEntity(for: item)
             guard !Task.isCancelled else {
                 return
             }
 
             let isNew = entity.parent == nil
 
-            entity.name = "\(itemState.id)"
-            entity.transform = Transform(translation: scene.mapGrid.worldPosition(for: itemState.gridPosition))
-            entity.components.set(GridPositionComponent(gridPosition: itemState.gridPosition))
-            entity.components.set(MapItemStateComponent(itemState: itemState))
+            entity.name = "\(item.objectID)"
+            entity.transform = Transform(translation: scene.mapGrid.worldPosition(for: item.gridPosition))
+            entity.components.set(GridPositionComponent(gridPosition: item.gridPosition))
+            entity.components.set(MapSceneItemComponent(item: item))
 
             if isNew {
                 entity.playDefaultSpriteAnimation()

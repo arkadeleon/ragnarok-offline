@@ -469,7 +469,7 @@ extension MapScene {
     }
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
-        state.items[item.objectID] = MapItemState(
+        state.items[item.objectID] = MapSceneItem(
             item: item,
             gridPosition: position
         )

@@ -180,18 +180,18 @@ final class RealityEntityCache {
         }
     }
 
-    func itemEntity(for itemState: MapItemState) async throws -> Entity {
-        if let phase = itemEntities[itemState.id] {
+    func itemEntity(for item: MapSceneItem) async throws -> Entity {
+        if let phase = itemEntities[item.objectID] {
             return try await phase.entity
         }
 
         let task = Task {
-            try await Entity(forItemID: itemState.itemID, using: resourceManager)
+            try await Entity(forItemID: item.itemID, using: resourceManager)
         }
-        itemEntities[itemState.id] = .inProgress(task)
+        itemEntities[item.objectID] = .inProgress(task)
 
         let entity = try await task.value
-        itemEntities[itemState.id] = .loaded(entity)
+        itemEntities[item.objectID] = .loaded(entity)
         return entity
     }
 

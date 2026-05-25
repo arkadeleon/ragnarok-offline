@@ -15,7 +15,7 @@ public final class MapSceneState {
     public var isPlayerDead = false
 
     public var objects: [GameObjectID : MapObjectState]
-    public var items: [GameObjectID : MapItemState] = [:]
+    public var items: [GameObjectID : MapSceneItem] = [:]
     public let overlay = MapOverlayState()
 
     public var player: MapObjectState {
@@ -58,7 +58,7 @@ extension MapSceneState {
             }
     }
 
-    func nearestItem(fromPosition position: SIMD2<Int>) -> MapItemState? {
+    func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneItem? {
         items.values
             .min {
                 distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)

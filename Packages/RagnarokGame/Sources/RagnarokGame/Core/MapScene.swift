@@ -264,9 +264,9 @@ public final class MapScene {
         }
     }
 
-    private func engageItem(_ target: MapItemState) {
+    private func engageItem(_ target: MapSceneItem) {
         movePlayerToward(targetPosition: target.gridPosition, within: 1) {
-            self.gameSession?.pickUpItem(objectID: target.id)
+            self.gameSession?.pickUpItem(objectID: target.objectID)
         }
     }
 
