@@ -68,8 +68,7 @@ public final class MapScene {
 
         self.mapGrid = MapGrid(gat: world.gat)
 
-        let playerState = MapObjectState(
-            id: player.objectID,
+        let playerObject = MapSceneObject(
             object: player,
             gridPosition: playerPosition,
             hp: character.hp,
@@ -84,7 +83,7 @@ public final class MapScene {
                 completion: .indefinite
             )
         )
-        self.state = MapSceneState(player: playerState)
+        self.state = MapSceneState(player: playerObject)
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
@@ -219,7 +218,7 @@ public final class MapScene {
 
     func talkToNearestNPC() {
         if let target = state.nearestNPC(fromPosition: state.player.gridPosition) {
-            gameSession?.talkToNPC(npcID: target.id)
+            gameSession?.talkToNPC(npcID: target.objectID)
         }
     }
 
@@ -232,19 +231,19 @@ public final class MapScene {
         case .monster:
             engageMonster(target)
         case .npc:
-            gameSession?.talkToNPC(npcID: target.id)
+            gameSession?.talkToNPC(npcID: target.objectID)
         default:
             break
         }
     }
 
-    private func engageMonster(_ target: MapObjectState) {
+    private func engageMonster(_ target: MapSceneObject) {
         movePlayerToward(targetPosition: target.gridPosition, within: 1) {
-            self.gameSession?.requestAction(._repeat, onTarget: target.id)
+            self.gameSession?.requestAction(._repeat, onTarget: target.objectID)
         }
     }
 
-    private func engageMonster(_ target: MapObjectState, skill: SkillInfo) {
+    private func engageMonster(_ target: MapSceneObject, skill: SkillInfo) {
         let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
         movePlayerToward(targetPosition: targetPosition, within: skillRange) {
@@ -258,7 +257,7 @@ public final class MapScene {
                 self.gameSession?.useSkill(
                     skillID: skill.skillID,
                     level: skill.level,
-                    onTarget: target.id
+                    onTarget: target.objectID
                 )
             }
         }

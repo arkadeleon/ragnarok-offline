@@ -11,7 +11,7 @@ import WorldCamera
 
 class CombatTextSystem: System {
     static let query = EntityQuery(where: .has(CombatTextComponent.self))
-    static let targetQuery = EntityQuery(where: .has(MapObjectStateComponent.self))
+    static let targetQuery = EntityQuery(where: .has(MapSceneObjectComponent.self))
 
     required init(scene: Scene) {
     }
@@ -53,7 +53,7 @@ class CombatTextSystem: System {
                     targetEntity = context.scene.findEntity(id: targetEntityID)
                 } else {
                     targetEntity = context.entities(matching: Self.targetQuery, updatingSystemWhen: .rendering).first { entity in
-                        entity.components[MapObjectStateComponent.self]?.objectState.id == component.combatText.target.id
+                        entity.components[MapSceneObjectComponent.self]?.object.objectID == component.combatText.target.id
                     }
                 }
 

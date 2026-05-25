@@ -72,13 +72,13 @@ private extension RealityMapView {
 
     var mapObjectTapGesture: some Gesture {
         SpatialTapGesture()
-            .targetedToEntity(where: .has(MapObjectStateComponent.self))
+            .targetedToEntity(where: .has(MapSceneObjectComponent.self))
             .onEnded { event in
-                guard let objectState = event.entity.components[MapObjectStateComponent.self]?.objectState else {
+                guard let object = event.entity.components[MapSceneObjectComponent.self]?.object else {
                     return
                 }
 
-                scene.handleInteraction(.mapObject(objectID: objectState.id))
+                scene.handleInteraction(.mapObject(objectID: object.objectID))
             }
     }
 

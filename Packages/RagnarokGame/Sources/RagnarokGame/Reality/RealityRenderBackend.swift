@@ -101,12 +101,12 @@ final class RealityRenderBackend: GameRenderBackend {
         do {
             let playerState = scene.state.player
             let (playerEntity, _) = try await entityCache.objectEntity(for: playerState)
-            playerEntity.name = "\(playerState.id)"
+            playerEntity.name = "\(playerState.objectID)"
             playerEntity.transform = Transform(translation: scene.mapGrid.worldPosition(for: scene.playerPosition))
             playerEntity.isEnabled = playerState.effectState != .cloak
             playerEntity.components.set([
                 GridPositionComponent(gridPosition: scene.playerPosition),
-                MapObjectStateComponent(objectState: playerState),
+                MapSceneObjectComponent(object: playerState),
             ])
             playerEntity.playSpriteAnimation(.idle, direction: .south)
             rootEntity.addChild(playerEntity)
@@ -206,7 +206,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private func registerRealityComponents() {
         GridPositionComponent.registerComponent()
-        MapObjectStateComponent.registerComponent()
+        MapSceneObjectComponent.registerComponent()
         MapSceneItemComponent.registerComponent()
         TileComponent.registerComponent()
 
@@ -383,8 +383,8 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     private func syncEntities(with state: MapSceneState, scene: MapScene) async {
-        let objectStates = Array(state.objects.values)
-        let desiredObjectIDs = Set(objectStates.map(\.id))
+        let objects = Array(state.objects.values)
+        let desiredObjectIDs = Set(objects.map(\.objectID))
 
         for objectID in entityCache.objectIDs.subtracting(desiredObjectIDs) {
             do {
@@ -394,12 +394,12 @@ final class RealityRenderBackend: GameRenderBackend {
             }
         }
 
-        for objectState in objectStates {
+        for object in objects {
             guard !Task.isCancelled else {
                 return
             }
 
-            await syncObjectEntity(for: objectState, scene: scene)
+            await syncObjectEntity(for: object, scene: scene)
         }
 
         let desiredItemIDs = Set(state.items.keys)
@@ -420,9 +420,9 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    private func syncObjectEntity(for objectState: MapObjectState, scene: MapScene) async {
+    private func syncObjectEntity(for object: MapSceneObject, scene: MapScene) async {
         do {
-            let (entity, isNew) = try await entityCache.objectEntity(for: objectState)
+            let (entity, isNew) = try await entityCache.objectEntity(for: object)
             guard !Task.isCancelled else {
                 return
             }
@@ -431,21 +431,21 @@ final class RealityRenderBackend: GameRenderBackend {
                 rootEntity.addChild(entity)
             }
 
-            entity.name = "\(objectState.id)"
+            entity.name = "\(object.objectID)"
             entity.transform = Transform(
                 translation: sampler.sample(
-                    for: objectState,
+                    for: object,
                     position: { scene.mapGrid.worldPosition(for: $0) },
                     now: .now
                 ).worldPosition
             )
-            entity.isEnabled = objectState.effectState != .cloak
-            entity.components.set(GridPositionComponent(gridPosition: objectState.gridPosition))
-            entity.components.set(MapObjectStateComponent(objectState: objectState))
+            entity.isEnabled = object.effectState != .cloak
+            entity.components.set(GridPositionComponent(gridPosition: object.gridPosition))
+            entity.components.set(MapSceneObjectComponent(object: object))
             entity.components.set(MapObjectSnapshotPresentationComponent(
-                logicalWorldPosition: scene.mapGrid.worldPosition(for: objectState.gridPosition),
-                timeline: MapObjectMovementTimeline(for: objectState, position: { scene.mapGrid.worldPosition(for: $0) }),
-                presentation: objectState.presentation
+                logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
+                timeline: MapObjectMovementTimeline(for: object, position: { scene.mapGrid.worldPosition(for: $0) }),
+                presentation: object.presentation
             ))
         } catch {
             logger.warning("\(error)")

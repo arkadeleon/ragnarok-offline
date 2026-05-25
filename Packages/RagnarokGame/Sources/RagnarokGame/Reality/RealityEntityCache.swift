@@ -80,26 +80,26 @@ final class RealityEntityCache {
         }
     }
 
-    func objectEntity(for objectState: MapObjectState) async throws -> (entity: Entity, isNew: Bool) {
-        let configuration = ComposedSprite.Configuration(objectState: objectState)
+    func objectEntity(for object: MapSceneObject) async throws -> (entity: Entity, isNew: Bool) {
+        let configuration = ComposedSprite.Configuration(object: object)
 
-        if let entry = objectEntities[objectState.id] {
+        if let entry = objectEntities[object.objectID] {
             if entry.configuration == configuration {
                 return try await (entry.phase.entity, false)
             }
 
             removeObjectEntity(entry)
-            objectEntities.removeValue(forKey: objectState.id)
+            objectEntities.removeValue(forKey: object.objectID)
         }
 
         if configuration.job.isPlayer {
             return try await playerEntity(
-                for: objectState.id,
+                for: object.objectID,
                 configuration: configuration
             )
         } else {
             return try await nonPlayerEntity(
-                for: objectState.id,
+                for: object.objectID,
                 configuration: configuration
             )
         }

@@ -210,7 +210,7 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     private func updateObjects(
-        objects: [GameObjectID : MapObjectState],
+        objects: [GameObjectID : MapSceneObject],
         items: [GameObjectID : MapSceneItem],
         scene: MapScene
     ) {

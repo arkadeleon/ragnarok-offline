@@ -14,11 +14,11 @@ public final class MapSceneState {
     public let playerID: GameObjectID
     public var isPlayerDead = false
 
-    public var objects: [GameObjectID : MapObjectState]
+    public var objects: [GameObjectID : MapSceneObject]
     public var items: [GameObjectID : MapSceneItem] = [:]
     public let overlay = MapOverlayState()
 
-    public var player: MapObjectState {
+    public var player: MapSceneObject {
         get {
             guard let player = objects[playerID] else {
                 preconditionFailure("MapSceneState.objects must contain the player.")
@@ -26,19 +26,19 @@ public final class MapSceneState {
             return player
         }
         set {
-            precondition(newValue.id == playerID, "MapSceneState.player must keep the original player ID.")
+            precondition(newValue.objectID == playerID, "MapSceneState.player must keep the original player ID.")
             objects[playerID] = newValue
         }
     }
 
-    public init(player: MapObjectState) {
-        self.playerID = player.id
-        self.objects = [player.id: player]
+    public init(player: MapSceneObject) {
+        self.playerID = player.objectID
+        self.objects = [player.objectID: player]
     }
 }
 
 extension MapSceneState {
-    func nearestMonster(fromPosition position: SIMD2<Int>) -> MapObjectState? {
+    func nearestMonster(fromPosition position: SIMD2<Int>) -> MapSceneObject? {
         objects.values
             .filter {
                 $0.type == .monster
@@ -48,7 +48,7 @@ extension MapSceneState {
             }
     }
 
-    func nearestNPC(fromPosition position: SIMD2<Int>) -> MapObjectState? {
+    func nearestNPC(fromPosition position: SIMD2<Int>) -> MapSceneObject? {
         objects.values
             .filter {
                 $0.type == .npc

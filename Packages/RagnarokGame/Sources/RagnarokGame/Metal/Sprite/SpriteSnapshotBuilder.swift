@@ -14,7 +14,7 @@ final class SpriteSnapshotBuilder {
     private let sampler = MapObjectPresentationSampler()
 
     func build(
-        objects: [GameObjectID : MapObjectState],
+        objects: [GameObjectID : MapSceneObject],
         items: [GameObjectID : MapSceneItem],
         scene: MapScene
     ) -> [GameObjectID : SpriteSnapshot] {
@@ -22,8 +22,8 @@ final class SpriteSnapshotBuilder {
 
         var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
-        for (objectID, objectState) in objects {
-            snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)
+        for (objectID, object) in objects {
+            snapshots[objectID] = snapshot(for: object, now: now, scene: scene)
         }
 
         for (objectID, item) in items {
@@ -33,14 +33,14 @@ final class SpriteSnapshotBuilder {
         return snapshots
     }
 
-    private func snapshot(for state: MapObjectState, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
+    private func snapshot(for object: MapSceneObject, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
         let presentationSample = sampler.sample(
-            for: state,
+            for: object,
             position: { scene.mapGrid.worldPosition(for: $0) },
             now: now
         )
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: state.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
         var animation = presentationSample.animation
         animation.direction = animation.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
@@ -49,10 +49,10 @@ final class SpriteSnapshotBuilder {
         }
 
         return SpriteSnapshot(
-            objectID: state.id,
+            objectID: object.objectID,
             worldPosition: presentationSample.worldPosition,
-            isVisible: state.effectState != .cloak,
-            content: .mapObject(configuration: ComposedSprite.Configuration(objectState: state), animation: animation)
+            isVisible: object.effectState != .cloak,
+            content: .mapObject(configuration: ComposedSprite.Configuration(object: object), animation: animation)
         )
     }
 

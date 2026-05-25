@@ -121,10 +121,10 @@ extension MapScene {
         let hp = Int(packet.HP)
         let maxHp = Int(packet.maxHP)
 
-        if var objectState = state.objects[objectID] {
-            objectState.hp = hp
-            objectState.maxHp = maxHp
-            state.objects[objectID] = objectState
+        if var object = state.objects[objectID] {
+            object.hp = hp
+            object.maxHp = maxHp
+            state.objects[objectID] = object
         }
         state.overlay.gauges[objectID]?.hp = hp
         state.overlay.gauges[objectID]?.maxHp = maxHp
@@ -133,8 +133,7 @@ extension MapScene {
     }
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
-        state.objects[object.objectID] = MapObjectState(
-            id: object.objectID,
+        state.objects[object.objectID] = MapSceneObject(
             object: object,
             gridPosition: position,
             hp: object.hp,
@@ -162,12 +161,12 @@ extension MapScene {
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
-        let existingObjectState = state.objects[object.objectID]
+        let existingObject = state.objects[object.objectID]
 
         let movementPlanner = MapObjectMovementPlanner(pathFinder: pathFinder)
         let movement = movementPlanner.replan(
-            existingMovement: existingObjectState?.movement,
-            existingSpeed: existingObjectState?.speed,
+            existingMovement: existingObject?.movement,
+            existingSpeed: existingObject?.speed,
             incomingStartPosition: startPosition,
             incomingEndPosition: endPosition,
             incomingSpeed: object.speed,
@@ -176,18 +175,18 @@ extension MapScene {
         let remainingDuration = movement.remainingDuration(at: now)
         let direction = movement.finalDirection
 
-        if var objectState = state.objects[object.objectID] {
+        if var object = state.objects[object.objectID] {
             let presentation = MapObjectPresentationState(
                 action: .walk,
                 direction: direction,
-                headDirection: objectState.presentation.headDirection,
+                headDirection: object.presentation.headDirection,
                 startTime: now,
                 completion: .after(remainingDuration, settledAction: .idle)
             )
-            objectState.gridPosition = endPosition
-            objectState.movement = movement
-            objectState.presentation = presentation
-            state.objects[object.objectID] = objectState
+            object.gridPosition = endPosition
+            object.movement = movement
+            object.presentation = presentation
+            state.objects[object.objectID] = object
         } else {
             let presentation = MapObjectPresentationState(
                 action: .walk,
@@ -196,8 +195,7 @@ extension MapScene {
                 startTime: now,
                 completion: .after(remainingDuration, settledAction: .idle)
             )
-            state.objects[object.objectID] = MapObjectState(
-                id: object.objectID,
+            state.objects[object.objectID] = MapSceneObject(
                 object: object,
                 gridPosition: endPosition,
                 hp: object.hp,
@@ -222,17 +220,17 @@ extension MapScene {
     func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
         let now = ContinuousClock.now
 
-        if var objectState = state.objects[objectID] {
-            objectState.gridPosition = position
-            objectState.movement = nil
-            objectState.presentation = MapObjectPresentationState(
+        if var object = state.objects[objectID] {
+            object.gridPosition = position
+            object.movement = nil
+            object.presentation = MapObjectPresentationState(
                 action: .idle,
-                direction: objectState.presentation.direction,
-                headDirection: objectState.presentation.headDirection,
+                direction: object.presentation.direction,
+                headDirection: object.presentation.headDirection,
                 startTime: now,
                 completion: .indefinite
             )
-            state.objects[objectID] = objectState
+            state.objects[objectID] = object
         }
 
         if objectID == state.playerID, let action = pendingArrivalAction {
@@ -268,15 +266,15 @@ extension MapScene {
     }
 
     func onMapObjectResurrected(objectID: GameObjectID) {
-        if var objectState = state.objects[objectID] {
-            objectState.presentation = MapObjectPresentationState(
+        if var object = state.objects[objectID] {
+            object.presentation = MapObjectPresentationState(
                 action: .idle,
-                direction: objectState.presentation.direction,
-                headDirection: objectState.presentation.headDirection,
+                direction: object.presentation.direction,
+                headDirection: object.presentation.headDirection,
                 startTime: .now,
                 completion: .indefinite
             )
-            state.objects[objectID] = objectState
+            state.objects[objectID] = object
         }
         if objectID == state.playerID {
             state.isPlayerDead = false
@@ -285,10 +283,10 @@ extension MapScene {
     }
 
     func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
-        if var objectState = state.objects[objectID] {
-            objectState.presentation.direction = SpriteDirection(direction: direction)
-            objectState.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
-            state.objects[objectID] = objectState
+        if var object = state.objects[objectID] {
+            object.presentation.direction = SpriteDirection(direction: direction)
+            object.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
+            state.objects[objectID] = object
         }
 
         applySnapshot()
@@ -297,22 +295,22 @@ extension MapScene {
     func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
         let isVisible = effectState != .cloak
 
-        if var objectState = state.objects[objectID] {
-            objectState.bodyState = bodyState
-            objectState.healthState = healthState
-            objectState.effectState = effectState
-            state.objects[objectID] = objectState
+        if var object = state.objects[objectID] {
+            object.bodyState = bodyState
+            object.healthState = healthState
+            object.effectState = effectState
+            state.objects[objectID] = object
         }
 
         if isVisible {
-            if let objectState = state.objects[objectID], objectID == state.playerID || objectState.type == .monster {
+            if let object = state.objects[objectID], objectID == state.playerID || object.type == .monster {
                 state.overlay.gauges[objectID] = MapGaugeOverlay(
                     id: objectID,
-                    hp: objectState.hp,
-                    maxHp: objectState.maxHp,
-                    sp: objectState.sp,
-                    maxSp: objectState.maxSp,
-                    objectType: objectState.type
+                    hp: object.hp,
+                    maxHp: object.maxHp,
+                    sp: object.sp,
+                    maxSp: object.maxSp,
+                    objectType: object.type
                 )
             }
         } else {
@@ -324,7 +322,7 @@ extension MapScene {
 
     func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
         let objectID = packet.AID
-        guard var objectState = state.objects[objectID] else {
+        guard var object = state.objects[objectID] else {
             return
         }
 
@@ -334,31 +332,31 @@ extension MapScene {
 
         switch look {
         case .base:
-            objectState.job = Int(packet.val)
+            object.job = Int(packet.val)
         case .hair:
-            objectState.hairStyle = Int(packet.val)
+            object.hairStyle = Int(packet.val)
         case .weapon:
-            objectState.weapon = Int(packet.val)
-            objectState.shield = Int(packet.val2)
+            object.weapon = Int(packet.val)
+            object.shield = Int(packet.val2)
         case .head_bottom:
-            objectState.headBottom = Int(packet.val)
+            object.headBottom = Int(packet.val)
         case .head_top:
-            objectState.headTop = Int(packet.val)
+            object.headTop = Int(packet.val)
         case .head_mid:
-            objectState.headMid = Int(packet.val)
+            object.headMid = Int(packet.val)
         case .hair_color:
-            objectState.hairColor = Int(packet.val)
+            object.hairColor = Int(packet.val)
         case .clothes_color:
-            objectState.clothesColor = Int(packet.val)
+            object.clothesColor = Int(packet.val)
         case .shield:
-            objectState.shield = Int(packet.val)
+            object.shield = Int(packet.val)
         case .robe:
-            objectState.garment = Int(packet.val)
+            object.garment = Int(packet.val)
         default:
             return
         }
 
-        state.objects[objectID] = objectState
+        state.objects[objectID] = object
         applySnapshot()
     }
 
@@ -402,15 +400,15 @@ extension MapScene {
             .after(.milliseconds(objectAction.sourceSpeed), settledAction: .idle)
         }
 
-        if var objectState = state.objects[sourceID] {
-            objectState.presentation = MapObjectPresentationState(
+        if var object = state.objects[sourceID] {
+            object.presentation = MapObjectPresentationState(
                 action: presentationAction,
-                direction: objectState.presentation.direction,
-                headDirection: objectState.presentation.headDirection,
+                direction: object.presentation.direction,
+                headDirection: object.presentation.headDirection,
                 startTime: now,
                 completion: completion
             )
-            state.objects[sourceID] = objectState
+            state.objects[sourceID] = object
         }
 
         applySnapshot()
@@ -431,15 +429,15 @@ extension MapScene {
             let duration = Duration.milliseconds(Int(packet.attackMT))
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            if var objectState = state.objects[objectID] {
-                objectState.presentation = MapObjectPresentationState(
+            if var object = state.objects[objectID] {
+                object.presentation = MapObjectPresentationState(
                     action: action,
-                    direction: objectState.presentation.direction,
-                    headDirection: objectState.presentation.headDirection,
+                    direction: object.presentation.direction,
+                    headDirection: object.presentation.headDirection,
                     startTime: now,
                     completion: .after(duration, settledAction: settledAction)
                 )
-                state.objects[objectID] = objectState
+                state.objects[objectID] = object
             }
         }
 
@@ -507,12 +505,12 @@ extension MapScene {
 }
 
 extension MapScene {
-    private func afterAttackAction(for objectState: MapObjectState?) -> SpriteActionType {
-        guard let objectState else {
+    private func afterAttackAction(for object: MapSceneObject?) -> SpriteActionType {
+        guard let object else {
             return .idle
         }
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: objectState.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
         return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
     }
 

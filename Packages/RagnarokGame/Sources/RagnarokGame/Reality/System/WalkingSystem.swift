@@ -26,7 +26,7 @@ class WalkingSystem: System {
                 continue
             }
 
-            guard let objectState = entity.components[MapObjectStateComponent.self]?.objectState else {
+            guard let object = entity.components[MapSceneObjectComponent.self]?.object else {
                 continue
             }
 
@@ -35,7 +35,7 @@ class WalkingSystem: System {
             let targetGridPosition = path[1]
 
             let direction = SpriteDirection(sourcePosition: sourceGridPosition, targetPosition: targetGridPosition)
-            let speed = TimeInterval(objectState.speed) / 1000
+            let speed = TimeInterval(object.speed) / 1000
             let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 
             let mapGrid = walkingComponent.mapGrid

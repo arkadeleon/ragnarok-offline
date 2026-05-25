@@ -125,17 +125,17 @@ extension Entity {
     }
 
     func attack(direction: SpriteDirection) {
-        guard let objectState = components[MapObjectStateComponent.self]?.objectState else {
+        guard let object = components[MapSceneObjectComponent.self]?.object else {
             return
         }
 
         let attackActionType = SpriteActionType.attackActionType(
-            forJobID: objectState.job,
-            gender: objectState.gender,
-            weapon: objectState.weapon
+            forJobID: object.job,
+            gender: object.gender,
+            weapon: object.weapon
         )
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: objectState.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
         let nextActionType: SpriteActionType = if availableActionTypes.contains(.readyToAttack) {
             .readyToAttack
         } else {
@@ -146,11 +146,11 @@ extension Entity {
     }
 
     func castSkill(direction: SpriteDirection) {
-        guard let objectState = components[MapObjectStateComponent.self]?.objectState else {
+        guard let object = components[MapSceneObjectComponent.self]?.object else {
             return
         }
 
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: objectState.job)
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
         let actionType: SpriteActionType = if availableActionTypes.contains(.skill) {
             .skill
         } else {
@@ -203,7 +203,7 @@ extension Entity {
             return
         }
 
-        guard let objectState = components[MapObjectStateComponent.self]?.objectState,
+        guard let object = components[MapSceneObjectComponent.self]?.object,
               let animations = spriteEntity.components[SpriteAnimationLibraryComponent.self]?.animations else {
             return
         }
@@ -217,7 +217,7 @@ extension Entity {
                 let targetPosition = path[i]
 
                 let direction = SpriteDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
-                let speed = TimeInterval(objectState.speed) / 1000
+                let speed = TimeInterval(object.speed) / 1000
                 let duration = direction.isDiagonal ? speed * sqrt(2) : speed
 
                 let animationName = SpriteAnimation.animationName(

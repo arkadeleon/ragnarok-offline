@@ -1,5 +1,5 @@
 //
-//  MapObjectState.swift
+//  MapSceneObject.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/20.
@@ -9,8 +9,8 @@ import RagnarokConstants
 import RagnarokModels
 import simd
 
-public struct MapObjectState: Identifiable, Sendable {
-    public let id: GameObjectID
+public struct MapSceneObject: Sendable {
+    public let objectID: GameObjectID
     public var type: MapObjectType
     public var name: String
     public var speed: Int
@@ -37,7 +37,6 @@ public struct MapObjectState: Identifiable, Sendable {
     public var presentation: MapObjectPresentationState
 
     public init(
-        id: GameObjectID,
         object: MapObject,
         gridPosition: SIMD2<Int>,
         hp: Int,
@@ -47,7 +46,7 @@ public struct MapObjectState: Identifiable, Sendable {
         movement: MapObjectMovementState? = nil,
         presentation: MapObjectPresentationState
     ) {
-        self.id = id
+        self.objectID = object.objectID
         self.type = object.type
         self.name = object.name
         self.speed = object.speed

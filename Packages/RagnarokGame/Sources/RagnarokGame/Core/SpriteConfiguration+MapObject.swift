@@ -38,16 +38,16 @@ extension ComposedSprite.Configuration {
         self.updateHairStyle()
     }
 
-    init(objectState: MapObjectState) {
-        self.init(jobID: objectState.job)
-        self.gender = objectState.gender
-        self.hairStyle = objectState.hairStyle
-        self.hairColor = objectState.hairColor
-        self.clothesColor = objectState.clothesColor
-        self.weapon = objectState.weapon
-        self.shield = objectState.shield
-        self.headgears = [objectState.headTop, objectState.headMid, objectState.headBottom]
-        self.garment = objectState.garment
+    init(object: MapSceneObject) {
+        self.init(jobID: object.job)
+        self.gender = object.gender
+        self.hairStyle = object.hairStyle
+        self.hairColor = object.hairColor
+        self.clothesColor = object.clothesColor
+        self.weapon = object.weapon
+        self.shield = object.shield
+        self.headgears = [object.headTop, object.headMid, object.headBottom]
+        self.garment = object.garment
 
         self.updateHairStyle()
     }
