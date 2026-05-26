@@ -39,7 +39,7 @@ final class RealityMapAudioPlayer: GameAudioPlayer {
         Task { @MainActor [weak self] in
             guard let self else { return }
             guard let resource = await soundEffectResource(for: soundName) else { return }
-            guard let entity = entityCache.loadedObjectEntity(for: objectID) else { return }
+            guard let entity = entityCache.objectEntities[objectID] else { return }
             entity.playAudio(resource)
         }
     }

@@ -98,23 +98,19 @@ final class RealityRenderBackend: GameRenderBackend {
 
         await tileSelectionRenderer.prepare()
 
-        do {
-            let playerState = scene.state.player
-            let (playerEntity, _) = try await entityCache.objectEntity(for: playerState)
-            playerEntity.name = "\(playerState.objectID)"
-            playerEntity.transform = Transform(translation: scene.mapGrid.worldPosition(for: scene.playerPosition))
-            playerEntity.isEnabled = playerState.effectState != .cloak
-            playerEntity.components.set([
-                GridPositionComponent(gridPosition: scene.playerPosition),
-                MapSceneObjectComponent(object: playerState),
-            ])
-            playerEntity.playSpriteAnimation(.idle, direction: .south)
-            rootEntity.addChild(playerEntity)
+        let player = scene.state.player
+        let playerEntity = entityCache.objectEntity(for: player)
+        playerEntity.name = "\(player.objectID)"
+        playerEntity.transform = Transform(translation: scene.mapGrid.worldPosition(for: scene.playerPosition))
+        playerEntity.isEnabled = player.effectState != .cloak
+        playerEntity.components.set([
+            GridPositionComponent(gridPosition: scene.playerPosition),
+            MapSceneObjectComponent(object: player),
+        ])
+        rootEntity.addChild(playerEntity)
+        loadObjectSpriteEntity(for: player, parent: playerEntity)
 
-            setupWorldCamera(target: playerEntity, cameraState: scene.cameraState)
-        } catch {
-            logger.warning("\(error)")
-        }
+        setupWorldCamera(target: playerEntity, cameraState: scene.cameraState)
 
         setupLighting(world: scene.world)
     }
@@ -221,6 +217,7 @@ final class RealityRenderBackend: GameRenderBackend {
         SpriteAnimationSystem.registerSystem()
         SpriteBillboardComponent.registerComponent()
         SpriteBillboardSystem.registerSystem()
+        SpriteConfigurationComponent.registerComponent()
 
         MapObjectSnapshotPresentationComponent.registerComponent()
         MapObjectSnapshotPresentationSystem.registerSystem()
@@ -379,27 +376,19 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     private func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
-        entityCache.loadedObjectEntity(for: objectID)?.position(relativeTo: nil)
+        entityCache.objectEntities[objectID]?.position(relativeTo: nil)
     }
 
     private func syncEntities(with state: MapSceneState, scene: MapScene) async {
         let objects = Array(state.objects.values)
         let desiredObjectIDs = Set(objects.map(\.objectID))
 
-        for objectID in entityCache.objectIDs.subtracting(desiredObjectIDs) {
-            do {
-                try await entityCache.removeObjectEntity(for: objectID)
-            } catch {
-                logger.warning("\(error)")
-            }
+        for objectID in Set(entityCache.objectEntities.keys).subtracting(desiredObjectIDs) {
+            entityCache.removeObjectEntity(for: objectID)
         }
 
         for object in objects {
-            guard !Task.isCancelled else {
-                return
-            }
-
-            await syncObjectEntity(for: object, scene: scene)
+            syncObjectEntity(for: object, scene: scene)
         }
 
         let desiredItemIDs = Set(state.items.keys)
@@ -412,35 +401,54 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    private func syncObjectEntity(for object: MapSceneObject, scene: MapScene) async {
-        do {
-            let (entity, isNew) = try await entityCache.objectEntity(for: object)
-            guard !Task.isCancelled else {
+    private func syncObjectEntity(for object: MapSceneObject, scene: MapScene) {
+        let entity = entityCache.objectEntity(for: object)
+        let isNew = entity.parent == nil
+
+        entity.name = "\(object.objectID)"
+        entity.transform = Transform(
+            translation: sampler.sample(
+                for: object,
+                position: { scene.mapGrid.worldPosition(for: $0) },
+                now: .now
+            ).worldPosition
+        )
+        entity.isEnabled = object.effectState != .cloak
+        entity.components.set(GridPositionComponent(gridPosition: object.gridPosition))
+        entity.components.set(MapSceneObjectComponent(object: object))
+        entity.components.set(MapObjectSnapshotPresentationComponent(
+            logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
+            timeline: MapObjectMovementTimeline(for: object, position: { scene.mapGrid.worldPosition(for: $0) }),
+            presentation: object.presentation
+        ))
+
+        if isNew {
+            rootEntity.addChild(entity)
+        }
+
+        let configuration = ComposedSprite.Configuration(object: object)
+        if isNew || entity.components[SpriteConfigurationComponent.self]?.configuration != configuration {
+            entity.components.set(SpriteConfigurationComponent(configuration: configuration))
+            loadObjectSpriteEntity(for: object, parent: entity)
+        }
+    }
+
+    private func loadObjectSpriteEntity(for object: MapSceneObject, parent entity: Entity) {
+        Task { [weak entityCache, weak entity] in
+            guard let entityCache else {
                 return
             }
 
-            if isNew || entity.parent == nil {
-                rootEntity.addChild(entity)
+            do {
+                let configuration = ComposedSprite.Configuration(object: object)
+                let spriteEntity = try await entityCache.objectSpriteEntity(for: configuration)
+                if let entity, configuration == entity.components[SpriteConfigurationComponent.self]?.configuration {
+                    entity.findEntity(named: "sprite")?.removeFromParent()
+                    entity.addChild(spriteEntity)
+                }
+            } catch {
+                logger.warning("\(error)")
             }
-
-            entity.name = "\(object.objectID)"
-            entity.transform = Transform(
-                translation: sampler.sample(
-                    for: object,
-                    position: { scene.mapGrid.worldPosition(for: $0) },
-                    now: .now
-                ).worldPosition
-            )
-            entity.isEnabled = object.effectState != .cloak
-            entity.components.set(GridPositionComponent(gridPosition: object.gridPosition))
-            entity.components.set(MapSceneObjectComponent(object: object))
-            entity.components.set(MapObjectSnapshotPresentationComponent(
-                logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
-                timeline: MapObjectMovementTimeline(for: object, position: { scene.mapGrid.worldPosition(for: $0) }),
-                presentation: object.presentation
-            ))
-        } catch {
-            logger.warning("\(error)")
         }
     }
 

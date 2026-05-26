@@ -29,152 +29,54 @@ enum RealityEntityPhase {
 
 @MainActor
 final class RealityEntityCache {
-    private struct ObjectEntityEntry {
-        var configuration: ComposedSprite.Configuration
-        var phase: RealityEntityPhase
-    }
-
     private let resourceManager: ResourceManager
 
-    private var objectEntities: [GameObjectID : ObjectEntityEntry] = [:]
+    private(set) var objectEntities: [GameObjectID : Entity] = [:]
     private(set) var itemEntities: [GameObjectID : Entity] = [:]
 
     private var templateEntitiesByConfiguration: [ComposedSprite.Configuration : RealityEntityPhase] = [:]
     private var templateEntitiesByItemID: [Int : RealityEntityPhase] = [:]
 
-    var objectIDs: Set<GameObjectID> {
-        Set(objectEntities.keys)
-    }
-
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
     }
 
-    func objectEntity(for objectID: GameObjectID) async throws -> Entity? {
-        if let entry = objectEntities[objectID] {
-            try await entry.phase.entity
-        } else {
-            nil
-        }
-    }
-
-    func loadedObjectEntity(for objectID: GameObjectID) -> Entity? {
-        guard let entry = objectEntities[objectID] else {
-            return nil
-        }
-
-        switch entry.phase {
-        case .loaded(let entity):
+    func objectEntity(for object: MapSceneObject) -> Entity {
+        if let entity = objectEntities[object.objectID] {
             return entity
-        case .inProgress:
-            return nil
         }
+
+        let entity = Entity()
+        objectEntities[object.objectID] = entity
+        return entity
     }
 
-    func removeObjectEntity(for objectID: GameObjectID) async throws {
-        if let entry = objectEntities.removeValue(forKey: objectID) {
-            let entity = try await entry.phase.entity
+    func removeObjectEntity(for objectID: GameObjectID) {
+        if let entity = objectEntities.removeValue(forKey: objectID) {
             entity.removeFromParent()
         }
     }
 
-    func objectEntity(for object: MapSceneObject) async throws -> (entity: Entity, isNew: Bool) {
-        let configuration = ComposedSprite.Configuration(object: object)
-
-        if let entry = objectEntities[object.objectID] {
-            if entry.configuration == configuration {
-                return try await (entry.phase.entity, false)
-            }
-
-            removeObjectEntity(entry)
-            objectEntities.removeValue(forKey: object.objectID)
-        }
-
-        if configuration.job.isPlayer {
-            return try await playerEntity(
-                for: object.objectID,
-                configuration: configuration
-            )
-        } else {
-            return try await nonPlayerEntity(
-                for: object.objectID,
-                configuration: configuration
-            )
-        }
-    }
-
-    private func playerEntity(
-        for objectID: GameObjectID,
-        configuration: ComposedSprite.Configuration
-    ) async throws -> (entity: Entity, isNew: Bool) {
-        let task = Task {
-            try await Entity(configuration: configuration, using: resourceManager)
-        }
-        objectEntities[objectID] = ObjectEntityEntry(configuration: configuration, phase: .inProgress(task))
-
-        let entity = try await task.value
-        guard objectEntities[objectID]?.configuration == configuration else {
-            entity.removeFromParent()
-            throw CancellationError()
-        }
-
-        objectEntities[objectID] = ObjectEntityEntry(configuration: configuration, phase: .loaded(entity))
-
-        return (entity, true)
-    }
-
-    private func nonPlayerEntity(
-        for objectID: GameObjectID,
-        configuration: ComposedSprite.Configuration
-    ) async throws -> (entity: Entity, isNew: Bool) {
+    func objectSpriteEntity(for configuration: ComposedSprite.Configuration) async throws -> Entity {
         if let templatePhase = templateEntitiesByConfiguration[configuration] {
-            let cloneTask = Task {
-                let templateEntity = try await templatePhase.entity
-                return templateEntity.clone(recursive: true)
-            }
-            objectEntities[objectID] = ObjectEntityEntry(configuration: configuration, phase: .inProgress(cloneTask))
-
-            let clonedEntity = try await cloneTask.value
-            guard objectEntities[objectID]?.configuration == configuration else {
-                clonedEntity.removeFromParent()
-                throw CancellationError()
-            }
-
-            objectEntities[objectID] = ObjectEntityEntry(configuration: configuration, phase: .loaded(clonedEntity))
-
-            return (clonedEntity, true)
-        }
-
-        let templateTask = Task {
-            try await Entity(configuration: configuration, using: resourceManager)
-        }
-        templateEntitiesByConfiguration[configuration] = .inProgress(templateTask)
-        let cloneTask = Task {
-            let templateEntity = try await templateTask.value
+            let templateEntity = try await templatePhase.entity
             return templateEntity.clone(recursive: true)
         }
-        objectEntities[objectID] = ObjectEntityEntry(configuration: configuration, phase: .inProgress(cloneTask))
 
-        let templateEntity = try await templateTask.value
-        templateEntitiesByConfiguration[configuration] = .loaded(templateEntity)
-
-        let clonedEntity = try await cloneTask.value
-        guard objectEntities[objectID]?.configuration == configuration else {
-            clonedEntity.removeFromParent()
-            throw CancellationError()
+        let templateTask = Task<Entity, any Error> {
+            let spriteEntity = try await SpriteEntity(forConfiguration: configuration, using: resourceManager)
+            spriteEntity.name = "sprite"
+            return spriteEntity
         }
+        templateEntitiesByConfiguration[configuration] = .inProgress(templateTask)
 
-        objectEntities[objectID] = ObjectEntityEntry(configuration: configuration, phase: .loaded(clonedEntity))
-
-        return (clonedEntity, true)
-    }
-
-    private func removeObjectEntity(_ entry: ObjectEntityEntry) {
-        switch entry.phase {
-        case .inProgress(let task):
-            task.cancel()
-        case .loaded(let entity):
-            entity.removeFromParent()
+        do {
+            let templateEntity = try await templateTask.value
+            templateEntitiesByConfiguration[configuration] = .loaded(templateEntity)
+            return templateEntity.clone(recursive: true)
+        } catch {
+            templateEntitiesByConfiguration.removeValue(forKey: configuration)
+            throw error
         }
     }
 
@@ -218,34 +120,28 @@ final class RealityEntityCache {
     }
 
     func clear() {
-        for entry in objectEntities.values {
-            switch entry.phase {
-            case .inProgress(let task):
-                task.cancel()
-            case .loaded(let entity):
-                entity.removeFromParent()
-            }
+        for entity in objectEntities.values {
+            entity.removeFromParent()
         }
+        objectEntities.removeAll()
 
         for entity in itemEntities.values {
             entity.removeFromParent()
         }
+        itemEntities.removeAll()
 
         for phase in templateEntitiesByConfiguration.values {
             if case .inProgress(let task) = phase {
                 task.cancel()
             }
         }
+        templateEntitiesByConfiguration.removeAll()
 
         for phase in templateEntitiesByItemID.values {
             if case .inProgress(let task) = phase {
                 task.cancel()
             }
         }
-
-        objectEntities.removeAll()
-        itemEntities.removeAll()
-        templateEntitiesByConfiguration.removeAll()
         templateEntitiesByItemID.removeAll()
     }
 }

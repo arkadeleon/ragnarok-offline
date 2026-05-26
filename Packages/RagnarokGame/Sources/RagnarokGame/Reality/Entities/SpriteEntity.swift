@@ -43,6 +43,13 @@ class SpriteEntity: Entity {
         components.set(spriteComponent)
     }
 
+    convenience init(forConfiguration configuration: ComposedSprite.Configuration, using resourceManager: ResourceManager) async throws {
+        let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
+        let animations = await SpriteAnimation.animations(for: composedSprite)
+
+        self.init(animations: animations)
+    }
+
     convenience init(forItemID itemID: Int, using resourceManager: ResourceManager) async throws {
         let sprite = try await resourceManager.itemSprite(forItemID: itemID)
         let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
@@ -52,21 +59,6 @@ class SpriteEntity: Entity {
 }
 
 extension Entity {
-    convenience init(configuration: ComposedSprite.Configuration, using resourceManager: ResourceManager) async throws {
-        self.init()
-
-        do {
-            let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
-            let animations = await SpriteAnimation.animations(for: composedSprite)
-
-            let spriteEntity = SpriteEntity(animations: animations)
-            spriteEntity.name = "sprite"
-            addChild(spriteEntity)
-        } catch {
-            logger.warning("\(error)")
-        }
-    }
-
     convenience init(from mapObject: MapObject, using resourceManager: ResourceManager) async throws {
         self.init()
 
