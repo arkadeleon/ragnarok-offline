@@ -26,6 +26,10 @@ final class MetalRenderBackend: GameRenderBackend {
     private var effectAssetStore: EffectAssetStore?
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
+    private var objectStates: [GameObjectID : MapSceneObject] = [:]
+    private var itemStates: [GameObjectID : MapSceneItem] = [:]
+    private var cameraState: MapCameraState = .default
+
     init(resourceManager: ResourceManager) throws {
         self.resourceManager = resourceManager
         self.renderer = try MetalMapRenderer()
@@ -34,7 +38,6 @@ final class MetalRenderBackend: GameRenderBackend {
 
     func attach(scene: MapScene) {
         self.scene = scene
-        syncFrameState(with: scene.state)
     }
 
     func detach() {
@@ -52,8 +55,6 @@ final class MetalRenderBackend: GameRenderBackend {
             try await prepareRenderResources(scene: scene, progress: progress)
 
             await audioPlayer.playBGM(forMapName: scene.mapName)
-
-            syncFrameState(with: scene.state)
         } catch {
             logger.warning("Metal map backend failed to load world asset: \(error)")
         }
@@ -64,8 +65,37 @@ final class MetalRenderBackend: GameRenderBackend {
         clearRenderResources()
     }
 
-    func applySnapshot(_ state: MapSceneState) {
-        syncFrameState(with: state)
+    func updateCamera(_ cameraState: MapCameraState) {
+        self.cameraState = cameraState
+        refreshSpriteDrawables()
+        updateCameraTarget()
+    }
+
+    func addObject(_ object: MapSceneObject) {
+        objectStates[object.objectID] = object
+        refreshSpriteDrawables()
+    }
+
+    func updateObject(_ object: MapSceneObject) {
+        objectStates[object.objectID] = object
+        refreshSpriteDrawables()
+    }
+
+    func removeObject(objectID: GameObjectID) {
+        objectStates.removeValue(forKey: objectID)
+        spriteSnapshots.removeValue(forKey: objectID)
+        refreshSpriteDrawables()
+    }
+
+    func addItem(_ item: MapSceneItem) {
+        itemStates[item.objectID] = item
+        refreshSpriteDrawables()
+    }
+
+    func removeItem(objectID: GameObjectID) {
+        itemStates.removeValue(forKey: objectID)
+        spriteSnapshots.removeValue(forKey: objectID)
+        refreshSpriteDrawables()
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
@@ -85,33 +115,37 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func prepareFrame() {
-        guard let scene else {
-            return
-        }
-        syncFrameState(with: scene.state)
+        removeExpiredCombatTexts()
+        removeExpiredEffects()
+        refreshSpriteDrawables()
+        updateCameraTarget()
         syncAndProjectOverlay()
     }
 
-    private func syncFrameState(with state: MapSceneState) {
+    private func refreshSpriteDrawables() {
         guard let scene else {
             return
         }
 
-        removeExpiredCombatTexts()
-        removeExpiredEffects()
-
-        updateObjects(
-            objects: state.objects,
-            items: state.items,
+        let snapshots = spriteSnapshotBuilder.build(
+            objects: objectStates,
+            items: itemStates,
             scene: scene
         )
+        spriteSnapshots = snapshots
+        renderer.spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
+    }
 
-        let playerPresentationPosition =
-            spriteSnapshots[state.playerID]?.worldPosition
-            ?? scene.mapGrid.worldPosition(for: state.player.gridPosition)
+    private func updateCameraTarget() {
+        guard let scene else {
+            return
+        }
+
+        let targetPosition = spriteSnapshots[scene.state.playerID]?.worldPosition
+            ?? scene.mapGrid.worldPosition(for: scene.state.player.gridPosition)
         renderer.updateCamera(
-            cameraState: scene.cameraState,
-            targetPosition: playerPresentationPosition
+            cameraState: cameraState,
+            targetPosition: targetPosition
         )
     }
 
@@ -191,6 +225,8 @@ final class MetalRenderBackend: GameRenderBackend {
         spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
+        objectStates.removeAll()
+        itemStates.removeAll()
         combatTextSpriteSet = nil
         for task in effectLoadTasks.values {
             task.cancel()
@@ -207,20 +243,6 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.combatTextResources.removeAll()
         renderer.effectResources.removeAll()
         renderer.tileSelectorResource = nil
-    }
-
-    private func updateObjects(
-        objects: [GameObjectID : MapSceneObject],
-        items: [GameObjectID : MapSceneItem],
-        scene: MapScene
-    ) {
-        let snapshots = spriteSnapshotBuilder.build(
-            objects: objects,
-            items: items,
-            scene: scene
-        )
-        spriteSnapshots = snapshots
-        renderer.spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
     }
 
     private func renderCombatText(_ combatText: MapSceneCombatText) {

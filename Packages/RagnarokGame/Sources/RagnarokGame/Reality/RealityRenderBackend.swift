@@ -32,7 +32,6 @@ final class RealityRenderBackend: GameRenderBackend {
     private let sampler = MapObjectPresentationSampler()
 
     private let worldCameraEntity = Entity()
-    private var snapshotTask: Task<Void, Never>?
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
     private let tileRange = 17
 
@@ -98,20 +97,6 @@ final class RealityRenderBackend: GameRenderBackend {
 
         await tileSelectionRenderer.prepare()
 
-        let player = scene.state.player
-        let playerEntity = entityCache.objectEntity(for: player)
-        playerEntity.name = "\(player.objectID)"
-        playerEntity.transform = Transform(translation: scene.mapGrid.worldPosition(for: scene.playerPosition))
-        playerEntity.isEnabled = player.effectState != .cloak
-        playerEntity.components.set([
-            GridPositionComponent(gridPosition: scene.playerPosition),
-            MapSceneObjectComponent(object: player),
-        ])
-        rootEntity.addChild(playerEntity)
-        loadObjectSpriteEntity(for: player, parent: playerEntity)
-
-        setupWorldCamera(target: playerEntity, cameraState: scene.cameraState)
-
         setupLighting(world: scene.world)
     }
 
@@ -125,21 +110,32 @@ final class RealityRenderBackend: GameRenderBackend {
         teardownSceneState()
     }
 
-    func applySnapshot(_ state: MapSceneState) {
-        guard let scene else {
-            return
-        }
+    func updateCamera(_ cameraState: MapCameraState) {
+        worldCameraEntity.components[WorldCameraComponent.self]?.azimuth = cameraState.azimuth
+        #if !os(visionOS)
+        worldCameraEntity.components[WorldCameraComponent.self]?.elevation = cameraState.elevation
+        #endif
+        worldCameraEntity.components[WorldCameraComponent.self]?.radius = cameraState.distance
+    }
 
-        updateCameraState(scene.cameraState)
-        updateTileEntities(forCenter: state.player.gridPosition, mapGrid: scene.mapGrid)
+    func addObject(_ object: MapSceneObject) {
+        upsertObjectEntity(for: object)
+    }
 
-        snapshotTask?.cancel()
-        snapshotTask = Task { @MainActor [weak self, weak scene] in
-            guard let self, let scene else {
-                return
-            }
-            await syncEntities(with: state, scene: scene)
-        }
+    func updateObject(_ object: MapSceneObject) {
+        upsertObjectEntity(for: object)
+    }
+
+    func removeObject(objectID: GameObjectID) {
+        entityCache.removeObjectEntity(for: objectID)
+    }
+
+    func addItem(_ item: MapSceneItem) {
+        upsertItemEntity(for: item)
+    }
+
+    func removeItem(objectID: GameObjectID) {
+        entityCache.removeItemEntity(for: objectID)
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
@@ -156,14 +152,6 @@ final class RealityRenderBackend: GameRenderBackend {
 
     func playSound(named soundName: String, on objectID: GameObjectID) {
         audioPlayer.playSound(named: soundName, on: objectID)
-    }
-
-    func updateCameraState(_ cameraState: MapCameraState) {
-        worldCameraEntity.components[WorldCameraComponent.self]?.azimuth = cameraState.azimuth
-        #if !os(visionOS)
-        worldCameraEntity.components[WorldCameraComponent.self]?.elevation = cameraState.elevation
-        #endif
-        worldCameraEntity.components[WorldCameraComponent.self]?.radius = cameraState.distance
     }
 
     #if os(iOS) || os(macOS)
@@ -325,9 +313,6 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     private func teardownSceneState() {
-        snapshotTask?.cancel()
-        snapshotTask = nil
-
         tileSelectionRenderer.hideSelection()
         worldCameraEntity.removeFromParent()
         for child in Array(worldCameraEntity.children) {
@@ -379,29 +364,11 @@ final class RealityRenderBackend: GameRenderBackend {
         entityCache.objectEntities[objectID]?.position(relativeTo: nil)
     }
 
-    private func syncEntities(with state: MapSceneState, scene: MapScene) async {
-        let objects = Array(state.objects.values)
-        let desiredObjectIDs = Set(objects.map(\.objectID))
-
-        for objectID in Set(entityCache.objectEntities.keys).subtracting(desiredObjectIDs) {
-            entityCache.removeObjectEntity(for: objectID)
+    private func upsertObjectEntity(for object: MapSceneObject) {
+        guard let scene else {
+            return
         }
 
-        for object in objects {
-            syncObjectEntity(for: object, scene: scene)
-        }
-
-        let desiredItemIDs = Set(state.items.keys)
-        for objectID in Set(entityCache.itemEntities.keys).subtracting(desiredItemIDs) {
-            entityCache.removeItemEntity(for: objectID)
-        }
-
-        for item in state.items.values {
-            syncItemEntity(for: item, scene: scene)
-        }
-    }
-
-    private func syncObjectEntity(for object: MapSceneObject, scene: MapScene) {
         let entity = entityCache.objectEntity(for: object)
         let isNew = entity.parent == nil
 
@@ -431,6 +398,14 @@ final class RealityRenderBackend: GameRenderBackend {
             entity.components.set(SpriteConfigurationComponent(configuration: configuration))
             loadObjectSpriteEntity(for: object, parent: entity)
         }
+
+        if object.objectID == scene.state.playerID {
+            updateTileEntities(forCenter: object.gridPosition, mapGrid: scene.mapGrid)
+
+            if worldCameraEntity.parent == nil {
+                setupWorldCamera(target: entity, cameraState: scene.cameraState)
+            }
+        }
     }
 
     private func loadObjectSpriteEntity(for object: MapSceneObject, parent entity: Entity) {
@@ -452,9 +427,12 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    private func syncItemEntity(for item: MapSceneItem, scene: MapScene) {
-        let entity = entityCache.itemEntity(for: item)
+    private func upsertItemEntity(for item: MapSceneItem) {
+        guard let scene else {
+            return
+        }
 
+        let entity = entityCache.itemEntity(for: item)
         let isNew = entity.parent == nil
 
         entity.name = "\(item.objectID)"
@@ -469,6 +447,7 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     private func loadItemSpriteEntity(for item: MapSceneItem, parent entity: Entity) {
+        let objectID = item.objectID
         Task { [weak entityCache, weak entity] in
             guard let entityCache else {
                 return
@@ -476,7 +455,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
             do {
                 let spriteEntity = try await entityCache.itemSpriteEntity(forItemID: item.itemID)
-                if let entity {
+                if let entity, entityCache.itemEntities[objectID] === entity {
                     entity.addChild(spriteEntity)
                     entity.playDefaultSpriteAnimation()
                 }

@@ -16,7 +16,14 @@ protocol GameRenderBackend: AnyObject {
     func load(progress: Progress) async
     func unload()
 
-    func applySnapshot(_ state: MapSceneState)
+    func updateCamera(_ cameraState: MapCameraState)
+
+    func addObject(_ object: MapSceneObject)
+    func updateObject(_ object: MapSceneObject)
+    func removeObject(objectID: GameObjectID)
+
+    func addItem(_ item: MapSceneItem)
+    func removeItem(objectID: GameObjectID)
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
     func addCombatText(_ combatText: MapSceneCombatText)

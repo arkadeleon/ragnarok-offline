@@ -43,7 +43,7 @@ public final class MapScene {
 
     var cameraState: MapCameraState = .default {
         didSet {
-            applySnapshot()
+            renderBackend.updateCamera(cameraState)
         }
     }
 
@@ -101,7 +101,8 @@ public final class MapScene {
 
     func load(progress: Progress) async {
         await renderBackend.load(progress: progress)
-        applySnapshot()
+        renderBackend.addObject(state.player)
+        renderBackend.updateCamera(cameraState)
     }
 
     func unload() {
@@ -144,10 +145,6 @@ public final class MapScene {
         } else {
             return state.player.gridPosition
         }
-    }
-
-    func applySnapshot() {
-        renderBackend.applySnapshot(state)
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {

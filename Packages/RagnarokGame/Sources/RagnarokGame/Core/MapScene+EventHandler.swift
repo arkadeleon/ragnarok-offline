@@ -23,22 +23,22 @@ extension MapScene {
             let hp = Int(packet.count)
             state.player.hp = hp
             state.overlay.gauges[player.objectID]?.hp = hp
-            applySnapshot()
+            renderBackend.updateObject(state.player)
         case .maxhp:
             let maxHp = Int(packet.count)
             state.player.maxHp = maxHp
             state.overlay.gauges[player.objectID]?.maxHp = maxHp
-            applySnapshot()
+            renderBackend.updateObject(state.player)
         case .sp:
             let sp = Int(packet.count)
             state.player.sp = sp
             state.overlay.gauges[player.objectID]?.sp = sp
-            applySnapshot()
+            renderBackend.updateObject(state.player)
         case .maxsp:
             let maxSp = Int(packet.count)
             state.player.maxSp = maxSp
             state.overlay.gauges[player.objectID]?.maxSp = maxSp
-            applySnapshot()
+            renderBackend.updateObject(state.player)
         default:
             break
         }
@@ -48,7 +48,7 @@ extension MapScene {
         state.player.hp = hp
         state.overlay.gauges[player.objectID]?.hp = hp
 
-        applySnapshot()
+        renderBackend.updateObject(state.player)
 
         let combatText = MapSceneCombatText(
             creationTime: .now,
@@ -64,7 +64,7 @@ extension MapScene {
         state.player.sp = sp
         state.overlay.gauges[player.objectID]?.sp = sp
 
-        applySnapshot()
+        renderBackend.updateObject(state.player)
 
         let combatText = MapSceneCombatText(
             creationTime: .now,
@@ -113,7 +113,7 @@ extension MapScene {
             }
         }
 
-        applySnapshot()
+        renderBackend.updateObject(state.player)
     }
 
     func onMapObjectHealthUpdated(_ packet: PACKET_ZC_HP_INFO) {
@@ -125,11 +125,11 @@ extension MapScene {
             object.hp = hp
             object.maxHp = maxHp
             state.objects[objectID] = object
+            renderBackend.updateObject(object)
         }
+
         state.overlay.gauges[objectID]?.hp = hp
         state.overlay.gauges[objectID]?.maxHp = maxHp
-
-        applySnapshot()
     }
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
@@ -146,6 +146,7 @@ extension MapScene {
                 completion: .indefinite
             )
         )
+        renderBackend.addObject(state.objects[object.objectID]!)
 
         if object.type == .monster {
             state.overlay.gauges[object.objectID] = MapGaugeOverlay(
@@ -155,8 +156,6 @@ extension MapScene {
                 objectType: object.type
             )
         }
-
-        applySnapshot()
     }
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -214,7 +213,12 @@ extension MapScene {
             }
         }
 
-        applySnapshot()
+        let finalObject = state.objects[object.objectID]!
+        if existingObject == nil {
+            renderBackend.addObject(finalObject)
+        } else {
+            renderBackend.updateObject(finalObject)
+        }
     }
 
     func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
@@ -231,6 +235,7 @@ extension MapScene {
                 completion: .indefinite
             )
             state.objects[objectID] = object
+            renderBackend.updateObject(object)
         }
 
         if objectID == state.playerID, let action = pendingArrivalAction {
@@ -239,30 +244,29 @@ extension MapScene {
             pendingArrivalAction = nil
             action()
         }
-
-        applySnapshot()
     }
 
     func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
         switch type {
         case 1 where objectID == state.playerID:
-            if var playerState = state.objects[objectID] {
-                playerState.presentation = MapObjectPresentationState(
+            if var player = state.objects[objectID] {
+                player.presentation = MapObjectPresentationState(
                     action: .die,
-                    direction: playerState.presentation.direction,
-                    headDirection: playerState.presentation.headDirection,
+                    direction: player.presentation.direction,
+                    headDirection: player.presentation.headDirection,
                     startTime: .now,
                     completion: .indefinite
                 )
-                state.objects[objectID] = playerState
+                state.objects[objectID] = player
+                renderBackend.updateObject(player)
             }
             state.isPlayerDead = true
             state.overlay.gauges.removeValue(forKey: objectID)
         default:
             state.objects.removeValue(forKey: objectID)
             state.overlay.gauges.removeValue(forKey: objectID)
+            renderBackend.removeObject(objectID: objectID)
         }
-        applySnapshot()
     }
 
     func onMapObjectResurrected(objectID: GameObjectID) {
@@ -275,11 +279,11 @@ extension MapScene {
                 completion: .indefinite
             )
             state.objects[objectID] = object
+            renderBackend.updateObject(object)
         }
         if objectID == state.playerID {
             state.isPlayerDead = false
         }
-        applySnapshot()
     }
 
     func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
@@ -287,9 +291,8 @@ extension MapScene {
             object.presentation.direction = SpriteDirection(direction: direction)
             object.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
             state.objects[objectID] = object
+            renderBackend.updateObject(object)
         }
-
-        applySnapshot()
     }
 
     func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
@@ -300,6 +303,7 @@ extension MapScene {
             object.healthState = healthState
             object.effectState = effectState
             state.objects[objectID] = object
+            renderBackend.updateObject(object)
         }
 
         if isVisible {
@@ -316,8 +320,6 @@ extension MapScene {
         } else {
             state.overlay.gauges.removeValue(forKey: objectID)
         }
-
-        applySnapshot()
     }
 
     func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
@@ -357,7 +359,7 @@ extension MapScene {
         }
 
         state.objects[objectID] = object
-        applySnapshot()
+        renderBackend.updateObject(object)
     }
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -409,9 +411,8 @@ extension MapScene {
                 completion: completion
             )
             state.objects[sourceID] = object
+            renderBackend.updateObject(object)
         }
-
-        applySnapshot()
 
         addCombatTexts(for: objectAction, now: now)
         playSound(for: objectAction)
@@ -421,27 +422,24 @@ extension MapScene {
         let objectID = packet.AID
 
         let now = ContinuousClock.now
-        let sourceState = state.objects[objectID]
+        let sourceObject = state.objects[objectID]
 
-        if let sourceState {
-            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceState.job)
+        if var sourceObject {
+            let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(Int(packet.attackMT))
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            if var object = state.objects[objectID] {
-                object.presentation = MapObjectPresentationState(
-                    action: action,
-                    direction: object.presentation.direction,
-                    headDirection: object.presentation.headDirection,
-                    startTime: now,
-                    completion: .after(duration, settledAction: settledAction)
-                )
-                state.objects[objectID] = object
-            }
+            sourceObject.presentation = MapObjectPresentationState(
+                action: action,
+                direction: sourceObject.presentation.direction,
+                headDirection: sourceObject.presentation.headDirection,
+                startTime: now,
+                completion: .after(duration, settledAction: settledAction)
+            )
+            state.objects[objectID] = sourceObject
+            renderBackend.updateObject(sourceObject)
         }
-
-        applySnapshot()
 
         if packet.damage >= 0 {
             let count = Int(packet.count)
@@ -472,13 +470,13 @@ extension MapScene {
             gridPosition: position
         )
 
-        applySnapshot()
+        renderBackend.addItem(state.items[item.objectID]!)
     }
 
     func onItemVanished(objectID: GameObjectID) {
         state.items.removeValue(forKey: objectID)
 
-        applySnapshot()
+        renderBackend.removeItem(objectID: objectID)
     }
 
     func onGroundSkillCast(_ packet: PACKET_ZC_NOTIFY_GROUNDSKILL) {
