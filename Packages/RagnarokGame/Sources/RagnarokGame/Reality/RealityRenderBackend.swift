@@ -37,6 +37,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
     private var objectStates: [GameObjectID : MapSceneObject] = [:]
     private var objectMovements: [GameObjectID : MapObjectMovementState] = [:]
+    private var objectPresentations: [GameObjectID : MapObjectPresentationState] = [:]
 
     #if os(iOS) || os(macOS)
     weak var arView: ARView?
@@ -121,8 +122,15 @@ final class RealityRenderBackend: GameRenderBackend {
         worldCameraEntity.components[WorldCameraComponent.self]?.radius = cameraState.distance
     }
 
-    func addObject(_ object: MapSceneObject) {
+    func addObject(_ object: MapSceneObject, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
         objectStates[object.objectID] = object
+        objectPresentations[object.objectID] = MapObjectPresentationState(
+            action: .idle,
+            direction: direction,
+            headDirection: headDirection,
+            startTime: .now,
+            completion: .indefinite
+        )
         upsertObjectEntity(for: object)
     }
 
@@ -147,6 +155,16 @@ final class RealityRenderBackend: GameRenderBackend {
         )
         objectMovements[command.objectID] = movement
 
+        let remainingDuration = movement.remainingDuration(at: command.startedAt)
+        let currentHeadDirection = objectPresentations[command.objectID]?.headDirection ?? .lookForward
+        objectPresentations[command.objectID] = MapObjectPresentationState(
+            action: .walk,
+            direction: movement.finalDirection,
+            headDirection: currentHeadDirection,
+            startTime: command.startedAt,
+            completion: .after(remainingDuration, settledAction: .idle)
+        )
+
         if let object = objectStates[command.objectID] {
             upsertObjectEntity(for: object)
         }
@@ -166,6 +184,13 @@ final class RealityRenderBackend: GameRenderBackend {
             objectStates[objectID]?.gridPosition = position
         }
 
+        if var presentation = objectPresentations[objectID] {
+            presentation.action = .idle
+            presentation.startTime = .now
+            presentation.completion = .indefinite
+            objectPresentations[objectID] = presentation
+        }
+
         if let object = objectStates[objectID] {
             upsertObjectEntity(for: object)
         }
@@ -177,9 +202,35 @@ final class RealityRenderBackend: GameRenderBackend {
         #endif
     }
 
+    func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+        guard let object = objectStates[objectID] else {
+            return
+        }
+        if var presentation = objectPresentations[objectID] {
+            presentation.direction = direction
+            presentation.headDirection = headDirection
+            objectPresentations[objectID] = presentation
+        }
+        upsertObjectEntity(for: object)
+    }
+
+    func performObjectAction(_ command: MapObjectPresentationCommand) {
+        guard let object = objectStates[command.objectID] else {
+            return
+        }
+        if var presentation = objectPresentations[command.objectID] {
+            presentation.action = command.action
+            presentation.startTime = command.startTime
+            presentation.completion = command.completion
+            objectPresentations[command.objectID] = presentation
+        }
+        upsertObjectEntity(for: object)
+    }
+
     func removeObject(objectID: GameObjectID) {
         objectStates.removeValue(forKey: objectID)
         objectMovements.removeValue(forKey: objectID)
+        objectPresentations.removeValue(forKey: objectID)
         entityCache.removeObjectEntity(for: objectID)
     }
 
@@ -381,6 +432,7 @@ final class RealityRenderBackend: GameRenderBackend {
     private func teardownSceneState() {
         objectStates.removeAll()
         objectMovements.removeAll()
+        objectPresentations.removeAll()
 
         tileSelectionRenderer.hideSelection()
         worldCameraEntity.removeFromParent()
@@ -439,10 +491,12 @@ final class RealityRenderBackend: GameRenderBackend {
 
         entity.name = "\(object.objectID)"
         let movement = objectMovements[object.objectID]
+        let presentation = objectPresentations[object.objectID] ?? .defaultPresentation
         entity.transform = Transform(
             translation: sampler.sample(
                 for: object,
                 movement: movement,
+                presentation: presentation,
                 position: { scene.mapGrid.worldPosition(for: $0) },
                 now: .now
             ).worldPosition
@@ -453,7 +507,7 @@ final class RealityRenderBackend: GameRenderBackend {
         entity.components.set(MapObjectSnapshotPresentationComponent(
             logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
             timeline: MapObjectMovementTimeline(movement: movement, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
-            presentation: object.presentation
+            presentation: presentation
         ))
 
         if isNew {

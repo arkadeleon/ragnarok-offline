@@ -16,6 +16,7 @@ final class SpriteSnapshotBuilder {
     func build(
         objects: [GameObjectID : MapSceneObject],
         movements: [GameObjectID : MapObjectMovementState],
+        presentations: [GameObjectID : MapObjectPresentationState],
         items: [GameObjectID : MapSceneItem],
         scene: MapScene
     ) -> [GameObjectID : SpriteSnapshot] {
@@ -24,7 +25,8 @@ final class SpriteSnapshotBuilder {
         var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
         for (objectID, object) in objects {
-            snapshots[objectID] = snapshot(for: object, movement: movements[objectID], now: now, scene: scene)
+            let presentation = presentations[objectID] ?? .defaultPresentation
+            snapshots[objectID] = snapshot(for: object, movement: movements[objectID], presentation: presentation, now: now, scene: scene)
         }
 
         for (objectID, item) in items {
@@ -34,10 +36,11 @@ final class SpriteSnapshotBuilder {
         return snapshots
     }
 
-    private func snapshot(for object: MapSceneObject, movement: MapObjectMovementState?, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
+    private func snapshot(for object: MapSceneObject, movement: MapObjectMovementState?, presentation: MapObjectPresentationState, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
         let presentationSample = sampler.sample(
             for: object,
             movement: movement,
+            presentation: presentation,
             position: { scene.mapGrid.worldPosition(for: $0) },
             now: now
         )

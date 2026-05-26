@@ -13,4 +13,14 @@ public struct MapObjectPresentationState: Sendable {
     public var headDirection: SpriteHeadDirection
     public var startTime: ContinuousClock.Instant
     public var completion: MapObjectAnimationCompletion
+
+    static var defaultPresentation: MapObjectPresentationState {
+        MapObjectPresentationState(
+            action: .idle,
+            direction: .south,
+            headDirection: .lookForward,
+            startTime: .now,
+            completion: .indefinite
+        )
+    }
 }

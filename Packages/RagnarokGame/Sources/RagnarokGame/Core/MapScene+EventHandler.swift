@@ -88,17 +88,8 @@ extension MapScene {
         )
         let movement = renderBackend.moveObject(command)
         let remainingDuration = movement?.remainingDuration(at: now) ?? .zero
-        let direction = movement?.finalDirection
-            ?? SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition)
 
         state.player.gridPosition = endPosition
-        state.player.presentation = MapObjectPresentationState(
-            action: .walk,
-            direction: direction,
-            headDirection: state.player.presentation.headDirection,
-            startTime: now,
-            completion: .after(remainingDuration, settledAction: .idle)
-        )
 
         if pendingArrivalAction != nil {
             arrivalTask?.cancel()
@@ -132,20 +123,18 @@ extension MapScene {
     }
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
-        state.objects[object.objectID] = MapSceneObject(
+        let sceneObject = MapSceneObject(
             object: object,
             gridPosition: position,
             hp: object.hp,
-            maxHp: object.maxHp,
-            presentation: MapObjectPresentationState(
-                action: .idle,
-                direction: SpriteDirection(direction: direction),
-                headDirection: SpriteHeadDirection(headDirection: headDirection),
-                startTime: .now,
-                completion: .indefinite
-            )
+            maxHp: object.maxHp
         )
-        renderBackend.addObject(state.objects[object.objectID]!)
+        state.objects[object.objectID] = sceneObject
+        renderBackend.addObject(
+            sceneObject,
+            direction: SpriteDirection(direction: direction),
+            headDirection: SpriteHeadDirection(headDirection: headDirection)
+        )
 
         if object.type == .monster {
             state.overlay.gauges[object.objectID] = MapGaugeOverlay(
@@ -162,22 +151,18 @@ extension MapScene {
         let isNew = state.objects[object.objectID] == nil
 
         if isNew {
-            let placeholderPresentation = MapObjectPresentationState(
-                action: .idle,
-                direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
-                headDirection: .lookForward,
-                startTime: now,
-                completion: .indefinite
-            )
             let sceneObject = MapSceneObject(
                 object: object,
                 gridPosition: startPosition,
                 hp: object.hp,
-                maxHp: object.maxHp,
-                presentation: placeholderPresentation
+                maxHp: object.maxHp
             )
             state.objects[object.objectID] = sceneObject
-            renderBackend.addObject(sceneObject)
+            renderBackend.addObject(
+                sceneObject,
+                direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
+                headDirection: .lookForward
+            )
 
             if object.type == .monster {
                 state.overlay.gauges[object.objectID] = MapGaugeOverlay(
@@ -196,39 +181,19 @@ extension MapScene {
             speed: object.speed,
             startedAt: now
         )
-        let movement = renderBackend.moveObject(command)
-        let remainingDuration = movement?.remainingDuration(at: now) ?? .zero
-        let direction = movement?.finalDirection
-            ?? SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition)
+        _ = renderBackend.moveObject(command)
 
         if var updated = state.objects[object.objectID] {
             updated.gridPosition = endPosition
-            updated.presentation = MapObjectPresentationState(
-                action: .walk,
-                direction: direction,
-                headDirection: updated.presentation.headDirection,
-                startTime: now,
-                completion: .after(remainingDuration, settledAction: .idle)
-            )
             state.objects[object.objectID] = updated
             renderBackend.updateObject(updated)
         }
     }
 
     func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
-        let now = ContinuousClock.now
-
         if var object = state.objects[objectID] {
             object.gridPosition = position
-            object.presentation = MapObjectPresentationState(
-                action: .idle,
-                direction: object.presentation.direction,
-                headDirection: object.presentation.headDirection,
-                startTime: now,
-                completion: .indefinite
-            )
             state.objects[objectID] = object
-            renderBackend.updateObject(object)
             renderBackend.stopObject(objectID: objectID, at: position)
         }
 
@@ -243,17 +208,14 @@ extension MapScene {
     func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
         switch type {
         case 1 where objectID == state.playerID:
-            if var player = state.objects[objectID] {
-                player.presentation = MapObjectPresentationState(
+            renderBackend.performObjectAction(
+                MapObjectPresentationCommand(
+                    objectID: objectID,
                     action: .die,
-                    direction: player.presentation.direction,
-                    headDirection: player.presentation.headDirection,
                     startTime: .now,
                     completion: .indefinite
                 )
-                state.objects[objectID] = player
-                renderBackend.updateObject(player)
-            }
+            )
             state.isPlayerDead = true
             state.overlay.gauges.removeValue(forKey: objectID)
         default:
@@ -264,29 +226,25 @@ extension MapScene {
     }
 
     func onMapObjectResurrected(objectID: GameObjectID) {
-        if var object = state.objects[objectID] {
-            object.presentation = MapObjectPresentationState(
+        renderBackend.performObjectAction(
+            MapObjectPresentationCommand(
+                objectID: objectID,
                 action: .idle,
-                direction: object.presentation.direction,
-                headDirection: object.presentation.headDirection,
                 startTime: .now,
                 completion: .indefinite
             )
-            state.objects[objectID] = object
-            renderBackend.updateObject(object)
-        }
+        )
         if objectID == state.playerID {
             state.isPlayerDead = false
         }
     }
 
     func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
-        if var object = state.objects[objectID] {
-            object.presentation.direction = SpriteDirection(direction: direction)
-            object.presentation.headDirection = SpriteHeadDirection(headDirection: headDirection)
-            state.objects[objectID] = object
-            renderBackend.updateObject(object)
-        }
+        renderBackend.turnObject(
+            objectID: objectID,
+            direction: SpriteDirection(direction: direction),
+            headDirection: SpriteHeadDirection(headDirection: headDirection)
+        )
     }
 
     func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
@@ -396,16 +354,15 @@ extension MapScene {
             .after(.milliseconds(objectAction.sourceSpeed), settledAction: .idle)
         }
 
-        if var object = state.objects[sourceID] {
-            object.presentation = MapObjectPresentationState(
-                action: presentationAction,
-                direction: object.presentation.direction,
-                headDirection: object.presentation.headDirection,
-                startTime: now,
-                completion: completion
+        if state.objects[sourceID] != nil {
+            renderBackend.performObjectAction(
+                MapObjectPresentationCommand(
+                    objectID: sourceID,
+                    action: presentationAction,
+                    startTime: now,
+                    completion: completion
+                )
             )
-            state.objects[sourceID] = object
-            renderBackend.updateObject(object)
         }
 
         addCombatTexts(for: objectAction, now: now)
@@ -416,23 +373,21 @@ extension MapScene {
         let objectID = packet.AID
 
         let now = ContinuousClock.now
-        let sourceObject = state.objects[objectID]
 
-        if var sourceObject {
+        if let sourceObject = state.objects[objectID] {
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(Int(packet.attackMT))
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            sourceObject.presentation = MapObjectPresentationState(
-                action: action,
-                direction: sourceObject.presentation.direction,
-                headDirection: sourceObject.presentation.headDirection,
-                startTime: now,
-                completion: .after(duration, settledAction: settledAction)
+            renderBackend.performObjectAction(
+                MapObjectPresentationCommand(
+                    objectID: objectID,
+                    action: action,
+                    startTime: now,
+                    completion: .after(duration, settledAction: settledAction)
+                )
             )
-            state.objects[objectID] = sourceObject
-            renderBackend.updateObject(sourceObject)
         }
 
         if packet.damage >= 0 {

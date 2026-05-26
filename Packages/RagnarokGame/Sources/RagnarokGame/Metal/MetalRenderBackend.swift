@@ -10,6 +10,7 @@ import Metal
 import RagnarokMetalRendering
 import RagnarokRenderAssets
 import RagnarokResources
+import RagnarokSprite
 import simd
 
 final class MetalRenderBackend: GameRenderBackend {
@@ -28,6 +29,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     private var objectStates: [GameObjectID : MapSceneObject] = [:]
     private var objectMovements: [GameObjectID : MapObjectMovementState] = [:]
+    private var objectPresentations: [GameObjectID : MapObjectPresentationState] = [:]
     private var itemStates: [GameObjectID : MapSceneItem] = [:]
     private var cameraState: MapCameraState = .default
 
@@ -72,8 +74,15 @@ final class MetalRenderBackend: GameRenderBackend {
         updateCameraTarget()
     }
 
-    func addObject(_ object: MapSceneObject) {
+    func addObject(_ object: MapSceneObject, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
         objectStates[object.objectID] = object
+        objectPresentations[object.objectID] = MapObjectPresentationState(
+            action: .idle,
+            direction: direction,
+            headDirection: headDirection,
+            startTime: .now,
+            completion: .indefinite
+        )
         refreshSpriteDrawables()
     }
 
@@ -98,6 +107,16 @@ final class MetalRenderBackend: GameRenderBackend {
         )
         objectMovements[command.objectID] = movement
 
+        let remainingDuration = movement.remainingDuration(at: command.startedAt)
+        let currentHeadDirection = objectPresentations[command.objectID]?.headDirection ?? .lookForward
+        objectPresentations[command.objectID] = MapObjectPresentationState(
+            action: .walk,
+            direction: movement.finalDirection,
+            headDirection: currentHeadDirection,
+            startTime: command.startedAt,
+            completion: .after(remainingDuration, settledAction: .idle)
+        )
+
         refreshSpriteDrawables()
         if command.objectID == scene.state.playerID {
             updateCameraTarget()
@@ -111,15 +130,49 @@ final class MetalRenderBackend: GameRenderBackend {
         if objectStates[objectID] != nil {
             objectStates[objectID]?.gridPosition = position
         }
+
+        if var presentation = objectPresentations[objectID] {
+            presentation.action = .idle
+            presentation.startTime = .now
+            presentation.completion = .indefinite
+            objectPresentations[objectID] = presentation
+        }
+
         refreshSpriteDrawables()
         if objectID == scene?.state.playerID {
             updateCameraTarget()
         }
     }
 
+    func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+        guard objectStates[objectID] != nil else {
+            return
+        }
+        if var presentation = objectPresentations[objectID] {
+            presentation.direction = direction
+            presentation.headDirection = headDirection
+            objectPresentations[objectID] = presentation
+        }
+        refreshSpriteDrawables()
+    }
+
+    func performObjectAction(_ command: MapObjectPresentationCommand) {
+        guard objectStates[command.objectID] != nil else {
+            return
+        }
+        if var presentation = objectPresentations[command.objectID] {
+            presentation.action = command.action
+            presentation.startTime = command.startTime
+            presentation.completion = command.completion
+            objectPresentations[command.objectID] = presentation
+        }
+        refreshSpriteDrawables()
+    }
+
     func removeObject(objectID: GameObjectID) {
         objectStates.removeValue(forKey: objectID)
         objectMovements.removeValue(forKey: objectID)
+        objectPresentations.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
     }
@@ -187,6 +240,7 @@ final class MetalRenderBackend: GameRenderBackend {
         let snapshots = spriteSnapshotBuilder.build(
             objects: objectStates,
             movements: objectMovements,
+            presentations: objectPresentations,
             items: itemStates,
             scene: scene
         )
@@ -285,6 +339,7 @@ final class MetalRenderBackend: GameRenderBackend {
         spriteSnapshots.removeAll()
         objectStates.removeAll()
         objectMovements.removeAll()
+        objectPresentations.removeAll()
         itemStates.removeAll()
         combatTextSpriteSet = nil
         for task in effectLoadTasks.values {

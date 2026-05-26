@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RagnarokSprite
 import simd
 
 @MainActor
@@ -18,10 +19,12 @@ protocol GameRenderBackend: AnyObject {
 
     func updateCamera(_ cameraState: MapCameraState)
 
-    func addObject(_ object: MapSceneObject)
+    func addObject(_ object: MapSceneObject, direction: SpriteDirection, headDirection: SpriteHeadDirection)
     func updateObject(_ object: MapSceneObject)
     func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState?
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>)
+    func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection)
+    func performObjectAction(_ command: MapObjectPresentationCommand)
     func removeObject(objectID: GameObjectID)
 
     func addItem(_ item: MapSceneItem)

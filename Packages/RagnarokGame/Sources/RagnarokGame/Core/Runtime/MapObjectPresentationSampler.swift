@@ -18,6 +18,7 @@ struct MapObjectPresentationSampler {
     func sample(
         for object: MapSceneObject,
         movement: MapObjectMovementState?,
+        presentation: MapObjectPresentationState,
         position: (SIMD2<Int>) -> SIMD3<Float>,
         now: ContinuousClock.Instant
     ) -> PresentationSample {
@@ -26,7 +27,7 @@ struct MapObjectPresentationSampler {
         return sample(
             logicalWorldPosition: logicalWorldPosition,
             timeline: timeline,
-            presentation: object.presentation,
+            presentation: presentation,
             now: now
         )
     }

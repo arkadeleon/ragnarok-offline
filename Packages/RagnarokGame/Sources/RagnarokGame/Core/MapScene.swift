@@ -74,14 +74,7 @@ public final class MapScene {
             hp: character.hp,
             maxHp: character.maxHp,
             sp: character.sp,
-            maxSp: character.maxSp,
-            presentation: MapObjectPresentationState(
-                action: .idle,
-                direction: .south,
-                headDirection: .lookForward,
-                startTime: .now,
-                completion: .indefinite
-            )
+            maxSp: character.maxSp
         )
         self.state = MapSceneState(player: playerObject)
 
@@ -101,7 +94,7 @@ public final class MapScene {
 
     func load(progress: Progress) async {
         await renderBackend.load(progress: progress)
-        renderBackend.addObject(state.player)
+        renderBackend.addObject(state.player, direction: .south, headDirection: .lookForward)
         renderBackend.updateCamera(cameraState)
     }
 
