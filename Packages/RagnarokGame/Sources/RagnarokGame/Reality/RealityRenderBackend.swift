@@ -403,20 +403,12 @@ final class RealityRenderBackend: GameRenderBackend {
         }
 
         let desiredItemIDs = Set(state.items.keys)
-        for objectID in entityCache.itemIDs.subtracting(desiredItemIDs) {
-            do {
-                try await entityCache.removeItemEntity(for: objectID)
-            } catch {
-                logger.warning("\(error)")
-            }
+        for objectID in Set(entityCache.itemEntities.keys).subtracting(desiredItemIDs) {
+            entityCache.removeItemEntity(for: objectID)
         }
 
         for item in state.items.values {
-            guard !Task.isCancelled else {
-                return
-            }
-
-            await syncItemEntity(for: item, scene: scene)
+            syncItemEntity(for: item, scene: scene)
         }
     }
 
@@ -452,26 +444,37 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    private func syncItemEntity(for item: MapSceneItem, scene: MapScene) async {
-        do {
-            let entity = try await entityCache.itemEntity(for: item)
-            guard !Task.isCancelled else {
+    private func syncItemEntity(for item: MapSceneItem, scene: MapScene) {
+        let entity = entityCache.itemEntity(for: item)
+
+        let isNew = entity.parent == nil
+
+        entity.name = "\(item.objectID)"
+        entity.transform = Transform(translation: scene.mapGrid.worldPosition(for: item.gridPosition))
+        entity.components.set(GridPositionComponent(gridPosition: item.gridPosition))
+        entity.components.set(MapSceneItemComponent(item: item))
+
+        if isNew {
+            rootEntity.addChild(entity)
+            loadItemSpriteEntity(for: item, parent: entity)
+        }
+    }
+
+    private func loadItemSpriteEntity(for item: MapSceneItem, parent entity: Entity) {
+        Task { [weak entityCache, weak entity] in
+            guard let entityCache else {
                 return
             }
 
-            let isNew = entity.parent == nil
-
-            entity.name = "\(item.objectID)"
-            entity.transform = Transform(translation: scene.mapGrid.worldPosition(for: item.gridPosition))
-            entity.components.set(GridPositionComponent(gridPosition: item.gridPosition))
-            entity.components.set(MapSceneItemComponent(item: item))
-
-            if isNew {
-                entity.playDefaultSpriteAnimation()
-                rootEntity.addChild(entity)
+            do {
+                let spriteEntity = try await entityCache.itemSpriteEntity(forItemID: item.itemID)
+                if let entity {
+                    entity.addChild(spriteEntity)
+                    entity.playDefaultSpriteAnimation()
+                }
+            } catch {
+                logger.warning("\(error)")
             }
-        } catch {
-            logger.warning("\(error)")
         }
     }
 }

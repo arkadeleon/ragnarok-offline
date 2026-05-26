@@ -37,15 +37,13 @@ final class RealityEntityCache {
     private let resourceManager: ResourceManager
 
     private var objectEntities: [GameObjectID : ObjectEntityEntry] = [:]
-    private var itemEntities: [GameObjectID : RealityEntityPhase] = [:]
+    private(set) var itemEntities: [GameObjectID : Entity] = [:]
+
     private var templateEntitiesByConfiguration: [ComposedSprite.Configuration : RealityEntityPhase] = [:]
+    private var templateEntitiesByItemID: [Int : RealityEntityPhase] = [:]
 
     var objectIDs: Set<GameObjectID> {
         Set(objectEntities.keys)
-    }
-
-    var itemIDs: Set<GameObjectID> {
-        Set(itemEntities.keys)
     }
 
     init(resourceManager: ResourceManager) {
@@ -180,25 +178,42 @@ final class RealityEntityCache {
         }
     }
 
-    func itemEntity(for item: MapSceneItem) async throws -> Entity {
-        if let phase = itemEntities[item.objectID] {
-            return try await phase.entity
+    func itemEntity(for item: MapSceneItem) -> Entity {
+        if let entity = itemEntities[item.objectID] {
+            return entity
         }
 
-        let task = Task {
-            try await Entity(forItemID: item.itemID, using: resourceManager)
-        }
-        itemEntities[item.objectID] = .inProgress(task)
-
-        let entity = try await task.value
-        itemEntities[item.objectID] = .loaded(entity)
+        let entity = Entity()
+        itemEntities[item.objectID] = entity
         return entity
     }
 
-    func removeItemEntity(for objectID: GameObjectID) async throws {
-        if let phase = itemEntities.removeValue(forKey: objectID) {
-            let entity = try await phase.entity
+    func removeItemEntity(for objectID: GameObjectID) {
+        if let entity = itemEntities.removeValue(forKey: objectID) {
             entity.removeFromParent()
+        }
+    }
+
+    func itemSpriteEntity(forItemID itemID: Int) async throws -> Entity {
+        if let templatePhase = templateEntitiesByItemID[itemID] {
+            let templateEntity = try await templatePhase.entity
+            return templateEntity.clone(recursive: true)
+        }
+
+        let templateTask = Task<Entity, any Error> {
+            let spriteEntity = try await SpriteEntity(forItemID: itemID, using: resourceManager)
+            spriteEntity.name = "sprite"
+            return spriteEntity
+        }
+        templateEntitiesByItemID[itemID] = .inProgress(templateTask)
+
+        do {
+            let templateEntity = try await templateTask.value
+            templateEntitiesByItemID[itemID] = .loaded(templateEntity)
+            return templateEntity.clone(recursive: true)
+        } catch {
+            templateEntitiesByItemID.removeValue(forKey: itemID)
+            throw error
         }
     }
 
@@ -212,13 +227,8 @@ final class RealityEntityCache {
             }
         }
 
-        for phase in itemEntities.values {
-            switch phase {
-            case .inProgress(let task):
-                task.cancel()
-            case .loaded(let entity):
-                entity.removeFromParent()
-            }
+        for entity in itemEntities.values {
+            entity.removeFromParent()
         }
 
         for phase in templateEntitiesByConfiguration.values {
@@ -227,8 +237,15 @@ final class RealityEntityCache {
             }
         }
 
+        for phase in templateEntitiesByItemID.values {
+            if case .inProgress(let task) = phase {
+                task.cancel()
+            }
+        }
+
         objectEntities.removeAll()
         itemEntities.removeAll()
         templateEntitiesByConfiguration.removeAll()
+        templateEntitiesByItemID.removeAll()
     }
 }

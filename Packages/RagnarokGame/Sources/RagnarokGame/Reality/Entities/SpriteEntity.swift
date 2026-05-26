@@ -42,6 +42,13 @@ class SpriteEntity: Entity {
         let spriteComponent = SpriteAnimationLibraryComponent(animations: animations)
         components.set(spriteComponent)
     }
+
+    convenience init(forItemID itemID: Int, using resourceManager: ResourceManager) async throws {
+        let sprite = try await resourceManager.itemSprite(forItemID: itemID)
+        let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
+
+        self.init(animation: animation)
+    }
 }
 
 extension Entity {
@@ -69,21 +76,6 @@ extension Entity {
             let animations = await SpriteAnimation.animations(for: composedSprite)
 
             let spriteEntity = SpriteEntity(animations: animations)
-            spriteEntity.name = "sprite"
-            addChild(spriteEntity)
-        } catch {
-            logger.warning("\(error)")
-        }
-    }
-
-    convenience init(forItemID itemID: Int, using resourceManager: ResourceManager) async throws {
-        self.init()
-
-        do {
-            let sprite = try await resourceManager.itemSprite(forItemID: itemID)
-            let animation = try await SpriteAnimation(sprite: sprite, actionIndex: 0)
-
-            let spriteEntity = SpriteEntity(animation: animation)
             spriteEntity.name = "sprite"
             addChild(spriteEntity)
         } catch {
