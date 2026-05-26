@@ -27,6 +27,7 @@ final class MetalRenderBackend: GameRenderBackend {
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     private var objectStates: [GameObjectID : MapSceneObject] = [:]
+    private var objectMovements: [GameObjectID : MapObjectMovementState] = [:]
     private var itemStates: [GameObjectID : MapSceneItem] = [:]
     private var cameraState: MapCameraState = .default
 
@@ -81,8 +82,44 @@ final class MetalRenderBackend: GameRenderBackend {
         refreshSpriteDrawables()
     }
 
+    func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState? {
+        guard let scene else {
+            return nil
+        }
+
+        let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
+        let movement = planner.replan(
+            existingMovement: objectMovements[command.objectID],
+            existingSpeed: objectStates[command.objectID]?.speed,
+            incomingStartPosition: command.startPosition,
+            incomingEndPosition: command.endPosition,
+            incomingSpeed: command.speed,
+            at: command.startedAt
+        )
+        objectMovements[command.objectID] = movement
+
+        refreshSpriteDrawables()
+        if command.objectID == scene.state.playerID {
+            updateCameraTarget()
+        }
+
+        return movement
+    }
+
+    func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
+        objectMovements.removeValue(forKey: objectID)
+        if objectStates[objectID] != nil {
+            objectStates[objectID]?.gridPosition = position
+        }
+        refreshSpriteDrawables()
+        if objectID == scene?.state.playerID {
+            updateCameraTarget()
+        }
+    }
+
     func removeObject(objectID: GameObjectID) {
         objectStates.removeValue(forKey: objectID)
+        objectMovements.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
     }
@@ -96,6 +133,26 @@ final class MetalRenderBackend: GameRenderBackend {
         itemStates.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
+    }
+
+    func presentationGridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        if let movement = objectMovements[objectID],
+           let speed = objectStates[objectID]?.speed,
+           let nextPosition = movement.nextPosition(speed: speed, at: .now) {
+            return nextPosition
+        }
+        return objectStates[objectID]?.gridPosition
+    }
+
+    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
+        if let worldPosition = spriteSnapshots[objectID]?.worldPosition {
+            return worldPosition
+        }
+        if let gridPosition = objectStates[objectID]?.gridPosition,
+           let scene {
+            return scene.mapGrid.worldPosition(for: gridPosition)
+        }
+        return nil
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
@@ -129,6 +186,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
         let snapshots = spriteSnapshotBuilder.build(
             objects: objectStates,
+            movements: objectMovements,
             items: itemStates,
             scene: scene
         )
@@ -226,6 +284,7 @@ final class MetalRenderBackend: GameRenderBackend {
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
         objectStates.removeAll()
+        objectMovements.removeAll()
         itemStates.removeAll()
         combatTextSpriteSet = nil
         for task in effectLoadTasks.values {

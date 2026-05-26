@@ -33,7 +33,6 @@ public struct MapSceneObject: Sendable {
     public var bodyState: StatusChangeOption1
     public var healthState: StatusChangeOption2
     public var effectState: StatusChangeOption
-    public var movement: MapObjectMovementState?
     public var presentation: MapObjectPresentationState
 
     public init(
@@ -43,7 +42,6 @@ public struct MapSceneObject: Sendable {
         maxHp: Int,
         sp: Int? = nil,
         maxSp: Int? = nil,
-        movement: MapObjectMovementState? = nil,
         presentation: MapObjectPresentationState
     ) {
         self.objectID = object.objectID
@@ -69,7 +67,6 @@ public struct MapSceneObject: Sendable {
         self.bodyState = object.bodyState
         self.healthState = object.healthState
         self.effectState = object.effectState
-        self.movement = movement
         self.presentation = presentation
     }
 }

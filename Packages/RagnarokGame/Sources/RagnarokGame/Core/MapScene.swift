@@ -139,12 +139,7 @@ public final class MapScene {
     }
 
     private func playerMovementOrigin() -> SIMD2<Int> {
-        if let movement = state.player.movement,
-           let nextPosition = movement.nextPosition(speed: state.player.speed, at: .now) {
-            return nextPosition
-        } else {
-            return state.player.gridPosition
-        }
+        renderBackend.presentationGridPosition(for: player.objectID) ?? state.player.gridPosition
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {

@@ -35,6 +35,9 @@ final class RealityRenderBackend: GameRenderBackend {
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
     private let tileRange = 17
 
+    private var objectStates: [GameObjectID : MapSceneObject] = [:]
+    private var objectMovements: [GameObjectID : MapObjectMovementState] = [:]
+
     #if os(iOS) || os(macOS)
     weak var arView: ARView?
     private var anchorEntity: AnchorEntity?
@@ -119,14 +122,64 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func addObject(_ object: MapSceneObject) {
+        objectStates[object.objectID] = object
         upsertObjectEntity(for: object)
     }
 
     func updateObject(_ object: MapSceneObject) {
+        objectStates[object.objectID] = object
         upsertObjectEntity(for: object)
     }
 
+    func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState? {
+        guard let scene else {
+            return nil
+        }
+
+        let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
+        let movement = planner.replan(
+            existingMovement: objectMovements[command.objectID],
+            existingSpeed: objectStates[command.objectID]?.speed,
+            incomingStartPosition: command.startPosition,
+            incomingEndPosition: command.endPosition,
+            incomingSpeed: command.speed,
+            at: command.startedAt
+        )
+        objectMovements[command.objectID] = movement
+
+        if let object = objectStates[command.objectID] {
+            upsertObjectEntity(for: object)
+        }
+
+        #if os(visionOS)
+        if command.objectID == scene.state.playerID {
+            updateTileEntities(forCenter: command.endPosition, mapGrid: scene.mapGrid)
+        }
+        #endif
+
+        return movement
+    }
+
+    func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
+        objectMovements.removeValue(forKey: objectID)
+        if objectStates[objectID] != nil {
+            objectStates[objectID]?.gridPosition = position
+        }
+
+        if let object = objectStates[objectID] {
+            upsertObjectEntity(for: object)
+        }
+
+        #if os(visionOS)
+        if objectID == scene?.state.playerID, let scene {
+            updateTileEntities(forCenter: position, mapGrid: scene.mapGrid)
+        }
+        #endif
+    }
+
     func removeObject(objectID: GameObjectID) {
+        objectStates.removeValue(forKey: objectID)
+        objectMovements.removeValue(forKey: objectID)
         entityCache.removeObjectEntity(for: objectID)
     }
 
@@ -136,6 +189,19 @@ final class RealityRenderBackend: GameRenderBackend {
 
     func removeItem(objectID: GameObjectID) {
         entityCache.removeItemEntity(for: objectID)
+    }
+
+    func presentationGridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        if let movement = objectMovements[objectID],
+           let speed = objectStates[objectID]?.speed,
+           let nextPosition = movement.nextPosition(speed: speed, at: .now) {
+            return nextPosition
+        }
+        return objectStates[objectID]?.gridPosition
+    }
+
+    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
+        entityCache.objectEntities[objectID]?.position(relativeTo: nil)
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
@@ -313,6 +379,9 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     private func teardownSceneState() {
+        objectStates.removeAll()
+        objectMovements.removeAll()
+
         tileSelectionRenderer.hideSelection()
         worldCameraEntity.removeFromParent()
         for child in Array(worldCameraEntity.children) {
@@ -360,10 +429,6 @@ final class RealityRenderBackend: GameRenderBackend {
         worldCameraEntity.position = target.position(relativeTo: parentEntity)
     }
 
-    private func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
-        entityCache.objectEntities[objectID]?.position(relativeTo: nil)
-    }
-
     private func upsertObjectEntity(for object: MapSceneObject) {
         guard let scene else {
             return
@@ -373,9 +438,11 @@ final class RealityRenderBackend: GameRenderBackend {
         let isNew = entity.parent == nil
 
         entity.name = "\(object.objectID)"
+        let movement = objectMovements[object.objectID]
         entity.transform = Transform(
             translation: sampler.sample(
                 for: object,
+                movement: movement,
                 position: { scene.mapGrid.worldPosition(for: $0) },
                 now: .now
             ).worldPosition
@@ -385,7 +452,7 @@ final class RealityRenderBackend: GameRenderBackend {
         entity.components.set(MapSceneObjectComponent(object: object))
         entity.components.set(MapObjectSnapshotPresentationComponent(
             logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
-            timeline: MapObjectMovementTimeline(for: object, position: { scene.mapGrid.worldPosition(for: $0) }),
+            timeline: MapObjectMovementTimeline(movement: movement, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
             presentation: object.presentation
         ))
 

@@ -20,10 +20,15 @@ protocol GameRenderBackend: AnyObject {
 
     func addObject(_ object: MapSceneObject)
     func updateObject(_ object: MapSceneObject)
+    func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState?
+    func stopObject(objectID: GameObjectID, at position: SIMD2<Int>)
     func removeObject(objectID: GameObjectID)
 
     func addItem(_ item: MapSceneItem)
     func removeItem(objectID: GameObjectID)
+
+    func presentationGridPosition(for objectID: GameObjectID) -> SIMD2<Int>?
+    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>?
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
     func addCombatText(_ combatText: MapSceneCombatText)

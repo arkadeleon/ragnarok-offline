@@ -79,20 +79,19 @@ extension MapScene {
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
 
-        let movementPlanner = MapObjectMovementPlanner(pathFinder: pathFinder)
-        let movement = movementPlanner.replan(
-            existingMovement: state.player.movement,
-            existingSpeed: state.player.speed,
-            incomingStartPosition: startPosition,
-            incomingEndPosition: endPosition,
-            incomingSpeed: state.player.speed,
-            at: now
+        let command = MapObjectMoveCommand(
+            objectID: player.objectID,
+            startPosition: startPosition,
+            endPosition: endPosition,
+            speed: state.player.speed,
+            startedAt: now
         )
-        let remainingDuration = movement.remainingDuration(at: now)
-        let direction = movement.finalDirection
+        let movement = renderBackend.moveObject(command)
+        let remainingDuration = movement?.remainingDuration(at: now) ?? .zero
+        let direction = movement?.finalDirection
+            ?? SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition)
 
         state.player.gridPosition = endPosition
-        state.player.movement = movement
         state.player.presentation = MapObjectPresentationState(
             action: .walk,
             direction: direction,
@@ -160,48 +159,25 @@ extension MapScene {
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let now = ContinuousClock.now
-        let existingObject = state.objects[object.objectID]
+        let isNew = state.objects[object.objectID] == nil
 
-        let movementPlanner = MapObjectMovementPlanner(pathFinder: pathFinder)
-        let movement = movementPlanner.replan(
-            existingMovement: existingObject?.movement,
-            existingSpeed: existingObject?.speed,
-            incomingStartPosition: startPosition,
-            incomingEndPosition: endPosition,
-            incomingSpeed: object.speed,
-            at: now
-        )
-        let remainingDuration = movement.remainingDuration(at: now)
-        let direction = movement.finalDirection
-
-        if var object = state.objects[object.objectID] {
-            let presentation = MapObjectPresentationState(
-                action: .walk,
-                direction: direction,
-                headDirection: object.presentation.headDirection,
-                startTime: now,
-                completion: .after(remainingDuration, settledAction: .idle)
-            )
-            object.gridPosition = endPosition
-            object.movement = movement
-            object.presentation = presentation
-            state.objects[object.objectID] = object
-        } else {
-            let presentation = MapObjectPresentationState(
-                action: .walk,
-                direction: direction,
+        if isNew {
+            let placeholderPresentation = MapObjectPresentationState(
+                action: .idle,
+                direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward,
                 startTime: now,
-                completion: .after(remainingDuration, settledAction: .idle)
+                completion: .indefinite
             )
-            state.objects[object.objectID] = MapSceneObject(
+            let sceneObject = MapSceneObject(
                 object: object,
-                gridPosition: endPosition,
+                gridPosition: startPosition,
                 hp: object.hp,
                 maxHp: object.maxHp,
-                movement: movement,
-                presentation: presentation
+                presentation: placeholderPresentation
             )
+            state.objects[object.objectID] = sceneObject
+            renderBackend.addObject(sceneObject)
 
             if object.type == .monster {
                 state.overlay.gauges[object.objectID] = MapGaugeOverlay(
@@ -213,11 +189,29 @@ extension MapScene {
             }
         }
 
-        let finalObject = state.objects[object.objectID]!
-        if existingObject == nil {
-            renderBackend.addObject(finalObject)
-        } else {
-            renderBackend.updateObject(finalObject)
+        let command = MapObjectMoveCommand(
+            objectID: object.objectID,
+            startPosition: startPosition,
+            endPosition: endPosition,
+            speed: object.speed,
+            startedAt: now
+        )
+        let movement = renderBackend.moveObject(command)
+        let remainingDuration = movement?.remainingDuration(at: now) ?? .zero
+        let direction = movement?.finalDirection
+            ?? SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition)
+
+        if var updated = state.objects[object.objectID] {
+            updated.gridPosition = endPosition
+            updated.presentation = MapObjectPresentationState(
+                action: .walk,
+                direction: direction,
+                headDirection: updated.presentation.headDirection,
+                startTime: now,
+                completion: .after(remainingDuration, settledAction: .idle)
+            )
+            state.objects[object.objectID] = updated
+            renderBackend.updateObject(updated)
         }
     }
 
@@ -226,7 +220,6 @@ extension MapScene {
 
         if var object = state.objects[objectID] {
             object.gridPosition = position
-            object.movement = nil
             object.presentation = MapObjectPresentationState(
                 action: .idle,
                 direction: object.presentation.direction,
@@ -236,6 +229,7 @@ extension MapScene {
             )
             state.objects[objectID] = object
             renderBackend.updateObject(object)
+            renderBackend.stopObject(objectID: objectID, at: position)
         }
 
         if objectID == state.playerID, let action = pendingArrivalAction {

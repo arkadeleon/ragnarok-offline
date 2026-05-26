@@ -81,15 +81,15 @@ struct MapObjectMovementTimeline {
     private let animationElapsedOffset: Duration
     private let progress: MapObjectMovementPathProgress
 
-    init?(for object: MapSceneObject, position: (SIMD2<Int>) -> SIMD3<Float>) {
-        guard let movement = object.movement, movement.path.count >= 2 else {
+    init?(movement: MapObjectMovementState?, speed: Int, position: (SIMD2<Int>) -> SIMD3<Float>) {
+        guard let movement, movement.path.count >= 2 else {
             return nil
         }
 
         let path = movement.path
         let progress = MapObjectMovementPathProgress(
             path: path,
-            speed: object.speed,
+            speed: speed,
             startTime: movement.startTime,
             duration: movement.duration
         )
