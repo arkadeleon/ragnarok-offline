@@ -1,5 +1,5 @@
 //
-//  MapCombatText.swift
+//  MapSceneCombatText.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/20.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct MapCombatText: Identifiable, Sendable {
+public struct MapSceneCombatText: Identifiable, Sendable {
     public struct Target: Sendable {
-        public let id: GameObjectID
+        public let objectID: GameObjectID
         public let isPlayer: Bool
     }
 
@@ -22,17 +22,17 @@ public struct MapCombatText: Identifiable, Sendable {
 
     public let id: UUID
     public let creationTime: ContinuousClock.Instant
-    public let target: MapCombatText.Target
+    public let target: MapSceneCombatText.Target
     public let amount: Int
-    public let kind: MapCombatText.Kind
+    public let kind: MapSceneCombatText.Kind
     public let delay: Duration
     public let duration: Duration
 
     public init(
         creationTime: ContinuousClock.Instant,
-        target: MapCombatText.Target,
+        target: MapSceneCombatText.Target,
         amount: Int,
-        kind: MapCombatText.Kind? = nil,
+        kind: MapSceneCombatText.Kind? = nil,
         delay: Duration
     ) {
         self.id = UUID()

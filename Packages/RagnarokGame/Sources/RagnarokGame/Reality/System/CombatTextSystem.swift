@@ -53,7 +53,7 @@ class CombatTextSystem: System {
                     targetEntity = context.scene.findEntity(id: targetEntityID)
                 } else {
                     targetEntity = context.entities(matching: Self.targetQuery, updatingSystemWhen: .rendering).first { entity in
-                        entity.components[MapSceneObjectComponent.self]?.object.objectID == component.combatText.target.id
+                        entity.components[MapSceneObjectComponent.self]?.object.objectID == component.combatText.target.objectID
                     }
                 }
 

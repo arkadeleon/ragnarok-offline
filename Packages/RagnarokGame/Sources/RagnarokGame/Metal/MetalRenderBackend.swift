@@ -72,7 +72,7 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
     }
 
-    func addCombatText(_ combatText: MapCombatText) {
+    func addCombatText(_ combatText: MapSceneCombatText) {
         renderCombatText(combatText)
     }
 
@@ -223,7 +223,7 @@ final class MetalRenderBackend: GameRenderBackend {
         renderer.spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
     }
 
-    private func renderCombatText(_ combatText: MapCombatText) {
+    private func renderCombatText(_ combatText: MapSceneCombatText) {
         guard let scene, let combatTextSpriteSet else {
             return
         }
@@ -232,8 +232,8 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
-        guard let startPosition = spriteSnapshots[combatText.target.id]?.worldPosition
-            ?? fallbackWorldPosition(for: combatText.target.id, scene: scene) else {
+        guard let startPosition = spriteSnapshots[combatText.target.objectID]?.worldPosition
+            ?? fallbackWorldPosition(for: combatText.target.objectID, scene: scene) else {
             return
         }
 

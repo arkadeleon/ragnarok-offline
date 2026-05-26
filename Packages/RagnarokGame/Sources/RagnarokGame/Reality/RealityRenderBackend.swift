@@ -150,7 +150,7 @@ final class RealityRenderBackend: GameRenderBackend {
         tileSelectionRenderer.showSelection(at: position, in: mapGrid)
     }
 
-    func addCombatText(_ combatText: MapCombatText) {
+    func addCombatText(_ combatText: MapSceneCombatText) {
         let combatTextEntity = Entity.makeCombatTextEntity(for: combatText)
         combatTextEntity.setParent(rootEntity)
     }

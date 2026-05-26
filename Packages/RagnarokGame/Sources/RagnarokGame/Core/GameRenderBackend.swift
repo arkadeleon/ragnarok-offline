@@ -19,7 +19,7 @@ protocol GameRenderBackend: AnyObject {
     func applySnapshot(_ state: MapSceneState)
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
-    func addCombatText(_ combatText: MapCombatText)
+    func addCombatText(_ combatText: MapSceneCombatText)
     func addEffect(_ effect: MapSceneEffect)
     func playSound(named soundName: String, on objectID: GameObjectID)
 }

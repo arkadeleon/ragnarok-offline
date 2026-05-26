@@ -50,9 +50,9 @@ extension MapScene {
 
         applySnapshot()
 
-        let combatText = MapCombatText(
+        let combatText = MapSceneCombatText(
             creationTime: .now,
-            target: MapCombatText.Target(id: player.objectID, isPlayer: true),
+            target: MapSceneCombatText.Target(objectID: player.objectID, isPlayer: true),
             amount: amount,
             kind: .hpRecovery,
             delay: .zero
@@ -66,9 +66,9 @@ extension MapScene {
 
         applySnapshot()
 
-        let combatText = MapCombatText(
+        let combatText = MapSceneCombatText(
             creationTime: .now,
-            target: MapCombatText.Target(id: player.objectID, isPlayer: true),
+            target: MapSceneCombatText.Target(objectID: player.objectID, isPlayer: true),
             amount: amount,
             kind: .spRecovery,
             delay: .zero
@@ -446,13 +446,13 @@ extension MapScene {
         if packet.damage >= 0 {
             let count = Int(packet.count)
             let damage = Int(packet.damage)
-            let target = MapCombatText.Target(
-                id: packet.targetID,
+            let target = MapSceneCombatText.Target(
+                objectID: packet.targetID,
                 isPlayer: state.objects[packet.targetID]?.type == .pc
             )
 
             for i in 0..<count {
-                let combatText = MapCombatText(
+                let combatText = MapSceneCombatText(
                     creationTime: now,
                     target: target,
                     amount: damage / count,
@@ -515,14 +515,14 @@ extension MapScene {
     }
 
     private func addCombatTexts(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
-        let target = MapCombatText.Target(
-            id: objectAction.targetObjectID,
+        let target = MapSceneCombatText.Target(
+            objectID: objectAction.targetObjectID,
             isPlayer: state.objects[objectAction.targetObjectID]?.type == .pc
         )
 
         switch objectAction.type {
         case .normal, .endure, .critical:
-            let combatText = MapCombatText(
+            let combatText = MapSceneCombatText(
                 creationTime: now,
                 target: target,
                 amount: objectAction.damage,
@@ -531,7 +531,7 @@ extension MapScene {
             renderBackend.addCombatText(combatText)
 
             if objectAction.damage2 > 0 {
-                let combatText2 = MapCombatText(
+                let combatText2 = MapSceneCombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage2,
@@ -542,7 +542,7 @@ extension MapScene {
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
             if count == 2 {
-                let combatText = MapCombatText(
+                let combatText = MapSceneCombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
@@ -551,7 +551,7 @@ extension MapScene {
                 renderBackend.addCombatText(combatText)
             }
             if objectAction.damage2 > 0 {
-                let combatText = MapCombatText(
+                let combatText = MapSceneCombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
@@ -559,7 +559,7 @@ extension MapScene {
                 )
                 renderBackend.addCombatText(combatText)
 
-                let combatText2 = MapCombatText(
+                let combatText2 = MapSceneCombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage2,
@@ -567,7 +567,7 @@ extension MapScene {
                 )
                 renderBackend.addCombatText(combatText2)
             } else {
-                let combatText = MapCombatText(
+                let combatText = MapSceneCombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
