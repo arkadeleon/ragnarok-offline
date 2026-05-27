@@ -14,10 +14,7 @@ final class SpriteSnapshotBuilder {
     private let sampler = MapObjectPresentationSampler()
 
     func build(
-        objects: [GameObjectID : MapSceneObject],
-        gridPositions: [GameObjectID : SIMD2<Int>],
-        movements: [GameObjectID : MapObjectMovementState],
-        presentations: [GameObjectID : MapObjectPresentationState],
+        objects: [GameObjectID : MetalMapObjectState],
         items: [GameObjectID : MapSceneItem],
         scene: MapScene
     ) -> [GameObjectID : SpriteSnapshot] {
@@ -25,12 +22,8 @@ final class SpriteSnapshotBuilder {
 
         var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
-        for (objectID, object) in objects {
-            guard let gridPosition = gridPositions[objectID] else {
-                continue
-            }
-            let presentation = presentations[objectID] ?? .defaultPresentation
-            snapshots[objectID] = snapshot(for: object, gridPosition: gridPosition, movement: movements[objectID], presentation: presentation, now: now, scene: scene)
+        for (objectID, objectState) in objects {
+            snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)
         }
 
         for (objectID, item) in items {
@@ -40,12 +33,13 @@ final class SpriteSnapshotBuilder {
         return snapshots
     }
 
-    private func snapshot(for object: MapSceneObject, gridPosition: SIMD2<Int>, movement: MapObjectMovementState?, presentation: MapObjectPresentationState, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
+    private func snapshot(for objectState: MetalMapObjectState, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
+        let object = objectState.object
         let presentationSample = sampler.sample(
             for: object,
-            gridPosition: gridPosition,
-            movement: movement,
-            presentation: presentation,
+            gridPosition: objectState.gridPosition,
+            movement: objectState.movement,
+            presentation: objectState.presentation,
             position: { scene.mapGrid.worldPosition(for: $0) },
             now: now
         )

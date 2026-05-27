@@ -13,6 +13,13 @@ import RagnarokResources
 import RagnarokSprite
 import simd
 
+struct MetalMapObjectState {
+    var object: MapSceneObject
+    var gridPosition: SIMD2<Int>
+    var movement: MapObjectMovementState?
+    var presentation: MapObjectPresentationState
+}
+
 final class MetalRenderBackend: GameRenderBackend {
     private(set) weak var scene: MapScene?
 
@@ -27,10 +34,7 @@ final class MetalRenderBackend: GameRenderBackend {
     private var effectAssetStore: EffectAssetStore?
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
-    private var objectStates: [GameObjectID : MapSceneObject] = [:]
-    private var objectGridPositions: [GameObjectID : SIMD2<Int>] = [:]
-    private var objectMovements: [GameObjectID : MapObjectMovementState] = [:]
-    private var objectPresentations: [GameObjectID : MapObjectPresentationState] = [:]
+    private var objectStates: [GameObjectID : MetalMapObjectState] = [:]
     private var itemStates: [GameObjectID : MapSceneItem] = [:]
     private var cameraState: MapCameraState = .default
 
@@ -76,49 +80,57 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func addObject(_ object: MapSceneObject, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        objectStates[object.objectID] = object
-        objectGridPositions[object.objectID] = gridPosition
-        objectPresentations[object.objectID] = MapObjectPresentationState(
-            action: .idle,
-            direction: direction,
-            headDirection: headDirection,
-            startTime: .now,
-            completion: .indefinite
+        objectStates[object.objectID] = MetalMapObjectState(
+            object: object,
+            gridPosition: gridPosition,
+            movement: nil,
+            presentation: MapObjectPresentationState(
+                action: .idle,
+                direction: direction,
+                headDirection: headDirection,
+                startTime: .now,
+                completion: .indefinite
+            )
         )
         refreshSpriteDrawables()
     }
 
     func updateObject(_ object: MapSceneObject) {
-        objectStates[object.objectID] = object
+        guard var objectState = objectStates[object.objectID] else {
+            return
+        }
+
+        objectState.object = object
+        objectStates[object.objectID] = objectState
         refreshSpriteDrawables()
     }
 
     func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState? {
-        guard let scene else {
+        guard let scene, var objectState = objectStates[command.objectID] else {
             return nil
         }
 
         let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
         let movement = planner.replan(
-            existingMovement: objectMovements[command.objectID],
-            existingSpeed: objectStates[command.objectID]?.speed,
+            existingMovement: objectState.movement,
+            existingSpeed: objectState.object.speed,
             incomingStartPosition: command.startPosition,
             incomingEndPosition: command.endPosition,
             incomingSpeed: command.speed,
             at: command.startedAt
         )
-        objectMovements[command.objectID] = movement
-        objectGridPositions[command.objectID] = command.endPosition
 
         let remainingDuration = movement.remainingDuration(at: command.startedAt)
-        let currentHeadDirection = objectPresentations[command.objectID]?.headDirection ?? .lookForward
-        objectPresentations[command.objectID] = MapObjectPresentationState(
+        objectState.gridPosition = command.endPosition
+        objectState.movement = movement
+        objectState.presentation = MapObjectPresentationState(
             action: .walk,
             direction: movement.finalDirection,
-            headDirection: currentHeadDirection,
+            headDirection: objectState.presentation.headDirection,
             startTime: command.startedAt,
             completion: .after(remainingDuration, settledAction: .idle)
         )
+        objectStates[command.objectID] = objectState
 
         refreshSpriteDrawables()
         if command.objectID == scene.state.playerID {
@@ -129,14 +141,13 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
-        objectMovements.removeValue(forKey: objectID)
-        objectGridPositions[objectID] = position
-
-        if var presentation = objectPresentations[objectID] {
-            presentation.action = .idle
-            presentation.startTime = .now
-            presentation.completion = .indefinite
-            objectPresentations[objectID] = presentation
+        if var objectState = objectStates[objectID] {
+            objectState.gridPosition = position
+            objectState.movement = nil
+            objectState.presentation.action = .idle
+            objectState.presentation.startTime = .now
+            objectState.presentation.completion = .indefinite
+            objectStates[objectID] = objectState
         }
 
         refreshSpriteDrawables()
@@ -146,35 +157,30 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        guard objectStates[objectID] != nil else {
+        guard var objectState = objectStates[objectID] else {
             return
         }
-        if var presentation = objectPresentations[objectID] {
-            presentation.direction = direction
-            presentation.headDirection = headDirection
-            objectPresentations[objectID] = presentation
-        }
+
+        objectState.presentation.direction = direction
+        objectState.presentation.headDirection = headDirection
+        objectStates[objectID] = objectState
         refreshSpriteDrawables()
     }
 
     func performObjectAction(_ command: MapObjectPresentationCommand) {
-        guard objectStates[command.objectID] != nil else {
+        guard var objectState = objectStates[command.objectID] else {
             return
         }
-        if var presentation = objectPresentations[command.objectID] {
-            presentation.action = command.action
-            presentation.startTime = command.startTime
-            presentation.completion = command.completion
-            objectPresentations[command.objectID] = presentation
-        }
+
+        objectState.presentation.action = command.action
+        objectState.presentation.startTime = command.startTime
+        objectState.presentation.completion = command.completion
+        objectStates[command.objectID] = objectState
         refreshSpriteDrawables()
     }
 
     func removeObject(objectID: GameObjectID) {
         objectStates.removeValue(forKey: objectID)
-        objectGridPositions.removeValue(forKey: objectID)
-        objectMovements.removeValue(forKey: objectID)
-        objectPresentations.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
     }
@@ -191,7 +197,7 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        objectGridPositions[objectID]
+        objectStates[objectID]?.gridPosition
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
@@ -225,9 +231,6 @@ final class MetalRenderBackend: GameRenderBackend {
 
         let snapshots = spriteSnapshotBuilder.build(
             objects: objectStates,
-            gridPositions: objectGridPositions,
-            movements: objectMovements,
-            presentations: objectPresentations,
             items: itemStates,
             scene: scene
         )
@@ -326,9 +329,6 @@ final class MetalRenderBackend: GameRenderBackend {
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
         objectStates.removeAll()
-        objectGridPositions.removeAll()
-        objectMovements.removeAll()
-        objectPresentations.removeAll()
         itemStates.removeAll()
         combatTextSpriteSet = nil
         for task in effectLoadTasks.values {
@@ -425,7 +425,7 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     private func fallbackWorldPosition(for objectID: GameObjectID, scene: MapScene) -> SIMD3<Float>? {
-        if let gridPosition = objectGridPositions[objectID] {
+        if let gridPosition = objectStates[objectID]?.gridPosition {
             return scene.mapGrid.worldPosition(for: gridPosition)
         } else {
             return nil
