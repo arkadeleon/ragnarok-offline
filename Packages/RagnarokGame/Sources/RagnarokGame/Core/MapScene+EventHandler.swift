@@ -89,8 +89,6 @@ extension MapScene {
         let movement = renderBackend.moveObject(command)
         let remainingDuration = movement?.remainingDuration(at: now) ?? .zero
 
-        state.player.gridPosition = endPosition
-
         if pendingArrivalAction != nil {
             arrivalTask?.cancel()
             arrivalTask = Task { @MainActor [weak self] in
@@ -125,13 +123,13 @@ extension MapScene {
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
         let sceneObject = MapSceneObject(
             object: object,
-            gridPosition: position,
             hp: object.hp,
             maxHp: object.maxHp
         )
         state.objects[object.objectID] = sceneObject
         renderBackend.addObject(
             sceneObject,
+            at: position,
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
@@ -153,13 +151,13 @@ extension MapScene {
         if isNew {
             let sceneObject = MapSceneObject(
                 object: object,
-                gridPosition: startPosition,
                 hp: object.hp,
                 maxHp: object.maxHp
             )
             state.objects[object.objectID] = sceneObject
             renderBackend.addObject(
                 sceneObject,
+                at: startPosition,
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
             )
@@ -183,17 +181,13 @@ extension MapScene {
         )
         _ = renderBackend.moveObject(command)
 
-        if var updated = state.objects[object.objectID] {
-            updated.gridPosition = endPosition
-            state.objects[object.objectID] = updated
+        if let updated = state.objects[object.objectID] {
             renderBackend.updateObject(updated)
         }
     }
 
     func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
-        if var object = state.objects[objectID] {
-            object.gridPosition = position
-            state.objects[objectID] = object
+        if state.objects[objectID] != nil {
             renderBackend.stopObject(objectID: objectID, at: position)
         }
 
@@ -530,7 +524,7 @@ extension MapScene {
     private func addSkillHitEffects(for packet: PACKET_ZC_NOTIFY_SKILL) {
         guard packet.damage > 0,
               let skillID = SkillID(rawValue: Int(packet.SKID)),
-              let targetPosition = state.objects[packet.targetID]?.gridPosition else {
+              let targetPosition = renderBackend.gridPosition(for: packet.targetID) else {
             return
         }
 
@@ -552,7 +546,8 @@ extension MapScene {
     private func addSkillEffects(for packet: PACKET_ZC_NOTIFY_SKILL) {
         guard let skillID = SkillID(rawValue: Int(packet.SKID)),
               let _ = state.objects[packet.AID],
-              let target = state.objects[packet.targetID],
+              state.objects[packet.targetID] != nil,
+              let targetPosition = renderBackend.gridPosition(for: packet.targetID),
               let damageType = DamageType(rawValue: Int(packet.action)),
               damageType != .splash, damageType != .splash_endure else {
             return
@@ -563,7 +558,7 @@ extension MapScene {
             addEffects(
                 forEffectID: effectID,
                 creationTime: now,
-                gridPosition: target.gridPosition,
+                gridPosition: targetPosition,
                 attachedObjectID: packet.targetID,
                 delay: .milliseconds(Int(packet.attackMT))
             )

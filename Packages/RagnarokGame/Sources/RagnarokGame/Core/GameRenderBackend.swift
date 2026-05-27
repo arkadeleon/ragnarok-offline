@@ -19,7 +19,7 @@ protocol GameRenderBackend: AnyObject {
 
     func updateCamera(_ cameraState: MapCameraState)
 
-    func addObject(_ object: MapSceneObject, direction: SpriteDirection, headDirection: SpriteHeadDirection)
+    func addObject(_ object: MapSceneObject, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection)
     func updateObject(_ object: MapSceneObject)
     func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState?
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>)
@@ -30,7 +30,7 @@ protocol GameRenderBackend: AnyObject {
     func addItem(_ item: MapSceneItem)
     func removeItem(objectID: GameObjectID)
 
-    func presentationGridPosition(for objectID: GameObjectID) -> SIMD2<Int>?
+    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>?
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
     func addCombatText(_ combatText: MapSceneCombatText)

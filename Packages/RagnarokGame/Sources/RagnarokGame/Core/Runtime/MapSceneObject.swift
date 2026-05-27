@@ -7,14 +7,12 @@
 
 import RagnarokConstants
 import RagnarokModels
-import simd
 
 public struct MapSceneObject: Sendable {
     public let objectID: GameObjectID
     public var type: MapObjectType
     public var name: String
     public var speed: Int
-    public var gridPosition: SIMD2<Int>
     public var job: Int
     public var gender: Gender
     public var hairStyle: Int
@@ -36,7 +34,6 @@ public struct MapSceneObject: Sendable {
 
     public init(
         object: MapObject,
-        gridPosition: SIMD2<Int>,
         hp: Int,
         maxHp: Int,
         sp: Int? = nil,
@@ -46,7 +43,6 @@ public struct MapSceneObject: Sendable {
         self.type = object.type
         self.name = object.name
         self.speed = object.speed
-        self.gridPosition = gridPosition
         self.job = object.job
         self.gender = object.gender
         self.hairStyle = object.hairStyle

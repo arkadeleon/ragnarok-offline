@@ -70,7 +70,6 @@ public final class MapScene {
 
         let playerObject = MapSceneObject(
             object: player,
-            gridPosition: playerPosition,
             hp: character.hp,
             maxHp: character.maxHp,
             sp: character.sp,
@@ -94,7 +93,7 @@ public final class MapScene {
 
     func load(progress: Progress) async {
         await renderBackend.load(progress: progress)
-        renderBackend.addObject(state.player, direction: .south, headDirection: .lookForward)
+        renderBackend.addObject(state.player, at: playerPosition, direction: .south, headDirection: .lookForward)
         renderBackend.updateCamera(cameraState)
     }
 
@@ -132,7 +131,27 @@ public final class MapScene {
     }
 
     private func playerMovementOrigin() -> SIMD2<Int> {
-        renderBackend.presentationGridPosition(for: player.objectID) ?? state.player.gridPosition
+        renderBackend.gridPosition(for: player.objectID) ?? playerPosition
+    }
+
+    private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneObject? {
+        state.objects.values
+            .filter { $0.type == type }
+            .compactMap { object -> (object: MapSceneObject, position: SIMD2<Int>)? in
+                guard let objectPosition = renderBackend.gridPosition(for: object.objectID) else {
+                    return nil
+                }
+                return (object, objectPosition)
+            }
+            .min {
+                distanceSquared($0.position, to: position) < distanceSquared($1.position, to: position)
+            }?.object
+    }
+
+    private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
+        let dx = a.x - b.x
+        let dy = a.y - b.y
+        return dx * dx + dy * dy
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
@@ -171,7 +190,8 @@ public final class MapScene {
     }
 
     func attackNearestMonster() {
-        if let target = state.nearestMonster(fromPosition: state.player.gridPosition) {
+        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+           let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
             engageMonster(target)
         }
     }
@@ -190,19 +210,22 @@ public final class MapScene {
             return
         }
 
-        if let target = state.nearestMonster(fromPosition: state.player.gridPosition) {
+        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+           let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
             engageMonster(target, skill: skill)
         }
     }
 
     func pickUpNearestItem() {
-        if let target = state.nearestItem(fromPosition: state.player.gridPosition) {
+        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+           let target = state.nearestItem(fromPosition: playerPosition) {
             engageItem(target)
         }
     }
 
     func talkToNearestNPC() {
-        if let target = state.nearestNPC(fromPosition: state.player.gridPosition) {
+        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+           let target = nearestObject(ofType: .npc, fromPosition: playerPosition) {
             gameSession?.talkToNPC(npcID: target.objectID)
         }
     }
@@ -223,13 +246,18 @@ public final class MapScene {
     }
 
     private func engageMonster(_ target: MapSceneObject) {
-        movePlayerToward(targetPosition: target.gridPosition, within: 1) {
+        guard let targetPosition = renderBackend.gridPosition(for: target.objectID) else {
+            return
+        }
+        movePlayerToward(targetPosition: targetPosition, within: 1) {
             self.gameSession?.requestAction(._repeat, onTarget: target.objectID)
         }
     }
 
     private func engageMonster(_ target: MapSceneObject, skill: SkillInfo) {
-        let targetPosition = target.gridPosition
+        guard let targetPosition = renderBackend.gridPosition(for: target.objectID) else {
+            return
+        }
         let skillRange = max(skill.attackRange, 1)
         movePlayerToward(targetPosition: targetPosition, within: skillRange) {
             if skill.isGroundTargetedSkill {
@@ -266,7 +294,7 @@ public final class MapScene {
     }
 
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
-        let startPosition = state.player.gridPosition
+        let startPosition = renderBackend.gridPosition(for: player.objectID) ?? playerPosition
         switch decideMovement(from: startPosition, toward: targetPosition, within: range) {
         case .alreadyInRange:
             onArrival()

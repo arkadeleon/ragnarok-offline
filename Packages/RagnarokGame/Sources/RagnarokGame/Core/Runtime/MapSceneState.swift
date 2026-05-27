@@ -38,26 +38,6 @@ public final class MapSceneState {
 }
 
 extension MapSceneState {
-    func nearestMonster(fromPosition position: SIMD2<Int>) -> MapSceneObject? {
-        objects.values
-            .filter {
-                $0.type == .monster
-            }
-            .min {
-                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
-            }
-    }
-
-    func nearestNPC(fromPosition position: SIMD2<Int>) -> MapSceneObject? {
-        objects.values
-            .filter {
-                $0.type == .npc
-            }
-            .min {
-                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
-            }
-    }
-
     func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneItem? {
         items.values
             .min {

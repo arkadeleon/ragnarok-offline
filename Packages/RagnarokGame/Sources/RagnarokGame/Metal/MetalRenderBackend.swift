@@ -28,6 +28,7 @@ final class MetalRenderBackend: GameRenderBackend {
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     private var objectStates: [GameObjectID : MapSceneObject] = [:]
+    private var objectGridPositions: [GameObjectID : SIMD2<Int>] = [:]
     private var objectMovements: [GameObjectID : MapObjectMovementState] = [:]
     private var objectPresentations: [GameObjectID : MapObjectPresentationState] = [:]
     private var itemStates: [GameObjectID : MapSceneItem] = [:]
@@ -74,8 +75,9 @@ final class MetalRenderBackend: GameRenderBackend {
         updateCameraTarget()
     }
 
-    func addObject(_ object: MapSceneObject, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+    func addObject(_ object: MapSceneObject, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
         objectStates[object.objectID] = object
+        objectGridPositions[object.objectID] = gridPosition
         objectPresentations[object.objectID] = MapObjectPresentationState(
             action: .idle,
             direction: direction,
@@ -106,6 +108,7 @@ final class MetalRenderBackend: GameRenderBackend {
             at: command.startedAt
         )
         objectMovements[command.objectID] = movement
+        objectGridPositions[command.objectID] = command.endPosition
 
         let remainingDuration = movement.remainingDuration(at: command.startedAt)
         let currentHeadDirection = objectPresentations[command.objectID]?.headDirection ?? .lookForward
@@ -127,9 +130,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
         objectMovements.removeValue(forKey: objectID)
-        if objectStates[objectID] != nil {
-            objectStates[objectID]?.gridPosition = position
-        }
+        objectGridPositions[objectID] = position
 
         if var presentation = objectPresentations[objectID] {
             presentation.action = .idle
@@ -171,6 +172,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
     func removeObject(objectID: GameObjectID) {
         objectStates.removeValue(forKey: objectID)
+        objectGridPositions.removeValue(forKey: objectID)
         objectMovements.removeValue(forKey: objectID)
         objectPresentations.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
@@ -188,13 +190,8 @@ final class MetalRenderBackend: GameRenderBackend {
         refreshSpriteDrawables()
     }
 
-    func presentationGridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        if let movement = objectMovements[objectID],
-           let speed = objectStates[objectID]?.speed,
-           let nextPosition = movement.nextPosition(speed: speed, at: .now) {
-            return nextPosition
-        }
-        return objectStates[objectID]?.gridPosition
+    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        objectGridPositions[objectID]
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
@@ -228,6 +225,7 @@ final class MetalRenderBackend: GameRenderBackend {
 
         let snapshots = spriteSnapshotBuilder.build(
             objects: objectStates,
+            gridPositions: objectGridPositions,
             movements: objectMovements,
             presentations: objectPresentations,
             items: itemStates,
@@ -243,7 +241,8 @@ final class MetalRenderBackend: GameRenderBackend {
         }
 
         let targetPosition = spriteSnapshots[scene.state.playerID]?.worldPosition
-            ?? scene.mapGrid.worldPosition(for: scene.state.player.gridPosition)
+            ?? gridPosition(for: scene.state.playerID).map { scene.mapGrid.worldPosition(for: $0) }
+            ?? scene.mapGrid.worldPosition(for: scene.playerPosition)
         renderer.updateCamera(
             cameraState: cameraState,
             targetPosition: targetPosition
@@ -327,6 +326,7 @@ final class MetalRenderBackend: GameRenderBackend {
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
         objectStates.removeAll()
+        objectGridPositions.removeAll()
         objectMovements.removeAll()
         objectPresentations.removeAll()
         itemStates.removeAll()
@@ -425,7 +425,7 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     private func fallbackWorldPosition(for objectID: GameObjectID, scene: MapScene) -> SIMD3<Float>? {
-        if let gridPosition = scene.state.objects[objectID]?.gridPosition {
+        if let gridPosition = objectGridPositions[objectID] {
             return scene.mapGrid.worldPosition(for: gridPosition)
         } else {
             return nil
