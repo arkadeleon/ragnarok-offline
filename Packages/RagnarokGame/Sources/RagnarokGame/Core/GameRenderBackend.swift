@@ -24,7 +24,7 @@ protocol GameRenderBackend: AnyObject {
     func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovementState?
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>)
     func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection)
-    func performObjectAction(_ command: MapObjectPresentationCommand)
+    func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MapObjectAnimationCompletion)
     func removeObject(objectID: GameObjectID)
 
     func addItem(_ item: MapSceneItem)

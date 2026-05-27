@@ -169,15 +169,15 @@ final class MetalRenderBackend: GameRenderBackend {
         refreshSpriteDrawables()
     }
 
-    func performObjectAction(_ command: MapObjectPresentationCommand) {
-        guard var objectState = objectStates[command.objectID] else {
+    func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MapObjectAnimationCompletion) {
+        guard var objectState = objectStates[objectID] else {
             return
         }
 
-        objectState.presentation.action = command.action
-        objectState.presentation.startTime = command.startTime
-        objectState.presentation.completion = command.completion
-        objectStates[command.objectID] = objectState
+        objectState.presentation.action = action
+        objectState.presentation.startTime = .now
+        objectState.presentation.completion = completion
+        objectStates[objectID] = objectState
         refreshSpriteDrawables()
     }
 

@@ -194,12 +194,9 @@ extension MapScene {
         switch type {
         case 1 where objectID == state.playerID:
             renderBackend.performObjectAction(
-                MapObjectPresentationCommand(
-                    objectID: objectID,
-                    action: .die,
-                    startTime: .now,
-                    completion: .indefinite
-                )
+                objectID: objectID,
+                action: .die,
+                completion: .indefinite
             )
             state.isPlayerDead = true
             state.overlay.gauges.removeValue(forKey: objectID)
@@ -212,12 +209,9 @@ extension MapScene {
 
     func onMapObjectResurrected(objectID: GameObjectID) {
         renderBackend.performObjectAction(
-            MapObjectPresentationCommand(
-                objectID: objectID,
-                action: .idle,
-                startTime: .now,
-                completion: .indefinite
-            )
+            objectID: objectID,
+            action: .idle,
+            completion: .indefinite
         )
         if objectID == state.playerID {
             state.isPlayerDead = false
@@ -341,12 +335,9 @@ extension MapScene {
 
         if state.objects[sourceID] != nil {
             renderBackend.performObjectAction(
-                MapObjectPresentationCommand(
-                    objectID: sourceID,
-                    action: presentationAction,
-                    startTime: now,
-                    completion: completion
-                )
+                objectID: sourceID,
+                action: presentationAction,
+                completion: completion
             )
         }
 
@@ -366,12 +357,9 @@ extension MapScene {
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
             renderBackend.performObjectAction(
-                MapObjectPresentationCommand(
-                    objectID: objectID,
-                    action: action,
-                    startTime: now,
-                    completion: .after(duration, settledAction: settledAction)
-                )
+                objectID: objectID,
+                action: action,
+                completion: .after(duration, settledAction: settledAction)
             )
         }
 

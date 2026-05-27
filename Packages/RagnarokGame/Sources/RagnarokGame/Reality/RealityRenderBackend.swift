@@ -244,15 +244,15 @@ final class RealityRenderBackend: GameRenderBackend {
         entity.components.set(component)
     }
 
-    func performObjectAction(_ command: MapObjectPresentationCommand) {
-        guard let entity = entityCache.objectEntities[command.objectID],
+    func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MapObjectAnimationCompletion) {
+        guard let entity = entityCache.objectEntities[objectID],
               var component = entity.components[MapSceneObjectComponent.self] else {
             return
         }
 
-        component.presentation.action = command.action
-        component.presentation.startTime = command.startTime
-        component.presentation.completion = command.completion
+        component.presentation.action = action
+        component.presentation.startTime = .now
+        component.presentation.completion = completion
         entity.components.set(component)
     }
 
