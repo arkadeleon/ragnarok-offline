@@ -130,10 +130,6 @@ public final class MapScene {
         cameraState.elevation = .pi / 4
     }
 
-    private func playerMovementOrigin() -> SIMD2<Int> {
-        renderBackend.gridPosition(for: player.objectID) ?? playerPosition
-    }
-
     private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneObject? {
         state.objects.values
             .filter { $0.type == type }
@@ -155,7 +151,9 @@ public final class MapScene {
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
-        let position = playerMovementOrigin()
+        guard let position = renderBackend.gridPosition(for: player.objectID) else {
+            return
+        }
 
         let joystickInput = SIMD2<Float>(
             Float(movementValue.x),

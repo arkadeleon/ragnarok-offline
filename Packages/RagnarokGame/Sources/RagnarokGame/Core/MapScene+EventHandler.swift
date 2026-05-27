@@ -171,10 +171,6 @@ extension MapScene {
             startPosition: startPosition,
             endPosition: endPosition
         )
-
-        if let updated = state.objects[object.objectID] {
-            renderBackend.updateObject(updated)
-        }
     }
 
     func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {

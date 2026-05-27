@@ -39,7 +39,7 @@ struct MapObjectPresentationSampler {
         presentation: MapObjectPresentationState,
         now: ContinuousClock.Instant
     ) -> PresentationSample {
-        let movementSample = timeline?.sample(at: now, logicalWorldPosition: logicalWorldPosition)
+        let movementSample = timeline?.sample(at: now)
         let worldPosition = movementSample?.worldPosition ?? logicalWorldPosition
 
         if let movementSample, movementSample.isMoving {

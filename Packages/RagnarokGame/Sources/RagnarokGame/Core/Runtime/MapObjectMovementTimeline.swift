@@ -105,7 +105,7 @@ struct MapObjectMovementTimeline {
         self.progress = progress
     }
 
-    func sample(at now: ContinuousClock.Instant, logicalWorldPosition: SIMD3<Float>) -> MovementSample? {
+    func sample(at now: ContinuousClock.Instant) -> MovementSample? {
         guard worldPath.count >= 2,
               gridPath.count == worldPath.count,
               stepDurations.count == worldPath.count - 1 else {
@@ -124,7 +124,7 @@ struct MapObjectMovementTimeline {
 
         if elapsed >= duration {
             return MovementSample(
-                worldPosition: worldPath.last ?? logicalWorldPosition,
+                worldPosition: worldPath[worldPath.count - 1],
                 direction: finalDirection,
                 totalElapsed: duration,
                 isMoving: false
@@ -151,7 +151,7 @@ struct MapObjectMovementTimeline {
         }
 
         return MovementSample(
-            worldPosition: worldPath.last ?? logicalWorldPosition,
+            worldPosition: worldPath[worldPath.count - 1],
             direction: finalDirection,
             totalElapsed: duration,
             isMoving: false

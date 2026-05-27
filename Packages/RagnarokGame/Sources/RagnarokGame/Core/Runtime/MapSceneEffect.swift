@@ -1,5 +1,5 @@
 //
-//  MapEffect.swift
+//  MapSceneEffect.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/4/30.
