@@ -161,12 +161,16 @@ struct MapObjectMovementTimeline {
 
 extension MapObjectMovementState {
     func nextPosition(speed: Int, at now: ContinuousClock.Instant) -> SIMD2<Int>? {
+        nextStep(speed: speed, at: now)?.position
+    }
+
+    func nextStep(speed: Int, at now: ContinuousClock.Instant) -> (index: Int, position: SIMD2<Int>)? {
         guard path.count >= 2 else {
             return nil
         }
 
         if startTime.duration(to: now) <= .zero {
-            return path[1]
+            return (1, path[1])
         }
 
         let progress = MapObjectMovementPathProgress(
@@ -179,6 +183,7 @@ extension MapObjectMovementState {
             return nil
         }
 
-        return path[step.index + 1]
+        let nextIndex = step.index + 1
+        return (nextIndex, path[nextIndex])
     }
 }

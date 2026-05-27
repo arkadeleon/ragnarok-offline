@@ -44,13 +44,17 @@ struct MapObjectMovementPlanner {
             animationElapsedOffset: fallbackAnimationElapsedOffset
         )
 
-        guard let existingMovement,
-              let nextPosition = existingMovement.nextPosition(speed: speed, at: now) else {
+        guard let existingMovement else {
             return fallbackMovement
         }
 
+        guard let nextStep = existingMovement.nextStep(speed: speed, at: now) else {
+            return fallbackMovement
+        }
+
+        let nextPosition = nextStep.position
         let suffixPath = movementPath(from: nextPosition, to: incomingEndPosition)
-        let prefixPath = Array(existingMovement.path.prefix { $0 != nextPosition }) + [nextPosition]
+        let prefixPath = Array(existingMovement.path.prefix(nextStep.index + 1))
         let fullPath = prefixPath + Array(suffixPath.dropFirst())
         let duration = movementDuration(path: fullPath, speed: speed)
 
