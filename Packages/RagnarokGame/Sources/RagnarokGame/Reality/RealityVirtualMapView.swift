@@ -54,9 +54,9 @@ class RealityVirtualMapViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         arView.addGestureRecognizer(tapGestureRecognizer)
 
-        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
-        doubleTapGestureRecognizer.numberOfTapsRequired = 2
-        arView.addGestureRecognizer(doubleTapGestureRecognizer)
+        let twoFingerTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTwoFingerTap(_:)))
+        twoFingerTapGestureRecognizer.numberOfTouchesRequired = 2
+        arView.addGestureRecognizer(twoFingerTapGestureRecognizer)
 
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         arView.addGestureRecognizer(panGestureRecognizer)
@@ -94,7 +94,7 @@ class RealityVirtualMapViewController: UIViewController {
         }
     }
 
-    @objc func handleDoubleTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc func handleTwoFingerTap(_ tapGestureRecognizer: UITapGestureRecognizer) {
         scene.resetCamera()
         baseAzimuth = scene.cameraState.azimuth
         baseElevation = scene.cameraState.elevation

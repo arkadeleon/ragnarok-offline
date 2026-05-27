@@ -63,13 +63,12 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
         view.addSubview(mtkView)
 
-        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
-        doubleTapGestureRecognizer.numberOfTapsRequired = 2
-        mtkView.addGestureRecognizer(doubleTapGestureRecognizer)
-
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        tapGestureRecognizer.require(toFail: doubleTapGestureRecognizer)
         mtkView.addGestureRecognizer(tapGestureRecognizer)
+
+        let twoFingerTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTwoFingerTap(_:)))
+        twoFingerTapGestureRecognizer.numberOfTouchesRequired = 2
+        mtkView.addGestureRecognizer(twoFingerTapGestureRecognizer)
 
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         mtkView.addGestureRecognizer(panGestureRecognizer)
@@ -109,15 +108,6 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         commandBuffer.commit()
     }
 
-    @objc func handleDoubleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard let scene else {
-            return
-        }
-        scene.resetCamera()
-        baseAzimuth = scene.cameraState.azimuth
-        baseElevation = scene.cameraState.elevation
-    }
-
     @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         guard let scene else {
             return
@@ -127,6 +117,15 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         if let result = backend.hitTest(point) {
             scene.handleInteraction(result)
         }
+    }
+
+    @objc func handleTwoFingerTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard let scene else {
+            return
+        }
+        scene.resetCamera()
+        baseAzimuth = scene.cameraState.azimuth
+        baseElevation = scene.cameraState.elevation
     }
 
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
