@@ -141,12 +141,16 @@ final class RealityRenderBackend: GameRenderBackend {
         objectStates[object.objectID] = object
 
         let entity = entityCache.objectEntity(for: object)
+
+        let newConfiguration = ComposedSprite.Configuration(object: object)
+        let oldConfiguration = entity.components[MapSceneObjectComponent.self].map {
+            ComposedSprite.Configuration(object: $0.object)
+        }
+
         entity.isEnabled = object.effectState != .cloak
         entity.components.set(MapSceneObjectComponent(object: object))
 
-        let configuration = ComposedSprite.Configuration(object: object)
-        if entity.components[SpriteConfigurationComponent.self]?.configuration != configuration {
-            entity.components.set(SpriteConfigurationComponent(configuration: configuration))
+        if newConfiguration != oldConfiguration {
             loadObjectSpriteEntity(for: object, parent: entity)
         }
     }
@@ -380,7 +384,6 @@ final class RealityRenderBackend: GameRenderBackend {
         SpriteAnimationSystem.registerSystem()
         SpriteBillboardComponent.registerComponent()
         SpriteBillboardSystem.registerSystem()
-        SpriteConfigurationComponent.registerComponent()
 
         MapObjectSnapshotPresentationComponent.registerComponent()
         MapObjectSnapshotPresentationSystem.registerSystem()
@@ -546,7 +549,6 @@ final class RealityRenderBackend: GameRenderBackend {
 
         let entity = entityCache.objectEntity(for: object)
         let worldPosition = scene.mapGrid.worldPosition(for: object.gridPosition)
-        let spriteConfiguration = ComposedSprite.Configuration(object: object)
 
         entity.name = "\(object.objectID)"
         entity.transform = Transform(translation: worldPosition)
@@ -558,7 +560,6 @@ final class RealityRenderBackend: GameRenderBackend {
             timeline: MapObjectMovementTimeline(movement: nil, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
             presentation: presentation
         ))
-        entity.components.set(SpriteConfigurationComponent(configuration: spriteConfiguration))
 
         rootEntity.addChild(entity)
         loadObjectSpriteEntity(for: object, parent: entity)
@@ -578,7 +579,8 @@ final class RealityRenderBackend: GameRenderBackend {
             do {
                 let configuration = ComposedSprite.Configuration(object: object)
                 let spriteEntity = try await entityCache.objectSpriteEntity(for: configuration)
-                if let entity, configuration == entity.components[SpriteConfigurationComponent.self]?.configuration {
+                if let entity, let object = entity.components[MapSceneObjectComponent.self]?.object,
+                   configuration == ComposedSprite.Configuration(object: object) {
                     entity.findEntity(named: "sprite")?.removeFromParent()
                     entity.addChild(spriteEntity)
                 }
