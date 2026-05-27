@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/3/25.
 //
 
-import RagnarokModels
 import RagnarokSprite
 import simd
 
@@ -16,70 +15,24 @@ struct MapObjectPresentationSampler {
     }
 
     func sample(
-        for object: MapSceneObject,
-        gridPosition: SIMD2<Int>,
-        movement: MapObjectMovementState?,
-        presentation: MapObjectPresentationState,
-        position: (SIMD2<Int>) -> SIMD3<Float>,
-        now: ContinuousClock.Instant
-    ) -> PresentationSample {
-        let logicalWorldPosition = position(gridPosition)
-        let timeline = MapObjectMovementTimeline(movement: movement, speed: object.speed, position: position)
-        return sample(
-            logicalWorldPosition: logicalWorldPosition,
-            timeline: timeline,
-            presentation: presentation,
-            now: now
-        )
-    }
-
-    func sample(
-        logicalWorldPosition: SIMD3<Float>,
         timeline: MapObjectMovementTimeline?,
-        presentation: MapObjectPresentationState,
+        headDirection: SpriteHeadDirection,
         now: ContinuousClock.Instant
-    ) -> PresentationSample {
-        let movementSample = timeline?.sample(at: now)
-        let worldPosition = movementSample?.worldPosition ?? logicalWorldPosition
-
-        if let movementSample, movementSample.isMoving {
-            let animation = MapObjectAnimationState(
-                action: .walk,
-                direction: movementSample.direction,
-                headDirection: presentation.headDirection,
-                elapsed: movementSample.totalElapsed,
-                completion: .indefinite
-            )
-            return PresentationSample(
-                worldPosition: worldPosition,
-                animation: animation
-            )
-        }
-
-        let elapsed = presentation.startTime.duration(to: now)
-        if case .after(let duration, let settledAction) = presentation.completion, elapsed >= duration {
-            let animation = MapObjectAnimationState(
-                action: settledAction,
-                direction: presentation.direction,
-                headDirection: presentation.headDirection,
-                elapsed: elapsed - duration,
-                completion: .indefinite
-            )
-            return PresentationSample(
-                worldPosition: worldPosition,
-                animation: animation
-            )
+    ) -> PresentationSample? {
+        guard let movementSample = timeline?.sample(at: now),
+              movementSample.isMoving else {
+            return nil
         }
 
         let animation = MapObjectAnimationState(
-            action: presentation.action,
-            direction: presentation.direction,
-            headDirection: presentation.headDirection,
-            elapsed: elapsed,
-            completion: presentation.completion
+            action: .walk,
+            direction: movementSample.direction,
+            headDirection: headDirection,
+            elapsed: movementSample.totalElapsed,
+            completion: .indefinite
         )
         return PresentationSample(
-            worldPosition: worldPosition,
+            worldPosition: movementSample.worldPosition,
             animation: animation
         )
     }

@@ -27,15 +27,14 @@ class MapSceneObjectPresentationSystem: System {
                 continue
             }
 
-            let sample = sampler.sample(
-                logicalWorldPosition: component.logicalWorldPosition,
+            let movementSample = sampler.sample(
                 timeline: component.movementTimeline,
-                presentation: component.presentation,
+                headDirection: component.presentation.headDirection,
                 now: now
             )
-            entity.position = sample.worldPosition
+            let animation = movementSample?.animation ?? component.presentation.animation(at: now)
+            entity.position = movementSample?.worldPosition ?? component.logicalWorldPosition
 
-            let animation = sample.animation
             let actionComponent = SpriteActionComponent(
                 actionType: animation.action,
                 direction: animation.direction,

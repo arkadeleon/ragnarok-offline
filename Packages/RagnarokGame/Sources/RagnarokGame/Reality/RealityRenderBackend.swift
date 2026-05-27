@@ -29,7 +29,6 @@ final class RealityRenderBackend: GameRenderBackend {
     let audioPlayer: RealityMapAudioPlayer
 
     private let tileSelectionRenderer: RealityTileSelectionRenderer
-    private let sampler = MapObjectPresentationSampler()
 
     private let worldCameraEntity = Entity()
     private var tileEntities: [SIMD2<Int>: Entity] = [:]
@@ -176,19 +175,8 @@ final class RealityRenderBackend: GameRenderBackend {
             completion: .after(remainingDuration, settledAction: .idle)
         )
 
-        let logicalWorldPosition = scene.mapGrid.worldPosition(for: endPosition)
-        entity.transform = Transform(
-            translation: sampler.sample(
-                for: component.object,
-                gridPosition: endPosition,
-                movement: movement,
-                presentation: presentation,
-                position: { scene.mapGrid.worldPosition(for: $0) },
-                now: .now
-            ).worldPosition
-        )
         component.gridPosition = endPosition
-        component.logicalWorldPosition = logicalWorldPosition
+        component.logicalWorldPosition = scene.mapGrid.worldPosition(for: endPosition)
         component.movement = movement
         component.movementTimeline = MapObjectMovementTimeline(
             movement: movement,

@@ -35,18 +35,16 @@ final class SpriteSnapshotBuilder {
 
     private func snapshot(for objectState: MetalMapObjectState, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
         let object = objectState.object
-        let presentationSample = sampler.sample(
-            for: object,
-            gridPosition: objectState.gridPosition,
-            movement: objectState.movement,
-            presentation: objectState.presentation,
-            position: { scene.mapGrid.worldPosition(for: $0) },
+        let movementSample = sampler.sample(
+            timeline: objectState.movementTimeline,
+            headDirection: objectState.presentation.headDirection,
             now: now
         )
+        let worldPosition = movementSample?.worldPosition ?? scene.mapGrid.worldPosition(for: objectState.gridPosition)
 
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
-        var animation = presentationSample.animation
+        var animation = movementSample?.animation ?? objectState.presentation.animation(at: now)
         animation.direction = animation.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
         if !availableActionTypes.contains(animation.action) {
             animation.action = .idle
@@ -54,7 +52,7 @@ final class SpriteSnapshotBuilder {
 
         return SpriteSnapshot(
             objectID: object.objectID,
-            worldPosition: presentationSample.worldPosition,
+            worldPosition: worldPosition,
             isVisible: object.effectState != .cloak,
             content: .mapObject(configuration: ComposedSprite.Configuration(object: object), animation: animation)
         )

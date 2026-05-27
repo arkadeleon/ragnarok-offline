@@ -17,6 +17,7 @@ struct MetalMapObjectState {
     var object: MapSceneObject
     var gridPosition: SIMD2<Int>
     var movement: MapObjectMovementState?
+    var movementTimeline: MapObjectMovementTimeline?
     var presentation: MapObjectPresentationState
 }
 
@@ -84,6 +85,7 @@ final class MetalRenderBackend: GameRenderBackend {
             object: object,
             gridPosition: gridPosition,
             movement: nil,
+            movementTimeline: nil,
             presentation: MapObjectPresentationState(
                 action: .idle,
                 direction: direction,
@@ -125,6 +127,11 @@ final class MetalRenderBackend: GameRenderBackend {
         let remainingDuration = movement.remainingDuration(at: now)
         objectState.gridPosition = endPosition
         objectState.movement = movement
+        objectState.movementTimeline = MapObjectMovementTimeline(
+            movement: movement,
+            speed: speed,
+            position: { scene.mapGrid.worldPosition(for: $0) }
+        )
         objectState.presentation = MapObjectPresentationState(
             action: .walk,
             direction: movement.finalDirection,
@@ -146,6 +153,7 @@ final class MetalRenderBackend: GameRenderBackend {
         if var objectState = objectStates[objectID] {
             objectState.gridPosition = position
             objectState.movement = nil
+            objectState.movementTimeline = nil
             objectState.presentation.action = .idle
             objectState.presentation.startTime = .now
             objectState.presentation.completion = .indefinite

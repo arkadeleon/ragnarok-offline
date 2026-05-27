@@ -23,4 +23,25 @@ public struct MapObjectPresentationState: Sendable {
             completion: .indefinite
         )
     }
+
+    func animation(at now: ContinuousClock.Instant) -> MapObjectAnimationState {
+        let elapsed = startTime.duration(to: now)
+        if case .after(let duration, let settledAction) = completion, elapsed >= duration {
+            return MapObjectAnimationState(
+                action: settledAction,
+                direction: direction,
+                headDirection: headDirection,
+                elapsed: elapsed - duration,
+                completion: .indefinite
+            )
+        }
+
+        return MapObjectAnimationState(
+            action: action,
+            direction: direction,
+            headDirection: headDirection,
+            elapsed: elapsed,
+            completion: completion
+        )
+    }
 }
