@@ -197,17 +197,6 @@ final class MetalRenderBackend: GameRenderBackend {
         return objectStates[objectID]?.gridPosition
     }
 
-    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
-        if let worldPosition = spriteSnapshots[objectID]?.worldPosition {
-            return worldPosition
-        }
-        if let gridPosition = objectStates[objectID]?.gridPosition,
-           let scene {
-            return scene.mapGrid.worldPosition(for: gridPosition)
-        }
-        return nil
-    }
-
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
         renderer.tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
     }

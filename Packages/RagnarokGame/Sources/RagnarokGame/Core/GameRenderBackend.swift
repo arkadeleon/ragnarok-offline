@@ -31,7 +31,6 @@ protocol GameRenderBackend: AnyObject {
     func removeItem(objectID: GameObjectID)
 
     func presentationGridPosition(for objectID: GameObjectID) -> SIMD2<Int>?
-    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>?
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
     func addCombatText(_ combatText: MapSceneCombatText)

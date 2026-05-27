@@ -313,10 +313,6 @@ final class RealityRenderBackend: GameRenderBackend {
         return objectStates[objectID]?.gridPosition
     }
 
-    func presentationWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
-        entityCache.objectEntities[objectID]?.position(relativeTo: nil)
-    }
-
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
         tileSelectionRenderer.showSelection(at: position, in: mapGrid)
     }
@@ -354,7 +350,7 @@ final class RealityRenderBackend: GameRenderBackend {
         }
 
         for objectID in scene.state.overlay.gauges.keys {
-            guard var worldPosition = presentationWorldPosition(for: objectID) else {
+            guard var worldPosition = entityCache.objectEntities[objectID]?.position(relativeTo: nil) else {
                 continue
             }
 
