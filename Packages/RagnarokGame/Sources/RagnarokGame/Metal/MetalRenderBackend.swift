@@ -105,35 +105,37 @@ final class MetalRenderBackend: GameRenderBackend {
         refreshSpriteDrawables()
     }
 
-    func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState? {
-        guard let scene, var objectState = objectStates[command.objectID] else {
+    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovementState? {
+        let now = ContinuousClock.now
+
+        guard let scene, var objectState = objectStates[objectID] else {
             return nil
         }
 
+        let speed = objectState.object.speed
         let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
         let movement = planner.replan(
             existingMovement: objectState.movement,
-            existingSpeed: objectState.object.speed,
-            incomingStartPosition: command.startPosition,
-            incomingEndPosition: command.endPosition,
-            incomingSpeed: command.speed,
-            at: command.startedAt
+            incomingStartPosition: startPosition,
+            incomingEndPosition: endPosition,
+            speed: speed,
+            at: now
         )
 
-        let remainingDuration = movement.remainingDuration(at: command.startedAt)
-        objectState.gridPosition = command.endPosition
+        let remainingDuration = movement.remainingDuration(at: now)
+        objectState.gridPosition = endPosition
         objectState.movement = movement
         objectState.presentation = MapObjectPresentationState(
             action: .walk,
             direction: movement.finalDirection,
             headDirection: objectState.presentation.headDirection,
-            startTime: command.startedAt,
+            startTime: now,
             completion: .after(remainingDuration, settledAction: .idle)
         )
-        objectStates[command.objectID] = objectState
+        objectStates[objectID] = objectState
 
         refreshSpriteDrawables()
-        if command.objectID == scene.state.playerID {
+        if objectID == scene.state.playerID {
             updateCameraTarget()
         }
 

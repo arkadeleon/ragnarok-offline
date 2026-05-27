@@ -77,17 +77,12 @@ extension MapScene {
     }
 
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        let now = ContinuousClock.now
-
-        let command = MapObjectMoveCommand(
+        let movement = renderBackend.moveObject(
             objectID: player.objectID,
             startPosition: startPosition,
-            endPosition: endPosition,
-            speed: state.player.speed,
-            startedAt: now
+            endPosition: endPosition
         )
-        let movement = renderBackend.moveObject(command)
-        let remainingDuration = movement?.remainingDuration(at: now) ?? .zero
+        let remainingDuration = movement?.remainingDuration(at: .now) ?? .zero
 
         if pendingArrivalAction != nil {
             arrivalTask?.cancel()
@@ -145,7 +140,6 @@ extension MapScene {
     }
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        let now = ContinuousClock.now
         let isNew = state.objects[object.objectID] == nil
 
         if isNew {
@@ -172,14 +166,11 @@ extension MapScene {
             }
         }
 
-        let command = MapObjectMoveCommand(
+        _ = renderBackend.moveObject(
             objectID: object.objectID,
             startPosition: startPosition,
-            endPosition: endPosition,
-            speed: object.speed,
-            startedAt: now
+            endPosition: endPosition
         )
-        _ = renderBackend.moveObject(command)
 
         if let updated = state.objects[object.objectID] {
             renderBackend.updateObject(updated)

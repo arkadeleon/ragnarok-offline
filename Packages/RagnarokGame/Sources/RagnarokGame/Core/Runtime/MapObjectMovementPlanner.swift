@@ -23,10 +23,9 @@ struct MapObjectMovementPlanner {
 
     func replan(
         existingMovement: MapObjectMovementState?,
-        existingSpeed: Int?,
         incomingStartPosition: SIMD2<Int>,
         incomingEndPosition: SIMD2<Int>,
-        incomingSpeed: Int,
+        speed: Int,
         at now: ContinuousClock.Instant
     ) -> MapObjectMovementState {
         let incomingPath = movementPath(from: incomingStartPosition, to: incomingEndPosition)
@@ -35,7 +34,7 @@ struct MapObjectMovementPlanner {
         } else {
             Duration.zero
         }
-        let fallbackDuration = movementDuration(path: incomingPath, speed: incomingSpeed)
+        let fallbackDuration = movementDuration(path: incomingPath, speed: speed)
         let fallbackMovement = MapObjectMovementState(
             startPosition: incomingStartPosition,
             endPosition: incomingEndPosition,
@@ -46,15 +45,14 @@ struct MapObjectMovementPlanner {
         )
 
         guard let existingMovement,
-              let existingSpeed,
-              let nextPosition = existingMovement.nextPosition(speed: existingSpeed, at: now) else {
+              let nextPosition = existingMovement.nextPosition(speed: speed, at: now) else {
             return fallbackMovement
         }
 
         let suffixPath = movementPath(from: nextPosition, to: incomingEndPosition)
         let prefixPath = Array(existingMovement.path.prefix { $0 != nextPosition }) + [nextPosition]
         let fullPath = prefixPath + Array(suffixPath.dropFirst())
-        let duration = movementDuration(path: fullPath, speed: incomingSpeed)
+        let duration = movementDuration(path: fullPath, speed: speed)
 
         return MapObjectMovementState(
             startPosition: existingMovement.startPosition,

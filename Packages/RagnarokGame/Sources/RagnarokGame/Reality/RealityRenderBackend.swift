@@ -148,57 +148,59 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState? {
+    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovementState? {
+        let now = ContinuousClock.now
+
         guard let scene,
-              let entity = entityCache.objectEntities[command.objectID],
+              let entity = entityCache.objectEntities[objectID],
               var component = entity.components[MapSceneObjectComponent.self] else {
             return nil
         }
 
+        let speed = component.object.speed
         let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
         let movement = planner.replan(
             existingMovement: component.movement,
-            existingSpeed: component.object.speed,
-            incomingStartPosition: command.startPosition,
-            incomingEndPosition: command.endPosition,
-            incomingSpeed: command.speed,
-            at: command.startedAt
+            incomingStartPosition: startPosition,
+            incomingEndPosition: endPosition,
+            speed: speed,
+            at: now
         )
 
-        let remainingDuration = movement.remainingDuration(at: command.startedAt)
+        let remainingDuration = movement.remainingDuration(at: now)
         let presentation = MapObjectPresentationState(
             action: .walk,
             direction: movement.finalDirection,
             headDirection: component.presentation.headDirection,
-            startTime: command.startedAt,
+            startTime: now,
             completion: .after(remainingDuration, settledAction: .idle)
         )
 
-        let logicalWorldPosition = scene.mapGrid.worldPosition(for: command.endPosition)
+        let logicalWorldPosition = scene.mapGrid.worldPosition(for: endPosition)
         entity.transform = Transform(
             translation: sampler.sample(
                 for: component.object,
-                gridPosition: command.endPosition,
+                gridPosition: endPosition,
                 movement: movement,
                 presentation: presentation,
                 position: { scene.mapGrid.worldPosition(for: $0) },
                 now: .now
             ).worldPosition
         )
-        component.gridPosition = command.endPosition
+        component.gridPosition = endPosition
         component.logicalWorldPosition = logicalWorldPosition
         component.movement = movement
         component.movementTimeline = MapObjectMovementTimeline(
             movement: movement,
-            speed: command.speed,
+            speed: speed,
             position: { scene.mapGrid.worldPosition(for: $0) }
         )
         component.presentation = presentation
         entity.components.set(component)
 
         #if os(visionOS)
-        if command.objectID == scene.state.playerID {
-            updateTileEntities(forCenter: command.endPosition, mapGrid: scene.mapGrid)
+        if objectID == scene.state.playerID {
+            updateTileEntities(forCenter: endPosition, mapGrid: scene.mapGrid)
         }
         #endif
 
