@@ -123,24 +123,36 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func addObject(_ object: MapSceneObject, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        objectStates[object.objectID] = object
-        objectPresentations[object.objectID] = MapObjectPresentationState(
+        let presentation = MapObjectPresentationState(
             action: .idle,
             direction: direction,
             headDirection: headDirection,
             startTime: .now,
             completion: .indefinite
         )
-        upsertObjectEntity(for: object)
+
+        objectStates[object.objectID] = object
+        objectPresentations[object.objectID] = presentation
+
+        addObjectEntity(for: object, presentation: presentation)
     }
 
     func updateObject(_ object: MapSceneObject) {
         objectStates[object.objectID] = object
-        upsertObjectEntity(for: object)
+
+        let entity = entityCache.objectEntity(for: object)
+        entity.isEnabled = object.effectState != .cloak
+        entity.components.set(MapSceneObjectComponent(object: object))
+
+        let configuration = ComposedSprite.Configuration(object: object)
+        if entity.components[SpriteConfigurationComponent.self]?.configuration != configuration {
+            entity.components.set(SpriteConfigurationComponent(configuration: configuration))
+            loadObjectSpriteEntity(for: object, parent: entity)
+        }
     }
 
     func moveObject(_ command: MapObjectMoveCommand) -> MapObjectMovementState? {
-        guard let scene else {
+        guard let scene, let object = objectStates[command.objectID] else {
             return nil
         }
 
@@ -165,9 +177,23 @@ final class RealityRenderBackend: GameRenderBackend {
             completion: .after(remainingDuration, settledAction: .idle)
         )
 
-        if let object = objectStates[command.objectID] {
-            upsertObjectEntity(for: object)
-        }
+        let entity = entityCache.objectEntity(for: object)
+        let presentation = objectPresentations[command.objectID] ?? .defaultPresentation
+
+        entity.transform = Transform(
+            translation: sampler.sample(
+                for: object,
+                movement: movement,
+                presentation: presentation,
+                position: { scene.mapGrid.worldPosition(for: $0) },
+                now: .now
+            ).worldPosition
+        )
+        entity.components.set(MapObjectSnapshotPresentationComponent(
+            logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
+            timeline: MapObjectMovementTimeline(movement: movement, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
+            presentation: presentation
+        ))
 
         #if os(visionOS)
         if command.objectID == scene.state.playerID {
@@ -179,7 +205,12 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
+        guard let scene, let object = objectStates[objectID] else {
+            return
+        }
+
         objectMovements.removeValue(forKey: objectID)
+
         if objectStates[objectID] != nil {
             objectStates[objectID]?.gridPosition = position
         }
@@ -191,40 +222,67 @@ final class RealityRenderBackend: GameRenderBackend {
             objectPresentations[objectID] = presentation
         }
 
-        if let object = objectStates[objectID] {
-            upsertObjectEntity(for: object)
-        }
+        let entity = entityCache.objectEntity(for: object)
+        let worldPosition = scene.mapGrid.worldPosition(for: position)
+        let presentation = objectPresentations[objectID] ?? .defaultPresentation
+
+        entity.transform = Transform(translation: worldPosition)
+        entity.components.set(GridPositionComponent(gridPosition: position))
+        entity.components.set(MapSceneObjectComponent(object: object))
+        entity.components.set(MapObjectSnapshotPresentationComponent(
+            logicalWorldPosition: worldPosition,
+            timeline: MapObjectMovementTimeline(movement: nil, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
+            presentation: presentation
+        ))
 
         #if os(visionOS)
-        if objectID == scene?.state.playerID, let scene {
+        if objectID == scene.state.playerID {
             updateTileEntities(forCenter: position, mapGrid: scene.mapGrid)
         }
         #endif
     }
 
     func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        guard let object = objectStates[objectID] else {
+        guard let scene, let object = objectStates[objectID] else {
             return
         }
+
         if var presentation = objectPresentations[objectID] {
             presentation.direction = direction
             presentation.headDirection = headDirection
             objectPresentations[objectID] = presentation
         }
-        upsertObjectEntity(for: object)
+
+        let entity = entityCache.objectEntity(for: object)
+        let movement = objectMovements[objectID]
+        let presentation = objectPresentations[objectID] ?? .defaultPresentation
+        entity.components.set(MapObjectSnapshotPresentationComponent(
+            logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
+            timeline: MapObjectMovementTimeline(movement: movement, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
+            presentation: presentation
+        ))
     }
 
     func performObjectAction(_ command: MapObjectPresentationCommand) {
-        guard let object = objectStates[command.objectID] else {
+        guard let scene, let object = objectStates[command.objectID] else {
             return
         }
+
         if var presentation = objectPresentations[command.objectID] {
             presentation.action = command.action
             presentation.startTime = command.startTime
             presentation.completion = command.completion
             objectPresentations[command.objectID] = presentation
         }
-        upsertObjectEntity(for: object)
+
+        let entity = entityCache.objectEntity(for: object)
+        let movement = objectMovements[command.objectID]
+        let presentation = objectPresentations[command.objectID] ?? .defaultPresentation
+        entity.components.set(MapObjectSnapshotPresentationComponent(
+            logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
+            timeline: MapObjectMovementTimeline(movement: movement, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
+            presentation: presentation
+        ))
     }
 
     func removeObject(objectID: GameObjectID) {
@@ -235,7 +293,7 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func addItem(_ item: MapSceneItem) {
-        upsertItemEntity(for: item)
+        addItemEntity(for: item)
     }
 
     func removeItem(objectID: GameObjectID) {
@@ -481,51 +539,33 @@ final class RealityRenderBackend: GameRenderBackend {
         worldCameraEntity.position = target.position(relativeTo: parentEntity)
     }
 
-    private func upsertObjectEntity(for object: MapSceneObject) {
+    private func addObjectEntity(for object: MapSceneObject, presentation: MapObjectPresentationState) {
         guard let scene else {
             return
         }
 
         let entity = entityCache.objectEntity(for: object)
-        let isNew = entity.parent == nil
+        let worldPosition = scene.mapGrid.worldPosition(for: object.gridPosition)
+        let spriteConfiguration = ComposedSprite.Configuration(object: object)
 
         entity.name = "\(object.objectID)"
-        let movement = objectMovements[object.objectID]
-        let presentation = objectPresentations[object.objectID] ?? .defaultPresentation
-        entity.transform = Transform(
-            translation: sampler.sample(
-                for: object,
-                movement: movement,
-                presentation: presentation,
-                position: { scene.mapGrid.worldPosition(for: $0) },
-                now: .now
-            ).worldPosition
-        )
+        entity.transform = Transform(translation: worldPosition)
         entity.isEnabled = object.effectState != .cloak
         entity.components.set(GridPositionComponent(gridPosition: object.gridPosition))
         entity.components.set(MapSceneObjectComponent(object: object))
         entity.components.set(MapObjectSnapshotPresentationComponent(
-            logicalWorldPosition: scene.mapGrid.worldPosition(for: object.gridPosition),
-            timeline: MapObjectMovementTimeline(movement: movement, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
+            logicalWorldPosition: worldPosition,
+            timeline: MapObjectMovementTimeline(movement: nil, speed: object.speed, position: { scene.mapGrid.worldPosition(for: $0) }),
             presentation: presentation
         ))
+        entity.components.set(SpriteConfigurationComponent(configuration: spriteConfiguration))
 
-        if isNew {
-            rootEntity.addChild(entity)
-        }
-
-        let configuration = ComposedSprite.Configuration(object: object)
-        if isNew || entity.components[SpriteConfigurationComponent.self]?.configuration != configuration {
-            entity.components.set(SpriteConfigurationComponent(configuration: configuration))
-            loadObjectSpriteEntity(for: object, parent: entity)
-        }
+        rootEntity.addChild(entity)
+        loadObjectSpriteEntity(for: object, parent: entity)
 
         if object.objectID == scene.state.playerID {
             updateTileEntities(forCenter: object.gridPosition, mapGrid: scene.mapGrid)
-
-            if worldCameraEntity.parent == nil {
-                setupWorldCamera(target: entity, cameraState: scene.cameraState)
-            }
+            setupWorldCamera(target: entity, cameraState: scene.cameraState)
         }
     }
 
@@ -548,27 +588,24 @@ final class RealityRenderBackend: GameRenderBackend {
         }
     }
 
-    private func upsertItemEntity(for item: MapSceneItem) {
+    private func addItemEntity(for item: MapSceneItem) {
         guard let scene else {
             return
         }
 
         let entity = entityCache.itemEntity(for: item)
-        let isNew = entity.parent == nil
+        let worldPosition = scene.mapGrid.worldPosition(for: item.gridPosition)
 
         entity.name = "\(item.objectID)"
-        entity.transform = Transform(translation: scene.mapGrid.worldPosition(for: item.gridPosition))
+        entity.transform = Transform(translation: worldPosition)
         entity.components.set(GridPositionComponent(gridPosition: item.gridPosition))
         entity.components.set(MapSceneItemComponent(item: item))
 
-        if isNew {
-            rootEntity.addChild(entity)
-            loadItemSpriteEntity(for: item, parent: entity)
-        }
+        rootEntity.addChild(entity)
+        loadItemSpriteEntity(for: item, parent: entity)
     }
 
     private func loadItemSpriteEntity(for item: MapSceneItem, parent entity: Entity) {
-        let objectID = item.objectID
         Task { [weak entityCache, weak entity] in
             guard let entityCache else {
                 return
@@ -576,7 +613,7 @@ final class RealityRenderBackend: GameRenderBackend {
 
             do {
                 let spriteEntity = try await entityCache.itemSpriteEntity(forItemID: item.itemID)
-                if let entity, entityCache.itemEntities[objectID] === entity {
+                if let entity, entityCache.itemEntities[item.objectID] === entity {
                     entity.addChild(spriteEntity)
                     entity.playDefaultSpriteAnimation()
                 }
