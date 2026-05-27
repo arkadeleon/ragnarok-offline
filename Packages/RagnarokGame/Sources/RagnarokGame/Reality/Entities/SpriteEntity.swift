@@ -214,7 +214,7 @@ extension Entity {
                 }
 
                 let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration) {
-                    self.components[GridPositionComponent.self]?.gridPosition = targetPosition
+                    self.components[MapSceneObjectComponent.self]?.gridPosition = targetPosition
                     if i == path.count - 1 {
                         self.playSpriteAnimation(.idle, direction: direction)
                     }

@@ -1,5 +1,5 @@
 //
-//  MapObjectSnapshotPresentationSystem.swift
+//  MapSceneObjectPresentationSystem.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/25.
@@ -10,8 +10,8 @@ import RagnarokSprite
 import RealityKit
 import simd
 
-class MapObjectSnapshotPresentationSystem: System {
-    static let query = EntityQuery(where: .has(MapObjectSnapshotPresentationComponent.self) && .has(MapSceneObjectComponent.self))
+class MapSceneObjectPresentationSystem: System {
+    static let query = EntityQuery(where: .has(MapSceneObjectComponent.self))
 
     private let sampler = MapObjectPresentationSampler()
 
@@ -22,14 +22,14 @@ class MapObjectSnapshotPresentationSystem: System {
         let now = ContinuousClock.now
 
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
-            guard let component = entity.components[MapObjectSnapshotPresentationComponent.self],
+            guard let component = entity.components[MapSceneObjectComponent.self],
                   let spriteEntity = entity.findEntity(named: "sprite") else {
                 continue
             }
 
             let sample = sampler.sample(
                 logicalWorldPosition: component.logicalWorldPosition,
-                timeline: component.timeline,
+                timeline: component.movementTimeline,
                 presentation: component.presentation,
                 now: now
             )

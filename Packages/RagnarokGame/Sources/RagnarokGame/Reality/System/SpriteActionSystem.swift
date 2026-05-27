@@ -13,7 +13,7 @@ class SpriteActionSystem: System {
     static let query = EntityQuery(where: .has(SpriteAnimationLibraryComponent.self) && .has(SpriteActionComponent.self))
 
     static var dependencies: [SystemDependency] {
-        [.after(MapObjectSnapshotPresentationSystem.self)]
+        [.after(MapSceneObjectPresentationSystem.self)]
     }
 
     required init(scene: Scene) {

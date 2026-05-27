@@ -69,7 +69,7 @@ class WalkingSystem: System {
                 walkingComponent.stepTime = 0
                 walkingComponent.path = Array(path.dropFirst())
 
-                entity.components[GridPositionComponent.self]?.gridPosition = targetGridPosition
+                entity.components[MapSceneObjectComponent.self]?.gridPosition = targetGridPosition
             } else {
                 entity.position = mix(sourcePosition, targetPosition, t: Float(stepTime / duration))
 

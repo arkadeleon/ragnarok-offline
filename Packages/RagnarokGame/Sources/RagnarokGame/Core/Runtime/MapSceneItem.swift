@@ -11,7 +11,7 @@ import simd
 public struct MapSceneItem: Sendable {
     public let objectID: GameObjectID
     public let itemID: Int
-    public var gridPosition: SIMD2<Int>
+    public let gridPosition: SIMD2<Int>
 
     public init(item: MapItem, gridPosition: SIMD2<Int>) {
         self.objectID = item.objectID
