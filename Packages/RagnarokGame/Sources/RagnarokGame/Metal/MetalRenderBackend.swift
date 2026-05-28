@@ -16,8 +16,8 @@ import simd
 struct MetalMapObjectState {
     var object: MapSceneObject
     var gridPosition: SIMD2<Int>
-    var movement: MapObjectMovementState?
     var animation: MapObjectAnimationState
+    var movement: MapObjectMovementState?
 }
 
 final class MetalRenderBackend: GameRenderBackend {
@@ -90,8 +90,8 @@ final class MetalRenderBackend: GameRenderBackend {
         objectStates[object.objectID] = MetalMapObjectState(
             object: object,
             gridPosition: gridPosition,
-            movement: nil,
-            animation: animation
+            animation: animation,
+            movement: nil
         )
         refreshSpriteDrawables()
     }
@@ -126,7 +126,6 @@ final class MetalRenderBackend: GameRenderBackend {
 
         let remainingDuration = movement.remainingDuration(at: now)
         objectState.gridPosition = endPosition
-        objectState.movement = movement
         objectState.animation = MapObjectAnimationState(
             action: .walk,
             direction: movement.finalDirection,
@@ -134,6 +133,7 @@ final class MetalRenderBackend: GameRenderBackend {
             startTime: now,
             completion: .after(remainingDuration, settledAction: .idle)
         )
+        objectState.movement = movement
         objectStates[objectID] = objectState
 
         refreshSpriteDrawables()
@@ -147,10 +147,10 @@ final class MetalRenderBackend: GameRenderBackend {
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
         if var objectState = objectStates[objectID] {
             objectState.gridPosition = position
-            objectState.movement = nil
             objectState.animation.action = .idle
             objectState.animation.startTime = .now
             objectState.animation.completion = .indefinite
+            objectState.movement = nil
             objectStates[objectID] = objectState
         }
 

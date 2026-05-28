@@ -178,8 +178,8 @@ final class RealityRenderBackend: GameRenderBackend {
 
         component.gridPosition = endPosition
         component.logicalWorldPosition = scene.mapGrid.worldPosition(for: endPosition)
-        component.movement = movement
         component.animation = animation
+        component.movement = movement
         entity.components.set(component)
 
         #if os(visionOS)
@@ -201,10 +201,10 @@ final class RealityRenderBackend: GameRenderBackend {
         let worldPosition = scene.mapGrid.worldPosition(for: position)
         component.gridPosition = position
         component.logicalWorldPosition = worldPosition
-        component.movement = nil
         component.animation.action = .idle
         component.animation.startTime = .now
         component.animation.completion = .indefinite
+        component.movement = nil
 
         entity.transform = Transform(translation: worldPosition)
         entity.components.set(component)
@@ -492,8 +492,8 @@ final class RealityRenderBackend: GameRenderBackend {
             object: object,
             gridPosition: gridPosition,
             logicalWorldPosition: worldPosition,
-            movement: nil,
-            animation: animation
+            animation: animation,
+            movement: nil
         ))
 
         rootEntity.addChild(entity)
