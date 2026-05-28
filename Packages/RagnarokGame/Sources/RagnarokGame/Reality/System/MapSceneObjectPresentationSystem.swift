@@ -22,17 +22,20 @@ class MapSceneObjectPresentationSystem: System {
         let now = ContinuousClock.now
 
         for entity in context.entities(matching: Self.query, updatingSystemWhen: .rendering) {
-            guard let component = entity.components[MapSceneObjectComponent.self],
+            guard var component = entity.components[MapSceneObjectComponent.self],
                   let spriteEntity = entity.findEntity(named: "sprite") else {
                 continue
             }
 
+            component.animation.update(atTime: now)
+            entity.components.set(component)
+
             let movementSample = sampler.sample(
                 timeline: component.movementTimeline,
-                headDirection: component.presentation.headDirection,
+                headDirection: component.animation.headDirection,
                 now: now
             )
-            let animation = movementSample?.animation ?? component.presentation.animation(at: now)
+            let animation = movementSample?.animation ?? component.animation
             entity.position = movementSample?.worldPosition ?? component.logicalWorldPosition
 
             let actionComponent = SpriteActionComponent(

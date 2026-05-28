@@ -14,7 +14,7 @@ final class SpriteSnapshotBuilder {
     private let sampler = MapObjectPresentationSampler()
 
     func build(
-        objects: [GameObjectID : MetalMapObjectState],
+        objects: inout [GameObjectID : MetalMapObjectState],
         items: [GameObjectID : MapSceneItem],
         scene: MapScene
     ) -> [GameObjectID : SpriteSnapshot] {
@@ -22,8 +22,14 @@ final class SpriteSnapshotBuilder {
 
         var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
-        for (objectID, objectState) in objects {
+        for objectID in Array(objects.keys) {
+            guard var objectState = objects[objectID] else {
+                continue
+            }
+
+            objectState.animation.update(atTime: now)
             snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)
+            objects[objectID] = objectState
         }
 
         for (objectID, item) in items {
@@ -37,14 +43,14 @@ final class SpriteSnapshotBuilder {
         let object = objectState.object
         let movementSample = sampler.sample(
             timeline: objectState.movementTimeline,
-            headDirection: objectState.presentation.headDirection,
+            headDirection: objectState.animation.headDirection,
             now: now
         )
         let worldPosition = movementSample?.worldPosition ?? scene.mapGrid.worldPosition(for: objectState.gridPosition)
 
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
-        var animation = movementSample?.animation ?? objectState.presentation.animation(at: now)
+        var animation = movementSample?.animation ?? objectState.animation
         animation.direction = animation.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
         if !availableActionTypes.contains(animation.action) {
             animation.action = .idle

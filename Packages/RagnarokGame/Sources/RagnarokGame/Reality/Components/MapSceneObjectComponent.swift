@@ -12,23 +12,7 @@ struct MapSceneObjectComponent: Component {
     var object: MapSceneObject
     var gridPosition: SIMD2<Int>
     var logicalWorldPosition: SIMD3<Float>
-    var movement: MapObjectMovementState?
-    var movementTimeline: MapObjectMovementTimeline?
-    var presentation: MapObjectPresentationState
-
-    init(
-        object: MapSceneObject,
-        gridPosition: SIMD2<Int>,
-        logicalWorldPosition: SIMD3<Float>,
-        movement: MapObjectMovementState? = nil,
-        movementTimeline: MapObjectMovementTimeline? = nil,
-        presentation: MapObjectPresentationState = .defaultPresentation
-    ) {
-        self.object = object
-        self.gridPosition = gridPosition
-        self.logicalWorldPosition = logicalWorldPosition
-        self.movement = movement
-        self.movementTimeline = movementTimeline
-        self.presentation = presentation
-    }
+    var movement: MapObjectMovementState? = nil
+    var movementTimeline: MapObjectMovementTimeline? = nil
+    var animation: MapObjectAnimationState = .defaultAnimation
 }

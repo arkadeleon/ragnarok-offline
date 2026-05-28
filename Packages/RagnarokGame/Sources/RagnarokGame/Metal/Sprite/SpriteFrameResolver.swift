@@ -45,10 +45,10 @@ struct SpriteFrameResolver {
         if case .once(let settledAction) = input.animation.completion,
            let duration = onceDuration(for: input),
            input.animation.action != settledAction,
-           input.animation.elapsed >= duration {
+           input.animation.elapsedTime >= duration {
             var settledInput = input
             settledInput.animation.action = settledAction
-            settledInput.animation.elapsed = input.animation.elapsed - duration
+            settledInput.animation.elapsedTime = input.animation.elapsedTime - duration
             settledInput.animation.completion = .indefinite
             return resolve(settledInput)
         }
@@ -77,7 +77,7 @@ struct SpriteFrameResolver {
             }
 
             let frameInterval = TimeInterval(action.frameInterval)
-            let rawFrameIndex = Int(input.animation.elapsed.timeInterval / frameInterval)
+            let rawFrameIndex = Int(input.animation.elapsedTime.timeInterval / frameInterval)
             let localFrameIndex: Int
             if actionRepeats(input.animation.action) {
                 localFrameIndex = rawFrameIndex % frameRange.count

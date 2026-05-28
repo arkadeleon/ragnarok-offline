@@ -118,7 +118,7 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func addObject(_ object: MapSceneObject, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        let presentation = MapObjectPresentationState(
+        let animation = MapObjectAnimationState(
             action: .idle,
             direction: direction,
             headDirection: headDirection,
@@ -126,7 +126,7 @@ final class RealityRenderBackend: GameRenderBackend {
             completion: .indefinite
         )
 
-        addObjectEntity(for: object, at: gridPosition, presentation: presentation)
+        addObjectEntity(for: object, at: gridPosition, animation: animation)
     }
 
     func updateObject(_ object: MapSceneObject) {
@@ -167,10 +167,10 @@ final class RealityRenderBackend: GameRenderBackend {
         )
 
         let remainingDuration = movement.remainingDuration(at: now)
-        let presentation = MapObjectPresentationState(
+        let animation = MapObjectAnimationState(
             action: .walk,
             direction: movement.finalDirection,
-            headDirection: component.presentation.headDirection,
+            headDirection: component.animation.headDirection,
             startTime: now,
             completion: .after(remainingDuration, settledAction: .idle)
         )
@@ -183,7 +183,7 @@ final class RealityRenderBackend: GameRenderBackend {
             speed: speed,
             position: { scene.mapGrid.worldPosition(for: $0) }
         )
-        component.presentation = presentation
+        component.animation = animation
         entity.components.set(component)
 
         #if os(visionOS)
@@ -207,9 +207,9 @@ final class RealityRenderBackend: GameRenderBackend {
         component.logicalWorldPosition = worldPosition
         component.movement = nil
         component.movementTimeline = nil
-        component.presentation.action = .idle
-        component.presentation.startTime = .now
-        component.presentation.completion = .indefinite
+        component.animation.action = .idle
+        component.animation.startTime = .now
+        component.animation.completion = .indefinite
 
         entity.transform = Transform(translation: worldPosition)
         entity.components.set(component)
@@ -227,8 +227,8 @@ final class RealityRenderBackend: GameRenderBackend {
             return
         }
 
-        component.presentation.direction = direction
-        component.presentation.headDirection = headDirection
+        component.animation.direction = direction
+        component.animation.headDirection = headDirection
         entity.components.set(component)
     }
 
@@ -238,9 +238,9 @@ final class RealityRenderBackend: GameRenderBackend {
             return
         }
 
-        component.presentation.action = action
-        component.presentation.startTime = .now
-        component.presentation.completion = completion
+        component.animation.action = action
+        component.animation.startTime = .now
+        component.animation.completion = completion
         entity.components.set(component)
     }
 
@@ -485,7 +485,7 @@ final class RealityRenderBackend: GameRenderBackend {
         worldCameraEntity.position = target.position(relativeTo: parentEntity)
     }
 
-    private func addObjectEntity(for object: MapSceneObject, at gridPosition: SIMD2<Int>, presentation: MapObjectPresentationState) {
+    private func addObjectEntity(for object: MapSceneObject, at gridPosition: SIMD2<Int>, animation: MapObjectAnimationState) {
         guard let scene else {
             return
         }
@@ -502,7 +502,7 @@ final class RealityRenderBackend: GameRenderBackend {
             logicalWorldPosition: worldPosition,
             movement: nil,
             movementTimeline: nil,
-            presentation: presentation
+            animation: animation
         ))
 
         rootEntity.addChild(entity)

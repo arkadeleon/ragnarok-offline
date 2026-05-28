@@ -28,12 +28,14 @@ struct MapObjectPresentationSampler {
             action: .walk,
             direction: movementSample.direction,
             headDirection: headDirection,
-            elapsed: movementSample.totalElapsed,
+            startTime: now - movementSample.totalElapsed,
+            elapsedTime: movementSample.totalElapsed,
             completion: .indefinite
         )
-        return PresentationSample(
+        let sample = PresentationSample(
             worldPosition: movementSample.worldPosition,
             animation: animation
         )
+        return sample
     }
 }

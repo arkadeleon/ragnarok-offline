@@ -62,13 +62,13 @@ class SpriteActionSystem: System {
                 continue
             }
 
-            var desiredElapsedTime = desiredAnimation?.elapsed.timeInterval
+            var desiredElapsedTime = desiredAnimation?.elapsedTime.timeInterval
             if let desiredAnimation,
                case .once(let settledActionType) = desiredAnimation.completion,
                let settledAnimation = spriteAnimation(for: settledActionType),
                actionComponent.actionType != settledActionType,
-               desiredAnimation.elapsed.timeInterval >= animation.duration {
-                desiredElapsedTime = desiredAnimation.elapsed.timeInterval - animation.duration
+               desiredAnimation.elapsedTime.timeInterval >= animation.duration {
+                desiredElapsedTime = desiredAnimation.elapsedTime.timeInterval - animation.duration
                 animation = settledAnimation
             }
 

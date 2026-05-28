@@ -18,7 +18,7 @@ struct MetalMapObjectState {
     var gridPosition: SIMD2<Int>
     var movement: MapObjectMovementState?
     var movementTimeline: MapObjectMovementTimeline?
-    var presentation: MapObjectPresentationState
+    var animation: MapObjectAnimationState
 }
 
 final class MetalRenderBackend: GameRenderBackend {
@@ -86,7 +86,7 @@ final class MetalRenderBackend: GameRenderBackend {
             gridPosition: gridPosition,
             movement: nil,
             movementTimeline: nil,
-            presentation: MapObjectPresentationState(
+            animation: MapObjectAnimationState(
                 action: .idle,
                 direction: direction,
                 headDirection: headDirection,
@@ -132,10 +132,10 @@ final class MetalRenderBackend: GameRenderBackend {
             speed: speed,
             position: { scene.mapGrid.worldPosition(for: $0) }
         )
-        objectState.presentation = MapObjectPresentationState(
+        objectState.animation = MapObjectAnimationState(
             action: .walk,
             direction: movement.finalDirection,
-            headDirection: objectState.presentation.headDirection,
+            headDirection: objectState.animation.headDirection,
             startTime: now,
             completion: .after(remainingDuration, settledAction: .idle)
         )
@@ -154,9 +154,9 @@ final class MetalRenderBackend: GameRenderBackend {
             objectState.gridPosition = position
             objectState.movement = nil
             objectState.movementTimeline = nil
-            objectState.presentation.action = .idle
-            objectState.presentation.startTime = .now
-            objectState.presentation.completion = .indefinite
+            objectState.animation.action = .idle
+            objectState.animation.startTime = .now
+            objectState.animation.completion = .indefinite
             objectStates[objectID] = objectState
         }
 
@@ -171,8 +171,8 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
-        objectState.presentation.direction = direction
-        objectState.presentation.headDirection = headDirection
+        objectState.animation.direction = direction
+        objectState.animation.headDirection = headDirection
         objectStates[objectID] = objectState
         refreshSpriteDrawables()
     }
@@ -182,9 +182,9 @@ final class MetalRenderBackend: GameRenderBackend {
             return
         }
 
-        objectState.presentation.action = action
-        objectState.presentation.startTime = .now
-        objectState.presentation.completion = completion
+        objectState.animation.action = action
+        objectState.animation.startTime = .now
+        objectState.animation.completion = completion
         objectStates[objectID] = objectState
         refreshSpriteDrawables()
     }
@@ -247,7 +247,7 @@ final class MetalRenderBackend: GameRenderBackend {
         }
 
         let snapshots = spriteSnapshotBuilder.build(
-            objects: objectStates,
+            objects: &objectStates,
             items: itemStates,
             scene: scene
         )

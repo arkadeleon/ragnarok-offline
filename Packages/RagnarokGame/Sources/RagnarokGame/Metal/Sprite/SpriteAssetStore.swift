@@ -231,7 +231,7 @@ final class SpriteAssetStore {
                     action: .idle,
                     direction: .south,
                     headDirection: .lookForward,
-                    elapsed: .zero,
+                    startTime: .now,
                     completion: .indefinite
                 )
                 let input = SpriteFrameResolver.ResolveInput(
