@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2020/8/17.
 //
 
-import BinaryIO
 import Foundation
 
 public actor GRFArchive {
@@ -155,7 +154,7 @@ public actor GRFArchive {
             throw GRFError.invalidEntryPath(path.string)
         }
 
-        guard let stream = FileStream(forReadingFrom: url) else {
+        guard let stream = GRFStream(forReadingFrom: url) else {
             throw GRFError.invalidURL(url)
         }
 

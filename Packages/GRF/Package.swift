@@ -16,14 +16,12 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../BinaryIO"),
         .package(path: "../DataCompression"),
     ],
     targets: [
         .target(
             name: "GRF",
             dependencies: [
-                "BinaryIO",
                 "DataCompression",
             ]
         ),

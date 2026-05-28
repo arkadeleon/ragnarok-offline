@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2020/5/4.
 //
 
-import BinaryIO
 import Foundation
 import Testing
 @testable import GRF
@@ -44,7 +43,7 @@ func grf(path: String) async throws {
         resourceURL.appending(path: "data/t2_¹è°æ1-1.bmp"),
     ]
 
-    let stream = FileStream(forReadingFrom: grfURL)!
+    let stream = GRFStream(forReadingFrom: grfURL)!
     defer {
         stream.close()
     }

@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2020/5/1.
 //
 
-import BinaryIO
 import CoreFoundation
 import DataCompression
 import Foundation
@@ -24,7 +23,7 @@ struct GRF {
     var table: GRF.Table
 
     init(url: URL) throws {
-        guard let stream = FileStream(forReadingFrom: url) else {
+        guard let stream = GRFStream(forReadingFrom: url) else {
             throw GRFError.invalidURL(url)
         }
 
@@ -32,18 +31,16 @@ struct GRF {
             stream.close()
         }
 
-        let decoder = BinaryDecoder(stream: stream)
+        header = try GRF.Header(from: stream)
 
-        header = try decoder.decode(GRF.Header.self)
+        stream.seek(Int(header.fileTableOffset), origin: .current)
 
-        try stream.seek(Int(header.fileTableOffset), origin: .current)
-
-        table = try decoder.decode(GRF.Table.self, configuration: header)
+        table = try GRF.Table(from: stream, header: header)
     }
 }
 
 extension GRF {
-    struct Header: BinaryDecodable {
+    struct Header {
         static let size = 0x2e
 
         var magic: [UInt8]
@@ -52,37 +49,37 @@ extension GRF {
         var fileCount: UInt32
         var version: UInt32
 
-        init(from decoder: BinaryDecoder) throws {
+        init(from stream: GRFStream) throws {
             let masterOfMagic = Array("Master of Magic\0".utf8)
             let eventHorizon = Array("Event Horizon\0RL".utf8)
 
-            magic = try decoder.decode([UInt8].self, count: 16)
-            key = try decoder.decode([UInt8].self, count: 14)
+            magic = try stream.read(count: 16)
+            key = try stream.read(count: 14)
 
             switch magic {
             case masterOfMagic:
-                let fileTableOffset = try decoder.decode(UInt32.self)
+                let fileTableOffset = try stream.read(UInt32.self)
                 self.fileTableOffset = UInt64(fileTableOffset)
 
-                let seed = try decoder.decode(UInt32.self)
-                let fileCount = try decoder.decode(UInt32.self)
+                let seed = try stream.read(UInt32.self)
+                let fileCount = try stream.read(UInt32.self)
                 self.fileCount = fileCount - seed - 7
             case eventHorizon:
-                let fileTableOffset = try decoder.decode(UInt64.self)
+                let fileTableOffset = try stream.read(UInt64.self)
                 self.fileTableOffset = fileTableOffset + 4
 
-                fileCount = try decoder.decode(UInt32.self)
+                fileCount = try stream.read(UInt32.self)
             default:
                 throw GRFError.invalidHeader(magic)
             }
 
-            version = try decoder.decode(UInt32.self)
+            version = try stream.read(UInt32.self)
         }
     }
 }
 
 extension GRF {
-    struct Table: BinaryDecodableWithConfiguration {
+    struct Table {
         static let size = 0x08
 
         var tableSizeCompressed: UInt32
@@ -90,13 +87,13 @@ extension GRF {
 
         var entries: [GRF.Entry] = []
 
-        init(from decoder: BinaryDecoder, configuration header: GRF.Header) throws {
+        init(from stream: GRFStream, header: GRF.Header) throws {
             switch header.version {
             case 0x102, 0x103:
                 tableSizeCompressed = 0
                 tableSize = 0
 
-                let data = try decoder.decode([UInt8].self, count: decoder.bytesRemaining)
+                let data = try stream.read(count: stream.bytesRemaining)
                 let des = DES()
 
                 var position = 0
@@ -160,10 +157,10 @@ extension GRF {
                     entries.append(entry)
                 }
             case 0x200, 0x300:
-                tableSizeCompressed = try decoder.decode(UInt32.self)
-                tableSize = try decoder.decode(UInt32.self)
+                tableSizeCompressed = try stream.read(UInt32.self)
+                tableSize = try stream.read(UInt32.self)
 
-                let compressedData = try decoder.decode([UInt8].self, count: Int(tableSizeCompressed))
+                let compressedData = try stream.read(count: Int(tableSizeCompressed))
                 if compressedData.first == 0 {
                     throw GRFError.lzmaCompressionIsNotSupported
                 }
@@ -255,11 +252,10 @@ extension GRF {
         var types: GRF.EntryTypes
         var offset: UInt64
 
-        func data(from stream: any BinaryIO.Stream) throws -> Data {
-            try stream.seek(GRF.Header.size + Int(offset), origin: .begin)
+        func data(from stream: GRFStream) throws -> Data {
+            stream.seek(GRF.Header.size + Int(offset), origin: .begin)
 
-            let decoder = BinaryDecoder(stream: stream)
-            var bytes = try decoder.decode([UInt8].self, count: Int(sizeCompressedAligned))
+            var bytes = try stream.read(count: Int(sizeCompressedAligned))
 
             if types.contains(.encryptMixed) {
                 let des = DES()
