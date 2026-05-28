@@ -257,7 +257,14 @@ final class RealityRenderBackend: GameRenderBackend {
     }
 
     func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        entityCache.objectEntities[objectID]?.components[MapSceneObjectComponent.self]?.gridPosition
+        guard let component = entityCache.objectEntities[objectID]?.components[MapSceneObjectComponent.self] else {
+            return nil
+        }
+
+        return component.movement?.nextPosition(
+            speed: component.object.speed,
+            at: .now
+        ) ?? component.gridPosition
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {

@@ -207,7 +207,14 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        objectStates[objectID]?.gridPosition
+        guard let objectState = objectStates[objectID] else {
+            return nil
+        }
+
+        return objectState.movement?.nextPosition(
+            speed: objectState.object.speed,
+            at: .now
+        ) ?? objectState.gridPosition
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
