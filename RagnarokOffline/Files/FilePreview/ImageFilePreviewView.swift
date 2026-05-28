@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2024/4/24.
 //
 
-import DataCompression
 import RagnarokFileFormats
+import SwiftGzip
 import SwiftUI
 
 struct ImageFilePreviewView: View {

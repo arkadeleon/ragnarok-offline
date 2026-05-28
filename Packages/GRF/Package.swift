@@ -16,13 +16,13 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(path: "../DataCompression"),
+        .package(url: "https://github.com/mihai8804858/swift-gzip", branch: "main"),
     ],
     targets: [
         .target(
             name: "GRF",
             dependencies: [
-                "DataCompression",
+                .product(name: "SwiftGzip", package: "swift-gzip"),
             ]
         ),
         .testTarget(

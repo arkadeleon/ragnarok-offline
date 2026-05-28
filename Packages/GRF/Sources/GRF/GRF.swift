@@ -6,8 +6,8 @@
 //
 
 import CoreFoundation
-import DataCompression
 import Foundation
+import SwiftGzip
 
 public enum GRFError: Error {
     case invalidURL(URL)

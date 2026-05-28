@@ -119,13 +119,6 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/DataCompression",
-        "identifier" : "DataCompressionTests",
-        "name" : "DataCompressionTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Packages\/RagnarokRendering",
         "identifier" : "RagnarokMetalRenderingTests",
         "name" : "RagnarokMetalRenderingTests"

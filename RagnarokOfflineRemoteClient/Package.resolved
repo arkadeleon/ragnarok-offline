@@ -119,6 +119,15 @@
       }
     },
     {
+      "identity" : "swift-gzip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mihai8804858/swift-gzip",
+      "state" : {
+        "branch" : "main",
+        "revision" : "97c502f10283dbd80eda534d164b715c9c973d72"
+      }
+    },
+    {
       "identity" : "swift-http-structured-headers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-http-structured-headers.git",

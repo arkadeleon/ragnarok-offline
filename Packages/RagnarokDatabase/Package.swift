@@ -17,20 +17,20 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
-        .package(path: "../DataCompression"),
         .package(path: "../RagnarokConstants"),
         .package(path: "../RagnarokCore"),
         .package(url: "https://github.com/arkadeleon/swift-rapidyaml.git", branch: "master"),
+        .package(url: "https://github.com/mihai8804858/swift-gzip", branch: "main"),
     ],
     targets: [
         .target(
             name: "RagnarokDatabase",
             dependencies: [
                 "BinaryIO",
-                "DataCompression",
                 "RagnarokConstants",
                 "RagnarokCore",
                 .product(name: "RapidYAML", package: "swift-rapidyaml"),
+                .product(name: "SwiftGzip", package: "swift-gzip"),
             ]
         ),
         .testTarget(

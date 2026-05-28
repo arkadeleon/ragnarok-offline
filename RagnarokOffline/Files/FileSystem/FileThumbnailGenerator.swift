@@ -5,10 +5,10 @@
 //  Created by Leon Li on 2023/4/23.
 //
 
-import DataCompression
 import Foundation
 import ImageIO
 import RagnarokFileFormats
+import SwiftGzip
 
 enum FileThumbnailError: Error {
     case unsupportedFileFormat

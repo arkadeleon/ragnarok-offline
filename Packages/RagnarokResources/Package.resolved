@@ -1,5 +1,5 @@
 {
-  "originHash" : "0f21d15d5897b71028e0b2124bbda6fe9259848540837ba94a4a4190d4678756",
+  "originHash" : "91a8bd37d3f9911ed22a97d58b66b96b9b480bdbf693bb7ec86246ff015b7b2a",
   "pins" : [
     {
       "identity" : "ragnarok-lua",
@@ -8,6 +8,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "a43c463e2c20c30561ba4c16592666c63e93268a"
+      }
+    },
+    {
+      "identity" : "swift-gzip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mihai8804858/swift-gzip",
+      "state" : {
+        "branch" : "main",
+        "revision" : "97c502f10283dbd80eda534d164b715c9c973d72"
       }
     }
   ],

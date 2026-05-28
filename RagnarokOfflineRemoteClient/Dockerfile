@@ -15,8 +15,6 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 WORKDIR /build
 
 # Copy the local packages
-COPY ./Packages/BinaryIO ./Packages/BinaryIO
-COPY ./Packages/DataCompression ./Packages/DataCompression
 COPY ./Packages/GRF ./Packages/GRF
 
 # First just resolve dependencies.
