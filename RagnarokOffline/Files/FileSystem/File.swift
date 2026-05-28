@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import GRF
 import Observation
 import RagnarokCore
+import RagnarokGRF
 import RagnarokResources
 import UniformTypeIdentifiers
 

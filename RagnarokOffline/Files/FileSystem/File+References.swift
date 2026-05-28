@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import GRF
 import RagnarokCore
 import RagnarokFileFormats
+import RagnarokGRF
 import RagnarokResources
 
 extension File {

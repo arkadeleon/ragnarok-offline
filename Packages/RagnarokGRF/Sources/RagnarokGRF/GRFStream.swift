@@ -1,6 +1,6 @@
 //
 //  GRFStream.swift
-//  GRF
+//  RagnarokGRF
 //
 //  Created by Leon Li on 2026/5/28.
 //

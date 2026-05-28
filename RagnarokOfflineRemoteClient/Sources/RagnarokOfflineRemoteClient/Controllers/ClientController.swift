@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2025/5/29.
 //
 
-import GRF
+import RagnarokGRF
 import Vapor
 
 struct ClientController: RouteCollection {

@@ -7,7 +7,7 @@ let package = Package(
        .macOS(.v15),
     ],
     dependencies: [
-        .package(path: "../Packages/GRF"),
+        .package(path: "../Packages/RagnarokGRF"),
         // 💧 A server-side Swift web framework.
         .package(url: "https://github.com/vapor/vapor.git", from: "4.115.0"),
         // 🔵 Non-blocking, event-driven networking for Swift. Used for custom executors
@@ -17,7 +17,7 @@ let package = Package(
         .executableTarget(
             name: "RagnarokOfflineRemoteClient",
             dependencies: [
-                "GRF",
+                "RagnarokGRF",
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "NIOPosix", package: "swift-nio"),

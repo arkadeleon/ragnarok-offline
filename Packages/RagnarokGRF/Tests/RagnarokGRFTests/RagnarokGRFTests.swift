@@ -1,13 +1,13 @@
 //
-//  GRFTests.swift
-//  GRFTests
+//  RagnarokGRFTests.swift
+//  RagnarokGRFTests
 //
 //  Created by Leon Li on 2020/5/4.
 //
 
 import Foundation
 import Testing
-@testable import GRF
+@testable import RagnarokGRF
 
 // Test data source: https://github.com/arminherling/GRF
 @Test(arguments: [

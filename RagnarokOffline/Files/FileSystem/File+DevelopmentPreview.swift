@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import GRF
 import RagnarokCore
+import RagnarokGRF
 import RagnarokResources
 
 extension ResourceManager {

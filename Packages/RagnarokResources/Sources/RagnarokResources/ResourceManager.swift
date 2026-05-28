@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import GRF
+import RagnarokGRF
 
 public enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)

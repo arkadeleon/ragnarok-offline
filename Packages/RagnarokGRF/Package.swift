@@ -4,15 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "GRF",
+    name: "RagnarokGRF",
     platforms: [
         .macOS(.v13),
         .iOS(.v16),
     ],
     products: [
         .library(
-            name: "GRF",
-            targets: ["GRF"]
+            name: "RagnarokGRF",
+            targets: ["RagnarokGRF"]
         ),
     ],
     dependencies: [
@@ -20,14 +20,14 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "GRF",
+            name: "RagnarokGRF",
             dependencies: [
                 .product(name: "SwiftGzip", package: "swift-gzip"),
             ]
         ),
         .testTarget(
-            name: "GRFTests",
-            dependencies: ["GRF"],
+            name: "RagnarokGRFTests",
+            dependencies: ["RagnarokGRF"],
             resources: [
                 .copy("Resources/data"),
                 .copy("Resources/test102.grf"),

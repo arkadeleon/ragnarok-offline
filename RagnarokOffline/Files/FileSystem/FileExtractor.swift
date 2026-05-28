@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import GRF
 import RagnarokCore
+import RagnarokGRF
 
 actor FileExtractor {
     func extract(_ file: File) async throws {

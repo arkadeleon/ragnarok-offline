@@ -91,13 +91,6 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/GRF",
-        "identifier" : "GRFTests",
-        "name" : "GRFTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Packages\/JSONViewer",
         "identifier" : "JSONViewerTests",
         "name" : "JSONViewerTests"
@@ -143,6 +136,13 @@
         "containerPath" : "container:Packages\/RagnarokModels",
         "identifier" : "RagnarokModelsTests",
         "name" : "RagnarokModelsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokGRF",
+        "identifier" : "RagnarokGRFTests",
+        "name" : "RagnarokGRFTests"
       }
     }
   ],

@@ -1,6 +1,6 @@
 //
 //  GRFArchive.swift
-//  GRF
+//  RagnarokGRF
 //
 //  Created by Leon Li on 2020/8/17.
 //

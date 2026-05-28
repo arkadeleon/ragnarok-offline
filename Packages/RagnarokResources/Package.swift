@@ -17,8 +17,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
-        .package(path: "../GRF"),
         .package(path: "../RagnarokCore"),
+        .package(path: "../RagnarokGRF"),
         .package(url: "https://github.com/arkadeleon/ragnarok-lua.git", branch: "master"),
     ],
     targets: [
@@ -26,8 +26,8 @@ let package = Package(
             name: "RagnarokResources",
             dependencies: [
                 "BinaryIO",
-                "GRF",
                 "RagnarokCore",
+                "RagnarokGRF",
                 .product(name: "RagnarokLua", package: "ragnarok-lua"),
             ],
             resources: [

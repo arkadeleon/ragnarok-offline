@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import GRF
+import RagnarokGRF
 
 final public class LocalResourceClient: Sendable {
     public let url: URL

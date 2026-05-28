@@ -15,7 +15,7 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 WORKDIR /build
 
 # Copy the local packages
-COPY ./Packages/GRF ./Packages/GRF
+COPY ./Packages/RagnarokGRF ./Packages/RagnarokGRF
 
 # First just resolve dependencies.
 # This creates a cached layer that can be reused
