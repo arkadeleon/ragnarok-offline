@@ -123,9 +123,10 @@ final class MetalRenderBackend: GameRenderBackend {
             at: now
         )
         movement.updateWorldPath { scene.mapGrid.worldPosition(for: $0) }
+        movement.update(atTime: now)
 
         let remainingDuration = movement.remainingDuration(at: now)
-        objectState.gridPosition = endPosition
+        objectState.gridPosition = movement.currentPosition
         objectState.animation = MapObjectAnimationState(
             action: .walk,
             direction: movement.finalDirection,
@@ -189,6 +190,14 @@ final class MetalRenderBackend: GameRenderBackend {
         refreshSpriteDrawables()
     }
 
+    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        objectStates[objectID]?.gridPosition
+    }
+
+    func nextGridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        objectStates[objectID]?.movement?.nextPosition(at: .now)
+    }
+
     func addItem(_ item: MapSceneItem) {
         itemStates[item.objectID] = item
         refreshSpriteDrawables()
@@ -198,14 +207,6 @@ final class MetalRenderBackend: GameRenderBackend {
         itemStates.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
-    }
-
-    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        guard let objectState = objectStates[objectID] else {
-            return nil
-        }
-
-        return objectState.movement?.nextPosition(at: .now) ?? objectState.gridPosition
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {

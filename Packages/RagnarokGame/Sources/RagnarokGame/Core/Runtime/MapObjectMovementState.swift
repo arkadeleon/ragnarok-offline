@@ -18,10 +18,30 @@ public struct MapObjectMovementState: Sendable {
     public let animationElapsedOffset: Duration
 
     public private(set) var worldPath: [SIMD3<Float>] = []
+    public private(set) var currentPosition: SIMD2<Int>
     public private(set) var worldPosition: SIMD3<Float>?
     public private(set) var direction: SpriteDirection?
     public private(set) var animationElapsedTime: Duration = .zero
     public private(set) var isMoving = false
+
+    public init(
+        startPosition: SIMD2<Int>,
+        endPosition: SIMD2<Int>,
+        path: [SIMD2<Int>],
+        startTime: ContinuousClock.Instant,
+        duration: Duration,
+        speed: Int,
+        animationElapsedOffset: Duration
+    ) {
+        self.startPosition = startPosition
+        self.endPosition = endPosition
+        self.path = path
+        self.startTime = startTime
+        self.duration = duration
+        self.speed = speed
+        self.animationElapsedOffset = animationElapsedOffset
+        self.currentPosition = path.first ?? startPosition
+    }
 
     var initialDirection: SpriteDirection {
         if path.count >= 2 {
@@ -49,9 +69,9 @@ public struct MapObjectMovementState: Sendable {
     }
 
     mutating func update(atTime time: ContinuousClock.Instant) {
-        guard path.count >= 2,
-              worldPath.count == path.count else {
-            worldPosition = worldPath.last
+        guard path.count >= 2, worldPath.count == path.count else {
+            currentPosition = path[path.count - 1]
+            worldPosition = worldPath[worldPath.count - 1]
             direction = nil
             animationElapsedTime = .zero
             isMoving = false
@@ -60,6 +80,7 @@ public struct MapObjectMovementState: Sendable {
 
         let elapsed = startTime.duration(to: time)
         if elapsed <= .zero {
+            currentPosition = path[0]
             worldPosition = worldPath[0]
             direction = initialDirection
             animationElapsedTime = animationElapsedOffset
@@ -68,6 +89,7 @@ public struct MapObjectMovementState: Sendable {
         }
 
         if elapsed >= duration {
+            currentPosition = path[path.count - 1]
             worldPosition = worldPath[worldPath.count - 1]
             direction = nil
             animationElapsedTime = .zero
@@ -82,6 +104,7 @@ public struct MapObjectMovementState: Sendable {
             duration: duration
         )
         guard let step = progress.activeStep(at: time) else {
+            currentPosition = path[path.count - 1]
             worldPosition = worldPath[worldPath.count - 1]
             direction = nil
             animationElapsedTime = .zero
@@ -99,6 +122,7 @@ public struct MapObjectMovementState: Sendable {
             targetPosition: path[step.index + 1]
         )
 
+        currentPosition = path[step.index]
         worldPosition = mix(source, target, t: fraction)
         self.direction = direction
         animationElapsedTime = elapsed + animationElapsedOffset

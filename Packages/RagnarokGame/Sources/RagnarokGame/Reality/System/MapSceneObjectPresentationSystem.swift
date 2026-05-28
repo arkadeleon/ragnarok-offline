@@ -28,6 +28,7 @@ class MapSceneObjectPresentationSystem: System {
             component.animation.update(atTime: now)
             if var movement = component.movement {
                 movement.update(atTime: now)
+                component.gridPosition = movement.currentPosition
                 component.movement = movement
             }
             entity.components.set(component)

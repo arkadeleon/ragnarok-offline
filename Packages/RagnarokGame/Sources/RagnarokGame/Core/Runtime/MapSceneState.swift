@@ -36,18 +36,3 @@ public final class MapSceneState {
         self.objects = [player.objectID: player]
     }
 }
-
-extension MapSceneState {
-    func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneItem? {
-        items.values
-            .min {
-                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
-            }
-    }
-
-    private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
-        let dx = a.x - b.x
-        let dy = a.y - b.y
-        return dx * dx + dy * dy
-    }
-}

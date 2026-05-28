@@ -166,6 +166,7 @@ final class RealityRenderBackend: GameRenderBackend {
             at: now
         )
         movement.updateWorldPath { scene.mapGrid.worldPosition(for: $0) }
+        movement.update(atTime: now)
 
         let remainingDuration = movement.remainingDuration(at: now)
         let animation = MapObjectAnimationState(
@@ -176,7 +177,7 @@ final class RealityRenderBackend: GameRenderBackend {
             completion: .after(remainingDuration, settledAction: .idle)
         )
 
-        component.gridPosition = endPosition
+        component.gridPosition = movement.currentPosition
         component.logicalWorldPosition = scene.mapGrid.worldPosition(for: endPosition)
         component.animation = animation
         component.movement = movement
@@ -243,20 +244,20 @@ final class RealityRenderBackend: GameRenderBackend {
         entityCache.removeObjectEntity(for: objectID)
     }
 
+    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        entityCache.objectEntities[objectID]?.components[MapSceneObjectComponent.self]?.gridPosition
+    }
+
+    func nextGridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
+        entityCache.objectEntities[objectID]?.components[MapSceneObjectComponent.self]?.movement?.nextPosition(at: .now)
+    }
+
     func addItem(_ item: MapSceneItem) {
         addItemEntity(for: item)
     }
 
     func removeItem(objectID: GameObjectID) {
         entityCache.removeItemEntity(for: objectID)
-    }
-
-    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        guard let component = entityCache.objectEntities[objectID]?.components[MapSceneObjectComponent.self] else {
-            return nil
-        }
-
-        return component.movement?.nextPosition(at: .now) ?? component.gridPosition
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {

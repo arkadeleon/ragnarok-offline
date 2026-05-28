@@ -28,6 +28,7 @@ final class SpriteSnapshotBuilder {
             objectState.animation.update(atTime: now)
             if var movement = objectState.movement {
                 movement.update(atTime: now)
+                objectState.gridPosition = movement.currentPosition
                 objectState.movement = movement
             }
             snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)

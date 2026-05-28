@@ -144,6 +144,13 @@ public final class MapScene {
             }?.object
     }
 
+    private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneItem? {
+        state.items.values
+            .min {
+                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
+            }
+    }
+
     private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
         let dx = a.x - b.x
         let dy = a.y - b.y
@@ -151,7 +158,8 @@ public final class MapScene {
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
-        guard let position = renderBackend.gridPosition(for: player.objectID) else {
+        guard let position = renderBackend.nextGridPosition(for: player.objectID)
+            ?? renderBackend.gridPosition(for: player.objectID) else {
             return
         }
 
@@ -216,7 +224,7 @@ public final class MapScene {
 
     func pickUpNearestItem() {
         if let playerPosition = renderBackend.gridPosition(for: player.objectID),
-           let target = state.nearestItem(fromPosition: playerPosition) {
+           let target = nearestItem(fromPosition: playerPosition) {
             engageItem(target)
         }
     }

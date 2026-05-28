@@ -26,11 +26,11 @@ protocol GameRenderBackend: AnyObject {
     func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection)
     func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MapObjectAnimationCompletion)
     func removeObject(objectID: GameObjectID)
+    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>?
+    func nextGridPosition(for objectID: GameObjectID) -> SIMD2<Int>?
 
     func addItem(_ item: MapSceneItem)
     func removeItem(objectID: GameObjectID)
-
-    func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>?
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid)
     func addCombatText(_ combatText: MapSceneCombatText)
