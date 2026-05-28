@@ -13,6 +13,5 @@ struct MapSceneObjectComponent: Component {
     var gridPosition: SIMD2<Int>
     var logicalWorldPosition: SIMD3<Float>
     var movement: MapObjectMovementState? = nil
-    var movementTimeline: MapObjectMovementTimeline? = nil
     var animation: MapObjectAnimationState = .defaultAnimation
 }

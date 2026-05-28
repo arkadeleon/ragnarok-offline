@@ -17,7 +17,6 @@ struct MetalMapObjectState {
     var object: MapSceneObject
     var gridPosition: SIMD2<Int>
     var movement: MapObjectMovementState?
-    var movementTimeline: MapObjectMovementTimeline?
     var animation: MapObjectAnimationState
 }
 
@@ -81,18 +80,18 @@ final class MetalRenderBackend: GameRenderBackend {
     }
 
     func addObject(_ object: MapSceneObject, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+        let animation = MapObjectAnimationState(
+            action: .idle,
+            direction: direction,
+            headDirection: headDirection,
+            startTime: .now,
+            completion: .indefinite
+        )
         objectStates[object.objectID] = MetalMapObjectState(
             object: object,
             gridPosition: gridPosition,
             movement: nil,
-            movementTimeline: nil,
-            animation: MapObjectAnimationState(
-                action: .idle,
-                direction: direction,
-                headDirection: headDirection,
-                startTime: .now,
-                completion: .indefinite
-            )
+            animation: animation
         )
         refreshSpriteDrawables()
     }
@@ -116,22 +115,18 @@ final class MetalRenderBackend: GameRenderBackend {
 
         let speed = objectState.object.speed
         let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
-        let movement = planner.replan(
+        var movement = planner.replan(
             existingMovement: objectState.movement,
             incomingStartPosition: startPosition,
             incomingEndPosition: endPosition,
             speed: speed,
             at: now
         )
+        movement.updateWorldPath { scene.mapGrid.worldPosition(for: $0) }
 
         let remainingDuration = movement.remainingDuration(at: now)
         objectState.gridPosition = endPosition
         objectState.movement = movement
-        objectState.movementTimeline = MapObjectMovementTimeline(
-            movement: movement,
-            speed: speed,
-            position: { scene.mapGrid.worldPosition(for: $0) }
-        )
         objectState.animation = MapObjectAnimationState(
             action: .walk,
             direction: movement.finalDirection,
@@ -153,7 +148,6 @@ final class MetalRenderBackend: GameRenderBackend {
         if var objectState = objectStates[objectID] {
             objectState.gridPosition = position
             objectState.movement = nil
-            objectState.movementTimeline = nil
             objectState.animation.action = .idle
             objectState.animation.startTime = .now
             objectState.animation.completion = .indefinite
@@ -211,10 +205,7 @@ final class MetalRenderBackend: GameRenderBackend {
             return nil
         }
 
-        return objectState.movement?.nextPosition(
-            speed: objectState.object.speed,
-            at: .now
-        ) ?? objectState.gridPosition
+        return objectState.movement?.nextPosition(at: .now) ?? objectState.gridPosition
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {

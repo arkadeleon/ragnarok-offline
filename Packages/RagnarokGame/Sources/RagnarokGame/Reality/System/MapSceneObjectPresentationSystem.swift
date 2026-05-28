@@ -13,8 +13,6 @@ import simd
 class MapSceneObjectPresentationSystem: System {
     static let query = EntityQuery(where: .has(MapSceneObjectComponent.self))
 
-    private let sampler = MapObjectPresentationSampler()
-
     required init(scene: Scene) {
     }
 
@@ -28,15 +26,25 @@ class MapSceneObjectPresentationSystem: System {
             }
 
             component.animation.update(atTime: now)
+            if var movement = component.movement {
+                movement.update(atTime: now)
+                component.movement = movement
+            }
             entity.components.set(component)
 
-            let movementSample = sampler.sample(
-                timeline: component.movementTimeline,
-                headDirection: component.animation.headDirection,
-                now: now
-            )
-            let animation = movementSample?.animation ?? component.animation
-            entity.position = movementSample?.worldPosition ?? component.logicalWorldPosition
+            let movement = component.movement
+            var animation = component.animation
+            if let movement, movement.isMoving {
+                animation.action = .walk
+                animation.direction = movement.direction ?? animation.direction
+                animation.elapsedTime = movement.animationElapsedTime
+                animation.completion = .indefinite
+            }
+            entity.position = if let movement, movement.isMoving, let movementWorldPosition = movement.worldPosition {
+                movementWorldPosition
+            } else {
+                component.logicalWorldPosition
+            }
 
             let actionComponent = SpriteActionComponent(
                 actionType: animation.action,

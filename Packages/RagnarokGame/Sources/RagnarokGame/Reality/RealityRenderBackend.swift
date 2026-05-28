@@ -158,13 +158,14 @@ final class RealityRenderBackend: GameRenderBackend {
 
         let speed = component.object.speed
         let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
-        let movement = planner.replan(
+        var movement = planner.replan(
             existingMovement: component.movement,
             incomingStartPosition: startPosition,
             incomingEndPosition: endPosition,
             speed: speed,
             at: now
         )
+        movement.updateWorldPath { scene.mapGrid.worldPosition(for: $0) }
 
         let remainingDuration = movement.remainingDuration(at: now)
         let animation = MapObjectAnimationState(
@@ -178,11 +179,6 @@ final class RealityRenderBackend: GameRenderBackend {
         component.gridPosition = endPosition
         component.logicalWorldPosition = scene.mapGrid.worldPosition(for: endPosition)
         component.movement = movement
-        component.movementTimeline = MapObjectMovementTimeline(
-            movement: movement,
-            speed: speed,
-            position: { scene.mapGrid.worldPosition(for: $0) }
-        )
         component.animation = animation
         entity.components.set(component)
 
@@ -206,7 +202,6 @@ final class RealityRenderBackend: GameRenderBackend {
         component.gridPosition = position
         component.logicalWorldPosition = worldPosition
         component.movement = nil
-        component.movementTimeline = nil
         component.animation.action = .idle
         component.animation.startTime = .now
         component.animation.completion = .indefinite
@@ -261,10 +256,7 @@ final class RealityRenderBackend: GameRenderBackend {
             return nil
         }
 
-        return component.movement?.nextPosition(
-            speed: component.object.speed,
-            at: .now
-        ) ?? component.gridPosition
+        return component.movement?.nextPosition(at: .now) ?? component.gridPosition
     }
 
     func showSelection(at position: SIMD2<Int>, mapGrid: MapGrid) {
@@ -501,7 +493,6 @@ final class RealityRenderBackend: GameRenderBackend {
             gridPosition: gridPosition,
             logicalWorldPosition: worldPosition,
             movement: nil,
-            movementTimeline: nil,
             animation: animation
         ))
 

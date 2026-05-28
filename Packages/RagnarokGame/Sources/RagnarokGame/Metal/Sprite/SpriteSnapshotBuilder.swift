@@ -11,8 +11,6 @@ import RagnarokSprite
 
 @MainActor
 final class SpriteSnapshotBuilder {
-    private let sampler = MapObjectPresentationSampler()
-
     func build(
         objects: inout [GameObjectID : MetalMapObjectState],
         items: [GameObjectID : MapSceneItem],
@@ -28,6 +26,10 @@ final class SpriteSnapshotBuilder {
             }
 
             objectState.animation.update(atTime: now)
+            if var movement = objectState.movement {
+                movement.update(atTime: now)
+                objectState.movement = movement
+            }
             snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)
             objects[objectID] = objectState
         }
@@ -41,16 +43,22 @@ final class SpriteSnapshotBuilder {
 
     private func snapshot(for objectState: MetalMapObjectState, now: ContinuousClock.Instant, scene: MapScene) -> SpriteSnapshot {
         let object = objectState.object
-        let movementSample = sampler.sample(
-            timeline: objectState.movementTimeline,
-            headDirection: objectState.animation.headDirection,
-            now: now
-        )
-        let worldPosition = movementSample?.worldPosition ?? scene.mapGrid.worldPosition(for: objectState.gridPosition)
+        let movement = objectState.movement
+        let worldPosition = if let movement, movement.isMoving, let movementWorldPosition = movement.worldPosition {
+            movementWorldPosition
+        } else {
+            scene.mapGrid.worldPosition(for: objectState.gridPosition)
+        }
 
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
-        var animation = movementSample?.animation ?? objectState.animation
+        var animation = objectState.animation
+        if let movement, movement.isMoving {
+            animation.action = .walk
+            animation.direction = movement.direction ?? animation.direction
+            animation.elapsedTime = movement.animationElapsedTime
+            animation.completion = .indefinite
+        }
         animation.direction = animation.direction.adjustedForCameraAzimuth(scene.cameraState.azimuth)
         if !availableActionTypes.contains(animation.action) {
             animation.action = .idle

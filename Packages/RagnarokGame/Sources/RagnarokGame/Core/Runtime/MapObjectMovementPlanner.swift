@@ -41,6 +41,7 @@ struct MapObjectMovementPlanner {
             path: incomingPath,
             startTime: now,
             duration: fallbackDuration,
+            speed: speed,
             animationElapsedOffset: fallbackAnimationElapsedOffset
         )
 
@@ -48,7 +49,7 @@ struct MapObjectMovementPlanner {
             return fallbackMovement
         }
 
-        guard let nextStep = existingMovement.nextStep(speed: speed, at: now) else {
+        guard let nextStep = existingMovement.nextStep(at: now) else {
             return fallbackMovement
         }
 
@@ -64,6 +65,7 @@ struct MapObjectMovementPlanner {
             path: fullPath,
             startTime: existingMovement.startTime,
             duration: duration,
+            speed: speed,
             animationElapsedOffset: existingMovement.animationElapsedOffset
         )
     }
