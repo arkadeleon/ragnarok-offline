@@ -10,7 +10,7 @@
 import SwiftUI
 
 struct RealityMapScreen: View {
-    var scene: MapScene
+    var scene: RealityMapScene
 
     @Environment(GameSession.self) private var gameSession
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace

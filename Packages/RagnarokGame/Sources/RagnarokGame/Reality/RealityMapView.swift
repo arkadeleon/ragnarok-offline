@@ -8,55 +8,28 @@
 import RealityKit
 import SwiftUI
 
-public struct RealityMapView: View {
-    var scene: MapScene
+#if os(visionOS)
 
-    #if os(visionOS)
-    @State private var baseDistance: Float = MapCameraState.default.distance
-    #endif
+public struct RealityMapView: View {
+    var scene: RealityMapScene
 
     public var body: some View {
-        #if os(visionOS)
-        if let backend = scene.renderBackend as? RealityRenderBackend {
-            RealityView { content in
-                content.add(backend.rootEntity)
-            } update: { _ in
-            } placeholder: {
-                ProgressView()
-            }
-            .gesture(tileTapGesture)
-            .gesture(mapObjectTapGesture)
-            .gesture(mapItemTapGesture)
-            .gesture(
-                MagnifyGesture()
-                    .onChanged { value in
-                        var distance = baseDistance * Float(1 / value.magnification)
-                        distance = max(distance, 3)
-                        distance = min(distance, 120)
-                        scene.cameraState.distance = distance
-                    }
-                    .onEnded { _ in
-                        baseDistance = scene.cameraState.distance
-                    }
-            )
-        } else {
-            EmptyView()
+        RealityView { content in
+            content.add(scene.rootEntity)
+        } update: { _ in
+        } placeholder: {
+            ProgressView()
         }
-        #else
-        if let backend = scene.renderBackend as? RealityRenderBackend {
-            RealityVirtualMapView(scene: scene, backend: backend)
-        } else {
-            EmptyView()
-        }
-        #endif
+        .gesture(tileTapGesture)
+        .gesture(mapObjectTapGesture)
+        .gesture(mapItemTapGesture)
     }
 
-    public init(scene: MapScene) {
+    public init(scene: RealityMapScene) {
         self.scene = scene
     }
 }
 
-#if os(visionOS)
 private extension RealityMapView {
     var tileTapGesture: some Gesture {
         SpatialTapGesture()
@@ -65,33 +38,49 @@ private extension RealityMapView {
                 guard let position = event.entity.components[TileComponent.self]?.position else {
                     return
                 }
-
                 scene.handleInteraction(.ground(position: position))
             }
     }
 
     var mapObjectTapGesture: some Gesture {
         SpatialTapGesture()
-            .targetedToEntity(where: .has(MapSceneObjectComponent.self))
+            .targetedToEntity(where: .has(MapObjectComponent.self))
             .onEnded { event in
-                guard let object = event.entity.components[MapSceneObjectComponent.self]?.object else {
+                guard let objectID = event.entity.components[MapObjectComponent.self]?.object.objectID else {
                     return
                 }
-
-                scene.handleInteraction(.mapObject(objectID: object.objectID))
+                scene.handleInteraction(.mapObject(objectID: objectID))
             }
     }
 
     var mapItemTapGesture: some Gesture {
         SpatialTapGesture()
-            .targetedToEntity(where: .has(MapSceneItemComponent.self))
+            .targetedToEntity(where: .has(MapItemComponent.self))
             .onEnded { event in
-                guard let item = event.entity.components[MapSceneItemComponent.self]?.item else {
+                guard let objectID = event.entity.components[MapItemComponent.self]?.item.objectID else {
                     return
                 }
-
-                scene.handleInteraction(.mapItem(objectID: item.objectID))
+                scene.handleInteraction(.mapItem(objectID: objectID))
             }
     }
 }
+
+#else
+
+public struct RealityMapView: View {
+    var scene: MapScene
+
+    public var body: some View {
+        if let backend = scene.renderBackend as? RealityRenderBackend {
+            RealityVirtualMapView(scene: scene, backend: backend)
+        } else {
+            EmptyView()
+        }
+    }
+
+    public init(scene: MapScene) {
+        self.scene = scene
+    }
+}
+
 #endif

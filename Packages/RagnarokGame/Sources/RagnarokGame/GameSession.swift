@@ -65,7 +65,7 @@ final public class GameSession {
     public enum MapPhase {
         case loading(_ progress: Progress)
         #if os(visionOS)
-        case loaded(_ scene: MapScene)
+        case loaded(_ scene: RealityMapScene)
         #else
         case loaded(_ scene: MetalMapScene)
         #endif
@@ -123,7 +123,7 @@ final public class GameSession {
     @ObservationIgnored var currentMapServer: MapServerInfo?
 
     #if os(visionOS)
-    public var mapScene: MapScene? {
+    public var mapScene: RealityMapScene? {
         if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
             scene
         } else {
@@ -141,7 +141,11 @@ final public class GameSession {
     #endif
 
     public var mapSceneState: MapSceneState? {
+        #if os(visionOS)
+        nil
+        #else
         mapScene?.state
+        #endif
     }
 
     public init(resourceManager: ResourceManager) {
@@ -732,11 +736,17 @@ final public class GameSession {
                 let player = MapObject(account: account, character: character)
 
                 #if os(visionOS)
-                let renderBackend = RealityRenderBackend(resourceManager: resourceManager)
+                let scene = RealityMapScene(
+                    mapName: mapName,
+                    world: world,
+                    character: character,
+                    player: player,
+                    playerPosition: position,
+                    resourceManager: resourceManager,
+                    gameSession: self
+                )
                 #else
                 let renderBackend = try MetalRenderBackend(resourceManager: resourceManager)
-                #endif
-
                 let scene = MapScene(
                     mapName: mapName,
                     world: world,
@@ -747,6 +757,7 @@ final public class GameSession {
                     resourceManager: resourceManager,
                     gameSession: self
                 )
+                #endif
 
                 await scene.load(progress: progress)
 
