@@ -109,7 +109,7 @@ extension Entity {
     }
 
     func attack(direction: SpriteDirection) {
-        guard let object = components[MapSceneObjectComponent.self]?.object else {
+        guard let object = components[MapObjectComponent.self]?.object else {
             return
         }
 
@@ -130,7 +130,7 @@ extension Entity {
     }
 
     func castSkill(direction: SpriteDirection) {
-        guard let object = components[MapSceneObjectComponent.self]?.object else {
+        guard let object = components[MapObjectComponent.self]?.object else {
             return
         }
 

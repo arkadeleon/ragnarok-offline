@@ -106,6 +106,8 @@ public final class RealityMapScene: GameMapScene {
             playerEntity.position = worldPosition
             playerEntity.components.set(GridPositionComponent(position: playerPosition))
             playerEntity.components.set(MapObjectComponent(object: player))
+            playerEntity.components.set(HealthPointsComponent(hp: character.hp, maxHp: character.maxHp))
+            playerEntity.components.set(SpellPointsComponent(sp: character.sp, maxSp: character.maxSp))
             rootEntity.addChild(playerEntity)
             objectEntities[player.objectID] = playerEntity
             setupWorldCamera(target: playerEntity)
@@ -257,58 +259,200 @@ public final class RealityMapScene: GameMapScene {
     }
 }
 
-// MARK: - Event Handlers (Phase 6+ will implement)
+// MARK: - Event Handlers
 
 extension RealityMapScene {
     func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        guard let playerEntity = objectEntities[player.objectID] else {
+            return
+        }
+
+        let path = pathFinder.findPath(from: startPosition, to: endPosition)
+        if path.count > 1 {
+            playerEntity.components.set(WalkingComponent(path: path, mapGrid: mapGrid))
+        }
+
+        tileEntityManager?.updateTileEntities(forCenter: endPosition)
     }
 
     func onPlayerParameterChanged(_ packet: PACKET_ZC_PAR_CHANGE) {
+        guard let playerEntity = objectEntities[player.objectID],
+              let sp = StatusProperty(rawValue: Int(packet.varID)) else {
+            return
+        }
+
+        switch sp {
+        case .hp:
+            playerEntity.components[HealthPointsComponent.self]?.hp = Int(packet.count)
+        case .maxhp:
+            playerEntity.components[HealthPointsComponent.self]?.maxHp = Int(packet.count)
+        case .sp:
+            playerEntity.components[SpellPointsComponent.self]?.sp = Int(packet.count)
+        case .maxsp:
+            playerEntity.components[SpellPointsComponent.self]?.maxSp = Int(packet.count)
+        default:
+            break
+        }
     }
 
     func onPlayerHealthPointsRecovered(hp: Int, amount: Int) {
+        objectEntities[player.objectID]?.components[HealthPointsComponent.self]?.hp = hp
     }
 
     func onPlayerSpellPointsRecovered(sp: Int, amount: Int) {
+        objectEntities[player.objectID]?.components[SpellPointsComponent.self]?.sp = sp
     }
 
     func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
+        Task {
+            let (entity, isNew) = try await spriteEntityManager.entity(for: object)
+            if isNew {
+                let worldPosition = mapGrid.worldPosition(for: position)
+                entity.position = worldPosition
+                entity.components.set(GridPositionComponent(position: position))
+                entity.components.set(MapObjectComponent(object: object))
+                entity.components.set(HealthPointsComponent(hp: object.hp, maxHp: object.maxHp))
+                let spriteDirection = SpriteDirection(direction: direction)
+                entity.playSpriteAnimation(.idle, direction: spriteDirection)
+                rootEntity.addChild(entity)
+            }
+            objectEntities[object.objectID] = entity
+        }
     }
 
     func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+        Task {
+            let (entity, isNew) = try await spriteEntityManager.entity(for: object)
+            if isNew {
+                let worldPosition = mapGrid.worldPosition(for: startPosition)
+                entity.position = worldPosition
+                entity.components.set(GridPositionComponent(position: startPosition))
+                entity.components.set(MapObjectComponent(object: object))
+                entity.components.set(HealthPointsComponent(hp: object.hp, maxHp: object.maxHp))
+                rootEntity.addChild(entity)
+            }
+            objectEntities[object.objectID] = entity
+
+            let path = pathFinder.findPath(from: startPosition, to: endPosition)
+            if path.count > 1 {
+                entity.components.set(WalkingComponent(path: path, mapGrid: mapGrid))
+            }
+        }
     }
 
     func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
+        guard let entity = objectEntities[objectID] else {
+            return
+        }
+
+        entity.components.remove(WalkingComponent.self)
+        entity.components[GridPositionComponent.self]?.position = position
+        entity.position = mapGrid.worldPosition(for: position)
+
+        let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
+        entity.playSpriteAnimation(.idle, direction: direction)
     }
 
     func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
+        if type == 1 && objectID == player.objectID {
+            let direction = objectEntities[objectID]?.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
+            objectEntities[objectID]?.playSpriteAnimation(.die, direction: direction)
+        } else {
+            Task {
+                try? await spriteEntityManager.removeEntity(for: objectID)
+                objectEntities.removeValue(forKey: objectID)
+            }
+        }
     }
 
     func onMapObjectResurrected(objectID: GameObjectID) {
+        guard let entity = objectEntities[objectID] else {
+            return
+        }
+
+        let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
+        entity.playSpriteAnimation(.idle, direction: direction)
     }
 
     func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
+        guard let entity = objectEntities[objectID] else {
+            return
+        }
+
+        let spriteDirection = SpriteDirection(direction: direction)
+        entity.playSpriteAnimation(.idle, direction: spriteDirection)
     }
 
     func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
+        // MapObject is immutable; full entity reload deferred to a later phase.
     }
 
     func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
+        objectEntities[objectID]?.isEnabled = effectState != .cloak
     }
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
+        guard let entity = objectEntities[objectAction.sourceObjectID] else {
+            return
+        }
+
+        let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
+
+        switch objectAction.type {
+        case .sit_down:
+            entity.playSpriteAnimation(.sit, direction: direction)
+        case .stand_up:
+            entity.playSpriteAnimation(.idle, direction: direction)
+        case .pickup_item:
+            entity.playSpriteAnimation(.pickup, direction: direction, nextActionType: .idle)
+        case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
+            entity.attack(direction: direction)
+        default:
+            break
+        }
     }
 
     func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
+        guard let entity = objectEntities[packet.AID] else {
+            return
+        }
+
+        let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
+        entity.castSkill(direction: direction)
     }
 
     func onMapObjectHealthUpdated(_ packet: PACKET_ZC_HP_INFO) {
+        guard let entity = objectEntities[packet.GID] else {
+            return
+        }
+
+        entity.components[HealthPointsComponent.self]?.hp = Int(packet.HP)
+        entity.components[HealthPointsComponent.self]?.maxHp = Int(packet.maxHP)
     }
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
+        Task {
+            let itemEntity = Entity()
+            itemEntity.position = mapGrid.worldPosition(for: position)
+            itemEntity.components.set(GridPositionComponent(position: position))
+            itemEntity.components.set(MapItemComponent(item: item))
+
+            let spriteEntity = try await SpriteEntity(forItemID: Int(item.itemID), using: resourceManager)
+            if let animation = spriteEntity.components[SpriteAnimationLibraryComponent.self]?.defaultAnimation {
+                spriteEntity.setSpriteAnimation(animation)
+                spriteEntity.generateModelAndCollisionShape(for: animation)
+            }
+            itemEntity.addChild(spriteEntity)
+
+            rootEntity.addChild(itemEntity)
+            itemEntities[item.objectID] = itemEntity
+        }
     }
 
     func onItemVanished(objectID: GameObjectID) {
+        if let entity = itemEntities.removeValue(forKey: objectID) {
+            entity.removeFromParent()
+        }
     }
 
     func onGroundSkillCast(_ packet: PACKET_ZC_NOTIFY_GROUNDSKILL) {

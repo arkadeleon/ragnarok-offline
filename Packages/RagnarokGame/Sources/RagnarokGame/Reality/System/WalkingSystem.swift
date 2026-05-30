@@ -26,7 +26,7 @@ class WalkingSystem: System {
                 continue
             }
 
-            guard let object = entity.components[MapSceneObjectComponent.self]?.object else {
+            guard let object = entity.components[MapObjectComponent.self]?.object else {
                 continue
             }
 
@@ -69,7 +69,7 @@ class WalkingSystem: System {
                 walkingComponent.stepTime = 0
                 walkingComponent.path = Array(path.dropFirst())
 
-                entity.components[MapSceneObjectComponent.self]?.gridPosition = targetGridPosition
+                entity.components[GridPositionComponent.self]?.position = targetGridPosition
             } else {
                 entity.position = mix(sourcePosition, targetPosition, t: Float(stepTime / duration))
 
