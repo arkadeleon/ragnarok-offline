@@ -48,6 +48,12 @@ public final class RealityMapScene: GameMapScene {
     private(set) var objectEntities: [GameObjectID : Entity] = [:]
     private(set) var itemEntities: [GameObjectID : Entity] = [:]
 
+    private var pendingArrivalAction: (@MainActor () -> Void)?
+
+    private var currentPlayerGridPosition: SIMD2<Int>? {
+        objectEntities[player.objectID]?.components[GridPositionComponent.self]?.position
+    }
+
     init(
         mapName: String,
         world: WorldResource,
@@ -139,15 +145,61 @@ public final class RealityMapScene: GameMapScene {
         case .ground(let position):
             selectGround(at: position)
         case .mapObject(let objectID):
-            gameSession?.requestAction(._repeat, onTarget: objectID)
+            handleMapObjectInteraction(objectID: objectID)
         case .mapItem(let objectID):
-            gameSession?.pickUpItem(objectID: objectID)
+            handleMapItemInteraction(objectID: objectID)
         }
     }
 
     func selectGround(at position: SIMD2<Int>) {
+        pendingArrivalAction = nil
         tileSelectionRenderer.showSelection(at: position, in: mapGrid)
         gameSession?.requestMove(to: position)
+    }
+
+    private func handleMapObjectInteraction(objectID: GameObjectID) {
+        guard let entity = objectEntities[objectID],
+              let object = entity.components[MapObjectComponent.self]?.object else {
+            return
+        }
+
+        switch object.type {
+        case .monster:
+            guard let targetPosition = entity.components[GridPositionComponent.self]?.position else {
+                return
+            }
+            movePlayerToward(targetPosition: targetPosition, within: 1) {
+                self.gameSession?.requestAction(._repeat, onTarget: objectID)
+            }
+        case .npc:
+            gameSession?.talkToNPC(npcID: objectID)
+        default:
+            break
+        }
+    }
+
+    private func handleMapItemInteraction(objectID: GameObjectID) {
+        guard let entity = itemEntities[objectID],
+              let targetPosition = entity.components[GridPositionComponent.self]?.position else {
+            gameSession?.pickUpItem(objectID: objectID)
+            return
+        }
+
+        movePlayerToward(targetPosition: targetPosition, within: 1) {
+            self.gameSession?.pickUpItem(objectID: objectID)
+        }
+    }
+
+    private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
+        let startPosition = currentPlayerGridPosition ?? playerPosition
+        let path = pathFinder.findPath(from: startPosition, to: targetPosition, within: range)
+
+        if path == [startPosition] {
+            onArrival()
+        } else if path.count > 1 {
+            pendingArrivalAction = onArrival
+            gameSession?.requestMove(to: path.last ?? targetPosition)
+        }
     }
 
     private func setupWorldCamera(target: Entity) {
@@ -351,6 +403,11 @@ extension RealityMapScene {
 
         let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
         entity.playSpriteAnimation(.idle, direction: direction)
+
+        if objectID == player.objectID, let action = pendingArrivalAction {
+            pendingArrivalAction = nil
+            action()
+        }
     }
 
     func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
