@@ -12,10 +12,6 @@ import WorldCamera
 class SpriteActionSystem: System {
     static let query = EntityQuery(where: .has(SpriteAnimationLibraryComponent.self) && .has(SpriteActionComponent.self))
 
-    static var dependencies: [SystemDependency] {
-        [.after(MapSceneObjectPresentationSystem.self)]
-    }
-
     required init(scene: Scene) {
     }
 

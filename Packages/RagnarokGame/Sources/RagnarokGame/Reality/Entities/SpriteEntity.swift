@@ -187,7 +187,7 @@ extension Entity {
             return
         }
 
-        guard let object = components[MapSceneObjectComponent.self]?.object,
+        guard let object = components[MapObjectComponent.self]?.object,
               let animations = spriteEntity.components[SpriteAnimationLibraryComponent.self]?.animations else {
             return
         }
@@ -214,7 +214,7 @@ extension Entity {
                 }
 
                 let actionAnimation = try AnimationResource.makeActionAnimation(with: animation, duration: duration) {
-                    self.components[MapSceneObjectComponent.self]?.gridPosition = targetPosition
+                    self.components[GridPositionComponent.self]?.position = targetPosition
                     if i == path.count - 1 {
                         self.playSpriteAnimation(.idle, direction: direction)
                     }

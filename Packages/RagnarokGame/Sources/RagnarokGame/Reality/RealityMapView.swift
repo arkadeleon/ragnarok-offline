@@ -65,22 +65,4 @@ private extension RealityMapView {
     }
 }
 
-#else
-
-public struct RealityMapView: View {
-    var scene: MapScene
-
-    public var body: some View {
-        if let backend = scene.renderBackend as? RealityRenderBackend {
-            RealityVirtualMapView(scene: scene, backend: backend)
-        } else {
-            EmptyView()
-        }
-    }
-
-    public init(scene: MapScene) {
-        self.scene = scene
-    }
-}
-
 #endif
