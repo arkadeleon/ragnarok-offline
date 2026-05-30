@@ -66,7 +66,11 @@ final public class GameSession {
 
     public enum MapPhase {
         case loading(_ progress: Progress)
-        case loaded(_ scene: MapScene)
+        #if os(visionOS)
+        case loaded(_ scene: RealityMapScene)
+        #else
+        case loaded(_ scene: MetalMapScene)
+        #endif
     }
 
     public private(set) var phase: GameSession.Phase = .login(.login)
@@ -120,13 +124,23 @@ final public class GameSession {
     @ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?
     @ObservationIgnored var currentMapServer: MapServerInfo?
 
-    public var mapScene: MapScene? {
+    #if os(visionOS)
+    public var mapScene: RealityMapScene? {
         if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
             scene
         } else {
             nil
         }
     }
+    #else
+    public var mapScene: MetalMapScene? {
+        if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
+            scene
+        } else {
+            nil
+        }
+    }
+    #endif
 
     public var mapSceneState: MapSceneState? {
         mapScene?.state

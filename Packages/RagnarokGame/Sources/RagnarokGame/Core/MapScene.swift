@@ -22,8 +22,7 @@ private enum MapMovementDecision {
     case noPath
 }
 
-@MainActor
-public final class MapScene {
+public final class MapScene: GameMapScene {
     let mapName: String
     let world: WorldResource
     let character: CharacterInfo
