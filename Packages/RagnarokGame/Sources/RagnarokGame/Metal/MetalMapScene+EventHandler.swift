@@ -20,26 +20,32 @@ extension MetalMapScene {
             return
         }
 
+        let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
+
         switch sp {
         case .hp:
             let hp = Int(packet.count)
             state.player.hp = hp
             state.overlay.gauges[player.objectID]?.hp = hp
+            playerObject?.hp = hp
             renderBackend.updateObject(state.player)
         case .maxhp:
             let maxHp = Int(packet.count)
             state.player.maxHp = maxHp
             state.overlay.gauges[player.objectID]?.maxHp = maxHp
+            playerObject?.maxHp = maxHp
             renderBackend.updateObject(state.player)
         case .sp:
             let sp = Int(packet.count)
             state.player.sp = sp
             state.overlay.gauges[player.objectID]?.sp = sp
+            playerObject?.sp = sp
             renderBackend.updateObject(state.player)
         case .maxsp:
             let maxSp = Int(packet.count)
             state.player.maxSp = maxSp
             state.overlay.gauges[player.objectID]?.maxSp = maxSp
+            playerObject?.maxSp = maxSp
             renderBackend.updateObject(state.player)
         default:
             break
@@ -49,6 +55,9 @@ extension MetalMapScene {
     func onPlayerHealthPointsRecovered(hp: Int, amount: Int) {
         state.player.hp = hp
         state.overlay.gauges[player.objectID]?.hp = hp
+
+        let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
+        playerObject?.hp = hp
 
         renderBackend.updateObject(state.player)
 
@@ -65,6 +74,9 @@ extension MetalMapScene {
     func onPlayerSpellPointsRecovered(sp: Int, amount: Int) {
         state.player.sp = sp
         state.overlay.gauges[player.objectID]?.sp = sp
+
+        let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
+        playerObject?.sp = sp
 
         renderBackend.updateObject(state.player)
 
@@ -113,6 +125,11 @@ extension MetalMapScene {
             renderBackend.updateObject(object)
         }
 
+        if let metalObject = objectRegistry.object(for: objectID) {
+            metalObject.hp = hp
+            metalObject.maxHp = maxHp
+        }
+
         state.overlay.gauges[objectID]?.hp = hp
         state.overlay.gauges[objectID]?.maxHp = maxHp
     }
@@ -124,6 +141,10 @@ extension MetalMapScene {
             maxHp: object.maxHp
         )
         state.objects[object.objectID] = sceneObject
+
+        let metalObject = MetalMapObject.make(object: object, hp: object.hp, maxHp: object.maxHp, gridPosition: position)
+        objectRegistry.add(metalObject)
+
         renderBackend.addObject(
             sceneObject,
             at: position,
@@ -151,6 +172,10 @@ extension MetalMapScene {
                 maxHp: object.maxHp
             )
             state.objects[object.objectID] = sceneObject
+
+            let metalObject = MetalMapObject.make(object: object, hp: object.hp, maxHp: object.maxHp, gridPosition: endPosition)
+            objectRegistry.add(metalObject)
+
             renderBackend.addObject(
                 sceneObject,
                 at: startPosition,
@@ -166,6 +191,8 @@ extension MetalMapScene {
                     objectType: object.type
                 )
             }
+        } else {
+            objectRegistry.object(for: object.objectID)?.gridPosition = endPosition
         }
 
         _ = renderBackend.moveObject(
@@ -179,6 +206,8 @@ extension MetalMapScene {
         if state.objects[objectID] != nil {
             renderBackend.stopObject(objectID: objectID, at: position)
         }
+
+        objectRegistry.object(for: objectID)?.gridPosition = position
 
         if objectID == state.playerID, let action = pendingArrivalAction {
             arrivalTask?.cancel()
@@ -201,6 +230,7 @@ extension MetalMapScene {
         default:
             state.objects.removeValue(forKey: objectID)
             state.overlay.gauges.removeValue(forKey: objectID)
+            objectRegistry.remove(objectID: objectID)
             renderBackend.removeObject(objectID: objectID)
         }
     }
@@ -233,6 +263,12 @@ extension MetalMapScene {
             object.effectState = effectState
             state.objects[objectID] = object
             renderBackend.updateObject(object)
+        }
+
+        if let metalObject = objectRegistry.object(for: objectID) {
+            metalObject.bodyState = bodyState
+            metalObject.healthState = healthState
+            metalObject.effectState = effectState
         }
 
         if isVisible {
@@ -289,6 +325,33 @@ extension MetalMapScene {
 
         state.objects[objectID] = object
         renderBackend.updateObject(object)
+
+        if let metalObject = objectRegistry.object(for: objectID) {
+            switch look {
+            case .base:
+                metalObject.job = Int(packet.val)
+            case .hair:
+                metalObject.hairStyle = Int(packet.val)
+            case .weapon:
+                metalObject.weapon = Int(packet.val)
+                metalObject.shield = Int(packet.val2)
+            case .head_bottom:
+                metalObject.headBottom = Int(packet.val)
+            case .head_top:
+                metalObject.headTop = Int(packet.val)
+            case .head_mid:
+                metalObject.headMid = Int(packet.val)
+            case .hair_color:
+                metalObject.hairColor = Int(packet.val)
+            case .clothes_color:
+                metalObject.clothesColor = Int(packet.val)
+            case .shield:
+                metalObject.shield = Int(packet.val)
+            case .robe:
+                metalObject.garment = Int(packet.val)
+            default: break
+            }
+        }
     }
 
     func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -390,12 +453,15 @@ extension MetalMapScene {
             gridPosition: position
         )
 
+        let metalItem = MetalMapItem(item: item, gridPosition: position)
+        itemRegistry.add(metalItem)
+
         renderBackend.addItem(state.items[item.objectID]!)
     }
 
     func onItemVanished(objectID: GameObjectID) {
         state.items.removeValue(forKey: objectID)
-
+        itemRegistry.remove(objectID: objectID)
         renderBackend.removeItem(objectID: objectID)
     }
 

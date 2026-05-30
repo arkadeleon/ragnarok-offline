@@ -37,6 +37,9 @@ public final class MetalMapScene: GameMapScene {
     let mapGrid: MapGrid
     let state: MapSceneState
 
+    let objectRegistry = MetalMapObjectRegistry()
+    let itemRegistry = MetalMapItemRegistry()
+
     let pathFinder: PathFinder
 
     var pendingArrivalAction: (@MainActor () -> Void)?
@@ -78,6 +81,16 @@ public final class MetalMapScene: GameMapScene {
         self.state = MapSceneState(player: playerObject)
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
+
+        let metalPlayer = MetalPlayerObject(
+            object: player,
+            hp: character.hp,
+            maxHp: character.maxHp,
+            sp: character.sp,
+            maxSp: character.maxSp,
+            gridPosition: playerPosition
+        )
+        objectRegistry.add(metalPlayer)
 
         state.overlay.gauges[player.objectID] = MapGaugeOverlay(
             id: player.objectID,
@@ -130,31 +143,12 @@ public final class MetalMapScene: GameMapScene {
         cameraState.elevation = .pi / 4
     }
 
-    private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneObject? {
-        state.objects.values
-            .filter { $0.type == type }
-            .compactMap { object -> (object: MapSceneObject, position: SIMD2<Int>)? in
-                guard let objectPosition = renderBackend.gridPosition(for: object.objectID) else {
-                    return nil
-                }
-                return (object, objectPosition)
-            }
-            .min {
-                distanceSquared($0.position, to: position) < distanceSquared($1.position, to: position)
-            }?.object
+    private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MetalMapObject? {
+        objectRegistry.nearestObject(ofType: type, fromPosition: position)
     }
 
-    private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneItem? {
-        state.items.values
-            .min {
-                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
-            }
-    }
-
-    private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
-        let dx = a.x - b.x
-        let dy = a.y - b.y
-        return dx * dx + dy * dy
+    private func nearestItem(fromPosition position: SIMD2<Int>) -> MetalMapItem? {
+        itemRegistry.nearestItem(fromPosition: position)
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
@@ -237,7 +231,7 @@ public final class MetalMapScene: GameMapScene {
     }
 
     private func handleMapObjectSelection(objectID: GameObjectID) {
-        guard let target = state.objects[objectID] else {
+        guard let target = objectRegistry.object(for: objectID) else {
             return
         }
 
@@ -251,7 +245,7 @@ public final class MetalMapScene: GameMapScene {
         }
     }
 
-    private func engageMonster(_ target: MapSceneObject) {
+    private func engageMonster(_ target: MetalMapObject) {
         guard let targetPosition = renderBackend.gridPosition(for: target.objectID) else {
             return
         }
@@ -260,7 +254,7 @@ public final class MetalMapScene: GameMapScene {
         }
     }
 
-    private func engageMonster(_ target: MapSceneObject, skill: SkillInfo) {
+    private func engageMonster(_ target: MetalMapObject, skill: SkillInfo) {
         guard let targetPosition = renderBackend.gridPosition(for: target.objectID) else {
             return
         }
@@ -282,7 +276,7 @@ public final class MetalMapScene: GameMapScene {
         }
     }
 
-    private func engageItem(_ target: MapSceneItem) {
+    private func engageItem(_ target: MetalMapItem) {
         movePlayerToward(targetPosition: target.gridPosition, within: 1) {
             self.gameSession?.pickUpItem(objectID: target.objectID)
         }
