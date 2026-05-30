@@ -22,8 +22,6 @@ final public class GameSession {
     public let windowID = "Game"
     public let immersiveSpaceID = "Game"
 
-    public let renderConfiguration: GameRenderConfiguration = .default
-
     let resourceManager: ResourceManager
 
     let itemInfoTable: ItemInfoTable
@@ -733,7 +731,11 @@ final public class GameSession {
 
                 let player = MapObject(account: account, character: character)
 
-                let renderBackend = try renderConfiguration.makeBackend(resourceManager: resourceManager)
+                #if os(visionOS)
+                let renderBackend = RealityRenderBackend(resourceManager: resourceManager)
+                #else
+                let renderBackend = try MetalRenderBackend(resourceManager: resourceManager)
+                #endif
 
                 let scene = MapScene(
                     mapName: mapName,
@@ -1326,16 +1328,3 @@ extension GameSession {
     }
 }
 
-// MARK: - Render Backend
-
-extension GameRenderConfiguration {
-    @MainActor
-    func makeBackend(resourceManager: ResourceManager) throws -> any GameRenderBackend {
-        switch engine {
-        case .metal:
-            try MetalRenderBackend(resourceManager: resourceManager)
-        case .realityKit:
-            RealityRenderBackend(resourceManager: resourceManager)
-        }
-    }
-}
