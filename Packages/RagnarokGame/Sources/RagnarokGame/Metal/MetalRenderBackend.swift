@@ -20,8 +20,9 @@ struct MetalMapObjectState {
     var movement: MapObjectMovementState?
 }
 
-final class MetalRenderBackend: GameRenderBackend {
-    private(set) weak var scene: MapScene?
+@MainActor
+final class MetalRenderBackend {
+    private(set) weak var scene: MetalMapScene?
 
     let resourceManager: ResourceManager
     let renderer: MetalMapRenderer
@@ -44,7 +45,7 @@ final class MetalRenderBackend: GameRenderBackend {
         self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
     }
 
-    func attach(scene: MapScene) {
+    func attach(scene: MetalMapScene) {
         self.scene = scene
     }
 
@@ -279,7 +280,7 @@ final class MetalRenderBackend: GameRenderBackend {
         }
     }
 
-    private func prepareRenderResources(scene: MapScene, progress: Progress) async throws {
+    private func prepareRenderResources(scene: MetalMapScene, progress: Progress) async throws {
         let worldAssetLoader = WorldAssetLoader()
         let worldAsset = try await worldAssetLoader.load(
             gat: scene.world.gat,
@@ -433,7 +434,7 @@ final class MetalRenderBackend: GameRenderBackend {
         }
     }
 
-    private func fallbackWorldPosition(for objectID: GameObjectID, scene: MapScene) -> SIMD3<Float>? {
+    private func fallbackWorldPosition(for objectID: GameObjectID, scene: MetalMapScene) -> SIMD3<Float>? {
         if let gridPosition = objectStates[objectID]?.gridPosition {
             return scene.mapGrid.worldPosition(for: gridPosition)
         } else {

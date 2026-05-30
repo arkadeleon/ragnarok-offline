@@ -11,13 +11,10 @@ import SwiftUI
 #if canImport(UIKit)
 
 struct MetalMapView: UIViewControllerRepresentable {
-    var scene: MapScene
+    var scene: MetalMapScene
 
     func makeUIViewController(context: Context) -> MetalMapViewController {
-        guard let backend = scene.renderBackend as? MetalRenderBackend else {
-            preconditionFailure("scene.renderBackend must be a MetalRenderBackend.")
-        }
-        return MetalMapViewController(scene: scene, backend: backend)
+        MetalMapViewController(scene: scene)
     }
 
     func updateUIViewController(_ viewController: MetalMapViewController, context: Context) {
@@ -26,7 +23,7 @@ struct MetalMapView: UIViewControllerRepresentable {
 }
 
 final class MetalMapViewController: UIViewController, MTKViewDelegate {
-    private weak var scene: MapScene?
+    private weak var scene: MetalMapScene?
     private let backend: MetalRenderBackend
     private let commandQueue: any MTLCommandQueue
     private let renderer: MetalMapRenderer
@@ -36,9 +33,9 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
 
-    init(scene: MapScene, backend: MetalRenderBackend) {
+    init(scene: MetalMapScene) {
         self.scene = scene
-        self.backend = backend
+        self.backend = scene.renderBackend
         self.renderer = backend.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
             fatalError("MetalMapViewController: failed to create Metal command queue")
@@ -81,7 +78,7 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         mtkView.addGestureRecognizer(pinchGestureRecognizer)
     }
 
-    func update(scene: MapScene) {
+    func update(scene: MetalMapScene) {
         self.scene = scene
     }
 
@@ -184,13 +181,10 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
 #elseif canImport(AppKit)
 
 struct MetalMapView: NSViewControllerRepresentable {
-    var scene: MapScene
+    var scene: MetalMapScene
 
     func makeNSViewController(context: Context) -> MetalMapViewController {
-        guard let backend = scene.renderBackend as? MetalRenderBackend else {
-            preconditionFailure("scene.renderBackend must be a MetalRenderBackend.")
-        }
-        return MetalMapViewController(scene: scene, backend: backend)
+        MetalMapViewController(scene: scene)
     }
 
     func updateNSViewController(_ viewController: MetalMapViewController, context: Context) {
@@ -199,7 +193,7 @@ struct MetalMapView: NSViewControllerRepresentable {
 }
 
 final class MetalMapViewController: NSViewController, MTKViewDelegate {
-    private weak var scene: MapScene?
+    private weak var scene: MetalMapScene?
     private let backend: MetalRenderBackend
     private let commandQueue: any MTLCommandQueue
     private let renderer: MetalMapRenderer
@@ -209,9 +203,9 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
 
-    init(scene: MapScene, backend: MetalRenderBackend) {
+    init(scene: MetalMapScene) {
         self.scene = scene
-        self.backend = backend
+        self.backend = scene.renderBackend
         self.renderer = backend.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
             fatalError("MetalMapViewController: failed to create Metal command queue")
@@ -242,7 +236,7 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
         mtkView.addGestureRecognizer(magnificationGestureRecognizer)
     }
 
-    func update(scene: MapScene) {
+    func update(scene: MetalMapScene) {
         self.scene = scene
     }
 

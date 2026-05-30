@@ -1,9 +1,11 @@
 //
-//  MapScene+EventHandler.swift
+//  MetalMapScene+EventHandler.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2026/4/20.
+//  Created by Leon Li on 2026/5/30.
 //
+
+#if !os(visionOS)
 
 import Foundation
 import RagnarokConstants
@@ -12,7 +14,7 @@ import RagnarokPackets
 import RagnarokSprite
 import simd
 
-extension MapScene {
+extension MetalMapScene {
     func onPlayerParameterChanged(_ packet: PACKET_ZC_PAR_CHANGE) {
         guard let sp = StatusProperty(rawValue: Int(packet.varID)) else {
             return
@@ -420,7 +422,7 @@ extension MapScene {
     }
 }
 
-extension MapScene {
+extension MetalMapScene {
     private func afterAttackAction(for object: MapSceneObject?) -> SpriteActionType {
         guard let object else {
             return .idle
@@ -608,3 +610,5 @@ extension MapScene {
         }
     }
 }
+
+#endif

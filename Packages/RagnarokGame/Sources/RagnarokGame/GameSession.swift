@@ -746,14 +746,12 @@ final public class GameSession {
                     gameSession: self
                 )
                 #else
-                let renderBackend = try MetalRenderBackend(resourceManager: resourceManager)
-                let scene = MapScene(
+                let scene = try MetalMapScene(
                     mapName: mapName,
                     world: world,
                     character: character,
                     player: player,
                     playerPosition: position,
-                    renderBackend: renderBackend,
                     resourceManager: resourceManager,
                     gameSession: self
                 )

@@ -1,9 +1,11 @@
 //
-//  MapScene.swift
+//  MetalMapScene.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2025/3/27.
+//  Created by Leon Li on 2026/5/30.
 //
+
+#if !os(visionOS)
 
 import CoreGraphics
 import Foundation
@@ -22,15 +24,15 @@ private enum MapMovementDecision {
     case noPath
 }
 
-public final class MapScene: GameMapScene {
+public final class MetalMapScene: GameMapScene {
     let mapName: String
     let world: WorldResource
     let character: CharacterInfo
     let player: MapObject
     let playerPosition: SIMD2<Int>
-    let renderBackend: any GameRenderBackend
+    let renderBackend: MetalRenderBackend
     let resourceManager: ResourceManager
-    weak let gameSession: GameSession?
+    weak var gameSession: GameSession?
 
     let mapGrid: MapGrid
     let state: MapSceneState
@@ -52,16 +54,15 @@ public final class MapScene: GameMapScene {
         character: CharacterInfo,
         player: MapObject,
         playerPosition: SIMD2<Int>,
-        renderBackend: any GameRenderBackend,
         resourceManager: ResourceManager,
         gameSession: GameSession
-    ) {
+    ) throws {
         self.mapName = mapName
         self.world = world
         self.character = character
         self.player = player
         self.playerPosition = playerPosition
-        self.renderBackend = renderBackend
+        self.renderBackend = try MetalRenderBackend(resourceManager: resourceManager)
         self.resourceManager = resourceManager
         self.gameSession = gameSession
 
@@ -312,3 +313,5 @@ public final class MapScene: GameMapScene {
         }
     }
 }
+
+#endif
