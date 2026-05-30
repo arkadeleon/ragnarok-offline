@@ -1,22 +1,19 @@
 //
-//  MapView.swift
+//  MetalMapScreen.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2025/3/30.
+//  Created by Leon Li on 2026/5/30.
 //
+
+#if !os(visionOS)
 
 import SwiftUI
 import ThumbstickView
 
-struct MapView: View {
-    var scene: MapScene
+struct MetalMapScreen: View {
+    var scene: MetalMapScene
 
     @Environment(GameSession.self) private var gameSession
-
-    #if os(visionOS)
-    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
-    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
-    #endif
 
     @State private var screenWidth: CGFloat = 320
     @State private var chatBoxOffsetY: CGFloat = 0
@@ -27,14 +24,10 @@ struct MapView: View {
 
     var body: some View {
         ZStack {
-            #if os(visionOS)
-            MapRenderHost(scene: scene, configuration: gameSession.renderConfiguration)
-            #else
-            MapRenderHost(scene: scene, configuration: gameSession.renderConfiguration)
+            MetalMapView(scene: scene)
                 .overlay {
                     MapOverlayView(overlay: scene.state.overlay)
                 }
-            #endif
         }
         .overlay(alignment: .bottomLeading) {
             ThumbstickView(updatingValue: $movementValue, radius: 72)
@@ -148,18 +141,6 @@ struct MapView: View {
         } action: { containerWidth in
             self.screenWidth = containerWidth
         }
-        #if os(visionOS)
-        .onAppear {
-            Task {
-                await openImmersiveSpace(id: gameSession.immersiveSpaceID)
-            }
-        }
-        .onDisappear {
-            Task {
-                await dismissImmersiveSpace()
-            }
-        }
-        #endif
     }
 
     private var isUltraWidescreen: Bool {
@@ -180,3 +161,5 @@ struct MapView: View {
         }
     }
 }
+
+#endif
