@@ -65,7 +65,7 @@ final public class GameSession {
     public enum MapPhase {
         case loading(_ progress: Progress)
         #if os(visionOS)
-        case loaded(_ scene: RealityMapScene)
+        case loaded(_ scene: MapScene)
         #else
         case loaded(_ scene: MetalMapScene)
         #endif
@@ -123,7 +123,7 @@ final public class GameSession {
     @ObservationIgnored var currentMapServer: MapServerInfo?
 
     #if os(visionOS)
-    public var mapScene: RealityMapScene? {
+    public var mapScene: MapScene? {
         if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
             scene
         } else {
