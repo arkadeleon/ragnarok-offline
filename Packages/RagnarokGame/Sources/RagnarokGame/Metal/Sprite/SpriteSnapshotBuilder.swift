@@ -12,7 +12,6 @@ import RagnarokSprite
 @MainActor
 final class SpriteSnapshotBuilder {
     func build(
-        objects: inout [GameObjectID : MetalMapObjectState],
         items: [GameObjectID : MapSceneItem],
         scene: MetalMapScene
     ) -> [GameObjectID : SpriteSnapshot] {
@@ -20,19 +19,22 @@ final class SpriteSnapshotBuilder {
 
         var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
-        for objectID in Array(objects.keys) {
-            guard var objectState = objects[objectID] else {
-                continue
+        for object in scene.objectRegistry.objects.values {
+            object.animationController.update(at: now)
+            object.movementController.update(at: now)
+            if let movement = object.movementController.movement {
+                object.gridPosition = movement.currentPosition
             }
-
-            objectState.animation.update(atTime: now)
-            if var movement = objectState.movement {
-                movement.update(atTime: now)
-                objectState.gridPosition = movement.currentPosition
-                objectState.movement = movement
+            let worldPosition: SIMD3<Float>
+            if let movement = object.movementController.movement,
+               movement.isMoving,
+               let movementWorldPosition = movement.worldPosition {
+                worldPosition = movementWorldPosition
+            } else {
+                worldPosition = scene.mapGrid.worldPosition(for: object.gridPosition)
             }
-            snapshots[objectID] = snapshot(for: objectState, now: now, scene: scene)
-            objects[objectID] = objectState
+            object.presentation.worldPosition = worldPosition
+            snapshots[object.objectID] = snapshot(for: object, worldPosition: worldPosition, scene: scene)
         }
 
         for (objectID, item) in items {
@@ -42,19 +44,11 @@ final class SpriteSnapshotBuilder {
         return snapshots
     }
 
-    private func snapshot(for objectState: MetalMapObjectState, now: ContinuousClock.Instant, scene: MetalMapScene) -> SpriteSnapshot {
-        let object = objectState.object
-        let movement = objectState.movement
-        let worldPosition = if let movement, movement.isMoving, let movementWorldPosition = movement.worldPosition {
-            movementWorldPosition
-        } else {
-            scene.mapGrid.worldPosition(for: objectState.gridPosition)
-        }
-
+    private func snapshot(for object: MetalMapObject, worldPosition: SIMD3<Float>, scene: MetalMapScene) -> SpriteSnapshot {
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
-        var animation = objectState.animation
-        if let movement, movement.isMoving {
+        var animation = object.animationController.animation
+        if let movement = object.movementController.movement, movement.isMoving {
             animation.action = .walk
             animation.direction = movement.direction ?? animation.direction
             animation.elapsedTime = movement.animationElapsedTime

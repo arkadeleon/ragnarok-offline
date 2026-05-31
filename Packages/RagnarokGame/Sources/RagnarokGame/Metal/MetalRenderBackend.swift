@@ -13,13 +13,6 @@ import RagnarokResources
 import RagnarokSprite
 import simd
 
-struct MetalMapObjectState {
-    var object: MapSceneObject
-    var gridPosition: SIMD2<Int>
-    var animation: MapObjectAnimationState
-    var movement: MapObjectMovementState?
-}
-
 @MainActor
 final class MetalRenderBackend {
     private(set) weak var scene: MetalMapScene?
@@ -35,7 +28,6 @@ final class MetalRenderBackend {
     private var effectAssetStore: EffectAssetStore?
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
-    private var objectStates: [GameObjectID : MetalMapObjectState] = [:]
     private var itemStates: [GameObjectID : MapSceneItem] = [:]
     private var cameraState: MapCameraState = .default
 
@@ -80,63 +72,47 @@ final class MetalRenderBackend {
         updateCameraTarget()
     }
 
-    func addObject(_ object: MapSceneObject, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        let animation = MapObjectAnimationState(
-            action: .idle,
-            direction: direction,
-            headDirection: headDirection,
-            startTime: .now,
-            completion: .indefinite
-        )
-        objectStates[object.objectID] = MetalMapObjectState(
-            object: object,
-            gridPosition: gridPosition,
-            animation: animation,
-            movement: nil
-        )
-        refreshSpriteDrawables()
-    }
-
-    func updateObject(_ object: MapSceneObject) {
-        guard var objectState = objectStates[object.objectID] else {
+    func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+        guard let object = scene?.objectRegistry.object(for: objectID) else {
             return
         }
-
-        objectState.object = object
-        objectStates[object.objectID] = objectState
+        object.gridPosition = gridPosition
+        object.animationController.perform(.idle, completion: .indefinite)
+        object.animationController.turn(direction: direction, headDirection: headDirection)
+        if let mapGrid = scene?.mapGrid {
+            object.presentation.worldPosition = mapGrid.worldPosition(for: gridPosition)
+        }
         refreshSpriteDrawables()
     }
 
-    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovementState? {
-        let now = ContinuousClock.now
+    func updateObject(objectID: GameObjectID) {
+        guard scene?.objectRegistry.object(for: objectID) != nil else {
+            return
+        }
+        refreshSpriteDrawables()
+    }
 
-        guard let scene, var objectState = objectStates[objectID] else {
+    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MetalMovement? {
+        guard let scene, let object = scene.objectRegistry.object(for: objectID) else {
             return nil
         }
 
-        let speed = objectState.object.speed
-        let planner = MapObjectMovementPlanner(pathFinder: scene.pathFinder)
-        var movement = planner.replan(
-            existingMovement: objectState.movement,
-            incomingStartPosition: startPosition,
-            incomingEndPosition: endPosition,
-            speed: speed,
+        let now = ContinuousClock.now
+        let movement = object.movementController.replan(
+            startPosition: startPosition,
+            endPosition: endPosition,
+            speed: object.speed,
             at: now
         )
-        movement.updateWorldPath { scene.mapGrid.worldPosition(for: $0) }
-        movement.update(atTime: now)
 
+        object.gridPosition = movement.currentPosition
         let remainingDuration = movement.remainingDuration(at: now)
-        objectState.gridPosition = movement.currentPosition
-        objectState.animation = MapObjectAnimationState(
-            action: .walk,
-            direction: movement.finalDirection,
-            headDirection: objectState.animation.headDirection,
-            startTime: now,
-            completion: .after(remainingDuration, settledAction: .idle)
+        object.animationController.perform(
+            .walk,
+            completion: .after(remainingDuration, settledAction: .idle),
+            at: now
         )
-        objectState.movement = movement
-        objectStates[objectID] = objectState
+        object.animationController.setDirection(movement.finalDirection)
 
         refreshSpriteDrawables()
         if objectID == scene.state.playerID {
@@ -147,13 +123,10 @@ final class MetalRenderBackend {
     }
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
-        if var objectState = objectStates[objectID] {
-            objectState.gridPosition = position
-            objectState.animation.action = .idle
-            objectState.animation.startTime = .now
-            objectState.animation.completion = .indefinite
-            objectState.movement = nil
-            objectStates[objectID] = objectState
+        if let object = scene?.objectRegistry.object(for: objectID) {
+            object.gridPosition = position
+            object.movementController.stop()
+            object.animationController.perform(.idle, completion: .indefinite)
         }
 
         refreshSpriteDrawables()
@@ -163,40 +136,34 @@ final class MetalRenderBackend {
     }
 
     func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        guard var objectState = objectStates[objectID] else {
+        guard let object = scene?.objectRegistry.object(for: objectID) else {
             return
         }
 
-        objectState.animation.direction = direction
-        objectState.animation.headDirection = headDirection
-        objectStates[objectID] = objectState
+        object.animationController.turn(direction: direction, headDirection: headDirection)
         refreshSpriteDrawables()
     }
 
-    func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MapObjectAnimationCompletion) {
-        guard var objectState = objectStates[objectID] else {
+    func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MetalAnimationCompletion) {
+        guard let object = scene?.objectRegistry.object(for: objectID) else {
             return
         }
 
-        objectState.animation.action = action
-        objectState.animation.startTime = .now
-        objectState.animation.completion = completion
-        objectStates[objectID] = objectState
+        object.animationController.perform(action, completion: completion)
         refreshSpriteDrawables()
     }
 
     func removeObject(objectID: GameObjectID) {
-        objectStates.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
     }
 
     func gridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        objectStates[objectID]?.gridPosition
+        scene?.objectRegistry.object(for: objectID)?.gridPosition
     }
 
     func nextGridPosition(for objectID: GameObjectID) -> SIMD2<Int>? {
-        objectStates[objectID]?.movement?.nextPosition(at: .now)
+        scene?.objectRegistry.object(for: objectID)?.movementController.nextPosition(at: .now)
     }
 
     func addItem(_ item: MapSceneItem) {
@@ -240,7 +207,6 @@ final class MetalRenderBackend {
         }
 
         let snapshots = spriteSnapshotBuilder.build(
-            objects: &objectStates,
             items: itemStates,
             scene: scene
         )
@@ -253,9 +219,12 @@ final class MetalRenderBackend {
             return
         }
 
-        let targetPosition = spriteSnapshots[scene.state.playerID]?.worldPosition
-            ?? gridPosition(for: scene.state.playerID).map { scene.mapGrid.worldPosition(for: $0) }
-            ?? scene.mapGrid.worldPosition(for: scene.playerPosition)
+        let targetPosition: SIMD3<Float>
+        if let player = scene.objectRegistry.object(for: scene.state.playerID) {
+            targetPosition = player.presentation.worldPosition
+        } else {
+            targetPosition = scene.mapGrid.worldPosition(for: scene.playerPosition)
+        }
         renderer.updateCamera(
             cameraState: cameraState,
             targetPosition: targetPosition
@@ -268,10 +237,10 @@ final class MetalRenderBackend {
         }
 
         for objectID in scene.state.overlay.gauges.keys {
-            guard var worldPosition = spriteSnapshots[objectID]?.worldPosition else {
+            guard let object = scene.objectRegistry.object(for: objectID) else {
                 continue
             }
-
+            var worldPosition = object.presentation.worldPosition
             worldPosition += [0, -0.8, 0]
             scene.state.overlay.gauges[objectID]?.worldPosition = worldPosition
 
@@ -338,7 +307,6 @@ final class MetalRenderBackend {
         spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
-        objectStates.removeAll()
         itemStates.removeAll()
         combatTextSpriteSet = nil
         for task in effectLoadTasks.values {
@@ -435,8 +403,8 @@ final class MetalRenderBackend {
     }
 
     private func fallbackWorldPosition(for objectID: GameObjectID, scene: MetalMapScene) -> SIMD3<Float>? {
-        if let gridPosition = objectStates[objectID]?.gridPosition {
-            return scene.mapGrid.worldPosition(for: gridPosition)
+        if let object = scene.objectRegistry.object(for: objectID) {
+            return object.presentation.worldPosition
         } else {
             return nil
         }

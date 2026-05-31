@@ -9,6 +9,7 @@
 
 import RagnarokConstants
 import RagnarokModels
+import RagnarokSprite
 import simd
 
 @MainActor
@@ -35,7 +36,20 @@ public class MetalMapObject {
     public var effectState: StatusChangeOption
     public var gridPosition: SIMD2<Int>
 
-    init(object: MapObject, hp: Int, maxHp: Int, gridPosition: SIMD2<Int>) {
+    public let animationController: MetalAnimationController
+    public let movementController: MetalMovementController
+    public let presentation: MetalObjectPresentation
+
+    init(
+        object: MapObject,
+        hp: Int,
+        maxHp: Int,
+        gridPosition: SIMD2<Int>,
+        mapGrid: MapGrid,
+        pathFinder: PathFinder,
+        direction: SpriteDirection = .south,
+        headDirection: SpriteHeadDirection = .lookForward
+    ) {
         objectID = object.objectID
         type = object.type
         name = object.name
@@ -57,16 +71,60 @@ public class MetalMapObject {
         healthState = object.healthState
         effectState = object.effectState
         self.gridPosition = gridPosition
+
+        animationController = MetalAnimationController(direction: direction, headDirection: headDirection)
+        movementController = MetalMovementController(pathFinder: pathFinder, mapGrid: mapGrid)
+        presentation = MetalObjectPresentation(worldPosition: mapGrid.worldPosition(for: gridPosition))
     }
 
-    static func make(object: MapObject, hp: Int, maxHp: Int, sp: Int = 0, maxSp: Int = 0, gridPosition: SIMD2<Int>) -> MetalMapObject {
+    static func make(
+        object: MapObject,
+        hp: Int,
+        maxHp: Int,
+        sp: Int = 0,
+        maxSp: Int = 0,
+        gridPosition: SIMD2<Int>,
+        mapGrid: MapGrid,
+        pathFinder: PathFinder,
+        direction: SpriteDirection = .south,
+        headDirection: SpriteHeadDirection = .lookForward
+    ) -> MetalMapObject {
         switch object.type {
         case .pc:
-            return MetalPlayerObject(object: object, hp: hp, maxHp: maxHp, sp: sp, maxSp: maxSp, gridPosition: gridPosition)
+            MetalPlayerObject(
+                object: object,
+                hp: hp,
+                maxHp: maxHp,
+                sp: sp,
+                maxSp: maxSp,
+                gridPosition: gridPosition,
+                mapGrid: mapGrid,
+                pathFinder: pathFinder,
+                direction: direction,
+                headDirection: headDirection
+            )
         case .monster:
-            return MetalMonsterObject(object: object, hp: hp, maxHp: maxHp, gridPosition: gridPosition)
+            MetalMonsterObject(
+                object: object,
+                hp: hp,
+                maxHp: maxHp,
+                gridPosition: gridPosition,
+                mapGrid: mapGrid,
+                pathFinder: pathFinder,
+                direction: direction,
+                headDirection: headDirection
+            )
         default:
-            return MetalNPCObject(object: object, hp: hp, maxHp: maxHp, gridPosition: gridPosition)
+            MetalNPCObject(
+                object: object,
+                hp: hp,
+                maxHp: maxHp,
+                gridPosition: gridPosition,
+                mapGrid: mapGrid,
+                pathFinder: pathFinder,
+                direction: direction,
+                headDirection: headDirection
+            )
         }
     }
 }
@@ -76,10 +134,30 @@ public final class MetalPlayerObject: MetalMapObject {
     public var sp: Int
     public var maxSp: Int
 
-    init(object: MapObject, hp: Int, maxHp: Int, sp: Int, maxSp: Int, gridPosition: SIMD2<Int>) {
+    init(
+        object: MapObject,
+        hp: Int,
+        maxHp: Int,
+        sp: Int,
+        maxSp: Int,
+        gridPosition: SIMD2<Int>,
+        mapGrid: MapGrid,
+        pathFinder: PathFinder,
+        direction: SpriteDirection = .south,
+        headDirection: SpriteHeadDirection = .lookForward
+    ) {
         self.sp = sp
         self.maxSp = maxSp
-        super.init(object: object, hp: hp, maxHp: maxHp, gridPosition: gridPosition)
+        super.init(
+            object: object,
+            hp: hp,
+            maxHp: maxHp,
+            gridPosition: gridPosition,
+            mapGrid: mapGrid,
+            pathFinder: pathFinder,
+            direction: direction,
+            headDirection: headDirection
+        )
     }
 }
 
@@ -88,5 +166,22 @@ public final class MetalMonsterObject: MetalMapObject {}
 
 @MainActor
 public final class MetalNPCObject: MetalMapObject {}
+
+extension ComposedSprite.Configuration {
+    @MainActor
+    init(object: MetalMapObject) {
+        self.init(jobID: object.job)
+        self.gender = object.gender
+        self.hairStyle = object.hairStyle
+        self.hairColor = object.hairColor
+        self.clothesColor = object.clothesColor
+        self.weapon = object.weapon
+        self.shield = object.shield
+        self.headgears = [object.headTop, object.headMid, object.headBottom]
+        self.garment = object.garment
+
+        self.updateHairStyle()
+    }
+}
 
 #endif

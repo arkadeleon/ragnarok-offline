@@ -27,7 +27,7 @@ struct SpriteFrameResolver {
     struct ResolveInput {
         let objectID: GameObjectID
         let composedSprite: ComposedSprite
-        var animation: MapObjectAnimationState
+        var animation: MetalAnimation
         let partTextures: SpritePartTextures
         let scriptContext: ScriptContext
         let worldPosition: SIMD3<Float>

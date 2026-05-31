@@ -227,7 +227,7 @@ final class SpriteAssetStore {
                     continue
                 }
 
-                let animation = MapObjectAnimationState(
+                let animation = MetalAnimation(
                     action: .idle,
                     direction: .south,
                     headDirection: .lookForward,

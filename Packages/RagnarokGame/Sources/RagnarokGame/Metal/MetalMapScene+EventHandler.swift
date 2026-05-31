@@ -28,25 +28,25 @@ extension MetalMapScene {
             state.player.hp = hp
             state.overlay.gauges[player.objectID]?.hp = hp
             playerObject?.hp = hp
-            renderBackend.updateObject(state.player)
+            renderBackend.updateObject(objectID: player.objectID)
         case .maxhp:
             let maxHp = Int(packet.count)
             state.player.maxHp = maxHp
             state.overlay.gauges[player.objectID]?.maxHp = maxHp
             playerObject?.maxHp = maxHp
-            renderBackend.updateObject(state.player)
+            renderBackend.updateObject(objectID: player.objectID)
         case .sp:
             let sp = Int(packet.count)
             state.player.sp = sp
             state.overlay.gauges[player.objectID]?.sp = sp
             playerObject?.sp = sp
-            renderBackend.updateObject(state.player)
+            renderBackend.updateObject(objectID: player.objectID)
         case .maxsp:
             let maxSp = Int(packet.count)
             state.player.maxSp = maxSp
             state.overlay.gauges[player.objectID]?.maxSp = maxSp
             playerObject?.maxSp = maxSp
-            renderBackend.updateObject(state.player)
+            renderBackend.updateObject(objectID: player.objectID)
         default:
             break
         }
@@ -59,7 +59,7 @@ extension MetalMapScene {
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
         playerObject?.hp = hp
 
-        renderBackend.updateObject(state.player)
+        renderBackend.updateObject(objectID: player.objectID)
 
         let combatText = MapSceneCombatText(
             creationTime: .now,
@@ -78,7 +78,7 @@ extension MetalMapScene {
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
         playerObject?.sp = sp
 
-        renderBackend.updateObject(state.player)
+        renderBackend.updateObject(objectID: player.objectID)
 
         let combatText = MapSceneCombatText(
             creationTime: .now,
@@ -110,7 +110,7 @@ extension MetalMapScene {
             }
         }
 
-        renderBackend.updateObject(state.player)
+        renderBackend.updateObject(objectID: player.objectID)
     }
 
     func onMapObjectHealthUpdated(_ packet: PACKET_ZC_HP_INFO) {
@@ -122,7 +122,7 @@ extension MetalMapScene {
             object.hp = hp
             object.maxHp = maxHp
             state.objects[objectID] = object
-            renderBackend.updateObject(object)
+            renderBackend.updateObject(objectID: objectID)
         }
 
         if let metalObject = objectRegistry.object(for: objectID) {
@@ -142,11 +142,20 @@ extension MetalMapScene {
         )
         state.objects[object.objectID] = sceneObject
 
-        let metalObject = MetalMapObject.make(object: object, hp: object.hp, maxHp: object.maxHp, gridPosition: position)
+        let metalObject = MetalMapObject.make(
+            object: object,
+            hp: object.hp,
+            maxHp: object.maxHp,
+            gridPosition: position,
+            mapGrid: mapGrid,
+            pathFinder: pathFinder,
+            direction: SpriteDirection(direction: direction),
+            headDirection: SpriteHeadDirection(headDirection: headDirection)
+        )
         objectRegistry.add(metalObject)
 
         renderBackend.addObject(
-            sceneObject,
+            objectID: object.objectID,
             at: position,
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
@@ -173,11 +182,20 @@ extension MetalMapScene {
             )
             state.objects[object.objectID] = sceneObject
 
-            let metalObject = MetalMapObject.make(object: object, hp: object.hp, maxHp: object.maxHp, gridPosition: endPosition)
+            let metalObject = MetalMapObject.make(
+                object: object,
+                hp: object.hp,
+                maxHp: object.maxHp,
+                gridPosition: endPosition,
+                mapGrid: mapGrid,
+                pathFinder: pathFinder,
+                direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
+                headDirection: .lookForward
+            )
             objectRegistry.add(metalObject)
 
             renderBackend.addObject(
-                sceneObject,
+                objectID: object.objectID,
                 at: startPosition,
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
@@ -262,7 +280,7 @@ extension MetalMapScene {
             object.healthState = healthState
             object.effectState = effectState
             state.objects[objectID] = object
-            renderBackend.updateObject(object)
+            renderBackend.updateObject(objectID: objectID)
         }
 
         if let metalObject = objectRegistry.object(for: objectID) {
@@ -324,7 +342,7 @@ extension MetalMapScene {
         }
 
         state.objects[objectID] = object
-        renderBackend.updateObject(object)
+        renderBackend.updateObject(objectID: objectID)
 
         if let metalObject = objectRegistry.object(for: objectID) {
             switch look {
@@ -381,7 +399,7 @@ extension MetalMapScene {
             .attack1
         }
 
-        let completion: MapObjectAnimationCompletion = switch presentationAction {
+        let completion: MetalAnimationCompletion = switch presentationAction {
         case .pickup:
             .once(settledAction: .idle)
         case .sit:

@@ -88,7 +88,9 @@ public final class MetalMapScene: GameMapScene {
             maxHp: character.maxHp,
             sp: character.sp,
             maxSp: character.maxSp,
-            gridPosition: playerPosition
+            gridPosition: playerPosition,
+            mapGrid: mapGrid,
+            pathFinder: pathFinder
         )
         objectRegistry.add(metalPlayer)
 
@@ -106,7 +108,7 @@ public final class MetalMapScene: GameMapScene {
 
     func load(progress: Progress) async {
         await renderBackend.load(progress: progress)
-        renderBackend.addObject(state.player, at: playerPosition, direction: .south, headDirection: .lookForward)
+        renderBackend.addObject(objectID: player.objectID, at: playerPosition, direction: .south, headDirection: .lookForward)
         renderBackend.updateCamera(cameraState)
     }
 
@@ -152,10 +154,10 @@ public final class MetalMapScene: GameMapScene {
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
-        guard let position = renderBackend.nextGridPosition(for: player.objectID)
-            ?? renderBackend.gridPosition(for: player.objectID) else {
+        guard let playerObject = objectRegistry.object(for: player.objectID) else {
             return
         }
+        let position = playerObject.movementController.nextPosition(at: .now) ?? playerObject.gridPosition
 
         let joystickInput = SIMD2<Float>(
             Float(movementValue.x),
@@ -190,7 +192,7 @@ public final class MetalMapScene: GameMapScene {
     }
 
     func attackNearestMonster() {
-        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
            let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
             engageMonster(target)
         }
@@ -210,21 +212,21 @@ public final class MetalMapScene: GameMapScene {
             return
         }
 
-        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
            let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
             engageMonster(target, skill: skill)
         }
     }
 
     func pickUpNearestItem() {
-        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
            let target = nearestItem(fromPosition: playerPosition) {
             engageItem(target)
         }
     }
 
     func talkToNearestNPC() {
-        if let playerPosition = renderBackend.gridPosition(for: player.objectID),
+        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
            let target = nearestObject(ofType: .npc, fromPosition: playerPosition) {
             gameSession?.talkToNPC(npcID: target.objectID)
         }
@@ -246,18 +248,14 @@ public final class MetalMapScene: GameMapScene {
     }
 
     private func engageMonster(_ target: MetalMapObject) {
-        guard let targetPosition = renderBackend.gridPosition(for: target.objectID) else {
-            return
-        }
+        let targetPosition = target.gridPosition
         movePlayerToward(targetPosition: targetPosition, within: 1) {
             self.gameSession?.requestAction(._repeat, onTarget: target.objectID)
         }
     }
 
     private func engageMonster(_ target: MetalMapObject, skill: SkillInfo) {
-        guard let targetPosition = renderBackend.gridPosition(for: target.objectID) else {
-            return
-        }
+        let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
         movePlayerToward(targetPosition: targetPosition, within: skillRange) {
             if skill.isGroundTargetedSkill {
@@ -294,7 +292,7 @@ public final class MetalMapScene: GameMapScene {
     }
 
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
-        let startPosition = renderBackend.gridPosition(for: player.objectID) ?? playerPosition
+        let startPosition = objectRegistry.object(for: player.objectID)?.gridPosition ?? playerPosition
         switch decideMovement(from: startPosition, toward: targetPosition, within: range) {
         case .alreadyInRange:
             onArrival()
