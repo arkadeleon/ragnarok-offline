@@ -87,7 +87,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
                 guard rect.contains(screenPoint) else {
                     continue
                 }
-                if scene.state.objects[objectID] != nil {
+                if scene.objectRegistry.object(for: objectID) != nil {
                     return .mapObject(objectID: objectID)
                 }
             }
@@ -95,7 +95,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
                 guard rect.contains(screenPoint) else {
                     continue
                 }
-                if scene.state.items[objectID] != nil {
+                if scene.itemRegistry.item(for: objectID) != nil {
                     return .mapItem(objectID: objectID)
                 }
             }
@@ -131,7 +131,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
 
         // Apply minimum hit area: 30pt for items, 60pt for others.
         for (objectID, rect) in hitBoxes {
-            let minSize: CGFloat = scene?.state.items[objectID] != nil ? 30 : 60
+            let minSize: CGFloat = scene?.itemRegistry.item(for: objectID) != nil ? 30 : 60
             var hitBox = rect
             if hitBox.width < minSize {
                 hitBox = hitBox.insetBy(dx: (hitBox.width - minSize) / 2, dy: 0)

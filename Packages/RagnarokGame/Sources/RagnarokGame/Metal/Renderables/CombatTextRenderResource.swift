@@ -19,7 +19,7 @@ final class CombatTextRenderResource {
         var texture: any MTLTexture
     }
 
-    let combatText: MapSceneCombatText
+    let combatText: MetalCombatText
     let startPosition: SIMD3<Float>
     let texture: (any MTLTexture)?
     let frameWidth: Float
@@ -29,7 +29,7 @@ final class CombatTextRenderResource {
 
     init(
         device: any MTLDevice,
-        combatText: MapSceneCombatText,
+        combatText: MetalCombatText,
         startPosition: SIMD3<Float>,
         spriteSet: CombatTextSpriteSet
     ) {

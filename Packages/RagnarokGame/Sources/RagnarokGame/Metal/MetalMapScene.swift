@@ -35,7 +35,7 @@ public final class MetalMapScene: GameMapScene {
     weak var gameSession: GameSession?
 
     let mapGrid: MapGrid
-    let state: MapSceneState
+    let state: MetalSceneState
 
     let objectRegistry = MetalMapObjectRegistry()
     let itemRegistry = MetalMapItemRegistry()
@@ -70,15 +70,7 @@ public final class MetalMapScene: GameMapScene {
         self.gameSession = gameSession
 
         self.mapGrid = MapGrid(gat: world.gat)
-
-        let playerObject = MapSceneObject(
-            object: player,
-            hp: character.hp,
-            maxHp: character.maxHp,
-            sp: character.sp,
-            maxSp: character.maxSp
-        )
-        self.state = MapSceneState(player: playerObject)
+        self.state = MetalSceneState()
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 

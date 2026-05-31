@@ -12,7 +12,7 @@ import RagnarokSprite
 @MainActor
 final class SpriteSnapshotBuilder {
     func build(
-        items: [GameObjectID : MapSceneItem],
+        items: [GameObjectID : MetalMapItem],
         scene: MetalMapScene
     ) -> [GameObjectID : SpriteSnapshot] {
         let now = ContinuousClock.now
@@ -67,7 +67,7 @@ final class SpriteSnapshotBuilder {
         )
     }
 
-    private func snapshot(for item: MapSceneItem, scene: MetalMapScene) -> SpriteSnapshot {
+    private func snapshot(for item: MetalMapItem, scene: MetalMapScene) -> SpriteSnapshot {
         SpriteSnapshot(
             objectID: item.objectID,
             worldPosition: scene.mapGrid.worldPosition(for: item.gridPosition),

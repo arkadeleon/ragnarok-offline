@@ -28,7 +28,7 @@ final class MetalRenderBackend {
     private var effectAssetStore: EffectAssetStore?
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
-    private var itemStates: [GameObjectID : MapSceneItem] = [:]
+    private var items: [GameObjectID : MetalMapItem] = [:]
     private var cameraState: MapCameraState = .default
 
     init(resourceManager: ResourceManager) throws {
@@ -115,7 +115,7 @@ final class MetalRenderBackend {
         object.animationController.setDirection(movement.finalDirection)
 
         refreshSpriteDrawables()
-        if objectID == scene.state.playerID {
+        if objectID == scene.player.objectID {
             updateCameraTarget()
         }
 
@@ -130,7 +130,7 @@ final class MetalRenderBackend {
         }
 
         refreshSpriteDrawables()
-        if objectID == scene?.state.playerID {
+        if objectID == scene?.player.objectID {
             updateCameraTarget()
         }
     }
@@ -166,13 +166,13 @@ final class MetalRenderBackend {
         scene?.objectRegistry.object(for: objectID)?.movementController.nextPosition(at: .now)
     }
 
-    func addItem(_ item: MapSceneItem) {
-        itemStates[item.objectID] = item
+    func addItem(_ item: MetalMapItem) {
+        items[item.objectID] = item
         refreshSpriteDrawables()
     }
 
     func removeItem(objectID: GameObjectID) {
-        itemStates.removeValue(forKey: objectID)
+        items.removeValue(forKey: objectID)
         spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
     }
@@ -181,11 +181,11 @@ final class MetalRenderBackend {
         renderer.tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
     }
 
-    func addCombatText(_ combatText: MapSceneCombatText) {
+    func addCombatText(_ combatText: MetalCombatText) {
         renderCombatText(combatText)
     }
 
-    func addEffect(_ effect: MapSceneEffect) {
+    func addEffect(_ effect: MetalSkillEffect) {
         renderEffect(effect)
     }
 
@@ -207,7 +207,7 @@ final class MetalRenderBackend {
         }
 
         let snapshots = spriteSnapshotBuilder.build(
-            items: itemStates,
+            items: items,
             scene: scene
         )
         spriteSnapshots = snapshots
@@ -220,7 +220,7 @@ final class MetalRenderBackend {
         }
 
         let targetPosition: SIMD3<Float>
-        if let player = scene.objectRegistry.object(for: scene.state.playerID) {
+        if let player = scene.objectRegistry.object(for: scene.player.objectID) {
             targetPosition = player.presentation.worldPosition
         } else {
             targetPosition = scene.mapGrid.worldPosition(for: scene.playerPosition)
@@ -307,7 +307,7 @@ final class MetalRenderBackend {
         spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
         spriteSnapshots.removeAll()
-        itemStates.removeAll()
+        items.removeAll()
         combatTextSpriteSet = nil
         for task in effectLoadTasks.values {
             task.cancel()
@@ -326,7 +326,7 @@ final class MetalRenderBackend {
         renderer.tileSelectorResource = nil
     }
 
-    private func renderCombatText(_ combatText: MapSceneCombatText) {
+    private func renderCombatText(_ combatText: MetalCombatText) {
         guard let scene, let combatTextSpriteSet else {
             return
         }
@@ -348,7 +348,7 @@ final class MetalRenderBackend {
         )
     }
 
-    private func renderEffect(_ effect: MapSceneEffect) {
+    private func renderEffect(_ effect: MetalSkillEffect) {
         guard let scene else {
             return
         }

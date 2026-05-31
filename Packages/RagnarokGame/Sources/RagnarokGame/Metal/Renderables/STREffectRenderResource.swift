@@ -24,7 +24,7 @@ final class STREffectRenderResource {
 
     init(
         device: any MTLDevice,
-        effect: MapSceneEffect,
+        effect: MetalSkillEffect,
         strEffect: STREffect,
         textures: [String : any MTLTexture],
         worldPosition: SIMD3<Float>

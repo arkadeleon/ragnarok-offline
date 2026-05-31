@@ -73,7 +73,7 @@ struct OptionsView: View {
     }
 
     private var isPlayerDead: Bool {
-        gameSession.mapSceneState?.isPlayerDead ?? false
+        gameSession.isPlayerDead
     }
 }
 

@@ -140,11 +140,11 @@ final public class GameSession {
     }
     #endif
 
-    public var mapSceneState: MapSceneState? {
+    public var isPlayerDead: Bool {
         #if os(visionOS)
-        nil
+        false
         #else
-        mapScene?.state
+        mapScene?.state.isPlayerDead ?? false
         #endif
     }
 
