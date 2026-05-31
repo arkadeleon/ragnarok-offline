@@ -1,9 +1,11 @@
 //
-//  MapOverlayState.swift
+//  MetalOverlayState.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/20.
 //
+
+#if !os(visionOS)
 
 import CoreGraphics
 import Observation
@@ -11,11 +13,11 @@ import RagnarokModels
 
 @MainActor
 @Observable
-public final class MapOverlayState {
-    var gauges: [GameObjectID : MapGaugeOverlay] = [:]
+final class MetalOverlayState {
+    var gauges: [GameObjectID : MetalGaugeOverlay] = [:]
 }
 
-struct MapGaugeOverlay: Identifiable, Sendable {
+struct MetalGaugeOverlay: Identifiable, Sendable {
     var id: GameObjectID
     var hp: Int
     var maxHp: Int
@@ -26,3 +28,5 @@ struct MapGaugeOverlay: Identifiable, Sendable {
     var worldPosition: SIMD3<Float>?
     var screenPosition: CGPoint?
 }
+
+#endif

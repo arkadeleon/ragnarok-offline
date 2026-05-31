@@ -143,7 +143,7 @@ extension MetalMapScene {
         )
 
         if object.type == .monster {
-            state.overlay.gauges[object.objectID] = MapGaugeOverlay(
+            state.overlay.gauges[object.objectID] = MetalGaugeOverlay(
                 id: object.objectID,
                 hp: object.hp,
                 maxHp: object.maxHp,
@@ -176,7 +176,7 @@ extension MetalMapScene {
             )
 
             if object.type == .monster {
-                state.overlay.gauges[object.objectID] = MapGaugeOverlay(
+                state.overlay.gauges[object.objectID] = MetalGaugeOverlay(
                     id: object.objectID,
                     hp: object.hp,
                     maxHp: object.maxHp,
@@ -259,7 +259,7 @@ extension MetalMapScene {
             if let object = objectRegistry.object(for: objectID), objectID == player.objectID || object.type == .monster {
                 let sp = (object as? MetalPlayerObject)?.sp
                 let maxSp = (object as? MetalPlayerObject)?.maxSp
-                state.overlay.gauges[objectID] = MapGaugeOverlay(
+                state.overlay.gauges[objectID] = MetalGaugeOverlay(
                     id: objectID,
                     hp: object.hp,
                     maxHp: object.maxHp,

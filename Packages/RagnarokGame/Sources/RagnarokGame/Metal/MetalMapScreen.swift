@@ -26,7 +26,7 @@ struct MetalMapScreen: View {
         ZStack {
             MetalMapView(scene: scene)
                 .overlay {
-                    MapOverlayView(overlay: scene.state.overlay)
+                    MetalOverlayView(overlay: scene.state.overlay)
                 }
         }
         .overlay(alignment: .bottomLeading) {

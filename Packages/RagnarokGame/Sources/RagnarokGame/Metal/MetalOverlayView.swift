@@ -1,14 +1,16 @@
 //
-//  MapOverlayView.swift
+//  MetalOverlayView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/1/30.
 //
 
+#if !os(visionOS)
+
 import SwiftUI
 
-struct MapOverlayView: View {
-    var overlay: MapOverlayState
+struct MetalOverlayView: View {
+    var overlay: MetalOverlayState
 
     var body: some View {
         GeometryReader { _ in
@@ -28,3 +30,5 @@ struct MapOverlayView: View {
         .allowsHitTesting(false)
     }
 }
+
+#endif

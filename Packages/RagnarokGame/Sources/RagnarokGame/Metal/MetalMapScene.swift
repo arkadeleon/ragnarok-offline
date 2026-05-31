@@ -86,7 +86,7 @@ public final class MetalMapScene: GameMapScene {
         )
         objectRegistry.add(metalPlayer)
 
-        state.overlay.gauges[player.objectID] = MapGaugeOverlay(
+        state.overlay.gauges[player.objectID] = MetalGaugeOverlay(
             id: player.objectID,
             hp: character.hp,
             maxHp: character.maxHp,

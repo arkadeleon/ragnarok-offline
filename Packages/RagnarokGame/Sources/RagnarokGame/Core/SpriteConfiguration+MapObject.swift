@@ -38,20 +38,6 @@ extension ComposedSprite.Configuration {
         self.updateHairStyle()
     }
 
-    init(object: MapSceneObject) {
-        self.init(jobID: object.job)
-        self.gender = object.gender
-        self.hairStyle = object.hairStyle
-        self.hairColor = object.hairColor
-        self.clothesColor = object.clothesColor
-        self.weapon = object.weapon
-        self.shield = object.shield
-        self.headgears = [object.headTop, object.headMid, object.headBottom]
-        self.garment = object.garment
-
-        self.updateHairStyle()
-    }
-
     mutating func updateHairStyle() {
         let hairStyles: [Int] = if job.isDoram {
             switch gender {
