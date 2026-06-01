@@ -19,7 +19,7 @@ final class SpriteSnapshotBuilder {
 
         var snapshots: [GameObjectID : SpriteSnapshot] = [:]
 
-        for object in scene.objectRegistry.objects.values {
+        for object in scene.objects.values {
             object.animationController.update(at: now)
             object.movementController.update(at: now)
             if let movement = object.movementController.movement {

@@ -83,7 +83,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
                 guard rect.contains(screenPoint) else {
                     continue
                 }
-                if objectRegistry.object(for: objectID) != nil {
+                if objects[objectID] != nil {
                     return .mapObject(objectID: objectID)
                 }
             }
@@ -91,7 +91,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
                 guard rect.contains(screenPoint) else {
                     continue
                 }
-                if itemRegistry.item(for: objectID) != nil {
+                if items[objectID] != nil {
                     return .mapItem(objectID: objectID)
                 }
             }
@@ -127,7 +127,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
 
         // Apply minimum hit area: 30pt for items, 60pt for others.
         for (objectID, rect) in hitBoxes {
-            let minSize: CGFloat = itemRegistry.item(for: objectID) != nil ? 30 : 60
+            let minSize: CGFloat = items[objectID] != nil ? 30 : 60
             var hitBox = rect
             if hitBox.width < minSize {
                 hitBox = hitBox.insetBy(dx: (hitBox.width - minSize) / 2, dy: 0)

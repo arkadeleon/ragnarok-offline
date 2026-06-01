@@ -39,8 +39,8 @@ public final class MetalMapScene: GameMapScene {
     let mapGrid: MapGrid
     let state: MetalSceneState
 
-    let objectRegistry = MetalMapObjectRegistry()
-    let itemRegistry = MetalMapItemRegistry()
+    var objects: [GameObjectID: MetalMapObject] = [:]
+    var items: [GameObjectID : MetalMapItem] = [:]
 
     let pathFinder: PathFinder
 
@@ -50,7 +50,6 @@ public final class MetalMapScene: GameMapScene {
     var combatTextSpriteSet: CombatTextSpriteSet?
     var effectAssetStore: EffectAssetStore?
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
-    var items: [GameObjectID : MetalMapItem] = [:]
 
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
@@ -95,7 +94,7 @@ public final class MetalMapScene: GameMapScene {
             mapGrid: mapGrid,
             pathFinder: pathFinder
         )
-        objectRegistry.add(metalPlayer)
+        objects[metalPlayer.objectID] = metalPlayer
 
         state.overlay.gauges[player.objectID] = MetalGaugeOverlay(
             id: player.objectID,
@@ -153,15 +152,28 @@ public final class MetalMapScene: GameMapScene {
     }
 
     private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MetalMapObject? {
-        objectRegistry.nearestObject(ofType: type, fromPosition: position)
+        objects.values
+            .filter {
+                $0.type == type
+            }
+            .min {
+                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
+            }
     }
 
     private func nearestItem(fromPosition position: SIMD2<Int>) -> MetalMapItem? {
-        itemRegistry.nearestItem(fromPosition: position)
+        items.values.min {
+            distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
+        }
+    }
+
+    private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
+        let d = a &- b
+        return d.x * d.x + d.y * d.y
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
-        guard let playerObject = objectRegistry.object(for: player.objectID) else {
+        guard let playerObject = objects[player.objectID] else {
             return
         }
         let position = playerObject.movementController.nextPosition(at: .now) ?? playerObject.gridPosition
@@ -199,7 +211,7 @@ public final class MetalMapScene: GameMapScene {
     }
 
     func attackNearestMonster() {
-        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
+        if let playerPosition = objects[player.objectID]?.gridPosition,
            let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
             engageMonster(target)
         }
@@ -219,28 +231,28 @@ public final class MetalMapScene: GameMapScene {
             return
         }
 
-        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
+        if let playerPosition = objects[player.objectID]?.gridPosition,
            let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
             engageMonster(target, skill: skill)
         }
     }
 
     func pickUpNearestItem() {
-        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
+        if let playerPosition = objects[player.objectID]?.gridPosition,
            let target = nearestItem(fromPosition: playerPosition) {
             engageItem(target)
         }
     }
 
     func talkToNearestNPC() {
-        if let playerPosition = objectRegistry.object(for: player.objectID)?.gridPosition,
+        if let playerPosition = objects[player.objectID]?.gridPosition,
            let target = nearestObject(ofType: .npc, fromPosition: playerPosition) {
             gameSession?.talkToNPC(npcID: target.objectID)
         }
     }
 
     private func handleMapObjectSelection(objectID: GameObjectID) {
-        guard let target = objectRegistry.object(for: objectID) else {
+        guard let target = objects[objectID] else {
             return
         }
 
@@ -299,7 +311,7 @@ public final class MetalMapScene: GameMapScene {
     }
 
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
-        let startPosition = objectRegistry.object(for: player.objectID)?.gridPosition ?? playerPosition
+        let startPosition = objects[player.objectID]?.gridPosition ?? playerPosition
         switch decideMovement(from: startPosition, toward: targetPosition, within: range) {
         case .alreadyInRange:
             onArrival()
@@ -338,7 +350,7 @@ extension MetalMapScene {
 
     func updateCameraTarget() {
         let targetPosition: SIMD3<Float>
-        if let playerObject = objectRegistry.object(for: player.objectID) {
+        if let playerObject = objects[player.objectID] {
             targetPosition = playerObject.presentation.worldPosition
         } else {
             targetPosition = mapGrid.worldPosition(for: playerPosition)
@@ -351,7 +363,7 @@ extension MetalMapScene {
 
     private func syncAndProjectOverlay() {
         for objectID in state.overlay.gauges.keys {
-            guard let object = objectRegistry.object(for: objectID) else {
+            guard let object = objects[objectID] else {
                 continue
             }
             var worldPosition = object.presentation.worldPosition
