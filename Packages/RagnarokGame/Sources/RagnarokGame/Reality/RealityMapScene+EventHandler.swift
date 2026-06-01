@@ -8,7 +8,6 @@
 import AVFAudio
 import RagnarokConstants
 import RagnarokModels
-import RagnarokPackets
 import RagnarokResources
 import RagnarokSprite
 import RealityKit
@@ -189,30 +188,31 @@ extension RealityMapScene {
         playAttackSounds(for: objectAction)
     }
 
-    public func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
-        guard let entity = objectEntities[packet.AID] else {
+    public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
+        guard let entity = objectEntities[objectSkill.sourceObjectID] else {
             return
         }
 
         let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
         entity.castSkill(direction: direction)
 
-        guard packet.damage >= 0 else {
+        guard objectSkill.damage >= 0 else {
             return
         }
 
         let now = ContinuousClock.now
-        let count = max(1, Int(packet.count))
-        let damage = Int(packet.damage)
-        let isPlayer = objectEntities[packet.targetID]?.components[MapObjectComponent.self]?.object.type == .pc
-        let target = MapSceneCombatText.Target(objectID: packet.targetID, isPlayer: isPlayer)
+        let count = max(1, objectSkill.count)
+        let damage = objectSkill.damage
+        let isPlayer = objectEntities[objectSkill.targetObjectID]?.components[MapObjectComponent.self]?.object.type == .pc
+        let target = MapSceneCombatText.Target(objectID: objectSkill.targetObjectID, isPlayer: isPlayer)
         for i in 0..<count {
-            addCombatText(MapSceneCombatText(
+            let combatText = MapSceneCombatText(
                 creationTime: now,
                 target: target,
                 amount: damage / count,
-                delay: .milliseconds(Int(packet.attackMT)) + .milliseconds(200 * i)
-            ))
+                delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
+            )
+            addCombatText(combatText)
         }
     }
 

@@ -8,7 +8,6 @@
 import Foundation
 import RagnarokConstants
 import RagnarokModels
-import RagnarokPackets
 import simd
 
 @MainActor public protocol GameMapScene: MapSceneEventHandler {
@@ -33,7 +32,7 @@ import simd
     func onMapObjectSpriteChanged(objectID: GameObjectID, look: Look, value: Int, value2: Int)
     func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
     func onMapObjectActionPerformed(objectAction: MapObjectAction)
-    func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL)
+    func onMapObjectSkillPerformed(objectSkill: MapObjectSkill)
     func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int)
 
     func onItemSpawned(item: MapItem, position: SIMD2<Int>)

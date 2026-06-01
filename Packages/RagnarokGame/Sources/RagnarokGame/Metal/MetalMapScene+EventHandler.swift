@@ -8,7 +8,6 @@
 import Foundation
 import RagnarokConstants
 import RagnarokModels
-import RagnarokPackets
 import RagnarokSprite
 import simd
 
@@ -345,30 +344,28 @@ extension MetalMapScene {
         playSound(for: objectAction)
     }
 
-    public func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
-        let objectID = packet.AID
-
+    public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
         let now = ContinuousClock.now
 
-        if let sourceObject = objectRegistry.object(for: objectID) {
+        if let sourceObject = objectRegistry.object(for: objectSkill.sourceObjectID) {
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
-            let duration = Duration.milliseconds(Int(packet.attackMT))
+            let duration = Duration.milliseconds(objectSkill.attackDelay)
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
             renderBackend.performObjectAction(
-                objectID: objectID,
+                objectID: objectSkill.sourceObjectID,
                 action: action,
                 completion: .after(duration, settledAction: settledAction)
             )
         }
 
-        if packet.damage >= 0 {
-            let count = Int(packet.count)
-            let damage = Int(packet.damage)
+        if objectSkill.damage >= 0 {
+            let count = objectSkill.count
+            let damage = objectSkill.damage
             let target = MetalCombatText.Target(
-                objectID: packet.targetID,
-                isPlayer: objectRegistry.object(for: packet.targetID)?.type == .pc
+                objectID: objectSkill.targetObjectID,
+                isPlayer: objectRegistry.object(for: objectSkill.targetObjectID)?.type == .pc
             )
 
             for i in 0..<count {
@@ -376,14 +373,14 @@ extension MetalMapScene {
                     creationTime: now,
                     target: target,
                     amount: damage / count,
-                    delay: .milliseconds(Int(packet.attackMT)) + .milliseconds(200 * i)
+                    delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
                 )
                 renderBackend.addCombatText(combatText)
             }
         }
 
-        addSkillHitEffects(for: packet)
-        addSkillEffects(for: packet)
+        addSkillHitEffects(for: objectSkill)
+        addSkillEffects(for: objectSkill)
     }
 
     public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
@@ -492,35 +489,34 @@ extension MetalMapScene {
         }
     }
 
-    private func addSkillHitEffects(for packet: PACKET_ZC_NOTIFY_SKILL) {
-        guard packet.damage > 0,
-              let skillID = SkillID(rawValue: Int(packet.SKID)),
-              let targetPosition = renderBackend.gridPosition(for: packet.targetID) else {
+    private func addSkillHitEffects(for objectSkill: MapObjectSkill) {
+        guard objectSkill.damage > 0,
+              let skillID = objectSkill.skillID,
+              let targetPosition = renderBackend.gridPosition(for: objectSkill.targetObjectID) else {
             return
         }
 
         let now = ContinuousClock.now
-        let count = max(1, Int(packet.count))
+        let count = max(1, objectSkill.count)
         for hitEffectID in SkillEffectTable.hitEffectIDs(for: skillID) {
             for i in 0..<count {
                 addEffects(
                     forEffectID: hitEffectID,
                     creationTime: now,
                     gridPosition: targetPosition,
-                    attachedObjectID: packet.targetID,
-                    delay: .milliseconds(Int(packet.attackMT)) + .milliseconds(200 * i)
+                    attachedObjectID: objectSkill.targetObjectID,
+                    delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
                 )
             }
         }
     }
 
-    private func addSkillEffects(for packet: PACKET_ZC_NOTIFY_SKILL) {
-        guard let skillID = SkillID(rawValue: Int(packet.SKID)),
-              objectRegistry.object(for: packet.AID) != nil,
-              objectRegistry.object(for: packet.targetID) != nil,
-              let targetPosition = renderBackend.gridPosition(for: packet.targetID),
-              let damageType = DamageType(rawValue: Int(packet.action)),
-              damageType != .splash, damageType != .splash_endure else {
+    private func addSkillEffects(for objectSkill: MapObjectSkill) {
+        guard let skillID = objectSkill.skillID,
+              objectRegistry.object(for: objectSkill.sourceObjectID) != nil,
+              objectRegistry.object(for: objectSkill.targetObjectID) != nil,
+              let targetPosition = renderBackend.gridPosition(for: objectSkill.targetObjectID),
+              objectSkill.damageType != .splash, objectSkill.damageType != .splash_endure else {
             return
         }
 
@@ -530,8 +526,8 @@ extension MetalMapScene {
                 forEffectID: effectID,
                 creationTime: now,
                 gridPosition: targetPosition,
-                attachedObjectID: packet.targetID,
-                delay: .milliseconds(Int(packet.attackMT))
+                attachedObjectID: objectSkill.targetObjectID,
+                delay: .milliseconds(objectSkill.attackDelay)
             )
         }
     }

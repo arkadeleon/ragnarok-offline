@@ -784,7 +784,8 @@ final public class GameSession {
         case _ as PACKET_ZC_USE_SKILL:
             break
         case let packet as PACKET_ZC_NOTIFY_SKILL:
-            mapScene?.onMapObjectSkillPerformed(packet)
+            let objectSkill = MapObjectSkill(from: packet)
+            mapScene?.onMapObjectSkillPerformed(objectSkill: objectSkill)
         case let packet as PACKET_ZC_NOTIFY_GROUNDSKILL:
             if let skillID = SkillID(rawValue: Int(packet.SKID)) {
                 let position = SIMD2(Int(packet.xPos), Int(packet.yPos))
