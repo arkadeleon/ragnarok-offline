@@ -1,5 +1,5 @@
 //
-//  RealityMapScreen.swift
+//  RealityMapSceneView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -10,7 +10,7 @@ import SwiftUI
 @available(visionOS 1.0, *)
 @available(iOS, unavailable)
 @available(macOS, unavailable)
-struct RealityMapScreen: View {
+struct RealityMapSceneView: View {
     var scene: RealityMapScene
 
     @Environment(GameSession.self) private var gameSession

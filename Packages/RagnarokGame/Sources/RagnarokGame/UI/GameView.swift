@@ -22,9 +22,9 @@ public struct GameView: View {
                     MapLoadingView(progress: progress)
                 case .loaded(let scene):
                     #if os(visionOS)
-                    RealityMapScreen(scene: scene as! RealityMapScene)
+                    RealityMapSceneView(scene: scene as! RealityMapScene)
                     #else
-                    MetalMapScreen(scene: scene as! MetalMapScene)
+                    MetalMapSceneView(scene: scene as! MetalMapScene)
                     #endif
                 }
             }

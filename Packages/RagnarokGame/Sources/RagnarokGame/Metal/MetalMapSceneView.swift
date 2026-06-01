@@ -1,5 +1,5 @@
 //
-//  MetalMapScreen.swift
+//  MetalMapSceneView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ThumbstickView
 
-struct MetalMapScreen: View {
+struct MetalMapSceneView: View {
     var scene: MetalMapScene
 
     @Environment(GameSession.self) private var gameSession
