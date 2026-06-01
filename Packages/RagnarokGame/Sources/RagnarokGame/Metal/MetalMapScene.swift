@@ -44,8 +44,6 @@ public final class MetalMapScene: GameMapScene {
 
     let pathFinder: PathFinder
 
-    let spriteSnapshotBuilder = SpriteSnapshotBuilder()
-    var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
     var spriteAssetStore: SpriteAssetStore?
     var combatTextSpriteSet: CombatTextSpriteSet?
     var effectAssetStore: EffectAssetStore?
@@ -340,12 +338,36 @@ extension MetalMapScene {
     }
 
     func refreshSpriteDrawables() {
-        let snapshots = spriteSnapshotBuilder.build(
+        updateObjectPresentation()
+        renderer.spriteDrawables = spriteAssetStore?.sync(
+            objects: objects,
             items: items,
-            scene: self
-        )
-        spriteSnapshots = snapshots
-        renderer.spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
+            mapGrid: mapGrid,
+            cameraState: cameraState
+        ) ?? []
+    }
+
+    private func updateObjectPresentation() {
+        let now = ContinuousClock.now
+
+        for object in objects.values {
+            object.animationController.update(at: now)
+            object.movementController.update(at: now)
+            if let movement = object.movementController.movement {
+                object.gridPosition = movement.currentPosition
+            }
+            object.presentation.worldPosition = worldPosition(for: object)
+        }
+    }
+
+    private func worldPosition(for object: MetalMapObject) -> SIMD3<Float> {
+        if let movement = object.movementController.movement,
+           movement.isMoving,
+           let movementWorldPosition = movement.worldPosition {
+            movementWorldPosition
+        } else {
+            mapGrid.worldPosition(for: object.gridPosition)
+        }
     }
 
     func updateCameraTarget() {
@@ -432,7 +454,6 @@ extension MetalMapScene {
     func clearRenderResources() {
         spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
-        spriteSnapshots.removeAll()
         items.removeAll()
         combatTextSpriteSet = nil
         for task in effectLoadTasks.values {

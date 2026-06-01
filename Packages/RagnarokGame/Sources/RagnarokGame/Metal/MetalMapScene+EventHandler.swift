@@ -207,7 +207,6 @@ extension MetalMapScene {
         default:
             state.overlay.gauges.removeValue(forKey: objectID)
             objects.removeValue(forKey: objectID)
-            spriteSnapshots.removeValue(forKey: objectID)
             refreshSpriteDrawables()
         }
     }
@@ -392,7 +391,6 @@ extension MetalMapScene {
 
     public func onItemVanished(objectID: GameObjectID) {
         items.removeValue(forKey: objectID)
-        spriteSnapshots.removeValue(forKey: objectID)
         refreshSpriteDrawables()
     }
 
@@ -582,8 +580,7 @@ extension MetalMapScene {
             return
         }
 
-        guard let startPosition = spriteSnapshots[combatText.target.objectID]?.worldPosition
-            ?? fallbackWorldPosition(for: combatText.target.objectID) else {
+        guard let startPosition = objects[combatText.target.objectID]?.presentation.worldPosition else {
             return
         }
 
@@ -593,14 +590,6 @@ extension MetalMapScene {
             startPosition: startPosition,
             spriteSet: combatTextSpriteSet
         )
-    }
-
-    private func fallbackWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
-        if let object = objects[objectID] {
-            return object.presentation.worldPosition
-        } else {
-            return nil
-        }
     }
 }
 

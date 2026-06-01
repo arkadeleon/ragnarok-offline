@@ -12,6 +12,11 @@ import RagnarokSprite
 
 @MainActor
 final class SpriteAssetStore {
+    private struct SpriteAnimationKey: Hashable {
+        var action: SpriteActionType
+        var direction: SpriteDirection
+    }
+
     private struct DrawableGroup {
         let depth: Float
         let objectID: GameObjectID
@@ -47,31 +52,44 @@ final class SpriteAssetStore {
         self.scriptContext = scriptContext
     }
 
-    func sync(snapshots: [GameObjectID : SpriteSnapshot]) -> [SpriteLayerDrawable] {
-        let currentIDs = Set(snapshots.keys)
+    func sync(
+        objects: [GameObjectID : MetalMapObject],
+        items: [GameObjectID : MetalMapItem],
+        mapGrid: MapGrid,
+        cameraState: MapCameraState
+    ) -> [SpriteLayerDrawable] {
+        let currentObjectIDs = Set(objects.keys)
+        let currentItemIDs = Set(items.keys)
 
-        for objectID in Set(objectAssets.keys).subtracting(currentIDs) {
+        for objectID in Set(objectAssets.keys).subtracting(currentObjectIDs) {
             objectAssets.removeValue(forKey: objectID)
             objectLoadTasks[objectID]?.cancel()
             objectLoadTasks.removeValue(forKey: objectID)
         }
 
-        for itemID in Set(itemAssets.keys).subtracting(currentIDs) {
-            itemAssets.removeValue(forKey: itemID)
-            itemLoadTasks[itemID]?.cancel()
-            itemLoadTasks.removeValue(forKey: itemID)
+        for objectID in Set(itemAssets.keys).subtracting(currentItemIDs) {
+            itemAssets.removeValue(forKey: objectID)
+            itemLoadTasks[objectID]?.cancel()
+            itemLoadTasks.removeValue(forKey: objectID)
         }
 
-        for (objectID, snapshot) in snapshots {
-            switch snapshot.content {
-            case .mapObject(let configuration, _):
-                syncObjectAssets(objectID: objectID, configuration: configuration)
-            case .mapItem(let itemID):
-                syncItemAssets(objectID: objectID, itemID: itemID)
-            }
+        for (objectID, object) in objects {
+            syncObjectAssets(
+                objectID: objectID,
+                configuration: ComposedSprite.Configuration(object: object)
+            )
         }
 
-        return drawables(for: snapshots)
+        for (objectID, item) in items {
+            syncItemAssets(objectID: objectID, itemID: item.itemID)
+        }
+
+        return drawables(
+            objects: objects,
+            items: items,
+            mapGrid: mapGrid,
+            cameraState: cameraState
+        )
     }
 
     func cancelAllTasks() {
@@ -173,89 +191,97 @@ final class SpriteAssetStore {
         }
     }
 
-    private func drawables(for snapshots: [GameObjectID : SpriteSnapshot]) -> [SpriteLayerDrawable] {
+    private func drawables(
+        objects: [GameObjectID : MetalMapObject],
+        items: [GameObjectID : MetalMapItem],
+        mapGrid: MapGrid,
+        cameraState: MapCameraState
+    ) -> [SpriteLayerDrawable] {
         var groups: [DrawableGroup] = []
-        groups.reserveCapacity(snapshots.count)
+        groups.reserveCapacity(objects.count + items.count)
 
-        for (objectID, snapshot) in snapshots {
-            switch snapshot.content {
-            case .mapObject(_, let animation):
-                guard let objectAsset = objectAssets[objectID],
-                      let composedSprite = objectAsset.composedSprite,
-                      let partTextures = objectAsset.partTextures else {
-                    continue
-                }
+        for (objectID, object) in objects {
+            guard let objectAsset = objectAssets[objectID],
+                  let composedSprite = objectAsset.composedSprite,
+                  let partTextures = objectAsset.partTextures else {
+                continue
+            }
 
-                let fallbackKeys = [
-                    SpriteAnimationKey(action: animation.action, direction: animation.direction),
-                    SpriteAnimationKey(action: .idle, direction: animation.direction),
-                    SpriteAnimationKey(action: .idle, direction: .south),
-                ]
+            let animation = animation(for: object, cameraState: cameraState)
+            let worldPosition = object.presentation.worldPosition
+            let isVisible = object.effectState != .cloak
 
-                guard let resolvedDrawables = fallbackKeys.lazy.compactMap({ key in
-                    var fallbackAnimation = animation
-                    fallbackAnimation.action = key.action
-                    fallbackAnimation.direction = key.direction
+            let fallbackKeys = [
+                SpriteAnimationKey(action: animation.action, direction: animation.direction),
+                SpriteAnimationKey(action: .idle, direction: animation.direction),
+                SpriteAnimationKey(action: .idle, direction: .south),
+            ]
 
-                    let input = SpriteFrameResolver.ResolveInput(
-                        objectID: objectID,
-                        composedSprite: composedSprite,
-                        animation: fallbackAnimation,
-                        partTextures: partTextures,
-                        scriptContext: self.scriptContext,
-                        worldPosition: snapshot.worldPosition,
-                        isVisible: snapshot.isVisible
-                    )
-                    let drawables = self.frameResolver.resolve(input)
-                    return drawables.isEmpty ? nil : drawables
-                }).first else {
-                    continue
-                }
+            guard let resolvedDrawables = fallbackKeys.lazy.compactMap({ key in
+                var fallbackAnimation = animation
+                fallbackAnimation.action = key.action
+                fallbackAnimation.direction = key.direction
 
-                groups.append(
-                    DrawableGroup(
-                        depth: snapshot.worldPosition.z,
-                        objectID: objectID,
-                        drawables: resolvedDrawables
-                    )
-                )
-
-            case .mapItem:
-                guard let itemAsset = itemAssets[objectID],
-                      let composedSprite = itemAsset.composedSprite,
-                      let partTextures = itemAsset.partTextures else {
-                    continue
-                }
-
-                let animation = MetalAnimation(
-                    action: .idle,
-                    direction: .south,
-                    headDirection: .lookForward,
-                    startTime: .now,
-                    completion: .indefinite
-                )
                 let input = SpriteFrameResolver.ResolveInput(
                     objectID: objectID,
                     composedSprite: composedSprite,
-                    animation: animation,
+                    animation: fallbackAnimation,
                     partTextures: partTextures,
-                    scriptContext: scriptContext,
-                    worldPosition: snapshot.worldPosition,
-                    isVisible: snapshot.isVisible
+                    scriptContext: self.scriptContext,
+                    worldPosition: worldPosition,
+                    isVisible: isVisible
                 )
-                let drawables = frameResolver.resolve(input)
-                guard !drawables.isEmpty else {
-                    continue
-                }
-
-                groups.append(
-                    DrawableGroup(
-                        depth: snapshot.worldPosition.z,
-                        objectID: objectID,
-                        drawables: drawables
-                    )
-                )
+                let drawables = self.frameResolver.resolve(input)
+                return drawables.isEmpty ? nil : drawables
+            }).first else {
+                continue
             }
+
+            groups.append(
+                DrawableGroup(
+                    depth: worldPosition.z,
+                    objectID: objectID,
+                    drawables: resolvedDrawables
+                )
+            )
+        }
+
+        for (objectID, item) in items {
+            guard let itemAsset = itemAssets[objectID],
+                  let composedSprite = itemAsset.composedSprite,
+                  let partTextures = itemAsset.partTextures else {
+                continue
+            }
+
+            let animation = MetalAnimation(
+                action: .idle,
+                direction: .south,
+                headDirection: .lookForward,
+                startTime: .now,
+                completion: .indefinite
+            )
+            let worldPosition = mapGrid.worldPosition(for: item.gridPosition)
+            let input = SpriteFrameResolver.ResolveInput(
+                objectID: objectID,
+                composedSprite: composedSprite,
+                animation: animation,
+                partTextures: partTextures,
+                scriptContext: scriptContext,
+                worldPosition: worldPosition,
+                isVisible: true
+            )
+            let drawables = frameResolver.resolve(input)
+            guard !drawables.isEmpty else {
+                continue
+            }
+
+            groups.append(
+                DrawableGroup(
+                    depth: worldPosition.z,
+                    objectID: objectID,
+                    drawables: drawables
+                )
+            )
         }
 
         groups.sort {
@@ -267,5 +293,23 @@ final class SpriteAssetStore {
         }
 
         return groups.flatMap(\.drawables)
+    }
+
+    private func animation(for object: MetalMapObject, cameraState: MapCameraState) -> MetalAnimation {
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
+
+        var animation = object.animationController.animation
+        if let movement = object.movementController.movement, movement.isMoving {
+            animation.action = .walk
+            animation.direction = movement.direction ?? animation.direction
+            animation.elapsedTime = movement.animationElapsedTime
+            animation.completion = .indefinite
+        }
+        animation.direction = animation.direction.adjustedForCameraAzimuth(cameraState.azimuth)
+        if !availableActionTypes.contains(animation.action) {
+            animation.action = .idle
+        }
+
+        return animation
     }
 }
