@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/1/30.
 //
 
-#if !os(visionOS)
-
 import SwiftUI
 
 struct MetalOverlayView: View {
@@ -30,5 +28,3 @@ struct MetalOverlayView: View {
         .allowsHitTesting(false)
     }
 }
-
-#endif

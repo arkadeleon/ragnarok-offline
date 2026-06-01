@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-#if !os(visionOS)
-
 import RagnarokConstants
 import RagnarokModels
 import RagnarokSprite
@@ -183,5 +181,3 @@ extension ComposedSprite.Configuration {
         self.updateHairStyle()
     }
 }
-
-#endif

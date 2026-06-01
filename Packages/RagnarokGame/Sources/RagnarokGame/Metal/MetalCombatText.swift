@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/31.
 //
 
-#if !os(visionOS)
-
 import Foundation
 
 struct MetalCombatText: Identifiable, Sendable {
@@ -51,5 +49,3 @@ struct MetalCombatText: Identifiable, Sendable {
         }
     }
 }
-
-#endif

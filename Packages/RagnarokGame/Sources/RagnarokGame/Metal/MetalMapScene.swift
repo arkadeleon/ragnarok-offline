@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-#if !os(visionOS)
-
 import CoreGraphics
 import Foundation
 import RagnarokConstants
@@ -297,5 +295,3 @@ public final class MetalMapScene: GameMapScene {
         }
     }
 }
-
-#endif

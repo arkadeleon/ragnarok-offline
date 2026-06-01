@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-#if !os(visionOS)
-
 import RagnarokModels
 import simd
 
@@ -22,5 +20,3 @@ public final class MetalMapItem {
         self.gridPosition = gridPosition
     }
 }
-
-#endif

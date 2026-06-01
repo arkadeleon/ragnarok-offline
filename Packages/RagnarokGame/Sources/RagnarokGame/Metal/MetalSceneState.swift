@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/31.
 //
 
-#if !os(visionOS)
-
 import Observation
 
 @MainActor
@@ -15,5 +13,3 @@ final class MetalSceneState {
     var isPlayerDead = false
     let overlay = MetalOverlayState()
 }
-
-#endif

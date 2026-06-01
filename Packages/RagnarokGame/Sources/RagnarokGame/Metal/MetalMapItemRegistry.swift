@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-#if !os(visionOS)
-
 import RagnarokModels
 import simd
 
@@ -36,5 +34,3 @@ import simd
         return d.x * d.x + d.y * d.y
     }
 }
-
-#endif

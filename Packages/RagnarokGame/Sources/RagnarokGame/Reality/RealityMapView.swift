@@ -8,8 +8,6 @@
 import RealityKit
 import SwiftUI
 
-#if os(visionOS)
-
 public struct RealityMapView: View {
     var scene: RealityMapScene
 
@@ -64,5 +62,3 @@ private extension RealityMapView {
             }
     }
 }
-
-#endif

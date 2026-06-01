@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/31.
 //
 
-#if !os(visionOS)
-
 import Foundation
 import simd
 
@@ -36,5 +34,3 @@ struct MetalSkillEffect: Identifiable, Sendable {
         self.delay = delay
     }
 }
-
-#endif

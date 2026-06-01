@@ -5,10 +5,11 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-#if os(visionOS)
-
 import SwiftUI
 
+@available(visionOS 1.0, *)
+@available(iOS, unavailable)
+@available(macOS, unavailable)
 struct RealityMapScreen: View {
     var scene: RealityMapScene
 
@@ -30,5 +31,3 @@ struct RealityMapScreen: View {
             }
     }
 }
-
-#endif

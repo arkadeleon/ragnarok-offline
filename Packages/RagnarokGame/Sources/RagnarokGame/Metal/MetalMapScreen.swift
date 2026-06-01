@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-#if !os(visionOS)
-
 import SwiftUI
 import ThumbstickView
 
@@ -161,5 +159,3 @@ struct MetalMapScreen: View {
         }
     }
 }
-
-#endif

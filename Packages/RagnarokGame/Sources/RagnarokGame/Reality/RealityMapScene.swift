@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-#if os(visionOS)
-
 import AVFAudio
 import CoreGraphics
 import Foundation
@@ -725,5 +723,3 @@ extension RealityMapScene {
         return resource
     }
 }
-
-#endif

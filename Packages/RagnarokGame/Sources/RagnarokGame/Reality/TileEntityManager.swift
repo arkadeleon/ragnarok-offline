@@ -21,7 +21,6 @@ final class TileEntityManager {
     }
 
     func addTileEntities(forCenter center: SIMD2<Int>) {
-        #if os(visionOS)
         for offsetX in (-range)...(range) {
             for offsetY in (-range)...(range) {
                 let x = center.x + offsetX
@@ -73,11 +72,9 @@ final class TileEntityManager {
                 rootEntity.addChild(tileEntity)
             }
         }
-        #endif
     }
 
     func updateTileEntities(forCenter center: SIMD2<Int>) {
-        #if os(visionOS)
         for offsetX in (-range)...(range) {
             for offsetY in (-range)...(range) {
                 let x = center.x + offsetX
@@ -112,6 +109,5 @@ final class TileEntityManager {
                 }
             }
         }
-        #endif
     }
 }

@@ -5,8 +5,6 @@
 //  Created by Leon Li on 2026/3/20.
 //
 
-#if !os(visionOS)
-
 import CoreGraphics
 import Observation
 import RagnarokModels
@@ -28,5 +26,3 @@ struct MetalGaugeOverlay: Identifiable, Sendable {
     var worldPosition: SIMD3<Float>?
     var screenPosition: CGPoint?
 }
-
-#endif
