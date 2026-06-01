@@ -27,48 +27,49 @@ extension RealityMapScene {
         tileEntityManager?.updateTileEntities(forCenter: endPosition)
     }
 
-    public func onPlayerParameterChanged(_ packet: PACKET_ZC_PAR_CHANGE) {
-        guard let playerEntity = objectEntities[player.objectID],
-              let sp = StatusProperty(rawValue: Int(packet.varID)) else {
+    public func onPlayerStatusChanged(property: StatusProperty, value: Int) {
+        guard let playerEntity = objectEntities[player.objectID] else {
             return
         }
 
-        switch sp {
+        switch property {
         case .hp:
-            playerEntity.components[HealthPointsComponent.self]?.hp = Int(packet.count)
+            playerEntity.components[HealthPointsComponent.self]?.hp = value
         case .maxhp:
-            playerEntity.components[HealthPointsComponent.self]?.maxHp = Int(packet.count)
+            playerEntity.components[HealthPointsComponent.self]?.maxHp = value
         case .sp:
-            playerEntity.components[SpellPointsComponent.self]?.sp = Int(packet.count)
+            playerEntity.components[SpellPointsComponent.self]?.sp = value
         case .maxsp:
-            playerEntity.components[SpellPointsComponent.self]?.maxSp = Int(packet.count)
+            playerEntity.components[SpellPointsComponent.self]?.maxSp = value
         default:
             break
         }
     }
 
-    public func onPlayerHealthPointsRecovered(hp: Int, amount: Int) {
-        objectEntities[player.objectID]?.components[HealthPointsComponent.self]?.hp = hp
+    public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
+        objectEntities[player.objectID]?.components[HealthPointsComponent.self]?.hp = current
 
-        addCombatText(MapSceneCombatText(
+        let combatText = MapSceneCombatText(
             creationTime: .now,
             target: MapSceneCombatText.Target(objectID: player.objectID, isPlayer: true),
-            amount: amount,
+            amount: recovered,
             kind: .hpRecovery,
             delay: .zero
-        ))
+        )
+        addCombatText(combatText)
     }
 
-    public func onPlayerSpellPointsRecovered(sp: Int, amount: Int) {
-        objectEntities[player.objectID]?.components[SpellPointsComponent.self]?.sp = sp
+    public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
+        objectEntities[player.objectID]?.components[SpellPointsComponent.self]?.sp = current
 
-        addCombatText(MapSceneCombatText(
+        let combatText = MapSceneCombatText(
             creationTime: .now,
             target: MapSceneCombatText.Target(objectID: player.objectID, isPlayer: true),
-            amount: amount,
+            amount: recovered,
             kind: .spRecovery,
             delay: .zero
-        ))
+        )
+        addCombatText(combatText)
     }
 
     public func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
@@ -126,11 +127,12 @@ extension RealityMapScene {
         }
     }
 
-    public func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
-        if type == 1 && objectID == player.objectID {
+    public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
+        switch type {
+        case .dead where objectID == player.objectID:
             let direction = objectEntities[objectID]?.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
             objectEntities[objectID]?.playSpriteAnimation(.die, direction: direction)
-        } else {
+        default:
             Task {
                 try? await spriteEntityManager.removeEntity(for: objectID)
                 objectEntities.removeValue(forKey: objectID)
@@ -156,8 +158,7 @@ extension RealityMapScene {
         entity.playSpriteAnimation(.idle, direction: spriteDirection)
     }
 
-    public func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
-        // MapObject is immutable; full entity reload deferred to a later phase.
+    public func onMapObjectSpriteChanged(objectID: GameObjectID, look: Look, value: Int, value2: Int) {
     }
 
     public func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
@@ -215,13 +216,13 @@ extension RealityMapScene {
         }
     }
 
-    public func onMapObjectHealthUpdated(_ packet: PACKET_ZC_HP_INFO) {
-        guard let entity = objectEntities[packet.GID] else {
+    public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
+        guard let entity = objectEntities[objectID] else {
             return
         }
 
-        entity.components[HealthPointsComponent.self]?.hp = Int(packet.HP)
-        entity.components[HealthPointsComponent.self]?.maxHp = Int(packet.maxHP)
+        entity.components[HealthPointsComponent.self]?.hp = hp
+        entity.components[HealthPointsComponent.self]?.maxHp = maxHp
     }
 
     public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
@@ -249,7 +250,7 @@ extension RealityMapScene {
         }
     }
 
-    public func onGroundSkillCast(_ packet: PACKET_ZC_NOTIFY_GROUNDSKILL) {
+    public func onGroundSkillCast(skillID: SkillID, position: SIMD2<Int>) {
     }
 }
 

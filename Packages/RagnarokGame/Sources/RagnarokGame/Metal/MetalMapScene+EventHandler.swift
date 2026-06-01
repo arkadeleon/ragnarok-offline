@@ -13,69 +13,61 @@ import RagnarokSprite
 import simd
 
 extension MetalMapScene {
-    public func onPlayerParameterChanged(_ packet: PACKET_ZC_PAR_CHANGE) {
-        guard let sp = StatusProperty(rawValue: Int(packet.varID)) else {
-            return
-        }
-
+    public func onPlayerStatusChanged(property: StatusProperty, value: Int) {
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
 
-        switch sp {
+        switch property {
         case .hp:
-            let hp = Int(packet.count)
-            state.overlay.gauges[player.objectID]?.hp = hp
-            playerObject?.hp = hp
+            state.overlay.gauges[player.objectID]?.hp = value
+            playerObject?.hp = value
             renderBackend.updateObject(objectID: player.objectID)
         case .maxhp:
-            let maxHp = Int(packet.count)
-            state.overlay.gauges[player.objectID]?.maxHp = maxHp
-            playerObject?.maxHp = maxHp
+            state.overlay.gauges[player.objectID]?.maxHp = value
+            playerObject?.maxHp = value
             renderBackend.updateObject(objectID: player.objectID)
         case .sp:
-            let sp = Int(packet.count)
-            state.overlay.gauges[player.objectID]?.sp = sp
-            playerObject?.sp = sp
+            state.overlay.gauges[player.objectID]?.sp = value
+            playerObject?.sp = value
             renderBackend.updateObject(objectID: player.objectID)
         case .maxsp:
-            let maxSp = Int(packet.count)
-            state.overlay.gauges[player.objectID]?.maxSp = maxSp
-            playerObject?.maxSp = maxSp
+            state.overlay.gauges[player.objectID]?.maxSp = value
+            playerObject?.maxSp = value
             renderBackend.updateObject(objectID: player.objectID)
         default:
             break
         }
     }
 
-    public func onPlayerHealthPointsRecovered(hp: Int, amount: Int) {
-        state.overlay.gauges[player.objectID]?.hp = hp
+    public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
+        state.overlay.gauges[player.objectID]?.hp = current
 
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
-        playerObject?.hp = hp
+        playerObject?.hp = current
 
         renderBackend.updateObject(objectID: player.objectID)
 
         let combatText = MetalCombatText(
             creationTime: .now,
             target: MetalCombatText.Target(objectID: player.objectID, isPlayer: true),
-            amount: amount,
+            amount: recovered,
             kind: .hpRecovery,
             delay: .zero
         )
         renderBackend.addCombatText(combatText)
     }
 
-    public func onPlayerSpellPointsRecovered(sp: Int, amount: Int) {
-        state.overlay.gauges[player.objectID]?.sp = sp
+    public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
+        state.overlay.gauges[player.objectID]?.sp = current
 
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
-        playerObject?.sp = sp
+        playerObject?.sp = current
 
         renderBackend.updateObject(objectID: player.objectID)
 
         let combatText = MetalCombatText(
             creationTime: .now,
             target: MetalCombatText.Target(objectID: player.objectID, isPlayer: true),
-            amount: amount,
+            amount: recovered,
             kind: .spRecovery,
             delay: .zero
         )
@@ -105,11 +97,7 @@ extension MetalMapScene {
         renderBackend.updateObject(objectID: player.objectID)
     }
 
-    public func onMapObjectHealthUpdated(_ packet: PACKET_ZC_HP_INFO) {
-        let objectID = packet.GID
-        let hp = Int(packet.HP)
-        let maxHp = Int(packet.maxHP)
-
+    public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
         if let metalObject = objectRegistry.object(for: objectID) {
             metalObject.hp = hp
             metalObject.maxHp = maxHp
@@ -207,9 +195,9 @@ extension MetalMapScene {
         }
     }
 
-    public func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
+    public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
         switch type {
-        case 1 where objectID == player.objectID:
+        case .dead where objectID == player.objectID:
             renderBackend.performObjectAction(
                 objectID: objectID,
                 action: .die,
@@ -271,38 +259,33 @@ extension MetalMapScene {
         }
     }
 
-    public func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
-        let objectID = packet.AID
+    public func onMapObjectSpriteChanged(objectID: GameObjectID, look: Look, value: Int, value2: Int) {
         guard let metalObject = objectRegistry.object(for: objectID) else {
-            return
-        }
-
-        guard let look = Look(rawValue: Int(packet.type)) else {
             return
         }
 
         switch look {
         case .base:
-            metalObject.job = Int(packet.val)
+            metalObject.job = value
         case .hair:
-            metalObject.hairStyle = Int(packet.val)
+            metalObject.hairStyle = value
         case .weapon:
-            metalObject.weapon = Int(packet.val)
-            metalObject.shield = Int(packet.val2)
+            metalObject.weapon = value
+            metalObject.shield = value2
         case .head_bottom:
-            metalObject.headBottom = Int(packet.val)
+            metalObject.headBottom = value
         case .head_top:
-            metalObject.headTop = Int(packet.val)
+            metalObject.headTop = value
         case .head_mid:
-            metalObject.headMid = Int(packet.val)
+            metalObject.headMid = value
         case .hair_color:
-            metalObject.hairColor = Int(packet.val)
+            metalObject.hairColor = value
         case .clothes_color:
-            metalObject.clothesColor = Int(packet.val)
+            metalObject.clothesColor = value
         case .shield:
-            metalObject.shield = Int(packet.val)
+            metalObject.shield = value
         case .robe:
-            metalObject.garment = Int(packet.val)
+            metalObject.garment = value
         default:
             return
         }
@@ -415,12 +398,7 @@ extension MetalMapScene {
         renderBackend.removeItem(objectID: objectID)
     }
 
-    public func onGroundSkillCast(_ packet: PACKET_ZC_NOTIFY_GROUNDSKILL) {
-        guard let skillID = SkillID(rawValue: Int(packet.SKID)) else {
-            return
-        }
-
-        let position = SIMD2(Int(packet.xPos), Int(packet.yPos))
+    public func onGroundSkillCast(skillID: SkillID, position: SIMD2<Int>) {
         guard mapGrid.contains(position) else {
             return
         }

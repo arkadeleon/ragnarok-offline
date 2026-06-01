@@ -786,12 +786,15 @@ final public class GameSession {
         case let packet as PACKET_ZC_NOTIFY_SKILL:
             mapScene?.onMapObjectSkillPerformed(packet)
         case let packet as PACKET_ZC_NOTIFY_GROUNDSKILL:
-            mapScene?.onGroundSkillCast(packet)
+            if let skillID = SkillID(rawValue: Int(packet.SKID)) {
+                let position = SIMD2(Int(packet.xPos), Int(packet.yPos))
+                mapScene?.onGroundSkillCast(skillID: skillID, position: position)
+            }
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.count))
+                mapScene?.onPlayerStatusChanged(property: sp, value: Int(packet.count))
             }
-            mapScene?.onPlayerParameterChanged(packet)
         case let packet as PACKET_ZC_LONGPAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 playerStatus.update(property: sp, value: Int(packet.amount))
@@ -817,12 +820,12 @@ final public class GameSession {
                     let amount = Int(packet.amount)
                     let hp = min(playerStatus.hp + amount, playerStatus.maxHp)
                     playerStatus.hp = hp
-                    mapScene?.onPlayerHealthPointsRecovered(hp: hp, amount: amount)
+                    mapScene?.onPlayerHealthPointsRecovered(recovered: amount, current: hp)
                 case .sp:
                     let amount = Int(packet.amount)
                     let sp = min(playerStatus.sp + amount, playerStatus.maxSp)
                     playerStatus.sp = sp
-                    mapScene?.onPlayerSpellPointsRecovered(sp: sp, amount: amount)
+                    mapScene?.onPlayerSpellPointsRecovered(recovered: amount, current: sp)
                 default:
                     break
                 }
@@ -889,8 +892,9 @@ final public class GameSession {
             mapScene?.onMapObjectStopped(objectID: objectID, position: position)
         case let packet as PACKET_ZC_NOTIFY_VANISH:
             let objectID = packet.gid
+            let type = UnitClearType(rawValue: Int(packet.type)) ?? .outsight
             logger.info("Object \(objectID) vanished (type: \(packet.type))")
-            mapScene?.onMapObjectVanished(objectID: objectID, type: packet.type)
+            mapScene?.onMapObjectVanished(objectID: objectID, type: type)
         case let packet as PACKET_ZC_RESURRECTION:
             logger.info("Object \(packet.gid) resurrected")
             mapScene?.onMapObjectResurrected(objectID: packet.gid)
@@ -899,7 +903,9 @@ final public class GameSession {
             let headDirection = HeadDirection(rawValue: Int(packet.headDir)) ?? .lookForward
             mapScene?.onMapObjectDirectionChanged(objectID: packet.srcId, direction: direction, headDirection: headDirection)
         case let packet as PACKET_ZC_SPRITE_CHANGE:
-            mapScene?.onMapObjectSpriteChanged(packet)
+            if let look = Look(rawValue: Int(packet.type)) {
+                mapScene?.onMapObjectSpriteChanged(objectID: packet.AID, look: look, value: Int(packet.val), value2: Int(packet.val2))
+            }
         case let packet as PACKET_ZC_STATE_CHANGE:
             let bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
             let healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
@@ -910,7 +916,7 @@ final public class GameSession {
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
             messageCenter.addMessage(for: objectAction, account: account)
         case let packet as PACKET_ZC_HP_INFO:
-            mapScene?.onMapObjectHealthUpdated(packet)
+            mapScene?.onMapObjectHealthUpdated(objectID: packet.GID, hp: Int(packet.HP), maxHp: Int(packet.maxHP))
         case let packet as PACKET_ZC_SAY_DIALOG:
             if let dialog, dialog.npcID == packet.NpcID {
                 dialog.clearIfNeeded()

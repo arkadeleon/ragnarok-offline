@@ -113,6 +113,12 @@ let allConstantConversions: [ConstantConversion] = [
     // MARK: - map/clif.hpp
     .cEnum(
         source: "map/clif.hpp",
+        type: "clr_type",
+        prefix: "CLR_",
+        outputType: "UnitClearType"
+    ),
+    .cEnum(
+        source: "map/clif.hpp",
         type: "clif_equipitemack_flag",
         prefix: "ITEM_EQUIP_ACK_",
         outputType: "ItemEquipAcknowledgeFlag"
