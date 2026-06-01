@@ -117,7 +117,7 @@ struct MetalMapScreen: View {
                         presentedMenuItem = nil
                     }
                 case .options:
-                    OptionsView {
+                    OptionsView(isPlayerDead: scene.state.isPlayerDead) {
                         presentedMenuItem = nil
                     }
                 }

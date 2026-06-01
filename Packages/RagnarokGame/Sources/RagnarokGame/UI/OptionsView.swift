@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OptionsView: View {
+    var isPlayerDead: Bool
     var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
@@ -71,14 +72,10 @@ struct OptionsView: View {
         }
         .frame(width: 280)
     }
-
-    private var isPlayerDead: Bool {
-        gameSession.isPlayerDead
-    }
 }
 
 #Preview {
-    OptionsView()
+    OptionsView(isPlayerDead: false)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
 }
