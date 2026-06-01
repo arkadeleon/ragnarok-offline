@@ -10,33 +10,32 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
-@MainActor
-public class MetalMapObject {
-    public let objectID: GameObjectID
-    public var type: MapObjectType
-    public var name: String
-    public var speed: Int
-    public var job: Int
-    public var gender: Gender
-    public var hairStyle: Int
-    public var hairColor: Int
-    public var clothesColor: Int
-    public var weapon: Int
-    public var shield: Int
-    public var headTop: Int
-    public var headMid: Int
-    public var headBottom: Int
-    public var garment: Int
-    public var hp: Int
-    public var maxHp: Int
-    public var bodyState: StatusChangeOption1
-    public var healthState: StatusChangeOption2
-    public var effectState: StatusChangeOption
-    public var gridPosition: SIMD2<Int>
+class MetalMapObject {
+    let objectID: GameObjectID
+    var type: MapObjectType
+    var name: String
+    var speed: Int
+    var job: Int
+    var gender: Gender
+    var hairStyle: Int
+    var hairColor: Int
+    var clothesColor: Int
+    var weapon: Int
+    var shield: Int
+    var headTop: Int
+    var headMid: Int
+    var headBottom: Int
+    var garment: Int
+    var hp: Int
+    var maxHp: Int
+    var bodyState: StatusChangeOption1
+    var healthState: StatusChangeOption2
+    var effectState: StatusChangeOption
+    var gridPosition: SIMD2<Int>
 
-    public let animationController: MetalAnimationController
-    public let movementController: MetalMovementController
-    public let presentation: MetalObjectPresentation
+    let animationController: MetalAnimationController
+    let movementController: MetalMovementController
+    let presentation: MetalObjectPresentation
 
     init(
         object: MapObject,
@@ -127,10 +126,9 @@ public class MetalMapObject {
     }
 }
 
-@MainActor
-public final class MetalPlayerObject: MetalMapObject {
-    public var sp: Int
-    public var maxSp: Int
+final class MetalPlayerObject: MetalMapObject {
+    var sp: Int
+    var maxSp: Int
 
     init(
         object: MapObject,
@@ -159,14 +157,11 @@ public final class MetalPlayerObject: MetalMapObject {
     }
 }
 
-@MainActor
-public final class MetalMonsterObject: MetalMapObject {}
+final class MetalMonsterObject: MetalMapObject {}
 
-@MainActor
-public final class MetalNPCObject: MetalMapObject {}
+final class MetalNPCObject: MetalMapObject {}
 
 extension ComposedSprite.Configuration {
-    @MainActor
     init(object: MetalMapObject) {
         self.init(jobID: object.job)
         self.gender = object.gender

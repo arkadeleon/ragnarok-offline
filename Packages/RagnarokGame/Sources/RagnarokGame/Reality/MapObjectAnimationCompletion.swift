@@ -7,7 +7,7 @@
 
 import RagnarokSprite
 
-public enum MapObjectAnimationCompletion: Sendable, Equatable {
+enum MapObjectAnimationCompletion: Sendable, Equatable {
     case indefinite
     case after(Duration, settledAction: SpriteActionType)
     case once(settledAction: SpriteActionType)

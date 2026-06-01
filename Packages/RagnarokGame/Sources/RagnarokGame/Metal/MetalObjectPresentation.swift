@@ -7,9 +7,8 @@
 
 import simd
 
-@MainActor
-public final class MetalObjectPresentation {
-    public var worldPosition: SIMD3<Float>
+final class MetalObjectPresentation {
+    var worldPosition: SIMD3<Float>
 
     init(worldPosition: SIMD3<Float>) {
         self.worldPosition = worldPosition

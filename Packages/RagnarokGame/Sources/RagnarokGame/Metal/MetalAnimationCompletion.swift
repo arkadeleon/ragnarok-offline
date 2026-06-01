@@ -7,7 +7,7 @@
 
 import RagnarokSprite
 
-public enum MetalAnimationCompletion: Sendable, Equatable {
+enum MetalAnimationCompletion: Sendable, Equatable {
     case indefinite
     case after(Duration, settledAction: SpriteActionType)
     case once(settledAction: SpriteActionType)

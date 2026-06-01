@@ -8,11 +8,10 @@
 import RagnarokModels
 import simd
 
-@MainActor
-public final class MetalMapItem {
-    public let objectID: GameObjectID
-    public let itemID: Int
-    public let gridPosition: SIMD2<Int>
+final class MetalMapItem {
+    let objectID: GameObjectID
+    let itemID: Int
+    let gridPosition: SIMD2<Int>
 
     init(item: MapItem, gridPosition: SIMD2<Int>) {
         objectID = item.objectID

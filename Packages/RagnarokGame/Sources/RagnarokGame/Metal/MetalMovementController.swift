@@ -7,12 +7,11 @@
 
 import simd
 
-@MainActor
-public final class MetalMovementController {
+final class MetalMovementController {
     private let pathFinder: PathFinder
     private let mapGrid: MapGrid
 
-    public private(set) var movement: MetalMovement?
+    private(set) var movement: MetalMovement?
 
     init(pathFinder: PathFinder, mapGrid: MapGrid) {
         self.pathFinder = pathFinder

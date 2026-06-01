@@ -7,13 +7,13 @@
 
 import RagnarokSprite
 
-public struct MapObjectAnimationState: Sendable {
-    public var action: SpriteActionType
-    public var direction: SpriteDirection
-    public var headDirection: SpriteHeadDirection
-    public var startTime: ContinuousClock.Instant
-    public var elapsedTime: Duration = .zero
-    public var completion: MapObjectAnimationCompletion
+struct MapObjectAnimationState: Sendable {
+    var action: SpriteActionType
+    var direction: SpriteDirection
+    var headDirection: SpriteHeadDirection
+    var startTime: ContinuousClock.Instant
+    var elapsedTime: Duration = .zero
+    var completion: MapObjectAnimationCompletion
 
     static var defaultAnimation: MapObjectAnimationState {
         MapObjectAnimationState(

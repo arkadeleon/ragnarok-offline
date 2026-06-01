@@ -7,28 +7,28 @@
 
 import Foundation
 
-public struct MapSceneCombatText: Identifiable, Sendable {
-    public struct Target: Sendable {
-        public let objectID: GameObjectID
-        public let isPlayer: Bool
+struct MapSceneCombatText: Identifiable, Sendable {
+    struct Target: Sendable {
+        let objectID: GameObjectID
+        let isPlayer: Bool
     }
 
-    public enum Kind: Sendable, Equatable {
+    enum Kind: Sendable, Equatable {
         case miss
         case damage
         case hpRecovery
         case spRecovery
     }
 
-    public let id: UUID
-    public let creationTime: ContinuousClock.Instant
-    public let target: MapSceneCombatText.Target
-    public let amount: Int
-    public let kind: MapSceneCombatText.Kind
-    public let delay: Duration
-    public let duration: Duration
+    let id: UUID
+    let creationTime: ContinuousClock.Instant
+    let target: MapSceneCombatText.Target
+    let amount: Int
+    let kind: MapSceneCombatText.Kind
+    let delay: Duration
+    let duration: Duration
 
-    public init(
+    init(
         creationTime: ContinuousClock.Instant,
         target: MapSceneCombatText.Target,
         amount: Int,

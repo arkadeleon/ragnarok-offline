@@ -7,9 +7,8 @@
 
 import RagnarokSprite
 
-@MainActor
-public final class MetalAnimationController {
-    public private(set) var animation: MetalAnimation
+final class MetalAnimationController {
+    private(set) var animation: MetalAnimation
 
     init(direction: SpriteDirection, headDirection: SpriteHeadDirection, at time: ContinuousClock.Instant = .now) {
         animation = MetalAnimation(
