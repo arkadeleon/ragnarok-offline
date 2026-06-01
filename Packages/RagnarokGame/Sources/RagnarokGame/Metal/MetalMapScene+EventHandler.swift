@@ -19,19 +19,19 @@ extension MetalMapScene {
         case .hp:
             state.overlay.gauges[player.objectID]?.hp = value
             playerObject?.hp = value
-            updateObject(objectID: player.objectID)
+            refreshSpriteDrawables()
         case .maxhp:
             state.overlay.gauges[player.objectID]?.maxHp = value
             playerObject?.maxHp = value
-            updateObject(objectID: player.objectID)
+            refreshSpriteDrawables()
         case .sp:
             state.overlay.gauges[player.objectID]?.sp = value
             playerObject?.sp = value
-            updateObject(objectID: player.objectID)
+            refreshSpriteDrawables()
         case .maxsp:
             state.overlay.gauges[player.objectID]?.maxSp = value
             playerObject?.maxSp = value
-            updateObject(objectID: player.objectID)
+            refreshSpriteDrawables()
         default:
             break
         }
@@ -43,7 +43,7 @@ extension MetalMapScene {
         let playerObject = objects[player.objectID] as? MetalPlayerObject
         playerObject?.hp = current
 
-        updateObject(objectID: player.objectID)
+        refreshSpriteDrawables()
 
         let combatText = MetalCombatText(
             creationTime: .now,
@@ -61,7 +61,7 @@ extension MetalMapScene {
         let playerObject = objects[player.objectID] as? MetalPlayerObject
         playerObject?.sp = current
 
-        updateObject(objectID: player.objectID)
+        refreshSpriteDrawables()
 
         let combatText = MetalCombatText(
             creationTime: .now,
@@ -93,14 +93,14 @@ extension MetalMapScene {
             }
         }
 
-        updateObject(objectID: player.objectID)
+        refreshSpriteDrawables()
     }
 
     public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
         if let metalObject = objects[objectID] {
             metalObject.hp = hp
             metalObject.maxHp = maxHp
-            updateObject(objectID: objectID)
+            refreshSpriteDrawables()
         }
 
         state.overlay.gauges[objectID]?.hp = hp
@@ -197,11 +197,11 @@ extension MetalMapScene {
     public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
         switch type {
         case .dead where objectID == player.objectID:
-            performObjectAction(
-                objectID: objectID,
-                action: .die,
-                completion: .indefinite
-            )
+            if let object = objects[objectID] {
+                object.animationController.perform(.die, completion: .indefinite)
+                refreshSpriteDrawables()
+            }
+
             state.isPlayerDead = true
             state.overlay.gauges.removeValue(forKey: objectID)
         default:
@@ -212,22 +212,26 @@ extension MetalMapScene {
     }
 
     public func onMapObjectResurrected(objectID: GameObjectID) {
-        performObjectAction(
-            objectID: objectID,
-            action: .idle,
-            completion: .indefinite
-        )
+        if let object = objects[objectID] {
+            object.animationController.perform(.idle, completion: .indefinite)
+            refreshSpriteDrawables()
+        }
+
         if objectID == player.objectID {
             state.isPlayerDead = false
         }
     }
 
     public func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
-        turnObject(
-            objectID: objectID,
-            direction: SpriteDirection(direction: direction),
-            headDirection: SpriteHeadDirection(headDirection: headDirection)
-        )
+        guard let object = objects[objectID] else {
+            return
+        }
+
+        let direction = SpriteDirection(direction: direction)
+        let headDirection = SpriteHeadDirection(headDirection: headDirection)
+        object.animationController.turn(direction: direction, headDirection: headDirection)
+
+        refreshSpriteDrawables()
     }
 
     public func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
@@ -237,7 +241,7 @@ extension MetalMapScene {
             metalObject.bodyState = bodyState
             metalObject.healthState = healthState
             metalObject.effectState = effectState
-            updateObject(objectID: objectID)
+            refreshSpriteDrawables()
         }
 
         if isVisible {
@@ -289,7 +293,7 @@ extension MetalMapScene {
             return
         }
 
-        updateObject(objectID: objectID)
+        refreshSpriteDrawables()
     }
 
     public func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -332,12 +336,9 @@ extension MetalMapScene {
             .after(.milliseconds(objectAction.sourceSpeed), settledAction: .idle)
         }
 
-        if sourceObject != nil {
-            performObjectAction(
-                objectID: sourceID,
-                action: presentationAction,
-                completion: completion
-            )
+        if let sourceObject {
+            sourceObject.animationController.perform(presentationAction, completion: completion)
+            refreshSpriteDrawables()
         }
 
         addCombatTexts(for: objectAction, now: now)
@@ -353,11 +354,8 @@ extension MetalMapScene {
             let duration = Duration.milliseconds(objectSkill.attackDelay)
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            performObjectAction(
-                objectID: objectSkill.sourceObjectID,
-                action: action,
-                completion: .after(duration, settledAction: settledAction)
-            )
+            sourceObject.animationController.perform(action, completion: .after(duration, settledAction: settledAction))
+            refreshSpriteDrawables()
         }
 
         if objectSkill.damage >= 0 {
@@ -424,13 +422,6 @@ extension MetalMapScene {
         refreshSpriteDrawables()
     }
 
-    func updateObject(objectID: GameObjectID) {
-        guard objects[objectID] != nil else {
-            return
-        }
-        refreshSpriteDrawables()
-    }
-
     func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MetalMovement? {
         guard let object = objects[objectID] else {
             return nil
@@ -472,24 +463,6 @@ extension MetalMapScene {
         if objectID == player.objectID {
             updateCameraTarget()
         }
-    }
-
-    func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        guard let object = objects[objectID] else {
-            return
-        }
-
-        object.animationController.turn(direction: direction, headDirection: headDirection)
-        refreshSpriteDrawables()
-    }
-
-    func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MetalAnimationCompletion) {
-        guard let object = objects[objectID] else {
-            return
-        }
-
-        object.animationController.perform(action, completion: completion)
-        refreshSpriteDrawables()
     }
 
     private func afterAttackAction(for object: MetalMapObject?) -> SpriteActionType {
