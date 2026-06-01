@@ -119,11 +119,6 @@ extension RealityMapScene {
 
         let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
         entity.playSpriteAnimation(.idle, direction: direction)
-
-        if objectID == player.objectID, let action = pendingArrivalAction {
-            pendingArrivalAction = nil
-            action()
-        }
     }
 
     public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {

@@ -33,8 +33,6 @@ class SpriteActionSystem: System {
                 continue
             }
 
-            let desiredAnimation = entity.components[SpriteAnimationTimingComponent.self]?.animation
-
             if let nextActionType = actionComponent.nextActionType,
                let animationComponent = entity.components[SpriteAnimationComponent.self],
                animationComponent.elapsedTime >= animationComponent.animation.duration {
@@ -54,27 +52,13 @@ class SpriteActionSystem: System {
                 return animations[animationName]
             }
 
-            guard var animation = spriteAnimation(for: actionComponent.actionType) else {
+            guard let animation = spriteAnimation(for: actionComponent.actionType) else {
                 continue
             }
 
-            var desiredElapsedTime = desiredAnimation?.elapsedTime.timeInterval
-            if let desiredAnimation,
-               case .once(let settledActionType) = desiredAnimation.completion,
-               let settledAnimation = spriteAnimation(for: settledActionType),
-               actionComponent.actionType != settledActionType,
-               desiredAnimation.elapsedTime.timeInterval >= animation.duration {
-                desiredElapsedTime = desiredAnimation.elapsedTime.timeInterval - animation.duration
-                animation = settledAnimation
-            }
-
             if entity.components[SpriteAnimationComponent.self]?.animation != animation {
-                entity.setSpriteAnimation(animation, elapsedTime: desiredElapsedTime ?? 0)
+                entity.setSpriteAnimation(animation, elapsedTime: 0)
                 entity.generateModelAndCollisionShape(for: animation)
-            } else if let desiredElapsedTime,
-                      var animationComponent = entity.components[SpriteAnimationComponent.self] {
-                animationComponent.elapsedTime = desiredElapsedTime
-                entity.components.set(animationComponent)
             }
         }
     }

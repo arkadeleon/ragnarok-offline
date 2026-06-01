@@ -23,6 +23,8 @@ class SpriteAnimationSystem: System {
                 continue
             }
 
+            animationComponent.elapsedTime += context.deltaTime
+
             let animation = animationComponent.animation
             let frameIndex = Int(animationComponent.elapsedTime / animation.frameInterval) % animation.frameCount
 
@@ -33,8 +35,9 @@ class SpriteAnimationSystem: System {
                     offset: [Float(frameIndex) / Float(animation.frameCount), 0],
                     scale: [1 / Float(animation.frameCount), 1]
                 )
-                entity.components.set(animationComponent)
             }
+
+            entity.components.set(animationComponent)
         }
     }
 }

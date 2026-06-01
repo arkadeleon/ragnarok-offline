@@ -44,8 +44,6 @@ public final class RealityMapScene: GameMapScene {
     var objectEntities: [GameObjectID : Entity] = [:]
     var itemEntities: [GameObjectID : Entity] = [:]
 
-    var pendingArrivalAction: (@MainActor () -> Void)?
-
     var soundEffectResourceCache: [String : AudioBufferResource] = [:]
     var soundEffectLoadTasks: [String : Task<AudioBufferResource?, Never>] = [:]
 
@@ -155,7 +153,7 @@ public final class RealityMapScene: GameMapScene {
     }
 
     func selectGround(at position: SIMD2<Int>) {
-        pendingArrivalAction = nil
+        objectEntities[player.objectID]?.components.remove(LockOnComponent.self)
         tileSelectionRenderer.showSelection(at: position, in: mapGrid)
         gameSession?.requestMove(to: position)
     }
@@ -200,7 +198,7 @@ public final class RealityMapScene: GameMapScene {
         if path == [startPosition] {
             onArrival()
         } else if path.count > 1 {
-            pendingArrivalAction = onArrival
+            objectEntities[player.objectID]?.components.set(LockOnComponent(action: onArrival))
             gameSession?.requestMove(to: path.last ?? targetPosition)
         }
     }
@@ -294,6 +292,8 @@ public final class RealityMapScene: GameMapScene {
         HealthPointsComponent.registerComponent()
         SpellPointsComponent.registerComponent()
 
+        LockOnComponent.registerComponent()
+        LockOnSystem.registerSystem()
         WalkingComponent.registerComponent()
         WalkingSystem.registerSystem()
         TileComponent.registerComponent()
@@ -301,7 +301,6 @@ public final class RealityMapScene: GameMapScene {
         SpriteActionComponent.registerComponent()
         SpriteActionSystem.registerSystem()
         SpriteAnimationComponent.registerComponent()
-        SpriteAnimationTimingComponent.registerComponent()
         SpriteAnimationLibraryComponent.registerComponent()
         SpriteAnimationSystem.registerSystem()
         SpriteBillboardComponent.registerComponent()
