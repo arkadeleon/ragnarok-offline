@@ -1,5 +1,5 @@
 //
-//  MetalRenderBackend+Projecting.swift
+//  MetalMapScene+Projecting.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/4/9.
@@ -8,8 +8,8 @@
 import CoreGraphics
 import simd
 
-extension MetalRenderBackend: GameCoordinateSpaceProjecting {
-    func project(_ worldPoint: SIMD3<Float>) -> CGPoint? {
+extension MetalMapScene: GameCoordinateSpaceProjecting {
+    public func project(_ worldPoint: SIMD3<Float>) -> CGPoint? {
         guard let matrices = renderer.lastRenderMatrices else {
             return nil
         }
@@ -41,7 +41,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
         return CGPoint(x: sx, y: sy)
     }
 
-    func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)? {
+    public func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)? {
         guard let matrices = renderer.lastRenderMatrices else {
             return nil
         }
@@ -74,11 +74,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
         return (origin: nearPos, direction: direction)
     }
 
-    func hitTest(_ screenPoint: CGPoint) -> GameHitTestResult? {
-        guard let scene else {
-            return nil
-        }
-
+    public func hitTest(_ screenPoint: CGPoint) -> GameHitTestResult? {
         if let matrices = renderer.lastRenderMatrices {
             let viewport = renderer.lastViewport
             let hitBoxes = spriteHitBoxes(matrices: matrices, viewport: viewport)
@@ -87,7 +83,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
                 guard rect.contains(screenPoint) else {
                     continue
                 }
-                if scene.objectRegistry.object(for: objectID) != nil {
+                if objectRegistry.object(for: objectID) != nil {
                     return .mapObject(objectID: objectID)
                 }
             }
@@ -95,7 +91,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
                 guard rect.contains(screenPoint) else {
                     continue
                 }
-                if scene.itemRegistry.item(for: objectID) != nil {
+                if itemRegistry.item(for: objectID) != nil {
                     return .mapItem(objectID: objectID)
                 }
             }
@@ -105,7 +101,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
             return nil
         }
 
-        return groundHit(origin: origin, direction: direction, mapGrid: scene.mapGrid)
+        return groundHit(origin: origin, direction: direction, mapGrid: mapGrid)
     }
 
     private func spriteHitBoxes(
@@ -131,7 +127,7 @@ extension MetalRenderBackend: GameCoordinateSpaceProjecting {
 
         // Apply minimum hit area: 30pt for items, 60pt for others.
         for (objectID, rect) in hitBoxes {
-            let minSize: CGFloat = scene?.itemRegistry.item(for: objectID) != nil ? 30 : 60
+            let minSize: CGFloat = itemRegistry.item(for: objectID) != nil ? 30 : 60
             var hitBox = rect
             if hitBox.width < minSize {
                 hitBox = hitBox.insetBy(dx: (hitBox.width - minSize) / 2, dy: 0)

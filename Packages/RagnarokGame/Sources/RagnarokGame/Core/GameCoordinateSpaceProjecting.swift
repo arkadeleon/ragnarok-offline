@@ -15,7 +15,7 @@ public enum GameHitTestResult: Sendable {
 }
 
 @MainActor
-public protocol GameCoordinateSpaceProjecting: AnyObject {
+public protocol GameCoordinateSpaceProjecting {
 
     /// Projects a point from the 3D world coordinate system of the scene to the
     /// 2D pixel coordinate system of the screen.

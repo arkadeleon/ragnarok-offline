@@ -19,19 +19,19 @@ extension MetalMapScene {
         case .hp:
             state.overlay.gauges[player.objectID]?.hp = value
             playerObject?.hp = value
-            renderBackend.updateObject(objectID: player.objectID)
+            updateObject(objectID: player.objectID)
         case .maxhp:
             state.overlay.gauges[player.objectID]?.maxHp = value
             playerObject?.maxHp = value
-            renderBackend.updateObject(objectID: player.objectID)
+            updateObject(objectID: player.objectID)
         case .sp:
             state.overlay.gauges[player.objectID]?.sp = value
             playerObject?.sp = value
-            renderBackend.updateObject(objectID: player.objectID)
+            updateObject(objectID: player.objectID)
         case .maxsp:
             state.overlay.gauges[player.objectID]?.maxSp = value
             playerObject?.maxSp = value
-            renderBackend.updateObject(objectID: player.objectID)
+            updateObject(objectID: player.objectID)
         default:
             break
         }
@@ -43,7 +43,7 @@ extension MetalMapScene {
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
         playerObject?.hp = current
 
-        renderBackend.updateObject(objectID: player.objectID)
+        updateObject(objectID: player.objectID)
 
         let combatText = MetalCombatText(
             creationTime: .now,
@@ -52,7 +52,7 @@ extension MetalMapScene {
             kind: .hpRecovery,
             delay: .zero
         )
-        renderBackend.addCombatText(combatText)
+        renderCombatText(combatText)
     }
 
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
@@ -61,7 +61,7 @@ extension MetalMapScene {
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
         playerObject?.sp = current
 
-        renderBackend.updateObject(objectID: player.objectID)
+        updateObject(objectID: player.objectID)
 
         let combatText = MetalCombatText(
             creationTime: .now,
@@ -70,11 +70,11 @@ extension MetalMapScene {
             kind: .spRecovery,
             delay: .zero
         )
-        renderBackend.addCombatText(combatText)
+        renderCombatText(combatText)
     }
 
     public func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        let movement = renderBackend.moveObject(
+        let movement = moveObject(
             objectID: player.objectID,
             startPosition: startPosition,
             endPosition: endPosition
@@ -93,14 +93,14 @@ extension MetalMapScene {
             }
         }
 
-        renderBackend.updateObject(objectID: player.objectID)
+        updateObject(objectID: player.objectID)
     }
 
     public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
         if let metalObject = objectRegistry.object(for: objectID) {
             metalObject.hp = hp
             metalObject.maxHp = maxHp
-            renderBackend.updateObject(objectID: objectID)
+            updateObject(objectID: objectID)
         }
 
         state.overlay.gauges[objectID]?.hp = hp
@@ -120,7 +120,7 @@ extension MetalMapScene {
         )
         objectRegistry.add(metalObject)
 
-        renderBackend.addObject(
+        addObject(
             objectID: object.objectID,
             at: position,
             direction: SpriteDirection(direction: direction),
@@ -153,7 +153,7 @@ extension MetalMapScene {
             )
             objectRegistry.add(metalObject)
 
-            renderBackend.addObject(
+            addObject(
                 objectID: object.objectID,
                 at: startPosition,
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
@@ -172,7 +172,7 @@ extension MetalMapScene {
             objectRegistry.object(for: object.objectID)?.gridPosition = endPosition
         }
 
-        _ = renderBackend.moveObject(
+        _ = moveObject(
             objectID: object.objectID,
             startPosition: startPosition,
             endPosition: endPosition
@@ -181,7 +181,7 @@ extension MetalMapScene {
 
     public func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
         if objectRegistry.object(for: objectID) != nil {
-            renderBackend.stopObject(objectID: objectID, at: position)
+            stopObject(objectID: objectID, at: position)
         }
 
         objectRegistry.object(for: objectID)?.gridPosition = position
@@ -197,7 +197,7 @@ extension MetalMapScene {
     public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
         switch type {
         case .dead where objectID == player.objectID:
-            renderBackend.performObjectAction(
+            performObjectAction(
                 objectID: objectID,
                 action: .die,
                 completion: .indefinite
@@ -207,12 +207,13 @@ extension MetalMapScene {
         default:
             state.overlay.gauges.removeValue(forKey: objectID)
             objectRegistry.remove(objectID: objectID)
-            renderBackend.removeObject(objectID: objectID)
+            spriteSnapshots.removeValue(forKey: objectID)
+            refreshSpriteDrawables()
         }
     }
 
     public func onMapObjectResurrected(objectID: GameObjectID) {
-        renderBackend.performObjectAction(
+        performObjectAction(
             objectID: objectID,
             action: .idle,
             completion: .indefinite
@@ -223,7 +224,7 @@ extension MetalMapScene {
     }
 
     public func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
-        renderBackend.turnObject(
+        turnObject(
             objectID: objectID,
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
@@ -237,7 +238,7 @@ extension MetalMapScene {
             metalObject.bodyState = bodyState
             metalObject.healthState = healthState
             metalObject.effectState = effectState
-            renderBackend.updateObject(objectID: objectID)
+            updateObject(objectID: objectID)
         }
 
         if isVisible {
@@ -289,7 +290,7 @@ extension MetalMapScene {
             return
         }
 
-        renderBackend.updateObject(objectID: objectID)
+        updateObject(objectID: objectID)
     }
 
     public func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -333,7 +334,7 @@ extension MetalMapScene {
         }
 
         if sourceObject != nil {
-            renderBackend.performObjectAction(
+            performObjectAction(
                 objectID: sourceID,
                 action: presentationAction,
                 completion: completion
@@ -353,7 +354,7 @@ extension MetalMapScene {
             let duration = Duration.milliseconds(objectSkill.attackDelay)
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            renderBackend.performObjectAction(
+            performObjectAction(
                 objectID: objectSkill.sourceObjectID,
                 action: action,
                 completion: .after(duration, settledAction: settledAction)
@@ -375,7 +376,7 @@ extension MetalMapScene {
                     amount: damage / count,
                     delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
                 )
-                renderBackend.addCombatText(combatText)
+                renderCombatText(combatText)
             }
         }
 
@@ -386,13 +387,15 @@ extension MetalMapScene {
     public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
         let metalItem = MetalMapItem(item: item, gridPosition: position)
         itemRegistry.add(metalItem)
-
-        renderBackend.addItem(metalItem)
+        items[item.objectID] = metalItem
+        refreshSpriteDrawables()
     }
 
     public func onItemVanished(objectID: GameObjectID) {
         itemRegistry.remove(objectID: objectID)
-        renderBackend.removeItem(objectID: objectID)
+        items.removeValue(forKey: objectID)
+        spriteSnapshots.removeValue(forKey: objectID)
+        refreshSpriteDrawables()
     }
 
     public func onGroundSkillCast(skillID: SkillID, position: SIMD2<Int>) {
@@ -414,6 +417,85 @@ extension MetalMapScene {
 }
 
 extension MetalMapScene {
+    func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+        guard let object = objectRegistry.object(for: objectID) else {
+            return
+        }
+        object.gridPosition = gridPosition
+        object.animationController.perform(.idle, completion: .indefinite)
+        object.animationController.turn(direction: direction, headDirection: headDirection)
+        object.presentation.worldPosition = mapGrid.worldPosition(for: gridPosition)
+        refreshSpriteDrawables()
+    }
+
+    func updateObject(objectID: GameObjectID) {
+        guard objectRegistry.object(for: objectID) != nil else {
+            return
+        }
+        refreshSpriteDrawables()
+    }
+
+    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MetalMovement? {
+        guard let object = objectRegistry.object(for: objectID) else {
+            return nil
+        }
+
+        let now = ContinuousClock.now
+        let movement = object.movementController.replan(
+            startPosition: startPosition,
+            endPosition: endPosition,
+            speed: object.speed,
+            at: now
+        )
+
+        object.gridPosition = movement.currentPosition
+        let remainingDuration = movement.remainingDuration(at: now)
+        object.animationController.perform(
+            .walk,
+            completion: .after(remainingDuration, settledAction: .idle),
+            at: now
+        )
+        object.animationController.setDirection(movement.finalDirection)
+
+        refreshSpriteDrawables()
+        if objectID == player.objectID {
+            updateCameraTarget()
+        }
+
+        return movement
+    }
+
+    func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
+        if let object = objectRegistry.object(for: objectID) {
+            object.gridPosition = position
+            object.movementController.stop()
+            object.animationController.perform(.idle, completion: .indefinite)
+        }
+
+        refreshSpriteDrawables()
+        if objectID == player.objectID {
+            updateCameraTarget()
+        }
+    }
+
+    func turnObject(objectID: GameObjectID, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+        guard let object = objectRegistry.object(for: objectID) else {
+            return
+        }
+
+        object.animationController.turn(direction: direction, headDirection: headDirection)
+        refreshSpriteDrawables()
+    }
+
+    func performObjectAction(objectID: GameObjectID, action: SpriteActionType, completion: MetalAnimationCompletion) {
+        guard let object = objectRegistry.object(for: objectID) else {
+            return
+        }
+
+        object.animationController.perform(action, completion: completion)
+        refreshSpriteDrawables()
+    }
+
     private func afterAttackAction(for object: MetalMapObject?) -> SpriteActionType {
         guard let object else {
             return .idle
@@ -422,7 +504,11 @@ extension MetalMapScene {
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
         return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
     }
+}
 
+// MARK: - Combat Text
+
+extension MetalMapScene {
     private func addCombatTexts(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
         let target = MetalCombatText.Target(
             objectID: objectAction.targetObjectID,
@@ -437,7 +523,7 @@ extension MetalMapScene {
                 amount: objectAction.damage,
                 delay: .milliseconds(objectAction.sourceSpeed)
             )
-            renderBackend.addCombatText(combatText)
+            renderCombatText(combatText)
 
             if objectAction.damage2 > 0 {
                 let combatText2 = MetalCombatText(
@@ -446,7 +532,7 @@ extension MetalMapScene {
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                renderBackend.addCombatText(combatText2)
+                renderCombatText(combatText2)
             }
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
@@ -457,7 +543,7 @@ extension MetalMapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed)
                 )
-                renderBackend.addCombatText(combatText)
+                renderCombatText(combatText)
             }
             if objectAction.damage2 > 0 {
                 let combatText = MetalCombatText(
@@ -466,7 +552,7 @@ extension MetalMapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                 )
-                renderBackend.addCombatText(combatText)
+                renderCombatText(combatText)
 
                 let combatText2 = MetalCombatText(
                     creationTime: now,
@@ -474,7 +560,7 @@ extension MetalMapScene {
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                renderBackend.addCombatText(combatText2)
+                renderCombatText(combatText2)
             } else {
                 let combatText = MetalCombatText(
                     creationTime: now,
@@ -482,17 +568,51 @@ extension MetalMapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                 )
-                renderBackend.addCombatText(combatText)
+                renderCombatText(combatText)
             }
         default:
             break
         }
     }
 
+    private func renderCombatText(_ combatText: MetalCombatText) {
+        guard let combatTextSpriteSet else {
+            return
+        }
+
+        guard renderer.combatTextResources[combatText.id] == nil else {
+            return
+        }
+
+        guard let startPosition = spriteSnapshots[combatText.target.objectID]?.worldPosition
+            ?? fallbackWorldPosition(for: combatText.target.objectID) else {
+            return
+        }
+
+        renderer.combatTextResources[combatText.id] = CombatTextRenderResource(
+            device: renderer.device,
+            combatText: combatText,
+            startPosition: startPosition,
+            spriteSet: combatTextSpriteSet
+        )
+    }
+
+    private func fallbackWorldPosition(for objectID: GameObjectID) -> SIMD3<Float>? {
+        if let object = objectRegistry.object(for: objectID) {
+            return object.presentation.worldPosition
+        } else {
+            return nil
+        }
+    }
+}
+
+// MARK: - Effect
+
+extension MetalMapScene {
     private func addSkillHitEffects(for objectSkill: MapObjectSkill) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
-              let targetPosition = renderBackend.gridPosition(for: objectSkill.targetObjectID) else {
+              let targetPosition = objectRegistry.object(for: objectSkill.targetObjectID)?.gridPosition else {
             return
         }
 
@@ -515,7 +635,7 @@ extension MetalMapScene {
         guard let skillID = objectSkill.skillID,
               objectRegistry.object(for: objectSkill.sourceObjectID) != nil,
               objectRegistry.object(for: objectSkill.targetObjectID) != nil,
-              let targetPosition = renderBackend.gridPosition(for: objectSkill.targetObjectID),
+              let targetPosition = objectRegistry.object(for: objectSkill.targetObjectID)?.gridPosition,
               objectSkill.damageType != .splash, objectSkill.damageType != .splash_endure else {
             return
         }
@@ -549,10 +669,50 @@ extension MetalMapScene {
                 attachedObjectID: attachedObjectID,
                 delay: delay
             )
-            renderBackend.addEffect(effect)
+            renderEffect(effect)
         }
     }
 
+    private func renderEffect(_ effect: MetalSkillEffect) {
+        if let soundName = effect.effectDefinition.soundName {
+            audioPlayer.playSound(named: soundName, after: effect.delay)
+        }
+
+        let worldPosition = mapGrid.worldPosition(for: effect.gridPosition)
+        let effectID = effect.id
+
+        effectLoadTasks[effectID] = Task { [weak self] in
+            guard let self else {
+                return
+            }
+            defer {
+                self.effectLoadTasks[effectID] = nil
+            }
+
+            do {
+                guard let effectAssetStore else {
+                    return
+                }
+
+                let asset = try await effectAssetStore.asset(for: effect.effectDefinition)
+
+                renderer.effectResources[effectID] = try STREffectRenderResource(
+                    device: renderer.device,
+                    effect: effect,
+                    strEffect: asset.effect,
+                    textures: asset.textures,
+                    worldPosition: worldPosition
+                )
+            } catch {
+                logger.warning("Metal map scene failed to load effect \(effect.effectID): \(error)")
+            }
+        }
+    }
+}
+
+// MARK: - Sound
+
+extension MetalMapScene {
     private func playSound(for objectAction: MapObjectAction) {
         let isAttackAction = switch objectAction.type {
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
@@ -572,7 +732,7 @@ extension MetalMapScene {
             let weaponType = WeaponType(rawValue: sourceObject.weapon) ?? .w_fist
             let soundName = WeaponSoundTable.attackSoundNames(for: weaponType).randomElement()
             if let soundName {
-                renderBackend.playSound(named: soundName, on: objectAction.sourceObjectID)
+                audioPlayer.playSound(named: soundName)
             }
         }
 
@@ -594,7 +754,7 @@ extension MetalMapScene {
                 Task { @MainActor [weak self] in
                     try? await Task.sleep(for: .milliseconds(objectAction.sourceSpeed))
                     guard let self else { return }
-                    renderBackend.playSound(named: hitSoundName, on: objectAction.targetObjectID)
+                    audioPlayer.playSound(named: hitSoundName)
                 }
             }
         }

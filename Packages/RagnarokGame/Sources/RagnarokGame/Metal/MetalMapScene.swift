@@ -9,6 +9,7 @@ import CoreGraphics
 import Foundation
 import RagnarokConstants
 import RagnarokCore
+import RagnarokMetalRendering
 import RagnarokModels
 import RagnarokPackets
 import RagnarokRenderAssets
@@ -29,9 +30,11 @@ public final class MetalMapScene: GameMapScene {
     let character: CharacterInfo
     let player: MapObject
     let playerPosition: SIMD2<Int>
-    let renderBackend: MetalRenderBackend
     let resourceManager: ResourceManager
     weak var gameSession: GameSession?
+
+    let renderer: MetalMapRenderer
+    let audioPlayer: MetalMapAudioPlayer
 
     let mapGrid: MapGrid
     let state: MetalSceneState
@@ -41,12 +44,20 @@ public final class MetalMapScene: GameMapScene {
 
     let pathFinder: PathFinder
 
+    let spriteSnapshotBuilder = SpriteSnapshotBuilder()
+    var spriteSnapshots: [GameObjectID : SpriteSnapshot] = [:]
+    var spriteAssetStore: SpriteAssetStore?
+    var combatTextSpriteSet: CombatTextSpriteSet?
+    var effectAssetStore: EffectAssetStore?
+    var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
+    var items: [GameObjectID : MetalMapItem] = [:]
+
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
 
     var cameraState: MapCameraState = .default {
         didSet {
-            renderBackend.updateCamera(cameraState)
+            updateCamera()
         }
     }
 
@@ -64,9 +75,10 @@ public final class MetalMapScene: GameMapScene {
         self.character = character
         self.player = player
         self.playerPosition = playerPosition
-        self.renderBackend = try MetalRenderBackend(resourceManager: resourceManager)
         self.resourceManager = resourceManager
         self.gameSession = gameSession
+        self.renderer = try MetalMapRenderer()
+        self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
 
         self.mapGrid = MapGrid(gat: world.gat)
         self.state = MetalSceneState()
@@ -93,22 +105,26 @@ public final class MetalMapScene: GameMapScene {
             maxSp: character.maxSp,
             objectType: player.type
         )
-
-        renderBackend.attach(scene: self)
     }
 
     public func load(progress: Progress) async {
-        await renderBackend.load(progress: progress)
-        renderBackend.addObject(objectID: player.objectID, at: playerPosition, direction: .south, headDirection: .lookForward)
-        renderBackend.updateCamera(cameraState)
+        do {
+            try await prepareRenderResources(progress: progress)
+            await audioPlayer.playBGM(forMapName: mapName)
+        } catch {
+            logger.warning("Metal map scene failed to load world asset: \(error)")
+        }
+
+        addObject(objectID: player.objectID, at: playerPosition, direction: .south, headDirection: .lookForward)
+        updateCamera()
     }
 
     public func unload() {
         arrivalTask?.cancel()
         arrivalTask = nil
         pendingArrivalAction = nil
-        renderBackend.unload()
-        renderBackend.detach()
+        audioPlayer.stopAll()
+        clearRenderResources()
     }
 
     func handleMovement(_ movementValue: CGPoint) {
@@ -127,7 +143,7 @@ public final class MetalMapScene: GameMapScene {
     }
 
     func selectGround(at position: SIMD2<Int>) {
-        renderBackend.showSelection(at: position, mapGrid: mapGrid)
+        renderer.tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
         gameSession?.requestMove(to: position)
     }
 
@@ -293,6 +309,148 @@ public final class MetalMapScene: GameMapScene {
             gameSession?.requestMove(to: destination)
         case .noPath:
             break
+        }
+    }
+}
+
+extension MetalMapScene {
+    func updateCamera() {
+        refreshSpriteDrawables()
+        updateCameraTarget()
+    }
+
+    func prepareFrame() {
+        removeExpiredCombatTexts()
+        removeExpiredEffects()
+        refreshSpriteDrawables()
+        updateCameraTarget()
+        syncAndProjectOverlay()
+    }
+
+    func refreshSpriteDrawables() {
+        let snapshots = spriteSnapshotBuilder.build(
+            items: items,
+            scene: self
+        )
+        spriteSnapshots = snapshots
+        renderer.spriteDrawables = spriteAssetStore?.sync(snapshots: snapshots) ?? []
+    }
+
+    func updateCameraTarget() {
+        let targetPosition: SIMD3<Float>
+        if let playerObject = objectRegistry.object(for: player.objectID) {
+            targetPosition = playerObject.presentation.worldPosition
+        } else {
+            targetPosition = mapGrid.worldPosition(for: playerPosition)
+        }
+        renderer.updateCamera(
+            cameraState: cameraState,
+            targetPosition: targetPosition
+        )
+    }
+
+    private func syncAndProjectOverlay() {
+        for objectID in state.overlay.gauges.keys {
+            guard let object = objectRegistry.object(for: objectID) else {
+                continue
+            }
+            var worldPosition = object.presentation.worldPosition
+            worldPosition += [0, -0.8, 0]
+            state.overlay.gauges[objectID]?.worldPosition = worldPosition
+
+            let screenPosition = project(worldPosition)
+            state.overlay.gauges[objectID]?.screenPosition = screenPosition
+        }
+    }
+
+    func prepareRenderResources(progress: Progress) async throws {
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(
+            gat: world.gat,
+            gnd: world.gnd,
+            rsw: world.rsw,
+            resourceManager: resourceManager,
+            progress: progress
+        )
+        let skyboxConfiguration = SkyboxConfiguration.generate(
+            light: world.rsw.light,
+            mapWidth: mapGrid.width,
+            mapHeight: mapGrid.height
+        )
+
+        renderer.skyboxResource = SkyboxRenderResource(device: renderer.device, configuration: skyboxConfiguration)
+        renderer.groundResource = GroundRenderResource(device: renderer.device, asset: worldAsset.ground)
+        renderer.waterResource = WaterRenderResource(device: renderer.device, asset: worldAsset.water)
+        renderer.modelResources = worldAsset.modelGroups.map { modelGroup in
+            RSMModelRenderResource(
+                device: renderer.device,
+                prototype: modelGroup.prototype,
+                instances: modelGroup.instances
+            )
+        }
+
+        do {
+            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
+            let image = try await resourceManager.image(at: path)
+            renderer.tileSelectorResource = TileSelectorRenderResource(device: renderer.device, image: image.cgImage)
+        } catch {
+            logger.warning("Metal map scene failed to load grid.tga: \(error)")
+        }
+
+        let scriptContext = await resourceManager.scriptContext
+        spriteAssetStore = SpriteAssetStore(
+            device: renderer.device,
+            resourceManager: resourceManager,
+            scriptContext: scriptContext
+        )
+
+        do {
+            combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
+        } catch {
+            combatTextSpriteSet = nil
+            logger.warning("Metal map scene failed to load combat text sprites: \(error)")
+        }
+
+        effectAssetStore = EffectAssetStore(
+            device: renderer.device,
+            resourceManager: resourceManager
+        )
+    }
+
+    func clearRenderResources() {
+        spriteAssetStore?.cancelAllTasks()
+        spriteAssetStore = nil
+        spriteSnapshots.removeAll()
+        items.removeAll()
+        combatTextSpriteSet = nil
+        for task in effectLoadTasks.values {
+            task.cancel()
+        }
+        effectAssetStore?.cancelAllTasks()
+        effectAssetStore = nil
+        effectLoadTasks.removeAll()
+
+        renderer.skyboxResource = nil
+        renderer.groundResource = nil
+        renderer.waterResource = nil
+        renderer.modelResources.removeAll()
+        renderer.spriteDrawables.removeAll()
+        renderer.combatTextResources.removeAll()
+        renderer.effectResources.removeAll()
+        renderer.tileSelectorResource = nil
+    }
+
+    private func removeExpiredCombatTexts() {
+        let now = ContinuousClock.now
+        renderer.combatTextResources = renderer.combatTextResources.filter { _, resource in
+            !resource.isExpired(at: now)
+        }
+    }
+
+    private func removeExpiredEffects() {
+        let now = ContinuousClock.now
+        renderer.effectResources = renderer.effectResources.filter { _, resource in
+            !resource.isExpired(at: now)
         }
     }
 }

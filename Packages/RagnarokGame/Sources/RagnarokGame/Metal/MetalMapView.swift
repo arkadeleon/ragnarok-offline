@@ -24,7 +24,6 @@ struct MetalMapView: UIViewControllerRepresentable {
 
 final class MetalMapViewController: UIViewController, MTKViewDelegate {
     private weak var scene: MetalMapScene?
-    private let backend: MetalRenderBackend
     private let commandQueue: any MTLCommandQueue
     private let renderer: MetalMapRenderer
     private var mtkView: MTKView!
@@ -35,8 +34,7 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
 
     init(scene: MetalMapScene) {
         self.scene = scene
-        self.backend = scene.renderBackend
-        self.renderer = backend.renderer
+        self.renderer = scene.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
             fatalError("MetalMapViewController: failed to create Metal command queue")
         }
@@ -92,7 +90,7 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
             return
         }
 
-        backend.prepareFrame()
+        scene?.prepareFrame()
 
         renderer.render(
             atTime: CACurrentMediaTime(),
@@ -111,7 +109,7 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         }
 
         let point = gestureRecognizer.location(in: mtkView)
-        if let result = backend.hitTest(point) {
+        if let result = scene.hitTest(point) {
             scene.handleInteraction(result)
         }
     }
@@ -194,7 +192,6 @@ struct MetalMapView: NSViewControllerRepresentable {
 
 final class MetalMapViewController: NSViewController, MTKViewDelegate {
     private weak var scene: MetalMapScene?
-    private let backend: MetalRenderBackend
     private let commandQueue: any MTLCommandQueue
     private let renderer: MetalMapRenderer
     private var mtkView: MTKView!
@@ -205,8 +202,7 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
 
     init(scene: MetalMapScene) {
         self.scene = scene
-        self.backend = scene.renderBackend
-        self.renderer = backend.renderer
+        self.renderer = scene.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
             fatalError("MetalMapViewController: failed to create Metal command queue")
         }
@@ -250,7 +246,7 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
             return
         }
 
-        backend.prepareFrame()
+        scene?.prepareFrame()
 
         renderer.render(
             atTime: CACurrentMediaTime(),
@@ -267,7 +263,7 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
         var point = mtkView.convert(event.locationInWindow, from: nil)
         // NSView has bottom-left origin; flip to top-left for hit testing.
         point.y = mtkView.bounds.height - point.y
-        if let result = backend.hitTest(point) {
+        if let result = scene?.hitTest(point) {
             scene?.handleInteraction(result)
         }
     }
