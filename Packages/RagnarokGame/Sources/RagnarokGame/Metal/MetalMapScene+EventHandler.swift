@@ -13,7 +13,7 @@ import RagnarokSprite
 import simd
 
 extension MetalMapScene {
-    func onPlayerParameterChanged(_ packet: PACKET_ZC_PAR_CHANGE) {
+    public func onPlayerParameterChanged(_ packet: PACKET_ZC_PAR_CHANGE) {
         guard let sp = StatusProperty(rawValue: Int(packet.varID)) else {
             return
         }
@@ -46,7 +46,7 @@ extension MetalMapScene {
         }
     }
 
-    func onPlayerHealthPointsRecovered(hp: Int, amount: Int) {
+    public func onPlayerHealthPointsRecovered(hp: Int, amount: Int) {
         state.overlay.gauges[player.objectID]?.hp = hp
 
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
@@ -64,7 +64,7 @@ extension MetalMapScene {
         renderBackend.addCombatText(combatText)
     }
 
-    func onPlayerSpellPointsRecovered(sp: Int, amount: Int) {
+    public func onPlayerSpellPointsRecovered(sp: Int, amount: Int) {
         state.overlay.gauges[player.objectID]?.sp = sp
 
         let playerObject = objectRegistry.object(for: player.objectID) as? MetalPlayerObject
@@ -82,7 +82,7 @@ extension MetalMapScene {
         renderBackend.addCombatText(combatText)
     }
 
-    func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+    public func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let movement = renderBackend.moveObject(
             objectID: player.objectID,
             startPosition: startPosition,
@@ -105,7 +105,7 @@ extension MetalMapScene {
         renderBackend.updateObject(objectID: player.objectID)
     }
 
-    func onMapObjectHealthUpdated(_ packet: PACKET_ZC_HP_INFO) {
+    public func onMapObjectHealthUpdated(_ packet: PACKET_ZC_HP_INFO) {
         let objectID = packet.GID
         let hp = Int(packet.HP)
         let maxHp = Int(packet.maxHP)
@@ -120,7 +120,7 @@ extension MetalMapScene {
         state.overlay.gauges[objectID]?.maxHp = maxHp
     }
 
-    func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
+    public func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
         let metalObject = MetalMapObject.make(
             object: object,
             hp: object.hp,
@@ -150,7 +150,7 @@ extension MetalMapScene {
         }
     }
 
-    func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+    public func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let isNew = objectRegistry.object(for: object.objectID) == nil
 
         if isNew {
@@ -192,7 +192,7 @@ extension MetalMapScene {
         )
     }
 
-    func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
+    public func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
         if objectRegistry.object(for: objectID) != nil {
             renderBackend.stopObject(objectID: objectID, at: position)
         }
@@ -207,7 +207,7 @@ extension MetalMapScene {
         }
     }
 
-    func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
+    public func onMapObjectVanished(objectID: GameObjectID, type: UInt8) {
         switch type {
         case 1 where objectID == player.objectID:
             renderBackend.performObjectAction(
@@ -224,7 +224,7 @@ extension MetalMapScene {
         }
     }
 
-    func onMapObjectResurrected(objectID: GameObjectID) {
+    public func onMapObjectResurrected(objectID: GameObjectID) {
         renderBackend.performObjectAction(
             objectID: objectID,
             action: .idle,
@@ -235,7 +235,7 @@ extension MetalMapScene {
         }
     }
 
-    func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
+    public func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
         renderBackend.turnObject(
             objectID: objectID,
             direction: SpriteDirection(direction: direction),
@@ -243,7 +243,7 @@ extension MetalMapScene {
         )
     }
 
-    func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
+    public func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
         let isVisible = effectState != .cloak
 
         if let metalObject = objectRegistry.object(for: objectID) {
@@ -271,7 +271,7 @@ extension MetalMapScene {
         }
     }
 
-    func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
+    public func onMapObjectSpriteChanged(_ packet: PACKET_ZC_SPRITE_CHANGE) {
         let objectID = packet.AID
         guard let metalObject = objectRegistry.object(for: objectID) else {
             return
@@ -310,7 +310,7 @@ extension MetalMapScene {
         renderBackend.updateObject(objectID: objectID)
     }
 
-    func onMapObjectActionPerformed(objectAction: MapObjectAction) {
+    public func onMapObjectActionPerformed(objectAction: MapObjectAction) {
         let now = ContinuousClock.now
 
         let sourceID = objectAction.sourceObjectID
@@ -362,7 +362,7 @@ extension MetalMapScene {
         playSound(for: objectAction)
     }
 
-    func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
+    public func onMapObjectSkillPerformed(_ packet: PACKET_ZC_NOTIFY_SKILL) {
         let objectID = packet.AID
 
         let now = ContinuousClock.now
@@ -403,19 +403,19 @@ extension MetalMapScene {
         addSkillEffects(for: packet)
     }
 
-    func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
+    public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
         let metalItem = MetalMapItem(item: item, gridPosition: position)
         itemRegistry.add(metalItem)
 
         renderBackend.addItem(metalItem)
     }
 
-    func onItemVanished(objectID: GameObjectID) {
+    public func onItemVanished(objectID: GameObjectID) {
         itemRegistry.remove(objectID: objectID)
         renderBackend.removeItem(objectID: objectID)
     }
 
-    func onGroundSkillCast(_ packet: PACKET_ZC_NOTIFY_GROUNDSKILL) {
+    public func onGroundSkillCast(_ packet: PACKET_ZC_NOTIFY_GROUNDSKILL) {
         guard let skillID = SkillID(rawValue: Int(packet.SKID)) else {
             return
         }

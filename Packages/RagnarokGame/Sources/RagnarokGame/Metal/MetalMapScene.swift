@@ -23,7 +23,8 @@ private enum MapMovementDecision {
 }
 
 public final class MetalMapScene: GameMapScene {
-    let mapName: String
+    public let mapName: String
+
     let world: WorldResource
     let character: CharacterInfo
     let player: MapObject
@@ -96,13 +97,13 @@ public final class MetalMapScene: GameMapScene {
         renderBackend.attach(scene: self)
     }
 
-    func load(progress: Progress) async {
+    public func load(progress: Progress) async {
         await renderBackend.load(progress: progress)
         renderBackend.addObject(objectID: player.objectID, at: playerPosition, direction: .south, headDirection: .lookForward)
         renderBackend.updateCamera(cameraState)
     }
 
-    func unload() {
+    public func unload() {
         arrivalTask?.cancel()
         arrivalTask = nil
         pendingArrivalAction = nil
