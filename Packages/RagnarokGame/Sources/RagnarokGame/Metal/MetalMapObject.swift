@@ -31,19 +31,19 @@ class MetalMapObject {
     var bodyState: StatusChangeOption1
     var healthState: StatusChangeOption2
     var effectState: StatusChangeOption
-    var gridPosition: SIMD2<Int>
 
-    let animationController: MetalAnimationController
-    let movementController: MetalMovementController
-    let presentation: MetalObjectPresentation
+    var gridPosition: SIMD2<Int>
+    var worldPosition: SIMD3<Float>
+
+    var animation: MetalAnimation
+    var movement: MetalMovement?
 
     init(
         object: MapObject,
         hp: Int,
         maxHp: Int,
         gridPosition: SIMD2<Int>,
-        mapGrid: MapGrid,
-        pathFinder: PathFinder,
+        worldPosition: SIMD3<Float>,
         direction: SpriteDirection = .south,
         headDirection: SpriteHeadDirection = .lookForward
     ) {
@@ -67,13 +67,72 @@ class MetalMapObject {
         bodyState = object.bodyState
         healthState = object.healthState
         effectState = object.effectState
-        self.gridPosition = gridPosition
 
-        animationController = MetalAnimationController(direction: direction, headDirection: headDirection)
-        movementController = MetalMovementController(pathFinder: pathFinder, mapGrid: mapGrid)
-        presentation = MetalObjectPresentation(worldPosition: mapGrid.worldPosition(for: gridPosition))
+        self.gridPosition = gridPosition
+        self.worldPosition = worldPosition
+
+        animation = MetalAnimation(
+            action: .idle,
+            direction: direction,
+            headDirection: headDirection,
+            startTime: .now,
+            completion: .indefinite
+        )
     }
 
+    func perform(_ action: SpriteActionType, completion: MetalAnimationCompletion, at time: ContinuousClock.Instant = .now) {
+        animation.action = action
+        animation.startTime = time
+        animation.elapsedTime = .zero
+        animation.completion = completion
+    }
+
+    func turn(direction: SpriteDirection, headDirection: SpriteHeadDirection) {
+        animation.direction = direction
+        animation.headDirection = headDirection
+    }
+
+    func setDirection(_ direction: SpriteDirection) {
+        animation.direction = direction
+    }
+
+    func replanMovement(
+        startPosition: SIMD2<Int>,
+        endPosition: SIMD2<Int>,
+        speed: Int,
+        pathFinder: PathFinder,
+        mapGrid: MapGrid,
+        at time: ContinuousClock.Instant = .now
+    ) -> MetalMovement {
+        let planner = MetalMovementPlanner(pathFinder: pathFinder)
+        var planned = planner.replan(
+            existingMovement: movement,
+            incomingStartPosition: startPosition,
+            incomingEndPosition: endPosition,
+            speed: speed,
+            at: time
+        )
+        planned.updateWorldPath { mapGrid.worldPosition(for: $0) }
+        planned.update(atTime: time)
+        movement = planned
+        return planned
+    }
+
+    func stopMovement() {
+        movement = nil
+    }
+
+    func update(at time: ContinuousClock.Instant) {
+        animation.update(atTime: time)
+        movement?.update(atTime: time)
+    }
+
+    func nextPosition(at time: ContinuousClock.Instant) -> SIMD2<Int>? {
+        movement?.nextPosition(at: time)
+    }
+}
+
+extension MetalMapObject {
     static func make(
         object: MapObject,
         hp: Int,
@@ -81,8 +140,7 @@ class MetalMapObject {
         sp: Int = 0,
         maxSp: Int = 0,
         gridPosition: SIMD2<Int>,
-        mapGrid: MapGrid,
-        pathFinder: PathFinder,
+        worldPosition: SIMD3<Float>,
         direction: SpriteDirection = .south,
         headDirection: SpriteHeadDirection = .lookForward
     ) -> MetalMapObject {
@@ -95,8 +153,7 @@ class MetalMapObject {
                 sp: sp,
                 maxSp: maxSp,
                 gridPosition: gridPosition,
-                mapGrid: mapGrid,
-                pathFinder: pathFinder,
+                worldPosition: worldPosition,
                 direction: direction,
                 headDirection: headDirection
             )
@@ -106,8 +163,7 @@ class MetalMapObject {
                 hp: hp,
                 maxHp: maxHp,
                 gridPosition: gridPosition,
-                mapGrid: mapGrid,
-                pathFinder: pathFinder,
+                worldPosition: worldPosition,
                 direction: direction,
                 headDirection: headDirection
             )
@@ -117,8 +173,7 @@ class MetalMapObject {
                 hp: hp,
                 maxHp: maxHp,
                 gridPosition: gridPosition,
-                mapGrid: mapGrid,
-                pathFinder: pathFinder,
+                worldPosition: worldPosition,
                 direction: direction,
                 headDirection: headDirection
             )
@@ -137,8 +192,7 @@ final class MetalPlayerObject: MetalMapObject {
         sp: Int,
         maxSp: Int,
         gridPosition: SIMD2<Int>,
-        mapGrid: MapGrid,
-        pathFinder: PathFinder,
+        worldPosition: SIMD3<Float>,
         direction: SpriteDirection = .south,
         headDirection: SpriteHeadDirection = .lookForward
     ) {
@@ -149,8 +203,7 @@ final class MetalPlayerObject: MetalMapObject {
             hp: hp,
             maxHp: maxHp,
             gridPosition: gridPosition,
-            mapGrid: mapGrid,
-            pathFinder: pathFinder,
+            worldPosition: worldPosition,
             direction: direction,
             headDirection: headDirection
         )

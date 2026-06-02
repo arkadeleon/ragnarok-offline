@@ -89,8 +89,7 @@ public final class MetalMapScene: GameMapScene {
             sp: character.sp,
             maxSp: character.maxSp,
             gridPosition: playerPosition,
-            mapGrid: mapGrid,
-            pathFinder: pathFinder
+            worldPosition: mapGrid.worldPosition(for: playerPosition)
         )
         objects[metalPlayer.objectID] = metalPlayer
 
@@ -174,7 +173,7 @@ public final class MetalMapScene: GameMapScene {
         guard let playerObject = objects[player.objectID] else {
             return
         }
-        let position = playerObject.movementController.nextPosition(at: .now) ?? playerObject.gridPosition
+        let position = playerObject.nextPosition(at: .now) ?? playerObject.gridPosition
 
         let joystickInput = SIMD2<Float>(
             Float(movementValue.x),
@@ -351,17 +350,16 @@ extension MetalMapScene {
         let now = ContinuousClock.now
 
         for object in objects.values {
-            object.animationController.update(at: now)
-            object.movementController.update(at: now)
-            if let movement = object.movementController.movement {
+            object.update(at: now)
+            if let movement = object.movement {
                 object.gridPosition = movement.currentPosition
             }
-            object.presentation.worldPosition = worldPosition(for: object)
+            object.worldPosition = worldPosition(for: object)
         }
     }
 
     private func worldPosition(for object: MetalMapObject) -> SIMD3<Float> {
-        if let movement = object.movementController.movement,
+        if let movement = object.movement,
            movement.isMoving,
            let movementWorldPosition = movement.worldPosition {
             movementWorldPosition
@@ -373,7 +371,7 @@ extension MetalMapScene {
     func updateCameraTarget() {
         let targetPosition: SIMD3<Float>
         if let playerObject = objects[player.objectID] {
-            targetPosition = playerObject.presentation.worldPosition
+            targetPosition = playerObject.worldPosition
         } else {
             targetPosition = mapGrid.worldPosition(for: playerPosition)
         }
@@ -388,7 +386,7 @@ extension MetalMapScene {
             guard let object = objects[objectID] else {
                 continue
             }
-            var worldPosition = object.presentation.worldPosition
+            var worldPosition = object.worldPosition
             worldPosition += [0, -0.8, 0]
             state.overlay.gauges[objectID]?.worldPosition = worldPosition
 

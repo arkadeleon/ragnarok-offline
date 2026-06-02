@@ -208,7 +208,7 @@ final class SpriteAssetStore {
             }
 
             let animation = animation(for: object, cameraState: cameraState)
-            let worldPosition = object.presentation.worldPosition
+            let worldPosition = object.worldPosition
             let isVisible = object.effectState != .cloak
 
             let fallbackKeys = [
@@ -298,8 +298,8 @@ final class SpriteAssetStore {
     private func animation(for object: MetalMapObject, cameraState: MapCameraState) -> MetalAnimation {
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
-        var animation = object.animationController.animation
-        if let movement = object.movementController.movement, movement.isMoving {
+        var animation = object.animation
+        if let movement = object.movement, movement.isMoving {
             animation.action = .walk
             animation.direction = movement.direction ?? animation.direction
             animation.elapsedTime = movement.animationElapsedTime

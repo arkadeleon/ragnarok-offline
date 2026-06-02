@@ -113,8 +113,7 @@ extension MetalMapScene {
             hp: object.hp,
             maxHp: object.maxHp,
             gridPosition: position,
-            mapGrid: mapGrid,
-            pathFinder: pathFinder,
+            worldPosition: mapGrid.worldPosition(for: position),
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
@@ -146,8 +145,7 @@ extension MetalMapScene {
                 hp: object.hp,
                 maxHp: object.maxHp,
                 gridPosition: endPosition,
-                mapGrid: mapGrid,
-                pathFinder: pathFinder,
+                worldPosition: mapGrid.worldPosition(for: endPosition),
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
             )
@@ -198,7 +196,7 @@ extension MetalMapScene {
         switch type {
         case .dead where objectID == player.objectID:
             if let object = objects[objectID] {
-                object.animationController.perform(.die, completion: .indefinite)
+                object.perform(.die, completion: .indefinite)
                 refreshSpriteDrawables()
             }
 
@@ -213,7 +211,7 @@ extension MetalMapScene {
 
     public func onMapObjectResurrected(objectID: GameObjectID) {
         if let object = objects[objectID] {
-            object.animationController.perform(.idle, completion: .indefinite)
+            object.perform(.idle, completion: .indefinite)
             refreshSpriteDrawables()
         }
 
@@ -229,7 +227,7 @@ extension MetalMapScene {
 
         let direction = SpriteDirection(direction: direction)
         let headDirection = SpriteHeadDirection(headDirection: headDirection)
-        object.animationController.turn(direction: direction, headDirection: headDirection)
+        object.turn(direction: direction, headDirection: headDirection)
 
         refreshSpriteDrawables()
     }
@@ -337,7 +335,7 @@ extension MetalMapScene {
         }
 
         if let sourceObject {
-            sourceObject.animationController.perform(presentationAction, completion: completion)
+            sourceObject.perform(presentationAction, completion: completion)
             refreshSpriteDrawables()
         }
 
@@ -354,7 +352,7 @@ extension MetalMapScene {
             let duration = Duration.milliseconds(objectSkill.attackDelay)
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            sourceObject.animationController.perform(action, completion: .after(duration, settledAction: settledAction))
+            sourceObject.perform(action, completion: .after(duration, settledAction: settledAction))
             refreshSpriteDrawables()
         }
 
@@ -416,9 +414,9 @@ extension MetalMapScene {
             return
         }
         object.gridPosition = gridPosition
-        object.animationController.perform(.idle, completion: .indefinite)
-        object.animationController.turn(direction: direction, headDirection: headDirection)
-        object.presentation.worldPosition = mapGrid.worldPosition(for: gridPosition)
+        object.perform(.idle, completion: .indefinite)
+        object.turn(direction: direction, headDirection: headDirection)
+        object.worldPosition = mapGrid.worldPosition(for: gridPosition)
         refreshSpriteDrawables()
     }
 
@@ -428,21 +426,23 @@ extension MetalMapScene {
         }
 
         let now = ContinuousClock.now
-        let movement = object.movementController.replan(
+        let movement = object.replanMovement(
             startPosition: startPosition,
             endPosition: endPosition,
             speed: object.speed,
+            pathFinder: pathFinder,
+            mapGrid: mapGrid,
             at: now
         )
 
         object.gridPosition = movement.currentPosition
         let remainingDuration = movement.remainingDuration(at: now)
-        object.animationController.perform(
+        object.perform(
             .walk,
             completion: .after(remainingDuration, settledAction: .idle),
             at: now
         )
-        object.animationController.setDirection(movement.finalDirection)
+        object.setDirection(movement.finalDirection)
 
         refreshSpriteDrawables()
         if objectID == player.objectID {
@@ -455,8 +455,8 @@ extension MetalMapScene {
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
         if let object = objects[objectID] {
             object.gridPosition = position
-            object.movementController.stop()
-            object.animationController.perform(.idle, completion: .indefinite)
+            object.stopMovement()
+            object.perform(.idle, completion: .indefinite)
         }
 
         refreshSpriteDrawables()
@@ -553,7 +553,7 @@ extension MetalMapScene {
             return
         }
 
-        guard let startPosition = objects[combatText.target.objectID]?.presentation.worldPosition else {
+        guard let startPosition = objects[combatText.target.objectID]?.worldPosition else {
             return
         }
 
