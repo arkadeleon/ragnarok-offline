@@ -1,8 +1,8 @@
 //
-//  RSMRenderer.swift
+//  GNDFilePreviewRenderer.swift
 //  RagnarokOffline
 //
-//  Created by Leon Li on 2020/7/15.
+//  Created by Leon Li on 2024/5/16.
 //
 
 import Metal
@@ -11,24 +11,31 @@ import RagnarokMetalRendering
 import RagnarokRenderAssets
 import simd
 
-public class RSMFilePreviewRenderer: Renderer {
-    public let device: any MTLDevice
+class GNDFilePreviewRenderer: Renderer {
+    let device: any MTLDevice
 
-    let modelBoundingBox: RSMModelBoundingBox
-    let modelResource: RSMModelRenderResource
-    let modelRenderer: RSMModelRenderer
+    let groundAsset: GroundRenderAsset
+    let groundResource: GroundRenderResource
+    let groundRenderer: GroundRenderer
 
-    public let camera = Camera()
+    let camera: OrbitalCamera
 
-    public init(device: any MTLDevice, asset: RSMModelRenderAsset) throws {
+    init(device: any MTLDevice, asset: GroundRenderAsset) throws {
         self.device = device
+        groundAsset = asset
 
-        modelBoundingBox = asset.boundingBox
-        modelResource = RSMModelRenderResource(device: device, asset: asset)
-        modelRenderer = try RSMModelRenderer(device: device)
+        groundResource = GroundRenderResource(device: device, asset: asset)
+        groundRenderer = try GroundRenderer(device: device)
+
+        let defaultDistance = -asset.altitude / 5 + 200
+        camera = OrbitalCamera(distance: defaultDistance)
+        camera.elevation = .pi / 2
+        camera.minimumDistance = defaultDistance - 190
+        camera.maximumDistance = defaultDistance + 200
+        camera.farZ = 500
     }
 
-    public func render(
+    func render(
         atTime time: CFTimeInterval,
         viewport: CGRect,
         commandBuffer: any MTLCommandBuffer,
@@ -38,26 +45,23 @@ public class RSMFilePreviewRenderer: Renderer {
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        let scale = 2 / modelBoundingBox.range.max()
-
+        camera.update(atTime: time)
         camera.update(size: viewport.size)
 
         var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_scale(modelMatrix, [scale, scale, scale])
-        modelMatrix = matrix_rotate(modelMatrix, radians(-15), [1, 0, 0])
-        modelMatrix = matrix_rotate(modelMatrix, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0, 1, 0])
+        modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
+        modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
         let viewMatrix = camera.viewMatrix
         let projectionMatrix = camera.projectionMatrix
-
         let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
-        modelRenderer.render(
-            resources: [modelResource],
+        groundRenderer.render(
+            resource: groundResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,

@@ -9,7 +9,6 @@ import RagnarokCore
 import RagnarokFileFormats
 import RagnarokRendering
 import RagnarokResources
-import RealityKit
 import SwiftUI
 
 struct RSWFilePreviewView: View {
@@ -47,14 +46,15 @@ struct RSWFilePreviewView: View {
     }
 }
 
+#if os(visionOS)
+
+import RealityKit
+
 struct RSWFileWorldView: View {
     var file: File
     var resourceManager: ResourceManager
 
     private let progress = Progress()
-
-    @State private var translation: CGSize = .zero
-    @State private var magnification: CGFloat = 1
 
     var body: some View {
         AsyncContentView {
@@ -110,6 +110,91 @@ struct RSWFileWorldView: View {
         return entity
     }
 }
+
+#else
+
+import Metal
+
+struct RSWFileWorldView: View {
+    var file: File
+    var resourceManager: ResourceManager
+
+    private let progress = Progress()
+
+    @State private var dragStartOffset: CGPoint?
+    @State private var magnification: CGFloat = 1
+
+    var body: some View {
+        AsyncContentView {
+            try await loadRSWFile()
+        } content: { renderer in
+            MetalViewContainer(renderer: renderer)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            let startOffset = dragStartOffset ?? renderer.camera.panOffset
+                            dragStartOffset = startOffset
+                            let offset = CGPoint(
+                                x: startOffset.x + value.translation.width,
+                                y: startOffset.y + value.translation.height
+                            )
+                            renderer.camera.pan(offset: offset)
+                        }
+                        .onEnded { _ in
+                            dragStartOffset = nil
+                        }
+                )
+                .simultaneousGesture(
+                    MagnifyGesture()
+                        .onChanged { value in
+                            renderer.camera.zoom(magnification: magnification * value.magnification)
+                        }
+                        .onEnded { value in
+                            magnification *= value.magnification
+                        }
+                )
+        } placeholder: {
+            ProgressView(progress)
+                .progressViewStyle(.circular)
+        }
+    }
+
+    private func loadRSWFile() async throws -> RSWFilePreviewRenderer {
+        let rswData = try await file.contents()
+        let rsw = try RSW(data: rswData)
+
+        let gatData: Data
+        let gndData: Data
+        switch file.node {
+        case .regularFile(let url):
+            let gatURL = url.deletingPathExtension().appendingPathExtension("gat")
+            gatData = try Data(contentsOf: gatURL)
+
+            let gndURL = url.deletingPathExtension().appendingPathExtension("gnd")
+            gndData = try Data(contentsOf: gndURL)
+        case .grfArchiveNode(let grfArchive, let node) where !node.isDirectory:
+            let gatPath = node.path.replacingExtension("gat")
+            gatData = try await grfArchive.contentsOfEntryNode(at: gatPath)
+
+            let gndPath = node.path.replacingExtension("gnd")
+            gndData = try await grfArchive.contentsOfEntryNode(at: gndPath)
+        default:
+            throw FileError.fileIsDirectory
+        }
+
+        let gat = try GAT(data: gatData)
+        let gnd = try GND(data: gndData)
+
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(gat: gat, gnd: gnd, rsw: rsw, resourceManager: resourceManager, progress: progress)
+
+        let device = MTLCreateSystemDefaultDevice()!
+        let renderer = try RSWFilePreviewRenderer(device: device, worldAsset: worldAsset)
+        return renderer
+    }
+}
+
+#endif
 
 #Preview {
     AsyncContentView {

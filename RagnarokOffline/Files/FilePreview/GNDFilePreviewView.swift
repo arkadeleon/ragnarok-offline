@@ -7,9 +7,8 @@
 
 import RagnarokCore
 import RagnarokFileFormats
-import RagnarokRenderAssets
+import RagnarokRendering
 import RagnarokResources
-import RealityKit
 import SwiftUI
 
 struct GNDFilePreviewView: View {
@@ -58,6 +57,10 @@ struct GNDFilePreviewView: View {
         }
     }
 }
+
+#if os(visionOS)
+
+import RealityKit
 
 struct GNDFileGroundView: View {
     var file: File
@@ -122,6 +125,94 @@ struct GNDFileGroundView: View {
         return entity
     }
 }
+
+#else
+
+import Metal
+
+struct GNDFileGroundView: View {
+    var file: File
+    var resourceManager: ResourceManager
+
+    private let progress = Progress()
+
+    @State private var dragStartOffset: CGPoint?
+    @State private var magnification: CGFloat = 1
+
+    var body: some View {
+        AsyncContentView {
+            try await loadGNDFile()
+        } content: { renderer in
+            MetalViewContainer(renderer: renderer)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            let startOffset = dragStartOffset ?? renderer.camera.panOffset
+                            dragStartOffset = startOffset
+                            let offset = CGPoint(
+                                x: startOffset.x + value.translation.width,
+                                y: startOffset.y + value.translation.height
+                            )
+                            renderer.camera.pan(offset: offset)
+                        }
+                        .onEnded { _ in
+                            dragStartOffset = nil
+                        }
+                )
+                .simultaneousGesture(
+                    MagnifyGesture()
+                        .onChanged { value in
+                            renderer.camera.zoom(magnification: magnification * value.magnification)
+                        }
+                        .onEnded { value in
+                            magnification *= value.magnification
+                        }
+                )
+        } placeholder: {
+            ProgressView(progress)
+                .progressViewStyle(.circular)
+        }
+    }
+
+    private func loadGNDFile() async throws -> GNDFilePreviewRenderer {
+        let gndData = try await file.contents()
+        let gnd = try GND(data: gndData)
+
+        let gatData: Data
+        switch file.node {
+        case .regularFile(let url):
+            let gatURL = url.deletingPathExtension().appendingPathExtension("gat")
+            gatData = try Data(contentsOf: gatURL)
+        case .grfArchiveNode(let grfArchive, let node) where !node.isDirectory:
+            let gatPath = node.path.replacingExtension("gat")
+            gatData = try await grfArchive.contentsOfEntryNode(at: gatPath)
+        default:
+            throw FileError.fileIsDirectory
+        }
+
+        let gat = try GAT(data: gatData)
+
+        progress.totalUnitCount = Int64(gnd.textures.count)
+        progress.completedUnitCount = 0
+
+        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+            progress.completedUnitCount += 1
+        }
+
+        let groundAsset = GroundRenderAsset(
+            gat: gat,
+            gnd: gnd,
+            lighting: .preview,
+            textureImages: textureImages
+        )
+
+        let device = MTLCreateSystemDefaultDevice()!
+        let renderer = try GNDFilePreviewRenderer(device: device, asset: groundAsset)
+        return renderer
+    }
+}
+
+#endif
 
 struct GNDFileTextureAtlasView: View {
     var file: File
