@@ -39,8 +39,6 @@ public final class RealityMapScene: GameMapScene {
 
     let resourceManager: ResourceManager
 
-    var cameraState: MapCameraState = .default
-
     var objectEntities: [GameObjectID : Entity] = [:]
     var itemEntities: [GameObjectID : Entity] = [:]
 
@@ -207,8 +205,8 @@ public final class RealityMapScene: GameMapScene {
         let elevationBounds: ClosedRange<Float> = radians(15)...radians(60)
 
         var worldCameraComponent = WorldCameraComponent(
-            azimuth: cameraState.azimuth,
-            elevation: cameraState.elevation,
+            azimuth: 0,
+            elevation: .pi / 12,
             radius: 15,
             bounds: WorldCameraComponent.CameraBounds(elevation: elevationBounds)
         )

@@ -52,7 +52,7 @@ public final class MetalMapScene: GameMapScene {
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
 
-    var cameraState: MapCameraState = .default {
+    var cameraState = MapCameraState() {
         didSet {
             updateCamera()
         }

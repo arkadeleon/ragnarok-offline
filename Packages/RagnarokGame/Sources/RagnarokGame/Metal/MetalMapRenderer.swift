@@ -41,7 +41,7 @@ final class MetalMapRenderer: Renderer {
     var effectResources: [UUID : STREffectRenderResource] = [:]
     var tileSelectorResource: TileSelectorRenderResource?
 
-    private var cameraState: MapCameraState = .default
+    private var cameraState = MapCameraState()
     private var targetPosition: SIMD3<Float> = .zero
 
     private(set) var lastRenderMatrices: RenderMatrices?
