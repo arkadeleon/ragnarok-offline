@@ -71,7 +71,15 @@ final class RSMModelTreeBuilder {
         if let rootBuilder {
             assignIndex(rootBuilder)
         }
-        // Defensive: any node unreachable from the root still gets an index.
+        // DFS-assign indices for each parentless subtree not reachable from the first
+        // root, so parents still precede their children. The Metal resource and the
+        // animator both rely on `asset.nodes` being parent-first when sweeping forward
+        // to build bone matrices.
+        for builder in builders where builder.index < 0 && builder.parent == nil {
+            assignIndex(builder)
+        }
+        // Defensive: any node still unindexed (e.g. malformed cyclic parent refs)
+        // gets an index in file order so the nodes array stays dense.
         for builder in builders where builder.index < 0 {
             builder.index = nextIndex
             nextIndex += 1
