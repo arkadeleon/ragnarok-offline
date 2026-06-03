@@ -11,15 +11,14 @@ import RagnarokShaders
 import simd
 
 /// Turns a parsed `RSM` into a node tree, a flat DFS-ordered node array, the model's
-/// bounding box, its center-correction offset, and a flattened pre-baked legacy mesh
-/// list (kept around until Phase 3 retires the legacy `RSMModelRenderAsset.meshes`).
+/// bounding box, and its center-correction offset. Each backend renders the tree
+/// directly — there is no longer a pre-baked flat mesh array.
 final class RSMModelTreeBuilder {
     struct Result {
         let rootNode: RSMModelNode?
         let nodes: [RSMModelNode]
         let boundingBox: RSMModelBoundingBox
         let centerCorrection: SIMD3<Float>
-        let legacyMeshes: [RSMModelMesh]
     }
 
     let rsm: RSM
@@ -166,41 +165,11 @@ final class RSMModelTreeBuilder {
         }
         let nodes = nodesByIndex.compactMap { $0 }
 
-        // Step 8: Derive the legacy flat `meshes` by baking the rest-pose world transform
-        // (plus the model-level center correction) into each node-local mesh. The output is
-        // rendering-equivalent to what the previous compile path produced directly.
-        let centerCorrectionMatrix = matrix_translate(matrix_identity_float4x4, centerCorrection)
-        var legacyMeshes: [RSMModelMesh] = []
-        for builder in builders {
-            let world = worldTransforms[builder.index]
-            let M = centerCorrectionMatrix * world
-            let N = extractRotation(M)
-            for nodeMesh in builder.meshes {
-                var bakedVertices: [ModelVertex] = []
-                bakedVertices.reserveCapacity(nodeMesh.vertices.count)
-                for v in nodeMesh.vertices {
-                    let p = M * SIMD4<Float>(v.position, 1)
-                    let n = N * SIMD4<Float>(v.normal, 1)
-                    bakedVertices.append(ModelVertex(
-                        position: [p.x, p.y, p.z],
-                        normal: [n.x, n.y, n.z],
-                        textureCoordinate: v.textureCoordinate,
-                        alpha: v.alpha
-                    ))
-                }
-                legacyMeshes.append(RSMModelMesh(
-                    vertices: bakedVertices,
-                    textureName: nodeMesh.textureName
-                ))
-            }
-        }
-
         return Result(
             rootNode: rootNode,
             nodes: nodes,
             boundingBox: boundingBox,
-            centerCorrection: centerCorrection,
-            legacyMeshes: legacyMeshes
+            centerCorrection: centerCorrection
         )
     }
 }

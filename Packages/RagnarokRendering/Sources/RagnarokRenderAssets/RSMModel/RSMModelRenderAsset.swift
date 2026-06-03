@@ -11,11 +11,6 @@ import RagnarokFileFormats
 import RagnarokShaders
 import simd
 
-public struct RSMModelMesh: Sendable {
-    public var vertices: [ModelVertex] = []
-    public var textureName: String
-}
-
 public struct RSMModelBoundingBox: Sendable {
     public var min: SIMD3<Float> = [.infinity, .infinity, .infinity]
     public var max: SIMD3<Float> = [-.infinity, -.infinity, -.infinity]
@@ -57,7 +52,6 @@ public struct RSMModelRenderAsset {
     public var name: String
     public let rootNode: RSMModelNode?
     public let nodes: [RSMModelNode]
-    public var meshes: [RSMModelMesh] = []
     public var boundingBox: RSMModelBoundingBox
     public let centerCorrection: SIMD3<Float>
     public var instance: RSMModelInstance
@@ -67,10 +61,6 @@ public struct RSMModelRenderAsset {
     public let frameRatePerSecond: Float
     public let shadeType: Int32
     public let alpha: UInt8
-
-    public var textureNames: Set<String> {
-        Set(meshes.map(\.textureName))
-    }
 
     public init(
         name: String,
@@ -93,6 +83,5 @@ public struct RSMModelRenderAsset {
         self.nodes = tree.nodes
         self.boundingBox = tree.boundingBox
         self.centerCorrection = tree.centerCorrection
-        self.meshes = tree.legacyMeshes
     }
 }
