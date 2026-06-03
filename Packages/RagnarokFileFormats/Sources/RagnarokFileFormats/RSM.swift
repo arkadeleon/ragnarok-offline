@@ -13,6 +13,7 @@ public struct RSM: FileFormat {
     public var header: String
     public var version: FileFormatVersion
     public var animationLength: Int32
+    public var fps: Float
     public var shadeType: Int32
     public var alpha: UInt8
 
@@ -34,6 +35,7 @@ public struct RSM: FileFormat {
         version = FileFormatVersion(major: major, minor: minor)
 
         animationLength = try decoder.decode(Int32.self)
+        fps = 1000
 
         shadeType = try decoder.decode(Int32.self)
 
@@ -46,7 +48,7 @@ public struct RSM: FileFormat {
         var textures: [String] = []
 
         if version >= "2.3" {
-            let fps = try decoder.decode(Float.self)
+            fps = try decoder.decode(Float.self)
             animationLength = Int32(ceilf(Float(animationLength) * fps))
 
             let rootNodeCount = try decoder.decode(Int32.self)
@@ -56,7 +58,7 @@ public struct RSM: FileFormat {
                 rootNodes.append(rootNodeName)
             }
         } else if version >= "2.2" {
-            let fps = try decoder.decode(Float.self)
+            fps = try decoder.decode(Float.self)
             animationLength = Int32(ceilf(Float(animationLength) * fps))
 
             let textureCount = try decoder.decode(Int32.self)

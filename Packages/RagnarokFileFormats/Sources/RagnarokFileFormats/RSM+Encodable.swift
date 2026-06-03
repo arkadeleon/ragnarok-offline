@@ -10,6 +10,7 @@ extension RSM: Encodable {
         case header
         case version
         case animationLength
+        case fps
         case shadeType
         case alpha
         case rootNodes
@@ -23,6 +24,7 @@ extension RSM: Encodable {
         try container.encode(header, forKey: .header)
         try container.encode(version.description, forKey: .version)
         try container.encode(animationLength, forKey: .animationLength)
+        try container.encode(fps, forKey: .fps)
         try container.encode(shadeType, forKey: .shadeType)
         try container.encode(alpha, forKey: .alpha)
         try container.encode(rootNodes, forKey: .rootNodes)
