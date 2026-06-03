@@ -73,7 +73,7 @@ struct RSMFileModelView: View {
         let instance = RSMModelInstance(
             position: .zero,
             rotation: .zero,
-            scale: [-0.25, -0.25, -0.25]
+            scale: [-0.25, -0.25, -0.25] / 5
         )
 
         var textureNames: Set<String> = []
