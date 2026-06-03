@@ -6,6 +6,7 @@
 //
 
 import Metal
+import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
@@ -77,11 +78,20 @@ public final class RSMModelRenderer {
             renderCommandEncoder.setVertexBuffer(instanceBuffer, offset: 0, index: 2)
             renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
 
+            let boneMatrices: [ModelBoneUniforms]
+            if resource.hasAnyKeyframes {
+                let animator = RSMModelAnimator(asset: resource.asset)
+                let frame = RSMModelAnimator.frame(at: time, asset: resource.asset)
+                boneMatrices = animator.evaluateBoneMatrices(atFrame: frame)
+            } else {
+                boneMatrices = resource.restPoseBoneMatrices
+            }
+
             for node in resource.nodes {
-                guard node.nodeIndex < resource.restPoseBoneMatrices.count else {
+                guard node.nodeIndex < boneMatrices.count else {
                     continue
                 }
-                var bone = resource.restPoseBoneMatrices[node.nodeIndex]
+                var bone = boneMatrices[node.nodeIndex]
                 renderCommandEncoder.setVertexBytes(&bone, length: MemoryLayout<ModelBoneUniforms>.stride, index: 3)
 
                 for mesh in node.meshes where mesh.vertexCount > 0 {

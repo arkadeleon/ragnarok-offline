@@ -23,8 +23,10 @@ public class RSMModelRenderResource {
         let meshes: [RSMModelRenderResource.MeshResource]
     }
 
+    let asset: RSMModelRenderAsset
     let nodes: [RSMModelRenderResource.NodeResource]
     let restPoseBoneMatrices: [ModelBoneUniforms]
+    let hasAnyKeyframes: Bool
     let instanceCount: Int
     let instanceBuffer: (any MTLBuffer)?
 
@@ -43,6 +45,7 @@ public class RSMModelRenderResource {
         let textures = Self.makeTextures(from: asset, device: device)
         let textureNamespace = Self.textureNamespace(for: asset)
 
+        self.asset = asset
         self.nodes = asset.nodes.map { node in
             NodeResource(
                 nodeIndex: node.index,
@@ -60,6 +63,11 @@ public class RSMModelRenderResource {
             )
         }
         self.restPoseBoneMatrices = asset.makeRestPoseBoneMatrices()
+        self.hasAnyKeyframes = asset.nodes.contains { node in
+            !node.positionKeyframes.isEmpty
+                || !node.rotationKeyframes.isEmpty
+                || !node.scaleKeyframes.isEmpty
+        }
         self.instanceCount = instances.count
         self.instanceBuffer = Self.makeInstanceBuffer(device: device, instances: instances)
 
