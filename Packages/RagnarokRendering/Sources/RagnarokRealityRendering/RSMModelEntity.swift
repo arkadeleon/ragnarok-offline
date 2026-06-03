@@ -40,13 +40,19 @@ extension Entity {
         let scale = 2 / modelAsset.boundingBox.range.max()
         transform.scale = [scale, scale, scale]
 
-        if let rootNode = modelAsset.rootNode {
-            let rootEntity = try await Entity(from: rootNode, textures: textures)
+        let rootNodes = modelAsset.nodes.filter { $0.parent == nil }
+        if !rootNodes.isEmpty {
+            let centerCorrectionEntity = Entity()
+            centerCorrectionEntity.transform = Transform(
+                matrix: matrix_translate(matrix_identity_float4x4, modelAsset.centerCorrection)
+            )
 
-            let centerCorrection = matrix_translate(matrix_identity_float4x4, modelAsset.centerCorrection)
-            rootEntity.transform = Transform(matrix: centerCorrection * rootEntity.transform.matrix)
+            for rootNode in rootNodes {
+                let rootEntity = try await Entity(from: rootNode, textures: textures)
+                centerCorrectionEntity.addChild(rootEntity)
+            }
 
-            addChild(rootEntity)
+            addChild(centerCorrectionEntity)
         }
     }
 
