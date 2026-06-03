@@ -6,6 +6,7 @@
 //
 
 import Metal
+import RagnarokCore
 import RagnarokRenderAssets
 import RagnarokShaders
 import simd
@@ -17,7 +18,13 @@ public class RSMModelRenderResource {
         let texture: (any MTLTexture)?
     }
 
-    let meshes: [RSMModelRenderResource.MeshResource]
+    struct NodeResource {
+        let nodeIndex: Int
+        let meshes: [RSMModelRenderResource.MeshResource]
+    }
+
+    let nodes: [RSMModelRenderResource.NodeResource]
+    let restPoseBoneMatrices: [ModelBoneUniforms]
     let instanceCount: Int
     let instanceBuffer: (any MTLBuffer)?
 
@@ -36,17 +43,23 @@ public class RSMModelRenderResource {
         let textures = Self.makeTextures(from: asset, device: device)
         let textureNamespace = Self.textureNamespace(for: asset)
 
-        self.meshes = asset.meshes.map { mesh in
-            MeshResource(
-                vertexCount: mesh.vertices.count,
-                vertexBuffer: device.makeBuffer(
-                    bytes: mesh.vertices,
-                    length: mesh.vertices.count * MemoryLayout<ModelVertex>.stride,
-                    options: []
-                ),
-                texture: textures[textureNamespace + mesh.textureName]
+        self.nodes = asset.nodes.map { node in
+            NodeResource(
+                nodeIndex: node.index,
+                meshes: node.meshes.map { mesh in
+                    MeshResource(
+                        vertexCount: mesh.vertices.count,
+                        vertexBuffer: mesh.vertices.isEmpty ? nil : device.makeBuffer(
+                            bytes: mesh.vertices,
+                            length: mesh.vertices.count * MemoryLayout<ModelVertex>.stride,
+                            options: []
+                        ),
+                        texture: textures[textureNamespace + mesh.textureName]
+                    )
+                }
             )
         }
+        self.restPoseBoneMatrices = asset.makeRestPoseBoneMatrices()
         self.instanceCount = instances.count
         self.instanceBuffer = Self.makeInstanceBuffer(device: device, instances: instances)
 
@@ -109,5 +122,61 @@ extension RSMModelRenderResource {
 
     private static func textureNamespace(for asset: RSMModelRenderAsset) -> String {
         "\(asset.name)::"
+    }
+}
+
+extension RSMModelRenderAsset {
+    func makeRestPoseBoneMatrices() -> [ModelBoneUniforms] {
+        let nodeCount = nodes.count
+        var worldForChildren = [simd_float4x4](repeating: matrix_identity_float4x4, count: nodeCount)
+        var bones = [ModelBoneUniforms](
+            repeating: ModelBoneUniforms(
+                boneMatrix: matrix_identity_float4x4,
+                boneNormalMatrix: matrix_identity_float3x3
+            ),
+            count: nodeCount
+        )
+
+        let centerCorrection = matrix_translate(matrix_identity_float4x4, centerCorrection)
+
+        // asset.nodes is DFS-ordered (parents before children), so a single forward
+        // sweep can resolve each node's world transform from its parent's cached value.
+        for node in nodes {
+            let parentWorldChildren: simd_float4x4
+            if let parent = node.parent {
+                parentWorldChildren = worldForChildren[parent.index]
+            } else {
+                parentWorldChildren = matrix_identity_float4x4
+            }
+
+            let local = restPoseLocalForChildrenMatrix(node)
+            let transform = local
+                * matrix_translate(matrix_identity_float4x4, node.offset)
+                * simd_float4x4(node.transformMatrix)
+
+            worldForChildren[node.index] = parentWorldChildren * local
+
+            let boneMatrix = centerCorrection * parentWorldChildren * transform
+            bones[node.index] = ModelBoneUniforms(
+                boneMatrix: boneMatrix,
+                boneNormalMatrix: simd_float3x3(boneMatrix).inverse.transpose
+            )
+        }
+
+        return bones
+    }
+
+    private func restPoseLocalForChildrenMatrix(_ node: RSMModelNode) -> simd_float4x4 {
+        var m = matrix_identity_float4x4
+        m = matrix_translate(m, node.position)
+        let quaternion: simd_quatf
+        if node.rotationKeyframes.isEmpty {
+            quaternion = simd_quatf(angle: node.rotationAngle, axis: node.rotationAxis)
+        } else {
+            quaternion = node.rotationKeyframes[0].quaternion
+        }
+        m *= simd_float4x4(quaternion)
+        m = matrix_scale(m, node.scale)
+        return m
     }
 }

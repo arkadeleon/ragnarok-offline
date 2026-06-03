@@ -77,16 +77,24 @@ public final class RSMModelRenderer {
             renderCommandEncoder.setVertexBuffer(instanceBuffer, offset: 0, index: 2)
             renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
 
-            for mesh in resource.meshes where mesh.vertexCount > 0 {
-                renderCommandEncoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)
-                renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+            for node in resource.nodes {
+                guard node.nodeIndex < resource.restPoseBoneMatrices.count else {
+                    continue
+                }
+                var bone = resource.restPoseBoneMatrices[node.nodeIndex]
+                renderCommandEncoder.setVertexBytes(&bone, length: MemoryLayout<ModelBoneUniforms>.stride, index: 3)
 
-                renderCommandEncoder.drawPrimitives(
-                    type: .triangle,
-                    vertexStart: 0,
-                    vertexCount: mesh.vertexCount,
-                    instanceCount: resource.instanceCount
-                )
+                for mesh in node.meshes where mesh.vertexCount > 0 {
+                    renderCommandEncoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)
+                    renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+
+                    renderCommandEncoder.drawPrimitives(
+                        type: .triangle,
+                        vertexStart: 0,
+                        vertexCount: mesh.vertexCount,
+                        instanceCount: resource.instanceCount
+                    )
+                }
             }
         }
     }

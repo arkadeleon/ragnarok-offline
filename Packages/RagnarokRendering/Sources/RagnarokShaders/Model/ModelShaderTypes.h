@@ -33,3 +33,8 @@ typedef struct {
     vector_float3 lightDiffuse;
     float lightOpacity;
 } ModelFragmentUniforms;
+
+typedef struct {
+    matrix_float4x4 boneMatrix;
+    matrix_float3x3 boneNormalMatrix;
+} ModelBoneUniforms;
