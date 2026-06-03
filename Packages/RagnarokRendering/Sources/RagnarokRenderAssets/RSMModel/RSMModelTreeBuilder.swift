@@ -40,8 +40,7 @@ final class RSMModelTreeBuilder {
             }
             return RSMModelNodeBuilder(
                 rsmNode: rsmNode,
-                positionKeyframes: positionKeyframes,
-                textureAnimations: makeTextureAnimations(from: rsmNode.textureKeyframeGroups)
+                positionKeyframes: positionKeyframes
             )
         }
 
@@ -150,7 +149,6 @@ final class RSMModelTreeBuilder {
                 positionKeyframes: builder.positionKeyframes,
                 rotationKeyframes: builder.rsmNode.rotationKeyframes,
                 scaleKeyframes: builder.rsmNode.scaleKeyframes,
-                textureAnimations: builder.textureAnimations,
                 meshes: builder.meshes
             )
             for child in childNodes {
@@ -177,7 +175,6 @@ final class RSMModelTreeBuilder {
 private final class RSMModelNodeBuilder {
     let rsmNode: RSM.Node
     var positionKeyframes: [RSMModelPositionKeyframe]
-    var textureAnimations: [RSMModelTextureAnimation]
     weak var parent: RSMModelNodeBuilder?
     var children: [RSMModelNodeBuilder] = []
     var index: Int = -1
@@ -185,12 +182,10 @@ private final class RSMModelNodeBuilder {
 
     init(
         rsmNode: RSM.Node,
-        positionKeyframes: [RSMModelPositionKeyframe],
-        textureAnimations: [RSMModelTextureAnimation]
+        positionKeyframes: [RSMModelPositionKeyframe]
     ) {
         self.rsmNode = rsmNode
         self.positionKeyframes = positionKeyframes
-        self.textureAnimations = textureAnimations
     }
 }
 
@@ -208,21 +203,6 @@ private func restPoseTransformForChildren(_ node: RSM.Node) -> simd_float4x4 {
     m *= simd_float4x4(quaternion)
     m = matrix_scale(m, node.scale)
     return m
-}
-
-// MARK: - Texture animation conversion
-
-private func makeTextureAnimations(
-    from groups: [RSM.Node.TextureKeyframeGroup]
-) -> [RSMModelTextureAnimation] {
-    groups.map { group in
-        RSMModelTextureAnimation(
-            textureIndex: group.textureIndex,
-            tracks: group.textureAnimations.map { animation in
-                RSMModelTextureAnimationTrack(type: animation.type, keyframes: animation.keyframes)
-            }
-        )
-    }
 }
 
 // MARK: - Node mesh compilation
@@ -302,7 +282,6 @@ private func compileNodeMeshes(
     return rsmNode.textures.enumerated().map { (textureIndex, textureName) in
         RSMModelNodeMesh(
             textureName: textureName,
-            textureIndex: Int32(textureIndex),
             vertices: verticesByTexture[Int32(textureIndex)] ?? []
         )
     }

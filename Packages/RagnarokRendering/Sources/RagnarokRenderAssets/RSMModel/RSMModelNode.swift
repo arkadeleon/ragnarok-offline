@@ -11,7 +11,6 @@ import simd
 
 public struct RSMModelNodeMesh: Sendable {
     public let textureName: String
-    public let textureIndex: Int32
     public let vertices: [ModelVertex]
 }
 
@@ -31,16 +30,6 @@ public struct RSMModelPositionKeyframe: Sendable {
         position = keyframe.position
         data = keyframe.data
     }
-}
-
-public struct RSMModelTextureAnimationTrack: Sendable {
-    public let type: Int32
-    public let keyframes: [RSM.Node.TextureAnimationKeyframe]
-}
-
-public struct RSMModelTextureAnimation: Sendable {
-    public let textureIndex: Int32
-    public let tracks: [RSMModelTextureAnimationTrack]
 }
 
 public final class RSMModelNode: @unchecked Sendable {
@@ -64,7 +53,6 @@ public final class RSMModelNode: @unchecked Sendable {
     public let positionKeyframes: [RSMModelPositionKeyframe]
     public let rotationKeyframes: [RSM.Node.RotationKeyframe]
     public let scaleKeyframes: [RSM.Node.ScaleKeyframe]
-    public let textureAnimations: [RSMModelTextureAnimation]
 
     public let meshes: [RSMModelNodeMesh]
 
@@ -85,7 +73,6 @@ public final class RSMModelNode: @unchecked Sendable {
         positionKeyframes: [RSMModelPositionKeyframe],
         rotationKeyframes: [RSM.Node.RotationKeyframe],
         scaleKeyframes: [RSM.Node.ScaleKeyframe],
-        textureAnimations: [RSMModelTextureAnimation],
         meshes: [RSMModelNodeMesh]
     ) {
         self.index = index
@@ -104,7 +91,6 @@ public final class RSMModelNode: @unchecked Sendable {
         self.positionKeyframes = positionKeyframes
         self.rotationKeyframes = rotationKeyframes
         self.scaleKeyframes = scaleKeyframes
-        self.textureAnimations = textureAnimations
         self.meshes = meshes
     }
 }
