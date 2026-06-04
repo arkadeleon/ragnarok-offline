@@ -81,7 +81,7 @@ public final class RSMModelRenderer {
             let boneMatrices: [ModelBoneUniforms]
             if resource.hasAnyKeyframes {
                 let animator = RSMModelAnimator(asset: resource.asset)
-                let frame = RSMModelAnimator.frame(at: time, asset: resource.asset)
+                let frame = animator.frame(atTime: time)
                 boneMatrices = animator.evaluateBoneMatrices(atFrame: frame)
             } else {
                 boneMatrices = resource.restPoseBoneMatrices

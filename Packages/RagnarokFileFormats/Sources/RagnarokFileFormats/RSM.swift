@@ -12,8 +12,8 @@ import simd
 public struct RSM: FileFormat {
     public var header: String
     public var version: FileFormatVersion
-    public var animationLength: Int32
     public var fps: Float
+    public var animationLength: Int32
     public var shadeType: Int32
     public var alpha: UInt8
 
@@ -34,8 +34,8 @@ public struct RSM: FileFormat {
         let minor = try decoder.decode(UInt8.self)
         version = FileFormatVersion(major: major, minor: minor)
 
-        animationLength = try decoder.decode(Int32.self)
         fps = 1000
+        animationLength = try decoder.decode(Int32.self)
 
         shadeType = try decoder.decode(Int32.self)
 

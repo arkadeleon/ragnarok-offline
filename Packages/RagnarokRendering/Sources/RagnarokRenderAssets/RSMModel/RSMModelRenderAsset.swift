@@ -11,6 +11,40 @@ import RagnarokFileFormats
 import RagnarokShaders
 import simd
 
+public struct RSMModelRenderAsset {
+    public var name: String
+    public let rootNode: RSMModelNode?
+    public let nodes: [RSMModelNode]
+    public var boundingBox: RSMModelBoundingBox
+    public let centerCorrection: SIMD3<Float>
+    public var instance: RSMModelInstance
+    public var lighting: WorldLighting
+    public var textureImages: [String : CGImage]
+    public let fps: Float
+    public let animationLength: Int32
+
+    public init(
+        name: String,
+        rsm: RSM,
+        instance: RSMModelInstance,
+        lighting: WorldLighting,
+        textureImages: [String : CGImage]
+    ) {
+        self.name = name
+        self.instance = instance
+        self.lighting = lighting
+        self.textureImages = textureImages
+        self.fps = rsm.fps
+        self.animationLength = rsm.animationLength
+
+        let tree = RSMModelTreeBuilder(rsm: rsm).build()
+        self.rootNode = tree.rootNode
+        self.nodes = tree.nodes
+        self.boundingBox = tree.boundingBox
+        self.centerCorrection = tree.centerCorrection
+    }
+}
+
 public struct RSMModelBoundingBox: Sendable {
     public var min: SIMD3<Float> = [.infinity, .infinity, .infinity]
     public var max: SIMD3<Float> = [-.infinity, -.infinity, -.infinity]
@@ -45,43 +79,5 @@ public struct RSMModelInstance: Sendable {
         self.position = position
         self.rotation = rotation
         self.scale = scale
-    }
-}
-
-public struct RSMModelRenderAsset {
-    public var name: String
-    public let rootNode: RSMModelNode?
-    public let nodes: [RSMModelNode]
-    public var boundingBox: RSMModelBoundingBox
-    public let centerCorrection: SIMD3<Float>
-    public var instance: RSMModelInstance
-    public var lighting: WorldLighting
-    public var textureImages: [String : CGImage]
-    public let animationLength: Int32
-    public let frameRatePerSecond: Float
-    public let shadeType: Int32
-    public let alpha: UInt8
-
-    public init(
-        name: String,
-        rsm: RSM,
-        instance: RSMModelInstance,
-        lighting: WorldLighting,
-        textureImages: [String : CGImage]
-    ) {
-        self.name = name
-        self.instance = instance
-        self.lighting = lighting
-        self.textureImages = textureImages
-        self.animationLength = rsm.animationLength
-        self.frameRatePerSecond = rsm.fps
-        self.shadeType = rsm.shadeType
-        self.alpha = rsm.alpha
-
-        let tree = RSMModelTreeBuilder(rsm: rsm).build()
-        self.rootNode = tree.rootNode
-        self.nodes = tree.nodes
-        self.boundingBox = tree.boundingBox
-        self.centerCorrection = tree.centerCorrection
     }
 }

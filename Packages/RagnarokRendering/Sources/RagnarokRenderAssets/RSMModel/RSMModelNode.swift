@@ -9,29 +9,6 @@ import RagnarokFileFormats
 import RagnarokShaders
 import simd
 
-public struct RSMModelNodeMesh: Sendable {
-    public let textureName: String
-    public let vertices: [ModelVertex]
-}
-
-public struct RSMModelPositionKeyframe: Sendable {
-    public var frame: Int32
-    public var position: SIMD3<Float>
-    public var data: Int32
-
-    init(from keyframe: RSM.PositionKeyframe) {
-        frame = keyframe.frame
-        position = keyframe.position
-        data = Int32(keyframe.data)
-    }
-
-    init(from keyframe: RSM.Node.PositionKeyframe) {
-        frame = keyframe.frame
-        position = keyframe.position
-        data = keyframe.data
-    }
-}
-
 public final class RSMModelNode: @unchecked Sendable {
     public let index: Int
     public let name: String
@@ -93,4 +70,27 @@ public final class RSMModelNode: @unchecked Sendable {
         self.scaleKeyframes = scaleKeyframes
         self.meshes = meshes
     }
+}
+
+public struct RSMModelPositionKeyframe: Sendable {
+    public var frame: Int32
+    public var position: SIMD3<Float>
+    public var data: Int32
+
+    init(from keyframe: RSM.PositionKeyframe) {
+        frame = keyframe.frame
+        position = keyframe.position
+        data = Int32(keyframe.data)
+    }
+
+    init(from keyframe: RSM.Node.PositionKeyframe) {
+        frame = keyframe.frame
+        position = keyframe.position
+        data = keyframe.data
+    }
+}
+
+public struct RSMModelNodeMesh: Sendable {
+    public let textureName: String
+    public let vertices: [ModelVertex]
 }

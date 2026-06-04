@@ -10,9 +10,7 @@ import RagnarokFileFormats
 import RagnarokShaders
 import simd
 
-/// Turns a parsed `RSM` into a node tree, a flat DFS-ordered node array, the model's
-/// bounding box, and its center-correction offset. Each backend renders the tree
-/// directly — there is no longer a pre-baked flat mesh array.
+/// Builds an `RSMModelNode` tree, bounding box, and center-correction offset from a parsed `RSM`.
 final class RSMModelTreeBuilder {
     struct Result {
         let rootNode: RSMModelNode?
@@ -71,15 +69,11 @@ final class RSMModelTreeBuilder {
         if let rootBuilder {
             assignIndex(rootBuilder)
         }
-        // DFS-assign indices for each parentless subtree not reachable from the first
-        // root, so parents still precede their children. The Metal resource and the
-        // animator both rely on `asset.nodes` being parent-first when sweeping forward
-        // to build bone matrices.
+        // Assign indices to any remaining parentless subtrees not reachable from the root.
         for builder in builders where builder.index < 0 && builder.parent == nil {
             assignIndex(builder)
         }
-        // Defensive: any node still unindexed (e.g. malformed cyclic parent refs)
-        // gets an index in file order so the nodes array stays dense.
+        // Assign indices to any still-unindexed nodes (e.g. malformed cyclic parent refs).
         for builder in builders where builder.index < 0 {
             builder.index = nextIndex
             nextIndex += 1
@@ -124,7 +118,7 @@ final class RSMModelTreeBuilder {
             -boundingBox.center[2]
         )
 
-        // Step 6: Compile node-local meshes (identity transform; vertices and normals stay in node space).
+        // Step 6: Compile per-node meshes in node-local space.
         for builder in builders {
             builder.meshes = compileNodeMeshes(
                 rsmNode: builder.rsmNode,
@@ -135,8 +129,7 @@ final class RSMModelTreeBuilder {
             )
         }
 
-        // Step 7: Materialize the immutable node tree. Builder index is preserved so the
-        // resulting `nodes` array satisfies nodes[i].index == i.
+        // Step 7: Materialize the immutable node tree.
         var nodesByIndex = [RSMModelNode?](repeating: nil, count: builders.count)
         func materialize(_ builder: RSMModelNodeBuilder) -> RSMModelNode {
             let childNodes = builder.children.map(materialize)

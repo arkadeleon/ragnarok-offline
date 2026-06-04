@@ -11,11 +11,7 @@ import RagnarokFileFormats
 import RagnarokShaders
 import simd
 
-/// Evaluates per-node poses for an RSM model.
-///
-/// Static models trivially fall through to default values; animated models interpolate
-/// keyframes. There is no "is animated" code path — a node with empty keyframe arrays
-/// produces the same matrix as the cached rest pose.
+/// Evaluates per-node transforms for an RSM model by interpolating animation keyframes.
 public struct RSMModelAnimator {
     public let asset: RSMModelRenderAsset
 
@@ -23,9 +19,9 @@ public struct RSMModelAnimator {
         self.asset = asset
     }
 
-    /// `(time * fps) mod animationLength`, wrapped to a non-negative value.
-    public static func frame(at time: CFTimeInterval, asset: RSMModelRenderAsset) -> Float {
-        let fps = max(asset.frameRatePerSecond, 1)
+    /// Returns the animation frame index for the given playback time.
+    public func frame(atTime time: CFTimeInterval) -> Float {
+        let fps = max(asset.fps, 1)
         let length = max(Float(asset.animationLength), 1)
         var f = Float(time) * fps
         f = f.truncatingRemainder(dividingBy: length)
@@ -33,9 +29,8 @@ public struct RSMModelAnimator {
         return f
     }
 
-    /// `T(animatedPos) × R(animatedRot) × S(animatedScale)`, falling back to node
-    /// defaults when a track is empty. Equivalent to the rest-pose "local for children"
-    /// matrix when every keyframe array is empty.
+    /// Returns the local transform for a node at the given frame, interpolating keyframes
+    /// and falling back to the node's default position/rotation/scale when tracks are empty.
     public func localTransform(for node: RSMModelNode, atFrame frame: Float) -> simd_float4x4 {
         let position = interpolatedPosition(for: node, atFrame: frame)
         let rotation = interpolatedRotation(for: node, atFrame: frame)
@@ -48,11 +43,8 @@ public struct RSMModelAnimator {
         return m
     }
 
-    /// `T(centerCorrection) × worldTransformForChildren(parent) × (localTransform(node) × T(offset) × mat3)`.
-    ///
-    /// Walks ancestors to recompute the parent's world-for-children matrix. For
-    /// per-frame whole-tree evaluation prefer `evaluateBoneMatrices(atFrame:)`, which
-    /// caches each parent's result in a single forward sweep.
+    /// Returns the world-space bone matrix for a single node. Prefer `evaluateBoneMatrices(atFrame:)`
+    /// for whole-tree evaluation, which avoids redundant ancestor walks.
     public func boneMatrix(for node: RSMModelNode, atFrame frame: Float) -> simd_float4x4 {
         let centerCorrection = matrix_translate(matrix_identity_float4x4, asset.centerCorrection)
         let parentWorldChildren = worldForChildren(of: node.parent, atFrame: frame)
@@ -63,8 +55,7 @@ public struct RSMModelAnimator {
         return centerCorrection * parentWorldChildren * transform
     }
 
-    /// Evaluates `ModelBoneUniforms` for every node in `asset.nodes`, indexed by node index.
-    /// Walks the DFS-ordered nodes once, reusing each parent's cached world-for-children.
+    /// Returns bone uniforms for every node, indexed by node index.
     public func evaluateBoneMatrices(atFrame frame: Float) -> [ModelBoneUniforms] {
         let nodeCount = asset.nodes.count
         var worldForChildren = [simd_float4x4](repeating: matrix_identity_float4x4, count: nodeCount)
