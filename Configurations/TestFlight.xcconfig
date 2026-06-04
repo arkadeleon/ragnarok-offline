@@ -10,7 +10,7 @@
 
 #include "Base.xcconfig"
 
-INFOPLIST_KEY_CFBundleDisplayName = RagOff
+INFOPLIST_KEY_CFBundleDisplayName = Ragnarok Offline
 MARKETING_VERSION = 2.0
 
 _DD_GAME_CLIENT_FEATURE = GAME_CLIENT_FEATURE
