@@ -9,7 +9,6 @@ import Foundation
 import Observation
 
 private enum SettingsKey {
-    static let isRemoteClientEnabled = "client.remote_client"
     static let serverAddress = "client.server_address"
     static let serverPort = "client.server_port"
 }
@@ -20,15 +19,7 @@ final class SettingsModel {
     @ObservationIgnored
     private let defaults: UserDefaults
 
-    @ObservationIgnored
-    var remoteClientDidChange: ((Bool) -> Void)?
-
-    var isRemoteClientEnabled: Bool {
-        didSet {
-            defaults.set(isRemoteClientEnabled, forKey: SettingsKey.isRemoteClientEnabled)
-            remoteClientDidChange?(isRemoteClientEnabled)
-        }
-    }
+    var isRemoteClientEnabled = false
 
     var serverAddress: String {
         didSet {
@@ -44,7 +35,6 @@ final class SettingsModel {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        isRemoteClientEnabled = defaults.object(forKey: SettingsKey.isRemoteClientEnabled) as? Bool ?? true
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
     }

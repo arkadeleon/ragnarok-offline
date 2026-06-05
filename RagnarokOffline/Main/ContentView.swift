@@ -6,6 +6,7 @@
 //
 
 import RagnarokGame
+import StoreKit
 import SwiftUI
 
 struct ContentView: View {
@@ -46,6 +47,17 @@ struct ContentView: View {
         }
         .onOpenURL { url in
             incomingFile = File(node: .regularFile(url), location: .external)
+        }
+        .subscriptionStatusTask(for: remoteClientSubscriptionGroupID) { taskState in
+            var isRemoteClientEnabled: Bool
+            if let entitlement = taskState.value {
+                isRemoteClientEnabled = entitlement.count(where: { $0.state != .revoked && $0.state != .expired }) > 0
+            } else {
+                isRemoteClientEnabled = false
+            }
+
+            appModel.settings.isRemoteClientEnabled = isRemoteClientEnabled
+            await appModel.resourceManager.setRemoteClientEnabled(isRemoteClientEnabled)
         }
     }
 

@@ -68,6 +68,9 @@
             ReferencedContainer = "container:RagnarokOffline.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StoreKitConfigurationFileReference
+         identifier = "../../RagnarokOffline/Resources/RagnarokOffline.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

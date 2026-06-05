@@ -13,6 +13,7 @@ import RagnarokResources
 let localClientURL = URL.documentsDirectory
 let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")!
 let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
+let remoteClientSubscriptionGroupID = "22133104"
 
 @MainActor
 @Observable
@@ -48,12 +49,6 @@ final class AppModel {
             localClient: localClient,
             remoteClient: remoteClient
         )
-
-        settings.remoteClientDidChange = { isEnabled in
-            Task {
-                await resourceManager.setRemoteClientEnabled(isEnabled)
-            }
-        }
 
         self.settings = settings
         self.resourceManager = resourceManager

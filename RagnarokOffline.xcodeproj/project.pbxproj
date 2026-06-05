@@ -32,6 +32,7 @@
 		3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3E12DFC28960038DFC3 /* rAthenaCommon */; };
 		359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */; };
 		3599154C2E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		35A5F9142FD2627A00669A12 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5F9132FD2627A00669A12 /* StoreKit.framework */; };
 		35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */ = {isa = PBXBuildFile; productRef = 35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */; };
 		35B2C4712EAF5D2900A4FD11 /* RagnarokDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 35B2C4702EAF5D2900A4FD11 /* RagnarokDatabase */; };
 		35BB2F9A2EFE86FC0047040D /* RagnarokLocalization in Frameworks */ = {isa = PBXBuildFile; productRef = 35BB2F992EFE86FC0047040D /* RagnarokLocalization */; };
@@ -100,6 +101,7 @@
 		3558A3C12DFC25AD0038DFC3 /* RagnarokOfflineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RagnarokOfflineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RagnarokOfflineThumbnailExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
+		35A5F9132FD2627A00669A12 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RagnarokOffline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -159,6 +161,7 @@
 				3558A3B52DFC22EA0038DFC3 /* rAthenaLogin in Frameworks */,
 				354FCEA42F14B9FA00995F35 /* JSONViewer in Frameworks */,
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
+				35A5F9142FD2627A00669A12 /* StoreKit.framework in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
 				35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
@@ -177,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */,
+				35A5F9132FD2627A00669A12 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
