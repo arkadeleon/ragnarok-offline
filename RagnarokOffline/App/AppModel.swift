@@ -11,7 +11,7 @@ import RagnarokGame
 import RagnarokResources
 
 let localClientURL = URL.documentsDirectory
-let remoteClientURL = URL(string: "http://ragnarokoffline.online/client")!
+let remoteClientURL = URL(string: "https://ragnarokoffline.online/client")!
 let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
 let remoteClientSubscriptionGroupID = "22133104"
 
