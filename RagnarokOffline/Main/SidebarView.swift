@@ -64,9 +64,11 @@ struct SidebarView: View {
                     }
                 }
 
+                #if GAME_CLIENT_FEATURE
                 NavigationLink(value: SidebarItem.gameClient) {
-                    SidebarRow("Game Client", iconName: "ipad.and.iphone", iconColor: .green)
+                    SidebarRow("Game Client Beta", iconName: "ipad.and.iphone", iconColor: .green)
                 }
+                #endif
 
                 #if CHAT_CLIENT_FEATURE
                 NavigationLink(value: SidebarItem.chatClient) {

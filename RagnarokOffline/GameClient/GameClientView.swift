@@ -8,7 +8,6 @@
 import Network
 import RagnarokGame
 import SwiftUI
-import TipKit
 
 struct GameClientView: View {
     @Environment(GameSession.self) private var gameSession
@@ -39,14 +38,19 @@ struct GameClientView: View {
 
     @State private var connectionState: ConnectionState = .unknown
 
-    private let serverStartupTip = ServerStartupTip()
-    private let accountRegistrationTip = AccountRegistrationTip()
-
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                TipView(serverStartupTip)
-                TipView(accountRegistrationTip)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("* This **Game Client** is still in beta. Some windows and buttons may not work yet.")
+                    Text("* Before you start, set up your local client files, such as data.grf. You can also use **Remote Client** if your subscription is active.")
+                    Text("* Start the **Login Server**, **Char Server**, and **Map Server** first. The **Game Client** cannot log in before these servers are running.")
+                    Text("* To create a new account, enter a username that ends with **_M** or **_F**, such as **ragnarok_M**, in the login window.")
+                }
+                .padding()
+                .background(.background.secondary)
+                .foregroundStyle(Color.secondary)
+                .cornerRadius(12)
 
                 VStack(spacing: 0) {
                     HStack {
@@ -103,7 +107,7 @@ struct GameClientView: View {
             }
             .padding()
         }
-        .navigationTitle("Game Client")
+        .navigationTitle("Game Client Beta")
         .onAppear {
             serverAddress = settings.serverAddress
             serverPort = settings.serverPort

@@ -1,6 +1,334 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "* Before you start, set up your local client files, such as data.grf. You can also use **Remote Client** if your subscription is active." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Richte vor dem Start deine lokalen Client-Dateien ein, zum Beispiel data.grf. Du kannst auch den **Remote-Client** verwenden, wenn dein Abonnement aktiv ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Antes de empezar, configura tus archivos de cliente local, como data.grf. También puedes usar **Cliente remoto** si tu suscripción está activa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Avant de commencer, configurez vos fichiers de client local, comme data.grf. Vous pouvez aussi utiliser **Client distant** si votre abonnement est actif."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, seperti data.grf. Anda juga dapat menggunakan **Klien jarak jauh** jika langganan Anda aktif."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Prima di iniziare, configura i file del client locale, come data.grf. Puoi anche usare **Client remoto** se il tuo abbonamento è attivo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 開始する前に、data.grf などのローカルクライアントファイルを設定してください。サブスクリプションが有効な場合は、**リモートクライアント**も使用できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 시작하기 전에 data.grf 같은 로컬 클라이언트 파일을 설정하세요. 구독이 활성화되어 있다면 **원격 클라이언트**도 사용할 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Antes de começar, configure seus arquivos do cliente local, como data.grf. Você também pode usar o **Cliente remoto** se sua assinatura estiver ativa."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Перед началом настройте файлы локального клиента, например data.grf. Вы также можете использовать **Удалённый клиент**, если ваша подписка активна."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* ก่อนเริ่มใช้งาน ให้ตั้งค่าไฟล์ไคลเอนต์ในเครื่อง เช่น data.grf คุณยังสามารถใช้ **ไคลเอนต์ระยะไกล** ได้หากการสมัครสมาชิกของคุณยังใช้งานอยู่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Başlamadan önce data.grf gibi yerel istemci dosyalarınızı ayarlayın. Aboneliğiniz etkinse **Uzak İstemci** de kullanabilirsiniz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 开始前，请先设置本地客户端文件，例如 data.grf。如果你的订阅处于有效状态，也可以使用**远程客户端**。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 開始前，請先設定本機用戶端檔案，例如 data.grf。如果你的訂閱處於有效狀態，也可以使用**遠端用戶端**。"
+          }
+        }
+      }
+    },
+    "* Start the **Login Server**, **Char Server**, and **Map Server** first. The **Game Client** cannot log in before these servers are running." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Starte zuerst den **Login-Server**, den **Char-Server** und den **Map-Server**. Der **Spiel-Client** kann sich erst anmelden, wenn diese Server laufen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Inicia primero el **servidor de login**, el **servidor de personajes** y el **servidor de mapas**. El **cliente de juego** no puede iniciar sesión hasta que estos servidores estén en ejecución."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Démarrez d'abord le **serveur de connexion**, le **serveur de personnages** et le **serveur de cartes**. Le **client de jeu** ne peut pas se connecter tant que ces serveurs ne sont pas en cours d'exécution."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Mulai **Server Login**, **Server Karakter**, dan **Server Map** terlebih dahulu. **Klien game** tidak dapat login sebelum server-server ini berjalan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Avvia prima il **server di login**, il **server personaggi** e il **server mappe**. Il **client di gioco** non può accedere finché questi server non sono in esecuzione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 先に**ログインサーバー**、**キャラクターサーバー**、**マップサーバー**を起動してください。これらのサーバーが実行中になるまで、**ゲームクライアント**はログインできません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 먼저 **로그인 서버**, **캐릭터 서버**, **맵 서버**를 시작하세요. 이 서버들이 실행되기 전에는 **게임 클라이언트**가 로그인할 수 없습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Inicie primeiro o **servidor de login**, o **servidor de personagens** e o **servidor de mapas**. O **cliente de jogo** não consegue fazer login antes que esses servidores estejam em execução."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Сначала запустите **сервер входа**, **сервер персонажей** и **сервер карт**. **Игровой клиент** не сможет войти, пока эти серверы не будут запущены."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* เริ่ม **เซิร์ฟเวอร์ล็อกอิน**, **เซิร์ฟเวอร์ตัวละคร** และ **เซิร์ฟเวอร์แผนที่** ก่อน **ไคลเอนต์เกม** จะเข้าสู่ระบบไม่ได้จนกว่าเซิร์ฟเวอร์เหล่านี้จะทำงานอยู่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Önce **Giriş Sunucusu**, **Karakter Sunucusu** ve **Harita Sunucusu**'nu başlatın. Bu sunucular çalışmadan **Oyun istemcisi** oturum açamaz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 请先启动**登录服务器**、**角色服务器**和**地图服务器**。这些服务器运行前，**游戏客户端**无法登录。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 請先啟動**登入伺服器**、**角色伺服器**和**地圖伺服器**。這些伺服器執行前，**遊戲客戶端**無法登入。"
+          }
+        }
+      }
+    },
+    "* This **Game Client** is still in beta. Some windows and buttons may not work yet." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Dieser **Spiel-Client** ist noch in der Beta. Einige Fenster und Schaltflächen funktionieren möglicherweise noch nicht."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Este **cliente de juego** aún está en beta. Es posible que algunas ventanas y botones todavía no funcionen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Ce **client de jeu** est encore en bêta. Certaines fenêtres et certains boutons peuvent ne pas encore fonctionner."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* **Klien game** ini masih dalam beta. Beberapa jendela dan tombol mungkin belum berfungsi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Questo **client di gioco** è ancora in beta. Alcune finestre e pulsanti potrebbero non funzionare ancora."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* この**ゲームクライアント**はまだベータ版です。一部のウィンドウやボタンはまだ動作しない場合があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 이 **게임 클라이언트**는 아직 베타 버전입니다. 일부 창과 버튼은 아직 작동하지 않을 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Este **cliente de jogo** ainda está em beta. Algumas janelas e botões talvez ainda não funcionem."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Этот **игровой клиент** всё ещё находится в бета-версии. Некоторые окна и кнопки могут пока не работать."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* **ไคลเอนต์เกม** นี้ยังอยู่ในช่วงเบต้า หน้าต่างและปุ่มบางส่วนอาจยังใช้งานไม่ได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Bu **Oyun istemcisi** hâlâ beta aşamasında. Bazı pencereler ve düğmeler henüz çalışmayabilir."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 此**游戏客户端**仍处于测试阶段。部分窗口和按钮可能尚无法正常工作。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 此**遊戲客戶端**仍處於測試階段。部分視窗和按鈕可能尚無法正常運作。"
+          }
+        }
+      }
+    },
+    "* To create a new account, enter a username that ends with **_M** or **_F**, such as **ragnarok_M**, in the login window." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Um ein neues Konto zu erstellen, gib im Login-Fenster einen Benutzernamen ein, der mit **_M** oder **_F** endet, zum Beispiel **ragnarok_M**."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Para crear una cuenta nueva, introduce en la ventana de inicio de sesión un nombre de usuario que termine en **_M** o **_F**, como **ragnarok_M**."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Pour créer un nouveau compte, saisissez dans la fenêtre de connexion un nom d'utilisateur qui se termine par **_M** ou **_F**, comme **ragnarok_M**."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Untuk membuat akun baru, masukkan nama pengguna yang diakhiri dengan **_M** atau **_F**, seperti **ragnarok_M**, di jendela login."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Per creare un nuovo account, inserisci nella finestra di login un nome utente che termini con **_M** o **_F**, ad esempio **ragnarok_M**."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 新しいアカウントを作成するには、ログインウィンドウで **_M** または **_F** で終わるユーザー名（例: **ragnarok_M**）を入力してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 새 계정을 만들려면 로그인 창에서 **_M** 또는 **_F**로 끝나는 사용자 이름(예: **ragnarok_M**)을 입력하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Para criar uma nova conta, insira na janela de login um nome de usuário que termine com **_M** ou **_F**, como **ragnarok_M**."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Чтобы создать новую учётную запись, в окне входа введите имя пользователя, которое заканчивается на **_M** или **_F**, например **ragnarok_M**."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* หากต้องการสร้างบัญชีใหม่ ให้ป้อนชื่อผู้ใช้ที่ลงท้ายด้วย **_M** หรือ **_F** เช่น **ragnarok_M** ในหน้าต่างล็อกอิน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Yeni bir hesap oluşturmak için giriş penceresinde **_M** veya **_F** ile biten bir kullanıcı adı girin; örneğin **ragnarok_M**."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 要创建新账号，请在登录窗口输入以 **_M** 或 **_F** 结尾的用户名，例如 **ragnarok_M**。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 若要建立新帳號，請在登入視窗輸入以 **_M** 或 **_F** 結尾的使用者名稱，例如 **ragnarok_M**。"
+          }
+        }
+      }
+    },
     "**Remote Client** is a paid option that provides game resources such as textures, sprites, and models without requiring you to keep a full local client archive on this device." : {
       "localizations" : {
         "de" : {
@@ -165,88 +493,6 @@
         }
       }
     },
-    "Account Registration" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Account-Registrierung"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registro de cuenta"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Création de compte"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registrasi akun"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registrazione account"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "アカウント登録"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "계정 등록"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Registro de conta"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Регистрация аккаунта"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "การลงทะเบียนบัญชี"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hesap kaydı"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "账号注册"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "帳號註冊"
-          }
-        }
-      }
-    },
     "Actions" : {
 
     },
@@ -334,88 +580,6 @@
     },
     "Altitude" : {
 
-    },
-    "Beta Access Required" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beta-Zugang erforderlich"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Se requiere acceso beta"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Accès bêta requis"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Akses beta diperlukan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "È richiesto l'accesso alla beta"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ベータアクセスが必要です"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "베타 액세스가 필요합니다"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "É necessário acesso beta"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Требуется доступ к бете"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ต้องมีการเข้าถึงเบต้า"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beta erişimi gerekli"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "需要测试资格"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "需要測試資格"
-          }
-        }
-      }
     },
     "Cancel" : {
       "localizations" : {
@@ -1158,84 +1322,84 @@
         }
       }
     },
-    "Game Client" : {
+    "Game Client Beta" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spiel-Client"
+            "value" : "Spiel-Client-Beta"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cliente de juego"
+            "value" : "Beta del cliente de juego"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Client de jeu"
+            "value" : "Bêta du client de jeu"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klien game"
+            "value" : "Beta Klien Game"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Client di gioco"
+            "value" : "Beta del client di gioco"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームクライアント"
+            "value" : "ゲームクライアントベータ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임 클라이언트"
+            "value" : "게임 클라이언트 베타"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cliente de jogo"
+            "value" : "Beta do cliente de jogo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Игровой клиент"
+            "value" : "Бета игрового клиента"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไคลเอนต์เกม"
+            "value" : "เบต้าไคลเอนต์เกม"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyun istemcisi"
+            "value" : "Oyun istemcisi betası"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏客户端"
+            "value" : "游戏客户端测试版"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "遊戲客戶端"
+            "value" : "遊戲客戶端測試版"
           }
         }
       }
@@ -1571,88 +1735,6 @@
         }
       }
     },
-    "Join Beta" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beta beitreten"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unirse a la beta"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rejoindre la bêta"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bergabung dengan beta"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Partecipa alla beta"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ベータに参加"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "베타 참여"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Participar da beta"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Присоединиться к бете"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เข้าร่วมเบต้า"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Betaya katıl"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加入测试"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "加入測試"
-          }
-        }
-      }
-    },
     "Local Client Files" : {
       "localizations" : {
         "de" : {
@@ -1731,88 +1813,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "本機用戶端檔案"
-          }
-        }
-      }
-    },
-    "Make sure all the servers are running before starting the game client." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stelle sicher, dass alle Server laufen, bevor du den Spiel-Client startest."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Asegúrate de que todos los servidores estén en ejecución antes de iniciar el cliente de juego."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assurez-vous que tous les serveurs sont en cours d’exécution avant de démarrer le client de jeu."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pastikan semua server sudah berjalan sebelum memulai klien game."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assicurati che tutti i server siano in esecuzione prima di avviare il client di gioco."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ゲームクライアントを起動する前に、すべてのサーバーが稼働していることを確認してください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "게임 클라이언트를 시작하기 전에 모든 서버가 실행 중인지 확인하세요."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Certifique-se de que todos os servidores estejam em execução antes de iniciar o cliente de jogo."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Перед запуском игрового клиента убедитесь, что все серверы запущены."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ตรวจสอบให้แน่ใจว่าเซิร์ฟเวอร์ทั้งหมดกำลังทำงานก่อนเริ่มไคลเอนต์เกม"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oyun istemcisini başlatmadan önce tüm sunucuların çalıştığından emin olun."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "启动游戏客户端前，请确保所有服务器都在运行。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "啟動遊戲客戶端之前，請確保所有伺服器都在執行。"
           }
         }
       }
@@ -3475,170 +3475,6 @@
         }
       }
     },
-    "The **Game Client** allows you to explore and walk through the game world." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mit dem **Spiel-Client** kannst du die Ragnarok-Welt erkunden und darin umherlaufen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "El **cliente de juego** te permite explorar y recorrer el mundo de Ragnarok."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le **client de jeu** vous permet d’explorer et de parcourir le monde de Ragnarok."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Klien game** memungkinkan Anda menjelajahi dan berjalan di dunia Ragnarok."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Il **client di gioco** ti permette di esplorare e attraversare il mondo di Ragnarok."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**ゲームクライアント**を使うと、Ragnarokの世界を探索して歩き回れます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**게임 클라이언트**를 통해 Ragnarok 세계를 탐험하고 돌아다닐 수 있습니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O **cliente de jogo** permite explorar e caminhar pelo mundo de Ragnarok."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Игровой клиент** позволяет исследовать мир Ragnarok и перемещаться по нему."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**ไคลเอนต์เกม** ช่วยให้คุณสำรวจและเดินทางในโลกของ Ragnarok ได้"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Oyun istemcisi** Ragnarok dünyasını keşfetmenizi ve içinde dolaşmanızı sağlar."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**游戏客户端** 可让你探索并行走于 Ragnarok 世界。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**遊戲客戶端** 可讓你探索並行走於 Ragnarok 世界。"
-          }
-        }
-      }
-    },
-    "This feature is currently available only for beta testers." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diese Funktion ist derzeit nur für Betatester verfügbar."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Esta función está disponible solo para probadores beta."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cette fonctionnalité est actuellement disponible uniquement pour les testeurs bêta."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fitur ini saat ini hanya tersedia untuk penguji beta."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Questa funzionalità è attualmente disponibile solo per i tester beta."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "この機能は現在ベータテスターのみが利用できます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이 기능은 현재 베타 테스터에게만 제공됩니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este recurso está disponível no momento apenas para testadores beta."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Эта функция сейчас доступна только бета-тестерам."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ฟีเจอร์นี้เปิดให้เฉพาะผู้ทดสอบเบต้าเท่านั้นในขณะนี้"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bu özellik şu anda yalnızca beta test kullanıcıları için kullanılabilir."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此功能目前仅向测试用户开放。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此功能目前僅向測試使用者開放。"
-          }
-        }
-      }
-    },
     "Tools" : {
       "localizations" : {
         "de" : {
@@ -3802,88 +3638,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不支援的檔案"
-          }
-        }
-      }
-    },
-    "Use _M/_F to register new accounts on the server." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verwende _M/_F, um neue Accounts auf dem Server zu registrieren."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usa _M/_F para registrar cuentas nuevas en el servidor."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Utilisez _M/_F pour enregistrer de nouveaux comptes sur le serveur."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gunakan _M/_F untuk mendaftarkan akun baru di server."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usa _M/_F per registrare nuovi account sul server."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "サーバーで新しいアカウントを登録するには _M/_F を使用してください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "서버에 새 계정을 등록하려면 _M/_F 를 사용하세요."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use _M/_F para registrar novas contas no servidor."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Используйте _M/_F, чтобы регистрировать новые аккаунты на сервере."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ใช้ _M/_F เพื่อสมัครบัญชีใหม่บนเซิร์ฟเวอร์"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sunucuda yeni hesaplar oluşturmak için _M/_F kullanın."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在服务器上注册新账号时请使用 _M/_F。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在伺服器上註冊新帳號時請使用 _M/_F。"
           }
         }
       }

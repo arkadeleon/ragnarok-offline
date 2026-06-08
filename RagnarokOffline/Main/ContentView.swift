@@ -68,13 +68,9 @@ struct ContentView: View {
         case .remoteClientFiles:
             FilesView("Remote Client Files", directory: appModel.remoteClientCacheDirectory)
         case .gameClient:
-            #if GAME_CLIENT_FEATURE
             GameClientView()
                 .environment(appModel.gameSession)
                 .environment(appModel.settings)
-            #else
-            GameClientIntroView()
-            #endif
         case .chatClient:
             ChatClientView()
                 .environment(appModel.chatSession)
