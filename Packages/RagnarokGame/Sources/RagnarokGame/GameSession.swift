@@ -93,6 +93,8 @@ final public class GameSession {
 
     private(set) var errorMessages: [GameSession.ErrorMessage] = []
     private(set) var account: AccountInfo?
+    private(set) var charServers: [CharServerInfo] = []
+    private(set) var charServer: CharServerInfo?
     private(set) var characters: [CharacterInfo] = []
     private(set) var character: CharacterInfo?
 
@@ -221,6 +223,8 @@ final public class GameSession {
 
     private func resetLoginPhase() {
         account = nil
+        charServers = []
+        charServer = nil
         characters = []
         character = nil
         currentMapServer = nil
@@ -298,6 +302,7 @@ final public class GameSession {
             let charServers = packet.char_servers.map(CharServerInfo.init(from:))
 
             self.account = account
+            self.charServers = charServers
 
             if charServers.count == 1 {
                 selectCharServer(charServers[0])
@@ -360,6 +365,7 @@ final public class GameSession {
     func selectCharServer(_ charServer: CharServerInfo) {
         stopLoginClient()
 
+        self.charServer = charServer
         phase = .login(.connectingCharServer(charServer))
 
         startCharClient(charServer)
@@ -678,14 +684,26 @@ final public class GameSession {
                 stopMapClient()
 
                 currentMapServer = nil
-                phase = .login(.characterSelect(characters))
+
+                if let charServer {
+                    phase = .login(.connectingCharServer(charServer))
+                    startCharClient(charServer)
+                } else {
+                    phase = .login(.login)
+                }
             }
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
             if packet.result == 0 {
                 stopMapClient()
 
                 currentMapServer = nil
-                phase = .login(.characterSelect(characters))
+
+                if let charServer {
+                    phase = .login(.connectingCharServer(charServer))
+                    startCharClient(charServer)
+                } else {
+                    phase = .login(.login)
+                }
             }
         case let packet as PACKET_ZC_AID:
             account?.update(accountID: packet.accountID)
