@@ -103,17 +103,31 @@ struct SidebarView: View {
                 SectionHeaderView("Server")
             }
             .sectionActions {
-                Button {
-                    Task {
-                        try await appModel.serverManager.startAllServers()
-                        requestReview()
+                if appModel.serverManager.allServersAreRunning {
+                    Button {
+                        Task {
+                            await appModel.serverManager.stopAllServers()
+                        }
+                    } label: {
+                        #if os(macOS)
+                        Label("Stop All Servers", systemImage: "stop")
+                        #else
+                        SidebarRow("Stop All Servers", iconName: "stop.fill", iconColor: .gray)
+                        #endif
                     }
-                } label: {
-                    #if os(macOS)
-                    Label("Start All Servers", systemImage: "play")
-                    #else
-                    SidebarRow("Start All Servers", iconName: "play.fill", iconColor: .gray)
-                    #endif
+                } else {
+                    Button {
+                        Task {
+                            try await appModel.serverManager.startAllServers()
+                            requestReview()
+                        }
+                    } label: {
+                        #if os(macOS)
+                        Label("Start All Servers", systemImage: "play")
+                        #else
+                        SidebarRow("Start All Servers", iconName: "play.fill", iconColor: .gray)
+                        #endif
+                    }
                 }
             }
 

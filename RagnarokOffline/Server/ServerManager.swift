@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Observation
 import rAthenaChar
 import rAthenaLogin
 import rAthenaMap
@@ -63,18 +64,24 @@ let serverConfiguration = ServerConfiguration(
 )
 
 @MainActor
+@Observable
 final class ServerManager {
     let loginServer = ServerModel(server: LoginServer.shared)
     let charServer = ServerModel(server: CharServer.shared)
     let mapServer = ServerModel(server: MapServer.shared)
     let webServer = ServerModel(server: WebServer.shared)
 
+    private let allServers: [ServerModel]
     private let serverResourceManager = ServerResourceManager()
 
-    private var serversToResume: [ServerModel] = []
+    @ObservationIgnored private var serversToResume: [ServerModel] = []
 
-    private var allServers: [ServerModel] {
-        [loginServer, charServer, mapServer, webServer]
+    var allServersAreRunning: Bool {
+        allServers.allSatisfy({ $0.status == .running })
+    }
+
+    init() {
+        allServers = [loginServer, charServer, mapServer, webServer]
     }
 
     func startServer(_ server: ServerModel) async throws {
@@ -97,7 +104,7 @@ final class ServerManager {
     }
 
     func pauseServers() async {
-        serversToResume = runningServers()
+        serversToResume = allServers.filter({ $0.status == .running })
         await stopServers(serversToResume)
     }
 
@@ -127,9 +134,5 @@ final class ServerManager {
                 }
             }
         }
-    }
-
-    private func runningServers() -> [ServerModel] {
-        allServers.filter({ $0.status == .running })
     }
 }
