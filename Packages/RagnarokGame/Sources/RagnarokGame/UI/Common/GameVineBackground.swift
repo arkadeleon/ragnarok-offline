@@ -1,0 +1,111 @@
+//
+//  GameVineBackground.swift
+//  RagnarokGame
+//
+//  Created by Leon Li on 2026/5/17.
+//
+
+import SwiftUI
+
+struct GameVineBackground: View {
+    var body: some View {
+        Canvas { context, size in
+            var vine = Path()
+
+            vine.move(to: CGPoint(x: 81.0, y: 9.9))
+            vine.addCurve(to: CGPoint(x: 48.0, y: 18.0), control1: CGPoint(x: 67.4, y: 16.9), control2: CGPoint(x: 52.7, y: 20.5))
+            vine.addCurve(to: CGPoint(x: 46.3, y: 19.7), control1: CGPoint(x: 46.4, y: 17.1), control2: CGPoint(x: 46.1, y: 17.3))
+            vine.addCurve(to: CGPoint(x: 41.9, y: 23.5), control1: CGPoint(x: 46.5, y: 22.0), control2: CGPoint(x: 46.0, y: 22.4))
+            vine.addCurve(to: CGPoint(x: 9.0, y: 25.2), control1: CGPoint(x: 36.0, y: 25.0), control2: CGPoint(x: 9.0, y: 26.5))
+            vine.addCurve(to: CGPoint(x: 18.5, y: 11.6), control1: CGPoint(x: 9.0, y: 23.4), control2: CGPoint(x: 16.8, y: 12.3))
+            vine.addCurve(to: CGPoint(x: 19.7, y: 10.3), control1: CGPoint(x: 19.5, y: 11.3), control2: CGPoint(x: 20.0, y: 10.7))
+            vine.addCurve(to: CGPoint(x: 14.8, y: 12.5), control1: CGPoint(x: 19.3, y: 10.0), control2: CGPoint(x: 17.1, y: 11.0))
+            vine.addCurve(to: CGPoint(x: 7.0, y: 16.0), control1: CGPoint(x: 12.4, y: 14.1), control2: CGPoint(x: 8.9, y: 15.6))
+            vine.addLine(to: CGPoint(x: 3.5, y: 16.6))
+            vine.addLine(to: CGPoint(x: 3.6, y: 24.0))
+            vine.addCurve(to: CGPoint(x: 13.5, y: 49.0), control1: CGPoint(x: 3.7, y: 32.2), control2: CGPoint(x: 6.0, y: 38.0))
+            vine.addLine(to: CGPoint(x: 17.2, y: 54.5))
+            vine.addLine(to: CGPoint(x: 15.5, y: 59.0))
+            vine.addCurve(to: CGPoint(x: 5.6, y: 90.0), control1: CGPoint(x: 11.1, y: 70.5), control2: CGPoint(x: 6.2, y: 85.9))
+            vine.addCurve(to: CGPoint(x: 6.3, y: 91.7), control1: CGPoint(x: 5.1, y: 94.2), control2: CGPoint(x: 5.2, y: 94.3))
+            vine.addCurve(to: CGPoint(x: 14.0, y: 89.2), control1: CGPoint(x: 7.4, y: 88.9), control2: CGPoint(x: 7.6, y: 88.8))
+            vine.addCurve(to: CGPoint(x: 30.9, y: 94.3), control1: CGPoint(x: 19.1, y: 89.5), control2: CGPoint(x: 22.8, y: 90.6))
+            vine.addCurve(to: CGPoint(x: 39.9, y: 97.6), control1: CGPoint(x: 36.7, y: 96.9), control2: CGPoint(x: 40.7, y: 98.4))
+            vine.addCurve(to: CGPoint(x: 21.1, y: 82.9), control1: CGPoint(x: 34.6, y: 92.6), control2: CGPoint(x: 24.7, y: 85.0))
+            vine.addLine(to: CGPoint(x: 16.8, y: 80.5))
+            vine.addLine(to: CGPoint(x: 20.6, y: 79.8))
+            vine.addCurve(to: CGPoint(x: 73.6, y: 78.9), control1: CGPoint(x: 28.5, y: 78.2), control2: CGPoint(x: 60.6, y: 77.7))
+            vine.addCurve(to: CGPoint(x: 126.4, y: 89.5), control1: CGPoint(x: 89.6, y: 80.4), control2: CGPoint(x: 112.0, y: 84.9))
+            vine.addCurve(to: CGPoint(x: 137.8, y: 92.5), control1: CGPoint(x: 132.4, y: 91.5), control2: CGPoint(x: 137.5, y: 92.8))
+            vine.addCurve(to: CGPoint(x: 105.5, y: 78.0), control1: CGPoint(x: 138.7, y: 91.6), control2: CGPoint(x: 115.9, y: 81.4))
+            vine.addCurve(to: CGPoint(x: 95.1, y: 74.3), control1: CGPoint(x: 100.0, y: 76.2), control2: CGPoint(x: 95.3, y: 74.5))
+            vine.addCurve(to: CGPoint(x: 107.3, y: 62.4), control1: CGPoint(x: 94.3, y: 73.7), control2: CGPoint(x: 101.2, y: 67.1))
+            vine.addCurve(to: CGPoint(x: 127.6, y: 59.9), control1: CGPoint(x: 114.2, y: 57.3), control2: CGPoint(x: 117.9, y: 56.8))
+            vine.addCurve(to: CGPoint(x: 160.8, y: 68.0), control1: CGPoint(x: 134.7, y: 62.2), control2: CGPoint(x: 152.1, y: 66.4))
+            vine.addCurve(to: CGPoint(x: 271.0, y: 63.5), control1: CGPoint(x: 198.1, y: 74.6), control2: CGPoint(x: 243.6, y: 72.8))
+            vine.addCurve(to: CGPoint(x: 272.0, y: 62.6), control1: CGPoint(x: 274.9, y: 62.2), control2: CGPoint(x: 275.1, y: 62.1))
+            vine.addCurve(to: CGPoint(x: 255.0, y: 65.2), control1: CGPoint(x: 270.1, y: 62.9), control2: CGPoint(x: 262.4, y: 64.1))
+            vine.addCurve(to: CGPoint(x: 215.5, y: 67.4), control1: CGPoint(x: 243.9, y: 67.0), control2: CGPoint(x: 236.9, y: 67.4))
+            vine.addCurve(to: CGPoint(x: 138.5, y: 56.5), control1: CGPoint(x: 182.1, y: 67.5), control2: CGPoint(x: 166.2, y: 65.2))
+            vine.addCurve(to: CGPoint(x: 130.6, y: 48.5), control1: CGPoint(x: 123.5, y: 51.7), control2: CGPoint(x: 123.4, y: 51.7))
+            vine.addCurve(to: CGPoint(x: 205.5, y: 30.6), control1: CGPoint(x: 150.7, y: 39.6), control2: CGPoint(x: 173.6, y: 34.1))
+            vine.addCurve(to: CGPoint(x: 192.5, y: 30.6), control1: CGPoint(x: 207.7, y: 30.4), control2: CGPoint(x: 201.9, y: 30.4))
+            vine.addCurve(to: CGPoint(x: 132.3, y: 43.7), control1: CGPoint(x: 169.5, y: 31.1), control2: CGPoint(x: 153.8, y: 34.5))
+            vine.addCurve(to: CGPoint(x: 103.4, y: 42.2), control1: CGPoint(x: 121.5, y: 48.3), control2: CGPoint(x: 116.3, y: 48.0))
+            vine.addCurve(to: CGPoint(x: 69.0, y: 30.2), control1: CGPoint(x: 95.1, y: 38.5), control2: CGPoint(x: 77.7, y: 32.4))
+            vine.addLine(to: CGPoint(x: 65.5, y: 29.3))
+            vine.addLine(to: CGPoint(x: 72.5, y: 25.7))
+            vine.addCurve(to: CGPoint(x: 84.0, y: 19.1), control1: CGPoint(x: 76.4, y: 23.7), control2: CGPoint(x: 81.5, y: 20.7))
+            vine.addCurve(to: CGPoint(x: 105.5, y: 17.5), control1: CGPoint(x: 89.3, y: 15.5), control2: CGPoint(x: 94.4, y: 15.1))
+            vine.addCurve(to: CGPoint(x: 144.6, y: 20.4), control1: CGPoint(x: 116.4, y: 19.8), control2: CGPoint(x: 136.9, y: 21.4))
+            vine.addLine(to: CGPoint(x: 151.5, y: 19.6))
+            vine.addLine(to: CGPoint(x: 141.1, y: 18.9))
+            vine.addCurve(to: CGPoint(x: 93.2, y: 9.1), control1: CGPoint(x: 122.5, y: 17.5), control2: CGPoint(x: 105.8, y: 14.1))
+            vine.addCurve(to: CGPoint(x: 87.2, y: 7.0), control1: CGPoint(x: 90.3, y: 8.0), control2: CGPoint(x: 87.6, y: 7.0))
+            vine.addCurve(to: CGPoint(x: 81.0, y: 9.9), control1: CGPoint(x: 86.8, y: 7.1), control2: CGPoint(x: 84.0, y: 8.4))
+            vine.closeSubpath()
+            vine.move(to: CGPoint(x: 53.7, y: 37.1))
+            vine.addCurve(to: CGPoint(x: 71.4, y: 40.6), control1: CGPoint(x: 58.0, y: 37.7), control2: CGPoint(x: 65.9, y: 39.3))
+            vine.addCurve(to: CGPoint(x: 110.3, y: 54.0), control1: CGPoint(x: 81.4, y: 43.1), control2: CGPoint(x: 108.8, y: 52.5))
+            vine.addCurve(to: CGPoint(x: 106.3, y: 58.1), control1: CGPoint(x: 110.8, y: 54.4), control2: CGPoint(x: 109.0, y: 56.3))
+            vine.addCurve(to: CGPoint(x: 95.9, y: 66.2), control1: CGPoint(x: 103.7, y: 59.9), control2: CGPoint(x: 99.0, y: 63.5))
+            vine.addCurve(to: CGPoint(x: 84.4, y: 71.0), control1: CGPoint(x: 90.5, y: 70.8), control2: CGPoint(x: 89.9, y: 71.0))
+            vine.addCurve(to: CGPoint(x: 69.5, y: 69.4), control1: CGPoint(x: 81.1, y: 71.0), control2: CGPoint(x: 74.5, y: 70.3))
+            vine.addCurve(to: CGPoint(x: 42.0, y: 67.4), control1: CGPoint(x: 64.6, y: 68.6), control2: CGPoint(x: 52.2, y: 67.6))
+            vine.addCurve(to: CGPoint(x: 22.1, y: 66.4), control1: CGPoint(x: 31.8, y: 67.1), control2: CGPoint(x: 22.9, y: 66.6))
+            vine.addCurve(to: CGPoint(x: 29.7, y: 58.5), control1: CGPoint(x: 20.2, y: 65.8), control2: CGPoint(x: 24.6, y: 61.1))
+            vine.addCurve(to: CGPoint(x: 33.9, y: 56.3), control1: CGPoint(x: 31.8, y: 57.5), control2: CGPoint(x: 33.7, y: 56.4))
+            vine.addCurve(to: CGPoint(x: 25.5, y: 47.0), control1: CGPoint(x: 34.2, y: 56.1), control2: CGPoint(x: 30.4, y: 51.9))
+            vine.addLine(to: CGPoint(x: 16.7, y: 38.1))
+            vine.addLine(to: CGPoint(x: 20.6, y: 37.5))
+            vine.addCurve(to: CGPoint(x: 25.5, y: 36.5), control1: CGPoint(x: 22.7, y: 37.1), control2: CGPoint(x: 25.0, y: 36.7))
+            vine.addCurve(to: CGPoint(x: 53.7, y: 37.1), control1: CGPoint(x: 27.8, y: 35.7), control2: CGPoint(x: 46.5, y: 36.1))
+            vine.closeSubpath()
+            vine.move(to: CGPoint(x: 49.7, y: 99.7))
+            vine.addCurve(to: CGPoint(x: 43.5, y: 101.0), control1: CGPoint(x: 46.0, y: 99.9), control2: CGPoint(x: 43.2, y: 100.5))
+            vine.addCurve(to: CGPoint(x: 5.8, y: 103.7), control1: CGPoint(x: 45.1, y: 103.5), control2: CGPoint(x: 13.3, y: 105.8))
+            vine.addLine(to: CGPoint(x: 3.0, y: 103.0))
+            vine.addLine(to: CGPoint(x: 3.0, y: 108.4))
+            vine.addCurve(to: CGPoint(x: 3.8, y: 114.3), control1: CGPoint(x: 3.0, y: 111.4), control2: CGPoint(x: 3.3, y: 114.1))
+            vine.addCurve(to: CGPoint(x: 30.4, y: 109.8), control1: CGPoint(x: 5.4, y: 115.3), control2: CGPoint(x: 20.9, y: 112.6))
+            vine.addCurve(to: CGPoint(x: 46.0, y: 106.0), control1: CGPoint(x: 35.9, y: 108.1), control2: CGPoint(x: 43.0, y: 106.4))
+            vine.addCurve(to: CGPoint(x: 50.3, y: 105.1), control1: CGPoint(x: 49.0, y: 105.6), control2: CGPoint(x: 50.9, y: 105.2))
+            vine.addCurve(to: CGPoint(x: 55.3, y: 101.1), control1: CGPoint(x: 47.2, y: 104.8), control2: CGPoint(x: 49.5, y: 102.9))
+            vine.addCurve(to: CGPoint(x: 59.0, y: 99.3), control1: CGPoint(x: 58.7, y: 100.0), control2: CGPoint(x: 60.4, y: 99.2))
+            vine.addCurve(to: CGPoint(x: 49.7, y: 99.7), control1: CGPoint(x: 57.6, y: 99.3), control2: CGPoint(x: 53.4, y: 99.5))
+            vine.closeSubpath()
+
+            let color = Color(#colorLiteral(red: 0.63, green: 0.72, blue: 0.83, alpha: 0.5))
+            context.fill(vine, with: .color(color))
+
+            let mirror = CGAffineTransform(scaleX: -1, y: -1)
+                .concatenating(CGAffineTransform(translationX: size.width, y: size.height))
+            context.fill(vine.applying(mirror), with: .color(color))
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+#Preview {
+    GameVineBackground()
+}
