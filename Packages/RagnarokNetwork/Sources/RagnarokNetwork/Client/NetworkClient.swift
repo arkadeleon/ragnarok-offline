@@ -14,6 +14,7 @@ public enum NetworkClientError: Error, Sendable {
     case decoding(any Error)
     case encoding(any Error)
     case network(NWError)
+    case disconnected
 }
 
 final public class NetworkClient: Sendable {
@@ -102,7 +103,7 @@ final public class NetworkClient: Sendable {
     }
 
     public func receiveDataAndPacket(count: Int, completion: @escaping @Sendable (_ data: Data) -> Void) {
-        connection.receive(minimumIncompleteLength: count, maximumLength: 65536) { [weak self] content, _, _, error in
+        connection.receive(minimumIncompleteLength: count, maximumLength: 65536) { [weak self] content, _, isComplete, error in
             guard let self else {
                 return
             }
@@ -130,6 +131,8 @@ final public class NetworkClient: Sendable {
 
             if let error {
                 self.errorContinuation.yield(.network(error))
+            } else if isComplete {
+                self.errorContinuation.yield(.disconnected)
             } else {
                 self.receivePacket()
             }
@@ -137,7 +140,7 @@ final public class NetworkClient: Sendable {
     }
 
     public func receivePacket() {
-        connection.receive(minimumIncompleteLength: 2, maximumLength: 65536) { [weak self] content, _, _, error in
+        connection.receive(minimumIncompleteLength: 2, maximumLength: 65536) { [weak self] content, _, isComplete, error in
             guard let self else {
                 return
             }
@@ -159,6 +162,8 @@ final public class NetworkClient: Sendable {
 
             if let error {
                 self.errorContinuation.yield(.network(error))
+            } else if isComplete {
+                self.errorContinuation.yield(.disconnected)
             } else {
                 self.receivePacket()
             }

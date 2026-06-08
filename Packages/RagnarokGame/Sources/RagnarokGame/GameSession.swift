@@ -91,6 +91,7 @@ final public class GameSession {
 
     private var username: String?
 
+    private(set) var isDisconnected = false
     private(set) var errorMessages: [GameSession.ErrorMessage] = []
     private(set) var account: AccountInfo?
     private(set) var charServers: [CharServerInfo] = []
@@ -192,6 +193,13 @@ final public class GameSession {
         }
     }
 
+    func exitSession() {
+        stopAllClients()
+
+        isDisconnected = false
+        errorMessages.removeAll()
+    }
+
     func stopAllClients() {
         stopMapClient()
         stopCharClient()
@@ -272,6 +280,9 @@ final public class GameSession {
         Task {
             for await error in client.errorStream {
                 logger.warning("\(error)")
+                if case .disconnected = error {
+                    isDisconnected = true
+                }
             }
         }
 
@@ -428,6 +439,9 @@ final public class GameSession {
         Task {
             for await error in client.errorStream {
                 logger.warning("\(error)")
+                if case .disconnected = error {
+                    isDisconnected = true
+                }
             }
         }
 
@@ -616,6 +630,9 @@ final public class GameSession {
         Task {
             for await error in client.errorStream {
                 logger.warning("\(error)")
+                if case .disconnected = error {
+                    isDisconnected = true
+                }
             }
         }
 
@@ -1339,4 +1356,3 @@ extension GameSession {
         }
     }
 }
-
