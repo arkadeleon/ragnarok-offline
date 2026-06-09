@@ -30,8 +30,8 @@ private struct GameButtonBackground: View {
             .fill(
                 LinearGradient(
                     colors: [
-                        Color(white: 0.66),
-                        Color(white: 0.43),
+                        Color(#colorLiteral(red: 0.66, green: 0.66, blue: 0.66, alpha: 1)),
+                        Color(#colorLiteral(red: 0.43, green: 0.43, blue: 0.43, alpha: 1)),
                     ],
                     startPoint: .top,
                     endPoint: .bottom
@@ -47,8 +47,8 @@ private struct GameButtonBackground: View {
     private var normalGradient: LinearGradient {
         LinearGradient(
             colors: [
-                Color(white: 0.87),
-                Color(white: 1.0),
+                Color(#colorLiteral(red: 0.87, green: 0.87, blue: 0.87, alpha: 1)),
+                Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)),
             ],
             startPoint: .top,
             endPoint: .bottom
@@ -58,8 +58,8 @@ private struct GameButtonBackground: View {
     private var pressedGradient: LinearGradient {
         LinearGradient(
             colors: [
-                Color(red: 0.64, green: 0.71, blue: 0.84),
-                Color(red: 0.85, green: 0.89, blue: 0.97),
+                Color(#colorLiteral(red: 0.64, green: 0.71, blue: 0.84, alpha: 1)),
+                Color(#colorLiteral(red: 0.85, green: 0.89, blue: 0.97, alpha: 1)),
             ],
             startPoint: .top,
             endPoint: .bottom

@@ -13,7 +13,7 @@ struct LoginFlowView: View {
     @Environment(GameSession.self) private var gameSession
 
     var body: some View {
-        GeometryReader { proxy in
+        GeometryReader { geometry in
             ScrollView([.horizontal, .vertical]) {
                 ZStack {
                     switch loginPhase {
@@ -46,7 +46,7 @@ struct LoginFlowView: View {
                     }
                     .offset(y: -120)
                 }
-                .frame(minWidth: proxy.size.width, minHeight: proxy.size.height)
+                .frame(minWidth: geometry.size.width, minHeight: geometry.size.height)
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.horizontal, .vertical])
         }

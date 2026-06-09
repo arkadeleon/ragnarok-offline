@@ -86,7 +86,7 @@ struct ChatBoxView: View {
                     .frame(height: ChatBoxView.messageHeaderHeight)
 
                     Rectangle()
-                        .foregroundStyle(Color.white)
+                        .fill(Color.white)
                         .frame(height: 1)
                 }
 

@@ -63,9 +63,10 @@ private struct SkillListRow: View {
 
     private var isPassiveSkill: Bool {
         if skill.flag < 0 {
-            return skill.spCost == 0
+            skill.spCost == 0
+        } else {
+            skill.flag == SkillInfoFlag.passive.rawValue
         }
-        return skill.flag == SkillInfoFlag.passive.rawValue
     }
 
     private var isDisabled: Bool {
@@ -95,16 +96,14 @@ private struct SkillListRow: View {
     }
 
     private var skillBackgroundColor: Color {
-        guard isSelected else {
-            return .clear
-        }
-
-        if isDisabled {
-            return Color(#colorLiteral(red: 0.7098039216, green: 0.7098039216, blue: 0.7098039216, alpha: 1))
+        if !isSelected {
+            .clear
+        } else if isDisabled {
+            Color(#colorLiteral(red: 0.7098039216, green: 0.7098039216, blue: 0.7098039216, alpha: 1))
         } else if isPassiveSkill {
-            return Color(#colorLiteral(red: 0.4509803922, green: 0.8352941176, blue: 0.9333333333, alpha: 1))
+            Color(#colorLiteral(red: 0.4509803922, green: 0.8352941176, blue: 0.9333333333, alpha: 1))
         } else {
-            return Color(#colorLiteral(red: 0.4509803922, green: 0.6117647059, blue: 0.9333333333, alpha: 1))
+            Color(#colorLiteral(red: 0.4509803922, green: 0.6117647059, blue: 0.9333333333, alpha: 1))
         }
     }
 
@@ -184,16 +183,10 @@ private struct SkillUpgradeButton: View {
                     .strokeBorder(Color(#colorLiteral(red: 0.6941176471, green: 0.6941176471, blue: 0.6941176471, alpha: 1)), lineWidth: 1)
 
                 SkillUpgradeTrendShape()
-                    .stroke(
-                        Color(#colorLiteral(red: 0.5843137255, green: 0.7019607843, blue: 0.9607843137, alpha: 1)),
-                        style: StrokeStyle(lineWidth: 2.8)
-                    )
+                    .stroke(Color(#colorLiteral(red: 0.5843137255, green: 0.7019607843, blue: 0.9607843137, alpha: 1)), style: StrokeStyle(lineWidth: 2.8))
 
                 SkillUpgradeTrendShape()
-                    .stroke(
-                        Color(#colorLiteral(red: 0.3215686275, green: 0.4745098039, blue: 0.8392156863, alpha: 1)),
-                        style: StrokeStyle(lineWidth: 1.4)
-                    )
+                    .stroke(Color(#colorLiteral(red: 0.3215686275, green: 0.4745098039, blue: 0.8392156863, alpha: 1)), style: StrokeStyle(lineWidth: 1.4))
 
                 Text(verbatim: "Lv UP")
                     .font(.game(size: 6.5, weight: .black))

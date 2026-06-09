@@ -27,7 +27,9 @@ struct GameTitleBar: View {
                 .strokeBorder(Color(#colorLiteral(red: 0.5098039216, green: 0.5803921569, blue: 0.7843137255, alpha: 1)), lineWidth: 1 / displayScale)
         }
         .overlay(alignment: .bottom) {
-            Rectangle().fill(Color.black).frame(height: 1)
+            Rectangle()
+                .fill(Color.black)
+                .frame(height: 1)
         }
     }
 }

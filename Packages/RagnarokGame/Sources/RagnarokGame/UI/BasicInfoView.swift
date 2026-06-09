@@ -142,17 +142,15 @@ private struct BasicInfoExpBar: View {
                 .foregroundStyle(Color.gameLabel)
                 .frame(width: 69, alignment: .leading)
 
-            GeometryReader { geo in
+            GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Color.white
                     Color(#colorLiteral(red: 0.2588235294, green: 0.3843137255, blue: 0.6470588235, alpha: 1))
-                        .frame(width: geo.size.width * Swift.max(0, Swift.min(1, fraction)))
+                        .frame(width: geometry.size.width * max(0, min(1, fraction)))
                 }
                 .overlay {
-                    Rectangle().strokeBorder(
-                        Color(#colorLiteral(red: 0.6862745098, green: 0.6862745098, blue: 0.6862745098, alpha: 1)),
-                        lineWidth: 1
-                    )
+                    Rectangle()
+                        .strokeBorder(Color(#colorLiteral(red: 0.6862745098, green: 0.6862745098, blue: 0.6862745098, alpha: 1)), lineWidth: 1)
                 }
             }
             .frame(width: 110, height: 4)
