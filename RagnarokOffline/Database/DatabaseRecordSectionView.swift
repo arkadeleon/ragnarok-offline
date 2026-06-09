@@ -8,45 +8,41 @@
 import SwiftUI
 
 struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Header: View {
-    @ViewBuilder var content: () -> Content
-    @ViewBuilder var header: () -> Header
+    var content: Content
+    var header: Header
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         VStack(spacing: 0) {
-            SectionHeaderView(content: header)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.vertical)
+            SectionHeaderView {
+                header
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical)
 
-            content()
+            content
         }
     }
 
-    init(@ViewBuilder content: @escaping () -> Content, @ViewBuilder header: @escaping () -> Header) {
-        self.content = content
-        self.header = header
+    init(@ViewBuilder content: () -> Content, @ViewBuilder header: () -> Header) {
+        self.content = content()
+        self.header = header()
     }
 
-    init(text: String, monospaced: Bool = false, @ViewBuilder header: @escaping () -> Header) where Content == DatabaseRecordSectionTextContent {
-        self.content = {
-            DatabaseRecordSectionTextContent(text: text, monospaced: monospaced)
-        }
-        self.header = header
+    init(text: String, monospaced: Bool = false, @ViewBuilder header: () -> Header) where Content == DatabaseRecordSectionTextContent {
+        self.content = DatabaseRecordSectionTextContent(text: text, monospaced: monospaced)
+        self.header = header()
     }
 
-    init(text: AttributedString, @ViewBuilder header: @escaping () -> Header) where Content == DatabaseRecordSectionTextContent {
-        self.content = {
-            DatabaseRecordSectionTextContent(text: text)
-        }
-        self.header = header
+    init(text: AttributedString, @ViewBuilder header: () -> Header) where Content == DatabaseRecordSectionTextContent {
+        self.content = DatabaseRecordSectionTextContent(text: text)
+        self.header = header()
     }
 
-    init(attributes: [DatabaseRecordAttribute], @ViewBuilder header: @escaping () -> Header) where Content == DatabaseRecordSectionAttributesContent {
-        self.content = {
-            DatabaseRecordSectionAttributesContent(attributes: attributes)
-        }
-        self.header = header
+    init(attributes: [DatabaseRecordAttribute], @ViewBuilder header: () -> Header) where Content == DatabaseRecordSectionAttributesContent {
+        self.content = DatabaseRecordSectionAttributesContent(attributes: attributes)
+        self.header = header()
     }
 }
 

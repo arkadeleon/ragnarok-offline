@@ -8,23 +8,21 @@
 import SwiftUI
 
 struct SectionHeaderView<Content>: View where Content: View {
-    var content: () -> Content
+    var content: Content
 
     var body: some View {
-        content()
+        content
             .font(.title3)
             .fontWeight(.semibold)
             .foregroundStyle(Color.primary)
             .textCase(nil)
     }
 
-    init(@ViewBuilder content: @escaping () -> Content) {
-        self.content = content
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
     }
 
     init(_ titleResource: LocalizedStringResource) where Content == Text {
-        content = {
-            Text(titleResource)
-        }
+        self.content = Text(titleResource)
     }
 }

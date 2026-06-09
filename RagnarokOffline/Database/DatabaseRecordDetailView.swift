@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct DatabaseRecordDetailView<Content>: View where Content: View {
-    @ViewBuilder var content: () -> Content
+    @ViewBuilder var content: Content
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         ScrollView {
             LazyVStack {
-                Group(subviews: content()) { subviews in
+                Group(subviews: content) { subviews in
                     ForEach(subviews.dropLast()) { subview in
                         subview
                             .padding(.bottom)

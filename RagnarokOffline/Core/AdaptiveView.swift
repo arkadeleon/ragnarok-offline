@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct AdaptiveView<Compact, Regular>: View where Compact: View, Regular: View {
-    @ViewBuilder var compact: () -> Compact
-    @ViewBuilder var regular: () -> Regular
+    @ViewBuilder var compact: Compact
+    @ViewBuilder var regular: Regular
 
     @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         if sizeClass == .compact {
-            compact()
+            compact
         } else {
-            regular()
+            regular
         }
     }
 }

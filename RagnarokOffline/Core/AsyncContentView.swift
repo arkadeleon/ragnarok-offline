@@ -17,7 +17,7 @@ enum AsyncContentState<Value> {
 struct AsyncContentView<Value, Content, Placeholder>: View where Value: Sendable, Content: View, Placeholder: View {
     var load: () async throws -> Value
     var content: (Value) -> Content
-    var placeholder: () -> Placeholder
+    var placeholder: Placeholder
 
     @State private var state: AsyncContentState<Value> = .idle
 
@@ -27,7 +27,7 @@ struct AsyncContentView<Value, Content, Placeholder>: View where Value: Sendable
             case .idle:
                 EmptyView()
             case .loading:
-                placeholder()
+                placeholder
             case .loaded(let value):
                 content(value)
             case .failed(let error):
@@ -54,19 +54,17 @@ struct AsyncContentView<Value, Content, Placeholder>: View where Value: Sendable
     ) where Placeholder == ProgressView<EmptyView, EmptyView> {
         self.load = load
         self.content = content
-        self.placeholder = {
-            ProgressView()
-        }
+        self.placeholder = ProgressView()
     }
 
     init(
         load: @escaping () async throws -> Value,
         @ViewBuilder content: @escaping (Value) -> Content,
-        @ViewBuilder placeholder: @escaping () -> Placeholder
+        @ViewBuilder placeholder: () -> Placeholder
     ) {
         self.load = load
         self.content = content
-        self.placeholder = placeholder
+        self.placeholder = placeholder()
     }
 }
 

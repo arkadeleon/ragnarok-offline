@@ -138,8 +138,7 @@ struct InventoryView: View {
         .padding(.bottom, 12)
     }
 
-    @ViewBuilder
-    private var contextMenu: some View {
+    @ViewBuilder private var contextMenu: some View {
         if let item = selectedItem {
             VStack {
                 if item.isUsable {

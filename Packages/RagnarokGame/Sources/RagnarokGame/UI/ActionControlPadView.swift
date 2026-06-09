@@ -99,7 +99,7 @@ struct RoundActionButton<Content: View>: View {
     var color: Color
     var diameter: CGFloat
     var action: () -> Void
-    @ViewBuilder var content: () -> Content
+    @ViewBuilder var content: Content
 
     var body: some View {
         Button(action: action) {
@@ -109,7 +109,7 @@ struct RoundActionButton<Content: View>: View {
                     .frame(width: diameter, height: diameter)
                     .shadow(color: color.opacity(0.4), radius: 5, x: 0, y: 2)
 
-                content()
+                content
             }
             .frame(width: diameter, height: diameter)
             .contentShape(Circle())

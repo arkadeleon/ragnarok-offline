@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, TitleBar: View, BottomBar: View {
-    @ViewBuilder var content: () -> Content
-    @ViewBuilder var titleBar: () -> TitleBar
-    @ViewBuilder var bottomBar: () -> BottomBar
+    var content: Content
+    var titleBar: TitleBar
+    var bottomBar: BottomBar
 
     @Environment(\.displayScale) private var displayScale
 
     var body: some View {
         VStack(spacing: 0) {
-            titleBar()
+            titleBar
 
-            content()
+            content
                 .frame(maxWidth: .infinity)
                 .background(Color.white)
                 .overlay(alignment: .leading) {
@@ -28,57 +28,43 @@ struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, Title
                     Rectangle().fill(Color.gameBoxBorder).frame(width: 1 / displayScale)
                 }
 
-            bottomBar()
+            bottomBar
         }
     }
 
     init(
-        @ViewBuilder content: @escaping () -> Content,
-        @ViewBuilder titleBar: @escaping () -> TitleBar,
-        @ViewBuilder bottomBar: @escaping () -> BottomBar
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder titleBar: () -> TitleBar,
+        @ViewBuilder bottomBar: () -> BottomBar
     ) {
-        self.content = content
-        self.titleBar = titleBar
-        self.bottomBar = bottomBar
+        self.content = content()
+        self.titleBar = titleBar()
+        self.bottomBar = bottomBar()
     }
 
     init(
-        @ViewBuilder content: @escaping () -> Content,
-        @ViewBuilder titleBar: @escaping () -> TitleBar
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder titleBar: () -> TitleBar
     ) where BottomBar == GameBottomBar<EmptyView> {
-        self.init(
-            content: content,
-            titleBar: titleBar,
-            bottomBar: {
-                GameBottomBar()
-            }
-        )
+        self.content = content()
+        self.titleBar = titleBar()
+        self.bottomBar = GameBottomBar()
     }
 
     init(
-        @ViewBuilder content: @escaping () -> Content,
-        @ViewBuilder bottomBar: @escaping () -> BottomBar
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder bottomBar: () -> BottomBar
     ) where TitleBar == GameTitleBar {
-        self.init(
-            content: content,
-            titleBar: {
-                GameTitleBar()
-            },
-            bottomBar: bottomBar
-        )
+        self.content = content()
+        self.titleBar = GameTitleBar()
+        self.bottomBar = bottomBar()
     }
 
     init(
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: () -> Content
     ) where TitleBar == GameTitleBar, BottomBar == GameBottomBar<EmptyView> {
-        self.init(
-            content: content,
-            titleBar: {
-                GameTitleBar()
-            },
-            bottomBar: {
-                GameBottomBar()
-            }
-        )
+        self.content = content()
+        self.titleBar = GameTitleBar()
+        self.bottomBar = GameBottomBar()
     }
 }

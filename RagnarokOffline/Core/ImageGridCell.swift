@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ImageGridCell<Image, Title, Subtitle>: View where Image: View, Title: View, Subtitle: View {
-    var title: () -> Title
-    var subtitle: () -> Subtitle
-    var image: () -> Image
+    var title: Title
+    var subtitle: Subtitle
+    var image: Image
 
     private var reservesSubtitleSpace: Bool
 
     var body: some View {
         VStack {
-            image()
+            image
 
             ZStack(alignment: .top) {
                 // This VStack is just for reserving space.
@@ -33,7 +33,7 @@ struct ImageGridCell<Image, Title, Subtitle>: View where Image: View, Title: Vie
                 }
 
                 VStack(spacing: 2) {
-                    title()
+                    title
                         .font(.body)
                         .foregroundStyle(Color.primary)
                         .multilineTextAlignment(.center)
@@ -41,7 +41,7 @@ struct ImageGridCell<Image, Title, Subtitle>: View where Image: View, Title: Vie
                         .frame(maxWidth: .infinity)
 
                     if reservesSubtitleSpace {
-                        subtitle()
+                        subtitle
                             .font(.footnote)
                             .foregroundStyle(Color.secondary)
                             .lineLimit(1, reservesSpace: false)
@@ -54,15 +54,11 @@ struct ImageGridCell<Image, Title, Subtitle>: View where Image: View, Title: Vie
 
     init(
         title: String,
-        @ViewBuilder image: @escaping () -> Image
+        @ViewBuilder image: () -> Image
     ) where Title == Text, Subtitle == EmptyView {
-        self.title = {
-            Text(title)
-        }
-        self.subtitle = {
-            EmptyView()
-        }
-        self.image = image
+        self.title = Text(title)
+        self.subtitle = EmptyView()
+        self.image = image()
 
         self.reservesSubtitleSpace = false
     }
@@ -70,29 +66,23 @@ struct ImageGridCell<Image, Title, Subtitle>: View where Image: View, Title: Vie
     init(
         title: String,
         subtitle: String,
-        @ViewBuilder image: @escaping () -> Image
+        @ViewBuilder image: () -> Image
     ) where Title == Text, Subtitle == Text {
-        self.title = {
-            Text(title)
-        }
-        self.subtitle = {
-            Text(subtitle)
-        }
-        self.image = image
+        self.title = Text(title)
+        self.subtitle = Text(subtitle)
+        self.image = image()
 
         self.reservesSubtitleSpace = true
     }
 
     init(
         title: String,
-        @ViewBuilder subtitle: @escaping () -> Subtitle,
-        @ViewBuilder image: @escaping () -> Image
+        @ViewBuilder subtitle: () -> Subtitle,
+        @ViewBuilder image: () -> Image
     ) where Title == Text {
-        self.title = {
-            Text(title)
-        }
-        self.subtitle = subtitle
-        self.image = image
+        self.title = Text(title)
+        self.subtitle = subtitle()
+        self.image = image()
 
         self.reservesSubtitleSpace = true
     }
