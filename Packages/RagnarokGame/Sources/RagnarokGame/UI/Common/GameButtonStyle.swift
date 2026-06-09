@@ -13,6 +13,7 @@ struct GameButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.game())
+            .foregroundStyle(Color.gameLabel)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
                 GameButtonBackground(isPressed: configuration.isPressed)

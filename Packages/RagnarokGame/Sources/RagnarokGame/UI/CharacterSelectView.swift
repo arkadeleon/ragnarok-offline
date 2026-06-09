@@ -96,6 +96,7 @@ struct CharacterSelectView: View {
 
                 Text("\(currentPage + 1) / \(totalPages)")
                     .font(.game())
+                    .foregroundStyle(Color.gameLabel)
                     .frame(maxWidth: .infinity)
                     .padding(.top, 1)
             }
@@ -113,7 +114,8 @@ struct CharacterSelectView: View {
                         Text(selectedCharacter.sp.formatted())
                         Text(mapName(for: selectedCharacter))
                     }
-                    .gameText()
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
                     .frame(width: 95, height: 15)
                 }
                 .offset(x: 65, y: 204)
@@ -127,7 +129,8 @@ struct CharacterSelectView: View {
                         Text(selectedCharacter.dex.formatted())
                         Text(selectedCharacter.luk.formatted())
                     }
-                    .gameText()
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
                     .frame(width: 95, height: 15)
                 }
                 .offset(x: 209, y: 204)

@@ -17,11 +17,13 @@ struct BasicInfoView: View {
         GameWindow {
             VStack(alignment: .leading, spacing: 0) {
                 Text(character.name)
-                    .gameText()
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
                     .padding(.leading, 10)
 
                 Text(JobID(rawValue: character.job)?.stringValue ?? "")
-                    .gameText()
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
                     .padding(.leading, 10)
 
                 Spacer()
@@ -70,7 +72,8 @@ struct BasicInfoView: View {
             GameBottomBar()
                 .overlay(alignment: .trailing) {
                     Text(verbatim: "Weight: \(status.weight)/\(status.maxWeight)  Zeny: \(status.zeny)")
-                        .gameText(size: 10)
+                        .font(.game(size: 10))
+                        .foregroundStyle(Color.gameLabel)
                         .padding(.horizontal, 5)
                 }
         }
@@ -96,7 +99,8 @@ private struct BasicInfoHPSPBar: View {
     var body: some View {
         HStack(spacing: 0) {
             Text(verbatim: label)
-                .gameText()
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
                 .frame(width: 20, alignment: .leading)
 
             GeometryReader { geometry in
@@ -117,7 +121,8 @@ private struct BasicInfoHPSPBar: View {
                 }
                 .overlay {
                     Text(verbatim: "\(current)/\(max)")
-                        .gameText(size: 9)
+                        .font(.game(size: 9))
+                        .foregroundStyle(Color.gameLabel)
                 }
             }
             .frame(width: 135, height: 8)
@@ -133,7 +138,8 @@ private struct BasicInfoExpBar: View {
     var body: some View {
         HStack(spacing: 0) {
             Text(verbatim: label)
-                .gameText()
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
                 .frame(width: 69, alignment: .leading)
 
             GeometryReader { geo in

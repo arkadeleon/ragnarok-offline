@@ -20,6 +20,7 @@ struct CharServerListView: View {
                     ForEach(charServers, id: \.name) { charServer in
                         Text(charServer.name)
                             .font(.game())
+                            .foregroundStyle(Color.gameLabel)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 2)
                             .background(Color(#colorLiteral(red: 0.8039215686, green: 0.8784313725, blue: 1, alpha: 1)))

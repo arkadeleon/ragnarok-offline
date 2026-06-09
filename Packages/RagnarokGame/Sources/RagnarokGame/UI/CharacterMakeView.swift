@@ -28,7 +28,8 @@ struct CharacterMakeView: View {
                 .textInputAutocapitalization(.never)
                 #endif
                 .disableAutocorrection(true)
-                .gameText()
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
                 .frame(width: 97, height: 18)
                 .offset(x: 63, y: 244)
 
@@ -158,7 +159,8 @@ struct CharacterMakeView: View {
                     Text(character.dex.formatted())
                     Text(character.luk.formatted())
                 }
-                .gameText()
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
                 .frame(width: 95, height: 15)
             }
             .offset(x: 460, y: 39)

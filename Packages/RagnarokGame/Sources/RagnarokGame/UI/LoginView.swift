@@ -29,7 +29,8 @@ struct LoginView: View {
                         .textInputAutocapitalization(.never)
                         #endif
                         .disableAutocorrection(true)
-                        .gameText()
+                        .font(.game())
+                        .foregroundStyle(Color.gameLabel)
                         .padding(.horizontal, 3)
                         .frame(width: 127, height: 18)
                         .background(Color.gameSecondaryBoxBackground)
@@ -52,7 +53,8 @@ struct LoginView: View {
                         .textInputAutocapitalization(.never)
                         #endif
                         .disableAutocorrection(true)
-                        .gameText()
+                        .font(.game())
+                        .foregroundStyle(Color.gameLabel)
                         .padding(.horizontal, 3)
                         .frame(width: 127, height: 18)
                         .background(Color.gameSecondaryBoxBackground)

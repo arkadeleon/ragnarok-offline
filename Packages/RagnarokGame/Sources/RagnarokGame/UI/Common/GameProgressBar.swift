@@ -31,7 +31,8 @@ struct GameProgressBar: View {
             .frame(width: 240)
 
             Text(verbatim: "\(Int(fractionCompleted * 100))%")
-                .gameText(color: Color(#colorLiteral(red: 1, green: 1, blue: 0, alpha: 1)))
+                .font(.game())
+                .foregroundStyle(Color(#colorLiteral(red: 1, green: 1, blue: 0, alpha: 1)))
         }
         .onReceive(progress.publisher(for: \.fractionCompleted)) { fractionCompleted in
             self.fractionCompleted = fractionCompleted

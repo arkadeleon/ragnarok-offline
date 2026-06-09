@@ -64,7 +64,8 @@ struct ChatBoxView: View {
                     .textInputAutocapitalization(.never)
                     #endif
                     .disableAutocorrection(true)
-                    .gameText()
+                    .font(.game())
+                    .foregroundStyle(Color.gameLabel)
                     .padding(.horizontal, 6)
                     .frame(height: ChatBoxView.chatInputHeight)
                     .background(Color.white.opacity(0.8))
@@ -138,7 +139,8 @@ private struct MessageGroupButton: View {
             selection = group
         } label: {
             Text(group.title)
-                .gameText(color: .white)
+                .font(.game())
+                .foregroundStyle(Color.white)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .contentShape(Rectangle())
                 .background(selection == group ? Color.white.opacity(0.3) : Color.clear)
@@ -158,7 +160,8 @@ private struct ChatMessageListView: View {
                 ForEach(messages) { message in
                     Text(message.content)
                         .id(message.id)
-                        .gameText(color: .white)
+                        .font(.game())
+                        .foregroundStyle(Color.white)
                 }
             }
         }
@@ -180,7 +183,8 @@ private struct PacketMessageListView: View {
                 ForEach(messages) { message in
                     Text(content(of: message))
                         .id(message.id)
-                        .gameText(color: .white)
+                        .font(.game())
+                        .foregroundStyle(Color.white)
                 }
             }
         }
@@ -210,7 +214,8 @@ private struct AtCommandShortcutListView: View {
                 ForEach(groups) { group in
                     VStack(alignment: .leading, spacing: 3) {
                         Text(group.title)
-                            .gameText(size: 10, color: .white.opacity(0.7))
+                            .font(.game(size: 10))
+                            .foregroundStyle(Color.white.opacity(0.7))
 
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 72), spacing: 3)], spacing: 3) {
                             ForEach(group.shortcuts) { shortcut in
@@ -218,7 +223,8 @@ private struct AtCommandShortcutListView: View {
                                     shortcutAction(shortcut)
                                 } label: {
                                     Text(shortcut.title)
-                                        .gameText(color: .white)
+                                        .font(.game())
+                                        .foregroundStyle(Color.white)
                                         .lineLimit(1)
                                         .padding(.horizontal, 6)
                                         .frame(maxWidth: .infinity)
