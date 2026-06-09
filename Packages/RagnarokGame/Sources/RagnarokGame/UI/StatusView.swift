@@ -104,13 +104,16 @@ private struct PrimaryStatRow: View {
                 }
 
                 Button(action: onIncrement) {
-                    RightArrow()
-                        .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
-                        .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
-                        .frame(width: 6, height: 8)
+                    ZStack {
+                        RightArrow()
+                            .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
+                            .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
+                            .frame(width: 6, height: 8)
+                    }
+                    .frame(width: 24, height: 24)
+                    .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .frame(width: 24, height: 24)
             }
             .background(Color.gameSecondaryBoxBackground)
             .overlay(Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1))

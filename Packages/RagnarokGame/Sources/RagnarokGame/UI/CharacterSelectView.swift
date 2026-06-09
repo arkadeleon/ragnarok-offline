@@ -177,46 +177,36 @@ struct CharacterSelectView: View {
         }
         .overlay(alignment: .center) {
             if showingDeleteConfirmation {
-                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 19))
-                    .overlay(alignment: .bottomTrailing) {
-                        HStack(spacing: 3) {
-                            Button("OK") {
-                                if let charID = selectedCharacter?.charID {
-                                    gameSession.deleteCharacter(charID: charID)
-                                }
-                                showingDeleteConfirmation = false
-                            }
-                            .buttonStyle(.game)
-                            .frame(width: 42, height: 20)
-
-                            Button("cancel") {
-                                showingDeleteConfirmation = false
-                            }
-                            .buttonStyle(.game)
-                            .frame(width: 42, height: 20)
+                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 19)) {
+                    Button("OK") {
+                        if let charID = selectedCharacter?.charID {
+                            gameSession.deleteCharacter(charID: charID)
                         }
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 4)
+                        showingDeleteConfirmation = false
                     }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
+
+                    Button("cancel") {
+                        showingDeleteConfirmation = false
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
+                }
             } else if showingCancelConfirmation {
-                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 17))
-                    .overlay(alignment: .bottomTrailing) {
-                        HStack(spacing: 3) {
-                            Button("OK") {
-                                gameSession.exitCurrentPhase()
-                            }
-                            .buttonStyle(.game)
-                            .frame(width: 42, height: 20)
-
-                            Button("cancel") {
-                                showingCancelConfirmation = false
-                            }
-                            .buttonStyle(.game)
-                            .frame(width: 42, height: 20)
-                        }
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 4)
+                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 17)) {
+                    Button("OK") {
+                        gameSession.exitCurrentPhase()
                     }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
+
+                    Button("cancel") {
+                        showingCancelConfirmation = false
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
+                }
             }
         }
         .task(id: currentPage) {

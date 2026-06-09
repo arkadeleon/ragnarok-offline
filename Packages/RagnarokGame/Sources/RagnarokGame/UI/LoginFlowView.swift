@@ -35,18 +35,13 @@ struct LoginFlowView: View {
 
                     ZStack {
                         ForEach(gameSession.errorMessages.reversed()) { errorMessage in
-                            MessageBoxView(errorMessage.content)
-                                .overlay(alignment: .bottomTrailing) {
-                                    HStack(spacing: 3) {
-                                        Button("OK") {
-                                            errorMessage.performAction(in: gameSession)
-                                        }
-                                        .buttonStyle(.game)
-                                        .frame(width: 42, height: 20)
-                                    }
-                                    .padding(.horizontal, 5)
-                                    .padding(.vertical, 4)
+                            MessageBoxView(errorMessage.content) {
+                                Button("OK") {
+                                    errorMessage.performAction(in: gameSession)
                                 }
+                                .buttonStyle(.game)
+                                .frame(width: 42, height: 20)
+                            }
                         }
                     }
                     .offset(y: -120)

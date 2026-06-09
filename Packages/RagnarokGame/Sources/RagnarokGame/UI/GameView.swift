@@ -31,19 +31,14 @@ public struct GameView: View {
         }
         .overlay(alignment: .center) {
             if gameSession.isDisconnected {
-                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 2))
-                    .overlay(alignment: .bottomTrailing) {
-                        HStack(spacing: 3) {
-                            Button("OK") {
-                                gameSession.exitSession()
-                                onExit()
-                            }
-                            .buttonStyle(.game)
-                            .frame(width: 42, height: 20)
-                        }
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 4)
+                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 2)) {
+                    Button("OK") {
+                        gameSession.exitSession()
+                        onExit()
                     }
+                    .buttonStyle(.game)
+                    .frame(width: 42, height: 20)
+                }
             }
         }
         .environment(gameSession)
