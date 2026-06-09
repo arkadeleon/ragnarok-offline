@@ -66,28 +66,24 @@ struct LoginView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 13)
         } bottomBar: {
-            GameBottomBar(height: 28)
-                .overlay(alignment: .trailing) {
-                    HStack(spacing: 3) {
-                        Button("login") {
-                            gameSession.loginAudioPlayer.playButtonSound()
-                            gameSession.login(
-                                username: username,
-                                password: password
-                            )
-                        }
-                        .buttonStyle(.game)
-                        .frame(width: 42, height: 20)
-                        .disabled(!isValidUsername || !isValidPassword)
-
-                        Button("exit") {
-                            exitGame()
-                        }
-                        .buttonStyle(.game)
-                        .frame(width: 42, height: 20)
-                    }
-                    .padding(.horizontal, 5)
+            GameBottomBar {
+                Button("login") {
+                    gameSession.loginAudioPlayer.playButtonSound()
+                    gameSession.login(
+                        username: username,
+                        password: password
+                    )
                 }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
+                .disabled(!isValidUsername || !isValidPassword)
+
+                Button("exit") {
+                    exitGame()
+                }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
+            }
         }
         .frame(width: 280)
     }

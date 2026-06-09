@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct GameBottomBar: View {
-    var height: CGFloat
+struct GameBottomBar<Actions>: View where Actions: View {
+    var actions: Actions
 
     @Environment(\.displayScale) private var displayScale
 
@@ -31,13 +31,24 @@ struct GameBottomBar: View {
             UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
                 .strokeBorder(Color.gameBoxBorder, lineWidth: 1 / displayScale)
         }
-        .overlay(alignment: .top) {
-            Rectangle().fill(Color.gameBoxBorder).frame(height: 1 / displayScale)
+        .overlay(alignment: .trailing) {
+            HStack(spacing: 3) {
+                actions
+            }
+            .padding(.horizontal, 5)
         }
     }
 
-    init(height: CGFloat = 21) {
-        self.height = height
+    private var height: CGFloat {
+        actions is EmptyView ? 21 : 28
+    }
+
+    init() where Actions == EmptyView {
+        self.actions = EmptyView()
+    }
+
+    init(@ViewBuilder actions: () -> Actions) {
+        self.actions = actions()
     }
 }
 

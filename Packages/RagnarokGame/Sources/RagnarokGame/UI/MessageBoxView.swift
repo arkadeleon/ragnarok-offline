@@ -20,13 +20,9 @@ struct MessageBoxView<Actions>: View where Actions: View {
                 .padding(.horizontal, 10)
                 .frame(height: 82)
         } bottomBar: {
-            GameBottomBar(height: actions is EmptyView ? 21 : 28)
-                .overlay(alignment: .trailing) {
-                    HStack(spacing: 3) {
-                        actions
-                    }
-                    .padding(.horizontal, 5)
-                }
+            GameBottomBar {
+                actions
+            }
         }
         .frame(width: 280)
     }

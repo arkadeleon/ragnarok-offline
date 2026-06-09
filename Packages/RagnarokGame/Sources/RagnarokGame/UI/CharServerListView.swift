@@ -30,27 +30,23 @@ struct CharServerListView: View {
             .padding(.vertical, 4)
             .frame(height: 75)
         } bottomBar: {
-            GameBottomBar(height: 28)
-                .overlay(alignment: .trailing) {
-                    HStack(spacing: 3) {
-                        Button("OK") {
-                            if let charServer = charServers.first {
-                                gameSession.loginAudioPlayer.playButtonSound()
-                                gameSession.selectCharServer(charServer)
-                            }
-                        }
-                        .buttonStyle(.game)
-                        .frame(width: 42, height: 20)
-                        .disabled(charServers.isEmpty)
-
-                        Button("cancel") {
-                            gameSession.exitCurrentPhase()
-                        }
-                        .buttonStyle(.game)
-                        .frame(width: 42, height: 20)
+            GameBottomBar {
+                Button("OK") {
+                    if let charServer = charServers.first {
+                        gameSession.loginAudioPlayer.playButtonSound()
+                        gameSession.selectCharServer(charServer)
                     }
-                    .padding(.horizontal, 5)
                 }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
+                .disabled(charServers.isEmpty)
+
+                Button("cancel") {
+                    gameSession.exitCurrentPhase()
+                }
+                .buttonStyle(.game)
+                .frame(width: 42, height: 20)
+            }
         }
         .frame(width: 280)
     }

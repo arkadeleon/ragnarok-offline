@@ -45,7 +45,7 @@ struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, Title
     init(
         @ViewBuilder content: @escaping () -> Content,
         @ViewBuilder titleBar: @escaping () -> TitleBar
-    ) where BottomBar == GameBottomBar {
+    ) where BottomBar == GameBottomBar<EmptyView> {
         self.init(
             content: content,
             titleBar: titleBar,
@@ -70,7 +70,7 @@ struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, Title
 
     init(
         @ViewBuilder content: @escaping () -> Content
-    ) where TitleBar == GameTitleBar, BottomBar == GameBottomBar {
+    ) where TitleBar == GameTitleBar, BottomBar == GameBottomBar<EmptyView> {
         self.init(
             content: content,
             titleBar: {
