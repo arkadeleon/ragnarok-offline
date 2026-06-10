@@ -22,14 +22,9 @@ public class WaterRenderResource {
     var waterAnimationSpeed: Float
     var waterOpacity: Float
 
-    var light = Light(
-        opacity: 1,
-        ambient: [1, 1, 1],
-        diffuse: [0, 0, 0],
-        direction: [0, 1, 0]
-    )
+    var light: WorldLight
 
-    public init(device: any MTLDevice, asset: WaterRenderAsset) {
+    public init(device: any MTLDevice, asset: WaterRenderAsset, light: WorldLight) {
         let vertices = asset.mesh.vertices
         vertexCount = vertices.count
         if vertexCount > 0 {
@@ -46,16 +41,13 @@ public class WaterRenderResource {
             MetalTextureFactory.makeTexture(from: $0, device: device, label: "water")
         }
 
-        light.ambient = asset.lighting.ambient
-        light.diffuse = asset.lighting.diffuse
-        light.direction = asset.lighting.direction
-        light.opacity = asset.lighting.opacity
-
         waveHeight = asset.parameters.waveHeight / 5
         waveSpeed = asset.parameters.waveSpeed
         wavePitch = asset.parameters.wavePitch
         waterLevel = asset.parameters.level / 5
         waterAnimationSpeed = max(Float(asset.parameters.animationSpeed), 1)
         waterOpacity = asset.parameters.opacity
+
+        self.light = light
     }
 }

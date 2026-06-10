@@ -411,13 +411,14 @@ extension MetalMapScene {
         )
 
         renderer.skyboxResource = SkyboxRenderResource(device: renderer.device, configuration: skyboxConfiguration)
-        renderer.groundResource = GroundRenderResource(device: renderer.device, asset: worldAsset.ground)
-        renderer.waterResource = WaterRenderResource(device: renderer.device, asset: worldAsset.water)
+        renderer.groundResource = GroundRenderResource(device: renderer.device, asset: worldAsset.ground, light: worldAsset.light)
+        renderer.waterResource = WaterRenderResource(device: renderer.device, asset: worldAsset.water, light: worldAsset.light)
         renderer.modelResources = worldAsset.modelGroups.map { modelGroup in
             RSMModelRenderResource(
                 device: renderer.device,
                 prototype: modelGroup.prototype,
-                instances: modelGroup.instances
+                instances: modelGroup.instances,
+                light: worldAsset.light
             )
         }
 

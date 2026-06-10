@@ -24,7 +24,7 @@ class GNDFilePreviewRenderer: Renderer {
         self.device = device
         groundAsset = asset
 
-        groundResource = GroundRenderResource(device: device, asset: asset)
+        groundResource = GroundRenderResource(device: device, asset: asset, light: .preview)
         groundRenderer = try GroundRenderer(device: device)
 
         let defaultDistance = -asset.altitude / 5 + 200

@@ -18,7 +18,6 @@ public struct RSMModelRenderAsset {
     public var boundingBox: RSMModelBoundingBox
     public let centerCorrection: SIMD3<Float>
     public var instance: RSMModelInstance
-    public var lighting: WorldLighting
     public var textureImages: [String : CGImage]
     public let fps: Float
     public let animationLength: Int32
@@ -27,12 +26,10 @@ public struct RSMModelRenderAsset {
         name: String,
         rsm: RSM,
         instance: RSMModelInstance,
-        lighting: WorldLighting,
         textureImages: [String : CGImage]
     ) {
         self.name = name
         self.instance = instance
-        self.lighting = lighting
         self.textureImages = textureImages
         self.fps = rsm.fps
         self.animationLength = rsm.animationLength

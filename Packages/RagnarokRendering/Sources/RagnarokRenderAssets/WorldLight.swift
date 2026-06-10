@@ -1,5 +1,5 @@
 //
-//  WorldLighting.swift
+//  WorldLight.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/2/10.
@@ -8,8 +8,8 @@
 import Foundation
 import RagnarokFileFormats
 
-public struct WorldLighting: Sendable {
-    public static let preview = WorldLighting(
+public struct WorldLight: Sendable {
+    public static let preview = WorldLight(
         longitude: 45,
         latitude: 45,
         diffuse: SIMD3<Float>(repeating: 1),

@@ -19,5 +19,5 @@ public struct WorldAsset {
     public var ground: GroundRenderAsset
     public var water: WaterRenderAsset
     public var modelGroups: [RSMModelAssetGroup]
-    public var lighting: WorldLighting
+    public var light: WorldLight
 }

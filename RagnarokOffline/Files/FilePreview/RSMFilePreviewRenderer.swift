@@ -24,7 +24,7 @@ public class RSMFilePreviewRenderer: Renderer {
         self.device = device
 
         modelBoundingBox = asset.boundingBox
-        modelResource = RSMModelRenderResource(device: device, asset: asset)
+        modelResource = RSMModelRenderResource(device: device, asset: asset, light: .preview)
         modelRenderer = try RSMModelRenderer(device: device)
     }
 

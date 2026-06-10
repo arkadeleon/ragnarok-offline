@@ -17,14 +17,9 @@ public class GroundRenderResource {
     let lightmapTexture: (any MTLTexture)?
     let tileColorTexture: (any MTLTexture)?
 
-    var light = Light(
-        opacity: 1,
-        ambient: [1, 1, 1],
-        diffuse: [0, 0, 0],
-        direction: [0, 1, 0]
-    )
+    var light: WorldLight
 
-    public init(device: any MTLDevice, asset: GroundRenderAsset) {
+    public init(device: any MTLDevice, asset: GroundRenderAsset, light: WorldLight) {
         let vertices = asset.mesh.vertices
         vertexCount = vertices.count
         vertexBuffer = device.makeBuffer(
@@ -51,9 +46,6 @@ public class GroundRenderResource {
             label: "ground-tile-color-texture"
         )
 
-        light.ambient = asset.lighting.ambient
-        light.diffuse = asset.lighting.diffuse
-        light.direction = asset.lighting.direction
-        light.opacity = asset.lighting.opacity
+        self.light = light
     }
 }

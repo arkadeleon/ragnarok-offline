@@ -202,7 +202,6 @@ struct GNDFileGroundView: View {
         let groundAsset = GroundRenderAsset(
             gat: gat,
             gnd: gnd,
-            lighting: .preview,
             textureImages: textureImages
         )
 

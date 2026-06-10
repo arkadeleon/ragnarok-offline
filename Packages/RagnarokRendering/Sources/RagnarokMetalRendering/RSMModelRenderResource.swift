@@ -30,18 +30,13 @@ public class RSMModelRenderResource {
     let instanceCount: Int
     let instanceBuffer: (any MTLBuffer)?
 
-    var light = Light(
-        opacity: 1,
-        ambient: [1, 1, 1],
-        diffuse: [0, 0, 0],
-        direction: [0, 1, 0]
-    )
+    var light: WorldLight
 
-    public convenience init(device: any MTLDevice, asset: RSMModelRenderAsset) {
-        self.init(device: device, prototype: asset, instances: [asset.instance])
+    public convenience init(device: any MTLDevice, asset: RSMModelRenderAsset, light: WorldLight) {
+        self.init(device: device, prototype: asset, instances: [asset.instance], light: light)
     }
 
-    public init(device: any MTLDevice, prototype asset: RSMModelRenderAsset, instances: [RSMModelInstance]) {
+    public init(device: any MTLDevice, prototype asset: RSMModelRenderAsset, instances: [RSMModelInstance], light: WorldLight) {
         let textures = Self.makeTextures(from: asset, device: device)
         let textureNamespace = Self.textureNamespace(for: asset)
 
@@ -71,10 +66,7 @@ public class RSMModelRenderResource {
         self.instanceCount = instances.count
         self.instanceBuffer = Self.makeInstanceBuffer(device: device, instances: instances)
 
-        light.ambient = asset.lighting.ambient
-        light.diffuse = asset.lighting.diffuse
-        light.direction = asset.lighting.direction
-        light.opacity = asset.lighting.opacity
+        self.light = light
     }
 }
 

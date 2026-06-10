@@ -34,13 +34,14 @@ public class RSWFilePreviewRenderer: Renderer {
         self.device = device
         self.groundAsset = worldAsset.ground
 
-        groundResource = GroundRenderResource(device: device, asset: groundAsset)
-        waterResource = WaterRenderResource(device: device, asset: worldAsset.water)
+        groundResource = GroundRenderResource(device: device, asset: groundAsset, light: worldAsset.light)
+        waterResource = WaterRenderResource(device: device, asset: worldAsset.water, light: worldAsset.light)
         modelResources = worldAsset.modelGroups.map { modelGroup in
             RSMModelRenderResource(
                 device: device,
                 prototype: modelGroup.prototype,
-                instances: modelGroup.instances
+                instances: modelGroup.instances,
+                light: worldAsset.light
             )
         }
 

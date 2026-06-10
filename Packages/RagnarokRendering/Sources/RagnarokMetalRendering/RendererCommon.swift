@@ -6,14 +6,6 @@
 //
 
 import Metal
-import simd
-
-struct Light {
-    var opacity: Float
-    var ambient: SIMD3<Float>
-    var diffuse: SIMD3<Float>
-    var direction: SIMD3<Float>
-}
 
 enum Formats {
 }

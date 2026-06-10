@@ -17,7 +17,7 @@ public struct WorldAssetLoader: Sendable {
         let uniqueModelNames = Set(rsw.models.map(\.modelName))
         let modelResources = await resourceManager.models(forNames: uniqueModelNames)
 
-        let lighting = WorldLighting(light: rsw.light)
+        let light = WorldLight(light: rsw.light)
 
         var modelTextureNames: Set<String> = []
         for (_, modelResource) in modelResources {
@@ -53,14 +53,12 @@ public struct WorldAssetLoader: Sendable {
         let groundAsset = GroundRenderAsset(
             gat: gat,
             gnd: gnd,
-            lighting: lighting,
             textureImages: await groundTextureImages
         )
 
         let waterAsset = WaterRenderAsset(
             gnd: gnd,
             parameters: waterParameters,
-            lighting: lighting,
             textureImages: await waterTextureImages
         )
 
@@ -78,7 +76,6 @@ public struct WorldAssetLoader: Sendable {
                 name: modelName,
                 rsm: modelResource.rsm,
                 instance: .identity,
-                lighting: lighting,
                 textureImages: textureImages,
             )
         }
@@ -115,7 +112,7 @@ public struct WorldAssetLoader: Sendable {
             ground: groundAsset,
             water: waterAsset,
             modelGroups: modelGroups,
-            lighting: lighting
+            light: light
         )
         return worldAsset
     }

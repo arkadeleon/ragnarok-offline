@@ -46,12 +46,10 @@ public struct WaterParameters {
 public struct WaterRenderAsset {
     public var mesh: WaterMesh
     public var parameters: WaterParameters
-    public var lighting: WorldLighting
     public var textureImages: [CGImage]
 
-    public init(gnd: GND, parameters: WaterParameters, lighting: WorldLighting, textureImages: [CGImage]) {
+    public init(gnd: GND, parameters: WaterParameters, textureImages: [CGImage]) {
         self.parameters = parameters
-        self.lighting = lighting
         self.textureImages = textureImages
 
         var vertices: [WaterVertex] = []
