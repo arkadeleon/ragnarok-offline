@@ -1,6 +1,6 @@
 //
 //  WorldEntity.swift
-//  RagnarokRealityRendering
+//  RagnarokReality
 //
 //  Created by Leon Li on 2025/2/26.
 //

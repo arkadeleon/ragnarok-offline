@@ -11,7 +11,7 @@ import SwiftUI
 #if os(visionOS)
 
 import RagnarokCore
-import RagnarokRendering
+import RagnarokReality
 import RealityKit
 
 struct MapViewerMapRenderingView: View {

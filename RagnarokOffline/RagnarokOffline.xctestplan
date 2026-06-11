@@ -98,9 +98,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/RagnarokRendering",
-        "identifier" : "RagnarokRealityRenderingTests",
-        "name" : "RagnarokRealityRenderingTests"
+        "containerPath" : "container:Packages\/RagnarokReality",
+        "identifier" : "RagnarokRealityTests",
+        "name" : "RagnarokRealityTests"
       }
     },
     {

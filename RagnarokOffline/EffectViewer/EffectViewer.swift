@@ -7,7 +7,8 @@
 
 import MetalKit
 import RagnarokFileFormats
-import RagnarokRendering
+import RagnarokRenderAssets
+import RagnarokRenderers
 import RagnarokResources
 import SwiftUI
 

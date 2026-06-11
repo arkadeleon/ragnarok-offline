@@ -1,5 +1,5 @@
 {
-  "originHash" : "cdc5bff1511fd034342040cb71d8430d0fe84a74859a0a69c20793717465f867",
+  "originHash" : "f54344fcbe4c163eb5e87b7f0781f478c618e8918f7d5623bea74830e25be482",
   "pins" : [
     {
       "identity" : "ragnarok-grf",
@@ -16,7 +16,7 @@
       "location" : "https://github.com/arkadeleon/ragnarok-lua.git",
       "state" : {
         "branch" : "master",
-        "revision" : "a43c463e2c20c30561ba4c16592666c63e93268a"
+        "revision" : "bc82609e05f9806d59f698aaf7d014e52db77f2d"
       }
     },
     {

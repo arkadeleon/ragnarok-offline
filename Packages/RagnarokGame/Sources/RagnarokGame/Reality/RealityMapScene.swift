@@ -10,7 +10,7 @@ import CoreGraphics
 import Foundation
 import RagnarokCore
 import RagnarokModels
-import RagnarokRealityRendering
+import RagnarokReality
 import RagnarokRenderAssets
 import RagnarokResources
 import RealityKit

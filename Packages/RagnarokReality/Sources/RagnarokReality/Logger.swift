@@ -1,6 +1,6 @@
 //
 //  Logger.swift
-//  RagnarokRealityRendering
+//  RagnarokReality
 //
 //  Created by Leon Li on 2025/9/17.
 //
@@ -8,5 +8,5 @@
 import OSLog
 import RagnarokCore
 
-let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "RagnarokRealityRendering")
+let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "RagnarokReality")
 let metric = PerformanceMetric(logger: logger)

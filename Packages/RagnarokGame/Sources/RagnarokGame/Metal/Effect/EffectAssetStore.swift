@@ -9,8 +9,8 @@ import Foundation
 import Metal
 import MetalKit
 import RagnarokFileFormats
-import RagnarokRenderers
 import RagnarokRenderAssets
+import RagnarokRenderers
 import RagnarokResources
 
 struct EffectAsset: @unchecked Sendable {
