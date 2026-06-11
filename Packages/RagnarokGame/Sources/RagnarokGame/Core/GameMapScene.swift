@@ -13,7 +13,7 @@ import simd
 @MainActor public protocol GameMapScene: MapSceneEventHandler {
     var mapName: String { get }
 
-    func load(progress: Progress) async
+    func load(progress: Progress) async throws
     func unload()
 }
 

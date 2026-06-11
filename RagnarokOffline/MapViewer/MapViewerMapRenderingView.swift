@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/5/21.
 //
 
+import RagnarokRenderAssets
 import RagnarokResources
 import SwiftUI
 
@@ -34,7 +35,14 @@ struct MapViewerMapRenderingView: View {
     private func loadEntity() async throws -> Entity {
         let world = try await resourceManager.world(mapName: "\(map.name).rsw")
 
-        let worldEntity = try await Entity(from: world, resourceManager: resourceManager, progress: progress)
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(
+            world: world,
+            resourceManager: resourceManager,
+            progress: progress
+        )
+
+        let worldEntity = try await Entity(from: worldAsset)
 
         let gat = world.gat
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
@@ -54,7 +62,6 @@ struct MapViewerMapRenderingView: View {
 #else
 
 import Metal
-import RagnarokRenderAssets
 
 struct MapViewerMapRenderingView: View {
     var map: MapModel
@@ -111,9 +118,7 @@ struct MapViewerMapRenderingView: View {
         let world = try await resourceManager.world(mapName: "\(map.name).rsw")
         let worldAssetLoader = WorldAssetLoader()
         let worldAsset = try await worldAssetLoader.load(
-            gat: world.gat,
-            gnd: world.gnd,
-            rsw: world.rsw,
+            world: world,
             resourceManager: resourceManager,
             progress: progress
         )

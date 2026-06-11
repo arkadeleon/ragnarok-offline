@@ -103,7 +103,7 @@ public final class MetalMapScene: GameMapScene {
         )
     }
 
-    public func load(progress: Progress) async {
+    public func load(progress: Progress) async throws {
         do {
             try await prepareRenderResources(progress: progress)
             await audioPlayer.playBGM(forMapName: mapName)
@@ -398,9 +398,7 @@ extension MetalMapScene {
     func prepareRenderResources(progress: Progress) async throws {
         let worldAssetLoader = WorldAssetLoader()
         let worldAsset = try await worldAssetLoader.load(
-            gat: world.gat,
-            gnd: world.gnd,
-            rsw: world.rsw,
+            world: world,
             resourceManager: resourceManager,
             progress: progress
         )

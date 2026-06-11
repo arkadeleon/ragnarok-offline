@@ -8,26 +8,11 @@
 import Foundation
 import RagnarokCore
 import RagnarokRenderAssets
-import RagnarokResources
 import RealityKit
 
 extension Entity {
-    public convenience init(from world: WorldResource, resourceManager: ResourceManager, progress: Progress) async throws {
+    public convenience init(from worldAsset: WorldAsset) async throws {
         self.init()
-
-        let worldAssetLoader = WorldAssetLoader()
-
-        metric.beginMeasuring("Load world assets")
-
-        let worldAsset = try await worldAssetLoader.load(
-            gat: world.gat,
-            gnd: world.gnd,
-            rsw: world.rsw,
-            resourceManager: resourceManager,
-            progress: progress
-        )
-
-        metric.endMeasuring("Load world assets")
 
         // MARK: - Ground Entity
 

@@ -770,11 +770,15 @@ final public class GameSession {
                 )
                 #endif
 
-                await scene.load(progress: progress)
+                do {
+                    try await scene.load(progress: progress)
 
-                notifyMapLoaded()
+                    notifyMapLoaded()
 
-                phase = .map(.loaded(scene))
+                    phase = .map(.loaded(scene))
+                } catch {
+                    logger.warning("Map scene failed to load: \(error)")
+                }
             }
         case let packet as PACKET_ZC_NOTIFY_PLAYERMOVE:
             let moveData = MoveData(from: packet.moveData)

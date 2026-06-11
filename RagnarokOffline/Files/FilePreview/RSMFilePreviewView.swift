@@ -94,7 +94,6 @@ struct RSMFileModelView: View {
             name: file.name,
             rsm: rsm,
             instance: instance,
-            lighting: .preview,
             textureImages: textureImages
         )
         let modelEntity = try await Entity(from: modelAsset)

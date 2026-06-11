@@ -13,7 +13,11 @@ import RagnarokResources
 public struct WorldAssetLoader: Sendable {
     public init() {}
 
-    public func load(gat: GAT, gnd: GND, rsw: RSW, resourceManager: ResourceManager, progress: Progress? = nil) async throws -> WorldAsset {
+    public func load(world: WorldResource, resourceManager: ResourceManager, progress: Progress? = nil) async throws -> WorldAsset {
+        let gat = world.gat
+        let gnd = world.gnd
+        let rsw = world.rsw
+
         let uniqueModelNames = Set(rsw.models.map(\.modelName))
         let modelResources = await resourceManager.models(forNames: uniqueModelNames)
 

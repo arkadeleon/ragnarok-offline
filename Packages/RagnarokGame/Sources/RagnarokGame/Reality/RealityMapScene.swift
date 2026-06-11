@@ -75,13 +75,19 @@ public final class RealityMapScene: GameMapScene {
         rootEntity.addChild(tileSelectionRenderer.entity)
     }
 
-    public func load(progress: Progress) async {
-        if let worldEntity = try? await Entity(from: world, resourceManager: resourceManager, progress: progress) {
-            worldEntity.name = mapName
-            worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
-            await playBGM(on: worldEntity)
-            rootEntity.addChild(worldEntity)
-        }
+    public func load(progress: Progress) async throws {
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(
+            world: world,
+            resourceManager: resourceManager,
+            progress: progress
+        )
+
+        let worldEntity = try await Entity(from: worldAsset)
+        worldEntity.name = mapName
+        worldEntity.transform = Transform(rotation: simd_quatf(angle: radians(-180), axis: [1, 0, 0]))
+        await playBGM(on: worldEntity)
+        rootEntity.addChild(worldEntity)
 
         let skyboxConfiguration = SkyboxConfiguration.generate(
             light: world.rsw.light,

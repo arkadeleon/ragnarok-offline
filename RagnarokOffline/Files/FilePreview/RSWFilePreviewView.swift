@@ -97,7 +97,14 @@ struct RSWFileWorldView: View {
 
         let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
 
-        let worldEntity = try await Entity(from: world, resourceManager: resourceManager, progress: progress)
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(
+            world: world,
+            resourceManager: resourceManager,
+            progress: progress
+        )
+
+        let worldEntity = try await Entity(from: worldAsset)
 
         let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
         let rotation = simd_float4x4(rotationX: radians(-90))
@@ -187,8 +194,14 @@ struct RSWFileWorldView: View {
         let gat = try GAT(data: gatData)
         let gnd = try GND(data: gndData)
 
+        let world = WorldResource(gat: gat, gnd: gnd, rsw: rsw)
+
         let worldAssetLoader = WorldAssetLoader()
-        let worldAsset = try await worldAssetLoader.load(gat: gat, gnd: gnd, rsw: rsw, resourceManager: resourceManager, progress: progress)
+        let worldAsset = try await worldAssetLoader.load(
+            world: world,
+            resourceManager: resourceManager,
+            progress: progress
+        )
 
         let device = MTLCreateSystemDefaultDevice()!
         let renderer = try RSWFilePreviewRenderer(device: device, worldAsset: worldAsset)
