@@ -103,10 +103,10 @@ private struct PrimaryStatRow: View {
 
                 Button(action: onIncrement) {
                     ZStack {
-                        RightArrow()
+                        GameRightArrow()
                             .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
                             .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
-                            .frame(width: 6, height: 8)
+                            .frame(width: 7, height: 9)
                     }
                     .frame(width: 24, height: 24)
                     .contentShape(Rectangle())
@@ -167,17 +167,6 @@ private struct SecondaryStatRow: View {
     init(_ title: String, value: String) {
         self.title = title
         self.value = value
-    }
-}
-
-private struct RightArrow: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.closeSubpath()
-        return path
     }
 }
 
