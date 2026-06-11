@@ -61,18 +61,8 @@ let package = Package(
             dependencies: [
                 "RagnarokCore",
                 "RagnarokFileFormats",
-                .target(
-                    name: "RagnarokRealitySurfaceShaders",
-                    condition: .when(platforms: [.iOS, .macOS])
-                ),
                 "RagnarokResources",
                 "RagnarokRenderAssets",
-            ]
-        ),
-        .target(
-            name: "RagnarokRealitySurfaceShaders",
-            resources: [
-                .process("SurfaceShaders.metal"),
             ]
         ),
         .target(
