@@ -7,7 +7,7 @@
 
 import Metal
 import RagnarokFileFormats
-import RagnarokMetalRendering
+import RagnarokRenderers
 import RagnarokSprite
 
 @MainActor

@@ -1,6 +1,6 @@
 //
 //  Camera.swift
-//  RagnarokMetalRendering
+//  RagnarokRenderers
 //
 //  Created by Leon Li on 2023/6/6.
 //

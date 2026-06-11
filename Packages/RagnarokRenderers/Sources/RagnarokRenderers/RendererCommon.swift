@@ -1,6 +1,6 @@
 //
 //  RendererCommon.swift
-//  RagnarokMetalRendering
+//  RagnarokRenderers
 //
 //  Created by Leon Li on 2020/6/29.
 //

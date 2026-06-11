@@ -16,10 +16,6 @@ let package = Package(
             targets: ["RagnarokRendering"]
         ),
         .library(
-            name: "RagnarokMetalRendering",
-            targets: ["RagnarokMetalRendering"]
-        ),
-        .library(
             name: "RagnarokRealityRendering",
             targets: ["RagnarokRealityRendering"]
         ),
@@ -28,6 +24,7 @@ let package = Package(
         .package(path: "../RagnarokCore"),
         .package(path: "../RagnarokFileFormats"),
         .package(path: "../RagnarokRenderAssets"),
+        .package(path: "../RagnarokRenderers"),
         .package(path: "../RagnarokResources"),
         .package(path: "../RagnarokShaders"),
     ],
@@ -35,16 +32,9 @@ let package = Package(
         .target(
             name: "RagnarokRendering",
             dependencies: [
-                "RagnarokMetalRendering",
-                "RagnarokRealityRendering",
-            ]
-        ),
-        .target(
-            name: "RagnarokMetalRendering",
-            dependencies: [
-                "RagnarokCore",
-                "RagnarokFileFormats",
                 "RagnarokRenderAssets",
+                "RagnarokRealityRendering",
+                "RagnarokRenderers",
                 "RagnarokShaders",
             ]
         ),
@@ -56,10 +46,6 @@ let package = Package(
                 "RagnarokRenderAssets",
                 "RagnarokResources",
             ]
-        ),
-        .testTarget(
-            name: "RagnarokMetalRenderingTests",
-            dependencies: ["RagnarokMetalRendering"]
         ),
         .testTarget(
             name: "RagnarokRealityRenderingTests",

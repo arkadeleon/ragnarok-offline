@@ -1,6 +1,6 @@
 //
 //  OrbitalCamera.swift
-//  RagnarokMetalRendering
+//  RagnarokRenderers
 //
 //  Created by Leon Li on 2026/5/15.
 //

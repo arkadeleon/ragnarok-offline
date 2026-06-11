@@ -105,9 +105,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/RagnarokRendering",
-        "identifier" : "RagnarokMetalRenderingTests",
-        "name" : "RagnarokMetalRenderingTests"
+        "containerPath" : "container:Packages\/RagnarokRenderers",
+        "identifier" : "RagnarokRenderersTests",
+        "name" : "RagnarokRenderersTests"
       }
     },
     {

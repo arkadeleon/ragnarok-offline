@@ -9,7 +9,7 @@ import Foundation
 import Metal
 import MetalKit
 import RagnarokFileFormats
-import RagnarokMetalRendering
+import RagnarokRenderers
 import RagnarokRenderAssets
 import RagnarokResources
 

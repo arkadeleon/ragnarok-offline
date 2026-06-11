@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import RagnarokConstants
 import RagnarokCore
-import RagnarokMetalRendering
+import RagnarokRenderers
 import RagnarokModels
 import RagnarokPackets
 import RagnarokRenderAssets

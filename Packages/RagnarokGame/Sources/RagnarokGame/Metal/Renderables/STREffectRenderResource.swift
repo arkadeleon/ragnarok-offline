@@ -7,7 +7,7 @@
 
 import Foundation
 import Metal
-import RagnarokMetalRendering
+import RagnarokRenderers
 import RagnarokRenderAssets
 import simd
 

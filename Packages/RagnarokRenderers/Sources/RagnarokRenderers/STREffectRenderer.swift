@@ -1,6 +1,6 @@
 //
 //  STREffectRenderer.swift
-//  RagnarokMetalRendering
+//  RagnarokRenderers
 //
 //  Created by Leon Li on 2023/11/24.
 //
