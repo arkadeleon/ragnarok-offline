@@ -8,6 +8,7 @@
 import RagnarokCore
 import RagnarokFileFormats
 import RagnarokReality
+import RagnarokRenderAssetIO
 import RagnarokRenderAssets
 import RagnarokRenderers
 import RagnarokResources

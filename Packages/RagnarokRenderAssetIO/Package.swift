@@ -4,33 +4,36 @@
 import PackageDescription
 
 let package = Package(
-    name: "RagnarokReality",
+    name: "RagnarokRenderAssetIO",
     platforms: [
-        .macOS(.v15),
-        .iOS(.v18),
-        .visionOS(.v2),
+        .macOS(.v13),
+        .iOS(.v16),
     ],
     products: [
         .library(
-            name: "RagnarokReality",
-            targets: ["RagnarokReality"]
+            name: "RagnarokRenderAssetIO",
+            targets: ["RagnarokRenderAssetIO"]
         ),
     ],
     dependencies: [
         .package(path: "../RagnarokCore"),
+        .package(path: "../RagnarokFileFormats"),
         .package(path: "../RagnarokRenderAssets"),
+        .package(path: "../RagnarokResources"),
     ],
     targets: [
         .target(
-            name: "RagnarokReality",
+            name: "RagnarokRenderAssetIO",
             dependencies: [
                 "RagnarokCore",
+                "RagnarokFileFormats",
                 "RagnarokRenderAssets",
+                "RagnarokResources",
             ]
         ),
         .testTarget(
-            name: "RagnarokRealityTests",
-            dependencies: ["RagnarokReality"]
+            name: "RagnarokRenderAssetIOTests",
+            dependencies: ["RagnarokRenderAssetIO"]
         ),
     ]
 )

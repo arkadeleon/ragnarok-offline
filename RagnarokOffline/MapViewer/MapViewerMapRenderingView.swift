@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/5/21.
 //
 
+import RagnarokRenderAssetIO
 import RagnarokRenderAssets
 import RagnarokResources
 import SwiftUI

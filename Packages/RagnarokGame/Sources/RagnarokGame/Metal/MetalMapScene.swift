@@ -11,6 +11,7 @@ import RagnarokConstants
 import RagnarokCore
 import RagnarokModels
 import RagnarokPackets
+import RagnarokRenderAssetIO
 import RagnarokRenderAssets
 import RagnarokRenderers
 import RagnarokResources

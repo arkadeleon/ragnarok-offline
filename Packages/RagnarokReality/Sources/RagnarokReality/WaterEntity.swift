@@ -8,7 +8,6 @@
 import CoreGraphics
 import RagnarokCore
 import RagnarokRenderAssets
-import RagnarokResources
 import RealityKit
 
 extension Entity {
