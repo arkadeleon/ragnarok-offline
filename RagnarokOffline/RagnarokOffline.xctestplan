@@ -70,7 +70,7 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/RagnarokRendering",
+        "containerPath" : "container:Packages\/RagnarokRenderAssets",
         "identifier" : "RagnarokRenderAssetsTests",
         "name" : "RagnarokRenderAssetsTests"
       }
