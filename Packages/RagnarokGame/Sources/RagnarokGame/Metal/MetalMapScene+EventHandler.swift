@@ -97,14 +97,28 @@ extension MetalMapScene {
     }
 
     public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
-        if let metalObject = objects[objectID] {
-            metalObject.hp = hp
-            metalObject.maxHp = maxHp
-            refreshSpriteDrawables()
+        guard let object = objects[objectID] else {
+            return
         }
 
-        state.overlay.gauges[objectID]?.hp = hp
-        state.overlay.gauges[objectID]?.maxHp = maxHp
+        object.hp = hp
+        object.maxHp = maxHp
+
+        refreshSpriteDrawables()
+
+        if var gauge = state.overlay.gauges[objectID] {
+            gauge.hp = hp
+            gauge.maxHp = maxHp
+            state.overlay.gauges[objectID] = gauge
+        } else if object.type == .monster {
+            let gauge = MetalGaugeOverlay(
+                id: objectID,
+                hp: hp,
+                maxHp: maxHp,
+                objectType: object.type
+            )
+            state.overlay.gauges[objectID] = gauge
+        }
     }
 
     public func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
@@ -125,15 +139,6 @@ extension MetalMapScene {
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
-
-        if object.type == .monster {
-            state.overlay.gauges[object.objectID] = MetalGaugeOverlay(
-                id: object.objectID,
-                hp: object.hp,
-                maxHp: object.maxHp,
-                objectType: object.type
-            )
-        }
     }
 
     public func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -157,15 +162,6 @@ extension MetalMapScene {
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
             )
-
-            if object.type == .monster {
-                state.overlay.gauges[object.objectID] = MetalGaugeOverlay(
-                    id: object.objectID,
-                    hp: object.hp,
-                    maxHp: object.maxHp,
-                    objectType: object.type
-                )
-            }
         } else {
             objects[object.objectID]?.gridPosition = endPosition
         }
@@ -243,10 +239,10 @@ extension MetalMapScene {
         }
 
         if isVisible {
-            if let object = objects[objectID], objectID == player.objectID || object.type == .monster {
+            if let object = objects[objectID], objectID == player.objectID {
                 let sp = (object as? MetalPlayerObject)?.sp
                 let maxSp = (object as? MetalPlayerObject)?.maxSp
-                state.overlay.gauges[objectID] = MetalGaugeOverlay(
+                let gauge = MetalGaugeOverlay(
                     id: objectID,
                     hp: object.hp,
                     maxHp: object.maxHp,
@@ -254,8 +250,9 @@ extension MetalMapScene {
                     maxSp: maxSp,
                     objectType: object.type
                 )
+                state.overlay.gauges[objectID] = gauge
             }
-        } else {
+        } else if objectID == player.objectID {
             state.overlay.gauges.removeValue(forKey: objectID)
         }
     }
