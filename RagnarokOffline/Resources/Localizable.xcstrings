@@ -2980,6 +2980,88 @@
         }
       }
     },
+    "Set up local client files with data.grf, or activate Remote Client before starting the game." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Richte vor dem Spielstart lokale Client-Dateien mit data.grf ein oder aktiviere den Remote-Client."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes de iniciar el juego, configura archivos de cliente local con data.grf o activa Cliente remoto."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avant de démarrer le jeu, configurez les fichiers du client local avec data.grf ou activez Client distant."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sebelum memulai game, siapkan file klien lokal dengan data.grf atau aktifkan Klien jarak jauh."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prima di avviare il gioco, configura i file del client locale con data.grf oppure attiva Client remoto."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲームを開始する前に、data.grf を含むローカルクライアントファイルを設定するか、リモートクライアントを有効にしてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임을 시작하기 전에 data.grf가 포함된 로컬 클라이언트 파일을 설정하거나 원격 클라이언트를 활성화하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antes de iniciar o jogo, configure os arquivos do cliente local com data.grf ou ative o Cliente remoto."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перед запуском игры настройте файлы локального клиента с data.grf или активируйте удалённый клиент."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ก่อนเริ่มเกม ให้ตั้งค่าไฟล์ไคลเอนต์ในเครื่องที่มี data.grf หรือเปิดใช้งานไคลเอนต์ระยะไกล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oyunu başlatmadan önce data.grf içeren yerel istemci dosyalarını ayarlayın veya Uzak İstemci'yi etkinleştirin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始游戏前，请设置包含 data.grf 的本地客户端文件，或启用远程客户端。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始遊戲前，請設定包含 data.grf 的本機用戶端檔案，或啟用遠端用戶端。"
+          }
+        }
+      }
+    },
     "Settings" : {
       "localizations" : {
         "de" : {

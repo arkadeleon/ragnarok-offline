@@ -29,14 +29,26 @@ struct GameClientView: View {
 
     @FocusState private var focusedField: GameClientView.Field?
 
-    private enum ConnectionState: Equatable {
-        case unknown
-        case testing
-        case available
-        case unavailable(NWError)
+    private enum StartState: Equatable {
+        case idle
+        case started
+        case missingClientResources
+        case testingServerConnection
+        case serverConnectionUnavailable(NWError)
+
+        var failureMessage: String? {
+            switch self {
+            case .missingClientResources:
+                String(localized: "Set up local client files with data.grf, or activate Remote Client before starting the game.")
+            case .serverConnectionUnavailable(let error):
+                error.localizedDescription
+            default:
+                nil
+            }
+        }
     }
 
-    @State private var connectionState: ConnectionState = .unknown
+    @State private var startState: StartState = .idle
 
     var body: some View {
         ScrollView {
@@ -94,14 +106,14 @@ struct GameClientView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .adaptiveProminentButtonStyle()
-                .disabled(connectionState == .testing)
+                .disabled(startState == .testingServerConnection)
 
-                if connectionState == .testing {
+                if startState == .testingServerConnection {
                     ProgressView()
                 }
 
-                if case .unavailable(let error) = connectionState {
-                    Text(error.localizedDescription)
+                if let failureMessage = startState.failureMessage {
+                    Text(failureMessage)
                         .foregroundStyle(.red)
                 }
             }
@@ -142,26 +154,73 @@ struct GameClientView: View {
     }
 
     private func startGameSession() async {
+        if !hasClientResources() {
+            startState = .missingClientResources
+            return
+        }
+
+        startState = .testingServerConnection
+
         let configuration = GameSession.Configuration(
             serverAddress: settings.serverAddress,
             serverPort: UInt16(settings.serverPort)!
         )
-
-        connectionState = .testing
-
-        let error = await gameSession.test(configuration)
-
+        let error = await testConnection(configuration)
         if let error {
-            connectionState = .unavailable(error)
-        } else {
-            connectionState = .available
+            startState = .serverConnectionUnavailable(error)
+            return
+        }
 
-            #if os(macOS)
-            openWindow(id: gameSession.windowID, value: configuration)
-            #else
-            gameSession.start(configuration)
-            isGameViewPresented = true
-            #endif
+        startState = .started
+
+        #if os(macOS)
+        openWindow(id: gameSession.windowID, value: configuration)
+        #else
+        gameSession.start(configuration)
+        isGameViewPresented = true
+        #endif
+    }
+
+    private func hasClientResources() -> Bool {
+        let dataGRFURL = localClientURL.appending(path: "data.grf")
+        if FileManager.default.fileExists(atPath: dataGRFURL.path(percentEncoded: false)) {
+            return true
+        }
+
+        if settings.isRemoteClientEnabled {
+            return true
+        }
+
+        return false
+    }
+
+    private func testConnection(_ configuration: GameSession.Configuration) async -> NWError? {
+        await withCheckedContinuation { continuation in
+            let tcp = NWProtocolTCP.Options()
+            tcp.connectionTimeout = 10
+
+            let connection = NWConnection(
+                host: NWEndpoint.Host(configuration.serverAddress),
+                port: NWEndpoint.Port(rawValue: configuration.serverPort)!,
+                using: NWParameters(tls: nil, tcp: tcp)
+            )
+
+            connection.stateUpdateHandler = { state in
+                logger.info("Game session testing connection state changed: \(String(describing: state))")
+
+                switch state {
+                case .ready:
+                    continuation.resume(returning: nil)
+                    connection.cancel()
+                case .waiting(let error), .failed(let error):
+                    continuation.resume(returning: error)
+                    connection.cancel()
+                default:
+                    break
+                }
+            }
+
+            connection.start(queue: .global())
         }
     }
 }
