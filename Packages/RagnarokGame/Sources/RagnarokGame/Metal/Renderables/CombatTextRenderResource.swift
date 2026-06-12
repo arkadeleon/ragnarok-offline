@@ -69,7 +69,7 @@ final class CombatTextRenderResource {
         }
     }
 
-    func snapshot(at now: ContinuousClock.Instant) -> Snapshot? {
+    func snapshot(at now: ContinuousClock.Instant, cameraAzimuth: Float) -> Snapshot? {
         guard let texture else {
             return nil
         }
@@ -97,10 +97,11 @@ final class CombatTextRenderResource {
             ]
         case .damage:
             scale = 4 * (1 - t)
+            let drift = drift(azimuth: cameraAzimuth) * t
             worldPosition = [
-                startPosition.x + 4 * t,
+                startPosition.x + drift.x,
                 startPosition.y + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
-                startPosition.z - 4 * t,
+                startPosition.z + drift.z,
             ]
         case .hpRecovery, .spRecovery:
             scale = max((1 - t * 2) * 3, 0.8)
@@ -130,6 +131,18 @@ final class CombatTextRenderResource {
         ]
 
         return Snapshot(vertices: vertices, worldPosition: worldPosition, texture: texture)
+    }
+
+    func drift(azimuth: Float) -> SIMD3<Float> {
+        let angle = azimuth
+        let cosAngle = cos(angle)
+        let sinAngle = sin(angle)
+        let localDrift = SIMD2<Float>(4, -4)
+        let worldDrift = SIMD2<Float>(
+            localDrift.x * cosAngle - localDrift.y * sinAngle,
+            localDrift.x * sinAngle + localDrift.y * cosAngle
+        )
+        return SIMD3<Float>(worldDrift.x, 0, worldDrift.y)
     }
 
     func isExpired(at now: ContinuousClock.Instant) -> Bool {

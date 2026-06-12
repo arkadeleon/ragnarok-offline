@@ -66,7 +66,7 @@ final class MetalSpriteRenderer {
 
         let now = ContinuousClock.now
         for resource in combatTextResources {
-            guard let snapshot = resource.snapshot(at: now) else {
+            guard let snapshot = resource.snapshot(at: now, cameraAzimuth: matrices.cameraAzimuth) else {
                 continue
             }
             encode(

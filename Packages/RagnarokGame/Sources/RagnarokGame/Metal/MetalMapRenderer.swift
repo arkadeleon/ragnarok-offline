@@ -21,6 +21,7 @@ final class MetalMapRenderer: Renderer {
         var projectionMatrix: simd_float4x4
         var normalMatrix: simd_float3x3
         var cameraPosition: SIMD3<Float>
+        var cameraAzimuth: Float
     }
 
     let device: any MTLDevice
@@ -183,7 +184,8 @@ final class MetalMapRenderer: Renderer {
             viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
             projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
             normalMatrix: simd_float3x3(modelMatrix).inverse.transpose,
-            cameraPosition: cameraPosition
+            cameraPosition: cameraPosition,
+            cameraAzimuth: cameraState.azimuth
         )
     }
 
