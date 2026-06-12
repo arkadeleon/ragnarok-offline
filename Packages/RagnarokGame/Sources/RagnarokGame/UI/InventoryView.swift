@@ -109,10 +109,10 @@ struct InventoryView: View {
                 ForEach(0..<64) { _ in
                     ZStack(alignment: .center) {
                         Ellipse()
-                            .foregroundStyle(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
+                            .fill(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
+                            .blur(radius: 2)
                             .frame(width: 24, height: 12)
                             .offset(y: 5)
-                            .blur(radius: 2)
                     }
                     .frame(width: 32, height: 32)
                 }

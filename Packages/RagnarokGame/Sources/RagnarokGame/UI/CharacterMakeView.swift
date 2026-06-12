@@ -21,8 +21,6 @@ struct CharacterMakeView: View {
     var body: some View {
         GameWindow {
             ZStack(alignment: .bottomTrailing) {
-
-
                 HStack(alignment: .top, spacing: 0) {
                     CharacterPreviewPanel(
                         character: $character,
@@ -120,9 +118,9 @@ private struct CharacterPreviewPanel: View {
         VStack(spacing: 11) {
             ZStack {
                 Ellipse()
-                    .fill(Color(#colorLiteral(red: 0.2, green: 0.2, blue: 0.25, alpha: 0.5)))
-                    .frame(width: 46, height: 9)
+                    .fill(Color(#colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.5725490196, alpha: 1)))
                     .blur(radius: 4)
+                    .frame(width: 38, height: 24)
                     .offset(y: 42.5)
 
                 Button {

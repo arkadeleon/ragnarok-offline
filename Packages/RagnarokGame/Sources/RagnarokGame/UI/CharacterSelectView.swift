@@ -215,9 +215,9 @@ private struct CharacterSlotPanel: View {
                                     }
 
                                     Ellipse()
-                                        .fill(Color(#colorLiteral(red: 0.698, green: 0.698, blue: 0.698, alpha: 1)))
-                                        .frame(width: 50, height: 12)
-                                        .blur(radius: 5)
+                                        .fill(Color(#colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.5725490196, alpha: 1)))
+                                        .blur(radius: 4)
+                                        .frame(width: 38, height: 24)
                                         .offset(y: 48)
 
                                     if let characterAnimation = characterAnimations[slot],

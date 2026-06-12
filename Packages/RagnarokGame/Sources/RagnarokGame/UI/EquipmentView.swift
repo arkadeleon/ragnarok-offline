@@ -8,10 +8,15 @@
 import RagnarokConstants
 import RagnarokModels
 import RagnarokResources
+import RagnarokSprite
 import SwiftUI
 
 struct EquipmentView: View {
     var onClose: () -> Void = {}
+
+    @Environment(GameSession.self) private var gameSession
+
+    @State private var characterAnimation: SpriteRenderer.Animation?
 
     var body: some View {
         GameWindow {
@@ -29,7 +34,7 @@ struct EquipmentView: View {
                 }
                 .frame(width: 120)
 
-                EquipmentCharacterView()
+                EquipmentCharacterView(characterAnimation: characterAnimation)
 
                 VStack(spacing: 0) {
                     EquipmentRightSlotRow(label: "head", location: .head_low)
@@ -53,15 +58,28 @@ struct EquipmentView: View {
                 }
         }
         .frame(width: 320)
+        .task {
+            if let character = gameSession.character {
+                characterAnimation = await gameSession.characterAnimation(for: character)
+            }
+        }
     }
 }
 
 private struct EquipmentCharacterView: View {
+    var characterAnimation: SpriteRenderer.Animation?
+
     var body: some View {
         ZStack {
             EquipmentCharacterBackground()
+
             EquipmentCharacterShadow()
                 .offset(y: 50)
+
+            if let characterAnimation, let firstFrame = characterAnimation.firstFrame {
+                Image(decorative: firstFrame, scale: 2)
+                    .offset(y: 10)
+            }
         }
     }
 }
@@ -83,20 +101,9 @@ private struct EquipmentCharacterBackground: View {
 private struct EquipmentCharacterShadow: View {
     var body: some View {
         Ellipse()
-            .fill(
-                RadialGradient(
-                    stops: [
-                        .init(color: Color(#colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.5725490196, alpha: 1)).opacity(0.9), location: 0),
-                        .init(color: Color(#colorLiteral(red: 0.6862745098, green: 0.6862745098, blue: 0.6862745098, alpha: 1)).opacity(0.55), location: 0.55),
-                        .init(color: Color(#colorLiteral(red: 0.8509803922, green: 0.8509803922, blue: 0.8509803922, alpha: 1)).opacity(0.0), location: 1)
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 38
-                )
-            )
+            .fill(Color(#colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.5725490196, alpha: 1)))
+            .blur(radius: 4)
             .frame(width: 38, height: 24)
-            .blendMode(.multiply)
     }
 }
 
@@ -195,18 +202,8 @@ private struct EquipmentSlotImage: View {
 private struct EquipmentSlotShadow: View {
     var body: some View {
         Ellipse()
-            .fill(
-                RadialGradient(
-                    stops: [
-                        .init(color: Color(#colorLiteral(red: 0.7294117647, green: 0.7725490196, blue: 0.8549019608, alpha: 1)).opacity(0.9), location: 0),
-                        .init(color: Color(#colorLiteral(red: 0.7176470588, green: 0.7607843137, blue: 0.8470588235, alpha: 1)).opacity(0.55), location: 0.55),
-                        .init(color: Color(#colorLiteral(red: 0.7450980392, green: 0.7843137255, blue: 0.8588235294, alpha: 1)).opacity(0.0), location: 1)
-                    ],
-                    center: .center,
-                    startRadius: 0,
-                    endRadius: 18
-                )
-            )
+            .fill(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
+            .blur(radius: 1)
             .frame(width: 18, height: 9)
     }
 }
