@@ -51,11 +51,7 @@ struct EquipmentView: View {
             }
             .frame(height: 134)
         } titleBar: {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
+            GameTitleBar(closeAction: onClose)
         }
         .frame(width: 320)
         .task {

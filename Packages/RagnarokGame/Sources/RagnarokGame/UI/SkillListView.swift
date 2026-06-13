@@ -34,11 +34,7 @@ struct SkillListView: View {
             }
             .frame(height: 220)
         } titleBar: {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
+            GameTitleBar(closeAction: onClose)
         } bottomBar: {
             GameBottomBar()
                 .overlay(alignment: .leading) {

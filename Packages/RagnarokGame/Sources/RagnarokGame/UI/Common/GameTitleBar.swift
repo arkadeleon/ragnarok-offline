@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GameTitleBar: View {
+    var closeAction: (() -> Void)?
+
     @Environment(\.displayScale) private var displayScale
 
     var body: some View {
@@ -31,11 +33,18 @@ struct GameTitleBar: View {
                 .fill(Color.black)
                 .frame(height: 1)
         }
+        .overlay(alignment: .trailing) {
+            if let closeAction {
+                GameWindowCloseButton(action: closeAction)
+            }
+        }
     }
 }
 
 #Preview {
-    GameTitleBar()
-        .frame(width: 280)
-        .padding()
+    GameTitleBar {
+        // close action
+    }
+    .frame(width: 280)
+    .padding()
 }

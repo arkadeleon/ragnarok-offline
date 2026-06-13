@@ -64,11 +64,7 @@ struct OptionsView: View {
             }
             .padding(.vertical, 20)
         } titleBar: {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
+            GameTitleBar(closeAction: onClose)
         }
         .frame(width: 280)
     }

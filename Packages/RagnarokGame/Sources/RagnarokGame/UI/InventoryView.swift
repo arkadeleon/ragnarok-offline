@@ -45,11 +45,7 @@ struct InventoryView: View {
                     itemGrid
                 }
             } titleBar: {
-                GameTitleBar()
-                    .overlay(alignment: .trailing) {
-                        GameWindowCloseButton(action: onClose)
-                            .padding(.horizontal, 5)
-                    }
+                GameTitleBar(closeAction: onClose)
             }
             .geometryGroup()
             .blur(radius: selectedItem == nil ? 0 : 5)

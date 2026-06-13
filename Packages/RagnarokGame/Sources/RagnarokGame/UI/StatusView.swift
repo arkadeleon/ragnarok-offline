@@ -62,11 +62,7 @@ struct StatusView: View {
             }
             .padding(6)
         } titleBar: {
-            GameTitleBar()
-                .overlay(alignment: .trailing) {
-                    GameWindowCloseButton(action: onClose)
-                        .padding(.horizontal, 5)
-                }
+            GameTitleBar(closeAction: onClose)
         }
         .frame(width: 320)
     }

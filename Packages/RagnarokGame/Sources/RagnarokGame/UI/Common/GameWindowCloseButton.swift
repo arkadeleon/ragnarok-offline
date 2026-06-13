@@ -41,6 +41,7 @@ struct GameWindowCloseButton: View {
                 .foregroundStyle(Color(#colorLiteral(red: 0.03, green: 0.13, blue: 0.34, alpha: 1)))
             }
             .frame(width: 13, height: 13)
+            .padding(5)
             .contentShape(Rectangle())
         }
         .buttonStyle(GameWindowCloseButtonStyle())
@@ -55,6 +56,8 @@ private struct GameWindowCloseButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    GameWindowCloseButton {}
-        .padding()
+    GameWindowCloseButton {
+        // action
+    }
+    .padding()
 }
