@@ -19,7 +19,6 @@ let package = Package(
     targets: [
         .target(
             name: "RagnarokLocalization",
-            dependencies: [],
             resources: [
                 .process("Resources"),
             ]

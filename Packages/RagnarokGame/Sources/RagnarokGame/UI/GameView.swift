@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/9/5.
 //
 
+import RagnarokLocalization
 import SwiftUI
 
 public struct GameView: View {
@@ -62,6 +63,13 @@ public struct GameView: View {
         self.gameSession = gameSession
         self.onExit = onExit
     }
+}
+
+extension EnvironmentValues {
+    @Entry public var itemInfoTable = ItemInfoTable()
+    @Entry public var mapNameTable = MapNameTable()
+    @Entry public var messageStringTable = MessageStringTable()
+    @Entry public var skillInfoTable = SkillInfoTable()
 }
 
 #Preview {

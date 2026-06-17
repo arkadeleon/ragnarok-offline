@@ -54,6 +54,7 @@ private struct SkillListRow: View {
     var onUpgrade: () -> Void
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(\.skillInfoTable) private var skillInfoTable
 
     @State private var iconImage: Resources.Image?
 
@@ -74,7 +75,7 @@ private struct SkillListRow: View {
     }
 
     private var skillName: String {
-        if let skillName = gameSession.skillInfoTable.localizedSkillName(forSkillID: skill.skillID) {
+        if let skillName = skillInfoTable.localizedSkillName(forSkillID: skill.skillID) {
             skillName
         } else if let skillID = SkillID(rawValue: skill.skillID) {
             skillID.stringValue

@@ -41,5 +41,4 @@ struct MessageBoxView<Actions>: View where Actions: View {
 #Preview {
     MessageBoxView("Please wait...")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.testing)
 }

@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct LoginLoadingView: View {
-    @Environment(GameSession.self) private var gameSession
+    @Environment(\.messageStringTable) private var messageStringTable
 
     var body: some View {
-        MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 121))
+        MessageBoxView(messageStringTable.localizedMessageString(forID: 121))
     }
 }
 
 #Preview {
     LoginLoadingView()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.testing)
 }

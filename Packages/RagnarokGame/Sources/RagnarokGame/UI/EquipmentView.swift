@@ -137,12 +137,13 @@ private struct EquipmentSlotLabel: View {
     var alignment: HorizontalAlignment
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(\.itemInfoTable) private var itemInfoTable
 
     private var itemName: String? {
         guard let item = gameSession.inventory.item(equippedAt: location) else {
             return nil
         }
-        return gameSession.itemInfoTable.localizedIdentifiedItemName(forItemID: item.itemID)
+        return itemInfoTable.localizedIdentifiedItemName(forItemID: item.itemID)
     }
 
     var body: some View {
