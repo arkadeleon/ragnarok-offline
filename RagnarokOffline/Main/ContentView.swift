@@ -64,9 +64,10 @@ struct ContentView: View {
     @ViewBuilder private func detailView(for item: SidebarItem) -> some View {
         switch item {
         case .localClientFiles:
-            FilesView("Local Client Files", directory: appModel.localClientDirectory)
+            LocalClientFilesView(directory: appModel.localClientDirectory)
         case .remoteClientFiles:
-            FilesView("Remote Client Files", directory: appModel.remoteClientCacheDirectory)
+            RemoteClientFilesView(directory: appModel.remoteClientCacheDirectory)
+                .environment(appModel.settings)
         case .gameClient:
             GameClientView()
                 .environment(appModel.gameSession)
@@ -75,7 +76,7 @@ struct ContentView: View {
             ChatClientView()
                 .environment(appModel.chatSession)
         case .serverFiles:
-            FilesView("Server Files", directory: appModel.serverDirectory)
+            ServerFilesView(directory: appModel.serverDirectory)
         case .loginServer:
             ServerView(server: appModel.serverManager.loginServer, serverManager: appModel.serverManager)
         case .charServer:

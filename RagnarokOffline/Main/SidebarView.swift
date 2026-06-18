@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2024/8/9.
 //
 
-import StoreKit
 import SwiftUI
 
 enum SidebarItem: Hashable {
@@ -58,10 +57,8 @@ struct SidebarView: View {
                     SidebarRow("Local Client Files", iconName: "folder.fill", iconColor: .blue)
                 }
 
-                if appModel.settings.isRemoteClientEnabled {
-                    NavigationLink(value: SidebarItem.remoteClientFiles) {
-                        SidebarRow("Remote Client Files", iconName: "folder.fill", iconColor: .blue)
-                    }
+                NavigationLink(value: SidebarItem.remoteClientFiles) {
+                    SidebarRow("Remote Client Files", iconName: "folder.fill", iconColor: .blue)
                 }
 
                 #if GAME_CLIENT_FEATURE
@@ -219,11 +216,6 @@ struct SidebarView: View {
                 .environment(appModel.settings)
             }
             .adaptiveNavigationTransition(sourceID: "settings", in: settingsNamespace)
-        }
-        .onChange(of: appModel.settings.isRemoteClientEnabled) { _, newValue in
-            if !newValue, selection?.wrappedValue == .remoteClientFiles {
-                selection?.wrappedValue = .localClientFiles
-            }
         }
     }
 }
