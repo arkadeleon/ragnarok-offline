@@ -2813,6 +2813,88 @@
         }
       }
     },
+    "Resume Servers Automatically" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server automatisch fortsetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reanuda servidores automáticamente"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reprend automatiquement les serveurs"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melanjutkan server secara otomatis"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riprende automaticamente i server"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サーバーを自動的に再開"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서버 자동 재개"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retoma servidores automaticamente"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Автоматически возобновляет серверы"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดำเนินการเซิร์ฟเวอร์ต่อโดยอัตโนมัติ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucuları otomatik olarak sürdürür"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动恢复服务器"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動恢復伺服器"
+          }
+        }
+      }
+    },
     "Send" : {
 
     },
@@ -4051,6 +4133,88 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "啟用**遠端用戶端**後，資源會從遠端伺服器下載並快取至本機的**遠端用戶端檔案**中。如果你已有 data.grf 等用戶端檔案，可以改用本機用戶端。"
+          }
+        }
+      }
+    },
+    "When enabled, servers that were running before the app entered the background automatically resume when the app returns to the foreground." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn aktiviert, werden Server, die vor dem Wechsel der App in den Hintergrund liefen, automatisch fortgesetzt, wenn die App in den Vordergrund zurückkehrt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuando está activado, los servidores que se estaban ejecutando antes de que la app pasara a segundo plano se reanudarán automáticamente cuando la app vuelva al primer plano."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lorsque cette option est activée, les serveurs qui étaient en cours d'exécution avant le passage de l'app en arrière-plan reprennent automatiquement lorsque l'app revient au premier plan."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saat diaktifkan, server yang berjalan sebelum app masuk ke latar belakang akan dilanjutkan secara otomatis saat app kembali ke latar depan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando attivo, i server in esecuzione prima che l'app passasse in background vengono ripresi automaticamente quando l'app torna in primo piano."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効にすると、アプリがバックグラウンドに入る前に実行中だったサーバーは、アプリがフォアグラウンドに戻ったときに自動的に再開します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "활성화하면 앱이 백그라운드로 들어가기 전에 실행 중이던 서버가 앱이 포그라운드로 돌아올 때 자동으로 재개됩니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando ativado, os servidores que estavam em execução antes de o app entrar em segundo plano serão retomados automaticamente quando o app voltar ao primeiro plano."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если включено, серверы, которые работали до перехода приложения в фон, будут автоматически возобновлены, когда приложение вернётся на передний план."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อเปิดใช้งาน เซิร์ฟเวอร์ที่กำลังทำงานก่อนที่แอปจะเข้าสู่เบื้องหลังจะดำเนินการต่อโดยอัตโนมัติเมื่อแอปกลับสู่เบื้องหน้า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etkinleştirildiğinde, uygulama arka plana geçmeden önce çalışan sunucular uygulama öne döndüğünde otomatik olarak sürdürülür."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用后，应用进入后台前正在运行的服务器会在应用回到前台时自动恢复。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用後，App 進入背景前正在執行的伺服器會在 App 回到前景時自動恢復。"
           }
         }
       }

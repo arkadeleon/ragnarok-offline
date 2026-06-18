@@ -26,7 +26,9 @@ struct iOSApp: App {
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                     Task {
-                        try await appModel.serverManager.resumeServers()
+                        if appModel.settings.automaticallyResumesServers {
+                            try await appModel.serverManager.resumeServers()
+                        }
                     }
                 }
         }

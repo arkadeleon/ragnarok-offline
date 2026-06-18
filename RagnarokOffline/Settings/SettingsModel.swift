@@ -11,13 +11,13 @@ import Observation
 private enum SettingsKey {
     static let serverAddress = "client.server_address"
     static let serverPort = "client.server_port"
+    static let automaticallyResumesServers = "server.automatically_resumes_servers"
 }
 
 @MainActor
 @Observable
 final class SettingsModel {
-    @ObservationIgnored
-    private let defaults: UserDefaults
+    @ObservationIgnored private let defaults: UserDefaults
 
     var isRemoteClientEnabled = false
 
@@ -33,9 +33,16 @@ final class SettingsModel {
         }
     }
 
+    var automaticallyResumesServers: Bool {
+        didSet {
+            defaults.set(automaticallyResumesServers, forKey: SettingsKey.automaticallyResumesServers)
+        }
+    }
+
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
+        automaticallyResumesServers = defaults.bool(forKey: SettingsKey.automaticallyResumesServers)
     }
 }

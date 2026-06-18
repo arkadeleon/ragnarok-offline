@@ -16,6 +16,8 @@ struct SettingsView: View {
     @State private var isRemoteClientSubscriptionPresented = false
 
     var body: some View {
+        @Bindable var settings = settings
+
         Form {
             Section {
                 Button {
@@ -35,6 +37,14 @@ struct SettingsView: View {
                     Text("Hosting and delivering these files requires ongoing expenses for server storage, bandwidth, and maintenance. Contributions from **Remote Client** users help cover these costs and keep core features free for everyone.")
                     Text("When **Remote Client** is active, resources are downloaded from the remote server and cached locally in **Remote Client Files**. If you already have client files such as data.grf, you can use the local client instead.")
                 }
+            }
+
+            Section {
+                Toggle("Resume Servers Automatically", isOn: $settings.automaticallyResumesServers)
+            } header: {
+                Text("Server")
+            } footer: {
+                Text("When enabled, servers that were running before the app entered the background automatically resume when the app returns to the foreground.")
             }
         }
         .formStyle(.grouped)
