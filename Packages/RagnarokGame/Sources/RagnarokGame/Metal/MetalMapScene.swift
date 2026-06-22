@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Foundation
+import QuartzCore
 import RagnarokConstants
 import RagnarokCore
 import RagnarokModels
@@ -479,9 +480,9 @@ extension MetalMapScene {
     }
 
     private func removeExpiredEffects() {
-        let now = ContinuousClock.now
+        let currentTime = CACurrentMediaTime()
         renderer.effectResources = renderer.effectResources.filter { _, resource in
-            !resource.isExpired(at: now)
+            !resource.isExpired(atTime: currentTime)
         }
     }
 }

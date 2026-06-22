@@ -31,6 +31,7 @@ final class MetalMapRenderer: Renderer {
     private let waterRenderer: WaterRenderer
     private let modelRenderer: RSMModelRenderer
     private let spriteRenderer: MetalSpriteRenderer
+    private let effectRenderer: STREffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
 
     var skyboxResource: SkyboxRenderResource?
@@ -59,6 +60,7 @@ final class MetalMapRenderer: Renderer {
         waterRenderer = try WaterRenderer(device: device)
         modelRenderer = try RSMModelRenderer(device: device)
         spriteRenderer = try MetalSpriteRenderer(device: device)
+        effectRenderer = try STREffectRenderer(device: device)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
     }
 
@@ -133,7 +135,9 @@ final class MetalMapRenderer: Renderer {
             normalMatrix: matrices.normalMatrix
         )
 
-        let sortedCombatTextResources = combatTextResources.values.sorted { $0.combatText.creationTime < $1.combatText.creationTime }
+        let sortedCombatTextResources = combatTextResources.values.sorted {
+            $0.combatText.creationTime < $1.combatText.creationTime
+        }
         spriteRenderer.render(
             drawables: spriteDrawables,
             combatTextResources: sortedCombatTextResources,
@@ -141,15 +145,17 @@ final class MetalMapRenderer: Renderer {
             matrices: matrices
         )
 
-        let now = ContinuousClock.now
-        let sortedEffects = effectResources.values
-            .filter { !$0.isExpired(at: now) }
-            .sorted { $0.creationTime < $1.creationTime }
+        let sortedEffects = effectResources.values.sorted {
+            $0.creationTime < $1.creationTime
+        }
         for resource in sortedEffects {
-            resource.render(
+            effectRenderer.render(
+                resource: resource,
                 atTime: time,
                 renderCommandEncoder: renderCommandEncoder,
-                matrices: matrices
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix
             )
         }
 

@@ -12,18 +12,18 @@ struct MetalSkillEffect: Identifiable, Sendable {
     let id: UUID
     let effectID: Int
     let effectDefinition: EffectDefinition
-    let creationTime: ContinuousClock.Instant
+    let creationTime: TimeInterval
     let gridPosition: SIMD2<Int>
     let attachedObjectID: GameObjectID?
-    let delay: Duration
+    let delay: TimeInterval
 
     init(
         effectID: Int,
         effectDefinition: EffectDefinition,
-        creationTime: ContinuousClock.Instant,
+        creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
         attachedObjectID: GameObjectID?,
-        delay: Duration = .zero
+        delay: TimeInterval = 0
     ) {
         self.id = UUID()
         self.effectID = effectID

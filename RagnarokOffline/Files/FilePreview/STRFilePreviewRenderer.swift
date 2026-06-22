@@ -5,7 +5,9 @@
 //  Created by Leon Li on 2023/11/24.
 //
 
+import Foundation
 import Metal
+import QuartzCore
 import RagnarokCore
 import RagnarokRenderAssets
 import RagnarokRenderers
@@ -15,13 +17,20 @@ public class STRFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
 
     let effectRenderer: STREffectRenderer
+    let effectResource: STREffectRenderResource
 
     public let camera = Camera()
 
     public init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
         self.device = device
 
-        effectRenderer = try STREffectRenderer(device: device, effect: effect, textures: textures)
+        effectRenderer = try STREffectRenderer(device: device)
+        effectResource = STREffectRenderResource(
+            effect: effect,
+            textures: textures,
+            spritePosition: .zero,
+            creationTime: CACurrentMediaTime()
+        )
 
         camera.fovy = 15
         camera.nearZ = 1
@@ -55,6 +64,7 @@ public class STRFilePreviewRenderer: Renderer {
         }
 
         effectRenderer.render(
+            resource: effectResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,

@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import QuartzCore
 import RagnarokConstants
 import RagnarokModels
+import RagnarokRenderers
 import RagnarokSprite
 import simd
 
@@ -392,14 +394,14 @@ extension MetalMapScene {
             return
         }
 
-        let now = ContinuousClock.now
+        let currentTime = CACurrentMediaTime()
         for effectID in SkillEffectTable.effectIDs(for: skillID) {
             addEffects(
                 forEffectID: effectID,
-                creationTime: now,
+                creationTime: currentTime,
                 gridPosition: position,
                 attachedObjectID: nil,
-                delay: .zero
+                delay: 0
             )
         }
     }
@@ -573,13 +575,13 @@ extension MetalMapScene {
             return
         }
 
-        let now = ContinuousClock.now
+        let currentTime = CACurrentMediaTime()
         let count = max(1, objectSkill.count)
         for hitEffectID in SkillEffectTable.hitEffectIDs(for: skillID) {
             for i in 0..<count {
                 addEffects(
                     forEffectID: hitEffectID,
-                    creationTime: now,
+                    creationTime: currentTime,
                     gridPosition: targetPosition,
                     attachedObjectID: objectSkill.targetObjectID,
                     delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
@@ -597,11 +599,11 @@ extension MetalMapScene {
             return
         }
 
-        let now = ContinuousClock.now
+        let currentTime = CACurrentMediaTime()
         for effectID in SkillEffectTable.effectIDs(for: skillID) {
             addEffects(
                 forEffectID: effectID,
-                creationTime: now,
+                creationTime: currentTime,
                 gridPosition: targetPosition,
                 attachedObjectID: objectSkill.targetObjectID,
                 delay: .milliseconds(objectSkill.attackDelay)
@@ -611,10 +613,10 @@ extension MetalMapScene {
 
     private func addEffects(
         forEffectID effectID: Int,
-        creationTime: ContinuousClock.Instant,
+        creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
         attachedObjectID: GameObjectID?,
-        delay: Duration
+        delay: TimeInterval
     ) {
         let definitions = EffectTable.definitions(forEffectID: effectID)
         for definition in definitions {
@@ -652,14 +654,22 @@ extension MetalMapScene {
                 }
 
                 let asset = try await effectAssetStore.asset(for: effect.effectDefinition)
+                guard asset.effect.fps > 0, !asset.effect.frames.isEmpty else {
+                    return
+                }
 
-                renderer.effectResources[effectID] = try STREffectRenderResource(
-                    device: renderer.device,
-                    effect: effect,
-                    strEffect: asset.effect,
+                let renderResource = STREffectRenderResource(
+                    effect: asset.effect,
                     textures: asset.textures,
-                    worldPosition: worldPosition
+                    spritePosition: [
+                        Float(effect.gridPosition.x),
+                        Float(effect.gridPosition.y),
+                        worldPosition.y,
+                    ],
+                    creationTime: effect.creationTime,
+                    delay: effect.delay
                 )
+                renderer.effectResources[effectID] = renderResource
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.effectID): \(error)")
             }

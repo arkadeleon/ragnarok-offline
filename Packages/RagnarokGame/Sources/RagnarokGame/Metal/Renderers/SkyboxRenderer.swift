@@ -12,7 +12,8 @@ import simd
 
 @MainActor
 final class SkyboxRenderer {
-    private let device: any MTLDevice
+    let device: any MTLDevice
+
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 

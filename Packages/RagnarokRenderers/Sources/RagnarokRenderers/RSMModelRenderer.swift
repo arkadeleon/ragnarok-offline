@@ -11,9 +11,10 @@ import RagnarokShaders
 import simd
 
 public final class RSMModelRenderer {
-    let device: any MTLDevice
-    let renderPipelineState: any MTLRenderPipelineState
-    let depthStencilState: (any MTLDepthStencilState)?
+    public let device: any MTLDevice
+
+    private let renderPipelineState: any MTLRenderPipelineState
+    private let depthStencilState: (any MTLDepthStencilState)?
 
     public init(device: any MTLDevice) throws {
         self.device = device

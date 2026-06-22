@@ -5,89 +5,49 @@
 //  Created by Leon Li on 2023/11/24.
 //
 
+import Foundation
 import Metal
 import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
-func mtlBlendFactor(_ d3dBlend: Int32) -> MTLBlendFactor {
-    switch d3dBlend {
-    case 1:  .zero
-    case 2:  .one
-    case 3:  .sourceColor
-    case 4:  .oneMinusSourceColor
-    case 5:  .sourceAlpha
-    case 6:  .oneMinusSourceAlpha
-    case 7:  .destinationAlpha
-    case 8:  .oneMinusDestinationAlpha
-    case 9:  .destinationColor
-    case 10: .oneMinusDestinationColor
-    case 11: .sourceAlphaSaturated
-    case 14: .blendColor
-    case 15: .oneMinusBlendAlpha
-    default: .sourceAlpha
-    }
-}
+public final class STREffectRenderer {
+    public let device: any MTLDevice
 
-public class STREffectRenderer {
-    let device: any MTLDevice
-    let renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState]
-    let depthStencilState: (any MTLDepthStencilState)?
+    private var renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState] = [:]
+    private let depthStencilState: (any MTLDepthStencilState)?
 
-    let effect: STREffect
-    let textures: [String : any MTLTexture]
-
-    public init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
+    public init(device: any MTLDevice) throws {
         self.device = device
-
-        let library = RagnarokShadersLibrary(device)!
-
-        var blendKeys: Set<SIMD2<Int32>> = []
-        for frame in effect.frames {
-            for sprite in frame.sprites {
-                let blendKey = SIMD2(sprite.sourceAlpha, sprite.destinationAlpha)
-                blendKeys.insert(blendKey)
-            }
-        }
-
-        var renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState] = [:]
-        for blendKey in blendKeys {
-            let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-            renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effectVertexShader")
-            renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "effectFragmentShader")
-
-            renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
-            renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
-            renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = mtlBlendFactor(blendKey.x)
-            renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = mtlBlendFactor(blendKey.x)
-            renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = mtlBlendFactor(blendKey.y)
-            renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = mtlBlendFactor(blendKey.y)
-
-            renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
-
-            renderPipelineStates[blendKey] = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
-        }
-        self.renderPipelineStates = renderPipelineStates
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
         depthStencilDescriptor.isDepthWriteEnabled = false
+        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
-        self.depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
-
-        self.effect = effect
-        self.textures = textures
+        let commonBlendKey = SIMD2<Int32>(5, 6)
+        renderPipelineStates[commonBlendKey] = try makeRenderPipelineState(for: commonBlendKey)
     }
 
     public func render(
-        atTime time: CFTimeInterval,
+        resource: STREffectRenderResource,
+        atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        spritePosition: SIMD3<Float> = .zero
+        projectionMatrix: simd_float4x4
     ) {
-        let frameIndex = Int(time * CFTimeInterval(effect.fps)) % effect.frames.count
+        let effect = resource.effect
+        guard effect.fps > 0, !effect.frames.isEmpty else {
+            return
+        }
+
+        let elapsedTime = time - resource.startTime
+        guard elapsedTime >= 0 else {
+            return
+        }
+
+        let frameIndex = Int(elapsedTime * TimeInterval(effect.fps)) % effect.frames.count
         let frame = effect.frames[frameIndex]
 
         renderCommandEncoder.setDepthStencilState(depthStencilState)
@@ -98,7 +58,7 @@ public class STREffectRenderer {
             }
 
             let blendKey = SIMD2(sprite.sourceAlpha, sprite.destinationAlpha)
-            guard let renderPipelineState = renderPipelineStates[blendKey] else {
+            guard let renderPipelineState = renderPipelineState(for: blendKey) else {
                 continue
             }
 
@@ -107,7 +67,7 @@ public class STREffectRenderer {
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
                 spriteAngle: matrix_identity_float4x4,
-                spritePosition: spritePosition,
+                spritePosition: resource.spritePosition,
                 spriteOffset: sprite.position - [320, 320]
             )
             guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<EffectVertexUniforms>.stride, options: []) else {
@@ -128,10 +88,61 @@ public class STREffectRenderer {
 
             renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
 
-            let texture = textures[sprite.textureName]
+            let texture = resource.textures[sprite.textureName]
             renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
             renderCommandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: sprite.vertices.count)
+        }
+    }
+
+    private func renderPipelineState(for blendKey: SIMD2<Int32>) -> (any MTLRenderPipelineState)? {
+        if let renderPipelineState = renderPipelineStates[blendKey] {
+            return renderPipelineState
+        }
+
+        guard let renderPipelineState = try? makeRenderPipelineState(for: blendKey) else {
+            return nil
+        }
+
+        renderPipelineStates[blendKey] = renderPipelineState
+        return renderPipelineState
+    }
+
+    private func makeRenderPipelineState(for blendKey: SIMD2<Int32>) throws -> any MTLRenderPipelineState {
+        let library = RagnarokShadersLibrary(device)!
+
+        let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effectVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "effectFragmentShader")
+
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
+        renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
+        renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = mtlBlendFactor(blendKey.x)
+        renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = mtlBlendFactor(blendKey.x)
+        renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = mtlBlendFactor(blendKey.y)
+        renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = mtlBlendFactor(blendKey.y)
+
+        renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
+
+        return try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+    }
+
+    private func mtlBlendFactor(_ d3dBlend: Int32) -> MTLBlendFactor {
+        switch d3dBlend {
+        case 1:  .zero
+        case 2:  .one
+        case 3:  .sourceColor
+        case 4:  .oneMinusSourceColor
+        case 5:  .sourceAlpha
+        case 6:  .oneMinusSourceAlpha
+        case 7:  .destinationAlpha
+        case 8:  .oneMinusDestinationAlpha
+        case 9:  .destinationColor
+        case 10: .oneMinusDestinationColor
+        case 11: .sourceAlphaSaturated
+        case 14: .blendColor
+        case 15: .oneMinusBlendAlpha
+        default: .sourceAlpha
         }
     }
 }
