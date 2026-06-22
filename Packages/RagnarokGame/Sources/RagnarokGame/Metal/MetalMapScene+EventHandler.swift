@@ -395,6 +395,7 @@ extension MetalMapScene {
         }
 
         let currentTime = CACurrentMediaTime()
+
         for effectID in SkillEffectTable.effectIDs(for: skillID) {
             addEffects(
                 forEffectID: effectID,
@@ -577,6 +578,7 @@ extension MetalMapScene {
 
         let currentTime = CACurrentMediaTime()
         let count = max(1, objectSkill.count)
+
         for hitEffectID in SkillEffectTable.hitEffectIDs(for: skillID) {
             for i in 0..<count {
                 addEffects(
@@ -600,6 +602,7 @@ extension MetalMapScene {
         }
 
         let currentTime = CACurrentMediaTime()
+
         for effectID in SkillEffectTable.effectIDs(for: skillID) {
             addEffects(
                 forEffectID: effectID,

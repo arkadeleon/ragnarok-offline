@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2020/7/15.
 //
 
+import Foundation
 import Metal
 import RagnarokCore
 import RagnarokRenderAssets
@@ -65,7 +66,7 @@ public class RSWFilePreviewRenderer: Renderer {
     }
 
     public func render(
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         viewport: CGRect,
         commandBuffer: any MTLCommandBuffer,
         renderPassDescriptor: MTLRenderPassDescriptor

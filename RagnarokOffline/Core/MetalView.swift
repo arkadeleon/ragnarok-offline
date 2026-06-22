@@ -63,9 +63,14 @@ class MetalView: UIView, MTKViewDelegate {
             return
         }
 
-        let time = CACurrentMediaTime()
+        let currentTime = CACurrentMediaTime()
 
-        renderer.render(atTime: time, viewport: view.bounds, commandBuffer: commandBuffer, renderPassDescriptor: renderPassDescriptor)
+        renderer.render(
+            atTime: currentTime,
+            viewport: view.bounds,
+            commandBuffer: commandBuffer,
+            renderPassDescriptor: renderPassDescriptor
+        )
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
@@ -125,9 +130,14 @@ class MetalView: NSView, MTKViewDelegate {
             return
         }
 
-        let time = CACurrentMediaTime()
+        let currentTime = CACurrentMediaTime()
 
-        renderer.render(atTime: time, viewport: view.bounds, commandBuffer: commandBuffer, renderPassDescriptor: renderPassDescriptor)
+        renderer.render(
+            atTime: currentTime,
+            viewport: view.bounds,
+            commandBuffer: commandBuffer,
+            renderPassDescriptor: renderPassDescriptor
+        )
 
         commandBuffer.present(drawable)
         commandBuffer.commit()

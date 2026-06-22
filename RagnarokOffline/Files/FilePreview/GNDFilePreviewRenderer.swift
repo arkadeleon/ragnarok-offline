@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/5/16.
 //
 
+import Foundation
 import Metal
 import RagnarokCore
 import RagnarokRenderAssets
@@ -36,7 +37,7 @@ class GNDFilePreviewRenderer: Renderer {
     }
 
     func render(
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         viewport: CGRect,
         commandBuffer: any MTLCommandBuffer,
         renderPassDescriptor: MTLRenderPassDescriptor

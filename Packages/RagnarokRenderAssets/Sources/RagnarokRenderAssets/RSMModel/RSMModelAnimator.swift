@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2026/6/3.
 //
 
-import CoreFoundation
+import Foundation
 import RagnarokCore
 import RagnarokFileFormats
 import RagnarokShaders
@@ -20,7 +20,7 @@ public struct RSMModelAnimator {
     }
 
     /// Returns the animation frame index for the given playback time.
-    public func frame(atTime time: CFTimeInterval) -> Double {
+    public func frame(atTime time: TimeInterval) -> Double {
         let animationLength = Double(asset.animationLength)
         guard animationLength > 0 else {
             return 0

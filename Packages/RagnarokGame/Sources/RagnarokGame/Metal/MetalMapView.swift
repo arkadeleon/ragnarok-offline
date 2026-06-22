@@ -90,10 +90,12 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
             return
         }
 
-        scene?.prepareFrame()
+        let currentTime = CACurrentMediaTime()
+
+        scene?.prepareFrame(atTime: currentTime)
 
         renderer.render(
-            atTime: CACurrentMediaTime(),
+            atTime: currentTime,
             viewport: view.bounds,
             commandBuffer: commandBuffer,
             renderPassDescriptor: renderPassDescriptor
@@ -246,10 +248,12 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
             return
         }
 
-        scene?.prepareFrame()
+        let currentTime = CACurrentMediaTime()
+
+        scene?.prepareFrame(atTime: currentTime)
 
         renderer.render(
-            atTime: CACurrentMediaTime(),
+            atTime: currentTime,
             viewport: view.bounds,
             commandBuffer: commandBuffer,
             renderPassDescriptor: renderPassDescriptor

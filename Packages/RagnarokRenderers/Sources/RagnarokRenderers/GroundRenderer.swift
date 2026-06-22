@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2020/7/3.
 //
 
+import Foundation
 import Metal
 import RagnarokShaders
 import simd
@@ -40,7 +41,7 @@ public final class GroundRenderer {
 
     public func render(
         resource: GroundRenderResource,
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,

@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import Foundation
 import Metal
 import QuartzCore
 import RagnarokRenderers
@@ -19,7 +20,7 @@ final class TileSelectorRenderResource {
     private(set) var vertexBuffer: (any MTLBuffer)?
 
     private(set) var selectionTexture: (any MTLTexture)?
-    private(set) var selectionShowTime: CFTimeInterval = -.infinity
+    private(set) var selectionShowTime: TimeInterval = -.infinity
 
     init(device: any MTLDevice, image: CGImage? = nil) {
         self.device = device

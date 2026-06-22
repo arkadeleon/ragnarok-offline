@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/3/23.
 //
 
+import Foundation
 import Metal
 import QuartzCore
 import RagnarokShaders
@@ -42,7 +43,7 @@ final class MetalTileSelectorRenderer {
 
     func render(
         resource: TileSelectorRenderResource,
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MetalMapRenderer.RenderMatrices
     ) {

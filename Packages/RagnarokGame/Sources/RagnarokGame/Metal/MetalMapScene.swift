@@ -330,9 +330,9 @@ extension MetalMapScene {
         updateCameraTarget()
     }
 
-    func prepareFrame() {
-        removeExpiredCombatTexts()
-        removeExpiredEffects()
+    func prepareFrame(atTime time: TimeInterval) {
+        removeExpiredCombatTexts(atTime: time)
+        removeExpiredEffects(atTime: time)
         refreshSpriteDrawables()
         updateCameraTarget()
         syncAndProjectOverlay()
@@ -472,17 +472,16 @@ extension MetalMapScene {
         renderer.tileSelectorResource = nil
     }
 
-    private func removeExpiredCombatTexts() {
+    private func removeExpiredCombatTexts(atTime time: TimeInterval) {
         let now = ContinuousClock.now
         renderer.combatTextResources = renderer.combatTextResources.filter { _, resource in
             !resource.isExpired(at: now)
         }
     }
 
-    private func removeExpiredEffects() {
-        let currentTime = CACurrentMediaTime()
+    private func removeExpiredEffects(atTime time: TimeInterval) {
         renderer.effectResources = renderer.effectResources.filter { _, resource in
-            !resource.isExpired(atTime: currentTime)
+            !resource.isExpired(atTime: time)
         }
     }
 }

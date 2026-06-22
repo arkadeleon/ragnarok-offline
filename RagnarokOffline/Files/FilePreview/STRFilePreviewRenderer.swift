@@ -41,7 +41,7 @@ public class STRFilePreviewRenderer: Renderer {
     }
 
     public func render(
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         viewport: CGRect,
         commandBuffer: any MTLCommandBuffer,
         renderPassDescriptor: MTLRenderPassDescriptor

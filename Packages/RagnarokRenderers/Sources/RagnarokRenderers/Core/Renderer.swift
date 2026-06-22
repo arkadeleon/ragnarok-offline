@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2023/5/23.
 //
 
+import Foundation
 import Metal
 
 @MainActor
@@ -14,7 +15,7 @@ public protocol Renderer {
     var depthStencilPixelFormat: MTLPixelFormat { get }
 
     func render(
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         viewport: CGRect,
         commandBuffer: any MTLCommandBuffer,
         renderPassDescriptor: MTLRenderPassDescriptor

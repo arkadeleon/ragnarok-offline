@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2020/6/29.
 //
 
+import Foundation
 import Metal
 import RagnarokRenderAssets
 import RagnarokShaders
@@ -41,7 +42,7 @@ public final class RSMModelRenderer {
 
     public func render(
         resources: [RSMModelRenderResource],
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,

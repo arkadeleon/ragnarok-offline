@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import Foundation
 import Metal
 import RagnarokCore
 import RagnarokRenderers
@@ -70,7 +71,7 @@ final class MetalMapRenderer: Renderer {
     }
 
     func render(
-        atTime time: CFTimeInterval,
+        atTime time: TimeInterval,
         viewport: CGRect,
         commandBuffer: any MTLCommandBuffer,
         renderPassDescriptor: MTLRenderPassDescriptor

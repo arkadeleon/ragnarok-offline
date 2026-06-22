@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import Foundation
 import RagnarokCore
 import simd
 
@@ -21,7 +22,7 @@ public class OrbitalCamera {
     public var nearZ: Float = 0.1
     public var farZ: Float = 100.0
     public var sensitivity: Float = 0.1
-    public var animationDuration: CFTimeInterval = 0.25
+    public var animationDuration: TimeInterval = 0.25
 
     public private(set) var aspectRatio: Float = 1.0
 
@@ -30,8 +31,8 @@ public class OrbitalCamera {
     private struct TargetAnimation {
         var startTarget: SIMD3<Float>
         var endTarget: SIMD3<Float>
-        var startTime: CFTimeInterval?
-        var duration: CFTimeInterval
+        var startTime: TimeInterval?
+        var duration: TimeInterval
     }
 
     private var targetAnimation: TargetAnimation?
@@ -62,7 +63,7 @@ public class OrbitalCamera {
         aspectRatio = Float(size.width / size.height)
     }
 
-    public func update(atTime time: CFTimeInterval) {
+    public func update(atTime time: TimeInterval) {
         guard var animation = targetAnimation else { return }
         if animation.startTime == nil {
             animation.startTime = time
