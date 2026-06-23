@@ -1,5 +1,5 @@
 {
-  "originHash" : "9b4940dca539f7bdc55204fe81e8df9b3b829d07ce8d636f614e66912d1f142d",
+  "originHash" : "d1cb7a0ee0d54e5897e9b8bf0942656b7a7e1aca6103c87a027bfc4ed7233d5b",
   "pins" : [
     {
       "identity" : "ragnarok-grf",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/arkadeleon/ragnarok-grf.git",
       "state" : {
         "branch" : "master",
-        "revision" : "d24bfc1e86600dad43627b77ee289e4558f36c1f"
+        "revision" : "a150461686db1c711e61857827983004bae4f21c"
       }
     },
     {
@@ -16,7 +16,7 @@
       "location" : "https://github.com/arkadeleon/ragnarok-lua.git",
       "state" : {
         "branch" : "master",
-        "revision" : "a43c463e2c20c30561ba4c16592666c63e93268a"
+        "revision" : "bc82609e05f9806d59f698aaf7d014e52db77f2d"
       }
     },
     {
@@ -34,7 +34,7 @@
       "location" : "https://github.com/arkadeleon/swift-highlight.git",
       "state" : {
         "branch" : "master",
-        "revision" : "a269f550c20c0d9e2f885e93fc63d7d53eb09311"
+        "revision" : "912b430570a2f86f8a1d1f4b7c7b79832c1e51a8"
       }
     },
     {
@@ -43,7 +43,7 @@
       "location" : "https://github.com/arkadeleon/swift-rapidyaml.git",
       "state" : {
         "branch" : "master",
-        "revision" : "b7acfea86f169611d8dd80047225b0a4abd1b052"
+        "revision" : "75396650414fe5a3b8713a5ba9c02af8d878b3c9"
       }
     }
   ],
