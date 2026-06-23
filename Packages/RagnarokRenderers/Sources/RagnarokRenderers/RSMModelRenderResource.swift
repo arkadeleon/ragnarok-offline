@@ -64,7 +64,7 @@ public class RSMModelRenderResource {
                 || !node.scaleKeyframes.isEmpty
         }
         self.instanceCount = instances.count
-        self.instanceBuffer = Self.makeInstanceBuffer(device: device, instances: instances)
+        self.instanceBuffer = Self.makeInstanceBuffer(device: device, asset: asset, instances: instances)
 
         self.light = light
     }
@@ -73,6 +73,7 @@ public class RSMModelRenderResource {
 extension RSMModelRenderResource {
     private static func makeInstanceBuffer(
         device: any MTLDevice,
+        asset: RSMModelRenderAsset,
         instances: [RSMModelInstance]
     ) -> (any MTLBuffer)? {
         guard !instances.isEmpty else {
@@ -80,7 +81,7 @@ extension RSMModelRenderResource {
         }
 
         let instanceUniforms = instances.map { instance in
-            let modelMatrix = instance.matrix
+            let modelMatrix = instance.matrix * asset.assetTransformMatrix
             return ModelInstanceUniforms(
                 modelMatrix: modelMatrix,
                 normalMatrix: simd_float3x3(modelMatrix).inverse.transpose
@@ -137,8 +138,6 @@ extension RSMModelRenderAsset {
             count: nodeCount
         )
 
-        let centerCorrection = matrix_translate(matrix_identity_float4x4, centerCorrection)
-
         // asset.nodes is DFS-ordered (parents before children), so a single forward
         // sweep can resolve each node's world transform from its parent's cached value.
         for node in nodes {
@@ -156,7 +155,7 @@ extension RSMModelRenderAsset {
 
             worldForChildren[node.index] = parentWorldChildren * local
 
-            let boneMatrix = centerCorrection * parentWorldChildren * transform
+            let boneMatrix = parentWorldChildren * transform
             bones[node.index] = ModelBoneUniforms(
                 boneMatrix: boneMatrix,
                 boneNormalMatrix: simd_float3x3(boneMatrix).inverse.transpose

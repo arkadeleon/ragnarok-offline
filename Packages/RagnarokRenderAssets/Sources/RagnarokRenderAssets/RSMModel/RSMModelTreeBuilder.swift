@@ -16,7 +16,7 @@ final class RSMModelTreeBuilder {
         let rootNode: RSMModelNode?
         let nodes: [RSMModelNode]
         let boundingBox: RSMModelBoundingBox
-        let centerCorrection: SIMD3<Float>
+        let assetTransformMatrix: simd_float4x4
     }
 
     let rsm: RSM
@@ -100,7 +100,7 @@ final class RSMModelTreeBuilder {
             computeWorldTransforms(builder, parentChildrenWorld: matrix_identity_float4x4)
         }
 
-        // Step 5: Bounding box from raw vertices in world space.
+        // Step 5: Compute the model bounding box and asset-level transform.
         var boundingBox = RSMModelBoundingBox()
         for builder in builders {
             let M = worldTransforms[builder.index]
@@ -112,11 +112,27 @@ final class RSMModelTreeBuilder {
                 }
             }
         }
-        let centerCorrection = SIMD3<Float>(
-            -boundingBox.center[0],
-            -boundingBox.max[1],
-            -boundingBox.center[2]
+        let centerCorrectionMatrix = matrix_translate(
+            matrix_identity_float4x4,
+            [
+                -boundingBox.center[0],
+                -boundingBox.max[1],
+                -boundingBox.center[2],
+            ]
         )
+        let assetTransformMatrix: simd_float4x4
+        if rsm.version >= "2.2" {
+            var rsm2Transform = matrix_identity_float4x4
+            rsm2Transform = matrix_scale(rsm2Transform, [1, -1, 1])
+            if let rootBuilder {
+                rsm2Transform = matrix_translate(rsm2Transform, rootBuilder.rsmNode.offset)
+            }
+            rsm2Transform = matrix_translate(rsm2Transform, [0, boundingBox.range[1], 0])
+            rsm2Transform = matrix_translate(rsm2Transform, boundingBox.center)
+            assetTransformMatrix = rsm2Transform * centerCorrectionMatrix
+        } else {
+            assetTransformMatrix = centerCorrectionMatrix
+        }
 
         // Step 6: Compile per-node meshes in node-local space.
         for builder in builders {
@@ -168,7 +184,7 @@ final class RSMModelTreeBuilder {
             rootNode: rootNode,
             nodes: nodes,
             boundingBox: boundingBox,
-            centerCorrection: centerCorrection
+            assetTransformMatrix: assetTransformMatrix
         )
     }
 }

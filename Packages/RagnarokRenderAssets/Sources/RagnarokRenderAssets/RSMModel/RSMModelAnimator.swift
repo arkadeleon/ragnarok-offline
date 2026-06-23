@@ -51,13 +51,12 @@ public struct RSMModelAnimator {
     /// Returns the world-space bone matrix for a single node. Prefer `evaluateBoneMatrices(atFrame:)`
     /// for whole-tree evaluation, which avoids redundant ancestor walks.
     public func boneMatrix(for node: RSMModelNode, atFrame frame: Double) -> simd_float4x4 {
-        let centerCorrection = matrix_translate(matrix_identity_float4x4, asset.centerCorrection)
         let worldTransform = worldTransformForChildren(of: node.parent, atFrame: frame)
         let localTransform = localTransform(for: node, atFrame: frame)
         let transform = localTransform
             * matrix_translate(matrix_identity_float4x4, node.offset)
             * simd_float4x4(node.transformMatrix)
-        return centerCorrection * worldTransform * transform
+        return worldTransform * transform
     }
 
     /// Returns bone uniforms for every node, indexed by node index.
@@ -71,8 +70,6 @@ public struct RSMModelAnimator {
             ),
             count: nodeCount
         )
-
-        let centerCorrection = matrix_translate(matrix_identity_float4x4, asset.centerCorrection)
 
         for node in asset.nodes {
             let worldTransform: simd_float4x4
@@ -89,7 +86,7 @@ public struct RSMModelAnimator {
 
             worldTransforms[node.index] = worldTransform * localTransform
 
-            let boneMatrix = centerCorrection * worldTransform * transform
+            let boneMatrix = worldTransform * transform
             bones[node.index] = ModelBoneUniforms(
                 boneMatrix: boneMatrix,
                 boneNormalMatrix: simd_float3x3(boneMatrix).inverse.transpose

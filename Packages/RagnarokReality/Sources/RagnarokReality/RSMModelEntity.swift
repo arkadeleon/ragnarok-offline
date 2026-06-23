@@ -42,17 +42,15 @@ extension Entity {
 
         let rootNodes = modelAsset.nodes.filter { $0.parent == nil }
         if !rootNodes.isEmpty {
-            let centerCorrectionEntity = Entity()
-            centerCorrectionEntity.transform = Transform(
-                matrix: matrix_translate(matrix_identity_float4x4, modelAsset.centerCorrection)
-            )
+            let assetTransformEntity = Entity()
+            assetTransformEntity.transform = Transform(matrix: modelAsset.assetTransformMatrix)
 
             for rootNode in rootNodes {
                 let rootEntity = try await Entity(from: rootNode, textures: textures)
-                centerCorrectionEntity.addChild(rootEntity)
+                assetTransformEntity.addChild(rootEntity)
             }
 
-            addChild(centerCorrectionEntity)
+            addChild(assetTransformEntity)
         }
     }
 

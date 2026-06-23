@@ -16,7 +16,7 @@ public struct RSMModelRenderAsset {
     public let rootNode: RSMModelNode?
     public let nodes: [RSMModelNode]
     public var boundingBox: RSMModelBoundingBox
-    public let centerCorrection: SIMD3<Float>
+    public let assetTransformMatrix: simd_float4x4
     public var instance: RSMModelInstance
     public var textureImages: [String : CGImage]
     public let fps: Float
@@ -38,7 +38,7 @@ public struct RSMModelRenderAsset {
         self.rootNode = tree.rootNode
         self.nodes = tree.nodes
         self.boundingBox = tree.boundingBox
-        self.centerCorrection = tree.centerCorrection
+        self.assetTransformMatrix = tree.assetTransformMatrix
     }
 }
 
