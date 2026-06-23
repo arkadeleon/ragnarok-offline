@@ -343,8 +343,7 @@ extension MetalMapScene {
         renderer.spriteDrawables = spriteAssetStore?.sync(
             objects: objects,
             items: items,
-            mapGrid: mapGrid,
-            cameraState: cameraState
+            camera: cameraState
         ) ?? []
     }
 

@@ -12,38 +12,11 @@ import RagnarokSprite
 
 @MainActor
 final class SpriteAssetStore {
-    private struct SpriteAnimationKey: Hashable {
-        var action: SpriteActionType
-        var direction: SpriteDirection
-    }
-
-    private struct DrawableGroup {
-        let depth: Float
-        let objectID: GameObjectID
-        let drawables: [SpriteLayerDrawable]
-    }
-
-    private struct ObjectAssetEntry {
-        var configuration: ComposedSprite.Configuration
-        var composedSprite: ComposedSprite?
-        var partTextures: SpritePartTextures?
-    }
-
-    private struct ItemAssetEntry {
-        var composedSprite: ComposedSprite?
-        var partTextures: SpritePartTextures?
-    }
-
-    private static let itemSpriteConfiguration = ComposedSprite.Configuration(jobID: 45)
-
     private let device: any MTLDevice
     private let resourceManager: ResourceManager
     private let scriptContext: ScriptContext
-    private let frameResolver = SpriteFrameResolver()
 
-    private var objectAssets: [GameObjectID : ObjectAssetEntry] = [:]
     private var objectLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
-    private var itemAssets: [GameObjectID : ItemAssetEntry] = [:]
     private var itemLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
 
     init(device: any MTLDevice, resourceManager: ResourceManager, scriptContext: ScriptContext) {
@@ -55,41 +28,30 @@ final class SpriteAssetStore {
     func sync(
         objects: [GameObjectID : MetalMapObject],
         items: [GameObjectID : MetalMapItem],
-        mapGrid: MapGrid,
-        cameraState: MapCameraState
+        camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         let currentObjectIDs = Set(objects.keys)
         let currentItemIDs = Set(items.keys)
 
-        for objectID in Set(objectAssets.keys).subtracting(currentObjectIDs) {
-            objectAssets.removeValue(forKey: objectID)
+        for objectID in Set(objectLoadTasks.keys).subtracting(currentObjectIDs) {
             objectLoadTasks[objectID]?.cancel()
             objectLoadTasks.removeValue(forKey: objectID)
         }
 
-        for objectID in Set(itemAssets.keys).subtracting(currentItemIDs) {
-            itemAssets.removeValue(forKey: objectID)
+        for objectID in Set(itemLoadTasks.keys).subtracting(currentItemIDs) {
             itemLoadTasks[objectID]?.cancel()
             itemLoadTasks.removeValue(forKey: objectID)
         }
 
-        for (objectID, object) in objects {
-            syncObjectAssets(
-                objectID: objectID,
-                configuration: ComposedSprite.Configuration(object: object)
-            )
+        for (_, object) in objects {
+            syncObject(object)
         }
 
-        for (objectID, item) in items {
-            syncItemAssets(objectID: objectID, itemID: item.itemID)
+        for (_, item) in items {
+            syncItem(item)
         }
 
-        return drawables(
-            objects: objects,
-            items: items,
-            mapGrid: mapGrid,
-            cameraState: cameraState
-        )
+        return drawables(objects: objects, items: items, camera: camera)
     }
 
     func cancelAllTasks() {
@@ -102,31 +64,26 @@ final class SpriteAssetStore {
 
         objectLoadTasks.removeAll()
         itemLoadTasks.removeAll()
-        objectAssets.removeAll()
-        itemAssets.removeAll()
     }
 
-    private func syncObjectAssets(objectID: GameObjectID, configuration: ComposedSprite.Configuration) {
-        if objectAssets[objectID] == nil {
-            objectAssets[objectID] = ObjectAssetEntry(
-                configuration: configuration,
-                composedSprite: nil,
-                partTextures: nil
-            )
-        } else if objectAssets[objectID]?.configuration != configuration {
+    private func syncObject(_ object: MetalMapObject) {
+        let objectID = object.objectID
+        let configuration = ComposedSprite.Configuration(object: object)
+        if object.spriteConfiguration != configuration {
             objectLoadTasks[objectID]?.cancel()
             objectLoadTasks.removeValue(forKey: objectID)
-            objectAssets[objectID]?.composedSprite = nil
-            objectAssets[objectID]?.partTextures = nil
+            object.spriteConfiguration = configuration
+            object.composedSprite = nil
+            object.partTextures = nil
+            object.drawables.removeAll()
         }
-        objectAssets[objectID]?.configuration = configuration
 
-        guard objectAssets[objectID]?.composedSprite == nil, objectLoadTasks[objectID] == nil else {
+        guard object.composedSprite == nil, objectLoadTasks[objectID] == nil else {
             return
         }
 
-        objectLoadTasks[objectID] = Task { [weak self] in
-            guard let self else {
+        objectLoadTasks[objectID] = Task { [weak self, weak object] in
+            guard let self, let object else {
                 return
             }
             defer {
@@ -140,176 +97,86 @@ final class SpriteAssetStore {
                 return
             }
 
-            guard self.objectAssets[objectID]?.configuration == configuration else {
+            guard object.spriteConfiguration == configuration else {
                 return
             }
 
-            self.objectAssets[objectID]?.composedSprite = composedSprite
-            self.objectAssets[objectID]?.partTextures = SpritePartTextures(
-                device: self.device,
-                composedSprite: composedSprite
-            )
+            object.composedSprite = composedSprite
+            object.partTextures = SpritePartTextures(device: self.device)
         }
     }
 
-    private func syncItemAssets(objectID: GameObjectID, itemID: Int) {
-        if itemAssets[objectID] == nil {
-            itemAssets[objectID] = ItemAssetEntry(
-                composedSprite: nil,
-                partTextures: nil
-            )
-        }
-
-        guard itemAssets[objectID]?.composedSprite == nil, itemLoadTasks[objectID] == nil else {
+    private func syncItem(_ item: MetalMapItem) {
+        let objectID = item.objectID
+        guard item.sprite == nil, itemLoadTasks[objectID] == nil else {
             return
         }
 
-        itemLoadTasks[objectID] = Task { [weak self] in
-            guard let self else {
+        itemLoadTasks[objectID] = Task { [weak self, weak item] in
+            guard let self, let item else {
                 return
             }
             defer {
                 self.itemLoadTasks.removeValue(forKey: objectID)
             }
 
-            guard let sprite = try? await self.resourceManager.itemSprite(forItemID: itemID) else {
+            guard let sprite = try? await self.resourceManager.itemSprite(forItemID: item.itemID) else {
                 return
             }
 
-            let part = ComposedSprite.Part(sprite: sprite, semantic: .main)
-            let composedSprite = ComposedSprite(
-                configuration: Self.itemSpriteConfiguration,
-                resourceManager: self.resourceManager,
-                parts: [part]
-            )
-
-            self.itemAssets[objectID]?.composedSprite = composedSprite
-            self.itemAssets[objectID]?.partTextures = SpritePartTextures(
-                device: self.device,
-                composedSprite: composedSprite
-            )
+            item.sprite = sprite
+            item.partTextures = SpritePartTextures(device: self.device)
         }
     }
 
     private func drawables(
         objects: [GameObjectID : MetalMapObject],
         items: [GameObjectID : MetalMapItem],
-        mapGrid: MapGrid,
-        cameraState: MapCameraState
+        camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
-        var groups: [DrawableGroup] = []
-        groups.reserveCapacity(objects.count + items.count)
+        var sprites: [SpriteObject] = []
+        sprites.reserveCapacity(objects.count + items.count)
 
-        for (objectID, object) in objects {
-            guard let objectAsset = objectAssets[objectID],
-                  let composedSprite = objectAsset.composedSprite,
-                  let partTextures = objectAsset.partTextures else {
+        let frameResolver = SpriteFrameResolver()
+
+        for (_, object) in objects {
+            guard object.composedSprite != nil, object.partTextures != nil else {
+                object.drawables.removeAll()
                 continue
             }
 
-            let animation = animation(for: object, cameraState: cameraState)
-            let worldPosition = object.worldPosition
-            let isVisible = object.effectState != .cloak
-
-            let fallbackKeys = [
-                SpriteAnimationKey(action: animation.action, direction: animation.direction),
-                SpriteAnimationKey(action: .idle, direction: animation.direction),
-                SpriteAnimationKey(action: .idle, direction: .south),
-            ]
-
-            guard let resolvedDrawables = fallbackKeys.lazy.compactMap({ key in
-                var fallbackAnimation = animation
-                fallbackAnimation.action = key.action
-                fallbackAnimation.direction = key.direction
-
-                let input = SpriteFrameResolver.ResolveInput(
-                    objectID: objectID,
-                    composedSprite: composedSprite,
-                    animation: fallbackAnimation,
-                    partTextures: partTextures,
-                    scriptContext: self.scriptContext,
-                    worldPosition: worldPosition,
-                    isVisible: isVisible
-                )
-                let drawables = self.frameResolver.resolve(input)
-                return drawables.isEmpty ? nil : drawables
-            }).first else {
-                continue
-            }
-
-            groups.append(
-                DrawableGroup(
-                    depth: worldPosition.z,
-                    objectID: objectID,
-                    drawables: resolvedDrawables
-                )
+            object.drawables = frameResolver.resolve(
+                object,
+                camera: camera,
+                scriptContext: scriptContext
             )
+            guard !object.drawables.isEmpty else {
+                continue
+            }
+            sprites.append(object)
         }
 
-        for (objectID, item) in items {
-            guard let itemAsset = itemAssets[objectID],
-                  let composedSprite = itemAsset.composedSprite,
-                  let partTextures = itemAsset.partTextures else {
+        for (_, item) in items {
+            guard item.sprite != nil, item.partTextures != nil else {
+                item.drawables.removeAll()
                 continue
             }
 
-            let animation = MetalAnimation(
-                action: .idle,
-                direction: .south,
-                headDirection: .lookForward,
-                startTime: .now,
-                completion: .indefinite
-            )
-            let worldPosition = mapGrid.worldPosition(for: item.gridPosition)
-            let input = SpriteFrameResolver.ResolveInput(
-                objectID: objectID,
-                composedSprite: composedSprite,
-                animation: animation,
-                partTextures: partTextures,
-                scriptContext: scriptContext,
-                worldPosition: worldPosition,
-                isVisible: true
-            )
-            let drawables = frameResolver.resolve(input)
-            guard !drawables.isEmpty else {
+            item.drawables = frameResolver.resolve(item)
+            guard !item.drawables.isEmpty else {
                 continue
             }
-
-            groups.append(
-                DrawableGroup(
-                    depth: worldPosition.z,
-                    objectID: objectID,
-                    drawables: drawables
-                )
-            )
+            sprites.append(item)
         }
 
-        groups.sort {
-            if $0.depth == $1.depth {
+        sprites.sort {
+            if $0.worldPosition.z == $1.worldPosition.z {
                 $0.objectID < $1.objectID
             } else {
-                $0.depth < $1.depth
+                $0.worldPosition.z < $1.worldPosition.z
             }
         }
 
-        return groups.flatMap(\.drawables)
-    }
-
-    private func animation(for object: MetalMapObject, cameraState: MapCameraState) -> MetalAnimation {
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
-
-        var animation = object.animation
-        if let movement = object.movement, movement.isMoving {
-            animation.action = .walk
-            animation.direction = movement.direction ?? animation.direction
-            animation.elapsedTime = movement.animationElapsedTime
-            animation.completion = .indefinite
-        }
-        animation.direction = animation.direction.adjustedForCameraAzimuth(cameraState.azimuth)
-        if !availableActionTypes.contains(animation.action) {
-            animation.action = .idle
-        }
-
-        return animation
+        return sprites.flatMap(\.drawables)
     }
 }

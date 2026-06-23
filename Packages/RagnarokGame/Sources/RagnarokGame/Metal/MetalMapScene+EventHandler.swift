@@ -379,7 +379,11 @@ extension MetalMapScene {
     }
 
     public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
-        let metalItem = MetalMapItem(item: item, gridPosition: position)
+        let metalItem = MetalMapItem(
+            item: item,
+            gridPosition: position,
+            worldPosition: mapGrid.worldPosition(for: position)
+        )
         items[item.objectID] = metalItem
         refreshSpriteDrawables()
     }

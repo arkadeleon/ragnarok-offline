@@ -10,8 +10,7 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
-class MetalMapObject {
-    let objectID: GameObjectID
+class MetalMapObject: SpriteObject {
     var type: MapObjectType
     var name: String
     var speed: Int
@@ -32,11 +31,12 @@ class MetalMapObject {
     var healthState: StatusChangeOption2
     var effectState: StatusChangeOption
 
-    var gridPosition: SIMD2<Int>
-    var worldPosition: SIMD3<Float>
-
     var animation: MetalAnimation
     var movement: MetalMovement?
+
+    var spriteConfiguration: ComposedSprite.Configuration
+    var composedSprite: ComposedSprite?
+    var partTextures: SpritePartTextures?
 
     init(
         object: MapObject,
@@ -47,7 +47,6 @@ class MetalMapObject {
         direction: SpriteDirection = .south,
         headDirection: SpriteHeadDirection = .lookForward
     ) {
-        objectID = object.objectID
         type = object.type
         name = object.name
         speed = object.speed
@@ -68,15 +67,19 @@ class MetalMapObject {
         healthState = object.healthState
         effectState = object.effectState
 
-        self.gridPosition = gridPosition
-        self.worldPosition = worldPosition
-
+        spriteConfiguration = ComposedSprite.Configuration(mapObject: object)
         animation = MetalAnimation(
             action: .idle,
             direction: direction,
             headDirection: headDirection,
             startTime: .now,
             completion: .indefinite
+        )
+
+        super.init(
+            objectID: object.objectID,
+            gridPosition: gridPosition,
+            worldPosition: worldPosition
         )
     }
 

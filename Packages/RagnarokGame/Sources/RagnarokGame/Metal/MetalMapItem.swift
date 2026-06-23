@@ -3,19 +3,27 @@
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
-//
-
 import RagnarokModels
+import RagnarokSprite
 import simd
 
-final class MetalMapItem {
-    let objectID: GameObjectID
+final class MetalMapItem: SpriteObject {
     let itemID: Int
-    let gridPosition: SIMD2<Int>
 
-    init(item: MapItem, gridPosition: SIMD2<Int>) {
-        objectID = item.objectID
+    var sprite: SpriteResource?
+    var partTextures: SpritePartTextures?
+
+    init(
+        item: MapItem,
+        gridPosition: SIMD2<Int>,
+        worldPosition: SIMD3<Float>
+    ) {
         itemID = Int(item.itemID)
-        self.gridPosition = gridPosition
+
+        super.init(
+            objectID: item.objectID,
+            gridPosition: gridPosition,
+            worldPosition: worldPosition
+        )
     }
 }

@@ -14,26 +14,8 @@ import RagnarokShaders
 import RagnarokSprite
 import simd
 
-struct SpriteLayerDrawable {
-    let objectID: GameObjectID
-    var vertices: [SpriteVertex]
-    var texture: any MTLTexture
-    var worldPosition: SIMD3<Float>
-    var isVisible: Bool
-}
-
 @MainActor
 struct SpriteFrameResolver {
-    struct ResolveInput {
-        let objectID: GameObjectID
-        let composedSprite: ComposedSprite
-        var animation: MetalAnimation
-        let partTextures: SpritePartTextures
-        let scriptContext: ScriptContext
-        let worldPosition: SIMD3<Float>
-        let isVisible: Bool
-    }
-
     private struct ResolvedLayer {
         let zIndex: Int
         let order: Int
@@ -41,27 +23,35 @@ struct SpriteFrameResolver {
         let texture: any MTLTexture
     }
 
-    func resolve(_ input: ResolveInput) -> [SpriteLayerDrawable] {
-        if case .once(let settledAction) = input.animation.completion,
-           let duration = onceDuration(for: input),
-           input.animation.action != settledAction,
-           input.animation.elapsedTime >= duration {
-            var settledInput = input
-            settledInput.animation.action = settledAction
-            settledInput.animation.elapsedTime = input.animation.elapsedTime - duration
-            settledInput.animation.completion = .indefinite
-            return resolve(settledInput)
+    func resolve(
+        _ object: MetalMapObject,
+        camera: MapCameraState,
+        scriptContext: ScriptContext
+    ) -> [SpriteLayerDrawable] {
+        guard let composedSprite = object.composedSprite,
+              let partTextures = object.partTextures else {
+            return []
         }
 
-        let actionIndex = input.animation.action.calculateActionIndex(
-            forJobID: input.composedSprite.configuration.job.rawValue,
-            direction: input.animation.direction
+        var animation = animation(for: object, camera: camera)
+        if case .once(let settledAction) = animation.completion,
+           let duration = onceDuration(composedSprite: composedSprite, animation: animation),
+           animation.action != settledAction,
+           animation.elapsedTime >= duration {
+            animation.action = settledAction
+            animation.elapsedTime -= duration
+            animation.completion = .indefinite
+        }
+
+        let actionIndex = animation.action.calculateActionIndex(
+            forJobID: composedSprite.configuration.job.rawValue,
+            direction: animation.direction
         )
 
         var resolvedLayers: [ResolvedLayer] = []
         resolvedLayers.reserveCapacity(24)
 
-        for (partIndex, part) in input.composedSprite.parts.enumerated() {
+        for (partIndex, part) in composedSprite.parts.enumerated() {
             let partActionIndex = (part.semantic == .shadow ? 0 : actionIndex)
             guard let action = part.sprite.act.action(at: partActionIndex), !action.frames.isEmpty else {
                 continue
@@ -69,17 +59,17 @@ struct SpriteFrameResolver {
 
             let frameRange = part.frameRange(
                 action: action,
-                actionType: input.animation.action,
-                headDirection: input.animation.headDirection
+                actionType: animation.action,
+                headDirection: animation.headDirection
             )
             guard !frameRange.isEmpty else {
                 continue
             }
 
             let frameInterval = TimeInterval(action.frameInterval)
-            let rawFrameIndex = Int(input.animation.elapsedTime.timeInterval / frameInterval)
+            let rawFrameIndex = Int(animation.elapsedTime.timeInterval / frameInterval)
             let localFrameIndex: Int
-            if actionRepeats(input.animation.action) {
+            if actionRepeats(animation.action) {
                 localFrameIndex = rawFrameIndex % frameRange.count
             } else {
                 localFrameIndex = min(rawFrameIndex, frameRange.count - 1)
@@ -90,15 +80,15 @@ struct SpriteFrameResolver {
                 continue
             }
 
-            let zIndex = input.composedSprite.zIndex(
+            let zIndex = composedSprite.zIndex(
                 for: part,
-                direction: input.animation.direction,
+                direction: animation.direction,
                 actionIndex: actionIndex,
                 frameIndex: absoluteFrameIndex,
-                scriptContext: input.scriptContext
+                scriptContext: scriptContext
             )
             let parentOffset = part.parentOffset(
-                actionType: input.animation.action,
+                actionType: animation.action,
                 action: action,
                 actionIndex: partActionIndex,
                 absoluteFrameIndex: absoluteFrameIndex,
@@ -111,10 +101,10 @@ struct SpriteFrameResolver {
                     continue
                 }
 
-                guard let texture = input.partTextures.texture(
+                guard let texture = partTextures.texture(
                     for: layer,
                     resource: part.sprite,
-                    label: "sprite-\(input.objectID)-\(partIndex)-\(layerIndex)"
+                    label: "sprite-\(object.objectID)-\(partIndex)-\(layerIndex)"
                 ) else {
                     continue
                 }
@@ -147,11 +137,51 @@ struct SpriteFrameResolver {
 
         return resolvedLayers.map {
             SpriteLayerDrawable(
-                objectID: input.objectID,
+                objectID: object.objectID,
                 vertices: $0.vertices,
                 texture: $0.texture,
-                worldPosition: input.worldPosition,
-                isVisible: input.isVisible
+                worldPosition: object.worldPosition,
+                isVisible: object.effectState != .cloak
+            )
+        }
+    }
+
+    func resolve(_ item: MetalMapItem) -> [SpriteLayerDrawable] {
+        guard let sprite = item.sprite,
+              let partTextures = item.partTextures,
+              let action = sprite.act.action(at: 0),
+              let frame = action.frames.first else {
+            return []
+        }
+
+        return frame.layers.enumerated().compactMap { layerIndex, layer in
+            guard layer.color.alpha != 0,
+                  let image = sprite.image(for: layer),
+                  image.width * image.height > 1 else {
+                return nil
+            }
+
+            let texture = partTextures.texture(
+                for: layer,
+                resource: sprite,
+                label: "item-\(item.objectID)-\(layerIndex)"
+            )
+            guard let texture else {
+                return nil
+            }
+
+            return SpriteLayerDrawable(
+                objectID: item.objectID,
+                vertices: makeVertices(
+                    layer: layer,
+                    parentOffset: .zero,
+                    partScale: 1,
+                    width: image.width,
+                    height: image.height
+                ),
+                texture: texture,
+                worldPosition: item.worldPosition,
+                isVisible: true
             )
         }
     }
@@ -210,14 +240,35 @@ struct SpriteFrameResolver {
         }
     }
 
-    private func onceDuration(for input: ResolveInput) -> Duration? {
-        let actionIndex = input.animation.action.calculateActionIndex(
-            forJobID: input.composedSprite.configuration.job.rawValue,
-            direction: input.animation.direction
+    private func animation(for object: MetalMapObject, camera: MapCameraState) -> MetalAnimation {
+        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
+
+        var animation = object.animation
+        if let movement = object.movement, movement.isMoving {
+            animation.action = .walk
+            animation.direction = movement.direction ?? animation.direction
+            animation.elapsedTime = movement.animationElapsedTime
+            animation.completion = .indefinite
+        }
+        animation.direction = animation.direction.adjustedForCameraAzimuth(camera.azimuth)
+        if !availableActionTypes.contains(animation.action) {
+            animation.action = .idle
+        }
+
+        return animation
+    }
+
+    private func onceDuration(
+        composedSprite: ComposedSprite,
+        animation: MetalAnimation
+    ) -> Duration? {
+        let actionIndex = animation.action.calculateActionIndex(
+            forJobID: composedSprite.configuration.job.rawValue,
+            direction: animation.direction
         )
 
         var duration: Duration?
-        for part in input.composedSprite.parts {
+        for part in composedSprite.parts {
             let partActionIndex = (part.semantic == .shadow ? 0 : actionIndex)
             guard let action = part.sprite.act.action(at: partActionIndex), !action.frames.isEmpty else {
                 continue
@@ -225,8 +276,8 @@ struct SpriteFrameResolver {
 
             let frameRange = part.frameRange(
                 action: action,
-                actionType: input.animation.action,
-                headDirection: input.animation.headDirection
+                actionType: animation.action,
+                headDirection: animation.headDirection
             )
             guard !frameRange.isEmpty else {
                 continue

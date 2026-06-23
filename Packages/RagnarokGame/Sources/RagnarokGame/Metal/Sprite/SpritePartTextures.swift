@@ -10,9 +10,8 @@ import RagnarokFileFormats
 import RagnarokRenderers
 import RagnarokSprite
 
-@MainActor
 final class SpritePartTextures {
-    struct CacheKey: Hashable {
+    private struct CacheKey: Hashable {
         let resourceID: ObjectIdentifier
         let spriteType: Int32
         let spriteIndex: Int32
@@ -24,13 +23,11 @@ final class SpritePartTextures {
     }
 
     let device: any MTLDevice
-    let composedSprite: ComposedSprite
 
     private var cache: [CacheKey : CacheValue] = [:]
 
-    init(device: any MTLDevice, composedSprite: ComposedSprite) {
+    init(device: any MTLDevice) {
         self.device = device
-        self.composedSprite = composedSprite
     }
 
     func texture(for layer: ACT.Layer, resource: SpriteResource, label: String) -> (any MTLTexture)? {
