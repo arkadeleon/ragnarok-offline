@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RagnarokGRF
 
 public enum ResourceError: LocalizedError {
     case resourceNotFound(ResourcePath)
@@ -20,11 +19,6 @@ public enum ResourceError: LocalizedError {
             String(localized: "Script context incomplete: \(call)")
         }
     }
-}
-
-public enum ResourceLocator: Sendable {
-    case url(URL)
-    case grfArchiveNode(GRFArchive, GRFNode)
 }
 
 final public class ResourceManager: Sendable {
@@ -49,10 +43,6 @@ final public class ResourceManager: Sendable {
     public func setRemoteClientEnabled(_ isEnabled: Bool) async {
         await remoteClient?.setEnabled(isEnabled)
         await clearCaches()
-    }
-
-    public func locatorOfResource(at path: ResourcePath) async throws -> ResourceLocator {
-        try await localClient.locatorOfResource(at: path)
     }
 
     public func contentsOfResource(at path: ResourcePath) async throws -> Data {

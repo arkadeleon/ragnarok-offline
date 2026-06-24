@@ -32,6 +32,11 @@ enum FileLocation {
     case external
 }
 
+enum FileLocator {
+    case url(URL)
+    case grfArchiveNode(GRFArchive, GRFNode)
+}
+
 @Observable
 final class File: Sendable {
     let node: FileNode
@@ -126,7 +131,7 @@ final class File: Sendable {
         }
     }
 
-    convenience init(_ locator: ResourceLocator) {
+    convenience init(_ locator: FileLocator) {
         let node: FileNode = switch locator {
         case .url(let url):
             .regularFile(url)
