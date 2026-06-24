@@ -57,7 +57,8 @@ struct ContentView: View {
             }
 
             appModel.settings.isRemoteClientEnabled = isRemoteClientEnabled
-            await appModel.resourceManager.setRemoteClientEnabled(isRemoteClientEnabled)
+            await appModel.resourceProvider.remoteProvider.setEnabled(isRemoteClientEnabled)
+            await appModel.resourceManager.clearCaches()
         }
     }
 

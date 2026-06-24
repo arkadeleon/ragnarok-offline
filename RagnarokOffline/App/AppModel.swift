@@ -10,9 +10,6 @@ import Observation
 import RagnarokGame
 import RagnarokResources
 
-let localClientURL = URL.documentsDirectory
-let remoteClientURL = URL(string: "https://ragnarokoffline.online/client")!
-let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
 let remoteClientSubscriptionGroupID = "22133104"
 
 @MainActor
@@ -21,6 +18,8 @@ final class AppModel {
     let mainWindowID = "Main"
 
     let settings: SettingsModel
+
+    let resourceProvider: ClientResourceProvider
     let resourceManager: ResourceManager
 
     let localClientDirectory = File(node: .directory(localClientURL), location: .client)
@@ -37,21 +36,10 @@ final class AppModel {
     let skillSimulator: SkillSimulator
 
     init() {
-        let settings = SettingsModel()
+        settings = SettingsModel()
 
-        let localClient = LocalResourceClient(url: localClientURL)
-        let remoteClient = RemoteResourceClient(
-            url: remoteClientURL,
-            cacheURL: remoteClientCacheURL,
-            isEnabled: settings.isRemoteClientEnabled
-        )
-        let resourceManager = ResourceManager(
-            localClient: localClient,
-            remoteClient: remoteClient
-        )
-
-        self.settings = settings
-        self.resourceManager = resourceManager
+        resourceProvider = ClientResourceProvider(isRemoteClientEnabled: settings.isRemoteClientEnabled)
+        resourceManager = ResourceManager(resourceProvider: resourceProvider)
 
         gameSession = GameSession(resourceManager: resourceManager)
         chatSession = ChatSession(

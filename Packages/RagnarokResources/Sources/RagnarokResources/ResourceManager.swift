@@ -22,8 +22,7 @@ public enum ResourceError: LocalizedError {
 }
 
 final public class ResourceManager: Sendable {
-    public let localClient: LocalResourceClient
-    public let remoteClient: RemoteResourceClient?
+    let resourceProvider: any ResourceProvider
 
     private let scriptContextLoader = ScriptContextLoader()
     public var scriptContext: ScriptContext {
@@ -35,29 +34,15 @@ final public class ResourceManager: Sendable {
     let cache = ResourceCache()
     let imageResourceCache = ThrowingResourceCache<Resources.Image>()
 
-    public init(localClient: LocalResourceClient, remoteClient: RemoteResourceClient? = nil) {
-        self.localClient = localClient
-        self.remoteClient = remoteClient
-    }
-
-    public func setRemoteClientEnabled(_ isEnabled: Bool) async {
-        await remoteClient?.setEnabled(isEnabled)
-        await clearCaches()
+    public init(resourceProvider: any ResourceProvider) {
+        self.resourceProvider = resourceProvider
     }
 
     public func contentsOfResource(at path: ResourcePath) async throws -> Data {
-        do {
-            return try await localClient.contentsOfResource(at: path)
-        } catch ResourceError.resourceNotFound {
-            if let remoteClient {
-                return try await remoteClient.contentsOfResource(at: path)
-            }
-        }
-
-        throw ResourceError.resourceNotFound(path)
+        try await resourceProvider.contentsOfResource(at: path)
     }
 
-    private func clearCaches() async {
+    public func clearCaches() async {
         await scriptContextLoader.clear()
         await cache.clear()
         await imageResourceCache.clear()

@@ -12,29 +12,12 @@ import RagnarokResources
 
 extension ResourceManager {
     static let previewing = ResourceManager(
-        localClient: LocalResourceClient(url: localClientURL),
-        remoteClient: RemoteResourceClient(url: remoteClientURL, cacheURL: remoteClientCacheURL)
+        resourceProvider: ClientResourceProvider(isRemoteClientEnabled: true)
     )
 }
 
-extension LocalResourceClient {
-    static let previewing = LocalResourceClient(url: localClientURL)
-
-    func locatorOfResource(at path: ResourcePath) async throws -> FileLocator {
-        let fileURL = url.absoluteURL.appending(path: L2K(path))
-        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
-            return .url(fileURL)
-        }
-
-        let grfPath = GRFPath(components: path.components)
-        for grfArchive in grfArchives {
-            if let entryNode = await grfArchive.entryNode(at: grfPath) {
-                return .grfArchiveNode(grfArchive, entryNode)
-            }
-        }
-
-        throw ResourceError.resourceNotFound(path)
-    }
+extension LocalClientResourceProvider {
+    static let previewing = LocalClientResourceProvider(url: localClientURL)
 }
 
 extension File {
@@ -52,49 +35,49 @@ extension File {
     }
 
     static func previewACT() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "sprite", "cursors.act"])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "sprite", "cursors.act"])
         let file = File(locator)
         return file
     }
 
     static func previewGAT() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "iz_int.gat"])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "iz_int.gat"])
         let file = File(locator)
         return file
     }
 
     static func previewWideGAT() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "1@4sac.gat"])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "1@4sac.gat"])
         let file = File(locator)
         return file
     }
 
     static func previewTallGAT() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "1@adv.gat"])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "1@adv.gat"])
         let file = File(locator)
         return file
     }
 
     static func previewGND() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "iz_int.gnd"])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "iz_int.gnd"])
         let file = File(locator)
         return file
     }
 
     static func previewRSM() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "model", K2L("내부소품"), K2L("철다리.rsm")])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "model", K2L("내부소품"), K2L("철다리.rsm")])
         let file = File(locator)
         return file
     }
 
     static func previewRSW() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "iz_int.rsw"])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "iz_int.rsw"])
         let file = File(locator)
         return file
     }
 
     static func previewSPR() async throws -> File {
-        let locator = try await LocalResourceClient.previewing.locatorOfResource(at: ["data", "sprite", "cursors.spr"])
+        let locator = try await LocalClientResourceProvider.previewing.locatorOfResource(at: ["data", "sprite", "cursors.spr"])
         let file = File(locator)
         return file
     }

@@ -27,7 +27,7 @@ final class SpriteRendererTests: XCTestCase {
         XCTAssertEqual(animation.frames.count, 8)
         XCTAssertEqual(animation.frameWidth, 40)
         XCTAssertEqual(animation.frameHeight, 95)
-        XCTAssertEqual(animation.frameInterval, 75 / 1000)
+        XCTAssertEqual(animation.frameInterval, CGFloat(Float(75) / Float(1000)))
         XCTAssertEqual(animation.scale, 2)
     }
 }
