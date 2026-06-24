@@ -2,30 +2,12 @@
   "originHash" : "045ab8fea08e70d026ff528348604f2dbfc9c8c3af7653e1913ed2eda4b8b87d",
   "pins" : [
     {
-      "identity" : "ragnarok-grf",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/ragnarok-grf.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "a150461686db1c711e61857827983004bae4f21c"
-      }
-    },
-    {
       "identity" : "ragnarok-lua",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/arkadeleon/ragnarok-lua.git",
       "state" : {
         "branch" : "master",
         "revision" : "bc82609e05f9806d59f698aaf7d014e52db77f2d"
-      }
-    },
-    {
-      "identity" : "swift-gzip",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mihai8804858/swift-gzip",
-      "state" : {
-        "branch" : "main",
-        "revision" : "97c502f10283dbd80eda534d164b715c9c973d72"
       }
     }
   ],

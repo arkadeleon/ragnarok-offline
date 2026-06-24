@@ -36,6 +36,7 @@
 		35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */ = {isa = PBXBuildFile; productRef = 35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */; };
 		35B2C4712EAF5D2900A4FD11 /* RagnarokDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 35B2C4702EAF5D2900A4FD11 /* RagnarokDatabase */; };
 		35BB2F9A2EFE86FC0047040D /* RagnarokLocalization in Frameworks */ = {isa = PBXBuildFile; productRef = 35BB2F992EFE86FC0047040D /* RagnarokLocalization */; };
+		35F6829E2FEBE29D003DC53A /* RagnarokGRF in Frameworks */ = {isa = PBXBuildFile; productRef = 35F6829D2FEBE29D003DC53A /* RagnarokGRF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +164,7 @@
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
 				35A5F9142FD2627A00669A12 /* StoreKit.framework in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
+				35F6829E2FEBE29D003DC53A /* RagnarokGRF in Frameworks */,
 				35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
 				3558A3BB2DFC22EA0038DFC3 /* rAthenaWeb in Frameworks */,
@@ -295,6 +297,7 @@
 				35B2C4702EAF5D2900A4FD11 /* RagnarokDatabase */,
 				35BB2F992EFE86FC0047040D /* RagnarokLocalization */,
 				354FCEA32F14B9FA00995F35 /* JSONViewer */,
+				35F6829D2FEBE29D003DC53A /* RagnarokGRF */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -348,6 +351,7 @@
 			packageReferences = (
 				353725EB2D83FDF2008590F6 /* XCRemoteSwiftPackageReference "swift-highlight" */,
 				3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */,
+				35F6829C2FEBE29D003DC53A /* XCRemoteSwiftPackageReference "ragnarok-grf" */,
 			);
 			productRefGroup = 35B3B8D52A08BEA600B4540B /* Products */;
 			projectDirPath = "";
@@ -833,6 +837,14 @@
 				kind = branch;
 			};
 		};
+		35F6829C2FEBE29D003DC53A /* XCRemoteSwiftPackageReference "ragnarok-grf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/arkadeleon/ragnarok-grf.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -919,6 +931,11 @@
 		35BB2F992EFE86FC0047040D /* RagnarokLocalization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RagnarokLocalization;
+		};
+		35F6829D2FEBE29D003DC53A /* RagnarokGRF */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35F6829C2FEBE29D003DC53A /* XCRemoteSwiftPackageReference "ragnarok-grf" */;
+			productName = RagnarokGRF;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
