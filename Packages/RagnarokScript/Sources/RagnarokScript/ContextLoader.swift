@@ -1,88 +1,24 @@
 //
-//  ScriptContext.swift
-//  RagnarokResources
+//  ContextLoader.swift
+//  RagnarokScript
 //
-//  Created by Leon Li on 2025/3/3.
+//  Created by Leon Li on 2026/6/23.
 //
 
 @preconcurrency import RagnarokLua
+import RagnarokResources
 
-final public class ScriptContext: Sendable {
-    let context: LuaContext
-    let contextQueue: DispatchQueue
+actor ContextLoader {
+    static let shared = ContextLoader()
 
-    init(context: LuaContext) {
-        self.context = context
-        self.contextQueue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.script-context")
-    }
-
-    public func accessoryName(forAccessoryID accessoryID: Int) -> String? {
-        let result = call("ReqAccName", with: [accessoryID], to: String.self)
-        return result
-    }
-
-    public func jobName(forJobID jobID: Int) -> String? {
-        let result = call("ReqJobName", with: [jobID], to: String.self)
-        return result
-    }
-
-    public func robeName(forRobeID robeID: Int, checkEnglish: Bool) -> String? {
-        let result = call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self)
-        return result
-    }
-
-    public func shadowFactor(forJobID jobID: Int) -> Double? {
-        let result = call("ReqshadowFactor", with: [jobID], to: Double.self)
-        return result
-    }
-
-    public func statusIconName(forStatusID statusID: Int) -> String? {
-        let result = call("statusIconName", with: [statusID], to: String.self)
-        return result
-    }
-
-    public func weaponName(forWeaponID weaponID: Int) -> String? {
-        let result = call("ReqWeaponName", with: [weaponID], to: String.self)
-        return result
-    }
-
-    public func realWeaponID(forWeaponID weaponID: Int) -> Int? {
-        let result = call("GetRealWeaponId", with: [weaponID], to: Int.self)
-        return result
-    }
-
-    public func drawOnTop(forRobeID robeID: Int, genderID: Int, jobID: Int, actionIndex: Int, frameIndex: Int) -> Bool {
-        let result = call("_New_DrawOnTop", with: [robeID, genderID, jobID, actionIndex, frameIndex], to: Bool.self)
-        return result ?? false
-    }
-
-    public func isTopLayer(forRobeID robeID: Int) -> Bool {
-        let result = call("IsTopLayer", with: [robeID], to: Bool.self)
-        return result ?? false
-    }
-
-    private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) -> T? {
-        contextQueue.sync {
-            do {
-                let result = try context.call(name, with: args)
-                return result as? T
-            } catch {
-                logger.warning("\(error)")
-                return nil
-            }
-        }
-    }
-}
-
-actor ScriptContextLoader {
     private enum Phase {
-        case inProgress(Task<ScriptContext, Never>)
-        case loaded(ScriptContext)
+        case inProgress(Task<LuaContext, Never>)
+        case loaded(LuaContext)
     }
 
-    private var phase: ScriptContextLoader.Phase?
+    private var phase: ContextLoader.Phase?
 
-    func scriptContext(using resourceManager: ResourceManager) async -> ScriptContext {
+    func context(using resourceManager: ResourceManager) async -> LuaContext {
         if let phase {
             switch phase {
             case .inProgress(let task):
@@ -102,11 +38,7 @@ actor ScriptContextLoader {
         return value
     }
 
-    func clear() {
-        phase = nil
-    }
-
-    private func load(using resourceManager: ResourceManager) async -> ScriptContext {
+    private func load(using resourceManager: ResourceManager) async -> LuaContext {
         let context = LuaContext()
 
         async let accessoryid = resourceManager.script(at: ["datainfo", "accessoryid"])
@@ -230,7 +162,7 @@ actor ScriptContextLoader {
             logger.warning("\(error)")
         }
 
-        return ScriptContext(context: context)
+        return context
     }
 
     private func loadScript(_ script: Data?, in context: LuaContext) {

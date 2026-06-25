@@ -25,8 +25,7 @@ struct SpriteFrameResolver {
 
     func resolve(
         _ object: MetalMapObject,
-        camera: MapCameraState,
-        scriptContext: ScriptContext
+        camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         guard let composedSprite = object.composedSprite,
               let partTextures = object.partTextures else {
@@ -84,8 +83,7 @@ struct SpriteFrameResolver {
                 for: part,
                 direction: animation.direction,
                 actionIndex: actionIndex,
-                frameIndex: absoluteFrameIndex,
-                scriptContext: scriptContext
+                frameIndex: absoluteFrameIndex
             )
             let parentOffset = part.parentOffset(
                 actionType: animation.action,

@@ -1,20 +1,21 @@
 //
 //  ScriptContextTests.swift
-//  RagnarokResourcesTests
+//  RagnarokScriptTests
 //
 //  Created by Leon Li on 2025/3/3.
 //
 
 import RagnarokCore
+import RagnarokResources
 import XCTest
-@testable import RagnarokResources
+@testable import RagnarokScript
 
 final class ScriptContextTests: XCTestCase {
     let resourceManager = ResourceManager.testing
 
     var scriptContext: ScriptContext {
         get async {
-            await resourceManager.scriptContext
+            await resourceManager.scriptContext()
         }
     }
 

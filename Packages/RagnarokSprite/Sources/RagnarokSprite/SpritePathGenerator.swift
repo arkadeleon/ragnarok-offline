@@ -8,6 +8,7 @@
 import RagnarokConstants
 import RagnarokCore
 import RagnarokResources
+import RagnarokScript
 
 class SpritePathGenerator {
     let scriptContext: ScriptContext

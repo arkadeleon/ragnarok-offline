@@ -4,38 +4,36 @@
 import PackageDescription
 
 let package = Package(
-    name: "RagnarokSprite",
+    name: "RagnarokScript",
     platforms: [
         .macOS(.v13),
         .iOS(.v16),
     ],
     products: [
         .library(
-            name: "RagnarokSprite",
-            targets: ["RagnarokSprite"]
+            name: "RagnarokScript",
+            targets: ["RagnarokScript"]
         ),
     ],
     dependencies: [
-        .package(path: "../RagnarokConstants"),
         .package(path: "../RagnarokCore"),
-        .package(path: "../RagnarokFileFormats"),
         .package(path: "../RagnarokResources"),
-        .package(path: "../RagnarokScript"),
+        .package(url: "https://github.com/arkadeleon/ragnarok-lua.git", branch: "master"),
     ],
     targets: [
         .target(
-            name: "RagnarokSprite",
+            name: "RagnarokScript",
             dependencies: [
-                "RagnarokConstants",
-                "RagnarokCore",
-                "RagnarokFileFormats",
                 "RagnarokResources",
-                "RagnarokScript",
+                .product(name: "RagnarokLua", package: "ragnarok-lua"),
             ]
         ),
         .testTarget(
-            name: "RagnarokSpriteTests",
-            dependencies: ["RagnarokSprite"]
+            name: "RagnarokScriptTests",
+            dependencies: [
+                "RagnarokCore",
+                "RagnarokScript",
+            ]
         ),
     ]
 )

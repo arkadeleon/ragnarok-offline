@@ -14,15 +14,13 @@ import RagnarokSprite
 final class SpriteAssetStore {
     private let device: any MTLDevice
     private let resourceManager: ResourceManager
-    private let scriptContext: ScriptContext
 
     private var objectLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
     private var itemLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
 
-    init(device: any MTLDevice, resourceManager: ResourceManager, scriptContext: ScriptContext) {
+    init(device: any MTLDevice, resourceManager: ResourceManager) {
         self.device = device
         self.resourceManager = resourceManager
-        self.scriptContext = scriptContext
     }
 
     func sync(
@@ -145,11 +143,7 @@ final class SpriteAssetStore {
                 continue
             }
 
-            object.drawables = frameResolver.resolve(
-                object,
-                camera: camera,
-                scriptContext: scriptContext
-            )
+            object.drawables = frameResolver.resolve(object, camera: camera)
             guard !object.drawables.isEmpty else {
                 continue
             }

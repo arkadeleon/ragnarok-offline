@@ -7,11 +7,14 @@
 
 import RagnarokFileFormats
 import RagnarokResources
+import RagnarokScript
 import simd
 
 final public class ComposedSprite: Sendable {
     public let configuration: ComposedSprite.Configuration
     let resourceManager: ResourceManager
+
+    let scriptContext: ScriptContext
 
     public let parts: [ComposedSprite.Part]
     public let imf: IMF?
@@ -26,12 +29,13 @@ final public class ComposedSprite: Sendable {
         self.configuration = configuration
         self.resourceManager = resourceManager
 
-        let composer = ComposedSprite.Composer(configuration: configuration, resourceManager: resourceManager)
+        scriptContext = await resourceManager.scriptContext()
+
+        let composer = ComposedSprite.Composer(configuration: configuration, resourceManager: resourceManager, scriptContext: scriptContext)
 
         if configuration.job.isPlayer {
             parts = try await composer.composePlayerSprite()
 
-            let scriptContext = await resourceManager.scriptContext
             let pathGenerator = SpritePathGenerator(scriptContext: scriptContext)
 
             if let imfPath = pathGenerator.generateIMFPath(job: configuration.job, gender: configuration.gender) {
@@ -46,18 +50,6 @@ final public class ComposedSprite: Sendable {
 
             imf = nil
         }
-    }
-
-    public init(
-        configuration: ComposedSprite.Configuration,
-        resourceManager: ResourceManager,
-        parts: [ComposedSprite.Part],
-        imf: IMF? = nil
-    ) {
-        self.configuration = configuration
-        self.resourceManager = resourceManager
-        self.parts = parts
-        self.imf = imf
     }
 }
 
@@ -161,8 +153,7 @@ extension ComposedSprite {
         for part: ComposedSprite.Part,
         direction: SpriteDirection,
         actionIndex: Int,
-        frameIndex: Int,
-        scriptContext: ScriptContext
+        frameIndex: Int
     ) -> Int {
         if part.semantic == .shadow {
             return -1
@@ -173,6 +164,7 @@ extension ComposedSprite {
         case .south, .southwest, .east, .southeast: false
         }
 
+        let scriptContext = scriptContext
         let zIndexForGarment: () -> Int = { [configuration] in
             let drawOnTop = scriptContext.drawOnTop(
                 forRobeID: configuration.garment,

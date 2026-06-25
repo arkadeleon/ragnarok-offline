@@ -24,13 +24,6 @@ public enum ResourceError: LocalizedError {
 final public class ResourceManager: Sendable {
     let resourceProvider: any ResourceProvider
 
-    private let scriptContextLoader = ScriptContextLoader()
-    public var scriptContext: ScriptContext {
-        get async {
-            await scriptContextLoader.scriptContext(using: self)
-        }
-    }
-
     let cache = ResourceCache()
     let imageResourceCache = ThrowingResourceCache<Resources.Image>()
 
@@ -42,8 +35,14 @@ final public class ResourceManager: Sendable {
         try await resourceProvider.contentsOfResource(at: path)
     }
 
+    public func cachedResource<R>(
+        forIdentifier resourceIdentifier: String,
+        loadOperation: sending @escaping () async -> R
+    ) async -> R where R: Resource {
+        await cache.resource(forIdentifier: resourceIdentifier, loadOperation: loadOperation)
+    }
+
     public func clearCaches() async {
-        await scriptContextLoader.clear()
         await cache.clear()
         await imageResourceCache.clear()
     }

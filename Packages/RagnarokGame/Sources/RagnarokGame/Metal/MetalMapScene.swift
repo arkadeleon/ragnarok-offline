@@ -429,11 +429,9 @@ extension MetalMapScene {
             logger.warning("Metal map scene failed to load grid.tga: \(error)")
         }
 
-        let scriptContext = await resourceManager.scriptContext
         spriteAssetStore = SpriteAssetStore(
             device: renderer.device,
-            resourceManager: resourceManager,
-            scriptContext: scriptContext
+            resourceManager: resourceManager
         )
 
         do {

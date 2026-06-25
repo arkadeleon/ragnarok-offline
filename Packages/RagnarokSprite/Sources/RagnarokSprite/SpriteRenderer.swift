@@ -167,8 +167,6 @@ final public class SpriteRenderer: Sendable {
             frameCount = max(frameCount, actionNode.0.children.count)
         }
 
-        let scriptContext = await composedSprite.resourceManager.scriptContext
-
         var frames: [CGImage?] = []
 
         for frameIndex in 0..<frameCount {
@@ -179,8 +177,7 @@ final public class SpriteRenderer: Sendable {
                     for: part,
                     direction: direction,
                     actionIndex: actionIndex,
-                    frameIndex: frameIndex,
-                    scriptContext: scriptContext
+                    frameIndex: frameIndex
                 )
                 sortedActionNodes.append((actionNode, zIndex))
             }
