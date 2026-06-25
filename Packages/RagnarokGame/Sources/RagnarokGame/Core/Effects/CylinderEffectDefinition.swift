@@ -36,7 +36,7 @@ public struct CylinderEffectDefinition: Sendable {
     public var alpha: Float
     public var fades: Bool
     public var animation: CylinderEffectAnimation?
-    public var blendMode: CylinderEffectBlendMode?
+    public var blendMode: CylinderEffectBlendMode
     public var zIndex: Float
 
     public var positionOffset: SIMD3<Float>
@@ -48,78 +48,6 @@ public struct CylinderEffectDefinition: Sendable {
     public var rotatesToTarget: Bool
     public var rotatesWithSource: Bool
     public var fixedPerspective: Bool
-
-    public init(
-        textureName: String,
-        soundName: String? = nil,
-        attachedToTarget: Bool,
-        rendersBeforeEntities: Bool = false,
-        repeats: Bool = false,
-        duration: TimeInterval? = nil,
-        delayStart: TimeInterval = 0,
-        delayOffset: TimeInterval = 0,
-        delayLate: TimeInterval = 0,
-        delayOffsetDelta: TimeInterval = 0,
-        delayLateDelta: TimeInterval = 0,
-        duplicateCount: Int = 1,
-        duplicateInterval: TimeInterval = 0.2,
-        totalCircleSides: Int = 20,
-        visibleCircleSides: Int? = nil,
-        textureRepeatX: Float = 1,
-        topRadius: Float,
-        bottomRadius: Float,
-        height: Float,
-        usesSemicircle: Bool = true,
-        color: SIMD3<Float> = [1, 1, 1],
-        alpha: Float = 1,
-        fades: Bool = false,
-        animation: CylinderEffectAnimation? = nil,
-        blendMode: CylinderEffectBlendMode? = nil,
-        zIndex: Float = 0,
-        positionOffset: SIMD3<Float> = .zero,
-        rotationDegrees: SIMD3<Float> = .zero,
-        randomRotationDegrees: SIMD3<Float> = .zero,
-        rotatesContinuously: Bool = false,
-        rotatesWithCamera: Bool = false,
-        rotatesToTarget: Bool = false,
-        rotatesWithSource: Bool = false,
-        fixedPerspective: Bool = false
-    ) {
-        self.textureName = textureName
-        self.soundName = soundName
-        self.attachedToTarget = attachedToTarget
-        self.rendersBeforeEntities = rendersBeforeEntities
-        self.repeats = repeats
-        self.duration = duration
-        self.delayStart = delayStart
-        self.delayOffset = delayOffset
-        self.delayLate = delayLate
-        self.delayOffsetDelta = delayOffsetDelta
-        self.delayLateDelta = delayLateDelta
-        self.duplicateCount = duplicateCount
-        self.duplicateInterval = duplicateInterval
-        self.totalCircleSides = totalCircleSides
-        self.visibleCircleSides = visibleCircleSides ?? totalCircleSides
-        self.textureRepeatX = textureRepeatX
-        self.topRadius = topRadius
-        self.bottomRadius = bottomRadius
-        self.height = height
-        self.usesSemicircle = usesSemicircle
-        self.color = color
-        self.alpha = alpha
-        self.fades = fades
-        self.animation = animation
-        self.blendMode = blendMode
-        self.zIndex = zIndex
-        self.positionOffset = positionOffset
-        self.rotationDegrees = rotationDegrees
-        self.randomRotationDegrees = randomRotationDegrees
-        self.rotatesContinuously = rotatesContinuously
-        self.rotatesWithCamera = rotatesWithCamera
-        self.rotatesToTarget = rotatesToTarget
-        self.rotatesWithSource = rotatesWithSource
-        self.fixedPerspective = fixedPerspective
-    }
 
     func resolved() -> CylinderEffectDefinition {
         guard randomRotationDegrees != .zero else {
