@@ -10,30 +10,30 @@
 enum EffectTable {
     private static let table: [Int : [EffectDefinition]] = [
         29: [ // EF_LIGHTBOLT
-            .str(.init(
+            .str(
                 fileName: "lightning.str",
                 attachedToTarget: true
-            )),
-            .str(.init(
+            ),
+            .str(
                 fileName: "windhit%d.str",
                 attachedToTarget: true,
                 randomNumberRange: 1...3
-            )),
+            ),
         ],
         30: [ // EF_THUNDERSTORM
-            .str(.init(
+            .str(
                 fileName: "thunderstorm.str",
                 soundName: "effect/magician_thunderstorm.wav",
                 attachedToTarget: false
-            )),
+            ),
         ],
         52: [ // EF_WINDHIT
-            .str(.init(
+            .str(
                 fileName: "windhit%d.str",
                 soundName: "_hit_fist%d.wav",
                 attachedToTarget: true,
                 randomNumberRange: 1...3
-            )),
+            ),
         ],
     ]
 
