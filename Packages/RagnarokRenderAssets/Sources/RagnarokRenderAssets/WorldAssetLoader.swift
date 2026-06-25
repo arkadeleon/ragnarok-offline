@@ -1,6 +1,6 @@
 //
 //  WorldAssetLoader.swift
-//  RagnarokRenderAssetIO
+//  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/3/21.
 //
@@ -8,7 +8,6 @@
 import CoreGraphics
 import Foundation
 import RagnarokFileFormats
-import RagnarokRenderAssets
 import RagnarokResources
 
 public struct WorldAssetLoader: Sendable {

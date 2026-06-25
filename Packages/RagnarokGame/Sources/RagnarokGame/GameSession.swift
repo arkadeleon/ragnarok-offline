@@ -13,7 +13,7 @@ import RagnarokLocalization
 import RagnarokModels
 import RagnarokNetwork
 import RagnarokPackets
-import RagnarokRenderAssetIO
+import RagnarokRenderAssets
 import RagnarokResources
 import RagnarokSprite
 

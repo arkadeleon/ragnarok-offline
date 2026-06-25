@@ -140,13 +140,6 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Packages\/RagnarokRenderAssetIO",
-        "identifier" : "RagnarokRenderAssetIOTests",
-        "name" : "RagnarokRenderAssetIOTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Packages\/RagnarokScript",
         "identifier" : "RagnarokScriptTests",
         "name" : "RagnarokScriptTests"
