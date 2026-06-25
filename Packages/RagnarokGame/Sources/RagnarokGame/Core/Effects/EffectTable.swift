@@ -35,6 +35,44 @@ enum EffectTable {
                 randomNumberRange: 1...3
             ),
         ],
+        321: [ // EF_WARPZONE2
+            .cylinder(
+                textureName: "ring_blue",
+                attachedToTarget: true,
+                rendersBeforeEntities: true,
+                repeats: true,
+                duration: 4,
+                duplicateCount: 4,
+                duplicateInterval: 1,
+                topRadius: 3.3,
+                bottomRadius: 2,
+                height: 1.1,
+                color: [0.5, 0.5, 1],
+                alpha: 0.4,
+                fades: true,
+                animation: .shrinkRadius,
+                blendMode: .one
+            ),
+            .cylinder(
+                textureName: "ring_blue",
+                attachedToTarget: true,
+                rendersBeforeEntities: true,
+                repeats: true,
+                duration: 4,
+                duplicateCount: 4,
+                duplicateInterval: 1,
+                topRadius: 3.2,
+                bottomRadius: 1.9,
+                height: 1.1,
+                color: [0.5, 0.5, 1],
+                alpha: 0.4,
+                fades: true,
+                animation: .shrinkRadius,
+                blendMode: .one
+            ),
+            // roBrowserLegacy also defines a 3D pok1.tga particle layer here.
+            // It is intentionally omitted until RagnarokGame has a 3D effect definition and renderer path.
+        ],
     ]
 
     static func definitions(forEffectID effectID: Int) -> [EffectDefinition] {

@@ -42,6 +42,10 @@ final class EffectAssetStore {
 
         let task: Task<EffectAsset, any Error>
         switch definition {
+        case .cylinder:
+            task = Task {
+                throw EffectAssetStoreError.unsupportedEffectDefinition(definition)
+            }
         case .str(let strDefinition):
             task = Task { [resourceManager, device] in
                 try await loadSTRAsset(
@@ -106,4 +110,8 @@ final class EffectAssetStore {
 
         return EffectAsset(effect: effect, textures: textures)
     }
+}
+
+private enum EffectAssetStoreError: Error {
+    case unsupportedEffectDefinition(EffectDefinition)
 }
