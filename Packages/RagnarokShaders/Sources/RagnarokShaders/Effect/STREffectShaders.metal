@@ -1,5 +1,5 @@
 //
-//  EffectShaders.metal
+//  STREffectShaders.metal
 //  RagnarokShaders
 //
 //  Created by Leon Li on 2023/11/24.
@@ -8,7 +8,7 @@
 #include <metal_stdlib>
 using namespace metal;
 
-#include "EffectShaderTypes.h"
+#include "STREffectShaderTypes.h"
 
 typedef struct {
     float4 position [[position]];
@@ -36,13 +36,13 @@ float4x4 project(float4x4 matrix, float3 position) {
 }
 
 vertex RasterizerData
-effectVertexShader(const device EffectVertex *vertices [[buffer(0)]],
-                   unsigned int vertexIndex [[vertex_id]],
-                   constant EffectVertexUniforms &uniforms [[buffer(1)]])
+strEffectVertexShader(const device STREffectVertex *vertices [[buffer(0)]],
+                      unsigned int vertexIndex [[vertex_id]],
+                      constant STREffectVertexUniforms &uniforms [[buffer(1)]])
 {
     const float pixelRatio = 1.0 / 35.0;
 
-    EffectVertex in = vertices[vertexIndex];
+    STREffectVertex in = vertices[vertexIndex];
 
     float4 position = uniforms.spriteAngle * float4(in.position.x * pixelRatio, -in.position.y * pixelRatio, 0.0, 1.0);
     position.x += uniforms.spriteOffset.x * pixelRatio;
@@ -58,9 +58,9 @@ effectVertexShader(const device EffectVertex *vertices [[buffer(0)]],
 }
 
 fragment float4
-effectFragmentShader(RasterizerData in [[stage_in]],
-                     constant EffectFragmentUniforms &uniforms [[buffer(0)]],
-                     texture2d<float> colorTexture [[texture(0)]])
+strEffectFragmentShader(RasterizerData in [[stage_in]],
+                        constant STREffectFragmentUniforms &uniforms [[buffer(0)]],
+                        texture2d<float> colorTexture [[texture(0)]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 color = colorTexture.sample(textureSampler, in.textureCoordinate);

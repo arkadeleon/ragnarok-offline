@@ -138,7 +138,7 @@ extension STREffect {
 
 extension STREffect {
     public struct Sprite {
-        public var vertices: [EffectVertex] = []
+        public var vertices: [STREffectVertex] = []
         public var textureName: String
 
         public var position: SIMD2<Float>
@@ -157,19 +157,19 @@ extension STREffect {
             sourceAlpha: Int32,
             destinationAlpha: Int32
         ) {
-            let v0 = EffectVertex(
+            let v0 = STREffectVertex(
                 position: [xy[0], xy[4]],
                 textureCoordinate: [0, 0]   // [uv[0], uv[1]]
             )
-            let v1 = EffectVertex(
+            let v1 = STREffectVertex(
                 position: [xy[1], xy[5]],
                 textureCoordinate: [1, 0]   // [uv[2], uv[3]]
             )
-            let v2 = EffectVertex(
+            let v2 = STREffectVertex(
                 position: [xy[3], xy[7]],
                 textureCoordinate: [0, 1]   // [uv[4], uv[5]]
             )
-            let v3 = EffectVertex(
+            let v3 = STREffectVertex(
                 position: [xy[2], xy[6]],
                 textureCoordinate: [1, 1]   // [uv[6], uv[7]]
             )

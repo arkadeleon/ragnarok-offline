@@ -1,5 +1,5 @@
 //
-//  EffectShaderTypes.h
+//  STREffectShaderTypes.h
 //  RagnarokShaders
 //
 //  Created by Leon Li on 2023/11/24.
@@ -10,7 +10,7 @@
 typedef struct {
     vector_float2 position;
     vector_float2 textureCoordinate;
-} EffectVertex;
+} STREffectVertex;
 
 typedef struct {
     matrix_float4x4 modelMatrix;
@@ -20,8 +20,8 @@ typedef struct {
     matrix_float4x4 spriteAngle;
     vector_float3 spritePosition;
     vector_float2 spriteOffset;
-} EffectVertexUniforms;
+} STREffectVertexUniforms;
 
 typedef struct {
     vector_float4 spriteColor;
-} EffectFragmentUniforms;
+} STREffectFragmentUniforms;

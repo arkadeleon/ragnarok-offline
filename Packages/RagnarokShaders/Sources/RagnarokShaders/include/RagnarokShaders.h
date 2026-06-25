@@ -6,7 +6,7 @@
 //
 
 #include "../ShadersLibrary.h"
-#include "../Effect/EffectShaderTypes.h"
+#include "../Effect/STREffectShaderTypes.h"
 #include "../Ground/GroundShaderTypes.h"
 #include "../Model/ModelShaderTypes.h"
 #include "../Skybox/SkyboxShaderTypes.h"

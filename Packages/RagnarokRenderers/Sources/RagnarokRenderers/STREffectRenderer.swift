@@ -53,7 +53,7 @@ public final class STREffectRenderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         for sprite in frame.sprites {
-            guard sprite.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: sprite.vertices, length: sprite.vertices.count * MemoryLayout<EffectVertex>.stride, options: []) else {
+            guard sprite.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: sprite.vertices, length: sprite.vertices.count * MemoryLayout<STREffectVertex>.stride, options: []) else {
                 continue
             }
 
@@ -62,7 +62,7 @@ public final class STREffectRenderer {
                 continue
             }
 
-            var vertexUniforms = EffectVertexUniforms(
+            var vertexUniforms = STREffectVertexUniforms(
                 modelMatrix: modelMatrix,
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
@@ -70,14 +70,14 @@ public final class STREffectRenderer {
                 spritePosition: resource.spritePosition,
                 spriteOffset: sprite.position - [320, 320]
             )
-            guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<EffectVertexUniforms>.stride, options: []) else {
+            guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<STREffectVertexUniforms>.stride, options: []) else {
                 continue
             }
 
-            var fragmentUniforms = EffectFragmentUniforms(
+            var fragmentUniforms = STREffectFragmentUniforms(
                 spriteColor: sprite.color
             )
-            guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<EffectFragmentUniforms>.stride, options: []) else {
+            guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<STREffectFragmentUniforms>.stride, options: []) else {
                 continue
             }
 
@@ -112,8 +112,8 @@ public final class STREffectRenderer {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effectVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "effectFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "strEffectVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "strEffectFragmentShader")
 
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
