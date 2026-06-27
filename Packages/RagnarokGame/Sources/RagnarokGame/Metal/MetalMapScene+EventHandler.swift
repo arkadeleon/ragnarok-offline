@@ -553,7 +553,7 @@ extension MetalMapScene {
             return
         }
 
-        guard renderer.combatTextResources[combatText.id] == nil else {
+        guard combatTextResources[combatText.id] == nil else {
             return
         }
 
@@ -561,7 +561,7 @@ extension MetalMapScene {
             return
         }
 
-        renderer.combatTextResources[combatText.id] = CombatTextRenderResource(
+        combatTextResources[combatText.id] = CombatTextRenderResource(
             device: renderer.device,
             combatText: combatText,
             startPosition: startPosition,
@@ -676,7 +676,7 @@ extension MetalMapScene {
                     creationTime: effect.creationTime,
                     delay: effect.delay
                 )
-                renderer.effectResources[effectID] = renderResource
+                effectResources[effectID] = renderResource
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.effectID): \(error)")
             }

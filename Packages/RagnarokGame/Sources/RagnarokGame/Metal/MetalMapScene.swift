@@ -47,7 +47,9 @@ public final class MetalMapScene: GameMapScene {
 
     var spriteAssetStore: SpriteAssetStore?
     var combatTextSpriteSet: CombatTextSpriteSet?
+    var combatTextResources: [UUID : CombatTextRenderResource] = [:]
     var effectAssetStore: EffectAssetStore?
+    var effectResources: [UUID : STREffectRenderResource] = [:]
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     var pendingArrivalAction: (@MainActor () -> Void)?
@@ -330,8 +332,22 @@ extension MetalMapScene {
     }
 
     func prepareFrame(atTime time: TimeInterval) {
-        removeExpiredCombatTexts(atTime: time)
-        removeExpiredEffects(atTime: time)
+        let now = ContinuousClock.now
+
+        combatTextResources = combatTextResources.filter { _, resource in
+            !resource.isExpired(at: now)
+        }
+        renderer.combatTextRenderResources = combatTextResources.values.sorted {
+            $0.combatText.creationTime < $1.combatText.creationTime
+        }
+
+        effectResources = effectResources.filter { _, resource in
+            !resource.isExpired(atTime: time)
+        }
+        renderer.effectRenderResources = effectResources.values.sorted {
+            $0.creationTime < $1.creationTime
+        }
+
         refreshSpriteDrawables()
         updateCameraTarget()
         syncAndProjectOverlay()
@@ -458,26 +474,16 @@ extension MetalMapScene {
         effectAssetStore = nil
         effectLoadTasks.removeAll()
 
+        combatTextResources.removeAll()
+        effectResources.removeAll()
+
         renderer.skyboxResource = nil
         renderer.groundResource = nil
         renderer.waterResource = nil
         renderer.modelResources.removeAll()
         renderer.spriteDrawables.removeAll()
-        renderer.combatTextResources.removeAll()
-        renderer.effectResources.removeAll()
+        renderer.combatTextRenderResources.removeAll()
+        renderer.effectRenderResources.removeAll()
         renderer.tileSelectorResource = nil
-    }
-
-    private func removeExpiredCombatTexts(atTime time: TimeInterval) {
-        let now = ContinuousClock.now
-        renderer.combatTextResources = renderer.combatTextResources.filter { _, resource in
-            !resource.isExpired(at: now)
-        }
-    }
-
-    private func removeExpiredEffects(atTime time: TimeInterval) {
-        renderer.effectResources = renderer.effectResources.filter { _, resource in
-            !resource.isExpired(atTime: time)
-        }
     }
 }

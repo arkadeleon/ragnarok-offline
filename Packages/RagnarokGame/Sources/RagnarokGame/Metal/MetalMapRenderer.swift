@@ -40,8 +40,8 @@ final class MetalMapRenderer: Renderer {
     var waterResource: WaterRenderResource?
     var modelResources: [RSMModelRenderResource] = []
     var spriteDrawables: [SpriteLayerDrawable] = []
-    var combatTextResources: [UUID : CombatTextRenderResource] = [:]
-    var effectResources: [UUID : STREffectRenderResource] = [:]
+    var combatTextRenderResources: [CombatTextRenderResource] = []
+    var effectRenderResources: [STREffectRenderResource] = []
     var tileSelectorResource: TileSelectorRenderResource?
 
     private var cameraState = MapCameraState()
@@ -136,20 +136,14 @@ final class MetalMapRenderer: Renderer {
             normalMatrix: matrices.normalMatrix
         )
 
-        let sortedCombatTextResources = combatTextResources.values.sorted {
-            $0.combatText.creationTime < $1.combatText.creationTime
-        }
         spriteRenderer.render(
             drawables: spriteDrawables,
-            combatTextResources: sortedCombatTextResources,
+            combatTextResources: combatTextRenderResources,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
 
-        let sortedEffects = effectResources.values.sorted {
-            $0.creationTime < $1.creationTime
-        }
-        for resource in sortedEffects {
+        for resource in effectRenderResources {
             effectRenderer.render(
                 resource: resource,
                 atTime: time,
