@@ -38,6 +38,8 @@ class MetalMapObject: SpriteObject {
     var composedSprite: ComposedSprite?
     var partTextures: SpritePartTextures?
 
+    var ownedEffects: [MetalMapEffect] = []
+
     init(
         object: MapObject,
         hp: Int,

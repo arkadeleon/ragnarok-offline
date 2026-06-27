@@ -13,9 +13,9 @@ import RagnarokRenderAssets
 import RagnarokRenderers
 import RagnarokResources
 
-struct EffectAsset: @unchecked Sendable {
-    var effect: STREffect
-    var textures: [String : any MTLTexture]
+enum EffectAsset: @unchecked Sendable {
+    case str(effect: STREffect, textures: [String : any MTLTexture])
+    case cylinder(texture: any MTLTexture)
 }
 
 @MainActor
@@ -42,9 +42,13 @@ final class EffectAssetStore {
 
         let task: Task<EffectAsset, any Error>
         switch definition {
-        case .cylinder:
-            task = Task {
-                throw EffectAssetStoreError.unsupportedEffectDefinition(definition)
+        case .cylinder(let cylinderDefinition):
+            task = Task { [resourceManager, device] in
+                try await loadCylinderAsset(
+                    definition: cylinderDefinition,
+                    resourceManager: resourceManager,
+                    device: device
+                )
             }
         case .str(let strDefinition):
             task = Task { [resourceManager, device] in
@@ -78,6 +82,26 @@ final class EffectAssetStore {
         assets.removeAll()
     }
 
+    private func loadCylinderAsset(
+        definition: CylinderEffectDefinition,
+        resourceManager: ResourceManager,
+        device: any MTLDevice
+    ) async throws -> EffectAsset {
+        let texturePath = ResourcePath.effectDirectory
+            .appending(definition.textureName)
+            .appendingPathExtension("tga")
+        let image = try await resourceManager.image(at: texturePath)
+        guard let texture = MetalTextureFactory.makeTexture(
+            from: image.cgImage,
+            device: device,
+            label: definition.textureName
+        ) else {
+            throw EffectAssetStoreError.cannotCreateTexture(texturePath)
+        }
+
+        return .cylinder(texture: texture)
+    }
+
     private func loadSTRAsset(
         definition: STREffectDefinition,
         resourceManager: ResourceManager,
@@ -108,10 +132,10 @@ final class EffectAssetStore {
             }
         }
 
-        return EffectAsset(effect: effect, textures: textures)
+        return .str(effect: effect, textures: textures)
     }
 }
 
 private enum EffectAssetStoreError: Error {
-    case unsupportedEffectDefinition(EffectDefinition)
+    case cannotCreateTexture(ResourcePath)
 }

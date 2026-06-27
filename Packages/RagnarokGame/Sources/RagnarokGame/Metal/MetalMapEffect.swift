@@ -1,5 +1,5 @@
 //
-//  MetalSkillEffect.swift
+//  MetalMapEffect.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/31.
@@ -8,7 +8,7 @@
 import Foundation
 import simd
 
-struct MetalSkillEffect: Identifiable, Sendable {
+final class MetalMapEffect: Identifiable {
     let id: UUID
     let effectID: Int
     let effectDefinition: EffectDefinition
@@ -16,6 +16,8 @@ struct MetalSkillEffect: Identifiable, Sendable {
     let gridPosition: SIMD2<Int>
     let attachedObjectID: GameObjectID?
     let delay: TimeInterval
+
+    var renderResources: [MetalEffectRenderResource] = []
 
     init(
         effectID: Int,
@@ -32,5 +34,15 @@ struct MetalSkillEffect: Identifiable, Sendable {
         self.gridPosition = gridPosition
         self.attachedObjectID = attachedObjectID
         self.delay = delay
+    }
+
+    var isReady: Bool {
+        !renderResources.isEmpty
+    }
+
+    func isExpired(atTime time: TimeInterval) -> Bool {
+        !renderResources.isEmpty && renderResources.allSatisfy {
+            $0.isExpired(atTime: time)
+        }
     }
 }

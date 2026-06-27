@@ -141,6 +141,17 @@ extension MetalMapScene {
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
+
+        if object.job == 45 { // JT_WARPNPC
+            addEffects(
+                forEffectID: 321, // EF_WARPZONE2
+                creationTime: CACurrentMediaTime(),
+                gridPosition: position,
+                attachedObjectID: object.objectID,
+                ownerObjectID: object.objectID,
+                delay: 0
+            )
+        }
     }
 
     public func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -406,6 +417,7 @@ extension MetalMapScene {
                 creationTime: currentTime,
                 gridPosition: position,
                 attachedObjectID: nil,
+                ownerObjectID: nil,
                 delay: 0
             )
         }
@@ -590,6 +602,7 @@ extension MetalMapScene {
                     creationTime: currentTime,
                     gridPosition: targetPosition,
                     attachedObjectID: objectSkill.targetObjectID,
+                    ownerObjectID: nil,
                     delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
                 )
             }
@@ -613,6 +626,7 @@ extension MetalMapScene {
                 creationTime: currentTime,
                 gridPosition: targetPosition,
                 attachedObjectID: objectSkill.targetObjectID,
+                ownerObjectID: nil,
                 delay: .milliseconds(objectSkill.attackDelay)
             )
         }
@@ -623,11 +637,12 @@ extension MetalMapScene {
         creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
         attachedObjectID: GameObjectID?,
+        ownerObjectID: GameObjectID?,
         delay: TimeInterval
     ) {
         let definitions = EffectTable.definitions(forEffectID: effectID)
         for definition in definitions {
-            let effect = MetalSkillEffect(
+            let effect = MetalMapEffect(
                 effectID: effectID,
                 effectDefinition: definition.resolved(),
                 creationTime: creationTime,
@@ -635,17 +650,22 @@ extension MetalMapScene {
                 attachedObjectID: attachedObjectID,
                 delay: delay
             )
-            renderEffect(effect)
+            addEffect(effect, ownerObjectID: ownerObjectID)
         }
     }
 
-    private func renderEffect(_ effect: MetalSkillEffect) {
+    private func addEffect(_ effect: MetalMapEffect, ownerObjectID: GameObjectID?) {
         if let soundName = effect.effectDefinition.soundName {
             audioPlayer.playSound(named: soundName, after: effect.delay)
         }
 
-        let worldPosition = mapGrid.worldPosition(for: effect.gridPosition)
         let effectID = effect.id
+        let effectWorldPosition = mapGrid.worldPosition(for: effect.gridPosition)
+        if let ownerObjectID {
+            objects[ownerObjectID]?.ownedEffects.append(effect)
+        } else {
+            effects[effectID] = effect
+        }
 
         effectLoadTasks[effectID] = Task { [weak self] in
             guard let self else {
@@ -661,22 +681,52 @@ extension MetalMapScene {
                 }
 
                 let asset = try await effectAssetStore.asset(for: effect.effectDefinition)
-                guard asset.effect.fps > 0, !asset.effect.frames.isEmpty else {
+                guard !Task.isCancelled else {
                     return
                 }
 
-                let renderResource = STREffectRenderResource(
-                    effect: asset.effect,
-                    textures: asset.textures,
-                    spritePosition: [
-                        Float(effect.gridPosition.x),
-                        Float(effect.gridPosition.y),
-                        worldPosition.y,
-                    ],
-                    creationTime: effect.creationTime,
-                    delay: effect.delay
-                )
-                effectResources[effectID] = renderResource
+                switch (effect.effectDefinition, asset) {
+                case (.str, .str(let strEffect, let textures)):
+                    guard strEffect.fps > 0, !strEffect.frames.isEmpty else {
+                        return
+                    }
+
+                    let renderResource = STREffectRenderResource(
+                        effect: strEffect,
+                        textures: textures,
+                        spritePosition: [
+                            Float(effect.gridPosition.x),
+                            Float(effect.gridPosition.y),
+                            effectWorldPosition.y,
+                        ],
+                        creationTime: effect.creationTime,
+                        delay: effect.delay
+                    )
+                    effect.renderResources = [.str(renderResource)]
+                case (.cylinder(let definition), .cylinder(let texture)):
+                    let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                    var renderResources: [MetalEffectRenderResource] = []
+                    for duplicateID in 0..<max(definition.duplicateCount, 1) {
+                        let delay = effect.delay
+                            + definition.delayStart
+                            + definition.delayOffset
+                            + definition.delayLate
+                            + definition.duplicateInterval * TimeInterval(duplicateID)
+                            + definition.delayOffsetDelta * TimeInterval(duplicateID)
+                            + definition.delayLateDelta * TimeInterval(duplicateID)
+                        let renderResource = CylinderEffectRenderResource(
+                            definition: definition,
+                            texture: texture,
+                            worldPosition: worldPosition,
+                            creationTime: effect.creationTime,
+                            delay: delay
+                        )
+                        renderResources.append(.cylinder(renderResource))
+                    }
+                    effect.renderResources = renderResources
+                default:
+                    return
+                }
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.effectID): \(error)")
             }

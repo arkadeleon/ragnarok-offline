@@ -76,6 +76,10 @@ final class SpriteAssetStore {
             object.drawables.removeAll()
         }
 
+        if object.job == 45 { // JT_WARPNPC
+            return
+        }
+
         guard object.composedSprite == nil, objectLoadTasks[objectID] == nil else {
             return
         }

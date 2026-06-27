@@ -1,0 +1,41 @@
+//
+//  MetalEffectRenderResource.swift
+//  RagnarokGame
+//
+//  Created by Leon Li on 2026/6/25.
+//
+
+import Foundation
+import RagnarokRenderers
+
+enum MetalEffectRenderResource {
+    case cylinder(CylinderEffectRenderResource)
+    case str(STREffectRenderResource)
+
+    var creationTime: TimeInterval {
+        switch self {
+        case .cylinder(let resource):
+            resource.creationTime
+        case .str(let resource):
+            resource.creationTime
+        }
+    }
+
+    var rendersBeforeEntities: Bool {
+        switch self {
+        case .cylinder(let resource):
+            resource.rendersBeforeEntities
+        case .str:
+            false
+        }
+    }
+
+    func isExpired(atTime time: TimeInterval) -> Bool {
+        switch self {
+        case .cylinder(let resource):
+            resource.isExpired(atTime: time)
+        case .str(let resource):
+            resource.isExpired(atTime: time)
+        }
+    }
+}

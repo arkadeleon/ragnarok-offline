@@ -32,7 +32,8 @@ final class MetalMapRenderer: Renderer {
     private let waterRenderer: WaterRenderer
     private let modelRenderer: RSMModelRenderer
     private let spriteRenderer: MetalSpriteRenderer
-    private let effectRenderer: STREffectRenderer
+    private let cylinderEffectRenderer: CylinderEffectRenderer
+    private let strEffectRenderer: STREffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
 
     var skyboxResource: SkyboxRenderResource?
@@ -41,7 +42,7 @@ final class MetalMapRenderer: Renderer {
     var modelResources: [RSMModelRenderResource] = []
     var spriteDrawables: [SpriteLayerDrawable] = []
     var combatTextRenderResources: [CombatTextRenderResource] = []
-    var effectRenderResources: [STREffectRenderResource] = []
+    var effectRenderResources: [MetalEffectRenderResource] = []
     var tileSelectorResource: TileSelectorRenderResource?
 
     private var cameraState = MapCameraState()
@@ -61,7 +62,8 @@ final class MetalMapRenderer: Renderer {
         waterRenderer = try WaterRenderer(device: device)
         modelRenderer = try RSMModelRenderer(device: device)
         spriteRenderer = try MetalSpriteRenderer(device: device)
-        effectRenderer = try STREffectRenderer(device: device)
+        cylinderEffectRenderer = try CylinderEffectRenderer(device: device)
+        strEffectRenderer = try STREffectRenderer(device: device)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
     }
 
@@ -126,6 +128,13 @@ final class MetalMapRenderer: Renderer {
             )
         }
 
+        renderEffects(
+            effectRenderResources.filter(\.rendersBeforeEntities),
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
+
         modelRenderer.render(
             resources: modelResources,
             atTime: time,
@@ -143,16 +152,12 @@ final class MetalMapRenderer: Renderer {
             matrices: matrices
         )
 
-        for resource in effectRenderResources {
-            effectRenderer.render(
-                resource: resource,
-                atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix
-            )
-        }
+        renderEffects(
+            effectRenderResources.filter { !$0.rendersBeforeEntities },
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
 
         if let tileSelectorResource {
             tileSelectorRenderer.render(
@@ -194,5 +199,39 @@ final class MetalMapRenderer: Renderer {
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         return modelMatrix
+    }
+
+    private func renderEffects(
+        _ resources: [MetalEffectRenderResource],
+        atTime time: TimeInterval,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        matrices: RenderMatrices
+    ) {
+        let sortedResources = resources.sorted {
+            $0.creationTime < $1.creationTime
+        }
+
+        for resource in sortedResources {
+            switch resource {
+            case .cylinder(let cylinderResource):
+                cylinderEffectRenderer.render(
+                    resource: cylinderResource,
+                    atTime: time,
+                    renderCommandEncoder: renderCommandEncoder,
+                    viewMatrix: matrices.viewMatrix,
+                    projectionMatrix: matrices.projectionMatrix,
+                    cameraAzimuth: matrices.cameraAzimuth
+                )
+            case .str(let strResource):
+                strEffectRenderer.render(
+                    resource: strResource,
+                    atTime: time,
+                    renderCommandEncoder: renderCommandEncoder,
+                    modelMatrix: matrices.modelMatrix,
+                    viewMatrix: matrices.viewMatrix,
+                    projectionMatrix: matrices.projectionMatrix
+                )
+            }
+        }
     }
 }

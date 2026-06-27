@@ -49,7 +49,7 @@ public final class MetalMapScene: GameMapScene {
     var combatTextSpriteSet: CombatTextSpriteSet?
     var combatTextResources: [UUID : CombatTextRenderResource] = [:]
     var effectAssetStore: EffectAssetStore?
-    var effectResources: [UUID : STREffectRenderResource] = [:]
+    var effects: [UUID : MetalMapEffect] = [:]
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     var pendingArrivalAction: (@MainActor () -> Void)?
@@ -341,12 +341,20 @@ extension MetalMapScene {
             $0.combatText.creationTime < $1.combatText.creationTime
         }
 
-        effectResources = effectResources.filter { _, resource in
-            !resource.isExpired(atTime: time)
+        effects = effects.filter { _, effect in
+            !effect.isReady || !effect.isExpired(atTime: time)
         }
-        renderer.effectRenderResources = effectResources.values.sorted {
-            $0.creationTime < $1.creationTime
+        for object in objects.values {
+            object.ownedEffects = object.ownedEffects.filter { effect in
+                !effect.isReady || !effect.isExpired(atTime: time)
+            }
         }
+        let effects = Array(effects.values) + objects.values.flatMap(\.ownedEffects)
+        renderer.effectRenderResources = effects
+            .flatMap(\.renderResources)
+            .sorted {
+                $0.creationTime < $1.creationTime
+            }
 
         refreshSpriteDrawables()
         updateCameraTarget()
@@ -475,7 +483,7 @@ extension MetalMapScene {
         effectLoadTasks.removeAll()
 
         combatTextResources.removeAll()
-        effectResources.removeAll()
+        effects.removeAll()
 
         renderer.skyboxResource = nil
         renderer.groundResource = nil
