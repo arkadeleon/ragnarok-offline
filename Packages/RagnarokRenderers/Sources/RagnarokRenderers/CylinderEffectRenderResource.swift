@@ -1,6 +1,6 @@
 //
 //  CylinderEffectRenderResource.swift
-//  RagnarokGame
+//  RagnarokRenderers
 //
 //  Created by Leon Li on 2026/6/25.
 //
@@ -12,7 +12,7 @@ import RagnarokEffects
 import RagnarokShaders
 import simd
 
-final class CylinderEffectRenderResource {
+public final class CylinderEffectRenderResource {
     struct Snapshot {
         var topRadius: Float
         var bottomRadius: Float
@@ -21,23 +21,23 @@ final class CylinderEffectRenderResource {
         var rotationMatrix: simd_float4x4
     }
 
-    let definition: CylinderEffectDefinition
-    let texture: any MTLTexture
-    let vertices: [CylinderEffectVertex]
+    public let definition: CylinderEffectDefinition
+    public let texture: any MTLTexture
+    public let vertices: [CylinderEffectVertex]
 
-    let worldPosition: SIMD3<Float>
-    let creationTime: TimeInterval
-    let delay: TimeInterval
+    public let worldPosition: SIMD3<Float>
+    public let creationTime: TimeInterval
+    public let delay: TimeInterval
 
-    var startTime: TimeInterval {
+    public var startTime: TimeInterval {
         creationTime + delay
     }
 
-    var rendersBeforeEntities: Bool {
+    public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
     }
 
-    init(
+    public init(
         definition: CylinderEffectDefinition,
         texture: any MTLTexture,
         worldPosition: SIMD3<Float>,
@@ -56,7 +56,7 @@ final class CylinderEffectRenderResource {
         self.delay = delay
     }
 
-    func isExpired(atTime time: TimeInterval) -> Bool {
+    public func isExpired(atTime time: TimeInterval) -> Bool {
         guard !definition.repeats, let duration = definition.duration else {
             return false
         }

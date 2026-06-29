@@ -1,6 +1,6 @@
 //
 //  CylinderEffectRenderer.swift
-//  RagnarokGame
+//  RagnarokRenderers
 //
 //  Created by Leon Li on 2026/6/25.
 //
@@ -17,7 +17,7 @@ public final class CylinderEffectRenderer {
     private var renderPipelineStates: [CylinderEffectBlendMode : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice) throws {
         self.device = device
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
@@ -29,7 +29,7 @@ public final class CylinderEffectRenderer {
         renderPipelineStates[commonBlendMode] = try makeRenderPipelineState(for: commonBlendMode)
     }
 
-    func render(
+    public func render(
         resource: CylinderEffectRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
