@@ -15,6 +15,7 @@ let package = Package(
         .target(
             name: "RagnarokShaders",
             resources: [
+                .process("Effect/Effect3DShaders.metal"),
                 .process("Effect/CylinderEffectShaders.metal"),
                 .process("Effect/STREffectShaders.metal"),
                 .process("Ground/GroundShaders.metal"),

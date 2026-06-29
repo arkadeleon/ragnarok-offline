@@ -9,11 +9,14 @@ import Foundation
 import RagnarokRenderers
 
 enum MetalEffectRenderResource {
+    case `3D`(Effect3DRenderResource)
     case cylinder(CylinderEffectRenderResource)
     case str(STREffectRenderResource)
 
     var creationTime: TimeInterval {
         switch self {
+        case .`3D`(let resource):
+            resource.creationTime
         case .cylinder(let resource):
             resource.creationTime
         case .str(let resource):
@@ -23,6 +26,8 @@ enum MetalEffectRenderResource {
 
     var rendersBeforeEntities: Bool {
         switch self {
+        case .`3D`(let resource):
+            resource.rendersBeforeEntities
         case .cylinder(let resource):
             resource.rendersBeforeEntities
         case .str:
@@ -32,6 +37,8 @@ enum MetalEffectRenderResource {
 
     func isExpired(atTime time: TimeInterval) -> Bool {
         switch self {
+        case .`3D`(let resource):
+            resource.isExpired(atTime: time)
         case .cylinder(let resource):
             resource.isExpired(atTime: time)
         case .str(let resource):

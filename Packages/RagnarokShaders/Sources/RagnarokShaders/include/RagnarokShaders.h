@@ -6,6 +6,7 @@
 //
 
 #include "../ShadersLibrary.h"
+#include "../Effect/Effect3DShaderTypes.h"
 #include "../Effect/CylinderEffectShaderTypes.h"
 #include "../Effect/STREffectShaderTypes.h"
 #include "../Ground/GroundShaderTypes.h"

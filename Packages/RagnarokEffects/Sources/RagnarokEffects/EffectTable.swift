@@ -23,7 +23,7 @@ public enum EffectTable {
         30: [ // EF_THUNDERSTORM
             .str(
                 fileName: "thunderstorm.str",
-                soundName: "effect/magician_thunderstorm.wav",
+                soundName: "effect\\magician_thunderstorm.wav",
                 attachedToTarget: false
             ),
         ],
@@ -70,8 +70,26 @@ public enum EffectTable {
                 animation: .shrinkRadius,
                 blendMode: .one
             ),
-            // roBrowserLegacy also defines a 3D pok1.tga particle layer here.
-            // It is intentionally omitted until RagnarokEffects has a 3D effect definition.
+            .`3D`(
+                fileName: "effect\\pok1.tga",
+                attachedToTarget: true,
+                rendersBeforeEntities: true,
+                repeats: true,
+                duration: 1,
+                duplicateCount: 5,
+                duplicateInterval: 0.3,
+                color: [0.9, 1, 0.9],
+                alphaMax: 1,
+                fadesIn: true,
+                fadesOut: true,
+                blendMode: .one,
+                zIndex: 1,
+                positionStartRandomRange: [3, 3, 0],
+                positionEndRandomRange: [0, 0, 2],
+                positionEndRandomMiddle: [0, 0, 2],
+                sizeStart: [50, 50],
+                sizeEnd: [50, 50]
+            ),
         ],
     ]
 

@@ -32,6 +32,7 @@ final class MetalMapRenderer: Renderer {
     private let waterRenderer: WaterRenderer
     private let modelRenderer: RSMModelRenderer
     private let spriteRenderer: MetalSpriteRenderer
+    private let effect3DRenderer: Effect3DRenderer
     private let cylinderEffectRenderer: CylinderEffectRenderer
     private let strEffectRenderer: STREffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
@@ -62,6 +63,7 @@ final class MetalMapRenderer: Renderer {
         waterRenderer = try WaterRenderer(device: device)
         modelRenderer = try RSMModelRenderer(device: device)
         spriteRenderer = try MetalSpriteRenderer(device: device)
+        effect3DRenderer = try Effect3DRenderer(device: device)
         cylinderEffectRenderer = try CylinderEffectRenderer(device: device)
         strEffectRenderer = try STREffectRenderer(device: device)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
@@ -213,6 +215,15 @@ final class MetalMapRenderer: Renderer {
 
         for resource in sortedResources {
             switch resource {
+            case .`3D`(let effect3DResource):
+                effect3DRenderer.render(
+                    resource: effect3DResource,
+                    atTime: time,
+                    renderCommandEncoder: renderCommandEncoder,
+                    viewMatrix: matrices.viewMatrix,
+                    projectionMatrix: matrices.projectionMatrix,
+                    cameraAzimuth: matrices.cameraAzimuth
+                )
             case .cylinder(let cylinderResource):
                 cylinderEffectRenderer.render(
                     resource: cylinderResource,

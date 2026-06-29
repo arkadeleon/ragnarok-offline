@@ -687,6 +687,33 @@ extension MetalMapScene {
                 }
 
                 switch (effect.effectDefinition, asset) {
+                case (.`3D`(let definition), .`3D`(let textures)):
+                    guard !textures.isEmpty else {
+                        return
+                    }
+
+                    let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                    var renderResources: [MetalEffectRenderResource] = []
+                    for duplicateID in 0..<max(definition.duplicateCount, 1) {
+                        let delay = effect.delay
+                            + definition.delayStart
+                            + definition.delay
+                            + definition.delayOffset
+                            + definition.delayLate
+                            + definition.duplicateInterval * TimeInterval(duplicateID)
+                            + definition.delayOffsetDelta * TimeInterval(duplicateID)
+                            + definition.delayLateDelta * TimeInterval(duplicateID)
+                        let renderResource = Effect3DRenderResource(
+                            definition: definition,
+                            textures: textures,
+                            worldPosition: worldPosition,
+                            creationTime: effect.creationTime,
+                            delay: delay,
+                            duplicateID: duplicateID
+                        )
+                        renderResources.append(.`3D`(renderResource))
+                    }
+                    effect.renderResources = renderResources
                 case (.str, .str(let strEffect, let textures)):
                     guard strEffect.fps > 0, !strEffect.frames.isEmpty else {
                         return

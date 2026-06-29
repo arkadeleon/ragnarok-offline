@@ -15,7 +15,7 @@ import RagnarokRenderers
 import RagnarokResources
 
 enum EffectAsset: @unchecked Sendable {
-    case `3D`
+    case `3D`(textures: [any MTLTexture])
     case cylinder(texture: any MTLTexture)
     case str(effect: STREffect, textures: [String : any MTLTexture])
 }
@@ -44,9 +44,13 @@ final class EffectAssetStore {
 
         let task: Task<EffectAsset, any Error>
         switch definition {
-        case .`3D`:
-            task = Task {
-                .`3D`
+        case .`3D`(let definition):
+            task = Task { [resourceManager, device] in
+                try await loadEffect3DAsset(
+                    definition: definition,
+                    resourceManager: resourceManager,
+                    device: device
+                )
             }
         case .cylinder(let cylinderDefinition):
             task = Task { [resourceManager, device] in
@@ -86,6 +90,34 @@ final class EffectAssetStore {
 
         loadTasks.removeAll()
         assets.removeAll()
+    }
+
+    private func loadEffect3DAsset(
+        definition: Effect3DDefinition,
+        resourceManager: ResourceManager,
+        device: any MTLDevice
+    ) async throws -> EffectAsset {
+        let textureNames: [String]
+        if definition.fileNames.isEmpty {
+            textureNames = definition.fileName.map { [$0] } ?? []
+        } else {
+            textureNames = definition.fileNames
+        }
+
+        var textures: [any MTLTexture] = []
+        for textureName in textureNames {
+            let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
+            let image = try await resourceManager.image(at: texturePath)
+            if let texture = MetalTextureFactory.makeTexture(
+                from: image.cgImage,
+                device: device,
+                label: textureName
+            ) {
+                textures.append(texture)
+            }
+        }
+
+        return .`3D`(textures: textures)
     }
 
     private func loadCylinderAsset(
