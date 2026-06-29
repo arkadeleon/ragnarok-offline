@@ -8,6 +8,14 @@
 import Foundation
 import simd
 
+public enum CylinderEffectAnimation: Int, Sendable {
+    case growHeight = 1
+    case growTopRadius = 2
+    case shrinkRadius = 3
+    case growRadius = 4
+    case growThenShrinkHeight = 5
+}
+
 public struct CylinderEffectDefinition: Sendable {
     public var textureName: String
     public var soundName: String?
@@ -36,7 +44,7 @@ public struct CylinderEffectDefinition: Sendable {
     public var alpha: Float
     public var fades: Bool
     public var animation: CylinderEffectAnimation?
-    public var blendMode: CylinderEffectBlendMode
+    public var blendMode: EffectBlendMode
     public var zIndex: Float
 
     public var positionOffset: SIMD3<Float>
@@ -65,28 +73,79 @@ public struct CylinderEffectDefinition: Sendable {
     }
 }
 
-public enum CylinderEffectAnimation: Int, Sendable {
-    case growHeight = 1
-    case growTopRadius = 2
-    case shrinkRadius = 3
-    case growRadius = 4
-    case growThenShrinkHeight = 5
-}
-
-public enum CylinderEffectBlendMode: Int, Sendable {
-    case zero = 1
-    case one = 2
-    case sourceColor = 3
-    case oneMinusSourceColor = 4
-    case destinationColor = 5
-    case oneMinusDestinationColor = 6
-    case sourceAlpha = 7
-    case oneMinusSourceAlpha = 8
-    case destinationAlpha = 9
-    case oneMinusDestinationAlpha = 10
-    case constantColor = 11
-    case oneMinusConstantColor = 12
-    case constantAlpha = 13
-    case oneMinusConstantAlpha = 14
-    case sourceAlphaSaturated = 15
+extension EffectDefinition {
+    public static func cylinder(
+        textureName: String,
+        soundName: String? = nil,
+        attachedToTarget: Bool,
+        rendersBeforeEntities: Bool = false,
+        repeats: Bool = false,
+        duration: TimeInterval? = nil,
+        delayStart: TimeInterval = 0,
+        delayOffset: TimeInterval = 0,
+        delayLate: TimeInterval = 0,
+        delayOffsetDelta: TimeInterval = 0,
+        delayLateDelta: TimeInterval = 0,
+        duplicateCount: Int = 1,
+        duplicateInterval: TimeInterval = 0.2,
+        totalCircleSides: Int = 20,
+        visibleCircleSides: Int? = nil,
+        textureRepeatX: Float = 1,
+        topRadius: Float,
+        bottomRadius: Float,
+        height: Float,
+        usesSemicircle: Bool = true,
+        color: SIMD3<Float> = [1, 1, 1],
+        alpha: Float = 1,
+        fades: Bool = false,
+        animation: CylinderEffectAnimation? = nil,
+        blendMode: EffectBlendMode = .oneMinusSourceAlpha,
+        zIndex: Float = 0,
+        positionOffset: SIMD3<Float> = .zero,
+        rotationDegrees: SIMD3<Float> = .zero,
+        randomRotationDegrees: SIMD3<Float> = .zero,
+        rotatesContinuously: Bool = false,
+        rotatesWithCamera: Bool = false,
+        rotatesToTarget: Bool = false,
+        rotatesWithSource: Bool = false,
+        fixedPerspective: Bool = false
+    ) -> EffectDefinition {
+        let definition = CylinderEffectDefinition(
+            textureName: textureName,
+            soundName: soundName,
+            attachedToTarget: attachedToTarget,
+            rendersBeforeEntities: rendersBeforeEntities,
+            repeats: repeats,
+            duration: duration,
+            delayStart: delayStart,
+            delayOffset: delayOffset,
+            delayLate: delayLate,
+            delayOffsetDelta: delayOffsetDelta,
+            delayLateDelta: delayLateDelta,
+            duplicateCount: duplicateCount,
+            duplicateInterval: duplicateInterval,
+            totalCircleSides: totalCircleSides,
+            visibleCircleSides: visibleCircleSides ?? totalCircleSides,
+            textureRepeatX: textureRepeatX,
+            topRadius: topRadius,
+            bottomRadius: bottomRadius,
+            height: height,
+            usesSemicircle: usesSemicircle,
+            color: color,
+            alpha: alpha,
+            fades: fades,
+            animation: animation,
+            blendMode: blendMode,
+            zIndex: zIndex,
+            positionOffset: positionOffset,
+            rotationDegrees: rotationDegrees,
+            randomRotationDegrees: randomRotationDegrees,
+            rotatesContinuously: rotatesContinuously,
+            rotatesWithCamera: rotatesWithCamera,
+            rotatesToTarget: rotatesToTarget,
+            rotatesWithSource: rotatesWithSource,
+            fixedPerspective: fixedPerspective
+        )
+        return .cylinder(definition)
+    }
 }

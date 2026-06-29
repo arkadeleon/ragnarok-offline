@@ -14,7 +14,7 @@ import simd
 public final class CylinderEffectRenderer {
     public let device: any MTLDevice
 
-    private var renderPipelineStates: [CylinderEffectBlendMode : any MTLRenderPipelineState] = [:]
+    private var renderPipelineStates: [EffectBlendMode : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
 
     public init(device: any MTLDevice) throws {
@@ -25,7 +25,7 @@ public final class CylinderEffectRenderer {
         depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
-        let commonBlendMode: CylinderEffectBlendMode = .one
+        let commonBlendMode: EffectBlendMode = .one
         renderPipelineStates[commonBlendMode] = try makeRenderPipelineState(for: commonBlendMode)
     }
 
@@ -76,7 +76,7 @@ public final class CylinderEffectRenderer {
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
     }
 
-    private func renderPipelineState(for blendMode: CylinderEffectBlendMode) -> (any MTLRenderPipelineState)? {
+    private func renderPipelineState(for blendMode: EffectBlendMode) -> (any MTLRenderPipelineState)? {
         if let renderPipelineState = renderPipelineStates[blendMode] {
             return renderPipelineState
         }
@@ -89,7 +89,7 @@ public final class CylinderEffectRenderer {
         return renderPipelineState
     }
 
-    private func makeRenderPipelineState(for blendMode: CylinderEffectBlendMode) throws -> any MTLRenderPipelineState {
+    private func makeRenderPipelineState(for blendMode: EffectBlendMode) throws -> any MTLRenderPipelineState {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -108,7 +108,7 @@ public final class CylinderEffectRenderer {
         return try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
     }
 
-    private func mtlBlendFactor(_ blendMode: CylinderEffectBlendMode) -> MTLBlendFactor {
+    private func mtlBlendFactor(_ blendMode: EffectBlendMode) -> MTLBlendFactor {
         switch blendMode {
         case .zero: .zero
         case .one: .one

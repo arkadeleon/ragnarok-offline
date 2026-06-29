@@ -24,3 +24,20 @@ public struct STREffectDefinition: Sendable {
         return definition
     }
 }
+
+extension EffectDefinition {
+    public static func str(
+        fileName: String,
+        soundName: String? = nil,
+        attachedToTarget: Bool,
+        randomNumberRange: ClosedRange<Int>? = nil
+    ) -> EffectDefinition {
+        let definition = STREffectDefinition(
+            fileName: fileName,
+            soundName: soundName,
+            attachedToTarget: attachedToTarget,
+            randomNumberRange: randomNumberRange
+        )
+        return .str(definition)
+    }
+}

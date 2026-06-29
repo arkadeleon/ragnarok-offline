@@ -71,7 +71,7 @@ public enum EffectTable {
                 blendMode: .one
             ),
             // roBrowserLegacy also defines a 3D pok1.tga particle layer here.
-            // It is intentionally omitted until RagnarokGame has a 3D effect definition and renderer path.
+            // It is intentionally omitted until RagnarokEffects has a 3D effect definition.
         ],
     ]
 
