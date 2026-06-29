@@ -19,6 +19,7 @@ let package = Package(
     dependencies: [
         .package(path: "../RagnarokConstants"),
         .package(path: "../RagnarokCore"),
+        .package(path: "../RagnarokEffects"),
         .package(path: "../RagnarokFileFormats"),
         .package(path: "../RagnarokLocalization"),
         .package(path: "../RagnarokModels"),
@@ -39,6 +40,7 @@ let package = Package(
             dependencies: [
                 "RagnarokConstants",
                 "RagnarokCore",
+                "RagnarokEffects",
                 "RagnarokFileFormats",
                 "RagnarokLocalization",
                 "RagnarokModels",

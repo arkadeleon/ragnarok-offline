@@ -8,6 +8,7 @@
 import Foundation
 import Metal
 import MetalKit
+import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokRenderAssets
 import RagnarokRenderers

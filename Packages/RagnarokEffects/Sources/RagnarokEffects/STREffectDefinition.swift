@@ -1,6 +1,6 @@
 //
 //  STREffectDefinition.swift
-//  RagnarokGame
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/6/25.
 //

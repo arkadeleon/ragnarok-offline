@@ -8,6 +8,7 @@
 import Foundation
 import QuartzCore
 import RagnarokConstants
+import RagnarokEffects
 import RagnarokModels
 import RagnarokRenderers
 import RagnarokSprite

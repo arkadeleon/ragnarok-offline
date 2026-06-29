@@ -1,13 +1,13 @@
 //
 //  EffectTable.swift
-//  RagnarokGame
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/4/30.
 //
 
 // Ported from roBrowserLegacy:
 // https://github.com/MrAntares/roBrowserLegacy/blob/master/src/DB/Effects/EffectTable.js
-enum EffectTable {
+public enum EffectTable {
     private static let table: [Int : [EffectDefinition]] = [
         29: [ // EF_LIGHTBOLT
             .str(
@@ -75,7 +75,7 @@ enum EffectTable {
         ],
     ]
 
-    static func definitions(forEffectID effectID: Int) -> [EffectDefinition] {
+    public static func definitions(forEffectID effectID: Int) -> [EffectDefinition] {
         table[effectID] ?? []
     }
 }

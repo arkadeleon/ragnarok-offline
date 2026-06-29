@@ -1,6 +1,6 @@
 //
 //  SkillEffectTable.swift
-//  RagnarokGame
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/4/30.
 //
@@ -9,7 +9,7 @@ import RagnarokConstants
 
 // Ported from roBrowserLegacy:
 // https://github.com/MrAntares/roBrowserLegacy/blob/master/src/DB/Skills/SkillEffect.js
-enum SkillEffectTable {
+public enum SkillEffectTable {
     private static let table: [SkillID : SkillEffectDefinition] = [
         .mg_lightningbolt: .init(
             effectIDs: [.id(29)],
@@ -21,14 +21,14 @@ enum SkillEffectTable {
         ),
     ]
 
-    static func effectIDs(for skillID: SkillID) -> [Int] {
+    public static func effectIDs(for skillID: SkillID) -> [Int] {
         guard let definition = table[skillID] else {
             return []
         }
         return definition.effectIDs.compactMap(\.effectID)
     }
 
-    static func hitEffectIDs(for skillID: SkillID) -> [Int] {
+    public static func hitEffectIDs(for skillID: SkillID) -> [Int] {
         guard let definition = table[skillID] else {
             return []
         }

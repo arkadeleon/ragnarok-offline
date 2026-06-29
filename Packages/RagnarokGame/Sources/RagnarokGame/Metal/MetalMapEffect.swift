@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RagnarokEffects
 import simd
 
 final class MetalMapEffect: Identifiable {

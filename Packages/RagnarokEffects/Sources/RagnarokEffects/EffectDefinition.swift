@@ -1,6 +1,6 @@
 //
 //  EffectDefinition.swift
-//  RagnarokGame
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/4/30.
 //
@@ -12,7 +12,7 @@ public enum EffectDefinition: Sendable {
     case cylinder(CylinderEffectDefinition)
     case str(STREffectDefinition)
 
-    static func cylinder(
+    public static func cylinder(
         textureName: String,
         soundName: String? = nil,
         attachedToTarget: Bool,
@@ -87,7 +87,7 @@ public enum EffectDefinition: Sendable {
         return .cylinder(definition)
     }
 
-    static func str(
+    public static func str(
         fileName: String,
         soundName: String? = nil,
         attachedToTarget: Bool,
@@ -104,7 +104,7 @@ public enum EffectDefinition: Sendable {
 }
 
 extension EffectDefinition {
-    var soundName: String? {
+    public var soundName: String? {
         switch self {
         case .cylinder(let definition):
             definition.soundName
@@ -113,7 +113,7 @@ extension EffectDefinition {
         }
     }
 
-    var assetKey: String {
+    public var assetKey: String {
         switch self {
         case .cylinder(let definition):
             "cylinder:\(definition.textureName)"
@@ -122,7 +122,7 @@ extension EffectDefinition {
         }
     }
 
-    func resolved() -> EffectDefinition {
+    public func resolved() -> EffectDefinition {
         switch self {
         case .cylinder(let definition):
             .cylinder(definition.resolved())

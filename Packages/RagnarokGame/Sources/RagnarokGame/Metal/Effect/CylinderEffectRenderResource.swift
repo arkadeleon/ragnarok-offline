@@ -8,6 +8,7 @@
 import Foundation
 import Metal
 import RagnarokCore
+import RagnarokEffects
 import RagnarokShaders
 import simd
 
