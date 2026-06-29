@@ -9,6 +9,7 @@ import Foundation
 import simd
 
 public enum EffectDefinition: Sendable {
+    case `3D`(Effect3DDefinition)
     case cylinder(CylinderEffectDefinition)
     case str(STREffectDefinition)
 }
@@ -16,6 +17,8 @@ public enum EffectDefinition: Sendable {
 extension EffectDefinition {
     public var soundName: String? {
         switch self {
+        case .`3D`(let definition):
+            definition.soundName
         case .cylinder(let definition):
             definition.soundName
         case .str(let definition):
@@ -25,6 +28,8 @@ extension EffectDefinition {
 
     public var assetKey: String {
         switch self {
+        case .`3D`(let definition):
+            "3d:\(definition.primaryAssetName)"
         case .cylinder(let definition):
             "cylinder:\(definition.textureName)"
         case .str(let definition):
@@ -34,6 +39,8 @@ extension EffectDefinition {
 
     public func resolved() -> EffectDefinition {
         switch self {
+        case .`3D`(let definition):
+            .`3D`(definition.resolved())
         case .cylinder(let definition):
             .cylinder(definition.resolved())
         case .str(let definition):

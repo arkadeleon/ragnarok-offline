@@ -15,8 +15,9 @@ import RagnarokRenderers
 import RagnarokResources
 
 enum EffectAsset: @unchecked Sendable {
-    case str(effect: STREffect, textures: [String : any MTLTexture])
+    case `3D`
     case cylinder(texture: any MTLTexture)
+    case str(effect: STREffect, textures: [String : any MTLTexture])
 }
 
 @MainActor
@@ -43,6 +44,10 @@ final class EffectAssetStore {
 
         let task: Task<EffectAsset, any Error>
         switch definition {
+        case .`3D`:
+            task = Task {
+                .`3D`
+            }
         case .cylinder(let cylinderDefinition):
             task = Task { [resourceManager, device] in
                 try await loadCylinderAsset(
