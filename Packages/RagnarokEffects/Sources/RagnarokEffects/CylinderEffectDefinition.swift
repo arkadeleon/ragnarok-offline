@@ -27,7 +27,7 @@ public struct CylinderEffectDefinition: Sendable {
     public var delayStart: TimeInterval
     public var delayOffset: TimeInterval
     public var delayLate: TimeInterval
-    public var duplicate: EffectDuplicate
+    public var duplicate: EffectParameters.Duplicate
 
     public var totalCircleSides: Int
     public var visibleCircleSides: Int
@@ -81,7 +81,7 @@ extension EffectDefinition {
         delayStart: TimeInterval = 0,
         delayOffset: TimeInterval = 0,
         delayLate: TimeInterval = 0,
-        duplicate: EffectDuplicate = EffectDuplicate(),
+        duplicate: EffectParameters.Duplicate = EffectParameters.Duplicate(),
         totalCircleSides: Int = 20,
         visibleCircleSides: Int? = nil,
         textureRepeatX: Float = 1,

@@ -36,7 +36,7 @@ public struct Effect3DDefinition: Sendable {
     public var delayOffset: TimeInterval
     public var delayLate: TimeInterval
     public var delaySound: TimeInterval
-    public var duplicate: EffectDuplicate
+    public var duplicate: EffectParameters.Duplicate
 
     public var color: SIMD3<Float>
     public var alphaMin: Float
@@ -134,7 +134,7 @@ extension EffectDefinition {
         delayOffset: TimeInterval = 0,
         delayLate: TimeInterval = 0,
         delaySound: TimeInterval = 0,
-        duplicate: EffectDuplicate = EffectDuplicate(),
+        duplicate: EffectParameters.Duplicate = EffectParameters.Duplicate(),
         color: SIMD3<Float> = [1, 1, 1],
         alphaMin: Float = 0,
         alphaMax: Float = 1,
