@@ -93,6 +93,10 @@ public enum EffectTable {
         ],
     ]
 
+    public static var effectIDs: [Int] {
+        table.keys.sorted()
+    }
+
     public static func definitions(forEffectID effectID: Int) -> [EffectDefinition] {
         table[effectID] ?? []
     }
