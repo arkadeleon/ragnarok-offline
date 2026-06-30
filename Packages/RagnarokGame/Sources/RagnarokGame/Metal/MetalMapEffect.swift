@@ -7,6 +7,7 @@
 
 import Foundation
 import RagnarokEffects
+import RagnarokRenderers
 import simd
 
 final class MetalMapEffect: Identifiable {
@@ -18,7 +19,7 @@ final class MetalMapEffect: Identifiable {
     let attachedObjectID: GameObjectID?
     let delay: TimeInterval
 
-    var renderResources: [MetalEffectRenderResource] = []
+    var renderResources: [EffectRenderResource] = []
 
     init(
         effectID: Int,

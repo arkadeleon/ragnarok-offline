@@ -17,7 +17,7 @@ import simd
 public class STRFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
 
-    let effectRenderer: STREffectRenderer
+    let effectRenderer: EffectRenderer
     let effectResource: STREffectRenderResource
 
     public let camera = Camera()
@@ -25,7 +25,7 @@ public class STRFilePreviewRenderer: Renderer {
     public init(device: any MTLDevice, effect: STREffect, textureImages: [String : CGImage]) throws {
         self.device = device
 
-        effectRenderer = try STREffectRenderer(device: device)
+        effectRenderer = try EffectRenderer(device: device)
         effectResource = STREffectRenderResource(
             device: device,
             effect: effect,
@@ -66,12 +66,13 @@ public class STRFilePreviewRenderer: Renderer {
         }
 
         effectRenderer.render(
-            resource: effectResource,
+            resource: .str(effectResource),
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix
+            projectionMatrix: projectionMatrix,
+            cameraAzimuth: 0
         )
 
         renderCommandEncoder.endEncoding()

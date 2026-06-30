@@ -1,19 +1,18 @@
 //
-//  MetalEffectRenderResource.swift
-//  RagnarokGame
+//  EffectRenderResource.swift
+//  RagnarokRenderers
 //
 //  Created by Leon Li on 2026/6/25.
 //
 
 import Foundation
-import RagnarokRenderers
 
-enum MetalEffectRenderResource {
+public enum EffectRenderResource {
     case `3D`(Effect3DRenderResource)
     case cylinder(CylinderEffectRenderResource)
     case str(STREffectRenderResource)
 
-    var creationTime: TimeInterval {
+    public var creationTime: TimeInterval {
         switch self {
         case .`3D`(let resource):
             resource.creationTime
@@ -24,7 +23,7 @@ enum MetalEffectRenderResource {
         }
     }
 
-    var rendersBeforeEntities: Bool {
+    public var rendersBeforeEntities: Bool {
         switch self {
         case .`3D`(let resource):
             resource.rendersBeforeEntities
@@ -35,7 +34,7 @@ enum MetalEffectRenderResource {
         }
     }
 
-    func isExpired(atTime time: TimeInterval) -> Bool {
+    public func isExpired(atTime time: TimeInterval) -> Bool {
         switch self {
         case .`3D`(let resource):
             resource.isExpired(atTime: time)

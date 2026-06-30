@@ -32,9 +32,7 @@ final class MetalMapRenderer: Renderer {
     private let waterRenderer: WaterRenderer
     private let modelRenderer: RSMModelRenderer
     private let spriteRenderer: MetalSpriteRenderer
-    private let effect3DRenderer: Effect3DRenderer
-    private let cylinderEffectRenderer: CylinderEffectRenderer
-    private let strEffectRenderer: STREffectRenderer
+    private let effectRenderer: EffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
 
     var skyboxResource: SkyboxRenderResource?
@@ -43,7 +41,7 @@ final class MetalMapRenderer: Renderer {
     var modelResources: [RSMModelRenderResource] = []
     var spriteDrawables: [SpriteLayerDrawable] = []
     var combatTextRenderResources: [CombatTextRenderResource] = []
-    var effectRenderResources: [MetalEffectRenderResource] = []
+    var effectRenderResources: [EffectRenderResource] = []
     var tileSelectorResource: TileSelectorRenderResource?
 
     private var cameraState = MapCameraState()
@@ -63,9 +61,7 @@ final class MetalMapRenderer: Renderer {
         waterRenderer = try WaterRenderer(device: device)
         modelRenderer = try RSMModelRenderer(device: device)
         spriteRenderer = try MetalSpriteRenderer(device: device)
-        effect3DRenderer = try Effect3DRenderer(device: device)
-        cylinderEffectRenderer = try CylinderEffectRenderer(device: device)
-        strEffectRenderer = try STREffectRenderer(device: device)
+        effectRenderer = try EffectRenderer(device: device)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
     }
 
@@ -173,6 +169,29 @@ final class MetalMapRenderer: Renderer {
         renderCommandEncoder.endEncoding()
     }
 
+    private func renderEffects(
+        _ resources: [EffectRenderResource],
+        atTime time: TimeInterval,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        matrices: RenderMatrices
+    ) {
+        let sortedResources = resources.sorted {
+            $0.creationTime < $1.creationTime
+        }
+
+        for resource in sortedResources {
+            effectRenderer.render(
+                resource: resource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix,
+                cameraAzimuth: matrices.cameraAzimuth
+            )
+        }
+    }
+
     private func makeRenderMatrices(viewport: CGRect) -> RenderMatrices {
         let modelMatrix = makeWorldModelMatrix()
         let worldTarget = targetPosition + Self.cameraTargetOffset
@@ -201,48 +220,5 @@ final class MetalMapRenderer: Renderer {
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         return modelMatrix
-    }
-
-    private func renderEffects(
-        _ resources: [MetalEffectRenderResource],
-        atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: RenderMatrices
-    ) {
-        let sortedResources = resources.sorted {
-            $0.creationTime < $1.creationTime
-        }
-
-        for resource in sortedResources {
-            switch resource {
-            case .`3D`(let effect3DResource):
-                effect3DRenderer.render(
-                    resource: effect3DResource,
-                    atTime: time,
-                    renderCommandEncoder: renderCommandEncoder,
-                    viewMatrix: matrices.viewMatrix,
-                    projectionMatrix: matrices.projectionMatrix,
-                    cameraAzimuth: matrices.cameraAzimuth
-                )
-            case .cylinder(let cylinderResource):
-                cylinderEffectRenderer.render(
-                    resource: cylinderResource,
-                    atTime: time,
-                    renderCommandEncoder: renderCommandEncoder,
-                    viewMatrix: matrices.viewMatrix,
-                    projectionMatrix: matrices.projectionMatrix,
-                    cameraAzimuth: matrices.cameraAzimuth
-                )
-            case .str(let strResource):
-                strEffectRenderer.render(
-                    resource: strResource,
-                    atTime: time,
-                    renderCommandEncoder: renderCommandEncoder,
-                    modelMatrix: matrices.modelMatrix,
-                    viewMatrix: matrices.viewMatrix,
-                    projectionMatrix: matrices.projectionMatrix
-                )
-            }
-        }
     }
 }

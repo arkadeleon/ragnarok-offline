@@ -689,7 +689,7 @@ extension MetalMapScene {
                 switch asset {
                 case .`3D`(let asset):
                     let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                    var renderResources: [MetalEffectRenderResource] = []
+                    var renderResources: [EffectRenderResource] = []
                     for duplicateID in 0..<max(asset.definition.duplicateCount, 1) {
                         let delay = effect.delay
                             + asset.definition.delayStart
@@ -712,7 +712,7 @@ extension MetalMapScene {
                     effect.renderResources = renderResources
                 case .cylinder(let asset):
                     let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                    var renderResources: [MetalEffectRenderResource] = []
+                    var renderResources: [EffectRenderResource] = []
                     for duplicateID in 0..<max(asset.definition.duplicateCount, 1) {
                         let delay = effect.delay
                             + asset.definition.delayStart

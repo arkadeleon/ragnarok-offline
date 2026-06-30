@@ -11,13 +11,13 @@ import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
-public final class STREffectRenderer {
-    public let device: any MTLDevice
+final class STREffectRenderer {
+    let device: any MTLDevice
 
     private var renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    public init(device: any MTLDevice) throws {
+    init(device: any MTLDevice) throws {
         self.device = device
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
@@ -29,7 +29,7 @@ public final class STREffectRenderer {
         renderPipelineStates[commonBlendKey] = try makeRenderPipelineState(for: commonBlendKey)
     }
 
-    public func render(
+    func render(
         resource: STREffectRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,

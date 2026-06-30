@@ -11,14 +11,14 @@ import RagnarokEffects
 import RagnarokShaders
 import simd
 
-public final class Effect3DRenderer {
-    public let device: any MTLDevice
+final class Effect3DRenderer {
+    let device: any MTLDevice
 
     private var renderPipelineStates: [EffectBlendMode : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
     private let overlayDepthStencilState: (any MTLDepthStencilState)?
 
-    public init(device: any MTLDevice) throws {
+    init(device: any MTLDevice) throws {
         self.device = device
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
@@ -35,7 +35,7 @@ public final class Effect3DRenderer {
         renderPipelineStates[commonBlendMode] = try makeRenderPipelineState(for: commonBlendMode)
     }
 
-    public func render(
+    func render(
         resource: Effect3DRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
