@@ -8,14 +8,6 @@
 import Foundation
 import simd
 
-public enum CylinderEffectAnimation: Int, Sendable {
-    case growHeight = 1
-    case growTopRadius = 2
-    case shrinkRadius = 3
-    case growRadius = 4
-    case growThenShrinkHeight = 5
-}
-
 public struct CylinderEffectDefinition: Sendable {
     public var textureName: String
     public var soundName: String?
@@ -40,8 +32,8 @@ public struct CylinderEffectDefinition: Sendable {
     public var color: SIMD3<Float>
     public var alpha: Float
     public var fades: Bool
-    public var animation: CylinderEffectAnimation?
-    public var blendMode: EffectBlendMode
+    public var animation: EffectParameters.Animation?
+    public var blendMode: EffectParameters.BlendMode
     public var zIndex: Float
 
     public var positionOffset: SIMD3<Float>
@@ -92,8 +84,8 @@ extension EffectDefinition {
         color: SIMD3<Float> = [1, 1, 1],
         alpha: Float = 1,
         fades: Bool = false,
-        animation: CylinderEffectAnimation? = nil,
-        blendMode: EffectBlendMode = .oneMinusSourceAlpha,
+        animation: EffectParameters.Animation? = nil,
+        blendMode: EffectParameters.BlendMode = .oneMinusSourceAlpha,
         zIndex: Float = 0,
         positionOffset: SIMD3<Float> = .zero,
         rotationDegrees: SIMD3<Float> = .zero,

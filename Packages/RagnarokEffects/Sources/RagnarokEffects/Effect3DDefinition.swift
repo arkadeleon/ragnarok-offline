@@ -43,7 +43,7 @@ public struct Effect3DDefinition: Sendable {
     public var alphaMax: Float
     public var fadesIn: Bool
     public var fadesOut: Bool
-    public var blendMode: EffectBlendMode
+    public var blendMode: EffectParameters.BlendMode
     public var zIndex: Float
     public var castsShadow: Bool
 
@@ -140,7 +140,7 @@ extension EffectDefinition {
         alphaMax: Float = 1,
         fadesIn: Bool = false,
         fadesOut: Bool = false,
-        blendMode: EffectBlendMode = .oneMinusSourceAlpha,
+        blendMode: EffectParameters.BlendMode = .oneMinusSourceAlpha,
         zIndex: Float = 0,
         castsShadow: Bool = false,
         positionStart: SIMD3<Float> = .zero,

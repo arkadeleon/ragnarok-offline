@@ -14,7 +14,7 @@ import simd
 final class Effect3DRenderer {
     let device: any MTLDevice
 
-    private var renderPipelineStates: [EffectBlendMode : any MTLRenderPipelineState] = [:]
+    private var renderPipelineStates: [EffectParameters.BlendMode : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
     private let overlayDepthStencilState: (any MTLDepthStencilState)?
 
@@ -31,7 +31,7 @@ final class Effect3DRenderer {
         overlayDepthStencilDescriptor.isDepthWriteEnabled = false
         overlayDepthStencilState = device.makeDepthStencilState(descriptor: overlayDepthStencilDescriptor)
 
-        let commonBlendMode: EffectBlendMode = .oneMinusSourceAlpha
+        let commonBlendMode: EffectParameters.BlendMode = .oneMinusSourceAlpha
         renderPipelineStates[commonBlendMode] = try makeRenderPipelineState(for: commonBlendMode)
     }
 
@@ -78,7 +78,7 @@ final class Effect3DRenderer {
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
     }
 
-    private func renderPipelineState(for blendMode: EffectBlendMode) -> (any MTLRenderPipelineState)? {
+    private func renderPipelineState(for blendMode: EffectParameters.BlendMode) -> (any MTLRenderPipelineState)? {
         if let renderPipelineState = renderPipelineStates[blendMode] {
             return renderPipelineState
         }
@@ -91,7 +91,7 @@ final class Effect3DRenderer {
         return renderPipelineState
     }
 
-    private func makeRenderPipelineState(for blendMode: EffectBlendMode) throws -> any MTLRenderPipelineState {
+    private func makeRenderPipelineState(for blendMode: EffectParameters.BlendMode) throws -> any MTLRenderPipelineState {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -110,7 +110,7 @@ final class Effect3DRenderer {
         return try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
     }
 
-    private func mtlBlendFactor(_ blendMode: EffectBlendMode) -> MTLBlendFactor {
+    private func mtlBlendFactor(_ blendMode: EffectParameters.BlendMode) -> MTLBlendFactor {
         switch blendMode {
         case .zero: .zero
         case .one: .one
