@@ -48,14 +48,14 @@ class EffectViewerEffectRenderer: Renderer {
             switch asset {
             case .`3D`(let asset):
                 let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicateCount, 1) {
+                for duplicateID in 0..<max(definition.duplicate.count, 1) {
                     let delay = definition.delayStart
                         + definition.delay
                         + definition.delayOffset
                         + definition.delayLate
-                        + definition.duplicateInterval * TimeInterval(duplicateID)
-                        + definition.delayOffsetDelta * TimeInterval(duplicateID)
-                        + definition.delayLateDelta * TimeInterval(duplicateID)
+                        + definition.duplicate.interval * TimeInterval(duplicateID)
+                        + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+                        + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                     let resource = Effect3DRenderResource(
                         device: device,
                         asset: asset,
@@ -68,13 +68,13 @@ class EffectViewerEffectRenderer: Renderer {
                 }
             case .cylinder(let asset):
                 let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicateCount, 1) {
+                for duplicateID in 0..<max(definition.duplicate.count, 1) {
                     let delay = definition.delayStart
                         + definition.delayOffset
                         + definition.delayLate
-                        + definition.duplicateInterval * TimeInterval(duplicateID)
-                        + definition.delayOffsetDelta * TimeInterval(duplicateID)
-                        + definition.delayLateDelta * TimeInterval(duplicateID)
+                        + definition.duplicate.interval * TimeInterval(duplicateID)
+                        + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+                        + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                     let resource = CylinderEffectRenderResource(
                         device: device,
                         asset: asset,

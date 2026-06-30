@@ -688,17 +688,18 @@ extension MetalMapScene {
 
                 switch asset {
                 case .`3D`(let asset):
+                    let definition = asset.definition
                     let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
                     var renderResources: [EffectRenderResource] = []
-                    for duplicateID in 0..<max(asset.definition.duplicateCount, 1) {
+                    for duplicateID in 0..<max(definition.duplicate.count, 1) {
                         let delay = effect.delay
-                            + asset.definition.delayStart
-                            + asset.definition.delay
-                            + asset.definition.delayOffset
-                            + asset.definition.delayLate
-                            + asset.definition.duplicateInterval * TimeInterval(duplicateID)
-                            + asset.definition.delayOffsetDelta * TimeInterval(duplicateID)
-                            + asset.definition.delayLateDelta * TimeInterval(duplicateID)
+                            + definition.delayStart
+                            + definition.delay
+                            + definition.delayOffset
+                            + definition.delayLate
+                            + definition.duplicate.interval * TimeInterval(duplicateID)
+                            + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+                            + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                         let renderResource = Effect3DRenderResource(
                             device: renderer.device,
                             asset: asset,
@@ -711,16 +712,17 @@ extension MetalMapScene {
                     }
                     effect.renderResources = renderResources
                 case .cylinder(let asset):
+                    let definition = asset.definition
                     let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
                     var renderResources: [EffectRenderResource] = []
-                    for duplicateID in 0..<max(asset.definition.duplicateCount, 1) {
+                    for duplicateID in 0..<max(definition.duplicate.count, 1) {
                         let delay = effect.delay
-                            + asset.definition.delayStart
-                            + asset.definition.delayOffset
-                            + asset.definition.delayLate
-                            + asset.definition.duplicateInterval * TimeInterval(duplicateID)
-                            + asset.definition.delayOffsetDelta * TimeInterval(duplicateID)
-                            + asset.definition.delayLateDelta * TimeInterval(duplicateID)
+                            + definition.delayStart
+                            + definition.delayOffset
+                            + definition.delayLate
+                            + definition.duplicate.interval * TimeInterval(duplicateID)
+                            + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+                            + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                         let renderResource = CylinderEffectRenderResource(
                             device: renderer.device,
                             asset: asset,

@@ -100,8 +100,8 @@ public final class Effect3DRenderResource {
         var sizeStart = definition.sizeStart
         var sizeEnd = definition.sizeEnd
 
-        if definition.sizeDelta != 0 {
-            let delta = definition.sizeDelta * Float(duplicateID)
+        if definition.duplicate.sizeDelta != 0 {
+            let delta = definition.duplicate.sizeDelta * Float(duplicateID)
             sizeStart += [delta, delta]
             sizeEnd += [delta, delta]
         }
@@ -117,8 +117,8 @@ public final class Effect3DRenderResource {
 
         self.sizeStart = sizeStart
         self.sizeEnd = sizeEnd
-        self.alphaMax = min(max(definition.alphaMax + definition.alphaMaxDelta * Float(duplicateID), 0), 1)
-        self.rotationDelay = definition.rotationDelay + definition.rotationDelayDelta * TimeInterval(duplicateID)
+        self.alphaMax = min(max(definition.alphaMax + definition.duplicate.alphaMaxDelta * Float(duplicateID), 0), 1)
+        self.rotationDelay = definition.rotationDelay + definition.duplicate.rotationDelayDelta * TimeInterval(duplicateID)
     }
 
     public func isExpired(atTime time: TimeInterval) -> Bool {

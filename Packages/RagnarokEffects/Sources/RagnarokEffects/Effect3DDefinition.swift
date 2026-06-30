@@ -35,16 +35,12 @@ public struct Effect3DDefinition: Sendable {
     public var delay: TimeInterval
     public var delayOffset: TimeInterval
     public var delayLate: TimeInterval
-    public var delayOffsetDelta: TimeInterval
-    public var delayLateDelta: TimeInterval
     public var delaySound: TimeInterval
-    public var duplicateCount: Int
-    public var duplicateInterval: TimeInterval
+    public var duplicate: EffectDuplicate
 
     public var color: SIMD3<Float>
     public var alphaMin: Float
     public var alphaMax: Float
-    public var alphaMaxDelta: Float
     public var fadesIn: Bool
     public var fadesOut: Bool
     public var blendMode: EffectBlendMode
@@ -73,14 +69,12 @@ public struct Effect3DDefinition: Sendable {
     public var sizeEnd: SIMD2<Float>
     public var sizeRandomRange: SIMD2<Float>
     public var sizeRandomMiddle: SIMD2<Float>
-    public var sizeDelta: Float
     public var smoothSize: Bool
 
     public var rotates: Bool
     public var rotatePosition: SIMD3<Float>
     public var rotationCount: Float
     public var rotationDelay: TimeInterval
-    public var rotationDelayDelta: TimeInterval
     public var rotatesClockwise: Bool
     public var angle: Float
     public var targetAngle: Float?
@@ -139,15 +133,11 @@ extension EffectDefinition {
         delay: TimeInterval = 0,
         delayOffset: TimeInterval = 0,
         delayLate: TimeInterval = 0,
-        delayOffsetDelta: TimeInterval = 0,
-        delayLateDelta: TimeInterval = 0,
         delaySound: TimeInterval = 0,
-        duplicateCount: Int = 1,
-        duplicateInterval: TimeInterval = 0.2,
+        duplicate: EffectDuplicate = EffectDuplicate(),
         color: SIMD3<Float> = [1, 1, 1],
         alphaMin: Float = 0,
         alphaMax: Float = 1,
-        alphaMaxDelta: Float = 0,
         fadesIn: Bool = false,
         fadesOut: Bool = false,
         blendMode: EffectBlendMode = .oneMinusSourceAlpha,
@@ -173,13 +163,11 @@ extension EffectDefinition {
         sizeEnd: SIMD2<Float> = [1, 1],
         sizeRandomRange: SIMD2<Float> = .zero,
         sizeRandomMiddle: SIMD2<Float> = .zero,
-        sizeDelta: Float = 0,
         smoothSize: Bool = false,
         rotates: Bool = false,
         rotatePosition: SIMD3<Float> = .zero,
         rotationCount: Float = 1,
         rotationDelay: TimeInterval = 0,
-        rotationDelayDelta: TimeInterval = 0,
         rotatesClockwise: Bool = false,
         angle: Float = 0,
         targetAngle: Float? = nil,
@@ -210,15 +198,11 @@ extension EffectDefinition {
             delay: delay,
             delayOffset: delayOffset,
             delayLate: delayLate,
-            delayOffsetDelta: delayOffsetDelta,
-            delayLateDelta: delayLateDelta,
             delaySound: delaySound,
-            duplicateCount: duplicateCount,
-            duplicateInterval: duplicateInterval,
+            duplicate: duplicate,
             color: color,
             alphaMin: alphaMin,
             alphaMax: alphaMax,
-            alphaMaxDelta: alphaMaxDelta,
             fadesIn: fadesIn,
             fadesOut: fadesOut,
             blendMode: blendMode,
@@ -244,13 +228,11 @@ extension EffectDefinition {
             sizeEnd: sizeEnd,
             sizeRandomRange: sizeRandomRange,
             sizeRandomMiddle: sizeRandomMiddle,
-            sizeDelta: sizeDelta,
             smoothSize: smoothSize,
             rotates: rotates,
             rotatePosition: rotatePosition,
             rotationCount: rotationCount,
             rotationDelay: rotationDelay,
-            rotationDelayDelta: rotationDelayDelta,
             rotatesClockwise: rotatesClockwise,
             angle: angle,
             targetAngle: targetAngle,
