@@ -765,8 +765,9 @@ final public class GameSession {
             skillList.delete(from: packet)
         case _ as PACKET_ZC_USESKILL_ACK:
             break
-        case _ as PACKET_ZC_USE_SKILL:
-            break
+        case let packet as PACKET_ZC_USE_SKILL:
+            let objectSkill = MapObjectSkill(from: packet)
+            mapScene?.onMapObjectSkillPerformed(objectSkill: objectSkill)
         case let packet as PACKET_ZC_NOTIFY_SKILL:
             let objectSkill = MapObjectSkill(from: packet)
             mapScene?.onMapObjectSkillPerformed(objectSkill: objectSkill)

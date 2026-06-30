@@ -18,6 +18,15 @@ public struct MapObjectSkill: Sendable {
     public let count: Int
     public let damageType: DamageType
 
+    public var isHealingSkill: Bool {
+        switch skillID {
+        case .al_heal, .ab_highnessheal, .ab_cheal:
+            true
+        default:
+            false
+        }
+    }
+
     public init(from packet: PACKET_ZC_NOTIFY_SKILL) {
         self.skillID = SkillID(rawValue: Int(packet.SKID))
         self.sourceObjectID = packet.AID
@@ -27,5 +36,16 @@ public struct MapObjectSkill: Sendable {
         self.level = Int(packet.level)
         self.count = Int(packet.count)
         self.damageType = DamageType(rawValue: Int(packet.action)) ?? .normal
+    }
+
+    public init(from packet: PACKET_ZC_USE_SKILL) {
+        self.skillID = SkillID(rawValue: Int(packet.SKID))
+        self.sourceObjectID = packet.srcAID
+        self.targetObjectID = packet.targetAID
+        self.attackDelay = 0
+        self.damage = -1
+        self.level = Int(packet.level)
+        self.count = 1
+        self.damageType = .normal
     }
 }

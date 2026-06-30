@@ -222,7 +222,7 @@ public final class MetalMapScene: GameMapScene {
             return
         }
 
-        if skill.isSelfOnlySkill {
+        if skill.isSelfOnlySkill || skill.isSupportSkill {
             gameSession?.useSkill(
                 skillID: skill.skillID,
                 level: skill.level,

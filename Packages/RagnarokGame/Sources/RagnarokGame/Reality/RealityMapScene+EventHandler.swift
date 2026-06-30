@@ -191,6 +191,20 @@ extension RealityMapScene {
         let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
         entity.castSkill(direction: direction)
 
+        if objectSkill.isHealingSkill, let targetEntity = objectEntities[objectSkill.targetObjectID] {
+            let isPlayer = targetEntity.components[MapObjectComponent.self]?.object.type == .pc
+            let combatText = MapSceneCombatText(
+                creationTime: .now,
+                target: MapSceneCombatText.Target(objectID: objectSkill.targetObjectID, isPlayer: isPlayer),
+                amount: objectSkill.level,
+                kind: .hpRecovery,
+                delay: .zero
+            )
+            addCombatText(combatText)
+
+            playSound(named: "_heal_effect.wav", on: objectSkill.targetObjectID)
+        }
+
         guard objectSkill.damage >= 0 else {
             return
         }

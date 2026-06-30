@@ -74,6 +74,10 @@ extension SkillInfo {
         let isTargetSkill = hasFlag(.attack) || hasFlag(.support) || isGroundTargetedSkill
         return hasFlag(._self) && !isTargetSkill
     }
+
+    public var isSupportSkill: Bool {
+        hasFlag(.support)
+    }
 }
 
 extension SkillInfo: Comparable {

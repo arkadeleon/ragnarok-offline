@@ -367,6 +367,22 @@ extension MetalMapScene {
             refreshSpriteDrawables()
         }
 
+        if objectSkill.isHealingSkill, let targetObject = objects[objectSkill.targetObjectID] {
+            let combatText = MetalCombatText(
+                creationTime: now,
+                target: MetalCombatText.Target(
+                    objectID: objectSkill.targetObjectID,
+                    isPlayer: targetObject.type == .pc
+                ),
+                amount: objectSkill.level,
+                kind: .hpRecovery,
+                delay: .zero
+            )
+            renderCombatText(combatText)
+
+            audioPlayer.playSound(named: "_heal_effect.wav")
+        }
+
         if objectSkill.damage >= 0 {
             let count = objectSkill.count
             let damage = objectSkill.damage
