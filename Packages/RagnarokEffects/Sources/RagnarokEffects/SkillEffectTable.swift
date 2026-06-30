@@ -19,6 +19,10 @@ public enum SkillEffectTable {
             effectIDs: [.id(30)],
             hitEffectIDs: [.id(52)]
         ),
+        .al_heal: .init(
+            effectIDs: [.id(312)],
+            hitEffectIDs: [.id(320)]
+        ),
     ]
 
     public static func effectIDs(for skillID: SkillID) -> [Int] {
