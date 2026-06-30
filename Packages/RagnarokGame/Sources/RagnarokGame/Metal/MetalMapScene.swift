@@ -464,10 +464,7 @@ extension MetalMapScene {
             logger.warning("Metal map scene failed to load combat text sprites: \(error)")
         }
 
-        effectAssetStore = EffectAssetStore(
-            device: renderer.device,
-            resourceManager: resourceManager
-        )
+        effectAssetStore = EffectAssetStore(resourceManager: resourceManager)
     }
 
     func clearRenderResources() {

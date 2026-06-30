@@ -6,31 +6,19 @@
 //
 
 import Foundation
-import Metal
-import MetalKit
 import RagnarokEffects
-import RagnarokFileFormats
 import RagnarokRenderAssets
-import RagnarokRenderers
 import RagnarokResources
-
-enum EffectAsset: @unchecked Sendable {
-    case `3D`(textures: [any MTLTexture])
-    case cylinder(texture: any MTLTexture)
-    case str(effect: STREffect, textures: [String : any MTLTexture])
-}
 
 @MainActor
 final class EffectAssetStore {
-    private let device: any MTLDevice
-    private let resourceManager: ResourceManager
+    private let loader: EffectAssetLoader
 
     private var assets: [String : EffectAsset] = [:]
     private var loadTasks: [String : Task<EffectAsset, any Error>] = [:]
 
-    init(device: any MTLDevice, resourceManager: ResourceManager) {
-        self.device = device
-        self.resourceManager = resourceManager
+    init(resourceManager: ResourceManager) {
+        self.loader = EffectAssetLoader(resourceManager: resourceManager)
     }
 
     func asset(for definition: EffectDefinition) async throws -> EffectAsset {
@@ -42,32 +30,8 @@ final class EffectAssetStore {
             return try await task.value
         }
 
-        let task: Task<EffectAsset, any Error>
-        switch definition {
-        case .`3D`(let definition):
-            task = Task { [resourceManager, device] in
-                try await loadEffect3DAsset(
-                    definition: definition,
-                    resourceManager: resourceManager,
-                    device: device
-                )
-            }
-        case .cylinder(let cylinderDefinition):
-            task = Task { [resourceManager, device] in
-                try await loadCylinderAsset(
-                    definition: cylinderDefinition,
-                    resourceManager: resourceManager,
-                    device: device
-                )
-            }
-        case .str(let strDefinition):
-            task = Task { [resourceManager, device] in
-                try await loadSTRAsset(
-                    definition: strDefinition,
-                    resourceManager: resourceManager,
-                    device: device
-                )
-            }
+        let task = Task { [loader] in
+            try await loader.loadAsset(with: definition)
         }
 
         loadTasks[assetKey] = task
@@ -91,89 +55,4 @@ final class EffectAssetStore {
         loadTasks.removeAll()
         assets.removeAll()
     }
-
-    private func loadEffect3DAsset(
-        definition: Effect3DDefinition,
-        resourceManager: ResourceManager,
-        device: any MTLDevice
-    ) async throws -> EffectAsset {
-        let textureNames: [String]
-        if definition.fileNames.isEmpty {
-            textureNames = definition.fileName.map { [$0] } ?? []
-        } else {
-            textureNames = definition.fileNames
-        }
-
-        var textures: [any MTLTexture] = []
-        for textureName in textureNames {
-            let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
-            let image = try await resourceManager.image(at: texturePath)
-            if let texture = MetalTextureFactory.makeTexture(
-                from: image.cgImage,
-                device: device,
-                label: textureName
-            ) {
-                textures.append(texture)
-            }
-        }
-
-        return .`3D`(textures: textures)
-    }
-
-    private func loadCylinderAsset(
-        definition: CylinderEffectDefinition,
-        resourceManager: ResourceManager,
-        device: any MTLDevice
-    ) async throws -> EffectAsset {
-        let texturePath = ResourcePath.effectDirectory
-            .appending(definition.textureName)
-            .appendingPathExtension("tga")
-        let image = try await resourceManager.image(at: texturePath)
-        guard let texture = MetalTextureFactory.makeTexture(
-            from: image.cgImage,
-            device: device,
-            label: definition.textureName
-        ) else {
-            throw EffectAssetStoreError.cannotCreateTexture(texturePath)
-        }
-
-        return .cylinder(texture: texture)
-    }
-
-    private func loadSTRAsset(
-        definition: STREffectDefinition,
-        resourceManager: ResourceManager,
-        device: any MTLDevice
-    ) async throws -> EffectAsset {
-        let strPath = ResourcePath.effectDirectory.appending(subpath: definition.fileName)
-        let strData = try await resourceManager.contentsOfResource(at: strPath)
-        let str = try STR(data: strData)
-        let effect = STREffect(str: str)
-
-        let textureLoader = MTKTextureLoader(device: device)
-        var textures: [String : any MTLTexture] = [:]
-
-        for frame in effect.frames {
-            for sprite in frame.sprites {
-                let textureName = sprite.textureName
-                guard textures[textureName] == nil else {
-                    continue
-                }
-
-                let texturePath = ResourcePath.effectDirectory.appending(subpath: textureName)
-                guard let textureData = try? await resourceManager.contentsOfResource(at: texturePath),
-                      let texture = textureLoader.newTexture(bmpData: textureData) else {
-                    continue
-                }
-
-                textures[textureName] = texture
-            }
-        }
-
-        return .str(effect: effect, textures: textures)
-    }
-}
-
-private enum EffectAssetStoreError: Error {
-    case cannotCreateTexture(ResourcePath)
 }

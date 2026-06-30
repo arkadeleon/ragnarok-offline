@@ -5,7 +5,8 @@
 //  Created by Leon Li on 2024/4/26.
 //
 
-import MetalKit
+import Metal
+import RagnarokCore
 import RagnarokFileFormats
 import RagnarokRenderAssets
 import RagnarokRenderers
@@ -77,13 +78,12 @@ struct STRFileEffectView: View {
         let effect = STREffect(str: str)
 
         let device = MTLCreateSystemDefaultDevice()!
-        let textureLoader = MTKTextureLoader(device: device)
-        var textures: [String : any MTLTexture] = [:]
+        var textureImages: [String : CGImage] = [:]
 
         for frame in effect.frames {
             for sprite in frame.sprites {
                 let textureName = sprite.textureName
-                if let _ = textures[textureName] {
+                if let _ = textureImages[textureName] {
                     continue
                 }
 
@@ -92,13 +92,13 @@ struct STRFileEffectView: View {
                     continue
                 }
 
-                if let texture = textureLoader.newTexture(bmpData: data) {
-                    textures[textureName] = texture
+                if let textureImage = CGImageCreateWithData(data)?.removingMagentaPixels() {
+                    textureImages[textureName] = textureImage
                 }
             }
         }
 
-        let renderer = try STRFilePreviewRenderer(device: device, effect: effect, textures: textures)
+        let renderer = try STRFilePreviewRenderer(device: device, effect: effect, textureImages: textureImages)
         return renderer
     }
 }

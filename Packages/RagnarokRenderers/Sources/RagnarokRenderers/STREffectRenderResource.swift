@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/4/30.
 //
 
+import CoreGraphics
 import Foundation
 import Metal
 import RagnarokRenderAssets
@@ -21,13 +22,31 @@ public final class STREffectRenderResource {
         creationTime + delay
     }
 
-    public init(
-        effect: STREffect,
-        textures: [String : any MTLTexture],
+    public convenience init(
+        device: any MTLDevice,
+        asset: STREffectAsset,
         spritePosition: SIMD3<Float>,
         creationTime: TimeInterval,
         delay: TimeInterval = 0
     ) {
+        self.init(device: device, effect: asset.effect, textureImages: asset.textureImages, spritePosition: spritePosition, creationTime: creationTime, delay: delay)
+    }
+
+    public init(
+        device: any MTLDevice,
+        effect: STREffect,
+        textureImages: [String : CGImage],
+        spritePosition: SIMD3<Float>,
+        creationTime: TimeInterval,
+        delay: TimeInterval = 0
+    ) {
+        var textures: [String : any MTLTexture] = [:]
+        for (textureName, textureImage) in textureImages {
+            if let texture = MetalTextureFactory.makeTexture(from: textureImage, device: device, label: textureName) {
+                textures[textureName] = texture
+            }
+        }
+
         self.effect = effect
         self.textures = textures
         self.spritePosition = spritePosition

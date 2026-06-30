@@ -5,10 +5,12 @@
 //  Created by Leon Li on 2026/6/29.
 //
 
+import CoreGraphics
 import Foundation
 import Metal
 import RagnarokCore
 import RagnarokEffects
+import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
@@ -22,19 +24,11 @@ public final class Effect3DRenderResource {
     }
 
     public let definition: Effect3DDefinition
+    public let vertices: [Effect3DVertex]
     public let textures: [any MTLTexture]
     public let worldPosition: SIMD3<Float>
     public let creationTime: TimeInterval
     public let delay: TimeInterval
-
-    let vertices: [Effect3DVertex] = [
-        Effect3DVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
-        Effect3DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
-        Effect3DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
-        Effect3DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
-        Effect3DVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
-        Effect3DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
-    ]
 
     private let positionStart: SIMD3<Float>
     private let positionEnd: SIMD3<Float>
@@ -52,15 +46,25 @@ public final class Effect3DRenderResource {
     }
 
     public init(
-        definition: Effect3DDefinition,
-        textures: [any MTLTexture],
+        device: any MTLDevice,
+        asset: Effect3DAsset,
         worldPosition: SIMD3<Float>,
         creationTime: TimeInterval,
         delay: TimeInterval = 0,
         duplicateID: Int = 0
     ) {
-        self.definition = definition
-        self.textures = textures
+        self.definition = asset.definition
+        self.vertices = [
+            Effect3DVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
+            Effect3DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
+            Effect3DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
+            Effect3DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
+            Effect3DVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
+            Effect3DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
+        ]
+        self.textures = asset.textureImages.enumerated().compactMap { index, textureImage in
+            MetalTextureFactory.makeTexture(from: textureImage, device: device, label: "effect3D[\(index)]")
+        }
         self.worldPosition = worldPosition
         self.creationTime = creationTime
         self.delay = delay

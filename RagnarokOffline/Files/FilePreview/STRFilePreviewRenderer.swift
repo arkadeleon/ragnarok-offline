@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2023/11/24.
 //
 
+import CoreGraphics
 import Foundation
 import Metal
 import QuartzCore
@@ -21,13 +22,14 @@ public class STRFilePreviewRenderer: Renderer {
 
     public let camera = Camera()
 
-    public init(device: any MTLDevice, effect: STREffect, textures: [String : any MTLTexture]) throws {
+    public init(device: any MTLDevice, effect: STREffect, textureImages: [String : CGImage]) throws {
         self.device = device
 
         effectRenderer = try STREffectRenderer(device: device)
         effectResource = STREffectRenderResource(
+            device: device,
             effect: effect,
-            textures: textures,
+            textureImages: textureImages,
             spritePosition: .zero,
             creationTime: CACurrentMediaTime()
         )

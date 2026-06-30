@@ -686,26 +686,22 @@ extension MetalMapScene {
                     return
                 }
 
-                switch (effect.effectDefinition, asset) {
-                case (.`3D`(let definition), .`3D`(let textures)):
-                    guard !textures.isEmpty else {
-                        return
-                    }
-
+                switch asset {
+                case .`3D`(let asset):
                     let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
                     var renderResources: [MetalEffectRenderResource] = []
-                    for duplicateID in 0..<max(definition.duplicateCount, 1) {
+                    for duplicateID in 0..<max(asset.definition.duplicateCount, 1) {
                         let delay = effect.delay
-                            + definition.delayStart
-                            + definition.delay
-                            + definition.delayOffset
-                            + definition.delayLate
-                            + definition.duplicateInterval * TimeInterval(duplicateID)
-                            + definition.delayOffsetDelta * TimeInterval(duplicateID)
-                            + definition.delayLateDelta * TimeInterval(duplicateID)
+                            + asset.definition.delayStart
+                            + asset.definition.delay
+                            + asset.definition.delayOffset
+                            + asset.definition.delayLate
+                            + asset.definition.duplicateInterval * TimeInterval(duplicateID)
+                            + asset.definition.delayOffsetDelta * TimeInterval(duplicateID)
+                            + asset.definition.delayLateDelta * TimeInterval(duplicateID)
                         let renderResource = Effect3DRenderResource(
-                            definition: definition,
-                            textures: textures,
+                            device: renderer.device,
+                            asset: asset,
                             worldPosition: worldPosition,
                             creationTime: effect.creationTime,
                             delay: delay,
@@ -714,14 +710,31 @@ extension MetalMapScene {
                         renderResources.append(.`3D`(renderResource))
                     }
                     effect.renderResources = renderResources
-                case (.str, .str(let strEffect, let textures)):
-                    guard strEffect.fps > 0, !strEffect.frames.isEmpty else {
-                        return
+                case .cylinder(let asset):
+                    let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                    var renderResources: [MetalEffectRenderResource] = []
+                    for duplicateID in 0..<max(asset.definition.duplicateCount, 1) {
+                        let delay = effect.delay
+                            + asset.definition.delayStart
+                            + asset.definition.delayOffset
+                            + asset.definition.delayLate
+                            + asset.definition.duplicateInterval * TimeInterval(duplicateID)
+                            + asset.definition.delayOffsetDelta * TimeInterval(duplicateID)
+                            + asset.definition.delayLateDelta * TimeInterval(duplicateID)
+                        let renderResource = CylinderEffectRenderResource(
+                            device: renderer.device,
+                            asset: asset,
+                            worldPosition: worldPosition,
+                            creationTime: effect.creationTime,
+                            delay: delay
+                        )
+                        renderResources.append(.cylinder(renderResource))
                     }
-
+                    effect.renderResources = renderResources
+                case .str(let asset):
                     let renderResource = STREffectRenderResource(
-                        effect: strEffect,
-                        textures: textures,
+                        device: renderer.device,
+                        asset: asset,
                         spritePosition: [
                             Float(effect.gridPosition.x),
                             Float(effect.gridPosition.y),
@@ -731,29 +744,6 @@ extension MetalMapScene {
                         delay: effect.delay
                     )
                     effect.renderResources = [.str(renderResource)]
-                case (.cylinder(let definition), .cylinder(let texture)):
-                    let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                    var renderResources: [MetalEffectRenderResource] = []
-                    for duplicateID in 0..<max(definition.duplicateCount, 1) {
-                        let delay = effect.delay
-                            + definition.delayStart
-                            + definition.delayOffset
-                            + definition.delayLate
-                            + definition.duplicateInterval * TimeInterval(duplicateID)
-                            + definition.delayOffsetDelta * TimeInterval(duplicateID)
-                            + definition.delayLateDelta * TimeInterval(duplicateID)
-                        let renderResource = CylinderEffectRenderResource(
-                            definition: definition,
-                            texture: texture,
-                            worldPosition: worldPosition,
-                            creationTime: effect.creationTime,
-                            delay: delay
-                        )
-                        renderResources.append(.cylinder(renderResource))
-                    }
-                    effect.renderResources = renderResources
-                default:
-                    return
                 }
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.effectID): \(error)")

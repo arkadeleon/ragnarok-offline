@@ -9,6 +9,7 @@ import Foundation
 import Metal
 import RagnarokCore
 import RagnarokEffects
+import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
@@ -22,8 +23,8 @@ public final class CylinderEffectRenderResource {
     }
 
     public let definition: CylinderEffectDefinition
-    public let texture: any MTLTexture
     public let vertices: [CylinderEffectVertex]
+    public let texture: (any MTLTexture)?
 
     public let worldPosition: SIMD3<Float>
     public let creationTime: TimeInterval
@@ -38,19 +39,19 @@ public final class CylinderEffectRenderResource {
     }
 
     public init(
-        definition: CylinderEffectDefinition,
-        texture: any MTLTexture,
+        device: any MTLDevice,
+        asset: CylinderEffectAsset,
         worldPosition: SIMD3<Float>,
         creationTime: TimeInterval,
         delay: TimeInterval = 0
     ) {
-        self.definition = definition
-        self.texture = texture
+        self.definition = asset.definition
         self.vertices = Self.makeVertices(
             totalCircleSides: definition.totalCircleSides,
             visibleCircleSides: definition.visibleCircleSides,
             textureRepeatX: definition.textureRepeatX
         )
+        self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "cylinderEffect")
         self.worldPosition = worldPosition
         self.creationTime = creationTime
         self.delay = delay
