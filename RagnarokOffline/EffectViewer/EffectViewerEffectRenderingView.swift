@@ -6,13 +6,14 @@
 //
 
 import Metal
+import RagnarokConstants
 import RagnarokEffects
 import RagnarokRenderAssets
 import RagnarokResources
 import SwiftUI
 
 struct EffectViewerEffectRenderingView: View {
-    var effectID: Int
+    var effectID: EffectID
     var resourceManager: ResourceManager
 
     var body: some View {
@@ -24,7 +25,7 @@ struct EffectViewerEffectRenderingView: View {
     }
 
     private func loadRenderer() async throws -> EffectViewerEffectRenderer {
-        let definitions = EffectTable.definitions(forEffectID: effectID).map { $0.resolved() }
+        let definitions = EffectTable.definitions(for: effectID).map { $0.resolved() }
 
         let device = MTLCreateSystemDefaultDevice()!
         let loader = EffectAssetLoader(resourceManager: resourceManager)

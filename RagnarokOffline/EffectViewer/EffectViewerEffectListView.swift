@@ -20,12 +20,7 @@ struct EffectViewerEffectListView: View {
                     dismiss()
                 } label: {
                     HStack {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(effect.displayName)
-                            Text(effect.summary)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
+                        Text(effect.displayName)
 
                         Spacer()
 

@@ -19,7 +19,7 @@ struct EffectViewer: View {
     var body: some View {
         ZStack {
             if let selectedEffect {
-                EffectViewerEffectRenderingView(effectID: selectedEffect.id, resourceManager: resourceManager)
+                EffectViewerEffectRenderingView(effectID: selectedEffect.effectID, resourceManager: resourceManager)
                     .id(selectedEffect.id)
             } else {
                 ContentUnavailableView {

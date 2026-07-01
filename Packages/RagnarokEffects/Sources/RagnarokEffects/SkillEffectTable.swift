@@ -12,20 +12,20 @@ import RagnarokConstants
 public enum SkillEffectTable {
     private static let table: [SkillID : SkillEffectDefinition] = [
         .mg_lightningbolt: .init(
-            effects: [.id(29)],
-            hitEffects: [.id(52)]
+            effects: [.id(.ef_lightbolt)],
+            hitEffects: [.id(.ef_windhit)]
         ),
         .mg_thunderstorm: .init(
-            effects: [.id(30)],
-            hitEffects: [.id(52)]
+            effects: [.id(.ef_thunderstorm)],
+            hitEffects: [.id(.ef_windhit)]
         ),
         .mg_firebolt: .init(
             beforeHitEffects: [.name("ef_firebolt")],
-            hitEffects: [.id(49)]
+            hitEffects: [.id(.ef_firehit)]
         ),
         .al_heal: .init(
-            effects: [.id(312)],
-            hitEffects: [.id(320)]
+            effects: [.id(.ef_heal)],
+            hitEffects: [.id(.ef_heal3)]
         ),
     ]
 

@@ -5,13 +5,15 @@
 //  Created by Leon Li on 2026/4/30.
 //
 
+import Foundation
+import RagnarokConstants
 import RagnarokCore
 
 // Ported from roBrowserLegacy:
 // https://github.com/MrAntares/roBrowserLegacy/blob/master/src/DB/Effects/EffectTable.js
 public enum EffectTable {
-    private static let table: [Int : [EffectDefinition]] = [
-        29: [ // EF_LIGHTBOLT
+    private static let table: [EffectID : [EffectDefinition]] = [
+        .ef_lightbolt: [
             .str(
                 fileName: "lightning.str",
                 attachedToTarget: true
@@ -22,14 +24,14 @@ public enum EffectTable {
                 randomNumberRange: 1...3
             ),
         ],
-        30: [ // EF_THUNDERSTORM
+        .ef_thunderstorm: [
             .str(
                 fileName: "thunderstorm.str",
                 soundName: "effect\\magician_thunderstorm.wav",
                 attachedToTarget: false
             ),
         ],
-        49: [ // EF_FIREHIT
+        .ef_firehit: [
             .str(
                 fileName: "firehit%d.str",
                 soundName: "effect\\ef_firehit.wav",
@@ -37,7 +39,7 @@ public enum EffectTable {
                 randomNumberRange: 1...3
             ),
         ],
-        52: [ // EF_WINDHIT
+        .ef_windhit: [
             .str(
                 fileName: "windhit%d.str",
                 soundName: "_hit_fist%d.wav",
@@ -45,7 +47,7 @@ public enum EffectTable {
                 randomNumberRange: 1...3
             ),
         ],
-        312: [ // EF_HEAL
+        .ef_heal: [
             .cylinder(
                 textureName: "ring_white",
                 soundName: "_heal_effect.wav",
@@ -112,7 +114,7 @@ public enum EffectTable {
                 sizeRandomRange: [2, 2]
             ),
         ],
-        320: [ // EF_HEAL3
+        .ef_heal3: [
             .cylinder(
                 textureName: "ring_white",
                 soundName: "_heal_effect.wav",
@@ -181,7 +183,7 @@ public enum EffectTable {
                 sparkleCount: 2
             ),
         ],
-        321: [ // EF_WARPZONE2
+        .ef_warpzone2: [
             .cylinder(
                 textureName: "ring_blue",
                 attachedToTarget: true,
@@ -264,20 +266,20 @@ public enum EffectTable {
         ]
     ]
 
-    public static var effectIDs: [Int] {
-        table.keys.sorted()
+    public static var effectIDs: [EffectID] {
+        table.keys.sorted(using: KeyPathComparator(\.rawValue))
     }
 
     public static func definitions(for effectReference: EffectReference) -> [EffectDefinition] {
         switch effectReference {
         case .id(let effectID):
-            definitions(forEffectID: effectID)
+            definitions(for: effectID)
         case .name(let effectName):
             definitions(forEffectName: effectName)
         }
     }
 
-    public static func definitions(forEffectID effectID: Int) -> [EffectDefinition] {
+    public static func definitions(for effectID: EffectID) -> [EffectDefinition] {
         table[effectID] ?? []
     }
 

@@ -145,7 +145,7 @@ extension MetalMapScene {
 
         if object.job == 45 { // JT_WARPNPC
             addEffects(
-                for: .id(321), // EF_WARPZONE2
+                for: .id(.ef_warpzone2),
                 creationTime: CACurrentMediaTime(),
                 gridPosition: position,
                 attachedObjectID: object.objectID,
