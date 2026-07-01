@@ -5,6 +5,8 @@
 //  Created by Leon Li on 2026/4/30.
 //
 
+import RagnarokCore
+
 // Ported from roBrowserLegacy:
 // https://github.com/MrAntares/roBrowserLegacy/blob/master/src/DB/Effects/EffectTable.js
 public enum EffectTable {
@@ -25,6 +27,14 @@ public enum EffectTable {
                 fileName: "thunderstorm.str",
                 soundName: "effect\\magician_thunderstorm.wav",
                 attachedToTarget: false
+            ),
+        ],
+        49: [ // EF_FIREHIT
+            .str(
+                fileName: "firehit%d.str",
+                soundName: "effect\\ef_firehit.wav",
+                attachedToTarget: true,
+                randomNumberRange: 1...3
             ),
         ],
         52: [ // EF_WINDHIT
@@ -226,11 +236,52 @@ public enum EffectTable {
         ],
     ]
 
+    private static let namedTable: [String : [EffectDefinition]] = [
+        "ef_firebolt": [
+            .`3D`(
+                fileNames: [
+                    K2L("effect\\불화살1.tga"),
+                    K2L("effect\\불화살2.tga"),
+                    K2L("effect\\불화살3.tga"),
+                    K2L("effect\\불화살4.tga"),
+                    K2L("effect\\불화살5.tga"),
+                    K2L("effect\\불화살6.tga"),
+                ],
+                frameDelay: 0.03,
+                soundName: "effect\\ef_firearrow%d.wav",
+                attachedToTarget: true,
+                duration: 0.5,
+                blendMode: .one,
+                zIndex: 1,
+                positionStart: [0, 0, 20],
+                positionStartRandomRange: [1, 1, 0],
+                positionStartRandomMiddle: [5, 2, 0],
+                sizeStart: [100, 50],
+                sizeEnd: [100, 50],
+                angle: 112.5,
+                randomNumberRange: 1...3
+            ),
+        ]
+    ]
+
     public static var effectIDs: [Int] {
         table.keys.sorted()
     }
 
+    public static func definitions(for effectReference: EffectReference) -> [EffectDefinition] {
+        switch effectReference {
+        case .id(let effectID):
+            definitions(forEffectID: effectID)
+        case .name(let effectName):
+            definitions(forEffectName: effectName)
+        }
+    }
+
     public static func definitions(forEffectID effectID: Int) -> [EffectDefinition] {
         table[effectID] ?? []
+    }
+
+    public static func definitions(forEffectName effectName: String) -> [EffectDefinition] {
+        namedTable[effectName] ?? []
     }
 }

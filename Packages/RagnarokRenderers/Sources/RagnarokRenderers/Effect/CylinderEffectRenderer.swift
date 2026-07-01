@@ -96,14 +96,14 @@ final class CylinderEffectRenderer {
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "cylinderEffectVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "cylinderEffectFragmentShader")
 
-        renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = mtlBlendFactor(blendMode)
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = mtlBlendFactor(blendMode)
 
-        renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
 
         return try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
     }

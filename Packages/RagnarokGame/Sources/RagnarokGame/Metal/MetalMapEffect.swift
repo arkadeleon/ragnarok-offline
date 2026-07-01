@@ -12,7 +12,7 @@ import simd
 
 final class MetalMapEffect: Identifiable {
     let id: UUID
-    let effectID: Int
+    let effectReference: EffectReference
     let effectDefinition: EffectDefinition
     let creationTime: TimeInterval
     let gridPosition: SIMD2<Int>
@@ -22,7 +22,7 @@ final class MetalMapEffect: Identifiable {
     var renderResources: [EffectRenderResource] = []
 
     init(
-        effectID: Int,
+        effectReference: EffectReference,
         effectDefinition: EffectDefinition,
         creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
@@ -30,7 +30,7 @@ final class MetalMapEffect: Identifiable {
         delay: TimeInterval = 0
     ) {
         self.id = UUID()
-        self.effectID = effectID
+        self.effectReference = effectReference
         self.effectDefinition = effectDefinition
         self.creationTime = creationTime
         self.gridPosition = gridPosition

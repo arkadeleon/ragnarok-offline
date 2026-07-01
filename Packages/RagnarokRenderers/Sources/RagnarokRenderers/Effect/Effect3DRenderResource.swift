@@ -256,7 +256,7 @@ public final class Effect3DRenderResource {
         }
 
         var matrix = matrix_identity_float4x4
-        matrix = matrix_rotate(matrix, radians(angle), [0, 0, 1])
+        matrix = matrix_rotate(matrix, radians(-angle), [0, 0, 1])
         return matrix
     }
 

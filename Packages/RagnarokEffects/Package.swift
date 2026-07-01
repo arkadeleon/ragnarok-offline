@@ -17,12 +17,14 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../RagnarokConstants"),
+        .package(path: "../RagnarokCore"),
     ],
     targets: [
         .target(
             name: "RagnarokEffects",
             dependencies: [
                 "RagnarokConstants",
+                "RagnarokCore",
             ]
         ),
         .testTarget(

@@ -12,30 +12,32 @@ import RagnarokConstants
 public enum SkillEffectTable {
     private static let table: [SkillID : SkillEffectDefinition] = [
         .mg_lightningbolt: .init(
-            effectIDs: [.id(29)],
-            hitEffectIDs: [.id(52)]
+            effects: [.id(29)],
+            hitEffects: [.id(52)]
         ),
         .mg_thunderstorm: .init(
-            effectIDs: [.id(30)],
-            hitEffectIDs: [.id(52)]
+            effects: [.id(30)],
+            hitEffects: [.id(52)]
+        ),
+        .mg_firebolt: .init(
+            beforeHitEffects: [.name("ef_firebolt")],
+            hitEffects: [.id(49)]
         ),
         .al_heal: .init(
-            effectIDs: [.id(312)],
-            hitEffectIDs: [.id(320)]
+            effects: [.id(312)],
+            hitEffects: [.id(320)]
         ),
     ]
 
-    public static func effectIDs(for skillID: SkillID) -> [Int] {
-        guard let definition = table[skillID] else {
-            return []
-        }
-        return definition.effectIDs.compactMap(\.effectID)
+    public static func effects(for skillID: SkillID) -> [EffectReference] {
+        table[skillID]?.effects ?? []
     }
 
-    public static func hitEffectIDs(for skillID: SkillID) -> [Int] {
-        guard let definition = table[skillID] else {
-            return []
-        }
-        return definition.hitEffectIDs.compactMap(\.effectID)
+    public static func beforeHitEffects(for skillID: SkillID) -> [EffectReference] {
+        table[skillID]?.beforeHitEffects ?? []
+    }
+
+    public static func hitEffects(for skillID: SkillID) -> [EffectReference] {
+        table[skillID]?.hitEffects ?? []
     }
 }

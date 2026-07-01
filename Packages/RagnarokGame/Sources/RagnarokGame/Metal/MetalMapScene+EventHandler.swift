@@ -145,7 +145,7 @@ extension MetalMapScene {
 
         if object.job == 45 { // JT_WARPNPC
             addEffects(
-                forEffectID: 321, // EF_WARPZONE2
+                for: .id(321), // EF_WARPZONE2
                 creationTime: CACurrentMediaTime(),
                 gridPosition: position,
                 attachedObjectID: object.objectID,
@@ -402,6 +402,7 @@ extension MetalMapScene {
             }
         }
 
+        addSkillBeforeHitEffects(for: objectSkill)
         addSkillHitEffects(for: objectSkill)
         addSkillEffects(for: objectSkill)
     }
@@ -428,9 +429,9 @@ extension MetalMapScene {
 
         let currentTime = CACurrentMediaTime()
 
-        for effectID in SkillEffectTable.effectIDs(for: skillID) {
+        for effectReference in SkillEffectTable.effects(for: skillID) {
             addEffects(
-                forEffectID: effectID,
+                for: effectReference,
                 creationTime: currentTime,
                 gridPosition: position,
                 attachedObjectID: nil,
@@ -602,6 +603,30 @@ extension MetalMapScene {
 // MARK: - Effect
 
 extension MetalMapScene {
+    private func addSkillBeforeHitEffects(for objectSkill: MapObjectSkill) {
+        guard objectSkill.damage > 0,
+              let skillID = objectSkill.skillID,
+              let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition else {
+            return
+        }
+
+        let currentTime = CACurrentMediaTime()
+        let count = max(1, objectSkill.count)
+
+        for effectReference in SkillEffectTable.beforeHitEffects(for: skillID) {
+            for i in 0..<count {
+                addEffects(
+                    for: effectReference,
+                    creationTime: currentTime,
+                    gridPosition: targetPosition,
+                    attachedObjectID: objectSkill.targetObjectID,
+                    ownerObjectID: nil,
+                    delay: .milliseconds(200 * i)
+                )
+            }
+        }
+    }
+
     private func addSkillHitEffects(for objectSkill: MapObjectSkill) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
@@ -612,10 +637,10 @@ extension MetalMapScene {
         let currentTime = CACurrentMediaTime()
         let count = max(1, objectSkill.count)
 
-        for hitEffectID in SkillEffectTable.hitEffectIDs(for: skillID) {
+        for effectReference in SkillEffectTable.hitEffects(for: skillID) {
             for i in 0..<count {
                 addEffects(
-                    forEffectID: hitEffectID,
+                    for: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
                     attachedObjectID: objectSkill.targetObjectID,
@@ -637,9 +662,9 @@ extension MetalMapScene {
 
         let currentTime = CACurrentMediaTime()
 
-        for effectID in SkillEffectTable.effectIDs(for: skillID) {
+        for effectReference in SkillEffectTable.effects(for: skillID) {
             addEffects(
-                forEffectID: effectID,
+                for: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
                 attachedObjectID: objectSkill.targetObjectID,
@@ -650,17 +675,17 @@ extension MetalMapScene {
     }
 
     private func addEffects(
-        forEffectID effectID: Int,
+        for effectReference: EffectReference,
         creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
         attachedObjectID: GameObjectID?,
         ownerObjectID: GameObjectID?,
         delay: TimeInterval
     ) {
-        let definitions = EffectTable.definitions(forEffectID: effectID)
+        let definitions = EffectTable.definitions(for: effectReference)
         for definition in definitions {
             let effect = MetalMapEffect(
-                effectID: effectID,
+                effectReference: effectReference,
                 effectDefinition: definition.resolved(),
                 creationTime: creationTime,
                 gridPosition: gridPosition,
@@ -711,11 +736,7 @@ extension MetalMapScene {
                         let delay = effect.delay
                             + definition.delayStart
                             + definition.delay
-                            + definition.delayOffset
-                            + definition.delayLate
                             + definition.duplicate.interval * TimeInterval(duplicateID)
-                            + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
-                            + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                         let renderResource = Effect3DRenderResource(
                             device: renderer.device,
                             asset: asset,
@@ -734,11 +755,7 @@ extension MetalMapScene {
                     for duplicateID in 0..<max(definition.duplicate.count, 1) {
                         let delay = effect.delay
                             + definition.delayStart
-                            + definition.delayOffset
-                            + definition.delayLate
                             + definition.duplicate.interval * TimeInterval(duplicateID)
-                            + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
-                            + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                         let renderResource = CylinderEffectRenderResource(
                             device: renderer.device,
                             asset: asset,
@@ -764,7 +781,7 @@ extension MetalMapScene {
                     effect.renderResources = [.str(renderResource)]
                 }
             } catch {
-                logger.warning("Metal map scene failed to load effect \(effect.effectID): \(error)")
+                logger.warning("Metal map scene failed to load effect \(effect.effectReference): \(error)")
             }
         }
     }

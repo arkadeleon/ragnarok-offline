@@ -5,16 +5,18 @@
 //  Created by Leon Li on 2026/4/30.
 //
 
-enum EffectReference: Sendable {
+public enum EffectReference: Sendable {
     case id(Int)
     case name(String)
+}
 
-    var effectID: Int? {
+extension EffectReference: CustomStringConvertible {
+    public var description: String {
         switch self {
         case .id(let effectID):
-            effectID
-        case .name:
-            nil
+            "\(effectID)"
+        case .name(let effectName):
+            effectName
         }
     }
 }
