@@ -44,7 +44,10 @@ public struct EffectAssetLoader: Sendable {
         var textureImages: [CGImage] = []
         for textureName in textureNames {
             let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
-            let image = try await resourceManager.image(at: texturePath)
+            let image = try await resourceManager.image(
+                at: texturePath,
+                removesMagentaPixels: textureName.lowercased().hasSuffix(".bmp")
+            )
             textureImages.append(image.cgImage)
         }
 

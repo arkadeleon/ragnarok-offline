@@ -59,10 +59,9 @@ public struct EffectAxes: Sendable {
 // - retreat:                        retreat
 // - movesFromSource:                fromSrc
 // - movesToSource:                  toSrc
-// - sizeStart:                      sizeStartX, sizeStartY
-// - sizeEnd:                        sizeEndX, sizeEndY
-// - sizeRandomRange:                sizeRand, sizeRandx
-// - sizeRandomMiddle:               sizeRandXMiddle, sizeRandYMiddle
+// - sizeStart:                      size, sizeX, sizeY, sizeStart, sizeStartX, sizeStartY, sizeRandXMiddle, sizeRandYMiddle
+// - sizeEnd:                        size, sizeX, sizeY, sizeEnd, sizeEndX, sizeEndY, sizeRandXMiddle, sizeRandYMiddle
+// - sizeRandomRange:                sizeRand, sizeRandX, sizeRandY
 // - smoothSize:                     sizeSmooth
 // - rotates:                        rotate
 // - rotatePosition:                 rotatePosX, rotatePosY, rotatePosZ
@@ -130,7 +129,6 @@ public struct Effect3DDefinition: Sendable {
     public var sizeStart: SIMD2<Float>
     public var sizeEnd: SIMD2<Float>
     public var sizeRandomRange: SIMD2<Float>
-    public var sizeRandomMiddle: SIMD2<Float>
     public var smoothSize: Bool
 
     public var rotates: Bool
@@ -221,10 +219,9 @@ extension EffectDefinition {
         retreat: Float = 0,
         movesFromSource: Bool = false,
         movesToSource: Bool = false,
-        sizeStart: SIMD2<Float> = [1, 1],
-        sizeEnd: SIMD2<Float> = [1, 1],
+        sizeStart: SIMD2<Float>,
+        sizeEnd: SIMD2<Float>,
         sizeRandomRange: SIMD2<Float> = .zero,
-        sizeRandomMiddle: SIMD2<Float> = .zero,
         smoothSize: Bool = false,
         rotates: Bool = false,
         rotatePosition: SIMD3<Float> = .zero,
@@ -289,7 +286,6 @@ extension EffectDefinition {
             sizeStart: sizeStart,
             sizeEnd: sizeEnd,
             sizeRandomRange: sizeRandomRange,
-            sizeRandomMiddle: sizeRandomMiddle,
             smoothSize: smoothSize,
             rotates: rotates,
             rotatePosition: rotatePosition,

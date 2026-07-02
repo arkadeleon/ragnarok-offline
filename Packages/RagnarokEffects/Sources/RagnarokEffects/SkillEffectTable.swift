@@ -27,6 +27,9 @@ public enum SkillEffectTable {
             effects: [.id(.ef_heal)],
             hitEffects: [.id(.ef_heal3)]
         ),
+        .al_incagi: .init(
+            effects: [.id(.ef_incagility)]
+        ),
     ]
 
     public static func effects(for skillID: SkillID) -> [EffectReference] {

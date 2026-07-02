@@ -107,12 +107,12 @@ public final class Effect3DRenderResource {
         }
 
         if definition.sizeRandomRange != .zero {
-            let randomSize = definition.sizeRandomMiddle + [
+            let randomSizeOffset: SIMD2<Float> = [
                 Float.random(in: -definition.sizeRandomRange.x...definition.sizeRandomRange.x),
                 Float.random(in: -definition.sizeRandomRange.y...definition.sizeRandomRange.y),
             ]
-            sizeStart = randomSize
-            sizeEnd = randomSize
+            sizeStart += randomSizeOffset
+            sizeEnd += randomSizeOffset
         }
 
         self.sizeStart = sizeStart
