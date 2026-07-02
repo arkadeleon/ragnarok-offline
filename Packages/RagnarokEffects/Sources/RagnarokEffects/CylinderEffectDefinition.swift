@@ -8,6 +8,34 @@
 import Foundation
 import simd
 
+// Ported from roBrowserLegacy EffectTable.js (Swift property → JS key):
+// - textureName:            textureName
+// - soundName:              wav
+// - attachedToTarget:       attachedEntity
+// - repeats:                repeat
+// - duration:               duration
+// - delayOffset:            delayOffset
+// - delayLate:              delayLate
+// - duplicate:              duplicate, timeBetweenDupli
+// - totalCircleSides:       totalCircleSides
+// - visibleCircleSides:     circleSides
+// - textureRepeatX:         repeatTextureX
+// - topRadius:              topSize
+// - bottomRadius:           bottomSize
+// - height:                 height
+// - color:                  red, green, blue
+// - alpha:                  alphaMax
+// - fades:                  fade
+// - animation:              animation, animationSpeed, animationOut
+// - blendMode:              blendMode
+// - positionOffset:         posX, posY, posZ
+// - rotationDegrees:        angleX, angleY, angleZ
+// - randomRotationDegrees:  angleZRandom
+// - rotatesContinuously:    rotate
+// - rotatesWithCamera:      rotateWithCamera
+// - rotatesToTarget:        rotateToTarget
+// - rotatesWithSource:      rotateWithSource
+// - fixedPerspective:       fixedPerspective
 public struct CylinderEffectDefinition: Sendable {
     public var textureName: String
     public var soundName: String?

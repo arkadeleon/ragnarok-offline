@@ -5,6 +5,11 @@
 //  Created by Leon Li on 2026/6/25.
 //
 
+// Ported from roBrowserLegacy EffectTable.js (Swift property → JS key):
+// - fileName:           file
+// - soundName:          wav
+// - attachedToTarget:   attachedEntity
+// - randomNumberRange:  rand
 public struct STREffectDefinition: Sendable {
     public var fileName: String
     public var soundName: String?

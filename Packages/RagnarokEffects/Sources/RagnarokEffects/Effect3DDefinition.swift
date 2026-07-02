@@ -16,6 +16,68 @@ public struct EffectAxes: Sendable {
     public static let none = EffectAxes(x: false, y: false, z: false)
 }
 
+// Ported from roBrowserLegacy EffectTable.js (Swift property → JS key):
+// - fileName:                       file
+// - fileNames:                      fileList
+// - frameDelay:                     frameDelay
+// - spriteName:                     spriteName
+// - absoluteSpriteName:             absoluteSpriteName
+// - playSprite:                     playSprite
+// - spriteFrameDelay:               sprDelay
+// - soundName:                      wav
+// - attachedToTarget:               attachedEntity
+// - repeats:                        repeat
+// - overlay:                        overlay
+// - duration:                       duration
+// - delayStart:                     delayStart
+// - delay:                          delayFrame
+// - delayOffset:                    delayOffset
+// - delayLate:                      delayLate
+// - delaySound:                     delayWav
+// - duplicate:                      duplicate, timeBetweenDupli
+// - color:                          red, green, blue
+// - alphaMin:                       alphaMin
+// - alphaMax:                       alphaMax
+// - fadesIn:                        fadeIn
+// - fadesOut:                       fadeOut
+// - blendMode:                      blendMode
+// - zIndex:                         zIndex
+// - castsShadow:                    shadowTexture
+// - positionStart:                  posxStart, posyStart, poszStart
+// - positionEnd:                    posxEnd, posyEnd, poszEnd
+// - positionRandomRange:            posxRand, posyRand, poszRand
+// - positionRandomDifferenceRange:  posxRandDiff, posyRandDiff, poszRandDiff
+// - positionStartRandomRange:       posxStartRand, posyStartRand, poszStartRand
+// - positionStartRandomMiddle:      posxStartRandMiddle, posyStartRandMiddle, poszStartRandMiddle
+// - positionEndRandomRange:         posxEndRand, posyEndRand, poszEndRand
+// - positionEndRandomMiddle:        posxEndRandMiddle, posyEndRandMiddle, poszEndRandMiddle
+// - smoothPositionAxes:             posxSmooth, posySmooth, poszSmooth
+// - offset:                         posx, posy, posz
+// - zOffsetStart:                   zOffsetStart
+// - zOffsetEnd:                     zOffsetEnd
+// - arc:                            arc
+// - retreat:                        retreat
+// - movesFromSource:                fromSrc
+// - movesToSource:                  toSrc
+// - sizeStart:                      sizeStartX, sizeStartY
+// - sizeEnd:                        sizeEndX, sizeEndY
+// - sizeRandomRange:                sizeRand, sizeRandx
+// - sizeRandomMiddle:               sizeRandXMiddle, sizeRandYMiddle
+// - smoothSize:                     sizeSmooth
+// - rotates:                        rotate
+// - rotatePosition:                 rotatePosX, rotatePosY, rotatePosZ
+// - rotationCount:                  nbOfRotation
+// - rotationDelay:                  rotateLate
+// - rotatesClockwise:               rotationClockwise
+// - angle:                          angle
+// - targetAngle:                    toAngle
+// - rotatesToTarget:                rotateToTarget
+// - rotatesWithCamera:              rotateWithCamera
+// - sparkles:                       sparkling
+// - sparkleCount:                   sparkNumber
+// - randomNumberRange:              rand
+// - soulStrikePattern:              soulStrikePattern
+// - drainPattern:                   drainPattern
 public struct Effect3DDefinition: Sendable {
     public var fileName: String?
     public var fileNames: [String]
