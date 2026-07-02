@@ -30,6 +30,9 @@ public enum SkillEffectTable {
         .al_incagi: .init(
             effects: [.id(.ef_incagility)]
         ),
+        .al_blessing: .init(
+            effects: [.id(.ef_blessing)]
+        ),
     ]
 
     public static func effects(for skillID: SkillID) -> [EffectReference] {

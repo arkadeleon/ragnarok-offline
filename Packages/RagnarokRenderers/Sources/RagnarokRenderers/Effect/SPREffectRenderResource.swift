@@ -60,7 +60,7 @@ public final class SPREffectRenderResource {
     }
 
     public func isExpired(atTime time: TimeInterval) -> Bool {
-        guard !definition.repeats, !definition.stopsAtEnd else {
+        if definition.stopsAtEnd {
             return false
         }
 
@@ -71,9 +71,13 @@ public final class SPREffectRenderResource {
 
         if let duration = definition.duration {
             return elapsedTime >= duration
-        } else {
-            return elapsedTime >= TimeInterval(textures.count) * frameInterval
         }
+
+        if definition.repeats {
+            return false
+        }
+
+        return elapsedTime >= TimeInterval(textures.count) * frameInterval
     }
 
     func texture(atTime time: TimeInterval) -> (any MTLTexture)? {
@@ -89,11 +93,8 @@ public final class SPREffectRenderResource {
         if definition.repeats {
             let frameIndex = Int(elapsedTime / frameInterval) % textures.count
             return textures[frameIndex]
-        } else if definition.stopsAtEnd {
-            let frameIndex = min(Int(elapsedTime / frameInterval), textures.count - 1)
-            return textures[frameIndex]
         } else {
-            let frameIndex = Int(elapsedTime / frameInterval) % textures.count
+            let frameIndex = min(Int(elapsedTime / frameInterval), textures.count - 1)
             return textures[frameIndex]
         }
     }

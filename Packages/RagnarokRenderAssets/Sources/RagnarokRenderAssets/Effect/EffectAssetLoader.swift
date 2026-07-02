@@ -37,21 +37,41 @@ public struct EffectAssetLoader: Sendable {
     }
 
     private func loadAsset(with definition: Effect3DDefinition) async throws -> Effect3DAsset {
-        let textureNames: [String]
-        if definition.fileNames.isEmpty {
-            textureNames = definition.fileName.map { [$0] } ?? []
-        } else {
-            textureNames = definition.fileNames
-        }
+        var textureImages: [CGImage]
 
-        var textureImages: [CGImage] = []
-        for textureName in textureNames {
-            let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
-            let image = try await resourceManager.image(
-                at: texturePath,
-                removesMagentaPixels: textureName.lowercased().hasSuffix(".bmp")
-            )
-            textureImages.append(image.cgImage)
+        if let spriteName = definition.spriteName {
+            let spritePath = ResourcePath.spriteDirectory
+                .appending(K2L("이팩트"))
+                .appending(spriteName)
+
+            async let actData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("act"))
+            async let sprData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("spr"))
+
+            let act = try await ACT(data: actData)
+            let spr = try await SPR(data: sprData)
+            let animation = act.action(at: 0)?.animation(using: spr.imagesBySpriteType())
+            textureImages = if definition.playSprite {
+                animation?.frames.compactMap { $0 } ?? []
+            } else {
+                animation?.frames.compactMap { $0 }.prefix(1).map { $0 } ?? []
+            }
+        } else {
+            let textureNames: [String]
+            if definition.fileNames.isEmpty {
+                textureNames = definition.fileName.map { [$0] } ?? []
+            } else {
+                textureNames = definition.fileNames
+            }
+
+            textureImages = []
+            for textureName in textureNames {
+                let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
+                let image = try await resourceManager.image(
+                    at: texturePath,
+                    removesMagentaPixels: textureName.lowercased().hasSuffix(".bmp")
+                )
+                textureImages.append(image.cgImage)
+            }
         }
 
         let asset = Effect3DAsset(definition: definition, textureImages: textureImages)
