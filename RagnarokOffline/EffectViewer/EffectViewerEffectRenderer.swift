@@ -49,13 +49,7 @@ class EffectViewerEffectRenderer: Renderer {
             case .`3D`(let asset):
                 let definition = asset.definition
                 for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                    let delay = definition.delayStart
-                        + definition.delay
-                        + definition.delayOffset
-                        + definition.delayLate
-                        + definition.duplicate.interval * TimeInterval(duplicateID)
-                        + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
-                        + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
+                    let delay = definition.delay(duplicateID: duplicateID)
                     let resource = Effect3DRenderResource(
                         device: device,
                         asset: asset,
@@ -69,12 +63,7 @@ class EffectViewerEffectRenderer: Renderer {
             case .cylinder(let asset):
                 let definition = asset.definition
                 for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                    let delay = definition.delayStart
-                        + definition.delayOffset
-                        + definition.delayLate
-                        + definition.duplicate.interval * TimeInterval(duplicateID)
-                        + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
-                        + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
+                    let delay = definition.delay(duplicateID: duplicateID)
                     let resource = CylinderEffectRenderResource(
                         device: device,
                         asset: asset,

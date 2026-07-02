@@ -74,6 +74,15 @@ public struct CylinderEffectDefinition: Sendable {
     public var rotatesWithSource: Bool
     public var fixedPerspective: Bool
 
+    public func delay(duplicateID: Int) -> TimeInterval {
+        delayStart
+            + delayOffset
+            + duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+            + delayLate
+            + duplicate.delayLateDelta * TimeInterval(duplicateID)
+            + duplicate.interval * TimeInterval(duplicateID)
+    }
+
     func resolved() -> CylinderEffectDefinition {
         guard randomRotationDegrees != .zero else {
             return self

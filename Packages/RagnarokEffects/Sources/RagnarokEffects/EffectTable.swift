@@ -84,7 +84,7 @@ public enum EffectTable {
             ),
             .`3D`(
                 fileName: "effect\\agi_up.bmp",
-                soundName: "effect\\ef_incagility",
+                soundName: "effect\\ef_incagility.wav",
                 attachedToTarget: true,
                 overlay: true,
                 duration: 1,

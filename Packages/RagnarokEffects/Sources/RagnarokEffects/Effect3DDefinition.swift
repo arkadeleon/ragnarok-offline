@@ -152,6 +152,16 @@ public struct Effect3DDefinition: Sendable {
         fileName ?? fileNames.first ?? absoluteSpriteName ?? spriteName ?? ""
     }
 
+    public func delay(duplicateID: Int) -> TimeInterval {
+        delayStart
+            + delay
+            + delayOffset
+            + duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+            + delayLate
+            + duplicate.delayLateDelta * TimeInterval(duplicateID)
+            + duplicate.interval * TimeInterval(duplicateID)
+    }
+
     func resolved() -> Effect3DDefinition {
         var definition = self
 

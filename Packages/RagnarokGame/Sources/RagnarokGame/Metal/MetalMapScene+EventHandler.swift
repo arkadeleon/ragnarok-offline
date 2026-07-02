@@ -733,10 +733,7 @@ extension MetalMapScene {
                     let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
                     var renderResources: [EffectRenderResource] = []
                     for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                        let delay = effect.delay
-                            + definition.delayStart
-                            + definition.delay
-                            + definition.duplicate.interval * TimeInterval(duplicateID)
+                        let delay = effect.delay + definition.delay(duplicateID: duplicateID)
                         let renderResource = Effect3DRenderResource(
                             device: renderer.device,
                             asset: asset,
@@ -753,9 +750,7 @@ extension MetalMapScene {
                     let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
                     var renderResources: [EffectRenderResource] = []
                     for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                        let delay = effect.delay
-                            + definition.delayStart
-                            + definition.duplicate.interval * TimeInterval(duplicateID)
+                        let delay = effect.delay + definition.delay(duplicateID: duplicateID)
                         let renderResource = CylinderEffectRenderResource(
                             device: renderer.device,
                             asset: asset,
