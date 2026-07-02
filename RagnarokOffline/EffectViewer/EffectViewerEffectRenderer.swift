@@ -73,6 +73,14 @@ class EffectViewerEffectRenderer: Renderer {
                     )
                     resources.append(.cylinder(resource))
                 }
+            case .spr(let asset):
+                let resource = SPREffectRenderResource(
+                    device: device,
+                    asset: asset,
+                    worldPosition: .zero,
+                    creationTime: time
+                )
+                resources.append(.spr(resource))
             case .str(let asset):
                 let resource = STREffectRenderResource(
                     device: device,

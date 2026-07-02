@@ -11,6 +11,7 @@ import simd
 public enum EffectDefinition: Sendable {
     case `3D`(Effect3DDefinition)
     case cylinder(CylinderEffectDefinition)
+    case spr(SPREffectDefinition)
     case str(STREffectDefinition)
 }
 
@@ -20,6 +21,8 @@ extension EffectDefinition {
         case .`3D`(let definition):
             definition.soundName
         case .cylinder(let definition):
+            definition.soundName
+        case .spr(let definition):
             definition.soundName
         case .str(let definition):
             definition.soundName
@@ -32,6 +35,8 @@ extension EffectDefinition {
             "3d:\(definition.primaryAssetName)"
         case .cylinder(let definition):
             "cylinder:\(definition.textureName)"
+        case .spr(let definition):
+            "spr:\(definition.fileName)"
         case .str(let definition):
             "str:\(definition.fileName)"
         }
@@ -43,6 +48,8 @@ extension EffectDefinition {
             .`3D`(definition.resolved())
         case .cylinder(let definition):
             .cylinder(definition.resolved())
+        case .spr(let definition):
+            .spr(definition)
         case .str(let definition):
             .str(definition.resolved())
         }

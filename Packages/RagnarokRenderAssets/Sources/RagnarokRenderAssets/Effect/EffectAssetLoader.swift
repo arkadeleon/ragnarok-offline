@@ -27,6 +27,9 @@ public struct EffectAssetLoader: Sendable {
         case .cylinder(let definition):
             let asset = try await loadAsset(with: definition)
             return .cylinder(asset)
+        case .spr(let definition):
+            let asset = try await loadAsset(with: definition)
+            return .spr(asset)
         case .str(let definition):
             let asset = try await loadAsset(with: definition)
             return .str(asset)
@@ -62,6 +65,35 @@ public struct EffectAssetLoader: Sendable {
         let image = try await resourceManager.image(at: texturePath)
 
         let asset = CylinderEffectAsset(definition: definition, textureImage: image.cgImage)
+        return asset
+    }
+
+    private func loadAsset(with definition: SPREffectDefinition) async throws -> SPREffectAsset {
+        let spritePath = ResourcePath.spriteDirectory
+            .appending(K2L("이팩트"))
+            .appending(definition.fileName)
+
+        async let actData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("act"))
+        async let sprData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("spr"))
+
+        let act = try await ACT(data: actData)
+        let spr = try await SPR(data: sprData)
+
+        let action = act.action(at: definition.actionIndex)
+        let animation = action?.animation(using: spr.imagesBySpriteType())
+        let frameImages = animation?.frames.compactMap { $0 } ?? []
+        let frameInterval = definition.frameInterval ?? TimeInterval(animation?.frameInterval ?? 1 / 12)
+        let frameSize = CGSize(
+            width: animation?.frameWidth ?? 0,
+            height: animation?.frameHeight ?? 0
+        )
+
+        let asset = SPREffectAsset(
+            definition: definition,
+            frameImages: frameImages,
+            frameInterval: frameInterval,
+            frameSize: frameSize
+        )
         return asset
     }
 

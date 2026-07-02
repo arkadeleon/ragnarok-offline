@@ -6,11 +6,13 @@
 //
 
 import CoreGraphics
+import Foundation
 import RagnarokEffects
 
 public enum EffectAsset: @unchecked Sendable {
     case `3D`(Effect3DAsset)
     case cylinder(CylinderEffectAsset)
+    case spr(SPREffectAsset)
     case str(STREffectAsset)
 }
 
@@ -22,6 +24,13 @@ public struct Effect3DAsset: Sendable {
 public struct CylinderEffectAsset: Sendable {
     public let definition: CylinderEffectDefinition
     public let textureImage: CGImage
+}
+
+public struct SPREffectAsset: Sendable {
+    public let definition: SPREffectDefinition
+    public let frameImages: [CGImage]
+    public let frameInterval: TimeInterval
+    public let frameSize: CGSize
 }
 
 public struct STREffectAsset {

@@ -761,6 +761,20 @@ extension MetalMapScene {
                         renderResources.append(.cylinder(renderResource))
                     }
                     effect.renderResources = renderResources
+                case .spr(let asset):
+                    let definition = asset.definition
+                    var worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                    if definition.rendersAtHead {
+                        worldPosition.y += 2.5
+                    }
+                    let renderResource = SPREffectRenderResource(
+                        device: renderer.device,
+                        asset: asset,
+                        worldPosition: worldPosition,
+                        creationTime: effect.creationTime,
+                        delay: effect.delay
+                    )
+                    effect.renderResources = [.spr(renderResource)]
                 case .str(let asset):
                     let renderResource = STREffectRenderResource(
                         device: renderer.device,

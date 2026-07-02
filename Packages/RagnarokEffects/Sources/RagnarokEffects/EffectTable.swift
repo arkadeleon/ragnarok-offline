@@ -99,6 +99,14 @@ public enum EffectTable {
                 smoothSize: true
             ),
         ],
+        .ef_aqua: [
+            .spr(
+                fileName: K2L("성수뜨기"),
+                soundName: "effect\\ef_aqua.wav",
+                attachedToTarget: true,
+                rendersAtHead: true
+            ),
+        ],
         .ef_firehit: [
             .str(
                 fileName: "firehit%d.str",

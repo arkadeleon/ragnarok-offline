@@ -13,6 +13,7 @@ public final class EffectRenderer {
 
     private let effect3DRenderer: Effect3DRenderer
     private let cylinderEffectRenderer: CylinderEffectRenderer
+    private let sprEffectRenderer: SPREffectRenderer
     private let strEffectRenderer: STREffectRenderer
 
     public init(device: any MTLDevice) throws {
@@ -20,6 +21,7 @@ public final class EffectRenderer {
 
         effect3DRenderer = try Effect3DRenderer(device: device)
         cylinderEffectRenderer = try CylinderEffectRenderer(device: device)
+        sprEffectRenderer = try SPREffectRenderer(device: device)
         strEffectRenderer = try STREffectRenderer(device: device)
     }
 
@@ -50,6 +52,14 @@ public final class EffectRenderer {
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
                 cameraAzimuth: cameraAzimuth
+            )
+        case .spr(let resource):
+            sprEffectRenderer.render(
+                resource: resource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                viewMatrix: viewMatrix,
+                projectionMatrix: projectionMatrix
             )
         case .str(let resource):
             strEffectRenderer.render(
