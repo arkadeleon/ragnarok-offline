@@ -19,7 +19,7 @@ public enum EffectParameters {
 
         public init(
             count: Int = 1,
-            interval: TimeInterval = 0.2,
+            interval: TimeInterval = 0,
             delayOffsetDelta: TimeInterval = 0,
             delayLateDelta: TimeInterval = 0,
             alphaMaxDelta: Float = 0,
