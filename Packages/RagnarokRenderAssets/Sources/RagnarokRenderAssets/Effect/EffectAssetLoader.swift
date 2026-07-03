@@ -19,7 +19,17 @@ public struct EffectAssetLoader: Sendable {
         self.resourceManager = resourceManager
     }
 
-    public func loadAsset(with definition: EffectDefinition) async throws -> EffectAsset {
+    public func loadAsset(with definitions: [EffectDefinition]) async throws -> EffectAsset {
+        var components: [EffectAssetComponent] = []
+        components.reserveCapacity(definitions.count)
+        for definition in definitions {
+            let component = try await loadComponent(with: definition)
+            components.append(component)
+        }
+        return EffectAsset(components: components)
+    }
+
+    private func loadComponent(with definition: EffectDefinition) async throws -> EffectAssetComponent {
         switch definition {
         case .`3D`(let definition):
             let asset = try await loadAsset(with: definition)

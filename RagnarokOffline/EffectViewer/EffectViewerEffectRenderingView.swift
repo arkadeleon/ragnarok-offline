@@ -52,14 +52,9 @@ struct EffectViewerEffectRenderingView: View {
 
         let device = MTLCreateSystemDefaultDevice()!
         let loader = EffectAssetLoader(resourceManager: resourceManager)
-        var assets: [EffectAsset] = []
+        let asset = try await loader.loadAsset(with: definitions)
 
-        for definition in definitions {
-            let asset = try await loader.loadAsset(with: definition)
-            assets.append(asset)
-        }
-
-        let renderer = try EffectViewerEffectRenderer(device: device, assets: assets)
+        let renderer = try EffectViewerEffectRenderer(device: device, asset: asset)
         return renderer
     }
 }

@@ -21,8 +21,8 @@ final class EffectAssetStore {
         self.loader = EffectAssetLoader(resourceManager: resourceManager)
     }
 
-    func asset(for definition: EffectDefinition) async throws -> EffectAsset {
-        let assetKey = definition.assetKey
+    func asset(for reference: EffectReference) async throws -> EffectAsset {
+        let assetKey = assetKey(for: reference)
         if let asset = assets[assetKey] {
             return asset
         }
@@ -31,7 +31,8 @@ final class EffectAssetStore {
         }
 
         let task = Task { [loader] in
-            try await loader.loadAsset(with: definition)
+            let definitions = EffectTable.definitions(for: reference).map({ $0.resolved() })
+            return try await loader.loadAsset(with: definitions)
         }
 
         loadTasks[assetKey] = task
@@ -54,5 +55,14 @@ final class EffectAssetStore {
 
         loadTasks.removeAll()
         assets.removeAll()
+    }
+
+    private func assetKey(for reference: EffectReference) -> String {
+        switch reference {
+        case .id(let effectID):
+            "id:\(effectID.rawValue)"
+        case .name(let name):
+            "name:\(name)"
+        }
     }
 }

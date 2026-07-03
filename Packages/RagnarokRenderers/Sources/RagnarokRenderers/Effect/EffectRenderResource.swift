@@ -7,7 +7,33 @@
 
 import Foundation
 
-public enum EffectRenderResource {
+public final class EffectRenderResource {
+    public let creationTime: TimeInterval
+    public let delay: TimeInterval
+    public let components: [EffectRenderResourceComponent]
+
+    public var rendersBeforeEntities: Bool {
+        components.contains(where: \.rendersBeforeEntities)
+    }
+
+    public init(
+        creationTime: TimeInterval,
+        delay: TimeInterval,
+        components: [EffectRenderResourceComponent]
+    ) {
+        self.creationTime = creationTime
+        self.delay = delay
+        self.components = components
+    }
+
+    public func isExpired(atTime time: TimeInterval) -> Bool {
+        !components.isEmpty && components.allSatisfy {
+            $0.isExpired(atTime: time)
+        }
+    }
+}
+
+public enum EffectRenderResourceComponent {
     case `3D`(Effect3DRenderResource)
     case cylinder(CylinderEffectRenderResource)
     case spr(SPREffectRenderResource)

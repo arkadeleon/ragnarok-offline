@@ -11,13 +11,13 @@ import RagnarokEffects
 import RagnarokShaders
 import simd
 
-final class CylinderEffectRenderer {
-    let device: any MTLDevice
+public final class CylinderEffectRenderer {
+    public let device: any MTLDevice
 
     private var renderPipelineStates: [EffectParameters.BlendMode : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice) throws {
         self.device = device
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
@@ -29,7 +29,7 @@ final class CylinderEffectRenderer {
         renderPipelineStates[commonBlendMode] = try makeRenderPipelineState(for: commonBlendMode)
     }
 
-    func render(
+    public func render(
         resource: CylinderEffectRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,

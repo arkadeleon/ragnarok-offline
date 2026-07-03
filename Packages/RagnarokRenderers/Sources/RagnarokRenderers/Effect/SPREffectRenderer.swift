@@ -10,13 +10,13 @@ import Metal
 import RagnarokShaders
 import simd
 
-final class SPREffectRenderer {
-    let device: any MTLDevice
+public final class SPREffectRenderer {
+    public let device: any MTLDevice
 
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice) throws {
         self.device = device
 
         let library = RagnarokShadersLibrary(device)!
@@ -39,7 +39,7 @@ final class SPREffectRenderer {
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    func render(
+    public func render(
         resource: SPREffectRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,

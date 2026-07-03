@@ -351,7 +351,7 @@ extension MetalMapScene {
         }
         let effects = Array(effects.values) + objects.values.flatMap(\.ownedEffects)
         renderer.effectRenderResources = effects
-            .flatMap(\.renderResources)
+            .compactMap(\.renderResource)
             .sorted {
                 $0.creationTime < $1.creationTime
             }

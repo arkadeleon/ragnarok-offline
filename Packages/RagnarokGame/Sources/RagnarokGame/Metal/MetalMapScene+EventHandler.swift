@@ -144,7 +144,7 @@ extension MetalMapScene {
         )
 
         if object.job == 45 { // JT_WARPNPC
-            addEffects(
+            addEffect(
                 for: .id(.ef_warpzone2),
                 creationTime: CACurrentMediaTime(),
                 gridPosition: position,
@@ -430,7 +430,7 @@ extension MetalMapScene {
         let currentTime = CACurrentMediaTime()
 
         for effectReference in SkillEffectTable.effects(for: skillID) {
-            addEffects(
+            addEffect(
                 for: effectReference,
                 creationTime: currentTime,
                 gridPosition: position,
@@ -615,7 +615,7 @@ extension MetalMapScene {
 
         for effectReference in SkillEffectTable.beforeHitEffects(for: skillID) {
             for i in 0..<count {
-                addEffects(
+                addEffect(
                     for: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
@@ -639,7 +639,7 @@ extension MetalMapScene {
 
         for effectReference in SkillEffectTable.hitEffects(for: skillID) {
             for i in 0..<count {
-                addEffects(
+                addEffect(
                     for: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
@@ -663,7 +663,7 @@ extension MetalMapScene {
         let currentTime = CACurrentMediaTime()
 
         for effectReference in SkillEffectTable.effects(for: skillID) {
-            addEffects(
+            addEffect(
                 for: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
@@ -674,7 +674,7 @@ extension MetalMapScene {
         }
     }
 
-    private func addEffects(
+    private func addEffect(
         for effectReference: EffectReference,
         creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
@@ -682,25 +682,17 @@ extension MetalMapScene {
         ownerObjectID: GameObjectID?,
         delay: TimeInterval
     ) {
-        let definitions = EffectTable.definitions(for: effectReference)
-        for definition in definitions {
-            let effect = MetalMapEffect(
-                effectReference: effectReference,
-                effectDefinition: definition.resolved(),
-                creationTime: creationTime,
-                gridPosition: gridPosition,
-                attachedObjectID: attachedObjectID,
-                delay: delay
-            )
-            addEffect(effect, ownerObjectID: ownerObjectID)
-        }
+        let effect = MetalMapEffect(
+            reference: effectReference,
+            creationTime: creationTime,
+            gridPosition: gridPosition,
+            attachedObjectID: attachedObjectID,
+            delay: delay
+        )
+        addEffect(effect, ownerObjectID: ownerObjectID)
     }
 
     private func addEffect(_ effect: MetalMapEffect, ownerObjectID: GameObjectID?) {
-        if let soundName = effect.effectDefinition.soundName {
-            audioPlayer.playSound(named: soundName, after: effect.delay)
-        }
-
         let effectID = effect.id
         let effectWorldPosition = mapGrid.worldPosition(for: effect.gridPosition)
         if let ownerObjectID {
@@ -722,75 +714,89 @@ extension MetalMapScene {
                     return
                 }
 
-                let asset = try await effectAssetStore.asset(for: effect.effectDefinition)
+                let asset = try await effectAssetStore.asset(for: effect.reference)
                 guard !Task.isCancelled else {
                     return
                 }
 
-                switch asset {
-                case .`3D`(let asset):
-                    let definition = asset.definition
-                    let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                    var renderResources: [EffectRenderResource] = []
-                    for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                        let delay = effect.delay + definition.delay(duplicateID: duplicateID)
-                        let renderResource = Effect3DRenderResource(
-                            device: renderer.device,
-                            asset: asset,
-                            worldPosition: worldPosition,
-                            creationTime: effect.creationTime,
-                            delay: delay,
-                            duplicateID: duplicateID
-                        )
-                        renderResources.append(.`3D`(renderResource))
+                for component in asset.components {
+                    if let soundName = component.definition.soundName {
+                        audioPlayer.playSound(named: soundName, after: effect.delay)
                     }
-                    effect.renderResources = renderResources
-                case .cylinder(let asset):
-                    let definition = asset.definition
-                    let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                    var renderResources: [EffectRenderResource] = []
-                    for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                        let delay = effect.delay + definition.delay(duplicateID: duplicateID)
-                        let renderResource = CylinderEffectRenderResource(
-                            device: renderer.device,
-                            asset: asset,
-                            worldPosition: worldPosition,
-                            creationTime: effect.creationTime,
-                            delay: delay
-                        )
-                        renderResources.append(.cylinder(renderResource))
-                    }
-                    effect.renderResources = renderResources
-                case .spr(let asset):
-                    let definition = asset.definition
-                    var worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                    if definition.rendersAtHead {
-                        worldPosition.y += 2.5
-                    }
-                    let renderResource = SPREffectRenderResource(
-                        device: renderer.device,
-                        asset: asset,
-                        worldPosition: worldPosition,
-                        creationTime: effect.creationTime,
-                        delay: effect.delay
-                    )
-                    effect.renderResources = [.spr(renderResource)]
-                case .str(let asset):
-                    let renderResource = STREffectRenderResource(
-                        device: renderer.device,
-                        asset: asset,
-                        spritePosition: [
-                            Float(effect.gridPosition.x),
-                            Float(effect.gridPosition.y),
-                            effectWorldPosition.y,
-                        ],
-                        creationTime: effect.creationTime,
-                        delay: effect.delay
-                    )
-                    effect.renderResources = [.str(renderResource)]
                 }
+
+                let components = asset.components.flatMap { component -> [EffectRenderResourceComponent] in
+                    switch component {
+                    case .`3D`(let asset):
+                        let definition = asset.definition
+                        let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                        var components: [EffectRenderResourceComponent] = []
+                        for duplicateID in 0..<max(definition.duplicate.count, 1) {
+                            let delay = effect.delay + definition.delay(duplicateID: duplicateID)
+                            let renderResource = Effect3DRenderResource(
+                                device: renderer.device,
+                                asset: asset,
+                                worldPosition: worldPosition,
+                                creationTime: effect.creationTime,
+                                delay: delay,
+                                duplicateID: duplicateID
+                            )
+                            components.append(.`3D`(renderResource))
+                        }
+                        return components
+                    case .cylinder(let asset):
+                        let definition = asset.definition
+                        let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                        var components: [EffectRenderResourceComponent] = []
+                        for duplicateID in 0..<max(definition.duplicate.count, 1) {
+                            let delay = effect.delay + definition.delay(duplicateID: duplicateID)
+                            let renderResource = CylinderEffectRenderResource(
+                                device: renderer.device,
+                                asset: asset,
+                                worldPosition: worldPosition,
+                                creationTime: effect.creationTime,
+                                delay: delay
+                            )
+                            components.append(.cylinder(renderResource))
+                        }
+                        return components
+                    case .spr(let asset):
+                        let definition = asset.definition
+                        var worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                        if definition.rendersAtHead {
+                            worldPosition.y += 2.5
+                        }
+                        let renderResource = SPREffectRenderResource(
+                            device: renderer.device,
+                            asset: asset,
+                            worldPosition: worldPosition,
+                            creationTime: effect.creationTime,
+                            delay: effect.delay
+                        )
+                        return [.spr(renderResource)]
+                    case .str(let asset):
+                        let renderResource = STREffectRenderResource(
+                            device: renderer.device,
+                            asset: asset,
+                            spritePosition: [
+                                Float(effect.gridPosition.x),
+                                Float(effect.gridPosition.y),
+                                effectWorldPosition.y,
+                            ],
+                            creationTime: effect.creationTime,
+                            delay: effect.delay
+                        )
+                        return [.str(renderResource)]
+                    }
+                }
+
+                effect.renderResource = EffectRenderResource(
+                    creationTime: effect.creationTime,
+                    delay: effect.delay,
+                    components: components
+                )
             } catch {
-                logger.warning("Metal map scene failed to load effect \(effect.effectReference): \(error)")
+                logger.warning("Metal map scene failed to load effect \(effect.reference): \(error)")
             }
         }
     }

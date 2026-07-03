@@ -34,7 +34,29 @@ public final class EffectRenderer {
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
-        switch resource {
+        for component in resource.components {
+            render(
+                component: component,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: modelMatrix,
+                viewMatrix: viewMatrix,
+                projectionMatrix: projectionMatrix,
+                cameraAzimuth: cameraAzimuth
+            )
+        }
+    }
+
+    public func render(
+        component: EffectRenderResourceComponent,
+        atTime time: TimeInterval,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        modelMatrix: simd_float4x4,
+        viewMatrix: simd_float4x4,
+        projectionMatrix: simd_float4x4,
+        cameraAzimuth: Float
+    ) {
+        switch component {
         case .`3D`(let resource):
             effect3DRenderer.render(
                 resource: resource,

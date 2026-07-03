@@ -10,7 +10,6 @@ import Foundation
 import Metal
 import QuartzCore
 import RagnarokCore
-import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokRenderAssets
 import RagnarokRenderers
@@ -24,7 +23,7 @@ class EffectViewerEffectRenderer: Renderer {
 
     let camera: OrbitalCamera
 
-    init(device: any MTLDevice, assets: [EffectAsset]) throws {
+    init(device: any MTLDevice, asset: EffectAsset) throws {
         self.device = device
 
         effectRenderer = try EffectRenderer(device: device)
@@ -38,16 +37,15 @@ class EffectViewerEffectRenderer: Renderer {
         camera.maximumDistance = 80
         camera.target = [0, 1.5, 0]
 
-        buildResources(from: assets, atTime: CACurrentMediaTime())
+        buildResource(from: asset, atTime: CACurrentMediaTime())
     }
 
-    private func buildResources(from assets: [EffectAsset], atTime time: TimeInterval) {
-        var resources: [EffectRenderResource] = []
-
-        for asset in assets {
-            switch asset {
+    private func buildResource(from asset: EffectAsset, atTime time: TimeInterval) {
+        let components = asset.components.flatMap { component -> [EffectRenderResourceComponent] in
+            switch component {
             case .`3D`(let asset):
                 let definition = asset.definition
+                var components: [EffectRenderResourceComponent] = []
                 for duplicateID in 0..<max(definition.duplicate.count, 1) {
                     let delay = definition.delay(duplicateID: duplicateID)
                     let resource = Effect3DRenderResource(
@@ -58,10 +56,12 @@ class EffectViewerEffectRenderer: Renderer {
                         delay: delay,
                         duplicateID: duplicateID
                     )
-                    resources.append(.`3D`(resource))
+                    components.append(.`3D`(resource))
                 }
+                return components
             case .cylinder(let asset):
                 let definition = asset.definition
+                var components: [EffectRenderResourceComponent] = []
                 for duplicateID in 0..<max(definition.duplicate.count, 1) {
                     let delay = definition.delay(duplicateID: duplicateID)
                     let resource = CylinderEffectRenderResource(
@@ -71,8 +71,9 @@ class EffectViewerEffectRenderer: Renderer {
                         creationTime: time,
                         delay: delay
                     )
-                    resources.append(.cylinder(resource))
+                    components.append(.cylinder(resource))
                 }
+                return components
             case .spr(let asset):
                 let resource = SPREffectRenderResource(
                     device: device,
@@ -80,7 +81,7 @@ class EffectViewerEffectRenderer: Renderer {
                     worldPosition: .zero,
                     creationTime: time
                 )
-                resources.append(.spr(resource))
+                return [.spr(resource)]
             case .str(let asset):
                 let resource = STREffectRenderResource(
                     device: device,
@@ -88,11 +89,17 @@ class EffectViewerEffectRenderer: Renderer {
                     spritePosition: .zero,
                     creationTime: time
                 )
-                resources.append(.str(resource))
+                return [.str(resource)]
             }
         }
 
-        effectResources = resources
+        effectResources = [
+            EffectRenderResource(
+                creationTime: time,
+                delay: 0,
+                components: components
+            )
+        ]
     }
 
     func render(

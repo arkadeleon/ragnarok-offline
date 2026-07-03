@@ -12,26 +12,23 @@ import simd
 
 final class MetalMapEffect: Identifiable {
     let id: UUID
-    let effectReference: EffectReference
-    let effectDefinition: EffectDefinition
+    let reference: EffectReference
     let creationTime: TimeInterval
     let gridPosition: SIMD2<Int>
     let attachedObjectID: GameObjectID?
     let delay: TimeInterval
 
-    var renderResources: [EffectRenderResource] = []
+    var renderResource: EffectRenderResource?
 
     init(
-        effectReference: EffectReference,
-        effectDefinition: EffectDefinition,
+        reference: EffectReference,
         creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
         attachedObjectID: GameObjectID?,
         delay: TimeInterval = 0
     ) {
         self.id = UUID()
-        self.effectReference = effectReference
-        self.effectDefinition = effectDefinition
+        self.reference = reference
         self.creationTime = creationTime
         self.gridPosition = gridPosition
         self.attachedObjectID = attachedObjectID
@@ -39,12 +36,10 @@ final class MetalMapEffect: Identifiable {
     }
 
     var isReady: Bool {
-        !renderResources.isEmpty
+        renderResource != nil
     }
 
     func isExpired(atTime time: TimeInterval) -> Bool {
-        !renderResources.isEmpty && renderResources.allSatisfy {
-            $0.isExpired(atTime: time)
-        }
+        renderResource?.isExpired(atTime: time) ?? false
     }
 }
