@@ -41,12 +41,12 @@ public final class SPREffectRenderer {
 
     public func render(
         resource: SPREffectRenderResource,
-        atTime time: TimeInterval,
+        elapsedTime: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4
     ) {
-        guard let texture = resource.texture(atTime: time) else {
+        guard let texture = resource.texture(elapsedTime: elapsedTime) else {
             return
         }
 

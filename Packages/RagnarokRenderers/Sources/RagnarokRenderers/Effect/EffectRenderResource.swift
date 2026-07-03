@@ -47,8 +47,6 @@ public final class EffectRenderResource {
                         device: device,
                         asset: asset,
                         worldPosition: worldPosition,
-                        creationTime: creationTime,
-                        delay: delay + definition.delay(duplicateID: duplicateID),
                         duplicateID: duplicateID
                     )
                     components.append(.`3D`(resource))
@@ -62,8 +60,7 @@ public final class EffectRenderResource {
                         device: device,
                         asset: asset,
                         worldPosition: worldPosition,
-                        creationTime: creationTime,
-                        delay: delay + definition.delay(duplicateID: duplicateID)
+                        duplicateID: duplicateID
                     )
                     components.append(.cylinder(resource))
                 }
@@ -76,18 +73,14 @@ public final class EffectRenderResource {
                 let resource = SPREffectRenderResource(
                     device: device,
                     asset: asset,
-                    worldPosition: worldPosition,
-                    creationTime: creationTime,
-                    delay: delay
+                    worldPosition: worldPosition
                 )
                 return [.spr(resource)]
             case .str(let asset):
                 let resource = STREffectRenderResource(
                     device: device,
                     asset: asset,
-                    spritePosition: spritePosition,
-                    creationTime: creationTime,
-                    delay: delay
+                    spritePosition: spritePosition
                 )
                 return [.str(resource)]
             }
@@ -97,8 +90,9 @@ public final class EffectRenderResource {
     }
 
     public func isExpired(atTime time: TimeInterval) -> Bool {
-        !components.isEmpty && components.allSatisfy {
-            $0.isExpired(atTime: time)
+        let elapsedTime = time - creationTime - delay
+        return !components.isEmpty && components.allSatisfy {
+            $0.isExpired(elapsedTime: elapsedTime)
         }
     }
 }
@@ -108,19 +102,6 @@ public enum EffectRenderResourceComponent {
     case cylinder(CylinderEffectRenderResource)
     case spr(SPREffectRenderResource)
     case str(STREffectRenderResource)
-
-    public var creationTime: TimeInterval {
-        switch self {
-        case .`3D`(let resource):
-            resource.creationTime
-        case .cylinder(let resource):
-            resource.creationTime
-        case .spr(let resource):
-            resource.creationTime
-        case .str(let resource):
-            resource.creationTime
-        }
-    }
 
     public var rendersBeforeEntities: Bool {
         switch self {
@@ -135,16 +116,16 @@ public enum EffectRenderResourceComponent {
         }
     }
 
-    public func isExpired(atTime time: TimeInterval) -> Bool {
+    public func isExpired(elapsedTime: TimeInterval) -> Bool {
         switch self {
         case .`3D`(let resource):
-            resource.isExpired(atTime: time)
+            resource.isExpired(elapsedTime: elapsedTime)
         case .cylinder(let resource):
-            resource.isExpired(atTime: time)
+            resource.isExpired(elapsedTime: elapsedTime)
         case .spr(let resource):
-            resource.isExpired(atTime: time)
+            resource.isExpired(elapsedTime: elapsedTime)
         case .str(let resource):
-            resource.isExpired(atTime: time)
+            resource.isExpired(elapsedTime: elapsedTime)
         }
     }
 }

@@ -15,30 +15,20 @@ public final class STREffectRenderResource {
     public let effect: STREffect
     public let textures: [String : any MTLTexture]
     public let spritePosition: SIMD3<Float>
-    public let creationTime: TimeInterval
-    public let delay: TimeInterval
-
-    public var startTime: TimeInterval {
-        creationTime + delay
-    }
 
     public convenience init(
         device: any MTLDevice,
         asset: STREffectAsset,
-        spritePosition: SIMD3<Float>,
-        creationTime: TimeInterval,
-        delay: TimeInterval = 0
+        spritePosition: SIMD3<Float>
     ) {
-        self.init(device: device, effect: asset.effect, textureImages: asset.textureImages, spritePosition: spritePosition, creationTime: creationTime, delay: delay)
+        self.init(device: device, effect: asset.effect, textureImages: asset.textureImages, spritePosition: spritePosition)
     }
 
     public init(
         device: any MTLDevice,
         effect: STREffect,
         textureImages: [String : CGImage],
-        spritePosition: SIMD3<Float>,
-        creationTime: TimeInterval,
-        delay: TimeInterval = 0
+        spritePosition: SIMD3<Float>
     ) {
         var textures: [String : any MTLTexture] = [:]
         for (textureName, textureImage) in textureImages {
@@ -50,13 +40,10 @@ public final class STREffectRenderResource {
         self.effect = effect
         self.textures = textures
         self.spritePosition = spritePosition
-        self.creationTime = creationTime
-        self.delay = delay
     }
 
-    public func isExpired(atTime time: TimeInterval) -> Bool {
+    public func isExpired(elapsedTime: TimeInterval) -> Bool {
         let duration = TimeInterval(effect.frames.count) / TimeInterval(effect.fps)
-        let elapsedTime = time - startTime
         guard elapsedTime >= 0 else {
             return false
         }

@@ -28,8 +28,7 @@ public final class Effect3DRenderResource {
     public let textures: [any MTLTexture]
     public let textureSizeFactors: [SIMD2<Float>]
     public let worldPosition: SIMD3<Float>
-    public let creationTime: TimeInterval
-    public let delay: TimeInterval
+    public let duplicateID: Int
 
     private let positionStart: SIMD3<Float>
     private let positionEnd: SIMD3<Float>
@@ -37,10 +36,6 @@ public final class Effect3DRenderResource {
     private let sizeEnd: SIMD2<Float>
     private let alphaMax: Float
     private let rotationDelay: TimeInterval
-
-    public var startTime: TimeInterval {
-        creationTime + delay
-    }
 
     public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
@@ -50,8 +45,6 @@ public final class Effect3DRenderResource {
         device: any MTLDevice,
         asset: Effect3DAsset,
         worldPosition: SIMD3<Float>,
-        creationTime: TimeInterval,
-        delay: TimeInterval = 0,
         duplicateID: Int = 0
     ) {
         self.definition = asset.definition
@@ -68,8 +61,7 @@ public final class Effect3DRenderResource {
         }
         self.textureSizeFactors = asset.textures.map(\.sizeFactor)
         self.worldPosition = worldPosition
-        self.creationTime = creationTime
-        self.delay = delay
+        self.duplicateID = duplicateID
 
         var positionStart = definition.positionStart
         var positionEnd = definition.positionEnd
@@ -123,12 +115,12 @@ public final class Effect3DRenderResource {
         self.rotationDelay = definition.rotationDelay + definition.duplicate.rotationDelayDelta * TimeInterval(duplicateID)
     }
 
-    public func isExpired(atTime time: TimeInterval) -> Bool {
+    public func isExpired(elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats, let duration = definition.duration else {
             return false
         }
 
-        let elapsedTime = time - startTime
+        let elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
         guard elapsedTime >= 0 else {
             return false
         }
@@ -136,8 +128,8 @@ public final class Effect3DRenderResource {
         return elapsedTime >= duration
     }
 
-    func snapshot(atTime time: TimeInterval, cameraAzimuth: Float) -> Snapshot? {
-        guard !textures.isEmpty, var elapsedTime = elapsedTime(atTime: time) else {
+    func snapshot(elapsedTime: TimeInterval, cameraAzimuth: Float) -> Snapshot? {
+        guard !textures.isEmpty, var elapsedTime = componentElapsedTime(elapsedTime: elapsedTime) else {
             return nil
         }
 
@@ -147,7 +139,7 @@ public final class Effect3DRenderResource {
         }
 
         let progress = Self.progress(elapsedTime: elapsedTime, duration: duration)
-        let textureIndex = textureIndex(atElapsedTime: elapsedTime)
+        let textureIndex = textureIndex(elapsedTime: elapsedTime)
         let texture = textures[textureIndex]
         let position = worldPosition + Self.worldOffset(forMapOffset: animatedPosition(progress: progress))
         let size = animatedSize(progress: progress) * textureSizeFactor(at: textureIndex)
@@ -163,15 +155,15 @@ public final class Effect3DRenderResource {
         )
     }
 
-    private func elapsedTime(atTime time: TimeInterval) -> TimeInterval? {
-        let elapsedTime = time - startTime
+    private func componentElapsedTime(elapsedTime: TimeInterval) -> TimeInterval? {
+        let elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
         guard elapsedTime >= 0 else {
             return nil
         }
         return elapsedTime
     }
 
-    private func textureIndex(atElapsedTime elapsedTime: TimeInterval) -> Int {
+    private func textureIndex(elapsedTime: TimeInterval) -> Int {
         guard textures.count > 1, definition.frameDelay > 0 else {
             return 0
         }

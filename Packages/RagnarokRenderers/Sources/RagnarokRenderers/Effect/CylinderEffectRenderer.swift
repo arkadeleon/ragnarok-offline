@@ -31,13 +31,13 @@ public final class CylinderEffectRenderer {
 
     public func render(
         resource: CylinderEffectRenderResource,
-        atTime time: TimeInterval,
+        elapsedTime: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
-        guard let snapshot = resource.snapshot(atTime: time, cameraAzimuth: cameraAzimuth),
+        guard let snapshot = resource.snapshot(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth),
               !resource.vertices.isEmpty,
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return

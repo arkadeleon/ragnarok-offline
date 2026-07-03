@@ -160,6 +160,8 @@ public enum EffectRenderResourceComponent {
 }
 ```
 
+`creationTime` and event-level `delay` should be stored only on `EffectRenderResource`. Primitive component resources should not store those values. During rendering and expiration checks, `EffectRenderer` should pass the aggregate start time to the primitive renderer/component resource. Definition-authored offsets such as duplicate delay remain derived from each component's definition.
+
 The current enum-style `EffectRenderResource` should become `EffectRenderResourceComponent`. The new top-level `EffectRenderResource` should provide the same aggregate conveniences that callers need:
 
 ```swift
@@ -285,13 +287,13 @@ let resource = STREffectRenderResource(
     device: device,
     effect: effect,
     textureImages: textureImages,
-    spritePosition: .zero,
-    creationTime: CACurrentMediaTime()
+    spritePosition: .zero
 )
+let creationTime = CACurrentMediaTime()
 
 strEffectRenderer.render(
     resource: resource,
-    atTime: time,
+    atTime: time - creationTime,
     renderCommandEncoder: renderCommandEncoder,
     modelMatrix: modelMatrix,
     viewMatrix: viewMatrix,
@@ -301,7 +303,7 @@ strEffectRenderer.render(
 
 That means `STREffectRenderer` and `STREffectRenderResource` should remain usable directly by file-preview tooling. `STRFilePreviewRenderer` should not use `EffectAssetStore`, because that store is intentionally keyed by `EffectReference`.
 
-If sharing dispatch code is valuable, add a small primitive/component rendering API such as `EffectRenderer.render(component: EffectRenderResourceComponent, ...)`. The existing whole-effect `render(resource: EffectRenderResource, ...)` API should remain the normal game/effect-viewer path.
+If sharing dispatch code is valuable, add a small primitive/component rendering API such as `EffectRenderer.render(component: EffectRenderResourceComponent, atTime elapsedTime: TimeInterval, ...)`. The existing whole-effect `render(resource: EffectRenderResource, ...)` API should remain the normal game/effect-viewer path.
 
 ## Layer Responsibilities
 

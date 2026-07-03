@@ -19,6 +19,7 @@ public class STRFilePreviewRenderer: Renderer {
 
     let effectRenderer: STREffectRenderer
     let effectResource: STREffectRenderResource
+    let creationTime: TimeInterval
 
     public let camera = Camera()
 
@@ -30,9 +31,9 @@ public class STRFilePreviewRenderer: Renderer {
             device: device,
             effect: effect,
             textureImages: textureImages,
-            spritePosition: .zero,
-            creationTime: CACurrentMediaTime()
+            spritePosition: .zero
         )
+        creationTime = CACurrentMediaTime()
 
         camera.fovy = 15
         camera.nearZ = 1
@@ -67,7 +68,7 @@ public class STRFilePreviewRenderer: Renderer {
 
         effectRenderer.render(
             resource: effectResource,
-            atTime: time,
+            elapsedTime: time - creationTime,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,

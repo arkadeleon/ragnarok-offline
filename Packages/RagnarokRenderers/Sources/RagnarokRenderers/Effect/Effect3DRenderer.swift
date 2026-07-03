@@ -37,13 +37,13 @@ public final class Effect3DRenderer {
 
     public func render(
         resource: Effect3DRenderResource,
-        atTime time: TimeInterval,
+        elapsedTime: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
-        guard let snapshot = resource.snapshot(atTime: time, cameraAzimuth: cameraAzimuth),
+        guard let snapshot = resource.snapshot(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }

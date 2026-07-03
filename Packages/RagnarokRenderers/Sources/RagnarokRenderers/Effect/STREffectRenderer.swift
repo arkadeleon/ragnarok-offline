@@ -31,7 +31,7 @@ public final class STREffectRenderer {
 
     public func render(
         resource: STREffectRenderResource,
-        atTime time: TimeInterval,
+        elapsedTime: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
@@ -42,7 +42,6 @@ public final class STREffectRenderer {
             return
         }
 
-        let elapsedTime = time - resource.startTime
         guard elapsedTime >= 0 else {
             return
         }

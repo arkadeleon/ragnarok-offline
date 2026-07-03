@@ -27,12 +27,7 @@ public final class CylinderEffectRenderResource {
     public let texture: (any MTLTexture)?
 
     public let worldPosition: SIMD3<Float>
-    public let creationTime: TimeInterval
-    public let delay: TimeInterval
-
-    public var startTime: TimeInterval {
-        creationTime + delay
-    }
+    public let duplicateID: Int
 
     public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
@@ -42,8 +37,7 @@ public final class CylinderEffectRenderResource {
         device: any MTLDevice,
         asset: CylinderEffectAsset,
         worldPosition: SIMD3<Float>,
-        creationTime: TimeInterval,
-        delay: TimeInterval = 0
+        duplicateID: Int = 0
     ) {
         self.definition = asset.definition
         self.vertices = Self.makeVertices(
@@ -53,16 +47,15 @@ public final class CylinderEffectRenderResource {
         )
         self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "cylinderEffect")
         self.worldPosition = worldPosition
-        self.creationTime = creationTime
-        self.delay = delay
+        self.duplicateID = duplicateID
     }
 
-    public func isExpired(atTime time: TimeInterval) -> Bool {
+    public func isExpired(elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats, let duration = definition.duration else {
             return false
         }
 
-        let elapsedTime = time - startTime
+        let elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
         guard elapsedTime >= 0 else {
             return false
         }
@@ -70,8 +63,8 @@ public final class CylinderEffectRenderResource {
         return elapsedTime >= duration
     }
 
-    func snapshot(atTime time: TimeInterval, cameraAzimuth: Float) -> Snapshot? {
-        guard var elapsedTime = elapsedTime(atTime: time) else {
+    func snapshot(elapsedTime: TimeInterval, cameraAzimuth: Float) -> Snapshot? {
+        guard var elapsedTime = componentElapsedTime(elapsedTime: elapsedTime) else {
             return nil
         }
 
@@ -128,23 +121,23 @@ public final class CylinderEffectRenderResource {
             bottomRadius: max(bottomRadius, 0),
             height: max(height, 0),
             color: SIMD4<Float>(definition.color, alpha),
-            rotationMatrix: rotationMatrix(atTime: time, cameraAzimuth: cameraAzimuth)
+            rotationMatrix: rotationMatrix(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth)
         )
     }
 
-    private func elapsedTime(atTime time: TimeInterval) -> TimeInterval? {
-        let elapsedTime = time - startTime
+    private func componentElapsedTime(elapsedTime: TimeInterval) -> TimeInterval? {
+        let elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
         guard elapsedTime >= 0 else {
             return nil
         }
         return elapsedTime
     }
 
-    private func rotationMatrix(atTime time: TimeInterval, cameraAzimuth: Float) -> simd_float4x4 {
+    private func rotationMatrix(elapsedTime: TimeInterval, cameraAzimuth: Float) -> simd_float4x4 {
         var matrix = matrix_identity_float4x4
 
         if definition.rotatesContinuously {
-            matrix = matrix_rotate(matrix, Float(time) * 250 / 180 * .pi, [0, 1, 0])
+            matrix = matrix_rotate(matrix, Float(elapsedTime) * 250 / 180 * .pi, [0, 1, 0])
         }
 
         let rotationDegrees = definition.rotationDegrees

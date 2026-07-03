@@ -34,10 +34,11 @@ public final class EffectRenderer {
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
+        let elapsedTime = time - resource.creationTime - resource.delay
         for component in resource.components {
             render(
                 component: component,
-                atTime: time,
+                elapsedTime: elapsedTime,
                 renderCommandEncoder: renderCommandEncoder,
                 modelMatrix: modelMatrix,
                 viewMatrix: viewMatrix,
@@ -49,7 +50,7 @@ public final class EffectRenderer {
 
     public func render(
         component: EffectRenderResourceComponent,
-        atTime time: TimeInterval,
+        elapsedTime: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
@@ -60,7 +61,7 @@ public final class EffectRenderer {
         case .`3D`(let resource):
             effect3DRenderer.render(
                 resource: resource,
-                atTime: time,
+                elapsedTime: elapsedTime,
                 renderCommandEncoder: renderCommandEncoder,
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
@@ -69,7 +70,7 @@ public final class EffectRenderer {
         case .cylinder(let resource):
             cylinderEffectRenderer.render(
                 resource: resource,
-                atTime: time,
+                elapsedTime: elapsedTime,
                 renderCommandEncoder: renderCommandEncoder,
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
@@ -78,7 +79,7 @@ public final class EffectRenderer {
         case .spr(let resource):
             sprEffectRenderer.render(
                 resource: resource,
-                atTime: time,
+                elapsedTime: elapsedTime,
                 renderCommandEncoder: renderCommandEncoder,
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix
@@ -86,7 +87,7 @@ public final class EffectRenderer {
         case .str(let resource):
             strEffectRenderer.render(
                 resource: resource,
-                atTime: time,
+                elapsedTime: elapsedTime,
                 renderCommandEncoder: renderCommandEncoder,
                 modelMatrix: modelMatrix,
                 viewMatrix: viewMatrix,
