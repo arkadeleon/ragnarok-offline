@@ -32,6 +32,7 @@ public final class CylinderEffectRenderer {
     public func render(
         resource: CylinderEffectRenderResource,
         elapsedTime: TimeInterval,
+        worldPosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4,
@@ -47,7 +48,7 @@ public final class CylinderEffectRenderer {
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             rotationMatrix: snapshot.rotationMatrix,
-            worldPosition: resource.worldPosition,
+            worldPosition: worldPosition,
             positionOffset: resource.definition.positionOffset,
             topRadius: snapshot.topRadius,
             bottomRadius: snapshot.bottomRadius,

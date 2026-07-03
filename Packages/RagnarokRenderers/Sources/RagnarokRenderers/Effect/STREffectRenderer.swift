@@ -32,6 +32,7 @@ public final class STREffectRenderer {
     public func render(
         resource: STREffectRenderResource,
         elapsedTime: TimeInterval,
+        spritePosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
@@ -66,7 +67,7 @@ public final class STREffectRenderer {
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
                 spriteAngle: matrix_identity_float4x4,
-                spritePosition: resource.spritePosition,
+                spritePosition: spritePosition,
                 spriteOffset: sprite.position - [320, 320]
             )
             guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<STREffectVertexUniforms>.stride, options: []) else {

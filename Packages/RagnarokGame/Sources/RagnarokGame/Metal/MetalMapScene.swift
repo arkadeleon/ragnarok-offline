@@ -350,11 +350,8 @@ extension MetalMapScene {
             }
         }
         let effects = Array(effects.values) + objects.values.flatMap(\.ownedEffects)
-        renderer.effectRenderResources = effects
-            .compactMap(\.renderResource)
-            .sorted {
-                $0.creationTime < $1.creationTime
-            }
+        renderer.objects = objects
+        renderer.effects = effects
 
         refreshSpriteDrawables()
         updateCameraTarget()
@@ -488,7 +485,8 @@ extension MetalMapScene {
         renderer.modelResources.removeAll()
         renderer.spriteDrawables.removeAll()
         renderer.combatTextRenderResources.removeAll()
-        renderer.effectRenderResources.removeAll()
+        renderer.objects.removeAll()
+        renderer.effects.removeAll()
         renderer.tileSelectorResource = nil
     }
 }

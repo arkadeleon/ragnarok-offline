@@ -41,7 +41,8 @@ final class MetalMapRenderer: Renderer {
     var modelResources: [RSMModelRenderResource] = []
     var spriteDrawables: [SpriteLayerDrawable] = []
     var combatTextRenderResources: [CombatTextRenderResource] = []
-    var effectRenderResources: [EffectRenderResource] = []
+    var objects: [GameObjectID : MetalMapObject] = [:]
+    var effects: [MetalMapEffect] = []
     var tileSelectorResource: TileSelectorRenderResource?
 
     private var cameraState = MapCameraState()
@@ -127,7 +128,7 @@ final class MetalMapRenderer: Renderer {
         }
 
         renderEffects(
-            effectRenderResources.filter(\.rendersBeforeEntities),
+            effects.filter { $0.renderResource?.rendersBeforeEntities == true },
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
@@ -151,7 +152,7 @@ final class MetalMapRenderer: Renderer {
         )
 
         renderEffects(
-            effectRenderResources.filter { !$0.rendersBeforeEntities },
+            effects.filter { $0.renderResource?.rendersBeforeEntities == false },
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
@@ -170,19 +171,44 @@ final class MetalMapRenderer: Renderer {
     }
 
     private func renderEffects(
-        _ resources: [EffectRenderResource],
+        _ effects: [MetalMapEffect],
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: RenderMatrices
     ) {
-        let sortedResources = resources.sorted {
-            $0.creationTime < $1.creationTime
+        let sortedEffects = effects.sorted {
+            guard let lhsCreationTime = $0.renderResource?.creationTime else {
+                return false
+            }
+            guard let rhsCreationTime = $1.renderResource?.creationTime else {
+                return true
+            }
+            return lhsCreationTime < rhsCreationTime
         }
 
-        for resource in sortedResources {
+        for effect in sortedEffects {
+            guard let resource = effect.renderResource else {
+                continue
+            }
+
+            let targetObject = effect.targetObjectID.flatMap { objects[$0] }
+            let worldPosition = targetObject?.worldPosition
+            let spritePosition = targetObject.map {
+                let worldPosition = $0.worldPosition
+                return SIMD3<Float>(
+                    worldPosition.x - 0.5,
+                    -worldPosition.z - 0.5,
+                    worldPosition.y
+                )
+            }
+
             effectRenderer.render(
                 resource: resource,
                 atTime: time,
+                worldPosition: effect.worldPosition,
+                spritePosition: effect.spritePosition,
+                attachedWorldPosition: worldPosition,
+                attachedSpritePosition: spritePosition,
                 renderCommandEncoder: renderCommandEncoder,
                 modelMatrix: matrices.modelMatrix,
                 viewMatrix: matrices.viewMatrix,

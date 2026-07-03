@@ -26,19 +26,13 @@ public final class CylinderEffectRenderResource {
     public let vertices: [CylinderEffectVertex]
     public let texture: (any MTLTexture)?
 
-    public let worldPosition: SIMD3<Float>
     public let duplicateID: Int
 
     public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
     }
 
-    public init(
-        device: any MTLDevice,
-        asset: CylinderEffectAsset,
-        worldPosition: SIMD3<Float>,
-        duplicateID: Int = 0
-    ) {
+    public init(device: any MTLDevice, asset: CylinderEffectAsset, duplicateID: Int = 0) {
         self.definition = asset.definition
         self.vertices = Self.makeVertices(
             totalCircleSides: definition.totalCircleSides,
@@ -46,7 +40,6 @@ public final class CylinderEffectRenderResource {
             textureRepeatX: definition.textureRepeatX
         )
         self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "cylinderEffect")
-        self.worldPosition = worldPosition
         self.duplicateID = duplicateID
     }
 

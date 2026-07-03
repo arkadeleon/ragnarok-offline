@@ -18,17 +18,12 @@ public final class SPREffectRenderResource {
     public let textures: [any MTLTexture]
     public let frameInterval: TimeInterval
     public let frameSize: SIMD2<Float>
-    public let worldPosition: SIMD3<Float>
 
     public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
     }
 
-    public init(
-        device: any MTLDevice,
-        asset: SPREffectAsset,
-        worldPosition: SIMD3<Float>
-    ) {
+    public init(device: any MTLDevice, asset: SPREffectAsset) {
         self.definition = asset.definition
         self.vertices = [
             SPREffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
@@ -46,7 +41,6 @@ public final class SPREffectRenderResource {
             Float(asset.frameSize.width),
             Float(asset.frameSize.height),
         ]
-        self.worldPosition = worldPosition + [definition.spriteOffset.x / 35, -definition.spriteOffset.y / 35, 0]
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
@@ -67,6 +61,15 @@ public final class SPREffectRenderResource {
         }
 
         return elapsedTime >= TimeInterval(textures.count) * frameInterval
+    }
+
+    func renderWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
+        var basePosition = worldPosition
+        if definition.rendersAtHead {
+            basePosition.y += 2.5
+        }
+
+        return basePosition + [definition.spriteOffset.x / 35, -definition.spriteOffset.y / 35, 0]
     }
 
     func texture(elapsedTime: TimeInterval) -> (any MTLTexture)? {

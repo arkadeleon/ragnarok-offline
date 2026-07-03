@@ -27,7 +27,6 @@ public final class Effect3DRenderResource {
     public let vertices: [Effect3DVertex]
     public let textures: [any MTLTexture]
     public let textureSizeFactors: [SIMD2<Float>]
-    public let worldPosition: SIMD3<Float>
     public let duplicateID: Int
 
     private let positionStart: SIMD3<Float>
@@ -41,12 +40,7 @@ public final class Effect3DRenderResource {
         definition.rendersBeforeEntities
     }
 
-    public init(
-        device: any MTLDevice,
-        asset: Effect3DAsset,
-        worldPosition: SIMD3<Float>,
-        duplicateID: Int = 0
-    ) {
+    public init(device: any MTLDevice, asset: Effect3DAsset, duplicateID: Int = 0) {
         self.definition = asset.definition
         self.vertices = [
             Effect3DVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
@@ -60,7 +54,6 @@ public final class Effect3DRenderResource {
             MetalTextureFactory.makeTexture(from: texture.image, device: device, label: "effect3D[\(index)]")
         }
         self.textureSizeFactors = asset.textures.map(\.sizeFactor)
-        self.worldPosition = worldPosition
         self.duplicateID = duplicateID
 
         var positionStart = definition.positionStart
@@ -128,7 +121,7 @@ public final class Effect3DRenderResource {
         return elapsedTime >= duration
     }
 
-    func snapshot(elapsedTime: TimeInterval, cameraAzimuth: Float) -> Snapshot? {
+    func snapshot(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Snapshot? {
         guard !textures.isEmpty, var elapsedTime = componentElapsedTime(elapsedTime: elapsedTime) else {
             return nil
         }

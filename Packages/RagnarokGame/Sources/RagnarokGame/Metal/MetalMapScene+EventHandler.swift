@@ -148,7 +148,7 @@ extension MetalMapScene {
                 for: .id(.ef_warpzone2),
                 creationTime: CACurrentMediaTime(),
                 gridPosition: position,
-                attachedObjectID: object.objectID,
+                targetObjectID: object.objectID,
                 ownerObjectID: object.objectID,
                 delay: 0
             )
@@ -434,7 +434,7 @@ extension MetalMapScene {
                 for: effectReference,
                 creationTime: currentTime,
                 gridPosition: position,
-                attachedObjectID: nil,
+                targetObjectID: nil,
                 ownerObjectID: nil,
                 delay: 0
             )
@@ -619,7 +619,7 @@ extension MetalMapScene {
                     for: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
-                    attachedObjectID: objectSkill.targetObjectID,
+                    targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: .milliseconds(200 * i)
                 )
@@ -643,7 +643,7 @@ extension MetalMapScene {
                     for: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
-                    attachedObjectID: objectSkill.targetObjectID,
+                    targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
                 )
@@ -667,7 +667,7 @@ extension MetalMapScene {
                 for: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
-                attachedObjectID: objectSkill.targetObjectID,
+                targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil,
                 delay: .milliseconds(objectSkill.attackDelay)
             )
@@ -678,15 +678,22 @@ extension MetalMapScene {
         for effectReference: EffectReference,
         creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
-        attachedObjectID: GameObjectID?,
+        targetObjectID: GameObjectID?,
         ownerObjectID: GameObjectID?,
         delay: TimeInterval
     ) {
+        let worldPosition = mapGrid.worldPosition(for: gridPosition)
         let effect = MetalMapEffect(
             reference: effectReference,
             creationTime: creationTime,
             gridPosition: gridPosition,
-            attachedObjectID: attachedObjectID,
+            worldPosition: worldPosition,
+            spritePosition: [
+                Float(gridPosition.x),
+                Float(gridPosition.y),
+                worldPosition.y,
+            ],
+            targetObjectID: targetObjectID,
             delay: delay
         )
         addEffect(effect, ownerObjectID: ownerObjectID)
@@ -694,7 +701,6 @@ extension MetalMapScene {
 
     private func addEffect(_ effect: MetalMapEffect, ownerObjectID: GameObjectID?) {
         let effectID = effect.id
-        let effectWorldPosition = mapGrid.worldPosition(for: effect.gridPosition)
         if let ownerObjectID {
             objects[ownerObjectID]?.ownedEffects.append(effect)
         } else {
@@ -725,18 +731,9 @@ extension MetalMapScene {
                     }
                 }
 
-                let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                let spritePosition = SIMD3<Float>(
-                    Float(effect.gridPosition.x),
-                    Float(effect.gridPosition.y),
-                    effectWorldPosition.y
-                )
-
                 effect.renderResource = EffectRenderResource(
                     device: renderer.device,
                     asset: asset,
-                    worldPosition: worldPosition,
-                    spritePosition: spritePosition,
                     creationTime: effect.creationTime,
                     delay: effect.delay
                 )

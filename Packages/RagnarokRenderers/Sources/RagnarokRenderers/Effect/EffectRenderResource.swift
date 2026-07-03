@@ -32,8 +32,6 @@ public final class EffectRenderResource {
     public convenience init(
         device: any MTLDevice,
         asset: EffectAsset,
-        worldPosition: SIMD3<Float>,
-        spritePosition: SIMD3<Float>,
         creationTime: TimeInterval,
         delay: TimeInterval = 0
     ) {
@@ -46,7 +44,6 @@ public final class EffectRenderResource {
                     let resource = Effect3DRenderResource(
                         device: device,
                         asset: asset,
-                        worldPosition: worldPosition,
                         duplicateID: duplicateID
                     )
                     components.append(.`3D`(resource))
@@ -59,28 +56,21 @@ public final class EffectRenderResource {
                     let resource = CylinderEffectRenderResource(
                         device: device,
                         asset: asset,
-                        worldPosition: worldPosition,
                         duplicateID: duplicateID
                     )
                     components.append(.cylinder(resource))
                 }
                 return components
             case .spr(let asset):
-                var worldPosition = worldPosition
-                if asset.definition.rendersAtHead {
-                    worldPosition.y += 2.5
-                }
                 let resource = SPREffectRenderResource(
                     device: device,
-                    asset: asset,
-                    worldPosition: worldPosition
+                    asset: asset
                 )
                 return [.spr(resource)]
             case .str(let asset):
                 let resource = STREffectRenderResource(
                     device: device,
-                    asset: asset,
-                    spritePosition: spritePosition
+                    asset: asset
                 )
                 return [.str(resource)]
             }

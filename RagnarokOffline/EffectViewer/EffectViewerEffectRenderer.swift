@@ -30,8 +30,6 @@ class EffectViewerEffectRenderer: Renderer {
         effectResource = EffectRenderResource(
             device: device,
             asset: asset,
-            worldPosition: .zero,
-            spritePosition: .zero,
             creationTime: CACurrentMediaTime(),
             delay: 0
         )
@@ -73,6 +71,8 @@ class EffectViewerEffectRenderer: Renderer {
         effectRenderer.render(
             resource: effectResource,
             atTime: time,
+            worldPosition: .zero,
+            spritePosition: .zero,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,

@@ -30,8 +30,7 @@ public class STRFilePreviewRenderer: Renderer {
         effectResource = STREffectRenderResource(
             device: device,
             effect: effect,
-            textureImages: textureImages,
-            spritePosition: .zero
+            textureImages: textureImages
         )
         creationTime = CACurrentMediaTime()
 
@@ -69,6 +68,7 @@ public class STRFilePreviewRenderer: Renderer {
         effectRenderer.render(
             resource: effectResource,
             elapsedTime: time - creationTime,
+            spritePosition: .zero,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
