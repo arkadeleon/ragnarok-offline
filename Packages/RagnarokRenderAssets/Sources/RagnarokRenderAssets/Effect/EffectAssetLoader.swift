@@ -37,7 +37,7 @@ public struct EffectAssetLoader: Sendable {
     }
 
     private func loadAsset(with definition: Effect3DDefinition) async throws -> Effect3DAsset {
-        var textureImages: [CGImage]
+        var textures: [Effect3DAsset.Texture] = []
 
         if let spriteName = definition.spriteName {
             let spritePath = ResourcePath.spriteDirectory
@@ -49,11 +49,13 @@ public struct EffectAssetLoader: Sendable {
 
             let act = try await ACT(data: actData)
             let spr = try await SPR(data: sprData)
-            let animation = act.action(at: 0)?.animation(using: spr.imagesBySpriteType())
-            textureImages = if definition.playSprite {
-                animation?.frames.compactMap { $0 } ?? []
-            } else {
-                animation?.frames.compactMap { $0 }.prefix(1).map { $0 } ?? []
+            let spriteImages = spr.imagesBySpriteType()
+            let actionFrames = act.action(at: 0)?.frames ?? []
+            let frames = definition.playSprite ? actionFrames : Array(actionFrames.prefix(1))
+            for frame in frames {
+                if let texture = effect3DTexture(for: frame, spriteImages: spriteImages) {
+                    textures.append(texture)
+                }
             }
         } else {
             let textureNames: [String]
@@ -63,18 +65,16 @@ public struct EffectAssetLoader: Sendable {
                 textureNames = definition.fileNames
             }
 
-            textureImages = []
             for textureName in textureNames {
                 let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
-                let image = try await resourceManager.image(
-                    at: texturePath,
-                    removesMagentaPixels: textureName.lowercased().hasSuffix(".bmp")
-                )
-                textureImages.append(image.cgImage)
+                let removesMagentaPixels = textureName.lowercased().hasSuffix(".bmp")
+                let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
+                let texture = Effect3DAsset.Texture(image: image.cgImage, sizeFactor: [1, 1])
+                textures.append(texture)
             }
         }
 
-        let asset = Effect3DAsset(definition: definition, textureImages: textureImages)
+        let asset = Effect3DAsset(definition: definition, textures: textures)
         return asset
     }
 
@@ -140,5 +140,26 @@ public struct EffectAssetLoader: Sendable {
 
         let asset = STREffectAsset(definition: definition, effect: effect, textureImages: textureImages)
         return asset
+    }
+
+    private func effect3DTexture(for frame: ACT.Frame, spriteImages: [SPR.SpriteType : [CGImage?]]) -> Effect3DAsset.Texture? {
+        guard let layer = frame.layers.first(where: { $0.spriteIndex >= 0 }),
+              let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
+              let images = spriteImages[spriteType] else {
+            return nil
+        }
+
+        let spriteIndex = Int(layer.spriteIndex)
+        guard images.indices.contains(spriteIndex),
+              let image = images[spriteIndex] else {
+            return nil
+        }
+
+        let sizeFactor: SIMD2<Float> = [
+            Float(image.width) * layer.scale.x / 100,
+            Float(image.height) * layer.scale.y / 100,
+        ]
+        let texture = Effect3DAsset.Texture(image: image, sizeFactor: sizeFactor)
+        return texture
     }
 }

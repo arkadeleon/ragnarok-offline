@@ -17,8 +17,13 @@ public enum EffectAsset: @unchecked Sendable {
 }
 
 public struct Effect3DAsset: Sendable {
+    public struct Texture: Sendable {
+        public let image: CGImage
+        public let sizeFactor: SIMD2<Float>
+    }
+
     public let definition: Effect3DDefinition
-    public let textureImages: [CGImage]
+    public let textures: [Effect3DAsset.Texture]
 }
 
 public struct CylinderEffectAsset: Sendable {

@@ -26,6 +26,7 @@ public final class Effect3DRenderResource {
     public let definition: Effect3DDefinition
     public let vertices: [Effect3DVertex]
     public let textures: [any MTLTexture]
+    public let textureSizeFactors: [SIMD2<Float>]
     public let worldPosition: SIMD3<Float>
     public let creationTime: TimeInterval
     public let delay: TimeInterval
@@ -62,9 +63,10 @@ public final class Effect3DRenderResource {
             Effect3DVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
             Effect3DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
-        self.textures = asset.textureImages.enumerated().compactMap { index, textureImage in
-            MetalTextureFactory.makeTexture(from: textureImage, device: device, label: "effect3D[\(index)]")
+        self.textures = asset.textures.enumerated().compactMap { index, texture in
+            MetalTextureFactory.makeTexture(from: texture.image, device: device, label: "effect3D[\(index)]")
         }
+        self.textureSizeFactors = asset.textures.map(\.sizeFactor)
         self.worldPosition = worldPosition
         self.creationTime = creationTime
         self.delay = delay
@@ -145,9 +147,10 @@ public final class Effect3DRenderResource {
         }
 
         let progress = Self.progress(elapsedTime: elapsedTime, duration: duration)
-        let texture = texture(atElapsedTime: elapsedTime)
+        let textureIndex = textureIndex(atElapsedTime: elapsedTime)
+        let texture = textures[textureIndex]
         let position = worldPosition + Self.worldOffset(forMapOffset: animatedPosition(progress: progress))
-        let size = animatedSize(progress: progress)
+        let size = animatedSize(progress: progress) * textureSizeFactor(at: textureIndex)
         let alpha = animatedAlpha(elapsedTime: elapsedTime, progress: progress, duration: duration)
         let rotationMatrix = rotationMatrix(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth)
 
@@ -168,13 +171,20 @@ public final class Effect3DRenderResource {
         return elapsedTime
     }
 
-    private func texture(atElapsedTime elapsedTime: TimeInterval) -> any MTLTexture {
+    private func textureIndex(atElapsedTime elapsedTime: TimeInterval) -> Int {
         guard textures.count > 1, definition.frameDelay > 0 else {
-            return textures[0]
+            return 0
         }
 
-        let frameIndex = Int(elapsedTime / definition.frameDelay) % textures.count
-        return textures[frameIndex]
+        return Int(elapsedTime / definition.frameDelay) % textures.count
+    }
+
+    private func textureSizeFactor(at index: Int) -> SIMD2<Float> {
+        guard textureSizeFactors.indices.contains(index) else {
+            return [1, 1]
+        }
+
+        return textureSizeFactors[index]
     }
 
     private func animatedPosition(progress: Float) -> SIMD3<Float> {
