@@ -138,10 +138,18 @@ effect.creationTime + effect.delay + definition.delay(duplicateID: duplicateID)
 
 ```swift
 public final class EffectRenderResource {
-    public let reference: EffectReference
     public let creationTime: TimeInterval
     public let delay: TimeInterval
     public let components: [EffectRenderResourceComponent]
+
+    public init(
+        device: any MTLDevice,
+        asset: EffectAsset,
+        worldPosition: SIMD3<Float>,
+        spritePosition: SIMD3<Float>,
+        creationTime: TimeInterval,
+        delay: TimeInterval = 0
+    )
 }
 
 public enum EffectRenderResourceComponent {
@@ -219,17 +227,24 @@ During loading:
 
 ```swift
 let asset = try await effectAssetStore.asset(for: effect.reference)
+let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+let spritePosition = SIMD3<Float>(
+    Float(effect.gridPosition.x),
+    Float(effect.gridPosition.y),
+    effectWorldPosition.y
+)
 let renderResource = EffectRenderResource(
     device: renderer.device,
     asset: asset,
-    effect: effect,
-    mapGrid: mapGrid,
-    objectLookup: objects
+    worldPosition: worldPosition,
+    spritePosition: spritePosition,
+    creationTime: effect.creationTime,
+    delay: effect.delay
 )
 effect.renderResource = renderResource
 ```
 
-That initializer does not need to take exactly those parameters, but the responsibility should be the same: combine loaded whole-effect asset data with runtime occurrence state and expand it into component render resources.
+`RagnarokGame` is responsible for calculating runtime placement from map/object state. `EffectRenderResource` is responsible for expanding the loaded whole-effect asset and runtime timing into component render resources. `EffectViewerEffectRenderer` should use the same `EffectRenderResource(device:asset:worldPosition:spritePosition:creationTime:delay:)` initializer with zero positions.
 
 Sound scheduling should iterate `asset.components` and use each component definition's `soundName`, delayed by `effect.delay`.
 

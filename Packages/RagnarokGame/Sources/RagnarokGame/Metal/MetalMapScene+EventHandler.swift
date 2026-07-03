@@ -725,75 +725,20 @@ extension MetalMapScene {
                     }
                 }
 
-                let components = asset.components.flatMap { component -> [EffectRenderResourceComponent] in
-                    switch component {
-                    case .`3D`(let asset):
-                        let definition = asset.definition
-                        let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                        var components: [EffectRenderResourceComponent] = []
-                        for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                            let delay = effect.delay + definition.delay(duplicateID: duplicateID)
-                            let renderResource = Effect3DRenderResource(
-                                device: renderer.device,
-                                asset: asset,
-                                worldPosition: worldPosition,
-                                creationTime: effect.creationTime,
-                                delay: delay,
-                                duplicateID: duplicateID
-                            )
-                            components.append(.`3D`(renderResource))
-                        }
-                        return components
-                    case .cylinder(let asset):
-                        let definition = asset.definition
-                        let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                        var components: [EffectRenderResourceComponent] = []
-                        for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                            let delay = effect.delay + definition.delay(duplicateID: duplicateID)
-                            let renderResource = CylinderEffectRenderResource(
-                                device: renderer.device,
-                                asset: asset,
-                                worldPosition: worldPosition,
-                                creationTime: effect.creationTime,
-                                delay: delay
-                            )
-                            components.append(.cylinder(renderResource))
-                        }
-                        return components
-                    case .spr(let asset):
-                        let definition = asset.definition
-                        var worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
-                        if definition.rendersAtHead {
-                            worldPosition.y += 2.5
-                        }
-                        let renderResource = SPREffectRenderResource(
-                            device: renderer.device,
-                            asset: asset,
-                            worldPosition: worldPosition,
-                            creationTime: effect.creationTime,
-                            delay: effect.delay
-                        )
-                        return [.spr(renderResource)]
-                    case .str(let asset):
-                        let renderResource = STREffectRenderResource(
-                            device: renderer.device,
-                            asset: asset,
-                            spritePosition: [
-                                Float(effect.gridPosition.x),
-                                Float(effect.gridPosition.y),
-                                effectWorldPosition.y,
-                            ],
-                            creationTime: effect.creationTime,
-                            delay: effect.delay
-                        )
-                        return [.str(renderResource)]
-                    }
-                }
+                let worldPosition = effect.attachedObjectID.flatMap { objects[$0]?.worldPosition } ?? effectWorldPosition
+                let spritePosition = SIMD3<Float>(
+                    Float(effect.gridPosition.x),
+                    Float(effect.gridPosition.y),
+                    effectWorldPosition.y
+                )
 
                 effect.renderResource = EffectRenderResource(
+                    device: renderer.device,
+                    asset: asset,
+                    worldPosition: worldPosition,
+                    spritePosition: spritePosition,
                     creationTime: effect.creationTime,
-                    delay: effect.delay,
-                    components: components
+                    delay: effect.delay
                 )
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.reference): \(error)")

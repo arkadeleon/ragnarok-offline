@@ -19,7 +19,7 @@ class EffectViewerEffectRenderer: Renderer {
     let device: any MTLDevice
 
     private let effectRenderer: EffectRenderer
-    private var effectResources: [EffectRenderResource] = []
+    private let effectResource: EffectRenderResource
 
     let camera: OrbitalCamera
 
@@ -27,6 +27,14 @@ class EffectViewerEffectRenderer: Renderer {
         self.device = device
 
         effectRenderer = try EffectRenderer(device: device)
+        effectResource = EffectRenderResource(
+            device: device,
+            asset: asset,
+            worldPosition: .zero,
+            spritePosition: .zero,
+            creationTime: CACurrentMediaTime(),
+            delay: 0
+        )
 
         camera = OrbitalCamera(distance: 20)
         camera.fovy = 45
@@ -36,70 +44,6 @@ class EffectViewerEffectRenderer: Renderer {
         camera.minimumDistance = 8
         camera.maximumDistance = 80
         camera.target = [0, 1.5, 0]
-
-        buildResource(from: asset, atTime: CACurrentMediaTime())
-    }
-
-    private func buildResource(from asset: EffectAsset, atTime time: TimeInterval) {
-        let components = asset.components.flatMap { component -> [EffectRenderResourceComponent] in
-            switch component {
-            case .`3D`(let asset):
-                let definition = asset.definition
-                var components: [EffectRenderResourceComponent] = []
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                    let delay = definition.delay(duplicateID: duplicateID)
-                    let resource = Effect3DRenderResource(
-                        device: device,
-                        asset: asset,
-                        worldPosition: .zero,
-                        creationTime: time,
-                        delay: delay,
-                        duplicateID: duplicateID
-                    )
-                    components.append(.`3D`(resource))
-                }
-                return components
-            case .cylinder(let asset):
-                let definition = asset.definition
-                var components: [EffectRenderResourceComponent] = []
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                    let delay = definition.delay(duplicateID: duplicateID)
-                    let resource = CylinderEffectRenderResource(
-                        device: device,
-                        asset: asset,
-                        worldPosition: .zero,
-                        creationTime: time,
-                        delay: delay
-                    )
-                    components.append(.cylinder(resource))
-                }
-                return components
-            case .spr(let asset):
-                let resource = SPREffectRenderResource(
-                    device: device,
-                    asset: asset,
-                    worldPosition: .zero,
-                    creationTime: time
-                )
-                return [.spr(resource)]
-            case .str(let asset):
-                let resource = STREffectRenderResource(
-                    device: device,
-                    asset: asset,
-                    spritePosition: .zero,
-                    creationTime: time
-                )
-                return [.str(resource)]
-            }
-        }
-
-        effectResources = [
-            EffectRenderResource(
-                creationTime: time,
-                delay: 0,
-                components: components
-            )
-        ]
     }
 
     func render(
@@ -126,22 +70,20 @@ class EffectViewerEffectRenderer: Renderer {
             return
         }
 
-        for resource in effectResources {
-            effectRenderer.render(
-                resource: resource,
-                atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: modelMatrix,
-                viewMatrix: viewMatrix,
-                projectionMatrix: projectionMatrix,
-                cameraAzimuth: cameraAzimuth
-            )
-        }
+        effectRenderer.render(
+            resource: effectResource,
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
+            projectionMatrix: projectionMatrix,
+            cameraAzimuth: cameraAzimuth
+        )
 
         renderCommandEncoder.endEncoding()
     }
 
     func isComplete(atTime time: TimeInterval) -> Bool {
-        !effectResources.isEmpty && effectResources.allSatisfy({ $0.isExpired(atTime: time) })
+        effectResource.isExpired(atTime: time)
     }
 }
