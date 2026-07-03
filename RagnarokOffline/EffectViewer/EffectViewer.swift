@@ -15,12 +15,15 @@ struct EffectViewer: View {
 
     @State private var isPicking = false
     @State private var selectedEffect: EffectViewerEffect?
+    @State private var replayToken = 0
 
     var body: some View {
         ZStack {
             if let selectedEffect {
-                EffectViewerEffectRenderingView(effectID: selectedEffect.effectID, resourceManager: resourceManager)
-                    .id(selectedEffect.id)
+                EffectViewerEffectRenderingView(effectID: selectedEffect.effectID, resourceManager: resourceManager) {
+                    replayToken += 1
+                }
+                .id("\(selectedEffect.id)-\(replayToken)")
             } else {
                 ContentUnavailableView {
                     Label {

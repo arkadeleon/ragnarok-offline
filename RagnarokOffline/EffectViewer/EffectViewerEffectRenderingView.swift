@@ -15,12 +15,35 @@ import SwiftUI
 struct EffectViewerEffectRenderingView: View {
     var effectID: EffectID
     var resourceManager: ResourceManager
+    var onReplay: () -> Void
+
+    private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+
+    @State private var isComplete = false
 
     var body: some View {
         AsyncContentView {
             try await loadRenderer()
         } content: { renderer in
-            MetalViewContainer(renderer: renderer)
+            ZStack {
+                if isComplete {
+                    Button(action: onReplay) {
+                        Label {
+                            Text("Replay", tableName: "EffectViewer")
+                        } icon: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        .font(.title3)
+                        .fontWeight(.medium)
+                    }
+                    .adaptiveProminentButtonStyle()
+                } else {
+                    MetalViewContainer(renderer: renderer)
+                }
+            }
+            .onReceive(timer) { _ in
+                isComplete = renderer.isComplete(atTime: CACurrentMediaTime())
+            }
         }
     }
 
