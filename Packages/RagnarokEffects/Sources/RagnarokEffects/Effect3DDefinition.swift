@@ -20,8 +20,7 @@ public struct EffectAxes: Sendable {
 // - fileName:                       file
 // - fileNames:                      fileList
 // - frameDelay:                     frameDelay
-// - spriteName:                     spriteName
-// - absoluteSpriteName:             absoluteSpriteName
+// - spriteName:                     spriteName, absoluteSpriteName (full path relative to data\sprite)
 // - playSprite:                     playSprite
 // - spriteFrameDelay:               sprDelay
 // - soundName:                      wav
@@ -82,7 +81,6 @@ public struct Effect3DDefinition: Sendable {
     public var fileNames: [String]
     public var frameDelay: TimeInterval
     public var spriteName: String?
-    public var absoluteSpriteName: String?
     public var playSprite: Bool
     public var spriteFrameDelay: TimeInterval
     public var soundName: String?
@@ -149,7 +147,7 @@ public struct Effect3DDefinition: Sendable {
     public var drainPattern: Int?
 
     public var primaryAssetName: String {
-        fileName ?? fileNames.first ?? absoluteSpriteName ?? spriteName ?? ""
+        fileName ?? fileNames.first ?? spriteName ?? ""
     }
 
     public func delay(duplicateID: Int) -> TimeInterval {
@@ -190,7 +188,6 @@ extension EffectDefinition {
         fileNames: [String] = [],
         frameDelay: TimeInterval = 0.1,
         spriteName: String? = nil,
-        absoluteSpriteName: String? = nil,
         playSprite: Bool = false,
         spriteFrameDelay: TimeInterval = 0,
         soundName: String? = nil,
@@ -254,7 +251,6 @@ extension EffectDefinition {
             fileNames: fileNames,
             frameDelay: frameDelay,
             spriteName: spriteName,
-            absoluteSpriteName: absoluteSpriteName,
             playSprite: playSprite,
             spriteFrameDelay: spriteFrameDelay,
             soundName: soundName,

@@ -51,9 +51,7 @@ public struct EffectAssetLoader: Sendable {
         var frames: [Effect3DAsset.Frame] = []
 
         if let spriteName = definition.spriteName {
-            let spritePath = ResourcePath.spriteDirectory
-                .appending(K2L("이팩트"))
-                .appending(spriteName)
+            let spritePath = ResourcePath.spriteDirectory.appending(subpath: spriteName)
 
             async let actData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("act"))
             async let sprData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("spr"))

@@ -107,9 +107,31 @@ public enum EffectTable {
                 rendersAtHead: true
             ),
         ],
+        .ef_smoke: [
+            .`3D`(
+                spriteName: K2L("이팩트\\굴뚝연기"),
+                attachedToTarget: false,
+                repeats: true,
+                duration: 10,
+                delay: 0.1,
+                duplicate: .init(count: 10, interval: 1),
+                alphaMax: 0.8,
+                fadesOut: true,
+                positionEnd: [0, 0, 20],
+                positionEndRandomRange: [3, 0, 0],
+                smoothPositionAxes: EffectAxes(x: true, y: false, z: false),
+                sizeStart: [70, 70],
+                sizeEnd: [300, 300],
+                smoothSize: true,
+                rotates: true,
+                angle: -90,
+                targetAngle: 0,
+                rotatesWithCamera: true
+            ),
+        ],
         .ef_torch: [
             .`3D`(
-                spriteName: "torch_01",
+                spriteName: K2L("이팩트\\torch_01"),
                 playSprite: true,
                 attachedToTarget: true,
                 repeats: true,
@@ -150,7 +172,7 @@ public enum EffectTable {
                 spriteOffset: [0, -120]
             ),
             .`3D`(
-                spriteName: "particle6",
+                spriteName: K2L("이팩트\\particle6"),
                 attachedToTarget: true,
                 duration: 1.2,
                 delayOffset: 0.3,
@@ -170,7 +192,7 @@ public enum EffectTable {
                 sparkleCount: 2
             ),
             .`3D`(
-                spriteName: "particle6",
+                spriteName: K2L("이팩트\\particle6"),
                 attachedToTarget: true,
                 duration: 1.2,
                 delayOffset: 0.4,
