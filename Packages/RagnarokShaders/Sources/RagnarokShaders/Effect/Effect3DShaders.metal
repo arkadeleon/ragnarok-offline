@@ -27,6 +27,7 @@ effect3DVertexShader(const device Effect3DVertex *vertices [[buffer(0)]],
 
     const float spriteRatio = 1.0 / 35.0;
     float4 rotatedPosition = uniforms.rotationMatrix * float4(in.position * uniforms.size * spriteRatio, 0.0, 1.0);
+    rotatedPosition.xy += uniforms.offset * spriteRatio;
     float3 worldPosition = uniforms.worldPosition
         + cameraRight * rotatedPosition.x
         + cameraUp * rotatedPosition.y;

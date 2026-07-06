@@ -18,6 +18,7 @@ typedef struct {
     matrix_float4x4 rotationMatrix;
     vector_float3 worldPosition;
     vector_float2 size;
+    vector_float2 offset;
     float zIndex;
 } Effect3DVertexUniforms;
 

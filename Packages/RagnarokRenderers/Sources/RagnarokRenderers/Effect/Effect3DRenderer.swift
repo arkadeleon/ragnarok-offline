@@ -49,34 +49,38 @@ public final class Effect3DRenderer {
             return
         }
 
-        var vertexUniforms = Effect3DVertexUniforms(
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            rotationMatrix: snapshot.rotationMatrix,
-            worldPosition: snapshot.worldPosition,
-            size: snapshot.size,
-            zIndex: resource.definition.zIndex
-        )
-        var fragmentUniforms = Effect3DFragmentUniforms(color: snapshot.color)
-
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(resource.definition.overlay ? overlayDepthStencilState : depthStencilState)
 
         resource.vertices.withUnsafeBytes { bytes in
             renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
         }
-        renderCommandEncoder.setVertexBytes(
-            &vertexUniforms,
-            length: MemoryLayout<Effect3DVertexUniforms>.stride,
-            index: 1
-        )
-        renderCommandEncoder.setFragmentBytes(
-            &fragmentUniforms,
-            length: MemoryLayout<Effect3DFragmentUniforms>.stride,
-            index: 0
-        )
-        renderCommandEncoder.setFragmentTexture(snapshot.texture, index: 0)
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
+
+        for layer in snapshot.layers {
+            var vertexUniforms = Effect3DVertexUniforms(
+                viewMatrix: viewMatrix,
+                projectionMatrix: projectionMatrix,
+                rotationMatrix: layer.rotationMatrix,
+                worldPosition: snapshot.worldPosition,
+                size: layer.size,
+                offset: layer.offset,
+                zIndex: resource.definition.zIndex
+            )
+            var fragmentUniforms = Effect3DFragmentUniforms(color: layer.color)
+
+            renderCommandEncoder.setVertexBytes(
+                &vertexUniforms,
+                length: MemoryLayout<Effect3DVertexUniforms>.stride,
+                index: 1
+            )
+            renderCommandEncoder.setFragmentBytes(
+                &fragmentUniforms,
+                length: MemoryLayout<Effect3DFragmentUniforms>.stride,
+                index: 0
+            )
+            renderCommandEncoder.setFragmentTexture(layer.texture, index: 0)
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
+        }
     }
 
     private func renderPipelineState(for blendMode: EffectParameters.BlendMode) -> (any MTLRenderPipelineState)? {

@@ -16,17 +16,22 @@ import simd
 
 public final class Effect3DRenderResource {
     struct Snapshot {
-        var texture: any MTLTexture
+        struct Layer {
+            var texture: any MTLTexture
+            var size: SIMD2<Float>
+            var offset: SIMD2<Float>
+            var color: SIMD4<Float>
+            var rotationMatrix: simd_float4x4
+        }
+
         var worldPosition: SIMD3<Float>
-        var size: SIMD2<Float>
-        var color: SIMD4<Float>
-        var rotationMatrix: simd_float4x4
+        var layers: [Snapshot.Layer]
     }
 
     public let definition: Effect3DDefinition
     public let vertices: [Effect3DVertex]
-    public let textures: [any MTLTexture]
-    public let textureSizeFactors: [SIMD2<Float>]
+    public let textures: [(any MTLTexture)?]
+    public let frames: [Effect3DAsset.Frame]
     public let duplicateID: Int
 
     private let positionStart: SIMD3<Float>
@@ -35,6 +40,7 @@ public final class Effect3DRenderResource {
     private let sizeEnd: SIMD2<Float>
     private let alphaMax: Float
     private let rotationDelay: TimeInterval
+    private let baseAngle: Float
 
     public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
@@ -50,10 +56,10 @@ public final class Effect3DRenderResource {
             Effect3DVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
             Effect3DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
-        self.textures = asset.textures.enumerated().compactMap { index, texture in
-            MetalTextureFactory.makeTexture(from: texture.image, device: device, label: "effect3D[\(index)]")
+        self.textures = asset.images.enumerated().map { index, image in
+            MetalTextureFactory.makeTexture(from: image, device: device, label: "effect3D[\(index)]")
         }
-        self.textureSizeFactors = asset.textures.map(\.sizeFactor)
+        self.frames = asset.frames
         self.duplicateID = duplicateID
 
         var positionStart = definition.positionStart
@@ -106,6 +112,12 @@ public final class Effect3DRenderResource {
         self.sizeEnd = sizeEnd
         self.alphaMax = min(max(definition.alphaMax + definition.duplicate.alphaMaxDelta * Float(duplicateID), 0), 1)
         self.rotationDelay = definition.rotationDelay + definition.duplicate.rotationDelayDelta * TimeInterval(duplicateID)
+
+        var baseAngle = definition.angle
+        if definition.rotatesToTarget {
+            baseAngle += 90 - degrees(atan2(positionEnd.y - positionStart.y, positionEnd.x - positionStart.x))
+        }
+        self.baseAngle = baseAngle
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
@@ -122,7 +134,7 @@ public final class Effect3DRenderResource {
     }
 
     func snapshot(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Snapshot? {
-        guard !textures.isEmpty, var elapsedTime = componentElapsedTime(elapsedTime: elapsedTime) else {
+        guard !frames.isEmpty, var elapsedTime = componentElapsedTime(elapsedTime: elapsedTime) else {
             return nil
         }
 
@@ -132,20 +144,41 @@ public final class Effect3DRenderResource {
         }
 
         let progress = Self.progress(elapsedTime: elapsedTime, duration: duration)
-        let textureIndex = textureIndex(elapsedTime: elapsedTime)
-        let texture = textures[textureIndex]
+        let frame = frames[frameIndex(elapsedTime: elapsedTime)]
         let position = worldPosition + Self.worldOffset(forMapOffset: animatedPosition(progress: progress))
-        let size = animatedSize(progress: progress) * textureSizeFactor(at: textureIndex)
+        let animatedSize = animatedSize(progress: progress)
         let alpha = animatedAlpha(elapsedTime: elapsedTime, progress: progress, duration: duration)
-        let rotationMatrix = rotationMatrix(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth)
+        let color = SIMD4<Float>(definition.color, alpha)
 
-        return Snapshot(
-            texture: texture,
-            worldPosition: position,
-            size: size,
-            color: SIMD4<Float>(definition.color, alpha),
-            rotationMatrix: rotationMatrix
-        )
+        let layers = frame.layers.compactMap { layer -> Snapshot.Layer? in
+            guard textures.indices.contains(layer.imageIndex),
+                  let texture = textures[layer.imageIndex] else {
+                return nil
+            }
+
+            var size = animatedSize * layer.sizeFactor
+            if layer.isMirrored {
+                size.x = -size.x
+            }
+
+            return Snapshot.Layer(
+                texture: texture,
+                size: size,
+                offset: [layer.offset.x, -layer.offset.y],
+                color: color * layer.color,
+                rotationMatrix: rotationMatrix(
+                    elapsedTime: elapsedTime,
+                    cameraAzimuth: cameraAzimuth,
+                    layerAngle: layer.angle
+                )
+            )
+        }
+
+        guard !layers.isEmpty else {
+            return nil
+        }
+
+        return Snapshot(worldPosition: position, layers: layers)
     }
 
     private func componentElapsedTime(elapsedTime: TimeInterval) -> TimeInterval? {
@@ -156,20 +189,12 @@ public final class Effect3DRenderResource {
         return elapsedTime
     }
 
-    private func textureIndex(elapsedTime: TimeInterval) -> Int {
-        guard textures.count > 1, definition.frameDelay > 0 else {
+    private func frameIndex(elapsedTime: TimeInterval) -> Int {
+        guard frames.count > 1, definition.frameDelay > 0 else {
             return 0
         }
 
-        return Int(elapsedTime / definition.frameDelay) % textures.count
-    }
-
-    private func textureSizeFactor(at index: Int) -> SIMD2<Float> {
-        guard textureSizeFactors.indices.contains(index) else {
-            return [1, 1]
-        }
-
-        return textureSizeFactors[index]
+        return Int(elapsedTime / definition.frameDelay) % frames.count
     }
 
     private func animatedPosition(progress: Float) -> SIMD3<Float> {
@@ -237,8 +262,8 @@ public final class Effect3DRenderResource {
         return min(max(alpha, definition.alphaMin), alphaMax)
     }
 
-    private func rotationMatrix(elapsedTime: TimeInterval, cameraAzimuth: Float) -> simd_float4x4 {
-        var angle = definition.angle
+    private func rotationMatrix(elapsedTime: TimeInterval, cameraAzimuth: Float, layerAngle: Float) -> simd_float4x4 {
+        var angle = baseAngle
 
         if definition.rotates {
             let progress = Self.progress(elapsedTime: elapsedTime, duration: definition.duration)
@@ -248,6 +273,10 @@ public final class Effect3DRenderResource {
 
         if definition.rotatesWithCamera {
             angle += degrees(cameraAzimuth)
+        }
+
+        if !definition.rotatesToTarget {
+            angle += layerAngle
         }
 
         var matrix = matrix_identity_float4x4

@@ -107,6 +107,20 @@ public enum EffectTable {
                 rendersAtHead: true
             ),
         ],
+        .ef_torch: [
+            .`3D`(
+                spriteName: "torch_01",
+                playSprite: true,
+                attachedToTarget: true,
+                repeats: true,
+                duration: 0.6,
+                offset: [0.1, 0, 0.8],
+                sizeStart: [100, 100],
+                sizeEnd: [100, 100],
+                angle: 270,
+                rotatesToTarget: true
+            ),
+        ],
         .ef_firehit: [
             .str(
                 fileName: "firehit%d.str",
