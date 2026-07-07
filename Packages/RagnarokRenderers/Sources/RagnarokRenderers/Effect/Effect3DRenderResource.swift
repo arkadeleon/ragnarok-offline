@@ -201,7 +201,7 @@ public final class Effect3DRenderResource {
         var position: SIMD3<Float>
 
         if definition.rotatePosition.x > 0 {
-            var x = definition.rotatePosition.x * cos(progress * 3.5 * definition.rotationCount * .pi - Float(rotationDelay) * .pi / 2)
+            var x = definition.rotatePosition.x * cos(progress * 100 * 3.5 * definition.rotationCount * .pi / 180 - Float(rotationDelay) * .pi / 2)
             if definition.rotatesClockwise {
                 x = -x
             }
@@ -215,7 +215,7 @@ public final class Effect3DRenderResource {
         }
 
         if definition.rotatePosition.y > 0 {
-            position.y = definition.rotatePosition.y * sin(progress * 3.5 * definition.rotationCount * .pi - Float(rotationDelay) * .pi / 2)
+            position.y = definition.rotatePosition.y * sin(progress * 100 * 3.5 * definition.rotationCount * .pi / 180 - Float(rotationDelay) * .pi / 2)
         } else {
             position.y = interpolate(positionStart.y, positionEnd.y, progress: progress, smooth: definition.smoothPositionAxes.y)
         }
@@ -256,7 +256,7 @@ public final class Effect3DRenderResource {
         } else if let duration, duration > 0, definition.fadesOut, elapsedTime > duration * 0.75 {
             alpha = Float((duration - elapsedTime) / (duration / 4)) * alphaMax
         } else if definition.sparkles {
-            alpha = alphaMax * ((cos(progress * 11 * definition.sparkleCount * .pi) + 1) / 2)
+            alpha = alphaMax * ((cos(progress * 100 * 11 * definition.sparkleCount * .pi / 180) + 1) / 2)
         }
 
         return min(max(alpha, definition.alphaMin), alphaMax)
