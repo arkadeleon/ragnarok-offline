@@ -43,7 +43,7 @@ public struct CylinderEffectDefinition: Sendable {
     public var rendersBeforeEntities: Bool
     public var repeats: Bool
 
-    public var duration: TimeInterval?
+    public var duration: TimeInterval
     public var delayStart: TimeInterval
     public var delayOffset: TimeInterval
     public var delayLate: TimeInterval
@@ -106,7 +106,7 @@ extension EffectDefinition {
         attachedToTarget: Bool,
         rendersBeforeEntities: Bool = false,
         repeats: Bool = false,
-        duration: TimeInterval? = nil,
+        duration: TimeInterval,
         delayStart: TimeInterval = 0,
         delayOffset: TimeInterval = 0,
         delayLate: TimeInterval = 0,

@@ -121,7 +121,7 @@ public final class Effect3DRenderResource {
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        guard !definition.repeats, let duration = definition.duration else {
+        guard !definition.repeats else {
             return false
         }
 
@@ -130,6 +130,7 @@ public final class Effect3DRenderResource {
             return false
         }
 
+        let duration = definition.duration
         return elapsedTime >= duration
     }
 
@@ -139,7 +140,7 @@ public final class Effect3DRenderResource {
         }
 
         let duration = definition.duration
-        if definition.repeats, let duration, duration > 0 {
+        if definition.repeats {
             elapsedTime.formTruncatingRemainder(dividingBy: duration)
         }
 

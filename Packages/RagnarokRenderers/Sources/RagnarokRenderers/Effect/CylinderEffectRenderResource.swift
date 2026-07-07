@@ -44,7 +44,7 @@ public final class CylinderEffectRenderResource {
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        guard !definition.repeats, let duration = definition.duration else {
+        guard !definition.repeats else {
             return false
         }
 
@@ -53,6 +53,7 @@ public final class CylinderEffectRenderResource {
             return false
         }
 
+        let duration = definition.duration
         return elapsedTime >= duration
     }
 
@@ -61,7 +62,8 @@ public final class CylinderEffectRenderResource {
             return nil
         }
 
-        if definition.repeats, let duration = definition.duration, duration > 0 {
+        let duration = definition.duration
+        if definition.repeats {
             elapsedTime.formTruncatingRemainder(dividingBy: duration)
         }
 
@@ -69,37 +71,42 @@ public final class CylinderEffectRenderResource {
         var bottomRadius = definition.bottomRadius
         var height = definition.height
 
-        if let duration = definition.duration, duration > 0 {
+        // Animations 1 and 2 finish growing within the first second, then hold.
+        switch definition.animation {
+        case .growHeight:
+            let growDuration = min(duration, 1)
+            let progress = Float(min(max(elapsedTime / growDuration, 0), 1))
+            height = progress * definition.height
+        case .growTopRadius:
+            let growDuration = min(duration, 1)
+            let progress = Float(min(max(elapsedTime / growDuration, 0), 1))
+            topRadius = progress * definition.topRadius
+        case .shrinkRadius:
             let progress = Float(min(max(elapsedTime / duration, 0), 1))
-            switch definition.animation {
-            case .growHeight:
-                height = progress * definition.height
-            case .growTopRadius:
-                topRadius = progress * definition.topRadius
-            case .shrinkRadius:
-                topRadius = (1 - progress) * definition.topRadius
-                bottomRadius = (1 - progress) * definition.bottomRadius
-                if progress < 0.5 {
-                    height = progress * 2 * definition.height
-                } else {
-                    height = (1 - progress) * 2 * definition.height
-                }
-            case .growRadius:
-                topRadius = progress * definition.topRadius
-                bottomRadius = progress * definition.bottomRadius
-            case .growThenShrinkHeight:
-                if progress < 0.5 {
-                    height = progress * 2 * definition.height
-                } else {
-                    height = (1 - progress) * 2 * definition.height
-                }
-            case nil:
-                break
+            topRadius = (1 - progress) * definition.topRadius
+            bottomRadius = (1 - progress) * definition.bottomRadius
+            if progress < 0.5 {
+                height = progress * 2 * definition.height
+            } else {
+                height = (1 - progress) * 2 * definition.height
             }
+        case .growRadius:
+            let progress = Float(min(max(elapsedTime / duration, 0), 1))
+            topRadius = progress * definition.topRadius
+            bottomRadius = progress * definition.bottomRadius
+        case .growThenShrinkHeight:
+            let progress = Float(min(max(elapsedTime / duration, 0), 1))
+            if progress < 0.5 {
+                height = progress * 2 * definition.height
+            } else {
+                height = (1 - progress) * 2 * definition.height
+            }
+        case nil:
+            break
         }
 
         var alpha = definition.alpha
-        if definition.fades, let duration = definition.duration, duration > 0 {
+        if definition.fades {
             let fadeDuration = duration / 4
             if elapsedTime < fadeDuration {
                 alpha = Float(elapsedTime / fadeDuration) * definition.alpha

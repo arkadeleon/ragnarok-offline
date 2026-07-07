@@ -89,7 +89,7 @@ public struct Effect3DDefinition: Sendable {
     public var repeats: Bool
     public var overlay: Bool
 
-    public var duration: TimeInterval?
+    public var duration: TimeInterval
     public var delayStart: TimeInterval
     public var delay: TimeInterval
     public var delayOffset: TimeInterval
@@ -195,7 +195,7 @@ extension EffectDefinition {
         rendersBeforeEntities: Bool = false,
         repeats: Bool = false,
         overlay: Bool = false,
-        duration: TimeInterval? = nil,
+        duration: TimeInterval,
         delayStart: TimeInterval = 0,
         delay: TimeInterval = 0,
         delayOffset: TimeInterval = 0,
