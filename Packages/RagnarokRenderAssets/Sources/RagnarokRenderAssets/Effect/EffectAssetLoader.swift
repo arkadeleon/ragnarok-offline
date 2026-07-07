@@ -186,7 +186,7 @@ public struct EffectAssetLoader: Sendable {
                 }
 
                 let texturePath = ResourcePath.effectDirectory.appending(subpath: textureName)
-                let image = try await resourceManager.image(at: texturePath)
+                let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: true)
 
                 textureImages[textureName] = image.cgImage
             }

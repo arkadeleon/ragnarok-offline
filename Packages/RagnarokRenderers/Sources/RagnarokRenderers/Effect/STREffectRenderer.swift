@@ -7,6 +7,7 @@
 
 import Foundation
 import Metal
+import RagnarokCore
 import RagnarokRenderAssets
 import RagnarokShaders
 import simd
@@ -66,7 +67,7 @@ public final class STREffectRenderer {
                 modelMatrix: modelMatrix,
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
-                spriteAngle: matrix_identity_float4x4,
+                spriteAngle: matrix_rotate(matrix_identity_float4x4, radians(-sprite.angle), [0, 0, 1]),
                 spritePosition: spritePosition,
                 spriteOffset: sprite.position - [320, 320]
             )

@@ -224,6 +224,13 @@ public enum EffectTable {
                 sizeEnd: [140, 140]
             ),
         ],
+        .ef_magnus: [
+            .str(
+                fileName: "magnus.str",
+                soundName: "effect\\priest_magnus.wav",
+                attachedToTarget: false
+            ),
+        ],
         .ef_heal: [
             .cylinder(
                 textureName: "ring_white",
