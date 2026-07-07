@@ -726,7 +726,7 @@ extension MetalMapScene {
                 }
 
                 for component in asset.components {
-                    if let soundName = component.definition.soundName {
+                    if let soundName = component.soundName {
                         audioPlayer.playSound(named: soundName, after: effect.delay)
                     }
                 }

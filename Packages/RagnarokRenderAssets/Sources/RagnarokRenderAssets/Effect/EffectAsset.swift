@@ -19,16 +19,16 @@ public enum EffectAssetComponent: Sendable {
     case spr(SPREffectAsset)
     case str(STREffectAsset)
 
-    public var definition: EffectDefinition {
+    public var soundName: String? {
         switch self {
         case .`3D`(let asset):
-            .`3D`(asset.definition)
+            asset.definition.soundName
         case .cylinder(let asset):
-            .cylinder(asset.definition)
+            asset.definition.soundName
         case .spr(let asset):
-            .spr(asset.definition)
+            asset.definition.soundName
         case .str(let asset):
-            .str(asset.definition)
+            asset.definition.soundName
         }
     }
 }
