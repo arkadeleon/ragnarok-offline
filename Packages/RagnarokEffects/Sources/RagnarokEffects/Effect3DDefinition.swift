@@ -24,24 +24,29 @@ public struct EffectAxes: Sendable {
 // - playSprite:                     playSprite
 // - spriteFrameDelay:               sprDelay
 // - soundName:                      wav
-// - attachedToTarget:               attachedEntity
-// - repeats:                        repeat
-// - overlay:                        overlay
+// - delaySound:                     delayWav
+// - randomNumberRange:              rand
 // - duration:                       duration
+// - repeats:                        repeat
 // - delayStart:                     delayStart
 // - delay:                          delayFrame
 // - delayOffset:                    delayOffset
 // - delayLate:                      delayLate
-// - delaySound:                     delayWav
 // - duplicate:                      duplicate, timeBetweenDupli
+// - attachedToTarget:               attachedEntity
+// - rendersBeforeEntities:          renderBeforeEntities
+// - overlay:                        overlay
+// - zIndex:                         zIndex
+// - blendMode:                      blendMode
 // - color:                          red, green, blue
+// - castsShadow:                    shadowTexture
 // - alphaMin:                       alphaMin
 // - alphaMax:                       alphaMax
 // - fadesIn:                        fadeIn
 // - fadesOut:                       fadeOut
-// - blendMode:                      blendMode
-// - zIndex:                         zIndex
-// - castsShadow:                    shadowTexture
+// - sparkles:                       sparkling
+// - sparkleCount:                   sparkNumber
+// - offset:                         posx, posy, posz
 // - positionStart:                  posxStart, posyStart, poszStart
 // - positionEnd:                    posxEnd, posyEnd, poszEnd
 // - positionRandomRange:            posxRand, posyRand, poszRand
@@ -51,7 +56,6 @@ public struct EffectAxes: Sendable {
 // - positionEndRandomRange:         posxEndRand, posyEndRand, poszEndRand
 // - positionEndRandomMiddle:        posxEndRandMiddle, posyEndRandMiddle, poszEndRandMiddle
 // - smoothPositionAxes:             posxSmooth, posySmooth, poszSmooth
-// - offset:                         posx, posy, posz
 // - zOffsetStart:                   zOffsetStart
 // - zOffsetEnd:                     zOffsetEnd
 // - arc:                            arc
@@ -62,18 +66,15 @@ public struct EffectAxes: Sendable {
 // - sizeEnd:                        size, sizeX, sizeY, sizeEnd, sizeEndX, sizeEndY, sizeRandXMiddle, sizeRandYMiddle
 // - sizeRandomRange:                sizeRand, sizeRandX, sizeRandY
 // - smoothSize:                     sizeSmooth
+// - angle:                          angle
+// - targetAngle:                    toAngle
 // - rotates:                        rotate
-// - rotatePosition:                 rotatePosX, rotatePosY, rotatePosZ
 // - rotationCount:                  nbOfRotation
 // - rotationDelay:                  rotateLate
 // - rotatesClockwise:               rotationClockwise
-// - angle:                          angle
-// - targetAngle:                    toAngle
+// - rotatePosition:                 rotatePosX, rotatePosY, rotatePosZ
 // - rotatesToTarget:                rotateToTarget
 // - rotatesWithCamera:              rotateWithCamera
-// - sparkles:                       sparkling
-// - sparkleCount:                   sparkNumber
-// - randomNumberRange:              rand
 // - soulStrikePattern:              soulStrikePattern
 // - drainPattern:                   drainPattern
 public struct Effect3DDefinition: Sendable {
@@ -84,28 +85,34 @@ public struct Effect3DDefinition: Sendable {
     public var playSprite: Bool
     public var spriteFrameDelay: TimeInterval
     public var soundName: String?
-    public var attachedToTarget: Bool
-    public var rendersBeforeEntities: Bool
-    public var repeats: Bool
-    public var overlay: Bool
+    public var delaySound: TimeInterval
+    public var randomNumberRange: ClosedRange<Int>?
 
     public var duration: TimeInterval
+    public var repeats: Bool
     public var delayStart: TimeInterval
     public var delay: TimeInterval
     public var delayOffset: TimeInterval
     public var delayLate: TimeInterval
-    public var delaySound: TimeInterval
     public var duplicate: EffectParameters.Duplicate
 
+    public var attachedToTarget: Bool
+    public var rendersBeforeEntities: Bool
+    public var overlay: Bool
+    public var zIndex: Float
+    public var blendMode: EffectParameters.BlendMode
     public var color: SIMD3<Float>
+    public var castsShadow: Bool
+
     public var alphaMin: Float
     public var alphaMax: Float
     public var fadesIn: Bool
     public var fadesOut: Bool
-    public var blendMode: EffectParameters.BlendMode
-    public var zIndex: Float
-    public var castsShadow: Bool
+    public var sparkles: Bool
+    public var sparkleCount: Float
+    public var sparkleCountRange: ClosedRange<Float>?
 
+    public var offset: SIMD3<Float>
     public var positionStart: SIMD3<Float>
     public var positionEnd: SIMD3<Float>
     public var positionRandomRange: SIMD3<Float>
@@ -115,8 +122,6 @@ public struct Effect3DDefinition: Sendable {
     public var positionEndRandomRange: SIMD3<Float>
     public var positionEndRandomMiddle: SIMD3<Float>
     public var smoothPositionAxes: EffectAxes
-
-    public var offset: SIMD3<Float>
     public var zOffsetStart: Float
     public var zOffsetEnd: Float
     public var arc: Float
@@ -129,20 +134,16 @@ public struct Effect3DDefinition: Sendable {
     public var sizeRandomRange: SIMD2<Float>
     public var smoothSize: Bool
 
+    public var angle: Float
+    public var targetAngle: Float?
     public var rotates: Bool
-    public var rotatePosition: SIMD3<Float>
     public var rotationCount: Float
     public var rotationDelay: TimeInterval
     public var rotatesClockwise: Bool
-    public var angle: Float
-    public var targetAngle: Float?
+    public var rotatePosition: SIMD3<Float>
     public var rotatesToTarget: Bool
     public var rotatesWithCamera: Bool
 
-    public var sparkles: Bool
-    public var sparkleCount: Float
-    public var sparkleCountRange: ClosedRange<Float>?
-    public var randomNumberRange: ClosedRange<Int>?
     public var soulStrikePattern: Int?
     public var drainPattern: Int?
 
@@ -191,25 +192,30 @@ extension EffectDefinition {
         playSprite: Bool = false,
         spriteFrameDelay: TimeInterval = 0,
         soundName: String? = nil,
-        attachedToTarget: Bool,
-        rendersBeforeEntities: Bool = false,
-        repeats: Bool = false,
-        overlay: Bool = false,
+        delaySound: TimeInterval = 0,
+        randomNumberRange: ClosedRange<Int>? = nil,
         duration: TimeInterval,
+        repeats: Bool = false,
         delayStart: TimeInterval = 0,
         delay: TimeInterval = 0,
         delayOffset: TimeInterval = 0,
         delayLate: TimeInterval = 0,
-        delaySound: TimeInterval = 0,
         duplicate: EffectParameters.Duplicate = EffectParameters.Duplicate(),
+        attachedToTarget: Bool,
+        rendersBeforeEntities: Bool = false,
+        overlay: Bool = false,
+        zIndex: Float = 0,
+        blendMode: EffectParameters.BlendMode = .oneMinusSourceAlpha,
         color: SIMD3<Float> = [1, 1, 1],
+        castsShadow: Bool = false,
         alphaMin: Float = 0,
         alphaMax: Float = 1,
         fadesIn: Bool = false,
         fadesOut: Bool = false,
-        blendMode: EffectParameters.BlendMode = .oneMinusSourceAlpha,
-        zIndex: Float = 0,
-        castsShadow: Bool = false,
+        sparkles: Bool = false,
+        sparkleCount: Float = 1,
+        sparkleCountRange: ClosedRange<Float>? = nil,
+        offset: SIMD3<Float> = .zero,
         positionStart: SIMD3<Float> = .zero,
         positionEnd: SIMD3<Float> = .zero,
         positionRandomRange: SIMD3<Float> = .zero,
@@ -219,7 +225,6 @@ extension EffectDefinition {
         positionEndRandomRange: SIMD3<Float> = .zero,
         positionEndRandomMiddle: SIMD3<Float> = .zero,
         smoothPositionAxes: EffectAxes = .none,
-        offset: SIMD3<Float> = .zero,
         zOffsetStart: Float = 0,
         zOffsetEnd: Float = 0,
         arc: Float = 0,
@@ -230,19 +235,15 @@ extension EffectDefinition {
         sizeEnd: SIMD2<Float>,
         sizeRandomRange: SIMD2<Float> = .zero,
         smoothSize: Bool = false,
+        angle: Float = 0,
+        targetAngle: Float? = nil,
         rotates: Bool = false,
-        rotatePosition: SIMD3<Float> = .zero,
         rotationCount: Float = 1,
         rotationDelay: TimeInterval = 0,
         rotatesClockwise: Bool = false,
-        angle: Float = 0,
-        targetAngle: Float? = nil,
+        rotatePosition: SIMD3<Float> = .zero,
         rotatesToTarget: Bool = false,
         rotatesWithCamera: Bool = false,
-        sparkles: Bool = false,
-        sparkleCount: Float = 1,
-        sparkleCountRange: ClosedRange<Float>? = nil,
-        randomNumberRange: ClosedRange<Int>? = nil,
         soulStrikePattern: Int? = nil,
         drainPattern: Int? = nil
     ) -> EffectDefinition {
@@ -254,25 +255,30 @@ extension EffectDefinition {
             playSprite: playSprite,
             spriteFrameDelay: spriteFrameDelay,
             soundName: soundName,
-            attachedToTarget: attachedToTarget,
-            rendersBeforeEntities: rendersBeforeEntities,
-            repeats: repeats,
-            overlay: overlay,
+            delaySound: delaySound,
+            randomNumberRange: randomNumberRange,
             duration: duration,
+            repeats: repeats,
             delayStart: delayStart,
             delay: delay,
             delayOffset: delayOffset,
             delayLate: delayLate,
-            delaySound: delaySound,
             duplicate: duplicate,
+            attachedToTarget: attachedToTarget,
+            rendersBeforeEntities: rendersBeforeEntities,
+            overlay: overlay,
+            zIndex: zIndex,
+            blendMode: blendMode,
             color: color,
+            castsShadow: castsShadow,
             alphaMin: alphaMin,
             alphaMax: alphaMax,
             fadesIn: fadesIn,
             fadesOut: fadesOut,
-            blendMode: blendMode,
-            zIndex: zIndex,
-            castsShadow: castsShadow,
+            sparkles: sparkles,
+            sparkleCount: sparkleCount,
+            sparkleCountRange: sparkleCountRange,
+            offset: offset,
             positionStart: positionStart,
             positionEnd: positionEnd,
             positionRandomRange: positionRandomRange,
@@ -282,7 +288,6 @@ extension EffectDefinition {
             positionEndRandomRange: positionEndRandomRange,
             positionEndRandomMiddle: positionEndRandomMiddle,
             smoothPositionAxes: smoothPositionAxes,
-            offset: offset,
             zOffsetStart: zOffsetStart,
             zOffsetEnd: zOffsetEnd,
             arc: arc,
@@ -293,19 +298,15 @@ extension EffectDefinition {
             sizeEnd: sizeEnd,
             sizeRandomRange: sizeRandomRange,
             smoothSize: smoothSize,
+            angle: angle,
+            targetAngle: targetAngle,
             rotates: rotates,
-            rotatePosition: rotatePosition,
             rotationCount: rotationCount,
             rotationDelay: rotationDelay,
             rotatesClockwise: rotatesClockwise,
-            angle: angle,
-            targetAngle: targetAngle,
+            rotatePosition: rotatePosition,
             rotatesToTarget: rotatesToTarget,
             rotatesWithCamera: rotatesWithCamera,
-            sparkles: sparkles,
-            sparkleCount: sparkleCount,
-            sparkleCountRange: sparkleCountRange,
-            randomNumberRange: randomNumberRange,
             soulStrikePattern: soulStrikePattern,
             drainPattern: drainPattern
         )

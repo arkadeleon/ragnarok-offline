@@ -11,23 +11,27 @@ import simd
 // Ported from roBrowserLegacy EffectTable.js (Swift property → JS key):
 // - textureName:            textureName
 // - soundName:              wav
-// - attachedToTarget:       attachedEntity
-// - repeats:                repeat
 // - duration:               duration
+// - repeats:                repeat
+// - delayStart:             delayStart
 // - delayOffset:            delayOffset
 // - delayLate:              delayLate
 // - duplicate:              duplicate, timeBetweenDupli
-// - totalCircleSides:       totalCircleSides
-// - visibleCircleSides:     circleSides
-// - textureRepeatX:         repeatTextureX
-// - topRadius:              topSize
-// - bottomRadius:           bottomSize
-// - height:                 height
+// - attachedToTarget:       attachedEntity
+// - rendersBeforeEntities:  renderBeforeEntities
+// - zIndex:                 zIndex
+// - blendMode:              blendMode
 // - color:                  red, green, blue
 // - alpha:                  alphaMax
 // - fades:                  fade
+// - topRadius:              topSize
+// - bottomRadius:           bottomSize
+// - height:                 height
+// - totalCircleSides:       totalCircleSides
+// - visibleCircleSides:     circleSides
+// - usesSemicircle:         semiCircle (inverted)
+// - textureRepeatX:         repeatTextureX
 // - animation:              animation, animationSpeed, animationOut
-// - blendMode:              blendMode
 // - positionOffset:         posX, posY, posZ
 // - rotationDegrees:        angleX, angleY, angleZ
 // - randomRotationDegrees:  angleZRandom
@@ -39,36 +43,36 @@ import simd
 public struct CylinderEffectDefinition: Sendable {
     public var textureName: String
     public var soundName: String?
-    public var attachedToTarget: Bool
-    public var rendersBeforeEntities: Bool
-    public var repeats: Bool
 
     public var duration: TimeInterval
+    public var repeats: Bool
     public var delayStart: TimeInterval
     public var delayOffset: TimeInterval
     public var delayLate: TimeInterval
     public var duplicate: EffectParameters.Duplicate
 
-    public var totalCircleSides: Int
-    public var visibleCircleSides: Int
-    public var textureRepeatX: Float
+    public var attachedToTarget: Bool
+    public var rendersBeforeEntities: Bool
+    public var zIndex: Float
+    public var blendMode: EffectParameters.BlendMode
+    public var color: SIMD3<Float>
+
+    public var alpha: Float
+    public var fades: Bool
+
     public var topRadius: Float
     public var bottomRadius: Float
     public var height: Float
+    public var totalCircleSides: Int
+    public var visibleCircleSides: Int
     public var usesSemicircle: Bool
-
-    public var color: SIMD3<Float>
-    public var alpha: Float
-    public var fades: Bool
+    public var textureRepeatX: Float
     public var animation: EffectParameters.Animation?
-    public var blendMode: EffectParameters.BlendMode
-    public var zIndex: Float
 
     public var positionOffset: SIMD3<Float>
     public var rotationDegrees: SIMD3<Float>
     public var randomRotationDegrees: SIMD3<Float>
     public var rotatesContinuously: Bool
-
     public var rotatesWithCamera: Bool
     public var rotatesToTarget: Bool
     public var rotatesWithSource: Bool
@@ -103,27 +107,27 @@ extension EffectDefinition {
     public static func cylinder(
         textureName: String,
         soundName: String? = nil,
-        attachedToTarget: Bool,
-        rendersBeforeEntities: Bool = false,
-        repeats: Bool = false,
         duration: TimeInterval,
+        repeats: Bool = false,
         delayStart: TimeInterval = 0,
         delayOffset: TimeInterval = 0,
         delayLate: TimeInterval = 0,
         duplicate: EffectParameters.Duplicate = EffectParameters.Duplicate(),
-        totalCircleSides: Int = 20,
-        visibleCircleSides: Int? = nil,
-        textureRepeatX: Float = 1,
-        topRadius: Float,
-        bottomRadius: Float,
-        height: Float,
-        usesSemicircle: Bool = true,
+        attachedToTarget: Bool,
+        rendersBeforeEntities: Bool = false,
+        zIndex: Float = 0,
+        blendMode: EffectParameters.BlendMode = .oneMinusSourceAlpha,
         color: SIMD3<Float> = [1, 1, 1],
         alpha: Float = 1,
         fades: Bool = false,
+        topRadius: Float,
+        bottomRadius: Float,
+        height: Float,
+        totalCircleSides: Int = 20,
+        visibleCircleSides: Int? = nil,
+        usesSemicircle: Bool = true,
+        textureRepeatX: Float = 1,
         animation: EffectParameters.Animation? = nil,
-        blendMode: EffectParameters.BlendMode = .oneMinusSourceAlpha,
-        zIndex: Float = 0,
         positionOffset: SIMD3<Float> = .zero,
         rotationDegrees: SIMD3<Float> = .zero,
         randomRotationDegrees: SIMD3<Float> = .zero,
@@ -136,27 +140,27 @@ extension EffectDefinition {
         let definition = CylinderEffectDefinition(
             textureName: textureName,
             soundName: soundName,
-            attachedToTarget: attachedToTarget,
-            rendersBeforeEntities: rendersBeforeEntities,
-            repeats: repeats,
             duration: duration,
+            repeats: repeats,
             delayStart: delayStart,
             delayOffset: delayOffset,
             delayLate: delayLate,
             duplicate: duplicate,
-            totalCircleSides: totalCircleSides,
-            visibleCircleSides: visibleCircleSides ?? totalCircleSides,
-            textureRepeatX: textureRepeatX,
-            topRadius: topRadius,
-            bottomRadius: bottomRadius,
-            height: height,
-            usesSemicircle: usesSemicircle,
+            attachedToTarget: attachedToTarget,
+            rendersBeforeEntities: rendersBeforeEntities,
+            zIndex: zIndex,
+            blendMode: blendMode,
             color: color,
             alpha: alpha,
             fades: fades,
+            topRadius: topRadius,
+            bottomRadius: bottomRadius,
+            height: height,
+            totalCircleSides: totalCircleSides,
+            visibleCircleSides: visibleCircleSides ?? totalCircleSides,
+            usesSemicircle: usesSemicircle,
+            textureRepeatX: textureRepeatX,
             animation: animation,
-            blendMode: blendMode,
-            zIndex: zIndex,
             positionOffset: positionOffset,
             rotationDegrees: rotationDegrees,
             randomRotationDegrees: randomRotationDegrees,

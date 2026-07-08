@@ -8,13 +8,14 @@
 // Ported from roBrowserLegacy EffectTable.js (Swift property → JS key):
 // - fileName:           file
 // - soundName:          wav
-// - attachedToTarget:   attachedEntity
 // - randomNumberRange:  rand
+// - attachedToTarget:   attachedEntity
 public struct STREffectDefinition: Sendable {
     public var fileName: String
     public var soundName: String?
-    public var attachedToTarget: Bool
     public var randomNumberRange: ClosedRange<Int>?
+
+    public var attachedToTarget: Bool
 
     func resolved() -> STREffectDefinition {
         guard let randomNumberRange else {
@@ -34,14 +35,14 @@ extension EffectDefinition {
     public static func str(
         fileName: String,
         soundName: String? = nil,
-        attachedToTarget: Bool,
-        randomNumberRange: ClosedRange<Int>? = nil
+        randomNumberRange: ClosedRange<Int>? = nil,
+        attachedToTarget: Bool
     ) -> EffectDefinition {
         let definition = STREffectDefinition(
             fileName: fileName,
             soundName: soundName,
-            attachedToTarget: attachedToTarget,
-            randomNumberRange: randomNumberRange
+            randomNumberRange: randomNumberRange,
+            attachedToTarget: attachedToTarget
         )
         return .str(definition)
     }
