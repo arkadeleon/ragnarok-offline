@@ -11,6 +11,7 @@ import simd
 public final class EffectRenderer {
     public let device: any MTLDevice
 
+    private let effect2DRenderer: Effect2DRenderer
     private let effect3DRenderer: Effect3DRenderer
     private let cylinderEffectRenderer: CylinderEffectRenderer
     private let sprEffectRenderer: SPREffectRenderer
@@ -19,6 +20,7 @@ public final class EffectRenderer {
     public init(device: any MTLDevice) throws {
         self.device = device
 
+        effect2DRenderer = try Effect2DRenderer(device: device)
         effect3DRenderer = try Effect3DRenderer(device: device)
         cylinderEffectRenderer = try CylinderEffectRenderer(device: device)
         sprEffectRenderer = try SPREffectRenderer(device: device)
@@ -41,6 +43,17 @@ public final class EffectRenderer {
         let elapsedTime = time - resource.creationTime - resource.delay
         for component in resource.components {
             switch component {
+            case .`2D`(let resource):
+                let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
+                effect2DRenderer.render(
+                    resource: resource,
+                    elapsedTime: elapsedTime,
+                    worldPosition: worldPosition,
+                    renderCommandEncoder: renderCommandEncoder,
+                    viewMatrix: viewMatrix,
+                    projectionMatrix: projectionMatrix,
+                    cameraAzimuth: cameraAzimuth
+                )
             case .`3D`(let resource):
                 let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
                 effect3DRenderer.render(

@@ -16,6 +16,7 @@ public enum EffectParameters {
         public var alphaMaxDelta: Float
         public var sizeDelta: Float
         public var rotationDelayDelta: TimeInterval
+        public var angleDelta: Float
 
         public init(
             count: Int = 1,
@@ -24,7 +25,8 @@ public enum EffectParameters {
             delayLateDelta: TimeInterval = 0,
             alphaMaxDelta: Float = 0,
             sizeDelta: Float = 0,
-            rotationDelayDelta: TimeInterval = 0
+            rotationDelayDelta: TimeInterval = 0,
+            angleDelta: Float = 0
         ) {
             self.count = count
             self.interval = interval
@@ -33,6 +35,7 @@ public enum EffectParameters {
             self.alphaMaxDelta = alphaMaxDelta
             self.sizeDelta = sizeDelta
             self.rotationDelayDelta = rotationDelayDelta
+            self.angleDelta = angleDelta
         }
     }
 

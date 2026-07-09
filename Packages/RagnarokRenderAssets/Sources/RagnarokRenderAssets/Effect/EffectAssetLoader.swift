@@ -31,6 +31,9 @@ public struct EffectAssetLoader: Sendable {
 
     private func loadComponent(with definition: EffectDefinition) async throws -> EffectAssetComponent {
         switch definition {
+        case .`2D`(let definition):
+            let asset = try await loadAsset(with: definition)
+            return .`2D`(asset)
         case .`3D`(let definition):
             let asset = try await loadAsset(with: definition)
             return .`3D`(asset)
@@ -44,6 +47,15 @@ public struct EffectAssetLoader: Sendable {
             let asset = try await loadAsset(with: definition)
             return .str(asset)
         }
+    }
+
+    private func loadAsset(with definition: Effect2DDefinition) async throws -> Effect2DAsset {
+        let texturePath = ResourcePath.textureDirectory.appending(subpath: definition.fileName)
+        let removesMagentaPixels = definition.fileName.lowercased().hasSuffix(".bmp")
+        let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
+
+        let asset = Effect2DAsset(definition: definition, textureImage: image.cgImage)
+        return asset
     }
 
     private func loadAsset(with definition: Effect3DDefinition) async throws -> Effect3DAsset {

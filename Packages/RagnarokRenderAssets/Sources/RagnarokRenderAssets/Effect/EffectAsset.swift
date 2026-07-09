@@ -14,6 +14,7 @@ public struct EffectAsset: Sendable {
 }
 
 public enum EffectAssetComponent: Sendable {
+    case `2D`(Effect2DAsset)
     case `3D`(Effect3DAsset)
     case cylinder(CylinderEffectAsset)
     case spr(SPREffectAsset)
@@ -21,6 +22,8 @@ public enum EffectAssetComponent: Sendable {
 
     public var soundName: String? {
         switch self {
+        case .`2D`(let asset):
+            asset.definition.soundName
         case .`3D`(let asset):
             asset.definition.soundName
         case .cylinder(let asset):
@@ -30,6 +33,16 @@ public enum EffectAssetComponent: Sendable {
         case .str(let asset):
             asset.definition.soundName
         }
+    }
+}
+
+public struct Effect2DAsset: Sendable {
+    public let definition: Effect2DDefinition
+    public let textureImage: CGImage
+
+    public init(definition: Effect2DDefinition, textureImage: CGImage) {
+        self.definition = definition
+        self.textureImage = textureImage
     }
 }
 

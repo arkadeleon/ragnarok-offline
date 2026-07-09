@@ -37,6 +37,18 @@ public final class EffectRenderResource {
     ) {
         let components = asset.components.flatMap { component -> [EffectRenderResourceComponent] in
             switch component {
+            case .`2D`(let asset):
+                var components: [EffectRenderResourceComponent] = []
+                let definition = asset.definition
+                for duplicateID in 0..<max(definition.duplicate.count, 1) {
+                    let resource = Effect2DRenderResource(
+                        device: device,
+                        asset: asset,
+                        duplicateID: duplicateID
+                    )
+                    components.append(.`2D`(resource))
+                }
+                return components
             case .`3D`(let asset):
                 var components: [EffectRenderResourceComponent] = []
                 let definition = asset.definition
@@ -88,6 +100,7 @@ public final class EffectRenderResource {
 }
 
 public enum EffectRenderResourceComponent {
+    case `2D`(Effect2DRenderResource)
     case `3D`(Effect3DRenderResource)
     case cylinder(CylinderEffectRenderResource)
     case spr(SPREffectRenderResource)
@@ -95,6 +108,8 @@ public enum EffectRenderResourceComponent {
 
     public var rendersBeforeEntities: Bool {
         switch self {
+        case .`2D`(let resource):
+            resource.rendersBeforeEntities
         case .`3D`(let resource):
             resource.rendersBeforeEntities
         case .cylinder(let resource):
@@ -108,6 +123,8 @@ public enum EffectRenderResourceComponent {
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
         switch self {
+        case .`2D`(let resource):
+            resource.isExpired(elapsedTime: elapsedTime)
         case .`3D`(let resource):
             resource.isExpired(elapsedTime: elapsedTime)
         case .cylinder(let resource):

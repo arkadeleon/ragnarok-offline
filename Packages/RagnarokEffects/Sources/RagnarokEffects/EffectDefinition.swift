@@ -9,6 +9,7 @@ import Foundation
 import simd
 
 public enum EffectDefinition: Sendable {
+    case `2D`(Effect2DDefinition)
     case `3D`(Effect3DDefinition)
     case cylinder(CylinderEffectDefinition)
     case spr(SPREffectDefinition)
@@ -18,6 +19,8 @@ public enum EffectDefinition: Sendable {
 extension EffectDefinition {
     public func resolved() -> EffectDefinition {
         switch self {
+        case .`2D`(let definition):
+            .`2D`(definition.resolved())
         case .`3D`(let definition):
             .`3D`(definition.resolved())
         case .cylinder(let definition):
