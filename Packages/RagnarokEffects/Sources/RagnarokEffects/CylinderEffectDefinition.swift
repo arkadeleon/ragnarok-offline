@@ -34,7 +34,9 @@ import simd
 // - animation:              animation, animationSpeed, animationOut
 // - positionOffset:         posX, posY, posZ
 // - rotationDegrees:        angleX, angleY, angleZ
-// - randomRotationDegrees:  angleZRandom
+// - rotationXRandomRange:   angleXRandom
+// - rotationYRandomRange:   angleYRandom
+// - rotationZRandomRange:   angleZRandom
 // - rotatesContinuously:    rotate
 // - rotatesWithCamera:      rotateWithCamera
 // - rotatesToTarget:        rotateToTarget
@@ -71,7 +73,9 @@ public struct CylinderEffectDefinition: Sendable {
 
     public var positionOffset: SIMD3<Float>
     public var rotationDegrees: SIMD3<Float>
-    public var randomRotationDegrees: SIMD3<Float>
+    public var rotationXRandomRange: ClosedRange<Float>?
+    public var rotationYRandomRange: ClosedRange<Float>?
+    public var rotationZRandomRange: ClosedRange<Float>?
     public var rotatesContinuously: Bool
     public var rotatesWithCamera: Bool
     public var rotatesToTarget: Bool
@@ -88,17 +92,21 @@ public struct CylinderEffectDefinition: Sendable {
     }
 
     func resolved() -> CylinderEffectDefinition {
-        guard randomRotationDegrees != .zero else {
-            return self
+        var definition = self
+
+        if let rotationXRandomRange {
+            definition.rotationDegrees.x += Float.random(in: rotationXRandomRange)
+            definition.rotationXRandomRange = nil
+        }
+        if let rotationYRandomRange {
+            definition.rotationDegrees.y += Float.random(in: rotationYRandomRange)
+            definition.rotationYRandomRange = nil
+        }
+        if let rotationZRandomRange {
+            definition.rotationDegrees.z += Float.random(in: rotationZRandomRange)
+            definition.rotationZRandomRange = nil
         }
 
-        var definition = self
-        definition.rotationDegrees += [
-            randomRotationDegrees.x > 0 ? Float.random(in: 0..<randomRotationDegrees.x) : 0,
-            randomRotationDegrees.y > 0 ? Float.random(in: 0..<randomRotationDegrees.y) : 0,
-            randomRotationDegrees.z > 0 ? Float.random(in: 0..<randomRotationDegrees.z) : 0,
-        ]
-        definition.randomRotationDegrees = .zero
         return definition
     }
 }
@@ -130,7 +138,9 @@ extension EffectDefinition {
         animation: EffectParameters.Animation? = nil,
         positionOffset: SIMD3<Float> = .zero,
         rotationDegrees: SIMD3<Float> = .zero,
-        randomRotationDegrees: SIMD3<Float> = .zero,
+        rotationXRandomRange: ClosedRange<Float>? = nil,
+        rotationYRandomRange: ClosedRange<Float>? = nil,
+        rotationZRandomRange: ClosedRange<Float>? = nil,
         rotatesContinuously: Bool = false,
         rotatesWithCamera: Bool = false,
         rotatesToTarget: Bool = false,
@@ -163,7 +173,9 @@ extension EffectDefinition {
             animation: animation,
             positionOffset: positionOffset,
             rotationDegrees: rotationDegrees,
-            randomRotationDegrees: randomRotationDegrees,
+            rotationXRandomRange: rotationXRandomRange,
+            rotationYRandomRange: rotationYRandomRange,
+            rotationZRandomRange: rotationZRandomRange,
             rotatesContinuously: rotatesContinuously,
             rotatesWithCamera: rotatesWithCamera,
             rotatesToTarget: rotatesToTarget,

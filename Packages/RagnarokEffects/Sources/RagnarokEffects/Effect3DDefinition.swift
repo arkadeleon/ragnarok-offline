@@ -46,15 +46,22 @@ public struct EffectAxes: Sendable {
 // - fadesOut:                       fadeOut
 // - sparkles:                       sparkling
 // - sparkleCount:                   sparkNumber
+// - sparkleCountRandomRange:        sparkNumber
 // - offset:                         posx, posy, posz
 // - positionStart:                  posxStart, posyStart, poszStart
 // - positionEnd:                    posxEnd, posyEnd, poszEnd
-// - positionRandomRange:            posxRand, posyRand, poszRand
-// - positionRandomDifferenceRange:  posxRandDiff, posyRandDiff, poszRandDiff
-// - positionStartRandomRange:       posxStartRand, posyStartRand, poszStartRand
-// - positionStartRandomMiddle:      posxStartRandMiddle, posyStartRandMiddle, poszStartRandMiddle
-// - positionEndRandomRange:         posxEndRand, posyEndRand, poszEndRand
-// - positionEndRandomMiddle:        posxEndRandMiddle, posyEndRandMiddle, poszEndRandMiddle
+// - positionXRandomRange:           posxRand
+// - positionYRandomRange:           posyRand
+// - positionZRandomRange:           poszRand
+// - positionXRandomDifferenceRange: posxRandDiff
+// - positionYRandomDifferenceRange: posyRandDiff
+// - positionZRandomDifferenceRange: poszRandDiff
+// - positionStartXRandomRange:      posxStartRand, posxStartRandMiddle
+// - positionStartYRandomRange:      posyStartRand, posyStartRandMiddle
+// - positionStartZRandomRange:      poszStartRand, poszStartRandMiddle
+// - positionEndXRandomRange:        posxEndRand, posxEndRandMiddle
+// - positionEndYRandomRange:        posyEndRand, posyEndRandMiddle
+// - positionEndZRandomRange:        poszEndRand, poszEndRandMiddle
 // - smoothPositionAxes:             posxSmooth, posySmooth, poszSmooth
 // - zOffsetStart:                   zOffsetStart
 // - zOffsetEnd:                     zOffsetEnd
@@ -62,9 +69,10 @@ public struct EffectAxes: Sendable {
 // - retreat:                        retreat
 // - movesFromSource:                fromSrc
 // - movesToSource:                  toSrc
-// - sizeStart:                      size, sizeX, sizeY, sizeStart, sizeStartX, sizeStartY, sizeRandXMiddle, sizeRandYMiddle
-// - sizeEnd:                        size, sizeX, sizeY, sizeEnd, sizeEndX, sizeEndY, sizeRandXMiddle, sizeRandYMiddle
-// - sizeRandomRange:                sizeRand, sizeRandX, sizeRandY
+// - sizeStart:                      size, sizeX, sizeY, sizeStart, sizeStartX, sizeStartY
+// - sizeEnd:                        size, sizeX, sizeY, sizeEnd, sizeEndX, sizeEndY
+// - sizeXRandomRange:               sizeRand, sizeRandX, sizeRandXMiddle
+// - sizeYRandomRange:               sizeRand, sizeRandY, sizeRandYMiddle
 // - smoothSize:                     sizeSmooth
 // - angle:                          angle
 // - targetAngle:                    toAngle
@@ -110,17 +118,23 @@ public struct Effect3DDefinition: Sendable {
     public var fadesOut: Bool
     public var sparkles: Bool
     public var sparkleCount: Float
-    public var sparkleCountRange: ClosedRange<Float>?
+    public var sparkleCountRandomRange: ClosedRange<Float>?
 
     public var offset: SIMD3<Float>
     public var positionStart: SIMD3<Float>
     public var positionEnd: SIMD3<Float>
-    public var positionRandomRange: SIMD3<Float>
-    public var positionRandomDifferenceRange: SIMD3<Float>
-    public var positionStartRandomRange: SIMD3<Float>
-    public var positionStartRandomMiddle: SIMD3<Float>
-    public var positionEndRandomRange: SIMD3<Float>
-    public var positionEndRandomMiddle: SIMD3<Float>
+    public var positionXRandomRange: ClosedRange<Float>?
+    public var positionYRandomRange: ClosedRange<Float>?
+    public var positionZRandomRange: ClosedRange<Float>?
+    public var positionXRandomDifferenceRange: ClosedRange<Float>?
+    public var positionYRandomDifferenceRange: ClosedRange<Float>?
+    public var positionZRandomDifferenceRange: ClosedRange<Float>?
+    public var positionStartXRandomRange: ClosedRange<Float>?
+    public var positionStartYRandomRange: ClosedRange<Float>?
+    public var positionStartZRandomRange: ClosedRange<Float>?
+    public var positionEndXRandomRange: ClosedRange<Float>?
+    public var positionEndYRandomRange: ClosedRange<Float>?
+    public var positionEndZRandomRange: ClosedRange<Float>?
     public var smoothPositionAxes: EffectAxes
     public var zOffsetStart: Float
     public var zOffsetEnd: Float
@@ -131,7 +145,8 @@ public struct Effect3DDefinition: Sendable {
 
     public var sizeStart: SIMD2<Float>
     public var sizeEnd: SIMD2<Float>
-    public var sizeRandomRange: SIMD2<Float>
+    public var sizeXRandomRange: ClosedRange<Float>?
+    public var sizeYRandomRange: ClosedRange<Float>?
     public var smoothSize: Bool
 
     public var angle: Float
@@ -174,9 +189,9 @@ public struct Effect3DDefinition: Sendable {
             definition.randomNumberRange = nil
         }
 
-        if let sparkleCountRange {
-            definition.sparkleCount = Float.random(in: sparkleCountRange)
-            definition.sparkleCountRange = nil
+        if let sparkleCountRandomRange {
+            definition.sparkleCount = Float.random(in: sparkleCountRandomRange)
+            definition.sparkleCountRandomRange = nil
         }
 
         return definition
@@ -214,16 +229,22 @@ extension EffectDefinition {
         fadesOut: Bool = false,
         sparkles: Bool = false,
         sparkleCount: Float = 1,
-        sparkleCountRange: ClosedRange<Float>? = nil,
+        sparkleCountRandomRange: ClosedRange<Float>? = nil,
         offset: SIMD3<Float> = .zero,
         positionStart: SIMD3<Float> = .zero,
         positionEnd: SIMD3<Float> = .zero,
-        positionRandomRange: SIMD3<Float> = .zero,
-        positionRandomDifferenceRange: SIMD3<Float> = .zero,
-        positionStartRandomRange: SIMD3<Float> = .zero,
-        positionStartRandomMiddle: SIMD3<Float> = .zero,
-        positionEndRandomRange: SIMD3<Float> = .zero,
-        positionEndRandomMiddle: SIMD3<Float> = .zero,
+        positionXRandomRange: ClosedRange<Float>? = nil,
+        positionYRandomRange: ClosedRange<Float>? = nil,
+        positionZRandomRange: ClosedRange<Float>? = nil,
+        positionXRandomDifferenceRange: ClosedRange<Float>? = nil,
+        positionYRandomDifferenceRange: ClosedRange<Float>? = nil,
+        positionZRandomDifferenceRange: ClosedRange<Float>? = nil,
+        positionStartXRandomRange: ClosedRange<Float>? = nil,
+        positionStartYRandomRange: ClosedRange<Float>? = nil,
+        positionStartZRandomRange: ClosedRange<Float>? = nil,
+        positionEndXRandomRange: ClosedRange<Float>? = nil,
+        positionEndYRandomRange: ClosedRange<Float>? = nil,
+        positionEndZRandomRange: ClosedRange<Float>? = nil,
         smoothPositionAxes: EffectAxes = .none,
         zOffsetStart: Float = 0,
         zOffsetEnd: Float = 0,
@@ -233,7 +254,8 @@ extension EffectDefinition {
         movesToSource: Bool = false,
         sizeStart: SIMD2<Float>,
         sizeEnd: SIMD2<Float>,
-        sizeRandomRange: SIMD2<Float> = .zero,
+        sizeXRandomRange: ClosedRange<Float>? = nil,
+        sizeYRandomRange: ClosedRange<Float>? = nil,
         smoothSize: Bool = false,
         angle: Float = 0,
         targetAngle: Float? = nil,
@@ -277,16 +299,22 @@ extension EffectDefinition {
             fadesOut: fadesOut,
             sparkles: sparkles,
             sparkleCount: sparkleCount,
-            sparkleCountRange: sparkleCountRange,
+            sparkleCountRandomRange: sparkleCountRandomRange,
             offset: offset,
             positionStart: positionStart,
             positionEnd: positionEnd,
-            positionRandomRange: positionRandomRange,
-            positionRandomDifferenceRange: positionRandomDifferenceRange,
-            positionStartRandomRange: positionStartRandomRange,
-            positionStartRandomMiddle: positionStartRandomMiddle,
-            positionEndRandomRange: positionEndRandomRange,
-            positionEndRandomMiddle: positionEndRandomMiddle,
+            positionXRandomRange: positionXRandomRange,
+            positionYRandomRange: positionYRandomRange,
+            positionZRandomRange: positionZRandomRange,
+            positionXRandomDifferenceRange: positionXRandomDifferenceRange,
+            positionYRandomDifferenceRange: positionYRandomDifferenceRange,
+            positionZRandomDifferenceRange: positionZRandomDifferenceRange,
+            positionStartXRandomRange: positionStartXRandomRange,
+            positionStartYRandomRange: positionStartYRandomRange,
+            positionStartZRandomRange: positionStartZRandomRange,
+            positionEndXRandomRange: positionEndXRandomRange,
+            positionEndYRandomRange: positionEndYRandomRange,
+            positionEndZRandomRange: positionEndZRandomRange,
             smoothPositionAxes: smoothPositionAxes,
             zOffsetStart: zOffsetStart,
             zOffsetEnd: zOffsetEnd,
@@ -296,7 +324,8 @@ extension EffectDefinition {
             movesToSource: movesToSource,
             sizeStart: sizeStart,
             sizeEnd: sizeEnd,
-            sizeRandomRange: sizeRandomRange,
+            sizeXRandomRange: sizeXRandomRange,
+            sizeYRandomRange: sizeYRandomRange,
             smoothSize: smoothSize,
             angle: angle,
             targetAngle: targetAngle,

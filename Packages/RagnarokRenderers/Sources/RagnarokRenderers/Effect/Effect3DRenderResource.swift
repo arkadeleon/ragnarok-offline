@@ -65,21 +65,53 @@ public final class Effect3DRenderResource {
         var positionStart = definition.positionStart
         var positionEnd = definition.positionEnd
 
-        let randomPosition = Self.randomVector(in: definition.positionRandomRange)
-        positionStart += randomPosition
-        positionEnd += randomPosition
-
-        if definition.positionRandomDifferenceRange != .zero {
-            positionStart += Self.randomVector(in: definition.positionRandomDifferenceRange)
-            positionEnd += Self.randomVector(in: definition.positionRandomDifferenceRange)
+        if let range = definition.positionXRandomRange {
+            let random = Float.random(in: range)
+            positionStart.x = random
+            positionEnd.x = random
+        }
+        if let range = definition.positionYRandomRange {
+            let random = Float.random(in: range)
+            positionStart.y = random
+            positionEnd.y = random
+        }
+        if let range = definition.positionZRandomRange {
+            let random = Float.random(in: range)
+            positionStart.z = random
+            positionEnd.z = random
         }
 
-        if definition.positionStartRandomRange != .zero {
-            positionStart += definition.positionStartRandomMiddle + Self.randomVector(in: definition.positionStartRandomRange)
+        if let range = definition.positionXRandomDifferenceRange {
+            positionStart.x = Float.random(in: range)
+            positionEnd.x = Float.random(in: range)
+        }
+        if let range = definition.positionYRandomDifferenceRange {
+            positionStart.y = Float.random(in: range)
+            positionEnd.y = Float.random(in: range)
+        }
+        if let range = definition.positionZRandomDifferenceRange {
+            positionStart.z = Float.random(in: range)
+            positionEnd.z = Float.random(in: range)
         }
 
-        if definition.positionEndRandomRange != .zero {
-            positionEnd += definition.positionEndRandomMiddle + Self.randomVector(in: definition.positionEndRandomRange)
+        if let range = definition.positionStartXRandomRange {
+            positionStart.x = Float.random(in: range)
+        }
+        if let range = definition.positionStartYRandomRange {
+            positionStart.y = Float.random(in: range)
+        }
+        if let range = definition.positionStartZRandomRange {
+            positionStart.z = Float.random(in: range)
+        }
+
+        if let range = definition.positionEndXRandomRange {
+            positionEnd.x = Float.random(in: range)
+        }
+        if let range = definition.positionEndYRandomRange {
+            positionEnd.y = Float.random(in: range)
+        }
+        if let range = definition.positionEndZRandomRange {
+            positionEnd.z = Float.random(in: range)
         }
 
         positionStart += definition.offset
@@ -93,19 +125,21 @@ public final class Effect3DRenderResource {
         var sizeStart = definition.sizeStart
         var sizeEnd = definition.sizeEnd
 
+        if let range = definition.sizeXRandomRange {
+            let random = Float.random(in: range)
+            sizeStart.x = random
+            sizeEnd.x = random
+        }
+        if let range = definition.sizeYRandomRange {
+            let random = Float.random(in: range)
+            sizeStart.y = random
+            sizeEnd.y = random
+        }
+
         if definition.duplicate.sizeDelta != 0 {
             let delta = definition.duplicate.sizeDelta * Float(duplicateID)
             sizeStart += [delta, delta]
             sizeEnd += [delta, delta]
-        }
-
-        if definition.sizeRandomRange != .zero {
-            let randomSizeOffset: SIMD2<Float> = [
-                Float.random(in: -definition.sizeRandomRange.x...definition.sizeRandomRange.x),
-                Float.random(in: -definition.sizeRandomRange.y...definition.sizeRandomRange.y),
-            ]
-            sizeStart += randomSizeOffset
-            sizeEnd += randomSizeOffset
         }
 
         self.sizeStart = sizeStart
@@ -303,13 +337,5 @@ public final class Effect3DRenderResource {
 
     private static func worldOffset(forMapOffset offset: SIMD3<Float>) -> SIMD3<Float> {
         [offset.x, offset.z, -offset.y]
-    }
-
-    private static func randomVector(in range: SIMD3<Float>) -> SIMD3<Float> {
-        [
-            range.x == 0 ? 0 : Float.random(in: -range.x...range.x),
-            range.y == 0 ? 0 : Float.random(in: -range.y...range.y),
-            range.z == 0 ? 0 : Float.random(in: -range.z...range.z),
-        ]
     }
 }

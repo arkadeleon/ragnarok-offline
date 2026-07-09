@@ -34,12 +34,18 @@ import simd
 // - positionOffset:                 posx, posy, posz
 // - positionStart:                  posxStart, posyStart, poszStart
 // - positionEnd:                    posxEnd, posyEnd, poszEnd
-// - positionRandomRange:            posxRand, posyRand, poszRand
-// - positionRandomDifferenceRange:  posxRandDiff, posyRandDiff, poszRandDiff
-// - positionStartRandomRange:       posxStartRand, posyStartRand, poszStartRand
-// - positionStartRandomMiddle:      posxStartRandMiddle, posyStartRandMiddle, poszStartRandMiddle
-// - positionEndRandomRange:         posxEndRand, posyEndRand, poszEndRand
-// - positionEndRandomMiddle:        posxEndRandMiddle, posyEndRandMiddle, poszEndRandMiddle
+// - positionXRandomRange:           posxRand
+// - positionYRandomRange:           posyRand
+// - positionZRandomRange:           poszRand
+// - positionXRandomDifferenceRange: posxRandDiff
+// - positionYRandomDifferenceRange: posyRandDiff
+// - positionZRandomDifferenceRange: poszRandDiff
+// - positionStartXRandomRange:      posxStartRand, posxStartRandMiddle
+// - positionStartYRandomRange:      posyStartRand, posyStartRandMiddle
+// - positionStartZRandomRange:      poszStartRand, poszStartRandMiddle
+// - positionEndXRandomRange:        posxEndRand, posxEndRandMiddle
+// - positionEndYRandomRange:        posyEndRand, posyEndRandMiddle
+// - positionEndZRandomRange:        poszEndRand, poszEndRandMiddle
 // - smoothPositionAxes:             posxSmooth, posySmooth, poszSmooth
 // - circlePattern:                  circlePattern
 // - circleInnerSize:                circleInnerSize
@@ -48,7 +54,8 @@ import simd
 // - offsetEnd:                      offsetxEnd, offsetyEnd
 // - sizeStart:                      size, sizeX, sizeY, sizeStart, sizeStartX, sizeStartY
 // - sizeEnd:                        size, sizeX, sizeY, sizeEnd, sizeEndX, sizeEndY
-// - sizeRandomRange:                sizeRand, sizeRandX, sizeRandY
+// - sizeXRandomRange:               sizeRand, sizeRandX, sizeRandXMiddle
+// - sizeYRandomRange:               sizeRand, sizeRandY, sizeRandYMiddle
 // - sizeStartXRandomRange:          sizeRandStartX
 // - sizeStartYRandomRange:          sizeRandStartY
 // - sizeEndXRandomRange:            sizeRandEndX
@@ -89,12 +96,18 @@ public struct Effect2DDefinition: Sendable {
     public var positionOffset: SIMD3<Float>
     public var positionStart: SIMD3<Float>
     public var positionEnd: SIMD3<Float>
-    public var positionRandomRange: SIMD3<Float>
-    public var positionRandomDifferenceRange: SIMD3<Float>
-    public var positionStartRandomRange: SIMD3<Float>
-    public var positionStartRandomMiddle: SIMD3<Float>
-    public var positionEndRandomRange: SIMD3<Float>
-    public var positionEndRandomMiddle: SIMD3<Float>
+    public var positionXRandomRange: ClosedRange<Float>?
+    public var positionYRandomRange: ClosedRange<Float>?
+    public var positionZRandomRange: ClosedRange<Float>?
+    public var positionXRandomDifferenceRange: ClosedRange<Float>?
+    public var positionYRandomDifferenceRange: ClosedRange<Float>?
+    public var positionZRandomDifferenceRange: ClosedRange<Float>?
+    public var positionStartXRandomRange: ClosedRange<Float>?
+    public var positionStartYRandomRange: ClosedRange<Float>?
+    public var positionStartZRandomRange: ClosedRange<Float>?
+    public var positionEndXRandomRange: ClosedRange<Float>?
+    public var positionEndYRandomRange: ClosedRange<Float>?
+    public var positionEndZRandomRange: ClosedRange<Float>?
     public var smoothPositionAxes: EffectAxes
     public var circlePattern: Bool
     public var circleInnerSize: Float
@@ -105,7 +118,8 @@ public struct Effect2DDefinition: Sendable {
 
     public var sizeStart: SIMD2<Float>
     public var sizeEnd: SIMD2<Float>
-    public var sizeRandomRange: SIMD2<Float>
+    public var sizeXRandomRange: ClosedRange<Float>?
+    public var sizeYRandomRange: ClosedRange<Float>?
     public var sizeStartXRandomRange: ClosedRange<Float>?
     public var sizeStartYRandomRange: ClosedRange<Float>?
     public var sizeEndXRandomRange: ClosedRange<Float>?
@@ -169,12 +183,18 @@ extension EffectDefinition {
         positionOffset: SIMD3<Float> = .zero,
         positionStart: SIMD3<Float> = .zero,
         positionEnd: SIMD3<Float> = .zero,
-        positionRandomRange: SIMD3<Float> = .zero,
-        positionRandomDifferenceRange: SIMD3<Float> = .zero,
-        positionStartRandomRange: SIMD3<Float> = .zero,
-        positionStartRandomMiddle: SIMD3<Float> = .zero,
-        positionEndRandomRange: SIMD3<Float> = .zero,
-        positionEndRandomMiddle: SIMD3<Float> = .zero,
+        positionXRandomRange: ClosedRange<Float>? = nil,
+        positionYRandomRange: ClosedRange<Float>? = nil,
+        positionZRandomRange: ClosedRange<Float>? = nil,
+        positionXRandomDifferenceRange: ClosedRange<Float>? = nil,
+        positionYRandomDifferenceRange: ClosedRange<Float>? = nil,
+        positionZRandomDifferenceRange: ClosedRange<Float>? = nil,
+        positionStartXRandomRange: ClosedRange<Float>? = nil,
+        positionStartYRandomRange: ClosedRange<Float>? = nil,
+        positionStartZRandomRange: ClosedRange<Float>? = nil,
+        positionEndXRandomRange: ClosedRange<Float>? = nil,
+        positionEndYRandomRange: ClosedRange<Float>? = nil,
+        positionEndZRandomRange: ClosedRange<Float>? = nil,
         smoothPositionAxes: EffectAxes = .none,
         circlePattern: Bool = false,
         circleInnerSize: Float = 0,
@@ -183,7 +203,8 @@ extension EffectDefinition {
         offsetEnd: SIMD2<Float> = .zero,
         sizeStart: SIMD2<Float> = [100, 100],
         sizeEnd: SIMD2<Float> = [100, 100],
-        sizeRandomRange: SIMD2<Float> = .zero,
+        sizeXRandomRange: ClosedRange<Float>? = nil,
+        sizeYRandomRange: ClosedRange<Float>? = nil,
         sizeStartXRandomRange: ClosedRange<Float>? = nil,
         sizeStartYRandomRange: ClosedRange<Float>? = nil,
         sizeEndXRandomRange: ClosedRange<Float>? = nil,
@@ -221,12 +242,18 @@ extension EffectDefinition {
             positionOffset: positionOffset,
             positionStart: positionStart,
             positionEnd: positionEnd,
-            positionRandomRange: positionRandomRange,
-            positionRandomDifferenceRange: positionRandomDifferenceRange,
-            positionStartRandomRange: positionStartRandomRange,
-            positionStartRandomMiddle: positionStartRandomMiddle,
-            positionEndRandomRange: positionEndRandomRange,
-            positionEndRandomMiddle: positionEndRandomMiddle,
+            positionXRandomRange: positionXRandomRange,
+            positionYRandomRange: positionYRandomRange,
+            positionZRandomRange: positionZRandomRange,
+            positionXRandomDifferenceRange: positionXRandomDifferenceRange,
+            positionYRandomDifferenceRange: positionYRandomDifferenceRange,
+            positionZRandomDifferenceRange: positionZRandomDifferenceRange,
+            positionStartXRandomRange: positionStartXRandomRange,
+            positionStartYRandomRange: positionStartYRandomRange,
+            positionStartZRandomRange: positionStartZRandomRange,
+            positionEndXRandomRange: positionEndXRandomRange,
+            positionEndYRandomRange: positionEndYRandomRange,
+            positionEndZRandomRange: positionEndZRandomRange,
             smoothPositionAxes: smoothPositionAxes,
             circlePattern: circlePattern,
             circleInnerSize: circleInnerSize,
@@ -235,7 +262,8 @@ extension EffectDefinition {
             offsetEnd: offsetEnd,
             sizeStart: sizeStart,
             sizeEnd: sizeEnd,
-            sizeRandomRange: sizeRandomRange,
+            sizeXRandomRange: sizeXRandomRange,
+            sizeYRandomRange: sizeYRandomRange,
             sizeStartXRandomRange: sizeStartXRandomRange,
             sizeStartYRandomRange: sizeStartYRandomRange,
             sizeEndXRandomRange: sizeEndXRandomRange,
