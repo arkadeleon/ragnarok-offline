@@ -19,7 +19,7 @@ class EffectViewerEffectRenderer: Renderer {
     let device: any MTLDevice
 
     private let effectRenderer: EffectRenderer
-    private let effectResource: EffectRenderResource
+    private let effectResourceGroup: EffectRenderResourceGroup
 
     let camera: OrbitalCamera
 
@@ -27,7 +27,7 @@ class EffectViewerEffectRenderer: Renderer {
         self.device = device
 
         effectRenderer = try EffectRenderer(device: device)
-        effectResource = EffectRenderResource(
+        effectResourceGroup = EffectRenderResourceGroup(
             device: device,
             assetGroup: assetGroup,
             creationTime: CACurrentMediaTime(),
@@ -69,7 +69,7 @@ class EffectViewerEffectRenderer: Renderer {
         }
 
         effectRenderer.render(
-            resource: effectResource,
+            resourceGroup: effectResourceGroup,
             atTime: time,
             worldPosition: .zero,
             spritePosition: .zero,
@@ -84,6 +84,6 @@ class EffectViewerEffectRenderer: Renderer {
     }
 
     func isComplete(atTime time: TimeInterval) -> Bool {
-        effectResource.isExpired(atTime: time)
+        effectResourceGroup.isExpired(atTime: time)
     }
 }

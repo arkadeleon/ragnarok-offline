@@ -20,7 +20,7 @@ final class MetalMapEffect: Identifiable {
     let targetObjectID: GameObjectID?
     let delay: TimeInterval
 
-    var renderResource: EffectRenderResource?
+    var renderResourceGroup: EffectRenderResourceGroup?
 
     init(
         reference: EffectReference,
@@ -42,10 +42,10 @@ final class MetalMapEffect: Identifiable {
     }
 
     var isReady: Bool {
-        renderResource != nil
+        renderResourceGroup != nil
     }
 
     func isExpired(atTime time: TimeInterval) -> Bool {
-        renderResource?.isExpired(atTime: time) ?? false
+        renderResourceGroup?.isExpired(atTime: time) ?? false
     }
 }

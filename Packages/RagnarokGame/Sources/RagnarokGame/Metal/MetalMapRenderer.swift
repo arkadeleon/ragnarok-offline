@@ -128,7 +128,7 @@ final class MetalMapRenderer: Renderer {
         }
 
         renderEffects(
-            effects.filter { $0.renderResource?.rendersBeforeEntities == true },
+            effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == true },
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
@@ -152,7 +152,7 @@ final class MetalMapRenderer: Renderer {
         )
 
         renderEffects(
-            effects.filter { $0.renderResource?.rendersBeforeEntities == false },
+            effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == false },
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
@@ -177,17 +177,17 @@ final class MetalMapRenderer: Renderer {
         matrices: RenderMatrices
     ) {
         let sortedEffects = effects.sorted {
-            guard let lhsCreationTime = $0.renderResource?.creationTime else {
+            guard let lhsCreationTime = $0.renderResourceGroup?.creationTime else {
                 return false
             }
-            guard let rhsCreationTime = $1.renderResource?.creationTime else {
+            guard let rhsCreationTime = $1.renderResourceGroup?.creationTime else {
                 return true
             }
             return lhsCreationTime < rhsCreationTime
         }
 
         for effect in sortedEffects {
-            guard let resource = effect.renderResource else {
+            guard let resourceGroup = effect.renderResourceGroup else {
                 continue
             }
 
@@ -203,7 +203,7 @@ final class MetalMapRenderer: Renderer {
             }
 
             effectRenderer.render(
-                resource: resource,
+                resourceGroup: resourceGroup,
                 atTime: time,
                 worldPosition: effect.worldPosition,
                 spritePosition: effect.spritePosition,

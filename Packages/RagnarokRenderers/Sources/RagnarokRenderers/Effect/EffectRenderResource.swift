@@ -2,104 +2,12 @@
 //  EffectRenderResource.swift
 //  RagnarokRenderers
 //
-//  Created by Leon Li on 2026/6/25.
+//  Created by Leon Li on 2026/7/9.
 //
 
 import Foundation
-import Metal
-import RagnarokRenderAssets
-import simd
 
-public final class EffectRenderResource {
-    public let creationTime: TimeInterval
-    public let delay: TimeInterval
-    public let components: [EffectRenderResourceComponent]
-
-    public var rendersBeforeEntities: Bool {
-        components.contains(where: \.rendersBeforeEntities)
-    }
-
-    public init(
-        creationTime: TimeInterval,
-        delay: TimeInterval,
-        components: [EffectRenderResourceComponent]
-    ) {
-        self.creationTime = creationTime
-        self.delay = delay
-        self.components = components
-    }
-
-    public convenience init(
-        device: any MTLDevice,
-        assetGroup: EffectAssetGroup,
-        creationTime: TimeInterval,
-        delay: TimeInterval = 0
-    ) {
-        let components = assetGroup.assets.flatMap { asset -> [EffectRenderResourceComponent] in
-            switch asset {
-            case .`2D`(let asset):
-                var components: [EffectRenderResourceComponent] = []
-                let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                    let resource = Effect2DRenderResource(
-                        device: device,
-                        asset: asset,
-                        duplicateID: duplicateID
-                    )
-                    components.append(.`2D`(resource))
-                }
-                return components
-            case .`3D`(let asset):
-                var components: [EffectRenderResourceComponent] = []
-                let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                    let resource = Effect3DRenderResource(
-                        device: device,
-                        asset: asset,
-                        duplicateID: duplicateID
-                    )
-                    components.append(.`3D`(resource))
-                }
-                return components
-            case .cylinder(let asset):
-                var components: [EffectRenderResourceComponent] = []
-                let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
-                    let resource = CylinderEffectRenderResource(
-                        device: device,
-                        asset: asset,
-                        duplicateID: duplicateID
-                    )
-                    components.append(.cylinder(resource))
-                }
-                return components
-            case .spr(let asset):
-                let resource = SPREffectRenderResource(
-                    device: device,
-                    asset: asset
-                )
-                return [.spr(resource)]
-            case .str(let asset):
-                let resource = STREffectRenderResource(
-                    device: device,
-                    asset: asset
-                )
-                return [.str(resource)]
-            }
-        }
-
-        self.init(creationTime: creationTime, delay: delay, components: components)
-    }
-
-    public func isExpired(atTime time: TimeInterval) -> Bool {
-        let elapsedTime = time - creationTime - delay
-        return !components.isEmpty && components.allSatisfy {
-            $0.isExpired(elapsedTime: elapsedTime)
-        }
-    }
-}
-
-public enum EffectRenderResourceComponent {
+public enum EffectRenderResource {
     case `2D`(Effect2DRenderResource)
     case `3D`(Effect3DRenderResource)
     case cylinder(CylinderEffectRenderResource)

@@ -731,7 +731,7 @@ extension MetalMapScene {
                     }
                 }
 
-                effect.renderResource = EffectRenderResource(
+                effect.renderResourceGroup = EffectRenderResourceGroup(
                     device: renderer.device,
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,

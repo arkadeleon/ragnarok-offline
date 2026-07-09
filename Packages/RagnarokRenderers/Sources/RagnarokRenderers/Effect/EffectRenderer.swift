@@ -28,7 +28,7 @@ public final class EffectRenderer {
     }
 
     public func render(
-        resource: EffectRenderResource,
+        resourceGroup: EffectRenderResourceGroup,
         atTime time: TimeInterval,
         worldPosition: SIMD3<Float>,
         spritePosition: SIMD3<Float>,
@@ -40,9 +40,9 @@ public final class EffectRenderer {
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
-        let elapsedTime = time - resource.creationTime - resource.delay
-        for component in resource.components {
-            switch component {
+        let elapsedTime = time - resourceGroup.creationTime - resourceGroup.delay
+        for resource in resourceGroup.resources {
+            switch resource {
             case .`2D`(let resource):
                 let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
                 effect2DRenderer.render(
