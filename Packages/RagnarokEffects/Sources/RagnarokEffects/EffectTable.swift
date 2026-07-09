@@ -191,8 +191,7 @@ public enum EffectTable {
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: 0...2,
                 positionEndZRandomRange: 5...7,
-                sizeStart: [2.5, 45],
-                sizeEnd: [2.5, 45],
+                size: [2.5, 45],
                 sizeYRandomRange: 30...60
             ),
             .`3D`(
@@ -207,8 +206,7 @@ public enum EffectTable {
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: 0...2,
                 positionEndZRandomRange: 5...7,
-                sizeStart: [2.5, 45],
-                sizeEnd: [2.5, 45],
+                size: [2.5, 45],
                 sizeYRandomRange: 30...60
             ),
             .`3D`(
@@ -222,8 +220,7 @@ public enum EffectTable {
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: 0...2,
                 positionEndZRandomRange: 5...7,
-                sizeStart: [2.5, 45],
-                sizeEnd: [2.5, 45],
+                size: [2.5, 45],
                 sizeYRandomRange: 30...60
             ),
             .`3D`(
@@ -238,8 +235,7 @@ public enum EffectTable {
                 fadesOut: true,
                 positionStart: [0, 0, 0.4],
                 positionEnd: [0, 0, 3],
-                sizeStart: [100, 45],
-                sizeEnd: [100, 45],
+                size: [100, 45],
                 smoothSize: true
             ),
         ],
@@ -281,8 +277,7 @@ public enum EffectTable {
                 repeats: true,
                 attachedToTarget: true,
                 offset: [0.1, 0, 0.8],
-                sizeStart: [100, 100],
-                sizeEnd: [100, 100],
+                size: [100, 100],
                 angle: 270,
                 rotatesToTarget: true
             ),
@@ -331,8 +326,7 @@ public enum EffectTable {
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: 3.5...7.5,
                 positionEndZRandomRange: 0.5...1.5,
-                sizeStart: [50, 50],
-                sizeEnd: [50, 50]
+                size: [50, 50]
             ),
             .`3D`(
                 spriteName: K2L("이팩트\\particle6"),
@@ -348,8 +342,7 @@ public enum EffectTable {
                 positionYRandomRange: -1.1...1.1,
                 positionStartZRandomRange: 3.5...7.5,
                 positionEndZRandomRange: 0.5...1.5,
-                sizeStart: [50, 50],
-                sizeEnd: [50, 50]
+                size: [50, 50]
             ),
             .`3D`(
                 fileName: "effect\\pok2.tga",
@@ -362,8 +355,7 @@ public enum EffectTable {
                 alphaMax: 0.3,
                 fadesIn: true,
                 fadesOut: true,
-                sizeStart: [140, 140],
-                sizeEnd: [140, 140]
+                size: [140, 140]
             ),
         ],
         .ef_magnus: [
@@ -417,8 +409,7 @@ public enum EffectTable {
                 positionXRandomRange: -1.5...1.5,
                 positionYRandomRange: -1.5...1.5,
                 positionEndZRandomRange: 4...8,
-                sizeStart: [9, 9],
-                sizeEnd: [9, 9],
+                size: [9, 9],
                 sizeXRandomRange: 7...11,
                 sizeYRandomRange: 7...11
             ),
@@ -437,8 +428,7 @@ public enum EffectTable {
                 positionXRandomRange: -1...1,
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: -1...1,
-                sizeStart: [9, 9],
-                sizeEnd: [9, 9],
+                size: [9, 9],
                 sizeXRandomRange: 7...11,
                 sizeYRandomRange: 7...11
             ),
@@ -487,8 +477,7 @@ public enum EffectTable {
                 positionXRandomRange: -1.5...1.5,
                 positionYRandomRange: -1.5...1.5,
                 positionEndZRandomRange: 3...9,
-                sizeStart: [9, 9],
-                sizeEnd: [9, 9],
+                size: [9, 9],
                 sizeXRandomRange: 7...11,
                 sizeYRandomRange: 7...11
             ),
@@ -509,8 +498,7 @@ public enum EffectTable {
                 positionXRandomRange: -1...1,
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: -1...1,
-                sizeStart: [9, 9],
-                sizeEnd: [9, 9],
+                size: [9, 9],
                 sizeXRandomRange: 7...11,
                 sizeYRandomRange: 7...11
             ),
@@ -564,8 +552,7 @@ public enum EffectTable {
                 positionStartXRandomRange: -3...3,
                 positionStartYRandomRange: -3...3,
                 positionEndZRandomRange: 0...4,
-                sizeStart: [50, 50],
-                sizeEnd: [50, 50]
+                size: [50, 50]
             ),
         ],
     ]
@@ -591,8 +578,7 @@ public enum EffectTable {
                 positionStart: [0, 0, 20],
                 positionStartXRandomRange: 4...6,
                 positionStartYRandomRange: 1...3,
-                sizeStart: [100, 50],
-                sizeEnd: [100, 50],
+                size: [100, 50],
                 angle: 112.5
             ),
         ]

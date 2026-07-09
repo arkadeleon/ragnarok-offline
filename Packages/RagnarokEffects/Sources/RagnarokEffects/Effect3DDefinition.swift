@@ -69,8 +69,9 @@ public struct EffectAxes: Sendable {
 // - retreat:                        retreat
 // - movesFromSource:                fromSrc
 // - movesToSource:                  toSrc
-// - sizeStart:                      size, sizeX, sizeY, sizeStart, sizeStartX, sizeStartY
-// - sizeEnd:                        size, sizeX, sizeY, sizeEnd, sizeEndX, sizeEndY
+// - size:                           size, sizeX, sizeY
+// - sizeStart:                      sizeStart, sizeStartX, sizeStartY
+// - sizeEnd:                        sizeEnd, sizeEndX, sizeEndY
 // - sizeXRandomRange:               sizeRand, sizeRandX, sizeRandXMiddle
 // - sizeYRandomRange:               sizeRand, sizeRandY, sizeRandYMiddle
 // - smoothSize:                     sizeSmooth
@@ -143,8 +144,9 @@ public struct Effect3DDefinition: Sendable {
     public var movesFromSource: Bool
     public var movesToSource: Bool
 
-    public var sizeStart: SIMD2<Float>
-    public var sizeEnd: SIMD2<Float>
+    public var size: SIMD2<Float>
+    public var sizeStart: SIMD2<Float>?
+    public var sizeEnd: SIMD2<Float>?
     public var sizeXRandomRange: ClosedRange<Float>?
     public var sizeYRandomRange: ClosedRange<Float>?
     public var smoothSize: Bool
@@ -252,8 +254,9 @@ extension EffectDefinition {
         retreat: Float = 0,
         movesFromSource: Bool = false,
         movesToSource: Bool = false,
-        sizeStart: SIMD2<Float>,
-        sizeEnd: SIMD2<Float>,
+        size: SIMD2<Float> = [100, 100],
+        sizeStart: SIMD2<Float>? = nil,
+        sizeEnd: SIMD2<Float>? = nil,
         sizeXRandomRange: ClosedRange<Float>? = nil,
         sizeYRandomRange: ClosedRange<Float>? = nil,
         smoothSize: Bool = false,
@@ -322,6 +325,7 @@ extension EffectDefinition {
             retreat: retreat,
             movesFromSource: movesFromSource,
             movesToSource: movesToSource,
+            size: size,
             sizeStart: sizeStart,
             sizeEnd: sizeEnd,
             sizeXRandomRange: sizeXRandomRange,

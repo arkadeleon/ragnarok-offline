@@ -122,8 +122,8 @@ public final class Effect3DRenderResource {
         self.positionStart = positionStart
         self.positionEnd = positionEnd
 
-        var sizeStart = definition.sizeStart
-        var sizeEnd = definition.sizeEnd
+        var sizeStart = definition.sizeStart ?? definition.size
+        var sizeEnd = definition.sizeEnd ?? definition.size
 
         if let range = definition.sizeXRandomRange {
             let random = Float.random(in: range)

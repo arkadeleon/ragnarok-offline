@@ -52,8 +52,9 @@ import simd
 // - circleOuterSizeRandomRange:     circleOuterSizeRand
 // - offsetStart:                    offsetxStart, offsetyStart
 // - offsetEnd:                      offsetxEnd, offsetyEnd
-// - sizeStart:                      size, sizeX, sizeY, sizeStart, sizeStartX, sizeStartY
-// - sizeEnd:                        size, sizeX, sizeY, sizeEnd, sizeEndX, sizeEndY
+// - size:                           size, sizeX, sizeY
+// - sizeStart:                      sizeStart, sizeStartX, sizeStartY
+// - sizeEnd:                        sizeEnd, sizeEndX, sizeEndY
 // - sizeXRandomRange:               sizeRand, sizeRandX, sizeRandXMiddle
 // - sizeYRandomRange:               sizeRand, sizeRandY, sizeRandYMiddle
 // - sizeStartXRandomRange:          sizeRandStartX
@@ -116,8 +117,9 @@ public struct Effect2DDefinition: Sendable {
     public var offsetStart: SIMD2<Float>
     public var offsetEnd: SIMD2<Float>
 
-    public var sizeStart: SIMD2<Float>
-    public var sizeEnd: SIMD2<Float>
+    public var size: SIMD2<Float>
+    public var sizeStart: SIMD2<Float>?
+    public var sizeEnd: SIMD2<Float>?
     public var sizeXRandomRange: ClosedRange<Float>?
     public var sizeYRandomRange: ClosedRange<Float>?
     public var sizeStartXRandomRange: ClosedRange<Float>?
@@ -201,8 +203,9 @@ extension EffectDefinition {
         circleOuterSizeRandomRange: ClosedRange<Float>? = nil,
         offsetStart: SIMD2<Float> = .zero,
         offsetEnd: SIMD2<Float> = .zero,
-        sizeStart: SIMD2<Float> = [100, 100],
-        sizeEnd: SIMD2<Float> = [100, 100],
+        size: SIMD2<Float> = [100, 100],
+        sizeStart: SIMD2<Float>? = nil,
+        sizeEnd: SIMD2<Float>? = nil,
         sizeXRandomRange: ClosedRange<Float>? = nil,
         sizeYRandomRange: ClosedRange<Float>? = nil,
         sizeStartXRandomRange: ClosedRange<Float>? = nil,
@@ -260,6 +263,7 @@ extension EffectDefinition {
             circleOuterSizeRandomRange: circleOuterSizeRandomRange,
             offsetStart: offsetStart,
             offsetEnd: offsetEnd,
+            size: size,
             sizeStart: sizeStart,
             sizeEnd: sizeEnd,
             sizeXRandomRange: sizeXRandomRange,
