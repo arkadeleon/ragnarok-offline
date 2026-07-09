@@ -23,13 +23,13 @@ class EffectViewerEffectRenderer: Renderer {
 
     let camera: OrbitalCamera
 
-    init(device: any MTLDevice, asset: EffectAsset) throws {
+    init(device: any MTLDevice, assetGroup: EffectAssetGroup) throws {
         self.device = device
 
         effectRenderer = try EffectRenderer(device: device)
         effectResource = EffectRenderResource(
             device: device,
-            asset: asset,
+            assetGroup: assetGroup,
             creationTime: CACurrentMediaTime(),
             delay: 0
         )

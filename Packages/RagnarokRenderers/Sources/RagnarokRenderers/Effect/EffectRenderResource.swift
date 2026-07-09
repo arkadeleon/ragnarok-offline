@@ -31,12 +31,12 @@ public final class EffectRenderResource {
 
     public convenience init(
         device: any MTLDevice,
-        asset: EffectAsset,
+        assetGroup: EffectAssetGroup,
         creationTime: TimeInterval,
         delay: TimeInterval = 0
     ) {
-        let components = asset.components.flatMap { component -> [EffectRenderResourceComponent] in
-            switch component {
+        let components = assetGroup.assets.flatMap { asset -> [EffectRenderResourceComponent] in
+            switch asset {
             case .`2D`(let asset):
                 var components: [EffectRenderResourceComponent] = []
                 let definition = asset.definition

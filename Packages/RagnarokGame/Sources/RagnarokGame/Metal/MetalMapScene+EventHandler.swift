@@ -720,20 +720,20 @@ extension MetalMapScene {
                     return
                 }
 
-                let asset = try await effectAssetStore.asset(for: effect.reference)
+                let assetGroup = try await effectAssetStore.assetGroup(for: effect.reference)
                 guard !Task.isCancelled else {
                     return
                 }
 
-                for component in asset.components {
-                    if let soundName = component.soundName {
+                for asset in assetGroup.assets {
+                    if let soundName = asset.soundName {
                         audioPlayer.playSound(named: soundName, after: effect.delay)
                     }
                 }
 
                 effect.renderResource = EffectRenderResource(
                     device: renderer.device,
-                    asset: asset,
+                    assetGroup: assetGroup,
                     creationTime: effect.creationTime,
                     delay: effect.delay
                 )

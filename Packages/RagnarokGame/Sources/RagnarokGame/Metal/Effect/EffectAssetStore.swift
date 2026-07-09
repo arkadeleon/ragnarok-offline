@@ -14,16 +14,16 @@ import RagnarokResources
 final class EffectAssetStore {
     private let loader: EffectAssetLoader
 
-    private var assets: [String : EffectAsset] = [:]
-    private var loadTasks: [String : Task<EffectAsset, any Error>] = [:]
+    private var assetGroups: [String : EffectAssetGroup] = [:]
+    private var loadTasks: [String : Task<EffectAssetGroup, any Error>] = [:]
 
     init(resourceManager: ResourceManager) {
         self.loader = EffectAssetLoader(resourceManager: resourceManager)
     }
 
-    func asset(for reference: EffectReference) async throws -> EffectAsset {
+    func assetGroup(for reference: EffectReference) async throws -> EffectAssetGroup {
         let assetKey = assetKey(for: reference)
-        if let asset = assets[assetKey] {
+        if let asset = assetGroups[assetKey] {
             return asset
         }
         if let task = loadTasks[assetKey] {
@@ -32,16 +32,16 @@ final class EffectAssetStore {
 
         let task = Task { [loader] in
             let definitions = EffectTable.definitions(for: reference).map({ $0.resolved() })
-            return try await loader.loadAsset(with: definitions)
+            return try await loader.loadAssetGroup(with: definitions)
         }
 
         loadTasks[assetKey] = task
 
         do {
-            let asset = try await task.value
-            assets[assetKey] = asset
+            let assetGroup = try await task.value
+            assetGroups[assetKey] = assetGroup
             loadTasks[assetKey] = nil
-            return asset
+            return assetGroup
         } catch {
             loadTasks[assetKey] = nil
             throw error
@@ -54,7 +54,7 @@ final class EffectAssetStore {
         }
 
         loadTasks.removeAll()
-        assets.removeAll()
+        assetGroups.removeAll()
     }
 
     private func assetKey(for reference: EffectReference) -> String {
