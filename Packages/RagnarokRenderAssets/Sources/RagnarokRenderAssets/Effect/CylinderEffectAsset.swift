@@ -11,10 +11,32 @@ import RagnarokResources
 import RagnarokShaders
 
 public struct CylinderEffectAsset: Sendable {
+    public struct Instance: Sendable {
+        public let duplicateID: Int
+        public let delay: TimeInterval
+
+        init(definition: CylinderEffectDefinition, duplicateID: Int) {
+            self.duplicateID = duplicateID
+
+            self.delay = definition.delayStart
+                + definition.delayOffset
+                + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+                + definition.delayLate
+                + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
+                + definition.duplicate.interval * TimeInterval(duplicateID)
+        }
+    }
+
     public let definition: CylinderEffectDefinition
     public let rotationDegrees: SIMD3<Float>
     public let vertices: [CylinderEffectVertex]
     public let textureImage: CGImage
+
+    public func makeInstances() -> [CylinderEffectAsset.Instance] {
+        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+            CylinderEffectAsset.Instance(definition: definition, duplicateID: duplicateID)
+        }
+    }
 
     static func load(with definition: CylinderEffectDefinition, using resourceManager: ResourceManager) async throws -> CylinderEffectAsset {
         var rotationDegrees = definition.rotationDegrees

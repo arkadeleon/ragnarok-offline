@@ -133,16 +133,6 @@ public struct Effect2DDefinition: Sendable {
     public var angleRandomRange: ClosedRange<Float>?
     public var rotates: Bool
     public var rotatesToTarget: Bool
-
-    public func delay(duplicateID: Int) -> TimeInterval {
-        delayStart
-            + delay
-            + delayOffset
-            + duplicate.delayOffsetDelta * TimeInterval(duplicateID)
-            + delayLate
-            + duplicate.delayLateDelta * TimeInterval(duplicateID)
-            + duplicate.interval * TimeInterval(duplicateID)
-    }
 }
 
 extension EffectDefinition {

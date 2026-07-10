@@ -19,24 +19,22 @@ extension Effect2DAsset {
         public var rotationMatrix: simd_float4x4
     }
 
-    public func isExpired(forDuplicateID duplicateID: Int, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: Effect2DAsset.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
 
-        let elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
-        return elapsedTime >= 0 && elapsedTime >= instance(forDuplicateID: duplicateID).duration
+        let elapsedTime = elapsedTime - instance.delay
+        return elapsedTime >= 0 && elapsedTime >= instance.duration
     }
 
     public func sample(
-        forDuplicateID duplicateID: Int,
+        instance: Effect2DAsset.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         cameraAzimuth: Float
     ) -> Effect2DAsset.Sample? {
-        let instance = instance(forDuplicateID: duplicateID)
-
-        guard let elapsedTime = activeElapsedTime(elapsedTime, forDuplicateID: duplicateID, duration: instance.duration) else {
+        guard let elapsedTime = activeElapsedTime(elapsedTime, instance: instance) else {
             return nil
         }
 
@@ -87,14 +85,14 @@ extension Effect2DAsset {
         )
     }
 
-    private func activeElapsedTime(_ elapsedTime: TimeInterval, forDuplicateID duplicateID: Int, duration: TimeInterval) -> TimeInterval? {
-        var elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
+    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: Effect2DAsset.Instance) -> TimeInterval? {
+        var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil
         }
 
         if definition.repeats {
-            elapsedTime.formTruncatingRemainder(dividingBy: duration)
+            elapsedTime.formTruncatingRemainder(dividingBy: instance.duration)
         }
         return elapsedTime
     }

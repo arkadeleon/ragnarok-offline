@@ -14,9 +14,9 @@ import simd
 
 public final class Effect2DRenderResource {
     public let asset: Effect2DAsset
+    public let instance: Effect2DAsset.Instance
     public let vertices: [Effect2DVertex]
     public let texture: (any MTLTexture)?
-    public let duplicateID: Int
 
     public var definition: Effect2DDefinition {
         asset.definition
@@ -26,8 +26,9 @@ public final class Effect2DRenderResource {
         asset.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: Effect2DAsset, duplicateID: Int = 0) {
+    public init(device: any MTLDevice, asset: Effect2DAsset, instance: Effect2DAsset.Instance) {
         self.asset = asset
+        self.instance = instance
         self.vertices = [
             Effect2DVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             Effect2DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
@@ -37,16 +38,15 @@ public final class Effect2DRenderResource {
             Effect2DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
         self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "effect2D")
-        self.duplicateID = duplicateID
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        asset.isExpired(forDuplicateID: duplicateID, elapsedTime: elapsedTime)
+        asset.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
     func sample(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Effect2DAsset.Sample? {
         asset.sample(
-            forDuplicateID: duplicateID,
+            instance: instance,
             elapsedTime: elapsedTime,
             worldPosition: worldPosition,
             cameraAzimuth: cameraAzimuth

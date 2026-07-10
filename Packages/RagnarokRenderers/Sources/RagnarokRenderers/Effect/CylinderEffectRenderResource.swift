@@ -14,9 +14,9 @@ import simd
 
 public final class CylinderEffectRenderResource {
     public let asset: CylinderEffectAsset
+    public let instance: CylinderEffectAsset.Instance
     public let vertices: [CylinderEffectVertex]
     public let texture: (any MTLTexture)?
-    public let duplicateID: Int
 
     public var definition: CylinderEffectDefinition {
         asset.definition
@@ -26,20 +26,20 @@ public final class CylinderEffectRenderResource {
         asset.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: CylinderEffectAsset, duplicateID: Int = 0) {
+    public init(device: any MTLDevice, asset: CylinderEffectAsset, instance: CylinderEffectAsset.Instance) {
         self.asset = asset
+        self.instance = instance
         self.vertices = asset.vertices
         self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "cylinderEffect")
-        self.duplicateID = duplicateID
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        asset.isExpired(forDuplicateID: duplicateID, elapsedTime: elapsedTime)
+        asset.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
     func sample(elapsedTime: TimeInterval, cameraAzimuth: Float) -> CylinderEffectAsset.Sample? {
         asset.sample(
-            forDuplicateID: duplicateID,
+            instance: instance,
             elapsedTime: elapsedTime,
             cameraAzimuth: cameraAzimuth
         )

@@ -13,6 +13,8 @@ import RagnarokResources
 
 public struct Effect2DAsset: Sendable {
     public struct Instance: Sendable {
+        public let duplicateID: Int
+        public let delay: TimeInterval
         public let duration: TimeInterval
         public let positionStart: SIMD3<Float>
         public let positionEnd: SIMD3<Float>
@@ -22,6 +24,16 @@ public struct Effect2DAsset: Sendable {
         public let targetAngle: Float
 
         init(definition: Effect2DDefinition, duplicateID: Int) {
+            self.duplicateID = duplicateID
+
+            self.delay = definition.delayStart
+                + definition.delay
+                + definition.delayOffset
+                + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+                + definition.delayLate
+                + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
+                + definition.duplicate.interval * TimeInterval(duplicateID)
+
             var positionStart = definition.positionStart
             var positionEnd = definition.positionEnd
 
@@ -143,10 +155,11 @@ public struct Effect2DAsset: Sendable {
     public let definition: Effect2DDefinition
     public let soundName: String?
     public let textureImage: CGImage
-    public let instances: [Effect2DAsset.Instance]
 
-    public func instance(forDuplicateID duplicateID: Int) -> Effect2DAsset.Instance {
-        instances[min(max(duplicateID, 0), instances.count - 1)]
+    public func makeInstances() -> [Effect2DAsset.Instance] {
+        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+            Effect2DAsset.Instance(definition: definition, duplicateID: duplicateID)
+        }
     }
 
     static func load(with definition: Effect2DDefinition, using resourceManager: ResourceManager) async throws -> Effect2DAsset {
@@ -162,15 +175,10 @@ public struct Effect2DAsset: Sendable {
         let removesMagentaPixels = fileName.lowercased().hasSuffix(".bmp")
         let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
 
-        let instances = (0..<max(definition.duplicate.count, 1)).map { duplicateID in
-            Effect2DAsset.Instance(definition: definition, duplicateID: duplicateID)
-        }
-
         let asset = Effect2DAsset(
             definition: definition,
             soundName: soundName,
-            textureImage: image.cgImage,
-            instances: instances
+            textureImage: image.cgImage
         )
         return asset
     }

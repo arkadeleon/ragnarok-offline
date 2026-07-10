@@ -18,12 +18,12 @@ extension CylinderEffectAsset {
         public var rotationMatrix: simd_float4x4
     }
 
-    public func isExpired(forDuplicateID duplicateID: Int, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: CylinderEffectAsset.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
 
-        let elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
+        let elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return false
         }
@@ -32,11 +32,11 @@ extension CylinderEffectAsset {
     }
 
     public func sample(
-        forDuplicateID duplicateID: Int,
+        instance: CylinderEffectAsset.Instance,
         elapsedTime: TimeInterval,
         cameraAzimuth: Float
     ) -> CylinderEffectAsset.Sample? {
-        var elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
+        var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil
         }

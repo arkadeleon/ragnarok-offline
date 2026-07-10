@@ -14,9 +14,9 @@ import simd
 
 public final class Effect3DRenderResource {
     public let asset: Effect3DAsset
+    public let instance: Effect3DAsset.Instance
     public let vertices: [Effect3DVertex]
     public let textures: [(any MTLTexture)?]
-    public let duplicateID: Int
 
     public var definition: Effect3DDefinition {
         asset.definition
@@ -26,8 +26,9 @@ public final class Effect3DRenderResource {
         asset.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: Effect3DAsset, duplicateID: Int = 0) {
+    public init(device: any MTLDevice, asset: Effect3DAsset, instance: Effect3DAsset.Instance) {
         self.asset = asset
+        self.instance = instance
         self.vertices = [
             Effect3DVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             Effect3DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
@@ -39,16 +40,15 @@ public final class Effect3DRenderResource {
         self.textures = asset.images.enumerated().map { index, image in
             MetalTextureFactory.makeTexture(from: image, device: device, label: "effect3D[\(index)]")
         }
-        self.duplicateID = duplicateID
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        asset.isExpired(forDuplicateID: duplicateID, elapsedTime: elapsedTime)
+        asset.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
     func sample(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Effect3DAsset.Sample? {
         asset.sample(
-            forDuplicateID: duplicateID,
+            instance: instance,
             elapsedTime: elapsedTime,
             worldPosition: worldPosition,
             cameraAzimuth: cameraAzimuth

@@ -38,41 +38,32 @@ public final class EffectRenderResourceGroup {
         let resources = assetGroup.assets.flatMap { asset -> [EffectRenderResource] in
             switch asset {
             case .`2D`(let asset):
-                var resources: [EffectRenderResource] = []
-                let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
+                return asset.makeInstances().map { instance in
                     let resource = Effect2DRenderResource(
                         device: device,
                         asset: asset,
-                        duplicateID: duplicateID
+                        instance: instance
                     )
-                    resources.append(.`2D`(resource))
+                    return .`2D`(resource)
                 }
-                return resources
             case .`3D`(let asset):
-                var resources: [EffectRenderResource] = []
-                let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
+                return asset.makeInstances().map { instance in
                     let resource = Effect3DRenderResource(
                         device: device,
                         asset: asset,
-                        duplicateID: duplicateID
+                        instance: instance
                     )
-                    resources.append(.`3D`(resource))
+                    return .`3D`(resource)
                 }
-                return resources
             case .cylinder(let asset):
-                var resources: [EffectRenderResource] = []
-                let definition = asset.definition
-                for duplicateID in 0..<max(definition.duplicate.count, 1) {
+                return asset.makeInstances().map { instance in
                     let resource = CylinderEffectRenderResource(
                         device: device,
                         asset: asset,
-                        duplicateID: duplicateID
+                        instance: instance
                     )
-                    resources.append(.cylinder(resource))
+                    return .cylinder(resource)
                 }
-                return resources
             case .spr(let asset):
                 let resource = SPREffectRenderResource(
                     device: device,

@@ -14,6 +14,8 @@ import RagnarokResources
 
 public struct Effect3DAsset: Sendable {
     public struct Instance: Sendable {
+        public let duplicateID: Int
+        public let delay: TimeInterval
         public let positionStart: SIMD3<Float>
         public let positionEnd: SIMD3<Float>
         public let sizeStart: SIMD2<Float>
@@ -21,6 +23,16 @@ public struct Effect3DAsset: Sendable {
         public let baseAngle: Float
 
         init(definition: Effect3DDefinition, duplicateID: Int) {
+            self.duplicateID = duplicateID
+
+            self.delay = definition.delayStart
+                + definition.delay
+                + definition.delayOffset
+                + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
+                + definition.delayLate
+                + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
+                + definition.duplicate.interval * TimeInterval(duplicateID)
+
             var positionStart = definition.positionStart
             var positionEnd = definition.positionEnd
 
@@ -146,10 +158,11 @@ public struct Effect3DAsset: Sendable {
     public let sparkleCount: Float
     public let images: [CGImage]
     public let frames: [Effect3DAsset.Frame]
-    public let instances: [Effect3DAsset.Instance]
 
-    public func instance(forDuplicateID duplicateID: Int) -> Effect3DAsset.Instance {
-        instances[min(max(duplicateID, 0), instances.count - 1)]
+    public func makeInstances() -> [Effect3DAsset.Instance] {
+        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+            Effect3DAsset.Instance(definition: definition, duplicateID: duplicateID)
+        }
     }
 
     static func load(with definition: Effect3DDefinition, using resourceManager: ResourceManager) async throws -> Effect3DAsset {
@@ -253,17 +266,12 @@ public struct Effect3DAsset: Sendable {
             }
         }
 
-        let instances = (0..<max(definition.duplicate.count, 1)).map { duplicateID in
-            Effect3DAsset.Instance(definition: definition, duplicateID: duplicateID)
-        }
-
         let asset = Effect3DAsset(
             definition: definition,
             soundName: soundName,
             sparkleCount: sparkleCount,
             images: images,
-            frames: frames,
-            instances: instances
+            frames: frames
         )
         return asset
     }

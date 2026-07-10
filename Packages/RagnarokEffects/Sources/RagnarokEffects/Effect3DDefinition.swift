@@ -163,20 +163,6 @@ public struct Effect3DDefinition: Sendable {
 
     public var soulStrikePattern: Int?
     public var drainPattern: Int?
-
-    public var primaryAssetName: String {
-        fileName ?? fileNames.first ?? spriteName ?? ""
-    }
-
-    public func delay(duplicateID: Int) -> TimeInterval {
-        delayStart
-            + delay
-            + delayOffset
-            + duplicate.delayOffsetDelta * TimeInterval(duplicateID)
-            + delayLate
-            + duplicate.delayLateDelta * TimeInterval(duplicateID)
-            + duplicate.interval * TimeInterval(duplicateID)
-    }
 }
 
 extension EffectDefinition {

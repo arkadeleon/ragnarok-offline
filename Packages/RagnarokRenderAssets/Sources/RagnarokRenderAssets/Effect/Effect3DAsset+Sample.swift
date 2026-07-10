@@ -24,17 +24,17 @@ extension Effect3DAsset {
         public var layers: [Effect3DAsset.Sample.Layer]
     }
 
-    public func isExpired(forDuplicateID duplicateID: Int, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: Effect3DAsset.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
 
-        let elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
+        let elapsedTime = elapsedTime - instance.delay
         return elapsedTime >= 0 && elapsedTime >= definition.duration
     }
 
     public func sample(
-        forDuplicateID duplicateID: Int,
+        instance: Effect3DAsset.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         cameraAzimuth: Float
@@ -43,14 +43,13 @@ extension Effect3DAsset {
             return nil
         }
 
-        guard let elapsedTime = activeElapsedTime(elapsedTime, forDuplicateID: duplicateID) else {
+        guard let elapsedTime = activeElapsedTime(elapsedTime, instance: instance) else {
             return nil
         }
 
-        let instance = instance(forDuplicateID: duplicateID)
         let progress = progress(elapsedTime: elapsedTime)
         let frame = frames[frameIndex(elapsedTime: elapsedTime)]
-        let mapOffset = animatedPosition(instance: instance, duplicateID: duplicateID, progress: progress)
+        let mapOffset = animatedPosition(instance: instance, progress: progress)
 
         let size = interpolate(
             instance.sizeStart,
@@ -59,7 +58,7 @@ extension Effect3DAsset {
             smooth: definition.smoothSize
         )
 
-        let alpha = animatedAlpha(forDuplicateID: duplicateID, elapsedTime: elapsedTime, progress: progress)
+        let alpha = animatedAlpha(instance: instance, elapsedTime: elapsedTime, progress: progress)
         let color = SIMD4<Float>(definition.color, alpha)
 
         let layers = frame.layers.compactMap { layer -> Effect3DAsset.Sample.Layer? in
@@ -96,8 +95,8 @@ extension Effect3DAsset {
         )
     }
 
-    private func activeElapsedTime(_ elapsedTime: TimeInterval, forDuplicateID duplicateID: Int) -> TimeInterval? {
-        var elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
+    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: Effect3DAsset.Instance) -> TimeInterval? {
+        var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil
         }
@@ -123,8 +122,8 @@ extension Effect3DAsset {
         return Int(elapsedTime / definition.frameDelay) % frames.count
     }
 
-    private func animatedPosition(instance: Instance, duplicateID: Int, progress: Float) -> SIMD3<Float> {
-        let rotationDelay = definition.rotationDelay + definition.duplicate.rotationDelayDelta * TimeInterval(duplicateID)
+    private func animatedPosition(instance: Effect3DAsset.Instance, progress: Float) -> SIMD3<Float> {
+        let rotationDelay = definition.rotationDelay + definition.duplicate.rotationDelayDelta * TimeInterval(instance.duplicateID)
         let rotationPhase = progress * 100 * 3.5 * definition.rotationCount * .pi / 180 - Float(rotationDelay) * .pi / 2
 
         var position = interpolate(
@@ -165,8 +164,8 @@ extension Effect3DAsset {
         return position
     }
 
-    private func animatedAlpha(forDuplicateID duplicateID: Int, elapsedTime: TimeInterval, progress: Float) -> Float {
-        let alphaMax = min(max(definition.alphaMax + definition.duplicate.alphaMaxDelta * Float(duplicateID), 0), 1)
+    private func animatedAlpha(instance: Effect3DAsset.Instance, elapsedTime: TimeInterval, progress: Float) -> Float {
+        let alphaMax = min(max(definition.alphaMax + definition.duplicate.alphaMaxDelta * Float(instance.duplicateID), 0), 1)
         var alpha = alphaMax
 
         if let fadeAlpha = fadeAlpha(elapsedTime: elapsedTime, alphaMax: alphaMax) {
@@ -195,7 +194,7 @@ extension Effect3DAsset {
         return nil
     }
 
-    private func rotationMatrix(instance: Instance, progress: Float, cameraAzimuth: Float, layerAngle: Float) -> simd_float4x4 {
+    private func rotationMatrix(instance: Effect3DAsset.Instance, progress: Float, cameraAzimuth: Float, layerAngle: Float) -> simd_float4x4 {
         var angle = instance.baseAngle
 
         if definition.rotates {
