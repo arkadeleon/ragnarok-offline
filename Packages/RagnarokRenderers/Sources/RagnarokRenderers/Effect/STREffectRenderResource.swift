@@ -45,10 +45,9 @@ public final class STREffectRenderResource {
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        let duration = TimeInterval(effect.frames.count) / TimeInterval(effect.fps)
         guard elapsedTime >= 0 else {
             return false
         }
-        return elapsedTime >= duration
+        return elapsedTime >= effect.duration
     }
 }

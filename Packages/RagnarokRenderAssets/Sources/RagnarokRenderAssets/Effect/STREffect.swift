@@ -5,12 +5,17 @@
 //  Created by Leon Li on 2023/11/24.
 //
 
+import Foundation
 import RagnarokFileFormats
 import RagnarokShaders
 
 public struct STREffect {
     public var fps: Int
     public var frames: [STREffect.Frame] = []
+
+    public var duration: TimeInterval {
+        return TimeInterval(frames.count) / TimeInterval(fps)
+    }
 
     public init(str: STR) {
         fps = Int(str.fps)
@@ -127,6 +132,15 @@ public struct STREffect {
             let frame = STREffect.Frame(sprites: sprites)
             frames.append(frame)
         }
+    }
+
+    public func frame(atElapsedTime elapsedTime: TimeInterval) -> STREffect.Frame? {
+        guard !frames.isEmpty, elapsedTime >= 0 else {
+            return nil
+        }
+
+        let frameIndex = Int(elapsedTime * TimeInterval(fps)) % frames.count
+        return frames[frameIndex]
     }
 }
 

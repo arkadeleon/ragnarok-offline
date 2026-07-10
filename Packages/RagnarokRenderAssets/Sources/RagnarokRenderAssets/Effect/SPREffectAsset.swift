@@ -47,3 +47,50 @@ public struct SPREffectAsset: Sendable {
         return asset
     }
 }
+
+extension SPREffectAsset {
+    private var playbackFrameInterval: TimeInterval {
+        max(frameInterval, 1 / 60)
+    }
+
+    public func isExpired(elapsedTime: TimeInterval) -> Bool {
+        if definition.stopsAtEnd {
+            return false
+        }
+
+        guard elapsedTime >= 0 else {
+            return false
+        }
+
+        if let duration = definition.duration {
+            return elapsedTime >= duration
+        }
+
+        if definition.repeats {
+            return false
+        }
+
+        return elapsedTime >= TimeInterval(frameImages.count) * playbackFrameInterval
+    }
+
+    public func frameIndex(atElapsedTime elapsedTime: TimeInterval) -> Int? {
+        guard !frameImages.isEmpty, elapsedTime >= 0 else {
+            return nil
+        }
+
+        if definition.repeats {
+            return Int(elapsedTime / playbackFrameInterval) % frameImages.count
+        } else {
+            return min(Int(elapsedTime / playbackFrameInterval), frameImages.count - 1)
+        }
+    }
+
+    public func renderWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
+        var basePosition = worldPosition
+        if definition.rendersAtHead {
+            basePosition.y += 2.5
+        }
+
+        return basePosition + [definition.spriteOffset.x / 35, -definition.spriteOffset.y / 35, 0]
+    }
+}

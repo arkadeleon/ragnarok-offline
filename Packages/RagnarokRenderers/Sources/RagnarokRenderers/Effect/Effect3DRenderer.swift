@@ -57,6 +57,11 @@ public final class Effect3DRenderer {
         }
 
         for layer in sample.layers {
+            guard resource.textures.indices.contains(layer.imageIndex),
+                  let texture = resource.textures[layer.imageIndex] else {
+                continue
+            }
+
             var vertexUniforms = Effect3DVertexUniforms(
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
@@ -78,7 +83,7 @@ public final class Effect3DRenderer {
                 length: MemoryLayout<Effect3DFragmentUniforms>.stride,
                 index: 0
             )
-            renderCommandEncoder.setFragmentTexture(layer.texture, index: 0)
+            renderCommandEncoder.setFragmentTexture(texture, index: 0)
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
         }
     }

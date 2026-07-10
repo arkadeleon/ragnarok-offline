@@ -13,18 +13,21 @@ import RagnarokShaders
 import simd
 
 public final class SPREffectRenderResource {
-    public let definition: SPREffectDefinition
+    public let asset: SPREffectAsset
     public let vertices: [SPREffectVertex]
-    public let textures: [any MTLTexture]
-    public let frameInterval: TimeInterval
+    public let textures: [(any MTLTexture)?]
     public let frameSize: SIMD2<Float>
 
+    public var definition: SPREffectDefinition {
+        asset.definition
+    }
+
     public var rendersBeforeEntities: Bool {
-        definition.rendersBeforeEntities
+        asset.definition.rendersBeforeEntities
     }
 
     public init(device: any MTLDevice, asset: SPREffectAsset) {
-        self.definition = asset.definition
+        self.asset = asset
         self.vertices = [
             SPREffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             SPREffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
@@ -33,10 +36,9 @@ public final class SPREffectRenderResource {
             SPREffectVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
             SPREffectVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
-        self.textures = asset.frameImages.enumerated().compactMap { index, frameImage in
+        self.textures = asset.frameImages.enumerated().map { index, frameImage in
             MetalTextureFactory.makeTexture(from: frameImage, device: device, label: "sprEffect[\(index)]")
         }
-        self.frameInterval = max(asset.frameInterval, 1 / 60)
         self.frameSize = [
             Float(asset.frameSize.width),
             Float(asset.frameSize.height),
@@ -44,49 +46,18 @@ public final class SPREffectRenderResource {
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        if definition.stopsAtEnd {
-            return false
-        }
-
-        guard elapsedTime >= 0 else {
-            return false
-        }
-
-        if let duration = definition.duration {
-            return elapsedTime >= duration
-        }
-
-        if definition.repeats {
-            return false
-        }
-
-        return elapsedTime >= TimeInterval(textures.count) * frameInterval
+        asset.isExpired(elapsedTime: elapsedTime)
     }
 
     func renderWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
-        var basePosition = worldPosition
-        if definition.rendersAtHead {
-            basePosition.y += 2.5
-        }
-
-        return basePosition + [definition.spriteOffset.x / 35, -definition.spriteOffset.y / 35, 0]
+        asset.renderWorldPosition(worldPosition)
     }
 
     func texture(elapsedTime: TimeInterval) -> (any MTLTexture)? {
-        guard !textures.isEmpty else {
+        guard let frameIndex = asset.frameIndex(atElapsedTime: elapsedTime),
+              textures.indices.contains(frameIndex) else {
             return nil
         }
-
-        guard elapsedTime >= 0 else {
-            return nil
-        }
-
-        if definition.repeats {
-            let frameIndex = Int(elapsedTime / frameInterval) % textures.count
-            return textures[frameIndex]
-        } else {
-            let frameIndex = min(Int(elapsedTime / frameInterval), textures.count - 1)
-            return textures[frameIndex]
-        }
+        return textures[frameIndex]
     }
 }

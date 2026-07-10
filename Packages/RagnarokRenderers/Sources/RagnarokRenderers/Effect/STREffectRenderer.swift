@@ -39,17 +39,9 @@ public final class STREffectRenderer {
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4
     ) {
-        let effect = resource.effect
-        guard effect.fps > 0, !effect.frames.isEmpty else {
+        guard let frame = resource.effect.frame(atElapsedTime: elapsedTime) else {
             return
         }
-
-        guard elapsedTime >= 0 else {
-            return
-        }
-
-        let frameIndex = Int(elapsedTime * TimeInterval(effect.fps)) % effect.frames.count
-        let frame = effect.frames[frameIndex]
 
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
