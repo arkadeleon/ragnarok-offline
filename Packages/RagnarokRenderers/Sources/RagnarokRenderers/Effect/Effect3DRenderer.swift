@@ -44,7 +44,7 @@ public final class Effect3DRenderer {
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
-        guard let snapshot = resource.snapshot(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraAzimuth),
+        guard let sample = resource.sample(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraAzimuth),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }
@@ -56,12 +56,12 @@ public final class Effect3DRenderer {
             renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
         }
 
-        for layer in snapshot.layers {
+        for layer in sample.layers {
             var vertexUniforms = Effect3DVertexUniforms(
                 viewMatrix: viewMatrix,
                 projectionMatrix: projectionMatrix,
                 rotationMatrix: layer.rotationMatrix,
-                worldPosition: snapshot.worldPosition,
+                worldPosition: sample.worldPosition,
                 size: layer.size,
                 offset: layer.offset,
                 zIndex: resource.definition.zIndex

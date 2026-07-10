@@ -15,7 +15,7 @@ import RagnarokShaders
 import simd
 
 public final class Effect3DRenderResource {
-    struct Snapshot {
+    struct Sample {
         struct Layer {
             var texture: any MTLTexture
             var size: SIMD2<Float>
@@ -25,7 +25,7 @@ public final class Effect3DRenderResource {
         }
 
         var worldPosition: SIMD3<Float>
-        var layers: [Snapshot.Layer]
+        var layers: [Sample.Layer]
     }
 
     public let definition: Effect3DDefinition
@@ -89,7 +89,7 @@ public final class Effect3DRenderResource {
         return elapsedTime >= duration
     }
 
-    func snapshot(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Snapshot? {
+    func sample(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Sample? {
         guard !frames.isEmpty, var elapsedTime = componentElapsedTime(elapsedTime: elapsedTime) else {
             return nil
         }
@@ -106,7 +106,7 @@ public final class Effect3DRenderResource {
         let alpha = animatedAlpha(elapsedTime: elapsedTime, progress: progress, duration: duration)
         let color = SIMD4<Float>(definition.color, alpha)
 
-        let layers = frame.layers.compactMap { layer -> Snapshot.Layer? in
+        let layers = frame.layers.compactMap { layer -> Sample.Layer? in
             guard textures.indices.contains(layer.imageIndex),
                   let texture = textures[layer.imageIndex] else {
                 return nil
@@ -117,7 +117,7 @@ public final class Effect3DRenderResource {
                 size.x = -size.x
             }
 
-            return Snapshot.Layer(
+            return Sample.Layer(
                 texture: texture,
                 size: size,
                 offset: [layer.offset.x, -layer.offset.y],
@@ -134,7 +134,7 @@ public final class Effect3DRenderResource {
             return nil
         }
 
-        return Snapshot(worldPosition: position, layers: layers)
+        return Sample(worldPosition: position, layers: layers)
     }
 
     private func componentElapsedTime(elapsedTime: TimeInterval) -> TimeInterval? {

@@ -45,7 +45,7 @@ public final class Effect2DRenderer {
         cameraAzimuth: Float
     ) {
         guard let texture = resource.texture,
-              let snapshot = resource.snapshot(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraAzimuth),
+              let sample = resource.sample(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraAzimuth),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }
@@ -60,13 +60,13 @@ public final class Effect2DRenderer {
         var vertexUniforms = Effect2DVertexUniforms(
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
-            rotationMatrix: snapshot.rotationMatrix,
-            worldPosition: snapshot.worldPosition,
-            size: snapshot.size,
-            offset: snapshot.offset,
+            rotationMatrix: sample.rotationMatrix,
+            worldPosition: sample.worldPosition,
+            size: sample.size,
+            offset: sample.offset,
             zIndex: resource.definition.zIndex
         )
-        var fragmentUniforms = Effect2DFragmentUniforms(color: snapshot.color)
+        var fragmentUniforms = Effect2DFragmentUniforms(color: sample.color)
 
         renderCommandEncoder.setVertexBytes(
             &vertexUniforms,

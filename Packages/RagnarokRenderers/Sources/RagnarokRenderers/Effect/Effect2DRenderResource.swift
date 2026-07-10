@@ -15,7 +15,7 @@ import RagnarokShaders
 import simd
 
 public final class Effect2DRenderResource {
-    struct Snapshot {
+    struct Sample {
         var worldPosition: SIMD3<Float>
         var size: SIMD2<Float>
         var offset: SIMD2<Float>
@@ -79,7 +79,7 @@ public final class Effect2DRenderResource {
         return elapsedTime >= duration
     }
 
-    func snapshot(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Snapshot? {
+    func sample(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Sample? {
         var elapsedTime = elapsedTime - definition.delay(duplicateID: duplicateID)
         guard elapsedTime >= 0 else {
             return nil
@@ -113,7 +113,7 @@ public final class Effect2DRenderResource {
         let alpha = animatedAlpha(elapsedTime: elapsedTime)
         let color = SIMD4<Float>(definition.color, alpha)
 
-        return Snapshot(
+        return Sample(
             worldPosition: position,
             size: size,
             offset: offset,

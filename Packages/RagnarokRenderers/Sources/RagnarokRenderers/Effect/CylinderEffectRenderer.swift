@@ -38,7 +38,7 @@ public final class CylinderEffectRenderer {
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
-        guard let snapshot = resource.snapshot(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth),
+        guard let sample = resource.sample(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth),
               !resource.vertices.isEmpty,
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
@@ -47,15 +47,15 @@ public final class CylinderEffectRenderer {
         var vertexUniforms = CylinderEffectVertexUniforms(
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
-            rotationMatrix: snapshot.rotationMatrix,
+            rotationMatrix: sample.rotationMatrix,
             worldPosition: worldPosition,
             positionOffset: resource.definition.positionOffset,
-            topRadius: snapshot.topRadius,
-            bottomRadius: snapshot.bottomRadius,
-            height: snapshot.height,
+            topRadius: sample.topRadius,
+            bottomRadius: sample.bottomRadius,
+            height: sample.height,
             zIndex: resource.definition.zIndex
         )
-        var fragmentUniforms = CylinderEffectFragmentUniforms(color: snapshot.color)
+        var fragmentUniforms = CylinderEffectFragmentUniforms(color: sample.color)
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)

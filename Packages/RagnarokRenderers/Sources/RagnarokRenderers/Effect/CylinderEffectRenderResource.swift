@@ -14,7 +14,7 @@ import RagnarokShaders
 import simd
 
 public final class CylinderEffectRenderResource {
-    struct Snapshot {
+    struct Sample {
         var topRadius: Float
         var bottomRadius: Float
         var height: Float
@@ -60,7 +60,7 @@ public final class CylinderEffectRenderResource {
         return elapsedTime >= duration
     }
 
-    func snapshot(elapsedTime: TimeInterval, cameraAzimuth: Float) -> Snapshot? {
+    func sample(elapsedTime: TimeInterval, cameraAzimuth: Float) -> Sample? {
         guard var elapsedTime = componentElapsedTime(elapsedTime: elapsedTime) else {
             return nil
         }
@@ -119,7 +119,7 @@ public final class CylinderEffectRenderResource {
             alpha = min(max(alpha, 0), definition.alpha)
         }
 
-        return Snapshot(
+        return Sample(
             topRadius: max(topRadius, 0),
             bottomRadius: max(bottomRadius, 0),
             height: max(height, 0),
