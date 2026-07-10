@@ -28,6 +28,8 @@ public final class CylinderEffectRenderResource {
 
     public let duplicateID: Int
 
+    private let rotationDegrees: SIMD3<Float>
+
     public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
     }
@@ -41,6 +43,7 @@ public final class CylinderEffectRenderResource {
         )
         self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "cylinderEffect")
         self.duplicateID = duplicateID
+        self.rotationDegrees = asset.rotationDegrees
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
@@ -140,7 +143,6 @@ public final class CylinderEffectRenderResource {
             matrix = matrix_rotate(matrix, Float(elapsedTime) * 250 / 180 * .pi, [0, 1, 0])
         }
 
-        let rotationDegrees = definition.rotationDegrees
         if rotationDegrees.x != 0 {
             matrix = matrix_rotate(matrix, radians(rotationDegrees.x), [1, 0, 0])
         }

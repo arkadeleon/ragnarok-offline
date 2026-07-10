@@ -31,7 +31,7 @@ final class EffectAssetStore {
         }
 
         let task = Task { [loader] in
-            let definitions = EffectTable.definitions(for: reference).map({ $0.resolved() })
+            let definitions = EffectTable.definitions(for: reference)
             return try await loader.loadAssetGroup(with: definitions)
         }
 

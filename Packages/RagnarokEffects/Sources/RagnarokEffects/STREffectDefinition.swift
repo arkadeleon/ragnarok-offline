@@ -16,19 +16,6 @@ public struct STREffectDefinition: Sendable {
     public var randomNumberRange: ClosedRange<Int>?
 
     public var attachedToTarget: Bool
-
-    func resolved() -> STREffectDefinition {
-        guard let randomNumberRange else {
-            return self
-        }
-
-        var definition = self
-        let randomNumber = Int.random(in: randomNumberRange)
-        definition.fileName = fileName.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-        definition.soundName = soundName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-        definition.randomNumberRange = nil
-        return definition
-    }
 }
 
 extension EffectDefinition {

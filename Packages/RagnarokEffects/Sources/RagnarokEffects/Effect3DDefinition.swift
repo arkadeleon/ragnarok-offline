@@ -177,27 +177,6 @@ public struct Effect3DDefinition: Sendable {
             + duplicate.delayLateDelta * TimeInterval(duplicateID)
             + duplicate.interval * TimeInterval(duplicateID)
     }
-
-    func resolved() -> Effect3DDefinition {
-        var definition = self
-
-        if let randomNumberRange {
-            let randomNumber = Int.random(in: randomNumberRange)
-            definition.fileName = fileName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-            definition.fileNames = fileNames.map {
-                $0.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-            }
-            definition.soundName = soundName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-            definition.randomNumberRange = nil
-        }
-
-        if let sparkleCountRandomRange {
-            definition.sparkleCount = Float.random(in: sparkleCountRandomRange)
-            definition.sparkleCountRandomRange = nil
-        }
-
-        return definition
-    }
 }
 
 extension EffectDefinition {

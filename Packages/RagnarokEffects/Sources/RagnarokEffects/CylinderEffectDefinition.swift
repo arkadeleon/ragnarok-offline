@@ -90,25 +90,6 @@ public struct CylinderEffectDefinition: Sendable {
             + duplicate.delayLateDelta * TimeInterval(duplicateID)
             + duplicate.interval * TimeInterval(duplicateID)
     }
-
-    func resolved() -> CylinderEffectDefinition {
-        var definition = self
-
-        if let rotationXRandomRange {
-            definition.rotationDegrees.x += Float.random(in: rotationXRandomRange)
-            definition.rotationXRandomRange = nil
-        }
-        if let rotationYRandomRange {
-            definition.rotationDegrees.y += Float.random(in: rotationYRandomRange)
-            definition.rotationYRandomRange = nil
-        }
-        if let rotationZRandomRange {
-            definition.rotationDegrees.z += Float.random(in: rotationZRandomRange)
-            definition.rotationZRandomRange = nil
-        }
-
-        return definition
-    }
 }
 
 extension EffectDefinition {

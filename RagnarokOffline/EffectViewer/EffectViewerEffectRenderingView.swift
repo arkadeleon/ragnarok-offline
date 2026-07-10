@@ -48,7 +48,7 @@ struct EffectViewerEffectRenderingView: View {
     }
 
     private func loadRenderer() async throws -> EffectViewerEffectRenderer {
-        let definitions = EffectTable.definitions(for: effectID).map { $0.resolved() }
+        let definitions = EffectTable.definitions(for: effectID)
 
         let device = MTLCreateSystemDefaultDevice()!
         let loader = EffectAssetLoader(resourceManager: resourceManager)

@@ -41,6 +41,7 @@ public final class Effect3DRenderResource {
     private let alphaMax: Float
     private let rotationDelay: TimeInterval
     private let baseAngle: Float
+    private let sparkleCount: Float
 
     public var rendersBeforeEntities: Bool {
         definition.rendersBeforeEntities
@@ -62,96 +63,16 @@ public final class Effect3DRenderResource {
         self.frames = asset.frames
         self.duplicateID = duplicateID
 
-        var positionStart = definition.positionStart
-        var positionEnd = definition.positionEnd
+        let instance = asset.instance(forDuplicateID: duplicateID)
+        self.positionStart = instance.positionStart
+        self.positionEnd = instance.positionEnd
+        self.sizeStart = instance.sizeStart
+        self.sizeEnd = instance.sizeEnd
+        self.baseAngle = instance.baseAngle
+        self.sparkleCount = asset.sparkleCount
 
-        if let range = definition.positionXRandomRange {
-            let random = Float.random(in: range)
-            positionStart.x = random
-            positionEnd.x = random
-        }
-        if let range = definition.positionYRandomRange {
-            let random = Float.random(in: range)
-            positionStart.y = random
-            positionEnd.y = random
-        }
-        if let range = definition.positionZRandomRange {
-            let random = Float.random(in: range)
-            positionStart.z = random
-            positionEnd.z = random
-        }
-
-        if let range = definition.positionXRandomDifferenceRange {
-            positionStart.x = Float.random(in: range)
-            positionEnd.x = Float.random(in: range)
-        }
-        if let range = definition.positionYRandomDifferenceRange {
-            positionStart.y = Float.random(in: range)
-            positionEnd.y = Float.random(in: range)
-        }
-        if let range = definition.positionZRandomDifferenceRange {
-            positionStart.z = Float.random(in: range)
-            positionEnd.z = Float.random(in: range)
-        }
-
-        if let range = definition.positionStartXRandomRange {
-            positionStart.x = Float.random(in: range)
-        }
-        if let range = definition.positionStartYRandomRange {
-            positionStart.y = Float.random(in: range)
-        }
-        if let range = definition.positionStartZRandomRange {
-            positionStart.z = Float.random(in: range)
-        }
-
-        if let range = definition.positionEndXRandomRange {
-            positionEnd.x = Float.random(in: range)
-        }
-        if let range = definition.positionEndYRandomRange {
-            positionEnd.y = Float.random(in: range)
-        }
-        if let range = definition.positionEndZRandomRange {
-            positionEnd.z = Float.random(in: range)
-        }
-
-        positionStart += definition.offset
-        positionEnd += definition.offset
-        positionStart.z += definition.zOffsetStart
-        positionEnd.z += definition.zOffsetEnd
-
-        self.positionStart = positionStart
-        self.positionEnd = positionEnd
-
-        var sizeStart = definition.sizeStart ?? definition.size
-        var sizeEnd = definition.sizeEnd ?? definition.size
-
-        if let range = definition.sizeXRandomRange {
-            let random = Float.random(in: range)
-            sizeStart.x = random
-            sizeEnd.x = random
-        }
-        if let range = definition.sizeYRandomRange {
-            let random = Float.random(in: range)
-            sizeStart.y = random
-            sizeEnd.y = random
-        }
-
-        if definition.duplicate.sizeDelta != 0 {
-            let delta = definition.duplicate.sizeDelta * Float(duplicateID)
-            sizeStart += [delta, delta]
-            sizeEnd += [delta, delta]
-        }
-
-        self.sizeStart = sizeStart
-        self.sizeEnd = sizeEnd
         self.alphaMax = min(max(definition.alphaMax + definition.duplicate.alphaMaxDelta * Float(duplicateID), 0), 1)
         self.rotationDelay = definition.rotationDelay + definition.duplicate.rotationDelayDelta * TimeInterval(duplicateID)
-
-        var baseAngle = definition.angle
-        if definition.rotatesToTarget {
-            baseAngle += 90 - degrees(atan2(positionEnd.y - positionStart.y, positionEnd.x - positionStart.x))
-        }
-        self.baseAngle = baseAngle
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
@@ -291,7 +212,7 @@ public final class Effect3DRenderResource {
         } else if let duration, duration > 0, definition.fadesOut, elapsedTime > duration * 0.75 {
             alpha = Float((duration - elapsedTime) / (duration / 4)) * alphaMax
         } else if definition.sparkles {
-            alpha = alphaMax * ((cos(progress * 100 * 11 * definition.sparkleCount * .pi / 180) + 1) / 2)
+            alpha = alphaMax * ((cos(progress * 100 * 11 * sparkleCount * .pi / 180) + 1) / 2)
         }
 
         return min(max(alpha, definition.alphaMin), alphaMax)

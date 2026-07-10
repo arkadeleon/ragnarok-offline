@@ -15,20 +15,3 @@ public enum EffectDefinition: Sendable {
     case spr(SPREffectDefinition)
     case str(STREffectDefinition)
 }
-
-extension EffectDefinition {
-    public func resolved() -> EffectDefinition {
-        switch self {
-        case .`2D`(let definition):
-            .`2D`(definition.resolved())
-        case .`3D`(let definition):
-            .`3D`(definition.resolved())
-        case .cylinder(let definition):
-            .cylinder(definition.resolved())
-        case .spr(let definition):
-            .spr(definition)
-        case .str(let definition):
-            .str(definition.resolved())
-        }
-    }
-}

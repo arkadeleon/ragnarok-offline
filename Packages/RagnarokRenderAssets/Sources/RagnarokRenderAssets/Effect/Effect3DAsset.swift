@@ -6,11 +6,112 @@
 //
 
 import CoreGraphics
+import Foundation
+import RagnarokCore
 import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokResources
 
 public struct Effect3DAsset: Sendable {
+    public struct Instance: Sendable {
+        public let positionStart: SIMD3<Float>
+        public let positionEnd: SIMD3<Float>
+        public let sizeStart: SIMD2<Float>
+        public let sizeEnd: SIMD2<Float>
+        public let baseAngle: Float
+
+        init(definition: Effect3DDefinition, duplicateID: Int) {
+            var positionStart = definition.positionStart
+            var positionEnd = definition.positionEnd
+
+            if let range = definition.positionXRandomRange {
+                let random = Float.random(in: range)
+                positionStart.x = random
+                positionEnd.x = random
+            }
+            if let range = definition.positionYRandomRange {
+                let random = Float.random(in: range)
+                positionStart.y = random
+                positionEnd.y = random
+            }
+            if let range = definition.positionZRandomRange {
+                let random = Float.random(in: range)
+                positionStart.z = random
+                positionEnd.z = random
+            }
+
+            if let range = definition.positionXRandomDifferenceRange {
+                positionStart.x = Float.random(in: range)
+                positionEnd.x = Float.random(in: range)
+            }
+            if let range = definition.positionYRandomDifferenceRange {
+                positionStart.y = Float.random(in: range)
+                positionEnd.y = Float.random(in: range)
+            }
+            if let range = definition.positionZRandomDifferenceRange {
+                positionStart.z = Float.random(in: range)
+                positionEnd.z = Float.random(in: range)
+            }
+
+            if let range = definition.positionStartXRandomRange {
+                positionStart.x = Float.random(in: range)
+            }
+            if let range = definition.positionStartYRandomRange {
+                positionStart.y = Float.random(in: range)
+            }
+            if let range = definition.positionStartZRandomRange {
+                positionStart.z = Float.random(in: range)
+            }
+
+            if let range = definition.positionEndXRandomRange {
+                positionEnd.x = Float.random(in: range)
+            }
+            if let range = definition.positionEndYRandomRange {
+                positionEnd.y = Float.random(in: range)
+            }
+            if let range = definition.positionEndZRandomRange {
+                positionEnd.z = Float.random(in: range)
+            }
+
+            positionStart += definition.offset
+            positionEnd += definition.offset
+            positionStart.z += definition.zOffsetStart
+            positionEnd.z += definition.zOffsetEnd
+
+            self.positionStart = positionStart
+            self.positionEnd = positionEnd
+
+            var sizeStart = definition.sizeStart ?? definition.size
+            var sizeEnd = definition.sizeEnd ?? definition.size
+
+            if let range = definition.sizeXRandomRange {
+                let random = Float.random(in: range)
+                sizeStart.x = random
+                sizeEnd.x = random
+            }
+            if let range = definition.sizeYRandomRange {
+                let random = Float.random(in: range)
+                sizeStart.y = random
+                sizeEnd.y = random
+            }
+
+            if definition.duplicate.sizeDelta != 0 {
+                let delta = definition.duplicate.sizeDelta * Float(duplicateID)
+                sizeStart += [delta, delta]
+                sizeEnd += [delta, delta]
+            }
+
+            self.sizeStart = sizeStart
+            self.sizeEnd = sizeEnd
+
+            var baseAngle = definition.angle
+            if definition.rotatesToTarget {
+                baseAngle += 90 - degrees(atan2(positionEnd.y - positionStart.y, positionEnd.x - positionStart.x))
+            }
+            self.baseAngle = baseAngle
+        }
+    }
+
     public struct Layer: Sendable {
         public let imageIndex: Int
         public let sizeFactor: SIMD2<Float>
@@ -41,10 +142,36 @@ public struct Effect3DAsset: Sendable {
     }
 
     public let definition: Effect3DDefinition
+    public let soundName: String?
+    public let sparkleCount: Float
     public let images: [CGImage]
     public let frames: [Effect3DAsset.Frame]
+    public let instances: [Effect3DAsset.Instance]
+
+    public func instance(forDuplicateID duplicateID: Int) -> Effect3DAsset.Instance {
+        instances[min(max(duplicateID, 0), instances.count - 1)]
+    }
 
     static func load(with definition: Effect3DDefinition, using resourceManager: ResourceManager) async throws -> Effect3DAsset {
+        var fileName = definition.fileName
+        var fileNames = definition.fileNames
+        var soundName = definition.soundName
+        if let randomNumberRange = definition.randomNumberRange {
+            let randomNumber = Int.random(in: randomNumberRange)
+            fileName = fileName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
+            fileNames = fileNames.map {
+                $0.replacingOccurrences(of: "%d", with: "\(randomNumber)")
+            }
+            soundName = soundName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
+        }
+
+        let sparkleCount: Float
+        if let sparkleCountRandomRange = definition.sparkleCountRandomRange {
+            sparkleCount = Float.random(in: sparkleCountRandomRange)
+        } else {
+            sparkleCount = definition.sparkleCount
+        }
+
         var images: [CGImage] = []
         var frames: [Effect3DAsset.Frame] = []
 
@@ -109,10 +236,10 @@ public struct Effect3DAsset: Sendable {
             }
         } else {
             let textureNames: [String]
-            if definition.fileNames.isEmpty {
-                textureNames = definition.fileName.map { [$0] } ?? []
+            if fileNames.isEmpty {
+                textureNames = fileName.map { [$0] } ?? []
             } else {
-                textureNames = definition.fileNames
+                textureNames = fileNames
             }
 
             for textureName in textureNames {
@@ -126,7 +253,18 @@ public struct Effect3DAsset: Sendable {
             }
         }
 
-        let asset = Effect3DAsset(definition: definition, images: images, frames: frames)
+        let instances = (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+            Effect3DAsset.Instance(definition: definition, duplicateID: duplicateID)
+        }
+
+        let asset = Effect3DAsset(
+            definition: definition,
+            soundName: soundName,
+            sparkleCount: sparkleCount,
+            images: images,
+            frames: frames,
+            instances: instances
+        )
         return asset
     }
 }

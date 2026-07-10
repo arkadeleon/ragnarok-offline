@@ -6,17 +6,27 @@
 //
 
 import CoreGraphics
+import Foundation
 import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokResources
 
 public struct STREffectAsset: @unchecked Sendable {
     public let definition: STREffectDefinition
+    public let soundName: String?
     public let effect: STREffect
     public let textureImages: [String : CGImage]
 
     static func load(with definition: STREffectDefinition, using resourceManager: ResourceManager) async throws -> STREffectAsset {
-        let strPath = ResourcePath.effectDirectory.appending(subpath: definition.fileName)
+        var fileName = definition.fileName
+        var soundName = definition.soundName
+        if let randomNumberRange = definition.randomNumberRange {
+            let randomNumber = Int.random(in: randomNumberRange)
+            fileName = fileName.replacingOccurrences(of: "%d", with: "\(randomNumber)")
+            soundName = soundName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
+        }
+
+        let strPath = ResourcePath.effectDirectory.appending(subpath: fileName)
         let strData = try await resourceManager.contentsOfResource(at: strPath)
         let str = try STR(data: strData)
         let effect = STREffect(str: str)
@@ -36,7 +46,12 @@ public struct STREffectAsset: @unchecked Sendable {
             }
         }
 
-        let asset = STREffectAsset(definition: definition, effect: effect, textureImages: textureImages)
+        let asset = STREffectAsset(
+            definition: definition,
+            soundName: soundName,
+            effect: effect,
+            textureImages: textureImages
+        )
         return asset
     }
 }

@@ -15,15 +15,15 @@ public enum EffectAsset: Sendable {
     public var soundName: String? {
         switch self {
         case .`2D`(let asset):
-            asset.definition.soundName
+            asset.soundName
         case .`3D`(let asset):
-            asset.definition.soundName
+            asset.soundName
         case .cylinder(let asset):
             asset.definition.soundName
         case .spr(let asset):
             asset.definition.soundName
         case .str(let asset):
-            asset.definition.soundName
+            asset.soundName
         }
     }
 }

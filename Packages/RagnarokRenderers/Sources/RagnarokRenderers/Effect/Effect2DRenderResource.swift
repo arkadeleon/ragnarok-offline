@@ -54,121 +54,14 @@ public final class Effect2DRenderResource {
         self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "effect2D")
         self.duplicateID = duplicateID
 
-        var positionStart = definition.positionStart
-        var positionEnd = definition.positionEnd
-
-        if let range = definition.positionXRandomRange {
-            let random = Float.random(in: range)
-            positionStart.x = random
-            positionEnd.x = random
-        }
-        if let range = definition.positionYRandomRange {
-            let random = Float.random(in: range)
-            positionStart.y = random
-            positionEnd.y = random
-        }
-        if let range = definition.positionZRandomRange {
-            let random = Float.random(in: range)
-            positionStart.z = random
-            positionEnd.z = random
-        }
-
-        if let range = definition.positionXRandomDifferenceRange {
-            positionStart.x = Float.random(in: range)
-            positionEnd.x = Float.random(in: range)
-        }
-        if let range = definition.positionYRandomDifferenceRange {
-            positionStart.y = Float.random(in: range)
-            positionEnd.y = Float.random(in: range)
-        }
-        if let range = definition.positionZRandomDifferenceRange {
-            positionStart.z = Float.random(in: range)
-            positionEnd.z = Float.random(in: range)
-        }
-
-        if let range = definition.positionStartXRandomRange {
-            positionStart.x = Float.random(in: range)
-        }
-        if let range = definition.positionStartYRandomRange {
-            positionStart.y = Float.random(in: range)
-        }
-        if let range = definition.positionStartZRandomRange {
-            positionStart.z = Float.random(in: range)
-        }
-
-        if let range = definition.positionEndXRandomRange {
-            positionEnd.x = Float.random(in: range)
-        }
-        if let range = definition.positionEndYRandomRange {
-            positionEnd.y = Float.random(in: range)
-        }
-        if let range = definition.positionEndZRandomRange {
-            positionEnd.z = Float.random(in: range)
-        }
-
-        positionStart += definition.positionOffset
-        positionEnd += definition.positionOffset
-
-        var baseAngle = definition.angle + definition.duplicate.angleDelta * Float(duplicateID)
-        let targetAngle = definition.targetAngle + definition.duplicate.angleDelta * Float(duplicateID)
-
-        if definition.rotatesToTarget {
-            baseAngle += 90 - degrees(atan2(positionEnd.y - positionStart.y, positionEnd.x - positionStart.x))
-        }
-
-        if let angleRandomRange = definition.angleRandomRange {
-            baseAngle = Float.random(in: angleRandomRange)
-        }
-
-        if definition.circlePattern, let circleOuterSizeRandomRange = definition.circleOuterSizeRandomRange {
-            let distance = Float.random(in: circleOuterSizeRandomRange)
-            let angle = radians(baseAngle)
-            positionEnd.x = sin(angle) * distance
-            positionEnd.y = cos(angle) * distance
-            positionStart.x = sin(angle) * definition.circleInnerSize
-            positionStart.y = cos(angle) * definition.circleInnerSize
-        }
-
-        self.positionStart = positionStart
-        self.positionEnd = positionEnd
-        self.baseAngle = baseAngle
-        self.targetAngle = targetAngle
-
-        var sizeStart = definition.sizeStart ?? definition.size
-        var sizeEnd = definition.sizeEnd ?? definition.size
-
-        if let range = definition.sizeXRandomRange {
-            let random = Float.random(in: range)
-            sizeStart.x = random
-            sizeEnd.x = random
-        }
-        if let range = definition.sizeYRandomRange {
-            let random = Float.random(in: range)
-            sizeStart.y = random
-            sizeEnd.y = random
-        }
-
-        if let sizeStartXRandomRange = definition.sizeStartXRandomRange {
-            sizeStart.x = Float.random(in: sizeStartXRandomRange)
-        }
-        if let sizeStartYRandomRange = definition.sizeStartYRandomRange {
-            sizeStart.y = Float.random(in: sizeStartYRandomRange)
-        }
-        if let sizeEndXRandomRange = definition.sizeEndXRandomRange {
-            sizeEnd.x = Float.random(in: sizeEndXRandomRange)
-        }
-        if let sizeEndYRandomRange = definition.sizeEndYRandomRange {
-            sizeEnd.y = Float.random(in: sizeEndYRandomRange)
-        }
-
-        self.sizeStart = sizeStart
-        self.sizeEnd = sizeEnd
-
-        if let durationRandomRange = definition.durationRandomRange {
-            self.duration = TimeInterval.random(in: durationRandomRange)
-        } else {
-            self.duration = definition.duration
-        }
+        let instance = asset.instance(forDuplicateID: duplicateID)
+        self.duration = instance.duration
+        self.positionStart = instance.positionStart
+        self.positionEnd = instance.positionEnd
+        self.sizeStart = instance.sizeStart
+        self.sizeEnd = instance.sizeEnd
+        self.baseAngle = instance.baseAngle
+        self.targetAngle = instance.targetAngle
 
         self.alphaMax = min(max(definition.alphaMax, 0), 1)
     }
