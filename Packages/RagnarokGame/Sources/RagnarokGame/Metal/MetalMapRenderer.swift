@@ -28,17 +28,13 @@ final class MetalMapRenderer: Renderer {
     let device: any MTLDevice
 
     private let skyboxRenderer: SkyboxRenderer
-    private let groundRenderer: GroundRenderer
-    private let waterRenderer: WaterRenderer
-    private let modelRenderer: RSMModelRenderer
+    private let worldRenderer: WorldRenderer
     private let spriteRenderer: MetalSpriteRenderer
     private let effectRenderer: EffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
 
     var skyboxResource: SkyboxRenderResource?
-    var groundResource: GroundRenderResource?
-    var waterResource: WaterRenderResource?
-    var modelResources: [RSMModelRenderResource] = []
+    var worldResource: WorldRenderResource?
     var spriteDrawables: [SpriteLayerDrawable] = []
     var combatTextRenderResources: [CombatTextRenderResource] = []
     var objects: [GameObjectID : MetalMapObject] = [:]
@@ -58,9 +54,7 @@ final class MetalMapRenderer: Renderer {
         self.device = device
 
         skyboxRenderer = try SkyboxRenderer(device: device)
-        groundRenderer = try GroundRenderer(device: device)
-        waterRenderer = try WaterRenderer(device: device)
-        modelRenderer = try RSMModelRenderer(device: device)
+        worldRenderer = try WorldRenderer(device: device)
         spriteRenderer = try MetalSpriteRenderer(device: device)
         effectRenderer = try EffectRenderer(device: device)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
@@ -112,26 +106,15 @@ final class MetalMapRenderer: Renderer {
             )
         }
 
-        if let groundResource {
-            groundRenderer.render(
-                resource: groundResource,
+        if let worldResource {
+            worldRenderer.renderGroundAndModels(
+                resource: worldResource,
                 atTime: time,
                 renderCommandEncoder: renderCommandEncoder,
                 modelMatrix: matrices.modelMatrix,
                 viewMatrix: matrices.viewMatrix,
                 projectionMatrix: matrices.projectionMatrix,
                 normalMatrix: matrices.normalMatrix
-            )
-        }
-
-        if let waterResource {
-            waterRenderer.render(
-                resource: waterResource,
-                atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix
             )
         }
 
@@ -142,22 +125,25 @@ final class MetalMapRenderer: Renderer {
             matrices: matrices
         )
 
-        modelRenderer.render(
-            resources: modelResources,
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: matrices.modelMatrix,
-            viewMatrix: matrices.viewMatrix,
-            projectionMatrix: matrices.projectionMatrix,
-            normalMatrix: matrices.normalMatrix
-        )
-
         spriteRenderer.render(
             drawables: spriteDrawables,
             combatTextResources: combatTextRenderResources,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
+
+        // Water renders after sprites so submerged
+        // sprites blend through the translucent surface.
+        if let worldResource {
+            worldRenderer.renderWater(
+                resource: worldResource,
+                atTime: time,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix
+            )
+        }
 
         renderEffects(
             effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == false },

@@ -16,13 +16,8 @@ public class RSWFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
 
     let groundAsset: GroundRenderAsset
-    let groundResource: GroundRenderResource
-    let groundRenderer: GroundRenderer
-
-    let waterResource: WaterRenderResource
-    let waterRenderer: WaterRenderer
-    let modelResources: [RSMModelRenderResource]
-    let modelRenderer: RSMModelRenderer
+    let worldResource: WorldRenderResource
+    let worldRenderer: WorldRenderer
 
     public let camera: OrbitalCamera
 
@@ -35,20 +30,8 @@ public class RSWFilePreviewRenderer: Renderer {
         self.device = device
         self.groundAsset = worldAsset.ground
 
-        groundResource = GroundRenderResource(device: device, asset: groundAsset, light: worldAsset.light)
-        waterResource = WaterRenderResource(device: device, asset: worldAsset.water, light: worldAsset.light)
-        modelResources = worldAsset.modelGroups.map { modelGroup in
-            RSMModelRenderResource(
-                device: device,
-                prototype: modelGroup.prototype,
-                instances: modelGroup.instances,
-                light: worldAsset.light
-            )
-        }
-
-        groundRenderer = try GroundRenderer(device: device)
-        waterRenderer = try WaterRenderer(device: device)
-        modelRenderer = try RSMModelRenderer(device: device)
+        worldResource = WorldRenderResource(device: device, asset: worldAsset)
+        worldRenderer = try WorldRenderer(device: device)
 
         let defaultDistance = -groundAsset.altitude / 5 + 200
         camera = OrbitalCamera(distance: defaultDistance)
@@ -95,27 +78,8 @@ public class RSWFilePreviewRenderer: Renderer {
             return
         }
 
-        groundRenderer.render(
-            resource: groundResource,
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
-        )
-
-        waterRenderer.render(
-            resource: waterResource,
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix
-        )
-
-        modelRenderer.render(
-            resources: modelResources,
+        worldRenderer.render(
+            resource: worldResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,

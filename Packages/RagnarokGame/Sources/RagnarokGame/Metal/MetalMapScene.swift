@@ -429,16 +429,7 @@ extension MetalMapScene {
         )
 
         renderer.skyboxResource = SkyboxRenderResource(device: renderer.device, configuration: skyboxConfiguration)
-        renderer.groundResource = GroundRenderResource(device: renderer.device, asset: worldAsset.ground, light: worldAsset.light)
-        renderer.waterResource = WaterRenderResource(device: renderer.device, asset: worldAsset.water, light: worldAsset.light)
-        renderer.modelResources = worldAsset.modelGroups.map { modelGroup in
-            RSMModelRenderResource(
-                device: renderer.device,
-                prototype: modelGroup.prototype,
-                instances: modelGroup.instances,
-                light: worldAsset.light
-            )
-        }
+        renderer.worldResource = WorldRenderResource(device: renderer.device, asset: worldAsset)
 
         do {
             let path = ResourcePath.textureDirectory.appending(["grid.tga"])
@@ -479,9 +470,7 @@ extension MetalMapScene {
         effects.removeAll()
 
         renderer.skyboxResource = nil
-        renderer.groundResource = nil
-        renderer.waterResource = nil
-        renderer.modelResources.removeAll()
+        renderer.worldResource = nil
         renderer.spriteDrawables.removeAll()
         renderer.combatTextRenderResources.removeAll()
         renderer.objects.removeAll()
