@@ -407,8 +407,7 @@ extension MetalMapScene {
             guard let object = objects[objectID] else {
                 continue
             }
-            var worldPosition = object.worldPosition
-            worldPosition += [0, -0.8, 0]
+            let worldPosition = object.worldPosition + [0, 0, -0.8]
             state.overlay.gauges[objectID]?.worldPosition = worldPosition
 
             let screenPosition = project(worldPosition)

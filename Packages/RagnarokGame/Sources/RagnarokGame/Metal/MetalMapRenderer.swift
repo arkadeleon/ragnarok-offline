@@ -66,6 +66,14 @@ final class MetalMapRenderer: Renderer {
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
     }
 
+    func renderPosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
+        [
+            worldPosition.x + 0.5,
+            worldPosition.z,
+            -worldPosition.y - 0.5,
+        ]
+    }
+
     func updateCamera(cameraState: MapCameraState, targetPosition: SIMD3<Float>) {
         self.cameraState = cameraState
         self.targetPosition = targetPosition
@@ -208,7 +216,7 @@ final class MetalMapRenderer: Renderer {
 
     private func makeRenderMatrices(viewport: CGRect) -> RenderMatrices {
         let modelMatrix = makeWorldModelMatrix()
-        let worldTarget = targetPosition + Self.cameraTargetOffset
+        let worldTarget = renderPosition(for: targetPosition) + Self.cameraTargetOffset
 
         let cameraOrientation =
             simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *

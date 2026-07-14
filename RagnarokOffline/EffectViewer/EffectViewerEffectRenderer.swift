@@ -41,7 +41,9 @@ class EffectViewerEffectRenderer: Renderer {
         camera.elevation = radians(20)
         camera.minimumDistance = 8
         camera.maximumDistance = 80
-        camera.target = [0, 1.5, 0]
+
+        // Effect renders at grid origin, which is (0.5, 0, -0.5) in render space.
+        camera.target = [0.5, 1.5, -0.5]
     }
 
     func render(

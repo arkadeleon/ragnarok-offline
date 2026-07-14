@@ -27,7 +27,10 @@ sprEffectVertexShader(const device SPREffectVertex *vertices [[buffer(0)]],
 
     const float spriteRatio = 1.0 / 35.0;
     float2 scaledPosition = in.position * uniforms.size * spriteRatio;
-    float3 worldPosition = uniforms.worldPosition
+
+    // worldPosition is (grid x, grid y, altitude); convert to render space.
+    float3 p = uniforms.worldPosition;
+    float3 worldPosition = float3(p.x + 0.5, p.z, -p.y - 0.5)
         + cameraRight * scaledPosition.x
         + cameraUp * scaledPosition.y;
 

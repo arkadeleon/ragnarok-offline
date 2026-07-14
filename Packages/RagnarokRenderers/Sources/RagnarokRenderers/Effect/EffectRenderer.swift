@@ -89,7 +89,7 @@ public final class EffectRenderer {
                 strEffectRenderer.render(
                     resource: resource,
                     elapsedTime: elapsedTime,
-                    spritePosition: spritePosition(for: worldPosition),
+                    spritePosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
                     modelMatrix: modelMatrix,
                     viewMatrix: viewMatrix,
@@ -97,9 +97,5 @@ public final class EffectRenderer {
                 )
             }
         }
-    }
-
-    private func spritePosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
-        [worldPosition.x - 0.5, -worldPosition.z - 0.5, worldPosition.y]
     }
 }

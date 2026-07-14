@@ -109,8 +109,7 @@ public final class RealityMapScene: GameMapScene {
 
         do {
             let (playerEntity, _) = try await spriteEntityManager.entity(for: player)
-            let worldPosition = mapGrid.worldPosition(for: playerPosition)
-            playerEntity.position = worldPosition
+            playerEntity.position = renderPosition(for: mapGrid.worldPosition(for: playerPosition))
             playerEntity.components.set(GridPositionComponent(position: playerPosition))
             playerEntity.components.set(MapObjectComponent(object: player))
             playerEntity.components.set(HealthPointsComponent(hp: character.hp, maxHp: character.maxHp))
@@ -143,6 +142,14 @@ public final class RealityMapScene: GameMapScene {
         for task in soundEffectLoadTasks.values { task.cancel() }
         soundEffectLoadTasks.removeAll()
         soundEffectResourceCache.removeAll()
+    }
+
+    func renderPosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
+        [
+            worldPosition.x + 0.5,
+            worldPosition.z,
+            -worldPosition.y - 0.5,
+        ]
     }
 
     func handleInteraction(_ result: GameHitTestResult) {

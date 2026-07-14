@@ -77,7 +77,7 @@ extension Effect2DAsset {
         }
 
         return Effect2DAsset.Sample(
-            worldPosition: worldPosition + worldOffset(forMapOffset: rotatedMapOffset),
+            worldPosition: worldPosition + rotatedMapOffset,
             size: size,
             offset: [screenOffset.x, -screenOffset.y],
             color: SIMD4<Float>(definition.color, min(max(alpha, 0), 1)),
@@ -146,9 +146,5 @@ extension Effect2DAsset {
 
     private func rotationMatrix(clockwiseDegrees angle: Float) -> simd_float4x4 {
         matrix_rotate(matrix_identity_float4x4, radians(-angle), [0, 0, 1])
-    }
-
-    private func worldOffset(forMapOffset offset: SIMD3<Float>) -> SIMD3<Float> {
-        [offset.x, offset.z, -offset.y]
     }
 }

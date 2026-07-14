@@ -168,10 +168,10 @@ final class SpriteAssetStore {
         }
 
         sprites.sort {
-            if $0.worldPosition.z == $1.worldPosition.z {
+            if $0.worldPosition.y == $1.worldPosition.y {
                 $0.objectID < $1.objectID
             } else {
-                $0.worldPosition.z < $1.worldPosition.z
+                $0.worldPosition.y > $1.worldPosition.y
             }
         }
 

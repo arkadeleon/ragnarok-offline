@@ -92,23 +92,23 @@ final class CombatTextRenderResource {
             scale = 0.5
             worldPosition = [
                 startPosition.x,
-                startPosition.y + 3.5 + 7 * t,
-                startPosition.z,
+                startPosition.y,
+                startPosition.z + 3.5 + 7 * t,
             ]
         case .damage:
             scale = 4 * (1 - t)
             let drift = drift(azimuth: cameraAzimuth) * t
             worldPosition = [
                 startPosition.x + drift.x,
-                startPosition.y + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
-                startPosition.z + drift.z,
+                startPosition.y + drift.y,
+                startPosition.z + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
             ]
         case .hpRecovery, .spRecovery:
             scale = max((1 - t * 2) * 3, 0.8)
             worldPosition = [
                 startPosition.x,
-                startPosition.y + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
-                startPosition.z,
+                startPosition.y,
+                startPosition.z + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
             ]
         }
 
@@ -142,7 +142,7 @@ final class CombatTextRenderResource {
             localDrift.x * cosAngle - localDrift.y * sinAngle,
             localDrift.x * sinAngle + localDrift.y * cosAngle
         )
-        return SIMD3<Float>(worldDrift.x, 0, worldDrift.y)
+        return SIMD3<Float>(worldDrift.x, -worldDrift.y, 0)
     }
 
     func isExpired(at now: ContinuousClock.Instant) -> Bool {

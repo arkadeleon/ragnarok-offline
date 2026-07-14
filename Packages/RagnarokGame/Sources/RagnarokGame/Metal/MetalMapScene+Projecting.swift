@@ -19,9 +19,9 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             return nil
         }
 
-        // worldPoint is already in world space; apply P × V only, no model matrix.
+        let renderPoint = renderer.renderPosition(for: worldPoint)
         let pv = matrices.projectionMatrix * matrices.viewMatrix
-        let clip = pv * SIMD4<Float>(worldPoint.x, worldPoint.y, worldPoint.z, 1)
+        let clip = pv * SIMD4<Float>(renderPoint, 1)
 
         guard clip.w > 0 else {
             return nil
@@ -177,9 +177,11 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             return nil
         }
 
+        let basePosition = renderer.renderPosition(for: drawable.worldPosition)
+
         // Project only the top-left and bottom-right corners.
         func projectCorner(_ spriteX: Float, _ spriteY: Float) -> CGPoint? {
-            let corner = drawable.worldPosition + right * spriteX * scale + up * spriteY * scale
+            let corner = basePosition + right * spriteX * scale + up * spriteY * scale
             let clip = pv * SIMD4<Float>(corner, 1)
             guard clip.w > 0 else {
                 return nil

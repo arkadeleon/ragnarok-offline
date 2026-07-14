@@ -75,8 +75,7 @@ extension RealityMapScene {
         Task {
             let (entity, isNew) = try await spriteEntityManager.entity(for: object)
             if isNew {
-                let worldPosition = mapGrid.worldPosition(for: position)
-                entity.position = worldPosition
+                entity.position = renderPosition(for: mapGrid.worldPosition(for: position))
                 entity.components.set(GridPositionComponent(position: position))
                 entity.components.set(MapObjectComponent(object: object))
                 entity.components.set(HealthPointsComponent(hp: object.hp, maxHp: object.maxHp))
@@ -92,8 +91,7 @@ extension RealityMapScene {
         Task {
             let (entity, isNew) = try await spriteEntityManager.entity(for: object)
             if isNew {
-                let worldPosition = mapGrid.worldPosition(for: startPosition)
-                entity.position = worldPosition
+                entity.position = renderPosition(for: mapGrid.worldPosition(for: startPosition))
                 entity.components.set(GridPositionComponent(position: startPosition))
                 entity.components.set(MapObjectComponent(object: object))
                 entity.components.set(HealthPointsComponent(hp: object.hp, maxHp: object.maxHp))
@@ -115,7 +113,7 @@ extension RealityMapScene {
 
         entity.components.remove(WalkingComponent.self)
         entity.components[GridPositionComponent.self]?.position = position
-        entity.position = mapGrid.worldPosition(for: position)
+        entity.position = renderPosition(for: mapGrid.worldPosition(for: position))
 
         let direction = entity.findEntity(named: "sprite")?.components[SpriteActionComponent.self]?.direction ?? .south
         entity.playSpriteAnimation(.idle, direction: direction)
@@ -237,7 +235,7 @@ extension RealityMapScene {
     public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
         Task {
             let itemEntity = Entity()
-            itemEntity.position = mapGrid.worldPosition(for: position)
+            itemEntity.position = renderPosition(for: mapGrid.worldPosition(for: position))
             itemEntity.components.set(GridPositionComponent(position: position))
             itemEntity.components.set(MapItemComponent(item: item))
 

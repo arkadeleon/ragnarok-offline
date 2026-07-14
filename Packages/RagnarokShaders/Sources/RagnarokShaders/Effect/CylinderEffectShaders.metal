@@ -33,7 +33,9 @@ cylinderEffectVertexShader(const device CylinderEffectVertex *vertices [[buffer(
     );
     localPosition = (uniforms.rotationMatrix * float4(localPosition, 0.0)).xyz;
 
-    float3 worldPosition = uniforms.worldPosition + uniforms.positionOffset + localPosition;
+    // worldPosition is (grid x, grid y, altitude); convert to render space.
+    float3 p = uniforms.worldPosition;
+    float3 worldPosition = float3(p.x + 0.5, p.z, -p.y - 0.5) + uniforms.positionOffset + localPosition;
     float4 clipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPosition, 1.0);
     clipPosition.z -= uniforms.zIndex * 0.001 * clipPosition.w;
 

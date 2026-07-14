@@ -54,9 +54,9 @@ struct MapGrid {
     func worldPosition(for gridPosition: SIMD2<Int>) -> SIMD3<Float> {
         let altitude = self[gridPosition].averageAltitude
         return [
-            Float(gridPosition.x) + 0.5,
+            Float(gridPosition.x),
+            Float(gridPosition.y),
             altitude,
-            -Float(gridPosition.y) - 0.5,
         ]
     }
 }

@@ -51,7 +51,7 @@ public final class SPREffectRenderer {
             return
         }
 
-        let worldPosition = resource.renderWorldPosition(worldPosition)
+        let worldPosition = resource.adjustedWorldPosition(worldPosition)
         var vertexUniforms = SPREffectVertexUniforms(
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,

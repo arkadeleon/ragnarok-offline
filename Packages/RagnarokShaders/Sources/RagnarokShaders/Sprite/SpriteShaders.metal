@@ -26,9 +26,13 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
     float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp    = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
 
+    // spriteWorldPosition is (grid x, grid y, altitude); convert to render space.
+    float3 p = uniforms.spriteWorldPosition.xyz;
+    float3 basePos = float3(p.x + 0.5, p.z, -p.y - 0.5);
+
     // 1 world unit = 32 pixels.
     const float pixelRatio = 1.0 / 32.0;
-    float3 worldPos = uniforms.spriteWorldPosition.xyz
+    float3 worldPos = basePos
         + cameraRight * in.position.x * pixelRatio
         + cameraUp    * in.position.y * pixelRatio;
 

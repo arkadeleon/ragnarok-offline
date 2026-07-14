@@ -49,8 +49,8 @@ public final class SPREffectRenderResource {
         asset.isExpired(elapsedTime: elapsedTime)
     }
 
-    func renderWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
-        asset.renderWorldPosition(worldPosition)
+    func adjustedWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
+        asset.adjustedWorldPosition(worldPosition)
     }
 
     func texture(elapsedTime: TimeInterval) -> (any MTLTexture)? {

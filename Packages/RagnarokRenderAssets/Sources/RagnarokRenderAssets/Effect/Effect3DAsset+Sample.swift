@@ -90,7 +90,7 @@ extension Effect3DAsset {
         }
 
         return Effect3DAsset.Sample(
-            worldPosition: worldPosition + worldOffset(forMapOffset: mapOffset),
+            worldPosition: worldPosition + mapOffset,
             layers: layers
         )
     }
@@ -239,9 +239,5 @@ extension Effect3DAsset {
             interpolate(start.y, end.y, progress: progress, smooth: smoothAxes.y),
             interpolate(start.z, end.z, progress: progress, smooth: smoothAxes.z),
         ]
-    }
-
-    private func worldOffset(forMapOffset offset: SIMD3<Float>) -> SIMD3<Float> {
-        [offset.x, offset.z, -offset.y]
     }
 }
