@@ -30,16 +30,14 @@ public final class EffectRenderer {
     public func render(
         resourceGroup: EffectRenderResourceGroup,
         atTime time: TimeInterval,
-        worldPosition: SIMD3<Float>,
-        spritePosition: SIMD3<Float>,
         attachedWorldPosition: SIMD3<Float>? = nil,
-        attachedSpritePosition: SIMD3<Float>? = nil,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
     ) {
+        let worldPosition = resourceGroup.worldPosition
         let elapsedTime = time - resourceGroup.creationTime - resourceGroup.delay
         for resource in resourceGroup.resources {
             switch resource {
@@ -87,11 +85,11 @@ public final class EffectRenderer {
                     projectionMatrix: projectionMatrix
                 )
             case .str(let resource):
-                let spritePosition = resource.definition?.attachedToTarget == true ? attachedSpritePosition ?? spritePosition : spritePosition
+                let worldPosition = resource.definition?.attachedToTarget == true ? attachedWorldPosition ?? worldPosition : worldPosition
                 strEffectRenderer.render(
                     resource: resource,
                     elapsedTime: elapsedTime,
-                    spritePosition: spritePosition,
+                    spritePosition: spritePosition(for: worldPosition),
                     renderCommandEncoder: renderCommandEncoder,
                     modelMatrix: modelMatrix,
                     viewMatrix: viewMatrix,
@@ -99,5 +97,9 @@ public final class EffectRenderer {
                 )
             }
         }
+    }
+
+    private func spritePosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
+        [worldPosition.x - 0.5, -worldPosition.z - 0.5, worldPosition.y]
     }
 }

@@ -71,8 +71,6 @@ class EffectViewerEffectRenderer: Renderer {
         effectRenderer.render(
             resourceGroup: effectResourceGroup,
             atTime: time,
-            worldPosition: .zero,
-            spritePosition: .zero,
             renderCommandEncoder: renderCommandEncoder,
             modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,

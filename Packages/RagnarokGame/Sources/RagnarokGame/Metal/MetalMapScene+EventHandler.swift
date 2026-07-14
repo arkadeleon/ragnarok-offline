@@ -682,17 +682,10 @@ extension MetalMapScene {
         ownerObjectID: GameObjectID?,
         delay: TimeInterval
     ) {
-        let worldPosition = mapGrid.worldPosition(for: gridPosition)
         let effect = MetalMapEffect(
             reference: effectReference,
             creationTime: creationTime,
-            gridPosition: gridPosition,
-            worldPosition: worldPosition,
-            spritePosition: [
-                Float(gridPosition.x),
-                Float(gridPosition.y),
-                worldPosition.y,
-            ],
+            worldPosition: mapGrid.worldPosition(for: gridPosition),
             targetObjectID: targetObjectID,
             delay: delay
         )
@@ -735,7 +728,8 @@ extension MetalMapScene {
                     device: renderer.device,
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,
-                    delay: effect.delay
+                    delay: effect.delay,
+                    worldPosition: effect.worldPosition
                 )
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.reference): \(error)")

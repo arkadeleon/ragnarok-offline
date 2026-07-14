@@ -14,9 +14,7 @@ final class MetalMapEffect: Identifiable {
     let id: UUID
     let reference: EffectReference
     let creationTime: TimeInterval
-    let gridPosition: SIMD2<Int>
     let worldPosition: SIMD3<Float>
-    let spritePosition: SIMD3<Float>
     let targetObjectID: GameObjectID?
     let delay: TimeInterval
 
@@ -25,18 +23,14 @@ final class MetalMapEffect: Identifiable {
     init(
         reference: EffectReference,
         creationTime: TimeInterval,
-        gridPosition: SIMD2<Int>,
         worldPosition: SIMD3<Float>,
-        spritePosition: SIMD3<Float>,
         targetObjectID: GameObjectID?,
         delay: TimeInterval = 0
     ) {
         self.id = UUID()
         self.reference = reference
         self.creationTime = creationTime
-        self.gridPosition = gridPosition
         self.worldPosition = worldPosition
-        self.spritePosition = spritePosition
         self.targetObjectID = targetObjectID
         self.delay = delay
     }

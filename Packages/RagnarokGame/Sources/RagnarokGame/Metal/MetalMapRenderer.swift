@@ -192,23 +192,11 @@ final class MetalMapRenderer: Renderer {
             }
 
             let targetObject = effect.targetObjectID.flatMap { objects[$0] }
-            let worldPosition = targetObject?.worldPosition
-            let spritePosition = targetObject.map {
-                let worldPosition = $0.worldPosition
-                return SIMD3<Float>(
-                    worldPosition.x - 0.5,
-                    -worldPosition.z - 0.5,
-                    worldPosition.y
-                )
-            }
 
             effectRenderer.render(
                 resourceGroup: resourceGroup,
                 atTime: time,
-                worldPosition: effect.worldPosition,
-                spritePosition: effect.spritePosition,
-                attachedWorldPosition: worldPosition,
-                attachedSpritePosition: spritePosition,
+                attachedWorldPosition: targetObject?.worldPosition,
                 renderCommandEncoder: renderCommandEncoder,
                 modelMatrix: matrices.modelMatrix,
                 viewMatrix: matrices.viewMatrix,

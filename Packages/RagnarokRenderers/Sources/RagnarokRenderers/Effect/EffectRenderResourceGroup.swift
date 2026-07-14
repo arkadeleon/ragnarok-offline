@@ -13,6 +13,7 @@ import simd
 public final class EffectRenderResourceGroup {
     public let creationTime: TimeInterval
     public let delay: TimeInterval
+    public let worldPosition: SIMD3<Float>
     public let resources: [EffectRenderResource]
 
     public var rendersBeforeEntities: Bool {
@@ -22,10 +23,12 @@ public final class EffectRenderResourceGroup {
     public init(
         creationTime: TimeInterval,
         delay: TimeInterval,
+        worldPosition: SIMD3<Float>,
         resources: [EffectRenderResource]
     ) {
         self.creationTime = creationTime
         self.delay = delay
+        self.worldPosition = worldPosition
         self.resources = resources
     }
 
@@ -33,7 +36,8 @@ public final class EffectRenderResourceGroup {
         device: any MTLDevice,
         assetGroup: EffectAssetGroup,
         creationTime: TimeInterval,
-        delay: TimeInterval = 0
+        delay: TimeInterval = 0,
+        worldPosition: SIMD3<Float> = .zero
     ) {
         let resources = assetGroup.assets.flatMap { asset -> [EffectRenderResource] in
             switch asset {
@@ -79,7 +83,7 @@ public final class EffectRenderResourceGroup {
             }
         }
 
-        self.init(creationTime: creationTime, delay: delay, resources: resources)
+        self.init(creationTime: creationTime, delay: delay, worldPosition: worldPosition, resources: resources)
     }
 
     public func isExpired(atTime time: TimeInterval) -> Bool {
