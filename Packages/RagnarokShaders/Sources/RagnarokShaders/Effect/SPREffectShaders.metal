@@ -40,12 +40,16 @@ sprEffectVertexShader(const device SPREffectVertex *vertices [[buffer(0)]],
 
     float4 clipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPosition, 1.0);
 
-    // Clamp depth to the vertical plane through the anchor so the tilted
-    // billboard does not sink behind nearby geometry.
+    // The billboard leans back toward the camera, so its upper part could
+    // end up behind nearby ground or models and get cut off. To avoid that,
+    // limit each vertex's depth to an upright plane half a cell in front of
+    // the anchor. The half-cell offset is the same one the sprite shader
+    // uses, so an effect and a sprite on the same spot get the same depth.
     float3 planeNormal = float3(cameraForward.x, 0.0, cameraForward.z);
     planeNormal = length(planeNormal) < 0.000001 ? cameraForward : normalize(planeNormal);
+    float3 planePoint = anchorPosition - planeNormal * 0.5;
     float3 rayDirection = normalize(worldPosition - cameraPosition);
-    float rayDistance = dot(anchorPosition - cameraPosition, planeNormal) / max(dot(planeNormal, rayDirection), 0.000001);
+    float rayDistance = dot(planePoint - cameraPosition, planeNormal) / max(dot(planeNormal, rayDirection), 0.000001);
     float4 planeClipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(cameraPosition + rayDirection * rayDistance, 1.0);
     clipPosition.z = min(clipPosition.z, planeClipPosition.z * (clipPosition.w / max(planeClipPosition.w, 0.000001)));
 

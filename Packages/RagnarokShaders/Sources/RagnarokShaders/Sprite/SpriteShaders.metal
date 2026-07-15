@@ -89,10 +89,15 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
         if (length(planeNormal) < 0.000001) {
             planeNormal = cameraForward;
         }
+        planeNormal = normalize(planeNormal);
+
+        // Place the plane half a cell in front of the anchor. Without this,
+        // ground that rises right in front of the sprite would cover its lower body.
+        float3 planePoint = anchor - planeNormal * 0.5;
 
         float denom = dot(planeNormal, rayWorld);
         if (abs(denom) > 0.000001) {
-            float t = dot(anchor - cameraPos, planeNormal) / denom;
+            float t = dot(planePoint - cameraPos, planeNormal) / denom;
             float4 hitClip = uniforms.projectionMatrix * uniforms.viewMatrix * float4(cameraPos + rayWorld * t, 1.0);
             out.depth = hitClip.z / max(hitClip.w, 0.000001);
         }
