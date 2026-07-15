@@ -17,4 +17,6 @@ typedef struct {
     matrix_float4x4 viewMatrix;
     matrix_float4x4 projectionMatrix;
     vector_float4 spriteWorldPosition;  // xyz = world-space anchor, w = unused
+    vector_float4 cameraPosition;       // xyz = render-space camera position, w = 1 outputs vertical-plane depth
+    vector_float2 framebufferSize;      // color attachment size in pixels
 } SpriteVertexUniforms;

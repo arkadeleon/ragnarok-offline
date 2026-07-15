@@ -23,7 +23,7 @@ public final class Effect2DRenderer {
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
-        depthStencilDescriptor.isDepthWriteEnabled = false
+        depthStencilDescriptor.isDepthWriteEnabled = true
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         let overlayDepthStencilDescriptor = MTLDepthStencilDescriptor()

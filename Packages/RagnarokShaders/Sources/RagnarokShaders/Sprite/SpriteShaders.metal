@@ -38,9 +38,6 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
 
     float4 clipPos = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPos, 1.0);
 
-    // Depth bias to prevent z-fighting with ground geometry at the same depth.
-    clipPos.z -= 0.001 * clipPos.w;
-
     RasterizerData out;
     out.position = clipPos;
     out.textureCoordinate = in.textureCoordinate;
@@ -48,8 +45,14 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
     return out;
 }
 
-fragment float4
+typedef struct {
+    float4 color [[color(0)]];
+    float depth [[depth(any)]];
+} SpriteFragmentOut;
+
+fragment SpriteFragmentOut
 spriteFragmentShader(RasterizerData in [[stage_in]],
+                     constant SpriteVertexUniforms &uniforms [[buffer(0)]],
                      texture2d<float> colorTexture [[texture(0)]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
@@ -57,5 +60,43 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
     if (color.a < 0.01) {
         discard_fragment();
     }
-    return color * in.color;
+
+    SpriteFragmentOut out;
+    out.color = color * in.color;
+    out.depth = in.position.z;
+
+    if (uniforms.cameraPosition.w != 0.0) {
+        // Depth of the vertical plane through the anchor along this pixel's ray.
+        // It only depends on the pixel coordinate and per-sprite uniforms, so
+        // every layer of a sprite resolves to the same depth and draw order
+        // decides the layering.
+        float2 ndc = float2(in.position.x / uniforms.framebufferSize.x * 2.0 - 1.0,
+                            1.0 - in.position.y / uniforms.framebufferSize.y * 2.0);
+        float3 rayView = float3(ndc.x / uniforms.projectionMatrix[0][0],
+                                ndc.y / uniforms.projectionMatrix[1][1],
+                                1.0);
+
+        float3 cameraRight   = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
+        float3 cameraUp      = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
+        float3 cameraForward = float3(uniforms.viewMatrix[0][2], uniforms.viewMatrix[1][2], uniforms.viewMatrix[2][2]);
+        float3 rayWorld = cameraRight * rayView.x + cameraUp * rayView.y + cameraForward * rayView.z;
+
+        float3 p = uniforms.spriteWorldPosition.xyz;
+        float3 anchor = float3(p.x + 0.5, p.z, -p.y - 0.5);
+        float3 cameraPos = uniforms.cameraPosition.xyz;
+
+        float3 planeNormal = float3(cameraForward.x, 0.0, cameraForward.z);
+        if (length(planeNormal) < 0.000001) {
+            planeNormal = cameraForward;
+        }
+
+        float denom = dot(planeNormal, rayWorld);
+        if (abs(denom) > 0.000001) {
+            float t = dot(anchor - cameraPos, planeNormal) / denom;
+            float4 hitClip = uniforms.projectionMatrix * uniforms.viewMatrix * float4(cameraPos + rayWorld * t, 1.0);
+            out.depth = hitClip.z / max(hitClip.w, 0.000001);
+        }
+    }
+
+    return out;
 }

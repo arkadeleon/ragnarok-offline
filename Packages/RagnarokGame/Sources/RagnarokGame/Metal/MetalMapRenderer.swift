@@ -30,6 +30,7 @@ final class MetalMapRenderer: Renderer {
     private let skyboxRenderer: SkyboxRenderer
     private let worldRenderer: WorldRenderer
     private let spriteRenderer: MetalSpriteRenderer
+    private let combatTextRenderer: MetalCombatTextRenderer
     private let effectRenderer: EffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
 
@@ -56,6 +57,7 @@ final class MetalMapRenderer: Renderer {
         skyboxRenderer = try SkyboxRenderer(device: device)
         worldRenderer = try WorldRenderer(device: device)
         spriteRenderer = try MetalSpriteRenderer(device: device)
+        combatTextRenderer = try MetalCombatTextRenderer(device: device)
         effectRenderer = try EffectRenderer(device: device)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
     }
@@ -125,9 +127,13 @@ final class MetalMapRenderer: Renderer {
             matrices: matrices
         )
 
+        let framebufferSize = SIMD2<Float>(
+            Float(renderPassDescriptor.colorAttachments[0].texture?.width ?? 0),
+            Float(renderPassDescriptor.colorAttachments[0].texture?.height ?? 0)
+        )
         spriteRenderer.render(
             drawables: spriteDrawables,
-            combatTextResources: combatTextRenderResources,
+            framebufferSize: framebufferSize,
             renderCommandEncoder: renderCommandEncoder,
             matrices: matrices
         )
@@ -160,6 +166,13 @@ final class MetalMapRenderer: Renderer {
                 matrices: matrices
             )
         }
+
+        // Combat text renders last so nothing draws over it.
+        combatTextRenderer.render(
+            resources: combatTextRenderResources,
+            renderCommandEncoder: renderCommandEncoder,
+            matrices: matrices
+        )
 
         renderCommandEncoder.endEncoding()
     }

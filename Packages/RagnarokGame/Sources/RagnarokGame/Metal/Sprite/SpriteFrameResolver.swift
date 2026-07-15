@@ -138,7 +138,7 @@ struct SpriteFrameResolver {
                 objectID: object.objectID,
                 vertices: $0.vertices,
                 texture: $0.texture,
-                worldPosition: object.worldPosition,
+                worldPosition: object.worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
                 isVisible: object.effectState != .cloak
             )
         }
@@ -178,7 +178,7 @@ struct SpriteFrameResolver {
                     height: image.height
                 ),
                 texture: texture,
-                worldPosition: item.worldPosition,
+                worldPosition: item.worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
                 isVisible: true
             )
         }

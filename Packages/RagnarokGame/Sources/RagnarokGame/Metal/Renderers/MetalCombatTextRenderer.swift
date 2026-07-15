@@ -1,8 +1,8 @@
 //
-//  MetalSpriteRenderer.swift
+//  MetalCombatTextRenderer.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2026/3/23.
+//  Created by Leon Li on 2026/7/15.
 //
 
 import Metal
@@ -10,7 +10,7 @@ import RagnarokShaders
 import simd
 
 @MainActor
-final class MetalSpriteRenderer {
+final class MetalCombatTextRenderer {
     let device: any MTLDevice
 
     private let renderPipelineState: any MTLRenderPipelineState
@@ -33,44 +33,45 @@ final class MetalSpriteRenderer {
         renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
+        // Combat text is always visible.
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
-        depthStencilDescriptor.depthCompareFunction = .lessEqual
-        depthStencilDescriptor.isDepthWriteEnabled = true
+        depthStencilDescriptor.depthCompareFunction = .always
+        depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
     func render(
-        drawables: [SpriteLayerDrawable],
-        framebufferSize: SIMD2<Float>,
+        resources: [CombatTextRenderResource],
         renderCommandEncoder: any MTLRenderCommandEncoder,
         matrices: MetalMapRenderer.RenderMatrices
     ) {
-        guard !drawables.isEmpty else {
+        guard !resources.isEmpty else {
             return
         }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        for drawable in drawables {
-            guard drawable.isVisible else {
+        let now = ContinuousClock.now
+        for resource in resources {
+            guard let snapshot = resource.snapshot(at: now, cameraAzimuth: matrices.cameraAzimuth) else {
                 continue
             }
 
             var uniforms = SpriteVertexUniforms(
                 viewMatrix: matrices.viewMatrix,
                 projectionMatrix: matrices.projectionMatrix,
-                spriteWorldPosition: SIMD4<Float>(drawable.worldPosition, 0),
-                cameraPosition: SIMD4<Float>(matrices.cameraPosition, 1),
-                framebufferSize: framebufferSize
+                spriteWorldPosition: SIMD4<Float>(snapshot.worldPosition, 0),
+                cameraPosition: SIMD4<Float>(matrices.cameraPosition, 0),
+                framebufferSize: .zero
             )
 
-            drawable.vertices.withUnsafeBytes { bytes in
+            snapshot.vertices.withUnsafeBytes { bytes in
                 renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
             }
             renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
             renderCommandEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 0)
-            renderCommandEncoder.setFragmentTexture(drawable.texture, index: 0)
+            renderCommandEncoder.setFragmentTexture(snapshot.texture, index: 0)
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
         }
     }
