@@ -16,10 +16,10 @@ typedef struct {
 } RasterizerData;
 
 float4x4 project(float4x4 matrix, float3 position) {
-    // xyz = x(-z)y + middle of cell (0.5)
-    float x = position.x + 0.5;
+    // position is (map x, map y, altitude); convert to render space.
+    float x = position.x;
     float y = -position.z;
-    float z = position.y + 0.5;
+    float z = position.y;
 
     // Matrix translation
     matrix[3].x += matrix[0].x * x + matrix[1].x * y + matrix[2].x * z;

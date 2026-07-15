@@ -26,9 +26,9 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
     float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp    = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
 
-    // spriteWorldPosition is (grid x, grid y, altitude); convert to render space.
+    // spriteWorldPosition is (map x, map y, altitude); convert to render space.
     float3 p = uniforms.spriteWorldPosition.xyz;
-    float3 basePos = float3(p.x + 0.5, p.z, -p.y - 0.5);
+    float3 basePos = float3(p.x, p.z, -p.y);
 
     // 1 world unit = 32 pixels.
     const float pixelRatio = 1.0 / 32.0;
@@ -82,7 +82,7 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
         float3 rayWorld = cameraRight * rayView.x + cameraUp * rayView.y + cameraForward * rayView.z;
 
         float3 p = uniforms.spriteWorldPosition.xyz;
-        float3 anchor = float3(p.x + 0.5, p.z, -p.y - 0.5);
+        float3 anchor = float3(p.x, p.z, -p.y);
         float3 cameraPos = uniforms.cameraPosition.xyz;
 
         float3 planeNormal = float3(cameraForward.x, 0.0, cameraForward.z);

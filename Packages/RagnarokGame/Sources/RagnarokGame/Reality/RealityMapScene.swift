@@ -146,9 +146,9 @@ public final class RealityMapScene: GameMapScene {
 
     func renderPosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
         [
-            worldPosition.x + 0.5,
+            worldPosition.x,
             worldPosition.z,
-            -worldPosition.y - 0.5,
+            -worldPosition.y,
         ]
     }
 
