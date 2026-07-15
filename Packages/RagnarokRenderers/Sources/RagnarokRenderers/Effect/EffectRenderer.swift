@@ -48,6 +48,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
+                    modelMatrix: modelMatrix,
                     viewMatrix: viewMatrix,
                     projectionMatrix: projectionMatrix,
                     cameraAzimuth: cameraAzimuth
@@ -59,6 +60,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
+                    modelMatrix: modelMatrix,
                     viewMatrix: viewMatrix,
                     projectionMatrix: projectionMatrix,
                     cameraAzimuth: cameraAzimuth
@@ -70,6 +72,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
+                    modelMatrix: modelMatrix,
                     viewMatrix: viewMatrix,
                     projectionMatrix: projectionMatrix,
                     cameraAzimuth: cameraAzimuth
@@ -81,6 +84,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
+                    modelMatrix: modelMatrix,
                     viewMatrix: viewMatrix,
                     projectionMatrix: projectionMatrix
                 )

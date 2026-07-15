@@ -7,6 +7,8 @@
 
 import CoreGraphics
 import Foundation
+import RagnarokConstants
+import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokResources
 
@@ -18,10 +20,10 @@ public struct WorldAssetLoader: Sendable {
         let gnd = world.gnd
         let rsw = world.rsw
 
+        let light = WorldLight(light: rsw.light)
+
         let uniqueModelNames = Set(rsw.models.map(\.modelName))
         let modelResources = await resourceManager.models(forNames: uniqueModelNames)
-
-        let light = WorldLight(light: rsw.light)
 
         var modelTextureNames: Set<String> = []
         for (_, modelResource) in modelResources {
@@ -112,12 +114,56 @@ public struct WorldAssetLoader: Sendable {
             return RSMModelAssetGroup(prototype: prototype, instances: instances)
         }
 
+        let effects = await loadEffects(rsw: rsw, gnd: gnd, resourceManager: resourceManager)
+
         let worldAsset = WorldAsset(
             ground: groundAsset,
             water: waterAsset,
             modelGroups: modelGroups,
+            effects: effects,
             light: light
         )
         return worldAsset
+    }
+
+    private func loadEffects(rsw: RSW, gnd: GND, resourceManager: ResourceManager) async -> [WorldEffectAsset] {
+        let effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
+
+        var assetGroupsByEffectID: [EffectID : EffectAssetGroup] = [:]
+        var effects: [WorldEffectAsset] = []
+
+        for effect in rsw.effects {
+            guard let effectID = EffectID(rawValue: Int(effect.id)) else {
+                continue
+            }
+
+            let assetGroup: EffectAssetGroup
+            if let loadedAssetGroup = assetGroupsByEffectID[effectID] {
+                assetGroup = loadedAssetGroup
+            } else {
+                let definitions = EffectTable.definitions(for: effectID)
+                guard let loadedAssetGroup = try? await effectAssetLoader.loadAssetGroup(with: definitions) else {
+                    continue
+                }
+                assetGroupsByEffectID[effectID] = loadedAssetGroup
+                assetGroup = loadedAssetGroup
+            }
+
+            let position: SIMD3<Float> = [
+                effect.position.x + Float(gnd.width),
+                effect.position.z + Float(gnd.height),
+                -effect.position.y + 1,
+            ]
+
+            effects.append(
+                WorldEffectAsset(
+                    effectID: effectID,
+                    position: position,
+                    assetGroup: assetGroup
+                )
+            )
+        }
+
+        return effects
     }
 }

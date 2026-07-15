@@ -24,17 +24,31 @@ sprEffectVertexShader(const device SPREffectVertex *vertices [[buffer(0)]],
 
     float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
+    float3 cameraForward = float3(uniforms.viewMatrix[0][2], uniforms.viewMatrix[1][2], uniforms.viewMatrix[2][2]);
+    float3 viewTranslation = uniforms.viewMatrix[3].xyz;
+    float3 cameraPosition = -(viewTranslation.x * cameraRight + viewTranslation.y * cameraUp + viewTranslation.z * cameraForward);
 
     const float spriteRatio = 1.0 / 35.0;
     float2 scaledPosition = in.position * uniforms.size * spriteRatio;
 
-    // worldPosition is (map x, map y, altitude); convert to render space.
+    // worldPosition is (map x, map y, altitude); the model matrix maps it to render space.
     float3 p = uniforms.worldPosition;
-    float3 worldPosition = float3(p.x, p.z, -p.y)
+    float3 anchorPosition = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz;
+    float3 worldPosition = anchorPosition
         + cameraRight * scaledPosition.x
         + cameraUp * scaledPosition.y;
 
     float4 clipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPosition, 1.0);
+
+    // Clamp depth to the vertical plane through the anchor so the tilted
+    // billboard does not sink behind nearby geometry.
+    float3 planeNormal = float3(cameraForward.x, 0.0, cameraForward.z);
+    planeNormal = length(planeNormal) < 0.000001 ? cameraForward : normalize(planeNormal);
+    float3 rayDirection = normalize(worldPosition - cameraPosition);
+    float rayDistance = dot(anchorPosition - cameraPosition, planeNormal) / max(dot(planeNormal, rayDirection), 0.000001);
+    float4 planeClipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(cameraPosition + rayDirection * rayDistance, 1.0);
+    clipPosition.z = min(clipPosition.z, planeClipPosition.z * (clipPosition.w / max(planeClipPosition.w, 0.000001)));
+
     clipPosition.z -= uniforms.zIndex * 0.001 * clipPosition.w;
 
     SPREffectRasterizerData out;

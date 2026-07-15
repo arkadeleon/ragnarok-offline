@@ -12,6 +12,7 @@ public class WorldRenderResource {
     let groundResource: GroundRenderResource
     let waterResource: WaterRenderResource
     let modelResources: [RSMModelRenderResource]
+    let effectResources: [EffectRenderResourceGroup]
 
     public init(device: any MTLDevice, asset: WorldAsset) {
         groundResource = GroundRenderResource(device: device, asset: asset.ground, light: asset.light)
@@ -22,6 +23,14 @@ public class WorldRenderResource {
                 prototype: modelGroup.prototype,
                 instances: modelGroup.instances,
                 light: asset.light
+            )
+        }
+        effectResources = asset.effects.map { effect in
+            EffectRenderResourceGroup(
+                device: device,
+                assetGroup: effect.assetGroup,
+                creationTime: 0,
+                worldPosition: effect.position
             )
         }
     }

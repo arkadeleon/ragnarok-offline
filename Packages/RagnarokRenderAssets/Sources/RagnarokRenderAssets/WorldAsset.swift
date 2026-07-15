@@ -19,17 +19,20 @@ public struct WorldAsset {
     public var ground: GroundRenderAsset
     public var water: WaterRenderAsset
     public var modelGroups: [RSMModelAssetGroup]
+    public var effects: [WorldEffectAsset]
     public var light: WorldLight
 
     public init(
         ground: GroundRenderAsset,
         water: WaterRenderAsset,
         modelGroups: [RSMModelAssetGroup],
+        effects: [WorldEffectAsset],
         light: WorldLight
     ) {
         self.ground = ground
         self.water = water
         self.modelGroups = modelGroups
+        self.effects = effects
         self.light = light
     }
 }

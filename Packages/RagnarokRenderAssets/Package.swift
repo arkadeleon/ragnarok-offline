@@ -16,6 +16,7 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../RagnarokConstants"),
         .package(path: "../RagnarokCore"),
         .package(path: "../RagnarokEffects"),
         .package(path: "../RagnarokFileFormats"),
@@ -26,6 +27,7 @@ let package = Package(
         .target(
             name: "RagnarokRenderAssets",
             dependencies: [
+                "RagnarokConstants",
                 "RagnarokCore",
                 "RagnarokEffects",
                 "RagnarokFileFormats",

@@ -11,7 +11,7 @@ import RagnarokRenderAssets
 import simd
 
 public final class EffectRenderResourceGroup {
-    public let creationTime: TimeInterval
+    public private(set) var creationTime: TimeInterval
     public let delay: TimeInterval
     public let worldPosition: SIMD3<Float>
     public let resources: [EffectRenderResource]
@@ -84,6 +84,10 @@ public final class EffectRenderResourceGroup {
         }
 
         self.init(creationTime: creationTime, delay: delay, worldPosition: worldPosition, resources: resources)
+    }
+
+    public func restart(atTime time: TimeInterval) {
+        creationTime = time
     }
 
     public func isExpired(atTime time: TimeInterval) -> Bool {

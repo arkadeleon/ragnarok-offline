@@ -40,6 +40,7 @@ public final class Effect2DRenderer {
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
+        modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
@@ -58,6 +59,7 @@ public final class Effect2DRenderer {
         }
 
         var vertexUniforms = Effect2DVertexUniforms(
+            modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             rotationMatrix: sample.rotationMatrix,

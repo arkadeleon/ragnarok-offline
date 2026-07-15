@@ -34,6 +34,7 @@ public final class CylinderEffectRenderer {
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
+        modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4,
         cameraAzimuth: Float
@@ -45,6 +46,7 @@ public final class CylinderEffectRenderer {
         }
 
         var vertexUniforms = CylinderEffectVertexUniforms(
+            modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             rotationMatrix: sample.rotationMatrix,

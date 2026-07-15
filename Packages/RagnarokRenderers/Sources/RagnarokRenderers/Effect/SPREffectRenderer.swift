@@ -44,6 +44,7 @@ public final class SPREffectRenderer {
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
+        modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
         projectionMatrix: simd_float4x4
     ) {
@@ -53,6 +54,7 @@ public final class SPREffectRenderer {
 
         let worldPosition = resource.adjustedWorldPosition(worldPosition)
         var vertexUniforms = SPREffectVertexUniforms(
+            modelMatrix: modelMatrix,
             viewMatrix: viewMatrix,
             projectionMatrix: projectionMatrix,
             worldPosition: worldPosition,

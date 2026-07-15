@@ -120,6 +120,19 @@ final class MetalMapRenderer: Renderer {
             )
         }
 
+        if let worldResource {
+            worldRenderer.renderEffects(
+                resource: worldResource,
+                atTime: time,
+                beforeEntities: true,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix,
+                cameraAzimuth: matrices.cameraAzimuth
+            )
+        }
+
         renderEffects(
             effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == true },
             atTime: time,
@@ -148,6 +161,19 @@ final class MetalMapRenderer: Renderer {
                 modelMatrix: matrices.modelMatrix,
                 viewMatrix: matrices.viewMatrix,
                 projectionMatrix: matrices.projectionMatrix
+            )
+        }
+
+        if let worldResource {
+            worldRenderer.renderEffects(
+                resource: worldResource,
+                atTime: time,
+                beforeEntities: false,
+                renderCommandEncoder: renderCommandEncoder,
+                modelMatrix: matrices.modelMatrix,
+                viewMatrix: matrices.viewMatrix,
+                projectionMatrix: matrices.projectionMatrix,
+                cameraAzimuth: matrices.cameraAzimuth
             )
         }
 

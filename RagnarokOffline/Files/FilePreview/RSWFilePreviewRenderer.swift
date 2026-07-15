@@ -88,6 +88,16 @@ public class RSWFilePreviewRenderer: Renderer {
             normalMatrix: normalMatrix
         )
 
+        worldRenderer.renderEffects(
+            resource: worldResource,
+            atTime: time,
+            renderCommandEncoder: renderCommandEncoder,
+            modelMatrix: modelMatrix,
+            viewMatrix: viewMatrix,
+            projectionMatrix: projectionMatrix,
+            cameraAzimuth: camera.azimuth
+        )
+
         renderCommandEncoder.endEncoding()
     }
 }
