@@ -9,9 +9,8 @@ import StoreKit
 import SwiftUI
 
 struct SettingsView: View {
-    var onDone: () -> Void
-
     @Environment(SettingsModel.self) private var settings
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         @Bindable var settings = settings
@@ -51,15 +50,16 @@ struct SettingsView: View {
         .navigationTitle("Settings")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarDoneButton(action: onDone)
+            ToolbarDoneButton {
+                dismiss()
+            }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        SettingsView {
-        }
+        SettingsView()
     }
     .environment(SettingsModel())
 }

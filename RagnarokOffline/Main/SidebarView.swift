@@ -210,12 +210,10 @@ struct SidebarView: View {
         }
         .sheet(isPresented: $isSettingsPresented) {
             NavigationStack {
-                SettingsView {
-                    isSettingsPresented.toggle()
-                }
-                .environment(appModel.settings)
+                SettingsView()
             }
             .adaptiveNavigationTransition(sourceID: "settings", in: settingsNamespace)
+            .environment(appModel.settings)
         }
     }
 }
