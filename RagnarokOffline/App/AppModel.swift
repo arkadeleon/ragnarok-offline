@@ -10,8 +10,6 @@ import Observation
 import RagnarokGame
 import RagnarokResources
 
-let remoteClientSubscriptionGroupID = "22133104"
-
 @MainActor
 @Observable
 final class AppModel {
@@ -52,7 +50,26 @@ final class AppModel {
         characterSimulator = CharacterSimulator(resourceManager: resourceManager)
         skillSimulator = SkillSimulator()
 
+        observeRemoteClientSubscription()
+
         setupHelpFile()
+    }
+
+    private func observeRemoteClientSubscription() {
+        withObservationTracking {
+            _ = settings.isRemoteClientEnabled
+        } onChange: { [weak self] in
+            Task { @MainActor in
+                guard let self else {
+                    return
+                }
+
+                self.observeRemoteClientSubscription()
+
+                await self.resourceProvider.remoteProvider.setEnabled(self.settings.isRemoteClientEnabled)
+                await self.resourceManager.clearCaches()
+            }
+        }
     }
 
     private func setupHelpFile() {

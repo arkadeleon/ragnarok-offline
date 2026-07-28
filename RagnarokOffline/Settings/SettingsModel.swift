@@ -7,6 +7,9 @@
 
 import Foundation
 import Observation
+import StoreKit
+
+let remoteClientSubscriptionGroupID = "22133104"
 
 private enum SettingsKey {
     static let serverAddress = "client.server_address"
@@ -18,6 +21,7 @@ private enum SettingsKey {
 @Observable
 final class SettingsModel {
     @ObservationIgnored private let defaults: UserDefaults
+    @ObservationIgnored private var subscriptionStatusTask: Task<Void, Never>?
 
     var isRemoteClientEnabled = false
 
@@ -44,5 +48,19 @@ final class SettingsModel {
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
         automaticallyResumesServers = defaults.bool(forKey: SettingsKey.automaticallyResumesServers)
+
+        subscriptionStatusTask = Task { [weak self] in
+            if let status = try? await Product.SubscriptionInfo.status(for: remoteClientSubscriptionGroupID) {
+                self?.isRemoteClientEnabled = status.contains(where: { $0.state != .revoked && $0.state != .expired })
+            }
+
+            for await (groupID, status) in Product.SubscriptionInfo.Status.all where groupID == remoteClientSubscriptionGroupID {
+                self?.isRemoteClientEnabled = status.contains(where: { $0.state != .revoked && $0.state != .expired })
+            }
+        }
+    }
+
+    deinit {
+        subscriptionStatusTask?.cancel()
     }
 }
