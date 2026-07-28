@@ -13,15 +13,15 @@ struct SettingsView: View {
 
     @Environment(SettingsModel.self) private var settings
 
-    @State private var isRemoteClientSubscriptionPresented = false
-
     var body: some View {
         @Bindable var settings = settings
 
         Form {
             Section {
-                Button {
-                    isRemoteClientSubscriptionPresented.toggle()
+                NavigationLink {
+                    SubscriptionStoreView(groupID: remoteClientSubscriptionGroupID)
+                        .storeButton(.hidden, for: .cancellation)
+                        .storeButton(.visible, for: .restorePurchases)
                 } label: {
                     LabeledContent {
                         Text(settings.isRemoteClientEnabled ? "Active" : "Inactive")
@@ -52,9 +52,6 @@ struct SettingsView: View {
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarDoneButton(action: onDone)
-        }
-        .sheet(isPresented: $isRemoteClientSubscriptionPresented) {
-            SubscriptionStoreView(groupID: remoteClientSubscriptionGroupID)
         }
     }
 }
