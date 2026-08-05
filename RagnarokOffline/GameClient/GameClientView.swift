@@ -55,7 +55,11 @@ struct GameClientView: View {
             VStack(spacing: 16) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("* This **Game Client** is still in beta. Some windows and buttons may not work yet.")
-                    Text("* Before you start, set up your local client files, such as data.grf. You can also use **Remote Client** if your subscription is active.")
+                    #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
+                    Text("* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead if your subscription is active and **Use Remote Client** is turned on in **Settings**.")
+                    #else
+                    Text("* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead by turning on **Use Remote Client** in **Settings**.")
+                    #endif
                     Text("* Start the **Login Server**, **Char Server**, and **Map Server** first. The **Game Client** cannot log in before these servers are running.")
                     Text("* To create a new account, enter a username that ends with **_M** or **_F**, such as **ragnarok_M**, in the login window.")
                 }

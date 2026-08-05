@@ -1,84 +1,166 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "* Before you start, set up your local client files, such as data.grf. You can also use **Remote Client** if your subscription is active." : {
+    "* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead by turning on **Use Remote Client** in **Settings**." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Richte vor dem Start deine lokalen Client-Dateien ein, zum Beispiel data.grf. Du kannst auch den **Remote-Client** verwenden, wenn dein Abonnement aktiv ist."
+            "value" : "* Richte vor dem Start deine lokalen Client-Dateien ein, zum Beispiel data.grf. Du kannst stattdessen den **Remote-Client** verwenden, indem du **Remote-Client verwenden** in den **Einstellungen** aktivierst."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Antes de empezar, configura tus archivos de cliente local, como data.grf. También puedes usar **Cliente remoto** si tu suscripción está activa."
+            "value" : "* Antes de empezar, configura tus archivos de cliente local, como data.grf. Puedes usar **Cliente remoto** en su lugar activando **Usar Cliente remoto** en **Configuración**."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Avant de commencer, configurez vos fichiers de client local, comme data.grf. Vous pouvez aussi utiliser **Client distant** si votre abonnement est actif."
+            "value" : "* Avant de commencer, configurez vos fichiers de client local, comme data.grf. Vous pouvez utiliser **Client distant** à la place en activant **Utiliser Client distant** dans **Paramètres**."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, seperti data.grf. Anda juga dapat menggunakan **Klien jarak jauh** jika langganan Anda aktif."
+            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, seperti data.grf. Anda dapat menggunakan **Klien jarak jauh** sebagai gantinya dengan mengaktifkan **Gunakan Klien jarak jauh** di **Pengaturan**."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Prima di iniziare, configura i file del client locale, come data.grf. Puoi anche usare **Client remoto** se il tuo abbonamento è attivo."
+            "value" : "* Prima di iniziare, configura i file del client locale, come data.grf. Puoi usare **Client remoto** al loro posto attivando **Usa Client remoto** in **Impostazioni**."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 開始する前に、data.grf などのローカルクライアントファイルを設定してください。サブスクリプションが有効な場合は、**リモートクライアント**も使用できます。"
+            "value" : "* 開始する前に、data.grf などのローカルクライアントファイルを設定してください。代わりに**リモートクライアント**を使用するには、**設定**で**リモートクライアントを使用**をオンにします。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 시작하기 전에 data.grf 같은 로컬 클라이언트 파일을 설정하세요. 구독이 활성화되어 있다면 **원격 클라이언트**도 사용할 수 있습니다."
+            "value" : "* 시작하기 전에 data.grf 같은 로컬 클라이언트 파일을 설정하세요. 대신 **원격 클라이언트**를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜세요."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Antes de começar, configure seus arquivos do cliente local, como data.grf. Você também pode usar o **Cliente remoto** se sua assinatura estiver ativa."
+            "value" : "* Antes de começar, configure seus arquivos do cliente local, como data.grf. Como alternativa, você pode usar o **Cliente remoto** ativando **Usar Cliente remoto** em **Configurações**."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Перед началом настройте файлы локального клиента, например data.grf. Вы также можете использовать **Удалённый клиент**, если ваша подписка активна."
+            "value" : "* Перед началом настройте файлы локального клиента, например data.grf. Вместо них можно использовать **Удалённый клиент**, включив **Использовать удалённый клиент** в **Настройках**."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* ก่อนเริ่มใช้งาน ให้ตั้งค่าไฟล์ไคลเอนต์ในเครื่อง เช่น data.grf คุณยังสามารถใช้ **ไคลเอนต์ระยะไกล** ได้หากการสมัครสมาชิกของคุณยังใช้งานอยู่"
+            "value" : "* ก่อนเริ่มใช้งาน ให้ตั้งค่าไฟล์ไคลเอนต์ในเครื่อง เช่น data.grf คุณสามารถใช้ **ไคลเอนต์ระยะไกล** แทนได้โดยเปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า**"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Başlamadan önce data.grf gibi yerel istemci dosyalarınızı ayarlayın. Aboneliğiniz etkinse **Uzak İstemci** de kullanabilirsiniz."
+            "value" : "* Başlamadan önce data.grf gibi yerel istemci dosyalarınızı ayarlayın. Bunun yerine **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açarak **Uzak İstemci**'yi kullanabilirsiniz."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 开始前，请先设置本地客户端文件，例如 data.grf。如果你的订阅处于有效状态，也可以使用**远程客户端**。"
+            "value" : "* 开始前，请先设置本地客户端文件，例如 data.grf。你也可以在**设置**中开启**使用远程客户端**，改用**远程客户端**。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 開始前，請先設定本機用戶端檔案，例如 data.grf。如果你的訂閱處於有效狀態，也可以使用**遠端用戶端**。"
+            "value" : "* 開始前，請先設定本機用戶端檔案，例如 data.grf。你也可以在**設定**中開啟**使用遠端用戶端**，改用**遠端用戶端**。"
+          }
+        }
+      }
+    },
+    "* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead if your subscription is active and **Use Remote Client** is turned on in **Settings**." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Richte vor dem Start deine lokalen Client-Dateien ein, zum Beispiel data.grf. Du kannst stattdessen den **Remote-Client** verwenden, wenn dein Abonnement aktiv ist und **Remote-Client verwenden** in den **Einstellungen** aktiviert ist."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Antes de empezar, configura tus archivos de cliente local, como data.grf. Puedes usar **Cliente remoto** en su lugar si tu suscripción está activa y **Usar Cliente remoto** está activado en **Configuración**."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Avant de commencer, configurez vos fichiers de client local, comme data.grf. Vous pouvez utiliser **Client distant** à la place si votre abonnement est actif et si **Utiliser Client distant** est activé dans **Paramètres**."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, seperti data.grf. Anda dapat menggunakan **Klien jarak jauh** sebagai gantinya jika langganan Anda aktif dan **Gunakan Klien jarak jauh** diaktifkan di **Pengaturan**."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Prima di iniziare, configura i file del client locale, come data.grf. Puoi usare **Client remoto** al loro posto se il tuo abbonamento è attivo e **Usa Client remoto** è attivato in **Impostazioni**."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 開始する前に、data.grf などのローカルクライアントファイルを設定してください。サブスクリプションが有効で、**設定**の**リモートクライアントを使用**がオンになっている場合は、代わりに**リモートクライアント**を使用できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 시작하기 전에 data.grf 같은 로컬 클라이언트 파일을 설정하세요. 구독이 활성화되어 있고 **설정**에서 **원격 클라이언트 사용**이 켜져 있다면 대신 **원격 클라이언트**를 사용할 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Antes de começar, configure seus arquivos do cliente local, como data.grf. Como alternativa, você pode usar o **Cliente remoto** se sua assinatura estiver ativa e **Usar Cliente remoto** estiver ativado em **Configurações**."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Перед началом настройте файлы локального клиента, например data.grf. Вместо них можно использовать **Удалённый клиент**, если ваша подписка активна и в **Настройках** включено **Использовать удалённый клиент**."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* ก่อนเริ่มใช้งาน ให้ตั้งค่าไฟล์ไคลเอนต์ในเครื่อง เช่น data.grf คุณสามารถใช้ **ไคลเอนต์ระยะไกล** แทนได้หากการสมัครสมาชิกของคุณยังใช้งานอยู่และเปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** ไว้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Başlamadan önce data.grf gibi yerel istemci dosyalarınızı ayarlayın. Aboneliğiniz etkinse ve **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneği açıksa bunun yerine **Uzak İstemci**'yi kullanabilirsiniz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 开始前，请先设置本地客户端文件，例如 data.grf。如果你的订阅处于有效状态，并且已在**设置**中开启**使用远程客户端**，则可以改用**远程客户端**。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* 開始前，請先設定本機用戶端檔案，例如 data.grf。如果你的訂閱處於有效狀態，並且已在**設定**中開啟**使用遠端用戶端**，則可以改用**遠端用戶端**。"
           }
         }
       }
@@ -411,6 +493,88 @@
         }
       }
     },
+    "**Remote Client** will require a subscription in a future update to help cover server costs. Local client files will continue to work without a subscription." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für den **Remote-Client** wird in einem zukünftigen Update ein Abonnement erforderlich sein, um die Serverkosten mitzufinanzieren. Lokale Client-Dateien funktionieren weiterhin ohne Abonnement."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Cliente remoto** requerirá una suscripción en una futura actualización para ayudar a cubrir los costos del servidor. Los archivos del cliente local seguirán funcionando sin suscripción."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Client distant** nécessitera un abonnement dans une prochaine mise à jour afin de contribuer aux frais de serveur. Les fichiers de client local continueront de fonctionner sans abonnement."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Klien jarak jauh** akan memerlukan langganan dalam pembaruan mendatang untuk membantu menutup biaya server. File klien lokal akan tetap berfungsi tanpa langganan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Client remoto** richiederà un abbonamento in un prossimo aggiornamento per contribuire a coprire i costi del server. I file del client locale continueranno a funzionare senza abbonamento."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サーバー費用の一部をまかなうため、今後のアップデートで**リモートクライアント**の利用にサブスクリプションが必要になります。ローカルクライアントファイルは、引き続きサブスクリプションなしで使用できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "서버 비용을 충당하기 위해 향후 업데이트부터 **원격 클라이언트** 사용에 구독이 필요합니다. 로컬 클라이언트 파일은 구독 없이도 계속 사용할 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O **Cliente remoto** exigirá uma assinatura em uma atualização futura para ajudar a cobrir os custos do servidor. Os arquivos do cliente local continuarão funcionando sem assinatura."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В одном из будущих обновлений для **Удалённого клиента** потребуется подписка, которая поможет покрыть расходы на сервер. Файлы локального клиента продолжат работать без подписки."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ไคลเอนต์ระยะไกล** จะต้องสมัครสมาชิกในการอัปเดตในอนาคตเพื่อช่วยครอบคลุมค่าใช้จ่ายของเซิร์ฟเวอร์ ไฟล์ไคลเอนต์ในเครื่องจะยังคงใช้งานได้โดยไม่ต้องสมัครสมาชิก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunucu maliyetlerini karşılamaya yardımcı olmak amacıyla **Uzak İstemci** gelecekteki bir güncellemede abonelik gerektirecek. Yerel istemci dosyaları abonelik olmadan çalışmaya devam edecek."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为了帮助支付服务器费用，未来的更新将要求订阅后才能使用**远程客户端**。本地客户端文件仍可在无订阅的情况下继续使用。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "為了協助支付伺服器費用，未來的更新將要求訂閱後才能使用**遠端用戶端**。本機用戶端檔案仍可在無訂閱的情況下繼續使用。"
+          }
+        }
+      }
+    },
     "^[%lld item](inflect: true)" : {
       "localizations" : {
         "de" : {
@@ -495,88 +659,6 @@
     },
     "Actions" : {
 
-    },
-    "Activate **Remote Client** in **Settings** to browse cached files" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktiviere **Remote-Client** in den **Einstellungen**, um zwischengespeicherte Dateien zu durchsuchen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activa **Cliente remoto** en **Configuración** para explorar los archivos en caché"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activez **Client distant** dans **Paramètres** pour parcourir les fichiers mis en cache"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktifkan **Klien jarak jauh** di **Pengaturan** untuk menelusuri file cache"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Attiva **Client remoto** in **Impostazioni** per sfogliare i file memorizzati nella cache"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**設定**で**リモートクライアント**を有効にして、キャッシュ済みファイルを参照します"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**설정**에서 **원격 클라이언트**를 활성화하여 캐시된 파일을 탐색하세요"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ative o **Cliente remoto** em **Configurações** para procurar arquivos em cache"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Активируйте **Удалённый клиент** в **Настройках**, чтобы просматривать кэшированные файлы"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เปิดใช้งาน **ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** เพื่อเรียกดูไฟล์ที่แคชไว้"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Önbelleğe alınmış dosyalara göz atmak için **Ayarlar** bölümünde **Uzak İstemci**'yi etkinleştirin"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在**设置**中启用**远程客户端**以浏览缓存文件"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在**設定**中啟用**遠端用戶端**以瀏覽快取檔案"
-          }
-        }
-      }
     },
     "Active" : {
       "localizations" : {
@@ -1482,6 +1564,88 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "遊戲客戶端測試版"
+          }
+        }
+      }
+    },
+    "Game resources are required for item and skill icons, character and monster sprites, and the beta Game Client. Turn on **Use Remote Client** to download resources from the remote server and cache them locally in **Remote Client Files**. If you already have local client files such as data.grf, you can keep **Use Remote Client** turned off and use those files instead." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spielressourcen werden für Gegenstands- und Fertigkeitssymbole, Charakter- und Monstersprites sowie den Beta-Spiel-Client benötigt. Aktiviere **Remote-Client verwenden**, um Ressourcen vom Remote-Server herunterzuladen und lokal in **Remote-Client-Dateien** zwischenzuspeichern. Wenn du bereits lokale Client-Dateien wie data.grf hast, kannst du **Remote-Client verwenden** deaktiviert lassen und stattdessen diese Dateien nutzen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los recursos del juego son necesarios para los iconos de objetos y habilidades, los sprites de personajes y monstruos, y el Cliente de juego beta. Activa **Usar Cliente remoto** para descargar recursos del servidor remoto y almacenarlos localmente en **Archivos de Cliente remoto**. Si ya tienes archivos del cliente local, como data.grf, puedes mantener **Usar Cliente remoto** desactivado y utilizar esos archivos en su lugar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les ressources de jeu sont nécessaires pour les icônes d'objets et de compétences, les sprites de personnages et de monstres, ainsi que pour le Client de jeu bêta. Activez **Utiliser Client distant** pour télécharger les ressources depuis le serveur distant et les mettre en cache localement dans **Fichiers de Client distant**. Si vous disposez déjà de fichiers de client local comme data.grf, vous pouvez laisser **Utiliser Client distant** désactivé et utiliser ces fichiers à la place."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resource game diperlukan untuk ikon item dan skill, sprite karakter dan monster, serta Klien game beta. Aktifkan **Gunakan Klien jarak jauh** untuk mengunduh resource dari server remote dan menyimpannya secara lokal di **File Klien Jarak Jauh**. Jika Anda sudah memiliki file klien lokal seperti data.grf, Anda dapat tetap menonaktifkan **Gunakan Klien jarak jauh** dan menggunakan file tersebut sebagai gantinya."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le risorse di gioco sono necessarie per le icone di oggetti e abilità, gli sprite di personaggi e mostri e il Client di gioco beta. Attiva **Usa Client remoto** per scaricare le risorse dal server remoto e memorizzarle localmente in **File di Client remoto**. Se hai già file del client locale come data.grf, puoi lasciare **Usa Client remoto** disattivato e utilizzare quei file al loro posto."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アイテムやスキルのアイコン、キャラクターやモンスターのスプライト、ベータ版ゲームクライアントには、ゲームリソースが必要です。**リモートクライアントを使用**をオンにすると、リモートサーバーからリソースがダウンロードされ、**リモートクライアントファイル**にローカルでキャッシュされます。data.grf などのローカルクライアントファイルを既に持っている場合は、**リモートクライアントを使用**をオフのままにして、代わりにそれらのファイルを使用できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아이템 및 스킬 아이콘, 캐릭터 및 몬스터 스프라이트, 베타 게임 클라이언트에는 게임 리소스가 필요합니다. **원격 클라이언트 사용**을 켜면 원격 서버에서 리소스를 다운로드하여 **원격 클라이언트 파일**에 로컬로 캐시합니다. data.grf 같은 로컬 클라이언트 파일이 이미 있다면 **원격 클라이언트 사용**을 끈 상태로 유지하고 해당 파일을 대신 사용할 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Os recursos do jogo são necessários para ícones de itens e habilidades, sprites de personagens e monstros e o Cliente de jogo beta. Ative **Usar Cliente remoto** para baixar recursos do servidor remoto e armazená-los localmente em **Arquivos do Cliente remoto**. Se você já tem arquivos do cliente local, como data.grf, pode manter **Usar Cliente remoto** desativado e usar esses arquivos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игровые ресурсы необходимы для значков предметов и умений, спрайтов персонажей и монстров, а также для бета-версии Игрового клиента. Включите **Использовать удалённый клиент**, чтобы загружать ресурсы с удалённого сервера и кэшировать их локально в **Файлах удалённого клиента**. Если у вас уже есть файлы локального клиента, например data.grf, можно оставить **Использовать удалённый клиент** выключенным и пользоваться этими файлами."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทรัพยากรเกมจำเป็นสำหรับไอคอนไอเท็มและสกิล สไปรต์ตัวละครและมอนสเตอร์ รวมถึงไคลเอนต์เกมรุ่นเบต้า เปิด **ใช้ไคลเอนต์ระยะไกล** เพื่อดาวน์โหลดทรัพยากรจากเซิร์ฟเวอร์ระยะไกลและแคชไว้ในเครื่องที่ **ไฟล์ไคลเอนต์ระยะไกล** หากคุณมีไฟล์ไคลเอนต์ในเครื่องอยู่แล้ว เช่น data.grf คุณสามารถปิด **ใช้ไคลเอนต์ระยะไกล** ไว้และใช้ไฟล์เหล่านั้นแทนได้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eşya ve beceri simgeleri, karakter ve canavar sprite'ları ve beta Oyun İstemcisi için oyun kaynakları gereklidir. Kaynakları uzak sunucudan indirmek ve yerel olarak **Uzak İstemci Dosyaları** içinde önbelleğe almak için **Uzak İstemci'yi Kullan** seçeneğini açın. data.grf gibi yerel istemci dosyalarınız zaten varsa **Uzak İstemci'yi Kullan** seçeneğini kapalı tutup bu dosyaları kullanabilirsiniz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "物品和技能图标、角色和怪物精灵图以及测试版游戏客户端都需要游戏资源。开启**使用远程客户端**可从远程服务器下载资源，并将其缓存到本地的**远程客户端文件**中。如果你已有 data.grf 等本地客户端文件，可以让**使用远程客户端**保持关闭，并改用这些文件。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "物品和技能圖示、角色和魔物精靈圖以及測試版遊戲用戶端都需要遊戲資源。開啟**使用遠端用戶端**可從遠端伺服器下載資源，並將其快取至本機的**遠端用戶端檔案**中。如果你已有 data.grf 等本機用戶端檔案，可以讓**使用遠端用戶端**保持關閉，並改用這些檔案。"
           }
         }
       }
@@ -2649,84 +2813,84 @@
         }
       }
     },
-    "Remote Client Inactive" : {
+    "Remote Client Not in Use" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Remote-Client inaktiv"
+            "value" : "Remote-Client wird nicht verwendet"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cliente remoto inactivo"
+            "value" : "Cliente remoto no está en uso"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Client distant inactif"
+            "value" : "Client distant non utilisé"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klien jarak jauh tidak aktif"
+            "value" : "Klien jarak jauh tidak digunakan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Client remoto inattivo"
+            "value" : "Client remoto non in uso"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "リモートクライアントは無効です"
+            "value" : "リモートクライアントは使用されていません"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "원격 클라이언트 비활성"
+            "value" : "원격 클라이언트 사용 안 함"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cliente remoto inativo"
+            "value" : "Cliente remoto não está em uso"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удалённый клиент неактивен"
+            "value" : "Удалённый клиент не используется"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไคลเอนต์ระยะไกลไม่ได้ใช้งาน"
+            "value" : "ไม่ได้ใช้ไคลเอนต์ระยะไกล"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci devre dışı"
+            "value" : "Uzak İstemci Kullanılmıyor"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "远程客户端未启用"
+            "value" : "未使用远程客户端"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "遠端用戶端未啟用"
+            "value" : "未使用遠端用戶端"
           }
         }
       }
@@ -3885,6 +4049,88 @@
         }
       }
     },
+    "Subscription" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonnement"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suscripción"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonnement"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langganan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbonamento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サブスクリプション"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "구독"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assinatura"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подписка"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การสมัครสมาชิก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abonelik"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "订阅"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "訂閱"
+          }
+        }
+      }
+    },
     "Tools" : {
       "localizations" : {
         "de" : {
@@ -3970,6 +4216,88 @@
     "Tree" : {
 
     },
+    "Turn on **Use Remote Client** in **Settings** to browse cached files" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiviere **Remote-Client verwenden** in den **Einstellungen**, um zwischengespeicherte Dateien zu durchsuchen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activa **Usar Cliente remoto** en **Configuración** para explorar los archivos en caché"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activez **Utiliser Client distant** dans **Paramètres** pour parcourir les fichiers mis en cache"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** untuk menelusuri file cache"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva **Usa Client remoto** in **Impostazioni** per sfogliare i file memorizzati nella cache"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャッシュ済みファイルを参照するには、**設定**で**リモートクライアントを使用**をオンにします"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "캐시된 파일을 탐색하려면 **설정**에서 **원격 클라이언트 사용**을 켜세요"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ative **Usar Cliente remoto** em **Configurações** para procurar arquivos em cache"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включите **Использовать удалённый клиент** в **Настройках**, чтобы просматривать кэшированные файлы"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** เพื่อเรียกดูไฟล์ที่แคชไว้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önbelleğe alınmış dosyalara göz atmak için **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在**设置**中开启**使用远程客户端**以浏览缓存文件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在**設定**中開啟**使用遠端用戶端**以瀏覽快取檔案"
+          }
+        }
+      }
+    },
     "Unsupported File" : {
       "localizations" : {
         "de" : {
@@ -4048,6 +4376,88 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不支援的檔案"
+          }
+        }
+      }
+    },
+    "Use Remote Client" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remote-Client verwenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar Cliente remoto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utiliser Client distant"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gunakan Klien jarak jauh"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa Client remoto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リモートクライアントを使用"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "원격 클라이언트 사용"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar Cliente remoto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использовать удалённый клиент"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้ไคลเอนต์ระยะไกล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uzak İstemci'yi Kullan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用远程客户端"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用遠端用戶端"
           }
         }
       }
