@@ -19,7 +19,11 @@ struct SettingsView: View {
                 NavigationLink {
                     RemoteClientSettingsView()
                 } label: {
-                    Text("Remote Client")
+                    LabeledContent {
+                        Text(settings.isRemoteClientEnabled ? "On" : "Off")
+                    } label: {
+                        Text("Remote Client")
+                    }
                 }
             } header: {
                 Text("Client")
