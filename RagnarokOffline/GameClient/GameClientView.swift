@@ -52,76 +52,84 @@ struct GameClientView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("* This **Game Client** is still in beta. Some windows and buttons may not work yet.")
-                    #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
-                    Text("* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead if your subscription is active and **Use Remote Client** is turned on in **Settings**.")
-                    #else
-                    Text("* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead by turning on **Use Remote Client** in **Settings**.")
-                    #endif
-                    Text("* Start the **Login Server**, **Char Server**, and **Map Server** first. The **Game Client** cannot log in before these servers are running.")
-                    Text("* To create a new account, enter a username that ends with **_M** or **_F**, such as **ragnarok_M**, in the login window.")
+            HStack {
+                Spacer()
+
+                VStack(spacing: 16) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("* This **Game Client** is still in beta. Some windows and buttons may not work yet.")
+                        #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
+                        Text("* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead if your subscription is active and **Use Remote Client** is turned on in **Settings**.")
+                        #else
+                        Text("* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead by turning on **Use Remote Client** in **Settings**.")
+                        #endif
+                        Text("* Start the **Login Server**, **Char Server**, and **Map Server** first. The **Game Client** cannot log in before these servers are running.")
+                        Text("* To create a new account, enter a username that ends with **_M** or **_F**, such as **ragnarok_M**, in the login window.")
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.background.secondary)
+                    .foregroundStyle(Color.secondary)
+                    .cornerRadius(12)
+
+                    VStack(spacing: 0) {
+                        HStack {
+                            Text("Server Address")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            TextField(String(), text: $serverAddress)
+                                .multilineTextAlignment(.trailing)
+                                .focused($focusedField, equals: .serverAddress)
+                                .textFieldStyle(.plain)
+                        }
+                        .padding()
+
+                        Divider()
+                            .padding(.horizontal)
+
+                        HStack {
+                            Text("Server Port")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            TextField(String(), text: $serverPort)
+                                .multilineTextAlignment(.trailing)
+                                .focused($focusedField, equals: .serverPort)
+                                .textFieldStyle(.plain)
+                        }
+                        .padding()
+                    }
+                    .background(.background.secondary)
+                    .cornerRadius(12)
+
+                    Button {
+                        focusedField = nil
+
+                        Task {
+                            await startGameSession()
+                        }
+                    } label: {
+                        Text("Start Game")
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .frame(maxWidth: .infinity)
+                    }
+                    .adaptiveProminentButtonStyle()
+                    .disabled(startState == .testingServerConnection)
+
+                    if startState == .testingServerConnection {
+                        ProgressView()
+                    }
+
+                    if let failureMessage = startState.failureMessage {
+                        Text(failureMessage)
+                            .foregroundStyle(.red)
+                    }
                 }
                 .padding()
-                .background(.background.secondary)
-                .foregroundStyle(Color.secondary)
-                .cornerRadius(12)
+                .frame(maxWidth: 640)
 
-                VStack(spacing: 0) {
-                    HStack {
-                        Text("Server Address")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        TextField(String(), text: $serverAddress)
-                            .multilineTextAlignment(.trailing)
-                            .focused($focusedField, equals: .serverAddress)
-                            .textFieldStyle(.plain)
-                    }
-                    .padding()
-
-                    Divider()
-                        .padding(.horizontal)
-
-                    HStack {
-                        Text("Server Port")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        TextField(String(), text: $serverPort)
-                            .multilineTextAlignment(.trailing)
-                            .focused($focusedField, equals: .serverPort)
-                            .textFieldStyle(.plain)
-                    }
-                    .padding()
-                }
-                .background(.background.secondary)
-                .cornerRadius(12)
-
-                Button {
-                    focusedField = nil
-
-                    Task {
-                        await startGameSession()
-                    }
-                } label: {
-                    Text("Start Game")
-                        .font(.title3)
-                        .fontWeight(.medium)
-                        .frame(maxWidth: .infinity)
-                }
-                .adaptiveProminentButtonStyle()
-                .disabled(startState == .testingServerConnection)
-
-                if startState == .testingServerConnection {
-                    ProgressView()
-                }
-
-                if let failureMessage = startState.failureMessage {
-                    Text(failureMessage)
-                        .foregroundStyle(.red)
-                }
+                Spacer()
             }
-            .padding()
         }
         .navigationTitle("Game Client Beta")
         .onAppear {
