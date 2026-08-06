@@ -15,6 +15,7 @@ struct SkillListView: View {
     var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var selectedSkillID: Int?
 
@@ -38,7 +39,7 @@ struct SkillListView: View {
         } bottomBar: {
             GameBottomBar()
                 .overlay(alignment: .leading) {
-                    Text(verbatim: "Skill Points: \(gameSession.playerStatus.skillPoint)")
+                    Text(verbatim: "Skill Points: \(gameContext.playerStatus.skillPoint)")
                         .font(.game())
                         .foregroundStyle(Color.gameProminentLabel)
                         .padding(.leading, 10)
@@ -53,8 +54,7 @@ private struct SkillListRow: View {
     var isSelected: Bool
     var onUpgrade: () -> Void
 
-    @Environment(GameSession.self) private var gameSession
-    @Environment(\.skillInfoTable) private var skillInfoTable
+    @Environment(GameContext.self) private var gameContext
 
     @State private var iconImage: Resources.Image?
 
@@ -71,11 +71,11 @@ private struct SkillListRow: View {
     }
 
     private var isUpgradable: Bool {
-        skill.isUpgradable && gameSession.playerStatus.skillPoint > 0
+        skill.isUpgradable && gameContext.playerStatus.skillPoint > 0
     }
 
     private var skillName: String {
-        if let skillName = skillInfoTable.localizedSkillName(forSkillID: skill.skillID) {
+        if let skillName = gameContext.skillInfoTable.localizedSkillName(forSkillID: skill.skillID) {
             skillName
         } else if let skillID = SkillID(rawValue: skill.skillID) {
             skillID.stringValue
@@ -162,7 +162,7 @@ private struct SkillListRow: View {
             }
 
             let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skillID.stringValue)
-            iconImage = try? await gameSession.resourceManager.image(at: path, removesMagentaPixels: true)
+            iconImage = try? await gameContext.resourceManager.image(at: path, removesMagentaPixels: true)
         }
     }
 }
@@ -218,7 +218,7 @@ private struct SkillUpgradeTrendShape: Shape {
 #Preview {
     let gameSession = {
         let gameSession = GameSession.testing
-        gameSession.playerStatus.skillPoint = 1
+        gameSession.context.playerStatus.skillPoint = 1
         return gameSession
     }()
 
@@ -261,4 +261,5 @@ private struct SkillUpgradeTrendShape: Shape {
     SkillListView(skillList: skillList)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(gameSession)
+        .environment(gameSession.context)
 }

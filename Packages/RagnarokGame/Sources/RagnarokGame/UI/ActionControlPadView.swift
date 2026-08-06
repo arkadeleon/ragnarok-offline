@@ -17,10 +17,10 @@ struct ActionControlPadView: View {
     var onTalk: () -> Void
     var onSkill: (SkillInfo) -> Void
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     private var shortcutSkills: [SkillInfo] {
-        Array(gameSession.skillList.activeSkills.prefix(5))
+        Array(gameContext.skillList.activeSkills.prefix(5))
     }
 
     var body: some View {
@@ -68,7 +68,7 @@ private struct SkillShortcutButton: View {
     var skill: SkillInfo?
     var action: () -> Void
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var iconImage: Resources.Image?
 
@@ -90,7 +90,7 @@ private struct SkillShortcutButton: View {
             }
 
             let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skillID.stringValue)
-            iconImage = try? await gameSession.resourceManager.image(at: path, removesMagentaPixels: true)
+            iconImage = try? await gameContext.resourceManager.image(at: path, removesMagentaPixels: true)
         }
     }
 }
@@ -119,8 +119,8 @@ struct RoundActionButton<Content: View>: View {
 }
 
 #Preview {
-    let gameSession = {
-        let gameSession = GameSession(resourceManager: .testing)
+    let gameContext = {
+        let gameContext = GameContext(resourceManager: .testing)
 
         var bash = SkillInfo()
         bash.skillID = 5
@@ -128,7 +128,7 @@ struct RoundActionButton<Content: View>: View {
         bash.level = 5
         bash.spCost = 8
         bash.attackRange = 1
-        gameSession.skillList.skills[5] = bash
+        gameContext.skillList.skills[5] = bash
 
         var heal = SkillInfo()
         heal.skillID = 28
@@ -136,9 +136,9 @@ struct RoundActionButton<Content: View>: View {
         heal.level = 10
         heal.spCost = 40
         heal.attackRange = 9
-        gameSession.skillList.skills[28] = heal
+        gameContext.skillList.skills[28] = heal
 
-        return gameSession
+        return gameContext
     }()
 
     ZStack(alignment: .bottomTrailing) {
@@ -150,5 +150,5 @@ struct RoundActionButton<Content: View>: View {
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .ignoresSafeArea()
-    .environment(gameSession)
+    .environment(gameContext)
 }

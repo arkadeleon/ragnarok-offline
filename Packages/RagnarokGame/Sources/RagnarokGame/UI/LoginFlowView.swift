@@ -73,4 +73,5 @@ struct LoginFlowView: View {
     LoginFlowView(loginPhase: .login)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

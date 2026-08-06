@@ -32,7 +32,7 @@ public struct GameView: View {
         }
         .overlay(alignment: .center) {
             if gameSession.isDisconnected {
-                MessageBoxView(gameSession.messageStringTable.localizedMessageString(forID: 2)) {
+                MessageBoxView(gameSession.context.messageStringTable.localizedMessageString(forID: 2)) {
                     Button("OK") {
                         gameSession.exitSession()
                         onExit()
@@ -43,6 +43,7 @@ public struct GameView: View {
             }
         }
         .environment(gameSession)
+        .environment(gameSession.context)
         .environment(\.exitGame, ExitGameAction {
             gameSession.exitSession()
             onExit()
@@ -63,13 +64,6 @@ public struct GameView: View {
         self.gameSession = gameSession
         self.onExit = onExit
     }
-}
-
-extension EnvironmentValues {
-    @Entry public var itemInfoTable = ItemInfoTable()
-    @Entry public var mapNameTable = MapNameTable()
-    @Entry public var messageStringTable = MessageStringTable()
-    @Entry public var skillInfoTable = SkillInfoTable()
 }
 
 #Preview {

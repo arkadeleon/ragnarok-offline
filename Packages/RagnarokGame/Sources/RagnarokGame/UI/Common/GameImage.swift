@@ -12,7 +12,7 @@ struct GameImage<Content>: View where Content: View {
     var name: String
     var content: (Resources.Image) -> Content
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var image: Resources.Image?
 
@@ -21,7 +21,7 @@ struct GameImage<Content>: View where Content: View {
             .task {
                 let components = name.split(separator: "/").map(String.init)
                 let path = ResourcePath.userInterfaceDirectory.appending(components)
-                image = try? await gameSession.resourceManager.image(at: path, removesMagentaPixels: true)
+                image = try? await gameContext.resourceManager.image(at: path, removesMagentaPixels: true)
             }
     }
 
@@ -52,5 +52,5 @@ struct GameImage<Content>: View where Content: View {
     GameImage("win_msgbox.bmp")
         .frame(width: 280, height: 120)
         .padding()
-        .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

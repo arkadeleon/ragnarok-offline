@@ -27,5 +27,5 @@ struct GameButton: View {
 #Preview {
     GameButton("btn_ok.bmp") {
     }
-    .environment(GameSession.testing)
+    .environment(GameContext.testing)
 }

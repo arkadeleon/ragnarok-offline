@@ -15,7 +15,7 @@ struct CharacterSelectView: View {
     var characters: [CharacterInfo]
 
     @Environment(GameSession.self) private var gameSession
-    @Environment(\.messageStringTable) private var messageStringTable
+    @Environment(GameContext.self) private var gameContext
 
     @State private var characterAnimationsBySlot: [Int : SpriteRenderer.Animation] = [:]
     @State private var showingDeleteConfirmation = false
@@ -107,7 +107,7 @@ struct CharacterSelectView: View {
         .frame(width: 576)
         .overlay(alignment: .center) {
             if showingDeleteConfirmation {
-                MessageBoxView(messageStringTable.localizedMessageString(forID: 19)) {
+                MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 19)) {
                     Button("OK") {
                         if let charID = selectedCharacter?.charID {
                             gameSession.deleteCharacter(charID: charID)
@@ -124,7 +124,7 @@ struct CharacterSelectView: View {
                     .frame(width: 42, height: 20)
                 }
             } else if showingCancelConfirmation {
-                MessageBoxView(messageStringTable.localizedMessageString(forID: 17)) {
+                MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 17)) {
                     Button("OK") {
                         gameSession.exitCurrentPhase()
                     }
@@ -283,7 +283,7 @@ private struct CharacterSlotSelectionFrame: View {
 private struct CharacterInfoPanel: View {
     var character: CharacterInfo?
 
-    @Environment(\.mapNameTable) private var mapNameTable
+    @Environment(GameContext.self) private var gameContext
 
     var body: some View {
         HStack(alignment: .top, spacing: 1) {
@@ -320,7 +320,7 @@ private struct CharacterInfoPanel: View {
         guard !character.mapName.isEmpty else {
             return ""
         }
-        guard let mapName = mapNameTable.localizedMapName(forMapName: character.mapName) else {
+        guard let mapName = gameContext.mapNameTable.localizedMapName(forMapName: character.mapName) else {
             return character.mapName
         }
         return mapName
@@ -369,4 +369,5 @@ private struct CharacterInfoRow: View {
     CharacterSelectView(characters: [character])
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

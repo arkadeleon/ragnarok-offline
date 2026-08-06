@@ -136,14 +136,13 @@ private struct EquipmentSlotLabel: View {
     var location: EquipPositions
     var alignment: HorizontalAlignment
 
-    @Environment(GameSession.self) private var gameSession
-    @Environment(\.itemInfoTable) private var itemInfoTable
+    @Environment(GameContext.self) private var gameContext
 
     private var itemName: String? {
-        guard let item = gameSession.inventory.item(equippedAt: location) else {
+        guard let item = gameContext.inventory.item(equippedAt: location) else {
             return nil
         }
-        return itemInfoTable.localizedIdentifiedItemName(forItemID: item.itemID)
+        return gameContext.itemInfoTable.localizedIdentifiedItemName(forItemID: item.itemID)
     }
 
     var body: some View {
@@ -168,12 +167,12 @@ private struct EquipmentSlotLabel: View {
 private struct EquipmentSlotImage: View {
     var location: EquipPositions
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var iconImage: Resources.Image?
 
     private var equippedItem: InventoryItem? {
-        gameSession.inventory.item(equippedAt: location)
+        gameContext.inventory.item(equippedAt: location)
     }
 
     var body: some View {
@@ -188,7 +187,7 @@ private struct EquipmentSlotImage: View {
         .frame(width: 26, height: 26)
         .task(id: equippedItem?.itemID) {
             if let equippedItem {
-                iconImage = try? await gameSession.resourceManager.itemIconImage(forItemID: equippedItem.itemID)
+                iconImage = try? await gameContext.resourceManager.itemIconImage(forItemID: equippedItem.itemID)
             } else {
                 iconImage = nil
             }
@@ -218,4 +217,5 @@ private struct EquipmentSlotDivider: View {
     EquipmentView()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

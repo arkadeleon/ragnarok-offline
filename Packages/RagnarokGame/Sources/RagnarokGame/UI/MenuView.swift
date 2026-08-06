@@ -121,5 +121,4 @@ struct MenuView: View {
         // Perform action.
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(GameSession.testing)
 }

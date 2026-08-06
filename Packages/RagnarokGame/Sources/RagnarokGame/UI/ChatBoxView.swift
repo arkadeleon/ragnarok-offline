@@ -48,6 +48,7 @@ struct ChatBoxView: View {
     }
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var viewStyle: ViewStyle = .compact
     @State private var messageGroup: MessageGroup = .chat
@@ -93,7 +94,7 @@ struct ChatBoxView: View {
                 Group {
                     switch messageGroup {
                     case .chat:
-                        ChatMessageListView(messages: gameSession.messageCenter.messages)
+                        ChatMessageListView(messages: gameContext.messageCenter.messages)
                     case .packet:
                         PacketMessageListView(messages: gameSession.packetMessages)
                     case .command:
@@ -248,14 +249,14 @@ private struct AtCommandShortcutListView: View {
 #Preview {
     let gameSession = {
         let gameSession = GameSession.testing
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Apple (1)."))
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Banana (1)."))
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Grape (1)."))
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Carrot (1)."))
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Potato (1)."))
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Meat (1)."))
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Honey (1)."))
-        gameSession.messageCenter.add(ChatMessage(type: .public, content: "You got Milk (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Apple (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Banana (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Grape (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Carrot (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Potato (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Meat (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Honey (1)."))
+        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Milk (1)."))
         return gameSession
     }()
 
@@ -266,4 +267,5 @@ private struct AtCommandShortcutListView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color.gray.opacity(0.5))
     .environment(gameSession)
+    .environment(gameSession.context)
 }

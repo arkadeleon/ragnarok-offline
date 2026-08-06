@@ -32,5 +32,5 @@ struct MapLoadingView: View {
 
 #Preview {
     MapLoadingView(progress: Progress())
-        .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

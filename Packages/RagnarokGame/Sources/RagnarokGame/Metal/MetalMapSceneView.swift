@@ -12,6 +12,7 @@ struct MetalMapSceneView: View {
     var scene: MetalMapScene
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var screenWidth: CGFloat = 320
     @State private var chatBoxOffsetY: CGFloat = 0
@@ -56,7 +57,7 @@ struct MetalMapSceneView: View {
         .overlay(alignment: .topLeading) {
             if let character = gameSession.character {
                 VStack(alignment: .leading, spacing: 0) {
-                    BasicInfoView(character: character, status: gameSession.playerStatus)
+                    BasicInfoView(character: character, status: gameContext.playerStatus)
 
                     MenuView { item in
                         if item == presentedMenuItem {
@@ -101,7 +102,7 @@ struct MetalMapSceneView: View {
             if let item = presentedMenuItem {
                 switch item {
                 case .status:
-                    StatusView(status: gameSession.playerStatus) {
+                    StatusView(status: gameContext.playerStatus) {
                         presentedMenuItem = nil
                     }
                 case .equipment:
@@ -109,11 +110,11 @@ struct MetalMapSceneView: View {
                         presentedMenuItem = nil
                     }
                 case .inventory:
-                    InventoryView(inventory: gameSession.inventory) {
+                    InventoryView(inventory: gameContext.inventory) {
                         presentedMenuItem = nil
                     }
                 case .skill:
-                    SkillListView(skillList: gameSession.skillList) {
+                    SkillListView(skillList: gameContext.skillList) {
                         presentedMenuItem = nil
                     }
                 case .options:

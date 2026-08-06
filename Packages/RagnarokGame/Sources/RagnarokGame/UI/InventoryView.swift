@@ -183,7 +183,7 @@ struct InventoryView: View {
 private struct InventoryItemView: View {
     var item: InventoryItem
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var iconImage: Resources.Image?
 
@@ -200,7 +200,7 @@ private struct InventoryItemView: View {
         }
         .frame(width: 32, height: 32)
         .task(id: item.itemID) {
-            iconImage = try? await gameSession.resourceManager.itemIconImage(forItemID: item.itemID)
+            iconImage = try? await gameContext.resourceManager.itemIconImage(forItemID: item.itemID)
         }
     }
 }
@@ -245,4 +245,5 @@ private struct InventoryItemActionButton: View {
     InventoryView(inventory: inventory)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

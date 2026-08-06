@@ -162,5 +162,4 @@ private struct BasicInfoExpBar: View {
 #Preview {
     BasicInfoView(character: CharacterInfo(), status: CharacterStatus())
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.testing)
 }
