@@ -11,29 +11,29 @@ struct StatusView: View {
     var status: CharacterStatus
     var onClose: () -> Void = {}
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(\.incrementStatusProperty) private var incrementStatusProperty
 
     var body: some View {
         GameWindow {
             HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: 6) {
                     PrimaryStatRow("Str", value: status.str, value2: status.str2, value3: status.str3) {
-                        gameSession.incrementStatusProperty(.str, by: 1)
+                        incrementStatusProperty?(.str, by: 1)
                     }
                     PrimaryStatRow("Agi", value: status.agi, value2: status.agi2, value3: status.agi3) {
-                        gameSession.incrementStatusProperty(.agi, by: 1)
+                        incrementStatusProperty?(.agi, by: 1)
                     }
                     PrimaryStatRow("Vit", value: status.vit, value2: status.vit2, value3: status.vit3) {
-                        gameSession.incrementStatusProperty(.vit, by: 1)
+                        incrementStatusProperty?(.vit, by: 1)
                     }
                     PrimaryStatRow("Int", value: status.int, value2: status.int2, value3: status.int3) {
-                        gameSession.incrementStatusProperty(.int, by: 1)
+                        incrementStatusProperty?(.int, by: 1)
                     }
                     PrimaryStatRow("Dex", value: status.dex, value2: status.dex2, value3: status.dex3) {
-                        gameSession.incrementStatusProperty(.dex, by: 1)
+                        incrementStatusProperty?(.dex, by: 1)
                     }
                     PrimaryStatRow("Luk", value: status.luk, value2: status.luk2, value3: status.luk3) {
-                        gameSession.incrementStatusProperty(.luk, by: 1)
+                        incrementStatusProperty?(.luk, by: 1)
                     }
                 }
 
@@ -169,5 +169,4 @@ private struct SecondaryStatRow: View {
 #Preview {
     StatusView(status: CharacterStatus())
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.testing)
 }

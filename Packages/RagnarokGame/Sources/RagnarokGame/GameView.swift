@@ -45,6 +45,9 @@ public struct GameView: View {
         }
         .environment(gameSession)
         .environment(gameSession.context)
+        .onIncrementStatusProperty { sp, amount in
+            gameSession.incrementStatusProperty(sp, by: amount)
+        }
         .persistentSystemOverlays(.hidden)
         #if os(iOS)
         .statusBarHidden()

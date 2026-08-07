@@ -20,7 +20,9 @@ extension EnvironmentValues {
 }
 
 extension View {
-    nonisolated public func onExitGame(perform action: @escaping () -> Void) -> some View {
+    nonisolated public func onExitGame(
+        perform action: @escaping () -> Void
+    ) -> some View {
         environment(\.exitGame, ExitGameAction(action: action))
     }
 }
