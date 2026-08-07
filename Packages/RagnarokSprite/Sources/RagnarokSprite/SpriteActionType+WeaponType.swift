@@ -296,9 +296,10 @@ extension SpriteActionType {
     }
 
     public static func attackActionType(forJobID jobID: Int, gender: Gender, weapon: Int) -> SpriteActionType {
-        guard let jobID = JobID(rawValue: jobID), let weaponType = WeaponType(rawValue: weapon) else {
+        guard let jobID = JobID(rawValue: jobID) else {
             return .attack1
         }
+        let weaponType = ItemWeaponTypeTable.weaponType(for: weapon) ?? .w_fist
 
         let baseJobID: JobID = switch jobID {
         case .novice, .novice_high, .baby:
