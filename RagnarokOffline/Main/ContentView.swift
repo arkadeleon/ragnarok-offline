@@ -110,8 +110,6 @@ struct ContentView: View {
                 .environment(appModel.database)
         case .effectViewer:
             EffectViewer(resourceManager: appModel.resourceManager)
-        case .cube:
-            CubeView()
         }
     }
 

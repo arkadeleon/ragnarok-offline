@@ -32,7 +32,6 @@ enum SidebarItem: Hashable {
     case skillSimulator
     case mapViewer
     case effectViewer
-    case cube
 }
 
 struct SidebarView: View {
@@ -182,12 +181,6 @@ struct SidebarView: View {
                 #if DEBUG
                 NavigationLink(value: SidebarItem.effectViewer) {
                     SidebarRow("Effect Viewer", iconName: "fireworks", iconColor: .yellow)
-                }
-                #endif
-
-                #if DEBUG
-                NavigationLink(value: SidebarItem.cube) {
-                    SidebarRow("Cube", iconName: "cube.fill", iconColor: .orange)
                 }
                 #endif
             } header: {
