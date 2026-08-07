@@ -1,5 +1,5 @@
 //
-//  LoginFlowView.swift
+//  LoginStageView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2025/12/5.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct LoginFlowView: View {
-    var loginPhase: GameSession.LoginPhase
+struct LoginStageView: View {
+    var loginPhase: LoginStage.Phase
 
     @Environment(GameSession.self) private var gameSession
 
@@ -70,7 +70,7 @@ struct LoginFlowView: View {
 }
 
 #Preview {
-    LoginFlowView(loginPhase: .login)
+    LoginStageView(loginPhase: .login)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
         .environment(GameContext.testing)

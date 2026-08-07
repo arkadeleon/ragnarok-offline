@@ -43,27 +43,7 @@ final public class GameSession {
 
     public private(set) var state: GameSession.State = .notStarted
 
-    public enum Phase {
-        case login(GameSession.LoginPhase)
-        case map(GameSession.MapPhase)
-    }
-
-    public enum LoginPhase {
-        case login
-        case loggingIn
-        case charServerList(_ charServers: [CharServerInfo])
-        case connectingCharServer(_ charServer: CharServerInfo)
-        case characterSelect(_ characters: [CharacterInfo])
-        case characterMake(_ slot: Int)
-        case waitingForMapServer(_ slot: Int)
-    }
-
-    public enum MapPhase {
-        case loading(_ progress: Progress)
-        case loaded(_ scene: any GameMapScene)
-    }
-
-    public private(set) var phase: GameSession.Phase = .login(.login)
+    private(set) var stage: GameStage = .login(.login)
 
     struct ErrorMessage: Identifiable {
         typealias Action = @MainActor (_ gameSession: GameSession, _ errorMessage: GameSession.ErrorMessage) -> Void
@@ -101,7 +81,7 @@ final public class GameSession {
     var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
 
-    @ObservationIgnored let loginAudioPlayer: LoginFlowAudioPlayer
+    let loginAudioPlayer: LoginAudioPlayer
 
     @ObservationIgnored var loginClient: NetworkClient?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
@@ -114,7 +94,7 @@ final public class GameSession {
     @ObservationIgnored var currentMapServer: MapServerInfo?
 
     public var mapScene: (any GameMapScene)? {
-        if case .map(let mapPhase) = phase, case .loaded(let scene) = mapPhase {
+        if case .map(let mapPhase) = stage, case .loaded(let scene) = mapPhase {
             scene
         } else {
             nil
@@ -123,7 +103,7 @@ final public class GameSession {
 
     public init(resourceManager: ResourceManager) {
         self.context = GameContext(resourceManager: resourceManager)
-        self.loginAudioPlayer = LoginFlowAudioPlayer(resourceManager: resourceManager)
+        self.loginAudioPlayer = LoginAudioPlayer(resourceManager: resourceManager)
     }
 
     // MARK: - Public
@@ -160,7 +140,7 @@ final public class GameSession {
     }
 
     func exitCurrentPhase() {
-        switch phase {
+        switch stage {
         case .login(.login):
             stopAllClients()
         case .login(.loggingIn), .login(.charServerList):
@@ -170,7 +150,7 @@ final public class GameSession {
             stopCharClient()
             resetLoginPhase()
         case .login(.characterMake):
-            phase = .login(.characterSelect(characters))
+            stage = .login(.characterSelect(characters))
         case .login(.waitingForMapServer):
             stopMapClient()
             stopCharClient()
@@ -190,13 +170,13 @@ final public class GameSession {
         selectedCharacterSlot = 0
         maxCharacterSlots = 9
 
-        phase = .login(.login)
+        stage = .login(.login)
     }
 
     // MARK: - Login Client
 
     func login(username: String, password: String) {
-        guard case .login(.login) = phase else {
+        guard case .login(.login) = stage else {
             return
         }
 
@@ -206,7 +186,7 @@ final public class GameSession {
             return
         }
 
-        phase = .login(.loggingIn)
+        stage = .login(.loggingIn)
 
         self.username = username
 
@@ -269,9 +249,9 @@ final public class GameSession {
             if charServers.count == 1 {
                 selectCharServer(charServers[0])
             } else if charServers.count > 1 {
-                phase = .login(.charServerList(charServers))
+                stage = .login(.charServerList(charServers))
             } else {
-                phase = .login(.login)
+                stage = .login(.login)
             }
 
             startLoginKeepalive()
@@ -328,24 +308,24 @@ final public class GameSession {
         stopLoginClient()
 
         self.charServer = charServer
-        phase = .login(.connectingCharServer(charServer))
+        stage = .login(.connectingCharServer(charServer))
 
         startCharClient(charServer)
     }
 
     func makeCharacter(slot: Int) {
-        phase = .login(.characterMake(slot))
+        stage = .login(.characterMake(slot))
     }
 
     /// Select character.
     ///
     /// Send ``PACKET_CH_SELECT_CHAR``
     func selectCharacter(slot: Int) {
-        guard case .login(.characterSelect) = phase, let charClient else {
+        guard case .login(.characterSelect) = stage, let charClient else {
             return
         }
 
-        phase = .login(.waitingForMapServer(slot))
+        stage = .login(.waitingForMapServer(slot))
 
         let packet = PacketFactory.CH_SELECT_CHAR(slot: slot)
         charClient.sendPacket(packet)
@@ -367,7 +347,7 @@ final public class GameSession {
     ///
     /// Send ``PACKET_CH_DELETE_CHAR3_RESERVED``, then ``PACKET_CH_DELETE_CHAR3`` on success.
     func deleteCharacter(charID: UInt32) {
-        guard case .login(.characterSelect) = phase, let charClient else {
+        guard case .login(.characterSelect) = stage, let charClient else {
             return
         }
 
@@ -443,14 +423,14 @@ final public class GameSession {
                 maxCharacterSlots = max(highestSlot + 1, 9)
             }
 
-            phase = .login(.characterSelect(characters))
+            stage = .login(.characterSelect(characters))
         case _ as PACKET_HC_REFUSE_ENTER:
-            switch phase {
+            switch stage {
             case .login(.waitingForMapServer):
                 let localizedMessage = context.messageStringTable.localizedMessageString(forID: 9)
                 let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
                     gameSession.removeErrorMessage(errorMessage)
-                    gameSession.phase = .login(.characterSelect(gameSession.characters))
+                    gameSession.stage = .login(.characterSelect(gameSession.characters))
                 }
                 errorMessages.append(errorMessage)
             default:
@@ -476,14 +456,14 @@ final public class GameSession {
             let localizedMessage = context.messageStringTable.localizedMessageString(forID: 1811)
             let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
                 gameSession.removeErrorMessage(errorMessage)
-                gameSession.phase = .login(.characterSelect(gameSession.characters))
+                gameSession.stage = .login(.characterSelect(gameSession.characters))
             }
             errorMessages.append(errorMessage)
         case let packet as PACKET_HC_ACCEPT_MAKECHAR:
             let character = CharacterInfo(from: packet.character)
             characters.append(character)
             selectedCharacterSlot = character.charNum
-            phase = .login(.characterSelect(characters))
+            stage = .login(.characterSelect(characters))
         case let packet as PACKET_HC_REFUSE_MAKECHAR:
             let message = MakeCharRefusedMessage(from: packet)
             let localizedMessage = context.messageStringTable.localizedMessageString(forID: message.messageID)
@@ -506,7 +486,7 @@ final public class GameSession {
         case let packet as PACKET_HC_DELETE_CHAR3:
             if packet.result == 1 {
                 characters.removeAll(where: { $0.charID == packet.CID })
-                phase = .login(.characterSelect(characters))
+                stage = .login(.characterSelect(characters))
             } else {
                 let message = DeleteCharMessage(from: packet)
                 let localizedMessage = context.messageStringTable.localizedMessageString(forID: message.messageID)
@@ -654,10 +634,10 @@ final public class GameSession {
                 currentMapServer = nil
 
                 if let charServer {
-                    phase = .login(.connectingCharServer(charServer))
+                    stage = .login(.connectingCharServer(charServer))
                     startCharClient(charServer)
                 } else {
-                    phase = .login(.login)
+                    stage = .login(.login)
                 }
             }
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
@@ -667,10 +647,10 @@ final public class GameSession {
                 currentMapServer = nil
 
                 if let charServer {
-                    phase = .login(.connectingCharServer(charServer))
+                    stage = .login(.connectingCharServer(charServer))
                     startCharClient(charServer)
                 } else {
-                    phase = .login(.login)
+                    stage = .login(.login)
                 }
             }
         case let packet as PACKET_ZC_AID:
@@ -687,7 +667,7 @@ final public class GameSession {
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
 
             let progress = Progress()
-            phase = .map(.loading(progress))
+            stage = .map(.loading(progress))
 
             Task {
                 guard let account, let character else {
@@ -726,7 +706,7 @@ final public class GameSession {
 
                     notifyMapLoaded()
 
-                    phase = .map(.loaded(scene))
+                    stage = .map(.loaded(scene))
                 } catch {
                     logger.warning("Map scene failed to load: \(error)")
                 }

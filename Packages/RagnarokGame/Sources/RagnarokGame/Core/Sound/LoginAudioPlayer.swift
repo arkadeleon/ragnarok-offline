@@ -1,5 +1,5 @@
 //
-//  LoginFlowAudioPlayer.swift
+//  LoginAudioPlayer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/10.
@@ -10,7 +10,7 @@ import Foundation
 import RagnarokCore
 import RagnarokResources
 
-final class LoginFlowAudioPlayer: GameAudioPlayer {
+final class LoginAudioPlayer: GameAudioPlayer {
     private let resourceManager: ResourceManager
 
     private var bgmPlayer: AVAudioPlayer?

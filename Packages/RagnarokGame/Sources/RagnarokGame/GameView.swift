@@ -15,9 +15,9 @@ public struct GameView: View {
 
     public var body: some View {
         Group {
-            switch gameSession.phase {
+            switch gameSession.stage {
             case .login(let loginPhase):
-                LoginFlowView(loginPhase: loginPhase)
+                LoginStageView(loginPhase: loginPhase)
             case .map(let mapPhase):
                 switch mapPhase {
                 case .loading(let progress):
