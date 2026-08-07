@@ -58,9 +58,8 @@ extension Entity {
         self.init()
         name = node.name
 
-        // Frozen at the rest pose for now. Per-frame animation hook for visionOS would
-        // replace this with `RSMModelAnimator.localTransform(for:atFrame:)` driven by a
-        // RealityKit `System`. See Phase 4 of rsm-model-node-tree-and-animation-plan.md.
+        // Frozen at the rest pose for now. Per-frame animation would replace this with
+        // `RSMModelAnimator.localTransform(for:atFrame:)` driven by a RealityKit `System`.
         transform = Transform(matrix: node.restPoseLocalMatrix)
 
         let nodeMeshes = node.meshes.filter { !$0.vertices.isEmpty }
