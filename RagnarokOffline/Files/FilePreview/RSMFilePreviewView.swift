@@ -58,10 +58,10 @@ struct RSMFileModelView: View {
     private let progress = Progress()
 
     var body: some View {
-        AsyncContentView {
-            try await loadRSMFile()
-        } content: { entity in
-            ModelViewer(entity: entity)
+        RealityView { content in
+            if let entity = try? await loadRSMFile() {
+                content.add(entity)
+            }
         } placeholder: {
             ProgressView(progress)
                 .progressViewStyle(.circular)

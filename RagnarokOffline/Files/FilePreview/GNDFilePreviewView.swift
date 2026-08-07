@@ -71,10 +71,10 @@ struct GNDFileGroundView: View {
     private let progress = Progress()
 
     var body: some View {
-        AsyncContentView {
-            try await loadGNDFile()
-        } content: { entity in
-            ModelViewer(entity: entity)
+        RealityView { content in
+            if let entity = try? await loadGNDFile() {
+                content.add(entity)
+            }
         } placeholder: {
             ProgressView(progress)
                 .progressViewStyle(.circular)

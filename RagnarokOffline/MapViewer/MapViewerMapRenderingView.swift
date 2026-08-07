@@ -22,10 +22,10 @@ struct MapViewerMapRenderingView: View {
     private let progress = Progress()
 
     var body: some View {
-        AsyncContentView {
-            try await loadEntity()
-        } content: { entity in
-            ModelViewer(entity: entity)
+        RealityView { content in
+            if let entity = try? await loadEntity() {
+                content.add(entity)
+            }
         } placeholder: {
             ProgressView(progress)
                 .progressViewStyle(.circular)
