@@ -213,7 +213,7 @@ public final class MetalMapScene: GameMapScene {
     func attackNearestMonster() {
         if let playerPosition = objects[player.objectID]?.gridPosition,
            let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
-            engageMonster(target)
+            attackMonster(target)
         }
     }
 
@@ -233,14 +233,14 @@ public final class MetalMapScene: GameMapScene {
 
         if let playerPosition = objects[player.objectID]?.gridPosition,
            let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
-            engageMonster(target, skill: skill)
+            attackMonster(target, skill: skill)
         }
     }
 
     func pickUpNearestItem() {
         if let playerPosition = objects[player.objectID]?.gridPosition,
            let target = nearestItem(fromPosition: playerPosition) {
-            engageItem(target)
+            pickUpItem(target)
         }
     }
 
@@ -258,7 +258,7 @@ public final class MetalMapScene: GameMapScene {
 
         switch target.type {
         case .monster:
-            engageMonster(target)
+            attackMonster(target)
         case .npc:
             gameSession?.talkToNPC(npcID: target.objectID)
         default:
@@ -266,14 +266,31 @@ public final class MetalMapScene: GameMapScene {
         }
     }
 
-    private func engageMonster(_ target: MetalMapObject) {
-        let targetPosition = target.gridPosition
-        movePlayerToward(targetPosition: targetPosition, within: 1) {
-            self.gameSession?.requestAction(._repeat, onTarget: target.objectID)
+    private func attackMonster(_ target: MetalMapObject) {
+        attackMonster(targetID: target.objectID)
+    }
+
+    private func attackMonster(targetID: GameObjectID) {
+        guard let target = objects[targetID] else {
+            return
+        }
+
+        let startPosition = objects[player.objectID]?.gridPosition ?? playerPosition
+        switch decideMovement(from: startPosition, toward: target.gridPosition, within: 1) {
+        case .alreadyInRange:
+            gameSession?.requestAction(._repeat, onTarget: targetID)
+        case .moveTo(let destination):
+            arrivalTask?.cancel()
+            pendingArrivalAction = { [weak self] in
+                self?.attackMonster(targetID: targetID)
+            }
+            gameSession?.requestMove(to: destination)
+        case .noPath:
+            break
         }
     }
 
-    private func engageMonster(_ target: MetalMapObject, skill: SkillInfo) {
+    private func attackMonster(_ target: MetalMapObject, skill: SkillInfo) {
         let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
         movePlayerToward(targetPosition: targetPosition, within: skillRange) {
@@ -293,7 +310,7 @@ public final class MetalMapScene: GameMapScene {
         }
     }
 
-    private func engageItem(_ target: MetalMapItem) {
+    private func pickUpItem(_ target: MetalMapItem) {
         movePlayerToward(targetPosition: target.gridPosition, within: 1) {
             self.gameSession?.pickUpItem(objectID: target.objectID)
         }
