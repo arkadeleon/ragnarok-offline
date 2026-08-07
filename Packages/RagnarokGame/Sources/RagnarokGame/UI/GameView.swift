@@ -10,7 +10,8 @@ import SwiftUI
 
 public struct GameView: View {
     public var gameSession: GameSession
-    public var onExit: () -> Void
+
+    @Environment(\.exitGame) private var exitGame
 
     public var body: some View {
         Group {
@@ -35,7 +36,7 @@ public struct GameView: View {
                 MessageBoxView(gameSession.context.messageStringTable.localizedMessageString(forID: 2)) {
                     Button("OK") {
                         gameSession.exitSession()
-                        onExit()
+                        exitGame()
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
@@ -44,10 +45,6 @@ public struct GameView: View {
         }
         .environment(gameSession)
         .environment(gameSession.context)
-        .environment(\.exitGame, ExitGameAction {
-            gameSession.exitSession()
-            onExit()
-        })
         .persistentSystemOverlays(.hidden)
         #if os(iOS)
         .statusBarHidden()
@@ -60,13 +57,11 @@ public struct GameView: View {
         #endif
     }
 
-    public init(gameSession: GameSession, onExit: @escaping () -> Void) {
+    public init(gameSession: GameSession) {
         self.gameSession = gameSession
-        self.onExit = onExit
     }
 }
 
 #Preview {
-    GameView(gameSession: .testing) {
-    }
+    GameView(gameSession: .testing)
 }

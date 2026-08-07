@@ -56,6 +56,7 @@ struct OptionsView: View {
 
                     Button("Exit") {
                         gameSession.requestExit()
+                        gameSession.exitSession()
                         exitGame()
                     }
                     .buttonStyle(.game)

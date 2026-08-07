@@ -27,23 +27,24 @@ struct macOSApp: App {
         }
 
         WindowGroup("Game", id: GameSession.windowID, for: GameSession.Configuration.self) { configuration in
-            GameView(gameSession: appModel.gameSession) {
-                dismissWindow(id: GameSession.windowID)
-            }
-            .onAppear {
-                if let configuration = configuration.wrappedValue {
-                    appModel.gameSession.start(configuration)
-                } else {
-                    let configuration = GameSession.Configuration(
-                        serverAddress: appModel.settings.serverAddress,
-                        serverPort: UInt16(appModel.settings.serverPort)!
-                    )
-                    appModel.gameSession.start(configuration)
+            GameView(gameSession: appModel.gameSession)
+                .onAppear {
+                    if let configuration = configuration.wrappedValue {
+                        appModel.gameSession.start(configuration)
+                    } else {
+                        let configuration = GameSession.Configuration(
+                            serverAddress: appModel.settings.serverAddress,
+                            serverPort: UInt16(appModel.settings.serverPort)!
+                        )
+                        appModel.gameSession.start(configuration)
+                    }
                 }
-            }
-            .onDisappear {
-                appModel.gameSession.stop()
-            }
+                .onDisappear {
+                    appModel.gameSession.stop()
+                }
+                .onExitGame {
+                    dismissWindow(id: GameSession.windowID)
+                }
         }
     }
 

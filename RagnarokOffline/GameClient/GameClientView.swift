@@ -157,10 +157,11 @@ struct GameClientView: View {
         }
         #if !os(macOS)
         .fullScreenCover(isPresented: $isGameViewPresented) {
-            GameView(gameSession: gameSession) {
-                isGameViewPresented = false
-                gameSession.stop()
-            }
+            GameView(gameSession: gameSession)
+                .onExitGame {
+                    isGameViewPresented = false
+                    gameSession.stop()
+                }
         }
         #endif
     }

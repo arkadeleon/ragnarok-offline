@@ -80,6 +80,7 @@ struct LoginView: View {
                 .disabled(!isValidUsername || !isValidPassword)
 
                 Button("exit") {
+                    gameSession.exitSession()
                     exitGame()
                 }
                 .buttonStyle(.game)
