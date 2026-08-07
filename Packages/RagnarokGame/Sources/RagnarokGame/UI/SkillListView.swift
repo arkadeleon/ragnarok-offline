@@ -14,7 +14,6 @@ struct SkillListView: View {
     var skillList: SkillList
     var onClose: () -> Void = {}
 
-    @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
 
     @State private var selectedSkillID: Int?
@@ -24,12 +23,10 @@ struct SkillListView: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     ForEach(skillList.sortedSkills, id: \.skillID) { skill in
-                        SkillListRow(skill: skill, isSelected: (selectedSkillID == skill.skillID)) {
-                            gameSession.upgradeSkillLevel(skillID: skill.skillID)
-                        }
-                        .onTapGesture {
-                            selectedSkillID = skill.skillID
-                        }
+                        SkillListRow(skill: skill, isSelected: (selectedSkillID == skill.skillID))
+                            .onTapGesture {
+                                selectedSkillID = skill.skillID
+                            }
                     }
                 }
             }
@@ -52,9 +49,9 @@ struct SkillListView: View {
 private struct SkillListRow: View {
     var skill: SkillInfo
     var isSelected: Bool
-    var onUpgrade: () -> Void
 
     @Environment(GameContext.self) private var gameContext
+    @Environment(\.upgradeSkillLevel) private var upgradeSkillLevel
 
     @State private var iconImage: Resources.Image?
 
@@ -147,11 +144,13 @@ private struct SkillListRow: View {
                 Spacer(minLength: 0)
             }
 
-            SkillUpgradeButton(action: onUpgrade)
-                .frame(width: 30, height: 24)
-                .opacity(isUpgradable ? 1 : 0)
-                .disabled(!isUpgradable)
-                .padding(.trailing, 2)
+            SkillUpgradeButton {
+                upgradeSkillLevel?(skillID: skill.skillID)
+            }
+            .frame(width: 30, height: 24)
+            .opacity(isUpgradable ? 1 : 0)
+            .disabled(!isUpgradable)
+            .padding(.trailing, 2)
         }
         .frame(height: 36)
         .background(skillBackgroundColor)
@@ -216,14 +215,10 @@ private struct SkillUpgradeTrendShape: Shape {
 }
 
 #Preview {
-    let gameSession = {
-        let gameSession = GameSession.testing
-        gameSession.context.playerStatus.skillPoint = 1
-        return gameSession
-    }()
+    let gameContext = {
+        let gameContext = GameContext.testing
 
-    let skillList = {
-        let skillList = SkillList()
+        gameContext.playerStatus.skillPoint = 1
 
         var bash = SkillInfo()
         bash.skillID = 5
@@ -233,7 +228,7 @@ private struct SkillUpgradeTrendShape: Shape {
         bash.attackRange = 1
         bash.isUpgradable = true
         bash.maxLevel = 10
-        skillList.skills[5] = bash
+        gameContext.skillList.skills[5] = bash
 
         var heal = SkillInfo()
         heal.skillID = 28
@@ -243,7 +238,7 @@ private struct SkillUpgradeTrendShape: Shape {
         heal.attackRange = 9
         heal.isUpgradable = false
         heal.maxLevel = 10
-        skillList.skills[28] = heal
+        gameContext.skillList.skills[28] = heal
 
         var swordMastery = SkillInfo()
         swordMastery.skillID = 2
@@ -253,13 +248,12 @@ private struct SkillUpgradeTrendShape: Shape {
         swordMastery.attackRange = 0
         swordMastery.isUpgradable = false
         swordMastery.maxLevel = 10
-        skillList.skills[2] = swordMastery
+        gameContext.skillList.skills[2] = swordMastery
 
-        return skillList
+        return gameContext
     }()
 
-    SkillListView(skillList: skillList)
+    SkillListView(skillList: gameContext.skillList)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(gameSession)
-        .environment(gameSession.context)
+        .environment(gameContext)
 }

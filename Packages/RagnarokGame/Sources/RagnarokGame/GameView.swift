@@ -48,6 +48,9 @@ public struct GameView: View {
         .onIncrementStatusProperty { sp, amount in
             gameSession.incrementStatusProperty(sp, by: amount)
         }
+        .onUpgradeSkillLevel { skillID in
+            gameSession.upgradeSkillLevel(skillID: skillID)
+        }
         .persistentSystemOverlays(.hidden)
         #if os(iOS)
         .statusBarHidden()
