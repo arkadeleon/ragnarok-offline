@@ -10,25 +10,33 @@ import simd
 
 extension SpriteDirection {
     init(sourcePosition: SIMD2<Int>, targetPosition: SIMD2<Int>) {
-        switch targetPosition &- sourcePosition {
-        case [0, -1]:
+        let delta = targetPosition &- sourcePosition
+        guard delta != .zero else {
             self = .south
-        case [-1, -1]:
-            self = .southwest
-        case [-1, 0]:
-            self = .west
-        case [-1, 1]:
-            self = .northwest
-        case [0, 1]:
-            self = .north
-        case [1, 1]:
-            self = .northeast
-        case [1, 0]:
+            return
+        }
+
+        let angle = atan2(Float(delta.y), Float(delta.x))
+        let octant = Int((angle / (.pi / 4)).rounded())
+        let normalizedOctant = ((octant % 8) + 8) % 8
+
+        switch normalizedOctant {
+        case 0:
             self = .east
-        case [1, -1]:
-            self = .southeast
-        default:
+        case 1:
+            self = .northeast
+        case 2:
+            self = .north
+        case 3:
+            self = .northwest
+        case 4:
+            self = .west
+        case 5:
+            self = .southwest
+        case 6:
             self = .south
+        default:
+            self = .southeast
         }
     }
 }

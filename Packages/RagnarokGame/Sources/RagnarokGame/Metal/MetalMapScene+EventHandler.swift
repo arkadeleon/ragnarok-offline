@@ -346,6 +346,15 @@ extension MetalMapScene {
         }
 
         if let sourceObject {
+            switch presentationAction {
+            case .attack1, .attack2, .attack3:
+                if let targetObject = objects[objectAction.targetObjectID] {
+                    sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
+                }
+            default:
+                break
+            }
+
             sourceObject.perform(presentationAction, completion: completion)
             refreshSpriteDrawables()
         }
@@ -358,6 +367,10 @@ extension MetalMapScene {
         let now = ContinuousClock.now
 
         if let sourceObject = objects[objectSkill.sourceObjectID] {
+            if let targetObject = objects[objectSkill.targetObjectID] {
+                sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
+            }
+
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(objectSkill.attackDelay)
