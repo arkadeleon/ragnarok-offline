@@ -35,7 +35,7 @@ struct visionOSApp: App {
                 }
         }
 
-        ImmersiveSpace(id: appModel.gameSession.immersiveSpaceID) {
+        ImmersiveSpace(id: GameSession.immersiveSpaceID) {
             if let mapScene = appModel.gameSession.mapScene as? RealityMapScene {
                 RealityMapView(scene: mapScene)
                     .environment(appModel.gameSession)

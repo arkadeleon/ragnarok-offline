@@ -20,8 +20,8 @@ import RagnarokSprite
 @MainActor
 @Observable
 final public class GameSession {
-    public let windowID = "Game"
-    public let immersiveSpaceID = "Game"
+    public static let windowID = "Game"
+    public static let immersiveSpaceID = "Game"
 
     let context: GameContext
 

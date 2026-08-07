@@ -186,7 +186,7 @@ struct GameClientView: View {
         startState = .started
 
         #if os(macOS)
-        openWindow(id: gameSession.windowID, value: configuration)
+        openWindow(id: GameSession.windowID, value: configuration)
         #else
         gameSession.start(configuration)
         isGameViewPresented = true

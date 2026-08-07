@@ -13,7 +13,6 @@ import SwiftUI
 struct RealityMapSceneView: View {
     var scene: RealityMapScene
 
-    @Environment(GameSession.self) private var gameSession
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
 
@@ -21,7 +20,7 @@ struct RealityMapSceneView: View {
         Color.clear
             .onAppear {
                 Task {
-                    await openImmersiveSpace(id: gameSession.immersiveSpaceID)
+                    await openImmersiveSpace(id: GameSession.immersiveSpaceID)
                 }
             }
             .onDisappear {
