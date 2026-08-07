@@ -26,18 +26,18 @@ public struct InventoryItem: Sendable {
 
     public var isEquippable: Bool {
         switch type {
-        case .weapon, .armor, .shadowgear, .petegg, .petarmor: true
+        case .weapon, .armor, .shadowgear, .petegg, .petarmor, .ammo: true
         default: false
         }
     }
 
     public var isEquipped: Bool {
-        !equippedLocation.isEmpty && type != .card && type != .ammo
+        !equippedLocation.isEmpty && type != .card
     }
 
     public var isEtc: Bool {
         switch type {
-        case .etc, .card, .ammo: true
+        case .etc, .card: true
         default: false
         }
     }

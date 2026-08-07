@@ -761,8 +761,8 @@ final public class GameSession {
             if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
                 context.playerStatus.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
             }
-        case _ as PACKET_ZC_ATTACK_RANGE:
-            break
+        case let packet as PACKET_ZC_ATTACK_RANGE:
+            context.playerStatus.update(from: packet)
         case let packet as PACKET_ZC_RECOVERY:
             if let statusProperty = StatusProperty(rawValue: Int(packet.type)) {
                 switch statusProperty {
@@ -816,6 +816,8 @@ final public class GameSession {
                 context.messageCenter.addMessage(for: packet, itemID: item.itemID)
             }
         case let packet as PACKET_ZC_ITEM_THROW_ACK:
+            context.inventory.update(from: packet)
+        case let packet as PACKET_ZC_EQUIP_ARROW:
             context.inventory.update(from: packet)
         case let packet as packet_spawn_unit:
             let object = MapObject(from: packet)

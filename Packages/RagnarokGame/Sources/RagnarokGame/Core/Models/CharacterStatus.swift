@@ -8,6 +8,7 @@
 import Observation
 import RagnarokConstants
 import RagnarokModels
+import RagnarokPackets
 
 @Observable
 final class CharacterStatus {
@@ -64,6 +65,8 @@ final class CharacterStatus {
     var statusPoint = 0
 
     var skillPoint = 0
+
+    var attackRange = 0
 
     init() {
     }
@@ -218,5 +221,9 @@ final class CharacterStatus {
         default:
             break
         }
+    }
+
+    func update(from packet: PACKET_ZC_ATTACK_RANGE) {
+        attackRange = Int(packet.currentAttRange)
     }
 }

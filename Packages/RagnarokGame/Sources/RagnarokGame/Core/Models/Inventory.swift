@@ -117,4 +117,13 @@ final class Inventory {
             items.removeValue(forKey: index)
         }
     }
+
+    func update(from packet: PACKET_ZC_EQUIP_ARROW) {
+        for key in items.keys where items[key]?.equippedLocation == .ammo {
+            items[key]?.equippedLocation = EquipPositions(rawValue: 0)
+        }
+
+        let index = Int(packet.index)
+        items[index]?.equippedLocation = .ammo
+    }
 }

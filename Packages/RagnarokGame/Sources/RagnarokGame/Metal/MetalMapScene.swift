@@ -276,7 +276,8 @@ public final class MetalMapScene: GameMapScene {
         }
 
         let startPosition = objects[player.objectID]?.gridPosition ?? playerPosition
-        switch decideMovement(from: startPosition, toward: target.gridPosition, within: 1) {
+        let attackRange = gameSession?.context.playerStatus.attackRange ?? 1
+        switch decideMovement(from: startPosition, toward: target.gridPosition, within: attackRange) {
         case .alreadyInRange:
             gameSession?.requestAction(._repeat, onTarget: targetID)
         case .moveTo(let destination):
