@@ -31,8 +31,8 @@ struct BasicInfoView: View {
 
                 BasicInfoHPSPBar(
                     label: "HP",
-                    current: Int(status.hp),
-                    max: Int(status.maxHp),
+                    current: status.hp,
+                    max: status.maxHp,
                     topColor: Color(#colorLiteral(red: 0.50, green: 0.90, blue: 0.55, alpha: 1)),
                     bottomColor: Color(#colorLiteral(red: 0.75, green: 1.0, blue: 0.80, alpha: 1))
                 )
@@ -42,8 +42,8 @@ struct BasicInfoView: View {
 
                 BasicInfoHPSPBar(
                     label: "SP",
-                    current: Int(status.sp),
-                    max: Int(status.maxSp),
+                    current: status.sp,
+                    max: status.maxSp,
                     topColor: Color(#colorLiteral(red: 0.40, green: 0.65, blue: 0.95, alpha: 1)),
                     bottomColor: Color(#colorLiteral(red: 0.65, green: 0.85, blue: 1.0, alpha: 1))
                 )

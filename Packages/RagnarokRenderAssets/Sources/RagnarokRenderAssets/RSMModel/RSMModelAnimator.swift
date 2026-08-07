@@ -26,7 +26,7 @@ public struct RSMModelAnimator {
             return 0
         }
         let fps = Double(asset.fps)
-        var frame = time * Double(fps)
+        var frame = time * fps
         frame = frame.truncatingRemainder(dividingBy: animationLength)
         if frame < 0 {
             frame += animationLength
