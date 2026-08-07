@@ -29,7 +29,7 @@ struct MetalMapSceneView: View {
                 }
         }
         .overlay(alignment: .bottomLeading) {
-            ThumbstickView(updatingValue: $movementValue, radius: 72)
+            ThumbstickView(value: $movementValue)
                 .padding(.leading, 16)
                 .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
                 .onReceive(timer) { _ in

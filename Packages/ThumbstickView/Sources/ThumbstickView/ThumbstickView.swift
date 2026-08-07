@@ -7,120 +7,79 @@ A view for thumbstick control.
 
 import SwiftUI
 
-/// A SwiftUI view that renders a virtual thumbstick control for directional input.
-///
-/// `ThumbStickView` displays a circular joystick-like UI with an outer boundary and a movable inner circle.
-/// You can drag the inner circle to simulate directional input, and the view updates a bound `CGPoint`
-/// representing the direction and magnitude of movement.
-///
-/// This is particularly useful in games, simulators, or any interactive app requiring analog-style input.
+/// A virtual thumbstick: drag anywhere in the circle to move the inner knob,
+/// which snaps back to center on release.
 ///
 /// ```swift
 /// @State private var joystickValue: CGPoint = .zero
 ///
 /// var body: some View {
-///     ThumbStickView(updatingValue: $joystickValue, radius: 60)
+///     ThumbstickView(value: $joystickValue, radius: 60)
 /// }
 /// ```
 ///
-/// The `updatingValue` binding updates with the offset from the center,
-/// allowing you to interpret it as velocity, direction, and so forth.
-///
-/// - Note: The coordinate values in `updatingValue` are relative to the center of the joystick.
-///   They reset to zero when the drag gesture ends.
-///
 /// - Parameters:
-///   - updatingValue: A binding to a `CGPoint` that receives continuous updates based on user interaction.
-///   - radius: The radius of the outer (static) circle. The inner circle automatically sets to half of this.
+///   - value: Offset of the knob from center, updated continuously while dragging and reset to zero on release.
+///   - radius: The radius of the outer circle. The inner knob is half of this.
 public struct ThumbstickView: View {
-    // MARK: - Properties
-
     private let largeRadius: CGFloat
     private let smallerRadius: CGFloat
 
-    @Binding private var updatingValue: CGPoint
-    @State private var innerCircleLocation: CGPoint = .zero
+    @Binding private var value: CGPoint
+
+    @State private var innerCirclePosition: CGPoint = .zero
+
+    public var body: some View {
+        Circle()
+            .fill(Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)))
+            .frame(width: largeRadius * 2, height: largeRadius * 2)
+            .overlay {
+                Circle()
+                    .foregroundColor(.clear)
+                    .background(.regularMaterial)
+                    .cornerRadius(smallerRadius)
+                    .shadow(radius: 5)
+                    .position(innerCirclePosition)
+                    .frame(width: smallerRadius * 2, height: smallerRadius * 2)
+            }
+            .contentShape(Circle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        let offsetX = value.location.x - largeRadius
+                        let offsetY = value.location.y - largeRadius
+                        let distance = hypot(offsetX, offsetY)
+                        let angle = atan2(offsetY, offsetX)
+                        let maxDistance = smallCircleCenter.x
+                        let clampedDistance = min(distance, maxDistance)
+
+                        let newX = cos(angle) * clampedDistance + maxDistance
+                        let newY = sin(angle) * clampedDistance + maxDistance
+
+                        innerCirclePosition = CGPoint(x: newX, y: newY)
+                    }
+                    .onEnded { _ in
+                        innerCirclePosition = smallCircleCenter
+                    }
+            )
+            .onAppear {
+                innerCirclePosition = smallCircleCenter
+            }
+            .onChange(of: innerCirclePosition) { _, newValue in
+                value = CGPoint(
+                    x: newValue.x - smallCircleCenter.x,
+                    y: newValue.y - smallCircleCenter.y
+                )
+            }
+    }
 
     private var smallCircleCenter: CGPoint {
         CGPoint(x: largeRadius - smallerRadius, y: largeRadius - smallerRadius)
     }
 
-    // MARK: - Initializer
-
-    public init(updatingValue: Binding<CGPoint>, radius: CGFloat = 75) {
+    public init(value: Binding<CGPoint>, radius: CGFloat = 75) {
         self.largeRadius = radius
         self.smallerRadius = radius / 2
-        self._updatingValue = updatingValue
-    }
-
-    // MARK: - Body
-
-    public var body: some View {
-        ZStack {
-            outerCircle
-                .overlay {
-                    // The inner movable circle.
-                    Circle()
-                        .foregroundColor(.clear)
-                        .background(.regularMaterial)
-                        .cornerRadius(smallerRadius)
-                        .position(innerCircleLocation)
-                        .frame(width: smallerRadius * 2, height: smallerRadius * 2)
-                        .gesture(fingerDrag)
-                }
-        }
-        .onAppear { resetThumbstick() }
-        .onChange(of: innerCircleLocation) { _, newValue in
-            updatingValue = CGPoint(
-                x: newValue.x - smallCircleCenter.x,
-                y: newValue.y - smallCircleCenter.y
-            )
-        }
-    }
-
-    // The outer circle.
-    @ViewBuilder private var outerCircle: some View {
-        #if os(macOS) || os(iOS)
-        if #available(macOS 26.0, iOS 26.0, *) {
-            Color.clear
-                .frame(width: largeRadius * 2, height: largeRadius * 2)
-                .glassEffect(.clear, in: .circle)
-        } else {
-            Color.clear
-                .frame(width: largeRadius * 2, height: largeRadius * 2)
-                .background(.ultraThinMaterial)
-                .cornerRadius(largeRadius)
-        }
-        #else
-        Color.clear
-            .frame(width: largeRadius * 2, height: largeRadius * 2)
-            .background(.ultraThinMaterial)
-            .cornerRadius(largeRadius)
-        #endif
-    }
-
-    // MARK: - Gesture
-
-    private var fingerDrag: some Gesture {
-        DragGesture(minimumDistance: 5)
-            .onChanged { value in
-                let translation = value.translation
-                let distance = hypot(translation.width, translation.height)
-                let angle = atan2(translation.height, translation.width)
-                let maxDistance = smallCircleCenter.x
-                let clampedDistance = min(distance, maxDistance)
-
-                let newX = cos(angle) * clampedDistance + maxDistance
-                let newY = sin(angle) * clampedDistance + maxDistance
-
-                innerCircleLocation = CGPoint(x: newX, y: newY)
-            }
-            .onEnded { _ in resetThumbstick() }
-    }
-
-    // MARK: - Helpers
-
-    private func resetThumbstick() {
-        innerCircleLocation = smallCircleCenter
+        self._value = value
     }
 }

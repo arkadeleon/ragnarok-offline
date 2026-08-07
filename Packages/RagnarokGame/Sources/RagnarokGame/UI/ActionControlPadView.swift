@@ -105,9 +105,9 @@ struct RoundActionButton<Content: View>: View {
         Button(action: action) {
             ZStack {
                 Circle()
-                    .fill(color.opacity(0.75))
+                    .fill(color.opacity(0.33))
                     .frame(width: diameter, height: diameter)
-                    .shadow(color: color.opacity(0.4), radius: 5, x: 0, y: 2)
+                    .shadow(color: color.opacity(0.33), radius: 5)
 
                 content
             }
