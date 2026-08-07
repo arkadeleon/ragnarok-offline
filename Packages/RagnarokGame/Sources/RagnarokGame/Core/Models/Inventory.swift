@@ -53,6 +53,29 @@ final class Inventory {
         }
     }
 
+    func update(from packet: PACKET_ZC_ITEM_PICKUP_ACK) {
+        guard packet.result == 0 else {
+            return
+        }
+
+        let index = Int(packet.Index)
+        let amount = Int(packet.count)
+
+        if var item = items[index] {
+            item.amount += amount
+            items[index] = item
+        } else {
+            var item = InventoryItem()
+            item.index = index
+            item.itemID = Int(packet.nameid)
+            item.type = ItemType(rawValue: Int(packet.type)) ?? .etc
+            item.amount = amount
+            item.location = EquipPositions(rawValue: Int(packet.location))
+            item.slots = packet.slot.card.map(Int.init)
+            items[index] = item
+        }
+    }
+
     func update(from packet: PACKET_ZC_USE_ITEM_ACK) {
         let usedItem = UsedItem(from: packet)
         if var item = items[usedItem.index] {

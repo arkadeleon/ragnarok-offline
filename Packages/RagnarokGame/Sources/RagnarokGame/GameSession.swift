@@ -801,6 +801,7 @@ final public class GameSession {
         case let packet as PACKET_ZC_ITEM_DISAPPEAR:
             mapScene?.onItemVanished(objectID: packet.itemAid)
         case let packet as PACKET_ZC_ITEM_PICKUP_ACK:
+            context.inventory.update(from: packet)
             context.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_USE_ITEM_ACK:
             context.inventory.update(from: packet)
