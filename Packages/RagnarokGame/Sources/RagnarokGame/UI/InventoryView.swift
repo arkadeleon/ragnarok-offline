@@ -145,26 +145,35 @@ struct InventoryView: View {
                 }
 
                 if item.isEquippable {
-                    InventoryItemActionButton(label: "Equip") {
-                        gameSession.equipItem(at: item.index, location: item.location)
-                        selectedItem = nil
+                    if item.isEquipped {
+                        InventoryItemActionButton(label: "Unequip") {
+                            gameSession.unequipItem(at: item.index)
+                            selectedItem = nil
+                        }
+                    } else {
+                        InventoryItemActionButton(label: "Equip") {
+                            gameSession.equipItem(at: item.index, location: item.location)
+                            selectedItem = nil
+                        }
                     }
                 }
 
-                if item.amount > 1 {
-                    InventoryItemActionButton(label: "Throw One") {
-                        gameSession.throwItem(at: item.index, amount: 1)
-                        selectedItem = nil
-                    }
+                if !item.isEquipped {
+                    if item.amount > 1 {
+                        InventoryItemActionButton(label: "Throw One") {
+                            gameSession.throwItem(at: item.index, amount: 1)
+                            selectedItem = nil
+                        }
 
-                    InventoryItemActionButton(label: "Throw All") {
-                        gameSession.throwItem(at: item.index, amount: item.amount)
-                        selectedItem = nil
-                    }
-                } else {
-                    InventoryItemActionButton(label: "Throw") {
-                        gameSession.throwItem(at: item.index, amount: 1)
-                        selectedItem = nil
+                        InventoryItemActionButton(label: "Throw All") {
+                            gameSession.throwItem(at: item.index, amount: item.amount)
+                            selectedItem = nil
+                        }
+                    } else {
+                        InventoryItemActionButton(label: "Throw") {
+                            gameSession.throwItem(at: item.index, amount: 1)
+                            selectedItem = nil
+                        }
                     }
                 }
             }
@@ -197,6 +206,14 @@ private struct InventoryItemView: View {
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
                 .offset(x: 5, y: 10)
+
+            if item.isEquipped {
+                Text(verbatim: "E")
+                    .font(.game())
+                    .foregroundStyle(Color.gameProminentLabel)
+                    .shadow(color: .black, radius: 1)
+                    .offset(x: -10, y: -10)
+            }
         }
         .frame(width: 32, height: 32)
         .task(id: item.itemID) {
@@ -236,9 +253,18 @@ private struct InventoryItemActionButton: View {
         sword.type = .weapon
         sword.amount = 1
 
+        var shield = InventoryItem()
+        shield.index = 2
+        shield.itemID = 2101
+        shield.type = .armor
+        shield.amount = 1
+        shield.location = .left_hand
+        shield.equippedLocation = .left_hand
+
         var inventory = Inventory()
         inventory.append(item: redPotion)
         inventory.append(item: sword)
+        inventory.append(item: shield)
         return inventory
     }()
 

@@ -20,7 +20,7 @@ final class Inventory {
     }
 
     var equipItems: [InventoryItem] {
-        let equipItems = items.values.filter({ $0.isEquippable && !$0.isEquipped })
+        let equipItems = items.values.filter(\.isEquippable)
         return equipItems.sorted()
     }
 
