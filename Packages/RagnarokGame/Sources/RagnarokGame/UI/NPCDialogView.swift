@@ -167,7 +167,7 @@ private struct NPCDialogInputBox: View {
         I don't know how this happened to our ship
         but we should go to see the captain.
         """
-        let dialog = NPCDialog(npcID: 0, message: message)
+        var dialog = NPCDialog(npcID: 0, message: message)
         dialog.action = .next
         dialog.menu = [
             "Go to the captain",

@@ -873,41 +873,40 @@ final public class GameSession {
         case let packet as PACKET_ZC_HP_INFO:
             mapScene?.onMapObjectHealthUpdated(objectID: packet.GID, hp: Int(packet.HP), maxHp: Int(packet.maxHP))
         case let packet as PACKET_ZC_SAY_DIALOG:
-            if let dialog, dialog.npcID == packet.NpcID {
-                dialog.clearIfNeeded()
-                dialog.append(message: packet.message)
+            if dialog?.npcID == packet.NpcID {
+                dialog?.clearIfNeeded()
+                dialog?.append(message: packet.message)
             } else {
                 dialog = NPCDialog(npcID: packet.NpcID, message: packet.message)
             }
         case let packet as PACKET_ZC_WAIT_DIALOG:
-            if let dialog, dialog.npcID == packet.NpcID {
-                dialog.action = .next
+            if dialog?.npcID == packet.NpcID {
+                dialog?.action = .next
             }
         case let packet as PACKET_ZC_CLOSE_DIALOG:
-            if let dialog, dialog.npcID == packet.npcId {
-                dialog.action = .close
-                dialog.menu = nil
-                dialog.input = nil
+            if dialog?.npcID == packet.npcId {
+                dialog?.action = .close
+                dialog?.menu = nil
+                dialog?.input = nil
             }
         case let packet as PACKET_ZC_CLEAR_DIALOG:
-            if let dialog, dialog.npcID == packet.GID {
-                self.dialog = nil
+            if dialog?.npcID == packet.GID {
+                dialog = nil
             }
         case let packet as PACKET_ZC_MENU_LIST:
-            if let dialog, dialog.npcID == packet.npcId {
-                let menu = packet.menu.split(separator: ":").map(String.init)
-                dialog.action = nil
-                dialog.menu = menu
+            if dialog?.npcID == packet.npcId {
+                dialog?.action = nil
+                dialog?.menu = packet.menu.split(separator: ":").map(String.init)
             }
         case let packet as PACKET_ZC_OPEN_EDITDLG:
-            if let dialog, dialog.npcID == packet.npcId {
-                dialog.action = nil
-                dialog.input = .number
+            if dialog?.npcID == packet.npcId {
+                dialog?.action = nil
+                dialog?.input = .number
             }
         case let packet as PACKET_ZC_OPEN_EDITDLGSTR:
-            if let dialog, dialog.npcID == packet.npcId {
-                dialog.action = nil
-                dialog.input = .text
+            if dialog?.npcID == packet.npcId {
+                dialog?.action = nil
+                dialog?.input = .text
             }
         case _ as PACKET_ZC_SHOW_IMAGE:
             break
@@ -1198,70 +1197,70 @@ final public class GameSession {
     }
 
     func requestNextMessage() {
-        guard let mapClient, let dialog else {
+        guard let mapClient, let npcID = dialog?.npcID else {
             return
         }
 
-        let packet = PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: dialog.npcID)
+        let packet = PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: npcID)
         mapClient.sendPacket(packet)
 
-        dialog.setNeedsClear()
-        dialog.action = nil
+        dialog?.setNeedsClear()
+        dialog?.action = nil
     }
 
     func closeDialog() {
-        guard let mapClient, let dialog else {
+        guard let mapClient, let npcID = dialog?.npcID else {
             return
         }
 
-        self.dialog = nil
+        dialog = nil
 
-        let packet = PacketFactory.CZ_CLOSE_DIALOG(npcID: dialog.npcID)
+        let packet = PacketFactory.CZ_CLOSE_DIALOG(npcID: npcID)
         mapClient.sendPacket(packet)
     }
 
     func selectMenu(_ select: UInt8) {
-        guard let mapClient, let dialog else {
+        guard let mapClient, let npcID = dialog?.npcID else {
             return
         }
 
-        dialog.menu = nil
+        dialog?.menu = nil
 
-        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: dialog.npcID, select: select)
+        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: npcID, select: select)
         mapClient.sendPacket(packet)
     }
 
     func cancelMenu() {
-        guard let mapClient, let dialog else {
+        guard let mapClient, let npcID = dialog?.npcID else {
             return
         }
 
-        self.dialog = nil
+        dialog = nil
 
-        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: dialog.npcID, select: 255)
+        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: npcID, select: 255)
         mapClient.sendPacket(packet)
     }
 
     func confirmInput(_ value: Int32) {
-        guard let mapClient, let dialog else {
+        guard let mapClient, let npcID = dialog?.npcID else {
             return
         }
 
-        let packet = PacketFactory.CZ_INPUT_EDITDLG(npcID: dialog.npcID, value: value)
+        let packet = PacketFactory.CZ_INPUT_EDITDLG(npcID: npcID, value: value)
         mapClient.sendPacket(packet)
 
-        dialog.input = nil
+        dialog?.input = nil
     }
 
     func confirmInput(_ value: String) {
-        guard let mapClient, let dialog else {
+        guard let mapClient, let npcID = dialog?.npcID else {
             return
         }
 
-        let packet = PacketFactory.CZ_INPUT_EDITDLGSTR(npcID: dialog.npcID, value: value)
+        let packet = PacketFactory.CZ_INPUT_EDITDLGSTR(npcID: npcID, value: value)
         mapClient.sendPacket(packet)
 
-        dialog.input = nil
+        dialog?.input = nil
     }
 }
 
