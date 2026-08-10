@@ -126,4 +126,19 @@ final class Inventory {
         let index = Int(packet.index)
         items[index]?.equippedLocation = .ammo
     }
+
+    func update(from packet: PACKET_ZC_DELETE_ITEM_FROM_BODY) {
+        let index = Int(packet.index)
+        let amount = Int(packet.count)
+        guard amount > 0, var item = items[index] else {
+            return
+        }
+
+        item.amount -= amount
+        if item.amount > 0 {
+            items[index] = item
+        } else {
+            items.removeValue(forKey: index)
+        }
+    }
 }

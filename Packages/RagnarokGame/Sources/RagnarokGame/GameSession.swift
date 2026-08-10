@@ -819,6 +819,8 @@ final public class GameSession {
             context.inventory.update(from: packet)
         case let packet as PACKET_ZC_EQUIP_ARROW:
             context.inventory.update(from: packet)
+        case let packet as PACKET_ZC_DELETE_ITEM_FROM_BODY:
+            context.inventory.update(from: packet)
         case let packet as packet_spawn_unit:
             let object = MapObject(from: packet)
             let posDir = PosDir(from: packet.PosDir)
