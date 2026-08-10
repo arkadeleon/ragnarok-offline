@@ -7,6 +7,7 @@
 
 import RagnarokPackets
 
+@available(*, deprecated, message: "Use `NetworkClient` directly instead.")
 extension MapSession {
     func subscribeToMailPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_Mail_window`

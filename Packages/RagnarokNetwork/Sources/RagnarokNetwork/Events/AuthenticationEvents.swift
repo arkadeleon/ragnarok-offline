@@ -7,6 +7,7 @@
 
 import RagnarokModels
 
+@available(*, deprecated, message: "Use raw packet instead.")
 public enum AuthenticationEvents {
     public struct Banned: Event {
         public let message: BannedMessage

@@ -11,6 +11,7 @@ import RagnarokConstants
 import RagnarokModels
 import RagnarokPackets
 
+@available(*, deprecated, message: "Use `NetworkClient` directly instead.")
 final public class MapSession: SessionProtocol, @unchecked Sendable {
     public enum Event: Sendable {
         // Map server events
@@ -356,7 +357,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         }
 
         // See `clif_skill_nodamage`
-        subscription.subscribe(to: PACKET_ZC_USE_SKILL.self) { [unowned self] packet in
+        subscription.subscribe(to: PACKET_ZC_USE_SKILL.self) { packet in
         }
     }
 

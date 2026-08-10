@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/4/18.
 //
 
+@available(*, deprecated, message: "Use raw packet instead.")
 public enum ChatEvents {
     public struct MessageReceived: Event {
         public enum MessageType: Sendable {

@@ -7,6 +7,7 @@
 
 import RagnarokModels
 
+@available(*, deprecated, message: "Use raw packet instead.")
 public enum PlayerEvents {
     public struct Moved: Event {
         public let startPosition: SIMD2<Int>

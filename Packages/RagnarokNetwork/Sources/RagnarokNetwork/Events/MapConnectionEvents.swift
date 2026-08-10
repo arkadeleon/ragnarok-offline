@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/9/25.
 //
 
+@available(*, deprecated, message: "Use raw packet instead.")
 public enum MapConnectionEvents {
     public struct Accepted: Event {
     }

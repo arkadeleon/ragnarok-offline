@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/12/6.
 //
 
+@available(*, deprecated, message: "Use raw packet instead.")
 public enum NPCEvents {
     public struct DialogReceived: Event {
         public let npcID: UInt32

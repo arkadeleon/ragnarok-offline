@@ -8,6 +8,7 @@
 import RagnarokConstants
 import RagnarokModels
 
+@available(*, deprecated, message: "Use raw packet instead.")
 public enum MapObjectEvents {
     public struct Spawned: Event {
         public let object: MapObject

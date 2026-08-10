@@ -9,6 +9,7 @@ import RagnarokConstants
 import RagnarokModels
 import RagnarokPackets
 
+@available(*, deprecated, message: "Use `NetworkClient` directly instead.")
 extension MapSession {
     func subscribeToItemPackets(with subscription: inout NetworkClientSubscription) {
         // See `clif_inventoryStart`

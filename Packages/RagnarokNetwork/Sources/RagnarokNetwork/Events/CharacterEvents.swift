@@ -7,6 +7,7 @@
 
 import RagnarokModels
 
+@available(*, deprecated, message: "Use raw packet instead.")
 public enum CharacterEvents {
     public struct MakeAccepted: Event {
         public let character: CharacterInfo

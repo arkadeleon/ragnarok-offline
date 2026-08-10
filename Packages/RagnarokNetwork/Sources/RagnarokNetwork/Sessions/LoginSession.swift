@@ -10,6 +10,7 @@ import Foundation
 import RagnarokModels
 import RagnarokPackets
 
+@available(*, deprecated, message: "Use `NetworkClient` directly instead.")
 final public class LoginSession: SessionProtocol, @unchecked Sendable {
     public enum Event: Sendable {
         // Login events
