@@ -29,7 +29,7 @@ extension Effect2DAsset {
     }
 
     public func sample(
-        instance: Effect2DAsset.Instance,
+        forInstance instance: Effect2DAsset.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         cameraAzimuth: Float

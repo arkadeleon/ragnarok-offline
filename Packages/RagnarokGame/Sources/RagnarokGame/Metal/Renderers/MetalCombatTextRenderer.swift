@@ -55,24 +55,24 @@ final class MetalCombatTextRenderer {
 
         let now = ContinuousClock.now
         for resource in resources {
-            guard let snapshot = resource.snapshot(at: now, cameraAzimuth: cameraParameters.cameraAzimuth) else {
+            guard let sample = resource.sample(for: now, cameraAzimuth: cameraParameters.cameraAzimuth) else {
                 continue
             }
 
             var uniforms = SpriteVertexUniforms(
                 viewMatrix: cameraParameters.viewMatrix,
                 projectionMatrix: cameraParameters.projectionMatrix,
-                spriteWorldPosition: SIMD4<Float>(snapshot.worldPosition, 0),
+                spriteWorldPosition: SIMD4<Float>(sample.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(cameraParameters.cameraPosition, 0),
                 framebufferSize: .zero
             )
 
-            snapshot.vertices.withUnsafeBytes { bytes in
+            sample.vertices.withUnsafeBytes { bytes in
                 renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
             }
             renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
             renderCommandEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 0)
-            renderCommandEncoder.setFragmentTexture(snapshot.texture, index: 0)
+            renderCommandEncoder.setFragmentTexture(sample.texture, index: 0)
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
         }
     }

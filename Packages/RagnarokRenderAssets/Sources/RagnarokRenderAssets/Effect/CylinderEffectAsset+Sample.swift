@@ -32,7 +32,7 @@ extension CylinderEffectAsset {
     }
 
     public func sample(
-        instance: CylinderEffectAsset.Instance,
+        forInstance instance: CylinderEffectAsset.Instance,
         elapsedTime: TimeInterval,
         cameraAzimuth: Float
     ) -> CylinderEffectAsset.Sample? {

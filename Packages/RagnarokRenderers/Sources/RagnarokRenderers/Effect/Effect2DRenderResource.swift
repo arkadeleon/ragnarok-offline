@@ -44,9 +44,9 @@ public final class Effect2DRenderResource {
         asset.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
-    func sample(elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Effect2DAsset.Sample? {
+    func sample(forElapsedTime elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Effect2DAsset.Sample? {
         asset.sample(
-            instance: instance,
+            forInstance: instance,
             elapsedTime: elapsedTime,
             worldPosition: worldPosition,
             cameraAzimuth: cameraAzimuth

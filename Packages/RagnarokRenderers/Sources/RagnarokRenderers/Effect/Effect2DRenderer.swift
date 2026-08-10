@@ -43,7 +43,7 @@ public final class Effect2DRenderer {
         cameraParameters: CameraParameters
     ) {
         guard let texture = resource.texture,
-              let sample = resource.sample(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraParameters.cameraAzimuth),
+              let sample = resource.sample(forElapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraParameters.cameraAzimuth),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }

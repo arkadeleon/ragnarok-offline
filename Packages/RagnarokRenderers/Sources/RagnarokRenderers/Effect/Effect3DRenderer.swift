@@ -42,7 +42,7 @@ public final class Effect3DRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder,
         cameraParameters: CameraParameters
     ) {
-        guard let sample = resource.sample(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraParameters.cameraAzimuth),
+        guard let sample = resource.sample(forElapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraParameters.cameraAzimuth),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }

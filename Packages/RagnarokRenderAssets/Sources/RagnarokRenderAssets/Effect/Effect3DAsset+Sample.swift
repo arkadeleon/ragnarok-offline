@@ -34,7 +34,7 @@ extension Effect3DAsset {
     }
 
     public func sample(
-        instance: Effect3DAsset.Instance,
+        forInstance instance: Effect3DAsset.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         cameraAzimuth: Float
