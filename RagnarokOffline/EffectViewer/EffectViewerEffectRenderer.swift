@@ -57,12 +57,15 @@ class EffectViewerEffectRenderer: Renderer {
         camera.update(atTime: time)
         camera.update(size: viewport.size)
 
-        let viewMatrix = camera.viewMatrix
-        let projectionMatrix = camera.projectionMatrix
-        let cameraAzimuth = camera.azimuth
-
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
+
+        let cameraParameters = CameraParameters(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            cameraAzimuth: camera.azimuth
+        )
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
@@ -72,10 +75,7 @@ class EffectViewerEffectRenderer: Renderer {
             resourceGroup: effectResourceGroup,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            cameraAzimuth: cameraAzimuth
+            cameraParameters: cameraParameters
         )
 
         renderCommandEncoder.endEncoding()

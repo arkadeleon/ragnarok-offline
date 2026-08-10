@@ -53,9 +53,11 @@ class GNDFilePreviewRenderer: Renderer {
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
-        let viewMatrix = camera.viewMatrix
-        let projectionMatrix = camera.projectionMatrix
-        let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
+        let cameraParameters = CameraParameters(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix
+        )
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
@@ -65,10 +67,7 @@ class GNDFilePreviewRenderer: Renderer {
             resource: groundResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
+            cameraParameters: cameraParameters
         )
 
         renderCommandEncoder.endEncoding()

@@ -40,13 +40,10 @@ public final class Effect2DRenderer {
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        cameraAzimuth: Float
+        cameraParameters: CameraParameters
     ) {
         guard let texture = resource.texture,
-              let sample = resource.sample(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraAzimuth),
+              let sample = resource.sample(elapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraParameters.cameraAzimuth),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }
@@ -59,9 +56,9 @@ public final class Effect2DRenderer {
         }
 
         var vertexUniforms = Effect2DVertexUniforms(
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
+            modelMatrix: cameraParameters.modelMatrix,
+            viewMatrix: cameraParameters.viewMatrix,
+            projectionMatrix: cameraParameters.projectionMatrix,
             rotationMatrix: sample.rotationMatrix,
             worldPosition: sample.worldPosition,
             size: sample.size,

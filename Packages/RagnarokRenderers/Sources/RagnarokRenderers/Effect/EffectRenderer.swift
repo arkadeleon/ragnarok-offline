@@ -32,10 +32,7 @@ public final class EffectRenderer {
         atTime time: TimeInterval,
         attachedWorldPosition: SIMD3<Float>? = nil,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        cameraAzimuth: Float
+        cameraParameters: CameraParameters
     ) {
         let worldPosition = resourceGroup.worldPosition
         let elapsedTime = time - resourceGroup.creationTime - resourceGroup.delay
@@ -48,10 +45,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
-                    modelMatrix: modelMatrix,
-                    viewMatrix: viewMatrix,
-                    projectionMatrix: projectionMatrix,
-                    cameraAzimuth: cameraAzimuth
+                    cameraParameters: cameraParameters
                 )
             case .`3D`(let resource):
                 let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
@@ -60,10 +54,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
-                    modelMatrix: modelMatrix,
-                    viewMatrix: viewMatrix,
-                    projectionMatrix: projectionMatrix,
-                    cameraAzimuth: cameraAzimuth
+                    cameraParameters: cameraParameters
                 )
             case .cylinder(let resource):
                 let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
@@ -72,10 +63,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
-                    modelMatrix: modelMatrix,
-                    viewMatrix: viewMatrix,
-                    projectionMatrix: projectionMatrix,
-                    cameraAzimuth: cameraAzimuth
+                    cameraParameters: cameraParameters
                 )
             case .spr(let resource):
                 let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
@@ -84,9 +72,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
-                    modelMatrix: modelMatrix,
-                    viewMatrix: viewMatrix,
-                    projectionMatrix: projectionMatrix
+                    cameraParameters: cameraParameters
                 )
             case .str(let resource):
                 let worldPosition = resource.definition?.attachedToTarget == true ? attachedWorldPosition ?? worldPosition : worldPosition
@@ -95,9 +81,7 @@ public final class EffectRenderer {
                     elapsedTime: elapsedTime,
                     spritePosition: worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
-                    modelMatrix: modelMatrix,
-                    viewMatrix: viewMatrix,
-                    projectionMatrix: projectionMatrix
+                    cameraParameters: cameraParameters
                 )
             }
         }

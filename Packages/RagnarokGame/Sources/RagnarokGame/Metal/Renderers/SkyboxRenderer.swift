@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Metal
+import RagnarokRenderers
 import RagnarokShaders
 import simd
 
@@ -38,14 +39,12 @@ final class SkyboxRenderer {
     func render(
         resource: SkyboxRenderResource,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        projectionMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        cameraPosition: SIMD3<Float>
+        cameraParameters: CameraParameters
     ) {
         guard resource.writeUniforms(
-            projectionMatrix: projectionMatrix,
-            viewMatrix: viewMatrix,
-            cameraPosition: cameraPosition
+            projectionMatrix: cameraParameters.projectionMatrix,
+            viewMatrix: cameraParameters.viewMatrix,
+            cameraPosition: cameraParameters.cameraPosition
         ) else {
             return
         }

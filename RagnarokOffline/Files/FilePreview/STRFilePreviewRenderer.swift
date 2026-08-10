@@ -58,8 +58,11 @@ public class STRFilePreviewRenderer: Renderer {
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_translate(modelMatrix, [0, -3, 0])
 
-        let viewMatrix = camera.viewMatrix
-        let projectionMatrix = camera.projectionMatrix
+        let cameraParameters = CameraParameters(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix
+        )
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
@@ -70,9 +73,7 @@ public class STRFilePreviewRenderer: Renderer {
             elapsedTime: time - creationTime,
             spritePosition: .zero,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix
+            cameraParameters: cameraParameters
         )
 
         renderCommandEncoder.endEncoding()

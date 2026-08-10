@@ -48,10 +48,11 @@ public class RSMFilePreviewRenderer: Renderer {
         modelMatrix = matrix_rotate(modelMatrix, radians(-15), [1, 0, 0])
         modelMatrix = matrix_rotate(modelMatrix, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0, 1, 0])
 
-        let viewMatrix = camera.viewMatrix
-        let projectionMatrix = camera.projectionMatrix
-
-        let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
+        let cameraParameters = CameraParameters(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix
+        )
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
@@ -61,10 +62,7 @@ public class RSMFilePreviewRenderer: Renderer {
             resources: [modelResource],
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
+            cameraParameters: cameraParameters
         )
 
         renderCommandEncoder.endEncoding()

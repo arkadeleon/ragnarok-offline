@@ -6,6 +6,7 @@
 //
 
 import Metal
+import RagnarokRenderers
 import RagnarokShaders
 import simd
 
@@ -43,7 +44,7 @@ final class MetalCombatTextRenderer {
     func render(
         resources: [CombatTextRenderResource],
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MetalMapRenderer.RenderMatrices
+        cameraParameters: CameraParameters
     ) {
         guard !resources.isEmpty else {
             return
@@ -54,15 +55,15 @@ final class MetalCombatTextRenderer {
 
         let now = ContinuousClock.now
         for resource in resources {
-            guard let snapshot = resource.snapshot(at: now, cameraAzimuth: matrices.cameraAzimuth) else {
+            guard let snapshot = resource.snapshot(at: now, cameraAzimuth: cameraParameters.cameraAzimuth) else {
                 continue
             }
 
             var uniforms = SpriteVertexUniforms(
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
+                viewMatrix: cameraParameters.viewMatrix,
+                projectionMatrix: cameraParameters.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(snapshot.worldPosition, 0),
-                cameraPosition: SIMD4<Float>(matrices.cameraPosition, 0),
+                cameraPosition: SIMD4<Float>(cameraParameters.cameraPosition, 0),
                 framebufferSize: .zero
             )
 

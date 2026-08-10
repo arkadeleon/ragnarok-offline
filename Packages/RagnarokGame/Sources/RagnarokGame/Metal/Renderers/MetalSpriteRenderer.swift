@@ -6,6 +6,7 @@
 //
 
 import Metal
+import RagnarokRenderers
 import RagnarokShaders
 import simd
 
@@ -43,7 +44,7 @@ final class MetalSpriteRenderer {
         drawables: [SpriteLayerDrawable],
         framebufferSize: SIMD2<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MetalMapRenderer.RenderMatrices
+        cameraParameters: CameraParameters
     ) {
         guard !drawables.isEmpty else {
             return
@@ -58,10 +59,10 @@ final class MetalSpriteRenderer {
             }
 
             var uniforms = SpriteVertexUniforms(
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
+                viewMatrix: cameraParameters.viewMatrix,
+                projectionMatrix: cameraParameters.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(drawable.worldPosition, 0),
-                cameraPosition: SIMD4<Float>(matrices.cameraPosition, 1),
+                cameraPosition: SIMD4<Float>(cameraParameters.cameraPosition, 1),
                 framebufferSize: framebufferSize
             )
 

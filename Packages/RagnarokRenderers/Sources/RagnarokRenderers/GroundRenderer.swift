@@ -43,21 +43,18 @@ public final class GroundRenderer {
         resource: GroundRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        normalMatrix: simd_float3x3
+        cameraParameters: CameraParameters
     ) {
         guard resource.vertexCount > 0 else {
             return
         }
 
         var vertexUniforms = GroundVertexUniforms(
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
+            modelMatrix: cameraParameters.modelMatrix,
+            viewMatrix: cameraParameters.viewMatrix,
+            projectionMatrix: cameraParameters.projectionMatrix,
             lightDirection: resource.light.direction,
-            normalMatrix: normalMatrix
+            normalMatrix: cameraParameters.normalMatrix
         )
 
         var fragmentUniforms = GroundFragmentUniforms(

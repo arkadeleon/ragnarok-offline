@@ -35,9 +35,7 @@ public final class STREffectRenderer {
         elapsedTime: TimeInterval,
         spritePosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4
+        cameraParameters: CameraParameters
     ) {
         guard let frame = resource.effect.frame(atElapsedTime: elapsedTime) else {
             return
@@ -56,9 +54,9 @@ public final class STREffectRenderer {
             }
 
             var vertexUniforms = STREffectVertexUniforms(
-                modelMatrix: modelMatrix,
-                viewMatrix: viewMatrix,
-                projectionMatrix: projectionMatrix,
+                modelMatrix: cameraParameters.modelMatrix,
+                viewMatrix: cameraParameters.viewMatrix,
+                projectionMatrix: cameraParameters.projectionMatrix,
                 spriteAngle: matrix_rotate(matrix_identity_float4x4, radians(-sprite.angle), [0, 0, 1]),
                 spritePosition: spritePosition,
                 spriteOffset: sprite.position - [320, 320]

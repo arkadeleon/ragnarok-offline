@@ -65,13 +65,16 @@ public class RSWFilePreviewRenderer: Renderer {
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
-        let viewMatrix = camera.viewMatrix
-        let projectionMatrix = camera.projectionMatrix
-        let normalMatrix = simd_float3x3(modelMatrix).inverse.transpose
+        let cameraParameters = CameraParameters(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            cameraAzimuth: camera.azimuth
+        )
 
-        lastModelMatrix = modelMatrix
-        lastViewMatrix = viewMatrix
-        lastProjectionMatrix = projectionMatrix
+        lastModelMatrix = cameraParameters.modelMatrix
+        lastViewMatrix = cameraParameters.viewMatrix
+        lastProjectionMatrix = cameraParameters.projectionMatrix
         lastViewport = viewport
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
@@ -82,20 +85,14 @@ public class RSWFilePreviewRenderer: Renderer {
             resource: worldResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
+            cameraParameters: cameraParameters
         )
 
         worldRenderer.renderEffects(
             resource: worldResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            cameraAzimuth: camera.azimuth
+            cameraParameters: cameraParameters
         )
 
         renderCommandEncoder.endEncoding()

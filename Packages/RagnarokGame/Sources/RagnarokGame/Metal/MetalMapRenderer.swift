@@ -16,15 +16,6 @@ final class MetalMapRenderer: Renderer {
     private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
     private static let fieldOfViewDegrees: Float = 15
 
-    struct RenderMatrices {
-        var modelMatrix: simd_float4x4
-        var viewMatrix: simd_float4x4
-        var projectionMatrix: simd_float4x4
-        var normalMatrix: simd_float3x3
-        var cameraPosition: SIMD3<Float>
-        var cameraAzimuth: Float
-    }
-
     let device: any MTLDevice
 
     private let skyboxRenderer: SkyboxRenderer
@@ -45,7 +36,7 @@ final class MetalMapRenderer: Renderer {
     private var cameraState = MapCameraState()
     private var targetPosition: SIMD3<Float> = .zero
 
-    private(set) var lastRenderMatrices: RenderMatrices?
+    private(set) var lastCameraParameters: CameraParameters?
     private(set) var lastViewport: CGRect = .zero
 
     init() throws {
@@ -94,17 +85,15 @@ final class MetalMapRenderer: Renderer {
             return
         }
 
-        let matrices = makeRenderMatrices(viewport: viewport)
-        lastRenderMatrices = matrices
+        let cameraParameters = makeCameraParameters(viewport: viewport)
+        lastCameraParameters = cameraParameters
         lastViewport = viewport
 
         if let skyboxResource {
             skyboxRenderer.render(
                 resource: skyboxResource,
                 renderCommandEncoder: renderCommandEncoder,
-                projectionMatrix: matrices.projectionMatrix,
-                viewMatrix: matrices.viewMatrix,
-                cameraPosition: matrices.cameraPosition
+                cameraParameters: cameraParameters
             )
         }
 
@@ -113,10 +102,7 @@ final class MetalMapRenderer: Renderer {
                 resource: worldResource,
                 atTime: time,
                 renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
-                normalMatrix: matrices.normalMatrix
+                cameraParameters: cameraParameters
             )
         }
 
@@ -126,10 +112,7 @@ final class MetalMapRenderer: Renderer {
                 atTime: time,
                 beforeEntities: true,
                 renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
-                cameraAzimuth: matrices.cameraAzimuth
+                cameraParameters: cameraParameters
             )
         }
 
@@ -137,7 +120,7 @@ final class MetalMapRenderer: Renderer {
             effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == true },
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
+            cameraParameters: cameraParameters
         )
 
         let framebufferSize = SIMD2<Float>(
@@ -148,7 +131,7 @@ final class MetalMapRenderer: Renderer {
             drawables: spriteDrawables,
             framebufferSize: framebufferSize,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
+            cameraParameters: cameraParameters
         )
 
         // Water renders after sprites so submerged
@@ -158,9 +141,7 @@ final class MetalMapRenderer: Renderer {
                 resource: worldResource,
                 atTime: time,
                 renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix
+                cameraParameters: cameraParameters
             )
         }
 
@@ -170,10 +151,7 @@ final class MetalMapRenderer: Renderer {
                 atTime: time,
                 beforeEntities: false,
                 renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
-                cameraAzimuth: matrices.cameraAzimuth
+                cameraParameters: cameraParameters
             )
         }
 
@@ -181,7 +159,7 @@ final class MetalMapRenderer: Renderer {
             effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == false },
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
+            cameraParameters: cameraParameters
         )
 
         if let tileSelectorResource {
@@ -189,7 +167,7 @@ final class MetalMapRenderer: Renderer {
                 resource: tileSelectorResource,
                 atTime: time,
                 renderCommandEncoder: renderCommandEncoder,
-                matrices: matrices
+                cameraParameters: cameraParameters
             )
         }
 
@@ -197,7 +175,7 @@ final class MetalMapRenderer: Renderer {
         combatTextRenderer.render(
             resources: combatTextRenderResources,
             renderCommandEncoder: renderCommandEncoder,
-            matrices: matrices
+            cameraParameters: cameraParameters
         )
 
         renderCommandEncoder.endEncoding()
@@ -207,7 +185,7 @@ final class MetalMapRenderer: Renderer {
         _ effects: [MetalMapEffect],
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: RenderMatrices
+        cameraParameters: CameraParameters
     ) {
         let sortedEffects = effects.sorted {
             guard let lhsCreationTime = $0.renderResourceGroup?.creationTime else {
@@ -231,15 +209,12 @@ final class MetalMapRenderer: Renderer {
                 atTime: time,
                 attachedWorldPosition: targetObject?.worldPosition,
                 renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: matrices.modelMatrix,
-                viewMatrix: matrices.viewMatrix,
-                projectionMatrix: matrices.projectionMatrix,
-                cameraAzimuth: matrices.cameraAzimuth
+                cameraParameters: cameraParameters
             )
         }
     }
 
-    private func makeRenderMatrices(viewport: CGRect) -> RenderMatrices {
+    private func makeCameraParameters(viewport: CGRect) -> CameraParameters {
         let modelMatrix = makeWorldModelMatrix()
         let worldTarget = renderPosition(for: targetPosition) + Self.cameraTargetOffset
 
@@ -253,11 +228,10 @@ final class MetalMapRenderer: Renderer {
         let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
         let farZ = max(cameraState.distance * 4, 1000)
 
-        return RenderMatrices(
+        return CameraParameters(
             modelMatrix: modelMatrix,
             viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
             projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
-            normalMatrix: simd_float3x3(modelMatrix).inverse.transpose,
             cameraPosition: cameraPosition,
             cameraAzimuth: cameraState.azimuth
         )

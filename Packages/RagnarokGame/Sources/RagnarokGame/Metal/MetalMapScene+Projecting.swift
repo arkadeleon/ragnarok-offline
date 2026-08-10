@@ -6,11 +6,12 @@
 //
 
 import CoreGraphics
+import RagnarokRenderers
 import simd
 
 extension MetalMapScene: GameCoordinateSpaceProjecting {
     public func project(_ worldPoint: SIMD3<Float>) -> CGPoint? {
-        guard let matrices = renderer.lastRenderMatrices else {
+        guard let cameraParameters = renderer.lastCameraParameters else {
             return nil
         }
 
@@ -20,7 +21,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         }
 
         let renderPoint = renderer.renderPosition(for: worldPoint)
-        let pv = matrices.projectionMatrix * matrices.viewMatrix
+        let pv = cameraParameters.projectionMatrix * cameraParameters.viewMatrix
         let clip = pv * SIMD4<Float>(renderPoint, 1)
 
         guard clip.w > 0 else {
@@ -42,7 +43,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
     }
 
     public func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)? {
-        guard let matrices = renderer.lastRenderMatrices else {
+        guard let cameraParameters = renderer.lastCameraParameters else {
             return nil
         }
 
@@ -51,7 +52,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             return nil
         }
 
-        let pv = matrices.projectionMatrix * matrices.viewMatrix
+        let pv = cameraParameters.projectionMatrix * cameraParameters.viewMatrix
         let pvInverse = pv.inverse
         if pvInverse[0][0].isNaN {
             return nil
@@ -75,9 +76,9 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
     }
 
     public func hitTest(_ screenPoint: CGPoint) -> GameHitTestResult? {
-        if let matrices = renderer.lastRenderMatrices {
+        if let cameraParameters = renderer.lastCameraParameters {
             let viewport = renderer.lastViewport
-            let hitBoxes = spriteHitBoxes(matrices: matrices, viewport: viewport)
+            let hitBoxes = spriteHitBoxes(cameraParameters: cameraParameters, viewport: viewport)
 
             for (objectID, rect) in hitBoxes {
                 guard rect.contains(screenPoint) else {
@@ -105,7 +106,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
     }
 
     private func spriteHitBoxes(
-        matrices: MetalMapRenderer.RenderMatrices,
+        cameraParameters: CameraParameters,
         viewport: CGRect
     ) -> [GameObjectID : CGRect] {
         guard viewport.width > 0, viewport.height > 0 else {
@@ -115,7 +116,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         var hitBoxes: [GameObjectID : CGRect] = [:]
         for drawable in renderer.spriteDrawables {
             guard drawable.isVisible,
-                  let rect = spriteHitBox(for: drawable, matrices: matrices, viewport: viewport) else {
+                  let rect = spriteHitBox(for: drawable, cameraParameters: cameraParameters, viewport: viewport) else {
                 continue
             }
             if let existing = hitBoxes[drawable.objectID] {
@@ -143,20 +144,20 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
 
     private func spriteHitBox(
         for drawable: SpriteLayerDrawable,
-        matrices: MetalMapRenderer.RenderMatrices,
+        cameraParameters: CameraParameters,
         viewport: CGRect
     ) -> CGRect? {
-        let pv = matrices.projectionMatrix * matrices.viewMatrix
+        let pv = cameraParameters.projectionMatrix * cameraParameters.viewMatrix
 
         let right = SIMD3<Float>(
-            matrices.viewMatrix[0][0],
-            matrices.viewMatrix[1][0],
-            matrices.viewMatrix[2][0]
+            cameraParameters.viewMatrix[0][0],
+            cameraParameters.viewMatrix[1][0],
+            cameraParameters.viewMatrix[2][0]
         )
         let up = SIMD3<Float>(
-            matrices.viewMatrix[0][1],
-            matrices.viewMatrix[1][1],
-            matrices.viewMatrix[2][1]
+            cameraParameters.viewMatrix[0][1],
+            cameraParameters.viewMatrix[1][1],
+            cameraParameters.viewMatrix[2][1]
         )
 
         let scale: Float = 1.0 / 32.0

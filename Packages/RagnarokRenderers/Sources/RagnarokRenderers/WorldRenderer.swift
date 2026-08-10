@@ -30,28 +30,20 @@ public final class WorldRenderer {
         resource: WorldRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        normalMatrix: simd_float3x3
+        cameraParameters: CameraParameters
     ) {
         renderGroundAndModels(
             resource: resource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
+            cameraParameters: cameraParameters
         )
 
         renderWater(
             resource: resource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix
+            cameraParameters: cameraParameters
         )
     }
 
@@ -59,29 +51,20 @@ public final class WorldRenderer {
         resource: WorldRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        normalMatrix: simd_float3x3
+        cameraParameters: CameraParameters
     ) {
         groundRenderer.render(
             resource: resource.groundResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
+            cameraParameters: cameraParameters
         )
 
         modelRenderer.render(
             resources: resource.modelResources,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
-            normalMatrix: normalMatrix
+            cameraParameters: cameraParameters
         )
     }
 
@@ -89,17 +72,13 @@ public final class WorldRenderer {
         resource: WorldRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4
+        cameraParameters: CameraParameters
     ) {
         waterRenderer.render(
             resource: resource.waterResource,
             atTime: time,
             renderCommandEncoder: renderCommandEncoder,
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix
+            cameraParameters: cameraParameters
         )
     }
 
@@ -108,10 +87,7 @@ public final class WorldRenderer {
         atTime time: TimeInterval,
         beforeEntities: Bool? = nil,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        cameraAzimuth: Float
+        cameraParameters: CameraParameters
     ) {
         for effectResource in resource.effectResources {
             if let beforeEntities, effectResource.rendersBeforeEntities != beforeEntities {
@@ -126,10 +102,7 @@ public final class WorldRenderer {
                 resourceGroup: effectResource,
                 atTime: time,
                 renderCommandEncoder: renderCommandEncoder,
-                modelMatrix: modelMatrix,
-                viewMatrix: viewMatrix,
-                projectionMatrix: projectionMatrix,
-                cameraAzimuth: cameraAzimuth
+                cameraParameters: cameraParameters
             )
         }
     }

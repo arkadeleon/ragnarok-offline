@@ -43,9 +43,7 @@ public final class WaterRenderer {
         resource: WaterRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4
+        cameraParameters: CameraParameters
     ) {
         let frame = Float(time * 60)
 
@@ -54,9 +52,9 @@ public final class WaterRenderer {
         }
 
         var vertexUniforms = WaterVertexUniforms(
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
+            modelMatrix: cameraParameters.modelMatrix,
+            viewMatrix: cameraParameters.viewMatrix,
+            projectionMatrix: cameraParameters.projectionMatrix,
             waveHeight: resource.waveHeight,
             wavePitch: resource.wavePitch,
             waterOffset: (frame * resource.waveSpeed).truncatingRemainder(dividingBy: 360) - 180

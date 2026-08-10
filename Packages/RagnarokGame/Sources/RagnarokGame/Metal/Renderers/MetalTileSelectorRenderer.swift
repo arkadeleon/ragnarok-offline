@@ -8,6 +8,7 @@
 import Foundation
 import Metal
 import QuartzCore
+import RagnarokRenderers
 import RagnarokShaders
 import simd
 
@@ -45,7 +46,7 @@ final class MetalTileSelectorRenderer {
         resource: TileSelectorRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        matrices: MetalMapRenderer.RenderMatrices
+        cameraParameters: CameraParameters
     ) {
         guard resource.vertexCount > 0 else {
             return
@@ -56,8 +57,8 @@ final class MetalTileSelectorRenderer {
         }
 
         var uniforms = TileVertexUniforms(
-            viewMatrix: matrices.viewMatrix,
-            projectionMatrix: matrices.projectionMatrix
+            viewMatrix: cameraParameters.viewMatrix,
+            projectionMatrix: cameraParameters.projectionMatrix
         )
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)

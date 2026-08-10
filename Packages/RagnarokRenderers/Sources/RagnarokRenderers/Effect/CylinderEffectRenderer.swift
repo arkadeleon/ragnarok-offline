@@ -34,21 +34,18 @@ public final class CylinderEffectRenderer {
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
-        modelMatrix: simd_float4x4,
-        viewMatrix: simd_float4x4,
-        projectionMatrix: simd_float4x4,
-        cameraAzimuth: Float
+        cameraParameters: CameraParameters
     ) {
-        guard let sample = resource.sample(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth),
+        guard let sample = resource.sample(elapsedTime: elapsedTime, cameraAzimuth: cameraParameters.cameraAzimuth),
               !resource.vertices.isEmpty,
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }
 
         var vertexUniforms = CylinderEffectVertexUniforms(
-            modelMatrix: modelMatrix,
-            viewMatrix: viewMatrix,
-            projectionMatrix: projectionMatrix,
+            modelMatrix: cameraParameters.modelMatrix,
+            viewMatrix: cameraParameters.viewMatrix,
+            projectionMatrix: cameraParameters.projectionMatrix,
             rotationMatrix: sample.rotationMatrix,
             worldPosition: worldPosition,
             positionOffset: resource.definition.positionOffset,
