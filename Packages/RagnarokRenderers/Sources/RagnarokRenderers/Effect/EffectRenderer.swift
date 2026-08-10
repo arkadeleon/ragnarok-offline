@@ -53,6 +53,8 @@ public final class EffectRenderer {
                     resource: resource,
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
+                    sourceWorldPosition: resourceGroup.sourceWorldPosition,
+                    targetWorldPosition: resourceGroup.worldPosition,
                     renderCommandEncoder: renderCommandEncoder,
                     cameraParameters: cameraParameters
                 )

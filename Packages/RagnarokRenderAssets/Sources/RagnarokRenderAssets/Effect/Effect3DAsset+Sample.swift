@@ -37,6 +37,8 @@ extension Effect3DAsset {
         forInstance instance: Effect3DAsset.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
+        sourceWorldPosition: SIMD3<Float>?,
+        targetWorldPosition: SIMD3<Float>,
         cameraAzimuth: Float
     ) -> Effect3DAsset.Sample? {
         guard !frames.isEmpty else {
@@ -49,7 +51,17 @@ extension Effect3DAsset {
 
         let progress = progress(elapsedTime: elapsedTime)
         let frame = frames[frameIndex(elapsedTime: elapsedTime)]
-        let mapOffset = animatedPosition(instance: instance, progress: progress)
+        let (positionStart, positionEnd) = movementPositions(
+            instance: instance,
+            sourceWorldPosition: sourceWorldPosition,
+            targetWorldPosition: targetWorldPosition
+        )
+        let mapOffset = animatedPosition(
+            instance: instance,
+            positionStart: positionStart,
+            positionEnd: positionEnd,
+            progress: progress
+        )
 
         let size = interpolate(
             instance.sizeStart,
@@ -78,6 +90,8 @@ extension Effect3DAsset {
                 color: color * layer.color,
                 rotationMatrix: rotationMatrix(
                     instance: instance,
+                    positionStart: positionStart,
+                    positionEnd: positionEnd,
                     progress: progress,
                     cameraAzimuth: cameraAzimuth,
                     layerAngle: layer.angle
@@ -122,13 +136,42 @@ extension Effect3DAsset {
         return Int(elapsedTime / definition.frameDelay) % frames.count
     }
 
-    private func animatedPosition(instance: Effect3DAsset.Instance, progress: Float) -> SIMD3<Float> {
+    private func movementPositions(
+        instance: Effect3DAsset.Instance,
+        sourceWorldPosition: SIMD3<Float>?,
+        targetWorldPosition: SIMD3<Float>
+    ) -> (start: SIMD3<Float>, end: SIMD3<Float>) {
+        var positionStart = instance.positionStart
+        var positionEnd = instance.positionEnd
+
+        // Resolve both movement endpoints relative to the effect's target
+        // position. Use a deterministic fallback when no source is available.
+        let sourceWorldPosition = sourceWorldPosition ?? targetWorldPosition + [-5, 5, 0]
+        let sourceOffset = sourceWorldPosition - targetWorldPosition
+
+        if definition.movesToSource {
+            positionStart = sourceOffset + instance.movementPositionStart
+            positionEnd = instance.movementPositionEnd
+        } else if definition.movesFromSource {
+            positionStart = instance.movementPositionStart
+            positionEnd = sourceOffset + instance.movementPositionEnd
+        }
+
+        return (positionStart, positionEnd)
+    }
+
+    private func animatedPosition(
+        instance: Effect3DAsset.Instance,
+        positionStart: SIMD3<Float>,
+        positionEnd: SIMD3<Float>,
+        progress: Float
+    ) -> SIMD3<Float> {
         let rotationDelay = definition.rotationDelay + definition.duplicate.rotationDelayDelta * TimeInterval(instance.duplicateID)
         let rotationPhase = progress * 100 * 3.5 * definition.rotationCount * .pi / 180 - Float(rotationDelay) * .pi / 2
 
         var position = interpolate(
-            instance.positionStart,
-            instance.positionEnd,
+            positionStart,
+            positionEnd,
             progress: progress,
             smoothAxes: definition.smoothPositionAxes
         )
@@ -145,15 +188,15 @@ extension Effect3DAsset {
 
         if definition.retreat != 0 {
             let direction = SIMD2<Float>(
-                instance.positionEnd.x - instance.positionStart.x,
-                instance.positionEnd.y - instance.positionStart.y
+                positionEnd.x - positionStart.x,
+                positionEnd.y - positionStart.y
             )
             let distance = simd_length(direction)
             if distance > 0.001 {
                 let normalized = direction / distance
                 let retreat = sin(progress * .pi) * definition.retreat
-                position.x = interpolate(instance.positionStart.x, instance.positionEnd.x, progress: progress, smooth: false) - normalized.x * retreat
-                position.y = interpolate(instance.positionStart.y, instance.positionEnd.y, progress: progress, smooth: false) - normalized.y * retreat
+                position.x = interpolate(positionStart.x, positionEnd.x, progress: progress, smooth: false) - normalized.x * retreat
+                position.y = interpolate(positionStart.y, positionEnd.y, progress: progress, smooth: false) - normalized.y * retreat
             }
         }
 
@@ -194,8 +237,19 @@ extension Effect3DAsset {
         return nil
     }
 
-    private func rotationMatrix(instance: Effect3DAsset.Instance, progress: Float, cameraAzimuth: Float, layerAngle: Float) -> simd_float4x4 {
+    private func rotationMatrix(
+        instance: Effect3DAsset.Instance,
+        positionStart: SIMD3<Float>,
+        positionEnd: SIMD3<Float>,
+        progress: Float,
+        cameraAzimuth: Float,
+        layerAngle: Float
+    ) -> simd_float4x4 {
         var angle = instance.baseAngle
+
+        if definition.rotatesToTarget {
+            angle += 90 - degrees(atan2(positionEnd.y - positionStart.y, positionEnd.x - positionStart.x))
+        }
 
         if definition.rotates {
             let targetAngle = definition.targetAngle ?? angle

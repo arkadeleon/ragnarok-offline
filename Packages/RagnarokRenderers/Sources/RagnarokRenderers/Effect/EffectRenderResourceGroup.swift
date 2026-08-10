@@ -14,6 +14,7 @@ public final class EffectRenderResourceGroup {
     public private(set) var creationTime: TimeInterval
     public let delay: TimeInterval
     public let worldPosition: SIMD3<Float>
+    public let sourceWorldPosition: SIMD3<Float>?
     public let resources: [EffectRenderResource]
 
     public var rendersBeforeEntities: Bool {
@@ -24,11 +25,13 @@ public final class EffectRenderResourceGroup {
         creationTime: TimeInterval,
         delay: TimeInterval,
         worldPosition: SIMD3<Float>,
+        sourceWorldPosition: SIMD3<Float>? = nil,
         resources: [EffectRenderResource]
     ) {
         self.creationTime = creationTime
         self.delay = delay
         self.worldPosition = worldPosition
+        self.sourceWorldPosition = sourceWorldPosition
         self.resources = resources
     }
 
@@ -37,7 +40,8 @@ public final class EffectRenderResourceGroup {
         assetGroup: EffectAssetGroup,
         creationTime: TimeInterval,
         delay: TimeInterval = 0,
-        worldPosition: SIMD3<Float> = .zero
+        worldPosition: SIMD3<Float> = .zero,
+        sourceWorldPosition: SIMD3<Float>? = nil
     ) {
         let resources = assetGroup.assets.flatMap { asset -> [EffectRenderResource] in
             switch asset {
@@ -83,7 +87,13 @@ public final class EffectRenderResourceGroup {
             }
         }
 
-        self.init(creationTime: creationTime, delay: delay, worldPosition: worldPosition, resources: resources)
+        self.init(
+            creationTime: creationTime,
+            delay: delay,
+            worldPosition: worldPosition,
+            sourceWorldPosition: sourceWorldPosition,
+            resources: resources
+        )
     }
 
     public func restart(atTime time: TimeInterval) {

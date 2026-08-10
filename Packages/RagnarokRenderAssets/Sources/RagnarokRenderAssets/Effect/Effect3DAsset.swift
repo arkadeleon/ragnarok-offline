@@ -18,6 +18,8 @@ public struct Effect3DAsset: Sendable {
         public let delay: TimeInterval
         public let positionStart: SIMD3<Float>
         public let positionEnd: SIMD3<Float>
+        public let movementPositionStart: SIMD3<Float>
+        public let movementPositionEnd: SIMD3<Float>
         public let sizeStart: SIMD2<Float>
         public let sizeEnd: SIMD2<Float>
         public let baseAngle: Float
@@ -35,6 +37,10 @@ public struct Effect3DAsset: Sendable {
 
             var positionStart = definition.positionStart
             var positionEnd = definition.positionEnd
+            var movementPositionStart = definition.offset
+            var movementPositionEnd = definition.offset
+            movementPositionStart.z += definition.zOffsetStart
+            movementPositionEnd.z += definition.zOffsetEnd
 
             if let range = definition.positionXRandomRange {
                 let random = Float.random(in: range)
@@ -66,23 +72,35 @@ public struct Effect3DAsset: Sendable {
             }
 
             if let range = definition.positionStartXRandomRange {
-                positionStart.x = Float.random(in: range)
+                let random = Float.random(in: range)
+                positionStart.x = random
+                movementPositionStart.x += random
             }
             if let range = definition.positionStartYRandomRange {
-                positionStart.y = Float.random(in: range)
+                let random = Float.random(in: range)
+                positionStart.y = random
+                movementPositionStart.y += random
             }
             if let range = definition.positionStartZRandomRange {
-                positionStart.z = Float.random(in: range)
+                let random = Float.random(in: range)
+                positionStart.z = random
+                movementPositionStart.z += random
             }
 
             if let range = definition.positionEndXRandomRange {
-                positionEnd.x = Float.random(in: range)
+                let random = Float.random(in: range)
+                positionEnd.x = random
+                movementPositionEnd.x += random
             }
             if let range = definition.positionEndYRandomRange {
-                positionEnd.y = Float.random(in: range)
+                let random = Float.random(in: range)
+                positionEnd.y = random
+                movementPositionEnd.y += random
             }
             if let range = definition.positionEndZRandomRange {
-                positionEnd.z = Float.random(in: range)
+                let random = Float.random(in: range)
+                positionEnd.z = random
+                movementPositionEnd.z += random
             }
 
             positionStart += definition.offset
@@ -92,6 +110,8 @@ public struct Effect3DAsset: Sendable {
 
             self.positionStart = positionStart
             self.positionEnd = positionEnd
+            self.movementPositionStart = movementPositionStart
+            self.movementPositionEnd = movementPositionEnd
 
             var sizeStart = definition.sizeStart ?? definition.size
             var sizeEnd = definition.sizeEnd ?? definition.size
@@ -116,11 +136,7 @@ public struct Effect3DAsset: Sendable {
             self.sizeStart = sizeStart
             self.sizeEnd = sizeEnd
 
-            var baseAngle = definition.angle
-            if definition.rotatesToTarget {
-                baseAngle += 90 - degrees(atan2(positionEnd.y - positionStart.y, positionEnd.x - positionStart.x))
-            }
-            self.baseAngle = baseAngle
+            self.baseAngle = definition.angle
         }
     }
 

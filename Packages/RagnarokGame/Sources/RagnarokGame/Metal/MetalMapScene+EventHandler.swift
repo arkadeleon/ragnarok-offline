@@ -632,6 +632,7 @@ extension MetalMapScene {
                     for: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
+                    sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: .milliseconds(200 * i)
@@ -656,6 +657,7 @@ extension MetalMapScene {
                     for: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
+                    sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
@@ -680,6 +682,7 @@ extension MetalMapScene {
                 for: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
+                sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil,
                 delay: .milliseconds(objectSkill.attackDelay)
@@ -691,6 +694,7 @@ extension MetalMapScene {
         for effectReference: EffectReference,
         creationTime: TimeInterval,
         gridPosition: SIMD2<Int>,
+        sourceWorldPosition: SIMD3<Float>? = nil,
         targetObjectID: GameObjectID?,
         ownerObjectID: GameObjectID?,
         delay: TimeInterval
@@ -699,6 +703,7 @@ extension MetalMapScene {
             reference: effectReference,
             creationTime: creationTime,
             worldPosition: mapGrid.worldPosition(for: gridPosition),
+            sourceWorldPosition: sourceWorldPosition,
             targetObjectID: targetObjectID,
             delay: delay
         )
@@ -742,7 +747,8 @@ extension MetalMapScene {
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,
                     delay: effect.delay,
-                    worldPosition: effect.worldPosition
+                    worldPosition: effect.worldPosition,
+                    sourceWorldPosition: effect.sourceWorldPosition
                 )
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.reference): \(error)")

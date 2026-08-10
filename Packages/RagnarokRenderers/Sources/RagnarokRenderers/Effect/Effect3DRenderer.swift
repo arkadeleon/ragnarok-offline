@@ -39,11 +39,19 @@ public final class Effect3DRenderer {
         resource: Effect3DRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
+        sourceWorldPosition: SIMD3<Float>?,
+        targetWorldPosition: SIMD3<Float>,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         cameraParameters: CameraParameters
     ) {
-        guard let sample = resource.sample(forElapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: cameraParameters.cameraAzimuth),
-              let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
+        let sample = resource.sample(
+            forElapsedTime: elapsedTime,
+            worldPosition: worldPosition,
+            sourceWorldPosition: sourceWorldPosition,
+            targetWorldPosition: targetWorldPosition,
+            cameraAzimuth: cameraParameters.cameraAzimuth
+        )
+        guard let sample, let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }
 

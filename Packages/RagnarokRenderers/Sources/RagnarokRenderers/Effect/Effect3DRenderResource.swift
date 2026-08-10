@@ -46,11 +46,19 @@ public final class Effect3DRenderResource {
         asset.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
-    func sample(forElapsedTime elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Effect3DAsset.Sample? {
+    func sample(
+        forElapsedTime elapsedTime: TimeInterval,
+        worldPosition: SIMD3<Float>,
+        sourceWorldPosition: SIMD3<Float>?,
+        targetWorldPosition: SIMD3<Float>,
+        cameraAzimuth: Float
+    ) -> Effect3DAsset.Sample? {
         asset.sample(
             forInstance: instance,
             elapsedTime: elapsedTime,
             worldPosition: worldPosition,
+            sourceWorldPosition: sourceWorldPosition,
+            targetWorldPosition: targetWorldPosition,
             cameraAzimuth: cameraAzimuth
         )
     }
