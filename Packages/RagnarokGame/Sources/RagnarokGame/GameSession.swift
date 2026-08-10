@@ -874,40 +874,24 @@ final public class GameSession {
             mapScene?.onMapObjectHealthUpdated(objectID: packet.GID, hp: Int(packet.HP), maxHp: Int(packet.maxHP))
         case let packet as PACKET_ZC_SAY_DIALOG:
             if dialog?.npcID == packet.NpcID {
-                dialog?.clearIfNeeded()
-                dialog?.append(message: packet.message)
+                dialog?.update(from: packet)
             } else {
-                dialog = NPCDialog(npcID: packet.NpcID, message: packet.message)
+                dialog = NPCDialog(from: packet)
             }
         case let packet as PACKET_ZC_WAIT_DIALOG:
-            if dialog?.npcID == packet.NpcID {
-                dialog?.action = .next
-            }
+            dialog?.update(from: packet)
         case let packet as PACKET_ZC_CLOSE_DIALOG:
-            if dialog?.npcID == packet.npcId {
-                dialog?.action = .close
-                dialog?.menu = nil
-                dialog?.input = nil
-            }
+            dialog?.update(from: packet)
         case let packet as PACKET_ZC_CLEAR_DIALOG:
             if dialog?.npcID == packet.GID {
                 dialog = nil
             }
         case let packet as PACKET_ZC_MENU_LIST:
-            if dialog?.npcID == packet.npcId {
-                dialog?.action = nil
-                dialog?.menu = packet.menu.split(separator: ":").map(String.init)
-            }
+            dialog?.update(from: packet)
         case let packet as PACKET_ZC_OPEN_EDITDLG:
-            if dialog?.npcID == packet.npcId {
-                dialog?.action = nil
-                dialog?.input = .number
-            }
+            dialog?.update(from: packet)
         case let packet as PACKET_ZC_OPEN_EDITDLGSTR:
-            if dialog?.npcID == packet.npcId {
-                dialog?.action = nil
-                dialog?.input = .text
-            }
+            dialog?.update(from: packet)
         case _ as PACKET_ZC_SHOW_IMAGE:
             break
         case _ as PACKET_ZC_COMPASS:
@@ -1204,8 +1188,8 @@ final public class GameSession {
         let packet = PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: npcID)
         mapClient.sendPacket(packet)
 
-        dialog?.setNeedsClear()
-        dialog?.action = nil
+        dialog?.setNeedsClearMessage()
+        dialog?.clearAction()
     }
 
     func closeDialog() {
@@ -1224,7 +1208,7 @@ final public class GameSession {
             return
         }
 
-        dialog?.menu = nil
+        dialog?.clearMenu()
 
         let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: npcID, select: select)
         mapClient.sendPacket(packet)
@@ -1249,7 +1233,7 @@ final public class GameSession {
         let packet = PacketFactory.CZ_INPUT_EDITDLG(npcID: npcID, value: value)
         mapClient.sendPacket(packet)
 
-        dialog?.input = nil
+        dialog?.clearInput()
     }
 
     func confirmInput(_ value: String) {
@@ -1260,7 +1244,7 @@ final public class GameSession {
         let packet = PacketFactory.CZ_INPUT_EDITDLGSTR(npcID: npcID, value: value)
         mapClient.sendPacket(packet)
 
-        dialog?.input = nil
+        dialog?.clearInput()
     }
 }
 
