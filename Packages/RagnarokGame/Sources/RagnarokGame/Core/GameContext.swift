@@ -7,6 +7,7 @@
 
 import Observation
 import RagnarokLocalization
+import RagnarokModels
 import RagnarokResources
 
 @MainActor
@@ -20,7 +21,7 @@ final class GameContext {
     let skillInfoTable: SkillInfoTable
 
     var playerStatus: CharacterStatus
-    let inventory: Inventory
+    var inventory: Inventory
     let skillList: SkillList
     let messageCenter: MessageCenter
 

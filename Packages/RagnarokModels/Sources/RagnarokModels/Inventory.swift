@@ -1,59 +1,59 @@
 //
 //  Inventory.swift
-//  RagnarokGame
+//  RagnarokModels
 //
 //  Created by Leon Li on 2025/4/10.
 //
 
-import Observation
 import RagnarokConstants
-import RagnarokModels
 import RagnarokPackets
 
-@Observable
-final class Inventory {
-    var items: [Int : InventoryItem] = [:]
+public struct Inventory {
+    public var items: [Int : InventoryItem] = [:]
 
-    var usableItems: [InventoryItem] {
+    public var usableItems: [InventoryItem] {
         let usableItems = items.values.filter(\.isUsable)
         return usableItems.sorted()
     }
 
-    var equipItems: [InventoryItem] {
+    public var equipItems: [InventoryItem] {
         let equipItems = items.values.filter(\.isEquippable)
         return equipItems.sorted()
     }
 
-    var etcItems: [InventoryItem] {
+    public var etcItems: [InventoryItem] {
         let etcItems = items.values.filter(\.isEtc)
         return etcItems.sorted()
     }
 
-    func item(equippedAt location: EquipPositions) -> InventoryItem? {
+    public init() {
+    }
+
+    public func item(equippedAt location: EquipPositions) -> InventoryItem? {
         items.values.first {
             $0.equippedLocation.contains(location)
         }
     }
 
-    func append(item: InventoryItem) {
+    public mutating func append(item: InventoryItem) {
         items[item.index] = item
     }
 
-    func update(from packet: packet_itemlist_normal) {
+    public mutating func update(from packet: packet_itemlist_normal) {
         let items = packet.list.map { InventoryItem(from: $0) }
         for item in items {
             self.items[item.index] = item
         }
     }
 
-    func update(from packet: packet_itemlist_equip) {
+    public mutating func update(from packet: packet_itemlist_equip) {
         let items = packet.list.map { InventoryItem(from: $0) }
         for item in items {
             self.items[item.index] = item
         }
     }
 
-    func update(from packet: PACKET_ZC_ITEM_PICKUP_ACK) {
+    public mutating func update(from packet: PACKET_ZC_ITEM_PICKUP_ACK) {
         guard packet.result == 0 else {
             return
         }
@@ -76,7 +76,7 @@ final class Inventory {
         }
     }
 
-    func update(from packet: PACKET_ZC_USE_ITEM_ACK) {
+    public mutating func update(from packet: PACKET_ZC_USE_ITEM_ACK) {
         let usedItem = UsedItem(from: packet)
         if var item = items[usedItem.index] {
             item.amount = usedItem.amount
@@ -84,7 +84,7 @@ final class Inventory {
         }
     }
 
-    func update(from packet: PACKET_ZC_REQ_WEAR_EQUIP_ACK) {
+    public mutating func update(from packet: PACKET_ZC_REQ_WEAR_EQUIP_ACK) {
         guard let flag = ItemEquipAcknowledgeFlag(rawValue: Int(packet.result)), flag == .ok else {
             return
         }
@@ -94,7 +94,7 @@ final class Inventory {
         items[index]?.equippedLocation = location
     }
 
-    func update(from packet: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK) {
+    public mutating func update(from packet: PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK) {
         guard let flag = ItemEquipAcknowledgeFlag(rawValue: Int(packet.flag)), flag == .ok else {
             return
         }
@@ -103,7 +103,7 @@ final class Inventory {
         items[index]?.equippedLocation = EquipPositions(rawValue: 0)
     }
 
-    func update(from packet: PACKET_ZC_ITEM_THROW_ACK) {
+    public mutating func update(from packet: PACKET_ZC_ITEM_THROW_ACK) {
         let index = Int(packet.index)
         let amount = Int(packet.count)
         guard amount > 0, var item = items[index] else {
@@ -118,7 +118,7 @@ final class Inventory {
         }
     }
 
-    func update(from packet: PACKET_ZC_EQUIP_ARROW) {
+    public mutating func update(from packet: PACKET_ZC_EQUIP_ARROW) {
         for key in items.keys where items[key]?.equippedLocation == .ammo {
             items[key]?.equippedLocation = EquipPositions(rawValue: 0)
         }
@@ -127,7 +127,7 @@ final class Inventory {
         items[index]?.equippedLocation = .ammo
     }
 
-    func update(from packet: PACKET_ZC_DELETE_ITEM_FROM_BODY) {
+    public mutating func update(from packet: PACKET_ZC_DELETE_ITEM_FROM_BODY) {
         let index = Int(packet.index)
         let amount = Int(packet.count)
         guard amount > 0, var item = items[index] else {
