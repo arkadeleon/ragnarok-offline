@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2025/4/8.
 //
 
+import RagnarokModels
 import SwiftUI
 
 struct StatusView: View {

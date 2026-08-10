@@ -1,77 +1,74 @@
 //
 //  CharacterStatus.swift
-//  RagnarokGame
+//  RagnarokModels
 //
 //  Created by Leon Li on 2024/12/13.
 //
 
-import Observation
 import RagnarokConstants
-import RagnarokModels
 import RagnarokPackets
 
-@Observable
-final class CharacterStatus {
-    var hp = 0
-    var maxHp = 0
-    var sp = 0
-    var maxSp = 0
+public struct CharacterStatus {
+    public var hp = 0
+    public var maxHp = 0
+    public var sp = 0
+    public var maxSp = 0
 
-    var baseLevel = 0
-    var baseExp = 0
-    var baseExpNext = 0
+    public var baseLevel = 0
+    public var baseExp = 0
+    public var baseExpNext = 0
 
-    var jobLevel = 0
-    var jobExp = 0
-    var jobExpNext = 0
+    public var jobLevel = 0
+    public var jobExp = 0
+    public var jobExpNext = 0
 
-    var weight = 0
-    var maxWeight = 0
+    public var weight = 0
+    public var maxWeight = 0
 
-    var zeny = 0
+    public var zeny = 0
 
-    var str = 0
-    var str2 = 0
-    var str3 = 0
-    var agi = 0
-    var agi2 = 0
-    var agi3 = 0
-    var vit = 0
-    var vit2 = 0
-    var vit3 = 0
-    var int = 0
-    var int2 = 0
-    var int3 = 0
-    var dex = 0
-    var dex2 = 0
-    var dex3 = 0
-    var luk = 0
-    var luk2 = 0
-    var luk3 = 0
+    public var str = 0
+    public var str2 = 0
+    public var str3 = 0
+    public var agi = 0
+    public var agi2 = 0
+    public var agi3 = 0
+    public var vit = 0
+    public var vit2 = 0
+    public var vit3 = 0
+    public var int = 0
+    public var int2 = 0
+    public var int3 = 0
+    public var dex = 0
+    public var dex2 = 0
+    public var dex3 = 0
+    public var luk = 0
+    public var luk2 = 0
+    public var luk3 = 0
 
-    var atk = 0
-    var atk2 = 0
-    var def = 0
-    var def2 = 0
-    var matk = 0
-    var matk2 = 0
-    var mdef = 0
-    var mdef2 = 0
-    var hit = 0
-    var flee = 0
-    var flee2 = 0
-    var critical = 0
-    var aspd = 0
-    var statusPoint = 0
+    public var atk = 0
+    public var atk2 = 0
+    public var def = 0
+    public var def2 = 0
+    public var matk = 0
+    public var matk2 = 0
+    public var mdef = 0
+    public var mdef2 = 0
+    public var hit = 0
+    public var flee = 0
+    public var flee2 = 0
+    public var critical = 0
+    public var aspd = 0
+    public var statusPoint = 0
 
-    var skillPoint = 0
+    public var skillPoint = 0
 
-    var attackRange = 0
+    public var attackRange = 0
 
-    init() {
+    public init() {
     }
 
-    init(from character: CharacterInfo) {
+    public init(from character: CharacterInfo) {
         hp = character.hp
         maxHp = character.maxHp
         sp = character.sp
@@ -93,7 +90,7 @@ final class CharacterStatus {
         luk = character.luk
     }
 
-    func update(from basicStatus: CharacterBasicStatus) {
+    public mutating func update(from basicStatus: CharacterBasicStatus) {
         str = basicStatus.str
         str3 = basicStatus.str3
         agi = basicStatus.agi
@@ -123,7 +120,7 @@ final class CharacterStatus {
         statusPoint = basicStatus.statusPoint
     }
 
-    func update(property: StatusProperty, value: Int) {
+    public mutating func update(property: StatusProperty, value: Int) {
         switch property {
         case .hp:
             hp = value
@@ -198,7 +195,7 @@ final class CharacterStatus {
         }
     }
 
-    func update(property: StatusProperty, value: Int, value2: Int) {
+    public mutating func update(property: StatusProperty, value: Int, value2: Int) {
         switch property {
         case .str:
             str = value
@@ -223,7 +220,7 @@ final class CharacterStatus {
         }
     }
 
-    func update(from packet: PACKET_ZC_ATTACK_RANGE) {
+    public mutating func update(from packet: PACKET_ZC_ATTACK_RANGE) {
         attackRange = Int(packet.currentAttRange)
     }
 }
