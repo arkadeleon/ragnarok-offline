@@ -22,7 +22,7 @@ final class GameContext {
 
     var playerStatus: CharacterStatus
     var inventory: Inventory
-    let skillList: SkillList
+    var skillList: SkillList
     let messageCenter: MessageCenter
 
     init(resourceManager: ResourceManager) {
