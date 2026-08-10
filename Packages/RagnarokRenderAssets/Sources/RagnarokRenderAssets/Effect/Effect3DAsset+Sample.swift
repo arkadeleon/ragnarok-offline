@@ -149,10 +149,10 @@ extension Effect3DAsset {
         let sourceWorldPosition = sourceWorldPosition ?? targetWorldPosition + [-5, 5, 0]
         let sourceOffset = sourceWorldPosition - targetWorldPosition
 
-        if definition.movesToSource {
+        if definition.movesFromSource {
             positionStart = sourceOffset + instance.movementPositionStart
             positionEnd = instance.movementPositionEnd
-        } else if definition.movesFromSource {
+        } else if definition.movesToSource {
             positionStart = instance.movementPositionStart
             positionEnd = sourceOffset + instance.movementPositionEnd
         }

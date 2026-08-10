@@ -558,6 +558,23 @@ public enum EffectTable {
     ]
 
     private static let namedTable: [String : [EffectDefinition]] = [
+        "ef_arrow_projectile": [
+            .`3D`(
+                spriteName: "npc\\skel_archer_arrow",
+                duration: 0.14,
+                attachedToTarget: true,
+                zIndex: 1,
+                alphaMax: 1,
+                fadesIn: true,
+                fadesOut: true,
+                offset: [0, 0, 1],
+                movesFromSource: true,
+                size: [100, 100],
+                angle: 180,
+                rotatesToTarget: true,
+                rotatesWithCamera: true
+            ),
+        ],
         "ef_firebolt": [
             .`3D`(
                 fileNames: [

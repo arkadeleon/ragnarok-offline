@@ -359,6 +359,7 @@ extension MetalMapScene {
             refreshSpriteDrawables()
         }
 
+        addArrowProjectileEffect(for: objectAction)
         addCombatTexts(for: objectAction, now: now)
         playSound(for: objectAction)
     }
@@ -616,6 +617,33 @@ extension MetalMapScene {
 // MARK: - Effect
 
 extension MetalMapScene {
+    private func addArrowProjectileEffect(for objectAction: MapObjectAction) {
+        let isAttackAction = switch objectAction.type {
+        case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
+            true
+        default:
+            false
+        }
+
+        guard isAttackAction,
+              let sourceObject = objects[objectAction.sourceObjectID],
+              let targetObject = objects[objectAction.targetObjectID],
+              SpriteJob(rawValue: sourceObject.job).isPlayer,
+              ItemWeaponTypeTable.weaponType(for: sourceObject.weapon) == .w_bow else {
+            return
+        }
+
+        addEffect(
+            for: .name("ef_arrow_projectile"),
+            creationTime: CACurrentMediaTime(),
+            gridPosition: targetObject.gridPosition,
+            sourceWorldPosition: sourceObject.worldPosition,
+            targetObjectID: targetObject.objectID,
+            ownerObjectID: nil,
+            delay: .milliseconds(objectAction.sourceSpeed)
+        )
+    }
+
     private func addSkillBeforeHitEffects(for objectSkill: MapObjectSkill) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,

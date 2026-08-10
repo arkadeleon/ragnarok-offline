@@ -8,7 +8,7 @@
 import RagnarokConstants
 
 // Generated from rAthena's item_db_equip.yml (pre-re + re, merged).
-enum ItemWeaponTypeTable {
+public enum ItemWeaponTypeTable {
     private static let table: [Int : WeaponType] = [
         1100: .w_1hsword,
         1101: .w_1hsword,
@@ -2818,7 +2818,7 @@ enum ItemWeaponTypeTable {
         840039: .w_grenade,
     ]
 
-    static func weaponType(for itemID: Int) -> WeaponType? {
+    public static func weaponType(for itemID: Int) -> WeaponType? {
         table[itemID]
     }
 }
