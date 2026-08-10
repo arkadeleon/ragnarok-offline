@@ -48,9 +48,9 @@ extension MetalMapScene {
 
         refreshSpriteDrawables()
 
-        let combatText = MetalCombatText(
+        let combatText = CombatText(
             creationTime: .now,
-            target: MetalCombatText.Target(objectID: player.objectID, isPlayer: true),
+            target: CombatText.Target(objectID: player.objectID, isPlayer: true),
             amount: recovered,
             kind: .hpRecovery,
             delay: .zero
@@ -66,9 +66,9 @@ extension MetalMapScene {
 
         refreshSpriteDrawables()
 
-        let combatText = MetalCombatText(
+        let combatText = CombatText(
             creationTime: .now,
-            target: MetalCombatText.Target(objectID: player.objectID, isPlayer: true),
+            target: CombatText.Target(objectID: player.objectID, isPlayer: true),
             amount: recovered,
             kind: .spRecovery,
             delay: .zero
@@ -381,9 +381,9 @@ extension MetalMapScene {
         }
 
         if objectSkill.isHealingSkill, let targetObject = objects[objectSkill.targetObjectID] {
-            let combatText = MetalCombatText(
+            let combatText = CombatText(
                 creationTime: now,
-                target: MetalCombatText.Target(
+                target: CombatText.Target(
                     objectID: objectSkill.targetObjectID,
                     isPlayer: targetObject.type == .pc
                 ),
@@ -399,13 +399,13 @@ extension MetalMapScene {
         if objectSkill.damage >= 0 {
             let count = objectSkill.count
             let damage = objectSkill.damage
-            let target = MetalCombatText.Target(
+            let target = CombatText.Target(
                 objectID: objectSkill.targetObjectID,
                 isPlayer: objects[objectSkill.targetObjectID]?.type == .pc
             )
 
             for i in 0..<count {
-                let combatText = MetalCombatText(
+                let combatText = CombatText(
                     creationTime: now,
                     target: target,
                     amount: damage / count,
@@ -526,14 +526,14 @@ extension MetalMapScene {
 
 extension MetalMapScene {
     private func addCombatTexts(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
-        let target = MetalCombatText.Target(
+        let target = CombatText.Target(
             objectID: objectAction.targetObjectID,
             isPlayer: objects[objectAction.targetObjectID]?.type == .pc
         )
 
         switch objectAction.type {
         case .normal, .endure, .critical:
-            let combatText = MetalCombatText(
+            let combatText = CombatText(
                 creationTime: now,
                 target: target,
                 amount: objectAction.damage,
@@ -542,7 +542,7 @@ extension MetalMapScene {
             renderCombatText(combatText)
 
             if objectAction.damage2 > 0 {
-                let combatText2 = MetalCombatText(
+                let combatText2 = CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage2,
@@ -553,7 +553,7 @@ extension MetalMapScene {
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
             if count == 2 {
-                let combatText = MetalCombatText(
+                let combatText = CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
@@ -562,7 +562,7 @@ extension MetalMapScene {
                 renderCombatText(combatText)
             }
             if objectAction.damage2 > 0 {
-                let combatText = MetalCombatText(
+                let combatText = CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
@@ -570,7 +570,7 @@ extension MetalMapScene {
                 )
                 renderCombatText(combatText)
 
-                let combatText2 = MetalCombatText(
+                let combatText2 = CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage2,
@@ -578,7 +578,7 @@ extension MetalMapScene {
                 )
                 renderCombatText(combatText2)
             } else {
-                let combatText = MetalCombatText(
+                let combatText = CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
@@ -591,7 +591,7 @@ extension MetalMapScene {
         }
     }
 
-    private func renderCombatText(_ combatText: MetalCombatText) {
+    private func renderCombatText(_ combatText: CombatText) {
         guard let combatTextSpriteSet else {
             return
         }

@@ -48,9 +48,9 @@ extension RealityMapScene {
     public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
         objectEntities[player.objectID]?.components[HealthPointsComponent.self]?.hp = current
 
-        let combatText = MapSceneCombatText(
+        let combatText = CombatText(
             creationTime: .now,
-            target: MapSceneCombatText.Target(objectID: player.objectID, isPlayer: true),
+            target: CombatText.Target(objectID: player.objectID, isPlayer: true),
             amount: recovered,
             kind: .hpRecovery,
             delay: .zero
@@ -61,9 +61,9 @@ extension RealityMapScene {
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
         objectEntities[player.objectID]?.components[SpellPointsComponent.self]?.sp = current
 
-        let combatText = MapSceneCombatText(
+        let combatText = CombatText(
             creationTime: .now,
-            target: MapSceneCombatText.Target(objectID: player.objectID, isPlayer: true),
+            target: CombatText.Target(objectID: player.objectID, isPlayer: true),
             amount: recovered,
             kind: .spRecovery,
             delay: .zero
@@ -191,9 +191,9 @@ extension RealityMapScene {
 
         if objectSkill.isHealingSkill, let targetEntity = objectEntities[objectSkill.targetObjectID] {
             let isPlayer = targetEntity.components[MapObjectComponent.self]?.object.type == .pc
-            let combatText = MapSceneCombatText(
+            let combatText = CombatText(
                 creationTime: .now,
-                target: MapSceneCombatText.Target(objectID: objectSkill.targetObjectID, isPlayer: isPlayer),
+                target: CombatText.Target(objectID: objectSkill.targetObjectID, isPlayer: isPlayer),
                 amount: objectSkill.level,
                 kind: .hpRecovery,
                 delay: .zero
@@ -211,9 +211,9 @@ extension RealityMapScene {
         let count = max(1, objectSkill.count)
         let damage = objectSkill.damage
         let isPlayer = objectEntities[objectSkill.targetObjectID]?.components[MapObjectComponent.self]?.object.type == .pc
-        let target = MapSceneCombatText.Target(objectID: objectSkill.targetObjectID, isPlayer: isPlayer)
+        let target = CombatText.Target(objectID: objectSkill.targetObjectID, isPlayer: isPlayer)
         for i in 0..<count {
-            let combatText = MapSceneCombatText(
+            let combatText = CombatText(
                 creationTime: now,
                 target: target,
                 amount: damage / count,
@@ -264,7 +264,7 @@ extension RealityMapScene {
 // MARK: - Combat Text
 
 extension RealityMapScene {
-    private func addCombatText(_ combatText: MapSceneCombatText) {
+    private func addCombatText(_ combatText: CombatText) {
         let entity = Entity.makeCombatTextEntity(for: combatText)
         if var component = entity.components[CombatTextComponent.self],
            let targetEntity = objectEntities[combatText.target.objectID] {
@@ -277,19 +277,19 @@ extension RealityMapScene {
     private func addCombatTexts(for objectAction: MapObjectAction) {
         let now = ContinuousClock.now
         let isPlayer = objectEntities[objectAction.targetObjectID]?.components[MapObjectComponent.self]?.object.type == .pc
-        let target = MapSceneCombatText.Target(objectID: objectAction.targetObjectID, isPlayer: isPlayer)
+        let target = CombatText.Target(objectID: objectAction.targetObjectID, isPlayer: isPlayer)
         let speed = objectAction.sourceSpeed
 
         switch objectAction.type {
         case .normal, .endure, .critical:
-            addCombatText(MapSceneCombatText(
+            addCombatText(CombatText(
                 creationTime: now,
                 target: target,
                 amount: objectAction.damage,
                 delay: .milliseconds(speed)
             ))
             if objectAction.damage2 > 0 {
-                addCombatText(MapSceneCombatText(
+                addCombatText(CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage2,
@@ -299,7 +299,7 @@ extension RealityMapScene {
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
             if count == 2 {
-                addCombatText(MapSceneCombatText(
+                addCombatText(CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
@@ -307,20 +307,20 @@ extension RealityMapScene {
                 ))
             }
             if objectAction.damage2 > 0 {
-                addCombatText(MapSceneCombatText(
+                addCombatText(CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,
                     delay: .milliseconds(speed) + .milliseconds(200 / 2)
                 ))
-                addCombatText(MapSceneCombatText(
+                addCombatText(CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage2,
                     delay: .milliseconds(speed) + .milliseconds(200 * 1.75)
                 ))
             } else {
-                addCombatText(MapSceneCombatText(
+                addCombatText(CombatText(
                     creationTime: now,
                     target: target,
                     amount: objectAction.damage / count,

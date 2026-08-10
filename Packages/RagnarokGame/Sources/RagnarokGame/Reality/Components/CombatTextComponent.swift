@@ -9,7 +9,7 @@ import Foundation
 import RealityKit
 
 struct CombatTextComponent: Component {
-    var combatText: MapSceneCombatText
+    var combatText: CombatText
     var color: Material.Color
 
     var elapsedTime: TimeInterval = 0
@@ -19,7 +19,7 @@ struct CombatTextComponent: Component {
 }
 
 extension Entity {
-    static func makeCombatTextEntity(for combatText: MapSceneCombatText) -> Entity {
+    static func makeCombatTextEntity(for combatText: CombatText) -> Entity {
         let combatTextComponent = switch combatText.kind {
         case .miss:
             CombatTextComponent(
