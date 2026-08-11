@@ -75,5 +75,6 @@ struct EffectViewer: View {
             .presentationSizing(.form)
             .adaptiveNavigationTransition(sourceID: "effect", in: effectNamespace)
         }
+        .preferredColorScheme(.dark)
     }
 }

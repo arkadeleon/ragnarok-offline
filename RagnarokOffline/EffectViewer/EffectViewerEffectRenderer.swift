@@ -50,6 +50,7 @@ class EffectViewerEffectRenderer: Renderer {
         commandBuffer: any MTLCommandBuffer,
         renderPassDescriptor: MTLRenderPassDescriptor
     ) {
+        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
