@@ -14,6 +14,7 @@ public struct CylinderEffectAsset: Sendable {
     public struct Instance: Sendable {
         public let duplicateID: Int
         public let delay: TimeInterval
+        public let rotationDegrees: SIMD3<Float>
 
         init(definition: CylinderEffectDefinition, duplicateID: Int) {
             self.duplicateID = duplicateID
@@ -24,11 +25,22 @@ public struct CylinderEffectAsset: Sendable {
                 + definition.delayLate
                 + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                 + definition.duplicate.interval * TimeInterval(duplicateID)
+
+            var rotationDegrees = definition.rotationDegrees
+            if let range = definition.rotationXRandomRange {
+                rotationDegrees.x += Float.random(in: range)
+            }
+            if let range = definition.rotationYRandomRange {
+                rotationDegrees.y += Float.random(in: range)
+            }
+            if let range = definition.rotationZRandomRange {
+                rotationDegrees.z += Float.random(in: range)
+            }
+            self.rotationDegrees = rotationDegrees
         }
     }
 
     public let definition: CylinderEffectDefinition
-    public let rotationDegrees: SIMD3<Float>
     public let vertices: [CylinderEffectVertex]
     public let textureImage: CGImage
 
@@ -39,17 +51,6 @@ public struct CylinderEffectAsset: Sendable {
     }
 
     static func load(with definition: CylinderEffectDefinition, using resourceManager: ResourceManager) async throws -> CylinderEffectAsset {
-        var rotationDegrees = definition.rotationDegrees
-        if let range = definition.rotationXRandomRange {
-            rotationDegrees.x += Float.random(in: range)
-        }
-        if let range = definition.rotationYRandomRange {
-            rotationDegrees.y += Float.random(in: range)
-        }
-        if let range = definition.rotationZRandomRange {
-            rotationDegrees.z += Float.random(in: range)
-        }
-
         let texturePath = ResourcePath.effectDirectory
             .appending(definition.textureName)
             .appendingPathExtension("tga")
@@ -57,7 +58,6 @@ public struct CylinderEffectAsset: Sendable {
 
         let asset = CylinderEffectAsset(
             definition: definition,
-            rotationDegrees: rotationDegrees,
             vertices: makeVertices(
                 totalCircleSides: definition.totalCircleSides,
                 visibleCircleSides: definition.visibleCircleSides,

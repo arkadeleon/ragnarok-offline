@@ -100,17 +100,26 @@ extension CylinderEffectAsset {
             bottomRadius: max(bottomRadius, 0),
             height: max(height, 0),
             color: SIMD4<Float>(definition.color, alpha),
-            rotationMatrix: rotationMatrix(elapsedTime: elapsedTime, cameraAzimuth: cameraAzimuth)
+            rotationMatrix: rotationMatrix(
+                forInstance: instance,
+                elapsedTime: elapsedTime,
+                cameraAzimuth: cameraAzimuth
+            )
         )
     }
 
-    private func rotationMatrix(elapsedTime: TimeInterval, cameraAzimuth: Float) -> simd_float4x4 {
+    private func rotationMatrix(
+        forInstance instance: CylinderEffectAsset.Instance,
+        elapsedTime: TimeInterval,
+        cameraAzimuth: Float
+    ) -> simd_float4x4 {
         var matrix = matrix_identity_float4x4
 
         if definition.rotatesContinuously {
             matrix = matrix_rotate(matrix, Float(elapsedTime) * 250 / 180 * .pi, [0, 1, 0])
         }
 
+        let rotationDegrees = instance.rotationDegrees
         if rotationDegrees.x != 0 {
             matrix = matrix_rotate(matrix, radians(rotationDegrees.x), [1, 0, 0])
         }
