@@ -181,6 +181,9 @@ extension RealityMapScene {
         playAttackSounds(for: objectAction)
     }
 
+    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID) {
+    }
+
     public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
         guard let entity = objectEntities[objectSkill.sourceObjectID] else {
             return

@@ -727,8 +727,10 @@ final public class GameSession {
             context.skillList.add(from: packet)
         case let packet as PACKET_ZC_SKILLINFO_DELETE:
             context.skillList.delete(from: packet)
-        case _ as PACKET_ZC_USESKILL_ACK:
-            break
+        case let packet as PACKET_ZC_USESKILL_ACK:
+            if let skillID = SkillID(rawValue: Int(packet.skillId)) {
+                mapScene?.onMapObjectSkillCast(skillID: skillID, sourceObjectID: packet.srcId)
+            }
         case let packet as PACKET_ZC_USE_SKILL:
             let objectSkill = MapObjectSkill(from: packet)
             mapScene?.onMapObjectSkillPerformed(objectSkill: objectSkill)

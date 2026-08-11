@@ -364,6 +364,25 @@ extension MetalMapScene {
         playSound(for: objectAction)
     }
 
+    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID) {
+        guard let sourceObject = objects[sourceObjectID] else {
+            return
+        }
+
+        let currentTime = CACurrentMediaTime()
+
+        for effectReference in SkillEffectTable.beginCastEffects(for: skillID) {
+            addEffect(
+                for: effectReference,
+                creationTime: currentTime,
+                gridPosition: sourceObject.gridPosition,
+                targetObjectID: sourceObjectID,
+                ownerObjectID: sourceObjectID,
+                delay: 0
+            )
+        }
+    }
+
     public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
         let now = ContinuousClock.now
 

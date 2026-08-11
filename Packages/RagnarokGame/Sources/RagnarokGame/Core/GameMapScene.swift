@@ -32,6 +32,7 @@ import simd
     func onMapObjectSpriteChanged(objectID: GameObjectID, look: Look, value: Int, value2: Int)
     func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption)
     func onMapObjectActionPerformed(objectAction: MapObjectAction)
+    func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID)
     func onMapObjectSkillPerformed(objectSkill: MapObjectSkill)
     func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int)
 

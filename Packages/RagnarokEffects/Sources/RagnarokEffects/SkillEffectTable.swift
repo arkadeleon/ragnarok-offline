@@ -33,7 +33,16 @@ public enum SkillEffectTable {
         .al_blessing: .init(
             effects: [.id(.ef_blessing)]
         ),
+        .ac_double: .init(
+            beginCastEffects: [.id(.ef_bash)],
+            beforeHitEffects: [.name("ef_arrow_projectile")],
+            hitEffects: [.id(.ef_hit2)]
+        ),
     ]
+
+    public static func beginCastEffects(for skillID: SkillID) -> [EffectReference] {
+        table[skillID]?.beginCastEffects ?? []
+    }
 
     public static func effects(for skillID: SkillID) -> [EffectReference] {
         table[skillID]?.effects ?? []

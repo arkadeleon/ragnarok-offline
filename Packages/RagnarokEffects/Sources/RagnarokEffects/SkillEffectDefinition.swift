@@ -6,6 +6,7 @@
 //
 
 struct SkillEffectDefinition: Sendable {
+    var beginCastEffects: [EffectReference] = []
     var effects: [EffectReference] = []
     var beforeHitEffects: [EffectReference] = []
     var hitEffects: [EffectReference] = []
