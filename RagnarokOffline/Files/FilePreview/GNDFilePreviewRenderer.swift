@@ -9,7 +9,7 @@ import Foundation
 import Metal
 import RagnarokCore
 import RagnarokRenderAssets
-import RagnarokRenderers
+import RagnarokRendering
 import simd
 
 class GNDFilePreviewRenderer: Renderer {

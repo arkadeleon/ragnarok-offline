@@ -7,7 +7,7 @@
 
 import Metal
 import RagnarokFileFormats
-import RagnarokRenderers
+import RagnarokRendering
 import RagnarokSprite
 
 final class SpritePartTextures {

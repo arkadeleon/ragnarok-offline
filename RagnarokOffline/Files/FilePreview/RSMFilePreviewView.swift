@@ -8,7 +8,7 @@
 import RagnarokFileFormats
 import RagnarokReality
 import RagnarokRenderAssets
-import RagnarokRenderers
+import RagnarokRendering
 import RagnarokResources
 import SwiftUI
 

@@ -10,7 +10,7 @@ import QuartzCore
 import RagnarokConstants
 import RagnarokEffects
 import RagnarokModels
-import RagnarokRenderers
+import RagnarokRendering
 import RagnarokSprite
 import simd
 

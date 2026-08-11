@@ -1,0 +1,110 @@
+//
+//  RSMModelRenderer.swift
+//  RagnarokRendering
+//
+//  Created by Leon Li on 2020/6/29.
+//
+
+import Foundation
+import Metal
+import RagnarokRenderAssets
+import RagnarokShaders
+import simd
+
+public final class RSMModelRenderer {
+    public let device: any MTLDevice
+
+    private let renderPipelineState: any MTLRenderPipelineState
+    private let depthStencilState: (any MTLDepthStencilState)?
+
+    public init(device: any MTLDevice) throws {
+        self.device = device
+
+        let library = RagnarokShadersLibrary(device)!
+
+        let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "modelVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "modelFragmentShader")
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
+        renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
+        renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
+        renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
+        renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
+        renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
+        renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
+        renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+
+        let depthStencilDescriptor = MTLDepthStencilDescriptor()
+        depthStencilDescriptor.depthCompareFunction = .lessEqual
+        depthStencilDescriptor.isDepthWriteEnabled = true
+        depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+    }
+
+    public func render(
+        resources: [RSMModelRenderResource],
+        atTime time: TimeInterval,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        cameraParameters: CameraParameters
+    ) {
+        guard !resources.isEmpty else {
+            return
+        }
+
+        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
+        renderCommandEncoder.setDepthStencilState(depthStencilState)
+
+        for resource in resources {
+            guard resource.instanceCount > 0,
+                  let instanceBuffer = resource.instanceBuffer else {
+                continue
+            }
+
+            var vertexUniforms = ModelVertexUniforms(
+                modelMatrix: cameraParameters.modelMatrix,
+                viewMatrix: cameraParameters.viewMatrix,
+                projectionMatrix: cameraParameters.projectionMatrix,
+                lightDirection: resource.light.direction,
+                normalMatrix: cameraParameters.normalMatrix
+            )
+
+            var fragmentUniforms = ModelFragmentUniforms(
+                lightAmbient: resource.light.ambient,
+                lightDiffuse: resource.light.diffuse,
+                lightOpacity: resource.light.opacity
+            )
+
+            renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, index: 1)
+            renderCommandEncoder.setVertexBuffer(instanceBuffer, offset: 0, index: 2)
+            renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
+
+            let boneMatrices: [ModelBoneUniforms]
+            if resource.hasAnyKeyframes {
+                let animator = RSMModelAnimator(asset: resource.asset)
+                let frame = animator.frame(atTime: time)
+                boneMatrices = animator.evaluateBoneMatrices(atFrame: frame)
+            } else {
+                boneMatrices = resource.restPoseBoneMatrices
+            }
+
+            for node in resource.nodes {
+                guard node.nodeIndex < boneMatrices.count else {
+                    continue
+                }
+                var bone = boneMatrices[node.nodeIndex]
+                renderCommandEncoder.setVertexBytes(&bone, length: MemoryLayout<ModelBoneUniforms>.stride, index: 3)
+
+                for mesh in node.meshes where mesh.vertexCount > 0 {
+                    renderCommandEncoder.setVertexBuffer(mesh.vertexBuffer, offset: 0, index: 0)
+                    renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+
+                    renderCommandEncoder.drawPrimitives(
+                        type: .triangle,
+                        vertexStart: 0,
+                        vertexCount: mesh.vertexCount,
+                        instanceCount: resource.instanceCount
+                    )
+                }
+            }
+        }
+    }
+}

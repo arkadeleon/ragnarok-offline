@@ -6,7 +6,7 @@
 //
 
 import CoreGraphics
-import RagnarokRenderers
+import RagnarokRendering
 import simd
 
 extension MetalMapScene: GameCoordinateSpaceProjecting {

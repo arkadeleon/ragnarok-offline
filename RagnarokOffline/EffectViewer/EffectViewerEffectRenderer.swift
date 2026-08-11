@@ -12,7 +12,7 @@ import QuartzCore
 import RagnarokCore
 import RagnarokFileFormats
 import RagnarokRenderAssets
-import RagnarokRenderers
+import RagnarokRendering
 import simd
 
 class EffectViewerEffectRenderer: Renderer {

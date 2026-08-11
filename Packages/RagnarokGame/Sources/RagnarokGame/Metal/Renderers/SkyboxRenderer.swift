@@ -7,7 +7,7 @@
 
 import CoreGraphics
 import Metal
-import RagnarokRenderers
+import RagnarokRendering
 import RagnarokShaders
 import simd
 

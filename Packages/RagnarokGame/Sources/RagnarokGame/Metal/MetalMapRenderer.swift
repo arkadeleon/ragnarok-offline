@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import Metal
 import RagnarokCore
-import RagnarokRenderers
+import RagnarokRendering
 import simd
 
 final class MetalMapRenderer: Renderer {

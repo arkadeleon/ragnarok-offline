@@ -1,49 +1,46 @@
 //
-//  MetalTileSelectorRenderer.swift
-//  RagnarokGame
+//  GroundRenderer.swift
+//  RagnarokRendering
 //
-//  Created by Leon Li on 2026/3/23.
+//  Created by Leon Li on 2020/7/3.
 //
 
 import Foundation
 import Metal
-import QuartzCore
-import RagnarokRendering
 import RagnarokShaders
 import simd
 
-@MainActor
-final class MetalTileSelectorRenderer {
-    let device: any MTLDevice
+public final class GroundRenderer {
+    public let device: any MTLDevice
 
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice) throws {
         self.device = device
 
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "tileVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "tileFragmentShader")
-        renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "groundVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "groundFragmentShader")
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
-        renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
-        depthStencilDescriptor.isDepthWriteEnabled = false
+        depthStencilDescriptor.isDepthWriteEnabled = true
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
-    func render(
-        resource: TileSelectorRenderResource,
+    public func render(
+        resource: GroundRenderResource,
         atTime time: TimeInterval,
         renderCommandEncoder: any MTLRenderCommandEncoder,
         cameraParameters: CameraParameters
@@ -52,20 +49,32 @@ final class MetalTileSelectorRenderer {
             return
         }
 
-        guard time - resource.selectionShowTime < 0.5 else {
-            return
-        }
-
-        var uniforms = TileVertexUniforms(
+        var vertexUniforms = GroundVertexUniforms(
+            modelMatrix: cameraParameters.modelMatrix,
             viewMatrix: cameraParameters.viewMatrix,
-            projectionMatrix: cameraParameters.projectionMatrix
+            projectionMatrix: cameraParameters.projectionMatrix,
+            lightDirection: resource.light.direction,
+            normalMatrix: cameraParameters.normalMatrix
+        )
+
+        var fragmentUniforms = GroundFragmentUniforms(
+            lightMapUse: resource.lightmapTexture == nil ? 0 : 1,
+            lightAmbient: resource.light.ambient,
+            lightDiffuse: resource.light.diffuse,
+            lightOpacity: resource.light.opacity
         )
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
+
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<TileVertexUniforms>.stride, index: 1)
-        renderCommandEncoder.setFragmentTexture(resource.selectionTexture, index: 0)
+        renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, index: 1)
+
+        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, index: 0)
+        renderCommandEncoder.setFragmentTexture(resource.baseColorTexture, index: 0)
+        renderCommandEncoder.setFragmentTexture(resource.lightmapTexture, index: 1)
+        renderCommandEncoder.setFragmentTexture(resource.tileColorTexture, index: 2)
+
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 }

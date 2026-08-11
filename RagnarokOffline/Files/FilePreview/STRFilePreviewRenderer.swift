@@ -11,7 +11,7 @@ import Metal
 import QuartzCore
 import RagnarokCore
 import RagnarokRenderAssets
-import RagnarokRenderers
+import RagnarokRendering
 import simd
 
 public class STRFilePreviewRenderer: Renderer {

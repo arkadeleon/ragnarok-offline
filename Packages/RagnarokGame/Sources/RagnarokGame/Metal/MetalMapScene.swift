@@ -13,7 +13,7 @@ import RagnarokCore
 import RagnarokModels
 import RagnarokPackets
 import RagnarokRenderAssets
-import RagnarokRenderers
+import RagnarokRendering
 import RagnarokResources
 import RagnarokSprite
 import simd
