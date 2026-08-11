@@ -15,6 +15,7 @@ extension CylinderEffectAsset {
         public var bottomRadius: Float
         public var height: Float
         public var color: SIMD4<Float>
+        public var positionOffset: SIMD3<Float>
         public var rotationMatrix: simd_float4x4
     }
 
@@ -100,12 +101,19 @@ extension CylinderEffectAsset {
             bottomRadius: max(bottomRadius, 0),
             height: max(height, 0),
             color: SIMD4<Float>(definition.color, alpha),
+            positionOffset: positionOffset,
             rotationMatrix: rotationMatrix(
                 forInstance: instance,
                 elapsedTime: elapsedTime,
                 cameraAzimuth: cameraAzimuth
             )
         )
+    }
+
+    // The offset is (map x, map y, altitude); render space is (x, altitude, -y).
+    private var positionOffset: SIMD3<Float> {
+        let offset = definition.positionOffset
+        return [offset.x, offset.z, -offset.y]
     }
 
     private func rotationMatrix(

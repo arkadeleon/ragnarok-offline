@@ -48,7 +48,7 @@ public final class CylinderEffectRenderer {
             projectionMatrix: cameraParameters.projectionMatrix,
             rotationMatrix: sample.rotationMatrix,
             worldPosition: worldPosition,
-            positionOffset: resource.definition.positionOffset,
+            positionOffset: sample.positionOffset,
             topRadius: sample.topRadius,
             bottomRadius: sample.bottomRadius,
             height: sample.height,
