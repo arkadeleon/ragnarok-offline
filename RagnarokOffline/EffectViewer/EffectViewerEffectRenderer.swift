@@ -64,7 +64,8 @@ class EffectViewerEffectRenderer: Renderer {
             modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix,
-            cameraAzimuth: camera.azimuth
+            cameraAzimuth: camera.azimuth,
+            cameraElevation: camera.elevation
         )
 
         guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {

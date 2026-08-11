@@ -37,11 +37,16 @@ public final class CylinderEffectRenderResource {
         asset.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
-    func sample(forElapsedTime elapsedTime: TimeInterval, cameraAzimuth: Float) -> CylinderEffectAsset.Sample? {
+    func sample(
+        forElapsedTime elapsedTime: TimeInterval,
+        cameraAzimuth: Float,
+        cameraElevation: Float
+    ) -> CylinderEffectAsset.Sample? {
         asset.sample(
             forInstance: instance,
             elapsedTime: elapsedTime,
-            cameraAzimuth: cameraAzimuth
+            cameraAzimuth: cameraAzimuth,
+            cameraElevation: cameraElevation
         )
     }
 }

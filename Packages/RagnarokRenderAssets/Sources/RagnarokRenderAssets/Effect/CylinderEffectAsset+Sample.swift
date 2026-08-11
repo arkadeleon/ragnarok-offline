@@ -35,7 +35,8 @@ extension CylinderEffectAsset {
     public func sample(
         forInstance instance: CylinderEffectAsset.Instance,
         elapsedTime: TimeInterval,
-        cameraAzimuth: Float
+        cameraAzimuth: Float,
+        cameraElevation: Float
     ) -> CylinderEffectAsset.Sample? {
         var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
@@ -101,47 +102,74 @@ extension CylinderEffectAsset {
             bottomRadius: max(bottomRadius, 0),
             height: max(height, 0),
             color: SIMD4<Float>(definition.color, alpha),
-            positionOffset: positionOffset,
+            positionOffset: positionOffset(
+                cameraAzimuth: cameraAzimuth,
+                cameraElevation: cameraElevation
+            ),
             rotationMatrix: rotationMatrix(
                 forInstance: instance,
                 elapsedTime: elapsedTime,
-                cameraAzimuth: cameraAzimuth
+                cameraAzimuth: cameraAzimuth,
+                cameraElevation: cameraElevation
             )
         )
     }
 
     // The offset is (map x, map y, altitude); render space is (x, altitude, -y).
-    private var positionOffset: SIMD3<Float> {
+    private func positionOffset(cameraAzimuth: Float, cameraElevation: Float) -> SIMD3<Float> {
         let offset = definition.positionOffset
-        return [offset.x, offset.z, -offset.y]
+        let renderSpaceOffset = SIMD3<Float>(offset.x, offset.z, -offset.y)
+
+        guard definition.fixedPerspective else {
+            return renderSpaceOffset
+        }
+
+        let matrix = cameraFacingMatrix(cameraAzimuth: cameraAzimuth, cameraElevation: cameraElevation)
+        let rotatedOffset = matrix * SIMD4<Float>(renderSpaceOffset, 0)
+        return SIMD3<Float>(rotatedOffset.x, rotatedOffset.y, rotatedOffset.z)
     }
 
     private func rotationMatrix(
         forInstance instance: CylinderEffectAsset.Instance,
         elapsedTime: TimeInterval,
-        cameraAzimuth: Float
+        cameraAzimuth: Float,
+        cameraElevation: Float
     ) -> simd_float4x4 {
+        // The shader applies this as `matrix * position`, so the rotations are
+        // appended in reverse of the order they take effect.
         var matrix = matrix_identity_float4x4
+
+        if definition.rotatesWithCamera || definition.fixedPerspective {
+            matrix = matrix * cameraFacingMatrix(
+                cameraAzimuth: cameraAzimuth,
+                cameraElevation: cameraElevation
+            )
+        }
+
+        let rotationDegrees = instance.rotationDegrees
+        if rotationDegrees.z != 0 {
+            matrix = matrix_rotate(matrix, radians(rotationDegrees.z), [0, 0, 1])
+        }
+        if rotationDegrees.y != 0 {
+            matrix = matrix_rotate(matrix, radians(rotationDegrees.y), [0, 1, 0])
+        }
+        if rotationDegrees.x != 0 {
+            matrix = matrix_rotate(matrix, radians(rotationDegrees.x), [1, 0, 0])
+        }
 
         if definition.rotatesContinuously {
             matrix = matrix_rotate(matrix, Float(elapsedTime) * 250 / 180 * .pi, [0, 1, 0])
         }
 
-        let rotationDegrees = instance.rotationDegrees
-        if rotationDegrees.x != 0 {
-            matrix = matrix_rotate(matrix, radians(rotationDegrees.x), [1, 0, 0])
-        }
-        if rotationDegrees.y != 0 {
-            matrix = matrix_rotate(matrix, radians(rotationDegrees.y), [0, 1, 0])
-        }
-        if rotationDegrees.z != 0 {
-            matrix = matrix_rotate(matrix, radians(rotationDegrees.z), [0, 0, 1])
-        }
+        return matrix
+    }
 
-        if definition.rotatesWithCamera {
-            matrix = matrix_rotate(matrix, cameraAzimuth, [0, 1, 0])
+    private func cameraFacingMatrix(cameraAzimuth: Float, cameraElevation: Float) -> simd_float4x4 {
+        var matrix = matrix_identity_float4x4
+        matrix = matrix_rotate(matrix, -cameraAzimuth, [0, 1, 0])
+        if definition.fixedPerspective {
+            matrix = matrix_rotate(matrix, -cameraElevation, [1, 0, 0])
         }
-
         return matrix
     }
 }

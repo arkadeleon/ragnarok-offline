@@ -233,7 +233,8 @@ final class MetalMapRenderer: Renderer {
             viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
             projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
             cameraPosition: cameraPosition,
-            cameraAzimuth: cameraState.azimuth
+            cameraAzimuth: cameraState.azimuth,
+            cameraElevation: cameraState.elevation
         )
     }
 
