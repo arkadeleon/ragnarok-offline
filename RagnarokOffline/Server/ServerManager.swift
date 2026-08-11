@@ -31,22 +31,23 @@ let serverConfiguration = ServerConfiguration(
         Body:
           - Id: 0
             Commands:
-              alive: true
-              autoloot: true
-              jobchange: true
-              baselevelup: true
-              heal: true
-              joblevelup: true
               mapmove: true
+              jobchange: true
+              alive: true
+              heal: true
+              item: true
+              baselevelup: true
+              joblevelup: true
               monster: true
-              mount_peco: true
-              agi: true
-              dex: true
-              int: true
-              luk: true
-              str: true
-              vit: true
               zeny: true
+              str: true
+              agi: true
+              vit: true
+              int: true
+              dex: true
+              luk: true
+              mount_peco: true
+              autoloot: true
             Permissions:
               any_warp: true
         """,
