@@ -48,13 +48,23 @@ public class RSWFilePreviewRenderer: Renderer {
         camera.animatePan(to: SIMD3<Float>(tileCenter.x, 0, tileCenter.z))
     }
 
+    public func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
+        camera.update(atTime: time)
+        camera.update(size: viewport.size)
+
+        return RenderCamera(
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            azimuth: camera.azimuth,
+            elevation: camera.elevation
+        )
+    }
+
     public func render(frame: RenderFrame) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
-
-        camera.update(atTime: frame.time)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
@@ -69,14 +79,7 @@ public class RSWFilePreviewRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            camera.update(size: view.size)
-
-            let cameraParameters = CameraParameters(
-                modelMatrix: modelMatrix,
-                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
-                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix,
-                cameraAzimuth: camera.azimuth
-            )
+            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
 
             lastModelMatrix = cameraParameters.modelMatrix
             lastViewMatrix = cameraParameters.viewMatrix

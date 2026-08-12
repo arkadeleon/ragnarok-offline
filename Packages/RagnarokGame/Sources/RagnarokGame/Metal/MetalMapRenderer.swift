@@ -66,6 +66,28 @@ final class MetalMapRenderer: Renderer {
         self.targetPosition = targetPosition
     }
 
+    func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
+        let worldTarget = renderPosition(for: targetPosition) + Self.cameraTargetOffset
+
+        let cameraOrientation =
+            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
+            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
+        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
+        let cameraUp = cameraOrientation.act([0, 1, 0])
+
+        let viewportHeight = max(Float(viewport.height), 1)
+        let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
+        let farZ = max(cameraState.distance * 4, 1000)
+
+        return RenderCamera(
+            viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
+            projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
+            position: cameraPosition,
+            azimuth: cameraState.azimuth,
+            elevation: cameraState.elevation
+        )
+    }
+
     func render(frame: RenderFrame) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -83,7 +105,7 @@ final class MetalMapRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            let cameraParameters = makeCameraParameters(for: view)
+            let cameraParameters = CameraParameters(modelMatrix: makeWorldModelMatrix(), camera: view.camera)
             lastCameraParameters = cameraParameters
 
             renderContents(
@@ -221,30 +243,6 @@ final class MetalMapRenderer: Renderer {
                 cameraParameters: cameraParameters
             )
         }
-    }
-
-    private func makeCameraParameters(for view: RenderView) -> CameraParameters {
-        let modelMatrix = makeWorldModelMatrix()
-        let worldTarget = renderPosition(for: targetPosition) + Self.cameraTargetOffset
-
-        let cameraOrientation =
-            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
-            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
-        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
-        let cameraUp = cameraOrientation.act([0, 1, 0])
-
-        let viewportHeight = max(Float(view.viewport.height), 1)
-        let aspectRatio = max(Float(view.viewport.width) / viewportHeight, .leastNonzeroMagnitude)
-        let farZ = max(cameraState.distance * 4, 1000)
-
-        return CameraParameters(
-            modelMatrix: modelMatrix,
-            viewMatrix: view.viewMatrix ?? lookAt(cameraPosition, worldTarget, cameraUp),
-            projectionMatrix: view.projectionMatrix ?? perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
-            cameraPosition: cameraPosition,
-            cameraAzimuth: cameraState.azimuth,
-            cameraElevation: cameraState.elevation
-        )
     }
 
     private func makeWorldModelMatrix() -> simd_float4x4 {

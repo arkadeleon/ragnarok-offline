@@ -7,42 +7,28 @@
 
 import CoreGraphics
 import Metal
-import simd
 
 /// A single view to be drawn within a frame.
 ///
 /// iOS and macOS draw one view per frame. visionOS draws one per eye, each with its own
-/// viewport and matrices derived from the device pose.
+/// viewport and camera derived from the device pose.
 public struct RenderView {
     /// Region of the render target this view draws into, in pixels.
     public var viewport: MTLViewport
 
-    /// View matrix from the visionOS device pose, or `nil` on iOS and macOS to let the
-    /// renderer's own camera decide.
-    public var viewMatrix: simd_float4x4?
+    /// The camera this view is drawn from.
+    public var camera: RenderCamera
 
-    /// Projection matrix from the visionOS device pose, or `nil` on iOS and macOS to let
-    /// the renderer's own camera decide.
-    public var projectionMatrix: simd_float4x4?
-
-    /// Size of `viewport`, in pixels.
-    public var size: CGSize {
-        CGSize(width: viewport.width, height: viewport.height)
-    }
-
-    public init(
-        viewport: MTLViewport,
-        viewMatrix: simd_float4x4? = nil,
-        projectionMatrix: simd_float4x4? = nil
-    ) {
+    public init(viewport: MTLViewport, camera: RenderCamera) {
         self.viewport = viewport
-        self.viewMatrix = viewMatrix
-        self.projectionMatrix = projectionMatrix
+        self.camera = camera
     }
+}
 
-    /// A view covering the whole of a render target of `size` pixels.
+extension MTLViewport {
+    /// A viewport covering the whole of a render target of `size` pixels.
     public init(size: CGSize) {
-        let viewport = MTLViewport(
+        self.init(
             originX: 0,
             originY: 0,
             width: size.width,
@@ -50,6 +36,10 @@ public struct RenderView {
             znear: 0,
             zfar: 1
         )
-        self.init(viewport: viewport)
+    }
+
+    /// Size of the viewport, in pixels.
+    public var size: CGSize {
+        CGSize(width: width, height: height)
     }
 }

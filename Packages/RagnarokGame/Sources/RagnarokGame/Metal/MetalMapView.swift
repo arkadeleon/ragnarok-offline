@@ -95,12 +95,15 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
 
         scene?.prepareFrame(atTime: currentTime)
 
+        let viewport = MTLViewport(size: view.drawableSize)
+        let camera = renderer.makeCamera(atTime: currentTime, viewport: viewport)
+
         let frame = RenderFrame(
             time: currentTime,
             commandBuffer: commandBuffer,
             renderPassDescriptor: renderPassDescriptor,
             views: [
-                RenderView(size: view.drawableSize)
+                RenderView(viewport: viewport, camera: camera)
             ],
             bounds: view.bounds
         )
@@ -257,12 +260,15 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
 
         scene?.prepareFrame(atTime: currentTime)
 
+        let viewport = MTLViewport(size: view.drawableSize)
+        let camera = renderer.makeCamera(atTime: currentTime, viewport: viewport)
+
         let frame = RenderFrame(
             time: currentTime,
             commandBuffer: commandBuffer,
             renderPassDescriptor: renderPassDescriptor,
             views: [
-                RenderView(size: view.drawableSize)
+                RenderView(viewport: viewport, camera: camera)
             ],
             bounds: view.bounds
         )

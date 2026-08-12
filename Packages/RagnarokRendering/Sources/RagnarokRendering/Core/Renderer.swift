@@ -14,6 +14,12 @@ public protocol Renderer {
     var colorPixelFormat: MTLPixelFormat { get }
     var depthStencilPixelFormat: MTLPixelFormat { get }
 
+    /// The camera to draw `viewport` from, advanced to `time`.
+    ///
+    /// iOS and macOS ask the renderer for this and pass it back through `RenderView`.
+    /// visionOS builds the camera from the device pose instead and never calls this.
+    func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera
+
     func render(frame: RenderFrame)
 }
 

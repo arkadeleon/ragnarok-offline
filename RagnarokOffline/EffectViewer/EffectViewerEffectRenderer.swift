@@ -44,14 +44,24 @@ class EffectViewerEffectRenderer: Renderer {
         camera.target = [0, 1.5, 0]
     }
 
+    func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
+        camera.update(atTime: time)
+        camera.update(size: viewport.size)
+
+        return RenderCamera(
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            azimuth: camera.azimuth,
+            elevation: camera.elevation
+        )
+    }
+
     func render(frame: RenderFrame) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
-
-        camera.update(atTime: frame.time)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
@@ -63,15 +73,7 @@ class EffectViewerEffectRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            camera.update(size: view.size)
-
-            let cameraParameters = CameraParameters(
-                modelMatrix: modelMatrix,
-                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
-                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix,
-                cameraAzimuth: camera.azimuth,
-                cameraElevation: camera.elevation
-            )
+            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
 
             effectRenderer.render(
                 resourceGroup: effectResourceGroup,

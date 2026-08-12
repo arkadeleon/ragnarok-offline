@@ -29,6 +29,15 @@ public class RSMFilePreviewRenderer: Renderer {
         modelRenderer = try RSMModelRenderer(device: device)
     }
 
+    public func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
+        camera.update(size: viewport.size)
+
+        return RenderCamera(
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix
+        )
+    }
+
     public func render(frame: RenderFrame) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -49,13 +58,7 @@ public class RSMFilePreviewRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            camera.update(size: view.size)
-
-            let cameraParameters = CameraParameters(
-                modelMatrix: modelMatrix,
-                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
-                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix
-            )
+            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
 
             modelRenderer.render(
                 resources: [modelResource],

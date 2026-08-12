@@ -34,4 +34,15 @@ public struct CameraParameters {
         self.cameraAzimuth = cameraAzimuth
         self.cameraElevation = cameraElevation
     }
+
+    public init(modelMatrix: simd_float4x4 = matrix_identity_float4x4, camera: RenderCamera) {
+        self.init(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            cameraPosition: camera.position,
+            cameraAzimuth: camera.azimuth,
+            cameraElevation: camera.elevation
+        )
+    }
 }

@@ -65,12 +65,15 @@ class MetalView: UIView, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
+        let viewport = MTLViewport(size: view.drawableSize)
+        let camera = renderer.makeCamera(atTime: currentTime, viewport: viewport)
+
         let frame = RenderFrame(
             time: currentTime,
             commandBuffer: commandBuffer,
             renderPassDescriptor: renderPassDescriptor,
             views: [
-                RenderView(size: view.drawableSize)
+                RenderView(viewport: viewport, camera: camera)
             ],
             bounds: view.bounds
         )
@@ -136,12 +139,15 @@ class MetalView: NSView, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
+        let viewport = MTLViewport(size: view.drawableSize)
+        let camera = renderer.makeCamera(atTime: currentTime, viewport: viewport)
+
         let frame = RenderFrame(
             time: currentTime,
             commandBuffer: commandBuffer,
             renderPassDescriptor: renderPassDescriptor,
             views: [
-                RenderView(size: view.drawableSize)
+                RenderView(viewport: viewport, camera: camera)
             ],
             bounds: view.bounds
         )

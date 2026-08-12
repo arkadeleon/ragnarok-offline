@@ -42,6 +42,15 @@ public class STRFilePreviewRenderer: Renderer {
         camera.maximumDistance = 100
     }
 
+    public func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
+        camera.update(size: viewport.size)
+
+        return RenderCamera(
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix
+        )
+    }
+
     public func render(frame: RenderFrame) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -59,13 +68,7 @@ public class STRFilePreviewRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            camera.update(size: view.size)
-
-            let cameraParameters = CameraParameters(
-                modelMatrix: modelMatrix,
-                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
-                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix
-            )
+            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
 
             effectRenderer.render(
                 resource: effectResource,
