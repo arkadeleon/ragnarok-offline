@@ -119,7 +119,11 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         }
 
         let point = gestureRecognizer.location(in: mtkView)
-        if let result = scene.hitTest(point) {
+        guard let camera = renderer.lastCamera,
+              let ray = camera.ray(through: point, in: mtkView.bounds) else {
+            return
+        }
+        if let result = scene.hitTest(ray) {
             scene.handleInteraction(result)
         }
     }
@@ -282,7 +286,11 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
         var point = mtkView.convert(event.locationInWindow, from: nil)
         // NSView has bottom-left origin; flip to top-left for hit testing.
         point.y = mtkView.bounds.height - point.y
-        if let result = scene?.hitTest(point) {
+        guard let camera = renderer.lastCamera,
+              let ray = camera.ray(through: point, in: mtkView.bounds) else {
+            return
+        }
+        if let result = scene?.hitTest(ray) {
             scene?.handleInteraction(result)
         }
     }

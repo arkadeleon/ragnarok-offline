@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import RagnarokRendering
 import simd
 
 public enum GameHitTestResult: Sendable {
@@ -21,18 +22,14 @@ public protocol GameCoordinateSpaceProjecting {
     /// to the 2D pixel coordinate system of the screen.
     func project(_ worldPoint: SIMD3<Float>) -> CGPoint?
 
-    /// Determines the position and direction of a ray through the given point
-    /// in the 2D space of the screen.
-    func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)?
-
-    /// Searches for objects corresponding to a point on the screen.
-    func hitTest(_ screenPoint: CGPoint) -> GameHitTestResult?
+    /// Searches for objects along a ray through the world.
+    func hitTest(_ ray: Ray) -> GameHitTestResult?
 }
 
 extension GameCoordinateSpaceProjecting {
-    func groundHit(origin: SIMD3<Float>, direction: SIMD3<Float>, mapGrid: MapGrid) -> GameHitTestResult? {
+    func groundHit(_ ray: Ray, mapGrid: MapGrid) -> GameHitTestResult? {
         for i in 0..<200 {
-            let point = origin + direction * Float(i)
+            let point = ray.point(atDistance: Float(i))
 
             let x = point.x
             let y = -point.z

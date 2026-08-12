@@ -23,8 +23,7 @@ public class RSWFilePreviewRenderer: Renderer {
     public let camera: OrbitalCamera
 
     private var lastModelMatrix = matrix_identity_float4x4
-    private var lastViewMatrix = matrix_identity_float4x4
-    private var lastProjectionMatrix = matrix_identity_float4x4
+    private var lastCamera: RenderCamera?
     private var lastBounds: CGRect = .zero
 
     public init(device: any MTLDevice, configuration: RenderConfiguration, worldAsset: WorldAsset) throws {
@@ -82,8 +81,7 @@ public class RSWFilePreviewRenderer: Renderer {
             renderCommandEncoder.setViewport(view.viewport)
 
             lastModelMatrix = modelMatrix
-            lastViewMatrix = camera.viewMatrix
-            lastProjectionMatrix = camera.projectionMatrix
+            lastCamera = view.camera
 
             worldRenderer.render(
                 resource: worldResource,
@@ -108,13 +106,14 @@ public class RSWFilePreviewRenderer: Renderer {
 
 extension RSWFilePreviewRenderer {
     private func tileCenter(at screenPoint: CGPoint) -> SIMD3<Float>? {
-        guard let (origin, direction) = ray(through: screenPoint) else {
+        guard let camera = lastCamera,
+              let ray = camera.ray(through: screenPoint, in: lastBounds) else {
             return nil
         }
 
         let inverseModelMatrix = lastModelMatrix.inverse
-        let localOrigin4 = inverseModelMatrix * SIMD4<Float>(origin.x, origin.y, origin.z, 1)
-        let localDirection4 = inverseModelMatrix * SIMD4<Float>(direction.x, direction.y, direction.z, 0)
+        let localOrigin4 = inverseModelMatrix * SIMD4<Float>(ray.origin, 1)
+        let localDirection4 = inverseModelMatrix * SIMD4<Float>(ray.direction, 0)
 
         let localOrigin = SIMD3<Float>(localOrigin4.x, localOrigin4.y, localOrigin4.z) / localOrigin4.w
         let localDirection = simd_normalize(SIMD3<Float>(localDirection4.x, localDirection4.y, localDirection4.z))
@@ -144,27 +143,5 @@ extension RSWFilePreviewRenderer {
         )
         let center = lastModelMatrix * localCenter
         return SIMD3<Float>(center.x, center.y, center.z) / center.w
-    }
-
-    private func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)? {
-        guard lastBounds.width > 0, lastBounds.height > 0 else {
-            return nil
-        }
-
-        let pvInverse = (lastProjectionMatrix * lastViewMatrix).inverse
-        if pvInverse[0][0].isNaN {
-            return nil
-        }
-
-        let ndcX = Float((screenPoint.x - lastBounds.minX) / lastBounds.width) * 2 - 1
-        let ndcY = 1 - Float((screenPoint.y - lastBounds.minY) / lastBounds.height) * 2
-
-        let nearWorld = pvInverse * SIMD4<Float>(ndcX, ndcY, 0, 1)
-        let farWorld = pvInverse * SIMD4<Float>(ndcX, ndcY, 1, 1)
-
-        let nearPosition = SIMD3<Float>(nearWorld.x, nearWorld.y, nearWorld.z) / nearWorld.w
-        let farPosition = SIMD3<Float>(farWorld.x, farWorld.y, farWorld.z) / farWorld.w
-
-        return (nearPosition, simd_normalize(farPosition - nearPosition))
     }
 }
