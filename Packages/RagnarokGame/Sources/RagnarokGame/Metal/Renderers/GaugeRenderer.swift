@@ -85,7 +85,7 @@ final class GaugeRenderer {
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(gauge.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
-                framebufferSize: .zero
+                viewport: .zero
             )
 
             vertices.withUnsafeBytes { bytes in

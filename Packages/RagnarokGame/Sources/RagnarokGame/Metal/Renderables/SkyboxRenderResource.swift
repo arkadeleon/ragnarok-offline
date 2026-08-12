@@ -11,32 +11,19 @@ import RagnarokShaders
 import simd
 
 final class SkyboxRenderResource {
-    private let device: any MTLDevice
     private let configuration: SkyboxConfiguration
 
-    let uniformsBuffer: (any MTLBuffer)?
-
-    init(device: any MTLDevice, configuration: SkyboxConfiguration) {
-        self.device = device
+    init(configuration: SkyboxConfiguration) {
         self.configuration = configuration
-
-        uniformsBuffer = device.makeBuffer(
-            length: MemoryLayout<SkyboxUniforms>.size,
-            options: .storageModeShared
-        )
     }
 
-    func writeUniforms(
+    func makeUniforms(
         projectionMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
         cameraPosition: SIMD3<Float>
-    ) -> Bool {
-        guard let uniformsBuffer else {
-            return false
-        }
-
+    ) -> SkyboxUniforms {
         let inverseViewProjectionMatrix = (projectionMatrix * viewMatrix).inverse
-        var uniforms = SkyboxUniforms(
+        return SkyboxUniforms(
             topColor: simd4(from: configuration.topColor),
             horizonColor: simd4(from: configuration.horizonColor),
             bottomColor: simd4(from: configuration.bottomColor),
@@ -54,8 +41,6 @@ final class SkyboxRenderResource {
             ),
             inverseViewProjectionMatrix: inverseViewProjectionMatrix
         )
-        memcpy(uniformsBuffer.contents(), &uniforms, MemoryLayout<SkyboxUniforms>.size)
-        return true
     }
 
     private func simd4(from color: CGColor) -> SIMD4<Float> {

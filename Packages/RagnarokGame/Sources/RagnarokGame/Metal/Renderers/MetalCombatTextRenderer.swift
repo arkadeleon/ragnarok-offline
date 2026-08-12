@@ -65,7 +65,7 @@ final class MetalCombatTextRenderer {
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(sample.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
-                framebufferSize: .zero
+                viewport: .zero
             )
 
             sample.vertices.withUnsafeBytes { bytes in

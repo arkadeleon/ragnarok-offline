@@ -43,7 +43,7 @@ final class MetalSpriteRenderer {
 
     func render(
         drawables: [SpriteLayerDrawable],
-        framebufferSize: SIMD2<Float>,
+        viewport: MTLViewport,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
@@ -64,7 +64,12 @@ final class MetalSpriteRenderer {
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(drawable.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 1),
-                framebufferSize: framebufferSize
+                viewport: SIMD4<Float>(
+                    Float(viewport.originX),
+                    Float(viewport.originY),
+                    Float(viewport.width),
+                    Float(viewport.height)
+                )
             )
 
             drawable.vertices.withUnsafeBytes { bytes in

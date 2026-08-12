@@ -40,20 +40,19 @@ stays as it is.
 
 None of these fire today. They all need `frame.views.count > 1`.
 
-1. **Layer routing.** `RenderView` carries no slice index and no renderer emits
-   `render_target_array_index`, so both eyes draw into the same slice of a layered
-   drawable.
-2. **Skybox uniforms are overwritten.** `SkyboxRenderer` is the only renderer using a
-   persistent `MTLBuffer` with `setFragmentBuffer`; every other renderer uses
-   `setVertexBytes` / `setFragmentBytes`, which snapshot into the command buffer. Two views
-   in one encoder make both skybox draws read the last view's matrices.
-3. **Sprite depth ignores the viewport origin.** `SpriteShaders.metal` converts
-   `in.position` to NDC by dividing by `framebufferSize` alone. A viewport with a non-zero
-   origin makes the second eye compute wrong depths.
-4. **Sprite ray reconstruction assumes a symmetric frustum.** The same shader derives the
-   view ray from `projectionMatrix[0][0]` and `[1][1]`, which implies
-   `P[2][0] == P[2][1] == 0`. visionOS tangents are off-axis; the correct form is
-   `(ndc.x - P[2][0]) / P[0][0]`.
+1. **Layer routing** — reclassified, see "Layout choice" below. `RenderView` carries no
+   slice index and no renderer emits `render_target_array_index`, which only matters under
+   the `.layered` layout.
+2. ~~**Skybox uniforms are overwritten.**~~ Fixed in Phase 1. `SkyboxRenderer` was the only
+   renderer using a persistent `MTLBuffer` with `setFragmentBuffer`, so two views in one
+   encoder made both skybox draws read the last view's matrices. It now uses
+   `setFragmentBytes` like every other renderer.
+3. ~~**Sprite depth ignores the viewport origin.**~~ Fixed in Phase 1. `SpriteShaders.metal`
+   converted `in.position` to NDC by dividing by `framebufferSize` alone, so a viewport with
+   a non-zero origin made the second eye compute wrong depths.
+4. ~~**Sprite ray reconstruction assumes a symmetric frustum.**~~ Fixed in Phase 1. The same
+   shader derived the view ray from `projectionMatrix[0][0]` and `[1][1]`, which implies
+   `P[2][0] == P[2][1] == 0`; visionOS tangents are off-axis.
 5. ~~**`RenderFrame.bounds` has no meaning under Compositor Services.**~~ Settled by
    Phase 0: the map no longer projects anything into point space. The field stays only for
    the RSW file preview, and the map can be handed `.zero`.
@@ -108,18 +107,47 @@ Deleted:
   was its only caller, leaving `hitTest(_ ray:)` as the protocol's only requirement
 - `MetalMapRenderer.lastBounds`, which only `project` read
 
-### Phase 1 — Stereo correctness
+### Phase 1 — Stereo correctness ✅ Done (2026-08-12)
 
-Fix gaps 1–4. All four are identity transforms with a single view, so they can land and be
-checked for regressions before any Compositor Services code exists:
+Gaps 2, 3 and 4 are fixed. All three are identity transforms with a single view — a
+symmetric frustum has `P[2][0] == P[2][1] == 0` and a full-target viewport has a zero
+origin — so they landed ahead of any Compositor Services code.
 
-- Give `RenderView` a slice index, or switch to vertex amplification
-  (`RenderConfiguration.amplificationCount` is already there as the seam)
-- Move `SkyboxRenderer` to `setFragmentBytes`, matching every other renderer
-- `SpriteShaders.metal`: pass the viewport origin in the uniforms and subtract it; add the
-  `P[2][0]` / `P[2][1]` terms to the ray reconstruction
+- `SkyboxRenderResource` no longer holds an `MTLBuffer`. It offers
+  `makeUniforms(projectionMatrix:viewMatrix:cameraPosition:)` and `SkyboxRenderer` passes
+  the result through `setFragmentBytes`. The resource no longer needs a device, so its
+  initialiser is now `init(configuration:)`.
+- `SpriteShaderTypes.h` replaces `vector_float2 framebufferSize` with
+  `vector_float4 viewport`, carrying the origin as well as the size.
+  `SpriteShaders.metal` subtracts the origin before converting to NDC.
+- The same shader now undoes the projection's shear as well as its scale:
+  `(ndc.x - P[2][0]) / P[0][0]`. Derivation: `ndc.x = (P[0][0]·vx + P[2][0]·vz) / vz`,
+  solved for `vx` with `vz = 1`.
+
+Gap 1 was **not** implemented, because it depends on a layout that has not been chosen yet.
+
+#### Layout choice
+
+Compositor Services offers three layouts, and gap 1 exists only under one of them:
+
+| Layout | Shape | Fits the current `render(frame:)`? |
+|---|---|---|
+| `.dedicated` | One texture per view | No — needs a render pass per view; today there is one encoder for all views |
+| `.shared` | One texture, views separated by viewport | **Yes — this is what the code already does** |
+| `.layered` | Texture array, one slice per view | No — needs `render_target_array_index` |
+
+`render(frame:)` already loops the views over a single encoder calling `setViewport`, which
+is the `.shared` shape. Choosing `.shared` makes gap 1 disappear, and makes the Phase 1 fix
+for gap 3 a precondition rather than a nicety.
+
+Going `.layered` instead would mean adding `render_target_array_index` to the output struct
+of all 11 vertex shaders — a large change with no observable effect until Phase 2 runs. Its
+payoff is a single pass with vertex amplification, which is a performance question best
+settled once something is actually running. **Decide this at the start of Phase 2.**
 
 ### Phase 2 — CompositorServicesHost
+
+Start by settling the layout choice above; the sketch below assumes `.shared`.
 
 A new host alongside `MetalView` and `MetalMapView`, with the same responsibilities:
 

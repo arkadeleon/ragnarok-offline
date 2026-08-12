@@ -42,17 +42,15 @@ final class SkyboxRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard resource.writeUniforms(
+        var uniforms = resource.makeUniforms(
             projectionMatrix: camera.projectionMatrix,
             viewMatrix: camera.viewMatrix,
             cameraPosition: camera.position
-        ) else {
-            return
-        }
+        )
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
-        renderCommandEncoder.setFragmentBuffer(resource.uniformsBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<SkyboxUniforms>.stride, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
     }
 }

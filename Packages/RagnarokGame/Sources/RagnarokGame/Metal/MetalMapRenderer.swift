@@ -165,10 +165,9 @@ final class MetalMapRenderer: Renderer {
             renderCommandEncoder: renderCommandEncoder
         )
 
-        let framebufferSize = SIMD2<Float>(Float(viewport.width), Float(viewport.height))
         spriteRenderer.render(
             drawables: spriteDrawables,
-            framebufferSize: framebufferSize,
+            viewport: viewport,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )

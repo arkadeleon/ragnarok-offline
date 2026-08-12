@@ -70,10 +70,14 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
         // It only depends on the pixel coordinate and per-sprite uniforms, so
         // every layer of a sprite resolves to the same depth and draw order
         // decides the layering.
-        float2 ndc = float2(in.position.x / uniforms.framebufferSize.x * 2.0 - 1.0,
-                            1.0 - in.position.y / uniforms.framebufferSize.y * 2.0);
-        float3 rayView = float3(ndc.x / uniforms.projectionMatrix[0][0],
-                                ndc.y / uniforms.projectionMatrix[1][1],
+        float2 viewportPoint = in.position.xy - uniforms.viewport.xy;
+        float2 ndc = float2(viewportPoint.x / uniforms.viewport.z * 2.0 - 1.0,
+                            1.0 - viewportPoint.y / uniforms.viewport.w * 2.0);
+
+        // The frustum is off-axis on visionOS, so undo the projection's shear as well
+        // as its scale.
+        float3 rayView = float3((ndc.x - uniforms.projectionMatrix[2][0]) / uniforms.projectionMatrix[0][0],
+                                (ndc.y - uniforms.projectionMatrix[2][1]) / uniforms.projectionMatrix[1][1],
                                 1.0);
 
         float3 cameraRight   = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);

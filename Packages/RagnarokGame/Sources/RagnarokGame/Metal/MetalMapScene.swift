@@ -438,7 +438,7 @@ extension MetalMapScene {
             mapHeight: mapGrid.height
         )
 
-        renderer.skyboxResource = SkyboxRenderResource(device: renderer.device, configuration: skyboxConfiguration)
+        renderer.skyboxResource = SkyboxRenderResource(configuration: skyboxConfiguration)
         renderer.worldResource = WorldRenderResource(device: renderer.device, asset: worldAsset)
 
         do {
