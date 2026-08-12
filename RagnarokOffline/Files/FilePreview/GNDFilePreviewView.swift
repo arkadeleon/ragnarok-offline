@@ -207,7 +207,7 @@ struct GNDFileGroundView: View {
         )
 
         let device = MTLCreateSystemDefaultDevice()!
-        let renderer = try GNDFilePreviewRenderer(device: device, asset: groundAsset)
+        let renderer = try GNDFilePreviewRenderer(device: device, configuration: .default, asset: groundAsset)
         return renderer
     }
 }

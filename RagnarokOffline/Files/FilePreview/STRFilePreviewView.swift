@@ -98,7 +98,7 @@ struct STRFileEffectView: View {
             }
         }
 
-        let renderer = try STRFilePreviewRenderer(device: device, effect: effect, textureImages: textureImages)
+        let renderer = try STRFilePreviewRenderer(device: device, configuration: .default, effect: effect, textureImages: textureImages)
         return renderer
     }
 }

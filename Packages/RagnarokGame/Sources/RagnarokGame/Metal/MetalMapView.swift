@@ -54,8 +54,8 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         mtkView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mtkView.isOpaque = false
         mtkView.delegate = self
-        mtkView.colorPixelFormat = renderer.colorPixelFormat
-        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
+        mtkView.colorPixelFormat = renderer.configuration.colorPixelFormat
+        mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
         view.addSubview(mtkView)
 
@@ -230,8 +230,8 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
         mtkView = MTKView(frame: view.bounds, device: renderer.device)
         mtkView.autoresizingMask = [.width, .height]
         mtkView.delegate = self
-        mtkView.colorPixelFormat = renderer.colorPixelFormat
-        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
+        mtkView.colorPixelFormat = renderer.configuration.colorPixelFormat
+        mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
         view.addSubview(mtkView)
 

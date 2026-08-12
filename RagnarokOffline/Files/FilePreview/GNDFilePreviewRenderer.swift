@@ -14,6 +14,7 @@ import simd
 
 class GNDFilePreviewRenderer: Renderer {
     let device: any MTLDevice
+    let configuration: RenderConfiguration
 
     let groundAsset: GroundRenderAsset
     let groundResource: GroundRenderResource
@@ -21,12 +22,13 @@ class GNDFilePreviewRenderer: Renderer {
 
     let camera: OrbitalCamera
 
-    init(device: any MTLDevice, asset: GroundRenderAsset) throws {
+    init(device: any MTLDevice, configuration: RenderConfiguration, asset: GroundRenderAsset) throws {
         self.device = device
+        self.configuration = configuration
         groundAsset = asset
 
         groundResource = GroundRenderResource(device: device, asset: asset, light: .preview)
-        groundRenderer = try GroundRenderer(device: device)
+        groundRenderer = try GroundRenderer(device: device, configuration: configuration)
 
         let defaultDistance = -asset.altitude / 5 + 200
         camera = OrbitalCamera(distance: defaultDistance)

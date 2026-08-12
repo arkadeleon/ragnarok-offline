@@ -19,7 +19,7 @@ final class MetalTileSelectorRenderer {
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice) throws {
+    init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
 
         let library = RagnarokShadersLibrary(device)!
@@ -27,13 +27,14 @@ final class MetalTileSelectorRenderer {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "tileVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "tileFragmentShader")
-        renderPipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
-        renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        renderPipelineDescriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()

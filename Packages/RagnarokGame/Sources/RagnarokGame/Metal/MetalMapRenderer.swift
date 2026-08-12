@@ -17,6 +17,7 @@ final class MetalMapRenderer: Renderer {
     private static let fieldOfViewDegrees: Float = 15
 
     let device: any MTLDevice
+    let configuration: RenderConfiguration
 
     private let skyboxRenderer: SkyboxRenderer
     private let worldRenderer: WorldRenderer
@@ -39,18 +40,19 @@ final class MetalMapRenderer: Renderer {
     private(set) var lastCameraParameters: CameraParameters?
     private(set) var lastBounds: CGRect = .zero
 
-    init() throws {
+    init(configuration: RenderConfiguration) throws {
         guard let device = MTLCreateSystemDefaultDevice() else {
             fatalError("MapRuntimeRenderer: Metal is not available on this device")
         }
         self.device = device
+        self.configuration = configuration
 
-        skyboxRenderer = try SkyboxRenderer(device: device)
-        worldRenderer = try WorldRenderer(device: device)
-        spriteRenderer = try MetalSpriteRenderer(device: device)
-        combatTextRenderer = try MetalCombatTextRenderer(device: device)
-        effectRenderer = try EffectRenderer(device: device)
-        tileSelectorRenderer = try MetalTileSelectorRenderer(device: device)
+        skyboxRenderer = try SkyboxRenderer(device: device, configuration: configuration)
+        worldRenderer = try WorldRenderer(device: device, configuration: configuration)
+        spriteRenderer = try MetalSpriteRenderer(device: device, configuration: configuration)
+        combatTextRenderer = try MetalCombatTextRenderer(device: device, configuration: configuration)
+        effectRenderer = try EffectRenderer(device: device, configuration: configuration)
+        tileSelectorRenderer = try MetalTileSelectorRenderer(device: device, configuration: configuration)
     }
 
     func renderPosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {

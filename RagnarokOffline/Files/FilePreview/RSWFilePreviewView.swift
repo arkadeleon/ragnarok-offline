@@ -204,7 +204,7 @@ struct RSWFileWorldView: View {
         )
 
         let device = MTLCreateSystemDefaultDevice()!
-        let renderer = try RSWFilePreviewRenderer(device: device, worldAsset: worldAsset)
+        let renderer = try RSWFilePreviewRenderer(device: device, configuration: .default, worldAsset: worldAsset)
         return renderer
     }
 }

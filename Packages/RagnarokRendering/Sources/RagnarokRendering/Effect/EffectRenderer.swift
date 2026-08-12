@@ -17,14 +17,14 @@ public final class EffectRenderer {
     private let sprEffectRenderer: SPREffectRenderer
     private let strEffectRenderer: STREffectRenderer
 
-    public init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
 
-        effect2DRenderer = try Effect2DRenderer(device: device)
-        effect3DRenderer = try Effect3DRenderer(device: device)
-        cylinderEffectRenderer = try CylinderEffectRenderer(device: device)
-        sprEffectRenderer = try SPREffectRenderer(device: device)
-        strEffectRenderer = try STREffectRenderer(device: device)
+        effect2DRenderer = try Effect2DRenderer(device: device, configuration: configuration)
+        effect3DRenderer = try Effect3DRenderer(device: device, configuration: configuration)
+        cylinderEffectRenderer = try CylinderEffectRenderer(device: device, configuration: configuration)
+        sprEffectRenderer = try SPREffectRenderer(device: device, configuration: configuration)
+        strEffectRenderer = try STREffectRenderer(device: device, configuration: configuration)
     }
 
     public func render(

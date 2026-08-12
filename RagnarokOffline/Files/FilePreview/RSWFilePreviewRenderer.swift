@@ -14,6 +14,7 @@ import simd
 
 public class RSWFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
+    public let configuration: RenderConfiguration
 
     let groundAsset: GroundRenderAsset
     let worldResource: WorldRenderResource
@@ -26,12 +27,13 @@ public class RSWFilePreviewRenderer: Renderer {
     private var lastProjectionMatrix = matrix_identity_float4x4
     private var lastBounds: CGRect = .zero
 
-    public init(device: any MTLDevice, worldAsset: WorldAsset) throws {
+    public init(device: any MTLDevice, configuration: RenderConfiguration, worldAsset: WorldAsset) throws {
         self.device = device
+        self.configuration = configuration
         self.groundAsset = worldAsset.ground
 
         worldResource = WorldRenderResource(device: device, asset: worldAsset)
-        worldRenderer = try WorldRenderer(device: device)
+        worldRenderer = try WorldRenderer(device: device, configuration: configuration)
 
         let defaultDistance = -groundAsset.altitude / 5 + 200
         camera = OrbitalCamera(distance: defaultDistance)

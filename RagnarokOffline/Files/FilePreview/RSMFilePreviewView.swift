@@ -164,7 +164,7 @@ struct RSMFileModelView: View {
         )
 
         let device = MTLCreateSystemDefaultDevice()!
-        let renderer = try RSMFilePreviewRenderer(device: device, asset: modelAsset)
+        let renderer = try RSMFilePreviewRenderer(device: device, configuration: .default, asset: modelAsset)
         return renderer
     }
 }

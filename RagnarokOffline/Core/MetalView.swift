@@ -40,8 +40,8 @@ class MetalView: UIView, MTKViewDelegate {
         mtkView.isOpaque = false
         mtkView.delegate = self
         mtkView.device = renderer.device
-        mtkView.colorPixelFormat = renderer.colorPixelFormat
-        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
+        mtkView.colorPixelFormat = renderer.configuration.colorPixelFormat
+        mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
         addSubview(mtkView)
     }
@@ -114,8 +114,8 @@ class MetalView: NSView, MTKViewDelegate {
         mtkView.autoresizingMask = [.width, .height]
         mtkView.delegate = self
         mtkView.device = renderer.device
-        mtkView.colorPixelFormat = renderer.colorPixelFormat
-        mtkView.depthStencilPixelFormat = renderer.depthStencilPixelFormat
+        mtkView.colorPixelFormat = renderer.configuration.colorPixelFormat
+        mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
         addSubview(mtkView)
     }

@@ -17,16 +17,18 @@ import simd
 
 class EffectViewerEffectRenderer: Renderer {
     let device: any MTLDevice
+    let configuration: RenderConfiguration
 
     private let effectRenderer: EffectRenderer
     private let effectResourceGroup: EffectRenderResourceGroup
 
     let camera: OrbitalCamera
 
-    init(device: any MTLDevice, assetGroup: EffectAssetGroup) throws {
+    init(device: any MTLDevice, configuration: RenderConfiguration, assetGroup: EffectAssetGroup) throws {
         self.device = device
+        self.configuration = configuration
 
-        effectRenderer = try EffectRenderer(device: device)
+        effectRenderer = try EffectRenderer(device: device, configuration: configuration)
         effectResourceGroup = EffectRenderResourceGroup(
             device: device,
             assetGroup: assetGroup,

@@ -14,6 +14,7 @@ import simd
 
 public class RSMFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
+    public let configuration: RenderConfiguration
 
     let modelBoundingBox: RSMModelBoundingBox
     let modelResource: RSMModelRenderResource
@@ -21,12 +22,13 @@ public class RSMFilePreviewRenderer: Renderer {
 
     public let camera = Camera()
 
-    public init(device: any MTLDevice, asset: RSMModelRenderAsset) throws {
+    public init(device: any MTLDevice, configuration: RenderConfiguration, asset: RSMModelRenderAsset) throws {
         self.device = device
+        self.configuration = configuration
 
         modelBoundingBox = asset.boundingBox
         modelResource = RSMModelRenderResource(device: device, asset: asset, light: .preview)
-        modelRenderer = try RSMModelRenderer(device: device)
+        modelRenderer = try RSMModelRenderer(device: device, configuration: configuration)
     }
 
     public func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {

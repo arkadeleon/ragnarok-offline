@@ -16,7 +16,7 @@ public final class WaterRenderer {
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    public init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
 
         let library = RagnarokShadersLibrary(device)!
@@ -24,13 +24,14 @@ public final class WaterRenderer {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "waterFragmentShader")
-        renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
+        renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
-        renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
+        renderPipelineDescriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()

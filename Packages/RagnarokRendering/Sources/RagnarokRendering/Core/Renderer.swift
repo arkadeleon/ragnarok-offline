@@ -11,8 +11,7 @@ import Metal
 @MainActor
 public protocol Renderer {
     var device: any MTLDevice { get }
-    var colorPixelFormat: MTLPixelFormat { get }
-    var depthStencilPixelFormat: MTLPixelFormat { get }
+    var configuration: RenderConfiguration { get }
 
     /// The camera to draw `viewport` from, advanced to `time`.
     ///
@@ -21,14 +20,4 @@ public protocol Renderer {
     func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera
 
     func render(frame: RenderFrame)
-}
-
-extension Renderer {
-    public var colorPixelFormat: MTLPixelFormat {
-        .bgra8Unorm
-    }
-
-    public var depthStencilPixelFormat: MTLPixelFormat {
-        .depth32Float
-    }
 }

@@ -17,13 +17,13 @@ public final class WorldRenderer {
     private let modelRenderer: RSMModelRenderer
     private let effectRenderer: EffectRenderer
 
-    public init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
 
-        groundRenderer = try GroundRenderer(device: device)
-        waterRenderer = try WaterRenderer(device: device)
-        modelRenderer = try RSMModelRenderer(device: device)
-        effectRenderer = try EffectRenderer(device: device)
+        groundRenderer = try GroundRenderer(device: device, configuration: configuration)
+        waterRenderer = try WaterRenderer(device: device, configuration: configuration)
+        modelRenderer = try RSMModelRenderer(device: device, configuration: configuration)
+        effectRenderer = try EffectRenderer(device: device, configuration: configuration)
     }
 
     public func render(

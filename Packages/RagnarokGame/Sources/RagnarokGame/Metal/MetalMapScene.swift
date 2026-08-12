@@ -77,7 +77,7 @@ public final class MetalMapScene: GameMapScene {
         self.playerPosition = playerPosition
         self.resourceManager = resourceManager
         self.gameSession = gameSession
-        self.renderer = try MetalMapRenderer()
+        self.renderer = try MetalMapRenderer(configuration: .default)
         self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
 
         self.mapGrid = MapGrid(gat: world.gat)

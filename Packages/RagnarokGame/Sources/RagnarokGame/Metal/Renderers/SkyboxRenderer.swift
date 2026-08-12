@@ -18,7 +18,7 @@ final class SkyboxRenderer {
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    init(device: any MTLDevice) throws {
+    init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
 
         let library = RagnarokShadersLibrary(device)!
@@ -26,8 +26,9 @@ final class SkyboxRenderer {
         let descriptor = MTLRenderPipelineDescriptor()
         descriptor.vertexFunction = library.makeFunction(name: "skyboxVertexShader")
         descriptor.fragmentFunction = library.makeFunction(name: "skyboxFragmentShader")
-        descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        descriptor.depthAttachmentPixelFormat = .depth32Float
+        descriptor.maxVertexAmplificationCount = configuration.amplificationCount
+        descriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
+        descriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
         renderPipelineState = try device.makeRenderPipelineState(descriptor: descriptor)
 
         let depthDescriptor = MTLDepthStencilDescriptor()

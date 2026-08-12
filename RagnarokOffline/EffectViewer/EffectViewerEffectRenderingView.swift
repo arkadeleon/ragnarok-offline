@@ -54,7 +54,7 @@ struct EffectViewerEffectRenderingView: View {
         let loader = EffectAssetLoader(resourceManager: resourceManager)
         let assetGroup = try await loader.loadAssetGroup(with: definitions)
 
-        let renderer = try EffectViewerEffectRenderer(device: device, assetGroup: assetGroup)
+        let renderer = try EffectViewerEffectRenderer(device: device, configuration: .default, assetGroup: assetGroup)
         return renderer
     }
 }

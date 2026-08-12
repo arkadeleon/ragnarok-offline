@@ -13,12 +13,14 @@ import simd
 
 public final class CylinderEffectRenderer {
     public let device: any MTLDevice
+    public let configuration: RenderConfiguration
 
     private var renderPipelineStates: [EffectParameters.BlendMode : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
 
-    public init(device: any MTLDevice) throws {
+    public init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
+        self.configuration = configuration
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .lessEqual
@@ -100,15 +102,14 @@ public final class CylinderEffectRenderer {
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
         renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "cylinderEffectVertexShader")
         renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "cylinderEffectFragmentShader")
-
-        renderPipelineDescriptor.colorAttachments[0].pixelFormat = Formats.colorPixelFormat
+        renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
+        renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = mtlBlendFactor(blendMode)
         renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = mtlBlendFactor(blendMode)
-
-        renderPipelineDescriptor.depthAttachmentPixelFormat = Formats.depthPixelFormat
+        renderPipelineDescriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
 
         return try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
     }
