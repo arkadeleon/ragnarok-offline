@@ -24,7 +24,7 @@ public final class Effect3DRenderer {
         self.configuration = configuration
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
-        depthStencilDescriptor.depthCompareFunction = .lessEqual
+        depthStencilDescriptor.depthCompareFunction = configuration.depthCompareFunction
         depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 

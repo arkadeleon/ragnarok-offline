@@ -35,7 +35,7 @@ public final class SPREffectRenderer {
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
-        depthStencilDescriptor.depthCompareFunction = .lessEqual
+        depthStencilDescriptor.depthCompareFunction = configuration.depthCompareFunction
         depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }

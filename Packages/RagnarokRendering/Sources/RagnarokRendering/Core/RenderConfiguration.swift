@@ -23,13 +23,31 @@ public struct RenderConfiguration: Sendable {
     /// Number of views a single draw call writes at once through vertex amplification.
     public var amplificationCount: Int
 
+    /// Whether depth runs from 1 at the near plane down to 0 at the far plane.
+    ///
+    /// Compositor Services only supports reversed depth; iOS and macOS use the ordinary
+    /// direction.
+    public var isDepthReversed: Bool
+
+    /// The value to clear the depth attachment to, which is the far plane.
+    public var clearDepth: Double {
+        isDepthReversed ? 0 : 1
+    }
+
+    /// The comparison that keeps the fragment nearer to the camera.
+    public var depthCompareFunction: MTLCompareFunction {
+        isDepthReversed ? .greaterEqual : .lessEqual
+    }
+
     public init(
         colorPixelFormat: MTLPixelFormat,
         depthStencilPixelFormat: MTLPixelFormat,
-        amplificationCount: Int = 1
+        amplificationCount: Int = 1,
+        isDepthReversed: Bool = false
     ) {
         self.colorPixelFormat = colorPixelFormat
         self.depthStencilPixelFormat = depthStencilPixelFormat
         self.amplificationCount = amplificationCount
+        self.isDepthReversed = isDepthReversed
     }
 }

@@ -98,7 +98,7 @@ final class MetalMapRenderer: Renderer {
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.loadAction = .clear
         renderPassDescriptor.depthAttachment.storeAction = .dontCare
-        renderPassDescriptor.depthAttachment.clearDepth = 1
+        renderPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
 
         guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return

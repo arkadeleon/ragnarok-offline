@@ -36,7 +36,7 @@ final class MetalSpriteRenderer {
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
-        depthStencilDescriptor.depthCompareFunction = .lessEqual
+        depthStencilDescriptor.depthCompareFunction = configuration.depthCompareFunction
         depthStencilDescriptor.isDepthWriteEnabled = true
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }

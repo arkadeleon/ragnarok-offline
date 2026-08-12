@@ -44,7 +44,7 @@ public class RSMFilePreviewRenderer: Renderer {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
-        renderPassDescriptor.depthAttachment.clearDepth = 1
+        renderPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
 
         let scale = 2 / modelBoundingBox.range.max()
 

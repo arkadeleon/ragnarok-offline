@@ -63,7 +63,7 @@ class EffectViewerEffectRenderer: Renderer {
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
-        renderPassDescriptor.depthAttachment.clearDepth = 1
+        renderPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
