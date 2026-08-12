@@ -23,6 +23,7 @@ final class MetalMapRenderer: Renderer {
     private let worldRenderer: WorldRenderer
     private let spriteRenderer: MetalSpriteRenderer
     private let combatTextRenderer: MetalCombatTextRenderer
+    private let gaugeRenderer: GaugeRenderer
     private let effectRenderer: EffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
 
@@ -30,6 +31,7 @@ final class MetalMapRenderer: Renderer {
     var worldResource: WorldRenderResource?
     var spriteDrawables: [SpriteLayerDrawable] = []
     var combatTextRenderResources: [CombatTextRenderResource] = []
+    var gauges: [Gauge] = []
     var objects: [GameObjectID : MetalMapObject] = [:]
     var effects: [MetalMapEffect] = []
     var tileSelectorResource: TileSelectorRenderResource?
@@ -38,7 +40,6 @@ final class MetalMapRenderer: Renderer {
     private var targetPosition: SIMD3<Float> = .zero
 
     private(set) var lastCamera: RenderCamera?
-    private(set) var lastBounds: CGRect = .zero
 
     init(configuration: RenderConfiguration) throws {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -51,6 +52,7 @@ final class MetalMapRenderer: Renderer {
         worldRenderer = try WorldRenderer(device: device, configuration: configuration)
         spriteRenderer = try MetalSpriteRenderer(device: device, configuration: configuration)
         combatTextRenderer = try MetalCombatTextRenderer(device: device, configuration: configuration)
+        gaugeRenderer = try GaugeRenderer(device: device, configuration: configuration)
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device, configuration: configuration)
     }
@@ -101,8 +103,6 @@ final class MetalMapRenderer: Renderer {
         guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
-
-        lastBounds = frame.bounds
 
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
@@ -212,6 +212,12 @@ final class MetalMapRenderer: Renderer {
                 renderCommandEncoder: renderCommandEncoder
             )
         }
+
+        gaugeRenderer.render(
+            gauges: gauges,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
+        )
 
         // Combat text renders last so nothing draws over it.
         combatTextRenderer.render(

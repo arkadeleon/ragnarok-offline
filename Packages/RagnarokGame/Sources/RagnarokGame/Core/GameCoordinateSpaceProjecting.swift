@@ -17,11 +17,6 @@ public enum GameHitTestResult: Sendable {
 
 @MainActor
 public protocol GameCoordinateSpaceProjecting {
-
-    /// Projects a point from the 3D world coordinate system (map x, map y, altitude)
-    /// to the 2D pixel coordinate system of the screen.
-    func project(_ worldPoint: SIMD3<Float>) -> CGPoint?
-
     /// Searches for objects along a ray through the world.
     func hitTest(_ ray: Ray) -> GameHitTestResult?
 }

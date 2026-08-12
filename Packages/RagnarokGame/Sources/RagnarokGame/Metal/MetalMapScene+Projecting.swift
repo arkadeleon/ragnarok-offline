@@ -10,38 +10,6 @@ import RagnarokRendering
 import simd
 
 extension MetalMapScene: GameCoordinateSpaceProjecting {
-    public func project(_ worldPoint: SIMD3<Float>) -> CGPoint? {
-        guard let camera = renderer.lastCamera else {
-            return nil
-        }
-
-        let bounds = renderer.lastBounds
-        guard bounds.width > 0, bounds.height > 0 else {
-            return nil
-        }
-
-        let renderPoint = renderer.renderPosition(for: worldPoint)
-        let pv = camera.projectionMatrix * camera.viewMatrix
-        let clip = pv * SIMD4<Float>(renderPoint, 1)
-
-        guard clip.w > 0 else {
-            return nil
-        }
-
-        let ndcX = clip.x / clip.w
-        let ndcY = clip.y / clip.w
-
-        guard (-1...1).contains(ndcX), (-1...1).contains(ndcY) else {
-            return nil
-        }
-
-        // NDC → screen coordinates (top-left origin; NDC +Y is up, screen +Y is down).
-        let sx = bounds.minX + CGFloat((ndcX + 1) * 0.5) * bounds.width
-        let sy = bounds.minY + CGFloat((1 - ndcY) * 0.5) * bounds.height
-
-        return CGPoint(x: sx, y: sy)
-    }
-
     public func hitTest(_ ray: Ray) -> GameHitTestResult? {
         let objectIDs = spriteHits(ray)
 

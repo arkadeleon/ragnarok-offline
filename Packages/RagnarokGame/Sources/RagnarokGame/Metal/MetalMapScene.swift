@@ -42,6 +42,7 @@ public final class MetalMapScene: GameMapScene {
 
     var objects: [GameObjectID: MetalMapObject] = [:]
     var items: [GameObjectID : MetalMapItem] = [:]
+    var gauges: [GameObjectID : Gauge] = [:]
 
     let pathFinder: PathFinder
 
@@ -96,8 +97,7 @@ public final class MetalMapScene: GameMapScene {
         )
         objects[metalPlayer.objectID] = metalPlayer
 
-        state.overlay.gauges[player.objectID] = MetalGaugeOverlay(
-            id: player.objectID,
+        gauges[player.objectID] = Gauge(
             hp: character.hp,
             maxHp: character.maxHp,
             sp: character.sp,
@@ -372,8 +372,13 @@ extension MetalMapScene {
         renderer.effects = effects
 
         refreshSpriteDrawables()
+
+        for (objectID, object) in objects {
+            gauges[objectID]?.worldPosition = object.worldPosition + [0, 0, -0.8]
+        }
+        renderer.gauges = Array(gauges.values)
+
         updateCameraTarget()
-        syncAndProjectOverlay()
     }
 
     func refreshSpriteDrawables() {
@@ -418,19 +423,6 @@ extension MetalMapScene {
             cameraState: cameraState,
             targetPosition: targetPosition
         )
-    }
-
-    private func syncAndProjectOverlay() {
-        for objectID in state.overlay.gauges.keys {
-            guard let object = objects[objectID] else {
-                continue
-            }
-            let worldPosition = object.worldPosition + [0, 0, -0.8]
-            state.overlay.gauges[objectID]?.worldPosition = worldPosition
-
-            let screenPosition = project(worldPosition)
-            state.overlay.gauges[objectID]?.screenPosition = screenPosition
-        }
     }
 
     func prepareRenderResources(progress: Progress) async throws {

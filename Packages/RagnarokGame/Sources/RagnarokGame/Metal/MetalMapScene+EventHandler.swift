@@ -20,19 +20,19 @@ extension MetalMapScene {
 
         switch property {
         case .hp:
-            state.overlay.gauges[player.objectID]?.hp = value
+            gauges[player.objectID]?.hp = value
             playerObject?.hp = value
             refreshSpriteDrawables()
         case .maxhp:
-            state.overlay.gauges[player.objectID]?.maxHp = value
+            gauges[player.objectID]?.maxHp = value
             playerObject?.maxHp = value
             refreshSpriteDrawables()
         case .sp:
-            state.overlay.gauges[player.objectID]?.sp = value
+            gauges[player.objectID]?.sp = value
             playerObject?.sp = value
             refreshSpriteDrawables()
         case .maxsp:
-            state.overlay.gauges[player.objectID]?.maxSp = value
+            gauges[player.objectID]?.maxSp = value
             playerObject?.maxSp = value
             refreshSpriteDrawables()
         default:
@@ -41,7 +41,7 @@ extension MetalMapScene {
     }
 
     public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
-        state.overlay.gauges[player.objectID]?.hp = current
+        gauges[player.objectID]?.hp = current
 
         let playerObject = objects[player.objectID] as? MetalPlayerObject
         playerObject?.hp = current
@@ -59,7 +59,7 @@ extension MetalMapScene {
     }
 
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
-        state.overlay.gauges[player.objectID]?.sp = current
+        gauges[player.objectID]?.sp = current
 
         let playerObject = objects[player.objectID] as? MetalPlayerObject
         playerObject?.sp = current
@@ -109,18 +109,12 @@ extension MetalMapScene {
 
         refreshSpriteDrawables()
 
-        if var gauge = state.overlay.gauges[objectID] {
+        if let gauge = gauges[objectID] {
             gauge.hp = hp
             gauge.maxHp = maxHp
-            state.overlay.gauges[objectID] = gauge
         } else if object.type == .monster {
-            let gauge = MetalGaugeOverlay(
-                id: objectID,
-                hp: hp,
-                maxHp: maxHp,
-                objectType: object.type
-            )
-            state.overlay.gauges[objectID] = gauge
+            let gauge = Gauge(hp: hp, maxHp: maxHp, objectType: object.type)
+            gauges[objectID] = gauge
         }
     }
 
@@ -209,12 +203,11 @@ extension MetalMapScene {
                 object.perform(.die, completion: .indefinite)
                 refreshSpriteDrawables()
             }
-
+            gauges.removeValue(forKey: objectID)
             state.isPlayerDead = true
-            state.overlay.gauges.removeValue(forKey: objectID)
         default:
-            state.overlay.gauges.removeValue(forKey: objectID)
             objects.removeValue(forKey: objectID)
+            gauges.removeValue(forKey: objectID)
             refreshSpriteDrawables()
         }
     }
@@ -256,18 +249,17 @@ extension MetalMapScene {
             if let object = objects[objectID], objectID == player.objectID {
                 let sp = (object as? MetalPlayerObject)?.sp
                 let maxSp = (object as? MetalPlayerObject)?.maxSp
-                let gauge = MetalGaugeOverlay(
-                    id: objectID,
+                let gauge = Gauge(
                     hp: object.hp,
                     maxHp: object.maxHp,
                     sp: sp,
                     maxSp: maxSp,
                     objectType: object.type
                 )
-                state.overlay.gauges[objectID] = gauge
+                gauges[objectID] = gauge
             }
         } else if objectID == player.objectID {
-            state.overlay.gauges.removeValue(forKey: objectID)
+            gauges.removeValue(forKey: objectID)
         }
     }
 

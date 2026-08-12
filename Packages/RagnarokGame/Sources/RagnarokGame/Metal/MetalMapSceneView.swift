@@ -24,9 +24,6 @@ struct MetalMapSceneView: View {
     var body: some View {
         ZStack {
             MetalMapView(scene: scene)
-                .overlay {
-                    MetalOverlayView(overlay: scene.state.overlay)
-                }
         }
         .overlay(alignment: .bottomLeading) {
             ThumbstickView(value: $movementValue)

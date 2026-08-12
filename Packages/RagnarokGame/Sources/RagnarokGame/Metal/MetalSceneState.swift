@@ -11,5 +11,4 @@ import Observation
 @Observable
 final class MetalSceneState {
     var isPlayerDead = false
-    let overlay = MetalOverlayState()
 }
