@@ -37,7 +37,7 @@ final class MetalMapRenderer: Renderer {
     private var cameraState = MapCameraState()
     private var targetPosition: SIMD3<Float> = .zero
 
-    private(set) var lastCameraParameters: CameraParameters?
+    private(set) var lastCamera: RenderCamera?
     private(set) var lastBounds: CGRect = .zero
 
     init(configuration: RenderConfiguration) throws {
@@ -107,14 +107,14 @@ final class MetalMapRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            let cameraParameters = CameraParameters(modelMatrix: makeWorldModelMatrix(), camera: view.camera)
-            lastCameraParameters = cameraParameters
+            lastCamera = view.camera
 
             renderContents(
                 atTime: frame.time,
                 viewport: view.viewport,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: makeWorldModelMatrix(),
+                camera: view.camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 
@@ -124,14 +124,15 @@ final class MetalMapRenderer: Renderer {
     private func renderContents(
         atTime time: TimeInterval,
         viewport: MTLViewport,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         if let skyboxResource {
             skyboxRenderer.render(
                 resource: skyboxResource,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 
@@ -139,8 +140,9 @@ final class MetalMapRenderer: Renderer {
             worldRenderer.renderGroundAndModels(
                 resource: worldResource,
                 atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 
@@ -149,24 +151,26 @@ final class MetalMapRenderer: Renderer {
                 resource: worldResource,
                 atTime: time,
                 beforeEntities: true,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 
         renderEffects(
             effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == true },
             atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
 
         let framebufferSize = SIMD2<Float>(Float(viewport.width), Float(viewport.height))
         spriteRenderer.render(
             drawables: spriteDrawables,
             framebufferSize: framebufferSize,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
 
         // Water renders after sprites so submerged
@@ -175,8 +179,9 @@ final class MetalMapRenderer: Renderer {
             worldRenderer.renderWater(
                 resource: worldResource,
                 atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 
@@ -185,40 +190,43 @@ final class MetalMapRenderer: Renderer {
                 resource: worldResource,
                 atTime: time,
                 beforeEntities: false,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 
         renderEffects(
             effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == false },
             atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
 
         if let tileSelectorResource {
             tileSelectorRenderer.render(
                 resource: tileSelectorResource,
                 atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 
         // Combat text renders last so nothing draws over it.
         combatTextRenderer.render(
             resources: combatTextRenderResources,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
     }
 
     private func renderEffects(
         _ effects: [MetalMapEffect],
         atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         let sortedEffects = effects.sorted {
             guard let lhsCreationTime = $0.renderResourceGroup?.creationTime else {
@@ -241,8 +249,9 @@ final class MetalMapRenderer: Renderer {
                 resourceGroup: resourceGroup,
                 atTime: time,
                 attachedWorldPosition: targetObject?.worldPosition,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
     }

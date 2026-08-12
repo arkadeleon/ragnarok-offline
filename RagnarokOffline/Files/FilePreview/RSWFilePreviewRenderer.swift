@@ -81,24 +81,24 @@ public class RSWFilePreviewRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
-
-            lastModelMatrix = cameraParameters.modelMatrix
-            lastViewMatrix = cameraParameters.viewMatrix
-            lastProjectionMatrix = cameraParameters.projectionMatrix
+            lastModelMatrix = modelMatrix
+            lastViewMatrix = camera.viewMatrix
+            lastProjectionMatrix = camera.projectionMatrix
 
             worldRenderer.render(
                 resource: worldResource,
                 atTime: frame.time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: view.camera,
+                renderCommandEncoder: renderCommandEncoder
             )
 
             worldRenderer.renderEffects(
                 resource: worldResource,
                 atTime: frame.time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: view.camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 

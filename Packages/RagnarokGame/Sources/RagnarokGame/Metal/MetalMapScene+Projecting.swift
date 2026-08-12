@@ -11,7 +11,7 @@ import simd
 
 extension MetalMapScene: GameCoordinateSpaceProjecting {
     public func project(_ worldPoint: SIMD3<Float>) -> CGPoint? {
-        guard let cameraParameters = renderer.lastCameraParameters else {
+        guard let camera = renderer.lastCamera else {
             return nil
         }
 
@@ -21,7 +21,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         }
 
         let renderPoint = renderer.renderPosition(for: worldPoint)
-        let pv = cameraParameters.projectionMatrix * cameraParameters.viewMatrix
+        let pv = camera.projectionMatrix * camera.viewMatrix
         let clip = pv * SIMD4<Float>(renderPoint, 1)
 
         guard clip.w > 0 else {
@@ -43,7 +43,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
     }
 
     public func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)? {
-        guard let cameraParameters = renderer.lastCameraParameters else {
+        guard let camera = renderer.lastCamera else {
             return nil
         }
 
@@ -52,7 +52,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             return nil
         }
 
-        let pv = cameraParameters.projectionMatrix * cameraParameters.viewMatrix
+        let pv = camera.projectionMatrix * camera.viewMatrix
         let pvInverse = pv.inverse
         if pvInverse[0][0].isNaN {
             return nil
@@ -76,9 +76,9 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
     }
 
     public func hitTest(_ screenPoint: CGPoint) -> GameHitTestResult? {
-        if let cameraParameters = renderer.lastCameraParameters {
+        if let camera = renderer.lastCamera {
             let bounds = renderer.lastBounds
-            let hitBoxes = spriteHitBoxes(cameraParameters: cameraParameters, bounds: bounds)
+            let hitBoxes = spriteHitBoxes(camera: camera, bounds: bounds)
 
             for (objectID, rect) in hitBoxes {
                 guard rect.contains(screenPoint) else {
@@ -106,7 +106,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
     }
 
     private func spriteHitBoxes(
-        cameraParameters: CameraParameters,
+        camera: RenderCamera,
         bounds: CGRect
     ) -> [GameObjectID : CGRect] {
         guard bounds.width > 0, bounds.height > 0 else {
@@ -116,7 +116,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         var hitBoxes: [GameObjectID : CGRect] = [:]
         for drawable in renderer.spriteDrawables {
             guard drawable.isVisible,
-                  let rect = spriteHitBox(for: drawable, cameraParameters: cameraParameters, bounds: bounds) else {
+                  let rect = spriteHitBox(for: drawable, camera: camera, bounds: bounds) else {
                 continue
             }
             if let existing = hitBoxes[drawable.objectID] {
@@ -144,20 +144,20 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
 
     private func spriteHitBox(
         for drawable: SpriteLayerDrawable,
-        cameraParameters: CameraParameters,
+        camera: RenderCamera,
         bounds: CGRect
     ) -> CGRect? {
-        let pv = cameraParameters.projectionMatrix * cameraParameters.viewMatrix
+        let pv = camera.projectionMatrix * camera.viewMatrix
 
         let right = SIMD3<Float>(
-            cameraParameters.viewMatrix[0][0],
-            cameraParameters.viewMatrix[1][0],
-            cameraParameters.viewMatrix[2][0]
+            camera.viewMatrix[0][0],
+            camera.viewMatrix[1][0],
+            camera.viewMatrix[2][0]
         )
         let up = SIMD3<Float>(
-            cameraParameters.viewMatrix[0][1],
-            cameraParameters.viewMatrix[1][1],
-            cameraParameters.viewMatrix[2][1]
+            camera.viewMatrix[0][1],
+            camera.viewMatrix[1][1],
+            camera.viewMatrix[2][1]
         )
 
         let scale: Float = 1.0 / 32.0

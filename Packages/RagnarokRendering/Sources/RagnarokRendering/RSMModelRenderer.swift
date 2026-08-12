@@ -44,8 +44,9 @@ public final class RSMModelRenderer {
     public func render(
         resources: [RSMModelRenderResource],
         atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         guard !resources.isEmpty else {
             return
@@ -61,11 +62,10 @@ public final class RSMModelRenderer {
             }
 
             var vertexUniforms = ModelVertexUniforms(
-                modelMatrix: cameraParameters.modelMatrix,
-                viewMatrix: cameraParameters.viewMatrix,
-                projectionMatrix: cameraParameters.projectionMatrix,
-                lightDirection: resource.light.direction,
-                normalMatrix: cameraParameters.normalMatrix
+                modelMatrix: modelMatrix,
+                viewMatrix: camera.viewMatrix,
+                projectionMatrix: camera.projectionMatrix,
+                lightDirection: resource.light.direction
             )
 
             var fragmentUniforms = ModelFragmentUniforms(

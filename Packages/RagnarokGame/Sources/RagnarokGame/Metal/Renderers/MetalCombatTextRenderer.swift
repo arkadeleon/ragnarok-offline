@@ -44,8 +44,8 @@ final class MetalCombatTextRenderer {
 
     func render(
         resources: [CombatTextRenderResource],
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         guard !resources.isEmpty else {
             return
@@ -56,15 +56,15 @@ final class MetalCombatTextRenderer {
 
         let now = ContinuousClock.now
         for resource in resources {
-            guard let sample = resource.sample(for: now, cameraAzimuth: cameraParameters.cameraAzimuth) else {
+            guard let sample = resource.sample(for: now, cameraAzimuth: camera.azimuth) else {
                 continue
             }
 
             var uniforms = SpriteVertexUniforms(
-                viewMatrix: cameraParameters.viewMatrix,
-                projectionMatrix: cameraParameters.projectionMatrix,
+                viewMatrix: camera.viewMatrix,
+                projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(sample.worldPosition, 0),
-                cameraPosition: SIMD4<Float>(cameraParameters.cameraPosition, 0),
+                cameraPosition: SIMD4<Float>(camera.position, 0),
                 framebufferSize: .zero
             )
 

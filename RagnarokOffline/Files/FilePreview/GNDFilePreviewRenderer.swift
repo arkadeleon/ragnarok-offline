@@ -67,13 +67,12 @@ class GNDFilePreviewRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
-
             groundRenderer.render(
                 resource: groundResource,
                 atTime: frame.time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: view.camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 

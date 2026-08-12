@@ -43,15 +43,16 @@ public final class Effect3DRenderer {
         worldPosition: SIMD3<Float>,
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         let sample = resource.sample(
             forElapsedTime: elapsedTime,
             worldPosition: worldPosition,
             sourceWorldPosition: sourceWorldPosition,
             targetWorldPosition: targetWorldPosition,
-            cameraAzimuth: cameraParameters.cameraAzimuth
+            cameraAzimuth: camera.azimuth
         )
         guard let sample, let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
@@ -71,9 +72,9 @@ public final class Effect3DRenderer {
             }
 
             var vertexUniforms = Effect3DVertexUniforms(
-                modelMatrix: cameraParameters.modelMatrix,
-                viewMatrix: cameraParameters.viewMatrix,
-                projectionMatrix: cameraParameters.projectionMatrix,
+                modelMatrix: modelMatrix,
+                viewMatrix: camera.viewMatrix,
+                projectionMatrix: camera.projectionMatrix,
                 rotationMatrix: layer.rotationMatrix,
                 worldPosition: sample.worldPosition,
                 size: layer.size,

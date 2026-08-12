@@ -43,19 +43,19 @@ public final class GroundRenderer {
     public func render(
         resource: GroundRenderResource,
         atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         guard resource.vertexCount > 0 else {
             return
         }
 
         var vertexUniforms = GroundVertexUniforms(
-            modelMatrix: cameraParameters.modelMatrix,
-            viewMatrix: cameraParameters.viewMatrix,
-            projectionMatrix: cameraParameters.projectionMatrix,
-            lightDirection: resource.light.direction,
-            normalMatrix: cameraParameters.normalMatrix
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            lightDirection: resource.light.direction
         )
 
         var fragmentUniforms = GroundFragmentUniforms(

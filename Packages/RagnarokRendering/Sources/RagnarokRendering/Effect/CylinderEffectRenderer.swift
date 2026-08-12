@@ -35,13 +35,14 @@ public final class CylinderEffectRenderer {
         resource: CylinderEffectRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         let sample = resource.sample(
             forElapsedTime: elapsedTime,
-            cameraAzimuth: cameraParameters.cameraAzimuth,
-            cameraElevation: cameraParameters.cameraElevation
+            cameraAzimuth: camera.azimuth,
+            cameraElevation: camera.elevation
         )
         guard let sample,
               !resource.vertices.isEmpty,
@@ -50,9 +51,9 @@ public final class CylinderEffectRenderer {
         }
 
         var vertexUniforms = CylinderEffectVertexUniforms(
-            modelMatrix: cameraParameters.modelMatrix,
-            viewMatrix: cameraParameters.viewMatrix,
-            projectionMatrix: cameraParameters.projectionMatrix,
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
             rotationMatrix: sample.rotationMatrix,
             worldPosition: worldPosition,
             positionOffset: sample.positionOffset,

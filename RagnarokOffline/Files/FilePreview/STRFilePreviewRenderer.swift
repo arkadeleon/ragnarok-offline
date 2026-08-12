@@ -70,14 +70,13 @@ public class STRFilePreviewRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
-
             effectRenderer.render(
                 resource: effectResource,
                 elapsedTime: frame.time - creationTime,
                 spritePosition: .zero,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: view.camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 

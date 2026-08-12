@@ -39,13 +39,13 @@ final class SkyboxRenderer {
 
     func render(
         resource: SkyboxRenderResource,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         guard resource.writeUniforms(
-            projectionMatrix: cameraParameters.projectionMatrix,
-            viewMatrix: cameraParameters.viewMatrix,
-            cameraPosition: cameraParameters.cameraPosition
+            projectionMatrix: camera.projectionMatrix,
+            viewMatrix: camera.viewMatrix,
+            cameraPosition: camera.position
         ) else {
             return
         }

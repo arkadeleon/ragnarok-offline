@@ -46,8 +46,8 @@ final class MetalTileSelectorRenderer {
     func render(
         resource: TileSelectorRenderResource,
         atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         guard resource.vertexCount > 0 else {
             return
@@ -58,8 +58,8 @@ final class MetalTileSelectorRenderer {
         }
 
         var uniforms = TileVertexUniforms(
-            viewMatrix: cameraParameters.viewMatrix,
-            projectionMatrix: cameraParameters.projectionMatrix
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix
         )
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)

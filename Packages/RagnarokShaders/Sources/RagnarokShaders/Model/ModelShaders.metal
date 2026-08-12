@@ -27,7 +27,10 @@ modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
 {
     ModelVertex in = vertices[vertexIndex];
     ModelInstanceUniforms instance = instances[instanceIndex];
-    float3 worldNormal = normalize(uniforms.normalMatrix * instance.normalMatrix * bone.boneNormalMatrix * in.normal);
+    float3x3 modelRotation = float3x3(uniforms.modelMatrix[0].xyz,
+                                      uniforms.modelMatrix[1].xyz,
+                                      uniforms.modelMatrix[2].xyz);
+    float3 worldNormal = normalize(modelRotation * instance.normalMatrix * bone.boneNormalMatrix * in.normal);
     float3 lightDirection = normalize(uniforms.lightDirection);
     float dotProduct = dot(worldNormal, lightDirection);
 

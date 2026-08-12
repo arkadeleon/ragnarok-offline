@@ -75,13 +75,12 @@ class EffectViewerEffectRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
-
             effectRenderer.render(
                 resourceGroup: effectResourceGroup,
                 atTime: frame.time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: view.camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 

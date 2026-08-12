@@ -60,13 +60,12 @@ public class RSMFilePreviewRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            let cameraParameters = CameraParameters(modelMatrix: modelMatrix, camera: view.camera)
-
             modelRenderer.render(
                 resources: [modelResource],
                 atTime: frame.time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: view.camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
 

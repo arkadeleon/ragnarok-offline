@@ -24,7 +24,10 @@ groundVertexShader(const device GroundVertex *vertices [[buffer(0)]],
                    constant GroundVertexUniforms &uniforms [[buffer(1)]])
 {
     GroundVertex in = vertices[vertexIndex];
-    float3 worldNormal = normalize(uniforms.normalMatrix * in.normal);
+    float3x3 modelRotation = float3x3(uniforms.modelMatrix[0].xyz,
+                                      uniforms.modelMatrix[1].xyz,
+                                      uniforms.modelMatrix[2].xyz);
+    float3 worldNormal = normalize(modelRotation * in.normal);
     float3 lightDirection = normalize(uniforms.lightDirection);
     float dotProduct = dot(worldNormal, lightDirection);
 

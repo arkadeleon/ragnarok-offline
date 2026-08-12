@@ -29,56 +29,64 @@ public final class WorldRenderer {
     public func render(
         resource: WorldRenderResource,
         atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         renderGroundAndModels(
             resource: resource,
             atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
 
         renderWater(
             resource: resource,
             atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
     }
 
     public func renderGroundAndModels(
         resource: WorldRenderResource,
         atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         groundRenderer.render(
             resource: resource.groundResource,
             atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
 
         modelRenderer.render(
             resources: resource.modelResources,
             atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
     }
 
     public func renderWater(
         resource: WorldRenderResource,
         atTime time: TimeInterval,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         waterRenderer.render(
             resource: resource.waterResource,
             atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
         )
     }
 
@@ -86,8 +94,9 @@ public final class WorldRenderer {
         resource: WorldRenderResource,
         atTime time: TimeInterval,
         beforeEntities: Bool? = nil,
-        renderCommandEncoder: any MTLRenderCommandEncoder,
-        cameraParameters: CameraParameters
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         for effectResource in resource.effectResources {
             if let beforeEntities, effectResource.rendersBeforeEntities != beforeEntities {
@@ -101,8 +110,9 @@ public final class WorldRenderer {
             effectRenderer.render(
                 resourceGroup: effectResource,
                 atTime: time,
-                renderCommandEncoder: renderCommandEncoder,
-                cameraParameters: cameraParameters
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
             )
         }
     }
