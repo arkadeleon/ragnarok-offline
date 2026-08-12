@@ -37,7 +37,7 @@ final class MetalMapRenderer: Renderer {
     private var targetPosition: SIMD3<Float> = .zero
 
     private(set) var lastCameraParameters: CameraParameters?
-    private(set) var lastViewport: CGRect = .zero
+    private(set) var lastBounds: CGRect = .zero
 
     init() throws {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -66,29 +66,43 @@ final class MetalMapRenderer: Renderer {
         self.targetPosition = targetPosition
     }
 
-    func render(
-        atTime time: TimeInterval,
-        viewport: CGRect,
-        commandBuffer: any MTLCommandBuffer,
-        renderPassDescriptor: MTLRenderPassDescriptor
-    ) {
+    func render(frame: RenderFrame) {
+        let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
+        renderPassDescriptor.depthAttachment.loadAction = .clear
+        renderPassDescriptor.depthAttachment.storeAction = .dontCare
+        renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        if let depthAttachment = renderPassDescriptor.depthAttachment {
-            depthAttachment.loadAction = .clear
-            depthAttachment.storeAction = .dontCare
-            depthAttachment.clearDepth = 1
-        }
-
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+        guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
-        let cameraParameters = makeCameraParameters(viewport: viewport)
-        lastCameraParameters = cameraParameters
-        lastViewport = viewport
+        lastBounds = frame.bounds
 
+        for view in frame.views {
+            renderCommandEncoder.setViewport(view.viewport)
+
+            let cameraParameters = makeCameraParameters(for: view)
+            lastCameraParameters = cameraParameters
+
+            renderContents(
+                atTime: frame.time,
+                viewport: view.viewport,
+                renderCommandEncoder: renderCommandEncoder,
+                cameraParameters: cameraParameters
+            )
+        }
+
+        renderCommandEncoder.endEncoding()
+    }
+
+    private func renderContents(
+        atTime time: TimeInterval,
+        viewport: MTLViewport,
+        renderCommandEncoder: any MTLRenderCommandEncoder,
+        cameraParameters: CameraParameters
+    ) {
         if let skyboxResource {
             skyboxRenderer.render(
                 resource: skyboxResource,
@@ -123,10 +137,7 @@ final class MetalMapRenderer: Renderer {
             cameraParameters: cameraParameters
         )
 
-        let framebufferSize = SIMD2<Float>(
-            Float(renderPassDescriptor.colorAttachments[0].texture?.width ?? 0),
-            Float(renderPassDescriptor.colorAttachments[0].texture?.height ?? 0)
-        )
+        let framebufferSize = SIMD2<Float>(Float(viewport.width), Float(viewport.height))
         spriteRenderer.render(
             drawables: spriteDrawables,
             framebufferSize: framebufferSize,
@@ -177,8 +188,6 @@ final class MetalMapRenderer: Renderer {
             renderCommandEncoder: renderCommandEncoder,
             cameraParameters: cameraParameters
         )
-
-        renderCommandEncoder.endEncoding()
     }
 
     private func renderEffects(
@@ -214,7 +223,7 @@ final class MetalMapRenderer: Renderer {
         }
     }
 
-    private func makeCameraParameters(viewport: CGRect) -> CameraParameters {
+    private func makeCameraParameters(for view: RenderView) -> CameraParameters {
         let modelMatrix = makeWorldModelMatrix()
         let worldTarget = renderPosition(for: targetPosition) + Self.cameraTargetOffset
 
@@ -224,14 +233,14 @@ final class MetalMapRenderer: Renderer {
         let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
         let cameraUp = cameraOrientation.act([0, 1, 0])
 
-        let viewportHeight = max(Float(viewport.height), 1)
-        let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
+        let viewportHeight = max(Float(view.viewport.height), 1)
+        let aspectRatio = max(Float(view.viewport.width) / viewportHeight, .leastNonzeroMagnitude)
         let farZ = max(cameraState.distance * 4, 1000)
 
         return CameraParameters(
             modelMatrix: modelMatrix,
-            viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
-            projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
+            viewMatrix: view.viewMatrix ?? lookAt(cameraPosition, worldTarget, cameraUp),
+            projectionMatrix: view.projectionMatrix ?? perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
             cameraPosition: cameraPosition,
             cameraAzimuth: cameraState.azimuth,
             cameraElevation: cameraState.elevation

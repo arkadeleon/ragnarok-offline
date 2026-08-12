@@ -36,39 +36,40 @@ class GNDFilePreviewRenderer: Renderer {
         camera.farZ = 500
     }
 
-    func render(
-        atTime time: TimeInterval,
-        viewport: CGRect,
-        commandBuffer: any MTLCommandBuffer,
-        renderPassDescriptor: MTLRenderPassDescriptor
-    ) {
+    func render(frame: RenderFrame) {
+        let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        camera.update(atTime: time)
-        camera.update(size: viewport.size)
+        camera.update(atTime: frame.time)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
-        let cameraParameters = CameraParameters(
-            modelMatrix: modelMatrix,
-            viewMatrix: camera.viewMatrix,
-            projectionMatrix: camera.projectionMatrix
-        )
-
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+        guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
-        groundRenderer.render(
-            resource: groundResource,
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
-        )
+        for view in frame.views {
+            renderCommandEncoder.setViewport(view.viewport)
+
+            camera.update(size: view.size)
+
+            let cameraParameters = CameraParameters(
+                modelMatrix: modelMatrix,
+                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
+                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix
+            )
+
+            groundRenderer.render(
+                resource: groundResource,
+                atTime: frame.time,
+                renderCommandEncoder: renderCommandEncoder,
+                cameraParameters: cameraParameters
+            )
+        }
 
         renderCommandEncoder.endEncoding()
     }

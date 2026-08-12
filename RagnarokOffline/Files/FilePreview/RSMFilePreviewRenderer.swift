@@ -29,41 +29,41 @@ public class RSMFilePreviewRenderer: Renderer {
         modelRenderer = try RSMModelRenderer(device: device)
     }
 
-    public func render(
-        atTime time: TimeInterval,
-        viewport: CGRect,
-        commandBuffer: any MTLCommandBuffer,
-        renderPassDescriptor: MTLRenderPassDescriptor
-    ) {
+    public func render(frame: RenderFrame) {
+        let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
         let scale = 2 / modelBoundingBox.range.max()
 
-        camera.update(size: viewport.size)
-
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_scale(modelMatrix, [scale, scale, scale])
         modelMatrix = matrix_rotate(modelMatrix, radians(-15), [1, 0, 0])
-        modelMatrix = matrix_rotate(modelMatrix, Float(radians(time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0, 1, 0])
+        modelMatrix = matrix_rotate(modelMatrix, Float(radians(frame.time.truncatingRemainder(dividingBy: 8) * 360 / 8)), [0, 1, 0])
 
-        let cameraParameters = CameraParameters(
-            modelMatrix: modelMatrix,
-            viewMatrix: camera.viewMatrix,
-            projectionMatrix: camera.projectionMatrix
-        )
-
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+        guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
-        modelRenderer.render(
-            resources: [modelResource],
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
-        )
+        for view in frame.views {
+            renderCommandEncoder.setViewport(view.viewport)
+
+            camera.update(size: view.size)
+
+            let cameraParameters = CameraParameters(
+                modelMatrix: modelMatrix,
+                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
+                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix
+            )
+
+            modelRenderer.render(
+                resources: [modelResource],
+                atTime: frame.time,
+                renderCommandEncoder: renderCommandEncoder,
+                cameraParameters: cameraParameters
+            )
+        }
 
         renderCommandEncoder.endEncoding()
     }

@@ -6,6 +6,7 @@
 //
 
 import MetalKit
+import RagnarokRendering
 import SwiftUI
 
 #if canImport(UIKit)
@@ -94,12 +95,16 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
 
         scene?.prepareFrame(atTime: currentTime)
 
-        renderer.render(
-            atTime: currentTime,
-            viewport: view.bounds,
+        let frame = RenderFrame(
+            time: currentTime,
             commandBuffer: commandBuffer,
-            renderPassDescriptor: renderPassDescriptor
+            renderPassDescriptor: renderPassDescriptor,
+            views: [
+                RenderView(size: view.drawableSize)
+            ],
+            bounds: view.bounds
         )
+        renderer.render(frame: frame)
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
@@ -252,12 +257,16 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
 
         scene?.prepareFrame(atTime: currentTime)
 
-        renderer.render(
-            atTime: currentTime,
-            viewport: view.bounds,
+        let frame = RenderFrame(
+            time: currentTime,
             commandBuffer: commandBuffer,
-            renderPassDescriptor: renderPassDescriptor
+            renderPassDescriptor: renderPassDescriptor,
+            views: [
+                RenderView(size: view.drawableSize)
+            ],
+            bounds: view.bounds
         )
+        renderer.render(frame: frame)
 
         commandBuffer.present(drawable)
         commandBuffer.commit()

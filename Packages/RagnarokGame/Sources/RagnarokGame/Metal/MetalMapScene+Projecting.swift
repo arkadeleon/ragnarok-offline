@@ -15,8 +15,8 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             return nil
         }
 
-        let viewport = renderer.lastViewport
-        guard viewport.width > 0, viewport.height > 0 else {
+        let bounds = renderer.lastBounds
+        guard bounds.width > 0, bounds.height > 0 else {
             return nil
         }
 
@@ -36,8 +36,8 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         }
 
         // NDC → screen coordinates (top-left origin; NDC +Y is up, screen +Y is down).
-        let sx = viewport.minX + CGFloat((ndcX + 1) * 0.5) * viewport.width
-        let sy = viewport.minY + CGFloat((1 - ndcY) * 0.5) * viewport.height
+        let sx = bounds.minX + CGFloat((ndcX + 1) * 0.5) * bounds.width
+        let sy = bounds.minY + CGFloat((1 - ndcY) * 0.5) * bounds.height
 
         return CGPoint(x: sx, y: sy)
     }
@@ -47,8 +47,8 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             return nil
         }
 
-        let viewport = renderer.lastViewport
-        guard viewport.width > 0, viewport.height > 0 else {
+        let bounds = renderer.lastBounds
+        guard bounds.width > 0, bounds.height > 0 else {
             return nil
         }
 
@@ -59,8 +59,8 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         }
 
         // Screen (top-left origin) → NDC [-1, 1]; Y is flipped because NDC +Y is up.
-        let ndcX = Float((screenPoint.x - viewport.minX) / viewport.width)  * 2 - 1
-        let ndcY = 1 - Float((screenPoint.y - viewport.minY) / viewport.height) * 2
+        let ndcX = Float((screenPoint.x - bounds.minX) / bounds.width)  * 2 - 1
+        let ndcY = 1 - Float((screenPoint.y - bounds.minY) / bounds.height) * 2
 
         let nearNDC = SIMD4<Float>(ndcX, ndcY, 0, 1)
         let farNDC  = SIMD4<Float>(ndcX, ndcY, 1, 1)
@@ -77,8 +77,8 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
 
     public func hitTest(_ screenPoint: CGPoint) -> GameHitTestResult? {
         if let cameraParameters = renderer.lastCameraParameters {
-            let viewport = renderer.lastViewport
-            let hitBoxes = spriteHitBoxes(cameraParameters: cameraParameters, viewport: viewport)
+            let bounds = renderer.lastBounds
+            let hitBoxes = spriteHitBoxes(cameraParameters: cameraParameters, bounds: bounds)
 
             for (objectID, rect) in hitBoxes {
                 guard rect.contains(screenPoint) else {
@@ -107,16 +107,16 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
 
     private func spriteHitBoxes(
         cameraParameters: CameraParameters,
-        viewport: CGRect
+        bounds: CGRect
     ) -> [GameObjectID : CGRect] {
-        guard viewport.width > 0, viewport.height > 0 else {
+        guard bounds.width > 0, bounds.height > 0 else {
             return [:]
         }
 
         var hitBoxes: [GameObjectID : CGRect] = [:]
         for drawable in renderer.spriteDrawables {
             guard drawable.isVisible,
-                  let rect = spriteHitBox(for: drawable, cameraParameters: cameraParameters, viewport: viewport) else {
+                  let rect = spriteHitBox(for: drawable, cameraParameters: cameraParameters, bounds: bounds) else {
                 continue
             }
             if let existing = hitBoxes[drawable.objectID] {
@@ -145,7 +145,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
     private func spriteHitBox(
         for drawable: SpriteLayerDrawable,
         cameraParameters: CameraParameters,
-        viewport: CGRect
+        bounds: CGRect
     ) -> CGRect? {
         let pv = cameraParameters.projectionMatrix * cameraParameters.viewMatrix
 
@@ -189,8 +189,8 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             }
             let ndcX = clip.x / clip.w
             let ndcY = clip.y / clip.w
-            let screenX = viewport.minX + CGFloat((ndcX + 1) * 0.5) * viewport.width
-            let screenY = viewport.minY + CGFloat((1 - ndcY) * 0.5) * viewport.height
+            let screenX = bounds.minX + CGFloat((ndcX + 1) * 0.5) * bounds.width
+            let screenY = bounds.minY + CGFloat((1 - ndcY) * 0.5) * bounds.height
             return CGPoint(x: screenX, y: screenY)
         }
 

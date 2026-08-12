@@ -42,39 +42,39 @@ public class STRFilePreviewRenderer: Renderer {
         camera.maximumDistance = 100
     }
 
-    public func render(
-        atTime time: TimeInterval,
-        viewport: CGRect,
-        commandBuffer: any MTLCommandBuffer,
-        renderPassDescriptor: MTLRenderPassDescriptor
-    ) {
+    public func render(frame: RenderFrame) {
+        let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        camera.update(size: viewport.size)
-
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_translate(modelMatrix, [0, -3, 0])
 
-        let cameraParameters = CameraParameters(
-            modelMatrix: modelMatrix,
-            viewMatrix: camera.viewMatrix,
-            projectionMatrix: camera.projectionMatrix
-        )
-
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+        guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
-        effectRenderer.render(
-            resource: effectResource,
-            elapsedTime: time - creationTime,
-            spritePosition: .zero,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
-        )
+        for view in frame.views {
+            renderCommandEncoder.setViewport(view.viewport)
+
+            camera.update(size: view.size)
+
+            let cameraParameters = CameraParameters(
+                modelMatrix: modelMatrix,
+                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
+                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix
+            )
+
+            effectRenderer.render(
+                resource: effectResource,
+                elapsedTime: frame.time - creationTime,
+                spritePosition: .zero,
+                renderCommandEncoder: renderCommandEncoder,
+                cameraParameters: cameraParameters
+            )
+        }
 
         renderCommandEncoder.endEncoding()
     }

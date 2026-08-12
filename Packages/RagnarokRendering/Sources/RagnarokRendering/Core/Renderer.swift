@@ -14,12 +14,7 @@ public protocol Renderer {
     var colorPixelFormat: MTLPixelFormat { get }
     var depthStencilPixelFormat: MTLPixelFormat { get }
 
-    func render(
-        atTime time: TimeInterval,
-        viewport: CGRect,
-        commandBuffer: any MTLCommandBuffer,
-        renderPassDescriptor: MTLRenderPassDescriptor
-    )
+    func render(frame: RenderFrame)
 }
 
 extension Renderer {

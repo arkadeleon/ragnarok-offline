@@ -24,7 +24,7 @@ public class RSWFilePreviewRenderer: Renderer {
     private var lastModelMatrix = matrix_identity_float4x4
     private var lastViewMatrix = matrix_identity_float4x4
     private var lastProjectionMatrix = matrix_identity_float4x4
-    private var lastViewport: CGRect = .zero
+    private var lastBounds: CGRect = .zero
 
     public init(device: any MTLDevice, worldAsset: WorldAsset) throws {
         self.device = device
@@ -48,52 +48,54 @@ public class RSWFilePreviewRenderer: Renderer {
         camera.animatePan(to: SIMD3<Float>(tileCenter.x, 0, tileCenter.z))
     }
 
-    public func render(
-        atTime time: TimeInterval,
-        viewport: CGRect,
-        commandBuffer: any MTLCommandBuffer,
-        renderPassDescriptor: MTLRenderPassDescriptor
-    ) {
+    public func render(frame: RenderFrame) {
+        let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = 1
 
-        camera.update(atTime: time)
-        camera.update(size: viewport.size)
+        camera.update(atTime: frame.time)
 
         var modelMatrix = matrix_identity_float4x4
         modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
         modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
-        let cameraParameters = CameraParameters(
-            modelMatrix: modelMatrix,
-            viewMatrix: camera.viewMatrix,
-            projectionMatrix: camera.projectionMatrix,
-            cameraAzimuth: camera.azimuth
-        )
-
-        lastModelMatrix = cameraParameters.modelMatrix
-        lastViewMatrix = cameraParameters.viewMatrix
-        lastProjectionMatrix = cameraParameters.projectionMatrix
-        lastViewport = viewport
-
-        guard let renderCommandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+        guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
-        worldRenderer.render(
-            resource: worldResource,
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
-        )
+        lastBounds = frame.bounds
 
-        worldRenderer.renderEffects(
-            resource: worldResource,
-            atTime: time,
-            renderCommandEncoder: renderCommandEncoder,
-            cameraParameters: cameraParameters
-        )
+        for view in frame.views {
+            renderCommandEncoder.setViewport(view.viewport)
+
+            camera.update(size: view.size)
+
+            let cameraParameters = CameraParameters(
+                modelMatrix: modelMatrix,
+                viewMatrix: view.viewMatrix ?? camera.viewMatrix,
+                projectionMatrix: view.projectionMatrix ?? camera.projectionMatrix,
+                cameraAzimuth: camera.azimuth
+            )
+
+            lastModelMatrix = cameraParameters.modelMatrix
+            lastViewMatrix = cameraParameters.viewMatrix
+            lastProjectionMatrix = cameraParameters.projectionMatrix
+
+            worldRenderer.render(
+                resource: worldResource,
+                atTime: frame.time,
+                renderCommandEncoder: renderCommandEncoder,
+                cameraParameters: cameraParameters
+            )
+
+            worldRenderer.renderEffects(
+                resource: worldResource,
+                atTime: frame.time,
+                renderCommandEncoder: renderCommandEncoder,
+                cameraParameters: cameraParameters
+            )
+        }
 
         renderCommandEncoder.endEncoding()
     }
@@ -140,7 +142,7 @@ extension RSWFilePreviewRenderer {
     }
 
     private func ray(through screenPoint: CGPoint) -> (origin: SIMD3<Float>, direction: SIMD3<Float>)? {
-        guard lastViewport.width > 0, lastViewport.height > 0 else {
+        guard lastBounds.width > 0, lastBounds.height > 0 else {
             return nil
         }
 
@@ -149,8 +151,8 @@ extension RSWFilePreviewRenderer {
             return nil
         }
 
-        let ndcX = Float((screenPoint.x - lastViewport.minX) / lastViewport.width) * 2 - 1
-        let ndcY = 1 - Float((screenPoint.y - lastViewport.minY) / lastViewport.height) * 2
+        let ndcX = Float((screenPoint.x - lastBounds.minX) / lastBounds.width) * 2 - 1
+        let ndcY = 1 - Float((screenPoint.y - lastBounds.minY) / lastBounds.height) * 2
 
         let nearWorld = pvInverse * SIMD4<Float>(ndcX, ndcY, 0, 1)
         let farWorld = pvInverse * SIMD4<Float>(ndcX, ndcY, 1, 1)
