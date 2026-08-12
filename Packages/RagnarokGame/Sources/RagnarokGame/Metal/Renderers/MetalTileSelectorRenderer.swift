@@ -46,6 +46,7 @@ final class MetalTileSelectorRenderer {
     func render(
         resource: TileSelectorRenderResource,
         atTime time: TimeInterval,
+        modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
@@ -58,6 +59,7 @@ final class MetalTileSelectorRenderer {
         }
 
         var uniforms = TileVertexUniforms(
+            modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix
         )

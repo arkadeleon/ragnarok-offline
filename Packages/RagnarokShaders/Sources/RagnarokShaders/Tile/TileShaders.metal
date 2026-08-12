@@ -23,7 +23,7 @@ tileVertexShader(const device TileVertex *vertices [[buffer(0)]],
 {
     TileVertex in = vertices[vertexIndex];
 
-    float4 clipPos = uniforms.projectionMatrix * uniforms.viewMatrix * float4(in.position, 1.0);
+    float4 clipPos = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
 
     RasterizerData out;
     out.position = clipPos;

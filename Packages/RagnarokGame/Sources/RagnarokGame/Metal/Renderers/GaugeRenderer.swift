@@ -63,6 +63,7 @@ final class GaugeRenderer {
 
     func render(
         gauges: [Gauge],
+        modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
@@ -81,6 +82,7 @@ final class GaugeRenderer {
             }
 
             var uniforms = SpriteVertexUniforms(
+                modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(gauge.worldPosition, 0),

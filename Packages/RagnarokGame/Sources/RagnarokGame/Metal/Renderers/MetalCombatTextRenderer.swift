@@ -44,6 +44,7 @@ final class MetalCombatTextRenderer {
 
     func render(
         resources: [CombatTextRenderResource],
+        modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
@@ -61,6 +62,7 @@ final class MetalCombatTextRenderer {
             }
 
             var uniforms = SpriteVertexUniforms(
+                modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(sample.worldPosition, 0),

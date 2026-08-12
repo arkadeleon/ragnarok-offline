@@ -44,6 +44,7 @@ final class MetalSpriteRenderer {
     func render(
         drawables: [SpriteLayerDrawable],
         viewport: MTLViewport,
+        modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
@@ -60,6 +61,7 @@ final class MetalSpriteRenderer {
             }
 
             var uniforms = SpriteVertexUniforms(
+                modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(drawable.worldPosition, 0),

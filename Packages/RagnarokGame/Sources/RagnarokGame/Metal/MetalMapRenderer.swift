@@ -131,6 +131,7 @@ final class MetalMapRenderer: Renderer {
         if let skyboxResource {
             skyboxRenderer.render(
                 resource: skyboxResource,
+                modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -168,6 +169,7 @@ final class MetalMapRenderer: Renderer {
         spriteRenderer.render(
             drawables: spriteDrawables,
             viewport: viewport,
+            modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -207,6 +209,7 @@ final class MetalMapRenderer: Renderer {
             tileSelectorRenderer.render(
                 resource: tileSelectorResource,
                 atTime: time,
+                modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -214,6 +217,7 @@ final class MetalMapRenderer: Renderer {
 
         gaugeRenderer.render(
             gauges: gauges,
+            modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -221,6 +225,7 @@ final class MetalMapRenderer: Renderer {
         // Combat text renders last so nothing draws over it.
         combatTextRenderer.render(
             resources: combatTextRenderResources,
+            modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )

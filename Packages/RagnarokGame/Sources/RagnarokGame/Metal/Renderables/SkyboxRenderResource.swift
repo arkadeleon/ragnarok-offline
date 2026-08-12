@@ -18,19 +18,26 @@ final class SkyboxRenderResource {
     }
 
     func makeUniforms(
-        projectionMatrix: simd_float4x4,
+        modelMatrix: simd_float4x4,
         viewMatrix: simd_float4x4,
+        projectionMatrix: simd_float4x4,
         cameraPosition: SIMD3<Float>
     ) -> SkyboxUniforms {
         let inverseViewProjectionMatrix = (projectionMatrix * viewMatrix).inverse
+        let center = modelMatrix * SIMD4<Float>(
+            configuration.center.x,
+            -configuration.center.z,
+            configuration.center.y,
+            1
+        )
         return SkyboxUniforms(
             topColor: simd4(from: configuration.topColor),
             horizonColor: simd4(from: configuration.horizonColor),
             bottomColor: simd4(from: configuration.bottomColor),
             sphereCenterAndRadius: SIMD4<Float>(
-                configuration.center.x,
-                configuration.center.y,
-                configuration.center.z,
+                center.x,
+                center.y,
+                center.z,
                 configuration.radius
             ),
             cameraPosition: SIMD4<Float>(

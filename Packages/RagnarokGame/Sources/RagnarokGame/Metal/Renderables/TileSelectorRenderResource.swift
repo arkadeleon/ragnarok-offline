@@ -44,11 +44,12 @@ final class TileSelectorRenderResource {
         let x = Float(position.x)
         let y = Float(position.y)
 
-        // +0.1 vertical offset keeps the overlay above the tile surface.
-        let p0 = SIMD3<Float>(x, cell.bottomLeftAltitude + 0.1, -y)
-        let p1 = SIMD3<Float>(x + 1, cell.bottomRightAltitude + 0.1, -y)
-        let p2 = SIMD3<Float>(x + 1, cell.topRightAltitude + 0.1, -(y + 1))
-        let p3 = SIMD3<Float>(x, cell.topLeftAltitude + 0.1, -(y + 1))
+        // The model matrix turns these into render space. The +0.1 vertical offset
+        // keeps the overlay above the tile surface.
+        let p0 = SIMD3<Float>(x, -(cell.bottomLeftAltitude + 0.1), y)
+        let p1 = SIMD3<Float>(x + 1, -(cell.bottomRightAltitude + 0.1), y)
+        let p2 = SIMD3<Float>(x + 1, -(cell.topRightAltitude + 0.1), y + 1)
+        let p3 = SIMD3<Float>(x, -(cell.topLeftAltitude + 0.1), y + 1)
 
         let vertices = [
             TileVertex(position: p0, textureCoordinate: [0, 0]),
