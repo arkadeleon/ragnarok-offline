@@ -39,12 +39,10 @@ final class SkyboxRenderer {
 
     func render(
         resource: SkyboxRenderResource,
-        modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         var uniforms = resource.makeUniforms(
-            modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix,
             cameraPosition: camera.position

@@ -13,7 +13,7 @@ import SwiftUI
 @main
 struct visionOSApp: App {
     @State private var appModel = AppModel()
-    @State private var immersionStyle: any ImmersionStyle = ProgressiveImmersionStyle(immersion: 0.1...1.0, initialAmount: 0.2)
+    @State private var immersionStyle: any ImmersionStyle = .full
 
     var body: some Scene {
         WindowGroup(id: appModel.mainWindowID) {
@@ -36,12 +36,9 @@ struct visionOSApp: App {
         }
 
         ImmersiveSpace(id: GameSession.immersiveSpaceID) {
-            if let mapScene = appModel.gameSession.mapScene as? RealityMapScene {
-                RealityMapView(scene: mapScene)
-                    .environment(appModel.gameSession)
-            }
+            MetalMapCompositorContent(gameSession: appModel.gameSession)
         }
-        .immersionStyle(selection: $immersionStyle, in: .progressive)
+        .immersionStyle(selection: $immersionStyle, in: .full)
         .defaultWindowPlacement { content, context in
             if let mainWindow = context.windows.first(where: { $0.id == appModel.mainWindowID }) {
                 WindowPlacement(.trailing(mainWindow))

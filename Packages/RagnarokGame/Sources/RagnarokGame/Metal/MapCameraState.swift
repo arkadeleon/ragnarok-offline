@@ -12,8 +12,13 @@ struct MapCameraState: Sendable {
 
     init() {
         azimuth = 0
+        #if os(visionOS)
+        elevation = .pi / 12
+        distance = 15
+        #else
         elevation = .pi / 4
         distance = 100
+        #endif
     }
 
     init(azimuth: Float, elevation: Float, distance: Float) {

@@ -11,6 +11,11 @@ import ThumbstickView
 struct MetalMapSceneView: View {
     var scene: MetalMapScene
 
+    #if os(visionOS)
+    @Environment(\.openImmersiveSpace) private var openImmersiveSpace
+    @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
+    #endif
+
     @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
 
@@ -23,7 +28,21 @@ struct MetalMapSceneView: View {
 
     var body: some View {
         ZStack {
+            #if os(visionOS)
+            Color.clear
+                .onAppear {
+                    Task {
+                        await openImmersiveSpace(id: GameSession.immersiveSpaceID)
+                    }
+                }
+                .onDisappear {
+                    Task {
+                        await dismissImmersiveSpace()
+                    }
+                }
+            #else
             MetalMapView(scene: scene)
+            #endif
         }
         .overlay(alignment: .bottomLeading) {
             ThumbstickView(value: $movementValue)

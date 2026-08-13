@@ -13,6 +13,7 @@ import RagnarokLocalization
 import RagnarokModels
 import RagnarokNetwork
 import RagnarokPackets
+import RagnarokRendering
 import RagnarokRenderAssets
 import RagnarokResources
 import RagnarokSprite
@@ -680,16 +681,11 @@ final public class GameSession {
                 let player = MapObject(account: account, character: character)
 
                 #if os(visionOS)
-                let scene = RealityMapScene(
-                    mapName: mapName,
-                    world: world,
-                    character: character,
-                    player: player,
-                    playerPosition: position,
-                    resourceManager: context.resourceManager,
-                    gameSession: self
-                )
+                let configuration = RenderConfiguration.immersive
                 #else
+                let configuration = RenderConfiguration.default
+                #endif
+
                 let scene = try MetalMapScene(
                     mapName: mapName,
                     world: world,
@@ -697,9 +693,9 @@ final public class GameSession {
                     player: player,
                     playerPosition: position,
                     resourceManager: context.resourceManager,
-                    gameSession: self
+                    gameSession: self,
+                    configuration: configuration
                 )
-                #endif
 
                 do {
                     try await scene.load(progress: progress)

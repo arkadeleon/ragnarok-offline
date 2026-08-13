@@ -69,7 +69,8 @@ public final class MetalMapScene: GameMapScene {
         player: MapObject,
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
-        gameSession: GameSession
+        gameSession: GameSession,
+        configuration: RenderConfiguration
     ) throws {
         self.mapName = mapName
         self.world = world
@@ -78,7 +79,7 @@ public final class MetalMapScene: GameMapScene {
         self.playerPosition = playerPosition
         self.resourceManager = resourceManager
         self.gameSession = gameSession
-        self.renderer = try MetalMapRenderer(configuration: .default)
+        self.renderer = try MetalMapRenderer(configuration: configuration)
         self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
 
         self.mapGrid = MapGrid(gat: world.gat)

@@ -107,13 +107,16 @@ final class MetalMapRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            lastCamera = view.camera
+            var camera = view.camera
+            camera.azimuth = cameraState.azimuth
+            camera.elevation = cameraState.elevation
+            lastCamera = camera
 
             renderContents(
                 atTime: frame.time,
                 viewport: view.viewport,
                 modelMatrix: makeWorldModelMatrix(),
-                camera: view.camera,
+                camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
         }
@@ -131,7 +134,6 @@ final class MetalMapRenderer: Renderer {
         if let skyboxResource {
             skyboxRenderer.render(
                 resource: skyboxResource,
-                modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )

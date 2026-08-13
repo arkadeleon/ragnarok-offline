@@ -40,9 +40,9 @@ stays as it is.
 
 None of these fire today. They all need `frame.views.count > 1`.
 
-1. **Layer routing** — reclassified, see "Layout choice" below. `RenderView` carries no
-   slice index and no renderer emits `render_target_array_index`, which only matters under
-   the `.layered` layout.
+1. ~~**Layer routing.**~~ Settled in Phase 2 by choosing the `.shared` layout, where the
+   eyes are separated by viewport rather than by slice. `render_target_array_index` would
+   only be needed under `.layered`.
 2. ~~**Skybox uniforms are overwritten.**~~ Fixed in Phase 1. `SkyboxRenderer` was the only
    renderer using a persistent `MTLBuffer` with `setFragmentBuffer`, so two views in one
    encoder made both skybox draws read the last view's matrices. It now uses
@@ -145,61 +145,96 @@ of all 11 vertex shaders — a large change with no observable effect until Phas
 payoff is a single pass with vertex amplification, which is a performance question best
 settled once something is actually running. **Decide this at the start of Phase 2.**
 
-### Phase 2 — CompositorServicesHost
+### Phase 2 — CompositorServicesHost ✅ Done (2026-08-13), partly verified
 
-Start by settling the layout choice above; the sketch below assumes `.shared`.
+The map renders in the immersive space on the visionOS simulator: terrain, models, sprites,
+effects, combat text and health gauges all appear, correctly lit and correctly depth-sorted.
 
-A new host alongside `MetalView` and `MetalMapView`, with the same responsibilities:
+What landed:
 
-```swift
-// per frame
-let frame = layerRenderer.queryNextFrame()
-frame.startUpdate() / endUpdate()
-let timing = frame.predictTiming()
-LayerRenderer.Clock().wait(until: timing.optimalInputTime)
-frame.startSubmission()
-let drawable = frame.queryDrawable()
-let deviceAnchor = worldTracking.queryDeviceAnchor(atTimestamp: ...)
-drawable.deviceAnchor = deviceAnchor
+- `Metal/MetalMapLayerRenderer.swift` — the frame loop, with the same job as
+  `MetalMapViewController`: `startUpdate` / `prepareFrame` / `endUpdate`, sleep until
+  `optimalInputTime`, `startSubmission`, set `deviceAnchor`, build one `RenderView` per eye,
+  `render(frame:)`, `encodePresent`, `endSubmission`
+- `Metal/MetalMapCompositorContent.swift` — the `ImmersiveSpaceContent` wrapper, the
+  `CompositorLayerConfiguration`, and `RenderConfiguration.immersive`
+- Depth direction reaches the renderers through `RenderConfiguration.isDepthReversed`, which
+  derives `clearDepth` and `depthCompareFunction`. Compositor Services **only** supports
+  reversed depth — `layer_renderer_configuration.h` says so outright.
+- Scene selection (what the plan called Phase 3): the `#if os(visionOS)` branches in
+  `GameSession` and `GameView` are gone, `MetalMapSceneView` opens the immersive space on
+  visionOS instead of embedding an `MTKView`, and `visionOSApp` hosts
+  `MetalMapCompositorContent`
+- Layout is `.shared`, settling known gap 1: one texture, one viewport per eye, which is
+  what `render(frame:)` already drew
 
-let views = drawable.views.enumerated().map { index, view in
-    RenderView(
-        viewport: view.textureMap.viewport,
-        camera: makeCamera(view: view, deviceAnchor: deviceAnchor)
-    )
-}
-renderer.render(frame: RenderFrame(
-    time: ..., commandBuffer: ..., renderPassDescriptor: ...,
-    views: views, bounds: .zero
-))
-drawable.encodePresent(commandBuffer:)
-frame.endSubmission()
-```
+#### What the plan got wrong
 
-`RenderConfiguration` comes from `LayerRenderer.Configuration` — typically `.rgba16Float`
-plus `.depth32Float`. Compositor Services commonly uses **reversed depth**, so check
-whether the existing `depthCompareFunction = .lessEqual` and `clearDepth = 1` have to flip.
+**The placement rides on the view matrix, not the model matrix.** "Camera semantics" below
+said to fold the game camera's view matrix into the model matrix. Doing that rotates vertex
+normals with the camera while the map's light direction stays in the map's own frame, so
+lighting swung as the camera orbited and whole cliff faces went black. Composing it into the
+view matrix instead — `viewMatrix = eyeView * worldPlacement`, with
+`camera.position = worldPlacement.inverse * eyePosition` — leaves the model matrix as the
+world's own transform and every downstream assumption intact.
 
-Where it lives: put it in `RagnarokGame/Metal/` first. Extracting a separate
-`RagnarokRenderHost` package can wait until Compositor Services is working — no need to
-split packages for its own sake.
+As a result **Phase 2a was not load-bearing after all.** Sprites and tiles reach the
+placement through the view matrix, which they already used. The change is still in: their
+model matrix is the world transform, matching the effect shaders, and with placement off the
+model matrix it computes exactly what it did before.
 
-### Phase 3 — Scene selection
+#### Four things that cost a run each
 
-Drop both branches so visionOS uses `MetalMapScene`:
+1. **Progressive immersion needs the drawable render context.** `ProgressiveImmersionStyle`
+   fails with *"cannot present drawable: need to use drawable render context when supporting
+   progressive style"*. `drawable.addRenderContext(commandBuffer:)` is visionOS 26 and up and
+   wants a stencil attachment on every pipeline plus a mask draw. The immersive space is
+   `.full` for now, which loses the Digital Crown immersion dial.
+2. **Handedness.** `SGLMath.lookAt` is left-handed with +Z into the screen — its own comment
+   says so, and `perspective` puts `clip.w = +vz`. `drawable.computeProjection` defaults to
+   the `.rightUpBack` convention, where visible geometry sits at −Z. Without
+   `simd_float4x4(diagonal: [1, 1, -1, 1])` on the placement the whole map sits behind the
+   viewer. The symptom is exact: only the skybox draws, because it is a full-screen ray
+   reconstruction with `depthCompareFunction = .always`.
+3. **Near plane.** Setting `defaultDepthRange` to `[1000, 0.05]` is rejected with
+   `Code=-104`, which `cp_error.h` names `unsupported_near_plane_distance`. Keep the near
+   plane the compositor hands over and push only the far plane out:
+   `[1000, configuration.defaultDepthRange.y]`. The far plane does need extending — one map
+   cell is one metre, so a map reaches hundreds of metres.
+4. **Camera distance.** `MapCameraState` defaults to 100, which frames the map through a 15°
+   field of view. The headset picks the field of view, so visionOS uses 15 — the value the
+   Reality path already tuned as `radius: 15`.
 
-- `GameSession.swift:682`
-- `GameView.swift:26`
+#### Still open
 
-Replace the `ImmersiveSpace` contents in `RagnarokOffline/App/visionOSApp.swift`:
-`RealityMapView` becomes a `CompositorLayer`.
+- **Colour.** With `.rgba16Float` the map renders noticeably brighter and flatter than the
+  same scene on macOS. The renderers work in sRGB values throughout — textures load with
+  `MTKTextureLoader.Option.SRGB: false` and lighting runs in that space — so a float target
+  has the compositor read them as linear and encode a second time. The colour format is now
+  `.bgra8Unorm`, matching `MTKView`. **Unverified.** If the compositor reads 8-bit unorm as
+  linear too, the fallback is an sRGB encode at the end of all 11 fragment shaders, switched
+  by `RenderConfiguration`.
+- **Stereo.** Cannot be judged from a screenshot. Whether both eyes are right and the depth
+  reads correctly needs looking at in the simulator or on device.
+- **The frame loop runs on the main actor**, because `Renderer` is main-actor isolated.
+  Compositor Services would rather have a thread of its own, so `waitUntilRunning()` is
+  replaced with polling — otherwise a paused layer stalls the app's windows. Worth revisiting
+  once there is something to measure.
 
 ### Phase 4 — Input
 
-- **Hit testing.** `SpatialEventGesture` / `onSpatialEvent` gives a world-space ray, which
-  feeds `scene.hitTest(ray)` directly. `Ray.pointWidth` becomes a small fixed angular size.
-- **Camera.** `MapCameraState`'s azimuth, elevation and distance keep their current
-  meaning; only where the resulting matrix goes changes. See "Camera semantics" below.
+visionOS currently has **no input into the map at all**: tapping does nothing and the camera
+cannot be orbited or zoomed, because the pan and pinch gestures live in `MetalMapView`, which
+the immersive path does not use. The thumbstick and action pad in the window still work,
+since they call the scene directly.
+
+- **Hit testing.** `LayerRenderer.onSpatialEvent` gives a ray, which feeds
+  `scene.hitTest(ray)`. Two things to get right: the ray arrives in the compositor's frame,
+  so it needs `worldPlacement.inverse` to reach the map's frame, and `Ray.pointWidth` becomes
+  a small fixed angular size rather than something derived from a viewport.
+- **Camera.** `MapCameraState`'s azimuth, elevation and distance keep their meaning; they
+  need some spatial gesture to drive them. See "Camera semantics" below for where the
+  resulting matrix goes.
 
 ### Phase 5 — HUD (the biggest unknown)
 
@@ -237,7 +272,11 @@ Neither needs to be decided: a RealityKit immersive space has the same constrain
 Compositor Services — the camera is the device pose — so the Reality path already answers
 both.
 
-### Camera semantics: fold the view matrix into the model matrix
+### Camera semantics: the game camera places the world
+
+> Superseded in part by Phase 2: the placement composes into the **view** matrix, not the
+> model matrix. Folding it into the model matrix rotates normals away from the map's light.
+> The reasoning below about *where the placement comes from* still holds.
 
 `WorldCameraSystem.update` on visionOS (`isRealityKitCamera == false`) computes the orbit
 camera transform around the target and applies its **inverse** to the world root:
@@ -255,10 +294,13 @@ today:  clip = P · V · M · p
 CS:     clip = P_eye · V_head · (V · M) · p
 ```
 
-That is, `modelMatrix = V · M`, where `V` and `M` are what `MetalMapRenderer.makeCamera`
-and `makeWorldModelMatrix` produce today. With the head at the origin the result is
-identical to the current output, so `MapCameraState` and the camera math stay as they are —
-only the slot the matrix goes into changes.
+That is, the placement is `V`, what `MetalMapRenderer.makeCamera` produces today. The host
+composes it into each eye's view matrix — `viewMatrix = eyeView · placement` — and converts
+the eye position back into the map's frame with `placement.inverse`. `MapCameraState` and the
+camera math stay as they are; only where the matrix is applied changes.
+
+The placement also needs `simd_float4x4(diagonal: [1, 1, -1, 1])` in front of it, because
+`lookAt` is left-handed and the compositor projects right-handed.
 
 ### World scale: one map cell is one metre
 
@@ -279,23 +321,25 @@ only the slot the matrix goes into changes.
 The two look similar because a 15° field of view at 100 m frames about as much as a wide
 one at 15 m. Compositor Services takes the field of view from the headset `tangents` and
 gives the app no say, so the Metal pairing of distance 100 with a 15° field of view does
-not survive. Start from the Reality path's `radius: 15` and `targetOffset: [0, -0.75, 0]`,
-which are already tuned for a headset field of view.
+not survive. Phase 2 took the Reality path's `radius: 15`, which is already tuned for a
+headset field of view. `targetOffset: [0, -0.75, 0]` has not been carried over yet.
 
 The elevation clamp is the same on both paths (15°–60°) and carries over unchanged.
 
-## Decision needed before starting
+## Decisions still open
 
-**HUD form.** See Phase 5. This is the only open question left.
+1. **HUD form.** See Phase 5. Phase 2 landed on option 2 by default — the window keeps every
+   control and the immersive space holds only the map — which works, but nobody has decided
+   whether that is the intended shape.
+2. **Progressive immersion.** Restoring it means visionOS 26, a stencil attachment on every
+   pipeline, and a mask draw. Worth it, or is full immersion the game's shape?
 
 ## Risks
 
 - **Comfort.** Program-driven camera motion is uncomfortable in stereo. Whether the world
   moves as the character walks needs to be tried on device.
 - **HUD scope is unbounded** and is the largest unknown in the plan.
-- **Stereo correctness cannot be verified incrementally.** The Phase 1 fixes are identity
-  transforms with a single view, so whether they are right is only known once Phase 2
-  runs. Verify all four first thing after Phase 2.
-- **No early validation of the Metal path on visionOS.** Window content stays on
-  RealityKit, so nothing exercises the Metal renderers on that platform until Phase 2. The
-  shaders do compile for visionOS today, but nothing has run.
+- **Stereo has still not been checked.** Everything so far was judged from mono screenshots,
+  which cannot show whether both eyes are right. Do this before building anything else on
+  top.
+- **Colour matching is unverified.** See "Still open" under Phase 2.
