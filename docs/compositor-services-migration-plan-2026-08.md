@@ -207,11 +207,28 @@ model matrix it computes exactly what it did before.
 
 - **Colour.** With `.rgba16Float` the map renders noticeably brighter and flatter than the
   same scene on macOS. The renderers work in sRGB values throughout — textures load with
-  `MTKTextureLoader.Option.SRGB: false` and lighting runs in that space — so a float target
-  has the compositor read them as linear and encode a second time. The colour format is now
-  `.bgra8Unorm`, matching `MTKView`. **Unverified.** If the compositor reads 8-bit unorm as
-  linear too, the fallback is an sRGB encode at the end of all 11 fragment shaders, switched
-  by `RenderConfiguration`.
+  `MTKTextureLoader.Option.SRGB: false` and lighting runs in that space — so the compositor
+  reads those values as linear and encodes them a second time.
+
+  Matching `MTKView` with `.bgra8Unorm` is not an option: the compositor accepts only the
+  formats `LayerRenderer.Capabilities.supportedColorFormats` lists, and configuring the
+  layer with anything else traps. On visionOS 26.5 that list is `rgba8Unorm_srgb`,
+  `bgra8Unorm_srgb`, `rgba16Unorm`, `bgr10a2Unorm`, `rgba16Float` — every one of them is
+  read as linear, the sRGB pair because the hardware decodes on sample. There is no format
+  that passes sRGB-encoded values through, and no colour space to set on the layer.
+  `RenderConfiguration.immersive` is therefore back to `.rgba16Float`, which is what the
+  code carries today — still too bright, but at least a format the layer accepts.
+
+  The fix is therefore on the shader side: an sRGB→linear *decode* at the end of all 11
+  fragment shaders, switched by `RenderConfiguration` through a function constant so iOS and
+  macOS keep writing straight through. Decode, not encode — the shaders already hold
+  sRGB-encoded values, and the attachment is what needs to be linear. Not implemented yet.
+
+  `.bgra8Unorm_srgb` is then the format to land on rather than `.rgba16Float`: the hardware
+  re-encodes on store, so the stored bytes come out identical to what macOS writes, at half
+  the bandwidth and with the precision spent where the eye is. Either way blending moves
+  into linear space, so alpha-blended sprites and additive effects will not composite
+  exactly as they do on macOS.
 - **Stereo.** Cannot be judged from a screenshot. Whether both eyes are right and the depth
   reads correctly needs looking at in the simulator or on device.
 - **The frame loop runs on the main actor**, because `Renderer` is main-actor isolated.

@@ -57,9 +57,10 @@ extension RenderConfiguration {
     /// a `LayerRenderer` to ask, so the formats are fixed here and the layer is configured
     /// to match. Compositor Services only supports reversed depth.
     public static let immersive = RenderConfiguration(
-        // The renderers work in sRGB values throughout, which a float target would have
-        // the compositor read as linear and brighten. This is what `MTKView` uses.
-        colorPixelFormat: .bgra8Unorm,
+        // The layer traps on any format outside `LayerRenderer.Capabilities`, and
+        // `.bgra8Unorm` is not among them. Every format it does accept is read as linear,
+        // so the renderers' sRGB values still need a decode in the fragment shaders.
+        colorPixelFormat: .rgba16Float,
         depthStencilPixelFormat: .depth32Float,
         isDepthReversed: true
     )
