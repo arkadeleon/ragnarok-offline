@@ -190,12 +190,10 @@ model matrix it computes exactly what it did before.
    progressive style"*. `drawable.addRenderContext(commandBuffer:)` is visionOS 26 and up and
    wants a stencil attachment on every pipeline plus a mask draw. The immersive space is
    `.full` for now, which loses the Digital Crown immersion dial.
-2. **Handedness.** `SGLMath.lookAt` is left-handed with +Z into the screen — its own comment
-   says so, and `perspective` puts `clip.w = +vz`. `drawable.computeProjection` defaults to
-   the `.rightUpBack` convention, where visible geometry sits at −Z. Without
-   `simd_float4x4(diagonal: [1, 1, -1, 1])` on the placement the whole map sits behind the
-   viewer. The symptom is exact: only the skybox draws, because it is a full-screen ray
-   reconstruction with `depthCompareFunction = .always`.
+2. ~~**Handedness.**~~ Unified after Phase 1. `RenderCamera`, `SGLMath.lookAt`, and
+   `perspective` now use a right-handed view space where visible geometry sits at −Z,
+   matching `drawable.computeProjection`'s `.rightUpBack` convention. The compositor can
+   compose the map placement directly without a Z-axis mirror.
 3. **Near plane.** Setting `defaultDepthRange` to `[1000, 0.05]` is rejected with
    `Code=-104`, which `cp_error.h` names `unsupported_near_plane_distance`. Keep the near
    plane the compositor hands over and push only the far plane out:
@@ -299,8 +297,8 @@ composes it into each eye's view matrix — `viewMatrix = eyeView · placement` 
 the eye position back into the map's frame with `placement.inverse`. `MapCameraState` and the
 camera math stay as they are; only where the matrix is applied changes.
 
-The placement also needs `simd_float4x4(diagonal: [1, 1, -1, 1])` in front of it, because
-`lookAt` is left-handed and the compositor projects right-handed.
+Both the map camera and compositor projection are right-handed, so the placement is applied
+directly without an axis conversion.
 
 ### World scale: one map cell is one metre
 

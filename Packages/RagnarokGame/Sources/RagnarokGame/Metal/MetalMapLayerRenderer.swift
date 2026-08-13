@@ -96,14 +96,13 @@ final class MetalMapLayerRenderer {
         let anchorTime = LayerRenderer.Clock.Instant.epoch.duration(to: timing.trackableAnchorTime)
         drawable.deviceAnchor = worldTracking.queryDeviceAnchor(atTimestamp: anchorTime.timeInterval)
 
-        // The eye cannot move, so the game camera places the map around the viewer
-        // instead. `lookAt` is left-handed with +Z into the screen, while the compositor
-        // projects with +Z behind the viewer, so flip Z on the way over.
-        let orbit = renderer.makeCamera(
+        // The eye cannot move, so the game camera places the map around the viewer.
+        // RenderCamera and the compositor both use right-handed view space with visible
+        // geometry at -Z, so each eye pose can compose the placement directly.
+        let worldPlacement = renderer.makeCamera(
             atTime: CACurrentMediaTime(),
             viewport: drawable.views[0].textureMap.viewport
         ).viewMatrix
-        let worldPlacement = simd_float4x4(diagonal: [1, 1, -1, 1]) * orbit
 
         let views = drawable.views.indices.map { index in
             RenderView(
@@ -138,7 +137,7 @@ final class MetalMapLayerRenderer {
 
         return RenderCamera(
             viewMatrix: originFromEye.inverse * worldPlacement,
-            projectionMatrix: drawable.computeProjection(viewIndex: viewIndex),
+            projectionMatrix: drawable.computeProjection(convention: .rightUpBack, viewIndex: viewIndex),
             position: (worldPlacement.inverse * originFromEye.columns.3).xyz
         )
     }

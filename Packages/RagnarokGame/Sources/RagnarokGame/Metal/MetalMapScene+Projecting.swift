@@ -89,11 +89,12 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
             camera.viewMatrix[1][1],
             camera.viewMatrix[2][1]
         )
-        let forward = SIMD3<Float>(
+        let backward = SIMD3<Float>(
             camera.viewMatrix[0][2],
             camera.viewMatrix[1][2],
             camera.viewMatrix[2][2]
         )
+        let forward = -backward
 
         // The sprite faces the camera, so cross the ray with the plane it stands on.
         let denominator = simd_dot(ray.direction, forward)

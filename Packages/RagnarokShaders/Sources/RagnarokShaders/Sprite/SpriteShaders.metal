@@ -76,14 +76,15 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
 
         // The frustum is off-axis on visionOS, so undo the projection's shear as well
         // as its scale.
-        float3 rayView = float3((ndc.x - uniforms.projectionMatrix[2][0]) / uniforms.projectionMatrix[0][0],
-                                (ndc.y - uniforms.projectionMatrix[2][1]) / uniforms.projectionMatrix[1][1],
-                                1.0);
+        float3 rayView = float3((ndc.x + uniforms.projectionMatrix[2][0]) / uniforms.projectionMatrix[0][0],
+                                (ndc.y + uniforms.projectionMatrix[2][1]) / uniforms.projectionMatrix[1][1],
+                                -1.0);
 
         float3 cameraRight   = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
         float3 cameraUp      = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
-        float3 cameraForward = float3(uniforms.viewMatrix[0][2], uniforms.viewMatrix[1][2], uniforms.viewMatrix[2][2]);
-        float3 rayWorld = cameraRight * rayView.x + cameraUp * rayView.y + cameraForward * rayView.z;
+        float3 cameraBack    = float3(uniforms.viewMatrix[0][2], uniforms.viewMatrix[1][2], uniforms.viewMatrix[2][2]);
+        float3 cameraForward = -cameraBack;
+        float3 rayWorld = cameraRight * rayView.x + cameraUp * rayView.y + cameraBack * rayView.z;
 
         float3 p = uniforms.spriteWorldPosition.xyz;
         float3 anchor = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz;

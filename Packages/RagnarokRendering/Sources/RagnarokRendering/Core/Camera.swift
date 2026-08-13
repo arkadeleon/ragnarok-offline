@@ -12,13 +12,13 @@ import simd
 public class Camera {
     public var defaultDistance: Float = 2.5 {
         didSet {
-            position = [0, 0, -defaultDistance]
+            position = [0, 0, defaultDistance]
         }
     }
     public var minimumDistance: Float = 0
     public var maximumDistance: Float = 20
 
-    public private(set) var position: SIMD3<Float> = [0, 0, -2.5]
+    public private(set) var position: SIMD3<Float> = [0, 0, 2.5]
     public private(set) var rotation: SIMD3<Float> = [0, 0, 0]
 
     public private(set) var target: SIMD3<Float> = [0, 0, 0]
@@ -64,7 +64,7 @@ public class Camera {
         rotation.x = max(-.pi / 2, min(rotation.x, .pi / 2))
 
         let rotationMatrix = simd_float4x4(rotationXYZ: [-rotation.x, rotation.y, 0])
-        let distanceVector: SIMD4<Float> = [0, 0, -distance, 0]
+        let distanceVector: SIMD4<Float> = [0, 0, distance, 0]
         let rotatedVector = rotationMatrix * distanceVector
         position = target + [rotatedVector.x, rotatedVector.y, rotatedVector.z]
     }

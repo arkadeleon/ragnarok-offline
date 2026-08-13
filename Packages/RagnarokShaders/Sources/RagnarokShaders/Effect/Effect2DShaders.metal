@@ -24,9 +24,10 @@ effect2DVertexShader(const device Effect2DVertex *vertices [[buffer(0)]],
 
     float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
-    float3 cameraForward = float3(uniforms.viewMatrix[0][2], uniforms.viewMatrix[1][2], uniforms.viewMatrix[2][2]);
+    float3 cameraBack = float3(uniforms.viewMatrix[0][2], uniforms.viewMatrix[1][2], uniforms.viewMatrix[2][2]);
+    float3 cameraForward = -cameraBack;
     float3 viewTranslation = uniforms.viewMatrix[3].xyz;
-    float3 cameraPosition = -(viewTranslation.x * cameraRight + viewTranslation.y * cameraUp + viewTranslation.z * cameraForward);
+    float3 cameraPosition = -(viewTranslation.x * cameraRight + viewTranslation.y * cameraUp + viewTranslation.z * cameraBack);
 
     const float spriteRatio = 1.0 / 35.0;
     float4 rotatedPosition = uniforms.rotationMatrix * float4(in.position * uniforms.size * spriteRatio, 0.0, 1.0);

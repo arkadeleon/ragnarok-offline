@@ -72,18 +72,19 @@ public func matrix_scale(_ m: simd_float4x4, _ v: simd_float3) -> simd_float4x4 
     )
 }
 
+/// Right-handed perspective matrix with Metal's zero-to-one NDC depth range.
 public func perspective(_ fov: Float, _ aspect: Float, _ near: Float, _ far: Float) -> simd_float4x4 {
     let y = 1 / tan(fov * 0.5)
     let x = y / aspect
-    let z = far / (far - near)
+    let z = far / (near - far)
     let X = simd_float4( x,  0,  0,  0)
     let Y = simd_float4( 0,  y,  0,  0)
-    let Z = simd_float4( 0,  0,  z, 1)
-    let W = simd_float4( 0,  0,  z * -near,  0)
+    let Z = simd_float4( 0,  0,  z, -1)
+    let W = simd_float4( 0,  0,  z * near,  0)
     return simd_float4x4(columns: (X, Y, Z, W))
 }
 
-/// Left-handed look-at matrix (Metal/DirectX convention: +X right, +Y up, +Z into screen).
+/// Right-handed look-at matrix (Metal convention: +X right, +Y up, camera forward is -Z).
 public func lookAt(_ eye: simd_float3, _ center: simd_float3, _ up: simd_float3) -> simd_float4x4 {
     let f = simd_normalize(center - eye)
     let s = simd_normalize(simd_cross(f, up))
@@ -91,12 +92,12 @@ public func lookAt(_ eye: simd_float3, _ center: simd_float3, _ up: simd_float3)
 
     let r30 = -simd_dot(s, eye)
     let r31 = -simd_dot(u, eye)
-    let r32 = -simd_dot(f, eye)
+    let r32 = simd_dot(f, eye)
 
     return simd_float4x4(
-        [s.x, u.x, f.x, 0],
-        [s.y, u.y, f.y, 0],
-        [s.z, u.z, f.z, 0],
+        [s.x, u.x, -f.x, 0],
+        [s.y, u.y, -f.y, 0],
+        [s.z, u.z, -f.z, 0],
         [r30, r31, r32, 1]
     )
 }
