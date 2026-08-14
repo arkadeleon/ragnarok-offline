@@ -15,6 +15,9 @@ import RagnarokSprite
 import simd
 
 extension MetalMapScene {
+
+    // MARK: - Player
+
     public func onPlayerStatusChanged(property: StatusProperty, value: Int) {
         let playerObject = objects[player.objectID] as? MetalPlayerObject
 
@@ -88,6 +91,8 @@ extension MetalMapScene {
             }
         }
     }
+
+    // MARK: - Map Object
 
     public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
         guard let object = objects[objectID] else {
@@ -410,6 +415,8 @@ extension MetalMapScene {
         addSkillEffects(for: objectSkill)
     }
 
+    // MARK: - Map Item
+
     public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
         let metalItem = MetalMapItem(
             item: item,
@@ -422,6 +429,8 @@ extension MetalMapScene {
     public func onItemVanished(objectID: GameObjectID) {
         items.removeValue(forKey: objectID)
     }
+
+    // MARK: - Other
 
     public func onGroundSkillCast(skillID: SkillID, position: SIMD2<Int>) {
         guard mapGrid.contains(position) else {
@@ -442,6 +451,8 @@ extension MetalMapScene {
         }
     }
 }
+
+// MARK: - Map Object
 
 extension MetalMapScene {
     func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {

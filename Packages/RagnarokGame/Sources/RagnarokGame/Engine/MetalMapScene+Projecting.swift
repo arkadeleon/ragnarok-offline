@@ -9,8 +9,15 @@ import CoreGraphics
 import RagnarokRendering
 import simd
 
-extension MetalMapScene: GameCoordinateSpaceProjecting {
-    public func hitTest(_ ray: Ray) -> GameHitTestResult? {
+public enum HitTestResult: Sendable {
+    case mapObject(objectID: GameObjectID)
+    case mapItem(objectID: GameObjectID)
+    case ground(position: SIMD2<Int>)
+}
+
+extension MetalMapScene {
+    /// Searches for objects along a ray through the world.
+    public func hitTest(_ ray: Ray) -> HitTestResult? {
         let objectIDs = spriteHits(ray)
 
         if let objectID = objectIDs.first(where: { objects[$0] != nil }) {
@@ -21,6 +28,34 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         }
 
         return groundHit(ray, mapGrid: mapGrid)
+    }
+
+    private func groundHit(_ ray: Ray, mapGrid: MapGrid) -> HitTestResult? {
+        for i in 0..<200 {
+            let point = ray.point(atDistance: Float(i))
+
+            let x = point.x
+            let y = -point.z
+            let position = SIMD2<Int>(Int(x), Int(y))
+
+            guard mapGrid.contains(position) else {
+                continue
+            }
+
+            let cell = mapGrid[position]
+            let xr = x.truncatingRemainder(dividingBy: 1)
+            let yr = y.truncatingRemainder(dividingBy: 1)
+
+            let x1 = cell.bottomLeftAltitude + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * xr
+            let x2 = cell.topLeftAltitude + (cell.topRightAltitude - cell.topLeftAltitude) * xr
+            let altitude = x1 + (x2 - x1) * yr
+
+            if fabsf(altitude - point.y) < 0.5 {
+                return .ground(position: position)
+            }
+        }
+
+        return nil
     }
 
     /// The objects whose sprite the ray passes through, nearest first.

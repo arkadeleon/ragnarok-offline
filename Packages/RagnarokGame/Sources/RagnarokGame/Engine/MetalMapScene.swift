@@ -25,7 +25,8 @@ private enum MapMovementDecision {
     case noPath
 }
 
-public final class MetalMapScene: GameMapScene {
+@MainActor
+public final class MetalMapScene {
     public let mapName: String
 
     let world: WorldResource
@@ -194,7 +195,7 @@ public final class MetalMapScene: GameMapScene {
         onMovementValueChanged(movementValue: movementValue)
     }
 
-    func handleInteraction(_ result: GameHitTestResult) {
+    func handleInteraction(_ result: HitTestResult) {
         switch result {
         case .ground(let position):
             selectGround(at: position)
