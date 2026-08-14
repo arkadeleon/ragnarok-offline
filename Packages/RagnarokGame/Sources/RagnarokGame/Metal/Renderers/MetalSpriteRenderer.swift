@@ -10,7 +10,6 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
-@MainActor
 final class MetalSpriteRenderer {
     let device: any MTLDevice
 

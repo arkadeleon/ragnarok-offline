@@ -17,7 +17,6 @@ import simd
 /// The renderer owns the Metal objects and nothing else. What to draw arrives in a
 /// `MetalMapRenderer.Scene`, which `MetalMapScene` builds once per frame, so every
 /// view of a frame draws the same contents from its own camera.
-@MainActor
 final class MetalMapRenderer {
     struct Scene {
         struct Effect {

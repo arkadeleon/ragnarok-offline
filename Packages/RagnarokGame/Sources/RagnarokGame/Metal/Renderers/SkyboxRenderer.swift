@@ -11,7 +11,6 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
-@MainActor
 final class SkyboxRenderer {
     let device: any MTLDevice
 

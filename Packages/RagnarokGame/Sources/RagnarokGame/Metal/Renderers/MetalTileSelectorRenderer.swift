@@ -12,7 +12,6 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
-@MainActor
 final class MetalTileSelectorRenderer {
     let device: any MTLDevice
 

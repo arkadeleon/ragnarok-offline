@@ -10,7 +10,6 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
-@MainActor
 final class GaugeRenderer {
     let device: any MTLDevice
 

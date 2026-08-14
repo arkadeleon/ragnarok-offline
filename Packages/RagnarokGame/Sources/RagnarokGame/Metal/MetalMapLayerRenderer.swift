@@ -17,9 +17,10 @@ import simd
 /// Drives the map renderer from a `LayerRenderer`, the way `MetalMapViewController` drives
 /// it from an `MTKView`.
 ///
-/// The loop runs on the main actor because `Renderer` is main-actor isolated. Compositor
-/// Services would rather have a thread of its own, so `waitUntilRunning()` is replaced by
-/// polling — otherwise a paused layer would stall the app's windows too.
+/// The loop drives `MetalMapRenderer` directly; it remains on the main actor because it
+/// reads and advances `MetalMapScene`. Compositor Services would rather have a thread of
+/// its own, so `waitUntilRunning()` is replaced by polling — otherwise a paused layer
+/// would stall the app's windows too.
 @MainActor
 final class MetalMapLayerRenderer {
     private let layerRenderer: LayerRenderer
