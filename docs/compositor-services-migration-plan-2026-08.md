@@ -236,20 +236,59 @@ model matrix it computes exactly what it did before.
   replaced with polling — otherwise a paused layer stalls the app's windows. Worth revisiting
   once there is something to measure.
 
-### Phase 4 — Input
+### Phase 4 — Input ✅ Done (2026-08-13), unverified
 
-visionOS currently has **no input into the map at all**: tapping does nothing and the camera
-cannot be orbited or zoomed, because the pan and pinch gestures live in `MetalMapView`, which
-the immersive path does not use. The thumbstick and action pad in the window still work,
-since they call the scene directly.
+Before this, visionOS had **no input into the map at all**: pinching did nothing and the
+camera could not be orbited or zoomed, because the tap, pan and pinch recognizers live in
+`MetalMapView`, which the immersive path does not use. The thumbstick and action pad in the
+window always worked, since they call the scene directly.
 
-- **Hit testing.** `LayerRenderer.onSpatialEvent` gives a ray, which feeds
-  `scene.hitTest(ray)`. Two things to get right: the ray arrives in the compositor's frame,
-  so it needs `worldPlacement.inverse` to reach the map's frame, and `Ray.pointWidth` becomes
-  a small fixed angular size rather than something derived from a viewport.
-- **Camera.** `MapCameraState`'s azimuth, elevation and distance keep their meaning; they
-  need some spatial gesture to drive them. See "Camera semantics" below for where the
-  resulting matrix goes.
+`Metal/MetalMapSpatialInput.swift` now takes `SpatialEventCollection` and drives both. The
+layer renderer sets `layerRenderer.onSpatialEvent` in `start()` and feeds it the frame's
+`worldPlacement` and device anchor on every frame. `onSpatialEvent` is already
+`@MainActor`, which is where the renderer and the scene live, so nothing crosses actors.
+
+The gesture map, one for one with `MetalMapViewController`:
+
+| iOS | visionOS |
+|---|---|
+| tap | a pinch released within 2 cm of where it closed |
+| one-finger pan | a pinch dragging — horizontal orbits, vertical raises |
+| pinch (distance) | nothing — the distance stays where it starts |
+| two-finger tap (reset camera) | nothing yet |
+
+**Distance is fixed on visionOS.** The headset picks the field of view, so the only thing
+distance changes is how big the map looks, and 15 is already the value the Reality path
+tuned. A two-handed zoom was written and then taken out again: it cost a separation-tracking
+gesture and a second rebase path for something nobody had asked to change.
+
+Details that mattered:
+
+- **Selection uses the ray from where the pinch closed**, not from where it opened, because
+  the eye has usually moved on by release. `event.selectionRay` arrives in the compositor's
+  world, so the origin goes through `worldPlacement.inverse` as a point and the direction as
+  a vector.
+- **`Ray.pointWidth` is now a fixed angle**, `.pi / 180 / 30`. Hit testing grows an item to
+  30 points, and the eye lands within about a degree of where it is looking, so a point is a
+  thirtieth of a degree. On iOS the same field comes out of the viewport height.
+- **Hand travel is measured along the head's right and up axes**, taken from the device
+  anchor, so a drag means the same thing whichever way the viewer has turned. Measuring in
+  world axes would have made the gesture depend on where the ARKit origin happened to land.
+- **The orbit rebases whenever the hand driving it changes**, which includes the moment a
+  pinch first crosses the 2 cm threshold. Whoever takes over starts from where the camera is
+  now, so neither starting a drag nor passing it between hands makes the camera jump.
+- Travel converts at 6 rad/m for azimuth and 3 rad/m for elevation — elevation moves less
+  because its whole range is 45°, while azimuth turns all the way around. **Both numbers are
+  guesses** and want trying in the simulator.
+
+Still open:
+
+- **No camera reset.** iOS has the two-finger tap; visionOS has no analogue that is not
+  fiddly. The natural home is a button in the window, which is Phase 5's territory.
+- **If `inputDevicePose` comes back nil** in an immersive `CompositorLayer`, no pinch ever
+  registers as a drag and the camera freezes while selection keeps working. That degradation
+  is deliberate, but which way it actually goes is unverified.
+- **Nothing here has been run**, only compiled for the visionOS simulator.
 
 ### Phase 5 — HUD (the biggest unknown)
 
@@ -354,7 +393,10 @@ The elevation clamp is the same on both paths (15°–60°) and carries over unc
 - **Comfort.** Program-driven camera motion is uncomfortable in stereo. Whether the world
   moves as the character walks needs to be tried on device.
 - **HUD scope is unbounded** and is the largest unknown in the plan.
-- **Stereo has still not been checked.** Everything so far was judged from mono screenshots,
-  which cannot show whether both eyes are right. Do this before building anything else on
-  top.
+- **Stereo has still not been checked**, and cannot be checked by eye: there is no Vision
+  Pro here, only the simulator. What the simulator can still settle is whether the two-eye
+  path runs at all (`drawable.views.count` and the two viewports), whether both halves of
+  the `.shared` texture are drawn with plausible parallax in a Metal frame capture, and
+  whether the two projections really are off-axis (`P[2][0]` non-zero and opposite in sign).
+  Comfort and world scale wait for hardware, and no longer block the phases after this one.
 - **Colour matching is unverified.** See "Still open" under Phase 2.

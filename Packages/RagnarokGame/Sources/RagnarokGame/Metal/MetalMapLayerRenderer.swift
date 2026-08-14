@@ -30,6 +30,8 @@ final class MetalMapLayerRenderer {
     private let arSession = ARKitSession()
     private let worldTracking = WorldTrackingProvider()
 
+    private let spatialInput: MetalMapSpatialInput
+
     init?(layerRenderer: LayerRenderer, scene: MetalMapScene) {
         guard let commandQueue = scene.renderer.device.makeCommandQueue() else {
             return nil
@@ -39,9 +41,14 @@ final class MetalMapLayerRenderer {
         self.scene = scene
         self.renderer = scene.renderer
         self.commandQueue = commandQueue
+        self.spatialInput = MetalMapSpatialInput(scene: scene)
     }
 
     func start() {
+        layerRenderer.onSpatialEvent = { [spatialInput] events in
+            spatialInput.handle(events)
+        }
+
         Task { @MainActor in
             do {
                 try await arSession.run([worldTracking])
@@ -104,6 +111,11 @@ final class MetalMapLayerRenderer {
             viewport: drawable.views[0].textureMap.viewport
         ).viewMatrix
 
+        spatialInput.update(
+            worldPlacement: worldPlacement,
+            originFromDevice: drawable.deviceAnchor?.originFromAnchorTransform ?? matrix_identity_float4x4
+        )
+
         let views = drawable.views.indices.map { index in
             RenderView(
                 viewport: drawable.views[index].textureMap.viewport,
@@ -152,7 +164,7 @@ final class MetalMapLayerRenderer {
 }
 
 extension simd_float4 {
-    fileprivate var xyz: SIMD3<Float> {
+    var xyz: SIMD3<Float> {
         SIMD3<Float>(x, y, z)
     }
 }

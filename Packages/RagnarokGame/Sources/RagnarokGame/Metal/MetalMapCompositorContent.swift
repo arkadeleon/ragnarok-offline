@@ -43,7 +43,7 @@ struct MetalMapLayerConfiguration: CompositorLayerConfiguration {
         configuration.colorFormat = RenderConfiguration.immersive.colorPixelFormat
         configuration.depthFormat = RenderConfiguration.immersive.depthStencilPixelFormat
 
-        // One map cell is one metre, so a map reaches hundreds of metres. Push the far
+        // One map cell is one meter, so a map reaches hundreds of meters. Push the far
         // plane out and keep the near plane the compositor asked for, since it rejects
         // anything closer. The far plane comes first: the range is in reverse-Z order.
         configuration.defaultDepthRange = [1000, configuration.defaultDepthRange.y]

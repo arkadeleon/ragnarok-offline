@@ -13,7 +13,7 @@ struct MapCameraState: Sendable {
     init() {
         azimuth = 0
         #if os(visionOS)
-        elevation = .pi / 12
+        elevation = .pi / 6
         distance = 15
         #else
         elevation = .pi / 4
