@@ -40,7 +40,7 @@ final class MetalMapSpatialInput {
     /// degree wide.
     private static let pointWidth: Float = .pi / 180 / 30
 
-    private weak var scene: MetalMapScene?
+    private weak var scene: MapScene?
 
     /// Where the map is, in the world coordinate system of the headset. This is the same
     /// coordinate system that `deviceAnchor` uses. The frame loop sets this every frame,
@@ -56,7 +56,7 @@ final class MetalMapSpatialInput {
     private var pinches: [SpatialEventCollection.Event.ID : Pinch] = [:]
     private var orbit: Orbit?
 
-    init(scene: MetalMapScene) {
+    init(scene: MapScene) {
         self.scene = scene
     }
 

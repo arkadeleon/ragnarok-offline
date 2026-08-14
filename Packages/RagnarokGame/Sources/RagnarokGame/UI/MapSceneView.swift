@@ -9,7 +9,7 @@ import SwiftUI
 import ThumbstickView
 
 struct MapSceneView: View {
-    var scene: MetalMapScene
+    var scene: MapScene
 
     #if os(visionOS)
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace

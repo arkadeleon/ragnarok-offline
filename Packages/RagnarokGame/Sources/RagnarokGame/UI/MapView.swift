@@ -12,7 +12,7 @@ import SwiftUI
 #if canImport(UIKit)
 
 struct MapView: UIViewControllerRepresentable {
-    var scene: MetalMapScene
+    var scene: MapScene
 
     func makeUIViewController(context: Context) -> MapViewController {
         MapViewController(scene: scene)
@@ -24,16 +24,16 @@ struct MapView: UIViewControllerRepresentable {
 }
 
 final class MapViewController: UIViewController, MTKViewDelegate {
-    private weak var scene: MetalMapScene?
+    private weak var scene: MapScene?
     private let commandQueue: any MTLCommandQueue
-    private let renderer: MetalMapRenderer
+    private let renderer: MapSceneRenderer
     private var mtkView: MTKView!
 
     private var baseAzimuth: Float = 0
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
 
-    init(scene: MetalMapScene) {
+    init(scene: MapScene) {
         self.scene = scene
         self.renderer = scene.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
@@ -77,7 +77,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         mtkView.addGestureRecognizer(pinchGestureRecognizer)
     }
 
-    func update(scene: MetalMapScene) {
+    func update(scene: MapScene) {
         self.scene = scene
     }
 
@@ -195,7 +195,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 #elseif canImport(AppKit)
 
 struct MapView: NSViewControllerRepresentable {
-    var scene: MetalMapScene
+    var scene: MapScene
 
     func makeNSViewController(context: Context) -> MapViewController {
         MapViewController(scene: scene)
@@ -207,16 +207,16 @@ struct MapView: NSViewControllerRepresentable {
 }
 
 final class MapViewController: NSViewController, MTKViewDelegate {
-    private weak var scene: MetalMapScene?
+    private weak var scene: MapScene?
     private let commandQueue: any MTLCommandQueue
-    private let renderer: MetalMapRenderer
+    private let renderer: MapSceneRenderer
     private var mtkView: MTKView!
 
     private var baseAzimuth: Float = 0
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
 
-    init(scene: MetalMapScene) {
+    init(scene: MapScene) {
         self.scene = scene
         self.renderer = scene.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
@@ -248,7 +248,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
         mtkView.addGestureRecognizer(magnificationGestureRecognizer)
     }
 
-    func update(scene: MetalMapScene) {
+    func update(scene: MapScene) {
         self.scene = scene
     }
 

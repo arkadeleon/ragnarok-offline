@@ -42,7 +42,7 @@ final class MetalCombatTextRenderer {
     }
 
     func render(
-        combatTexts: [MetalMapRenderer.Scene.CombatText],
+        combatTexts: [MapSceneRenderer.Scene.CombatText],
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder

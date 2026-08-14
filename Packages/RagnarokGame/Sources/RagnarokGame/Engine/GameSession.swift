@@ -94,7 +94,7 @@ final public class GameSession {
     @ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?
     @ObservationIgnored var currentMapServer: MapServerInfo?
 
-    public var mapScene: MetalMapScene? {
+    public var mapScene: MapScene? {
         if case .map(let mapPhase) = stage, case .loaded(let scene) = mapPhase {
             scene
         } else {
@@ -686,7 +686,7 @@ final public class GameSession {
                 let configuration = RenderConfiguration.default
                 #endif
 
-                let scene = try MetalMapScene(
+                let scene = try MapScene(
                     mapName: mapName,
                     world: world,
                     character: character,

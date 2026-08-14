@@ -61,7 +61,7 @@ final class GaugeRenderer {
     }
 
     func render(
-        gauges: [MetalMapRenderer.Scene.Gauge],
+        gauges: [MapSceneRenderer.Scene.Gauge],
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder

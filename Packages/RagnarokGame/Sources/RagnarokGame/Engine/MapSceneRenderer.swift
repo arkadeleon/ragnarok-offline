@@ -1,5 +1,5 @@
 //
-//  MetalMapRenderer.swift
+//  MapSceneRenderer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/22.
@@ -15,9 +15,9 @@ import simd
 /// Draws the map.
 ///
 /// The renderer owns the Metal objects and nothing else. What to draw arrives in a
-/// `MetalMapRenderer.Scene`, which `MetalMapScene` builds once per frame, so every
+/// `MapSceneRenderer.Scene`, which `MapScene` builds once per frame, so every
 /// view of a frame draws the same contents from its own camera.
-final class MetalMapRenderer {
+final class MapSceneRenderer {
     struct Scene {
         struct Effect {
             let resourceGroup: EffectRenderResourceGroup
@@ -39,9 +39,9 @@ final class MetalMapRenderer {
         var world: WorldRenderResource?
         var tileSelector: TileSelectorRenderResource?
         var spriteDrawables: [SpriteLayerDrawable] = []
-        var effects: [MetalMapRenderer.Scene.Effect] = []
-        var gauges: [MetalMapRenderer.Scene.Gauge] = []
-        var combatTexts: [MetalMapRenderer.Scene.CombatText] = []
+        var effects: [MapSceneRenderer.Scene.Effect] = []
+        var gauges: [MapSceneRenderer.Scene.Gauge] = []
+        var combatTexts: [MapSceneRenderer.Scene.CombatText] = []
     }
 
     /// The map's own transform. The game world stands the other way up from render space,
@@ -84,7 +84,7 @@ final class MetalMapRenderer {
         ]
     }
 
-    func render(frame: RenderFrame, scene: MetalMapRenderer.Scene) {
+    func render(frame: RenderFrame, scene: MapSceneRenderer.Scene) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
@@ -112,7 +112,7 @@ final class MetalMapRenderer {
     }
 
     private func renderScene(
-        _ scene: MetalMapRenderer.Scene,
+        _ scene: MapSceneRenderer.Scene,
         atTime time: TimeInterval,
         viewport: MTLViewport,
         camera: RenderCamera,
@@ -221,7 +221,7 @@ final class MetalMapRenderer {
     }
 
     private func renderEffects(
-        _ effects: [MetalMapRenderer.Scene.Effect],
+        _ effects: [MapSceneRenderer.Scene.Effect],
         beforeEntities: Bool,
         atTime time: TimeInterval,
         modelMatrix: simd_float4x4,

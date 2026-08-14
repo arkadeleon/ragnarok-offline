@@ -1,5 +1,5 @@
 //
-//  MetalMapScene.swift
+//  MapScene.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -26,7 +26,7 @@ private enum MapMovementDecision {
 }
 
 @MainActor
-public final class MetalMapScene {
+public final class MapScene {
     public let mapName: String
 
     let world: WorldResource
@@ -36,11 +36,11 @@ public final class MetalMapScene {
     let resourceManager: ResourceManager
     weak var gameSession: GameSession?
 
-    let renderer: MetalMapRenderer
+    let renderer: MapSceneRenderer
     let audioPlayer: MetalMapAudioPlayer
 
     let mapGrid: MapGrid
-    let state: MetalSceneState
+    let state: MapSceneState
 
     var objects: [GameObjectID: MetalMapObject] = [:]
     var items: [GameObjectID : MetalMapItem] = [:]
@@ -84,11 +84,11 @@ public final class MetalMapScene {
         self.playerPosition = playerPosition
         self.resourceManager = resourceManager
         self.gameSession = gameSession
-        self.renderer = try MetalMapRenderer(configuration: configuration)
+        self.renderer = try MapSceneRenderer(configuration: configuration)
         self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
 
         self.mapGrid = MapGrid(gat: world.gat)
-        self.state = MetalSceneState()
+        self.state = MapSceneState()
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
@@ -408,7 +408,7 @@ public final class MetalMapScene {
     }
 }
 
-extension MetalMapScene {
+extension MapScene {
     private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
     private static let cameraFieldOfViewDegrees: Float = 15
 
@@ -417,7 +417,7 @@ extension MetalMapScene {
     /// iOS and macOS draw the map from this camera. visionOS draws it from the eye instead,
     /// and uses this camera's view matrix to place the map around the viewer.
     func makeCamera(viewport: MTLViewport) -> RenderCamera {
-        let worldTarget = MetalMapRenderer.renderPosition(for: cameraTargetPosition) + Self.cameraTargetOffset
+        let worldTarget = MapSceneRenderer.renderPosition(for: cameraTargetPosition) + Self.cameraTargetOffset
 
         let cameraOrientation =
             simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
@@ -438,7 +438,7 @@ extension MetalMapScene {
         )
     }
 
-    func makeRenderScene(atTime time: TimeInterval) -> MetalMapRenderer.Scene {
+    func makeRenderScene(atTime time: TimeInterval) -> MapSceneRenderer.Scene {
         let now = ContinuousClock.now
 
         combatTextResources = combatTextResources.filter { _, resource in
@@ -470,7 +470,7 @@ extension MetalMapScene {
 
         updateCameraTarget()
 
-        var scene = MetalMapRenderer.Scene()
+        var scene = MapSceneRenderer.Scene()
 
         scene.skybox = skyboxResource
         scene.world = worldResource
@@ -483,7 +483,7 @@ extension MetalMapScene {
                     return nil
                 }
                 let targetObject = effect.targetObjectID.flatMap { objects[$0] }
-                return MetalMapRenderer.Scene.Effect(
+                return MapSceneRenderer.Scene.Effect(
                     resourceGroup: resourceGroup,
                     attachedWorldPosition: targetObject?.worldPosition
                 )
@@ -496,7 +496,7 @@ extension MetalMapScene {
             guard let vertices = gauges[objectID]?.makeVertices(), !vertices.isEmpty else {
                 return nil
             }
-            return MetalMapRenderer.Scene.Gauge(
+            return MapSceneRenderer.Scene.Gauge(
                 vertices: vertices,
                 worldPosition: object.worldPosition + [0, 0, -0.8]
             )

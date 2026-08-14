@@ -1,5 +1,5 @@
 //
-//  MetalMapScene+EventHandler.swift
+//  MapScene+EventHandler.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -14,7 +14,7 @@ import RagnarokRendering
 import RagnarokSprite
 import simd
 
-extension MetalMapScene {
+extension MapScene {
 
     // MARK: - Player
 
@@ -454,7 +454,7 @@ extension MetalMapScene {
 
 // MARK: - Map Object
 
-extension MetalMapScene {
+extension MapScene {
     func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
         guard let object = objects[objectID] else {
             return
@@ -512,7 +512,7 @@ extension MetalMapScene {
 
 // MARK: - Combat Text
 
-extension MetalMapScene {
+extension MapScene {
     private func addCombatTexts(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
         let target = CombatText.Target(
             objectID: objectAction.targetObjectID,
@@ -603,7 +603,7 @@ extension MetalMapScene {
 
 // MARK: - Effect
 
-extension MetalMapScene {
+extension MapScene {
     private func addArrowProjectileEffect(for objectAction: MapObjectAction) {
         let isAttackAction = switch objectAction.type {
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
@@ -774,7 +774,7 @@ extension MetalMapScene {
 
 // MARK: - Sound
 
-extension MetalMapScene {
+extension MapScene {
     private func playSound(for objectAction: MapObjectAction) {
         let isAttackAction = switch objectAction.type {
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:

@@ -16,7 +16,7 @@ public struct MetalMapCompositorContent: ImmersiveSpaceContent {
 
     public var body: some ImmersiveSpaceContent {
         CompositorLayer(configuration: MetalMapLayerConfiguration()) { layerRenderer in
-            guard let scene = gameSession.mapScene as? MetalMapScene,
+            guard let scene = gameSession.mapScene,
                   let layerMapRenderer = MetalMapLayerRenderer(layerRenderer: layerRenderer, scene: scene) else {
                 return
             }

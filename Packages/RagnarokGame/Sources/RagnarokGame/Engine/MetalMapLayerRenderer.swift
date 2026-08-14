@@ -14,18 +14,18 @@ import QuartzCore
 import RagnarokRendering
 import simd
 
-/// Drives the map renderer from a `LayerRenderer`, the way `MapViewController` drives
+/// Drives the map scene renderer from a `LayerRenderer`, the way `MapViewController` drives
 /// it from an `MTKView`.
 ///
-/// The loop drives `MetalMapRenderer` directly; it remains on the main actor because it
-/// reads and advances `MetalMapScene`. Compositor Services would rather have a thread of
+/// The loop drives `MapSceneRenderer` directly; it remains on the main actor because it
+/// reads and advances `MapScene`. Compositor Services would rather have a thread of
 /// its own, so `waitUntilRunning()` is replaced by polling — otherwise a paused layer
 /// would stall the app's windows too.
 @MainActor
 final class MetalMapLayerRenderer {
     private let layerRenderer: LayerRenderer
-    private let scene: MetalMapScene
-    private let renderer: MetalMapRenderer
+    private let scene: MapScene
+    private let renderer: MapSceneRenderer
     private let commandQueue: any MTLCommandQueue
 
     private let arSession = ARKitSession()
@@ -33,7 +33,7 @@ final class MetalMapLayerRenderer {
 
     private let spatialInput: MetalMapSpatialInput
 
-    init?(layerRenderer: LayerRenderer, scene: MetalMapScene) {
+    init?(layerRenderer: LayerRenderer, scene: MapScene) {
         guard let commandQueue = scene.renderer.device.makeCommandQueue() else {
             return nil
         }

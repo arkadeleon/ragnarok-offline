@@ -1,5 +1,5 @@
 //
-//  MetalMapScene+Projecting.swift
+//  MapScene+Projecting.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/4/9.
@@ -15,7 +15,7 @@ public enum HitTestResult: Sendable {
     case ground(position: SIMD2<Int>)
 }
 
-extension MetalMapScene {
+extension MapScene {
     /// Searches for objects along a ray through the world.
     public func hitTest(_ ray: Ray) -> HitTestResult? {
         let objectIDs = spriteHits(ray)
@@ -101,7 +101,7 @@ extension MetalMapScene {
         }
 
         return SpriteBounds(
-            anchor: MetalMapRenderer.renderPosition(for: drawable.worldPosition),
+            anchor: MapSceneRenderer.renderPosition(for: drawable.worldPosition),
             minimum: minimum,
             maximum: maximum
         )

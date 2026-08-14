@@ -63,7 +63,7 @@ final class CombatTextRenderResource {
         }
     }
 
-    func combatText(for now: ContinuousClock.Instant, cameraAzimuth: Float) -> MetalMapRenderer.Scene.CombatText? {
+    func combatText(for now: ContinuousClock.Instant, cameraAzimuth: Float) -> MapSceneRenderer.Scene.CombatText? {
         guard let texture else {
             return nil
         }
@@ -124,7 +124,7 @@ final class CombatTextRenderResource {
             SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: vertexColor),
         ]
 
-        return MetalMapRenderer.Scene.CombatText(vertices: vertices, worldPosition: worldPosition, texture: texture)
+        return MapSceneRenderer.Scene.CombatText(vertices: vertices, worldPosition: worldPosition, texture: texture)
     }
 
     func drift(azimuth: Float) -> SIMD3<Float> {
