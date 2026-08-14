@@ -30,6 +30,7 @@
 		3558A3DD2DFC28410038DFC3 /* rAthenaWeb in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3DB2DFC28410038DFC3 /* rAthenaWeb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3558A3E02DFC288D0038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3DF2DFC288D0038DFC3 /* rAthenaCommon */; };
 		3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3E12DFC28960038DFC3 /* rAthenaCommon */; };
+		356B59FB302F010200D3FE6A /* RagnarokReality in Frameworks */ = {isa = PBXBuildFile; productRef = 356B59FA302F010200D3FE6A /* RagnarokReality */; };
 		359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */; };
 		3599154C2E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		35A5F9142FD2627A00669A12 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5F9132FD2627A00669A12 /* StoreKit.framework */; };
@@ -161,6 +162,7 @@
 			files = (
 				3558A3B52DFC22EA0038DFC3 /* rAthenaLogin in Frameworks */,
 				354FCEA42F14B9FA00995F35 /* JSONViewer in Frameworks */,
+				356B59FB302F010200D3FE6A /* RagnarokReality in Frameworks */,
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
 				35A5F9142FD2627A00669A12 /* StoreKit.framework in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
@@ -298,6 +300,7 @@
 				35BB2F992EFE86FC0047040D /* RagnarokLocalization */,
 				354FCEA32F14B9FA00995F35 /* JSONViewer */,
 				35F6829D2FEBE29D003DC53A /* RagnarokGRF */,
+				356B59FA302F010200D3FE6A /* RagnarokReality */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -919,6 +922,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
 			productName = rAthenaCommon;
+		};
+		356B59FA302F010200D3FE6A /* RagnarokReality */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RagnarokReality;
 		};
 		35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -308,17 +308,32 @@ structured — a `WindowGroup` beside an `ImmersiveSpace`.
 **This may still be more work than the renderer itself.** Worth sizing separately before
 committing to the migration.
 
-### Phase 6 — Removal
+### Phase 6 — Removal ✅ Done (2026-08-14)
+
+Deleted:
 
 - `Packages/RagnarokGame/Sources/RagnarokGame/Reality/` (31 files)
-- `Packages/WorldCamera/` — its only importers are `RealityMapScene.swift`,
-  `SpriteActionSystem.swift`, `SpriteBillboardSystem.swift` and `CombatTextSystem.swift`,
-  all under `RagnarokGame/Reality/`
-- `RagnarokGame/Package.swift`: the `RagnarokReality` and `WorldCamera` entries
-  (lines 28, 35, 49, 56) — `RagnarokGame` stops depending on both, while the
-  `RagnarokReality` package itself stays for the window content in the app target
+- `Packages/WorldCamera/` — nothing outside `RagnarokGame/Reality/` ever imported it
+- The `RagnarokReality` and `WorldCamera` entries in `RagnarokGame/Package.swift`.
+  `RagnarokGame` no longer imports RealityKit at all; the `RagnarokReality` package stays
+  for the four window views in the app target.
 
-Port the two formulas below out of `WorldCameraSystem` before deleting it.
+**The app target had to gain a direct dependency on `RagnarokReality`.** It was reaching the
+module transitively through `RagnarokGame`, so dropping that entry alone would have broken
+the RSM, RSW and GND file previews and the map viewer. It is now in the target's
+`packageProductDependencies`, which is where it always belonged.
+
+**Neither formula needed porting — both were already there.** `cameraAxisOrientation()` is
+character for character what `MetalMapScene.makeCamera` computes:
+`simd_quatf(angle: -azimuth, axis: [0, 1, 0]) * simd_quatf(angle: -elevation, axis: [1, 0, 0])`.
+The orbit placement — `orientation.act([0, 0, radius])` around the target, inverted into the
+world's transform — landed in Phase 2 as `makeCamera` plus
+`originFromEye.inverse * worldPlacement`.
+
+What did **not** carry over is `targetOffset`. The Reality path used `[0, -0.75, 0]` applied
+inside `act()`, so in camera space; the Metal path uses `[0, 0.5, 0]` added to the world
+target, so in world space. That is a tuning difference rather than a formula, and it is the
+one thing lost with the deletion. Worth re-tuning on device.
 
 ## Camera semantics and world scale
 

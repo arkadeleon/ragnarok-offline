@@ -25,14 +25,12 @@ let package = Package(
         .package(path: "../RagnarokModels"),
         .package(path: "../RagnarokNetwork"),
         .package(path: "../RagnarokPackets"),
-        .package(path: "../RagnarokReality"),
         .package(path: "../RagnarokRenderAssets"),
         .package(path: "../RagnarokRendering"),
         .package(path: "../RagnarokResources"),
         .package(path: "../RagnarokShaders"),
         .package(path: "../RagnarokSprite"),
         .package(path: "../ThumbstickView"),
-        .package(path: "../WorldCamera"),
     ],
     targets: [
         .target(
@@ -46,14 +44,12 @@ let package = Package(
                 "RagnarokModels",
                 "RagnarokNetwork",
                 "RagnarokPackets",
-                "RagnarokReality",
                 "RagnarokRenderAssets",
                 "RagnarokRendering",
                 "RagnarokResources",
                 "RagnarokShaders",
                 "RagnarokSprite",
                 "ThumbstickView",
-                "WorldCamera",
             ]
         ),
         .testTarget(
