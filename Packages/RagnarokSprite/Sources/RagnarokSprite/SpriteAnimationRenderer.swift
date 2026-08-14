@@ -1,5 +1,5 @@
 //
-//  SpriteRenderer.swift
+//  SpriteAnimationRenderer.swift
 //  RagnarokSprite
 //
 //  Created by Leon Li on 2025/2/17.
@@ -10,31 +10,31 @@ import Foundation
 import RagnarokCore
 import RagnarokResources
 
-final public class SpriteRenderer: Sendable {
+public struct SpriteAnimation: Sendable {
+    public let frames: [CGImage?]
+    public let frameWidth: CGFloat
+    public let frameHeight: CGFloat
+    public let frameInterval: CGFloat
+    public let scale: CGFloat
+
+    /// The pivot point represents the offset to the center point.
+    public let pivot: CGPoint
+
+    public var firstFrame: CGImage? {
+        frames.first ?? nil
+    }
+}
+
+final public class SpriteAnimationRenderer: Sendable {
     public let scale: CGFloat
 
     public init(scale: CGFloat = 2) {
         self.scale = scale
     }
 
-    public struct Animation: Sendable {
-        public let frames: [CGImage?]
-        public let frameWidth: CGFloat
-        public let frameHeight: CGFloat
-        public let frameInterval: CGFloat
-        public let scale: CGFloat
-
-        /// The pivot point represents the offset to the center point.
-        public let pivot: CGPoint
-
-        public var firstFrame: CGImage? {
-            frames.first ?? nil
-        }
-    }
-
     // MARK: - Render Sprite
 
-    public func render(sprite: SpriteResource, actionIndex: Int) async -> SpriteRenderer.Animation {
+    public func render(sprite: SpriteResource, actionIndex: Int) async -> SpriteAnimation {
         let actionNode = SpriteRenderNode(
             actionNodeWithSprite: sprite,
             actionIndex: actionIndex,
@@ -57,7 +57,7 @@ final public class SpriteRenderer: Sendable {
         let pivotY = (0 - bounds.midY) / scale
         let pivot = CGPoint(x: pivotX, y: pivotY)
 
-        let animation = SpriteRenderer.Animation(
+        let animation = SpriteAnimation(
             frames: frames,
             frameWidth: frameWidth,
             frameHeight: frameHeight,
@@ -94,7 +94,7 @@ final public class SpriteRenderer: Sendable {
         direction: SpriteDirection = .south,
         headDirection: SpriteHeadDirection = .lookForward,
         rendersShadow: Bool = true
-    ) async -> SpriteRenderer.Animation {
+    ) async -> SpriteAnimation {
         let actionIndex = actionType.calculateActionIndex(
             forJobID: composedSprite.configuration.job.rawValue,
             direction: direction
@@ -142,7 +142,7 @@ final public class SpriteRenderer: Sendable {
         let pivotY = (0 - bounds.midY) / scale
         let pivot = CGPoint(x: pivotX, y: pivotY)
 
-        let animation = SpriteRenderer.Animation(
+        let animation = SpriteAnimation(
             frames: frames,
             frameWidth: frameWidth,
             frameHeight: frameHeight,

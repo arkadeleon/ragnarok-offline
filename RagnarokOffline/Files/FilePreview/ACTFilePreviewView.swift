@@ -100,11 +100,11 @@ struct ACTFileActionView: View {
         let spr = try SPR(data: sprData)
 
         let sprite = SpriteResource(act: act, spr: spr)
-        let spriteRenderer = SpriteRenderer()
+        let renderer = SpriteAnimationRenderer()
 
         var animatedImages: [AnimatedImage] = []
         for actionIndex in 0..<act.actions.count {
-            let animation = await spriteRenderer.render(sprite: sprite, actionIndex: actionIndex)
+            let animation = await renderer.render(sprite: sprite, actionIndex: actionIndex)
             let animatedImage = AnimatedImage(animation: animation)
             animatedImages.append(animatedImage)
         }

@@ -15,7 +15,7 @@ struct CharacterMakeView: View {
     @Environment(GameSession.self) private var gameSession
 
     @State private var character = CharacterInfo()
-    @State private var characterAnimation: SpriteRenderer.Animation?
+    @State private var characterAnimation: SpriteAnimation?
     @State private var startDate: Date = .now
 
     var body: some View {
@@ -111,7 +111,7 @@ struct CharacterMakeView: View {
 
 private struct CharacterPreviewPanel: View {
     @Binding var character: CharacterInfo
-    var animation: SpriteRenderer.Animation?
+    var animation: SpriteAnimation?
     var startDate: Date
 
     var body: some View {

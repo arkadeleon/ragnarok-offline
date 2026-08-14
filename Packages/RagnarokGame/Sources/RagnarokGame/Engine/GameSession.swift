@@ -1249,14 +1249,14 @@ final public class GameSession {
 // MARK: - Character Sprite
 
 extension GameSession {
-    func characterAnimation(forSlot slot: Int) async -> SpriteRenderer.Animation? {
+    func characterAnimation(forSlot slot: Int) async -> SpriteAnimation? {
         guard let character = characters.first(where: { $0.charNum == slot }) else {
             return nil
         }
         return await characterAnimation(for: character)
     }
 
-    func characterAnimation(for character: CharacterInfo, direction: SpriteDirection = .south) async -> SpriteRenderer.Animation? {
+    func characterAnimation(for character: CharacterInfo, direction: SpriteDirection = .south) async -> SpriteAnimation? {
         do {
             let configuration = ComposedSprite.Configuration(character: character)
             let composedSprite = try await ComposedSprite(
@@ -1264,8 +1264,8 @@ extension GameSession {
                 resourceManager: context.resourceManager
             )
 
-            let spriteRenderer = SpriteRenderer()
-            let animation = await spriteRenderer.render(
+            let renderer = SpriteAnimationRenderer()
+            let animation = await renderer.render(
                 composedSprite: composedSprite,
                 actionType: .idle,
                 direction: direction,

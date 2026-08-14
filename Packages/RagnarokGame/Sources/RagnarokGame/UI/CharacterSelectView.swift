@@ -17,7 +17,7 @@ struct CharacterSelectView: View {
     @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
 
-    @State private var characterAnimationsBySlot: [Int : SpriteRenderer.Animation] = [:]
+    @State private var characterAnimationsBySlot: [Int : SpriteAnimation] = [:]
     @State private var showingDeleteConfirmation = false
     @State private var showingCancelConfirmation = false
 
@@ -168,7 +168,7 @@ struct CharacterSelectView: View {
 }
 
 private struct CharacterSlotPanel: View {
-    var characterAnimations: [Int : SpriteRenderer.Animation]
+    var characterAnimations: [Int : SpriteAnimation]
 
     @Environment(GameSession.self) private var gameSession
 

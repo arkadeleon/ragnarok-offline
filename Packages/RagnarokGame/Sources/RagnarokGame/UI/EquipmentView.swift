@@ -16,7 +16,7 @@ struct EquipmentView: View {
 
     @Environment(GameSession.self) private var gameSession
 
-    @State private var characterAnimation: SpriteRenderer.Animation?
+    @State private var characterAnimation: SpriteAnimation?
 
     var body: some View {
         GameWindow {
@@ -63,7 +63,7 @@ struct EquipmentView: View {
 }
 
 private struct EquipmentCharacterView: View {
-    var characterAnimation: SpriteRenderer.Animation?
+    var characterAnimation: SpriteAnimation?
 
     var body: some View {
         ZStack {

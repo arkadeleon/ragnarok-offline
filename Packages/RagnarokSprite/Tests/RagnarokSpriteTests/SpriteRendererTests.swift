@@ -17,8 +17,8 @@ final class SpriteRendererTests: XCTestCase {
         let composedSprite = try await ComposedSprite(configuration: configuration, resourceManager: resourceManager)
         XCTAssertEqual(composedSprite.parts.count, 3)
 
-        let spriteRenderer = SpriteRenderer()
-        let animation = await spriteRenderer.render(
+        let renderer = SpriteAnimationRenderer()
+        let animation = await renderer.render(
             composedSprite: composedSprite,
             actionType: .walk,
             direction: .south,

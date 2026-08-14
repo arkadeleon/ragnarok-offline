@@ -129,8 +129,8 @@ final class MonsterModel {
             return
         }
 
-        let spriteRenderer = SpriteRenderer()
-        let animation = await spriteRenderer.render(
+        let renderer = SpriteAnimationRenderer()
+        let animation = await renderer.render(
             composedSprite: composedSprite,
             actionType: .idle
         )

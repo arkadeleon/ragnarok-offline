@@ -30,7 +30,7 @@ struct AnimatedImage: Hashable, Sendable {
 }
 
 extension AnimatedImage {
-    init(animation: SpriteRenderer.Animation) {
+    init(animation: SpriteAnimation) {
         self.init(
             frames: animation.frames,
             frameWidth: animation.frameWidth,

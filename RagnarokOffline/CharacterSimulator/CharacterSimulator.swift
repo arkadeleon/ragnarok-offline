@@ -78,7 +78,7 @@ final class CharacterSimulator {
     }
 
     var composedSprite: ComposedSprite?
-    var animation: SpriteRenderer.Animation?
+    var animation: SpriteAnimation?
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
@@ -100,8 +100,8 @@ final class CharacterSimulator {
             return
         }
 
-        let spriteRenderer = SpriteRenderer()
-        animation = await spriteRenderer.render(
+        let renderer = SpriteAnimationRenderer()
+        animation = await renderer.render(
             composedSprite: composedSprite,
             actionType: self.configuration.actionType,
             direction: self.configuration.direction,
