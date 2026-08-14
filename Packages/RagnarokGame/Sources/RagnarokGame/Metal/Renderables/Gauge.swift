@@ -17,7 +17,6 @@ final class Gauge {
     var maxHp: Int
     var sp: Int?
     var maxSp: Int?
-    var worldPosition: SIMD3<Float> = .zero
 
     /// Bar size in sprite pixels, of which 32 make one world unit.
     private let barWidth: Float = 60

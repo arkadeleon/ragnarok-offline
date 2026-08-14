@@ -22,19 +22,15 @@ extension MetalMapScene {
         case .hp:
             gauges[player.objectID]?.hp = value
             playerObject?.hp = value
-            refreshSpriteDrawables()
         case .maxhp:
             gauges[player.objectID]?.maxHp = value
             playerObject?.maxHp = value
-            refreshSpriteDrawables()
         case .sp:
             gauges[player.objectID]?.sp = value
             playerObject?.sp = value
-            refreshSpriteDrawables()
         case .maxsp:
             gauges[player.objectID]?.maxSp = value
             playerObject?.maxSp = value
-            refreshSpriteDrawables()
         default:
             break
         }
@@ -46,8 +42,6 @@ extension MetalMapScene {
         let playerObject = objects[player.objectID] as? MetalPlayerObject
         playerObject?.hp = current
 
-        refreshSpriteDrawables()
-
         let combatText = CombatText(
             creationTime: .now,
             target: CombatText.Target(objectID: player.objectID, isPlayer: true),
@@ -55,7 +49,7 @@ extension MetalMapScene {
             kind: .hpRecovery,
             delay: .zero
         )
-        renderCombatText(combatText)
+        addCombatText(combatText)
     }
 
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
@@ -64,8 +58,6 @@ extension MetalMapScene {
         let playerObject = objects[player.objectID] as? MetalPlayerObject
         playerObject?.sp = current
 
-        refreshSpriteDrawables()
-
         let combatText = CombatText(
             creationTime: .now,
             target: CombatText.Target(objectID: player.objectID, isPlayer: true),
@@ -73,7 +65,7 @@ extension MetalMapScene {
             kind: .spRecovery,
             delay: .zero
         )
-        renderCombatText(combatText)
+        addCombatText(combatText)
     }
 
     public func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -95,8 +87,6 @@ extension MetalMapScene {
                 }
             }
         }
-
-        refreshSpriteDrawables()
     }
 
     public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
@@ -106,8 +96,6 @@ extension MetalMapScene {
 
         object.hp = hp
         object.maxHp = maxHp
-
-        refreshSpriteDrawables()
 
         if let gauge = gauges[objectID] {
             gauge.hp = hp
@@ -201,21 +189,18 @@ extension MetalMapScene {
         case .dead where objectID == player.objectID:
             if let object = objects[objectID] {
                 object.perform(.die, completion: .indefinite)
-                refreshSpriteDrawables()
             }
             gauges.removeValue(forKey: objectID)
             state.isPlayerDead = true
         default:
             objects.removeValue(forKey: objectID)
             gauges.removeValue(forKey: objectID)
-            refreshSpriteDrawables()
         }
     }
 
     public func onMapObjectResurrected(objectID: GameObjectID) {
         if let object = objects[objectID] {
             object.perform(.idle, completion: .indefinite)
-            refreshSpriteDrawables()
         }
 
         if objectID == player.objectID {
@@ -231,8 +216,6 @@ extension MetalMapScene {
         let direction = SpriteDirection(direction: direction)
         let headDirection = SpriteHeadDirection(headDirection: headDirection)
         object.turn(direction: direction, headDirection: headDirection)
-
-        refreshSpriteDrawables()
     }
 
     public func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
@@ -242,7 +225,6 @@ extension MetalMapScene {
             metalObject.bodyState = bodyState
             metalObject.healthState = healthState
             metalObject.effectState = effectState
-            refreshSpriteDrawables()
         }
 
         if isVisible {
@@ -293,8 +275,6 @@ extension MetalMapScene {
         default:
             return
         }
-
-        refreshSpriteDrawables()
     }
 
     public func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -348,7 +328,6 @@ extension MetalMapScene {
             }
 
             sourceObject.perform(presentationAction, completion: completion)
-            refreshSpriteDrawables()
         }
 
         addArrowProjectileEffect(for: objectAction)
@@ -389,7 +368,6 @@ extension MetalMapScene {
             let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
             sourceObject.perform(action, completion: .after(duration, settledAction: settledAction))
-            refreshSpriteDrawables()
         }
 
         if objectSkill.isHealingSkill, let targetObject = objects[objectSkill.targetObjectID] {
@@ -403,7 +381,7 @@ extension MetalMapScene {
                 kind: .hpRecovery,
                 delay: .zero
             )
-            renderCombatText(combatText)
+            addCombatText(combatText)
 
             audioPlayer.playSound(named: "_heal_effect.wav")
         }
@@ -423,7 +401,7 @@ extension MetalMapScene {
                     amount: damage / count,
                     delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
                 )
-                renderCombatText(combatText)
+                addCombatText(combatText)
             }
         }
 
@@ -439,12 +417,10 @@ extension MetalMapScene {
             worldPosition: mapGrid.worldPosition(for: position)
         )
         items[item.objectID] = metalItem
-        refreshSpriteDrawables()
     }
 
     public func onItemVanished(objectID: GameObjectID) {
         items.removeValue(forKey: objectID)
-        refreshSpriteDrawables()
     }
 
     public func onGroundSkillCast(skillID: SkillID, position: SIMD2<Int>) {
@@ -476,7 +452,6 @@ extension MetalMapScene {
         object.perform(.idle, completion: .indefinite)
         object.turn(direction: direction, headDirection: headDirection)
         object.worldPosition = mapGrid.worldPosition(for: gridPosition)
-        refreshSpriteDrawables()
     }
 
     func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MetalMovement? {
@@ -503,11 +478,6 @@ extension MetalMapScene {
         )
         object.setDirection(movement.finalDirection)
 
-        refreshSpriteDrawables()
-        if objectID == player.objectID {
-            updateCameraTarget()
-        }
-
         return movement
     }
 
@@ -516,11 +486,6 @@ extension MetalMapScene {
             object.gridPosition = position
             object.stopMovement()
             object.perform(.idle, completion: .indefinite)
-        }
-
-        refreshSpriteDrawables()
-        if objectID == player.objectID {
-            updateCameraTarget()
         }
     }
 
@@ -551,7 +516,7 @@ extension MetalMapScene {
                 amount: objectAction.damage,
                 delay: .milliseconds(objectAction.sourceSpeed)
             )
-            renderCombatText(combatText)
+            addCombatText(combatText)
 
             if objectAction.damage2 > 0 {
                 let combatText2 = CombatText(
@@ -560,7 +525,7 @@ extension MetalMapScene {
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                renderCombatText(combatText2)
+                addCombatText(combatText2)
             }
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
@@ -571,7 +536,7 @@ extension MetalMapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed)
                 )
-                renderCombatText(combatText)
+                addCombatText(combatText)
             }
             if objectAction.damage2 > 0 {
                 let combatText = CombatText(
@@ -580,7 +545,7 @@ extension MetalMapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                 )
-                renderCombatText(combatText)
+                addCombatText(combatText)
 
                 let combatText2 = CombatText(
                     creationTime: now,
@@ -588,7 +553,7 @@ extension MetalMapScene {
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                renderCombatText(combatText2)
+                addCombatText(combatText2)
             } else {
                 let combatText = CombatText(
                     creationTime: now,
@@ -596,14 +561,14 @@ extension MetalMapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                 )
-                renderCombatText(combatText)
+                addCombatText(combatText)
             }
         default:
             break
         }
     }
 
-    private func renderCombatText(_ combatText: CombatText) {
+    private func addCombatText(_ combatText: CombatText) {
         guard let combatTextSpriteSet else {
             return
         }

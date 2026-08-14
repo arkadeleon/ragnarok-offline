@@ -25,14 +25,14 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
 
     /// The objects whose sprite the ray passes through, nearest first.
     private func spriteHits(_ ray: Ray) -> [GameObjectID] {
-        guard let camera = renderer.lastCamera else {
+        guard let camera = lastCamera else {
             return []
         }
 
         // The layers of an object share an anchor, so merge their bounds before hit
         // testing, to grow the object to the minimum tap size once instead of per layer.
         var bounds: [GameObjectID : SpriteBounds] = [:]
-        for drawable in renderer.spriteDrawables where drawable.isVisible {
+        for drawable in spriteDrawables where drawable.isVisible {
             guard let layerBounds = spriteBounds(for: drawable) else {
                 continue
             }
@@ -66,7 +66,7 @@ extension MetalMapScene: GameCoordinateSpaceProjecting {
         }
 
         return SpriteBounds(
-            anchor: renderer.renderPosition(for: drawable.worldPosition),
+            anchor: MetalMapRenderer.renderPosition(for: drawable.worldPosition),
             minimum: minimum,
             maximum: maximum
         )

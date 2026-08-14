@@ -62,7 +62,7 @@ final class GaugeRenderer {
     }
 
     func render(
-        gauges: [Gauge],
+        gauges: [MetalMapRenderer.Scene.Gauge],
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -76,11 +76,6 @@ final class GaugeRenderer {
         renderCommandEncoder.setFragmentTexture(whiteTexture, index: 0)
 
         for gauge in gauges {
-            let vertices = gauge.makeVertices()
-            guard !vertices.isEmpty else {
-                continue
-            }
-
             var uniforms = SpriteVertexUniforms(
                 modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
@@ -90,12 +85,12 @@ final class GaugeRenderer {
                 viewport: .zero
             )
 
-            vertices.withUnsafeBytes { bytes in
+            gauge.vertices.withUnsafeBytes { bytes in
                 renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
             }
             renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
             renderCommandEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 0)
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: gauge.vertices.count)
         }
     }
 }

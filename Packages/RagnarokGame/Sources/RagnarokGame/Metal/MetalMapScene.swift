@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Foundation
+import Metal
 import QuartzCore
 import RagnarokConstants
 import RagnarokCore
@@ -53,14 +54,17 @@ public final class MetalMapScene: GameMapScene {
     var effects: [UUID : MetalMapEffect] = [:]
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
+    var skyboxResource: SkyboxRenderResource?
+    var worldResource: WorldRenderResource?
+    var tileSelectorResource: TileSelectorRenderResource?
+    var spriteDrawables: [SpriteLayerDrawable] = []
+
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
 
-    var cameraState = MapCameraState() {
-        didSet {
-            updateCamera()
-        }
-    }
+    var cameraState = MapCameraState()
+    private var cameraTargetPosition: SIMD3<Float> = .zero
+    var lastCamera: RenderCamera?
 
     init(
         mapName: String,
@@ -116,7 +120,6 @@ public final class MetalMapScene: GameMapScene {
         }
 
         addObject(objectID: player.objectID, at: playerPosition, direction: .south, headDirection: .lookForward)
-        updateCamera()
     }
 
     public func unload() {
@@ -125,6 +128,66 @@ public final class MetalMapScene: GameMapScene {
         pendingArrivalAction = nil
         audioPlayer.stopAll()
         clearRenderResources()
+    }
+
+    func prepareRenderResources(progress: Progress) async throws {
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(
+            world: world,
+            resourceManager: resourceManager,
+            progress: progress
+        )
+        let skyboxConfiguration = SkyboxConfiguration.generate(
+            light: world.rsw.light,
+            mapWidth: mapGrid.width,
+            mapHeight: mapGrid.height
+        )
+
+        skyboxResource = SkyboxRenderResource(configuration: skyboxConfiguration)
+        worldResource = WorldRenderResource(device: renderer.device, asset: worldAsset)
+
+        do {
+            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
+            let image = try await resourceManager.image(at: path)
+            tileSelectorResource = TileSelectorRenderResource(device: renderer.device, image: image.cgImage)
+        } catch {
+            logger.warning("Metal map scene failed to load grid.tga: \(error)")
+        }
+
+        spriteAssetStore = SpriteAssetStore(
+            device: renderer.device,
+            resourceManager: resourceManager
+        )
+
+        do {
+            combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
+        } catch {
+            combatTextSpriteSet = nil
+            logger.warning("Metal map scene failed to load combat text sprites: \(error)")
+        }
+
+        effectAssetStore = EffectAssetStore(resourceManager: resourceManager)
+    }
+
+    func clearRenderResources() {
+        spriteAssetStore?.cancelAllTasks()
+        spriteAssetStore = nil
+        items.removeAll()
+        combatTextSpriteSet = nil
+        for task in effectLoadTasks.values {
+            task.cancel()
+        }
+        effectAssetStore?.cancelAllTasks()
+        effectAssetStore = nil
+        effectLoadTasks.removeAll()
+
+        combatTextResources.removeAll()
+        effects.removeAll()
+
+        skyboxResource = nil
+        worldResource = nil
+        tileSelectorResource = nil
+        spriteDrawables.removeAll()
     }
 
     func handleMovement(_ movementValue: CGPoint) {
@@ -143,7 +206,7 @@ public final class MetalMapScene: GameMapScene {
     }
 
     func selectGround(at position: SIMD2<Int>) {
-        renderer.tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
+        tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
         gameSession?.requestMove(to: position)
     }
 
@@ -345,19 +408,40 @@ public final class MetalMapScene: GameMapScene {
 }
 
 extension MetalMapScene {
-    func updateCamera() {
-        refreshSpriteDrawables()
-        updateCameraTarget()
+    private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
+    private static let cameraFieldOfViewDegrees: Float = 15
+
+    /// The game camera, orbiting the player at `cameraState` and drawn into `viewport`.
+    ///
+    /// iOS and macOS draw the map from this camera. visionOS draws it from the eye instead,
+    /// and uses this camera's view matrix to place the map around the viewer.
+    func makeCamera(viewport: MTLViewport) -> RenderCamera {
+        let worldTarget = MetalMapRenderer.renderPosition(for: cameraTargetPosition) + Self.cameraTargetOffset
+
+        let cameraOrientation =
+            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
+            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
+        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
+        let cameraUp = cameraOrientation.act([0, 1, 0])
+
+        let viewportHeight = max(Float(viewport.height), 1)
+        let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
+        let farZ = max(cameraState.distance * 4, 1000)
+
+        return RenderCamera(
+            viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
+            projectionMatrix: perspective(radians(Self.cameraFieldOfViewDegrees), aspectRatio, 0.1, farZ),
+            position: cameraPosition,
+            azimuth: cameraState.azimuth,
+            elevation: cameraState.elevation
+        )
     }
 
-    func prepareFrame(atTime time: TimeInterval) {
+    func makeRenderScene(atTime time: TimeInterval) -> MetalMapRenderer.Scene {
         let now = ContinuousClock.now
 
         combatTextResources = combatTextResources.filter { _, resource in
             !resource.isExpired(at: now)
-        }
-        renderer.combatTextRenderResources = combatTextResources.values.sorted {
-            $0.combatText.creationTime < $1.combatText.creationTime
         }
 
         effects = effects.filter { _, effect in
@@ -368,31 +452,6 @@ extension MetalMapScene {
                 !effect.isReady || !effect.isExpired(atTime: time)
             }
         }
-        let effects = Array(effects.values) + objects.values.flatMap(\.ownedEffects)
-        renderer.objects = objects
-        renderer.effects = effects
-
-        refreshSpriteDrawables()
-
-        for (objectID, object) in objects {
-            gauges[objectID]?.worldPosition = object.worldPosition + [0, 0, -0.8]
-        }
-        renderer.gauges = Array(gauges.values)
-
-        updateCameraTarget()
-    }
-
-    func refreshSpriteDrawables() {
-        updateObjectPresentation()
-        renderer.spriteDrawables = spriteAssetStore?.sync(
-            objects: objects,
-            items: items,
-            camera: cameraState
-        ) ?? []
-    }
-
-    private func updateObjectPresentation() {
-        let now = ContinuousClock.now
 
         for object in objects.values {
             object.update(at: now)
@@ -401,6 +460,56 @@ extension MetalMapScene {
             }
             object.worldPosition = worldPosition(for: object)
         }
+
+        spriteDrawables = spriteAssetStore?.sync(
+            objects: objects,
+            items: items,
+            camera: cameraState
+        ) ?? []
+
+        updateCameraTarget()
+
+        var scene = MetalMapRenderer.Scene()
+
+        scene.skybox = skyboxResource
+        scene.world = worldResource
+        scene.tileSelector = tileSelectorResource
+        scene.spriteDrawables = spriteDrawables
+
+        scene.effects = (Array(effects.values) + objects.values.flatMap(\.ownedEffects))
+            .compactMap { effect in
+                guard let resourceGroup = effect.renderResourceGroup else {
+                    return nil
+                }
+                let targetObject = effect.targetObjectID.flatMap { objects[$0] }
+                return MetalMapRenderer.Scene.Effect(
+                    resourceGroup: resourceGroup,
+                    attachedWorldPosition: targetObject?.worldPosition
+                )
+            }
+            .sorted {
+                $0.resourceGroup.creationTime < $1.resourceGroup.creationTime
+            }
+
+        scene.gauges = objects.compactMap { objectID, object in
+            guard let vertices = gauges[objectID]?.makeVertices(), !vertices.isEmpty else {
+                return nil
+            }
+            return MetalMapRenderer.Scene.Gauge(
+                vertices: vertices,
+                worldPosition: object.worldPosition + [0, 0, -0.8]
+            )
+        }
+
+        scene.combatTexts = combatTextResources.values
+            .sorted {
+                $0.combatText.creationTime < $1.combatText.creationTime
+            }
+            .compactMap { resource in
+                resource.combatText(for: now, cameraAzimuth: cameraState.azimuth)
+            }
+
+        return scene
     }
 
     private func worldPosition(for object: MetalMapObject) -> SIMD3<Float> {
@@ -413,79 +522,11 @@ extension MetalMapScene {
         }
     }
 
-    func updateCameraTarget() {
-        let targetPosition: SIMD3<Float>
+    private func updateCameraTarget() {
         if let playerObject = objects[player.objectID] {
-            targetPosition = playerObject.worldPosition
+            cameraTargetPosition = playerObject.worldPosition
         } else {
-            targetPosition = mapGrid.worldPosition(for: playerPosition)
+            cameraTargetPosition = mapGrid.worldPosition(for: playerPosition)
         }
-        renderer.updateCamera(
-            cameraState: cameraState,
-            targetPosition: targetPosition
-        )
-    }
-
-    func prepareRenderResources(progress: Progress) async throws {
-        let worldAssetLoader = WorldAssetLoader()
-        let worldAsset = try await worldAssetLoader.load(
-            world: world,
-            resourceManager: resourceManager,
-            progress: progress
-        )
-        let skyboxConfiguration = SkyboxConfiguration.generate(
-            light: world.rsw.light,
-            mapWidth: mapGrid.width,
-            mapHeight: mapGrid.height
-        )
-
-        renderer.skyboxResource = SkyboxRenderResource(configuration: skyboxConfiguration)
-        renderer.worldResource = WorldRenderResource(device: renderer.device, asset: worldAsset)
-
-        do {
-            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
-            let image = try await resourceManager.image(at: path)
-            renderer.tileSelectorResource = TileSelectorRenderResource(device: renderer.device, image: image.cgImage)
-        } catch {
-            logger.warning("Metal map scene failed to load grid.tga: \(error)")
-        }
-
-        spriteAssetStore = SpriteAssetStore(
-            device: renderer.device,
-            resourceManager: resourceManager
-        )
-
-        do {
-            combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
-        } catch {
-            combatTextSpriteSet = nil
-            logger.warning("Metal map scene failed to load combat text sprites: \(error)")
-        }
-
-        effectAssetStore = EffectAssetStore(resourceManager: resourceManager)
-    }
-
-    func clearRenderResources() {
-        spriteAssetStore?.cancelAllTasks()
-        spriteAssetStore = nil
-        items.removeAll()
-        combatTextSpriteSet = nil
-        for task in effectLoadTasks.values {
-            task.cancel()
-        }
-        effectAssetStore?.cancelAllTasks()
-        effectAssetStore = nil
-        effectLoadTasks.removeAll()
-
-        combatTextResources.removeAll()
-        effects.removeAll()
-
-        renderer.skyboxResource = nil
-        renderer.worldResource = nil
-        renderer.spriteDrawables.removeAll()
-        renderer.combatTextRenderResources.removeAll()
-        renderer.objects.removeAll()
-        renderer.effects.removeAll()
-        renderer.tileSelectorResource = nil
     }
 }

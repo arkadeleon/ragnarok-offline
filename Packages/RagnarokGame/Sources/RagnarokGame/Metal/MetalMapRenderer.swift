@@ -5,16 +5,49 @@
 //  Created by Leon Li on 2026/3/22.
 //
 
-import CoreGraphics
 import Foundation
 import Metal
 import RagnarokCore
 import RagnarokRendering
+import RagnarokShaders
 import simd
 
-final class MetalMapRenderer: Renderer {
-    private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
-    private static let fieldOfViewDegrees: Float = 15
+/// Draws the map.
+///
+/// The renderer owns the Metal objects and nothing else. What to draw arrives in a
+/// `MetalMapRenderer.Scene`, which `MetalMapScene` builds once per frame, so every
+/// view of a frame draws the same contents from its own camera.
+@MainActor
+final class MetalMapRenderer {
+    struct Scene {
+        struct Effect {
+            let resourceGroup: EffectRenderResourceGroup
+            let attachedWorldPosition: SIMD3<Float>?
+        }
+
+        struct Gauge {
+            let vertices: [SpriteVertex]
+            let worldPosition: SIMD3<Float>
+        }
+
+        struct CombatText {
+            let vertices: [SpriteVertex]
+            let worldPosition: SIMD3<Float>
+            let texture: any MTLTexture
+        }
+
+        var skybox: SkyboxRenderResource?
+        var world: WorldRenderResource?
+        var tileSelector: TileSelectorRenderResource?
+        var spriteDrawables: [SpriteLayerDrawable] = []
+        var effects: [MetalMapRenderer.Scene.Effect] = []
+        var gauges: [MetalMapRenderer.Scene.Gauge] = []
+        var combatTexts: [MetalMapRenderer.Scene.CombatText] = []
+    }
+
+    /// The map's own transform. The game world stands the other way up from render space,
+    /// so the whole map turns over.
+    private static let worldModelMatrix = matrix_rotate(matrix_identity_float4x4, radians(-180), [1, 0, 0])
 
     let device: any MTLDevice
     let configuration: RenderConfiguration
@@ -26,20 +59,6 @@ final class MetalMapRenderer: Renderer {
     private let gaugeRenderer: GaugeRenderer
     private let effectRenderer: EffectRenderer
     private let tileSelectorRenderer: MetalTileSelectorRenderer
-
-    var skyboxResource: SkyboxRenderResource?
-    var worldResource: WorldRenderResource?
-    var spriteDrawables: [SpriteLayerDrawable] = []
-    var combatTextRenderResources: [CombatTextRenderResource] = []
-    var gauges: [Gauge] = []
-    var objects: [GameObjectID : MetalMapObject] = [:]
-    var effects: [MetalMapEffect] = []
-    var tileSelectorResource: TileSelectorRenderResource?
-
-    private var cameraState = MapCameraState()
-    private var targetPosition: SIMD3<Float> = .zero
-
-    private(set) var lastCamera: RenderCamera?
 
     init(configuration: RenderConfiguration) throws {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -57,7 +76,8 @@ final class MetalMapRenderer: Renderer {
         tileSelectorRenderer = try MetalTileSelectorRenderer(device: device, configuration: configuration)
     }
 
-    func renderPosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
+    /// Where a game world position sits in the space the map is drawn in.
+    static func renderPosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
         [
             worldPosition.x,
             worldPosition.z,
@@ -65,34 +85,7 @@ final class MetalMapRenderer: Renderer {
         ]
     }
 
-    func updateCamera(cameraState: MapCameraState, targetPosition: SIMD3<Float>) {
-        self.cameraState = cameraState
-        self.targetPosition = targetPosition
-    }
-
-    func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
-        let worldTarget = renderPosition(for: targetPosition) + Self.cameraTargetOffset
-
-        let cameraOrientation =
-            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
-            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
-        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
-        let cameraUp = cameraOrientation.act([0, 1, 0])
-
-        let viewportHeight = max(Float(viewport.height), 1)
-        let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
-        let farZ = max(cameraState.distance * 4, 1000)
-
-        return RenderCamera(
-            viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
-            projectionMatrix: perspective(radians(Self.fieldOfViewDegrees), aspectRatio, 0.1, farZ),
-            position: cameraPosition,
-            azimuth: cameraState.azimuth,
-            elevation: cameraState.elevation
-        )
-    }
-
-    func render(frame: RenderFrame) {
+    func render(frame: RenderFrame, scene: MetalMapRenderer.Scene) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
@@ -107,16 +100,11 @@ final class MetalMapRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            var camera = view.camera
-            camera.azimuth = cameraState.azimuth
-            camera.elevation = cameraState.elevation
-            lastCamera = camera
-
-            renderContents(
+            renderScene(
+                scene,
                 atTime: frame.time,
                 viewport: view.viewport,
-                modelMatrix: makeWorldModelMatrix(),
-                camera: camera,
+                camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder
             )
         }
@@ -124,34 +112,34 @@ final class MetalMapRenderer: Renderer {
         renderCommandEncoder.endEncoding()
     }
 
-    private func renderContents(
+    private func renderScene(
+        _ scene: MetalMapRenderer.Scene,
         atTime time: TimeInterval,
         viewport: MTLViewport,
-        modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        if let skyboxResource {
+        let modelMatrix = Self.worldModelMatrix
+
+        if let skybox = scene.skybox {
             skyboxRenderer.render(
-                resource: skyboxResource,
+                resource: skybox,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
         }
 
-        if let worldResource {
+        if let world = scene.world {
             worldRenderer.renderGroundAndModels(
-                resource: worldResource,
+                resource: world,
                 atTime: time,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
-        }
 
-        if let worldResource {
             worldRenderer.renderEffects(
-                resource: worldResource,
+                resource: world,
                 atTime: time,
                 beforeEntities: true,
                 modelMatrix: modelMatrix,
@@ -161,7 +149,8 @@ final class MetalMapRenderer: Renderer {
         }
 
         renderEffects(
-            effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == true },
+            scene.effects,
+            beforeEntities: true,
             atTime: time,
             modelMatrix: modelMatrix,
             camera: camera,
@@ -169,7 +158,7 @@ final class MetalMapRenderer: Renderer {
         )
 
         spriteRenderer.render(
-            drawables: spriteDrawables,
+            drawables: scene.spriteDrawables,
             viewport: viewport,
             modelMatrix: modelMatrix,
             camera: camera,
@@ -178,19 +167,17 @@ final class MetalMapRenderer: Renderer {
 
         // Water renders after sprites so submerged
         // sprites blend through the translucent surface.
-        if let worldResource {
+        if let world = scene.world {
             worldRenderer.renderWater(
-                resource: worldResource,
+                resource: world,
                 atTime: time,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
-        }
 
-        if let worldResource {
             worldRenderer.renderEffects(
-                resource: worldResource,
+                resource: world,
                 atTime: time,
                 beforeEntities: false,
                 modelMatrix: modelMatrix,
@@ -200,16 +187,17 @@ final class MetalMapRenderer: Renderer {
         }
 
         renderEffects(
-            effects.filter { $0.renderResourceGroup?.rendersBeforeEntities == false },
+            scene.effects,
+            beforeEntities: false,
             atTime: time,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
 
-        if let tileSelectorResource {
+        if let tileSelector = scene.tileSelector {
             tileSelectorRenderer.render(
-                resource: tileSelectorResource,
+                resource: tileSelector,
                 atTime: time,
                 modelMatrix: modelMatrix,
                 camera: camera,
@@ -218,7 +206,7 @@ final class MetalMapRenderer: Renderer {
         }
 
         gaugeRenderer.render(
-            gauges: gauges,
+            gauges: scene.gauges,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -226,7 +214,7 @@ final class MetalMapRenderer: Renderer {
 
         // Combat text renders last so nothing draws over it.
         combatTextRenderer.render(
-            resources: combatTextRenderResources,
+            combatTexts: scene.combatTexts,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -234,43 +222,22 @@ final class MetalMapRenderer: Renderer {
     }
 
     private func renderEffects(
-        _ effects: [MetalMapEffect],
+        _ effects: [MetalMapRenderer.Scene.Effect],
+        beforeEntities: Bool,
         atTime time: TimeInterval,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let sortedEffects = effects.sorted {
-            guard let lhsCreationTime = $0.renderResourceGroup?.creationTime else {
-                return false
-            }
-            guard let rhsCreationTime = $1.renderResourceGroup?.creationTime else {
-                return true
-            }
-            return lhsCreationTime < rhsCreationTime
-        }
-
-        for effect in sortedEffects {
-            guard let resourceGroup = effect.renderResourceGroup else {
-                continue
-            }
-
-            let targetObject = effect.targetObjectID.flatMap { objects[$0] }
-
+        for effect in effects where effect.resourceGroup.rendersBeforeEntities == beforeEntities {
             effectRenderer.render(
-                resourceGroup: resourceGroup,
+                resourceGroup: effect.resourceGroup,
                 atTime: time,
-                attachedWorldPosition: targetObject?.worldPosition,
+                attachedWorldPosition: effect.attachedWorldPosition,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
         }
-    }
-
-    private func makeWorldModelMatrix() -> simd_float4x4 {
-        var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
-        return modelMatrix
     }
 }

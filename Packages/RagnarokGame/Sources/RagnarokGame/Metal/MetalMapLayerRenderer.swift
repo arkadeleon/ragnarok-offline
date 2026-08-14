@@ -82,7 +82,7 @@ final class MetalMapLayerRenderer {
         }
 
         frame.startUpdate()
-        scene.prepareFrame(atTime: CACurrentMediaTime())
+        let renderScene = scene.makeRenderScene(atTime: CACurrentMediaTime())
         frame.endUpdate()
 
         guard let timing = frame.predictTiming() else {
@@ -106,10 +106,7 @@ final class MetalMapLayerRenderer {
         // The eye cannot move, so the game camera places the map around the viewer.
         // RenderCamera and the compositor both use right-handed view space with visible
         // geometry at -Z, so each eye pose can compose the placement directly.
-        let worldPlacement = renderer.makeCamera(
-            atTime: CACurrentMediaTime(),
-            viewport: drawable.views[0].textureMap.viewport
-        ).viewMatrix
+        let worldPlacement = scene.makeCamera(viewport: drawable.views[0].textureMap.viewport).viewMatrix
 
         spatialInput.update(
             worldPlacement: worldPlacement,
@@ -122,13 +119,17 @@ final class MetalMapLayerRenderer {
                 camera: makeCamera(drawable: drawable, viewIndex: index, worldPlacement: worldPlacement)
             )
         }
+        scene.lastCamera = views.last?.camera
 
-        renderer.render(frame: RenderFrame(
-            time: CACurrentMediaTime(),
-            commandBuffer: commandBuffer,
-            renderPassDescriptor: makeRenderPassDescriptor(drawable: drawable),
-            views: views
-        ))
+        renderer.render(
+            frame: RenderFrame(
+                time: CACurrentMediaTime(),
+                commandBuffer: commandBuffer,
+                renderPassDescriptor: makeRenderPassDescriptor(drawable: drawable),
+                views: views
+            ),
+            scene: renderScene
+        )
 
         drawable.encodePresent(commandBuffer: commandBuffer)
         commandBuffer.commit()
@@ -139,6 +140,9 @@ final class MetalMapLayerRenderer {
     /// The placement rides on the view matrix rather than the model matrix, so the world
     /// keeps its own frame: normals still match the map's light, and sprites still
     /// billboard against the map's axes.
+    ///
+    /// The angles come from the game camera, not from the eye: effects that turn to face
+    /// the viewer turn with the map's placement, the way they do on iOS and macOS.
     private func makeCamera(
         drawable: LayerRenderer.Drawable,
         viewIndex: Int,
@@ -150,7 +154,9 @@ final class MetalMapLayerRenderer {
         return RenderCamera(
             viewMatrix: originFromEye.inverse * worldPlacement,
             projectionMatrix: drawable.computeProjection(convention: .rightUpBack, viewIndex: viewIndex),
-            position: (worldPlacement.inverse * originFromEye.columns.3).xyz
+            position: (worldPlacement.inverse * originFromEye.columns.3).xyz,
+            azimuth: scene.cameraState.azimuth,
+            elevation: scene.cameraState.elevation
         )
     }
 

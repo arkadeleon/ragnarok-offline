@@ -85,7 +85,8 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
-        guard let commandBuffer = commandQueue.makeCommandBuffer(),
+        guard let scene,
+              let commandBuffer = commandQueue.makeCommandBuffer(),
               let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
             return
@@ -93,10 +94,11 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
-        scene?.prepareFrame(atTime: currentTime)
+        let renderScene = scene.makeRenderScene(atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
-        let camera = renderer.makeCamera(atTime: currentTime, viewport: viewport)
+        let camera = scene.makeCamera(viewport: viewport)
+        scene.lastCamera = camera
 
         let frame = RenderFrame(
             time: currentTime,
@@ -107,7 +109,7 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
             ],
             bounds: view.bounds
         )
-        renderer.render(frame: frame)
+        renderer.render(frame: frame, scene: renderScene)
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
@@ -119,7 +121,7 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         }
 
         let point = gestureRecognizer.location(in: mtkView)
-        guard let camera = renderer.lastCamera,
+        guard let camera = scene.lastCamera,
               let ray = camera.ray(through: point, in: mtkView.bounds) else {
             return
         }
@@ -254,7 +256,8 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
-        guard let commandBuffer = commandQueue.makeCommandBuffer(),
+        guard let scene,
+              let commandBuffer = commandQueue.makeCommandBuffer(),
               let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
             return
@@ -262,10 +265,11 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
-        scene?.prepareFrame(atTime: currentTime)
+        let renderScene = scene.makeRenderScene(atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
-        let camera = renderer.makeCamera(atTime: currentTime, viewport: viewport)
+        let camera = scene.makeCamera(viewport: viewport)
+        scene.lastCamera = camera
 
         let frame = RenderFrame(
             time: currentTime,
@@ -276,22 +280,26 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
             ],
             bounds: view.bounds
         )
-        renderer.render(frame: frame)
+        renderer.render(frame: frame, scene: renderScene)
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
 
     override func mouseDown(with event: NSEvent) {
+        guard let scene else {
+            return
+        }
+
         var point = mtkView.convert(event.locationInWindow, from: nil)
         // NSView has bottom-left origin; flip to top-left for hit testing.
         point.y = mtkView.bounds.height - point.y
-        guard let camera = renderer.lastCamera,
+        guard let camera = scene.lastCamera,
               let ray = camera.ray(through: point, in: mtkView.bounds) else {
             return
         }
-        if let result = scene?.hitTest(ray) {
-            scene?.handleInteraction(result)
+        if let result = scene.hitTest(ray) {
+            scene.handleInteraction(result)
         }
     }
 

@@ -13,12 +13,6 @@ import simd
 
 @MainActor
 final class CombatTextRenderResource {
-    struct Sample {
-        var vertices: [SpriteVertex]
-        var worldPosition: SIMD3<Float>
-        var texture: any MTLTexture
-    }
-
     let combatText: CombatText
     let startPosition: SIMD3<Float>
     let texture: (any MTLTexture)?
@@ -69,7 +63,7 @@ final class CombatTextRenderResource {
         }
     }
 
-    func sample(for now: ContinuousClock.Instant, cameraAzimuth: Float) -> CombatTextRenderResource.Sample? {
+    func combatText(for now: ContinuousClock.Instant, cameraAzimuth: Float) -> MetalMapRenderer.Scene.CombatText? {
         guard let texture else {
             return nil
         }
@@ -130,7 +124,7 @@ final class CombatTextRenderResource {
             SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: vertexColor),
         ]
 
-        return CombatTextRenderResource.Sample(vertices: vertices, worldPosition: worldPosition, texture: texture)
+        return MetalMapRenderer.Scene.CombatText(vertices: vertices, worldPosition: worldPosition, texture: texture)
     }
 
     func drift(azimuth: Float) -> SIMD3<Float> {

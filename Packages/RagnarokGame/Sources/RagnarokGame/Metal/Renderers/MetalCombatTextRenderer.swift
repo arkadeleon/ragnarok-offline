@@ -43,40 +43,35 @@ final class MetalCombatTextRenderer {
     }
 
     func render(
-        resources: [CombatTextRenderResource],
+        combatTexts: [MetalMapRenderer.Scene.CombatText],
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard !resources.isEmpty else {
+        guard !combatTexts.isEmpty else {
             return
         }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        let now = ContinuousClock.now
-        for resource in resources {
-            guard let sample = resource.sample(for: now, cameraAzimuth: camera.azimuth) else {
-                continue
-            }
-
+        for combatText in combatTexts {
             var uniforms = SpriteVertexUniforms(
                 modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
                 projectionMatrix: camera.projectionMatrix,
-                spriteWorldPosition: SIMD4<Float>(sample.worldPosition, 0),
+                spriteWorldPosition: SIMD4<Float>(combatText.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
                 viewport: .zero
             )
 
-            sample.vertices.withUnsafeBytes { bytes in
+            combatText.vertices.withUnsafeBytes { bytes in
                 renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
             }
             renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
             renderCommandEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 0)
-            renderCommandEncoder.setFragmentTexture(sample.texture, index: 0)
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 6)
+            renderCommandEncoder.setFragmentTexture(combatText.texture, index: 0)
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: combatText.vertices.count)
         }
     }
 }
