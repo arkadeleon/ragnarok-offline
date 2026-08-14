@@ -1,5 +1,5 @@
 //
-//  MetalMapView.swift
+//  MapView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/22.
@@ -11,19 +11,19 @@ import SwiftUI
 
 #if canImport(UIKit)
 
-struct MetalMapView: UIViewControllerRepresentable {
+struct MapView: UIViewControllerRepresentable {
     var scene: MetalMapScene
 
-    func makeUIViewController(context: Context) -> MetalMapViewController {
-        MetalMapViewController(scene: scene)
+    func makeUIViewController(context: Context) -> MapViewController {
+        MapViewController(scene: scene)
     }
 
-    func updateUIViewController(_ viewController: MetalMapViewController, context: Context) {
+    func updateUIViewController(_ viewController: MapViewController, context: Context) {
         viewController.update(scene: scene)
     }
 }
 
-final class MetalMapViewController: UIViewController, MTKViewDelegate {
+final class MapViewController: UIViewController, MTKViewDelegate {
     private weak var scene: MetalMapScene?
     private let commandQueue: any MTLCommandQueue
     private let renderer: MetalMapRenderer
@@ -37,7 +37,7 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
         self.scene = scene
         self.renderer = scene.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
-            fatalError("MetalMapViewController: failed to create Metal command queue")
+            fatalError("MapViewController: failed to create Metal command queue")
         }
         self.commandQueue = commandQueue
         super.init(nibName: nil, bundle: nil)
@@ -194,19 +194,19 @@ final class MetalMapViewController: UIViewController, MTKViewDelegate {
 
 #elseif canImport(AppKit)
 
-struct MetalMapView: NSViewControllerRepresentable {
+struct MapView: NSViewControllerRepresentable {
     var scene: MetalMapScene
 
-    func makeNSViewController(context: Context) -> MetalMapViewController {
-        MetalMapViewController(scene: scene)
+    func makeNSViewController(context: Context) -> MapViewController {
+        MapViewController(scene: scene)
     }
 
-    func updateNSViewController(_ viewController: MetalMapViewController, context: Context) {
+    func updateNSViewController(_ viewController: MapViewController, context: Context) {
         viewController.update(scene: scene)
     }
 }
 
-final class MetalMapViewController: NSViewController, MTKViewDelegate {
+final class MapViewController: NSViewController, MTKViewDelegate {
     private weak var scene: MetalMapScene?
     private let commandQueue: any MTLCommandQueue
     private let renderer: MetalMapRenderer
@@ -220,7 +220,7 @@ final class MetalMapViewController: NSViewController, MTKViewDelegate {
         self.scene = scene
         self.renderer = scene.renderer
         guard let commandQueue = renderer.device.makeCommandQueue() else {
-            fatalError("MetalMapViewController: failed to create Metal command queue")
+            fatalError("MapViewController: failed to create Metal command queue")
         }
         self.commandQueue = commandQueue
         super.init(nibName: nil, bundle: nil)

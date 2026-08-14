@@ -1,5 +1,5 @@
 //
-//  MetalMapSceneView.swift
+//  MapSceneView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ThumbstickView
 
-struct MetalMapSceneView: View {
+struct MapSceneView: View {
     var scene: MetalMapScene
 
     #if os(visionOS)
@@ -41,7 +41,7 @@ struct MetalMapSceneView: View {
                     }
                 }
             #else
-            MetalMapView(scene: scene)
+            MapView(scene: scene)
             #endif
         }
         .overlay(alignment: .bottomLeading) {

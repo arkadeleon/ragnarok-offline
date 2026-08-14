@@ -14,7 +14,7 @@ import QuartzCore
 import RagnarokRendering
 import simd
 
-/// Drives the map renderer from a `LayerRenderer`, the way `MetalMapViewController` drives
+/// Drives the map renderer from a `LayerRenderer`, the way `MapViewController` drives
 /// it from an `MTKView`.
 ///
 /// The loop drives `MetalMapRenderer` directly; it remains on the main actor because it
