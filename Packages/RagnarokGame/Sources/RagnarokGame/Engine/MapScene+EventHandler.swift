@@ -415,15 +415,15 @@ extension MapScene {
         addSkillEffects(for: objectSkill)
     }
 
-    // MARK: - Map Item
+    // MARK: - Dropped Item
 
-    public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
-        let mapItem = MapSceneMapItem(
+    public func onItemSpawned(item: DroppedItem, position: SIMD2<Int>) {
+        let droppedItem = MapSceneDroppedItem(
             item: item,
             gridPosition: position,
             worldPosition: mapGrid.worldPosition(for: position)
         )
-        items[item.objectID] = mapItem
+        items[item.objectID] = droppedItem
     }
 
     public func onItemVanished(objectID: GameObjectID) {

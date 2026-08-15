@@ -43,7 +43,7 @@ public final class MapScene {
     let state: MapSceneState
 
     var objects: [GameObjectID: MapSceneMapObject] = [:]
-    var items: [GameObjectID : MapSceneMapItem] = [:]
+    var items: [GameObjectID : MapSceneDroppedItem] = [:]
     var gauges: [GameObjectID : Gauge] = [:]
 
     let pathFinder: PathFinder
@@ -226,7 +226,7 @@ public final class MapScene {
             }
     }
 
-    private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneMapItem? {
+    private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneDroppedItem? {
         items.values.min {
             distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
         }
@@ -376,7 +376,7 @@ public final class MapScene {
         }
     }
 
-    private func pickUpItem(_ target: MapSceneMapItem) {
+    private func pickUpItem(_ target: MapSceneDroppedItem) {
         movePlayerToward(targetPosition: target.gridPosition, within: 1) {
             self.gameSession?.pickUpItem(objectID: target.objectID)
         }

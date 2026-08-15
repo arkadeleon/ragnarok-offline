@@ -10,7 +10,7 @@ import RagnarokModels
 @available(*, deprecated, message: "Use raw packet instead.")
 public enum ItemEvents {
     public struct Spawned: Event {
-        public let item: MapItem
+        public let item: DroppedItem
         public let position: SIMD2<Int>
     }
 

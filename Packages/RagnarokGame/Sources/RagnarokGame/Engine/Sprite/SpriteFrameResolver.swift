@@ -143,7 +143,7 @@ struct SpriteFrameResolver {
         }
     }
 
-    func resolve(_ item: MapSceneMapItem) -> [SpriteLayerDrawable] {
+    func resolve(_ item: MapSceneDroppedItem) -> [SpriteLayerDrawable] {
         guard let sprite = item.sprite,
               let partTextures = item.partTextures,
               let action = sprite.act.action(at: 0),

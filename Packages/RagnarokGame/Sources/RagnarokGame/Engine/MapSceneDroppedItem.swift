@@ -1,5 +1,5 @@
 //
-//  MapSceneMapItem.swift
+//  MapSceneDroppedItem.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -9,14 +9,14 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
-final class MapSceneMapItem: SpriteObject {
+final class MapSceneDroppedItem: SpriteObject {
     let itemID: Int
 
     var sprite: SpriteResource?
     var partTextures: SpritePartTextures?
 
     init(
-        item: MapItem,
+        item: DroppedItem,
         gridPosition: SIMD2<Int>,
         worldPosition: SIMD3<Float>
     ) {

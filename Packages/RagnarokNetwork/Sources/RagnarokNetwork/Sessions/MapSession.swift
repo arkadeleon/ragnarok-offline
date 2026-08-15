@@ -40,7 +40,7 @@ final public class MapSession: SessionProtocol, @unchecked Sendable {
         case inventoryItemsAppended(items: [InventoryItem])
 
         // Item events
-        case itemSpawned(item: MapItem, position: SIMD2<Int>)
+        case itemSpawned(item: DroppedItem, position: SIMD2<Int>)
         case itemVanished(objectID: UInt32)
         case itemPickedUp(item: PickedUpItem)
         case itemThrown(item: ThrownItem)

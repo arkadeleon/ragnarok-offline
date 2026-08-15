@@ -789,11 +789,11 @@ final public class GameSession {
         case let packet as packet_itemlist_equip:
             context.inventory.update(from: packet)
         case let packet as PACKET_ZC_ITEM_ENTRY:
-            let item = MapItem(from: packet)
+            let item = DroppedItem(from: packet)
             let position = SIMD2(x: Int(packet.x), y: Int(packet.y))
             mapScene?.onItemSpawned(item: item, position: position)
         case let packet as packet_dropflooritem:
-            let item = MapItem(from: packet)
+            let item = DroppedItem(from: packet)
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
             mapScene?.onItemSpawned(item: item, position: position)
         case let packet as PACKET_ZC_ITEM_DISAPPEAR:

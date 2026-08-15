@@ -25,7 +25,7 @@ final class SpriteAssetStore {
 
     func sync(
         objects: [GameObjectID : MapSceneMapObject],
-        items: [GameObjectID : MapSceneMapItem],
+        items: [GameObjectID : MapSceneDroppedItem],
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         let currentObjectIDs = Set(objects.keys)
@@ -108,7 +108,7 @@ final class SpriteAssetStore {
         }
     }
 
-    private func syncItem(_ item: MapSceneMapItem) {
+    private func syncItem(_ item: MapSceneDroppedItem) {
         let objectID = item.objectID
         guard item.sprite == nil, itemLoadTasks[objectID] == nil else {
             return
@@ -133,7 +133,7 @@ final class SpriteAssetStore {
 
     private func drawables(
         objects: [GameObjectID : MapSceneMapObject],
-        items: [GameObjectID : MapSceneMapItem],
+        items: [GameObjectID : MapSceneDroppedItem],
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         var sprites: [SpriteObject] = []

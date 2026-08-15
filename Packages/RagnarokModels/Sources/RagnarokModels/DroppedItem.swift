@@ -1,5 +1,5 @@
 //
-//  MapItem.swift
+//  DroppedItem.swift
 //  RagnarokModels
 //
 //  Created by Leon Li on 2025/4/2.
@@ -8,7 +8,7 @@
 import RagnarokPackets
 
 /// Represents an item dropped on a map.
-public struct MapItem: Sendable {
+public struct DroppedItem: Sendable {
     public let objectID: UInt32
     public let itemID: UInt32
 

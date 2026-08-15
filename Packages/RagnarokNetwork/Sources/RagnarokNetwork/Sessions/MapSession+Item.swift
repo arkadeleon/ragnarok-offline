@@ -40,7 +40,7 @@ extension MapSession {
 
         // See `clif_getareachar_item`
         subscription.subscribe(to: PACKET_ZC_ITEM_ENTRY.self) { [unowned self] packet in
-            let item = MapItem(from: packet)
+            let item = DroppedItem(from: packet)
             let position = SIMD2(x: Int(packet.x), y: Int(packet.y))
 
             let event = MapSession.Event.itemSpawned(item: item, position: position)
@@ -49,7 +49,7 @@ extension MapSession {
 
         // See `clif_dropflooritem`
         subscription.subscribe(to: packet_dropflooritem.self) { [unowned self] packet in
-            let item = MapItem(from: packet)
+            let item = DroppedItem(from: packet)
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
 
             let event = MapSession.Event.itemSpawned(item: item, position: position)
