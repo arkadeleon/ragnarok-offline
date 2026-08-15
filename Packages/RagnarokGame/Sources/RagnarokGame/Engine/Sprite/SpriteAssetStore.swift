@@ -24,8 +24,8 @@ final class SpriteAssetStore {
     }
 
     func sync(
-        objects: [GameObjectID : MetalMapObject],
-        items: [GameObjectID : MetalMapItem],
+        objects: [GameObjectID : MapSceneMapObject],
+        items: [GameObjectID : MapSceneMapItem],
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         let currentObjectIDs = Set(objects.keys)
@@ -64,7 +64,7 @@ final class SpriteAssetStore {
         itemLoadTasks.removeAll()
     }
 
-    private func syncObject(_ object: MetalMapObject) {
+    private func syncObject(_ object: MapSceneMapObject) {
         let objectID = object.objectID
         let configuration = ComposedSprite.Configuration(object: object)
         if object.spriteConfiguration != configuration {
@@ -108,7 +108,7 @@ final class SpriteAssetStore {
         }
     }
 
-    private func syncItem(_ item: MetalMapItem) {
+    private func syncItem(_ item: MapSceneMapItem) {
         let objectID = item.objectID
         guard item.sprite == nil, itemLoadTasks[objectID] == nil else {
             return
@@ -132,8 +132,8 @@ final class SpriteAssetStore {
     }
 
     private func drawables(
-        objects: [GameObjectID : MetalMapObject],
-        items: [GameObjectID : MetalMapItem],
+        objects: [GameObjectID : MapSceneMapObject],
+        items: [GameObjectID : MapSceneMapItem],
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         var sprites: [SpriteObject] = []

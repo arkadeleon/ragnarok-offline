@@ -19,7 +19,7 @@ extension MapScene {
     // MARK: - Player
 
     public func onPlayerStatusChanged(property: StatusProperty, value: Int) {
-        let playerObject = objects[player.objectID] as? MetalPlayerObject
+        let playerObject = objects[player.objectID] as? MapScenePlayerObject
 
         switch property {
         case .hp:
@@ -42,7 +42,7 @@ extension MapScene {
     public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
         gauges[player.objectID]?.hp = current
 
-        let playerObject = objects[player.objectID] as? MetalPlayerObject
+        let playerObject = objects[player.objectID] as? MapScenePlayerObject
         playerObject?.hp = current
 
         let combatText = CombatText(
@@ -58,7 +58,7 @@ extension MapScene {
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
         gauges[player.objectID]?.sp = current
 
-        let playerObject = objects[player.objectID] as? MetalPlayerObject
+        let playerObject = objects[player.objectID] as? MapScenePlayerObject
         playerObject?.sp = current
 
         let combatText = CombatText(
@@ -112,7 +112,7 @@ extension MapScene {
     }
 
     public func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
-        let metalObject = MetalMapObject.make(
+        let mapObject = MapSceneMapObject.make(
             object: object,
             hp: object.hp,
             maxHp: object.maxHp,
@@ -121,7 +121,7 @@ extension MapScene {
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
-        objects[metalObject.objectID] = metalObject
+        objects[object.objectID] = mapObject
 
         addObject(
             objectID: object.objectID,
@@ -146,7 +146,7 @@ extension MapScene {
         let isNew = objects[object.objectID] == nil
 
         if isNew {
-            let metalObject = MetalMapObject.make(
+            let mapObject = MapSceneMapObject.make(
                 object: object,
                 hp: object.hp,
                 maxHp: object.maxHp,
@@ -155,7 +155,7 @@ extension MapScene {
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
             )
-            objects[metalObject.objectID] = metalObject
+            objects[object.objectID] = mapObject
 
             addObject(
                 objectID: object.objectID,
@@ -226,16 +226,16 @@ extension MapScene {
     public func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
         let isVisible = effectState != .cloak
 
-        if let metalObject = objects[objectID] {
-            metalObject.bodyState = bodyState
-            metalObject.healthState = healthState
-            metalObject.effectState = effectState
+        if let mapObject = objects[objectID] {
+            mapObject.bodyState = bodyState
+            mapObject.healthState = healthState
+            mapObject.effectState = effectState
         }
 
         if isVisible {
             if let object = objects[objectID], objectID == player.objectID {
-                let sp = (object as? MetalPlayerObject)?.sp
-                let maxSp = (object as? MetalPlayerObject)?.maxSp
+                let sp = (object as? MapScenePlayerObject)?.sp
+                let maxSp = (object as? MapScenePlayerObject)?.maxSp
                 let gauge = Gauge(
                     hp: object.hp,
                     maxHp: object.maxHp,
@@ -251,32 +251,32 @@ extension MapScene {
     }
 
     public func onMapObjectSpriteChanged(objectID: GameObjectID, look: Look, value: Int, value2: Int) {
-        guard let metalObject = objects[objectID] else {
+        guard let mapObject = objects[objectID] else {
             return
         }
 
         switch look {
         case .base:
-            metalObject.job = value
+            mapObject.job = value
         case .hair:
-            metalObject.hairStyle = value
+            mapObject.hairStyle = value
         case .weapon:
-            metalObject.weapon = value
-            metalObject.shield = value2
+            mapObject.weapon = value
+            mapObject.shield = value2
         case .head_bottom:
-            metalObject.headBottom = value
+            mapObject.headBottom = value
         case .head_top:
-            metalObject.headTop = value
+            mapObject.headTop = value
         case .head_mid:
-            metalObject.headMid = value
+            mapObject.headMid = value
         case .hair_color:
-            metalObject.hairColor = value
+            mapObject.hairColor = value
         case .clothes_color:
-            metalObject.clothesColor = value
+            mapObject.clothesColor = value
         case .shield:
-            metalObject.shield = value
+            mapObject.shield = value
         case .robe:
-            metalObject.garment = value
+            mapObject.garment = value
         default:
             return
         }
@@ -418,12 +418,12 @@ extension MapScene {
     // MARK: - Map Item
 
     public func onItemSpawned(item: MapItem, position: SIMD2<Int>) {
-        let metalItem = MetalMapItem(
+        let mapItem = MapSceneMapItem(
             item: item,
             gridPosition: position,
             worldPosition: mapGrid.worldPosition(for: position)
         )
-        items[item.objectID] = metalItem
+        items[item.objectID] = mapItem
     }
 
     public func onItemVanished(objectID: GameObjectID) {
@@ -500,7 +500,7 @@ extension MapScene {
         }
     }
 
-    private func afterAttackAction(for object: MetalMapObject?) -> SpriteActionType {
+    private func afterAttackAction(for object: MapSceneMapObject?) -> SpriteActionType {
         guard let object else {
             return .idle
         }
@@ -714,7 +714,7 @@ extension MapScene {
         ownerObjectID: GameObjectID?,
         delay: TimeInterval
     ) {
-        let effect = MetalMapEffect(
+        let effect = MapSceneEffect(
             reference: effectReference,
             creationTime: creationTime,
             worldPosition: mapGrid.worldPosition(for: gridPosition),
@@ -725,7 +725,7 @@ extension MapScene {
         addEffect(effect, ownerObjectID: ownerObjectID)
     }
 
-    private func addEffect(_ effect: MetalMapEffect, ownerObjectID: GameObjectID?) {
+    private func addEffect(_ effect: MapSceneEffect, ownerObjectID: GameObjectID?) {
         let effectID = effect.id
         if let ownerObjectID {
             objects[ownerObjectID]?.ownedEffects.append(effect)

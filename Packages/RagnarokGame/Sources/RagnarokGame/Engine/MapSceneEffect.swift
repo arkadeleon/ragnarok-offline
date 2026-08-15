@@ -1,5 +1,5 @@
 //
-//  MetalMapEffect.swift
+//  MapSceneEffect.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/31.
@@ -10,7 +10,7 @@ import RagnarokEffects
 import RagnarokRendering
 import simd
 
-final class MetalMapEffect: Identifiable {
+final class MapSceneEffect: Identifiable {
     let id: UUID
     let reference: EffectReference
     let creationTime: TimeInterval

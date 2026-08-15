@@ -42,8 +42,8 @@ public final class MapScene {
     let mapGrid: MapGrid
     let state: MapSceneState
 
-    var objects: [GameObjectID: MetalMapObject] = [:]
-    var items: [GameObjectID : MetalMapItem] = [:]
+    var objects: [GameObjectID: MapSceneMapObject] = [:]
+    var items: [GameObjectID : MapSceneMapItem] = [:]
     var gauges: [GameObjectID : Gauge] = [:]
 
     let pathFinder: PathFinder
@@ -52,7 +52,7 @@ public final class MapScene {
     var combatTextSpriteSet: CombatTextSpriteSet?
     var combatTextResources: [UUID : CombatTextRenderResource] = [:]
     var effectAssetStore: EffectAssetStore?
-    var effects: [UUID : MetalMapEffect] = [:]
+    var effects: [UUID : MapSceneEffect] = [:]
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     var skyboxResource: SkyboxRenderResource?
@@ -92,7 +92,7 @@ public final class MapScene {
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
-        let metalPlayer = MetalPlayerObject(
+        let metalPlayer = MapScenePlayerObject(
             object: player,
             hp: character.hp,
             maxHp: character.maxHp,
@@ -216,7 +216,7 @@ public final class MapScene {
         cameraState.elevation = .pi / 4
     }
 
-    private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MetalMapObject? {
+    private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneMapObject? {
         objects.values
             .filter {
                 $0.type == type
@@ -226,7 +226,7 @@ public final class MapScene {
             }
     }
 
-    private func nearestItem(fromPosition position: SIMD2<Int>) -> MetalMapItem? {
+    private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneMapItem? {
         items.values.min {
             distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
         }
@@ -331,7 +331,7 @@ public final class MapScene {
         }
     }
 
-    private func attackMonster(_ target: MetalMapObject) {
+    private func attackMonster(_ target: MapSceneMapObject) {
         attackMonster(targetID: target.objectID)
     }
 
@@ -356,7 +356,7 @@ public final class MapScene {
         }
     }
 
-    private func attackMonster(_ target: MetalMapObject, skill: SkillInfo) {
+    private func attackMonster(_ target: MapSceneMapObject, skill: SkillInfo) {
         let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
         movePlayerToward(targetPosition: targetPosition, within: skillRange) {
@@ -376,7 +376,7 @@ public final class MapScene {
         }
     }
 
-    private func pickUpItem(_ target: MetalMapItem) {
+    private func pickUpItem(_ target: MapSceneMapItem) {
         movePlayerToward(targetPosition: target.gridPosition, within: 1) {
             self.gameSession?.pickUpItem(objectID: target.objectID)
         }
@@ -513,7 +513,7 @@ extension MapScene {
         return scene
     }
 
-    private func worldPosition(for object: MetalMapObject) -> SIMD3<Float> {
+    private func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
         if let movement = object.movement,
            movement.isMoving,
            let movementWorldPosition = movement.worldPosition {

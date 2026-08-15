@@ -1,5 +1,5 @@
 //
-//  MetalMapItem.swift
+//  MapSceneMapItem.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -9,7 +9,7 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
-final class MetalMapItem: SpriteObject {
+final class MapSceneMapItem: SpriteObject {
     let itemID: Int
 
     var sprite: SpriteResource?

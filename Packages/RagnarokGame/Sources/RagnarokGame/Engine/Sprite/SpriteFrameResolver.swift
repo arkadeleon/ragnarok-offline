@@ -23,7 +23,7 @@ struct SpriteFrameResolver {
     }
 
     func resolve(
-        _ object: MetalMapObject,
+        _ object: MapSceneMapObject,
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         guard let composedSprite = object.composedSprite,
@@ -143,7 +143,7 @@ struct SpriteFrameResolver {
         }
     }
 
-    func resolve(_ item: MetalMapItem) -> [SpriteLayerDrawable] {
+    func resolve(_ item: MapSceneMapItem) -> [SpriteLayerDrawable] {
         guard let sprite = item.sprite,
               let partTextures = item.partTextures,
               let action = sprite.act.action(at: 0),
@@ -237,7 +237,7 @@ struct SpriteFrameResolver {
         }
     }
 
-    private func action(for object: MetalMapObject, camera: MapCameraState) -> SpriteAction {
+    private func action(for object: MapSceneMapObject, camera: MapCameraState) -> SpriteAction {
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
         var action = object.action

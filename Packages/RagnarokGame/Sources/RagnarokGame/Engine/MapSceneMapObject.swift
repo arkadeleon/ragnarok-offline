@@ -1,5 +1,5 @@
 //
-//  MetalMapObject.swift
+//  MapSceneMapObject.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -10,7 +10,7 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
-class MetalMapObject: SpriteObject {
+class MapSceneMapObject: SpriteObject {
     var type: MapObjectType
     var name: String
     var speed: Int
@@ -38,7 +38,7 @@ class MetalMapObject: SpriteObject {
     var composedSprite: ComposedSprite?
     var partTextures: SpritePartTextures?
 
-    var ownedEffects: [MetalMapEffect] = []
+    var ownedEffects: [MapSceneEffect] = []
 
     init(
         object: MapObject,
@@ -137,7 +137,7 @@ class MetalMapObject: SpriteObject {
     }
 }
 
-extension MetalMapObject {
+extension MapSceneMapObject {
     static func make(
         object: MapObject,
         hp: Int,
@@ -148,10 +148,10 @@ extension MetalMapObject {
         worldPosition: SIMD3<Float>,
         direction: SpriteDirection = .south,
         headDirection: SpriteHeadDirection = .lookForward
-    ) -> MetalMapObject {
+    ) -> MapSceneMapObject {
         switch object.type {
         case .pc:
-            MetalPlayerObject(
+            MapScenePlayerObject(
                 object: object,
                 hp: hp,
                 maxHp: maxHp,
@@ -163,7 +163,7 @@ extension MetalMapObject {
                 headDirection: headDirection
             )
         case .monster:
-            MetalMonsterObject(
+            MapSceneMonsterObject(
                 object: object,
                 hp: hp,
                 maxHp: maxHp,
@@ -173,7 +173,7 @@ extension MetalMapObject {
                 headDirection: headDirection
             )
         default:
-            MetalNPCObject(
+            MapSceneNPCObject(
                 object: object,
                 hp: hp,
                 maxHp: maxHp,
@@ -186,7 +186,7 @@ extension MetalMapObject {
     }
 }
 
-final class MetalPlayerObject: MetalMapObject {
+final class MapScenePlayerObject: MapSceneMapObject {
     var sp: Int
     var maxSp: Int
 
@@ -215,12 +215,12 @@ final class MetalPlayerObject: MetalMapObject {
     }
 }
 
-final class MetalMonsterObject: MetalMapObject {}
+final class MapSceneMonsterObject: MapSceneMapObject {}
 
-final class MetalNPCObject: MetalMapObject {}
+final class MapSceneNPCObject: MapSceneMapObject {}
 
 extension ComposedSprite.Configuration {
-    init(object: MetalMapObject) {
+    init(object: MapSceneMapObject) {
         self.init(jobID: object.job)
         self.gender = object.gender
         self.hairStyle = object.hairStyle
