@@ -36,7 +36,7 @@ struct visionOSApp: App {
         }
 
         ImmersiveSpace(id: GameSession.immersiveSpaceID) {
-            MetalMapCompositorContent(gameSession: appModel.gameSession)
+            GameImmersiveSpaceContent(gameSession: appModel.gameSession)
         }
         .immersionStyle(selection: $immersionStyle, in: .full)
         .defaultWindowPlacement { content, context in

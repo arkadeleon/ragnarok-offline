@@ -1,5 +1,5 @@
 //
-//  MetalMapLayerRenderer.swift
+//  MapLayerRenderer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/8/13.
@@ -22,7 +22,7 @@ import simd
 /// its own, so `waitUntilRunning()` is replaced by polling — otherwise a paused layer
 /// would stall the app's windows too.
 @MainActor
-final class MetalMapLayerRenderer {
+final class MapLayerRenderer {
     private let layerRenderer: LayerRenderer
     private let scene: MapScene
     private let renderer: MapSceneRenderer
@@ -31,7 +31,7 @@ final class MetalMapLayerRenderer {
     private let arSession = ARKitSession()
     private let worldTracking = WorldTrackingProvider()
 
-    private let spatialInput: MetalMapSpatialInput
+    private let spatialInput: MapSpatialInput
 
     init?(layerRenderer: LayerRenderer, scene: MapScene) {
         guard let commandQueue = scene.renderer.device.makeCommandQueue() else {
@@ -42,7 +42,7 @@ final class MetalMapLayerRenderer {
         self.scene = scene
         self.renderer = scene.renderer
         self.commandQueue = commandQueue
-        self.spatialInput = MetalMapSpatialInput(scene: scene)
+        self.spatialInput = MapSpatialInput(scene: scene)
     }
 
     func start() {
@@ -54,7 +54,7 @@ final class MetalMapLayerRenderer {
             do {
                 try await arSession.run([worldTracking])
             } catch {
-                logger.error("MetalMapLayerRenderer: world tracking failed to start: \(error)")
+                logger.error("MapLayerRenderer: world tracking failed to start: \(error)")
                 return
             }
 

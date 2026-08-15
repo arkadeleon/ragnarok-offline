@@ -1,5 +1,5 @@
 //
-//  MetalMovementPlanner.swift
+//  MapObjectMovementPlanner.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -8,7 +8,7 @@
 import RagnarokSprite
 import simd
 
-struct MetalMovementPlanner {
+struct MapObjectMovementPlanner {
     private let findPath: (SIMD2<Int>, SIMD2<Int>) -> [SIMD2<Int>]
 
     init(pathFinder: PathFinder) {
@@ -22,12 +22,12 @@ struct MetalMovementPlanner {
     }
 
     func replan(
-        existingMovement: MetalMovement?,
+        existingMovement: MapObjectMovement?,
         incomingStartPosition: SIMD2<Int>,
         incomingEndPosition: SIMD2<Int>,
         speed: Int,
         at now: ContinuousClock.Instant
-    ) -> MetalMovement {
+    ) -> MapObjectMovement {
         let incomingPath = movementPath(from: incomingStartPosition, to: incomingEndPosition)
         let fallbackAnimationElapsedOffset = if let existingMovement {
             existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
@@ -35,7 +35,7 @@ struct MetalMovementPlanner {
             Duration.zero
         }
         let fallbackDuration = movementDuration(path: incomingPath, speed: speed)
-        let fallbackMovement = MetalMovement(
+        let fallbackMovement = MapObjectMovement(
             startPosition: incomingStartPosition,
             endPosition: incomingEndPosition,
             path: incomingPath,
@@ -59,7 +59,7 @@ struct MetalMovementPlanner {
         let fullPath = prefixPath + Array(suffixPath.dropFirst())
         let duration = movementDuration(path: fullPath, speed: speed)
 
-        return MetalMovement(
+        return MapObjectMovement(
             startPosition: existingMovement.startPosition,
             endPosition: incomingEndPosition,
             path: fullPath,

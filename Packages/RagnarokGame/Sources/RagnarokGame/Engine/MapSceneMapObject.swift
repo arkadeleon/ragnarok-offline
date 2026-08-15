@@ -32,7 +32,7 @@ class MapSceneMapObject: SpriteObject {
     var effectState: StatusChangeOption
 
     var action: SpriteAction
-    var movement: MetalMovement?
+    var movement: MapObjectMovement?
 
     var spriteConfiguration: ComposedSprite.Configuration
     var composedSprite: ComposedSprite?
@@ -108,8 +108,8 @@ class MapSceneMapObject: SpriteObject {
         pathFinder: PathFinder,
         mapGrid: MapGrid,
         at time: ContinuousClock.Instant = .now
-    ) -> MetalMovement {
-        let planner = MetalMovementPlanner(pathFinder: pathFinder)
+    ) -> MapObjectMovement {
+        let planner = MapObjectMovementPlanner(pathFinder: pathFinder)
         var planned = planner.replan(
             existingMovement: movement,
             incomingStartPosition: startPosition,

@@ -1,5 +1,5 @@
 //
-//  MetalMapSpatialInput.swift
+//  MapSpatialInput.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/8/13.
@@ -21,7 +21,7 @@ import simd
 /// moves is a drag. It rotates the camera. The camera distance never changes, because the
 /// headset chooses the field of view.
 @MainActor
-final class MetalMapSpatialInput {
+final class MapSpatialInput {
     /// A pinch is a tap if the hand moves less than this many meters.
     private static let dragThreshold: Float = 0.02
 

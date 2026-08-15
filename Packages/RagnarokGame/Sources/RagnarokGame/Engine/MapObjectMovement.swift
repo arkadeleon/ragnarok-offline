@@ -1,5 +1,5 @@
 //
-//  MetalMovement.swift
+//  MapObjectMovement.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -8,7 +8,7 @@
 import RagnarokSprite
 import simd
 
-public struct MetalMovement: Sendable {
+public struct MapObjectMovement: Sendable {
     public let startPosition: SIMD2<Int>
     public let endPosition: SIMD2<Int>
     public let path: [SIMD2<Int>]

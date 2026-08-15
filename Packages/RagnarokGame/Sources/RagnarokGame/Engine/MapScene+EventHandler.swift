@@ -465,7 +465,7 @@ extension MapScene {
         object.worldPosition = mapGrid.worldPosition(for: gridPosition)
     }
 
-    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MetalMovement? {
+    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovement? {
         guard let object = objects[objectID] else {
             return nil
         }

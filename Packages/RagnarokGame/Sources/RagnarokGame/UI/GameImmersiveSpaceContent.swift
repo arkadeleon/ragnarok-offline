@@ -1,5 +1,5 @@
 //
-//  MetalMapCompositorContent.swift
+//  GameImmersiveSpaceContent.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/8/13.
@@ -11,16 +11,16 @@ import CompositorServices
 import RagnarokRendering
 import SwiftUI
 
-public struct MetalMapCompositorContent: ImmersiveSpaceContent {
-    private var gameSession: GameSession
+public struct GameImmersiveSpaceContent: ImmersiveSpaceContent {
+    public var gameSession: GameSession
 
     public var body: some ImmersiveSpaceContent {
-        CompositorLayer(configuration: MetalMapLayerConfiguration()) { layerRenderer in
+        CompositorLayer(configuration: MapLayerConfiguration()) { layerRenderer in
             guard let scene = gameSession.mapScene,
-                  let layerMapRenderer = MetalMapLayerRenderer(layerRenderer: layerRenderer, scene: scene) else {
+                  let mapLayerRenderer = MapLayerRenderer(layerRenderer: layerRenderer, scene: scene) else {
                 return
             }
-            layerMapRenderer.start()
+            mapLayerRenderer.start()
         }
     }
 
@@ -29,7 +29,7 @@ public struct MetalMapCompositorContent: ImmersiveSpaceContent {
     }
 }
 
-struct MetalMapLayerConfiguration: CompositorLayerConfiguration {
+struct MapLayerConfiguration: CompositorLayerConfiguration {
     func makeConfiguration(
         capabilities: LayerRenderer.Capabilities,
         configuration: inout LayerRenderer.Configuration
