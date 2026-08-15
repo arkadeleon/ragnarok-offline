@@ -53,11 +53,11 @@ final class MapSceneRenderer {
 
     private let skyboxRenderer: SkyboxRenderer
     private let worldRenderer: WorldRenderer
-    private let spriteRenderer: MetalSpriteRenderer
-    private let combatTextRenderer: MetalCombatTextRenderer
+    private let spriteRenderer: SpriteRenderer
+    private let combatTextRenderer: CombatTextRenderer
     private let gaugeRenderer: GaugeRenderer
     private let effectRenderer: EffectRenderer
-    private let tileSelectorRenderer: MetalTileSelectorRenderer
+    private let tileSelectorRenderer: TileSelectorRenderer
 
     init(configuration: RenderConfiguration) throws {
         guard let device = MTLCreateSystemDefaultDevice() else {
@@ -68,11 +68,11 @@ final class MapSceneRenderer {
 
         skyboxRenderer = try SkyboxRenderer(device: device, configuration: configuration)
         worldRenderer = try WorldRenderer(device: device, configuration: configuration)
-        spriteRenderer = try MetalSpriteRenderer(device: device, configuration: configuration)
-        combatTextRenderer = try MetalCombatTextRenderer(device: device, configuration: configuration)
+        spriteRenderer = try SpriteRenderer(device: device, configuration: configuration)
+        combatTextRenderer = try CombatTextRenderer(device: device, configuration: configuration)
         gaugeRenderer = try GaugeRenderer(device: device, configuration: configuration)
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
-        tileSelectorRenderer = try MetalTileSelectorRenderer(device: device, configuration: configuration)
+        tileSelectorRenderer = try TileSelectorRenderer(device: device, configuration: configuration)
     }
 
     /// Where a game world position sits in the space the map is drawn in.

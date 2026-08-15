@@ -1,5 +1,5 @@
 //
-//  MetalSpriteRenderer.swift
+//  SpriteRenderer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/3/23.
@@ -10,7 +10,7 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
-final class MetalSpriteRenderer {
+final class SpriteRenderer {
     let device: any MTLDevice
 
     private let renderPipelineState: any MTLRenderPipelineState

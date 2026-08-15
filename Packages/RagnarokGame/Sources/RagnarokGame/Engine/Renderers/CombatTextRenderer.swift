@@ -1,18 +1,16 @@
 //
-//  MetalTileSelectorRenderer.swift
+//  CombatTextRenderer.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2026/3/23.
+//  Created by Leon Li on 2026/7/15.
 //
 
-import Foundation
 import Metal
-import QuartzCore
 import RagnarokRendering
 import RagnarokShaders
 import simd
 
-final class MetalTileSelectorRenderer {
+final class CombatTextRenderer {
     let device: any MTLDevice
 
     private let renderPipelineState: any MTLRenderPipelineState
@@ -24,8 +22,8 @@ final class MetalTileSelectorRenderer {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "tileVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "tileFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "spriteVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "spriteFragmentShader")
         renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
@@ -36,38 +34,43 @@ final class MetalTileSelectorRenderer {
         renderPipelineDescriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
+        // Combat text is always visible.
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
-        depthStencilDescriptor.depthCompareFunction = configuration.depthCompareFunction
+        depthStencilDescriptor.depthCompareFunction = .always
         depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
     }
 
     func render(
-        resource: TileSelectorRenderResource,
-        atTime time: TimeInterval,
+        combatTexts: [MapSceneRenderer.Scene.CombatText],
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard resource.vertexCount > 0 else {
+        guard !combatTexts.isEmpty else {
             return
         }
-
-        guard time - resource.selectionShowTime < 0.5 else {
-            return
-        }
-
-        var uniforms = TileVertexUniforms(
-            modelMatrix: modelMatrix,
-            viewMatrix: camera.viewMatrix,
-            projectionMatrix: camera.projectionMatrix
-        )
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
-        renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<TileVertexUniforms>.stride, index: 1)
-        renderCommandEncoder.setFragmentTexture(resource.selectionTexture, index: 0)
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
+
+        for combatText in combatTexts {
+            var uniforms = SpriteVertexUniforms(
+                modelMatrix: modelMatrix,
+                viewMatrix: camera.viewMatrix,
+                projectionMatrix: camera.projectionMatrix,
+                spriteWorldPosition: SIMD4<Float>(combatText.worldPosition, 0),
+                cameraPosition: SIMD4<Float>(camera.position, 0),
+                viewport: .zero
+            )
+
+            combatText.vertices.withUnsafeBytes { bytes in
+                renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
+            }
+            renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
+            renderCommandEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 0)
+            renderCommandEncoder.setFragmentTexture(combatText.texture, index: 0)
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: combatText.vertices.count)
+        }
     }
 }

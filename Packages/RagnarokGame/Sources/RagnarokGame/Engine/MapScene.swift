@@ -37,7 +37,7 @@ public final class MapScene {
     weak var gameSession: GameSession?
 
     let renderer: MapSceneRenderer
-    let audioPlayer: MetalMapAudioPlayer
+    let audioPlayer: MapAudioPlayer
 
     let mapGrid: MapGrid
     let state: MapSceneState
@@ -85,7 +85,7 @@ public final class MapScene {
         self.resourceManager = resourceManager
         self.gameSession = gameSession
         self.renderer = try MapSceneRenderer(configuration: configuration)
-        self.audioPlayer = MetalMapAudioPlayer(resourceManager: resourceManager)
+        self.audioPlayer = MapAudioPlayer(resourceManager: resourceManager)
 
         self.mapGrid = MapGrid(gat: world.gat)
         self.state = MapSceneState()

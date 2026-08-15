@@ -1,5 +1,5 @@
 //
-//  MetalMapAudioPlayer.swift
+//  MapAudioPlayer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/4/22.
@@ -9,7 +9,7 @@ import AVFAudio
 import Foundation
 import RagnarokResources
 
-final class MetalMapAudioPlayer: GameAudioPlayer {
+final class MapAudioPlayer: GameAudioPlayer {
     private let resourceManager: ResourceManager
 
     private var bgmPlayer: AVAudioPlayer?
