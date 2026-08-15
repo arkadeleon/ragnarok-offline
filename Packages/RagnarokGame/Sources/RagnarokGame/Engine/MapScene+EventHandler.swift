@@ -288,7 +288,7 @@ extension MapScene {
         let sourceID = objectAction.sourceObjectID
         let sourceObject = objects[sourceID]
 
-        let presentationAction: SpriteActionType = switch objectAction.type {
+        let presentationActionType: SpriteActionType = switch objectAction.type {
         case .sit_down:
             .sit
         case .stand_up:
@@ -309,21 +309,21 @@ extension MapScene {
             .attack1
         }
 
-        let completion: MetalAnimationCompletion = switch presentationAction {
+        let completion: SpriteAction.Completion = switch presentationActionType {
         case .pickup:
-            .once(settledAction: .idle)
+            .once(nextActionType: .idle)
         case .sit:
             .indefinite
         case .freeze, .freeze2, .die:
-            .after(.milliseconds(objectAction.sourceSpeed), settledAction: presentationAction)
+            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: presentationActionType)
         case .attack1, .attack2, .attack3, .skill:
-            .after(.milliseconds(objectAction.sourceSpeed), settledAction: afterAttackAction(for: sourceObject))
+            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: afterAttackAction(for: sourceObject))
         case .idle, .walk, .readyToAttack, .hurt:
-            .after(.milliseconds(objectAction.sourceSpeed), settledAction: .idle)
+            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: .idle)
         }
 
         if let sourceObject {
-            switch presentationAction {
+            switch presentationActionType {
             case .attack1, .attack2, .attack3:
                 if let targetObject = objects[objectAction.targetObjectID] {
                     sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
@@ -332,7 +332,7 @@ extension MapScene {
                 break
             }
 
-            sourceObject.perform(presentationAction, completion: completion)
+            sourceObject.perform(presentationActionType, completion: completion)
         }
 
         addArrowProjectileEffect(for: objectAction)
@@ -370,9 +370,9 @@ extension MapScene {
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(objectSkill.attackDelay)
-            let settledAction: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
+            let nextActionType: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
-            sourceObject.perform(action, completion: .after(duration, settledAction: settledAction))
+            sourceObject.perform(action, completion: .after(duration, nextActionType: nextActionType))
         }
 
         if objectSkill.isHealingSkill, let targetObject = objects[objectSkill.targetObjectID] {
@@ -484,7 +484,7 @@ extension MapScene {
         let remainingDuration = movement.remainingDuration(at: now)
         object.perform(
             .walk,
-            completion: .after(remainingDuration, settledAction: .idle),
+            completion: .after(remainingDuration, nextActionType: .idle),
             at: now
         )
         object.setDirection(movement.finalDirection)

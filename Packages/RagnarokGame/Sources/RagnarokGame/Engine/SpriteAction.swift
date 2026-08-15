@@ -1,5 +1,5 @@
 //
-//  MetalAnimation.swift
+//  SpriteAction.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/30.
@@ -7,22 +7,28 @@
 
 import RagnarokSprite
 
-struct MetalAnimation: Sendable {
-    var action: SpriteActionType
+struct SpriteAction: Sendable {
+    enum Completion: Sendable, Equatable {
+        case indefinite
+        case after(Duration, nextActionType: SpriteActionType)
+        case once(nextActionType: SpriteActionType)
+    }
+
+    var actionType: SpriteActionType
     var direction: SpriteDirection
     var headDirection: SpriteHeadDirection
     var startTime: ContinuousClock.Instant
     var elapsedTime: Duration = .zero
-    var completion: MetalAnimationCompletion
+    var completion: SpriteAction.Completion
 
     init(
-        action: SpriteActionType,
+        actionType: SpriteActionType,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection,
         startTime: ContinuousClock.Instant,
-        completion: MetalAnimationCompletion
+        completion: SpriteAction.Completion
     ) {
-        self.action = action
+        self.actionType = actionType
         self.direction = direction
         self.headDirection = headDirection
         self.startTime = startTime
@@ -31,9 +37,9 @@ struct MetalAnimation: Sendable {
 
     mutating func update(atTime time: ContinuousClock.Instant) {
         let elapsed = startTime.duration(to: time)
-        if case .after(let duration, let settledAction) = completion, elapsed >= duration {
+        if case .after(let duration, let nextActionType) = completion, elapsed >= duration {
             let overflow = elapsed - duration
-            action = settledAction
+            actionType = nextActionType
             startTime = time - overflow
             elapsedTime = overflow
             completion = .indefinite

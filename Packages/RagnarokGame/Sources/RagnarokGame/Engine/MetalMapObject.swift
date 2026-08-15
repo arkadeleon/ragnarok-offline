@@ -31,7 +31,7 @@ class MetalMapObject: SpriteObject {
     var healthState: StatusChangeOption2
     var effectState: StatusChangeOption
 
-    var animation: MetalAnimation
+    var action: SpriteAction
     var movement: MetalMovement?
 
     var spriteConfiguration: ComposedSprite.Configuration
@@ -70,8 +70,8 @@ class MetalMapObject: SpriteObject {
         effectState = object.effectState
 
         spriteConfiguration = ComposedSprite.Configuration(mapObject: object)
-        animation = MetalAnimation(
-            action: .idle,
+        action = SpriteAction(
+            actionType: .idle,
             direction: direction,
             headDirection: headDirection,
             startTime: .now,
@@ -85,20 +85,20 @@ class MetalMapObject: SpriteObject {
         )
     }
 
-    func perform(_ action: SpriteActionType, completion: MetalAnimationCompletion, at time: ContinuousClock.Instant = .now) {
-        animation.action = action
-        animation.startTime = time
-        animation.elapsedTime = .zero
-        animation.completion = completion
+    func perform(_ actionType: SpriteActionType, completion: SpriteAction.Completion, at time: ContinuousClock.Instant = .now) {
+        action.actionType = actionType
+        action.startTime = time
+        action.elapsedTime = .zero
+        action.completion = completion
     }
 
     func turn(direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        animation.direction = direction
-        animation.headDirection = headDirection
+        action.direction = direction
+        action.headDirection = headDirection
     }
 
     func setDirection(_ direction: SpriteDirection) {
-        animation.direction = direction
+        action.direction = direction
     }
 
     func replanMovement(
@@ -128,7 +128,7 @@ class MetalMapObject: SpriteObject {
     }
 
     func update(at time: ContinuousClock.Instant) {
-        animation.update(atTime: time)
+        action.update(atTime: time)
         movement?.update(atTime: time)
     }
 

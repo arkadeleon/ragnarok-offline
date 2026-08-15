@@ -14,7 +14,6 @@ import RagnarokShaders
 import RagnarokSprite
 import simd
 
-@MainActor
 struct SpriteFrameResolver {
     private struct ResolvedLayer {
         let zIndex: Int
@@ -32,19 +31,19 @@ struct SpriteFrameResolver {
             return []
         }
 
-        var animation = animation(for: object, camera: camera)
-        if case .once(let settledAction) = animation.completion,
-           let duration = onceDuration(composedSprite: composedSprite, animation: animation),
-           animation.action != settledAction,
-           animation.elapsedTime >= duration {
-            animation.action = settledAction
-            animation.elapsedTime -= duration
-            animation.completion = .indefinite
+        var action = action(for: object, camera: camera)
+        if case .once(let nextActionType) = action.completion,
+           let duration = onceDuration(composedSprite: composedSprite, action: action),
+           action.actionType != nextActionType,
+           action.elapsedTime >= duration {
+            action.actionType = nextActionType
+            action.elapsedTime -= duration
+            action.completion = .indefinite
         }
 
-        let actionIndex = animation.action.calculateActionIndex(
+        let actionIndex = action.actionType.calculateActionIndex(
             forJobID: composedSprite.configuration.job.rawValue,
-            direction: animation.direction
+            direction: action.direction
         )
 
         var resolvedLayers: [ResolvedLayer] = []
@@ -52,23 +51,23 @@ struct SpriteFrameResolver {
 
         for (partIndex, part) in composedSprite.parts.enumerated() {
             let partActionIndex = (part.semantic == .shadow ? 0 : actionIndex)
-            guard let action = part.sprite.act.action(at: partActionIndex), !action.frames.isEmpty else {
+            guard let actAction = part.sprite.act.action(at: partActionIndex), !actAction.frames.isEmpty else {
                 continue
             }
 
             let frameRange = part.frameRange(
-                action: action,
-                actionType: animation.action,
-                headDirection: animation.headDirection
+                action: actAction,
+                actionType: action.actionType,
+                headDirection: action.headDirection
             )
             guard !frameRange.isEmpty else {
                 continue
             }
 
-            let frameInterval = TimeInterval(action.frameInterval)
-            let rawFrameIndex = Int(animation.elapsedTime.timeInterval / frameInterval)
+            let frameInterval = TimeInterval(actAction.frameInterval)
+            let rawFrameIndex = Int(action.elapsedTime.timeInterval / frameInterval)
             let localFrameIndex: Int
-            if actionRepeats(animation.action) {
+            if actionRepeats(action.actionType) {
                 localFrameIndex = rawFrameIndex % frameRange.count
             } else {
                 localFrameIndex = min(rawFrameIndex, frameRange.count - 1)
@@ -81,13 +80,13 @@ struct SpriteFrameResolver {
 
             let zIndex = composedSprite.zIndex(
                 for: part,
-                direction: animation.direction,
+                direction: action.direction,
                 actionIndex: actionIndex,
                 frameIndex: absoluteFrameIndex
             )
             let parentOffset = part.parentOffset(
-                actionType: animation.action,
-                action: action,
+                actionType: action.actionType,
+                action: actAction,
                 actionIndex: partActionIndex,
                 absoluteFrameIndex: absoluteFrameIndex,
                 frame: frame
@@ -238,50 +237,50 @@ struct SpriteFrameResolver {
         }
     }
 
-    private func animation(for object: MetalMapObject, camera: MapCameraState) -> MetalAnimation {
+    private func action(for object: MetalMapObject, camera: MapCameraState) -> SpriteAction {
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
 
-        var animation = object.animation
+        var action = object.action
         if let movement = object.movement, movement.isMoving {
-            animation.action = .walk
-            animation.direction = movement.direction ?? animation.direction
-            animation.elapsedTime = movement.animationElapsedTime
-            animation.completion = .indefinite
+            action.actionType = .walk
+            action.direction = movement.direction ?? action.direction
+            action.elapsedTime = movement.animationElapsedTime
+            action.completion = .indefinite
         }
-        animation.direction = animation.direction.adjustedForCameraAzimuth(camera.azimuth)
-        if !availableActionTypes.contains(animation.action) {
-            animation.action = .idle
+        action.direction = action.direction.adjustedForCameraAzimuth(camera.azimuth)
+        if !availableActionTypes.contains(action.actionType) {
+            action.actionType = .idle
         }
 
-        return animation
+        return action
     }
 
     private func onceDuration(
         composedSprite: ComposedSprite,
-        animation: MetalAnimation
+        action: SpriteAction
     ) -> Duration? {
-        let actionIndex = animation.action.calculateActionIndex(
+        let actionIndex = action.actionType.calculateActionIndex(
             forJobID: composedSprite.configuration.job.rawValue,
-            direction: animation.direction
+            direction: action.direction
         )
 
         var duration: Duration?
         for part in composedSprite.parts {
             let partActionIndex = (part.semantic == .shadow ? 0 : actionIndex)
-            guard let action = part.sprite.act.action(at: partActionIndex), !action.frames.isEmpty else {
+            guard let actAction = part.sprite.act.action(at: partActionIndex), !actAction.frames.isEmpty else {
                 continue
             }
 
             let frameRange = part.frameRange(
-                action: action,
-                actionType: animation.action,
-                headDirection: animation.headDirection
+                action: actAction,
+                actionType: action.actionType,
+                headDirection: action.headDirection
             )
             guard !frameRange.isEmpty else {
                 continue
             }
 
-            let partDuration: Duration = .seconds(Double(action.frameInterval) * Double(frameRange.count))
+            let partDuration: Duration = .seconds(Double(actAction.frameInterval) * Double(frameRange.count))
             duration = max(duration ?? .zero, partDuration)
         }
 
