@@ -28,21 +28,21 @@ extension AtCommandShortcutGroup {
         AtCommandShortcutGroup(
             title: "Basic",
             shortcuts: [
-                AtCommandShortcut(title: "Base +10", command: "@blvl 10"),
-                AtCommandShortcut(title: "Job +10", command: "@jlvl 10"),
-                AtCommandShortcut(title: "Zeny +10,000", command: "@zeny 10000"),
+                AtCommandShortcut(title: "Base +1", command: "@blvl 1"),
+                AtCommandShortcut(title: "Job +1", command: "@jlvl 1"),
+                AtCommandShortcut(title: "Zeny +10000", command: "@zeny 10000"),
                 AtCommandShortcut(title: "Autoloot", command: "@autoloot"),
             ]
         ),
         AtCommandShortcutGroup(
             title: "Stats",
             shortcuts: [
-                AtCommandShortcut(title: "STR +10", command: "@str 10"),
-                AtCommandShortcut(title: "AGI +10", command: "@agi 10"),
-                AtCommandShortcut(title: "VIT +10", command: "@vit 10"),
-                AtCommandShortcut(title: "INT +10", command: "@int 10"),
-                AtCommandShortcut(title: "DEX +10", command: "@dex 10"),
-                AtCommandShortcut(title: "LUK +10", command: "@luk 10"),
+                AtCommandShortcut(title: "STR +1", command: "@str 1"),
+                AtCommandShortcut(title: "AGI +1", command: "@agi 1"),
+                AtCommandShortcut(title: "VIT +1", command: "@vit 1"),
+                AtCommandShortcut(title: "INT +1", command: "@int 1"),
+                AtCommandShortcut(title: "DEX +1", command: "@dex 1"),
+                AtCommandShortcut(title: "LUK +1", command: "@luk 1"),
             ]
         ),
         AtCommandShortcutGroup(
