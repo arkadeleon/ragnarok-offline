@@ -870,6 +870,10 @@ final public class GameSession {
             context.messageCenter.addMessage(for: objectAction, account: account)
         case let packet as PACKET_ZC_HP_INFO:
             mapScene?.onMapObjectHealthUpdated(objectID: packet.GID, hp: Int(packet.HP), maxHp: Int(packet.maxHP))
+        case let packet as PACKET_ZC_NOTIFY_EFFECT:
+            if let effect = NotifyEffect(rawValue: Int(packet.effectId)) {
+                mapScene?.onSpecialEffectSpawned(effect: effect, objectID: packet.aid)
+            }
         case let packet as PACKET_ZC_SAY_DIALOG:
             if dialog?.npcID == packet.NpcID {
                 dialog?.update(from: packet)

@@ -10,6 +10,7 @@ import RagnarokConstants
 // Ported from roBrowserLegacy:
 // https://github.com/MrAntares/roBrowserLegacy/blob/master/src/DB/Skills/SkillEffect.js
 public enum SkillEffectTable {
+    // Keep entries sorted in ascending order by `SkillID.rawValue`.
     private static let table: [SkillID : SkillEffectDefinition] = [
         .mg_lightningbolt: .init(
             effects: [.id(.ef_lightbolt)],

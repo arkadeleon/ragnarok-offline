@@ -130,6 +130,12 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "DamageType",
         extensions: [.decodable]
     ),
+    .cEnum(
+        source: "map/clif.hpp",
+        type: "e_notify_effect",
+        prefix: "NOTIFYEFFECT_",
+        outputType: "NotifyEffect"
+    ),
     // MARK: - map/itemdb.hpp
     .optionSet(
         source: "map/itemdb.hpp",

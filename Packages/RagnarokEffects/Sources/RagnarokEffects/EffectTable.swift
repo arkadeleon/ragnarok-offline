@@ -12,6 +12,7 @@ import RagnarokCore
 // Ported from roBrowserLegacy:
 // https://github.com/MrAntares/roBrowserLegacy/blob/master/src/DB/Effects/EffectTable.js
 public enum EffectTable {
+    // Keep entries sorted in ascending order by `EffectID.rawValue`.
     private static let table: [EffectID : [EffectDefinition]] = [
         .ef_hit2: [
             .`2D`(
@@ -424,6 +425,12 @@ public enum EffectTable {
                 attachedToTarget: false
             ),
         ],
+        .ef_joblvup: [
+            .str(
+                fileName: "joblvup.str",
+                attachedToTarget: true
+            ),
+        ],
         .ef_heal: [
             .cylinder(
                 textureName: "ring_white",
@@ -612,6 +619,13 @@ public enum EffectTable {
                 positionStartYRandomRange: -3...3,
                 positionEndZRandomRange: 0...4,
                 size: [50, 50]
+            ),
+        ],
+        .ef_angel: [
+            .str(
+                fileName: "angel.str",
+                soundName: "levelup.wav",
+                attachedToTarget: true
             ),
         ],
     ]

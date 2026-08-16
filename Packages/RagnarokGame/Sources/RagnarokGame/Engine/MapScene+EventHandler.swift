@@ -430,6 +430,34 @@ extension MapScene {
         items.removeValue(forKey: objectID)
     }
 
+    // MARK: - Effect
+
+    public func onSpecialEffectSpawned(effect: NotifyEffect, objectID: GameObjectID) {
+        guard let object = objects[objectID] else {
+            return
+        }
+
+        let effectID: EffectID? = switch effect {
+        case .base_level_up:
+            .ef_angel
+        case .job_level_up:
+            .ef_joblvup
+        default:
+            nil
+        }
+
+        if let effectID {
+            addEffect(
+                for: .id(effectID),
+                creationTime: CACurrentMediaTime(),
+                gridPosition: object.gridPosition,
+                targetObjectID: objectID,
+                ownerObjectID: objectID,
+                delay: 0
+            )
+        }
+    }
+
     // MARK: - Other
 
     public func onGroundSkillCast(skillID: SkillID, position: SIMD2<Int>) {
