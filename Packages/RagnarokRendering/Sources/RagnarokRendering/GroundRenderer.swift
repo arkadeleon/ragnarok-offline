@@ -74,13 +74,19 @@ public final class GroundRenderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<GroundVertexUniforms>.stride, index: 1)
-
-        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<GroundFragmentUniforms>.stride, index: 0)
+        renderCommandEncoder.setVertexBytes(
+            &vertexUniforms,
+            length: MemoryLayout<GroundVertexUniforms>.stride,
+            index: 1
+        )
+        renderCommandEncoder.setFragmentBytes(
+            &fragmentUniforms,
+            length: MemoryLayout<GroundFragmentUniforms>.stride,
+            index: 0
+        )
         renderCommandEncoder.setFragmentTexture(resource.baseColorTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(resource.lightmapTexture, index: 1)
         renderCommandEncoder.setFragmentTexture(resource.tileColorTexture, index: 2)
-
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 }

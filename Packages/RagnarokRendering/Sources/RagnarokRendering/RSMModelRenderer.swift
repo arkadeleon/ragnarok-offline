@@ -79,9 +79,17 @@ public final class RSMModelRenderer {
                 fogColor: fog.color
             )
 
-            renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<ModelVertexUniforms>.stride, index: 1)
+            renderCommandEncoder.setVertexBytes(
+                &vertexUniforms,
+                length: MemoryLayout<ModelVertexUniforms>.stride,
+                index: 1
+            )
             renderCommandEncoder.setVertexBuffer(instanceBuffer, offset: 0, index: 2)
-            renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<ModelFragmentUniforms>.stride, index: 0)
+            renderCommandEncoder.setFragmentBytes(
+                &fragmentUniforms,
+                length: MemoryLayout<ModelFragmentUniforms>.stride,
+                index: 0
+            )
 
             let boneMatrices: [ModelBoneUniforms]
             if resource.hasAnyKeyframes {

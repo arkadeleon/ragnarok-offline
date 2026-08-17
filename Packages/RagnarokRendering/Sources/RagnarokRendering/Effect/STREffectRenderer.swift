@@ -48,7 +48,7 @@ public final class STREffectRenderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         for sprite in frame.sprites {
-            guard sprite.vertices.count > 0, let vertexBuffer = device.makeBuffer(bytes: sprite.vertices, length: sprite.vertices.count * MemoryLayout<STREffectVertex>.stride, options: []) else {
+            guard !sprite.vertices.isEmpty else {
                 continue
             }
 
@@ -65,9 +65,6 @@ public final class STREffectRenderer {
                 spritePosition: spritePosition,
                 spriteOffset: sprite.position - [320, 320]
             )
-            guard let vertexUniformsBuffer = device.makeBuffer(bytes: &vertexUniforms, length: MemoryLayout<STREffectVertexUniforms>.stride, options: []) else {
-                continue
-            }
 
             // D3DBLEND_ONE as the destination means the sprite adds to what is behind
             // it, and blending the fog color in would only brighten it.
@@ -80,20 +77,23 @@ public final class STREffectRenderer {
                 fogFar: fog.far,
                 fogColor: fog.color
             )
-            guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<STREffectFragmentUniforms>.stride, options: []) else {
-                continue
-            }
 
             renderCommandEncoder.setRenderPipelineState(renderPipelineState)
 
-            renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-            renderCommandEncoder.setVertexBuffer(vertexUniformsBuffer, offset: 0, index: 1)
-
-            renderCommandEncoder.setFragmentBuffer(fragmentUniformsBuffer, offset: 0, index: 0)
-
-            let texture = resource.textures[sprite.textureName]
-            renderCommandEncoder.setFragmentTexture(texture, index: 0)
-
+            sprite.vertices.withUnsafeBytes { bytes in
+                renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
+            }
+            renderCommandEncoder.setVertexBytes(
+                &vertexUniforms,
+                length: MemoryLayout<STREffectVertexUniforms>.stride,
+                index: 1
+            )
+            renderCommandEncoder.setFragmentBytes(
+                &fragmentUniforms,
+                length: MemoryLayout<STREffectFragmentUniforms>.stride,
+                index: 0
+            )
+            renderCommandEncoder.setFragmentTexture(resource.textures[sprite.textureName], index: 0)
             renderCommandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: sprite.vertices.count)
         }
     }

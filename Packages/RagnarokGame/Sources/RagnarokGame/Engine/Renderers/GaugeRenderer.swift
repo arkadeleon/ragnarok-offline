@@ -91,8 +91,16 @@ final class GaugeRenderer {
             gauge.vertices.withUnsafeBytes { bytes in
                 renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
             }
-            renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 1)
-            renderCommandEncoder.setFragmentBytes(&uniforms, length: MemoryLayout<SpriteVertexUniforms>.stride, index: 0)
+            renderCommandEncoder.setVertexBytes(
+                &uniforms,
+                length: MemoryLayout<SpriteVertexUniforms>.stride,
+                index: 1
+            )
+            renderCommandEncoder.setFragmentBytes(
+                &uniforms,
+                length: MemoryLayout<SpriteVertexUniforms>.stride,
+                index: 0
+            )
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: gauge.vertices.count)
         }
     }

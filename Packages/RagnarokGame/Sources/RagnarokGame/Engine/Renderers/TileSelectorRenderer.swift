@@ -58,7 +58,7 @@ final class TileSelectorRenderer {
             return
         }
 
-        var uniforms = TileVertexUniforms(
+        var vertexUniforms = TileVertexUniforms(
             modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix
@@ -73,9 +73,18 @@ final class TileSelectorRenderer {
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
+
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<TileVertexUniforms>.stride, index: 1)
-        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<TileFragmentUniforms>.stride, index: 0)
+        renderCommandEncoder.setVertexBytes(
+            &vertexUniforms,
+            length: MemoryLayout<TileVertexUniforms>.stride,
+            index: 1
+        )
+        renderCommandEncoder.setFragmentBytes(
+            &fragmentUniforms,
+            length: MemoryLayout<TileFragmentUniforms>.stride,
+            index: 0
+        )
         renderCommandEncoder.setFragmentTexture(resource.selectionTexture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }

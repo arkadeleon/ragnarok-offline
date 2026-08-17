@@ -80,11 +80,17 @@ public final class WaterRenderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
-        renderCommandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<WaterVertexUniforms>.stride, index: 1)
-
-        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<WaterFragmentUniforms>.stride, index: 0)
+        renderCommandEncoder.setVertexBytes(
+            &vertexUniforms,
+            length: MemoryLayout<WaterVertexUniforms>.stride,
+            index: 1
+        )
+        renderCommandEncoder.setFragmentBytes(
+            &fragmentUniforms,
+            length: MemoryLayout<WaterFragmentUniforms>.stride,
+            index: 0
+        )
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
-
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 }
