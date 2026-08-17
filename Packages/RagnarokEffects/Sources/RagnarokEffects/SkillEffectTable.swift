@@ -34,6 +34,9 @@ public enum SkillEffectTable {
         .al_blessing: .init(
             effects: [.id(.ef_blessing)]
         ),
+        .ac_concentration: .init(
+            effects: [.id(.ef_concentration)]
+        ),
         .ac_double: .init(
             beginCastEffects: [.id(.ef_bash)],
             beforeHitEffects: [.name("ef_arrow_projectile")],

@@ -425,6 +425,13 @@ public enum EffectTable {
                 attachedToTarget: false
             ),
         ],
+        .ef_concentration: [
+            .str(
+                fileName: "concentration.str",
+                soundName: "effect\\ac_concentration.wav",
+                attachedToTarget: true
+            ),
+        ],
         .ef_joblvup: [
             .str(
                 fileName: "joblvup.str",
