@@ -19,8 +19,8 @@ public enum EffectParameters {
         public var angleDelta: Float
 
         public init(
-            count: Int = 1,
-            interval: TimeInterval = 0,
+            count: Int,
+            interval: TimeInterval,
             delayOffsetDelta: TimeInterval = 0,
             delayLateDelta: TimeInterval = 0,
             alphaMaxDelta: Float = 0,

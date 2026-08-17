@@ -92,7 +92,7 @@ extension EffectDefinition {
         delayStart: TimeInterval = 0,
         delayOffset: TimeInterval = 0,
         delayLate: TimeInterval = 0,
-        duplicate: EffectParameters.Duplicate = EffectParameters.Duplicate(),
+        duplicate: EffectParameters.Duplicate = EffectParameters.Duplicate(count: 1, interval: 0),
         attachedToTarget: Bool,
         rendersBeforeEntities: Bool = false,
         zIndex: Float = 0,
