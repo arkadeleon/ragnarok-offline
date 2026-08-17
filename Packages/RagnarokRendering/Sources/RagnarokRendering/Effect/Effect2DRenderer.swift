@@ -41,6 +41,7 @@ public final class Effect2DRenderer {
         resource: Effect2DRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -58,6 +59,10 @@ public final class Effect2DRenderer {
             renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
         }
 
+        // Blending the fog color into an additive draw would only brighten it, so the
+        // additive effects go through untouched.
+        let isAdditive = resource.definition.blendMode == .one
+
         var vertexUniforms = Effect2DVertexUniforms(
             modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
@@ -68,7 +73,13 @@ public final class Effect2DRenderer {
             offset: sample.offset,
             zIndex: resource.definition.zIndex
         )
-        var fragmentUniforms = Effect2DFragmentUniforms(color: sample.color)
+        var fragmentUniforms = Effect2DFragmentUniforms(
+            color: sample.color,
+            fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
+            fogNear: fog.near,
+            fogFar: fog.far,
+            fogColor: fog.color
+        )
 
         renderCommandEncoder.setVertexBytes(
             &vertexUniforms,

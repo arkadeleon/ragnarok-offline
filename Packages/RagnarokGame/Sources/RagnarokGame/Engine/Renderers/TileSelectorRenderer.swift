@@ -45,6 +45,7 @@ final class TileSelectorRenderer {
     func render(
         resource: TileSelectorRenderResource,
         atTime time: TimeInterval,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -63,10 +64,18 @@ final class TileSelectorRenderer {
             projectionMatrix: camera.projectionMatrix
         )
 
+        var fragmentUniforms = TileFragmentUniforms(
+            fogUse: fog.isEnabled ? 1 : 0,
+            fogNear: fog.near,
+            fogFar: fog.far,
+            fogColor: fog.color
+        )
+
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
         renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBytes(&uniforms, length: MemoryLayout<TileVertexUniforms>.stride, index: 1)
+        renderCommandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<TileFragmentUniforms>.stride, index: 0)
         renderCommandEncoder.setFragmentTexture(resource.selectionTexture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }

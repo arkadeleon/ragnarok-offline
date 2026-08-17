@@ -29,6 +29,7 @@ public final class WorldRenderer {
     public func render(
         resource: WorldRenderResource,
         atTime time: TimeInterval,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -36,6 +37,7 @@ public final class WorldRenderer {
         renderGroundAndModels(
             resource: resource,
             atTime: time,
+            fog: fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -44,6 +46,7 @@ public final class WorldRenderer {
         renderWater(
             resource: resource,
             atTime: time,
+            fog: fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -53,6 +56,7 @@ public final class WorldRenderer {
     public func renderGroundAndModels(
         resource: WorldRenderResource,
         atTime time: TimeInterval,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -60,6 +64,7 @@ public final class WorldRenderer {
         groundRenderer.render(
             resource: resource.groundResource,
             atTime: time,
+            fog: fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -68,6 +73,7 @@ public final class WorldRenderer {
         modelRenderer.render(
             resources: resource.modelResources,
             atTime: time,
+            fog: fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -77,6 +83,7 @@ public final class WorldRenderer {
     public func renderWater(
         resource: WorldRenderResource,
         atTime time: TimeInterval,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -84,6 +91,7 @@ public final class WorldRenderer {
         waterRenderer.render(
             resource: resource.waterResource,
             atTime: time,
+            fog: fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -94,6 +102,7 @@ public final class WorldRenderer {
         resource: WorldRenderResource,
         atTime time: TimeInterval,
         beforeEntities: Bool? = nil,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -110,6 +119,7 @@ public final class WorldRenderer {
             effectRenderer.render(
                 resourceGroup: effectResource,
                 atTime: time,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder

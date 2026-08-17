@@ -31,6 +31,7 @@ public final class EffectRenderer {
         resourceGroup: EffectRenderResourceGroup,
         atTime time: TimeInterval,
         attachedWorldPosition: SIMD3<Float>? = nil,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -45,6 +46,7 @@ public final class EffectRenderer {
                     resource: resource,
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
+                    fog: fog,
                     modelMatrix: modelMatrix,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder
@@ -57,6 +59,7 @@ public final class EffectRenderer {
                     worldPosition: worldPosition,
                     sourceWorldPosition: resourceGroup.sourceWorldPosition,
                     targetWorldPosition: resourceGroup.worldPosition,
+                    fog: fog,
                     modelMatrix: modelMatrix,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder
@@ -67,6 +70,7 @@ public final class EffectRenderer {
                     resource: resource,
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
+                    fog: fog,
                     modelMatrix: modelMatrix,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder
@@ -77,6 +81,7 @@ public final class EffectRenderer {
                     resource: resource,
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
+                    fog: fog,
                     modelMatrix: modelMatrix,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder
@@ -87,6 +92,7 @@ public final class EffectRenderer {
                     resource: resource,
                     elapsedTime: elapsedTime,
                     spritePosition: worldPosition,
+                    fog: fog,
                     modelMatrix: modelMatrix,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder

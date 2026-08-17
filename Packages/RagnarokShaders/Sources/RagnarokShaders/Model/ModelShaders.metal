@@ -15,6 +15,7 @@ typedef struct {
     float2 textureCoordinate;
     float lightWeighting;
     float alpha;
+    float fogDepth;
 } RasterizerData;
 
 vertex RasterizerData
@@ -34,11 +35,14 @@ modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
     float3 lightDirection = normalize(uniforms.lightDirection);
     float dotProduct = dot(worldNormal, lightDirection);
 
+    float4 viewPosition = uniforms.viewMatrix * uniforms.modelMatrix * instance.modelMatrix * bone.boneMatrix * float4(in.position, 1.0);
+
     RasterizerData out;
-    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * instance.modelMatrix * bone.boneMatrix * float4(in.position, 1.0);
+    out.position = uniforms.projectionMatrix * viewPosition;
     out.textureCoordinate = in.textureCoordinate;
     out.lightWeighting = max(dotProduct, 0.5);
     out.alpha = in.alpha;
+    out.fogDepth = -viewPosition.z;
     return out;
 }
 
@@ -60,6 +64,11 @@ modelFragmentShader(RasterizerData in [[stage_in]],
 
     color.rgb *= clamp(lightColor.rgb, 0.0, 1.0);
     color.a *= in.alpha;
+
+    if (uniforms.fogUse) {
+        float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
+        color.rgb = mix(color.rgb, uniforms.fogColor, fogAmount);
+    }
 
     return color;
 }

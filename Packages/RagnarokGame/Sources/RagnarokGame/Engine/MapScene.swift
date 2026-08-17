@@ -55,6 +55,7 @@ public final class MapScene {
     var effects: [UUID : MapSceneEffect] = [:]
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
+    var fog: Fog = .disabled
     var skyboxResource: SkyboxRenderResource?
     var worldResource: WorldRenderResource?
     var tileSelectorResource: TileSelectorRenderResource?
@@ -143,6 +144,11 @@ public final class MapScene {
             mapWidth: mapGrid.width,
             mapHeight: mapGrid.height
         )
+
+        let fogParameterTable = await resourceManager.fogParameterTable()
+        if let parameter = fogParameterTable.fogParameter(forMapName: mapName) {
+            fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
+        }
 
         skyboxResource = SkyboxRenderResource(configuration: skyboxConfiguration)
         worldResource = WorldRenderResource(device: renderer.device, asset: worldAsset)
@@ -470,7 +476,7 @@ extension MapScene {
 
         updateCameraTarget()
 
-        var scene = MapSceneRenderer.Scene()
+        var scene = MapSceneRenderer.Scene(fog: fog)
 
         scene.skybox = skyboxResource
         scene.world = worldResource

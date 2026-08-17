@@ -21,3 +21,10 @@ typedef struct {
     float zIndex;
 } SPREffectVertexUniforms;
 
+typedef struct {
+    int fogUse;
+    float fogNear;
+    float fogFar;
+    vector_float3 fogColor;
+} SPREffectFragmentUniforms;
+

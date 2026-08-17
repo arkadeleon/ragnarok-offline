@@ -63,6 +63,7 @@ public class RSMFilePreviewRenderer: Renderer {
             modelRenderer.render(
                 resources: [modelResource],
                 atTime: frame.time,
+                fog: .disabled,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

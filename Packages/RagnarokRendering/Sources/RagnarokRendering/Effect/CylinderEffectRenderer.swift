@@ -35,6 +35,7 @@ public final class CylinderEffectRenderer {
         resource: CylinderEffectRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -50,6 +51,10 @@ public final class CylinderEffectRenderer {
             return
         }
 
+        // Blending the fog color into an additive draw would only brighten it, so the
+        // additive effects go through untouched.
+        let isAdditive = resource.definition.blendMode == .one
+
         var vertexUniforms = CylinderEffectVertexUniforms(
             modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
@@ -62,7 +67,13 @@ public final class CylinderEffectRenderer {
             height: sample.height,
             zIndex: resource.definition.zIndex
         )
-        var fragmentUniforms = CylinderEffectFragmentUniforms(color: sample.color)
+        var fragmentUniforms = CylinderEffectFragmentUniforms(
+            color: sample.color,
+            fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
+            fogNear: fog.near,
+            fogFar: fog.far,
+            fogColor: fog.color
+        )
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)

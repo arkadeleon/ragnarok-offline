@@ -16,6 +16,7 @@ typedef struct {
     float2 lightmapCoordinate;
     float2 tileColorCoordinate;
     float lightWeighting;
+    float fogDepth;
 } RasterizerData;
 
 vertex RasterizerData
@@ -31,12 +32,15 @@ groundVertexShader(const device GroundVertex *vertices [[buffer(0)]],
     float3 lightDirection = normalize(uniforms.lightDirection);
     float dotProduct = dot(worldNormal, lightDirection);
 
+    float4 viewPosition = uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
+
     RasterizerData out;
-    out.position = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
+    out.position = uniforms.projectionMatrix * viewPosition;
     out.textureCoordinate = in.textureCoordinate;
     out.lightmapCoordinate = in.lightmapCoordinate;
     out.tileColorCoordinate = in.tileColorCoordinate;
     out.lightWeighting = max(dotProduct, 0.1);
+    out.fogDepth = -viewPosition.z;
     return out;
 }
 
@@ -73,6 +77,11 @@ groundFragmentShader(RasterizerData in [[stage_in]],
     } else {
         float3 lightColor = clamp(ambient + diffuse, 0.0, 1.0);
         color = float4(texture.rgb * lightColor, texture.a);
+    }
+
+    if (uniforms.fogUse) {
+        float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
+        color.rgb = mix(color.rgb, uniforms.fogColor, fogAmount);
     }
 
     return color;

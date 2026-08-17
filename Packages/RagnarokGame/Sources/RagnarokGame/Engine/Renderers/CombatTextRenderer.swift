@@ -61,7 +61,11 @@ final class CombatTextRenderer {
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(combatText.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
-                viewport: .zero
+                viewport: .zero,
+                fogUse: 0,
+                fogNear: 0,
+                fogFar: 0,
+                fogColor: .zero
             )
 
             combatText.vertices.withUnsafeBytes { bytes in

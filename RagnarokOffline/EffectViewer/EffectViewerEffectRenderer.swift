@@ -78,6 +78,7 @@ class EffectViewerEffectRenderer: Renderer {
             effectRenderer.render(
                 resourceGroup: effectResourceGroup,
                 atTime: frame.time,
+                fog: .disabled,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

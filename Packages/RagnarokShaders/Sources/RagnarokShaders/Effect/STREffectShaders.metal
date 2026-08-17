@@ -13,6 +13,7 @@ using namespace metal;
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
+    float fogDepth;
 } RasterizerData;
 
 float4x4 project(float4x4 matrix, float3 position) {
@@ -48,12 +49,14 @@ strEffectVertexShader(const device STREffectVertex *vertices [[buffer(0)]],
     position.x += uniforms.spriteOffset.x * pixelRatio;
     position.y -= uniforms.spriteOffset.y * pixelRatio + 0.5;
 
-    position = uniforms.projectionMatrix * project(uniforms.viewMatrix * uniforms.modelMatrix, uniforms.spritePosition) * position;
+    float4 viewPosition = project(uniforms.viewMatrix * uniforms.modelMatrix, uniforms.spritePosition) * position;
+    position = uniforms.projectionMatrix * viewPosition;
     position.z -= 0.1;
 
     RasterizerData out;
     out.position = position;
     out.textureCoordinate = in.textureCoordinate;
+    out.fogDepth = -viewPosition.z;
     return out;
 }
 
@@ -69,6 +72,11 @@ strEffectFragmentShader(RasterizerData in [[stage_in]],
     }
 
     color = color * uniforms.spriteColor;
+
+    if (uniforms.fogUse) {
+        float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
+        color.rgb = mix(color.rgb, uniforms.fogColor, fogAmount);
+    }
 
     return color;
 }

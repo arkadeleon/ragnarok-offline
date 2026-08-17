@@ -17,3 +17,10 @@ typedef struct {
     matrix_float4x4 viewMatrix;
     matrix_float4x4 projectionMatrix;
 } TileVertexUniforms;
+
+typedef struct {
+    int fogUse;
+    float fogNear;
+    float fogFar;
+    vector_float3 fogColor;
+} TileFragmentUniforms;

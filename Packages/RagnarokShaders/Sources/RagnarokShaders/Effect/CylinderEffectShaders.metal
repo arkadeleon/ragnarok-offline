@@ -13,6 +13,7 @@ using namespace metal;
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
+    float fogDepth;
 } CylinderEffectRasterizerData;
 
 vertex CylinderEffectRasterizerData
@@ -36,12 +37,14 @@ cylinderEffectVertexShader(const device CylinderEffectVertex *vertices [[buffer(
     // worldPosition is (map x, map y, altitude); the model matrix maps it to render space.
     float3 p = uniforms.worldPosition;
     float3 worldPosition = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz + uniforms.positionOffset + localPosition;
-    float4 clipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPosition, 1.0);
+    float4 viewPosition = uniforms.viewMatrix * float4(worldPosition, 1.0);
+    float4 clipPosition = uniforms.projectionMatrix * viewPosition;
     clipPosition.z -= uniforms.zIndex * 0.001 * clipPosition.w;
 
     CylinderEffectRasterizerData out;
     out.position = clipPosition;
     out.textureCoordinate = in.textureCoordinate;
+    out.fogDepth = -viewPosition.z;
     return out;
 }
 
@@ -68,5 +71,12 @@ cylinderEffectFragmentShader(CylinderEffectRasterizerData in [[stage_in]],
         discard_fragment();
     }
 
-    return color * uniforms.color;
+    color = color * uniforms.color;
+
+    if (uniforms.fogUse) {
+        float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
+        color.rgb = mix(color.rgb, uniforms.fogColor, fogAmount);
+    }
+
+    return color;
 }

@@ -36,6 +36,7 @@ public final class STREffectRenderer {
         resource: STREffectRenderResource,
         elapsedTime: TimeInterval,
         spritePosition: SIMD3<Float>,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -68,8 +69,16 @@ public final class STREffectRenderer {
                 continue
             }
 
+            // D3DBLEND_ONE as the destination means the sprite adds to what is behind
+            // it, and blending the fog color in would only brighten it.
+            let isAdditive = sprite.destinationAlpha == 2
+
             var fragmentUniforms = STREffectFragmentUniforms(
-                spriteColor: sprite.color
+                spriteColor: sprite.color,
+                fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
+                fogNear: fog.near,
+                fogFar: fog.far,
+                fogColor: fog.color
             )
             guard let fragmentUniformsBuffer = device.makeBuffer(bytes: &fragmentUniforms, length: MemoryLayout<STREffectFragmentUniforms>.stride, options: []) else {
                 continue

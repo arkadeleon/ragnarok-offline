@@ -29,4 +29,9 @@ typedef struct {
     vector_float3 lightAmbient;
     vector_float3 lightDiffuse;
     float lightOpacity;
+
+    int fogUse;
+    float fogNear;
+    float fogFar;
+    vector_float3 fogColor;
 } GroundFragmentUniforms;

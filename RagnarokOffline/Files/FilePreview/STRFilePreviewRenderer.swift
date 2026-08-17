@@ -74,6 +74,7 @@ public class STRFilePreviewRenderer: Renderer {
                 resource: effectResource,
                 elapsedTime: frame.time - creationTime,
                 spritePosition: .zero,
+                fog: .disabled,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

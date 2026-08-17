@@ -81,7 +81,11 @@ final class GaugeRenderer {
                 projectionMatrix: camera.projectionMatrix,
                 spriteWorldPosition: SIMD4<Float>(gauge.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
-                viewport: .zero
+                viewport: .zero,
+                fogUse: 0,
+                fogNear: 0,
+                fogFar: 0,
+                fogColor: .zero
             )
 
             gauge.vertices.withUnsafeBytes { bytes in

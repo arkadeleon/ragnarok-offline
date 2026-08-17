@@ -43,6 +43,7 @@ final class SpriteRenderer {
     func render(
         drawables: [SpriteLayerDrawable],
         viewport: MTLViewport,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -70,7 +71,11 @@ final class SpriteRenderer {
                     Float(viewport.originY),
                     Float(viewport.width),
                     Float(viewport.height)
-                )
+                ),
+                fogUse: fog.isEnabled ? 1 : 0,
+                fogNear: fog.near,
+                fogFar: fog.far,
+                fogColor: fog.color
             )
 
             drawable.vertices.withUnsafeBytes { bytes in

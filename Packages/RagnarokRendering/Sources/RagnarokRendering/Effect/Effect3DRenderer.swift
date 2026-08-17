@@ -43,6 +43,7 @@ public final class Effect3DRenderer {
         worldPosition: SIMD3<Float>,
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -65,6 +66,10 @@ public final class Effect3DRenderer {
             renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
         }
 
+        // Blending the fog color into an additive draw would only brighten it, so the
+        // additive effects go through untouched.
+        let isAdditive = resource.definition.blendMode == .one
+
         for layer in sample.layers {
             guard resource.textures.indices.contains(layer.imageIndex),
                   let texture = resource.textures[layer.imageIndex] else {
@@ -81,7 +86,13 @@ public final class Effect3DRenderer {
                 offset: layer.offset,
                 zIndex: resource.definition.zIndex
             )
-            var fragmentUniforms = Effect3DFragmentUniforms(color: layer.color)
+            var fragmentUniforms = Effect3DFragmentUniforms(
+                color: layer.color,
+                fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
+                fogNear: fog.near,
+                fogFar: fog.far,
+                fogColor: fog.color
+            )
 
             renderCommandEncoder.setVertexBytes(
                 &vertexUniforms,

@@ -35,6 +35,7 @@ final class MapSceneRenderer {
             let texture: any MTLTexture
         }
 
+        var fog: Fog
         var skybox: SkyboxRenderResource?
         var world: WorldRenderResource?
         var tileSelector: TileSelectorRenderResource?
@@ -132,6 +133,7 @@ final class MapSceneRenderer {
             worldRenderer.renderGroundAndModels(
                 resource: world,
                 atTime: time,
+                fog: scene.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -141,6 +143,7 @@ final class MapSceneRenderer {
                 resource: world,
                 atTime: time,
                 beforeEntities: true,
+                fog: scene.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -151,6 +154,7 @@ final class MapSceneRenderer {
             scene.effects,
             beforeEntities: true,
             atTime: time,
+            fog: scene.fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -159,6 +163,7 @@ final class MapSceneRenderer {
         spriteRenderer.render(
             drawables: scene.spriteDrawables,
             viewport: viewport,
+            fog: scene.fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -170,6 +175,7 @@ final class MapSceneRenderer {
             worldRenderer.renderWater(
                 resource: world,
                 atTime: time,
+                fog: scene.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -179,6 +185,7 @@ final class MapSceneRenderer {
                 resource: world,
                 atTime: time,
                 beforeEntities: false,
+                fog: scene.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -189,6 +196,7 @@ final class MapSceneRenderer {
             scene.effects,
             beforeEntities: false,
             atTime: time,
+            fog: scene.fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -198,6 +206,7 @@ final class MapSceneRenderer {
             tileSelectorRenderer.render(
                 resource: tileSelector,
                 atTime: time,
+                fog: scene.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -224,6 +233,7 @@ final class MapSceneRenderer {
         _ effects: [MapSceneRenderer.Scene.Effect],
         beforeEntities: Bool,
         atTime time: TimeInterval,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -233,6 +243,7 @@ final class MapSceneRenderer {
                 resourceGroup: effect.resourceGroup,
                 atTime: time,
                 attachedWorldPosition: effect.attachedWorldPosition,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder

@@ -14,6 +14,7 @@ typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
     float4 color;
+    float fogDepth;
 } RasterizerData;
 
 vertex RasterizerData
@@ -36,12 +37,13 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
         + cameraRight * in.position.x * pixelRatio
         + cameraUp    * in.position.y * pixelRatio;
 
-    float4 clipPos = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPos, 1.0);
+    float4 viewPos = uniforms.viewMatrix * float4(worldPos, 1.0);
 
     RasterizerData out;
-    out.position = clipPos;
+    out.position = uniforms.projectionMatrix * viewPos;
     out.textureCoordinate = in.textureCoordinate;
     out.color = in.color;
+    out.fogDepth = -viewPos.z;
     return out;
 }
 
@@ -64,6 +66,11 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
     SpriteFragmentOut out;
     out.color = color * in.color;
     out.depth = in.position.z;
+
+    if (uniforms.fogUse) {
+        float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
+        out.color.rgb = mix(out.color.rgb, uniforms.fogColor, fogAmount);
+    }
 
     if (uniforms.cameraPosition.w != 0.0) {
         // Depth of the vertical plane through the anchor along this pixel's ray.

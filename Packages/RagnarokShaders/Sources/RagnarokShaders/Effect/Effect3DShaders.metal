@@ -13,6 +13,7 @@ using namespace metal;
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
+    float fogDepth;
 } Effect3DRasterizerData;
 
 vertex Effect3DRasterizerData
@@ -60,6 +61,7 @@ effect3DVertexShader(const device Effect3DVertex *vertices [[buffer(0)]],
     Effect3DRasterizerData out;
     out.position = clipPosition;
     out.textureCoordinate = in.textureCoordinate;
+    out.fogDepth = -(uniforms.viewMatrix * float4(worldPosition, 1.0)).z;
     return out;
 }
 
@@ -81,5 +83,12 @@ effect3DFragmentShader(Effect3DRasterizerData in [[stage_in]],
         discard_fragment();
     }
 
-    return color * uniforms.color;
+    color = color * uniforms.color;
+
+    if (uniforms.fogUse) {
+        float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
+        color.rgb = mix(color.rgb, uniforms.fogColor, fogAmount);
+    }
+
+    return color;
 }

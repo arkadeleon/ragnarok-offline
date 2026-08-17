@@ -28,4 +28,9 @@ typedef struct {
     float lightOpacity;
 
     float opacity;
+
+    int fogUse;
+    float fogNear;
+    float fogFar;
+    vector_float3 fogColor;
 } WaterFragmentUniforms;

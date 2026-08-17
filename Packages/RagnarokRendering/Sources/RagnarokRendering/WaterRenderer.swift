@@ -43,6 +43,7 @@ public final class WaterRenderer {
     public func render(
         resource: WaterRenderResource,
         atTime time: TimeInterval,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -66,7 +67,11 @@ public final class WaterRenderer {
             lightAmbient: resource.light.ambient,
             lightDiffuse: resource.light.diffuse,
             lightOpacity: resource.light.opacity,
-            opacity: resource.waterOpacity
+            opacity: resource.waterOpacity,
+            fogUse: fog.isEnabled ? 1 : 0,
+            fogNear: fog.near,
+            fogFar: fog.far,
+            fogColor: fog.color
         )
 
         let texture = resource.textures[Int(frame / resource.waterAnimationSpeed) % resource.textures.count]

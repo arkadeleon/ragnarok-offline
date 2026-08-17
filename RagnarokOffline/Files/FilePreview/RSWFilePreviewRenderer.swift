@@ -86,6 +86,7 @@ public class RSWFilePreviewRenderer: Renderer {
             worldRenderer.render(
                 resource: worldResource,
                 atTime: frame.time,
+                fog: .disabled,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -94,6 +95,7 @@ public class RSWFilePreviewRenderer: Renderer {
             worldRenderer.renderEffects(
                 resource: worldResource,
                 atTime: frame.time,
+                fog: .disabled,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

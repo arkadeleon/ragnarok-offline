@@ -25,4 +25,9 @@ typedef struct {
 
 typedef struct {
     vector_float4 color;
+
+    int fogUse;
+    float fogNear;
+    float fogFar;
+    vector_float3 fogColor;
 } Effect3DFragmentUniforms;

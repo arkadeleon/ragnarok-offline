@@ -70,6 +70,7 @@ class GNDFilePreviewRenderer: Renderer {
             groundRenderer.render(
                 resource: groundResource,
                 atTime: frame.time,
+                fog: .disabled,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

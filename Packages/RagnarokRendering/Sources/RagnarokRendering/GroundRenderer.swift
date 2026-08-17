@@ -43,6 +43,7 @@ public final class GroundRenderer {
     public func render(
         resource: GroundRenderResource,
         atTime time: TimeInterval,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -62,7 +63,11 @@ public final class GroundRenderer {
             lightMapUse: resource.lightmapTexture == nil ? 0 : 1,
             lightAmbient: resource.light.ambient,
             lightDiffuse: resource.light.diffuse,
-            lightOpacity: resource.light.opacity
+            lightOpacity: resource.light.opacity,
+            fogUse: fog.isEnabled ? 1 : 0,
+            fogNear: fog.near,
+            fogFar: fog.far,
+            fogColor: fog.color
         )
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)

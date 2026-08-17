@@ -13,6 +13,7 @@ using namespace metal;
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
+    float fogDepth;
 } SPREffectRasterizerData;
 
 vertex SPREffectRasterizerData
@@ -59,11 +60,13 @@ sprEffectVertexShader(const device SPREffectVertex *vertices [[buffer(0)]],
     SPREffectRasterizerData out;
     out.position = clipPosition;
     out.textureCoordinate = in.textureCoordinate;
+    out.fogDepth = -(uniforms.viewMatrix * float4(worldPosition, 1.0)).z;
     return out;
 }
 
 fragment float4
 sprEffectFragmentShader(SPREffectRasterizerData in [[stage_in]],
+                        constant SPREffectFragmentUniforms &uniforms [[buffer(0)]],
                         texture2d<float> colorTexture [[texture(0)]])
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
@@ -71,5 +74,11 @@ sprEffectFragmentShader(SPREffectRasterizerData in [[stage_in]],
     if (color.a < 0.01) {
         discard_fragment();
     }
+
+    if (uniforms.fogUse) {
+        float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
+        color.rgb = mix(color.rgb, uniforms.fogColor, fogAmount);
+    }
+
     return color;
 }

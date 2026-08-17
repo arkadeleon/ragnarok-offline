@@ -44,6 +44,7 @@ public final class SPREffectRenderer {
         resource: SPREffectRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
+        fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
@@ -62,6 +63,13 @@ public final class SPREffectRenderer {
             zIndex: 0
         )
 
+        var fragmentUniforms = SPREffectFragmentUniforms(
+            fogUse: fog.isEnabled ? 1 : 0,
+            fogNear: fog.near,
+            fogFar: fog.far,
+            fogColor: fog.color
+        )
+
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
@@ -72,6 +80,11 @@ public final class SPREffectRenderer {
             &vertexUniforms,
             length: MemoryLayout<SPREffectVertexUniforms>.stride,
             index: 1
+        )
+        renderCommandEncoder.setFragmentBytes(
+            &fragmentUniforms,
+            length: MemoryLayout<SPREffectFragmentUniforms>.stride,
+            index: 0
         )
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
