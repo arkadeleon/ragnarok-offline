@@ -460,7 +460,7 @@ extension MapScene {
 
     // MARK: - Other
 
-    public func onGroundSkillCast(skillID: SkillID, position: SIMD2<Int>) {
+    public func onGroundSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, position: SIMD2<Int>) {
         guard mapGrid.contains(position) else {
             return
         }
@@ -472,6 +472,7 @@ extension MapScene {
                 for: effectReference,
                 creationTime: currentTime,
                 gridPosition: position,
+                sourceWorldPosition: objects[sourceObjectID]?.worldPosition,
                 targetObjectID: nil,
                 ownerObjectID: nil,
                 delay: 0

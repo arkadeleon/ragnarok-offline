@@ -736,7 +736,7 @@ final public class GameSession {
         case let packet as PACKET_ZC_NOTIFY_GROUNDSKILL:
             if let skillID = SkillID(rawValue: Int(packet.SKID)) {
                 let position = SIMD2(Int(packet.xPos), Int(packet.yPos))
-                mapScene?.onGroundSkillCast(skillID: skillID, position: position)
+                mapScene?.onGroundSkillCast(skillID: skillID, sourceObjectID: packet.AID, position: position)
             }
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {

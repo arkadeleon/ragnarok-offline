@@ -655,6 +655,26 @@ public enum EffectTable {
                 rotatesWithCamera: true
             ),
         ],
+        "ef_arrow_shower_projectile": [
+            .`3D`(
+                spriteName: "npc\\skel_archer_arrow",
+                duration: 0.14,
+                duplicate: EffectParameters.Duplicate(count: 10),
+                attachedToTarget: false,
+                zIndex: 1,
+                alphaMax: 1,
+                fadesIn: true,
+                fadesOut: true,
+                offset: [0, 0, 1],
+                positionEndXRandomRange: -1.5...1.5,
+                positionEndYRandomRange: -1.5...1.5,
+                movesFromSource: true,
+                size: [100, 100],
+                angle: 180,
+                rotatesToTarget: true,
+                rotatesWithCamera: true
+            ),
+        ],
         "ef_firebolt": [
             .`3D`(
                 fileNames: [

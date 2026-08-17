@@ -42,6 +42,10 @@ public enum SkillEffectTable {
             beforeHitEffects: [.name("ef_arrow_projectile")],
             hitEffects: [.id(.ef_hit2)]
         ),
+        .ac_shower: .init(
+            effects: [.name("ef_arrow_shower_projectile")],
+            hitEffects: [.id(.ef_hit2)]
+        ),
     ]
 
     public static func beginCastEffects(for skillID: SkillID) -> [EffectReference] {
