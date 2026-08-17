@@ -36,7 +36,6 @@ final class MapSceneRenderer {
         }
 
         var fog: Fog
-        var skybox: SkyboxRenderResource?
         var world: WorldRenderResource?
         var tileSelector: TileSelectorRenderResource?
         var spriteDrawables: [SpriteLayerDrawable] = []
@@ -52,7 +51,6 @@ final class MapSceneRenderer {
     let device: any MTLDevice
     let configuration: RenderConfiguration
 
-    private let skyboxRenderer: SkyboxRenderer
     private let worldRenderer: WorldRenderer
     private let spriteRenderer: SpriteRenderer
     private let combatTextRenderer: CombatTextRenderer
@@ -67,7 +65,6 @@ final class MapSceneRenderer {
         self.device = device
         self.configuration = configuration
 
-        skyboxRenderer = try SkyboxRenderer(device: device, configuration: configuration)
         worldRenderer = try WorldRenderer(device: device, configuration: configuration)
         spriteRenderer = try SpriteRenderer(device: device, configuration: configuration)
         combatTextRenderer = try CombatTextRenderer(device: device, configuration: configuration)
@@ -120,14 +117,6 @@ final class MapSceneRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         let modelMatrix = Self.worldModelMatrix
-
-        if let skybox = scene.skybox {
-            skyboxRenderer.render(
-                resource: skybox,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        }
 
         if let world = scene.world {
             worldRenderer.renderGroundAndModels(

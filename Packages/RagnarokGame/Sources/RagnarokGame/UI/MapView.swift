@@ -52,11 +52,11 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 
         mtkView = MTKView(frame: view.bounds, device: renderer.device)
         mtkView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mtkView.isOpaque = false
+        mtkView.isOpaque = true
         mtkView.delegate = self
         mtkView.colorPixelFormat = renderer.configuration.colorPixelFormat
         mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
-        mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+        mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         view.addSubview(mtkView)
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
@@ -238,7 +238,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
         mtkView.delegate = self
         mtkView.colorPixelFormat = renderer.configuration.colorPixelFormat
         mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
-        mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+        mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         view.addSubview(mtkView)
 
         let panGestureRecognizer = NSPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))

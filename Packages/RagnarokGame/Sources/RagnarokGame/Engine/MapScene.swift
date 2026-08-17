@@ -56,7 +56,6 @@ public final class MapScene {
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     var fog: Fog = .disabled
-    var skyboxResource: SkyboxRenderResource?
     var worldResource: WorldRenderResource?
     var tileSelectorResource: TileSelectorRenderResource?
     var spriteDrawables: [SpriteLayerDrawable] = []
@@ -139,18 +138,12 @@ public final class MapScene {
             resourceManager: resourceManager,
             progress: progress
         )
-        let skyboxConfiguration = SkyboxConfiguration.generate(
-            light: world.rsw.light,
-            mapWidth: mapGrid.width,
-            mapHeight: mapGrid.height
-        )
 
         let fogParameterTable = await resourceManager.fogParameterTable()
         if let parameter = fogParameterTable.fogParameter(forMapName: mapName) {
             fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
         }
 
-        skyboxResource = SkyboxRenderResource(configuration: skyboxConfiguration)
         worldResource = WorldRenderResource(device: renderer.device, asset: worldAsset)
 
         do {
@@ -191,7 +184,6 @@ public final class MapScene {
         combatTextResources.removeAll()
         effects.removeAll()
 
-        skyboxResource = nil
         worldResource = nil
         tileSelectorResource = nil
         spriteDrawables.removeAll()
@@ -478,7 +470,6 @@ extension MapScene {
 
         var scene = MapSceneRenderer.Scene(fog: fog)
 
-        scene.skybox = skyboxResource
         scene.world = worldResource
         scene.tileSelector = tileSelectorResource
         scene.spriteDrawables = spriteDrawables
