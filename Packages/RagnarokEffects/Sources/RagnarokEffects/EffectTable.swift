@@ -14,6 +14,28 @@ import RagnarokCore
 public enum EffectTable {
     // Keep entries sorted in ascending order by `EffectID.rawValue`.
     private static let table: [EffectID : [EffectDefinition]] = [
+        .ef_hit1: [
+            .`3D`(
+                fileName: "effect\\pok3.tga",
+                duration: 0.3,
+                duplicate: .init(count: 4, interval: 0),
+                attachedToTarget: false,
+                zIndex: 1,
+                alphaMin: 0.3,
+                alphaMax: 0.8,
+                fadesIn: true,
+                fadesOut: true,
+                sparkles: true,
+                positionStart: [0, 0, 1],
+                positionEndXRandomRange: -2...2,
+                positionEndYRandomRange: -2...2,
+                positionEndZRandomRange: -2...2,
+                size: [10, 10],
+                sizeXRandomRange: -10...30,
+                sizeYRandomRange: -10...30,
+                smoothSize: true
+            ),
+        ],
         .ef_hit2: [
             .`2D`(
                 fileName: "effect\\lens1.tga",

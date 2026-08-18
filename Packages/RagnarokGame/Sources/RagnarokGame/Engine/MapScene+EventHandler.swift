@@ -330,6 +330,7 @@ extension MapScene {
 
         addCombatTextsAndPlayHitSound(for: objectAction, now: now)
 
+        addHitEffect(for: objectAction)
         addArrowProjectileEffect(for: objectAction)
     }
 
@@ -393,7 +394,7 @@ extension MapScene {
                 isPlayer: objects[objectSkill.targetObjectID]?.type == .pc
             )
 
-            let showsComboText = count > 1 && damage > 0 && showsComboText(forObjectID: objectSkill.targetObjectID)
+            let showsComboText = count > 1 && damage > 0 && isMonster(objectID: objectSkill.targetObjectID)
 
             for i in 0..<count {
                 let delay: Duration = .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
@@ -546,6 +547,15 @@ extension MapScene {
         let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
         return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
     }
+
+    private func isMonster(objectID: GameObjectID) -> Bool {
+        switch objects[objectID]?.type {
+        case .monster, .abr, .bionic:
+            true
+        default:
+            false
+        }
+    }
 }
 
 // MARK: - Combat Text
@@ -621,7 +631,7 @@ extension MapScene {
             }
 
             // Monsters taking more than one hit show a combo text.
-            if objectAction.damage > 0, showsComboText(forObjectID: objectAction.targetObjectID) {
+            if objectAction.damage > 0, isMonster(objectID: objectAction.targetObjectID) {
                 if objectAction.damage > 1 {
                     let comboText = CombatText(
                         creationTime: now,
@@ -687,20 +697,28 @@ extension MapScene {
             spriteSet: combatTextSpriteSet
         )
     }
-
-    private func showsComboText(forObjectID objectID: GameObjectID) -> Bool {
-        switch objects[objectID]?.type {
-        case .monster, .abr, .bionic:
-            true
-        default:
-            false
-        }
-    }
 }
 
 // MARK: - Effect
 
 extension MapScene {
+    private func addHitEffect(for objectAction: MapObjectAction) {
+        guard objectAction.damage > 0,
+              isMonster(objectID: objectAction.targetObjectID),
+              let targetObject = objects[objectAction.targetObjectID] else {
+            return
+        }
+
+        addEffect(
+            for: .id(.ef_hit1),
+            creationTime: CACurrentMediaTime(),
+            gridPosition: targetObject.gridPosition,
+            targetObjectID: targetObject.objectID,
+            ownerObjectID: nil,
+            delay: .milliseconds(objectAction.sourceSpeed)
+        )
+    }
+
     private func addArrowProjectileEffect(for objectAction: MapObjectAction) {
         let isAttackAction = switch objectAction.type {
         case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
