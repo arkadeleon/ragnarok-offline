@@ -14,10 +14,16 @@ struct CombatText: Identifiable, Sendable {
     }
 
     enum Kind: Sendable, Equatable {
-        case miss
-        case damage
         case hpRecovery
         case spRecovery
+        case miss
+        case damage
+        case combo
+        case finalCombo
+
+        var isCombo: Bool {
+            self == .combo || self == .finalCombo
+        }
     }
 
     let id: UUID
@@ -27,6 +33,10 @@ struct CombatText: Identifiable, Sendable {
     let kind: CombatText.Kind
     let delay: Duration
     let duration: Duration
+
+    var startTime: ContinuousClock.Instant {
+        creationTime + delay
+    }
 
     init(
         creationTime: ContinuousClock.Instant,
@@ -42,10 +52,12 @@ struct CombatText: Identifiable, Sendable {
         self.kind = kind ?? (amount == 0 ? .miss : .damage)
         self.delay = delay
         self.duration = switch self.kind {
+        case .hpRecovery, .spRecovery, .damage:
+            .milliseconds(1500)
         case .miss:
             .milliseconds(800)
-        case .damage, .hpRecovery, .spRecovery:
-            .milliseconds(1500)
+        case .combo, .finalCombo:
+            .milliseconds(3000)
         }
     }
 }

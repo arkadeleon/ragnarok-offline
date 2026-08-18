@@ -499,12 +499,35 @@ extension MapScene {
             )
         }
 
+        // A target shows one combo text at a time: the newest one that has started
+        // hides the ones before it.
+        let comboTexts = combatTextResources.values
+            .map(\.combatText)
+            .filter { $0.kind.isCombo && $0.startTime <= now }
+            .map { ($0.target.objectID, $0) }
+        let latestComboTexts = Dictionary(
+            comboTexts,
+            uniquingKeysWith: { $0.startTime > $1.startTime ? $0 : $1 }
+        )
+
         scene.combatTexts = combatTextResources.values
+            .filter {
+                let combatText = $0.combatText
+                if combatText.kind.isCombo, let latestComboText = latestComboTexts[combatText.target.objectID] {
+                    return combatText.id == latestComboText.id
+                } else {
+                    return true
+                }
+            }
             .sorted {
                 $0.combatText.creationTime < $1.combatText.creationTime
             }
-            .compactMap { resource in
-                resource.combatText(for: now, cameraAzimuth: cameraState.azimuth)
+            .compactMap {
+                $0.combatText(
+                    for: now,
+                    targetPosition: objects[$0.combatText.target.objectID]?.worldPosition,
+                    cameraAzimuth: cameraState.azimuth
+                )
             }
 
         return scene

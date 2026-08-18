@@ -28,10 +28,10 @@ final class CombatTextRenderResource {
         spriteSet: CombatTextSpriteSet
     ) {
         let image = switch combatText.kind {
+        case .hpRecovery, .spRecovery, .damage, .combo, .finalCombo:
+            spriteSet.digitImage(for: combatText.amount)
         case .miss:
             spriteSet.missImage
-        case .damage, .hpRecovery, .spRecovery:
-            spriteSet.digitImage(for: combatText.amount)
         }
         let texture = MetalTextureFactory.makeTexture(
             from: image,
@@ -60,28 +60,42 @@ final class CombatTextRenderResource {
             } else {
                 [1, 1, 1, 1]
             }
+        case .combo, .finalCombo:
+            [0.9, 0.9, 0.15, 1]
         }
     }
 
-    func combatText(for now: ContinuousClock.Instant, cameraAzimuth: Float) -> MapSceneRenderer.Scene.CombatText? {
+    func combatText(
+        for now: ContinuousClock.Instant,
+        targetPosition: SIMD3<Float>?,
+        cameraAzimuth: Float
+    ) -> MapSceneRenderer.Scene.CombatText? {
         guard let texture else {
             return nil
         }
 
-        let elapsed = now - combatText.creationTime
-        guard elapsed >= combatText.delay else {
-            return nil
-        }
-
-        let animationElapsed = elapsed - combatText.delay
-        let t = Float(animationElapsed.timeInterval / combatText.duration.timeInterval)
+        let elapsedTime = now - combatText.startTime
+        let t = Float(elapsedTime / combatText.duration)
         guard t >= 0, t < 1 else {
             return nil
         }
 
+        if combatText.kind == .combo, t > 0.15 {
+            return nil
+        }
+
+        let startPosition = targetPosition ?? self.startPosition
+
         let scale: Float
         let worldPosition: SIMD3<Float>
         switch combatText.kind {
+        case .hpRecovery, .spRecovery:
+            scale = max((1 - t * 2) * 3, 0.8)
+            worldPosition = [
+                startPosition.x,
+                startPosition.y,
+                startPosition.z + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
+            ]
         case .miss:
             scale = 0.5
             worldPosition = [
@@ -97,12 +111,12 @@ final class CombatTextRenderResource {
                 startPosition.y + drift.y,
                 startPosition.z + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
             ]
-        case .hpRecovery, .spRecovery:
-            scale = max((1 - t * 2) * 3, 0.8)
+        case .combo, .finalCombo:
+            scale = min(t, 0.05) * 70
             worldPosition = [
                 startPosition.x,
                 startPosition.y,
-                startPosition.z + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
+                startPosition.z + 7 + t,
             ]
         }
 
@@ -140,6 +154,6 @@ final class CombatTextRenderResource {
     }
 
     func isExpired(at now: ContinuousClock.Instant) -> Bool {
-        now - combatText.creationTime > combatText.delay + combatText.duration + .seconds(1)
+        now - combatText.startTime > combatText.duration + .seconds(1)
     }
 }

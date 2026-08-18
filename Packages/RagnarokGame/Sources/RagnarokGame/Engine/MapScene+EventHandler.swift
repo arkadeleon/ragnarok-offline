@@ -399,14 +399,29 @@ extension MapScene {
                 isPlayer: objects[objectSkill.targetObjectID]?.type == .pc
             )
 
+            let showsComboText = count > 1 && damage > 0 && showsComboText(forObjectID: objectSkill.targetObjectID)
+
             for i in 0..<count {
+                let delay: Duration = .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
+
                 let combatText = CombatText(
                     creationTime: now,
                     target: target,
                     amount: damage / count,
-                    delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
+                    delay: delay
                 )
                 addCombatText(combatText)
+
+                if showsComboText {
+                    let comboText = CombatText(
+                        creationTime: now,
+                        target: target,
+                        amount: damage * (i + 1) / count,
+                        kind: i + 1 == count ? .finalCombo : .combo,
+                        delay: delay
+                    )
+                    addCombatText(comboText)
+                }
             }
         }
 
@@ -603,6 +618,49 @@ extension MapScene {
                 )
                 addCombatText(combatText)
             }
+
+            // Monsters taking more than one hit show a combo text.
+            if objectAction.damage > 0, showsComboText(forObjectID: objectAction.targetObjectID) {
+                if objectAction.damage > 1 {
+                    let comboText = CombatText(
+                        creationTime: now,
+                        target: target,
+                        amount: objectAction.damage / 2,
+                        kind: .combo,
+                        delay: .milliseconds(objectAction.sourceSpeed)
+                    )
+                    addCombatText(comboText)
+                }
+
+                if objectAction.damage2 > 0 {
+                    let comboText = CombatText(
+                        creationTime: now,
+                        target: target,
+                        amount: objectAction.damage,
+                        kind: .combo,
+                        delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
+                    )
+                    addCombatText(comboText)
+
+                    let finalComboText = CombatText(
+                        creationTime: now,
+                        target: target,
+                        amount: objectAction.damage + objectAction.damage2,
+                        kind: .finalCombo,
+                        delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
+                    )
+                    addCombatText(finalComboText)
+                } else {
+                    let finalComboText = CombatText(
+                        creationTime: now,
+                        target: target,
+                        amount: objectAction.damage,
+                        kind: .finalCombo,
+                        delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
+                    )
+                    addCombatText(finalComboText)
+                }
+            }
         default:
             break
         }
@@ -627,6 +685,15 @@ extension MapScene {
             startPosition: startPosition,
             spriteSet: combatTextSpriteSet
         )
+    }
+
+    private func showsComboText(forObjectID objectID: GameObjectID) -> Bool {
+        switch objects[objectID]?.type {
+        case .monster, .abr, .bionic:
+            true
+        default:
+            false
+        }
     }
 }
 
