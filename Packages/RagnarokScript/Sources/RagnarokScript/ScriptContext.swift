@@ -18,8 +18,9 @@ final public class ScriptContext: Resource {
     }
 
     public func accessoryName(forAccessoryID accessoryID: Int) -> String? {
+        // The script answers with an empty string for an accessory it has no name for.
         let result = call("ReqAccName", with: [accessoryID], to: String.self)
-        return result
+        return result?.isEmpty == false ? result : nil
     }
 
     public func jobName(forJobID jobID: Int) -> String? {
@@ -28,8 +29,9 @@ final public class ScriptContext: Resource {
     }
 
     public func robeName(forRobeID robeID: Int, checkEnglish: Bool) -> String? {
+        // The script answers with an empty string for a robe it has no name for.
         let result = call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self)
-        return result
+        return result?.isEmpty == false ? result : nil
     }
 
     public func shadowFactor(forJobID jobID: Int) -> Double? {
@@ -43,8 +45,9 @@ final public class ScriptContext: Resource {
     }
 
     public func weaponName(forWeaponID weaponID: Int) -> String? {
+        // The script answers with an empty string for a weapon it has no name for.
         let result = call("ReqWeaponName", with: [weaponID], to: String.self)
-        return result
+        return result?.isEmpty == false ? result : nil
     }
 
     public func realWeaponID(forWeaponID weaponID: Int) -> Int? {
