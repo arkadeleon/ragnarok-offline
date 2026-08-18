@@ -30,9 +30,7 @@ public final class MapScene {
     public let mapName: String
 
     let world: WorldResource
-    let character: CharacterInfo
-    let player: MapObject
-    let playerPosition: SIMD2<Int>
+    let player: MapScenePlayerObject
     let resourceManager: ResourceManager
     weak var gameSession: GameSession?
 
@@ -70,8 +68,8 @@ public final class MapScene {
     init(
         mapName: String,
         world: WorldResource,
+        account: AccountInfo,
         character: CharacterInfo,
-        player: MapObject,
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
         gameSession: GameSession,
@@ -79,9 +77,6 @@ public final class MapScene {
     ) throws {
         self.mapName = mapName
         self.world = world
-        self.character = character
-        self.player = player
-        self.playerPosition = playerPosition
         self.resourceManager = resourceManager
         self.gameSession = gameSession
         self.renderer = try MapSceneRenderer(configuration: configuration)
@@ -92,22 +87,21 @@ public final class MapScene {
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
-        let metalPlayer = MapScenePlayerObject(
-            object: player,
-            hp: character.hp,
-            maxHp: character.maxHp,
-            sp: character.sp,
-            maxSp: character.maxSp,
+        self.player = MapScenePlayerObject(
+            account: account,
+            character: character,
             gridPosition: playerPosition,
-            worldPosition: mapGrid.worldPosition(for: playerPosition)
+            worldPosition: mapGrid.worldPosition(for: playerPosition),
+            direction: .south,
+            headDirection: .lookForward
         )
-        objects[metalPlayer.objectID] = metalPlayer
+        objects[player.objectID] = player
 
         gauges[player.objectID] = Gauge(
-            hp: character.hp,
-            maxHp: character.maxHp,
-            sp: character.sp,
-            maxSp: character.maxSp,
+            hp: player.hp,
+            maxHp: player.maxHp,
+            sp: player.sp,
+            maxSp: player.maxSp,
             objectType: player.type
         )
     }
@@ -117,10 +111,8 @@ public final class MapScene {
             try await prepareRenderResources(progress: progress)
             await audioPlayer.playBGM(forMapName: mapName)
         } catch {
-            logger.warning("Metal map scene failed to load world asset: \(error)")
+            logger.warning("Map scene failed to load world asset: \(error)")
         }
-
-        addObject(objectID: player.objectID, at: playerPosition, direction: .south, headDirection: .lookForward)
     }
 
     public func unload() {
@@ -151,7 +143,7 @@ public final class MapScene {
             let image = try await resourceManager.image(at: path)
             tileSelectorResource = TileSelectorRenderResource(device: renderer.device, image: image.cgImage)
         } catch {
-            logger.warning("Metal map scene failed to load grid.tga: \(error)")
+            logger.warning("Map scene failed to load grid.tga: \(error)")
         }
 
         spriteAssetStore = SpriteAssetStore(
@@ -163,7 +155,7 @@ public final class MapScene {
             combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
         } catch {
             combatTextSpriteSet = nil
-            logger.warning("Metal map scene failed to load combat text sprites: \(error)")
+            logger.warning("Map scene failed to load combat text sprites: \(error)")
         }
 
         effectAssetStore = EffectAssetStore(resourceManager: resourceManager)
@@ -236,10 +228,7 @@ public final class MapScene {
     }
 
     private func onMovementValueChanged(movementValue: CGPoint) {
-        guard let playerObject = objects[player.objectID] else {
-            return
-        }
-        let position = playerObject.nextPosition(at: .now) ?? playerObject.gridPosition
+        let position = player.nextPosition(at: .now) ?? player.gridPosition
 
         let joystickInput = SIMD2<Float>(
             Float(movementValue.x),
@@ -274,8 +263,7 @@ public final class MapScene {
     }
 
     func attackNearestMonster() {
-        if let playerPosition = objects[player.objectID]?.gridPosition,
-           let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
+        if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
             attackMonster(target)
         }
     }
@@ -294,22 +282,19 @@ public final class MapScene {
             return
         }
 
-        if let playerPosition = objects[player.objectID]?.gridPosition,
-           let target = nearestObject(ofType: .monster, fromPosition: playerPosition) {
+        if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
             attackMonster(target, skill: skill)
         }
     }
 
     func pickUpNearestItem() {
-        if let playerPosition = objects[player.objectID]?.gridPosition,
-           let target = nearestItem(fromPosition: playerPosition) {
+        if let target = nearestItem(fromPosition: player.gridPosition) {
             pickUpItem(target)
         }
     }
 
     func talkToNearestNPC() {
-        if let playerPosition = objects[player.objectID]?.gridPosition,
-           let target = nearestObject(ofType: .npc, fromPosition: playerPosition) {
+        if let target = nearestObject(ofType: .npc, fromPosition: player.gridPosition) {
             gameSession?.talkToNPC(npcID: target.objectID)
         }
     }
@@ -338,7 +323,7 @@ public final class MapScene {
             return
         }
 
-        let startPosition = objects[player.objectID]?.gridPosition ?? playerPosition
+        let startPosition = player.gridPosition
         let attackRange = gameSession?.context.playerStatus.attackRange ?? 1
         switch decideMovement(from: startPosition, toward: target.gridPosition, within: attackRange) {
         case .alreadyInRange:
@@ -392,7 +377,7 @@ public final class MapScene {
     }
 
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
-        let startPosition = objects[player.objectID]?.gridPosition ?? playerPosition
+        let startPosition = player.gridPosition
         switch decideMovement(from: startPosition, toward: targetPosition, within: range) {
         case .alreadyInRange:
             onArrival()
@@ -466,7 +451,7 @@ extension MapScene {
             camera: cameraState
         ) ?? []
 
-        updateCameraTarget()
+        cameraTargetPosition = player.worldPosition
 
         var scene = MapSceneRenderer.Scene(fog: fog)
 
@@ -540,14 +525,6 @@ extension MapScene {
             movementWorldPosition
         } else {
             mapGrid.worldPosition(for: object.gridPosition)
-        }
-    }
-
-    private func updateCameraTarget() {
-        if let playerObject = objects[player.objectID] {
-            cameraTargetPosition = playerObject.worldPosition
-        } else {
-            cameraTargetPosition = mapGrid.worldPosition(for: playerPosition)
         }
     }
 }

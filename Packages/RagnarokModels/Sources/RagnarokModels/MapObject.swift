@@ -52,32 +52,6 @@ public struct MapObject: Sendable {
     public let healthState: StatusChangeOption2
     public let effectState: StatusChangeOption
 
-    public init(account: AccountInfo, character: CharacterInfo) {
-        self.objectID = account.accountID
-        self.type = .pc
-        self.name = character.name
-        self.speed = character.speed
-
-        self.job = character.job
-        self.gender = Gender(rawValue: character.sex) ?? .female
-        self.hairStyle = character.head
-        self.hairColor = character.headPalette
-        self.clothesColor = character.bodyPalette
-        self.weapon = character.weapon
-        self.shield = character.shield
-        self.headTop = character.accessory2
-        self.headMid = character.accessory3
-        self.headBottom = character.accessory
-        self.garment = character.robePalette
-
-        self.hp = character.hp
-        self.maxHp = character.maxHp
-
-        self.bodyState = StatusChangeOption1(rawValue: character.bodyState) ?? .none
-        self.healthState = StatusChangeOption2(rawValue: character.healthState) ?? .none
-        self.effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
-    }
-
     public init(from packet: packet_spawn_unit) {
         self.objectID = packet.AID
         self.type = MapObjectType(rawValue: Int(packet.objecttype)) ?? .unknown

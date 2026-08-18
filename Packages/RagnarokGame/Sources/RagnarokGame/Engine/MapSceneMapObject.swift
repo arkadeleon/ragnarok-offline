@@ -41,13 +41,57 @@ class MapSceneMapObject: SpriteObject {
     var ownedEffects: [MapSceneEffect] = []
 
     init(
+        account: AccountInfo,
+        character: CharacterInfo,
+        gridPosition: SIMD2<Int>,
+        worldPosition: SIMD3<Float>,
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection
+    ) {
+        type = .pc
+        name = character.name
+        speed = character.speed
+        job = character.job
+        gender = Gender(rawValue: character.sex) ?? .female
+        hairStyle = character.head
+        hairColor = character.headPalette
+        clothesColor = character.bodyPalette
+        weapon = character.weapon
+        shield = character.shield
+        headTop = character.accessory2
+        headMid = character.accessory3
+        headBottom = character.accessory
+        garment = character.robePalette
+        hp = character.hp
+        maxHp = character.maxHp
+        bodyState = StatusChangeOption1(rawValue: character.bodyState) ?? .none
+        healthState = StatusChangeOption2(rawValue: character.healthState) ?? .none
+        effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
+
+        spriteConfiguration = ComposedSprite.Configuration(character: character)
+        action = SpriteAction(
+            actionType: .idle,
+            direction: direction,
+            headDirection: headDirection,
+            startTime: .now,
+            completion: .indefinite
+        )
+
+        super.init(
+            objectID: account.accountID,
+            gridPosition: gridPosition,
+            worldPosition: worldPosition
+        )
+    }
+
+    init(
         object: MapObject,
         hp: Int,
         maxHp: Int,
         gridPosition: SIMD2<Int>,
         worldPosition: SIMD3<Float>,
-        direction: SpriteDirection = .south,
-        headDirection: SpriteHeadDirection = .lookForward
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection
     ) {
         type = object.type
         name = object.name
@@ -146,8 +190,8 @@ extension MapSceneMapObject {
         maxSp: Int = 0,
         gridPosition: SIMD2<Int>,
         worldPosition: SIMD3<Float>,
-        direction: SpriteDirection = .south,
-        headDirection: SpriteHeadDirection = .lookForward
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection
     ) -> MapSceneMapObject {
         switch object.type {
         case .pc:
@@ -190,6 +234,26 @@ final class MapScenePlayerObject: MapSceneMapObject {
     var sp: Int
     var maxSp: Int
 
+    override init(
+        account: AccountInfo,
+        character: CharacterInfo,
+        gridPosition: SIMD2<Int>,
+        worldPosition: SIMD3<Float>,
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection
+    ) {
+        sp = character.sp
+        maxSp = character.maxSp
+        super.init(
+            account: account,
+            character: character,
+            gridPosition: gridPosition,
+            worldPosition: worldPosition,
+            direction: direction,
+            headDirection: headDirection
+        )
+    }
+
     init(
         object: MapObject,
         hp: Int,
@@ -198,8 +262,8 @@ final class MapScenePlayerObject: MapSceneMapObject {
         maxSp: Int,
         gridPosition: SIMD2<Int>,
         worldPosition: SIMD3<Float>,
-        direction: SpriteDirection = .south,
-        headDirection: SpriteHeadDirection = .lookForward
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection
     ) {
         self.sp = sp
         self.maxSp = maxSp

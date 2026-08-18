@@ -19,31 +19,27 @@ extension MapScene {
     // MARK: - Player
 
     public func onPlayerStatusChanged(property: StatusProperty, value: Int) {
-        let playerObject = objects[player.objectID] as? MapScenePlayerObject
-
         switch property {
         case .hp:
+            player.hp = value
             gauges[player.objectID]?.hp = value
-            playerObject?.hp = value
         case .maxhp:
+            player.maxHp = value
             gauges[player.objectID]?.maxHp = value
-            playerObject?.maxHp = value
         case .sp:
+            player.sp = value
             gauges[player.objectID]?.sp = value
-            playerObject?.sp = value
         case .maxsp:
+            player.maxSp = value
             gauges[player.objectID]?.maxSp = value
-            playerObject?.maxSp = value
         default:
             break
         }
     }
 
     public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
+        player.hp = current
         gauges[player.objectID]?.hp = current
-
-        let playerObject = objects[player.objectID] as? MapScenePlayerObject
-        playerObject?.hp = current
 
         let combatText = CombatText(
             creationTime: .now,
@@ -56,10 +52,8 @@ extension MapScene {
     }
 
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
+        player.sp = current
         gauges[player.objectID]?.sp = current
-
-        let playerObject = objects[player.objectID] as? MapScenePlayerObject
-        playerObject?.sp = current
 
         let combatText = CombatText(
             creationTime: .now,
@@ -233,15 +227,13 @@ extension MapScene {
         }
 
         if isVisible {
-            if let object = objects[objectID], objectID == player.objectID {
-                let sp = (object as? MapScenePlayerObject)?.sp
-                let maxSp = (object as? MapScenePlayerObject)?.maxSp
+            if objectID == player.objectID {
                 let gauge = Gauge(
-                    hp: object.hp,
-                    maxHp: object.maxHp,
-                    sp: sp,
-                    maxSp: maxSp,
-                    objectType: object.type
+                    hp: player.hp,
+                    maxHp: player.maxHp,
+                    sp: player.sp,
+                    maxSp: player.maxSp,
+                    objectType: player.type
                 )
                 gauges[objectID] = gauge
             }
