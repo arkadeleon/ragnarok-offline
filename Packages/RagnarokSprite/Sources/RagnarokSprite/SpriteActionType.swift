@@ -20,6 +20,15 @@ public enum SpriteActionType: String, CaseIterable, CustomStringConvertible, Sen
     case attack3
     case skill
 
+    public var isAttack: Bool {
+        switch self {
+        case .attack1, .attack2, .attack3:
+            true
+        default:
+            false
+        }
+    }
+
     public var description: String {
         switch self {
         case .idle:

@@ -34,6 +34,9 @@ class MapSceneMapObject: SpriteObject {
     var action: SpriteAction
     var movement: MapObjectMovement?
 
+    /// How long one attack takes.
+    var attackDelay: Duration = .milliseconds(300)
+
     var spriteConfiguration: ComposedSprite.Configuration?
     var composedSprite: ComposedSprite?
     var partTextures: SpritePartTextures?

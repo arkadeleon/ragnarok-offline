@@ -315,13 +315,11 @@ extension MapScene {
         }
 
         if let sourceObject {
-            switch presentationActionType {
-            case .attack1, .attack2, .attack3:
+            if presentationActionType.isAttack {
+                sourceObject.attackDelay = .milliseconds(objectAction.sourceSpeed)
                 if let targetObject = objects[objectAction.targetObjectID] {
                     sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
                 }
-            default:
-                break
             }
 
             sourceObject.perform(presentationActionType, completion: completion)
@@ -364,6 +362,7 @@ extension MapScene {
             let duration = Duration.milliseconds(objectSkill.attackDelay)
             let nextActionType: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
 
+            sourceObject.attackDelay = duration
             sourceObject.perform(action, completion: .after(duration, nextActionType: nextActionType))
         }
 

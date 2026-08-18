@@ -33,7 +33,7 @@ struct SpriteFrameResolver {
 
         var action = action(for: object, camera: camera)
         if case .once(let nextActionType) = action.completion,
-           let duration = onceDuration(composedSprite: composedSprite, action: action),
+           let duration = onceDuration(composedSprite: composedSprite, action: action, attackDelay: object.attackDelay),
            action.actionType != nextActionType,
            action.elapsedTime >= duration {
             action.actionType = nextActionType
@@ -64,8 +64,13 @@ struct SpriteFrameResolver {
                 continue
             }
 
-            let frameInterval = TimeInterval(actAction.frameInterval)
-            let rawFrameIndex = Int(action.elapsedTime.timeInterval / frameInterval)
+            let frameInterval = frameInterval(
+                action: actAction,
+                actionType: action.actionType,
+                frameCount: frameRange.count,
+                attackDelay: object.attackDelay
+            )
+            let rawFrameIndex = Int(action.elapsedTime / frameInterval)
             let localFrameIndex: Int
             if actionRepeats(action.actionType) {
                 localFrameIndex = rawFrameIndex % frameRange.count
@@ -257,7 +262,8 @@ struct SpriteFrameResolver {
 
     private func onceDuration(
         composedSprite: ComposedSprite,
-        action: SpriteAction
+        action: SpriteAction,
+        attackDelay: Duration
     ) -> Duration? {
         let actionIndex = action.actionType.calculateActionIndex(
             forJobID: composedSprite.configuration.job.rawValue,
@@ -280,10 +286,29 @@ struct SpriteFrameResolver {
                 continue
             }
 
-            let partDuration: Duration = .seconds(Double(actAction.frameInterval) * Double(frameRange.count))
+            let frameInterval = frameInterval(
+                action: actAction,
+                actionType: action.actionType,
+                frameCount: frameRange.count,
+                attackDelay: attackDelay
+            )
+            let partDuration = frameInterval * frameRange.count
             duration = max(duration ?? .zero, partDuration)
         }
 
         return duration
+    }
+
+    private func frameInterval(
+        action: ACT.Action,
+        actionType: SpriteActionType,
+        frameCount: Int,
+        attackDelay: Duration
+    ) -> Duration {
+        if actionType.isAttack {
+            attackDelay / frameCount
+        } else {
+            .seconds(Double(action.frameInterval))
+        }
     }
 }
