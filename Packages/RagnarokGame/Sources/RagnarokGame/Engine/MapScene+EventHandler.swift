@@ -320,14 +320,17 @@ extension MapScene {
                 if let targetObject = objects[objectAction.targetObjectID] {
                     sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
                 }
+                if SpriteJob(rawValue: sourceObject.job).isPlayer {
+                    audioPlayer.playSound(named: WeaponSoundTable.attackSoundNames(for: sourceObject.weaponType).randomElement())
+                }
             }
 
             sourceObject.perform(presentationActionType, completion: completion)
         }
 
+        addCombatTextsAndPlayHitSound(for: objectAction, now: now)
+
         addArrowProjectileEffect(for: objectAction)
-        addCombatTexts(for: objectAction, now: now)
-        playSound(for: objectAction)
     }
 
     public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID) {
@@ -548,11 +551,12 @@ extension MapScene {
 // MARK: - Combat Text
 
 extension MapScene {
-    private func addCombatTexts(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
+    private func addCombatTextsAndPlayHitSound(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
         let target = CombatText.Target(
             objectID: objectAction.targetObjectID,
             isPlayer: objects[objectAction.targetObjectID]?.type == .pc
         )
+        let hitSoundName = hitSoundName(for: objectAction)
 
         switch objectAction.type {
         case .normal, .endure, .critical:
@@ -563,6 +567,7 @@ extension MapScene {
                 delay: .milliseconds(objectAction.sourceSpeed)
             )
             addCombatText(combatText)
+            audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
 
             if objectAction.damage2 > 0 {
                 let combatText2 = CombatText(
@@ -572,6 +577,7 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
                 addCombatText(combatText2)
+                audioPlayer.playSound(named: hitSoundName, after: combatText2.delay)
             }
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
@@ -583,6 +589,7 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed)
                 )
                 addCombatText(combatText)
+                audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
             }
             if objectAction.damage2 > 0 {
                 let combatText = CombatText(
@@ -592,6 +599,7 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                 )
                 addCombatText(combatText)
+                audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
 
                 let combatText2 = CombatText(
                     creationTime: now,
@@ -600,6 +608,7 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
                 addCombatText(combatText2)
+                audioPlayer.playSound(named: hitSoundName, after: combatText2.delay)
             } else {
                 let combatText = CombatText(
                     creationTime: now,
@@ -608,6 +617,7 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                 )
                 addCombatText(combatText)
+                audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
             }
 
             // Monsters taking more than one hit show a combo text.
@@ -840,7 +850,7 @@ extension MapScene {
 
                 for asset in assetGroup.assets {
                     if let soundName = asset.soundName {
-                        audioPlayer.playSound(named: soundName, after: effect.delay)
+                        audioPlayer.playSound(named: soundName, after: .seconds(effect.delay))
                     }
                 }
 
@@ -862,48 +872,22 @@ extension MapScene {
 // MARK: - Sound
 
 extension MapScene {
-    private func playSound(for objectAction: MapObjectAction) {
-        let isAttackAction = switch objectAction.type {
-        case .normal, .endure, .critical, .multi_hit, .multi_hit_endure, .multi_hit_critical, .lucy_dodge:
-            true
-        default:
-            false
-        }
-
-        guard isAttackAction else {
-            return
+    private func hitSoundName(for objectAction: MapObjectAction) -> String? {
+        guard objectAction.damage > 0,
+              let targetObject = objects[objectAction.targetObjectID] else {
+            return nil
         }
 
         let sourceObject = objects[objectAction.sourceObjectID]
-        let targetObject = objects[objectAction.targetObjectID]
+        let targetJob = SpriteJob(rawValue: targetObject.job)
 
-        if let sourceObject, SpriteJob(rawValue: sourceObject.job).isPlayer {
-            let soundName = WeaponSoundTable.attackSoundNames(for: sourceObject.weaponType).randomElement()
-            if let soundName {
-                audioPlayer.playSound(named: soundName)
-            }
-        }
-
-        if let targetObject, objectAction.damage > 0 {
-            let targetJob = SpriteJob(rawValue: targetObject.job)
-
-            let hitSoundName: String?
-            if targetJob.isPlayer {
-                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
-            } else if let sourceObject, SpriteJob(rawValue: sourceObject.job).isPlayer {
-                let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: sourceObject.weaponType).randomElement()
-                hitSoundName = weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
-            } else {
-                hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
-            }
-
-            if let hitSoundName {
-                Task { @MainActor [weak self] in
-                    try? await Task.sleep(for: .milliseconds(objectAction.sourceSpeed))
-                    guard let self else { return }
-                    audioPlayer.playSound(named: hitSoundName)
-                }
-            }
+        if targetJob.isPlayer {
+            return JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
+        } else if let sourceObject, SpriteJob(rawValue: sourceObject.job).isPlayer {
+            let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: sourceObject.weaponType).randomElement()
+            return weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
+        } else {
+            return JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
         }
     }
 }

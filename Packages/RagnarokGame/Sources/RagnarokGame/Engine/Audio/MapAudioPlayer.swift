@@ -29,10 +29,14 @@ final class MapAudioPlayer: GameAudioPlayer {
         bgmPlayer?.play()
     }
 
-    func playSound(named soundName: String, after delay: TimeInterval = 0) {
+    func playSound(named soundName: String?, after delay: Duration = .zero) {
+        guard let soundName else {
+            return
+        }
+
         Task { [weak self] in
-            if delay > 0 {
-                try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+            if delay > .zero {
+                try await Task.sleep(for: delay)
             }
             guard let self else { return }
             guard let wavData = await soundEffectData(for: soundName) else { return }
