@@ -253,7 +253,7 @@ extension MapScene {
         case .hair:
             mapObject.hairStyle = value
         case .weapon:
-            mapObject.weapon = value
+            mapObject.weaponType = ItemWeaponTypeTable.weaponType(for: value) ?? .w_fist
             mapObject.shield = value2
         case .head_bottom:
             mapObject.headBottom = value
@@ -292,7 +292,7 @@ extension MapScene {
                 SpriteActionType.attackActionType(
                     forJobID: sourceObject.job,
                     gender: sourceObject.gender,
-                    weapon: sourceObject.weapon
+                    weaponType: sourceObject.weaponType
                 )
             } else {
                 .attack1
@@ -704,7 +704,7 @@ extension MapScene {
               let sourceObject = objects[objectAction.sourceObjectID],
               let targetObject = objects[objectAction.targetObjectID],
               SpriteJob(rawValue: sourceObject.job).isPlayer,
-              ItemWeaponTypeTable.weaponType(for: sourceObject.weapon) == .w_bow else {
+              sourceObject.weaponType == .w_bow else {
             return
         }
 
@@ -879,8 +879,7 @@ extension MapScene {
         let targetObject = objects[objectAction.targetObjectID]
 
         if let sourceObject, SpriteJob(rawValue: sourceObject.job).isPlayer {
-            let weaponType = WeaponType(rawValue: sourceObject.weapon) ?? .w_fist
-            let soundName = WeaponSoundTable.attackSoundNames(for: weaponType).randomElement()
+            let soundName = WeaponSoundTable.attackSoundNames(for: sourceObject.weaponType).randomElement()
             if let soundName {
                 audioPlayer.playSound(named: soundName)
             }
@@ -893,8 +892,7 @@ extension MapScene {
             if targetJob.isPlayer {
                 hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
             } else if let sourceObject, SpriteJob(rawValue: sourceObject.job).isPlayer {
-                let weaponType = WeaponType(rawValue: sourceObject.weapon) ?? .w_fist
-                let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: weaponType).randomElement()
+                let weaponHitSoundName = WeaponHitSoundTable.hitSoundNames(for: sourceObject.weaponType).randomElement()
                 hitSoundName = weaponHitSoundName ?? JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()
             } else {
                 hitSoundName = JobHitSoundTable.hitSoundNames(forJob: targetObject.job).randomElement()

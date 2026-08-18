@@ -19,7 +19,7 @@ class MapSceneMapObject: SpriteObject {
     var hairStyle: Int
     var hairColor: Int
     var clothesColor: Int
-    var weapon: Int
+    var weaponType: WeaponType
     var shield: Int
     var headTop: Int
     var headMid: Int
@@ -34,7 +34,7 @@ class MapSceneMapObject: SpriteObject {
     var action: SpriteAction
     var movement: MapObjectMovement?
 
-    var spriteConfiguration: ComposedSprite.Configuration
+    var spriteConfiguration: ComposedSprite.Configuration?
     var composedSprite: ComposedSprite?
     var partTextures: SpritePartTextures?
 
@@ -56,7 +56,7 @@ class MapSceneMapObject: SpriteObject {
         hairStyle = character.head
         hairColor = character.headPalette
         clothesColor = character.bodyPalette
-        weapon = character.weapon
+        weaponType = WeaponType(rawValue: character.weapon) ?? .w_fist
         shield = character.shield
         headTop = character.accessory2
         headMid = character.accessory3
@@ -68,7 +68,6 @@ class MapSceneMapObject: SpriteObject {
         healthState = StatusChangeOption2(rawValue: character.healthState) ?? .none
         effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
 
-        spriteConfiguration = ComposedSprite.Configuration(character: character)
         action = SpriteAction(
             actionType: .idle,
             direction: direction,
@@ -101,7 +100,7 @@ class MapSceneMapObject: SpriteObject {
         hairStyle = object.hairStyle
         hairColor = object.hairColor
         clothesColor = object.clothesColor
-        weapon = object.weapon
+        weaponType = ItemWeaponTypeTable.weaponType(for: object.weapon) ?? .w_fist
         shield = object.shield
         headTop = object.headTop
         headMid = object.headMid
@@ -113,7 +112,6 @@ class MapSceneMapObject: SpriteObject {
         healthState = object.healthState
         effectState = object.effectState
 
-        spriteConfiguration = ComposedSprite.Configuration(mapObject: object)
         action = SpriteAction(
             actionType: .idle,
             direction: direction,
@@ -290,7 +288,7 @@ extension ComposedSprite.Configuration {
         self.hairStyle = object.hairStyle
         self.hairColor = object.hairColor
         self.clothesColor = object.clothesColor
-        self.weapon = object.weapon
+        self.weapon = object.weaponType.rawValue
         self.shield = object.shield
         self.headgears = [object.headTop, object.headMid, object.headBottom]
         self.garment = object.garment

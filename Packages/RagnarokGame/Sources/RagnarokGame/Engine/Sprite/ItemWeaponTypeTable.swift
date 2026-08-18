@@ -1,6 +1,6 @@
 //
 //  ItemWeaponTypeTable.swift
-//  RagnarokSprite
+//  RagnarokGame
 //
 //  Created by Leon Li on 2026/8/8.
 //
@@ -8,7 +8,7 @@
 import RagnarokConstants
 
 // Generated from rAthena's item_db_equip.yml (pre-re + re, merged).
-public enum ItemWeaponTypeTable {
+enum ItemWeaponTypeTable {
     private static let table: [Int : WeaponType] = [
         1100: .w_1hsword,
         1101: .w_1hsword,
@@ -2818,7 +2818,7 @@ public enum ItemWeaponTypeTable {
         840039: .w_grenade,
     ]
 
-    public static func weaponType(for itemID: Int) -> WeaponType? {
+    static func weaponType(for itemID: Int) -> WeaponType? {
         table[itemID]
     }
 }

@@ -1,5 +1,5 @@
 //
-//  SpriteConfiguration+MapObject.swift
+//  SpriteConfiguration+CharacterInfo.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/14.
@@ -20,20 +20,6 @@ extension ComposedSprite.Configuration {
         self.shield = character.shield
         self.headgears = [character.accessory2, character.accessory3, character.accessory]
         self.garment = character.robePalette
-
-        self.updateHairStyle()
-    }
-
-    init(mapObject: MapObject) {
-        self.init(jobID: mapObject.job)
-        self.gender = mapObject.gender
-        self.hairStyle = mapObject.hairStyle
-        self.hairColor = mapObject.hairColor
-        self.clothesColor = mapObject.clothesColor
-        self.weapon = mapObject.weapon
-        self.shield = mapObject.shield
-        self.headgears = [mapObject.headTop, mapObject.headMid, mapObject.headBottom]
-        self.garment = mapObject.garment
 
         self.updateHairStyle()
     }
