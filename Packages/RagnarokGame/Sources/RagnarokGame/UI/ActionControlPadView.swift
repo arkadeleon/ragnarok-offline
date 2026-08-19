@@ -14,7 +14,6 @@ import SwiftUI
 struct ActionControlPadView: View {
     var onAttack: () -> Void
     var onPickup: () -> Void
-    var onTalk: () -> Void
     var onSkill: (SkillInfo) -> Void
 
     @Environment(GameContext.self) private var gameContext
@@ -50,14 +49,7 @@ struct ActionControlPadView: View {
                     .font(.subheadline.bold())
                     .foregroundStyle(.white)
             }
-            .offset(x: -65 * sin(radians(-110)), y: -65 * cos(radians(-110)))
-
-            RoundActionButton(color: .blue, diameter: 35, action: onTalk) {
-                Text("T")
-                    .font(.subheadline.bold())
-                    .foregroundStyle(.white)
-            }
-            .offset(x: -65 * sin(radians(-160)), y: -65 * cos(radians(-160)))
+            .offset(x: -65 * sin(radians(-135)), y: -65 * cos(radians(-135)))
         }
         .frame(width: 180, height: 180)
         .offset(x: 10, y: 10)
@@ -144,7 +136,7 @@ struct RoundActionButton<Content: View>: View {
     ZStack(alignment: .bottomTrailing) {
         Color.black.opacity(0.2)
 
-        ActionControlPadView(onAttack: {}, onPickup: {}, onTalk: {}, onSkill: { _ in })
+        ActionControlPadView(onAttack: {}, onPickup: {}, onSkill: { _ in })
             .padding(.bottom, 16)
             .padding(.trailing, 16)
     }

@@ -293,12 +293,6 @@ public final class MapScene {
         }
     }
 
-    func talkToNearestNPC() {
-        if let target = nearestObject(ofType: .npc, fromPosition: player.gridPosition) {
-            gameSession?.talkToNPC(npcID: target.objectID)
-        }
-    }
-
     private func handleMapObjectSelection(objectID: GameObjectID) {
         guard let target = objects[objectID] else {
             return

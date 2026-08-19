@@ -60,9 +60,6 @@ struct MapSceneView: View {
                 onPickup: {
                     scene.pickUpNearestItem()
                 },
-                onTalk: {
-                    scene.talkToNearestNPC()
-                },
                 onSkill: { skill in
                     scene.useSkillOnNearestMonster(skill)
                 }
