@@ -11,6 +11,11 @@ import RagnarokModels
 import RagnarokResources
 import SwiftUI
 
+private let ringInnerRadius: CGFloat = 40
+private let ringOuterRadius: CGFloat = 88
+private let sectorSweepAngle: Angle = .degrees(360 / 9)
+private let sectorGap: CGFloat = 4
+
 struct ActionControlPadView: View {
     var onAttack: () -> Void
     var onPickup: () -> Void
@@ -19,44 +24,61 @@ struct ActionControlPadView: View {
     @Environment(GameContext.self) private var gameContext
 
     private var shortcutSkills: [SkillInfo] {
-        Array(gameContext.skillList.activeSkills.prefix(5))
+        Array(gameContext.skillList.activeSkills.prefix(8))
     }
 
     var body: some View {
         ZStack {
-            RoundActionButton(color: .red, diameter: 55, action: onAttack) {
+            RoundActionButton(color: .red.opacity(0.55), diameter: 65, action: onAttack) {
                 Text("A")
                     .font(.title.bold())
                     .foregroundStyle(.white)
             }
 
-            ForEach(0..<5) { index in
-                let skill = (index < shortcutSkills.count) ? shortcutSkills[index] : nil
-
-                SkillShortcutButton(skill: skill) {
-                    if let skill {
-                        onSkill(skill)
-                    }
-                }
-                .offset(
-                    x: -75 * sin(radians(135 - CGFloat(index) * 45)),
-                    y: -75 * cos(radians(135 - CGFloat(index) * 45))
-                )
-            }
-
-            RoundActionButton(color: .green, diameter: 35, action: onPickup) {
+            RingSectorActionButton(centerAngle: .degrees(45), color: .green.opacity(0.55), action: onPickup) {
                 Text("P")
                     .font(.subheadline.bold())
                     .foregroundStyle(.white)
             }
-            .offset(x: -65 * sin(radians(-135)), y: -65 * cos(radians(-135)))
+
+            ForEach(0..<8) { index in
+                let skill = (index < shortcutSkills.count) ? shortcutSkills[index] : nil
+
+                SkillShortcutButton(centerAngle: .degrees(45 + 40 * Double(index + 1)), skill: skill) {
+                    if let skill {
+                        onSkill(skill)
+                    }
+                }
+            }
         }
-        .frame(width: 180, height: 180)
-        .offset(x: 10, y: 10)
+        .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
+    }
+}
+
+private struct RoundActionButton<Content>: View where Content: View {
+    var color: Color
+    var diameter: CGFloat
+    var action: () -> Void
+    @ViewBuilder var content: Content
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Circle()
+                    .fill(color)
+                    .frame(width: diameter, height: diameter)
+
+                content
+            }
+            .frame(width: diameter, height: diameter)
+            .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
     }
 }
 
 private struct SkillShortcutButton: View {
+    var centerAngle: Angle
     var skill: SkillInfo?
     var action: () -> Void
 
@@ -65,12 +87,11 @@ private struct SkillShortcutButton: View {
     @State private var iconImage: Resources.Image?
 
     var body: some View {
-        RoundActionButton(color: .orange, diameter: 45, action: action) {
+        RingSectorActionButton(centerAngle: centerAngle, color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)), action: action) {
             if let iconImage {
                 Image(decorative: iconImage.cgImage, scale: 1)
                     .resizable()
                     .interpolation(.none)
-                    .padding(6)
             }
         }
         .disabled(skill == nil)
@@ -87,24 +108,39 @@ private struct SkillShortcutButton: View {
     }
 }
 
-struct RoundActionButton<Content: View>: View {
+private struct RingSectorActionButton<Content>: View where Content: View {
+    var centerAngle: Angle
     var color: Color
-    var diameter: CGFloat
     var action: () -> Void
     @ViewBuilder var content: Content
 
+    private var ringSector: GameRingSector {
+        GameRingSector(
+            centerAngle: centerAngle,
+            sweepAngle: sectorSweepAngle,
+            innerRadius: ringInnerRadius,
+            outerRadius: ringOuterRadius,
+            gap: sectorGap
+        )
+    }
+
     var body: some View {
+        let contentRadius = (ringInnerRadius + ringOuterRadius) / 2
+
         Button(action: action) {
             ZStack {
-                Circle()
-                    .fill(color.opacity(0.33))
-                    .frame(width: diameter, height: diameter)
-                    .shadow(color: color.opacity(0.33), radius: 5)
+                ringSector
+                    .fill(color)
 
                 content
+                    .frame(width: 28, height: 28)
+                    .offset(
+                        x: contentRadius * cos(centerAngle.radians),
+                        y: contentRadius * sin(centerAngle.radians)
+                    )
             }
-            .frame(width: diameter, height: diameter)
-            .contentShape(Circle())
+            .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
+            .contentShape(ringSector)
         }
         .buttonStyle(.plain)
     }
@@ -134,13 +170,12 @@ struct RoundActionButton<Content: View>: View {
     }()
 
     ZStack(alignment: .bottomTrailing) {
-        Color.black.opacity(0.2)
+        Color.black
 
         ActionControlPadView(onAttack: {}, onPickup: {}, onSkill: { _ in })
             .padding(.bottom, 16)
             .padding(.trailing, 16)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .ignoresSafeArea()
     .environment(gameContext)
 }
