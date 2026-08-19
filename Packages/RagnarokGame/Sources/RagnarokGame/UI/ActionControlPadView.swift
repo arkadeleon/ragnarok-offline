@@ -16,6 +16,9 @@ private let ringOuterRadius: CGFloat = 88
 private let sectorSweepAngle: Angle = .degrees(360 / 9)
 private let sectorGap: CGFloat = 4
 
+private let shortcutsPerPage = 8
+private let shortcutPageCount = 2
+
 struct ActionControlPadView: View {
     var onAttack: () -> Void
     var onPickup: () -> Void
@@ -23,35 +26,82 @@ struct ActionControlPadView: View {
 
     @Environment(GameContext.self) private var gameContext
 
+    @State private var currentPage = 0
+    @State private var dialAngle: Angle = .zero
+
+    /// The shortcuts on the current page.
     private var shortcutSkills: [SkillInfo] {
-        Array(gameContext.skillList.activeSkills.prefix(8))
+        let activeSkills = gameContext.skillList.activeSkills
+        let startIndex = currentPage * shortcutsPerPage
+        guard startIndex < activeSkills.count else {
+            return []
+        }
+        let endIndex = min(startIndex + shortcutsPerPage, activeSkills.count)
+        return Array(activeSkills[startIndex..<endIndex])
     }
 
     var body: some View {
         ZStack {
-            RoundActionButton(color: .red.opacity(0.55), diameter: 65, action: onAttack) {
+            RoundActionButton(
+                color: .red.opacity(0.55),
+                diameter: (ringInnerRadius - sectorGap) * 2,
+                action: onAttack
+            ) {
                 Text("A")
-                    .font(.title.bold())
+                    .font(.game(size: 24, weight: .bold))
                     .foregroundStyle(.white)
             }
 
-            RingSectorActionButton(centerAngle: .degrees(45), color: .green.opacity(0.55), action: onPickup) {
+            RingSectorActionButton(
+                centerAngle: .degrees(45),
+                innerRadius: ringInnerRadius,
+                outerRadius: (ringInnerRadius + ringOuterRadius) / 2 - sectorGap / 2,
+                color: .green.opacity(0.55),
+                action: onPickup
+            ) {
                 Text("P")
-                    .font(.subheadline.bold())
+                    .font(.game(size: 12, weight: .bold))
                     .foregroundStyle(.white)
             }
 
-            ForEach(0..<8) { index in
-                let skill = (index < shortcutSkills.count) ? shortcutSkills[index] : nil
+            RingSectorActionButton(
+                centerAngle: .degrees(45),
+                innerRadius: (ringInnerRadius + ringOuterRadius) / 2 + sectorGap / 2,
+                outerRadius: ringOuterRadius,
+                color: .blue.opacity(0.55),
+                action: turnDial
+            ) {
+                Image(systemName: "arrow.clockwise")
+                    .font(.game(size: 12, weight: .bold))
+                    .foregroundStyle(.white)
+            }
 
-                SkillShortcutButton(centerAngle: .degrees(45 + 40 * Double(index + 1)), skill: skill) {
-                    if let skill {
-                        onSkill(skill)
+            ZStack {
+                ForEach(0..<shortcutsPerPage, id: \.self) { index in
+                    let skill = (index < shortcutSkills.count) ? shortcutSkills[index] : nil
+
+                    SkillShortcutButton(centerAngle: .degrees(45 + 40 * Double(index + 1)), skill: skill) {
+                        if let skill {
+                            onSkill(skill)
+                        }
                     }
                 }
             }
+            .rotationEffect(dialAngle)
         }
         .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
+    }
+
+    private func turnDial() {
+        withAnimation(.easeIn(duration: 0.15)) {
+            dialAngle = sectorSweepAngle
+        } completion: {
+            currentPage = (currentPage + 1) % shortcutPageCount
+
+            withAnimation(.easeOut(duration: 0.35)) {
+                dialAngle = .zero
+            }
+        }
     }
 }
 
@@ -87,15 +137,27 @@ private struct SkillShortcutButton: View {
     @State private var iconImage: Resources.Image?
 
     var body: some View {
-        RingSectorActionButton(centerAngle: centerAngle, color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)), action: action) {
-            if let iconImage {
-                Image(decorative: iconImage.cgImage, scale: 1)
-                    .resizable()
-                    .interpolation(.none)
+        let iconImageKey = iconImage.map({ ObjectIdentifier($0) })
+
+        RingSectorActionButton(
+            centerAngle: centerAngle,
+            innerRadius: ringInnerRadius,
+            outerRadius: ringOuterRadius,
+            color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)),
+            action: action
+        ) {
+            ZStack {
+                if let iconImage {
+                    Image(decorative: iconImage.cgImage, scale: 1)
+                        .resizable()
+                        .interpolation(.none)
+                        .transition(.opacity)
+                        .id(iconImageKey)
+                }
             }
+            .animation(.easeInOut(duration: 0.2), value: iconImageKey)
         }
-        .disabled(skill == nil)
-        .opacity(skill == nil ? 0.6 : 1)
+        .animation(.easeInOut(duration: 0.2), value: skill == nil)
         .task(id: skill?.skillID) {
             guard let skill, let skillID = SkillID(rawValue: skill.skillID) else {
                 iconImage = nil
@@ -110,6 +172,8 @@ private struct SkillShortcutButton: View {
 
 private struct RingSectorActionButton<Content>: View where Content: View {
     var centerAngle: Angle
+    var innerRadius: CGFloat
+    var outerRadius: CGFloat
     var color: Color
     var action: () -> Void
     @ViewBuilder var content: Content
@@ -118,14 +182,14 @@ private struct RingSectorActionButton<Content>: View where Content: View {
         GameRingSector(
             centerAngle: centerAngle,
             sweepAngle: sectorSweepAngle,
-            innerRadius: ringInnerRadius,
-            outerRadius: ringOuterRadius,
+            innerRadius: innerRadius,
+            outerRadius: outerRadius,
             gap: sectorGap
         )
     }
 
     var body: some View {
-        let contentRadius = (ringInnerRadius + ringOuterRadius) / 2
+        let contentRadius = (innerRadius + outerRadius) / 2
 
         Button(action: action) {
             ZStack {
@@ -150,32 +214,20 @@ private struct RingSectorActionButton<Content>: View where Content: View {
     let gameContext = {
         let gameContext = GameContext(resourceManager: .testing)
 
-        var bash = SkillInfo()
-        bash.skillID = 5
-        bash.flag = SkillInfoFlag.attack.rawValue
-        bash.level = 5
-        bash.spCost = 8
-        bash.attackRange = 1
-        gameContext.skillList.skills[5] = bash
-
-        var heal = SkillInfo()
-        heal.skillID = 28
-        heal.flag = SkillInfoFlag.support.rawValue
-        heal.level = 10
-        heal.spCost = 40
-        heal.attackRange = 9
-        gameContext.skillList.skills[28] = heal
+        for skillID in [5, 7, 10, 16, 17, 18, 19, 20, 21, 25, 26, 28] {
+            var skill = SkillInfo()
+            skill.skillID = skillID
+            skill.flag = SkillInfoFlag.attack.rawValue
+            skill.level = 1
+            skill.attackRange = 1
+            gameContext.skillList.skills[skillID] = skill
+        }
 
         return gameContext
     }()
 
-    ZStack(alignment: .bottomTrailing) {
-        Color.black
-
-        ActionControlPadView(onAttack: {}, onPickup: {}, onSkill: { _ in })
-            .padding(.bottom, 16)
-            .padding(.trailing, 16)
-    }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .environment(gameContext)
+    ActionControlPadView(onAttack: {}, onPickup: {}, onSkill: { _ in })
+        .padding()
+        .background(Color.black)
+        .environment(gameContext)
 }
