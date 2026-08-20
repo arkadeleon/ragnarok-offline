@@ -12,6 +12,10 @@ import RagnarokConstants
 public enum SkillEffectTable {
     // Keep entries sorted in ascending order by `SkillID.rawValue`.
     private static let table: [SkillID : SkillEffectDefinition] = [
+        .sm_bash: .init(
+            beginCastEffects: [.id(.ef_bash)],
+            hitEffects: [.id(.ef_hit2)]
+        ),
         .mg_lightningbolt: .init(
             effects: [.id(.ef_lightbolt)],
             hitEffects: [.id(.ef_windhit)]
