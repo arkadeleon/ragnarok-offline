@@ -183,6 +183,21 @@ public enum EffectTable {
                 angleRandomRange: 340...360
             ),
         ],
+        .ef_endure: [
+            .`3D`(
+                fileName: "effect\\endure.tga",
+                soundName: "effect\\ef_endure.wav",
+                duration: 1,
+                attachedToTarget: true,
+                zIndex: 10,
+                fadesIn: true,
+                fadesOut: true,
+                offset: [0, 0, 2],
+                sizeStart: [200, 200],
+                sizeEnd: [70, 70],
+                smoothSize: true
+            ),
+        ],
         .ef_soulstrike: [
             .`3D`(
                 fileName: "effect\\pok3.tga",

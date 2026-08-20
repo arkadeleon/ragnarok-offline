@@ -19,6 +19,9 @@ public enum SkillEffectTable {
         .sm_provoke: .init(
             successEffects: [.id(.ef_provoke)]
         ),
+        .sm_endure: .init(
+            effects: [.id(.ef_endure)]
+        ),
         .mg_lightningbolt: .init(
             effects: [.id(.ef_lightbolt)],
             hitEffects: [.id(.ef_windhit)]
