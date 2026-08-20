@@ -186,7 +186,7 @@ extension Effect3DAsset {
             position.y = definition.rotatePosition.y * sin(rotationPhase)
         }
 
-        if definition.retreat != 0 {
+        if instance.retreat != 0 {
             let direction = SIMD2<Float>(
                 positionEnd.x - positionStart.x,
                 positionEnd.y - positionStart.y
@@ -194,14 +194,14 @@ extension Effect3DAsset {
             let distance = simd_length(direction)
             if distance > 0.001 {
                 let normalized = direction / distance
-                let retreat = sin(progress * .pi) * definition.retreat
+                let retreat = sin(progress * .pi) * instance.retreat
                 position.x = interpolate(positionStart.x, positionEnd.x, progress: progress, smooth: false) - normalized.x * retreat
                 position.y = interpolate(positionStart.y, positionEnd.y, progress: progress, smooth: false) - normalized.y * retreat
             }
         }
 
-        if definition.arc != 0 {
-            position.z += definition.arc * sin(progress * .pi)
+        if instance.arc != 0 {
+            position.z += instance.arc * sin(progress * .pi)
         }
 
         return position

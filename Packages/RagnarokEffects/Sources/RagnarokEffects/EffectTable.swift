@@ -183,6 +183,37 @@ public enum EffectTable {
                 angleRandomRange: 340...360
             ),
         ],
+        .ef_soulstrike: [
+            .`3D`(
+                fileName: "effect\\pok3.tga",
+                soundName: "effect\\ef_soulstrike.wav",
+                duration: 0.2,
+                delayLate: 0.25,
+                attachedToTarget: true,
+                zIndex: 1,
+                fadesIn: true,
+                fadesOut: true,
+                positionStartZRandomRange: -5...5,
+                smoothPositionAxes: EffectAxes(x: false, y: false, z: true),
+                movesFromSource: true,
+                size: [50, 50]
+            ),
+            .`3D`(
+                spriteName: K2L("이팩트\\particle1"),
+                playSprite: true,
+                duration: 0.25,
+                duplicate: .init(count: 5, interval: 0.02),
+                attachedToTarget: false,
+                zOffsetStart: 3,
+                arc: 4,
+                retreat: 3,
+                movesFromSource: true,
+                sizeStart: [100, 100],
+                sizeEnd: [500, 500],
+                rotatesToTarget: true,
+                soulStrikePattern: true
+            ),
+        ],
         .ef_bash: [
             .cylinder(
                 textureName: "alpha_down",

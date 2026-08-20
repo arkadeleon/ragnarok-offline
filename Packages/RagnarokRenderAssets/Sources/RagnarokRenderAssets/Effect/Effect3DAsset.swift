@@ -23,8 +23,10 @@ public struct Effect3DAsset: Sendable {
         public let sizeStart: SIMD2<Float>
         public let sizeEnd: SIMD2<Float>
         public let baseAngle: Float
+        public let arc: Float
+        public let retreat: Float
 
-        init(definition: Effect3DDefinition, duplicateID: Int) {
+        init(definition: Effect3DDefinition, duplicateID: Int, patternIndex: Int) {
             self.duplicateID = duplicateID
 
             self.delay = definition.delayStart
@@ -108,10 +110,34 @@ public struct Effect3DAsset: Sendable {
             positionStart.z += definition.zOffsetStart
             positionEnd.z += definition.zOffsetEnd
 
+            var arc = definition.arc
+            var retreat = definition.retreat
+            var angle = definition.angle
+
+            if definition.soulStrikePattern {
+                let patternAngle = Float(patternIndex) * 72
+                let patternRadius: Float = 2
+                let patternOffset = SIMD2(
+                    cos(radians(patternAngle)) * patternRadius,
+                    sin(radians(patternAngle)) * patternRadius
+                )
+
+                positionStart.x += patternOffset.x
+                positionStart.y += patternOffset.y
+                movementPositionStart.x += patternOffset.x
+                movementPositionStart.y += patternOffset.y
+
+                arc *= 1 + Float(patternIndex) * 0.1
+                retreat *= 1 + Float(patternIndex) * 0.2
+                angle += patternAngle
+            }
+
             self.positionStart = positionStart
             self.positionEnd = positionEnd
             self.movementPositionStart = movementPositionStart
             self.movementPositionEnd = movementPositionEnd
+            self.arc = arc
+            self.retreat = retreat
 
             var sizeStart = definition.sizeStart ?? definition.size
             var sizeEnd = definition.sizeEnd ?? definition.size
@@ -136,7 +162,7 @@ public struct Effect3DAsset: Sendable {
             self.sizeStart = sizeStart
             self.sizeEnd = sizeEnd
 
-            self.baseAngle = definition.angle
+            self.baseAngle = angle
         }
     }
 
@@ -177,8 +203,9 @@ public struct Effect3DAsset: Sendable {
     public let frames: [Effect3DAsset.Frame]
 
     public func makeInstances() -> [Effect3DAsset.Instance] {
-        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
-            Effect3DAsset.Instance(definition: definition, duplicateID: duplicateID)
+        let patternIndex = Int.random(in: 0..<5)
+        return (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+            Effect3DAsset.Instance(definition: definition, duplicateID: duplicateID, patternIndex: patternIndex)
         }
     }
 

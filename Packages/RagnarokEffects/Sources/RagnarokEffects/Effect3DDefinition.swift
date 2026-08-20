@@ -161,8 +161,8 @@ public struct Effect3DDefinition: Sendable {
     public var rotatesToTarget: Bool
     public var rotatesWithCamera: Bool
 
-    public var soulStrikePattern: Int?
-    public var drainPattern: Int?
+    public var soulStrikePattern: Bool
+    public var drainPattern: Bool
 }
 
 extension EffectDefinition {
@@ -234,8 +234,8 @@ extension EffectDefinition {
         rotatePosition: SIMD3<Float> = .zero,
         rotatesToTarget: Bool = false,
         rotatesWithCamera: Bool = false,
-        soulStrikePattern: Int? = nil,
-        drainPattern: Int? = nil
+        soulStrikePattern: Bool = false,
+        drainPattern: Bool = false
     ) -> EffectDefinition {
         let definition = Effect3DDefinition(
             fileName: fileName,
