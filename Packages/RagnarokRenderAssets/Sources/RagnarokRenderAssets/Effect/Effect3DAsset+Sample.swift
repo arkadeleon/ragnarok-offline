@@ -129,11 +129,11 @@ extension Effect3DAsset {
     }
 
     private func frameIndex(elapsedTime: TimeInterval) -> Int {
-        guard frames.count > 1, definition.frameDelay > 0 else {
+        guard frames.count > 1, frameDelay > 0 else {
             return 0
         }
 
-        return Int(elapsedTime / definition.frameDelay) % frames.count
+        return Int(elapsedTime / frameDelay) % frames.count
     }
 
     private func movementPositions(

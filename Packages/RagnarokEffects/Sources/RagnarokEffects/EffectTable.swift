@@ -242,6 +242,24 @@ public enum EffectTable {
                 fixedPerspective: true
             ),
         ],
+        .ef_fireball: [
+            .`3D`(
+                spriteName: K2L("이팩트\\fireball"),
+                playSprite: true,
+                soundName: "effect\\ef_fireball.wav",
+                duration: 0.25,
+                delayOffset: 0.16,
+                duplicate: .init(count: 5, interval: 0, delayOffsetDelta: -0.04, alphaMaxDelta: 0.2),
+                attachedToTarget: true,
+                zIndex: 1,
+                alphaMax: 0.2,
+                offset: [0, 0, 2],
+                movesFromSource: true,
+                size: [200, 200],
+                rotatesToTarget: true,
+                rotatesWithCamera: true
+            ),
+        ],
         .ef_lightbolt: [
             .str(
                 fileName: "lightning.str",

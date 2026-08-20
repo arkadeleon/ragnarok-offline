@@ -172,6 +172,7 @@ public struct Effect3DAsset: Sendable {
     public let definition: Effect3DDefinition
     public let soundName: String?
     public let sparkleCount: Float
+    public let frameDelay: TimeInterval
     public let images: [CGImage]
     public let frames: [Effect3DAsset.Frame]
 
@@ -201,6 +202,8 @@ public struct Effect3DAsset: Sendable {
             sparkleCount = definition.sparkleCount
         }
 
+        var frameDelay = definition.frameDelay
+
         var images: [CGImage] = []
         var frames: [Effect3DAsset.Frame] = []
 
@@ -213,8 +216,15 @@ public struct Effect3DAsset: Sendable {
             let act = try await ACT(data: actData)
             let spr = try await SPR(data: sprData)
             let spriteImages = spr.imagesBySpriteType()
-            let actionFrames = act.action(at: 0)?.frames ?? []
+            let action = act.action(at: 0)
+            let actionFrames = action?.frames ?? []
             let usedFrames = definition.playSprite ? actionFrames : Array(actionFrames.prefix(1))
+
+            if definition.spriteFrameDelay > 0 {
+                frameDelay = definition.spriteFrameDelay
+            } else if let action {
+                frameDelay = TimeInterval(action.frameInterval)
+            }
 
             var imageIndicesBySprite: [SIMD2<Int> : Int] = [:]
             for frame in usedFrames {
@@ -286,6 +296,7 @@ public struct Effect3DAsset: Sendable {
             definition: definition,
             soundName: soundName,
             sparkleCount: sparkleCount,
+            frameDelay: frameDelay,
             images: images,
             frames: frames
         )

@@ -67,8 +67,8 @@ public struct EffectAxes: Sendable {
 // - zOffsetEnd:                     zOffsetEnd
 // - arc:                            arc
 // - retreat:                        retreat
-// - movesFromSource:                fromSrc
-// - movesToSource:                  toSrc
+// - movesFromSource:                toSrc (starts at the source and moves to the anchor)
+// - movesToSource:                  fromSrc (starts at the anchor and moves to the source)
 // - size:                           size, sizeX, sizeY
 // - sizeStart:                      sizeStart, sizeStartX, sizeStartY
 // - sizeEnd:                        sizeEnd, sizeEndX, sizeEndY
