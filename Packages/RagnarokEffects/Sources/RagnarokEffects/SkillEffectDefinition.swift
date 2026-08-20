@@ -10,4 +10,5 @@ struct SkillEffectDefinition: Sendable {
     var effects: [EffectReference] = []
     var beforeHitEffects: [EffectReference] = []
     var hitEffects: [EffectReference] = []
+    var successEffects: [EffectReference] = []
 }

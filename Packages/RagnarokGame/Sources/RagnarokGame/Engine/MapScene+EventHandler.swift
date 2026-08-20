@@ -423,6 +423,7 @@ extension MapScene {
         addSkillBeforeHitEffects(for: objectSkill)
         addSkillHitEffects(for: objectSkill)
         addSkillEffects(for: objectSkill)
+        addSkillSuccessEffects(for: objectSkill)
     }
 
     // MARK: - Dropped Item
@@ -816,6 +817,28 @@ extension MapScene {
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil,
                 delay: .milliseconds(objectSkill.attackDelay)
+            )
+        }
+    }
+
+    private func addSkillSuccessEffects(for objectSkill: MapObjectSkill) {
+        guard objectSkill.isSuccess,
+              let skillID = objectSkill.skillID,
+              let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition else {
+            return
+        }
+
+        let currentTime = CACurrentMediaTime()
+
+        for effectReference in SkillEffectTable.successEffects(for: skillID) {
+            addEffect(
+                for: effectReference,
+                creationTime: currentTime,
+                gridPosition: targetPosition,
+                sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
+                targetObjectID: objectSkill.targetObjectID,
+                ownerObjectID: nil,
+                delay: 0
             )
         }
     }

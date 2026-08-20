@@ -489,6 +489,13 @@ public enum EffectTable {
                 size: [140, 140]
             ),
         ],
+        .ef_provoke: [
+            .str(
+                fileName: "provoke.str",
+                soundName: "effect\\swordman_provoke.wav",
+                attachedToTarget: true
+            ),
+        ],
         .ef_magnus: [
             .str(
                 fileName: "magnus.str",

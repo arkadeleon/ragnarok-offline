@@ -17,6 +17,7 @@ public struct MapObjectSkill: Sendable {
     public let level: Int
     public let count: Int
     public let damageType: DamageType
+    public let isSuccess: Bool
 
     public var isHealingSkill: Bool {
         switch skillID {
@@ -36,6 +37,7 @@ public struct MapObjectSkill: Sendable {
         self.level = Int(packet.level)
         self.count = Int(packet.count)
         self.damageType = DamageType(rawValue: Int(packet.action)) ?? .normal
+        self.isSuccess = false
     }
 
     public init(from packet: PACKET_ZC_USE_SKILL) {
@@ -47,5 +49,6 @@ public struct MapObjectSkill: Sendable {
         self.level = Int(packet.level)
         self.count = 1
         self.damageType = .normal
+        self.isSuccess = packet.result == 1
     }
 }

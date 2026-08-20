@@ -16,6 +16,9 @@ public enum SkillEffectTable {
             beginCastEffects: [.id(.ef_bash)],
             hitEffects: [.id(.ef_hit2)]
         ),
+        .sm_provoke: .init(
+            successEffects: [.id(.ef_provoke)]
+        ),
         .mg_lightningbolt: .init(
             effects: [.id(.ef_lightbolt)],
             hitEffects: [.id(.ef_windhit)]
@@ -77,5 +80,9 @@ public enum SkillEffectTable {
 
     public static func hitEffects(for skillID: SkillID) -> [EffectReference] {
         table[skillID]?.hitEffects ?? []
+    }
+
+    public static func successEffects(for skillID: SkillID) -> [EffectReference] {
+        table[skillID]?.successEffects ?? []
     }
 }
