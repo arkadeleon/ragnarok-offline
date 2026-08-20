@@ -42,15 +42,18 @@ struct ActionControlPadView: View {
 
     var body: some View {
         ZStack {
-            RoundActionButton(
-                color: .red.opacity(0.55),
-                diameter: (ringInnerRadius - sectorGap) * 2,
-                action: onAttack
-            ) {
-                Text("A")
-                    .font(.game(size: 24, weight: .bold))
-                    .foregroundStyle(.white)
+            ZStack {
+                ForEach(0..<shortcutsPerPage, id: \.self) { index in
+                    let skill = (index < shortcutSkills.count) ? shortcutSkills[index] : nil
+
+                    SkillShortcutButton(centerAngle: .degrees(45 + 40 * Double(index + 1)), skill: skill) {
+                        if let skill {
+                            onSkill(skill)
+                        }
+                    }
+                }
             }
+            .rotationEffect(dialAngle)
 
             RingSectorActionButton(
                 centerAngle: .degrees(45),
@@ -59,7 +62,7 @@ struct ActionControlPadView: View {
                 color: .green.opacity(0.55),
                 action: onPickup
             ) {
-                Text("P")
+                Image(systemName: "hand.wave")
                     .font(.game(size: 12, weight: .bold))
                     .foregroundStyle(.white)
             }
@@ -76,18 +79,14 @@ struct ActionControlPadView: View {
                     .foregroundStyle(.white)
             }
 
-            ZStack {
-                ForEach(0..<shortcutsPerPage, id: \.self) { index in
-                    let skill = (index < shortcutSkills.count) ? shortcutSkills[index] : nil
-
-                    SkillShortcutButton(centerAngle: .degrees(45 + 40 * Double(index + 1)), skill: skill) {
-                        if let skill {
-                            onSkill(skill)
-                        }
-                    }
-                }
+            RoundActionButton(
+                color: .red.opacity(0.55),
+                diameter: (ringInnerRadius - sectorGap) * 2,
+                action: onAttack
+            ) {
+                GameSwordIcon()
+                    .frame(width: 40, height: 40)
             }
-            .rotationEffect(dialAngle)
         }
         .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
     }
