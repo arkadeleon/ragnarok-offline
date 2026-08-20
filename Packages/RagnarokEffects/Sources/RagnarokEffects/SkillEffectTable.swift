@@ -20,6 +20,9 @@ public enum SkillEffectTable {
             effects: [.id(.ef_thunderstorm)],
             hitEffects: [.id(.ef_windhit)]
         ),
+        .mg_napalmbeat: .init(
+            hitEffects: [.id(.ef_hit2)]
+        ),
         .mg_soulstrike: .init(
             beforeHitEffects: [.id(.ef_soulstrike)],
             hitEffects: [.id(.ef_hit2)]
