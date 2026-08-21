@@ -83,7 +83,9 @@ struct MapSceneView: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            // Minimap
+            MinimapView(scene: scene)
+                .padding(.top, 16)
+                .padding(.trailing, 16)
         }
         .overlay(alignment: .bottom) {
             ChatBoxView()
