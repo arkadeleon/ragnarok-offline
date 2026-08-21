@@ -13,15 +13,12 @@ struct BasicInfoView: View {
     var character: CharacterInfo
     var status: CharacterStatus
 
+    @State private var isExpVisible = false
+
     var body: some View {
         GameWindow {
             VStack(alignment: .leading, spacing: 0) {
-                Text(character.name)
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .padding(.leading, 10)
-
-                Text(JobID(rawValue: character.job)?.stringValue ?? "")
+                Text(verbatim: "\(character.name) | \(job)")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .padding(.leading, 10)
@@ -51,23 +48,24 @@ struct BasicInfoView: View {
                 Spacer()
                     .frame(height: 4)
 
-                VStack(spacing: 0) {
-                    BasicInfoExpBar(
-                        label: "Base Lv. \(status.baseLevel)",
-                        fraction: baseExp
+                if isExpVisible {
+                    BasicInfoExpView(
+                        baseLevel: status.baseLevel,
+                        baseExp: baseExp,
+                        jobLevel: status.jobLevel,
+                        jobExp: jobExp
                     )
-
-                    BasicInfoExpBar(
-                        label: "Job Lv.  \(status.jobLevel)",
-                        fraction: jobExp
-                    )
+                    .transition(.opacity)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(RoundedRectangle(cornerRadius: 3).fill(Color(#colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9176470588, alpha: 1))))
-                .padding(.horizontal, 6)
-                .padding(.vertical, 4)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, 3)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isExpVisible.toggle()
+                }
+            }
         } bottomBar: {
             GameBottomBar()
                 .overlay(alignment: .trailing) {
@@ -78,6 +76,10 @@ struct BasicInfoView: View {
                 }
         }
         .frame(width: 220)
+    }
+
+    private var job: String {
+        JobID(rawValue: character.job)?.stringValue ?? ""
     }
 
     private var baseExp: CGFloat {
@@ -131,6 +133,31 @@ private struct BasicInfoHPSPBar: View {
     }
 }
 
+private struct BasicInfoExpView: View {
+    var baseLevel: Int
+    var baseExp: CGFloat
+    var jobLevel: Int
+    var jobExp: CGFloat
+
+    var body: some View {
+        VStack(spacing: 0) {
+            BasicInfoExpBar(
+                label: "Base Lv. \(baseLevel)",
+                fraction: baseExp
+            )
+
+            BasicInfoExpBar(
+                label: "Job Lv.  \(jobLevel)",
+                fraction: jobExp
+            )
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(RoundedRectangle(cornerRadius: 3).fill(Color(#colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9176470588, alpha: 1))))
+        .padding(.horizontal, 6)
+        .padding(.vertical, 4)
+    }
+}
+
 private struct BasicInfoExpBar: View {
     var label: String
     var fraction: CGFloat
@@ -138,9 +165,9 @@ private struct BasicInfoExpBar: View {
     var body: some View {
         HStack(spacing: 0) {
             Text(verbatim: label)
-                .font(.game())
+                .font(.game(size: 10))
                 .foregroundStyle(Color.gameLabel)
-                .frame(width: 69, alignment: .leading)
+                .frame(width: 60, alignment: .leading)
 
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {

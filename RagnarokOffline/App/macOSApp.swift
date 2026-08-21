@@ -46,6 +46,7 @@ struct macOSApp: App {
                     dismissWindow(id: GameSession.windowID)
                 }
         }
+        .windowStyle(.hiddenTitleBar)
     }
 
     init() {
