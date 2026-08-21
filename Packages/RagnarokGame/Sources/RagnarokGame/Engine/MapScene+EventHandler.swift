@@ -184,21 +184,29 @@ extension MapScene {
     }
 
     public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
-        switch type {
-        case .dead where objectID == player.objectID:
-            if let object = objects[objectID] {
-                object.perform(.die, completion: .indefinite)
-            }
-            gauges.removeValue(forKey: objectID)
-            state.isPlayerDead = true
-        default:
+        guard type == .dead, let object = objects[objectID] else {
             objects.removeValue(forKey: objectID)
             gauges.removeValue(forKey: objectID)
+            return
+        }
+
+        object.death = MapObjectDeath(
+            startTime: .now,
+            fadeDuration: object.type == .pc ? nil : .seconds(5)
+        )
+        object.stopMovement()
+        object.perform(.die, completion: .indefinite)
+
+        gauges.removeValue(forKey: objectID)
+
+        if objectID == player.objectID {
+            state.isPlayerDead = true
         }
     }
 
     public func onMapObjectResurrected(objectID: GameObjectID) {
         if let object = objects[objectID] {
+            object.death = nil
             object.perform(.idle, completion: .indefinite)
         }
 

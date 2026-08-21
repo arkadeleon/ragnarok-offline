@@ -68,8 +68,7 @@ extension SpriteActionType {
         if job.isPlayer {
             return [.idle, .walk, .sit, .pickup, .readyToAttack, .attack1, .hurt, .freeze, .die, .freeze2, .attack2, .attack3, .skill]
         } else if job.isMonster {
-            // It seems that die action type is a little bit different.
-            return [.idle, .walk, .attack1, .hurt, /*.die*/]
+            return [.idle, .walk, .attack1, .hurt, .die]
         } else {
             return [.idle]
         }

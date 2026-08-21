@@ -209,7 +209,7 @@ public final class MapScene {
     private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneMapObject? {
         objects.values
             .filter {
-                $0.type == type
+                $0.type == type && !$0.isDead
             }
             .min {
                 distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
@@ -294,7 +294,7 @@ public final class MapScene {
     }
 
     private func handleMapObjectSelection(objectID: GameObjectID) {
-        guard let target = objects[objectID] else {
+        guard let target = objects[objectID], !target.isDead else {
             return
         }
 
@@ -313,7 +313,7 @@ public final class MapScene {
     }
 
     private func attackMonster(targetID: GameObjectID) {
-        guard let target = objects[targetID] else {
+        guard let target = objects[targetID], !target.isDead else {
             return
         }
 
@@ -417,6 +417,14 @@ extension MapScene {
 
     func makeRenderScene(atTime time: TimeInterval) -> MapSceneRenderer.Scene {
         let now = ContinuousClock.now
+
+        objects = objects.filter { objectID, object in
+            guard object.death?.isFinished(at: now) == true else {
+                return true
+            }
+            gauges.removeValue(forKey: objectID)
+            return false
+        }
 
         combatTextResources = combatTextResources.filter { _, resource in
             !resource.isExpired(at: now)

@@ -116,7 +116,8 @@ struct SpriteFrameResolver {
                     parentOffset: parentOffset,
                     partScale: partScale,
                     width: image.width,
-                    height: image.height
+                    height: image.height,
+                    opacity: object.opacity
                 )
                 resolvedLayers.append(
                     ResolvedLayer(
@@ -179,7 +180,8 @@ struct SpriteFrameResolver {
                     parentOffset: .zero,
                     partScale: 1,
                     width: image.width,
-                    height: image.height
+                    height: image.height,
+                    opacity: 1
                 ),
                 texture: texture,
                 worldPosition: item.worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
@@ -193,7 +195,8 @@ struct SpriteFrameResolver {
         parentOffset: SIMD2<Int32>,
         partScale: Float,
         width: Int,
-        height: Int
+        height: Int,
+        opacity: Float
     ) -> [SpriteVertex] {
         let cx = Float(layer.offset.x + parentOffset.x) * partScale
         let cy = Float(layer.offset.y + parentOffset.y) * partScale
@@ -215,7 +218,7 @@ struct SpriteFrameResolver {
             Float(layer.color.red) / 255,
             Float(layer.color.green) / 255,
             Float(layer.color.blue) / 255,
-            Float(layer.color.alpha) / 255
+            Float(layer.color.alpha) / 255 * opacity
         )
 
         let topLeft = point(-halfWidth * mirrorX, -halfHeight)

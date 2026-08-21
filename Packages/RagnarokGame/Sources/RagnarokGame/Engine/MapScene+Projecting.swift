@@ -20,7 +20,7 @@ extension MapScene {
     public func hitTest(_ ray: Ray) -> HitTestResult? {
         let objectIDs = spriteHits(ray)
 
-        if let objectID = objectIDs.first(where: { objects[$0] != nil }) {
+        if let objectID = objectIDs.first(where: { objects[$0]?.isDead == false }) {
             return .mapObject(objectID: objectID)
         }
         if let objectID = objectIDs.first(where: { items[$0] != nil }) {

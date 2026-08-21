@@ -33,6 +33,7 @@ class MapSceneMapObject: SpriteObject {
 
     var action: SpriteAction
     var movement: MapObjectMovement?
+    var death: MapObjectDeath?
 
     /// How long one attack takes.
     var attackDelay: Duration = .milliseconds(300)
@@ -42,6 +43,14 @@ class MapSceneMapObject: SpriteObject {
     var partTextures: SpritePartTextures?
 
     var ownedEffects: [MapSceneEffect] = []
+
+    var isDead: Bool {
+        death != nil
+    }
+
+    var opacity: Float {
+        death?.opacity ?? 1
+    }
 
     init(
         account: AccountInfo,
@@ -175,6 +184,7 @@ class MapSceneMapObject: SpriteObject {
     func update(at time: ContinuousClock.Instant) {
         action.update(atTime: time)
         movement?.update(atTime: time)
+        death?.update(at: time)
     }
 
     func nextPosition(at time: ContinuousClock.Instant) -> SIMD2<Int>? {
