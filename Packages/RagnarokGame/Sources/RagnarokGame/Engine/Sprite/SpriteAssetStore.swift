@@ -10,10 +10,24 @@ import RagnarokModels
 import RagnarokResources
 import RagnarokSprite
 
+struct ObjectSpriteAssets {
+    let composedSprite: ComposedSprite
+    let partTextures: SpritePartTextures
+}
+
+struct ItemSpriteAssets {
+    let sprite: SpriteResource
+    let partTextures: SpritePartTextures
+}
+
 @MainActor
 final class SpriteAssetStore {
     private let device: any MTLDevice
     private let resourceManager: ResourceManager
+
+    private var objectConfigurations: [GameObjectID : ComposedSprite.Configuration] = [:]
+    private var objectAssets: [GameObjectID : ObjectSpriteAssets] = [:]
+    private var itemAssets: [GameObjectID : ItemSpriteAssets] = [:]
 
     private var objectLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
     private var itemLoadTasks: [GameObjectID : Task<Void, Never>] = [:]
@@ -32,14 +46,15 @@ final class SpriteAssetStore {
         let currentObjectIDs = Set(objects.keys)
         let currentItemIDs = Set(items.keys)
 
-        for objectID in Set(objectLoadTasks.keys).subtracting(currentObjectIDs) {
-            objectLoadTasks[objectID]?.cancel()
-            objectLoadTasks.removeValue(forKey: objectID)
+        for objectID in Set(objectConfigurations.keys).union(objectLoadTasks.keys).subtracting(currentObjectIDs) {
+            objectLoadTasks.removeValue(forKey: objectID)?.cancel()
+            objectConfigurations.removeValue(forKey: objectID)
+            objectAssets.removeValue(forKey: objectID)
         }
 
-        for objectID in Set(itemLoadTasks.keys).subtracting(currentItemIDs) {
-            itemLoadTasks[objectID]?.cancel()
-            itemLoadTasks.removeValue(forKey: objectID)
+        for itemID in Set(itemAssets.keys).union(itemLoadTasks.keys).subtracting(currentItemIDs) {
+            itemLoadTasks.removeValue(forKey: itemID)?.cancel()
+            itemAssets.removeValue(forKey: itemID)
         }
 
         for (_, object) in objects {
@@ -73,25 +88,23 @@ final class SpriteAssetStore {
     private func syncObject(_ object: MapSceneMapObject) {
         let objectID = object.objectID
         let configuration = ComposedSprite.Configuration(object: object)
-        if object.spriteConfiguration != configuration {
-            objectLoadTasks[objectID]?.cancel()
-            objectLoadTasks.removeValue(forKey: objectID)
-            object.spriteConfiguration = configuration
-            object.composedSprite = nil
-            object.partTextures = nil
-            object.drawables.removeAll()
+
+        if objectConfigurations[objectID] != configuration {
+            objectLoadTasks.removeValue(forKey: objectID)?.cancel()
+            objectConfigurations[objectID] = configuration
+            objectAssets.removeValue(forKey: objectID)
         }
 
         if object.job == 45 { // JT_WARPNPC
             return
         }
 
-        guard object.composedSprite == nil, objectLoadTasks[objectID] == nil else {
+        guard objectAssets[objectID] == nil, objectLoadTasks[objectID] == nil else {
             return
         }
 
-        objectLoadTasks[objectID] = Task { [weak self, weak object] in
-            guard let self, let object else {
+        objectLoadTasks[objectID] = Task { [weak self] in
+            guard let self else {
                 return
             }
             defer {
@@ -105,35 +118,41 @@ final class SpriteAssetStore {
                 return
             }
 
-            guard object.spriteConfiguration == configuration else {
+            guard self.objectConfigurations[objectID] == configuration else {
                 return
             }
 
-            object.composedSprite = composedSprite
-            object.partTextures = SpritePartTextures(device: self.device)
+            self.objectAssets[objectID] = ObjectSpriteAssets(
+                composedSprite: composedSprite,
+                partTextures: SpritePartTextures(device: self.device)
+            )
         }
     }
 
     private func syncItem(_ item: MapSceneDroppedItem) {
         let objectID = item.objectID
-        guard item.sprite == nil, itemLoadTasks[objectID] == nil else {
+        let itemID = item.itemID
+
+        guard itemAssets[objectID] == nil, itemLoadTasks[objectID] == nil else {
             return
         }
 
-        itemLoadTasks[objectID] = Task { [weak self, weak item] in
-            guard let self, let item else {
+        itemLoadTasks[objectID] = Task { [weak self] in
+            guard let self else {
                 return
             }
             defer {
                 self.itemLoadTasks.removeValue(forKey: objectID)
             }
 
-            guard let sprite = try? await self.resourceManager.itemSprite(forItemID: item.itemID) else {
+            guard let sprite = try? await self.resourceManager.itemSprite(forItemID: itemID) else {
                 return
             }
 
-            item.sprite = sprite
-            item.partTextures = SpritePartTextures(device: self.device)
+            self.itemAssets[objectID] = ItemSpriteAssets(
+                sprite: sprite,
+                partTextures: SpritePartTextures(device: self.device)
+            )
         }
     }
 
@@ -149,33 +168,38 @@ final class SpriteAssetStore {
         let frameResolver = SpriteFrameResolver()
 
         for (objectID, object) in objects {
-            guard object.composedSprite != nil,
-                  object.partTextures != nil,
+            guard let assets = objectAssets[objectID],
                   let worldPosition = worldPositions[objectID] else {
-                object.drawables.removeAll()
                 continue
             }
 
-            object.drawables = frameResolver.resolve(object, worldPosition: worldPosition, camera: camera)
-            guard !object.drawables.isEmpty else {
+            let drawables = frameResolver.resolve(
+                object,
+                assets: assets,
+                worldPosition: worldPosition,
+                camera: camera
+            )
+            guard !drawables.isEmpty else {
                 continue
             }
-            sprites.append((objectID, worldPosition, object.drawables))
+            sprites.append((objectID, worldPosition, drawables))
         }
 
-        for (objectID, item) in items {
-            guard item.sprite != nil,
-                  item.partTextures != nil,
+        for objectID in items.keys {
+            guard let assets = itemAssets[objectID],
                   let worldPosition = worldPositions[objectID] else {
-                item.drawables.removeAll()
                 continue
             }
 
-            item.drawables = frameResolver.resolve(item, worldPosition: worldPosition)
-            guard !item.drawables.isEmpty else {
+            let drawables = frameResolver.resolve(
+                objectID: objectID,
+                assets: assets,
+                worldPosition: worldPosition
+            )
+            guard !drawables.isEmpty else {
                 continue
             }
-            sprites.append((objectID, worldPosition, item.drawables))
+            sprites.append((objectID, worldPosition, drawables))
         }
 
         sprites.sort {

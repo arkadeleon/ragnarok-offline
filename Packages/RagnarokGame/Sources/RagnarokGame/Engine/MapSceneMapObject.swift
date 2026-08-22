@@ -10,7 +10,9 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
-class MapSceneMapObject: SpriteObject {
+class MapSceneMapObject {
+    let objectID: GameObjectID
+
     var type: MapObjectType
     var name: String
     var speed: Int
@@ -31,16 +33,14 @@ class MapSceneMapObject: SpriteObject {
     var healthState: StatusChangeOption2
     var effectState: StatusChangeOption
 
+    var gridPosition: SIMD2<Int>
+
     var action: SpriteAction
     var movement: MapObjectMovement?
     var death: MapObjectDeath?
 
     /// How long one attack takes.
     var attackDelay: Duration = .milliseconds(300)
-
-    var spriteConfiguration: ComposedSprite.Configuration?
-    var composedSprite: ComposedSprite?
-    var partTextures: SpritePartTextures?
 
     var isDead: Bool {
         death != nil
@@ -57,6 +57,8 @@ class MapSceneMapObject: SpriteObject {
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
+        objectID = account.accountID
+
         type = .pc
         name = character.name
         speed = character.speed
@@ -77,6 +79,8 @@ class MapSceneMapObject: SpriteObject {
         healthState = StatusChangeOption2(rawValue: character.healthState) ?? .none
         effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
 
+        self.gridPosition = gridPosition
+
         action = SpriteAction(
             actionType: .idle,
             direction: direction,
@@ -84,8 +88,6 @@ class MapSceneMapObject: SpriteObject {
             startTime: .now,
             completion: .indefinite
         )
-
-        super.init(objectID: account.accountID, gridPosition: gridPosition)
     }
 
     init(
@@ -96,6 +98,8 @@ class MapSceneMapObject: SpriteObject {
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
+        objectID = object.objectID
+
         type = object.type
         name = object.name
         speed = object.speed
@@ -116,6 +120,8 @@ class MapSceneMapObject: SpriteObject {
         healthState = object.healthState
         effectState = object.effectState
 
+        self.gridPosition = gridPosition
+
         action = SpriteAction(
             actionType: .idle,
             direction: direction,
@@ -123,8 +129,6 @@ class MapSceneMapObject: SpriteObject {
             startTime: .now,
             completion: .indefinite
         )
-
-        super.init(objectID: object.objectID, gridPosition: gridPosition)
     }
 
     func perform(_ actionType: SpriteActionType, completion: SpriteAction.Completion, at time: ContinuousClock.Instant = .now) {
@@ -271,19 +275,3 @@ final class MapScenePlayerObject: MapSceneMapObject {
 final class MapSceneMonsterObject: MapSceneMapObject {}
 
 final class MapSceneNPCObject: MapSceneMapObject {}
-
-extension ComposedSprite.Configuration {
-    init(object: MapSceneMapObject) {
-        self.init(jobID: object.job)
-        self.gender = object.gender
-        self.hairStyle = object.hairStyle
-        self.hairColor = object.hairColor
-        self.clothesColor = object.clothesColor
-        self.weapon = object.weaponType.rawValue
-        self.shield = object.shield
-        self.headgears = [object.headTop, object.headMid, object.headBottom]
-        self.garment = object.garment
-
-        self.updateHairStyle()
-    }
-}

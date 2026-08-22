@@ -24,13 +24,12 @@ struct SpriteFrameResolver {
 
     func resolve(
         _ object: MapSceneMapObject,
+        assets: ObjectSpriteAssets,
         worldPosition: SIMD3<Float>,
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
-        guard let composedSprite = object.composedSprite,
-              let partTextures = object.partTextures else {
-            return []
-        }
+        let composedSprite = assets.composedSprite
+        let partTextures = assets.partTextures
 
         var action = action(for: object, camera: camera)
         if case .once(let nextActionType) = action.completion,
@@ -150,10 +149,15 @@ struct SpriteFrameResolver {
         }
     }
 
-    func resolve(_ item: MapSceneDroppedItem, worldPosition: SIMD3<Float>) -> [SpriteLayerDrawable] {
-        guard let sprite = item.sprite,
-              let partTextures = item.partTextures,
-              let action = sprite.act.action(at: 0),
+    func resolve(
+        objectID: GameObjectID,
+        assets: ItemSpriteAssets,
+        worldPosition: SIMD3<Float>
+    ) -> [SpriteLayerDrawable] {
+        let sprite = assets.sprite
+        let partTextures = assets.partTextures
+
+        guard let action = sprite.act.action(at: 0),
               let frame = action.frames.first else {
             return []
         }
@@ -168,14 +172,14 @@ struct SpriteFrameResolver {
             let texture = partTextures.texture(
                 for: layer,
                 resource: sprite,
-                label: "item-\(item.objectID)-\(layerIndex)"
+                label: "item-\(objectID)-\(layerIndex)"
             )
             guard let texture else {
                 return nil
             }
 
             return SpriteLayerDrawable(
-                objectID: item.objectID,
+                objectID: objectID,
                 vertices: makeVertices(
                     layer: layer,
                     parentOffset: .zero,
