@@ -418,12 +418,11 @@ extension MapScene {
     func makeRenderScene(atTime time: TimeInterval) -> MapSceneRenderer.Scene {
         let now = ContinuousClock.now
 
-        objects = objects.filter { objectID, object in
-            guard object.death?.isFinished(at: now) == true else {
-                return true
-            }
-            gauges.removeValue(forKey: objectID)
-            return false
+        let vanishedObjectIDs = objects.compactMap { objectID, object in
+            object.death?.isVanished(at: now) == true ? objectID : nil
+        }
+        for objectID in vanishedObjectIDs {
+            removeObject(objectID: objectID)
         }
 
         combatTextResources = combatTextResources.filter { _, resource in
@@ -432,11 +431,6 @@ extension MapScene {
 
         effects = effects.filter { _, effect in
             !effect.isReady || !effect.isExpired(atTime: time)
-        }
-        for object in objects.values {
-            object.ownedEffects = object.ownedEffects.filter { effect in
-                !effect.isReady || !effect.isExpired(atTime: time)
-            }
         }
 
         for object in objects.values {
@@ -461,7 +455,7 @@ extension MapScene {
         scene.tileSelector = tileSelectorResource
         scene.spriteDrawables = spriteDrawables
 
-        scene.effects = (Array(effects.values) + objects.values.flatMap(\.ownedEffects))
+        scene.effects = effects.values
             .compactMap { effect in
                 guard let resourceGroup = effect.renderResourceGroup else {
                     return nil

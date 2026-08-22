@@ -20,7 +20,7 @@ struct MapObjectDeath {
         opacity = 1 - min(max(progress, 0), 1)
     }
 
-    func isFinished(at time: ContinuousClock.Instant) -> Bool {
+    func isVanished(at time: ContinuousClock.Instant) -> Bool {
         guard let fadeDuration else {
             return false
         }

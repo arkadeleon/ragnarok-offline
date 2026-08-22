@@ -185,8 +185,7 @@ extension MapScene {
 
     public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
         guard type == .dead, let object = objects[objectID] else {
-            objects.removeValue(forKey: objectID)
-            gauges.removeValue(forKey: objectID)
+            removeObject(objectID: objectID)
             return
         }
 
@@ -511,6 +510,19 @@ extension MapScene {
         object.perform(.idle, completion: .indefinite)
         object.turn(direction: direction, headDirection: headDirection)
         object.worldPosition = mapGrid.worldPosition(for: gridPosition)
+    }
+
+    func removeObject(objectID: GameObjectID) {
+        objects.removeValue(forKey: objectID)
+        gauges.removeValue(forKey: objectID)
+
+        let ownedEffectIDs = effects.compactMap { effectID, effect in
+            effect.ownerObjectID == objectID ? effectID : nil
+        }
+        for effectID in ownedEffectIDs {
+            effectLoadTasks.removeValue(forKey: effectID)?.cancel()
+            effects.removeValue(forKey: effectID)
+        }
     }
 
     func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovement? {
@@ -866,18 +878,15 @@ extension MapScene {
             worldPosition: mapGrid.worldPosition(for: gridPosition),
             sourceWorldPosition: sourceWorldPosition,
             targetObjectID: targetObjectID,
+            ownerObjectID: ownerObjectID,
             delay: delay
         )
-        addEffect(effect, ownerObjectID: ownerObjectID)
+        addEffect(effect)
     }
 
-    private func addEffect(_ effect: MapSceneEffect, ownerObjectID: GameObjectID?) {
+    private func addEffect(_ effect: MapSceneEffect) {
         let effectID = effect.id
-        if let ownerObjectID {
-            objects[ownerObjectID]?.ownedEffects.append(effect)
-        } else {
-            effects[effectID] = effect
-        }
+        effects[effectID] = effect
 
         effectLoadTasks[effectID] = Task { [weak self] in
             guard let self else {

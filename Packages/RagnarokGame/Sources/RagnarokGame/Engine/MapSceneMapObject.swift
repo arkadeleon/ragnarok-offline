@@ -42,8 +42,6 @@ class MapSceneMapObject: SpriteObject {
     var composedSprite: ComposedSprite?
     var partTextures: SpritePartTextures?
 
-    var ownedEffects: [MapSceneEffect] = []
-
     var isDead: Bool {
         death != nil
     }
