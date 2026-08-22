@@ -22,17 +22,11 @@ class SpriteObject {
     let objectID: GameObjectID
 
     var gridPosition: SIMD2<Int>
-    var worldPosition: SIMD3<Float>
 
     var drawables: [SpriteLayerDrawable] = []
 
-    init(
-        objectID: GameObjectID,
-        gridPosition: SIMD2<Int>,
-        worldPosition: SIMD3<Float>
-    ) {
+    init(objectID: GameObjectID, gridPosition: SIMD2<Int>) {
         self.objectID = objectID
         self.gridPosition = gridPosition
-        self.worldPosition = worldPosition
     }
 }

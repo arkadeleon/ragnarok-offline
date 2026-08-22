@@ -91,7 +91,6 @@ public final class MapScene {
             account: account,
             character: character,
             gridPosition: playerPosition,
-            worldPosition: mapGrid.worldPosition(for: playerPosition),
             direction: .south,
             headDirection: .lookForward
         )
@@ -433,21 +432,29 @@ extension MapScene {
             !effect.isReady || !effect.isExpired(atTime: time)
         }
 
+        var worldPositions: [GameObjectID : SIMD3<Float>] = [:]
+        worldPositions.reserveCapacity(objects.count + items.count)
+
         for object in objects.values {
             object.update(at: now)
             if let movement = object.movement {
                 object.gridPosition = movement.currentPosition
             }
-            object.worldPosition = worldPosition(for: object)
+            worldPositions[object.objectID] = worldPosition(for: object)
+        }
+
+        for item in items.values {
+            worldPositions[item.objectID] = mapGrid.worldPosition(for: item.gridPosition)
         }
 
         spriteDrawables = spriteAssetStore?.sync(
             objects: objects,
             items: items,
+            worldPositions: worldPositions,
             camera: cameraState
         ) ?? []
 
-        cameraTargetPosition = player.worldPosition
+        cameraTargetPosition = worldPositions[player.objectID] ?? cameraTargetPosition
 
         var scene = MapSceneRenderer.Scene(fog: fog)
 
@@ -460,23 +467,23 @@ extension MapScene {
                 guard let resourceGroup = effect.renderResourceGroup else {
                     return nil
                 }
-                let targetObject = effect.targetObjectID.flatMap { objects[$0] }
                 return MapSceneRenderer.Scene.Effect(
                     resourceGroup: resourceGroup,
-                    attachedWorldPosition: targetObject?.worldPosition
+                    attachedWorldPosition: effect.targetObjectID.flatMap { worldPositions[$0] }
                 )
             }
             .sorted {
                 $0.resourceGroup.creationTime < $1.resourceGroup.creationTime
             }
 
-        scene.gauges = objects.compactMap { objectID, object in
-            guard let vertices = gauges[objectID]?.makeVertices(), !vertices.isEmpty else {
+        scene.gauges = objects.compactMap { objectID, _ in
+            guard let vertices = gauges[objectID]?.makeVertices(), !vertices.isEmpty,
+                  let worldPosition = worldPositions[objectID] else {
                 return nil
             }
             return MapSceneRenderer.Scene.Gauge(
                 vertices: vertices,
-                worldPosition: object.worldPosition + [0, 0, -0.8]
+                worldPosition: worldPosition + [0, 0, -0.8]
             )
         }
 
@@ -506,7 +513,7 @@ extension MapScene {
             .compactMap {
                 $0.combatText(
                     for: now,
-                    targetPosition: objects[$0.combatText.target.objectID]?.worldPosition,
+                    targetPosition: worldPositions[$0.combatText.target.objectID],
                     cameraAzimuth: cameraState.azimuth
                 )
             }
@@ -514,13 +521,19 @@ extension MapScene {
         return scene
     }
 
-    private func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
-        if let movement = object.movement,
-           movement.isMoving,
-           let movementWorldPosition = movement.worldPosition {
-            movementWorldPosition
+    func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
+        if let step = object.movement?.currentStep {
+            mix(
+                mapGrid.worldPosition(for: step.sourcePosition),
+                mapGrid.worldPosition(for: step.targetPosition),
+                t: step.fraction
+            )
         } else {
             mapGrid.worldPosition(for: object.gridPosition)
         }
+    }
+
+    func worldPosition(forObjectID objectID: GameObjectID) -> SIMD3<Float>? {
+        objects[objectID].map(worldPosition(for:))
     }
 }

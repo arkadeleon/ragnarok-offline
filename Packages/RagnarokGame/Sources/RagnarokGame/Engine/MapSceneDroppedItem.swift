@@ -15,17 +15,9 @@ final class MapSceneDroppedItem: SpriteObject {
     var sprite: SpriteResource?
     var partTextures: SpritePartTextures?
 
-    init(
-        item: DroppedItem,
-        gridPosition: SIMD2<Int>,
-        worldPosition: SIMD3<Float>
-    ) {
+    init(item: DroppedItem, gridPosition: SIMD2<Int>) {
         itemID = Int(item.itemID)
 
-        super.init(
-            objectID: item.objectID,
-            gridPosition: gridPosition,
-            worldPosition: worldPosition
-        )
+        super.init(objectID: item.objectID, gridPosition: gridPosition)
     }
 }

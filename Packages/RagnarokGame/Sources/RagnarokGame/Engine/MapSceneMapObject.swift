@@ -54,7 +54,6 @@ class MapSceneMapObject: SpriteObject {
         account: AccountInfo,
         character: CharacterInfo,
         gridPosition: SIMD2<Int>,
-        worldPosition: SIMD3<Float>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
@@ -86,11 +85,7 @@ class MapSceneMapObject: SpriteObject {
             completion: .indefinite
         )
 
-        super.init(
-            objectID: account.accountID,
-            gridPosition: gridPosition,
-            worldPosition: worldPosition
-        )
+        super.init(objectID: account.accountID, gridPosition: gridPosition)
     }
 
     init(
@@ -98,7 +93,6 @@ class MapSceneMapObject: SpriteObject {
         hp: Int,
         maxHp: Int,
         gridPosition: SIMD2<Int>,
-        worldPosition: SIMD3<Float>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
@@ -130,11 +124,7 @@ class MapSceneMapObject: SpriteObject {
             completion: .indefinite
         )
 
-        super.init(
-            objectID: object.objectID,
-            gridPosition: gridPosition,
-            worldPosition: worldPosition
-        )
+        super.init(objectID: object.objectID, gridPosition: gridPosition)
     }
 
     func perform(_ actionType: SpriteActionType, completion: SpriteAction.Completion, at time: ContinuousClock.Instant = .now) {
@@ -158,7 +148,6 @@ class MapSceneMapObject: SpriteObject {
         endPosition: SIMD2<Int>,
         speed: Int,
         pathFinder: PathFinder,
-        mapGrid: MapGrid,
         at time: ContinuousClock.Instant = .now
     ) -> MapObjectMovement {
         let planner = MapObjectMovementPlanner(pathFinder: pathFinder)
@@ -169,7 +158,6 @@ class MapSceneMapObject: SpriteObject {
             speed: speed,
             at: time
         )
-        planned.updateWorldPath { mapGrid.worldPosition(for: $0) }
         planned.update(atTime: time)
         movement = planned
         return planned
@@ -198,7 +186,6 @@ extension MapSceneMapObject {
         sp: Int = 0,
         maxSp: Int = 0,
         gridPosition: SIMD2<Int>,
-        worldPosition: SIMD3<Float>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) -> MapSceneMapObject {
@@ -211,7 +198,6 @@ extension MapSceneMapObject {
                 sp: sp,
                 maxSp: maxSp,
                 gridPosition: gridPosition,
-                worldPosition: worldPosition,
                 direction: direction,
                 headDirection: headDirection
             )
@@ -221,7 +207,6 @@ extension MapSceneMapObject {
                 hp: hp,
                 maxHp: maxHp,
                 gridPosition: gridPosition,
-                worldPosition: worldPosition,
                 direction: direction,
                 headDirection: headDirection
             )
@@ -231,7 +216,6 @@ extension MapSceneMapObject {
                 hp: hp,
                 maxHp: maxHp,
                 gridPosition: gridPosition,
-                worldPosition: worldPosition,
                 direction: direction,
                 headDirection: headDirection
             )
@@ -247,7 +231,6 @@ final class MapScenePlayerObject: MapSceneMapObject {
         account: AccountInfo,
         character: CharacterInfo,
         gridPosition: SIMD2<Int>,
-        worldPosition: SIMD3<Float>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
@@ -257,7 +240,6 @@ final class MapScenePlayerObject: MapSceneMapObject {
             account: account,
             character: character,
             gridPosition: gridPosition,
-            worldPosition: worldPosition,
             direction: direction,
             headDirection: headDirection
         )
@@ -270,7 +252,6 @@ final class MapScenePlayerObject: MapSceneMapObject {
         sp: Int,
         maxSp: Int,
         gridPosition: SIMD2<Int>,
-        worldPosition: SIMD3<Float>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
@@ -281,7 +262,6 @@ final class MapScenePlayerObject: MapSceneMapObject {
             hp: hp,
             maxHp: maxHp,
             gridPosition: gridPosition,
-            worldPosition: worldPosition,
             direction: direction,
             headDirection: headDirection
         )

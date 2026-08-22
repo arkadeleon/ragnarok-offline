@@ -26,6 +26,7 @@ final class SpriteAssetStore {
     func sync(
         objects: [GameObjectID : MapSceneMapObject],
         items: [GameObjectID : MapSceneDroppedItem],
+        worldPositions: [GameObjectID : SIMD3<Float>],
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         let currentObjectIDs = Set(objects.keys)
@@ -49,7 +50,12 @@ final class SpriteAssetStore {
             syncItem(item)
         }
 
-        return drawables(objects: objects, items: items, camera: camera)
+        return drawables(
+            objects: objects,
+            items: items,
+            worldPositions: worldPositions,
+            camera: camera
+        )
     }
 
     func cancelAllTasks() {
@@ -134,37 +140,42 @@ final class SpriteAssetStore {
     private func drawables(
         objects: [GameObjectID : MapSceneMapObject],
         items: [GameObjectID : MapSceneDroppedItem],
+        worldPositions: [GameObjectID : SIMD3<Float>],
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
-        var sprites: [SpriteObject] = []
+        var sprites: [(objectID: GameObjectID, worldPosition: SIMD3<Float>, drawables: [SpriteLayerDrawable])] = []
         sprites.reserveCapacity(objects.count + items.count)
 
         let frameResolver = SpriteFrameResolver()
 
-        for (_, object) in objects {
-            guard object.composedSprite != nil, object.partTextures != nil else {
+        for (objectID, object) in objects {
+            guard object.composedSprite != nil,
+                  object.partTextures != nil,
+                  let worldPosition = worldPositions[objectID] else {
                 object.drawables.removeAll()
                 continue
             }
 
-            object.drawables = frameResolver.resolve(object, camera: camera)
+            object.drawables = frameResolver.resolve(object, worldPosition: worldPosition, camera: camera)
             guard !object.drawables.isEmpty else {
                 continue
             }
-            sprites.append(object)
+            sprites.append((objectID, worldPosition, object.drawables))
         }
 
-        for (_, item) in items {
-            guard item.sprite != nil, item.partTextures != nil else {
+        for (objectID, item) in items {
+            guard item.sprite != nil,
+                  item.partTextures != nil,
+                  let worldPosition = worldPositions[objectID] else {
                 item.drawables.removeAll()
                 continue
             }
 
-            item.drawables = frameResolver.resolve(item)
+            item.drawables = frameResolver.resolve(item, worldPosition: worldPosition)
             guard !item.drawables.isEmpty else {
                 continue
             }
-            sprites.append(item)
+            sprites.append((objectID, worldPosition, item.drawables))
         }
 
         sprites.sort {

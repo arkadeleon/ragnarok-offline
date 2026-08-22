@@ -24,6 +24,7 @@ struct SpriteFrameResolver {
 
     func resolve(
         _ object: MapSceneMapObject,
+        worldPosition: SIMD3<Float>,
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
         guard let composedSprite = object.composedSprite,
@@ -143,13 +144,13 @@ struct SpriteFrameResolver {
                 objectID: object.objectID,
                 vertices: $0.vertices,
                 texture: $0.texture,
-                worldPosition: object.worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+                worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
                 isVisible: object.effectState != .cloak
             )
         }
     }
 
-    func resolve(_ item: MapSceneDroppedItem) -> [SpriteLayerDrawable] {
+    func resolve(_ item: MapSceneDroppedItem, worldPosition: SIMD3<Float>) -> [SpriteLayerDrawable] {
         guard let sprite = item.sprite,
               let partTextures = item.partTextures,
               let action = sprite.act.action(at: 0),
@@ -184,7 +185,7 @@ struct SpriteFrameResolver {
                     opacity: 1
                 ),
                 texture: texture,
-                worldPosition: item.worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+                worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
                 isVisible: true
             )
         }

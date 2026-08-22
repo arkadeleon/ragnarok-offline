@@ -9,6 +9,12 @@ import RagnarokSprite
 import simd
 
 public struct MapObjectMovement: Sendable {
+    public struct Step: Sendable {
+        public let sourcePosition: SIMD2<Int>
+        public let targetPosition: SIMD2<Int>
+        public let fraction: Float
+    }
+
     public let startPosition: SIMD2<Int>
     public let endPosition: SIMD2<Int>
     public let path: [SIMD2<Int>]
@@ -17,9 +23,8 @@ public struct MapObjectMovement: Sendable {
     public let speed: Int
     public let animationElapsedOffset: Duration
 
-    public private(set) var worldPath: [SIMD3<Float>] = []
     public private(set) var currentPosition: SIMD2<Int>
-    public private(set) var worldPosition: SIMD3<Float>?
+    public private(set) var currentStep: MapObjectMovement.Step?
     public private(set) var direction: SpriteDirection?
     public private(set) var animationElapsedTime: Duration = .zero
     public private(set) var isMoving = false
@@ -64,24 +69,16 @@ public struct MapObjectMovement: Sendable {
         return max(duration - elapsed, .zero)
     }
 
-    mutating func updateWorldPath(position: (SIMD2<Int>) -> SIMD3<Float>) {
-        worldPath = path.map(position)
-    }
-
     mutating func update(atTime time: ContinuousClock.Instant) {
-        guard path.count >= 2, worldPath.count == path.count else {
-            currentPosition = path[path.count - 1]
-            worldPosition = worldPath[worldPath.count - 1]
-            direction = nil
-            animationElapsedTime = .zero
-            isMoving = false
+        guard path.count >= 2 else {
+            finish()
             return
         }
 
         let elapsed = startTime.duration(to: time)
         if elapsed <= .zero {
             currentPosition = path[0]
-            worldPosition = worldPath[0]
+            currentStep = nil
             direction = initialDirection
             animationElapsedTime = animationElapsedOffset
             isMoving = true
@@ -89,42 +86,34 @@ public struct MapObjectMovement: Sendable {
         }
 
         if elapsed >= duration {
-            currentPosition = path[path.count - 1]
-            worldPosition = worldPath[worldPath.count - 1]
-            direction = nil
-            animationElapsedTime = .zero
-            isMoving = false
+            finish()
             return
         }
 
-        let progress = MetalMovementPathProgress(
+        let progress = MovementPathProgress(
             path: path,
             speed: speed,
             startTime: startTime,
             duration: duration
         )
         guard let step = progress.activeStep(at: time) else {
-            currentPosition = path[path.count - 1]
-            worldPosition = worldPath[worldPath.count - 1]
-            direction = nil
-            animationElapsedTime = .zero
-            isMoving = false
+            finish()
             return
         }
 
         let stepElapsed = step.elapsed - step.accumulated
         let stepSeconds = max(step.stepDuration.timeInterval, .leastNonzeroMagnitude)
         let fraction = Float(min(max(stepElapsed.timeInterval / stepSeconds, 0), 1))
-        let source = worldPath[step.index]
-        let target = worldPath[step.index + 1]
-        let direction = SpriteDirection(
-            sourcePosition: path[step.index],
-            targetPosition: path[step.index + 1]
-        )
+        let sourcePosition = path[step.index]
+        let targetPosition = path[step.index + 1]
 
-        currentPosition = path[step.index]
-        worldPosition = mix(source, target, t: fraction)
-        self.direction = direction
+        currentPosition = sourcePosition
+        currentStep = MapObjectMovement.Step(
+            sourcePosition: sourcePosition,
+            targetPosition: targetPosition,
+            fraction: fraction
+        )
+        direction = SpriteDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
         animationElapsedTime = elapsed + animationElapsedOffset
         isMoving = true
     }
@@ -142,7 +131,7 @@ public struct MapObjectMovement: Sendable {
             return (1, path[1])
         }
 
-        let progress = MetalMovementPathProgress(
+        let progress = MovementPathProgress(
             path: path,
             speed: speed,
             startTime: startTime,
@@ -155,9 +144,17 @@ public struct MapObjectMovement: Sendable {
         let nextIndex = step.index + 1
         return (nextIndex, path[nextIndex])
     }
+
+    private mutating func finish() {
+        currentPosition = path.last ?? startPosition
+        currentStep = nil
+        direction = nil
+        animationElapsedTime = .zero
+        isMoving = false
+    }
 }
 
-private struct MetalMovementPathProgress {
+private struct MovementPathProgress {
     struct ActiveStep {
         var index: Int
         var elapsed: Duration
@@ -184,7 +181,7 @@ private struct MetalMovementPathProgress {
         self.duration = duration
     }
 
-    func activeStep(at now: ContinuousClock.Instant) -> ActiveStep? {
+    func activeStep(at now: ContinuousClock.Instant) -> MovementPathProgress.ActiveStep? {
         let elapsed = startTime.duration(to: now)
         guard elapsed > .zero, elapsed < duration else {
             return nil
@@ -196,7 +193,7 @@ private struct MetalMovementPathProgress {
             let nextAccumulated = accumulated + stepDuration
 
             if elapsed < nextAccumulated {
-                return ActiveStep(
+                return MovementPathProgress.ActiveStep(
                     index: index,
                     elapsed: elapsed,
                     accumulated: accumulated,
