@@ -61,7 +61,10 @@ public final class MapScene {
 
     var fog: Fog = .disabled
     var worldResource: WorldRenderResource?
-    var tileSelectorResource: TileSelectorRenderResource?
+
+    var tileSelector: TileSelector?
+    var tileSelectorTexture: (any MTLTexture)?
+
     var spriteDrawables: [SpriteLayerDrawable] = []
 
     var pendingArrivalAction: (@MainActor () -> Void)?
@@ -140,7 +143,11 @@ public final class MapScene {
         do {
             let path = ResourcePath.textureDirectory.appending(["grid.tga"])
             let image = try await resourceManager.image(at: path)
-            tileSelectorResource = TileSelectorRenderResource(device: renderer.device, image: image.cgImage)
+            tileSelectorTexture = MetalTextureFactory.makeTexture(
+                from: image.cgImage,
+                device: renderer.device,
+                label: "tile-selector"
+            )
         } catch {
             logger.warning("Map scene failed to load grid.tga: \(error)")
         }
@@ -180,7 +187,10 @@ public final class MapScene {
         effectRenderResources.removeAll()
 
         worldResource = nil
-        tileSelectorResource = nil
+
+        tileSelector = nil
+        tileSelectorTexture = nil
+
         spriteDrawables.removeAll()
     }
 
@@ -200,7 +210,9 @@ public final class MapScene {
     }
 
     func selectGround(at position: SIMD2<Int>) {
-        tileSelectorResource?.showSelection(at: position, mapGrid: mapGrid)
+        tileSelector = mapGrid.contains(position)
+            ? TileSelector(position: position, showTime: .now)
+            : nil
         gameSession?.requestMove(to: position)
     }
 
@@ -470,8 +482,17 @@ extension MapScene {
         var scene = MapSceneRenderer.Scene(fog: fog)
 
         scene.world = worldResource
-        scene.tileSelector = tileSelectorResource
         scene.spriteDrawables = spriteDrawables
+
+        if let tileSelector, let tileSelectorTexture,
+           !tileSelector.isExpired(at: now),
+           mapGrid.contains(tileSelector.position) {
+            scene.tileSelector = MapSceneRenderer.Scene.TileSelector(
+                position: tileSelector.position,
+                cell: mapGrid[tileSelector.position],
+                texture: tileSelectorTexture
+            )
+        }
 
         scene.effects = effects.values
             .compactMap { effect in

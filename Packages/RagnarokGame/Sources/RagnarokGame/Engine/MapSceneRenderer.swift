@@ -29,6 +29,12 @@ final class MapSceneRenderer {
             let worldPosition: SIMD3<Float>
         }
 
+        struct TileSelector {
+            let position: SIMD2<Int>
+            let cell: MapGrid.Cell
+            let texture: any MTLTexture
+        }
+
         struct CombatText {
             let vertices: [SpriteVertex]
             let worldPosition: SIMD3<Float>
@@ -37,7 +43,7 @@ final class MapSceneRenderer {
 
         var fog: Fog
         var world: WorldRenderResource?
-        var tileSelector: TileSelectorRenderResource?
+        var tileSelector: MapSceneRenderer.Scene.TileSelector?
         var spriteDrawables: [SpriteLayerDrawable] = []
         var effects: [MapSceneRenderer.Scene.Effect] = []
         var gauges: [MapSceneRenderer.Scene.Gauge] = []
@@ -193,8 +199,7 @@ final class MapSceneRenderer {
 
         if let tileSelector = scene.tileSelector {
             tileSelectorRenderer.render(
-                resource: tileSelector,
-                atTime: time,
+                tileSelector: tileSelector,
                 fog: scene.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,

@@ -43,20 +43,13 @@ final class TileSelectorRenderer {
     }
 
     func render(
-        resource: TileSelectorRenderResource,
-        atTime time: TimeInterval,
+        tileSelector: MapSceneRenderer.Scene.TileSelector,
         fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard resource.vertexCount > 0 else {
-            return
-        }
-
-        guard time - resource.selectionShowTime < 0.5 else {
-            return
-        }
+        let vertices = makeVertices(position: tileSelector.position, cell: tileSelector.cell)
 
         var vertexUniforms = TileVertexUniforms(
             modelMatrix: modelMatrix,
@@ -74,7 +67,9 @@ final class TileSelectorRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
+        vertices.withUnsafeBytes { bytes in
+            renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
+        }
         renderCommandEncoder.setVertexBytes(
             &vertexUniforms,
             length: MemoryLayout<TileVertexUniforms>.stride,
@@ -85,7 +80,28 @@ final class TileSelectorRenderer {
             length: MemoryLayout<TileFragmentUniforms>.stride,
             index: 0
         )
-        renderCommandEncoder.setFragmentTexture(resource.selectionTexture, index: 0)
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
+        renderCommandEncoder.setFragmentTexture(tileSelector.texture, index: 0)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+    }
+
+    private func makeVertices(position: SIMD2<Int>, cell: MapGrid.Cell) -> [TileVertex] {
+        let x = Float(position.x)
+        let y = Float(position.y)
+
+        // The model matrix turns these into render space. The +0.1 vertical offset
+        // keeps the overlay above the tile surface.
+        let p0 = SIMD3<Float>(x, -(cell.bottomLeftAltitude + 0.1), y)
+        let p1 = SIMD3<Float>(x + 1, -(cell.bottomRightAltitude + 0.1), y)
+        let p2 = SIMD3<Float>(x + 1, -(cell.topRightAltitude + 0.1), y + 1)
+        let p3 = SIMD3<Float>(x, -(cell.topLeftAltitude + 0.1), y + 1)
+
+        return [
+            TileVertex(position: p0, textureCoordinate: [0, 0]),
+            TileVertex(position: p1, textureCoordinate: [1, 0]),
+            TileVertex(position: p2, textureCoordinate: [1, 1]),
+            TileVertex(position: p2, textureCoordinate: [1, 1]),
+            TileVertex(position: p3, textureCoordinate: [0, 1]),
+            TileVertex(position: p0, textureCoordinate: [0, 0]),
+        ]
     }
 }
