@@ -10,13 +10,13 @@ import RagnarokShaders
 import simd
 
 /// An object's health and spell point bars, drawn as a billboard around its anchor.
-final class Gauge {
-    let objectType: MapObjectType
+struct Gauge {
+    private let objectType: MapObjectType
 
-    var hp: Int
-    var maxHp: Int
-    var sp: Int?
-    var maxSp: Int?
+    private let hp: Int
+    private let maxHp: Int
+    private let sp: Int
+    private let maxSp: Int
 
     /// Bar size in sprite pixels, of which 32 make one world unit.
     private let barWidth: Float = 60
@@ -28,15 +28,15 @@ final class Gauge {
     private let backgroundColor = SIMD4<Float>(0.259, 0.259, 0.259, 1)
     private let spellPointsColor = SIMD4<Float>(0.094, 0.388, 0.871, 1)
 
-    init(hp: Int, maxHp: Int, sp: Int? = nil, maxSp: Int? = nil, objectType: MapObjectType) {
-        self.hp = hp
-        self.maxHp = maxHp
-        self.sp = sp
-        self.maxSp = maxSp
-        self.objectType = objectType
+    init(object: MapSceneMapObject) {
+        objectType = object.type
+        hp = object.hp
+        maxHp = object.maxHp
+        sp = object.sp
+        maxSp = object.maxSp
     }
 
-    /// The quads that draw the bars, in sprite space around `worldPosition`.
+    /// The quads that draw the bars, in sprite space around the object's anchor.
     func makeVertices() -> [SpriteVertex] {
         guard maxHp > 0 else {
             return []
@@ -47,7 +47,7 @@ final class Gauge {
         var bars: [(percentage: Float, color: SIMD4<Float>)] = [
             (healthPercentage, healthColor(percentage: healthPercentage))
         ]
-        if let sp, let maxSp, maxSp > 0 {
+        if maxSp > 0 {
             bars.append((Float(sp) / Float(maxSp), spellPointsColor))
         }
 

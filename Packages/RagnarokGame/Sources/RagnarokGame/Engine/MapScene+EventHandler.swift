@@ -22,16 +22,12 @@ extension MapScene {
         switch property {
         case .hp:
             player.hp = value
-            gauges[player.objectID]?.hp = value
         case .maxhp:
             player.maxHp = value
-            gauges[player.objectID]?.maxHp = value
         case .sp:
             player.sp = value
-            gauges[player.objectID]?.sp = value
         case .maxsp:
             player.maxSp = value
-            gauges[player.objectID]?.maxSp = value
         default:
             break
         }
@@ -39,7 +35,6 @@ extension MapScene {
 
     public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
         player.hp = current
-        gauges[player.objectID]?.hp = current
 
         let combatText = CombatText(
             creationTime: .now,
@@ -53,7 +48,6 @@ extension MapScene {
 
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
         player.sp = current
-        gauges[player.objectID]?.sp = current
 
         let combatText = CombatText(
             creationTime: .now,
@@ -96,12 +90,8 @@ extension MapScene {
         object.hp = hp
         object.maxHp = maxHp
 
-        if let gauge = gauges[objectID] {
-            gauge.hp = hp
-            gauge.maxHp = maxHp
-        } else if object.type == .monster {
-            let gauge = Gauge(hp: hp, maxHp: maxHp, objectType: object.type)
-            gauges[objectID] = gauge
+        if object.type == .monster {
+            gaugeObjectIDs.insert(objectID)
         }
     }
 
@@ -194,7 +184,7 @@ extension MapScene {
         object.stopMovement()
         object.perform(.die, completion: .indefinite)
 
-        gauges.removeValue(forKey: objectID)
+        gaugeObjectIDs.remove(objectID)
 
         if objectID == player.objectID {
             state.isPlayerDead = true
@@ -208,6 +198,7 @@ extension MapScene {
         }
 
         if objectID == player.objectID {
+            gaugeObjectIDs.insert(objectID)
             state.isPlayerDead = false
         }
     }
@@ -223,27 +214,10 @@ extension MapScene {
     }
 
     public func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
-        let isVisible = effectState != .cloak
-
         if let mapObject = objects[objectID] {
             mapObject.bodyState = bodyState
             mapObject.healthState = healthState
             mapObject.effectState = effectState
-        }
-
-        if isVisible {
-            if objectID == player.objectID {
-                let gauge = Gauge(
-                    hp: player.hp,
-                    maxHp: player.maxHp,
-                    sp: player.sp,
-                    maxSp: player.maxSp,
-                    objectType: player.type
-                )
-                gauges[objectID] = gauge
-            }
-        } else if objectID == player.objectID {
-            gauges.removeValue(forKey: objectID)
         }
     }
 
@@ -507,7 +481,7 @@ extension MapScene {
 
     func removeObject(objectID: GameObjectID) {
         objects.removeValue(forKey: objectID)
-        gauges.removeValue(forKey: objectID)
+        gaugeObjectIDs.remove(objectID)
 
         let ownedEffectIDs = effects.compactMap { effectID, effect in
             effect.ownerObjectID == objectID ? effectID : nil

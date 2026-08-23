@@ -42,7 +42,9 @@ public final class MapScene {
 
     var objects: [GameObjectID: MapSceneMapObject] = [:]
     var items: [GameObjectID : MapSceneDroppedItem] = [:]
-    var gauges: [GameObjectID : Gauge] = [:]
+
+    /// The objects that show a gauge above them.
+    var gaugeObjectIDs: Set<GameObjectID> = []
 
     let pathFinder: PathFinder
 
@@ -96,13 +98,7 @@ public final class MapScene {
         )
         objects[player.objectID] = player
 
-        gauges[player.objectID] = Gauge(
-            hp: player.hp,
-            maxHp: player.maxHp,
-            sp: player.sp,
-            maxSp: player.maxSp,
-            objectType: player.type
-        )
+        gaugeObjectIDs.insert(player.objectID)
     }
 
     public func load(progress: Progress) async throws {
@@ -476,9 +472,14 @@ extension MapScene {
                 $0.resourceGroup.creationTime < $1.resourceGroup.creationTime
             }
 
-        scene.gauges = objects.compactMap { objectID, _ in
-            guard let vertices = gauges[objectID]?.makeVertices(), !vertices.isEmpty,
+        scene.gauges = gaugeObjectIDs.compactMap { objectID in
+            guard let object = objects[objectID],
+                  object.effectState != .cloak,
                   let worldPosition = worldPositions[objectID] else {
+                return nil
+            }
+            let vertices = Gauge(object: object).makeVertices()
+            guard !vertices.isEmpty else {
                 return nil
             }
             return MapSceneRenderer.Scene.Gauge(
