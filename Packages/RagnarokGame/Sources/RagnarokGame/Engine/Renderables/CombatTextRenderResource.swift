@@ -11,20 +11,21 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
-@MainActor
-final class CombatTextRenderResource {
-    let combatText: CombatText
-    let startPosition: SIMD3<Float>
-    let texture: (any MTLTexture)?
+struct CombatTextRenderResource {
+    let texture: any MTLTexture
     let frameWidth: Float
     let frameHeight: Float
     let spriteScale: SIMD2<Float>
     let color: SIMD4<Float>
 
-    init(
+    /// Where the target stood when the text was created. The text falls back to this
+    /// once the target has left the map.
+    let startWorldPosition: SIMD3<Float>
+
+    init?(
         device: any MTLDevice,
         combatText: CombatText,
-        startPosition: SIMD3<Float>,
+        startWorldPosition: SIMD3<Float>,
         spriteSet: CombatTextSpriteSet
     ) {
         let image = switch combatText.kind {
@@ -33,22 +34,24 @@ final class CombatTextRenderResource {
         case .miss:
             spriteSet.missImage
         }
-        let texture = MetalTextureFactory.makeTexture(
+
+        guard let texture = MetalTextureFactory.makeTexture(
             from: image,
             device: device,
             label: "combat-text-\(combatText.id.uuidString)"
-        )
+        ) else {
+            return nil
+        }
 
         let size = image.map {
             SIMD2<Float>(Float($0.width), Float($0.height))
         } ?? SIMD2<Float>(64, 24)
 
-        self.combatText = combatText
-        self.startPosition = startPosition
         self.texture = texture
         self.frameWidth = size.x
         self.frameHeight = size.y
         self.spriteScale = spriteSet.scale
+        self.startWorldPosition = startWorldPosition
         self.color = switch combatText.kind {
         case .hpRecovery:
             [0, 1, 0, 1]
@@ -65,95 +68,21 @@ final class CombatTextRenderResource {
         }
     }
 
-    func combatText(
-        for now: ContinuousClock.Instant,
-        targetPosition: SIMD3<Float>?,
-        cameraAzimuth: Float
-    ) -> MapSceneRenderer.Scene.CombatText? {
-        guard let texture else {
-            return nil
-        }
+    /// The quad that draws the text, in sprite space around its world position.
+    func makeVertices(scale: Float, alpha: Float) -> [SpriteVertex] {
+        let halfWidth = frameWidth * spriteScale.x * scale / 2
+        let halfHeight = frameHeight * spriteScale.y * scale / 2
 
-        let elapsedTime = now - combatText.startTime
-        let t = Float(elapsedTime / combatText.duration)
-        guard t >= 0, t < 1 else {
-            return nil
-        }
-
-        if combatText.kind == .combo, t > 0.15 {
-            return nil
-        }
-
-        let startPosition = targetPosition ?? self.startPosition
-
-        let scale: Float
-        let worldPosition: SIMD3<Float>
-        switch combatText.kind {
-        case .hpRecovery, .spRecovery:
-            scale = max((1 - t * 2) * 3, 0.8)
-            worldPosition = [
-                startPosition.x,
-                startPosition.y,
-                startPosition.z + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
-            ]
-        case .miss:
-            scale = 0.5
-            worldPosition = [
-                startPosition.x,
-                startPosition.y,
-                startPosition.z + 3.5 + 7 * t,
-            ]
-        case .damage:
-            scale = 4 * (1 - t)
-            let drift = drift(azimuth: cameraAzimuth) * t
-            worldPosition = [
-                startPosition.x + drift.x,
-                startPosition.y + drift.y,
-                startPosition.z + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
-            ]
-        case .combo, .finalCombo:
-            scale = min(t, 0.05) * 70
-            worldPosition = [
-                startPosition.x,
-                startPosition.y,
-                startPosition.z + 7 + t,
-            ]
-        }
-
-        guard scale > 0 else {
-            return nil
-        }
-
-        let halfW = frameWidth * spriteScale.x * scale / 2
-        let halfH = frameHeight * spriteScale.y * scale / 2
         var vertexColor = color
-        vertexColor.w *= 1 - t
+        vertexColor.w *= alpha
 
-        let vertices: [SpriteVertex] = [
-            SpriteVertex(position: [-halfW, -halfH], textureCoordinate: [0, 1], color: vertexColor),
-            SpriteVertex(position: [ halfW, -halfH], textureCoordinate: [1, 1], color: vertexColor),
-            SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: vertexColor),
-            SpriteVertex(position: [ halfW, -halfH], textureCoordinate: [1, 1], color: vertexColor),
-            SpriteVertex(position: [ halfW,  halfH], textureCoordinate: [1, 0], color: vertexColor),
-            SpriteVertex(position: [-halfW,  halfH], textureCoordinate: [0, 0], color: vertexColor),
+        return [
+            SpriteVertex(position: [-halfWidth, -halfHeight], textureCoordinate: [0, 1], color: vertexColor),
+            SpriteVertex(position: [ halfWidth, -halfHeight], textureCoordinate: [1, 1], color: vertexColor),
+            SpriteVertex(position: [-halfWidth,  halfHeight], textureCoordinate: [0, 0], color: vertexColor),
+            SpriteVertex(position: [ halfWidth, -halfHeight], textureCoordinate: [1, 1], color: vertexColor),
+            SpriteVertex(position: [ halfWidth,  halfHeight], textureCoordinate: [1, 0], color: vertexColor),
+            SpriteVertex(position: [-halfWidth,  halfHeight], textureCoordinate: [0, 0], color: vertexColor),
         ]
-
-        return MapSceneRenderer.Scene.CombatText(vertices: vertices, worldPosition: worldPosition, texture: texture)
-    }
-
-    func drift(azimuth: Float) -> SIMD3<Float> {
-        let angle = azimuth
-        let cosAngle = cos(angle)
-        let sinAngle = sin(angle)
-        let localDrift = SIMD2<Float>(4, -4)
-        let worldDrift = SIMD2<Float>(
-            localDrift.x * cosAngle - localDrift.y * sinAngle,
-            localDrift.x * sinAngle + localDrift.y * cosAngle
-        )
-        return SIMD3<Float>(worldDrift.x, -worldDrift.y, 0)
-    }
-
-    func isExpired(at now: ContinuousClock.Instant) -> Bool {
-        now - combatText.startTime > combatText.duration + .seconds(1)
     }
 }

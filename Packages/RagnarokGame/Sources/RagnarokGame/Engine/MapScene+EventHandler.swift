@@ -668,20 +668,25 @@ extension MapScene {
             return
         }
 
-        guard combatTextResources[combatText.id] == nil else {
+        guard combatTexts[combatText.id] == nil else {
             return
         }
 
-        guard let startPosition = worldPosition(forObjectID: combatText.target.objectID) else {
+        guard let startWorldPosition = worldPosition(forObjectID: combatText.target.objectID) else {
             return
         }
 
-        combatTextResources[combatText.id] = CombatTextRenderResource(
+        guard let resource = CombatTextRenderResource(
             device: renderer.device,
             combatText: combatText,
-            startPosition: startPosition,
+            startWorldPosition: startWorldPosition,
             spriteSet: combatTextSpriteSet
-        )
+        ) else {
+            return
+        }
+
+        combatTexts[combatText.id] = combatText
+        combatTextResources[combatText.id] = resource
     }
 }
 

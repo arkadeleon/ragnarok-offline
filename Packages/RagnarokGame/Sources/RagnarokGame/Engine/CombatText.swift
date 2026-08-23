@@ -60,4 +60,8 @@ struct CombatText: Identifiable, Sendable {
             .milliseconds(3000)
         }
     }
+
+    func isExpired(at time: ContinuousClock.Instant) -> Bool {
+        time - startTime > duration + .seconds(1)
+    }
 }

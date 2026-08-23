@@ -49,7 +49,9 @@ public final class MapScene {
     let pathFinder: PathFinder
 
     var spriteAssetStore: SpriteAssetStore?
+
     var combatTextSpriteSet: CombatTextSpriteSet?
+    var combatTexts: [UUID : CombatText] = [:]
     var combatTextResources: [UUID : CombatTextRenderResource] = [:]
 
     var effectAssetStore: EffectAssetStore?
@@ -162,7 +164,7 @@ public final class MapScene {
         spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
         items.removeAll()
-        combatTextSpriteSet = nil
+
         for task in effectLoadTasks.values {
             task.cancel()
         }
@@ -170,6 +172,8 @@ public final class MapScene {
         effectAssetStore = nil
         effectLoadTasks.removeAll()
 
+        combatTextSpriteSet = nil
+        combatTexts.removeAll()
         combatTextResources.removeAll()
 
         effects.removeAll()
@@ -424,8 +428,12 @@ extension MapScene {
             removeObject(objectID: objectID)
         }
 
-        combatTextResources = combatTextResources.filter { _, resource in
-            !resource.isExpired(at: now)
+        let expiredCombatTextObjectIDs = combatTexts.compactMap { combatTextObjectID, combatText in
+            combatText.isExpired(at: now) ? combatTextObjectID : nil
+        }
+        for combatTextObjectID in expiredCombatTextObjectIDs {
+            combatTexts.removeValue(forKey: combatTextObjectID)
+            combatTextResources.removeValue(forKey: combatTextObjectID)
         }
 
         let expiredEffectObjectIDs = effectRenderResources.compactMap { effectObjectID, resourceGroup in
@@ -497,8 +505,7 @@ extension MapScene {
 
         // A target shows one combo text at a time: the newest one that has started
         // hides the ones before it.
-        let comboTexts = combatTextResources.values
-            .map(\.combatText)
+        let comboTexts = combatTexts.values
             .filter { $0.kind.isCombo && $0.startTime <= now }
             .map { ($0.target.objectID, $0) }
         let latestComboTexts = Dictionary(
@@ -506,9 +513,8 @@ extension MapScene {
             uniquingKeysWith: { $0.startTime > $1.startTime ? $0 : $1 }
         )
 
-        scene.combatTexts = combatTextResources.values
-            .filter {
-                let combatText = $0.combatText
+        scene.combatTexts = combatTexts.values
+            .filter { combatText in
                 if combatText.kind.isCombo, let latestComboText = latestComboTexts[combatText.target.objectID] {
                     return combatText.id == latestComboText.id
                 } else {
@@ -516,13 +522,26 @@ extension MapScene {
                 }
             }
             .sorted {
-                $0.combatText.creationTime < $1.combatText.creationTime
+                $0.creationTime < $1.creationTime
             }
-            .compactMap {
-                $0.combatText(
-                    for: now,
-                    targetPosition: worldPositions[$0.combatText.target.objectID],
+            .compactMap { combatText in
+                guard let resource = combatTextResources[combatText.id] else {
+                    return nil
+                }
+
+                let anchor = worldPositions[combatText.target.objectID] ?? resource.startWorldPosition
+                guard let animation = combatText.animation(
+                    at: now,
+                    anchor: anchor,
                     cameraAzimuth: cameraState.azimuth
+                ) else {
+                    return nil
+                }
+
+                return MapSceneRenderer.Scene.CombatText(
+                    vertices: resource.makeVertices(scale: animation.scale, alpha: animation.alpha),
+                    worldPosition: animation.worldPosition,
+                    texture: resource.texture
                 )
             }
 
