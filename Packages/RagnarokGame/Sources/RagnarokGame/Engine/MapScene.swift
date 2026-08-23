@@ -30,7 +30,7 @@ public final class MapScene {
     public let mapName: String
 
     let world: WorldResource
-    let player: MapScenePlayerObject
+    let player: MapSceneMapObject
     let resourceManager: ResourceManager
     weak var gameSession: GameSession?
 
@@ -87,7 +87,7 @@ public final class MapScene {
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
-        self.player = MapScenePlayerObject(
+        self.player = MapSceneMapObject(
             account: account,
             character: character,
             gridPosition: playerPosition,

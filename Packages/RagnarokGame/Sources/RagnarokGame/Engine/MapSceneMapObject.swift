@@ -10,7 +10,7 @@ import RagnarokModels
 import RagnarokSprite
 import simd
 
-class MapSceneMapObject {
+final class MapSceneMapObject {
     let objectID: GameObjectID
 
     var type: MapObjectType
@@ -29,6 +29,8 @@ class MapSceneMapObject {
     var garment: Int
     var hp: Int
     var maxHp: Int
+    var sp: Int
+    var maxSp: Int
     var bodyState: StatusChangeOption1
     var healthState: StatusChangeOption2
     var effectState: StatusChangeOption
@@ -75,6 +77,8 @@ class MapSceneMapObject {
         garment = character.robePalette
         hp = character.hp
         maxHp = character.maxHp
+        sp = character.sp
+        maxSp = character.maxSp
         bodyState = StatusChangeOption1(rawValue: character.bodyState) ?? .none
         healthState = StatusChangeOption2(rawValue: character.healthState) ?? .none
         effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
@@ -94,6 +98,8 @@ class MapSceneMapObject {
         object: MapObject,
         hp: Int,
         maxHp: Int,
+        sp: Int = 0,
+        maxSp: Int = 0,
         gridPosition: SIMD2<Int>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
@@ -116,6 +122,8 @@ class MapSceneMapObject {
         garment = object.garment
         self.hp = hp
         self.maxHp = maxHp
+        self.sp = sp
+        self.maxSp = maxSp
         bodyState = object.bodyState
         healthState = object.healthState
         effectState = object.effectState
@@ -182,96 +190,3 @@ class MapSceneMapObject {
     }
 }
 
-extension MapSceneMapObject {
-    static func make(
-        object: MapObject,
-        hp: Int,
-        maxHp: Int,
-        sp: Int = 0,
-        maxSp: Int = 0,
-        gridPosition: SIMD2<Int>,
-        direction: SpriteDirection,
-        headDirection: SpriteHeadDirection
-    ) -> MapSceneMapObject {
-        switch object.type {
-        case .pc:
-            MapScenePlayerObject(
-                object: object,
-                hp: hp,
-                maxHp: maxHp,
-                sp: sp,
-                maxSp: maxSp,
-                gridPosition: gridPosition,
-                direction: direction,
-                headDirection: headDirection
-            )
-        case .monster:
-            MapSceneMonsterObject(
-                object: object,
-                hp: hp,
-                maxHp: maxHp,
-                gridPosition: gridPosition,
-                direction: direction,
-                headDirection: headDirection
-            )
-        default:
-            MapSceneNPCObject(
-                object: object,
-                hp: hp,
-                maxHp: maxHp,
-                gridPosition: gridPosition,
-                direction: direction,
-                headDirection: headDirection
-            )
-        }
-    }
-}
-
-final class MapScenePlayerObject: MapSceneMapObject {
-    var sp: Int
-    var maxSp: Int
-
-    override init(
-        account: AccountInfo,
-        character: CharacterInfo,
-        gridPosition: SIMD2<Int>,
-        direction: SpriteDirection,
-        headDirection: SpriteHeadDirection
-    ) {
-        sp = character.sp
-        maxSp = character.maxSp
-        super.init(
-            account: account,
-            character: character,
-            gridPosition: gridPosition,
-            direction: direction,
-            headDirection: headDirection
-        )
-    }
-
-    init(
-        object: MapObject,
-        hp: Int,
-        maxHp: Int,
-        sp: Int,
-        maxSp: Int,
-        gridPosition: SIMD2<Int>,
-        direction: SpriteDirection,
-        headDirection: SpriteHeadDirection
-    ) {
-        self.sp = sp
-        self.maxSp = maxSp
-        super.init(
-            object: object,
-            hp: hp,
-            maxHp: maxHp,
-            gridPosition: gridPosition,
-            direction: direction,
-            headDirection: headDirection
-        )
-    }
-}
-
-final class MapSceneMonsterObject: MapSceneMapObject {}
-
-final class MapSceneNPCObject: MapSceneMapObject {}

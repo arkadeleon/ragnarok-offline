@@ -106,7 +106,7 @@ extension MapScene {
     }
 
     public func onMapObjectSpawned(object: MapObject, position: SIMD2<Int>, direction: Direction, headDirection: HeadDirection) {
-        let mapObject = MapSceneMapObject.make(
+        let mapObject = MapSceneMapObject(
             object: object,
             hp: object.hp,
             maxHp: object.maxHp,
@@ -139,7 +139,7 @@ extension MapScene {
         let isNew = objects[object.objectID] == nil
 
         if isNew {
-            let mapObject = MapSceneMapObject.make(
+            let mapObject = MapSceneMapObject(
                 object: object,
                 hp: object.hp,
                 maxHp: object.maxHp,
