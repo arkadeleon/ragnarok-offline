@@ -51,8 +51,10 @@ public final class MapScene {
     var spriteAssetStore: SpriteAssetStore?
     var combatTextSpriteSet: CombatTextSpriteSet?
     var combatTextResources: [UUID : CombatTextRenderResource] = [:]
+
     var effectAssetStore: EffectAssetStore?
     var effects: [UUID : MapSceneEffect] = [:]
+    var effectRenderResources: [UUID : EffectRenderResourceGroup] = [:]
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     var fog: Fog = .disabled
@@ -169,7 +171,9 @@ public final class MapScene {
         effectLoadTasks.removeAll()
 
         combatTextResources.removeAll()
+
         effects.removeAll()
+        effectRenderResources.removeAll()
 
         worldResource = nil
         tileSelectorResource = nil
@@ -424,8 +428,11 @@ extension MapScene {
             !resource.isExpired(at: now)
         }
 
-        effects = effects.filter { _, effect in
-            !effect.isReady || !effect.isExpired(atTime: time)
+        let expiredEffectObjectIDs = effectRenderResources.compactMap { effectObjectID, resourceGroup in
+            resourceGroup.isExpired(atTime: time) ? effectObjectID : nil
+        }
+        for effectObjectID in expiredEffectObjectIDs {
+            removeEffect(objectID: effectObjectID)
         }
 
         var worldPositions: [GameObjectID : SIMD3<Float>] = [:]
@@ -460,7 +467,7 @@ extension MapScene {
 
         scene.effects = effects.values
             .compactMap { effect in
-                guard let resourceGroup = effect.renderResourceGroup else {
+                guard let resourceGroup = effectRenderResources[effect.id] else {
                     return nil
                 }
                 return MapSceneRenderer.Scene.Effect(

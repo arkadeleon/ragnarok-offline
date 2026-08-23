@@ -483,12 +483,11 @@ extension MapScene {
         objects.removeValue(forKey: objectID)
         gaugeObjectIDs.remove(objectID)
 
-        let ownedEffectIDs = effects.compactMap { effectID, effect in
+        let ownedEffectObjectIDs = effects.compactMap { effectID, effect in
             effect.ownerObjectID == objectID ? effectID : nil
         }
-        for effectID in ownedEffectIDs {
-            effectLoadTasks.removeValue(forKey: effectID)?.cancel()
-            effects.removeValue(forKey: effectID)
+        for effectObjectID in ownedEffectObjectIDs {
+            removeEffect(objectID: effectObjectID)
         }
     }
 
@@ -841,7 +840,7 @@ extension MapScene {
         let effect = MapSceneEffect(
             reference: effectReference,
             creationTime: creationTime,
-            worldPosition: mapGrid.worldPosition(for: gridPosition),
+            gridPosition: gridPosition,
             sourceWorldPosition: sourceWorldPosition,
             targetObjectID: targetObjectID,
             ownerObjectID: ownerObjectID,
@@ -878,18 +877,28 @@ extension MapScene {
                     }
                 }
 
-                effect.renderResourceGroup = EffectRenderResourceGroup(
+                guard effects[effectID] != nil else {
+                    return
+                }
+
+                effectRenderResources[effectID] = EffectRenderResourceGroup(
                     device: renderer.device,
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,
                     delay: effect.delay,
-                    worldPosition: effect.worldPosition,
+                    worldPosition: mapGrid.worldPosition(for: effect.gridPosition),
                     sourceWorldPosition: effect.sourceWorldPosition
                 )
             } catch {
                 logger.warning("Metal map scene failed to load effect \(effect.reference): \(error)")
             }
         }
+    }
+
+    func removeEffect(objectID: UUID) {
+        effects.removeValue(forKey: objectID)
+        effectRenderResources.removeValue(forKey: objectID)
+        effectLoadTasks.removeValue(forKey: objectID)?.cancel()
     }
 }
 

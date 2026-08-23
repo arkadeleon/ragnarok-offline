@@ -7,25 +7,29 @@
 
 import Foundation
 import RagnarokEffects
-import RagnarokRendering
 import simd
 
 final class MapSceneEffect: Identifiable {
     let id: UUID
     let reference: EffectReference
     let creationTime: TimeInterval
-    let worldPosition: SIMD3<Float>
-    let sourceWorldPosition: SIMD3<Float>?
-    let targetObjectID: GameObjectID?
-    let ownerObjectID: GameObjectID?
-    let delay: TimeInterval
+    let gridPosition: SIMD2<Int>
 
-    var renderResourceGroup: EffectRenderResourceGroup?
+    /// Where the effect starts from, taken when it was cast. A projectile flies from
+    /// here to the effect position.
+    let sourceWorldPosition: SIMD3<Float>?
+
+    let targetObjectID: GameObjectID?
+
+    /// The object this effect belongs to. The effect ends when that object leaves the map.
+    let ownerObjectID: GameObjectID?
+
+    let delay: TimeInterval
 
     init(
         reference: EffectReference,
         creationTime: TimeInterval,
-        worldPosition: SIMD3<Float>,
+        gridPosition: SIMD2<Int>,
         sourceWorldPosition: SIMD3<Float>? = nil,
         targetObjectID: GameObjectID?,
         ownerObjectID: GameObjectID?,
@@ -34,18 +38,10 @@ final class MapSceneEffect: Identifiable {
         self.id = UUID()
         self.reference = reference
         self.creationTime = creationTime
-        self.worldPosition = worldPosition
+        self.gridPosition = gridPosition
         self.sourceWorldPosition = sourceWorldPosition
         self.targetObjectID = targetObjectID
         self.ownerObjectID = ownerObjectID
         self.delay = delay
-    }
-
-    var isReady: Bool {
-        renderResourceGroup != nil
-    }
-
-    func isExpired(atTime time: TimeInterval) -> Bool {
-        renderResourceGroup?.isExpired(atTime: time) ?? false
     }
 }
