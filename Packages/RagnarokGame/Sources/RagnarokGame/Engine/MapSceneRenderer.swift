@@ -64,10 +64,7 @@ final class MapSceneRenderer {
     private let effectRenderer: EffectRenderer
     private let tileSelectorRenderer: TileSelectorRenderer
 
-    init(configuration: RenderConfiguration) throws {
-        guard let device = MTLCreateSystemDefaultDevice() else {
-            fatalError("MapRuntimeRenderer: Metal is not available on this device")
-        }
+    init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
         self.configuration = configuration
 

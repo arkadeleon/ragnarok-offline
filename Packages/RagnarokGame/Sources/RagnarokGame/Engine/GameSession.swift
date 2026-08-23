@@ -678,21 +678,14 @@ final public class GameSession {
                 let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
                 let world = try await context.resourceManager.world(mapName: mapName)
 
-                #if os(visionOS)
-                let configuration = RenderConfiguration.immersive
-                #else
-                let configuration = RenderConfiguration.default
-                #endif
-
-                let scene = try MapScene(
+                let scene = MapScene(
                     mapName: mapName,
                     world: world,
                     account: account,
                     character: character,
                     playerPosition: position,
                     resourceManager: context.resourceManager,
-                    gameSession: self,
-                    configuration: configuration
+                    gameSession: self
                 )
 
                 do {

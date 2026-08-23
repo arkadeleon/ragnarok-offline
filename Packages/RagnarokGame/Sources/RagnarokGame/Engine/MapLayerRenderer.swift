@@ -34,13 +34,14 @@ final class MapLayerRenderer {
     private let spatialInput: MapSpatialInput
 
     init?(layerRenderer: LayerRenderer, scene: MapScene) {
-        guard let commandQueue = scene.renderer.device.makeCommandQueue() else {
+        guard let renderer = try? MapSceneRenderer(device: scene.device, configuration: .immersive),
+              let commandQueue = scene.device.makeCommandQueue() else {
             return nil
         }
 
         self.layerRenderer = layerRenderer
         self.scene = scene
-        self.renderer = scene.renderer
+        self.renderer = renderer
         self.commandQueue = commandQueue
         self.spatialInput = MapSpatialInput(scene: scene)
     }

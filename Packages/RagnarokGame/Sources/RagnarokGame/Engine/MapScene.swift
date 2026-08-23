@@ -27,6 +27,8 @@ private enum MapMovementDecision {
 
 @MainActor
 public final class MapScene {
+    let device: any MTLDevice
+
     public let mapName: String
 
     let world: WorldResource
@@ -34,7 +36,6 @@ public final class MapScene {
     let resourceManager: ResourceManager
     weak var gameSession: GameSession?
 
-    let renderer: MapSceneRenderer
     let audioPlayer: MapAudioPlayer
 
     let mapGrid: MapGrid
@@ -81,14 +82,17 @@ public final class MapScene {
         character: CharacterInfo,
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
-        gameSession: GameSession,
-        configuration: RenderConfiguration
-    ) throws {
+        gameSession: GameSession
+    ) {
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            fatalError("MapScene: Metal is not available on this device")
+        }
+        self.device = device
+
         self.mapName = mapName
         self.world = world
         self.resourceManager = resourceManager
         self.gameSession = gameSession
-        self.renderer = try MapSceneRenderer(configuration: configuration)
         self.audioPlayer = MapAudioPlayer(resourceManager: resourceManager)
 
         self.mapGrid = MapGrid(gat: world.gat)
@@ -138,14 +142,14 @@ public final class MapScene {
             fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
         }
 
-        worldResource = WorldRenderResource(device: renderer.device, asset: worldAsset)
+        worldResource = WorldRenderResource(device: device, asset: worldAsset)
 
         do {
             let path = ResourcePath.textureDirectory.appending(["grid.tga"])
             let image = try await resourceManager.image(at: path)
             tileSelectorTexture = MetalTextureFactory.makeTexture(
                 from: image.cgImage,
-                device: renderer.device,
+                device: device,
                 label: "tile-selector"
             )
         } catch {
@@ -153,7 +157,7 @@ public final class MapScene {
         }
 
         spriteAssetStore = SpriteAssetStore(
-            device: renderer.device,
+            device: device,
             resourceManager: resourceManager
         )
 

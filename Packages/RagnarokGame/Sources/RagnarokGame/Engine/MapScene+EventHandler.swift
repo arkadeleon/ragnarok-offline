@@ -677,7 +677,7 @@ extension MapScene {
         }
 
         guard let resource = CombatTextRenderResource(
-            device: renderer.device,
+            device: device,
             combatText: combatText,
             startWorldPosition: startWorldPosition,
             spriteSet: combatTextSpriteSet
@@ -887,7 +887,7 @@ extension MapScene {
                 }
 
                 effectRenderResources[effectID] = EffectRenderResourceGroup(
-                    device: renderer.device,
+                    device: device,
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,
                     delay: effect.delay,
