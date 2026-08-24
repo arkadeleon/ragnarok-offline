@@ -34,10 +34,20 @@ struct CombatText: Identifiable, Sendable {
     let amount: Int
     let kind: CombatText.Kind
     let delay: Duration
-    let duration: Duration
 
     var startTime: ContinuousClock.Instant {
         creationTime + delay
+    }
+
+    var duration: Duration {
+        switch kind {
+        case .hpRecovery, .spRecovery, .damage:
+            .milliseconds(1500)
+        case .miss:
+            .milliseconds(800)
+        case .combo, .finalCombo:
+            .milliseconds(3000)
+        }
     }
 
     init(
@@ -53,14 +63,6 @@ struct CombatText: Identifiable, Sendable {
         self.amount = amount
         self.kind = kind ?? (amount == 0 ? .miss : .damage)
         self.delay = delay
-        self.duration = switch self.kind {
-        case .hpRecovery, .spRecovery, .damage:
-            .milliseconds(1500)
-        case .miss:
-            .milliseconds(800)
-        case .combo, .finalCombo:
-            .milliseconds(3000)
-        }
     }
 
     func isExpired(at time: ContinuousClock.Instant) -> Bool {
