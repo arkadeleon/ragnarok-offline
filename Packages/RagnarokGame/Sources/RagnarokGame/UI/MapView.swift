@@ -36,13 +36,15 @@ final class MapViewController: UIViewController, MTKViewDelegate {
     init(scene: MapScene) {
         self.scene = scene
 
+        let device = scene.renderResources.device
+
         do {
-            self.renderer = try MapSceneRenderer(device: scene.device, configuration: .default)
+            self.renderer = try MapSceneRenderer(device: device, configuration: .default)
         } catch {
             fatalError("MapViewController: failed to create map scene renderer: \(error)")
         }
 
-        guard let commandQueue = scene.device.makeCommandQueue() else {
+        guard let commandQueue = device.makeCommandQueue() else {
             fatalError("MapViewController: failed to create Metal command queue")
         }
         self.commandQueue = commandQueue
@@ -226,13 +228,15 @@ final class MapViewController: NSViewController, MTKViewDelegate {
     init(scene: MapScene) {
         self.scene = scene
 
+        let device = scene.renderResources.device
+
         do {
-            self.renderer = try MapSceneRenderer(device: scene.device, configuration: .default)
+            self.renderer = try MapSceneRenderer(device: device, configuration: .default)
         } catch {
             fatalError("MapViewController: failed to create map scene renderer: \(error)")
         }
 
-        guard let commandQueue = scene.device.makeCommandQueue() else {
+        guard let commandQueue = device.makeCommandQueue() else {
             fatalError("MapViewController: failed to create Metal command queue")
         }
         self.commandQueue = commandQueue

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Metal
 import Network
 import Observation
 import RagnarokConstants
@@ -678,6 +679,11 @@ final public class GameSession {
                 let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
                 let world = try await context.resourceManager.world(mapName: mapName)
 
+                guard let device = MTLCreateSystemDefaultDevice() else {
+                    fatalError("GameSession: Metal is not available on this device")
+                }
+                let renderResources = MapSceneRenderResources(device: device)
+
                 let scene = MapScene(
                     mapName: mapName,
                     world: world,
@@ -685,6 +691,7 @@ final public class GameSession {
                     character: character,
                     playerPosition: position,
                     resourceManager: context.resourceManager,
+                    renderResources: renderResources,
                     gameSession: self
                 )
 

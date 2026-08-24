@@ -27,13 +27,12 @@ private enum MapMovementDecision {
 
 @MainActor
 public final class MapScene {
-    let device: any MTLDevice
-
     public let mapName: String
 
     let world: WorldResource
     let player: MapSceneMapObject
     let resourceManager: ResourceManager
+    let renderResources: MapSceneRenderResources
     weak var gameSession: GameSession?
 
     let audioPlayer: MapAudioPlayer
@@ -61,10 +60,7 @@ public final class MapScene {
     var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     var fog: Fog = .disabled
-    var worldResource: WorldRenderResource?
-
     var tileSelector: TileSelector?
-    var tileSelectorTexture: (any MTLTexture)?
 
     var spriteDrawables: [SpriteLayerDrawable] = []
 
@@ -82,16 +78,13 @@ public final class MapScene {
         character: CharacterInfo,
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
+        renderResources: MapSceneRenderResources,
         gameSession: GameSession
     ) {
-        guard let device = MTLCreateSystemDefaultDevice() else {
-            fatalError("MapScene: Metal is not available on this device")
-        }
-        self.device = device
-
         self.mapName = mapName
         self.world = world
         self.resourceManager = resourceManager
+        self.renderResources = renderResources
         self.gameSession = gameSession
         self.audioPlayer = MapAudioPlayer(resourceManager: resourceManager)
 
@@ -142,22 +135,18 @@ public final class MapScene {
             fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
         }
 
-        worldResource = WorldRenderResource(device: device, asset: worldAsset)
+        renderResources.loadWorld(worldAsset)
 
         do {
             let path = ResourcePath.textureDirectory.appending(["grid.tga"])
             let image = try await resourceManager.image(at: path)
-            tileSelectorTexture = MetalTextureFactory.makeTexture(
-                from: image.cgImage,
-                device: device,
-                label: "tile-selector"
-            )
+            renderResources.loadTileSelectorTexture(from: image.cgImage)
         } catch {
             logger.warning("Map scene failed to load grid.tga: \(error)")
         }
 
         spriteAssetStore = SpriteAssetStore(
-            device: device,
+            device: renderResources.device,
             resourceManager: resourceManager
         )
 
@@ -190,10 +179,8 @@ public final class MapScene {
         effects.removeAll()
         effectRenderResources.removeAll()
 
-        worldResource = nil
-
         tileSelector = nil
-        tileSelectorTexture = nil
+        renderResources.removeAll()
 
         spriteDrawables.removeAll()
     }
@@ -485,10 +472,10 @@ extension MapScene {
 
         var snapshot = MapSceneRenderSnapshot(fog: fog)
 
-        snapshot.world = worldResource
+        snapshot.world = renderResources.world
         snapshot.spriteDrawables = spriteDrawables
 
-        if let tileSelector, let tileSelectorTexture,
+        if let tileSelector, let tileSelectorTexture = renderResources.tileSelectorTexture,
            !tileSelector.isExpired(at: now),
            mapGrid.contains(tileSelector.position) {
             snapshot.tileSelector = MapSceneRenderSnapshot.TileSelector(
