@@ -34,21 +34,6 @@ final class MapSceneRuntime {
     }
 
     func load(progress: Progress) async throws {
-        do {
-            try await prepareRenderResources(progress: progress)
-            await scene.load()
-        } catch {
-            logger.warning("Map scene failed to load world asset: \(error)")
-        }
-    }
-
-    func unload() {
-        scene.unload()
-        renderResources.removeAll()
-        lastCamera = nil
-    }
-
-    private func prepareRenderResources(progress: Progress) async throws {
         let worldAssetLoader = WorldAssetLoader()
         let worldAsset = try await worldAssetLoader.load(
             world: world,
@@ -80,6 +65,14 @@ final class MapSceneRuntime {
         }
 
         renderResources.prepareEffects(resourceManager: scene.resourceManager)
+
+        await scene.load()
+    }
+
+    func unload() {
+        scene.unload()
+        renderResources.removeAll()
+        lastCamera = nil
     }
 
     func update(at now: ContinuousClock.Instant, renderTime: TimeInterval) {
