@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import RagnarokResources
+import RagnarokSprite
 import SwiftUI
 
 private let mapSize: CGFloat = 96
@@ -91,31 +92,27 @@ private struct MinimapMapView: View {
     var showsFullMap: Bool
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 1.0 / 30.0)) { _ in
-            let position = scene.player.gridPosition
-
-            ZStack {
-                if let mapImage {
-                    Image(decorative: mapImage, scale: 1)
-                        .resizable()
-                        .interpolation(.none)
-                        .frame(
-                            width: mapDisplaySize(for: mapImage).width,
-                            height: mapDisplaySize(for: mapImage).height
-                        )
-                        .position(mapCenter(for: mapImage, playerPosition: position))
-                }
-
-                if let arrowImage {
-                    Image(decorative: arrowImage, scale: 1)
-                        .interpolation(.none)
-                        .rotationEffect(arrowRotation)
-                        .position(arrowPosition(for: position))
-                }
+        ZStack {
+            if let mapImage {
+                Image(decorative: mapImage, scale: 1)
+                    .resizable()
+                    .interpolation(.none)
+                    .frame(
+                        width: mapDisplaySize(for: mapImage).width,
+                        height: mapDisplaySize(for: mapImage).height
+                    )
+                    .position(mapCenter(for: mapImage, playerPosition: scene.state.playerPosition))
             }
-            .frame(width: mapSize, height: mapSize)
-            .clipped()
+
+            if let arrowImage {
+                Image(decorative: arrowImage, scale: 1)
+                    .interpolation(.none)
+                    .rotationEffect(arrowRotation(for: scene.state.playerDirection))
+                    .position(arrowPosition(for: scene.state.playerPosition))
+            }
         }
+        .frame(width: mapSize, height: mapSize)
+        .clipped()
         .allowsHitTesting(false)
     }
 
@@ -146,9 +143,8 @@ private struct MinimapMapView: View {
         )
     }
 
-    private var arrowRotation: Angle {
-        let direction = scene.player.movement?.direction ?? scene.player.action.direction
-        return .degrees(Double((direction.rawValue + 4) * 45))
+    private func arrowRotation(for direction: SpriteDirection) -> Angle {
+        .degrees(Double((direction.rawValue + 4) * 45))
     }
 
     private func arrowPosition(for position: SIMD2<Int>) -> CGPoint {

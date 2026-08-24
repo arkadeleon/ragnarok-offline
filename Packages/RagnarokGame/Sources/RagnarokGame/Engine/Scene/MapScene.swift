@@ -71,7 +71,10 @@ public final class MapScene {
         self.gameSession = gameSession
         self.audioPlayer = MapAudioPlayer(resourceManager: resourceManager)
 
-        self.state = MapSceneState()
+        self.state = MapSceneState(
+            playerPosition: playerPosition,
+            playerDirection: .south
+        )
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
@@ -331,6 +334,15 @@ extension MapScene {
             }
         }
 
+        let playerPosition = player.gridPosition
+        if state.playerPosition != playerPosition {
+            state.playerPosition = playerPosition
+        }
+
+        let playerDirection = player.movement?.direction ?? player.action.direction
+        if state.playerDirection != playerDirection {
+            state.playerDirection = playerDirection
+        }
     }
 
     func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
