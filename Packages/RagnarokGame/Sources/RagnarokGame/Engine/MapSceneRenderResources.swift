@@ -177,38 +177,12 @@ final class MapSceneRenderResources {
 
     func makeSnapshot(
         from scene: MapScene,
-        atTime time: TimeInterval
+        at now: ContinuousClock.Instant
     ) -> MapSceneRenderSnapshot {
-        let now = ContinuousClock.now
-
-        let vanishedObjectIDs = scene.objects.compactMap { objectID, object in
-            object.death?.isVanished(at: now) == true ? objectID : nil
-        }
-        for objectID in vanishedObjectIDs {
-            scene.removeObject(objectID: objectID)
-        }
-
-        let expiredCombatTextObjectIDs = scene.combatTexts.compactMap { combatTextObjectID, combatText in
-            combatText.isExpired(at: now) ? combatTextObjectID : nil
-        }
-        for combatTextObjectID in expiredCombatTextObjectIDs {
-            scene.combatTexts.removeValue(forKey: combatTextObjectID)
-            removeCombatText(id: combatTextObjectID)
-        }
-
-        let expiredEffectObjectIDs = expiredEffectIDs(atTime: time)
-        for effectObjectID in expiredEffectObjectIDs {
-            scene.removeEffect(objectID: effectObjectID)
-        }
-
         var worldPositions: [GameObjectID : SIMD3<Float>] = [:]
         worldPositions.reserveCapacity(scene.objects.count + scene.items.count)
 
         for object in scene.objects.values {
-            object.update(at: now)
-            if let movement = object.movement {
-                object.gridPosition = movement.currentPosition
-            }
             worldPositions[object.objectID] = scene.worldPosition(for: object)
         }
 
@@ -222,10 +196,6 @@ final class MapSceneRenderResources {
             worldPositions: worldPositions,
             camera: scene.cameraState
         )
-
-        if let playerWorldPosition = worldPositions[scene.player.objectID] {
-            scene.updateCameraTargetPosition(playerWorldPosition)
-        }
 
         var snapshot = MapSceneRenderSnapshot(fog: scene.fog)
 

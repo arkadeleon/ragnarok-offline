@@ -395,8 +395,37 @@ extension MapScene {
         )
     }
 
-    func updateCameraTargetPosition(_ position: SIMD3<Float>) {
-        cameraTargetPosition = position
+    func update(
+        at now: ContinuousClock.Instant,
+        renderTime: TimeInterval
+    ) {
+        let vanishedObjectIDs = objects.compactMap { objectID, object in
+            object.death?.isVanished(at: now) == true ? objectID : nil
+        }
+        for objectID in vanishedObjectIDs {
+            removeObject(objectID: objectID)
+        }
+
+        let expiredCombatTextObjectIDs = combatTexts.compactMap { combatTextObjectID, combatText in
+            combatText.isExpired(at: now) ? combatTextObjectID : nil
+        }
+        for combatTextObjectID in expiredCombatTextObjectIDs {
+            combatTexts.removeValue(forKey: combatTextObjectID)
+            renderResources.removeCombatText(id: combatTextObjectID)
+        }
+
+        for effectObjectID in renderResources.expiredEffectIDs(atTime: renderTime) {
+            removeEffect(objectID: effectObjectID)
+        }
+
+        for object in objects.values {
+            object.update(at: now)
+            if let movement = object.movement {
+                object.gridPosition = movement.currentPosition
+            }
+        }
+
+        cameraTargetPosition = worldPosition(for: player)
     }
 
     func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
