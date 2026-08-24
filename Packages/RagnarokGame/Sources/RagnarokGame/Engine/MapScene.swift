@@ -48,21 +48,12 @@ public final class MapScene {
 
     let pathFinder: PathFinder
 
-    var spriteAssetStore: SpriteAssetStore?
-
-    var combatTextSpriteSet: CombatTextSpriteSet?
     var combatTexts: [UUID : CombatText] = [:]
-    var combatTextResources: [UUID : CombatTextRenderResource] = [:]
 
-    var effectAssetStore: EffectAssetStore?
     var effects: [UUID : MapSceneEffect] = [:]
-    var effectRenderResources: [UUID : EffectRenderResourceGroup] = [:]
-    var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
     var fog: Fog = .disabled
     var tileSelector: TileSelector?
-
-    var spriteDrawables: [SpriteLayerDrawable] = []
 
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
@@ -145,44 +136,27 @@ public final class MapScene {
             logger.warning("Map scene failed to load grid.tga: \(error)")
         }
 
-        spriteAssetStore = SpriteAssetStore(
-            device: renderResources.device,
-            resourceManager: resourceManager
-        )
+        renderResources.prepareSprites(resourceManager: resourceManager)
 
         do {
-            combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
+            try await renderResources.prepareCombatTexts(resourceManager: resourceManager)
         } catch {
-            combatTextSpriteSet = nil
             logger.warning("Map scene failed to load combat text sprites: \(error)")
         }
 
-        effectAssetStore = EffectAssetStore(resourceManager: resourceManager)
+        renderResources.prepareEffects(resourceManager: resourceManager)
     }
 
     func clearRenderResources() {
-        spriteAssetStore?.cancelAllTasks()
-        spriteAssetStore = nil
         items.removeAll()
 
-        for task in effectLoadTasks.values {
-            task.cancel()
-        }
-        effectAssetStore?.cancelAllTasks()
-        effectAssetStore = nil
-        effectLoadTasks.removeAll()
-
-        combatTextSpriteSet = nil
         combatTexts.removeAll()
-        combatTextResources.removeAll()
 
         effects.removeAll()
-        effectRenderResources.removeAll()
 
         tileSelector = nil
         renderResources.removeAll()
 
-        spriteDrawables.removeAll()
     }
 
     func handleMovement(_ movementValue: CGPoint) {
@@ -436,12 +410,10 @@ extension MapScene {
         }
         for combatTextObjectID in expiredCombatTextObjectIDs {
             combatTexts.removeValue(forKey: combatTextObjectID)
-            combatTextResources.removeValue(forKey: combatTextObjectID)
+            renderResources.removeCombatText(id: combatTextObjectID)
         }
 
-        let expiredEffectObjectIDs = effectRenderResources.compactMap { effectObjectID, resourceGroup in
-            resourceGroup.isExpired(atTime: time) ? effectObjectID : nil
-        }
+        let expiredEffectObjectIDs = renderResources.expiredEffectIDs(atTime: time)
         for effectObjectID in expiredEffectObjectIDs {
             removeEffect(objectID: effectObjectID)
         }
@@ -461,19 +433,19 @@ extension MapScene {
             worldPositions[item.objectID] = mapGrid.worldPosition(for: item.gridPosition)
         }
 
-        spriteDrawables = spriteAssetStore?.sync(
+        renderResources.synchronizeSprites(
             objects: objects,
             items: items,
             worldPositions: worldPositions,
             camera: cameraState
-        ) ?? []
+        )
 
         cameraTargetPosition = worldPositions[player.objectID] ?? cameraTargetPosition
 
         var snapshot = MapSceneRenderSnapshot(fog: fog)
 
         snapshot.world = renderResources.world
-        snapshot.spriteDrawables = spriteDrawables
+        snapshot.spriteDrawables = renderResources.spriteDrawables
 
         if let tileSelector, let tileSelectorTexture = renderResources.tileSelectorTexture,
            !tileSelector.isExpired(at: now),
@@ -487,7 +459,7 @@ extension MapScene {
 
         snapshot.effects = effects.values
             .compactMap { effect in
-                guard let resourceGroup = effectRenderResources[effect.id] else {
+                guard let resourceGroup = renderResources.effectResource(for: effect.id) else {
                     return nil
                 }
                 return MapSceneRenderSnapshot.Effect(
@@ -537,7 +509,7 @@ extension MapScene {
                 $0.creationTime < $1.creationTime
             }
             .compactMap { combatText in
-                guard let resource = combatTextResources[combatText.id] else {
+                guard let resource = renderResources.combatTextResource(for: combatText.id) else {
                     return nil
                 }
 

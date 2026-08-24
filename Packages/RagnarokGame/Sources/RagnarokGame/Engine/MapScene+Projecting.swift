@@ -67,7 +67,7 @@ extension MapScene {
         // The layers of an object share an anchor, so merge their bounds before hit
         // testing, to grow the object to the minimum tap size once instead of per layer.
         var bounds: [GameObjectID : SpriteBounds] = [:]
-        for drawable in spriteDrawables where drawable.isVisible {
+        for drawable in renderResources.spriteDrawables where drawable.isVisible {
             guard let layerBounds = spriteBounds(for: drawable) else {
                 continue
             }

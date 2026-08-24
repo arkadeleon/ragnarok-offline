@@ -664,10 +664,6 @@ extension MapScene {
     }
 
     private func addCombatText(_ combatText: CombatText) {
-        guard let combatTextSpriteSet else {
-            return
-        }
-
         guard combatTexts[combatText.id] == nil else {
             return
         }
@@ -676,17 +672,14 @@ extension MapScene {
             return
         }
 
-        guard let resource = CombatTextRenderResource(
-            device: renderResources.device,
-            combatText: combatText,
-            startWorldPosition: startWorldPosition,
-            spriteSet: combatTextSpriteSet
+        guard renderResources.addCombatText(
+            combatText,
+            startWorldPosition: startWorldPosition
         ) else {
             return
         }
 
         combatTexts[combatText.id] = combatText
-        combatTextResources[combatText.id] = resource
     }
 }
 
@@ -858,52 +851,17 @@ extension MapScene {
         let effectID = effect.id
         effects[effectID] = effect
 
-        effectLoadTasks[effectID] = Task { [weak self] in
-            guard let self else {
-                return
-            }
-            defer {
-                self.effectLoadTasks[effectID] = nil
-            }
-
-            do {
-                guard let effectAssetStore else {
-                    return
-                }
-
-                let assetGroup = try await effectAssetStore.assetGroup(for: effect.reference)
-                guard !Task.isCancelled else {
-                    return
-                }
-
-                for asset in assetGroup.assets {
-                    if let soundName = asset.soundName {
-                        audioPlayer.playSound(named: soundName, after: .seconds(effect.delay))
-                    }
-                }
-
-                guard effects[effectID] != nil else {
-                    return
-                }
-
-                effectRenderResources[effectID] = EffectRenderResourceGroup(
-                    device: renderResources.device,
-                    assetGroup: assetGroup,
-                    creationTime: effect.creationTime,
-                    delay: effect.delay,
-                    worldPosition: mapGrid.worldPosition(for: effect.gridPosition),
-                    sourceWorldPosition: effect.sourceWorldPosition
-                )
-            } catch {
-                logger.warning("Metal map scene failed to load effect \(effect.reference): \(error)")
-            }
+        renderResources.addEffect(
+            effect,
+            worldPosition: mapGrid.worldPosition(for: effect.gridPosition)
+        ) { [audioPlayer] soundName, delay in
+            audioPlayer.playSound(named: soundName, after: .seconds(delay))
         }
     }
 
     func removeEffect(objectID: UUID) {
         effects.removeValue(forKey: objectID)
-        effectRenderResources.removeValue(forKey: objectID)
-        effectLoadTasks.removeValue(forKey: objectID)?.cancel()
+        renderResources.removeEffect(id: objectID)
     }
 }
 
