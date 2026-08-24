@@ -60,7 +60,7 @@ extension MapSceneRuntime {
 
     /// The objects whose sprite the ray passes through, nearest first.
     private func spriteHits(_ ray: Ray) -> [GameObjectID] {
-        guard let camera = scene.lastCamera else {
+        guard let lastCamera else {
             return []
         }
 
@@ -78,7 +78,7 @@ extension MapSceneRuntime {
         for (objectID, objectBounds) in bounds {
             // Items are too small to tap reliably; everything else is already big enough.
             let minimumSize: Float = scene.items[objectID] != nil ? 30 : 0
-            guard let distance = hitDistance(ray, bounds: objectBounds, minimumSize: minimumSize, camera: camera) else {
+            guard let distance = hitDistance(ray, bounds: objectBounds, minimumSize: minimumSize, camera: lastCamera) else {
                 continue
             }
             distances[objectID] = distance

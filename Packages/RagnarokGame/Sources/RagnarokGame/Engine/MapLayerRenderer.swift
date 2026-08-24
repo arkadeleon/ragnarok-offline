@@ -115,7 +115,7 @@ final class MapLayerRenderer {
         // The eye cannot move, so the game camera places the map around the viewer.
         // RenderCamera and the compositor both use right-handed view space with visible
         // geometry at -Z, so each eye pose can compose the placement directly.
-        let worldPlacement = scene.makeCamera(viewport: drawable.views[0].textureMap.viewport).viewMatrix
+        let worldPlacement = runtime.makeCamera(viewport: drawable.views[0].textureMap.viewport).viewMatrix
 
         spatialInput.update(
             worldPlacement: worldPlacement,
@@ -128,7 +128,7 @@ final class MapLayerRenderer {
                 camera: makeCamera(drawable: drawable, viewIndex: index, worldPlacement: worldPlacement)
             )
         }
-        scene.lastCamera = views.last?.camera
+        runtime.lastCamera = views.last?.camera
 
         renderer.render(
             frame: RenderFrame(

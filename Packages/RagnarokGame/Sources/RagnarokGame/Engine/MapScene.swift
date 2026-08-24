@@ -7,7 +7,6 @@
 
 import CoreGraphics
 import Foundation
-import Metal
 import QuartzCore
 import RagnarokConstants
 import RagnarokCore
@@ -58,8 +57,6 @@ public final class MapScene {
     var arrivalTask: Task<Void, any Error>?
 
     var cameraState = MapCameraState()
-    private var cameraTargetPosition: SIMD3<Float> = .zero
-    var lastCamera: RenderCamera?
 
     init(
         mapName: String,
@@ -315,35 +312,6 @@ public final class MapScene {
 }
 
 extension MapScene {
-    private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
-    private static let cameraFieldOfViewDegrees: Float = 15
-
-    /// The game camera, orbiting the player at `cameraState` and drawn into `viewport`.
-    ///
-    /// iOS and macOS draw the map from this camera. visionOS draws it from the eye instead,
-    /// and uses this camera's view matrix to place the map around the viewer.
-    func makeCamera(viewport: MTLViewport) -> RenderCamera {
-        let worldTarget = MapSceneRenderer.renderPosition(for: cameraTargetPosition) + Self.cameraTargetOffset
-
-        let cameraOrientation =
-            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
-            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
-        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
-        let cameraUp = cameraOrientation.act([0, 1, 0])
-
-        let viewportHeight = max(Float(viewport.height), 1)
-        let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
-        let farZ = max(cameraState.distance * 4, 1000)
-
-        return RenderCamera(
-            viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
-            projectionMatrix: perspective(radians(Self.cameraFieldOfViewDegrees), aspectRatio, 0.1, farZ),
-            position: cameraPosition,
-            azimuth: cameraState.azimuth,
-            elevation: cameraState.elevation
-        )
-    }
-
     func update(at now: ContinuousClock.Instant) {
         let vanishedObjectIDs = objects.compactMap { objectID, object in
             object.death?.isVanished(at: now) == true ? objectID : nil
@@ -366,7 +334,6 @@ extension MapScene {
             }
         }
 
-        cameraTargetPosition = worldPosition(for: player)
     }
 
     func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {

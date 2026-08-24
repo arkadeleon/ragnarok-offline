@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Metal
+import RagnarokCore
 import RagnarokRenderAssets
 import RagnarokRendering
 import RagnarokResources
@@ -13,8 +15,12 @@ import simd
 
 @MainActor
 final class MapSceneRuntime {
+    private static let cameraTargetOffset = SIMD3<Float>(0, 0.5, 0)
+    private static let cameraFieldOfViewDegrees: Float = 15
+
     let scene: MapScene
     let renderResources: MapSceneRenderResources
+    var lastCamera: RenderCamera?
 
     init(scene: MapScene, renderResources: MapSceneRenderResources) {
         self.scene = scene
@@ -33,6 +39,7 @@ final class MapSceneRuntime {
     func unload() {
         scene.unload()
         renderResources.removeAll()
+        lastCamera = nil
     }
 
     private func prepareRenderResources(progress: Progress) async throws {
@@ -94,6 +101,34 @@ final class MapSceneRuntime {
         ) { [audioPlayer = scene.audioPlayer] soundName, delay in
             audioPlayer.playSound(named: soundName, after: .seconds(delay))
         }
+    }
+
+    /// The game camera, orbiting the player at `cameraState` and drawn into `viewport`.
+    ///
+    /// iOS and macOS draw the map from this camera. visionOS draws it from the eye instead,
+    /// and uses this camera's view matrix to place the map around the viewer.
+    func makeCamera(viewport: MTLViewport) -> RenderCamera {
+        let cameraState = scene.cameraState
+        let targetPosition = scene.worldPosition(for: scene.player)
+        let worldTarget = MapSceneRenderer.renderPosition(for: targetPosition) + Self.cameraTargetOffset
+
+        let cameraOrientation =
+            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
+            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
+        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
+        let cameraUp = cameraOrientation.act([0, 1, 0])
+
+        let viewportHeight = max(Float(viewport.height), 1)
+        let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
+        let farZ = max(cameraState.distance * 4, 1000)
+
+        return RenderCamera(
+            viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
+            projectionMatrix: perspective(radians(Self.cameraFieldOfViewDegrees), aspectRatio, 0.1, farZ),
+            position: cameraPosition,
+            azimuth: cameraState.azimuth,
+            elevation: cameraState.elevation
+        )
     }
 
     func makeRenderSnapshot(at now: ContinuousClock.Instant) -> MapSceneRenderSnapshot {

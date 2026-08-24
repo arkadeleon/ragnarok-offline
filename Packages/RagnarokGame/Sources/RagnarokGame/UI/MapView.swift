@@ -108,8 +108,8 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         let snapshot = runtime.makeRenderSnapshot(at: now)
 
         let viewport = MTLViewport(size: view.drawableSize)
-        let camera = runtime.scene.makeCamera(viewport: viewport)
-        runtime.scene.lastCamera = camera
+        let camera = runtime.makeCamera(viewport: viewport)
+        runtime.lastCamera = camera
 
         let frame = RenderFrame(
             time: currentTime,
@@ -127,17 +127,17 @@ final class MapViewController: UIViewController, MTKViewDelegate {
     }
 
     @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard let scene = runtime?.scene else {
+        guard let runtime else {
             return
         }
 
         let point = gestureRecognizer.location(in: mtkView)
-        guard let camera = scene.lastCamera,
+        guard let camera = runtime.lastCamera,
               let ray = camera.ray(through: point, in: mtkView.bounds) else {
             return
         }
-        if let result = runtime?.hitTest(ray) {
-            scene.handleInteraction(result)
+        if let result = runtime.hitTest(ray) {
+            runtime.scene.handleInteraction(result)
         }
     }
 
@@ -291,8 +291,8 @@ final class MapViewController: NSViewController, MTKViewDelegate {
         let snapshot = runtime.makeRenderSnapshot(at: now)
 
         let viewport = MTLViewport(size: view.drawableSize)
-        let camera = runtime.scene.makeCamera(viewport: viewport)
-        runtime.scene.lastCamera = camera
+        let camera = runtime.makeCamera(viewport: viewport)
+        runtime.lastCamera = camera
 
         let frame = RenderFrame(
             time: currentTime,
@@ -310,19 +310,19 @@ final class MapViewController: NSViewController, MTKViewDelegate {
     }
 
     override func mouseDown(with event: NSEvent) {
-        guard let scene = runtime?.scene else {
+        guard let runtime else {
             return
         }
 
         var point = mtkView.convert(event.locationInWindow, from: nil)
         // NSView has bottom-left origin; flip to top-left for hit testing.
         point.y = mtkView.bounds.height - point.y
-        guard let camera = scene.lastCamera,
+        guard let camera = runtime.lastCamera,
               let ray = camera.ray(through: point, in: mtkView.bounds) else {
             return
         }
-        if let result = runtime?.hitTest(ray) {
-            scene.handleInteraction(result)
+        if let result = runtime.hitTest(ray) {
+            runtime.scene.handleInteraction(result)
         }
     }
 
