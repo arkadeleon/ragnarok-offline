@@ -665,9 +665,7 @@ final public class GameSession {
             let packet = PacketFactory.CZ_PING_LIVE()
             mapClient?.sendPacket(packet)
         case let packet as PACKET_ZC_NPCACK_MAPMOVE:
-            if let mapScene {
-                mapScene.unload()
-            }
+            mapRuntime?.unload()
 
             let mapName = packet.mapName
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
@@ -698,16 +696,16 @@ final public class GameSession {
                     renderResources: renderResources,
                     gameSession: self
                 )
+                let runtime = MapSceneRuntime(
+                    scene: scene,
+                    renderResources: renderResources
+                )
 
                 do {
-                    try await scene.load(progress: progress)
+                    try await runtime.load(progress: progress)
 
                     notifyMapLoaded()
 
-                    let runtime = MapSceneRuntime(
-                        scene: scene,
-                        renderResources: renderResources
-                    )
                     stage = .map(.loaded(runtime))
                 } catch {
                     logger.warning("Map scene failed to load: \(error)")

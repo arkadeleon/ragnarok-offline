@@ -96,67 +96,19 @@ public final class MapScene {
         gaugeObjectIDs.insert(player.objectID)
     }
 
-    public func load(progress: Progress) async throws {
-        do {
-            try await prepareRenderResources(progress: progress)
-            await audioPlayer.playBGM(forMapName: mapName)
-        } catch {
-            logger.warning("Map scene failed to load world asset: \(error)")
-        }
+    func load() async {
+        await audioPlayer.playBGM(forMapName: mapName)
     }
 
-    public func unload() {
+    func unload() {
         arrivalTask?.cancel()
         arrivalTask = nil
         pendingArrivalAction = nil
         audioPlayer.stopAll()
-        clearRenderResources()
-    }
-
-    func prepareRenderResources(progress: Progress) async throws {
-        let worldAssetLoader = WorldAssetLoader()
-        let worldAsset = try await worldAssetLoader.load(
-            world: world,
-            resourceManager: resourceManager,
-            progress: progress
-        )
-
-        let fogParameterTable = await resourceManager.fogParameterTable()
-        if let parameter = fogParameterTable.fogParameter(forMapName: mapName) {
-            fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
-        }
-
-        renderResources.loadWorld(worldAsset)
-
-        do {
-            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
-            let image = try await resourceManager.image(at: path)
-            renderResources.loadTileSelectorTexture(from: image.cgImage)
-        } catch {
-            logger.warning("Map scene failed to load grid.tga: \(error)")
-        }
-
-        renderResources.prepareSprites(resourceManager: resourceManager)
-
-        do {
-            try await renderResources.prepareCombatTexts(resourceManager: resourceManager)
-        } catch {
-            logger.warning("Map scene failed to load combat text sprites: \(error)")
-        }
-
-        renderResources.prepareEffects(resourceManager: resourceManager)
-    }
-
-    func clearRenderResources() {
         items.removeAll()
-
         combatTexts.removeAll()
-
         effects.removeAll()
-
         tileSelector = nil
-        renderResources.removeAll()
-
     }
 
     func handleMovement(_ movementValue: CGPoint) {

@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import RagnarokRenderAssets
+import RagnarokRendering
+import RagnarokResources
 import simd
 
 @MainActor
@@ -16,6 +19,54 @@ final class MapSceneRuntime {
     init(scene: MapScene, renderResources: MapSceneRenderResources) {
         self.scene = scene
         self.renderResources = renderResources
+    }
+
+    func load(progress: Progress) async throws {
+        do {
+            try await prepareRenderResources(progress: progress)
+            await scene.load()
+        } catch {
+            logger.warning("Map scene failed to load world asset: \(error)")
+        }
+    }
+
+    func unload() {
+        scene.unload()
+        renderResources.removeAll()
+    }
+
+    private func prepareRenderResources(progress: Progress) async throws {
+        let worldAssetLoader = WorldAssetLoader()
+        let worldAsset = try await worldAssetLoader.load(
+            world: scene.world,
+            resourceManager: scene.resourceManager,
+            progress: progress
+        )
+
+        let fogParameterTable = await scene.resourceManager.fogParameterTable()
+        if let parameter = fogParameterTable.fogParameter(forMapName: scene.mapName) {
+            scene.fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
+        }
+
+        renderResources.loadWorld(worldAsset)
+
+        do {
+            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
+            let image = try await scene.resourceManager.image(at: path)
+            renderResources.loadTileSelectorTexture(from: image.cgImage)
+        } catch {
+            logger.warning("Map scene failed to load grid.tga: \(error)")
+        }
+
+        renderResources.prepareSprites(resourceManager: scene.resourceManager)
+
+        do {
+            try await renderResources.prepareCombatTexts(resourceManager: scene.resourceManager)
+        } catch {
+            logger.warning("Map scene failed to load combat text sprites: \(error)")
+        }
+
+        renderResources.prepareEffects(resourceManager: scene.resourceManager)
     }
 
     func makeRenderSnapshot(at now: ContinuousClock.Instant) -> MapSceneRenderSnapshot {
