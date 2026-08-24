@@ -189,4 +189,3 @@ final class MapSceneMapObject {
         movement?.nextPosition(at: time)
     }
 }
-

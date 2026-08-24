@@ -176,7 +176,8 @@ final class MapSceneRuntime {
                   let worldPosition = worldPositions[objectID] else {
                 return nil
             }
-            let vertices = Gauge(object: object).makeVertices()
+            let guage = Gauge(object: object)
+            let vertices = guage.makeVertices()
             guard !vertices.isEmpty else {
                 return nil
             }
