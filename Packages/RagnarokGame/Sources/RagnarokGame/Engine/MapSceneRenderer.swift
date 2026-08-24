@@ -15,8 +15,8 @@ import simd
 /// Draws the map.
 ///
 /// The renderer owns the Metal objects and nothing else. What to draw arrives in a
-/// `MapSceneRenderSnapshot`, which `MapScene` builds once per frame, so every
-/// view of a frame draws the same contents from its own camera.
+/// `MapSceneRenderSnapshot`, which is built once per frame so every view of a frame
+/// draws the same contents from its own camera.
 final class MapSceneRenderer {
     /// The map's own transform. The game world stands the other way up from render space,
     /// so the whole map turns over.

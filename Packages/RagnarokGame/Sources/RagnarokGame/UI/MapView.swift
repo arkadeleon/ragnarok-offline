@@ -103,7 +103,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
-        let snapshot = scene.makeRenderSnapshot(atTime: currentTime)
+        let snapshot = scene.renderResources.makeSnapshot(from: scene, atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
         let camera = scene.makeCamera(viewport: viewport)
@@ -283,7 +283,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
-        let snapshot = scene.makeRenderSnapshot(atTime: currentTime)
+        let snapshot = scene.renderResources.makeSnapshot(from: scene, atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
         let camera = scene.makeCamera(viewport: viewport)
