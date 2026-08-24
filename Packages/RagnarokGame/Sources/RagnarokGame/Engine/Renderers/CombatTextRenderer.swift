@@ -42,7 +42,7 @@ final class CombatTextRenderer {
     }
 
     func render(
-        combatTexts: [MapSceneRenderer.Scene.CombatText],
+        combatTexts: [MapSceneRenderSnapshot.CombatText],
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder

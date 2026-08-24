@@ -15,41 +15,9 @@ import simd
 /// Draws the map.
 ///
 /// The renderer owns the Metal objects and nothing else. What to draw arrives in a
-/// `MapSceneRenderer.Scene`, which `MapScene` builds once per frame, so every
+/// `MapSceneRenderSnapshot`, which `MapScene` builds once per frame, so every
 /// view of a frame draws the same contents from its own camera.
 final class MapSceneRenderer {
-    struct Scene {
-        struct Effect {
-            let resourceGroup: EffectRenderResourceGroup
-            let attachedWorldPosition: SIMD3<Float>?
-        }
-
-        struct Gauge {
-            let vertices: [SpriteVertex]
-            let worldPosition: SIMD3<Float>
-        }
-
-        struct TileSelector {
-            let position: SIMD2<Int>
-            let cell: MapGrid.Cell
-            let texture: any MTLTexture
-        }
-
-        struct CombatText {
-            let vertices: [SpriteVertex]
-            let worldPosition: SIMD3<Float>
-            let texture: any MTLTexture
-        }
-
-        var fog: Fog
-        var world: WorldRenderResource?
-        var tileSelector: MapSceneRenderer.Scene.TileSelector?
-        var spriteDrawables: [SpriteLayerDrawable] = []
-        var effects: [MapSceneRenderer.Scene.Effect] = []
-        var gauges: [MapSceneRenderer.Scene.Gauge] = []
-        var combatTexts: [MapSceneRenderer.Scene.CombatText] = []
-    }
-
     /// The map's own transform. The game world stands the other way up from render space,
     /// so the whole map turns over.
     private static let worldModelMatrix = matrix_rotate(matrix_identity_float4x4, radians(-180), [1, 0, 0])
@@ -85,7 +53,7 @@ final class MapSceneRenderer {
         ]
     }
 
-    func render(frame: RenderFrame, scene: MapSceneRenderer.Scene) {
+    func render(frame: RenderFrame, snapshot: MapSceneRenderSnapshot) {
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
@@ -100,8 +68,8 @@ final class MapSceneRenderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            renderScene(
-                scene,
+            renderSnapshot(
+                snapshot,
                 atTime: frame.time,
                 viewport: view.viewport,
                 camera: view.camera,
@@ -112,8 +80,8 @@ final class MapSceneRenderer {
         renderCommandEncoder.endEncoding()
     }
 
-    private func renderScene(
-        _ scene: MapSceneRenderer.Scene,
+    private func renderSnapshot(
+        _ snapshot: MapSceneRenderSnapshot,
         atTime time: TimeInterval,
         viewport: MTLViewport,
         camera: RenderCamera,
@@ -121,11 +89,11 @@ final class MapSceneRenderer {
     ) {
         let modelMatrix = Self.worldModelMatrix
 
-        if let world = scene.world {
+        if let world = snapshot.world {
             worldRenderer.renderGroundAndModels(
                 resource: world,
                 atTime: time,
-                fog: scene.fog,
+                fog: snapshot.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -135,7 +103,7 @@ final class MapSceneRenderer {
                 resource: world,
                 atTime: time,
                 beforeEntities: true,
-                fog: scene.fog,
+                fog: snapshot.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -143,19 +111,19 @@ final class MapSceneRenderer {
         }
 
         renderEffects(
-            scene.effects,
+            snapshot.effects,
             beforeEntities: true,
             atTime: time,
-            fog: scene.fog,
+            fog: snapshot.fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
 
         spriteRenderer.render(
-            drawables: scene.spriteDrawables,
+            drawables: snapshot.spriteDrawables,
             viewport: viewport,
-            fog: scene.fog,
+            fog: snapshot.fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -163,11 +131,11 @@ final class MapSceneRenderer {
 
         // Water renders after sprites so submerged
         // sprites blend through the translucent surface.
-        if let world = scene.world {
+        if let world = snapshot.world {
             worldRenderer.renderWater(
                 resource: world,
                 atTime: time,
-                fog: scene.fog,
+                fog: snapshot.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -177,7 +145,7 @@ final class MapSceneRenderer {
                 resource: world,
                 atTime: time,
                 beforeEntities: false,
-                fog: scene.fog,
+                fog: snapshot.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -185,19 +153,19 @@ final class MapSceneRenderer {
         }
 
         renderEffects(
-            scene.effects,
+            snapshot.effects,
             beforeEntities: false,
             atTime: time,
-            fog: scene.fog,
+            fog: snapshot.fog,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
 
-        if let tileSelector = scene.tileSelector {
+        if let tileSelector = snapshot.tileSelector {
             tileSelectorRenderer.render(
                 tileSelector: tileSelector,
-                fog: scene.fog,
+                fog: snapshot.fog,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -205,7 +173,7 @@ final class MapSceneRenderer {
         }
 
         gaugeRenderer.render(
-            gauges: scene.gauges,
+            gauges: snapshot.gauges,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -213,7 +181,7 @@ final class MapSceneRenderer {
 
         // Combat text renders last so nothing draws over it.
         combatTextRenderer.render(
-            combatTexts: scene.combatTexts,
+            combatTexts: snapshot.combatTexts,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
@@ -221,7 +189,7 @@ final class MapSceneRenderer {
     }
 
     private func renderEffects(
-        _ effects: [MapSceneRenderer.Scene.Effect],
+        _ effects: [MapSceneRenderSnapshot.Effect],
         beforeEntities: Bool,
         atTime time: TimeInterval,
         fog: Fog,

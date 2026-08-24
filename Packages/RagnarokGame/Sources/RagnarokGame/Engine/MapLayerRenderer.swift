@@ -84,7 +84,7 @@ final class MapLayerRenderer {
         }
 
         frame.startUpdate()
-        let renderScene = scene.makeRenderScene(atTime: CACurrentMediaTime())
+        let snapshot = scene.makeRenderSnapshot(atTime: CACurrentMediaTime())
         frame.endUpdate()
 
         guard let timing = frame.predictTiming() else {
@@ -130,7 +130,7 @@ final class MapLayerRenderer {
                 renderPassDescriptor: makeRenderPassDescriptor(drawable: drawable),
                 views: views
             ),
-            scene: renderScene
+            snapshot: snapshot
         )
 
         drawable.encodePresent(commandBuffer: commandBuffer)

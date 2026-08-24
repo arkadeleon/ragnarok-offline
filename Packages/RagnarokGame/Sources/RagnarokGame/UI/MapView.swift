@@ -101,7 +101,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
-        let renderScene = scene.makeRenderScene(atTime: currentTime)
+        let snapshot = scene.makeRenderSnapshot(atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
         let camera = scene.makeCamera(viewport: viewport)
@@ -116,7 +116,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
             ],
             bounds: view.bounds
         )
-        renderer.render(frame: frame, scene: renderScene)
+        renderer.render(frame: frame, snapshot: snapshot)
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
@@ -279,7 +279,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
 
         let currentTime = CACurrentMediaTime()
 
-        let renderScene = scene.makeRenderScene(atTime: currentTime)
+        let snapshot = scene.makeRenderSnapshot(atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
         let camera = scene.makeCamera(viewport: viewport)
@@ -294,7 +294,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
             ],
             bounds: view.bounds
         )
-        renderer.render(frame: frame, scene: renderScene)
+        renderer.render(frame: frame, snapshot: snapshot)
 
         commandBuffer.present(drawable)
         commandBuffer.commit()

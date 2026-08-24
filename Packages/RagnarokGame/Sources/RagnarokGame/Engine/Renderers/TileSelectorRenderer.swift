@@ -43,7 +43,7 @@ final class TileSelectorRenderer {
     }
 
     func render(
-        tileSelector: MapSceneRenderer.Scene.TileSelector,
+        tileSelector: MapSceneRenderSnapshot.TileSelector,
         fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,

@@ -434,7 +434,7 @@ extension MapScene {
         )
     }
 
-    func makeRenderScene(atTime time: TimeInterval) -> MapSceneRenderer.Scene {
+    func makeRenderSnapshot(atTime time: TimeInterval) -> MapSceneRenderSnapshot {
         let now = ContinuousClock.now
 
         let vanishedObjectIDs = objects.compactMap { objectID, object in
@@ -483,27 +483,27 @@ extension MapScene {
 
         cameraTargetPosition = worldPositions[player.objectID] ?? cameraTargetPosition
 
-        var scene = MapSceneRenderer.Scene(fog: fog)
+        var snapshot = MapSceneRenderSnapshot(fog: fog)
 
-        scene.world = worldResource
-        scene.spriteDrawables = spriteDrawables
+        snapshot.world = worldResource
+        snapshot.spriteDrawables = spriteDrawables
 
         if let tileSelector, let tileSelectorTexture,
            !tileSelector.isExpired(at: now),
            mapGrid.contains(tileSelector.position) {
-            scene.tileSelector = MapSceneRenderer.Scene.TileSelector(
+            snapshot.tileSelector = MapSceneRenderSnapshot.TileSelector(
                 position: tileSelector.position,
                 cell: mapGrid[tileSelector.position],
                 texture: tileSelectorTexture
             )
         }
 
-        scene.effects = effects.values
+        snapshot.effects = effects.values
             .compactMap { effect in
                 guard let resourceGroup = effectRenderResources[effect.id] else {
                     return nil
                 }
-                return MapSceneRenderer.Scene.Effect(
+                return MapSceneRenderSnapshot.Effect(
                     resourceGroup: resourceGroup,
                     attachedWorldPosition: effect.targetObjectID.flatMap { worldPositions[$0] }
                 )
@@ -512,7 +512,7 @@ extension MapScene {
                 $0.resourceGroup.creationTime < $1.resourceGroup.creationTime
             }
 
-        scene.gauges = gaugeObjectIDs.compactMap { objectID in
+        snapshot.gauges = gaugeObjectIDs.compactMap { objectID in
             guard let object = objects[objectID],
                   object.effectState != .cloak,
                   let worldPosition = worldPositions[objectID] else {
@@ -522,7 +522,7 @@ extension MapScene {
             guard !vertices.isEmpty else {
                 return nil
             }
-            return MapSceneRenderer.Scene.Gauge(
+            return MapSceneRenderSnapshot.Gauge(
                 vertices: vertices,
                 worldPosition: worldPosition + [0, 0, -0.8]
             )
@@ -538,7 +538,7 @@ extension MapScene {
             uniquingKeysWith: { $0.startTime > $1.startTime ? $0 : $1 }
         )
 
-        scene.combatTexts = combatTexts.values
+        snapshot.combatTexts = combatTexts.values
             .filter { combatText in
                 if combatText.kind.isCombo, let latestComboText = latestComboTexts[combatText.target.objectID] {
                     return combatText.id == latestComboText.id
@@ -563,14 +563,14 @@ extension MapScene {
                     return nil
                 }
 
-                return MapSceneRenderer.Scene.CombatText(
+                return MapSceneRenderSnapshot.CombatText(
                     vertices: resource.makeVertices(scale: animation.scale, alpha: animation.alpha),
                     worldPosition: animation.worldPosition,
                     texture: resource.texture
                 )
             }
 
-        return scene
+        return snapshot
     }
 
     func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
