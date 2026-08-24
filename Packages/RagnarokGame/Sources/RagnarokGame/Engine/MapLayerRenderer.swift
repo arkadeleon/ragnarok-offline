@@ -24,6 +24,7 @@ import simd
 @MainActor
 final class MapLayerRenderer {
     private let layerRenderer: LayerRenderer
+    private let runtime: MapSceneRuntime
     private let scene: MapScene
     private let renderer: MapSceneRenderer
     private let commandQueue: any MTLCommandQueue
@@ -33,14 +34,16 @@ final class MapLayerRenderer {
 
     private let spatialInput: MapSpatialInput
 
-    init?(layerRenderer: LayerRenderer, scene: MapScene) {
-        let device = scene.renderResources.device
+    init?(layerRenderer: LayerRenderer, runtime: MapSceneRuntime) {
+        let scene = runtime.scene
+        let device = runtime.renderResources.device
         guard let renderer = try? MapSceneRenderer(device: device, configuration: .immersive),
               let commandQueue = device.makeCommandQueue() else {
             return nil
         }
 
         self.layerRenderer = layerRenderer
+        self.runtime = runtime
         self.scene = scene
         self.renderer = renderer
         self.commandQueue = commandQueue
@@ -87,8 +90,8 @@ final class MapLayerRenderer {
         frame.startUpdate()
         let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
-        scene.update(at: now, renderTime: currentTime)
-        let snapshot = scene.renderResources.makeSnapshot(from: scene, at: now)
+        runtime.scene.update(at: now, renderTime: currentTime)
+        let snapshot = runtime.makeRenderSnapshot(at: now)
         frame.endUpdate()
 
         guard let timing = frame.predictTiming() else {

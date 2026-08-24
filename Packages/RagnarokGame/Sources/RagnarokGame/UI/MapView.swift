@@ -12,19 +12,19 @@ import SwiftUI
 #if canImport(UIKit)
 
 struct MapView: UIViewControllerRepresentable {
-    var scene: MapScene
+    var runtime: MapSceneRuntime
 
     func makeUIViewController(context: Context) -> MapViewController {
-        MapViewController(scene: scene)
+        MapViewController(runtime: runtime)
     }
 
     func updateUIViewController(_ viewController: MapViewController, context: Context) {
-        viewController.update(scene: scene)
+        viewController.update(runtime: runtime)
     }
 }
 
 final class MapViewController: UIViewController, MTKViewDelegate {
-    private weak var scene: MapScene?
+    private weak var runtime: MapSceneRuntime?
     private let commandQueue: any MTLCommandQueue
     private let renderer: MapSceneRenderer
     private var mtkView: MTKView!
@@ -33,10 +33,10 @@ final class MapViewController: UIViewController, MTKViewDelegate {
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
 
-    init(scene: MapScene) {
-        self.scene = scene
+    init(runtime: MapSceneRuntime) {
+        self.runtime = runtime
 
-        let device = scene.renderResources.device
+        let device = runtime.renderResources.device
 
         do {
             self.renderer = try MapSceneRenderer(device: device, configuration: .default)
@@ -86,15 +86,15 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         mtkView.addGestureRecognizer(pinchGestureRecognizer)
     }
 
-    func update(scene: MapScene) {
-        self.scene = scene
+    func update(runtime: MapSceneRuntime) {
+        self.runtime = runtime
     }
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
     }
 
     func draw(in view: MTKView) {
-        guard let scene,
+        guard let runtime,
               let commandBuffer = commandQueue.makeCommandBuffer(),
               let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
@@ -104,12 +104,12 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
 
-        scene.update(at: now, renderTime: currentTime)
-        let snapshot = scene.renderResources.makeSnapshot(from: scene, at: now)
+        runtime.scene.update(at: now, renderTime: currentTime)
+        let snapshot = runtime.makeRenderSnapshot(at: now)
 
         let viewport = MTLViewport(size: view.drawableSize)
-        let camera = scene.makeCamera(viewport: viewport)
-        scene.lastCamera = camera
+        let camera = runtime.scene.makeCamera(viewport: viewport)
+        runtime.scene.lastCamera = camera
 
         let frame = RenderFrame(
             time: currentTime,
@@ -127,7 +127,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
     }
 
     @objc func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 
@@ -142,16 +142,17 @@ final class MapViewController: UIViewController, MTKViewDelegate {
     }
 
     @objc func handleTwoFingerTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
+
         scene.resetCamera()
         baseAzimuth = scene.cameraState.azimuth
         baseElevation = scene.cameraState.elevation
     }
 
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 
@@ -167,7 +168,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
     }
 
     @objc func handleTwoFingerPan(_ gestureRecognizer: UIPanGestureRecognizer) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 
@@ -185,7 +186,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
     }
 
     @objc func handlePinch(_ gestureRecognizer: UIPinchGestureRecognizer) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 
@@ -206,19 +207,19 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 #elseif canImport(AppKit)
 
 struct MapView: NSViewControllerRepresentable {
-    var scene: MapScene
+    var runtime: MapSceneRuntime
 
     func makeNSViewController(context: Context) -> MapViewController {
-        MapViewController(scene: scene)
+        MapViewController(runtime: runtime)
     }
 
     func updateNSViewController(_ viewController: MapViewController, context: Context) {
-        viewController.update(scene: scene)
+        viewController.update(runtime: runtime)
     }
 }
 
 final class MapViewController: NSViewController, MTKViewDelegate {
-    private weak var scene: MapScene?
+    private weak var runtime: MapSceneRuntime?
     private let commandQueue: any MTLCommandQueue
     private let renderer: MapSceneRenderer
     private var mtkView: MTKView!
@@ -227,10 +228,10 @@ final class MapViewController: NSViewController, MTKViewDelegate {
     private var baseElevation: Float = 0
     private var baseDistance: Float = 0
 
-    init(scene: MapScene) {
-        self.scene = scene
+    init(runtime: MapSceneRuntime) {
+        self.runtime = runtime
 
-        let device = scene.renderResources.device
+        let device = runtime.renderResources.device
 
         do {
             self.renderer = try MapSceneRenderer(device: device, configuration: .default)
@@ -268,15 +269,15 @@ final class MapViewController: NSViewController, MTKViewDelegate {
         mtkView.addGestureRecognizer(magnificationGestureRecognizer)
     }
 
-    func update(scene: MapScene) {
-        self.scene = scene
+    func update(runtime: MapSceneRuntime) {
+        self.runtime = runtime
     }
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
     }
 
     func draw(in view: MTKView) {
-        guard let scene,
+        guard let runtime,
               let commandBuffer = commandQueue.makeCommandBuffer(),
               let drawable = view.currentDrawable,
               let renderPassDescriptor = view.currentRenderPassDescriptor else {
@@ -286,12 +287,12 @@ final class MapViewController: NSViewController, MTKViewDelegate {
         let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
 
-        scene.update(at: now, renderTime: currentTime)
-        let snapshot = scene.renderResources.makeSnapshot(from: scene, at: now)
+        runtime.scene.update(at: now, renderTime: currentTime)
+        let snapshot = runtime.makeRenderSnapshot(at: now)
 
         let viewport = MTLViewport(size: view.drawableSize)
-        let camera = scene.makeCamera(viewport: viewport)
-        scene.lastCamera = camera
+        let camera = runtime.scene.makeCamera(viewport: viewport)
+        runtime.scene.lastCamera = camera
 
         let frame = RenderFrame(
             time: currentTime,
@@ -309,7 +310,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
     }
 
     override func mouseDown(with event: NSEvent) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 
@@ -326,7 +327,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
     }
 
     @objc func handlePan(_ gestureRecognizer: NSPanGestureRecognizer) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 
@@ -348,7 +349,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
     }
 
     @objc func handleMagnification(_ gestureRecognizer: NSMagnificationGestureRecognizer) {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 

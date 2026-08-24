@@ -28,6 +28,6 @@ enum LoginStage {
 enum MapStage {
     enum Phase {
         case loading(_ progress: Progress)
-        case loaded(_ scene: MapScene)
+        case loaded(_ runtime: MapSceneRuntime)
     }
 }

@@ -22,8 +22,8 @@ public struct GameView: View {
                 switch mapPhase {
                 case .loading(let progress):
                     MapLoadingView(progress: progress)
-                case .loaded(let scene):
-                    MapSceneView(scene: scene)
+                case .loaded(let runtime):
+                    MapSceneView(runtime: runtime)
                 }
             }
         }

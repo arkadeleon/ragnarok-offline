@@ -9,7 +9,7 @@ import SwiftUI
 import ThumbstickView
 
 struct MapSceneView: View {
-    var scene: MapScene
+    var runtime: MapSceneRuntime
 
     #if os(visionOS)
     @Environment(\.openImmersiveSpace) private var openImmersiveSpace
@@ -41,7 +41,7 @@ struct MapSceneView: View {
                     }
                 }
             #else
-            MapView(scene: scene)
+            MapView(runtime: runtime)
             #endif
         }
         .overlay(alignment: .bottomLeading) {
@@ -49,19 +49,19 @@ struct MapSceneView: View {
                 .padding(.leading, 16)
                 .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
                 .onReceive(timer) { _ in
-                    scene.handleMovement(movementValue)
+                    runtime.scene.handleMovement(movementValue)
                 }
         }
         .overlay(alignment: .bottomTrailing) {
             ActionControlPadView(
                 onAttack: {
-                    scene.attackNearestMonster()
+                    runtime.scene.attackNearestMonster()
                 },
                 onPickup: {
-                    scene.pickUpNearestItem()
+                    runtime.scene.pickUpNearestItem()
                 },
                 onSkill: { skill in
-                    scene.useSkillOnNearestMonster(skill)
+                    runtime.scene.useSkillOnNearestMonster(skill)
                 }
             )
             .padding(.trailing, 16)
@@ -83,7 +83,7 @@ struct MapSceneView: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            MinimapView(scene: scene)
+            MinimapView(scene: runtime.scene)
                 .padding(.top, 16)
                 .padding(.trailing, 16)
         }
@@ -133,7 +133,7 @@ struct MapSceneView: View {
                         presentedMenuItem = nil
                     }
                 case .options:
-                    OptionsView(isPlayerDead: scene.state.isPlayerDead) {
+                    OptionsView(isPlayerDead: runtime.scene.state.isPlayerDead) {
                         presentedMenuItem = nil
                     }
                 }
@@ -144,7 +144,7 @@ struct MapSceneView: View {
                 NPCDialogView(dialog: dialog)
             }
         }
-        .onChange(of: scene.state.isPlayerDead) { _, newValue in
+        .onChange(of: runtime.scene.state.isPlayerDead) { _, newValue in
             if newValue {
                 presentedMenuItem = .options
             }

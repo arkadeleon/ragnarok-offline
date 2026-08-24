@@ -16,8 +16,8 @@ public struct GameImmersiveSpaceContent: ImmersiveSpaceContent {
 
     public var body: some ImmersiveSpaceContent {
         CompositorLayer(configuration: MapLayerConfiguration()) { layerRenderer in
-            guard let scene = gameSession.mapScene,
-                  let mapLayerRenderer = MapLayerRenderer(layerRenderer: layerRenderer, scene: scene) else {
+            guard let runtime = gameSession.mapRuntime,
+                  let mapLayerRenderer = MapLayerRenderer(layerRenderer: layerRenderer, runtime: runtime) else {
                 return
             }
             mapLayerRenderer.start()
@@ -53,9 +53,8 @@ struct MapLayerConfiguration: CompositorLayerConfiguration {
 extension RenderConfiguration {
     /// What the game's immersive space renders into.
     ///
-    /// The renderers build their pipeline states when the map scene loads, before there is
-    /// a `LayerRenderer` to ask, so the formats are fixed here and the layer is configured
-    /// to match. Compositor Services only supports reversed depth.
+    /// The renderer and compositor layer must use the same formats, so they share this
+    /// fixed configuration. Compositor Services only supports reversed depth.
     public static let immersive = RenderConfiguration(
         // The layer traps on any format outside `LayerRenderer.Capabilities`, and
         // `.bgra8Unorm` is not among them. Every format it does accept is read as linear,

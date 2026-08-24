@@ -96,8 +96,12 @@ final public class GameSession {
     @ObservationIgnored var currentMapServer: MapServerInfo?
 
     public var mapScene: MapScene? {
-        if case .map(let mapPhase) = stage, case .loaded(let scene) = mapPhase {
-            scene
+        mapRuntime?.scene
+    }
+
+    var mapRuntime: MapSceneRuntime? {
+        if case .map(let mapPhase) = stage, case .loaded(let runtime) = mapPhase {
+            runtime
         } else {
             nil
         }
@@ -700,7 +704,11 @@ final public class GameSession {
 
                     notifyMapLoaded()
 
-                    stage = .map(.loaded(scene))
+                    let runtime = MapSceneRuntime(
+                        scene: scene,
+                        renderResources: renderResources
+                    )
+                    stage = .map(.loaded(runtime))
                 } catch {
                     logger.warning("Map scene failed to load: \(error)")
                 }
