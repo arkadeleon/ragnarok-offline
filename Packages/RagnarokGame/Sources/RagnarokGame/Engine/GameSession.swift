@@ -678,13 +678,12 @@ final public class GameSession {
                     return
                 }
 
-                let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
-                let world = try await context.resourceManager.world(mapName: mapName)
-
                 guard let device = MTLCreateSystemDefaultDevice() else {
                     fatalError("GameSession: Metal is not available on this device")
                 }
-                let renderResources = MapSceneRenderResources(device: device)
+
+                let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
+                let world = try await context.resourceManager.world(mapName: mapName)
 
                 let scene = MapScene(
                     mapName: mapName,
@@ -693,9 +692,9 @@ final public class GameSession {
                     character: character,
                     playerPosition: position,
                     resourceManager: context.resourceManager,
-                    renderResources: renderResources,
                     gameSession: self
                 )
+                let renderResources = MapSceneRenderResources(device: device)
                 let runtime = MapSceneRuntime(
                     scene: scene,
                     renderResources: renderResources

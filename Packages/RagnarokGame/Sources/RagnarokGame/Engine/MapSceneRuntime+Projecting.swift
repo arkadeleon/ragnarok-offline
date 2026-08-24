@@ -1,5 +1,5 @@
 //
-//  MapScene+Projecting.swift
+//  MapSceneRuntime+Projecting.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/4/9.
@@ -15,19 +15,19 @@ public enum HitTestResult: Sendable {
     case ground(position: SIMD2<Int>)
 }
 
-extension MapScene {
+extension MapSceneRuntime {
     /// Searches for objects along a ray through the world.
-    public func hitTest(_ ray: Ray) -> HitTestResult? {
+    func hitTest(_ ray: Ray) -> HitTestResult? {
         let objectIDs = spriteHits(ray)
 
-        if let objectID = objectIDs.first(where: { objects[$0]?.isDead == false }) {
+        if let objectID = objectIDs.first(where: { scene.objects[$0]?.isDead == false }) {
             return .mapObject(objectID: objectID)
         }
-        if let objectID = objectIDs.first(where: { items[$0] != nil }) {
+        if let objectID = objectIDs.first(where: { scene.items[$0] != nil }) {
             return .mapItem(objectID: objectID)
         }
 
-        return groundHit(ray, mapGrid: mapGrid)
+        return groundHit(ray, mapGrid: scene.mapGrid)
     }
 
     private func groundHit(_ ray: Ray, mapGrid: MapGrid) -> HitTestResult? {
@@ -60,7 +60,7 @@ extension MapScene {
 
     /// The objects whose sprite the ray passes through, nearest first.
     private func spriteHits(_ ray: Ray) -> [GameObjectID] {
-        guard let camera = lastCamera else {
+        guard let camera = scene.lastCamera else {
             return []
         }
 
@@ -77,7 +77,7 @@ extension MapScene {
         var distances: [GameObjectID : Float] = [:]
         for (objectID, objectBounds) in bounds {
             // Items are too small to tap reliably; everything else is already big enough.
-            let minimumSize: Float = items[objectID] != nil ? 30 : 0
+            let minimumSize: Float = scene.items[objectID] != nil ? 30 : 0
             guard let distance = hitDistance(ray, bounds: objectBounds, minimumSize: minimumSize, camera: camera) else {
                 continue
             }

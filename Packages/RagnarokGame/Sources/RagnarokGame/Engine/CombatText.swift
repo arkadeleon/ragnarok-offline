@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import simd
 
 struct CombatText: Identifiable, Sendable {
     struct Target: Sendable {
         let objectID: GameObjectID
+        let initialWorldPosition: SIMD3<Float>
         let isPlayer: Bool
     }
 

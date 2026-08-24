@@ -27,6 +27,7 @@ final class MapSceneRenderResources {
     private var combatTextResources: [UUID : CombatTextRenderResource] = [:]
 
     private var effectAssetStore: EffectAssetStore?
+    private var effectObjectIDs: Set<UUID> = []
     private var effectResources: [UUID : EffectRenderResourceGroup] = [:]
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
@@ -75,55 +76,77 @@ final class MapSceneRenderResources {
         combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
     }
 
-    func addCombatText(
-        _ combatText: CombatText,
-        startWorldPosition: SIMD3<Float>
-    ) -> Bool {
+    func synchronizeCombatTexts(_ combatTexts: [UUID : CombatText]) {
+        let currentIDs = Set(combatTexts.keys)
+        for combatTextObjectID in Set(combatTextResources.keys).subtracting(currentIDs) {
+            combatTextResources.removeValue(forKey: combatTextObjectID)
+        }
+
+        for (combatTextObjectID, combatText) in combatTexts where combatTextResources[combatTextObjectID] == nil {
+            addCombatText(combatText)
+        }
+    }
+
+    private func addCombatText(_ combatText: CombatText) {
         guard let combatTextSpriteSet,
               combatTextResources[combatText.id] == nil,
               let resource = CombatTextRenderResource(
                   device: device,
                   combatText: combatText,
-                  startWorldPosition: startWorldPosition,
                   spriteSet: combatTextSpriteSet
               ) else {
-            return false
+            return
         }
 
         combatTextResources[combatText.id] = resource
-        return true
     }
 
-    func combatTextResource(for id: UUID) -> CombatTextRenderResource? {
-        combatTextResources[id]
-    }
-
-    func removeCombatText(id: UUID) {
-        combatTextResources.removeValue(forKey: id)
+    func combatTextResource(for objectID: UUID) -> CombatTextRenderResource? {
+        combatTextResources[objectID]
     }
 
     func prepareEffects(resourceManager: ResourceManager) {
         cancelEffectLoads()
         effectAssetStore?.cancelAllTasks()
         effectAssetStore = EffectAssetStore(resourceManager: resourceManager)
+        effectObjectIDs.removeAll()
         effectResources.removeAll()
     }
 
-    func addEffect(
+    func synchronizeEffects(
+        _ effects: [UUID : MapSceneEffect],
+        worldPositions: [UUID : SIMD3<Float>],
+        onSound: @escaping @MainActor (_ name: String, _ delay: TimeInterval) -> Void
+    ) {
+        let currentIDs = Set(effects.keys)
+        for effectObjectID in effectObjectIDs.subtracting(currentIDs) {
+            removeEffect(objectID: effectObjectID)
+        }
+
+        for (effectObjectID, effect) in effects where !effectObjectIDs.contains(effectObjectID) {
+            guard let worldPosition = worldPositions[effectObjectID] else {
+                continue
+            }
+            effectObjectIDs.insert(effectObjectID)
+            loadEffect(effect, worldPosition: worldPosition, onSound: onSound)
+        }
+    }
+
+    private func loadEffect(
         _ effect: MapSceneEffect,
         worldPosition: SIMD3<Float>,
         onSound: @escaping @MainActor (_ name: String, _ delay: TimeInterval) -> Void
     ) {
-        let effectID = effect.id
-        effectLoadTasks.removeValue(forKey: effectID)?.cancel()
-        effectResources.removeValue(forKey: effectID)
+        let objectID = effect.id
+        effectLoadTasks.removeValue(forKey: objectID)?.cancel()
+        effectResources.removeValue(forKey: objectID)
 
-        effectLoadTasks[effectID] = Task { [weak self] in
+        effectLoadTasks[objectID] = Task { [weak self] in
             guard let self else {
                 return
             }
             defer {
-                self.effectLoadTasks[effectID] = nil
+                self.effectLoadTasks[objectID] = nil
             }
 
             do {
@@ -142,11 +165,11 @@ final class MapSceneRenderResources {
                     }
                 }
 
-                guard effectLoadTasks[effectID] != nil else {
+                guard effectLoadTasks[objectID] != nil else {
                     return
                 }
 
-                effectResources[effectID] = EffectRenderResourceGroup(
+                effectResources[objectID] = EffectRenderResourceGroup(
                     device: device,
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,
@@ -155,24 +178,25 @@ final class MapSceneRenderResources {
                     sourceWorldPosition: effect.sourceWorldPosition
                 )
             } catch {
-                logger.warning("Metal map scene failed to load effect \(effect.reference): \(error)")
+                logger.warning("Map scene failed to load effect \(effect.reference): \(error)")
             }
         }
     }
 
-    func effectResource(for id: UUID) -> EffectRenderResourceGroup? {
-        effectResources[id]
+    func effectResource(for objectID: UUID) -> EffectRenderResourceGroup? {
+        effectResources[objectID]
     }
 
     func expiredEffectIDs(atTime time: TimeInterval) -> [UUID] {
-        effectResources.compactMap { effectID, resourceGroup in
-            resourceGroup.isExpired(atTime: time) ? effectID : nil
+        effectResources.compactMap { objectID, resourceGroup in
+            resourceGroup.isExpired(atTime: time) ? objectID : nil
         }
     }
 
-    func removeEffect(id: UUID) {
-        effectResources.removeValue(forKey: id)
-        effectLoadTasks.removeValue(forKey: id)?.cancel()
+    private func removeEffect(objectID: UUID) {
+        effectObjectIDs.remove(objectID)
+        effectResources.removeValue(forKey: objectID)
+        effectLoadTasks.removeValue(forKey: objectID)?.cancel()
     }
 
     func removeAll() {
@@ -186,6 +210,7 @@ final class MapSceneRenderResources {
         cancelEffectLoads()
         effectAssetStore?.cancelAllTasks()
         effectAssetStore = nil
+        effectObjectIDs.removeAll()
         effectResources.removeAll()
 
         world = nil

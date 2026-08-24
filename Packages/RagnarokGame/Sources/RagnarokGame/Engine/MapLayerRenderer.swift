@@ -47,7 +47,7 @@ final class MapLayerRenderer {
         self.scene = scene
         self.renderer = renderer
         self.commandQueue = commandQueue
-        self.spatialInput = MapSpatialInput(scene: scene)
+        self.spatialInput = MapSpatialInput(runtime: runtime)
     }
 
     func start() {
@@ -90,7 +90,7 @@ final class MapLayerRenderer {
         frame.startUpdate()
         let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
-        runtime.scene.update(at: now, renderTime: currentTime)
+        runtime.update(at: now, renderTime: currentTime)
         let snapshot = runtime.makeRenderSnapshot(at: now)
         frame.endUpdate()
 

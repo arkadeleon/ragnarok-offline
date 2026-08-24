@@ -38,7 +38,11 @@ extension MapScene {
 
         let combatText = CombatText(
             creationTime: .now,
-            target: CombatText.Target(objectID: player.objectID, isPlayer: true),
+            target: CombatText.Target(
+                objectID: player.objectID,
+                initialWorldPosition: worldPosition(for: player),
+                isPlayer: true
+            ),
             amount: recovered,
             kind: .hpRecovery,
             delay: .zero
@@ -51,7 +55,11 @@ extension MapScene {
 
         let combatText = CombatText(
             creationTime: .now,
-            target: CombatText.Target(objectID: player.objectID, isPlayer: true),
+            target: CombatText.Target(
+                objectID: player.objectID,
+                initialWorldPosition: worldPosition(for: player),
+                isPlayer: true
+            ),
             amount: recovered,
             kind: .spRecovery,
             delay: .zero
@@ -354,6 +362,7 @@ extension MapScene {
                 creationTime: now,
                 target: CombatText.Target(
                     objectID: objectSkill.targetObjectID,
+                    initialWorldPosition: worldPosition(for: targetObject),
                     isPlayer: targetObject.type == .pc
                 ),
                 amount: objectSkill.level,
@@ -365,11 +374,13 @@ extension MapScene {
             audioPlayer.playSound(named: "_heal_effect.wav")
         }
 
-        if objectSkill.damage >= 0 {
+        if objectSkill.damage >= 0,
+           let initialWorldPosition = worldPosition(forObjectID: objectSkill.targetObjectID) {
             let count = objectSkill.count
             let damage = objectSkill.damage
             let target = CombatText.Target(
                 objectID: objectSkill.targetObjectID,
+                initialWorldPosition: initialWorldPosition,
                 isPlayer: objects[objectSkill.targetObjectID]?.type == .pc
             )
 
@@ -548,8 +559,13 @@ extension MapScene {
 
 extension MapScene {
     private func addCombatTextsAndPlayHitSound(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
+        guard let initialWorldPosition = worldPosition(forObjectID: objectAction.targetObjectID) else {
+            return
+        }
+
         let target = CombatText.Target(
             objectID: objectAction.targetObjectID,
+            initialWorldPosition: initialWorldPosition,
             isPlayer: objects[objectAction.targetObjectID]?.type == .pc
         )
         let hitSoundName = hitSoundName(for: objectAction)
@@ -665,17 +681,6 @@ extension MapScene {
 
     private func addCombatText(_ combatText: CombatText) {
         guard combatTexts[combatText.id] == nil else {
-            return
-        }
-
-        guard let startWorldPosition = worldPosition(forObjectID: combatText.target.objectID) else {
-            return
-        }
-
-        guard renderResources.addCombatText(
-            combatText,
-            startWorldPosition: startWorldPosition
-        ) else {
             return
         }
 
@@ -844,24 +849,11 @@ extension MapScene {
             ownerObjectID: ownerObjectID,
             delay: delay
         )
-        addEffect(effect)
-    }
-
-    private func addEffect(_ effect: MapSceneEffect) {
-        let effectID = effect.id
-        effects[effectID] = effect
-
-        renderResources.addEffect(
-            effect,
-            worldPosition: mapGrid.worldPosition(for: effect.gridPosition)
-        ) { [audioPlayer] soundName, delay in
-            audioPlayer.playSound(named: soundName, after: .seconds(delay))
-        }
+        effects[effect.id] = effect
     }
 
     func removeEffect(objectID: UUID) {
         effects.removeValue(forKey: objectID)
-        renderResources.removeEffect(id: objectID)
     }
 }
 

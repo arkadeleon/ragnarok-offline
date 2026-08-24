@@ -104,7 +104,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
 
-        runtime.scene.update(at: now, renderTime: currentTime)
+        runtime.update(at: now, renderTime: currentTime)
         let snapshot = runtime.makeRenderSnapshot(at: now)
 
         let viewport = MTLViewport(size: view.drawableSize)
@@ -136,7 +136,7 @@ final class MapViewController: UIViewController, MTKViewDelegate {
               let ray = camera.ray(through: point, in: mtkView.bounds) else {
             return
         }
-        if let result = scene.hitTest(ray) {
+        if let result = runtime?.hitTest(ray) {
             scene.handleInteraction(result)
         }
     }
@@ -287,7 +287,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
         let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
 
-        runtime.scene.update(at: now, renderTime: currentTime)
+        runtime.update(at: now, renderTime: currentTime)
         let snapshot = runtime.makeRenderSnapshot(at: now)
 
         let viewport = MTLViewport(size: view.drawableSize)
@@ -321,7 +321,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
               let ray = camera.ray(through: point, in: mtkView.bounds) else {
             return
         }
-        if let result = scene.hitTest(ray) {
+        if let result = runtime?.hitTest(ray) {
             scene.handleInteraction(result)
         }
     }

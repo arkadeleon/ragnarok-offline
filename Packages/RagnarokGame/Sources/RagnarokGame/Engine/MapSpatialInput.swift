@@ -40,7 +40,7 @@ final class MapSpatialInput {
     /// degree wide.
     private static let pointWidth: Float = .pi / 180 / 30
 
-    private weak var scene: MapScene?
+    private weak var runtime: MapSceneRuntime?
 
     /// Where the map is, in the world coordinate system of the headset. This is the same
     /// coordinate system that `deviceAnchor` uses. The frame loop sets this every frame,
@@ -56,8 +56,8 @@ final class MapSpatialInput {
     private var pinches: [SpatialEventCollection.Event.ID : Pinch] = [:]
     private var orbit: Orbit?
 
-    init(scene: MapScene) {
-        self.scene = scene
+    init(runtime: MapSceneRuntime) {
+        self.runtime = runtime
     }
 
     func update(worldPlacement: simd_float4x4, originFromDevice: simd_float4x4) {
@@ -107,7 +107,7 @@ final class MapSpatialInput {
     }
 
     private func select(along selectionRay: Ray3D?) {
-        guard let scene, let selectionRay else {
+        guard let runtime, let selectionRay else {
             return
         }
 
@@ -127,13 +127,13 @@ final class MapSpatialInput {
             direction: simd_normalize(direction),
             pointWidth: Self.pointWidth
         )
-        if let result = scene.hitTest(ray) {
-            scene.handleInteraction(result)
+        if let result = runtime.hitTest(ray) {
+            runtime.scene.handleInteraction(result)
         }
     }
 
     private func updateCamera() {
-        guard let scene else {
+        guard let scene = runtime?.scene else {
             return
         }
 

@@ -69,24 +69,35 @@ final class MapSceneRuntime {
         renderResources.prepareEffects(resourceManager: scene.resourceManager)
     }
 
-    func makeRenderSnapshot(at now: ContinuousClock.Instant) -> MapSceneRenderSnapshot {
-        var worldPositions: [GameObjectID : SIMD3<Float>] = [:]
-        worldPositions.reserveCapacity(scene.objects.count + scene.items.count)
+    func update(at now: ContinuousClock.Instant, renderTime: TimeInterval) {
+        scene.update(at: now)
 
-        for object in scene.objects.values {
-            worldPositions[object.objectID] = scene.worldPosition(for: object)
-        }
-
-        for item in scene.items.values {
-            worldPositions[item.objectID] = scene.mapGrid.worldPosition(for: item.gridPosition)
+        for effectID in renderResources.expiredEffectIDs(atTime: renderTime) {
+            scene.removeEffect(objectID: effectID)
         }
 
         renderResources.synchronizeSprites(
             objects: scene.objects,
             items: scene.items,
-            worldPositions: worldPositions,
+            worldPositions: makeWorldPositions(),
             camera: scene.cameraState
         )
+
+        renderResources.synchronizeCombatTexts(scene.combatTexts)
+
+        let effectWorldPositions = scene.effects.mapValues { effect in
+            scene.mapGrid.worldPosition(for: effect.gridPosition)
+        }
+        renderResources.synchronizeEffects(
+            scene.effects,
+            worldPositions: effectWorldPositions
+        ) { [audioPlayer = scene.audioPlayer] soundName, delay in
+            audioPlayer.playSound(named: soundName, after: .seconds(delay))
+        }
+    }
+
+    func makeRenderSnapshot(at now: ContinuousClock.Instant) -> MapSceneRenderSnapshot {
+        let worldPositions = makeWorldPositions()
 
         var snapshot = MapSceneRenderSnapshot(fog: scene.fog)
 
@@ -160,7 +171,7 @@ final class MapSceneRuntime {
                     return nil
                 }
 
-                let anchor = worldPositions[combatText.target.objectID] ?? resource.startWorldPosition
+                let anchor = worldPositions[combatText.target.objectID] ?? combatText.target.initialWorldPosition
                 guard let animation = combatText.animation(
                     at: now,
                     anchor: anchor,
@@ -177,5 +188,20 @@ final class MapSceneRuntime {
             }
 
         return snapshot
+    }
+
+    private func makeWorldPositions() -> [GameObjectID : SIMD3<Float>] {
+        var worldPositions: [GameObjectID : SIMD3<Float>] = [:]
+        worldPositions.reserveCapacity(scene.objects.count + scene.items.count)
+
+        for object in scene.objects.values {
+            worldPositions[object.objectID] = scene.worldPosition(for: object)
+        }
+
+        for item in scene.items.values {
+            worldPositions[item.objectID] = scene.mapGrid.worldPosition(for: item.gridPosition)
+        }
+
+        return worldPositions
     }
 }

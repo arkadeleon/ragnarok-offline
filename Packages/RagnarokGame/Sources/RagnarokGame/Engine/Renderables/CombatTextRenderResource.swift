@@ -18,14 +18,9 @@ struct CombatTextRenderResource {
     let spriteScale: SIMD2<Float>
     let color: SIMD4<Float>
 
-    /// Where the target stood when the text was created. The text falls back to this
-    /// once the target has left the map.
-    let startWorldPosition: SIMD3<Float>
-
     init?(
         device: any MTLDevice,
         combatText: CombatText,
-        startWorldPosition: SIMD3<Float>,
         spriteSet: CombatTextSpriteSet
     ) {
         let image = switch combatText.kind {
@@ -51,7 +46,6 @@ struct CombatTextRenderResource {
         self.frameWidth = size.x
         self.frameHeight = size.y
         self.spriteScale = spriteSet.scale
-        self.startWorldPosition = startWorldPosition
         self.color = switch combatText.kind {
         case .hpRecovery:
             [0, 1, 0, 1]

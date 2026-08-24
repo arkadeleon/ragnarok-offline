@@ -32,7 +32,6 @@ public final class MapScene {
     let world: WorldResource
     let player: MapSceneMapObject
     let resourceManager: ResourceManager
-    let renderResources: MapSceneRenderResources
     weak var gameSession: GameSession?
 
     let audioPlayer: MapAudioPlayer
@@ -69,13 +68,11 @@ public final class MapScene {
         character: CharacterInfo,
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
-        renderResources: MapSceneRenderResources,
         gameSession: GameSession
     ) {
         self.mapName = mapName
         self.world = world
         self.resourceManager = resourceManager
-        self.renderResources = renderResources
         self.gameSession = gameSession
         self.audioPlayer = MapAudioPlayer(resourceManager: resourceManager)
 
@@ -347,10 +344,7 @@ extension MapScene {
         )
     }
 
-    func update(
-        at now: ContinuousClock.Instant,
-        renderTime: TimeInterval
-    ) {
+    func update(at now: ContinuousClock.Instant) {
         let vanishedObjectIDs = objects.compactMap { objectID, object in
             object.death?.isVanished(at: now) == true ? objectID : nil
         }
@@ -363,11 +357,6 @@ extension MapScene {
         }
         for combatTextObjectID in expiredCombatTextObjectIDs {
             combatTexts.removeValue(forKey: combatTextObjectID)
-            renderResources.removeCombatText(id: combatTextObjectID)
-        }
-
-        for effectObjectID in renderResources.expiredEffectIDs(atTime: renderTime) {
-            removeEffect(objectID: effectObjectID)
         }
 
         for object in objects.values {
