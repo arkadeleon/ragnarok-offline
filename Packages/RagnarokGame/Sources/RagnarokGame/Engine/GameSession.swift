@@ -684,10 +684,11 @@ final public class GameSession {
 
                 let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
                 let world = try await context.resourceManager.world(mapName: mapName)
+                let mapGrid = MapGrid(gat: world.gat)
 
                 let scene = MapScene(
                     mapName: mapName,
-                    world: world,
+                    mapGrid: mapGrid,
                     account: account,
                     character: character,
                     playerPosition: position,
@@ -697,6 +698,7 @@ final public class GameSession {
                 let renderResources = MapSceneRenderResources(device: device)
                 let runtime = MapSceneRuntime(
                     scene: scene,
+                    world: world,
                     renderResources: renderResources
                 )
 

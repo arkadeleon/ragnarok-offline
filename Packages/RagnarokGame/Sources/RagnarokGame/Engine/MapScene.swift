@@ -12,7 +12,6 @@ import RagnarokConstants
 import RagnarokCore
 import RagnarokModels
 import RagnarokPackets
-import RagnarokRenderAssets
 import RagnarokRendering
 import RagnarokResources
 import RagnarokSprite
@@ -26,16 +25,15 @@ private enum MapMovementDecision {
 
 @MainActor
 public final class MapScene {
-    public let mapName: String
+    let mapName: String
+    let mapGrid: MapGrid
 
-    let world: WorldResource
     let player: MapSceneMapObject
     let resourceManager: ResourceManager
     weak var gameSession: GameSession?
 
     let audioPlayer: MapAudioPlayer
 
-    let mapGrid: MapGrid
     let state: MapSceneState
 
     var objects: [GameObjectID: MapSceneMapObject] = [:]
@@ -60,7 +58,7 @@ public final class MapScene {
 
     init(
         mapName: String,
-        world: WorldResource,
+        mapGrid: MapGrid,
         account: AccountInfo,
         character: CharacterInfo,
         playerPosition: SIMD2<Int>,
@@ -68,12 +66,11 @@ public final class MapScene {
         gameSession: GameSession
     ) {
         self.mapName = mapName
-        self.world = world
+        self.mapGrid = mapGrid
         self.resourceManager = resourceManager
         self.gameSession = gameSession
         self.audioPlayer = MapAudioPlayer(resourceManager: resourceManager)
 
-        self.mapGrid = MapGrid(gat: world.gat)
         self.state = MapSceneState()
 
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)

@@ -19,11 +19,17 @@ final class MapSceneRuntime {
     private static let cameraFieldOfViewDegrees: Float = 15
 
     let scene: MapScene
+    let world: WorldResource
     let renderResources: MapSceneRenderResources
     var lastCamera: RenderCamera?
 
-    init(scene: MapScene, renderResources: MapSceneRenderResources) {
+    init(
+        scene: MapScene,
+        world: WorldResource,
+        renderResources: MapSceneRenderResources
+    ) {
         self.scene = scene
+        self.world = world
         self.renderResources = renderResources
     }
 
@@ -45,7 +51,7 @@ final class MapSceneRuntime {
     private func prepareRenderResources(progress: Progress) async throws {
         let worldAssetLoader = WorldAssetLoader()
         let worldAsset = try await worldAssetLoader.load(
-            world: scene.world,
+            world: world,
             resourceManager: scene.resourceManager,
             progress: progress
         )
