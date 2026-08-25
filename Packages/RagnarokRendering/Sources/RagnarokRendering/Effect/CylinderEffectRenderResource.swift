@@ -23,23 +23,23 @@ public final class CylinderEffectRenderResource {
         public var rotationMatrix: simd_float4x4
     }
 
-    public let asset: CylinderEffectAsset
+    public let effect: CylinderEffect
     public let instance: CylinderEffect.Instance
     public let vertices: [CylinderEffectVertex]
     public let texture: (any MTLTexture)?
 
     public var definition: CylinderEffectDefinition {
-        asset.effect.definition
+        effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.effect.definition.rendersBeforeEntities
+        effect.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: CylinderEffectAsset, instance: CylinderEffect.Instance) {
-        let definition = asset.effect.definition
+    public init(device: any MTLDevice, effect: CylinderEffect, instance: CylinderEffect.Instance, asset: CylinderEffectAsset) {
+        let definition = effect.definition
 
-        self.asset = asset
+        self.effect = effect
         self.instance = instance
         self.vertices = Self.makeVertices(
             totalCircleSides: definition.totalCircleSides,

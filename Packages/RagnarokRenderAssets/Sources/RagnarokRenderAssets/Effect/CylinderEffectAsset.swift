@@ -6,23 +6,17 @@
 //
 
 import CoreGraphics
-import RagnarokEffects
 import RagnarokResources
 
 public struct CylinderEffectAsset: Sendable {
-    public let effect: CylinderEffect
     public let textureImage: CGImage
 
-    static func load(with definition: CylinderEffectDefinition, using resourceManager: ResourceManager) async throws -> CylinderEffectAsset {
+    static func load(textureName: String, using resourceManager: ResourceManager) async throws -> CylinderEffectAsset {
         let texturePath = ResourcePath.effectDirectory
-            .appending(definition.textureName)
+            .appending(textureName)
             .appendingPathExtension("tga")
         let image = try await resourceManager.image(at: texturePath)
 
-        let asset = CylinderEffectAsset(
-            effect: CylinderEffect(definition: definition),
-            textureImage: image.cgImage
-        )
-        return asset
+        return CylinderEffectAsset(textureImage: image.cgImage)
     }
 }

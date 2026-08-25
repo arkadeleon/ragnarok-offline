@@ -129,7 +129,6 @@ public struct WorldAssetLoader: Sendable {
     private func loadEffects(rsw: RSW, gnd: GND, resourceManager: ResourceManager) async -> [WorldEffectAsset] {
         let effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
 
-        var assetGroupsByEffectID: [EffectID : EffectAssetGroup] = [:]
         var effects: [WorldEffectAsset] = []
 
         for effect in rsw.effects {
@@ -137,16 +136,13 @@ public struct WorldAssetLoader: Sendable {
                 continue
             }
 
+            let definitions = EffectTable.definitions(for: effectID)
             let assetGroup: EffectAssetGroup
-            if let loadedAssetGroup = assetGroupsByEffectID[effectID] {
-                assetGroup = loadedAssetGroup
-            } else {
-                let definitions = EffectTable.definitions(for: effectID)
-                guard let loadedAssetGroup = try? await effectAssetLoader.loadAssetGroup(with: definitions) else {
-                    continue
-                }
-                assetGroupsByEffectID[effectID] = loadedAssetGroup
-                assetGroup = loadedAssetGroup
+            do {
+                assetGroup = try await effectAssetLoader.loadAssetGroup(with: definitions)
+            } catch {
+                logger.warning("World failed to load effect \(effectID.rawValue): \(error)")
+                continue
             }
 
             let position: SIMD3<Float> = [

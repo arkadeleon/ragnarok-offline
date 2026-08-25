@@ -27,26 +27,38 @@ public final class ThreeDEffectRenderResource {
         public var layers: [ThreeDEffectRenderResource.Sample.Layer]
     }
 
-    public let asset: ThreeDEffectAsset
+    public let effect: ThreeDEffect
     public let instance: ThreeDEffect.Instance
+    public let frames: [ThreeDEffectAsset.Frame]
+    public let frameDelay: TimeInterval
     public let vertices: [ThreeDEffectVertex]
     public let textures: [(any MTLTexture)?]
 
     public var definition: ThreeDEffectDefinition {
-        asset.effect.definition
+        effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.effect.definition.rendersBeforeEntities
+        effect.definition.rendersBeforeEntities
     }
 
-    private var frames: [ThreeDEffectAsset.Frame] {
-        asset.frames
-    }
+    public init(device: any MTLDevice, effect: ThreeDEffect, instance: ThreeDEffect.Instance, asset: ThreeDEffectAsset) {
+        let definition = effect.definition
 
-    public init(device: any MTLDevice, asset: ThreeDEffectAsset, instance: ThreeDEffect.Instance) {
-        self.asset = asset
+        self.effect = effect
         self.instance = instance
+        self.frames = asset.frames
+
+        // A sprite's own interval wins over the definition's, unless the
+        // definition asks for a specific sprite frame delay.
+        if definition.spriteFrameDelay > 0 {
+            self.frameDelay = definition.spriteFrameDelay
+        } else if let frameInterval = asset.frameInterval {
+            self.frameDelay = frameInterval
+        } else {
+            self.frameDelay = definition.frameDelay
+        }
+
         self.vertices = [
             ThreeDEffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             ThreeDEffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
@@ -157,7 +169,6 @@ public final class ThreeDEffectRenderResource {
     }
 
     private func frameIndex(elapsedTime: TimeInterval) -> Int {
-        let frameDelay = asset.frameDelay
         guard frames.count > 1, frameDelay > 0 else {
             return 0
         }

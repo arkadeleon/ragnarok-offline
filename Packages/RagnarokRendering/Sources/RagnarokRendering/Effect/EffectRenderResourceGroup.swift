@@ -52,13 +52,14 @@ public final class EffectRenderResourceGroup {
 
         for asset in assetGroup.assets {
             switch asset {
-            case .`2D`(let asset):
-                let instances = asset.effect.makeInstances()
+            case .`2D`(let effect, let asset):
+                let instances = effect.makeInstances()
                 for instance in instances {
                     let resource = TwoDEffectRenderResource(
                         device: device,
-                        asset: asset,
-                        instance: instance
+                        effect: effect,
+                        instance: instance,
+                        asset: asset
                     )
                     resources.append(.`2D`(resource))
 
@@ -66,13 +67,14 @@ public final class EffectRenderResourceGroup {
                         sounds.append(sound)
                     }
                 }
-            case .`3D`(let asset):
-                let instances = asset.effect.makeInstances()
+            case .`3D`(let effect, let asset):
+                let instances = effect.makeInstances()
                 for instance in instances {
                     let resource = ThreeDEffectRenderResource(
                         device: device,
-                        asset: asset,
-                        instance: instance
+                        effect: effect,
+                        instance: instance,
+                        asset: asset
                     )
                     resources.append(.`3D`(resource))
 
@@ -80,13 +82,14 @@ public final class EffectRenderResourceGroup {
                         sounds.append(sound)
                     }
                 }
-            case .cylinder(let asset):
-                let instances = asset.effect.makeInstances()
+            case .cylinder(let effect, let asset):
+                let instances = effect.makeInstances()
                 for instance in instances {
                     let resource = CylinderEffectRenderResource(
                         device: device,
-                        asset: asset,
-                        instance: instance
+                        effect: effect,
+                        instance: instance,
+                        asset: asset
                     )
                     resources.append(.cylinder(resource))
 
@@ -94,28 +97,30 @@ public final class EffectRenderResourceGroup {
                         sounds.append(sound)
                     }
                 }
-            case .spr(let asset):
+            case .spr(let effect, let asset):
                 let resource = SPREffectRenderResource(
                     device: device,
+                    effect: effect,
                     asset: asset
                 )
                 resources.append(.spr(resource))
 
-                if let sound = asset.effect.sound {
+                if let sound = effect.sound {
                     sounds.append(sound)
                 }
-            case .str(let asset):
+            case .str(let effect, let asset):
                 let resource = STREffectRenderResource(
                     device: device,
+                    effect: effect,
                     asset: asset
                 )
                 resources.append(.str(resource))
 
-                if let sound = asset.effect.sound {
+                if let sound = effect.sound {
                     sounds.append(sound)
                 }
-            case .wav(let asset):
-                sounds.append(asset.effect.sound)
+            case .wav(let effect):
+                sounds.append(effect.sound)
             }
         }
 

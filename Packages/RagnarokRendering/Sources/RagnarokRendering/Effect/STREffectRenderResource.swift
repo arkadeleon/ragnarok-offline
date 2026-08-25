@@ -17,10 +17,10 @@ public final class STREffectRenderResource {
     public let animation: STRAnimation
     public let textures: [String : any MTLTexture]
 
-    public convenience init(device: any MTLDevice, asset: STREffectAsset) {
+    public convenience init(device: any MTLDevice, effect: STREffect, asset: STREffectAsset) {
         self.init(
             device: device,
-            definition: asset.effect.definition,
+            definition: effect.definition,
             animation: asset.animation,
             textureImages: asset.textureImages
         )

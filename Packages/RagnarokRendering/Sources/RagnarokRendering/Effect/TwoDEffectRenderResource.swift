@@ -22,21 +22,21 @@ public final class TwoDEffectRenderResource {
         public var rotationMatrix: simd_float4x4
     }
 
-    public let asset: TwoDEffectAsset
+    public let effect: TwoDEffect
     public let instance: TwoDEffect.Instance
     public let vertices: [TwoDEffectVertex]
     public let texture: (any MTLTexture)?
 
     public var definition: TwoDEffectDefinition {
-        asset.effect.definition
+        effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.effect.definition.rendersBeforeEntities
+        effect.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: TwoDEffectAsset, instance: TwoDEffect.Instance) {
-        self.asset = asset
+    public init(device: any MTLDevice, effect: TwoDEffect, instance: TwoDEffect.Instance, asset: TwoDEffectAsset) {
+        self.effect = effect
         self.instance = instance
         self.vertices = [
             TwoDEffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),

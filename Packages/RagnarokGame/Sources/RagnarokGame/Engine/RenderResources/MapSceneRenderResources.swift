@@ -8,6 +8,7 @@
 import CoreGraphics
 import Foundation
 import Metal
+import RagnarokEffects
 import RagnarokRenderAssets
 import RagnarokRendering
 import RagnarokResources
@@ -26,7 +27,7 @@ final class MapSceneRenderResources {
     private var combatTextSpriteSet: CombatTextSpriteSet?
     private var combatTextResources: [UUID : CombatTextRenderResource] = [:]
 
-    private var effectAssetStore: EffectAssetStore?
+    private var effectAssetLoader: EffectAssetLoader?
     private var effectObjectIDs: Set<UUID> = []
     private var effectResources: [UUID : EffectRenderResourceGroup] = [:]
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
@@ -107,8 +108,7 @@ final class MapSceneRenderResources {
 
     func prepareEffects(resourceManager: ResourceManager) {
         cancelEffectLoads()
-        effectAssetStore?.cancelAllTasks()
-        effectAssetStore = EffectAssetStore(resourceManager: resourceManager)
+        effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
         effectObjectIDs.removeAll()
         effectResources.removeAll()
     }
@@ -150,11 +150,12 @@ final class MapSceneRenderResources {
             }
 
             do {
-                guard let effectAssetStore else {
+                guard let effectAssetLoader else {
                     return
                 }
 
-                let assetGroup = try await effectAssetStore.assetGroup(for: effect.reference)
+                let definitions = EffectTable.definitions(for: effect.reference)
+                let assetGroup = try await effectAssetLoader.loadAssetGroup(with: definitions)
                 guard !Task.isCancelled else {
                     return
                 }
@@ -208,8 +209,7 @@ final class MapSceneRenderResources {
         combatTextResources.removeAll()
 
         cancelEffectLoads()
-        effectAssetStore?.cancelAllTasks()
-        effectAssetStore = nil
+        effectAssetLoader = nil
         effectObjectIDs.removeAll()
         effectResources.removeAll()
 

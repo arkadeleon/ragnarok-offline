@@ -7,12 +7,10 @@
 
 import CoreGraphics
 import Foundation
-import RagnarokCore
-import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokResources
 
-public struct ThreeDEffectAsset: Sendable {
+public struct ThreeDEffectAsset: @unchecked Sendable {
     public struct Layer: Sendable {
         public let imageIndex: Int
         public let sizeFactor: SIMD2<Float>
@@ -42,18 +40,12 @@ public struct ThreeDEffectAsset: Sendable {
         public let layers: [ThreeDEffectAsset.Layer]
     }
 
-    public let effect: ThreeDEffect
     public let images: [CGImage]
-    public let frameDelay: TimeInterval
     public let frames: [ThreeDEffectAsset.Frame]
+    public let frameInterval: TimeInterval?
 
-    static func load(with definition: ThreeDEffectDefinition, using resourceManager: ResourceManager) async throws -> ThreeDEffectAsset {
-        var frameDelay = definition.frameDelay
-
-        var images: [CGImage] = []
-        var frames: [ThreeDEffectAsset.Frame] = []
-
-        if let spriteName = definition.spriteName {
+    static func load(spriteName: String, playSprite: Bool, using resourceManager: ResourceManager, cache: EffectAssetCache) async throws -> ThreeDEffectAsset {
+        try await cache.resource(forIdentifier: "3DEffect/sprite/\(spriteName)#\(playSprite)") {
             let spritePath = ResourcePath.spriteDirectory.appending(subpath: spriteName)
 
             async let actData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("act"))
@@ -64,15 +56,12 @@ public struct ThreeDEffectAsset: Sendable {
             let spriteImages = spr.imagesBySpriteType()
             let action = act.action(at: 0)
             let actionFrames = action?.frames ?? []
-            let usedFrames = definition.playSprite ? actionFrames : Array(actionFrames.prefix(1))
+            let usedFrames = playSprite ? actionFrames : Array(actionFrames.prefix(1))
 
-            if definition.spriteFrameDelay > 0 {
-                frameDelay = definition.spriteFrameDelay
-            } else if let action {
-                frameDelay = TimeInterval(action.frameInterval)
-            }
-
+            var images: [CGImage] = []
+            var frames: [ThreeDEffectAsset.Frame] = []
             var imageIndicesBySprite: [SIMD2<Int> : Int] = [:]
+
             for frame in usedFrames {
                 var layers: [ThreeDEffectAsset.Layer] = []
                 for layer in frame.layers where layer.spriteIndex >= 0 {
@@ -119,31 +108,30 @@ public struct ThreeDEffectAsset: Sendable {
                 }
                 frames.append(ThreeDEffectAsset.Frame(layers: layers))
             }
-        } else {
-            let textureNames: [String]
-            if definition.fileNames.isEmpty {
-                textureNames = definition.fileName.map { [$0] } ?? []
-            } else {
-                textureNames = definition.fileNames
-            }
+
+            return ThreeDEffectAsset(
+                images: images,
+                frames: frames,
+                frameInterval: action.map { TimeInterval($0.frameInterval) }
+            )
+        }
+    }
+
+    static func load(textureNames: [String], using resourceManager: ResourceManager, cache: EffectAssetCache) async throws -> ThreeDEffectAsset {
+        try await cache.resource(forIdentifier: "3DEffect/textures/\(textureNames.joined(separator: "|"))") {
+            var images: [CGImage] = []
+            var frames: [ThreeDEffectAsset.Frame] = []
 
             for textureName in textureNames {
                 let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
                 let removesMagentaPixels = textureName.lowercased().hasSuffix(".bmp")
                 let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
                 let layer = ThreeDEffectAsset.Layer(imageIndex: images.count, sizeFactor: [1, 1])
-                let frame = ThreeDEffectAsset.Frame(layers: [layer])
-                frames.append(frame)
+                frames.append(ThreeDEffectAsset.Frame(layers: [layer]))
                 images.append(image.cgImage)
             }
-        }
 
-        let asset = ThreeDEffectAsset(
-            effect: ThreeDEffect(definition: definition),
-            images: images,
-            frameDelay: frameDelay,
-            frames: frames
-        )
-        return asset
+            return ThreeDEffectAsset(images: images, frames: frames, frameInterval: nil)
+        }
     }
 }

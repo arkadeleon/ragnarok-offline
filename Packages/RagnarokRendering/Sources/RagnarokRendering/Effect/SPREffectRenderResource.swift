@@ -13,25 +13,24 @@ import RagnarokShaders
 import simd
 
 public final class SPREffectRenderResource {
-    public let asset: SPREffectAsset
+    public let effect: SPREffect
     public let vertices: [SPREffectVertex]
     public let textures: [(any MTLTexture)?]
     public let frameSize: SIMD2<Float>
 
+    private let playbackFrameInterval: TimeInterval
+
     public var definition: SPREffectDefinition {
-        asset.effect.definition
+        effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.effect.definition.rendersBeforeEntities
+        effect.definition.rendersBeforeEntities
     }
 
-    private var playbackFrameInterval: TimeInterval {
-        max(asset.frameInterval, 1 / 60)
-    }
+    public init(device: any MTLDevice, effect: SPREffect, asset: SPREffectAsset) {
+        self.effect = effect
 
-    public init(device: any MTLDevice, asset: SPREffectAsset) {
-        self.asset = asset
         self.vertices = [
             SPREffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             SPREffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
@@ -44,6 +43,9 @@ public final class SPREffectRenderResource {
             MetalTextureFactory.makeTexture(from: frameImage, device: device, label: "sprEffect[\(index)]")
         }
         self.frameSize = asset.frameSize
+
+        // The definition may override the sprite's own interval.
+        self.playbackFrameInterval = max(effect.definition.frameInterval ?? asset.frameInterval, 1 / 60)
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
