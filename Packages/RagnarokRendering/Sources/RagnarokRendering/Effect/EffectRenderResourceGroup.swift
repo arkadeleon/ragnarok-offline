@@ -80,7 +80,7 @@ public final class EffectRenderResourceGroup {
                     }
                 }
             case .cylinder(let asset):
-                let instances = asset.makeInstances()
+                let instances = asset.effect.makeInstances()
                 for instance in instances {
                     let resource = CylinderEffectRenderResource(
                         device: device,

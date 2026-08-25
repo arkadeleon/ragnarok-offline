@@ -14,19 +14,19 @@ import simd
 
 public final class CylinderEffectRenderResource {
     public let asset: CylinderEffectAsset
-    public let instance: CylinderEffectAsset.Instance
+    public let instance: CylinderEffect.Instance
     public let vertices: [CylinderEffectVertex]
     public let texture: (any MTLTexture)?
 
     public var definition: CylinderEffectDefinition {
-        asset.definition
+        asset.effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.definition.rendersBeforeEntities
+        asset.effect.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: CylinderEffectAsset, instance: CylinderEffectAsset.Instance) {
+    public init(device: any MTLDevice, asset: CylinderEffectAsset, instance: CylinderEffect.Instance) {
         self.asset = asset
         self.instance = instance
         self.vertices = asset.vertices
@@ -34,15 +34,15 @@ public final class CylinderEffectRenderResource {
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        asset.isExpired(instance: instance, elapsedTime: elapsedTime)
+        asset.effect.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
     func sample(
         forElapsedTime elapsedTime: TimeInterval,
         cameraAzimuth: Float,
         cameraElevation: Float
-    ) -> CylinderEffectAsset.Sample? {
-        asset.sample(
+    ) -> CylinderEffect.Sample? {
+        asset.effect.sample(
             forInstance: instance,
             elapsedTime: elapsedTime,
             cameraAzimuth: cameraAzimuth,

@@ -1,5 +1,5 @@
 //
-//  CylinderEffectAsset+Sample.swift
+//  CylinderEffect+Sample.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/10.
@@ -9,7 +9,7 @@ import Foundation
 import RagnarokCore
 import simd
 
-extension CylinderEffectAsset {
+extension CylinderEffect {
     public struct Sample: Sendable {
         public var topRadius: Float
         public var bottomRadius: Float
@@ -19,7 +19,7 @@ extension CylinderEffectAsset {
         public var rotationMatrix: simd_float4x4
     }
 
-    public func isExpired(instance: CylinderEffectAsset.Instance, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: CylinderEffect.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
@@ -33,11 +33,11 @@ extension CylinderEffectAsset {
     }
 
     public func sample(
-        forInstance instance: CylinderEffectAsset.Instance,
+        forInstance instance: CylinderEffect.Instance,
         elapsedTime: TimeInterval,
         cameraAzimuth: Float,
         cameraElevation: Float
-    ) -> CylinderEffectAsset.Sample? {
+    ) -> CylinderEffect.Sample? {
         var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil
@@ -97,7 +97,7 @@ extension CylinderEffectAsset {
             alpha = min(max(alpha, 0), definition.alpha)
         }
 
-        return CylinderEffectAsset.Sample(
+        return CylinderEffect.Sample(
             topRadius: max(topRadius, 0),
             bottomRadius: max(bottomRadius, 0),
             height: max(height, 0),
@@ -130,7 +130,7 @@ extension CylinderEffectAsset {
     }
 
     private func rotationMatrix(
-        forInstance instance: CylinderEffectAsset.Instance,
+        forInstance instance: CylinderEffect.Instance,
         elapsedTime: TimeInterval,
         cameraAzimuth: Float,
         cameraElevation: Float

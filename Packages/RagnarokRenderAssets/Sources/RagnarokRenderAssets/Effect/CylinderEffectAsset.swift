@@ -11,52 +11,9 @@ import RagnarokResources
 import RagnarokShaders
 
 public struct CylinderEffectAsset: Sendable {
-    public struct Instance: Sendable {
-        public let duplicateID: Int
-        public let sound: EffectSound?
-        public let delay: TimeInterval
-        public let rotationDegrees: SIMD3<Float>
-
-        init(definition: CylinderEffectDefinition, duplicateID: Int) {
-            self.duplicateID = duplicateID
-
-            self.sound = definition.soundName.map { soundName in
-                EffectSound(
-                    name: soundName,
-                    delay: definition.duplicate.interval * TimeInterval(duplicateID)
-                )
-            }
-
-            self.delay = definition.delayStart
-                + definition.delayOffset
-                + definition.duplicate.delayOffsetDelta * TimeInterval(duplicateID)
-                + definition.delayLate
-                + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
-                + definition.duplicate.interval * TimeInterval(duplicateID)
-
-            var rotationDegrees = definition.rotationDegrees
-            if let range = definition.rotationXRandomRange {
-                rotationDegrees.x += Float.random(in: range)
-            }
-            if let range = definition.rotationYRandomRange {
-                rotationDegrees.y += Float.random(in: range)
-            }
-            if let range = definition.rotationZRandomRange {
-                rotationDegrees.z += Float.random(in: range)
-            }
-            self.rotationDegrees = rotationDegrees
-        }
-    }
-
-    public let definition: CylinderEffectDefinition
+    public let effect: CylinderEffect
     public let vertices: [CylinderEffectVertex]
     public let textureImage: CGImage
-
-    public func makeInstances() -> [CylinderEffectAsset.Instance] {
-        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
-            CylinderEffectAsset.Instance(definition: definition, duplicateID: duplicateID)
-        }
-    }
 
     static func load(with definition: CylinderEffectDefinition, using resourceManager: ResourceManager) async throws -> CylinderEffectAsset {
         let texturePath = ResourcePath.effectDirectory
@@ -65,7 +22,7 @@ public struct CylinderEffectAsset: Sendable {
         let image = try await resourceManager.image(at: texturePath)
 
         let asset = CylinderEffectAsset(
-            definition: definition,
+            effect: CylinderEffect(definition: definition),
             vertices: makeVertices(
                 totalCircleSides: definition.totalCircleSides,
                 visibleCircleSides: definition.visibleCircleSides,
