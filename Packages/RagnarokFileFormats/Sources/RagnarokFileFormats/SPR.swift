@@ -51,7 +51,7 @@ public struct SPR: FileFormat {
             sprites.append(sprite)
         }
 
-        if version > "1.0" {
+        if version > "1.0", decoder.bytesRemaining >= 1024 {
             _ = try decoder.decode([UInt8].self, count: decoder.bytesRemaining - 1024)
             palette = try decoder.decode(PAL.self)
         }
