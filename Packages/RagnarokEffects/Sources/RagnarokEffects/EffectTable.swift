@@ -566,6 +566,13 @@ public enum EffectTable {
                 size: [140, 140]
             ),
         ],
+        .ef_cure: [
+            .str(
+                fileName: "cure.str",
+                soundName: "effect\\acolyte_cure.wav",
+                attachedToTarget: true
+            ),
+        ],
         .ef_provoke: [
             .str(
                 fileName: "provoke.str",

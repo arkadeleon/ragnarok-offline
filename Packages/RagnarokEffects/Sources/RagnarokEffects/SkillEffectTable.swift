@@ -75,6 +75,9 @@ public enum SkillEffectTable {
         .al_blessing: .init(
             effects: [.id(.ef_blessing)]
         ),
+        .al_cure: .init(
+            effects: [.id(.ef_cure)]
+        ),
         .ac_concentration: .init(
             effects: [.id(.ef_concentration)]
         ),
