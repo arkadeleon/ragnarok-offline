@@ -20,7 +20,7 @@ public final class STREffectRenderResource {
     public convenience init(device: any MTLDevice, asset: STREffectAsset) {
         self.init(
             device: device,
-            definition: asset.definition,
+            definition: asset.effect.definition,
             animation: asset.animation,
             textureImages: asset.textureImages
         )

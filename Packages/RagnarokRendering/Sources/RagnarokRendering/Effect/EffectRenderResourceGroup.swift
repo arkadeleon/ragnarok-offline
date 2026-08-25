@@ -110,7 +110,7 @@ public final class EffectRenderResourceGroup {
                 )
                 resources.append(.str(resource))
 
-                if let sound = asset.sound {
+                if let sound = asset.effect.sound {
                     sounds.append(sound)
                 }
             case .wav(let asset):
