@@ -1,5 +1,5 @@
 //
-//  ThreeDEffectAsset+Sample.swift
+//  ThreeDEffect+Sample.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/10.
@@ -10,7 +10,7 @@ import RagnarokCore
 import RagnarokEffects
 import simd
 
-extension ThreeDEffectAsset {
+extension ThreeDEffect {
     public struct Sample: Sendable {
         public struct Layer: Sendable {
             public var imageIndex: Int
@@ -21,10 +21,10 @@ extension ThreeDEffectAsset {
         }
 
         public var worldPosition: SIMD3<Float>
-        public var layers: [ThreeDEffectAsset.Sample.Layer]
+        public var layers: [ThreeDEffect.Sample.Layer]
     }
 
-    public func isExpired(instance: ThreeDEffectAsset.Instance, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: ThreeDEffect.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
@@ -34,13 +34,13 @@ extension ThreeDEffectAsset {
     }
 
     public func sample(
-        forInstance instance: ThreeDEffectAsset.Instance,
+        forInstance instance: ThreeDEffect.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>,
         cameraAzimuth: Float
-    ) -> ThreeDEffectAsset.Sample? {
+    ) -> ThreeDEffect.Sample? {
         guard !frames.isEmpty else {
             return nil
         }
@@ -73,17 +73,13 @@ extension ThreeDEffectAsset {
         let alpha = animatedAlpha(instance: instance, elapsedTime: elapsedTime, progress: progress)
         let color = SIMD4<Float>(definition.color, alpha)
 
-        let layers = frame.layers.compactMap { layer -> ThreeDEffectAsset.Sample.Layer? in
-            guard images.indices.contains(layer.imageIndex) else {
-                return nil
-            }
-
+        let layers = frame.layers.map { layer -> ThreeDEffect.Sample.Layer in
             var layerSize = size * layer.sizeFactor
             if layer.isMirrored {
                 layerSize.x = -layerSize.x
             }
 
-            return ThreeDEffectAsset.Sample.Layer(
+            return ThreeDEffect.Sample.Layer(
                 imageIndex: layer.imageIndex,
                 size: layerSize,
                 offset: [layer.offset.x, -layer.offset.y],
@@ -103,13 +99,13 @@ extension ThreeDEffectAsset {
             return nil
         }
 
-        return ThreeDEffectAsset.Sample(
+        return ThreeDEffect.Sample(
             worldPosition: worldPosition + mapOffset,
             layers: layers
         )
     }
 
-    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: ThreeDEffectAsset.Instance) -> TimeInterval? {
+    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: ThreeDEffect.Instance) -> TimeInterval? {
         var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil
@@ -137,7 +133,7 @@ extension ThreeDEffectAsset {
     }
 
     private func movementPositions(
-        instance: ThreeDEffectAsset.Instance,
+        instance: ThreeDEffect.Instance,
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>
     ) -> (start: SIMD3<Float>, end: SIMD3<Float>) {
@@ -161,7 +157,7 @@ extension ThreeDEffectAsset {
     }
 
     private func animatedPosition(
-        instance: ThreeDEffectAsset.Instance,
+        instance: ThreeDEffect.Instance,
         positionStart: SIMD3<Float>,
         positionEnd: SIMD3<Float>,
         progress: Float
@@ -207,14 +203,14 @@ extension ThreeDEffectAsset {
         return position
     }
 
-    private func animatedAlpha(instance: ThreeDEffectAsset.Instance, elapsedTime: TimeInterval, progress: Float) -> Float {
+    private func animatedAlpha(instance: ThreeDEffect.Instance, elapsedTime: TimeInterval, progress: Float) -> Float {
         let alphaMax = min(max(definition.alphaMax + definition.duplicate.alphaMaxDelta * Float(instance.duplicateID), 0), 1)
         var alpha = alphaMax
 
         if let fadeAlpha = fadeAlpha(elapsedTime: elapsedTime, alphaMax: alphaMax) {
             alpha = fadeAlpha
         } else if definition.sparkles {
-            alpha = alphaMax * ((cos(progress * 100 * 11 * sparkleCount * .pi / 180) + 1) / 2)
+            alpha = alphaMax * ((cos(progress * 100 * 11 * instance.sparkleCount * .pi / 180) + 1) / 2)
         }
 
         return min(max(alpha, definition.alphaMin), alphaMax)
@@ -238,7 +234,7 @@ extension ThreeDEffectAsset {
     }
 
     private func rotationMatrix(
-        instance: ThreeDEffectAsset.Instance,
+        instance: ThreeDEffect.Instance,
         positionStart: SIMD3<Float>,
         positionEnd: SIMD3<Float>,
         progress: Float,

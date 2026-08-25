@@ -66,7 +66,7 @@ public final class EffectRenderResourceGroup {
                     }
                 }
             case .`3D`(let asset):
-                let instances = asset.makeInstances()
+                let instances = asset.effect.makeInstances()
                 for instance in instances {
                     let resource = ThreeDEffectRenderResource(
                         device: device,

@@ -46,7 +46,7 @@ public struct EffectAxes: Sendable {
 // - fadesOut:                       fadeOut
 // - sparkles:                       sparkling
 // - sparkleCount:                   sparkNumber
-// - sparkleCountRandomRange:        sparkNumber
+// - sparkleCountRandomRange:        sparkNumberRand
 // - offset:                         posx, posy, posz
 // - positionStart:                  posxStart, posyStart, poszStart
 // - positionEnd:                    posxEnd, posyEnd, poszEnd
@@ -195,7 +195,7 @@ extension EffectDefinition {
         fadesIn: Bool = false,
         fadesOut: Bool = false,
         sparkles: Bool = false,
-        sparkleCount: Float = 1,
+        sparkleCount: Float = 0,
         sparkleCountRandomRange: ClosedRange<Float>? = nil,
         offset: SIMD3<Float> = .zero,
         positionStart: SIMD3<Float> = .zero,

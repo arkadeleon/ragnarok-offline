@@ -14,19 +14,19 @@ import simd
 
 public final class ThreeDEffectRenderResource {
     public let asset: ThreeDEffectAsset
-    public let instance: ThreeDEffectAsset.Instance
+    public let instance: ThreeDEffect.Instance
     public let vertices: [ThreeDEffectVertex]
     public let textures: [(any MTLTexture)?]
 
     public var definition: ThreeDEffectDefinition {
-        asset.definition
+        asset.effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.definition.rendersBeforeEntities
+        asset.effect.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: ThreeDEffectAsset, instance: ThreeDEffectAsset.Instance) {
+    public init(device: any MTLDevice, asset: ThreeDEffectAsset, instance: ThreeDEffect.Instance) {
         self.asset = asset
         self.instance = instance
         self.vertices = [
@@ -43,7 +43,7 @@ public final class ThreeDEffectRenderResource {
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        asset.isExpired(instance: instance, elapsedTime: elapsedTime)
+        asset.effect.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
     func sample(
@@ -52,8 +52,8 @@ public final class ThreeDEffectRenderResource {
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>,
         cameraAzimuth: Float
-    ) -> ThreeDEffectAsset.Sample? {
-        asset.sample(
+    ) -> ThreeDEffect.Sample? {
+        asset.effect.sample(
             forInstance: instance,
             elapsedTime: elapsedTime,
             worldPosition: worldPosition,
