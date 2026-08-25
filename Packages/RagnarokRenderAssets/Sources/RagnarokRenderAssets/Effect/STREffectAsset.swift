@@ -14,7 +14,7 @@ import RagnarokResources
 public struct STREffectAsset: @unchecked Sendable {
     public let definition: STREffectDefinition
     public let sound: EffectSound?
-    public let effect: STREffect
+    public let animation: STRAnimation
     public let textureImages: [String : CGImage]
 
     static func load(with definition: STREffectDefinition, using resourceManager: ResourceManager) async throws -> STREffectAsset {
@@ -29,10 +29,10 @@ public struct STREffectAsset: @unchecked Sendable {
         let strPath = ResourcePath.effectDirectory.appending(subpath: fileName)
         let strData = try await resourceManager.contentsOfResource(at: strPath)
         let str = try STR(data: strData)
-        let effect = STREffect(str: str)
+        let animation = STRAnimation(str: str)
 
         var textureImages: [String : CGImage] = [:]
-        for frame in effect.frames {
+        for frame in animation.frames {
             for sprite in frame.sprites {
                 let textureName = sprite.textureName
                 guard textureImages[textureName] == nil else {
@@ -49,7 +49,7 @@ public struct STREffectAsset: @unchecked Sendable {
         let asset = STREffectAsset(
             definition: definition,
             sound: sound,
-            effect: effect,
+            animation: animation,
             textureImages: textureImages
         )
         return asset

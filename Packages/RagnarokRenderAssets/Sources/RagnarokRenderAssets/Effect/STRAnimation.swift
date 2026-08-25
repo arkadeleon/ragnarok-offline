@@ -1,5 +1,5 @@
 //
-//  STREffect.swift
+//  STRAnimation.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2023/11/24.
@@ -9,9 +9,9 @@ import Foundation
 import RagnarokFileFormats
 import RagnarokShaders
 
-public struct STREffect {
+public struct STRAnimation {
     public var fps: Int
-    public var frames: [STREffect.Frame] = []
+    public var frames: [STRAnimation.Frame] = []
 
     public var duration: TimeInterval {
         return TimeInterval(frames.count) / TimeInterval(fps)
@@ -22,7 +22,7 @@ public struct STREffect {
 
         let frameCount = str.maxKeyframeIndex + 1
         for frameIndex in 0..<frameCount {
-            var sprites: [STREffect.Sprite] = []
+            var sprites: [STRAnimation.Sprite] = []
 
             for layer in str.layers {
                 var lastFrame = 0
@@ -67,7 +67,7 @@ public struct STREffect {
                     }
 
                     let textureName = layer.textures[Int(from.textureIndex)]
-                    let sprite = STREffect.Sprite(
+                    let sprite = STRAnimation.Sprite(
                         uv: from.uv,
                         xy: from.xy,
                         textureName: textureName,
@@ -116,7 +116,7 @@ public struct STREffect {
                 let angle = from.angle + to.angle * Float(delta)
                 let color = from.color + to.color * Float(delta)
 
-                let sprite = STREffect.Sprite(
+                let sprite = STRAnimation.Sprite(
                     uv: uv,
                     xy: xy,
                     textureName: textureName,
@@ -129,12 +129,12 @@ public struct STREffect {
                 sprites.append(sprite)
             }
 
-            let frame = STREffect.Frame(sprites: sprites)
+            let frame = STRAnimation.Frame(sprites: sprites)
             frames.append(frame)
         }
     }
 
-    public func frame(atElapsedTime elapsedTime: TimeInterval) -> STREffect.Frame? {
+    public func frame(atElapsedTime elapsedTime: TimeInterval) -> STRAnimation.Frame? {
         guard !frames.isEmpty, elapsedTime >= 0 else {
             return nil
         }
@@ -144,13 +144,13 @@ public struct STREffect {
     }
 }
 
-extension STREffect {
+extension STRAnimation {
     public struct Frame {
-        public var sprites: [STREffect.Sprite] = []
+        public var sprites: [STRAnimation.Sprite] = []
     }
 }
 
-extension STREffect {
+extension STRAnimation {
     public struct Sprite {
         public var vertices: [STREffectVertex] = []
         public var textureName: String

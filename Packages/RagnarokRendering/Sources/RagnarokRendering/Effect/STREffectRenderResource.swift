@@ -14,14 +14,14 @@ import simd
 
 public final class STREffectRenderResource {
     public let definition: STREffectDefinition?
-    public let effect: STREffect
+    public let animation: STRAnimation
     public let textures: [String : any MTLTexture]
 
     public convenience init(device: any MTLDevice, asset: STREffectAsset) {
         self.init(
             device: device,
             definition: asset.definition,
-            effect: asset.effect,
+            animation: asset.animation,
             textureImages: asset.textureImages
         )
     }
@@ -29,7 +29,7 @@ public final class STREffectRenderResource {
     public init(
         device: any MTLDevice,
         definition: STREffectDefinition? = nil,
-        effect: STREffect,
+        animation: STRAnimation,
         textureImages: [String : CGImage]
     ) {
         var textures: [String : any MTLTexture] = [:]
@@ -40,7 +40,7 @@ public final class STREffectRenderResource {
         }
 
         self.definition = definition
-        self.effect = effect
+        self.animation = animation
         self.textures = textures
     }
 
@@ -48,6 +48,6 @@ public final class STREffectRenderResource {
         guard elapsedTime >= 0 else {
             return false
         }
-        return elapsedTime >= effect.duration
+        return elapsedTime >= animation.duration
     }
 }

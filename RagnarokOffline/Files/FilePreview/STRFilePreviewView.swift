@@ -75,12 +75,12 @@ struct STRFileEffectView: View {
 
         let data = try await file.contents()
         let str = try STR(data: data)
-        let effect = STREffect(str: str)
+        let animation = STRAnimation(str: str)
 
         let device = MTLCreateSystemDefaultDevice()!
         var textureImages: [String : CGImage] = [:]
 
-        for frame in effect.frames {
+        for frame in animation.frames {
             for sprite in frame.sprites {
                 let textureName = sprite.textureName
                 if let _ = textureImages[textureName] {
@@ -98,7 +98,7 @@ struct STRFileEffectView: View {
             }
         }
 
-        let renderer = try STRFilePreviewRenderer(device: device, configuration: .default, effect: effect, textureImages: textureImages)
+        let renderer = try STRFilePreviewRenderer(device: device, configuration: .default, animation: animation, textureImages: textureImages)
         return renderer
     }
 }
