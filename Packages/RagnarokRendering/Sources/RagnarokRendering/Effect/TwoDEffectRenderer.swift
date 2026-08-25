@@ -47,7 +47,7 @@ public final class TwoDEffectRenderer {
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         guard let texture = resource.texture,
-              let sample = resource.sample(forElapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: camera.azimuth),
+              let sample = resource.animation.sample(atElapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: camera.azimuth),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }

@@ -40,8 +40,8 @@ public final class CylinderEffectRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let sample = resource.sample(
-            forElapsedTime: elapsedTime,
+        let sample = resource.animation.sample(
+            atElapsedTime: elapsedTime,
             cameraAzimuth: camera.azimuth,
             cameraElevation: camera.elevation
         )
