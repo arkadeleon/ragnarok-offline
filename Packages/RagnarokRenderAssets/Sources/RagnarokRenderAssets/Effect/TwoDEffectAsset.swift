@@ -1,5 +1,5 @@
 //
-//  Effect2DAsset.swift
+//  TwoDEffectAsset.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/9.
@@ -11,7 +11,7 @@ import RagnarokCore
 import RagnarokEffects
 import RagnarokResources
 
-public struct Effect2DAsset: Sendable {
+public struct TwoDEffectAsset: Sendable {
     public struct Instance: Sendable {
         public let duplicateID: Int
         public let delay: TimeInterval
@@ -156,13 +156,13 @@ public struct Effect2DAsset: Sendable {
     public let soundName: String?
     public let textureImage: CGImage
 
-    public func makeInstances() -> [Effect2DAsset.Instance] {
+    public func makeInstances() -> [TwoDEffectAsset.Instance] {
         (0..<max(definition.duplicate.count, 1)).map { duplicateID in
-            Effect2DAsset.Instance(definition: definition, duplicateID: duplicateID)
+            TwoDEffectAsset.Instance(definition: definition, duplicateID: duplicateID)
         }
     }
 
-    static func load(with definition: TwoDEffectDefinition, using resourceManager: ResourceManager) async throws -> Effect2DAsset {
+    static func load(with definition: TwoDEffectDefinition, using resourceManager: ResourceManager) async throws -> TwoDEffectAsset {
         var fileName = definition.fileName
         var soundName = definition.soundName
         if let randomNumberRange = definition.randomNumberRange {
@@ -175,7 +175,7 @@ public struct Effect2DAsset: Sendable {
         let removesMagentaPixels = fileName.lowercased().hasSuffix(".bmp")
         let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
 
-        let asset = Effect2DAsset(
+        let asset = TwoDEffectAsset(
             definition: definition,
             soundName: soundName,
             textureImage: image.cgImage

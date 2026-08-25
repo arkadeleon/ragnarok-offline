@@ -13,8 +13,8 @@ import RagnarokShaders
 import simd
 
 public final class Effect2DRenderResource {
-    public let asset: Effect2DAsset
-    public let instance: Effect2DAsset.Instance
+    public let asset: TwoDEffectAsset
+    public let instance: TwoDEffectAsset.Instance
     public let vertices: [Effect2DVertex]
     public let texture: (any MTLTexture)?
 
@@ -26,7 +26,7 @@ public final class Effect2DRenderResource {
         asset.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: Effect2DAsset, instance: Effect2DAsset.Instance) {
+    public init(device: any MTLDevice, asset: TwoDEffectAsset, instance: TwoDEffectAsset.Instance) {
         self.asset = asset
         self.instance = instance
         self.vertices = [
@@ -44,7 +44,7 @@ public final class Effect2DRenderResource {
         asset.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
-    func sample(forElapsedTime elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> Effect2DAsset.Sample? {
+    func sample(forElapsedTime elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> TwoDEffectAsset.Sample? {
         asset.sample(
             forInstance: instance,
             elapsedTime: elapsedTime,

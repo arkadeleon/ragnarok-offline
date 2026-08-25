@@ -32,10 +32,10 @@ public struct EffectAssetLoader: Sendable {
     private func loadAsset(with definition: EffectDefinition) async throws -> EffectAsset {
         switch definition {
         case .`2D`(let definition):
-            let asset = try await Effect2DAsset.load(with: definition, using: resourceManager)
+            let asset = try await TwoDEffectAsset.load(with: definition, using: resourceManager)
             return .`2D`(asset)
         case .`3D`(let definition):
-            let asset = try await Effect3DAsset.load(with: definition, using: resourceManager)
+            let asset = try await ThreeDEffectAsset.load(with: definition, using: resourceManager)
             return .`3D`(asset)
         case .cylinder(let definition):
             let asset = try await CylinderEffectAsset.load(with: definition, using: resourceManager)

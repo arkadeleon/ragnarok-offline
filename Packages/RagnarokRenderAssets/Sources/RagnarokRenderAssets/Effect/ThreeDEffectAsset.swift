@@ -1,5 +1,5 @@
 //
-//  Effect3DAsset.swift
+//  ThreeDEffectAsset.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/9.
@@ -12,7 +12,7 @@ import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokResources
 
-public struct Effect3DAsset: Sendable {
+public struct ThreeDEffectAsset: Sendable {
     public struct Instance: Sendable {
         public let duplicateID: Int
         public let delay: TimeInterval
@@ -192,7 +192,7 @@ public struct Effect3DAsset: Sendable {
     }
 
     public struct Frame: Sendable {
-        public let layers: [Effect3DAsset.Layer]
+        public let layers: [ThreeDEffectAsset.Layer]
     }
 
     public let definition: ThreeDEffectDefinition
@@ -200,16 +200,16 @@ public struct Effect3DAsset: Sendable {
     public let sparkleCount: Float
     public let frameDelay: TimeInterval
     public let images: [CGImage]
-    public let frames: [Effect3DAsset.Frame]
+    public let frames: [ThreeDEffectAsset.Frame]
 
-    public func makeInstances() -> [Effect3DAsset.Instance] {
+    public func makeInstances() -> [ThreeDEffectAsset.Instance] {
         let patternIndex = Int.random(in: 0..<5)
         return (0..<max(definition.duplicate.count, 1)).map { duplicateID in
-            Effect3DAsset.Instance(definition: definition, duplicateID: duplicateID, patternIndex: patternIndex)
+            ThreeDEffectAsset.Instance(definition: definition, duplicateID: duplicateID, patternIndex: patternIndex)
         }
     }
 
-    static func load(with definition: ThreeDEffectDefinition, using resourceManager: ResourceManager) async throws -> Effect3DAsset {
+    static func load(with definition: ThreeDEffectDefinition, using resourceManager: ResourceManager) async throws -> ThreeDEffectAsset {
         var fileName = definition.fileName
         var fileNames = definition.fileNames
         var soundName = definition.soundName
@@ -232,7 +232,7 @@ public struct Effect3DAsset: Sendable {
         var frameDelay = definition.frameDelay
 
         var images: [CGImage] = []
-        var frames: [Effect3DAsset.Frame] = []
+        var frames: [ThreeDEffectAsset.Frame] = []
 
         if let spriteName = definition.spriteName {
             let spritePath = ResourcePath.spriteDirectory.appending(subpath: spriteName)
@@ -255,7 +255,7 @@ public struct Effect3DAsset: Sendable {
 
             var imageIndicesBySprite: [SIMD2<Int> : Int] = [:]
             for frame in usedFrames {
-                var layers: [Effect3DAsset.Layer] = []
+                var layers: [ThreeDEffectAsset.Layer] = []
                 for layer in frame.layers where layer.spriteIndex >= 0 {
                     guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
                           let typedImages = spriteImages[spriteType] else {
@@ -278,7 +278,7 @@ public struct Effect3DAsset: Sendable {
                         imageIndicesBySprite[spriteKey] = imageIndex
                     }
 
-                    layers.append(Effect3DAsset.Layer(
+                    layers.append(ThreeDEffectAsset.Layer(
                         imageIndex: imageIndex,
                         sizeFactor: [
                             Float(image.width) * layer.scale.x / 100,
@@ -298,7 +298,7 @@ public struct Effect3DAsset: Sendable {
                         isMirrored: layer.isMirrored != 0
                     ))
                 }
-                frames.append(Effect3DAsset.Frame(layers: layers))
+                frames.append(ThreeDEffectAsset.Frame(layers: layers))
             }
         } else {
             let textureNames: [String]
@@ -312,14 +312,14 @@ public struct Effect3DAsset: Sendable {
                 let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
                 let removesMagentaPixels = textureName.lowercased().hasSuffix(".bmp")
                 let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
-                let layer = Effect3DAsset.Layer(imageIndex: images.count, sizeFactor: [1, 1])
-                let frame = Effect3DAsset.Frame(layers: [layer])
+                let layer = ThreeDEffectAsset.Layer(imageIndex: images.count, sizeFactor: [1, 1])
+                let frame = ThreeDEffectAsset.Frame(layers: [layer])
                 frames.append(frame)
                 images.append(image.cgImage)
             }
         }
 
-        let asset = Effect3DAsset(
+        let asset = ThreeDEffectAsset(
             definition: definition,
             soundName: soundName,
             sparkleCount: sparkleCount,

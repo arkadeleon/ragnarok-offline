@@ -1,5 +1,5 @@
 //
-//  Effect3DAsset+Sample.swift
+//  ThreeDEffectAsset+Sample.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/10.
@@ -10,7 +10,7 @@ import RagnarokCore
 import RagnarokEffects
 import simd
 
-extension Effect3DAsset {
+extension ThreeDEffectAsset {
     public struct Sample: Sendable {
         public struct Layer: Sendable {
             public var imageIndex: Int
@@ -21,10 +21,10 @@ extension Effect3DAsset {
         }
 
         public var worldPosition: SIMD3<Float>
-        public var layers: [Effect3DAsset.Sample.Layer]
+        public var layers: [ThreeDEffectAsset.Sample.Layer]
     }
 
-    public func isExpired(instance: Effect3DAsset.Instance, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: ThreeDEffectAsset.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
@@ -34,13 +34,13 @@ extension Effect3DAsset {
     }
 
     public func sample(
-        forInstance instance: Effect3DAsset.Instance,
+        forInstance instance: ThreeDEffectAsset.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>,
         cameraAzimuth: Float
-    ) -> Effect3DAsset.Sample? {
+    ) -> ThreeDEffectAsset.Sample? {
         guard !frames.isEmpty else {
             return nil
         }
@@ -73,7 +73,7 @@ extension Effect3DAsset {
         let alpha = animatedAlpha(instance: instance, elapsedTime: elapsedTime, progress: progress)
         let color = SIMD4<Float>(definition.color, alpha)
 
-        let layers = frame.layers.compactMap { layer -> Effect3DAsset.Sample.Layer? in
+        let layers = frame.layers.compactMap { layer -> ThreeDEffectAsset.Sample.Layer? in
             guard images.indices.contains(layer.imageIndex) else {
                 return nil
             }
@@ -83,7 +83,7 @@ extension Effect3DAsset {
                 layerSize.x = -layerSize.x
             }
 
-            return Effect3DAsset.Sample.Layer(
+            return ThreeDEffectAsset.Sample.Layer(
                 imageIndex: layer.imageIndex,
                 size: layerSize,
                 offset: [layer.offset.x, -layer.offset.y],
@@ -103,13 +103,13 @@ extension Effect3DAsset {
             return nil
         }
 
-        return Effect3DAsset.Sample(
+        return ThreeDEffectAsset.Sample(
             worldPosition: worldPosition + mapOffset,
             layers: layers
         )
     }
 
-    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: Effect3DAsset.Instance) -> TimeInterval? {
+    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: ThreeDEffectAsset.Instance) -> TimeInterval? {
         var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil
@@ -137,7 +137,7 @@ extension Effect3DAsset {
     }
 
     private func movementPositions(
-        instance: Effect3DAsset.Instance,
+        instance: ThreeDEffectAsset.Instance,
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>
     ) -> (start: SIMD3<Float>, end: SIMD3<Float>) {
@@ -161,7 +161,7 @@ extension Effect3DAsset {
     }
 
     private func animatedPosition(
-        instance: Effect3DAsset.Instance,
+        instance: ThreeDEffectAsset.Instance,
         positionStart: SIMD3<Float>,
         positionEnd: SIMD3<Float>,
         progress: Float
@@ -207,7 +207,7 @@ extension Effect3DAsset {
         return position
     }
 
-    private func animatedAlpha(instance: Effect3DAsset.Instance, elapsedTime: TimeInterval, progress: Float) -> Float {
+    private func animatedAlpha(instance: ThreeDEffectAsset.Instance, elapsedTime: TimeInterval, progress: Float) -> Float {
         let alphaMax = min(max(definition.alphaMax + definition.duplicate.alphaMaxDelta * Float(instance.duplicateID), 0), 1)
         var alpha = alphaMax
 
@@ -238,7 +238,7 @@ extension Effect3DAsset {
     }
 
     private func rotationMatrix(
-        instance: Effect3DAsset.Instance,
+        instance: ThreeDEffectAsset.Instance,
         positionStart: SIMD3<Float>,
         positionEnd: SIMD3<Float>,
         progress: Float,

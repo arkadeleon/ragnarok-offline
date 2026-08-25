@@ -1,5 +1,5 @@
 //
-//  Effect2DAsset+Sample.swift
+//  TwoDEffectAsset+Sample.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/10.
@@ -10,7 +10,7 @@ import RagnarokCore
 import RagnarokEffects
 import simd
 
-extension Effect2DAsset {
+extension TwoDEffectAsset {
     public struct Sample: Sendable {
         public var worldPosition: SIMD3<Float>
         public var size: SIMD2<Float>
@@ -19,7 +19,7 @@ extension Effect2DAsset {
         public var rotationMatrix: simd_float4x4
     }
 
-    public func isExpired(instance: Effect2DAsset.Instance, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: TwoDEffectAsset.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
@@ -29,11 +29,11 @@ extension Effect2DAsset {
     }
 
     public func sample(
-        forInstance instance: Effect2DAsset.Instance,
+        forInstance instance: TwoDEffectAsset.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         cameraAzimuth: Float
-    ) -> Effect2DAsset.Sample? {
+    ) -> TwoDEffectAsset.Sample? {
         guard let elapsedTime = activeElapsedTime(elapsedTime, instance: instance) else {
             return nil
         }
@@ -76,7 +76,7 @@ extension Effect2DAsset {
             angle += (instance.targetAngle - instance.baseAngle) * progress
         }
 
-        return Effect2DAsset.Sample(
+        return TwoDEffectAsset.Sample(
             worldPosition: worldPosition + rotatedMapOffset,
             size: size,
             offset: [screenOffset.x, -screenOffset.y],
@@ -85,7 +85,7 @@ extension Effect2DAsset {
         )
     }
 
-    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: Effect2DAsset.Instance) -> TimeInterval? {
+    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: TwoDEffectAsset.Instance) -> TimeInterval? {
         var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil

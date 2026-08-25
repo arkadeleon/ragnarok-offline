@@ -13,8 +13,8 @@ import RagnarokShaders
 import simd
 
 public final class Effect3DRenderResource {
-    public let asset: Effect3DAsset
-    public let instance: Effect3DAsset.Instance
+    public let asset: ThreeDEffectAsset
+    public let instance: ThreeDEffectAsset.Instance
     public let vertices: [Effect3DVertex]
     public let textures: [(any MTLTexture)?]
 
@@ -26,7 +26,7 @@ public final class Effect3DRenderResource {
         asset.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: Effect3DAsset, instance: Effect3DAsset.Instance) {
+    public init(device: any MTLDevice, asset: ThreeDEffectAsset, instance: ThreeDEffectAsset.Instance) {
         self.asset = asset
         self.instance = instance
         self.vertices = [
@@ -52,7 +52,7 @@ public final class Effect3DRenderResource {
         sourceWorldPosition: SIMD3<Float>?,
         targetWorldPosition: SIMD3<Float>,
         cameraAzimuth: Float
-    ) -> Effect3DAsset.Sample? {
+    ) -> ThreeDEffectAsset.Sample? {
         asset.sample(
             forInstance: instance,
             elapsedTime: elapsedTime,
