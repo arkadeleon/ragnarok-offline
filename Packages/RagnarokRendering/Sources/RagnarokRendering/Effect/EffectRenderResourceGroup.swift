@@ -114,7 +114,7 @@ public final class EffectRenderResourceGroup {
                     sounds.append(sound)
                 }
             case .wav(let asset):
-                sounds.append(asset.sound)
+                sounds.append(asset.effect.sound)
             }
         }
 
