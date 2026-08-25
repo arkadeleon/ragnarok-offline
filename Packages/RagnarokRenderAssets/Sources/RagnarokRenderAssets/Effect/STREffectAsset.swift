@@ -13,19 +13,19 @@ import RagnarokResources
 
 public struct STREffectAsset: @unchecked Sendable {
     public let definition: STREffectDefinition
-    public let soundName: String?
+    public let sound: EffectSound?
     public let effect: STREffect
     public let textureImages: [String : CGImage]
 
     static func load(with definition: STREffectDefinition, using resourceManager: ResourceManager) async throws -> STREffectAsset {
-        var fileName = definition.fileName
-        var soundName = definition.soundName
-        if let randomNumberRange = definition.randomNumberRange {
-            let randomNumber = Int.random(in: randomNumberRange)
-            fileName = fileName.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-            soundName = soundName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
+        let sound = definition.soundName.map { soundName in
+            EffectSound(
+                name: soundName.replacingRandomNumber(in: definition.randomNumberRange),
+                delay: 0
+            )
         }
 
+        let fileName = definition.fileName.replacingRandomNumber(in: definition.randomNumberRange)
         let strPath = ResourcePath.effectDirectory.appending(subpath: fileName)
         let strData = try await resourceManager.contentsOfResource(at: strPath)
         let str = try STR(data: strData)
@@ -48,7 +48,7 @@ public struct STREffectAsset: @unchecked Sendable {
 
         let asset = STREffectAsset(
             definition: definition,
-            soundName: soundName,
+            sound: sound,
             effect: effect,
             textureImages: textureImages
         )

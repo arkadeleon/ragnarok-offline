@@ -14,11 +14,16 @@ import RagnarokResources
 
 public struct SPREffectAsset: Sendable {
     public let definition: SPREffectDefinition
+    public let sound: EffectSound?
     public let frameImages: [CGImage]
     public let frameInterval: TimeInterval
     public let frameSize: CGSize
 
     static func load(with definition: SPREffectDefinition, using resourceManager: ResourceManager) async throws -> SPREffectAsset {
+        let sound = definition.soundName.map { soundName in
+            EffectSound(name: soundName, delay: 0)
+        }
+
         let spritePath = ResourcePath.spriteDirectory
             .appending(K2L("이팩트"))
             .appending(definition.fileName)
@@ -40,6 +45,7 @@ public struct SPREffectAsset: Sendable {
 
         let asset = SPREffectAsset(
             definition: definition,
+            sound: sound,
             frameImages: frameImages,
             frameInterval: frameInterval,
             frameSize: frameSize

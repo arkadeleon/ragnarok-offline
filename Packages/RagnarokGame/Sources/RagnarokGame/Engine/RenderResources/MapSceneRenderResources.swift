@@ -159,17 +159,11 @@ final class MapSceneRenderResources {
                     return
                 }
 
-                for asset in assetGroup.assets {
-                    if let soundName = asset.soundName {
-                        onSound(soundName, effect.delay)
-                    }
-                }
-
                 guard effectLoadTasks[objectID] != nil else {
                     return
                 }
 
-                effectResources[objectID] = EffectRenderResourceGroup(
+                let resourceGroup = EffectRenderResourceGroup(
                     device: device,
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,
@@ -177,6 +171,12 @@ final class MapSceneRenderResources {
                     worldPosition: worldPosition,
                     sourceWorldPosition: effect.sourceWorldPosition
                 )
+
+                for sound in resourceGroup.sounds {
+                    onSound(sound.name, effect.delay + sound.delay)
+                }
+
+                effectResources[objectID] = resourceGroup
             } catch {
                 logger.warning("Map scene failed to load effect \(effect.reference): \(error)")
             }

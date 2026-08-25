@@ -15,6 +15,7 @@ import RagnarokResources
 public struct ThreeDEffectAsset: Sendable {
     public struct Instance: Sendable {
         public let duplicateID: Int
+        public let sound: EffectSound?
         public let delay: TimeInterval
         public let positionStart: SIMD3<Float>
         public let positionEnd: SIMD3<Float>
@@ -28,6 +29,13 @@ public struct ThreeDEffectAsset: Sendable {
 
         init(definition: ThreeDEffectDefinition, duplicateID: Int, patternIndex: Int) {
             self.duplicateID = duplicateID
+
+            self.sound = definition.soundName.map { soundName in
+                EffectSound(
+                    name: soundName.replacingRandomNumber(in: definition.randomNumberRange),
+                    delay: definition.duplicate.interval * TimeInterval(duplicateID) + definition.delaySound
+                )
+            }
 
             self.delay = definition.delayStart
                 + definition.delay
@@ -196,7 +204,6 @@ public struct ThreeDEffectAsset: Sendable {
     }
 
     public let definition: ThreeDEffectDefinition
-    public let soundName: String?
     public let sparkleCount: Float
     public let frameDelay: TimeInterval
     public let images: [CGImage]
@@ -210,18 +217,6 @@ public struct ThreeDEffectAsset: Sendable {
     }
 
     static func load(with definition: ThreeDEffectDefinition, using resourceManager: ResourceManager) async throws -> ThreeDEffectAsset {
-        var fileName = definition.fileName
-        var fileNames = definition.fileNames
-        var soundName = definition.soundName
-        if let randomNumberRange = definition.randomNumberRange {
-            let randomNumber = Int.random(in: randomNumberRange)
-            fileName = fileName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-            fileNames = fileNames.map {
-                $0.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-            }
-            soundName = soundName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-        }
-
         let sparkleCount: Float
         if let sparkleCountRandomRange = definition.sparkleCountRandomRange {
             sparkleCount = Float.random(in: sparkleCountRandomRange)
@@ -302,10 +297,10 @@ public struct ThreeDEffectAsset: Sendable {
             }
         } else {
             let textureNames: [String]
-            if fileNames.isEmpty {
-                textureNames = fileName.map { [$0] } ?? []
+            if definition.fileNames.isEmpty {
+                textureNames = definition.fileName.map { [$0] } ?? []
             } else {
-                textureNames = fileNames
+                textureNames = definition.fileNames
             }
 
             for textureName in textureNames {
@@ -321,7 +316,6 @@ public struct ThreeDEffectAsset: Sendable {
 
         let asset = ThreeDEffectAsset(
             definition: definition,
-            soundName: soundName,
             sparkleCount: sparkleCount,
             frameDelay: frameDelay,
             images: images,

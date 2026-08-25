@@ -16,6 +16,7 @@ public final class EffectRenderResourceGroup {
     public let worldPosition: SIMD3<Float>
     public let sourceWorldPosition: SIMD3<Float>?
     public let resources: [EffectRenderResource]
+    public let sounds: [EffectSound]
 
     public var rendersBeforeEntities: Bool {
         resources.contains(where: \.rendersBeforeEntities)
@@ -26,13 +27,15 @@ public final class EffectRenderResourceGroup {
         delay: TimeInterval,
         worldPosition: SIMD3<Float>,
         sourceWorldPosition: SIMD3<Float>? = nil,
-        resources: [EffectRenderResource]
+        resources: [EffectRenderResource],
+        sounds: [EffectSound]
     ) {
         self.creationTime = creationTime
         self.delay = delay
         self.worldPosition = worldPosition
         self.sourceWorldPosition = sourceWorldPosition
         self.resources = resources
+        self.sounds = sounds
     }
 
     public convenience init(
@@ -43,47 +46,73 @@ public final class EffectRenderResourceGroup {
         worldPosition: SIMD3<Float> = .zero,
         sourceWorldPosition: SIMD3<Float>? = nil
     ) {
-        let resources = assetGroup.assets.flatMap { asset -> [EffectRenderResource] in
+        var resources: [EffectRenderResource] = []
+        var sounds: [EffectSound] = []
+
+        for asset in assetGroup.assets {
             switch asset {
             case .`2D`(let asset):
-                return asset.makeInstances().map { instance in
+                let instances = asset.makeInstances()
+                for instance in instances {
                     let resource = TwoDEffectRenderResource(
                         device: device,
                         asset: asset,
                         instance: instance
                     )
-                    return .`2D`(resource)
+                    resources.append(.`2D`(resource))
+
+                    if let sound = instance.sound {
+                        sounds.append(sound)
+                    }
                 }
             case .`3D`(let asset):
-                return asset.makeInstances().map { instance in
+                let instances = asset.makeInstances()
+                for instance in instances {
                     let resource = ThreeDEffectRenderResource(
                         device: device,
                         asset: asset,
                         instance: instance
                     )
-                    return .`3D`(resource)
+                    resources.append(.`3D`(resource))
+
+                    if let sound = instance.sound {
+                        sounds.append(sound)
+                    }
                 }
             case .cylinder(let asset):
-                return asset.makeInstances().map { instance in
+                let instances = asset.makeInstances()
+                for instance in instances {
                     let resource = CylinderEffectRenderResource(
                         device: device,
                         asset: asset,
                         instance: instance
                     )
-                    return .cylinder(resource)
+                    resources.append(.cylinder(resource))
+
+                    if let sound = instance.sound {
+                        sounds.append(sound)
+                    }
                 }
             case .spr(let asset):
                 let resource = SPREffectRenderResource(
                     device: device,
                     asset: asset
                 )
-                return [.spr(resource)]
+                resources.append(.spr(resource))
+
+                if let sound = asset.sound {
+                    sounds.append(sound)
+                }
             case .str(let asset):
                 let resource = STREffectRenderResource(
                     device: device,
                     asset: asset
                 )
-                return [.str(resource)]
+                resources.append(.str(resource))
+
+                if let sound = asset.sound {
+                    sounds.append(sound)
+                }
             }
         }
 
@@ -92,7 +121,8 @@ public final class EffectRenderResourceGroup {
             delay: delay,
             worldPosition: worldPosition,
             sourceWorldPosition: sourceWorldPosition,
-            resources: resources
+            resources: resources,
+            sounds: sounds
         )
     }
 

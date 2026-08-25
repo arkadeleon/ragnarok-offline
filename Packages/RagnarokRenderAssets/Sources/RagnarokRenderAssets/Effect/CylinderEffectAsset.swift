@@ -13,11 +13,19 @@ import RagnarokShaders
 public struct CylinderEffectAsset: Sendable {
     public struct Instance: Sendable {
         public let duplicateID: Int
+        public let sound: EffectSound?
         public let delay: TimeInterval
         public let rotationDegrees: SIMD3<Float>
 
         init(definition: CylinderEffectDefinition, duplicateID: Int) {
             self.duplicateID = duplicateID
+
+            self.sound = definition.soundName.map { soundName in
+                EffectSound(
+                    name: soundName,
+                    delay: definition.duplicate.interval * TimeInterval(duplicateID)
+                )
+            }
 
             self.delay = definition.delayStart
                 + definition.delayOffset

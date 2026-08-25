@@ -14,6 +14,7 @@ import RagnarokResources
 public struct TwoDEffectAsset: Sendable {
     public struct Instance: Sendable {
         public let duplicateID: Int
+        public let sound: EffectSound?
         public let delay: TimeInterval
         public let duration: TimeInterval
         public let positionStart: SIMD3<Float>
@@ -25,6 +26,13 @@ public struct TwoDEffectAsset: Sendable {
 
         init(definition: TwoDEffectDefinition, duplicateID: Int) {
             self.duplicateID = duplicateID
+
+            self.sound = definition.soundName.map { soundName in
+                EffectSound(
+                    name: soundName.replacingRandomNumber(in: definition.randomNumberRange),
+                    delay: definition.duplicate.interval * TimeInterval(duplicateID) + definition.delaySound
+                )
+            }
 
             self.delay = definition.delayStart
                 + definition.delay
@@ -153,7 +161,6 @@ public struct TwoDEffectAsset: Sendable {
     }
 
     public let definition: TwoDEffectDefinition
-    public let soundName: String?
     public let textureImage: CGImage
 
     public func makeInstances() -> [TwoDEffectAsset.Instance] {
@@ -163,21 +170,13 @@ public struct TwoDEffectAsset: Sendable {
     }
 
     static func load(with definition: TwoDEffectDefinition, using resourceManager: ResourceManager) async throws -> TwoDEffectAsset {
-        var fileName = definition.fileName
-        var soundName = definition.soundName
-        if let randomNumberRange = definition.randomNumberRange {
-            let randomNumber = Int.random(in: randomNumberRange)
-            fileName = fileName.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-            soundName = soundName?.replacingOccurrences(of: "%d", with: "\(randomNumber)")
-        }
-
+        let fileName = definition.fileName
         let texturePath = ResourcePath.textureDirectory.appending(subpath: fileName)
         let removesMagentaPixels = fileName.lowercased().hasSuffix(".bmp")
         let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
 
         let asset = TwoDEffectAsset(
             definition: definition,
-            soundName: soundName,
             textureImage: image.cgImage
         )
         return asset
