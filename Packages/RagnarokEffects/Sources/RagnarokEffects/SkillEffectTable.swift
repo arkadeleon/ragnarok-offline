@@ -69,6 +69,9 @@ public enum SkillEffectTable {
         .al_crucis: .init(
             effects: [.id(.ef_signum)]
         ),
+        .al_angelus: .init(
+            effects: [.id(.ef_angelus)]
+        ),
         .al_blessing: .init(
             effects: [.id(.ef_blessing)]
         ),

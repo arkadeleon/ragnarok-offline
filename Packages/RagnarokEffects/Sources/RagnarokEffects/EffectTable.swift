@@ -442,6 +442,13 @@ public enum EffectTable {
                 attachedToTarget: true
             ),
         ],
+        .ef_angelus: [
+            .str(
+                fileName: "angelus.str",
+                soundName: "effect\\ef_angelus.wav",
+                attachedToTarget: true
+            ),
+        ],
         .ef_smoke: [
             .`3D`(
                 spriteName: K2L("이팩트\\굴뚝연기"),
