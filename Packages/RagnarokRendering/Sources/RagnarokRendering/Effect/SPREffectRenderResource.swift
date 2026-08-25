@@ -19,11 +19,15 @@ public final class SPREffectRenderResource {
     public let frameSize: SIMD2<Float>
 
     public var definition: SPREffectDefinition {
-        asset.definition
+        asset.effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.definition.rendersBeforeEntities
+        asset.effect.definition.rendersBeforeEntities
+    }
+
+    private var playbackFrameInterval: TimeInterval {
+        max(asset.frameInterval, 1 / 60)
     }
 
     public init(device: any MTLDevice, asset: SPREffectAsset) {
@@ -39,25 +43,50 @@ public final class SPREffectRenderResource {
         self.textures = asset.frameImages.enumerated().map { index, frameImage in
             MetalTextureFactory.makeTexture(from: frameImage, device: device, label: "sprEffect[\(index)]")
         }
-        self.frameSize = [
-            Float(asset.frameSize.width),
-            Float(asset.frameSize.height),
-        ]
+        self.frameSize = asset.frameSize
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        asset.isExpired(elapsedTime: elapsedTime)
+        if definition.stopsAtEnd {
+            return false
+        }
+
+        guard elapsedTime >= 0 else {
+            return false
+        }
+
+        if let duration = definition.duration {
+            return elapsedTime >= duration
+        }
+
+        if definition.repeats {
+            return false
+        }
+
+        return elapsedTime >= TimeInterval(textures.count) * playbackFrameInterval
     }
 
     func adjustedWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
-        asset.adjustedWorldPosition(worldPosition)
+        var basePosition = worldPosition
+        if definition.rendersAtHead {
+            basePosition.z += 2.5
+        }
+
+        return basePosition + [definition.spriteOffset.x / 35, 0, -definition.spriteOffset.y / 35]
     }
 
     func texture(elapsedTime: TimeInterval) -> (any MTLTexture)? {
-        guard let frameIndex = asset.frameIndex(atElapsedTime: elapsedTime),
-              textures.indices.contains(frameIndex) else {
+        guard !textures.isEmpty, elapsedTime >= 0 else {
             return nil
         }
+
+        let frameIndex: Int
+        if definition.repeats {
+            frameIndex = Int(elapsedTime / playbackFrameInterval) % textures.count
+        } else {
+            frameIndex = min(Int(elapsedTime / playbackFrameInterval), textures.count - 1)
+        }
+
         return textures[frameIndex]
     }
 }

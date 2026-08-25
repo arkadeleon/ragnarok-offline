@@ -13,17 +13,12 @@ import RagnarokFileFormats
 import RagnarokResources
 
 public struct SPREffectAsset: Sendable {
-    public let definition: SPREffectDefinition
-    public let sound: EffectSound?
+    public let effect: SPREffect
     public let frameImages: [CGImage]
     public let frameInterval: TimeInterval
-    public let frameSize: CGSize
+    public let frameSize: SIMD2<Float>
 
     static func load(with definition: SPREffectDefinition, using resourceManager: ResourceManager) async throws -> SPREffectAsset {
-        let sound = definition.soundName.map { soundName in
-            EffectSound(name: soundName, delay: 0)
-        }
-
         let spritePath = ResourcePath.spriteDirectory
             .appending(K2L("이팩트"))
             .appending(definition.fileName)
@@ -36,67 +31,16 @@ public struct SPREffectAsset: Sendable {
 
         let action = act.action(at: definition.actionIndex)
         let animation = action?.animation(using: spr.imagesBySpriteType())
-        let frameImages = animation?.frames.compactMap { $0 } ?? []
-        let frameInterval = definition.frameInterval ?? TimeInterval(animation?.frameInterval ?? 1 / 12)
-        let frameSize = CGSize(
-            width: animation?.frameWidth ?? 0,
-            height: animation?.frameHeight ?? 0
-        )
 
         let asset = SPREffectAsset(
-            definition: definition,
-            sound: sound,
-            frameImages: frameImages,
-            frameInterval: frameInterval,
-            frameSize: frameSize
+            effect: SPREffect(definition: definition),
+            frameImages: animation?.frames.compactMap { $0 } ?? [],
+            frameInterval: definition.frameInterval ?? TimeInterval(animation?.frameInterval ?? 1 / 12),
+            frameSize: [
+                Float(animation?.frameWidth ?? 0),
+                Float(animation?.frameHeight ?? 0),
+            ]
         )
         return asset
-    }
-}
-
-extension SPREffectAsset {
-    private var playbackFrameInterval: TimeInterval {
-        max(frameInterval, 1 / 60)
-    }
-
-    public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        if definition.stopsAtEnd {
-            return false
-        }
-
-        guard elapsedTime >= 0 else {
-            return false
-        }
-
-        if let duration = definition.duration {
-            return elapsedTime >= duration
-        }
-
-        if definition.repeats {
-            return false
-        }
-
-        return elapsedTime >= TimeInterval(frameImages.count) * playbackFrameInterval
-    }
-
-    public func frameIndex(atElapsedTime elapsedTime: TimeInterval) -> Int? {
-        guard !frameImages.isEmpty, elapsedTime >= 0 else {
-            return nil
-        }
-
-        if definition.repeats {
-            return Int(elapsedTime / playbackFrameInterval) % frameImages.count
-        } else {
-            return min(Int(elapsedTime / playbackFrameInterval), frameImages.count - 1)
-        }
-    }
-
-    public func adjustedWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
-        var basePosition = worldPosition
-        if definition.rendersAtHead {
-            basePosition.z += 2.5
-        }
-
-        return basePosition + [definition.spriteOffset.x / 35, 0, -definition.spriteOffset.y / 35]
     }
 }
