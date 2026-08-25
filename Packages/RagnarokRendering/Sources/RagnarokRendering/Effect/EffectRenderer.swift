@@ -11,8 +11,8 @@ import simd
 public final class EffectRenderer {
     public let device: any MTLDevice
 
-    private let effect2DRenderer: Effect2DRenderer
-    private let effect3DRenderer: Effect3DRenderer
+    private let twoDEffectRenderer: TwoDEffectRenderer
+    private let threeDEffectRenderer: ThreeDEffectRenderer
     private let cylinderEffectRenderer: CylinderEffectRenderer
     private let sprEffectRenderer: SPREffectRenderer
     private let strEffectRenderer: STREffectRenderer
@@ -20,8 +20,8 @@ public final class EffectRenderer {
     public init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
 
-        effect2DRenderer = try Effect2DRenderer(device: device, configuration: configuration)
-        effect3DRenderer = try Effect3DRenderer(device: device, configuration: configuration)
+        twoDEffectRenderer = try TwoDEffectRenderer(device: device, configuration: configuration)
+        threeDEffectRenderer = try ThreeDEffectRenderer(device: device, configuration: configuration)
         cylinderEffectRenderer = try CylinderEffectRenderer(device: device, configuration: configuration)
         sprEffectRenderer = try SPREffectRenderer(device: device, configuration: configuration)
         strEffectRenderer = try STREffectRenderer(device: device, configuration: configuration)
@@ -42,7 +42,7 @@ public final class EffectRenderer {
             switch resource {
             case .`2D`(let resource):
                 let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
-                effect2DRenderer.render(
+                twoDEffectRenderer.render(
                     resource: resource,
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,
@@ -53,7 +53,7 @@ public final class EffectRenderer {
                 )
             case .`3D`(let resource):
                 let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
-                effect3DRenderer.render(
+                threeDEffectRenderer.render(
                     resource: resource,
                     elapsedTime: elapsedTime,
                     worldPosition: worldPosition,

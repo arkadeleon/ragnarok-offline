@@ -1,5 +1,5 @@
 //
-//  Effect3DRenderer.swift
+//  ThreeDEffectRenderer.swift
 //  RagnarokRendering
 //
 //  Created by Leon Li on 2026/6/29.
@@ -11,7 +11,7 @@ import RagnarokEffects
 import RagnarokShaders
 import simd
 
-public final class Effect3DRenderer {
+public final class ThreeDEffectRenderer {
     public let device: any MTLDevice
     public let configuration: RenderConfiguration
 
@@ -38,7 +38,7 @@ public final class Effect3DRenderer {
     }
 
     public func render(
-        resource: Effect3DRenderResource,
+        resource: ThreeDEffectRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         sourceWorldPosition: SIMD3<Float>?,
@@ -76,7 +76,7 @@ public final class Effect3DRenderer {
                 continue
             }
 
-            var vertexUniforms = Effect3DVertexUniforms(
+            var vertexUniforms = ThreeDEffectVertexUniforms(
                 modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
                 projectionMatrix: camera.projectionMatrix,
@@ -86,7 +86,7 @@ public final class Effect3DRenderer {
                 offset: layer.offset,
                 zIndex: resource.definition.zIndex
             )
-            var fragmentUniforms = Effect3DFragmentUniforms(
+            var fragmentUniforms = ThreeDEffectFragmentUniforms(
                 color: layer.color,
                 fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
                 fogNear: fog.near,
@@ -96,12 +96,12 @@ public final class Effect3DRenderer {
 
             renderCommandEncoder.setVertexBytes(
                 &vertexUniforms,
-                length: MemoryLayout<Effect3DVertexUniforms>.stride,
+                length: MemoryLayout<ThreeDEffectVertexUniforms>.stride,
                 index: 1
             )
             renderCommandEncoder.setFragmentBytes(
                 &fragmentUniforms,
-                length: MemoryLayout<Effect3DFragmentUniforms>.stride,
+                length: MemoryLayout<ThreeDEffectFragmentUniforms>.stride,
                 index: 0
             )
             renderCommandEncoder.setFragmentTexture(texture, index: 0)
@@ -126,8 +126,8 @@ public final class Effect3DRenderer {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effect3DVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "effect3DFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "threeDEffectVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "threeDEffectFragmentShader")
         renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true

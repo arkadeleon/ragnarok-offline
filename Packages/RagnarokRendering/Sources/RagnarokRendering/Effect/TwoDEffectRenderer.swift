@@ -1,5 +1,5 @@
 //
-//  Effect2DRenderer.swift
+//  TwoDEffectRenderer.swift
 //  RagnarokRendering
 //
 //  Created by Leon Li on 2026/7/9.
@@ -11,7 +11,7 @@ import RagnarokEffects
 import RagnarokShaders
 import simd
 
-public final class Effect2DRenderer {
+public final class TwoDEffectRenderer {
     public let device: any MTLDevice
     public let configuration: RenderConfiguration
 
@@ -38,7 +38,7 @@ public final class Effect2DRenderer {
     }
 
     public func render(
-        resource: Effect2DRenderResource,
+        resource: TwoDEffectRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         fog: Fog,
@@ -63,7 +63,7 @@ public final class Effect2DRenderer {
         // additive effects go through untouched.
         let isAdditive = resource.definition.blendMode == .one
 
-        var vertexUniforms = Effect2DVertexUniforms(
+        var vertexUniforms = TwoDEffectVertexUniforms(
             modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix,
@@ -73,7 +73,7 @@ public final class Effect2DRenderer {
             offset: sample.offset,
             zIndex: resource.definition.zIndex
         )
-        var fragmentUniforms = Effect2DFragmentUniforms(
+        var fragmentUniforms = TwoDEffectFragmentUniforms(
             color: sample.color,
             fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
             fogNear: fog.near,
@@ -83,12 +83,12 @@ public final class Effect2DRenderer {
 
         renderCommandEncoder.setVertexBytes(
             &vertexUniforms,
-            length: MemoryLayout<Effect2DVertexUniforms>.stride,
+            length: MemoryLayout<TwoDEffectVertexUniforms>.stride,
             index: 1
         )
         renderCommandEncoder.setFragmentBytes(
             &fragmentUniforms,
-            length: MemoryLayout<Effect2DFragmentUniforms>.stride,
+            length: MemoryLayout<TwoDEffectFragmentUniforms>.stride,
             index: 0
         )
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
@@ -112,8 +112,8 @@ public final class Effect2DRenderer {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "effect2DVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "effect2DFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "twoDEffectVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "twoDEffectFragmentShader")
         renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true

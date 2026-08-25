@@ -1,27 +1,27 @@
 //
-//  Effect3DShaders.metal
+//  TwoDEffectShaders.metal
 //  RagnarokShaders
 //
-//  Created by Leon Li on 2026/6/29.
+//  Created by Leon Li on 2026/7/9.
 //
 
 #include <metal_stdlib>
 using namespace metal;
 
-#include "Effect3DShaderTypes.h"
+#include "TwoDEffectShaderTypes.h"
 
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
     float fogDepth;
-} Effect3DRasterizerData;
+} TwoDEffectRasterizerData;
 
-vertex Effect3DRasterizerData
-effect3DVertexShader(const device Effect3DVertex *vertices [[buffer(0)]],
-                     unsigned int vertexIndex [[vertex_id]],
-                     constant Effect3DVertexUniforms &uniforms [[buffer(1)]])
+vertex TwoDEffectRasterizerData
+twoDEffectVertexShader(const device TwoDEffectVertex *vertices [[buffer(0)]],
+                       unsigned int vertexIndex [[vertex_id]],
+                       constant TwoDEffectVertexUniforms &uniforms [[buffer(1)]])
 {
-    Effect3DVertex in = vertices[vertexIndex];
+    TwoDEffectVertex in = vertices[vertexIndex];
 
     float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
@@ -58,7 +58,7 @@ effect3DVertexShader(const device Effect3DVertex *vertices [[buffer(0)]],
 
     clipPosition.z -= uniforms.zIndex * 0.001 * clipPosition.w;
 
-    Effect3DRasterizerData out;
+    TwoDEffectRasterizerData out;
     out.position = clipPosition;
     out.textureCoordinate = in.textureCoordinate;
     out.fogDepth = -(uniforms.viewMatrix * float4(worldPosition, 1.0)).z;
@@ -66,9 +66,9 @@ effect3DVertexShader(const device Effect3DVertex *vertices [[buffer(0)]],
 }
 
 fragment float4
-effect3DFragmentShader(Effect3DRasterizerData in [[stage_in]],
-                       constant Effect3DFragmentUniforms &uniforms [[buffer(0)]],
-                       texture2d<float> colorTexture [[texture(0)]])
+twoDEffectFragmentShader(TwoDEffectRasterizerData in [[stage_in]],
+                         constant TwoDEffectFragmentUniforms &uniforms [[buffer(0)]],
+                         texture2d<float> colorTexture [[texture(0)]])
 {
     if (uniforms.color.a <= 0.0) {
         discard_fragment();

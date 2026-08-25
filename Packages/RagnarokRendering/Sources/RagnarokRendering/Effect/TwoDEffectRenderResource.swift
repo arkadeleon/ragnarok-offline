@@ -1,5 +1,5 @@
 //
-//  Effect2DRenderResource.swift
+//  TwoDEffectRenderResource.swift
 //  RagnarokRendering
 //
 //  Created by Leon Li on 2026/7/9.
@@ -12,10 +12,10 @@ import RagnarokRenderAssets
 import RagnarokShaders
 import simd
 
-public final class Effect2DRenderResource {
+public final class TwoDEffectRenderResource {
     public let asset: TwoDEffectAsset
     public let instance: TwoDEffectAsset.Instance
-    public let vertices: [Effect2DVertex]
+    public let vertices: [TwoDEffectVertex]
     public let texture: (any MTLTexture)?
 
     public var definition: TwoDEffectDefinition {
@@ -30,14 +30,14 @@ public final class Effect2DRenderResource {
         self.asset = asset
         self.instance = instance
         self.vertices = [
-            Effect2DVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
-            Effect2DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
-            Effect2DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
-            Effect2DVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
-            Effect2DVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
-            Effect2DVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
+            TwoDEffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
+            TwoDEffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
+            TwoDEffectVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
+            TwoDEffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
+            TwoDEffectVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
+            TwoDEffectVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
-        self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "effect2D")
+        self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "2DEffect")
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {

@@ -1,5 +1,5 @@
 //
-//  Effect2DShaderTypes.h
+//  TwoDEffectShaderTypes.h
 //  RagnarokShaders
 //
 //  Created by Leon Li on 2026/7/9.
@@ -10,7 +10,7 @@
 typedef struct {
     vector_float2 position;
     vector_float2 textureCoordinate;
-} Effect2DVertex;
+} TwoDEffectVertex;
 
 typedef struct {
     matrix_float4x4 modelMatrix;
@@ -21,7 +21,7 @@ typedef struct {
     vector_float2 size;
     vector_float2 offset;
     float zIndex;
-} Effect2DVertexUniforms;
+} TwoDEffectVertexUniforms;
 
 typedef struct {
     vector_float4 color;
@@ -30,4 +30,4 @@ typedef struct {
     float fogNear;
     float fogFar;
     vector_float3 fogColor;
-} Effect2DFragmentUniforms;
+} TwoDEffectFragmentUniforms;

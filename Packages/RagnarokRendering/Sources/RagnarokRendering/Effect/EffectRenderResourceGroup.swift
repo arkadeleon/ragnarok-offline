@@ -47,7 +47,7 @@ public final class EffectRenderResourceGroup {
             switch asset {
             case .`2D`(let asset):
                 return asset.makeInstances().map { instance in
-                    let resource = Effect2DRenderResource(
+                    let resource = TwoDEffectRenderResource(
                         device: device,
                         asset: asset,
                         instance: instance
@@ -56,7 +56,7 @@ public final class EffectRenderResourceGroup {
                 }
             case .`3D`(let asset):
                 return asset.makeInstances().map { instance in
-                    let resource = Effect3DRenderResource(
+                    let resource = ThreeDEffectRenderResource(
                         device: device,
                         asset: asset,
                         instance: instance

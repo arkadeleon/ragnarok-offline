@@ -8,8 +8,8 @@
 import Foundation
 
 public enum EffectRenderResource {
-    case `2D`(Effect2DRenderResource)
-    case `3D`(Effect3DRenderResource)
+    case `2D`(TwoDEffectRenderResource)
+    case `3D`(ThreeDEffectRenderResource)
     case cylinder(CylinderEffectRenderResource)
     case spr(SPREffectRenderResource)
     case str(STREffectRenderResource)
