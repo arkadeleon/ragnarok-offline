@@ -438,6 +438,12 @@ public enum EffectTable {
                 attachedToTarget: true
             ),
         ],
+        .ef_coldhit: [
+            .wav(
+                soundName: "_hit_fist%d.wav",
+                randomNumberRange: 3...4
+            ),
+        ],
         .ef_windhit: [
             .str(
                 fileName: "windhit%d.str",
@@ -768,6 +774,34 @@ public enum EffectTable {
                 angle: 180,
                 rotatesToTarget: true,
                 rotatesWithCamera: true
+            ),
+        ],
+        "ef_coldbolt": [
+            .`3D`(
+                fileName: "effect\\icearrow.tga",
+                soundName: "effect\\ef_icearrow%d.wav",
+                randomNumberRange: 1...3,
+                duration: 0.5,
+                attachedToTarget: true,
+                zIndex: 1,
+                positionStart: [0, 0, 20],
+                positionStartXRandomRange: 4...6,
+                positionStartYRandomRange: 1...3,
+                size: [50, 50],
+                angle: 112.5
+            ),
+            .cylinder(
+                textureName: "ring_blue",
+                duration: 1,
+                delayLate: 0.5,
+                attachedToTarget: false,
+                alpha: 0.7,
+                fades: true,
+                topRadius: 5,
+                bottomRadius: 3,
+                height: 0.1,
+                animation: .growRadius,
+                rotatesContinuously: true
             ),
         ],
         "ef_firebolt": [
