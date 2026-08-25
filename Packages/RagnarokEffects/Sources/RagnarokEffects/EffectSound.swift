@@ -1,6 +1,6 @@
 //
 //  EffectSound.swift
-//  RagnarokRenderAssets
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/8/25.
 //

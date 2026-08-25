@@ -1,12 +1,11 @@
 //
 //  CylinderEffect.swift
-//  RagnarokRenderAssets
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/8/25.
 //
 
 import Foundation
-import RagnarokEffects
 
 public struct CylinderEffect: Sendable {
     public struct Instance: Sendable {
@@ -48,7 +47,7 @@ public struct CylinderEffect: Sendable {
 
     public let definition: CylinderEffectDefinition
 
-    init(definition: CylinderEffectDefinition) {
+    public init(definition: CylinderEffectDefinition) {
         self.definition = definition
     }
 

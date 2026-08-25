@@ -16,7 +16,9 @@ public struct STREffectAsset: @unchecked Sendable {
     public let textureImages: [String : CGImage]
 
     static func load(with definition: STREffectDefinition, using resourceManager: ResourceManager) async throws -> STREffectAsset {
-        let fileName = definition.fileName.replacingRandomNumber(in: definition.randomNumberRange)
+        let effect = STREffect(definition: definition)
+
+        let fileName = effect.fileName
         let strPath = ResourcePath.effectDirectory.appending(subpath: fileName)
         let strData = try await resourceManager.contentsOfResource(at: strPath)
         let str = try STR(data: strData)
@@ -38,7 +40,7 @@ public struct STREffectAsset: @unchecked Sendable {
         }
 
         let asset = STREffectAsset(
-            effect: STREffect(definition: definition),
+            effect: effect,
             animation: animation,
             textureImages: textureImages
         )

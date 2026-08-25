@@ -1,31 +1,27 @@
 //
-//  ThreeDEffect.swift
-//  RagnarokRenderAssets
+//  TwoDEffect.swift
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/8/25.
 //
 
 import Foundation
 import RagnarokCore
-import RagnarokEffects
 
-public struct ThreeDEffect: Sendable {
+public struct TwoDEffect: Sendable {
     public struct Instance: Sendable {
         public let duplicateID: Int
         public let sound: EffectSound?
         public let delay: TimeInterval
-        public let sparkleCount: Float
+        public let duration: TimeInterval
         public let positionStart: SIMD3<Float>
         public let positionEnd: SIMD3<Float>
-        public let movementPositionStart: SIMD3<Float>
-        public let movementPositionEnd: SIMD3<Float>
         public let sizeStart: SIMD2<Float>
         public let sizeEnd: SIMD2<Float>
         public let baseAngle: Float
-        public let arc: Float
-        public let retreat: Float
+        public let targetAngle: Float
 
-        init(definition: ThreeDEffectDefinition, duplicateID: Int, patternIndex: Int) {
+        init(definition: TwoDEffectDefinition, duplicateID: Int) {
             self.duplicateID = duplicateID
 
             self.sound = definition.soundName.map { soundName in
@@ -43,20 +39,8 @@ public struct ThreeDEffect: Sendable {
                 + definition.duplicate.delayLateDelta * TimeInterval(duplicateID)
                 + definition.duplicate.interval * TimeInterval(duplicateID)
 
-            if definition.sparkleCount > 0 {
-                self.sparkleCount = definition.sparkleCount
-            } else if let range = definition.sparkleCountRandomRange {
-                self.sparkleCount = Float.random(in: range)
-            } else {
-                self.sparkleCount = 1
-            }
-
             var positionStart = definition.positionStart
             var positionEnd = definition.positionEnd
-            var movementPositionStart = definition.offset
-            var movementPositionEnd = definition.offset
-            movementPositionStart.z += definition.zOffsetStart
-            movementPositionEnd.z += definition.zOffsetEnd
 
             if let range = definition.positionXRandomRange {
                 let random = Float.random(in: range)
@@ -88,70 +72,52 @@ public struct ThreeDEffect: Sendable {
             }
 
             if let range = definition.positionStartXRandomRange {
-                let random = Float.random(in: range)
-                positionStart.x = random
-                movementPositionStart.x += random
+                positionStart.x = Float.random(in: range)
             }
             if let range = definition.positionStartYRandomRange {
-                let random = Float.random(in: range)
-                positionStart.y = random
-                movementPositionStart.y += random
+                positionStart.y = Float.random(in: range)
             }
             if let range = definition.positionStartZRandomRange {
-                let random = Float.random(in: range)
-                positionStart.z = random
-                movementPositionStart.z += random
+                positionStart.z = Float.random(in: range)
             }
 
             if let range = definition.positionEndXRandomRange {
-                let random = Float.random(in: range)
-                positionEnd.x = random
-                movementPositionEnd.x += random
+                positionEnd.x = Float.random(in: range)
             }
             if let range = definition.positionEndYRandomRange {
-                let random = Float.random(in: range)
-                positionEnd.y = random
-                movementPositionEnd.y += random
+                positionEnd.y = Float.random(in: range)
             }
             if let range = definition.positionEndZRandomRange {
-                let random = Float.random(in: range)
-                positionEnd.z = random
-                movementPositionEnd.z += random
+                positionEnd.z = Float.random(in: range)
             }
 
-            positionStart += definition.offset
-            positionEnd += definition.offset
-            positionStart.z += definition.zOffsetStart
-            positionEnd.z += definition.zOffsetEnd
+            positionStart += definition.positionOffset
+            positionEnd += definition.positionOffset
 
-            var arc = definition.arc
-            var retreat = definition.retreat
-            var angle = definition.angle
+            var baseAngle = definition.angle + definition.duplicate.angleDelta * Float(duplicateID)
+            let targetAngle = definition.targetAngle + definition.duplicate.angleDelta * Float(duplicateID)
 
-            if definition.soulStrikePattern {
-                let patternAngle = Float(patternIndex) * 72
-                let patternRadius: Float = 2
-                let patternOffset = SIMD2(
-                    cos(radians(patternAngle)) * patternRadius,
-                    sin(radians(patternAngle)) * patternRadius
-                )
+            if definition.rotatesToTarget {
+                baseAngle += 90 - degrees(atan2(positionEnd.y - positionStart.y, positionEnd.x - positionStart.x))
+            }
 
-                positionStart.x += patternOffset.x
-                positionStart.y += patternOffset.y
-                movementPositionStart.x += patternOffset.x
-                movementPositionStart.y += patternOffset.y
+            if let angleRandomRange = definition.angleRandomRange {
+                baseAngle = Float.random(in: angleRandomRange)
+            }
 
-                arc *= 1 + Float(patternIndex) * 0.1
-                retreat *= 1 + Float(patternIndex) * 0.2
-                angle += patternAngle
+            if definition.circlePattern, let circleOuterSizeRandomRange = definition.circleOuterSizeRandomRange {
+                let distance = Float.random(in: circleOuterSizeRandomRange)
+                let angle = radians(baseAngle)
+                positionEnd.x = sin(angle) * distance
+                positionEnd.y = cos(angle) * distance
+                positionStart.x = sin(angle) * definition.circleInnerSize
+                positionStart.y = cos(angle) * definition.circleInnerSize
             }
 
             self.positionStart = positionStart
             self.positionEnd = positionEnd
-            self.movementPositionStart = movementPositionStart
-            self.movementPositionEnd = movementPositionEnd
-            self.arc = arc
-            self.retreat = retreat
+            self.baseAngle = baseAngle
+            self.targetAngle = targetAngle
 
             var sizeStart = definition.sizeStart ?? definition.size
             var sizeEnd = definition.sizeEnd ?? definition.size
@@ -167,29 +133,39 @@ public struct ThreeDEffect: Sendable {
                 sizeEnd.y = random
             }
 
-            if definition.duplicate.sizeDelta != 0 {
-                let delta = definition.duplicate.sizeDelta * Float(duplicateID)
-                sizeStart += [delta, delta]
-                sizeEnd += [delta, delta]
+            if let sizeStartXRandomRange = definition.sizeStartXRandomRange {
+                sizeStart.x = Float.random(in: sizeStartXRandomRange)
+            }
+            if let sizeStartYRandomRange = definition.sizeStartYRandomRange {
+                sizeStart.y = Float.random(in: sizeStartYRandomRange)
+            }
+            if let sizeEndXRandomRange = definition.sizeEndXRandomRange {
+                sizeEnd.x = Float.random(in: sizeEndXRandomRange)
+            }
+            if let sizeEndYRandomRange = definition.sizeEndYRandomRange {
+                sizeEnd.y = Float.random(in: sizeEndYRandomRange)
             }
 
             self.sizeStart = sizeStart
             self.sizeEnd = sizeEnd
 
-            self.baseAngle = angle
+            if let durationRandomRange = definition.durationRandomRange {
+                self.duration = TimeInterval.random(in: durationRandomRange)
+            } else {
+                self.duration = definition.duration
+            }
         }
     }
 
-    public let definition: ThreeDEffectDefinition
+    public let definition: TwoDEffectDefinition
 
-    init(definition: ThreeDEffectDefinition) {
+    public init(definition: TwoDEffectDefinition) {
         self.definition = definition
     }
 
-    public func makeInstances() -> [ThreeDEffect.Instance] {
-        let patternIndex = Int.random(in: 0..<5)
-        return (0..<max(definition.duplicate.count, 1)).map { duplicateID in
-            ThreeDEffect.Instance(definition: definition, duplicateID: duplicateID, patternIndex: patternIndex)
+    public func makeInstances() -> [TwoDEffect.Instance] {
+        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+            TwoDEffect.Instance(definition: definition, duplicateID: duplicateID)
         }
     }
 }
