@@ -13,14 +13,45 @@ import RagnarokFileFormats
 import RagnarokResources
 
 public struct ThreeDEffectAsset: Sendable {
+    public struct Layer: Sendable {
+        public let imageIndex: Int
+        public let sizeFactor: SIMD2<Float>
+        public let offset: SIMD2<Float>
+        public let angle: Float
+        public let color: SIMD4<Float>
+        public let isMirrored: Bool
+
+        init(
+            imageIndex: Int,
+            sizeFactor: SIMD2<Float>,
+            offset: SIMD2<Float> = .zero,
+            angle: Float = 0,
+            color: SIMD4<Float> = [1, 1, 1, 1],
+            isMirrored: Bool = false
+        ) {
+            self.imageIndex = imageIndex
+            self.sizeFactor = sizeFactor
+            self.offset = offset
+            self.angle = angle
+            self.color = color
+            self.isMirrored = isMirrored
+        }
+    }
+
+    public struct Frame: Sendable {
+        public let layers: [ThreeDEffectAsset.Layer]
+    }
+
     public let effect: ThreeDEffect
     public let images: [CGImage]
+    public let frameDelay: TimeInterval
+    public let frames: [ThreeDEffectAsset.Frame]
 
     static func load(with definition: ThreeDEffectDefinition, using resourceManager: ResourceManager) async throws -> ThreeDEffectAsset {
         var frameDelay = definition.frameDelay
 
         var images: [CGImage] = []
-        var frames: [ThreeDEffect.Frame] = []
+        var frames: [ThreeDEffectAsset.Frame] = []
 
         if let spriteName = definition.spriteName {
             let spritePath = ResourcePath.spriteDirectory.appending(subpath: spriteName)
@@ -43,7 +74,7 @@ public struct ThreeDEffectAsset: Sendable {
 
             var imageIndicesBySprite: [SIMD2<Int> : Int] = [:]
             for frame in usedFrames {
-                var layers: [ThreeDEffect.Layer] = []
+                var layers: [ThreeDEffectAsset.Layer] = []
                 for layer in frame.layers where layer.spriteIndex >= 0 {
                     guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
                           let typedImages = spriteImages[spriteType] else {
@@ -66,7 +97,7 @@ public struct ThreeDEffectAsset: Sendable {
                         imageIndicesBySprite[spriteKey] = imageIndex
                     }
 
-                    layers.append(ThreeDEffect.Layer(
+                    layers.append(ThreeDEffectAsset.Layer(
                         imageIndex: imageIndex,
                         sizeFactor: [
                             Float(image.width) * layer.scale.x / 100,
@@ -86,7 +117,7 @@ public struct ThreeDEffectAsset: Sendable {
                         isMirrored: layer.isMirrored != 0
                     ))
                 }
-                frames.append(ThreeDEffect.Frame(layers: layers))
+                frames.append(ThreeDEffectAsset.Frame(layers: layers))
             }
         } else {
             let textureNames: [String]
@@ -100,22 +131,18 @@ public struct ThreeDEffectAsset: Sendable {
                 let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
                 let removesMagentaPixels = textureName.lowercased().hasSuffix(".bmp")
                 let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
-                let layer = ThreeDEffect.Layer(imageIndex: images.count, sizeFactor: [1, 1])
-                let frame = ThreeDEffect.Frame(layers: [layer])
+                let layer = ThreeDEffectAsset.Layer(imageIndex: images.count, sizeFactor: [1, 1])
+                let frame = ThreeDEffectAsset.Frame(layers: [layer])
                 frames.append(frame)
                 images.append(image.cgImage)
             }
         }
 
-        let effect = ThreeDEffect(
-            definition: definition,
+        let asset = ThreeDEffectAsset(
+            effect: ThreeDEffect(definition: definition),
+            images: images,
             frameDelay: frameDelay,
             frames: frames
-        )
-
-        let asset = ThreeDEffectAsset(
-            effect: effect,
-            images: images
         )
         return asset
     }

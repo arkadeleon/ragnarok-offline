@@ -180,47 +180,10 @@ public struct ThreeDEffect: Sendable {
         }
     }
 
-    public struct Layer: Sendable {
-        public let imageIndex: Int
-        public let sizeFactor: SIMD2<Float>
-        public let offset: SIMD2<Float>
-        public let angle: Float
-        public let color: SIMD4<Float>
-        public let isMirrored: Bool
-
-        init(
-            imageIndex: Int,
-            sizeFactor: SIMD2<Float>,
-            offset: SIMD2<Float> = .zero,
-            angle: Float = 0,
-            color: SIMD4<Float> = [1, 1, 1, 1],
-            isMirrored: Bool = false
-        ) {
-            self.imageIndex = imageIndex
-            self.sizeFactor = sizeFactor
-            self.offset = offset
-            self.angle = angle
-            self.color = color
-            self.isMirrored = isMirrored
-        }
-    }
-
-    public struct Frame: Sendable {
-        public let layers: [ThreeDEffect.Layer]
-    }
-
     public let definition: ThreeDEffectDefinition
-    public let frameDelay: TimeInterval
-    public let frames: [ThreeDEffect.Frame]
 
-    init(
-        definition: ThreeDEffectDefinition,
-        frameDelay: TimeInterval,
-        frames: [ThreeDEffect.Frame]
-    ) {
+    init(definition: ThreeDEffectDefinition) {
         self.definition = definition
-        self.frameDelay = frameDelay
-        self.frames = frames
     }
 
     public func makeInstances() -> [ThreeDEffect.Instance] {
