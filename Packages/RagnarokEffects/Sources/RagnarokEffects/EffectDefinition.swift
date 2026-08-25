@@ -9,8 +9,8 @@ import Foundation
 import simd
 
 public enum EffectDefinition: Sendable {
-    case `2D`(Effect2DDefinition)
-    case `3D`(Effect3DDefinition)
+    case `2D`(TwoDEffectDefinition)
+    case `3D`(ThreeDEffectDefinition)
     case cylinder(CylinderEffectDefinition)
     case spr(SPREffectDefinition)
     case str(STREffectDefinition)

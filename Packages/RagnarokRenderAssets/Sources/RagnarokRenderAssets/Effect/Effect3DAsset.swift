@@ -26,7 +26,7 @@ public struct Effect3DAsset: Sendable {
         public let arc: Float
         public let retreat: Float
 
-        init(definition: Effect3DDefinition, duplicateID: Int, patternIndex: Int) {
+        init(definition: ThreeDEffectDefinition, duplicateID: Int, patternIndex: Int) {
             self.duplicateID = duplicateID
 
             self.delay = definition.delayStart
@@ -195,7 +195,7 @@ public struct Effect3DAsset: Sendable {
         public let layers: [Effect3DAsset.Layer]
     }
 
-    public let definition: Effect3DDefinition
+    public let definition: ThreeDEffectDefinition
     public let soundName: String?
     public let sparkleCount: Float
     public let frameDelay: TimeInterval
@@ -209,7 +209,7 @@ public struct Effect3DAsset: Sendable {
         }
     }
 
-    static func load(with definition: Effect3DDefinition, using resourceManager: ResourceManager) async throws -> Effect3DAsset {
+    static func load(with definition: ThreeDEffectDefinition, using resourceManager: ResourceManager) async throws -> Effect3DAsset {
         var fileName = definition.fileName
         var fileNames = definition.fileNames
         var soundName = definition.soundName

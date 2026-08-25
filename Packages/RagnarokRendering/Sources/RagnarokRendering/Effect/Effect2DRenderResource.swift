@@ -18,7 +18,7 @@ public final class Effect2DRenderResource {
     public let vertices: [Effect2DVertex]
     public let texture: (any MTLTexture)?
 
-    public var definition: Effect2DDefinition {
+    public var definition: TwoDEffectDefinition {
         asset.definition
     }
 

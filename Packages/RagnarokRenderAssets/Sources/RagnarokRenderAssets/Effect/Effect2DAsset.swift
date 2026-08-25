@@ -23,7 +23,7 @@ public struct Effect2DAsset: Sendable {
         public let baseAngle: Float
         public let targetAngle: Float
 
-        init(definition: Effect2DDefinition, duplicateID: Int) {
+        init(definition: TwoDEffectDefinition, duplicateID: Int) {
             self.duplicateID = duplicateID
 
             self.delay = definition.delayStart
@@ -152,7 +152,7 @@ public struct Effect2DAsset: Sendable {
         }
     }
 
-    public let definition: Effect2DDefinition
+    public let definition: TwoDEffectDefinition
     public let soundName: String?
     public let textureImage: CGImage
 
@@ -162,7 +162,7 @@ public struct Effect2DAsset: Sendable {
         }
     }
 
-    static func load(with definition: Effect2DDefinition, using resourceManager: ResourceManager) async throws -> Effect2DAsset {
+    static func load(with definition: TwoDEffectDefinition, using resourceManager: ResourceManager) async throws -> Effect2DAsset {
         var fileName = definition.fileName
         var soundName = definition.soundName
         if let randomNumberRange = definition.randomNumberRange {

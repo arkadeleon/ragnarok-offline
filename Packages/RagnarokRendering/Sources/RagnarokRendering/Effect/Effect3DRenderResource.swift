@@ -18,7 +18,7 @@ public final class Effect3DRenderResource {
     public let vertices: [Effect3DVertex]
     public let textures: [(any MTLTexture)?]
 
-    public var definition: Effect3DDefinition {
+    public var definition: ThreeDEffectDefinition {
         asset.definition
     }
 
