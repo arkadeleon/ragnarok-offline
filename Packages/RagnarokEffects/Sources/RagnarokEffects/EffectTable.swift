@@ -370,7 +370,7 @@ public enum EffectTable {
             .`3D`(
                 fileName: "effect\\ac_center2.tga",
                 duration: 1,
-                duplicate: .init(count: 10, interval: 0.2),
+                duplicate: .init(count: 10, interval: 0),
                 attachedToTarget: true,
                 alphaMax: 1,
                 fadesOut: true,
@@ -393,6 +393,36 @@ public enum EffectTable {
                 fadesOut: true,
                 positionStart: [0, 0, 0.4],
                 positionEnd: [0, 0, 3],
+                size: [100, 45],
+                smoothSize: true
+            ),
+        ],
+        .ef_decagility: [
+            .`3D`(
+                fileName: "effect\\ac_center2.tga",
+                duration: 1,
+                duplicate: .init(count: 20, interval: 0),
+                attachedToTarget: true,
+                alphaMax: 1,
+                fadesOut: true,
+                positionXRandomRange: -1.5...1.5,
+                positionYRandomRange: -1...1,
+                positionStartZRandomRange: 5...7,
+                positionEndZRandomRange: 0...2,
+                size: [2.5, 45],
+                sizeYRandomRange: 30...60
+            ),
+            .`3D`(
+                fileName: "effect\\slow.bmp",
+                soundName: "effect\\ef_decagility.wav",
+                duration: 1,
+                attachedToTarget: true,
+                zIndex: 10,
+                alphaMax: 1,
+                fadesIn: true,
+                fadesOut: true,
+                positionStart: [0, 0, 2.8],
+                positionEnd: [0, 0, 0.4],
                 size: [100, 45],
                 smoothSize: true
             ),
