@@ -46,6 +46,9 @@ public struct EffectAssetLoader: Sendable {
         case .str(let definition):
             let asset = try await STREffectAsset.load(with: definition, using: resourceManager)
             return .str(asset)
+        case .wav(let definition):
+            let asset = WAVEffectAsset(definition: definition)
+            return .wav(asset)
         }
     }
 }

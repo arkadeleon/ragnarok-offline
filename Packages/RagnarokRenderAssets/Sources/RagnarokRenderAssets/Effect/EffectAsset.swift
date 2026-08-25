@@ -11,4 +11,5 @@ public enum EffectAsset: Sendable {
     case cylinder(CylinderEffectAsset)
     case spr(SPREffectAsset)
     case str(STREffectAsset)
+    case wav(WAVEffectAsset)
 }

@@ -292,7 +292,6 @@ public enum EffectTable {
             .`3D`(
                 spriteName: K2L("이팩트\\fireball"),
                 playSprite: true,
-                soundName: "effect\\ef_fireball.wav",
                 duration: 0.25,
                 delayOffset: 0.16,
                 duplicate: .init(count: 5, interval: 0, delayOffsetDelta: -0.04, alphaMaxDelta: 0.2),
@@ -304,6 +303,9 @@ public enum EffectTable {
                 size: [200, 200],
                 rotatesToTarget: true,
                 rotatesWithCamera: true
+            ),
+            .wav(
+                soundName: "effect\\ef_fireball.wav"
             ),
         ],
         .ef_lightbolt: [

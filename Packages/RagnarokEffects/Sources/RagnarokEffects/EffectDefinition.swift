@@ -14,4 +14,5 @@ public enum EffectDefinition: Sendable {
     case cylinder(CylinderEffectDefinition)
     case spr(SPREffectDefinition)
     case str(STREffectDefinition)
+    case wav(WAVEffectDefinition)
 }
