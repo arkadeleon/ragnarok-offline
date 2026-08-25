@@ -90,6 +90,9 @@ public enum SkillEffectTable {
             effects: [.name("ef_arrow_shower_projectile")],
             hitEffects: [.id(.ef_hit2)]
         ),
+        .all_resurrection: .init(
+            effects: [.id(.ef_resurrection), .id(.ef_revive)]
+        ),
     ]
 
     public static func beginCastEffects(for skillID: SkillID) -> [EffectReference] {

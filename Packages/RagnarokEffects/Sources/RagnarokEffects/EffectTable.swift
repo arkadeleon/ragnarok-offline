@@ -580,11 +580,23 @@ public enum EffectTable {
                 attachedToTarget: true
             ),
         ],
+        .ef_resurrection: [
+            .str(
+                fileName: "resurrection.str",
+                soundName: "effect\\priest_resurrection.wav",
+                attachedToTarget: true
+            ),
+        ],
         .ef_magnus: [
             .str(
                 fileName: "magnus.str",
                 soundName: "effect\\priest_magnus.wav",
                 attachedToTarget: false
+            ),
+        ],
+        .ef_revive: [
+            .wav(
+                soundName: "effect\\priest_resurrection.wav"
             ),
         ],
         .ef_concentration: [
