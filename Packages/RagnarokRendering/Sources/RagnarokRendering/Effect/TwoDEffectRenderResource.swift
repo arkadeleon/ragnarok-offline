@@ -14,19 +14,19 @@ import simd
 
 public final class TwoDEffectRenderResource {
     public let asset: TwoDEffectAsset
-    public let instance: TwoDEffectAsset.Instance
+    public let instance: TwoDEffect.Instance
     public let vertices: [TwoDEffectVertex]
     public let texture: (any MTLTexture)?
 
     public var definition: TwoDEffectDefinition {
-        asset.definition
+        asset.effect.definition
     }
 
     public var rendersBeforeEntities: Bool {
-        asset.definition.rendersBeforeEntities
+        asset.effect.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, asset: TwoDEffectAsset, instance: TwoDEffectAsset.Instance) {
+    public init(device: any MTLDevice, asset: TwoDEffectAsset, instance: TwoDEffect.Instance) {
         self.asset = asset
         self.instance = instance
         self.vertices = [
@@ -41,11 +41,11 @@ public final class TwoDEffectRenderResource {
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        asset.isExpired(instance: instance, elapsedTime: elapsedTime)
+        asset.effect.isExpired(instance: instance, elapsedTime: elapsedTime)
     }
 
-    func sample(forElapsedTime elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> TwoDEffectAsset.Sample? {
-        asset.sample(
+    func sample(forElapsedTime elapsedTime: TimeInterval, worldPosition: SIMD3<Float>, cameraAzimuth: Float) -> TwoDEffect.Sample? {
+        asset.effect.sample(
             forInstance: instance,
             elapsedTime: elapsedTime,
             worldPosition: worldPosition,

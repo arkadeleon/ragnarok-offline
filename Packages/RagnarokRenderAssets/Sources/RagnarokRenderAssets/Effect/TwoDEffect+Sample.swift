@@ -1,5 +1,5 @@
 //
-//  TwoDEffectAsset+Sample.swift
+//  TwoDEffect+Sample.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/10.
@@ -10,7 +10,7 @@ import RagnarokCore
 import RagnarokEffects
 import simd
 
-extension TwoDEffectAsset {
+extension TwoDEffect {
     public struct Sample: Sendable {
         public var worldPosition: SIMD3<Float>
         public var size: SIMD2<Float>
@@ -19,7 +19,7 @@ extension TwoDEffectAsset {
         public var rotationMatrix: simd_float4x4
     }
 
-    public func isExpired(instance: TwoDEffectAsset.Instance, elapsedTime: TimeInterval) -> Bool {
+    public func isExpired(instance: TwoDEffect.Instance, elapsedTime: TimeInterval) -> Bool {
         guard !definition.repeats else {
             return false
         }
@@ -29,11 +29,11 @@ extension TwoDEffectAsset {
     }
 
     public func sample(
-        forInstance instance: TwoDEffectAsset.Instance,
+        forInstance instance: TwoDEffect.Instance,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
         cameraAzimuth: Float
-    ) -> TwoDEffectAsset.Sample? {
+    ) -> TwoDEffect.Sample? {
         guard let elapsedTime = activeElapsedTime(elapsedTime, instance: instance) else {
             return nil
         }
@@ -76,7 +76,7 @@ extension TwoDEffectAsset {
             angle += (instance.targetAngle - instance.baseAngle) * progress
         }
 
-        return TwoDEffectAsset.Sample(
+        return TwoDEffect.Sample(
             worldPosition: worldPosition + rotatedMapOffset,
             size: size,
             offset: [screenOffset.x, -screenOffset.y],
@@ -85,7 +85,7 @@ extension TwoDEffectAsset {
         )
     }
 
-    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: TwoDEffectAsset.Instance) -> TimeInterval? {
+    private func activeElapsedTime(_ elapsedTime: TimeInterval, instance: TwoDEffect.Instance) -> TimeInterval? {
         var elapsedTime = elapsedTime - instance.delay
         guard elapsedTime >= 0 else {
             return nil

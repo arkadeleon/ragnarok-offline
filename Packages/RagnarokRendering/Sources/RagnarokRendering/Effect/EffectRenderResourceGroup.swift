@@ -52,7 +52,7 @@ public final class EffectRenderResourceGroup {
         for asset in assetGroup.assets {
             switch asset {
             case .`2D`(let asset):
-                let instances = asset.makeInstances()
+                let instances = asset.effect.makeInstances()
                 for instance in instances {
                     let resource = TwoDEffectRenderResource(
                         device: device,
