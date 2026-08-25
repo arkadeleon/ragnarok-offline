@@ -308,6 +308,16 @@ public enum EffectTable {
                 soundName: "effect\\ef_fireball.wav"
             ),
         ],
+        .ef_frostdiver: [
+            // The ice traveling to the target has no definition yet.
+        ],
+        .ef_frostdiver2: [
+            .str(
+                fileName: "freeze.str",
+                soundName: "effect\\ef_frostdiver2.wav",
+                attachedToTarget: true
+            ),
+        ],
         .ef_lightbolt: [
             .str(
                 fileName: "lightning.str",

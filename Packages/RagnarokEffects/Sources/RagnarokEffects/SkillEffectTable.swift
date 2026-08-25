@@ -41,6 +41,10 @@ public enum SkillEffectTable {
             beforeHitEffects: [.name("ef_coldbolt")],
             hitEffects: [.id(.ef_coldhit)]
         ),
+        .mg_frostdiver: .init(
+            effects: [.id(.ef_frostdiver)],
+            hitEffects: [.id(.ef_frostdiver2)]
+        ),
         .mg_fireball: .init(
             beforeHitEffects: [.id(.ef_fireball)],
             hitEffects: [.id(.ef_firehit)]
