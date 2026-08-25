@@ -66,6 +66,9 @@ public enum SkillEffectTable {
         .al_holywater: .init(
             effects: [.id(.ef_aqua)]
         ),
+        .al_crucis: .init(
+            effects: [.id(.ef_signum)]
+        ),
         .al_blessing: .init(
             effects: [.id(.ef_blessing)]
         ),

@@ -435,6 +435,13 @@ public enum EffectTable {
                 rendersAtHead: true
             ),
         ],
+        .ef_signum: [
+            .str(
+                fileName: "cross.str",
+                soundName: "effect\\ef_signum.wav",
+                attachedToTarget: true
+            ),
+        ],
         .ef_smoke: [
             .`3D`(
                 spriteName: K2L("이팩트\\굴뚝연기"),
