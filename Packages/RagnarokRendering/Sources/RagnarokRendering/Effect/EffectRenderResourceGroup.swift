@@ -140,7 +140,7 @@ public final class EffectRenderResourceGroup {
 
     public func isExpired(atTime time: TimeInterval) -> Bool {
         let elapsedTime = time - creationTime - delay
-        return !resources.isEmpty && resources.allSatisfy {
+        return resources.allSatisfy {
             $0.isExpired(elapsedTime: elapsedTime)
         }
     }
