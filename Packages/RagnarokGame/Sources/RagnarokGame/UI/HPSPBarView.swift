@@ -1,5 +1,5 @@
 //
-//  GaugeView.swift
+//  HPSPBarView.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/1/30.
@@ -8,7 +8,7 @@
 import RagnarokModels
 import SwiftUI
 
-struct GaugeView: View {
+struct HPSPBarView: View {
     var hp: Int
     var maxHp: Int
     var sp: Int?
@@ -17,13 +17,13 @@ struct GaugeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            GaugeBar(
+            BarView(
                 percentage: hpPercentage,
                 fillColor: hpFillColor
             )
 
             if let sp, let maxSp {
-                GaugeBar(
+                BarView(
                     percentage: CGFloat(sp) / CGFloat(maxSp),
                     fillColor: Color(#colorLiteral(red: 0.09411764706, green: 0.3882352941, blue: 0.8705882353, alpha: 1))
                 )
@@ -46,7 +46,7 @@ struct GaugeView: View {
     }
 }
 
-private struct GaugeBar: View {
+private struct BarView: View {
     private let barWidth: CGFloat = 60
     private let barHeight: CGFloat = 6
 
@@ -76,6 +76,6 @@ private struct GaugeBar: View {
 }
 
 #Preview {
-    GaugeView(hp: 75, maxHp: 100, sp: 50, maxSp: 100, objectType: .pc)
+    HPSPBarView(hp: 75, maxHp: 100, sp: 50, maxSp: 100, objectType: .pc)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
 }

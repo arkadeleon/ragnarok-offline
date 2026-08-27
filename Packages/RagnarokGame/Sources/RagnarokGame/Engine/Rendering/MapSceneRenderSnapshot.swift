@@ -20,7 +20,7 @@ struct MapSceneRenderSnapshot {
         let attachedWorldPosition: SIMD3<Float>?
     }
 
-    struct Gauge {
+    struct Bar {
         let vertices: [SpriteVertex]
         let worldPosition: SIMD3<Float>
     }
@@ -42,6 +42,6 @@ struct MapSceneRenderSnapshot {
     var tileSelector: TileSelector?
     var spriteDrawables: [SpriteLayerDrawable] = []
     var effects: [Effect] = []
-    var gauges: [Gauge] = []
+    var bars: [Bar] = []
     var combatTexts: [CombatText] = []
 }

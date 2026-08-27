@@ -40,6 +40,7 @@ final class MapSceneMapObject {
     var action: SpriteAction
     var movement: MapObjectMovement?
     var death: MapObjectDeath?
+    var cast: MapObjectCast?
 
     /// How long one attack takes.
     var attackDelay: Duration = .milliseconds(300)
@@ -183,6 +184,10 @@ final class MapSceneMapObject {
         action.update(atTime: time)
         movement?.update(atTime: time)
         death?.update(at: time)
+
+        if cast?.isFinished(at: time) == true {
+            cast = nil
+        }
     }
 
     func nextPosition(at time: ContinuousClock.Instant) -> SIMD2<Int>? {

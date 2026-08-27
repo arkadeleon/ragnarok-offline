@@ -1,51 +1,40 @@
 //
-//  Gauge.swift
+//  BarMesh.swift
 //  RagnarokGame
 //
-//  Created by Leon Li on 2026/8/12.
+//  Created by Leon Li on 2026/8/27.
 //
 
 import RagnarokModels
 import RagnarokShaders
 import simd
 
-/// An object's health and spell point bars, drawn as a billboard around its anchor.
-struct Gauge {
-    private let objectType: MapObjectType
+/// The quads that draw a map object's bars, in sprite pixels of which 32 make one world unit.
+struct BarMesh {
+    let vertices: [SpriteVertex]
 
-    private let hp: Int
-    private let maxHp: Int
-    private let sp: Int
-    private let maxSp: Int
-
-    /// Bar size in sprite pixels, of which 32 make one world unit.
-    private let barWidth: Float = 60
-    private let barHeight: Float = 5
-    private let borderWidth: Float = 1
-    private let barSpacing: Float = 1
-
-    private let borderColor = SIMD4<Float>(0.063, 0.094, 0.612, 1)
-    private let backgroundColor = SIMD4<Float>(0.259, 0.259, 0.259, 1)
-    private let spellPointsColor = SIMD4<Float>(0.094, 0.388, 0.871, 1)
-
-    init(object: MapSceneMapObject) {
-        objectType = object.type
-        hp = object.hp
-        maxHp = object.maxHp
-        sp = object.sp
-        maxSp = object.maxSp
-    }
-
-    /// The quads that draw the bars, in sprite space around the object's anchor.
-    func makeVertices() -> [SpriteVertex] {
+    /// An object's health and spell point bars, stacked around its anchor.
+    static func mesh(hp: Int, maxHp: Int, sp: Int, maxSp: Int, objectType: MapObjectType) -> BarMesh {
         guard maxHp > 0 else {
-            return []
+            return BarMesh(vertices: [])
         }
+
+        let barHeight: Float = 5
+        let barSpacing: Float = 1
 
         let healthPercentage = Float(hp) / Float(maxHp)
 
+        let healthColor: SIMD4<Float> = switch objectType {
+        case .monster, .abr, .bionic:
+            healthPercentage < 0.25 ? [1, 1, 0, 1] : [1, 0, 0.906, 1]
+        default:
+            healthPercentage < 0.25 ? [1, 0, 0, 1] : [0.063, 0.937, 0.129, 1]
+        }
+
+        let spellPointsColor = SIMD4<Float>(0.094, 0.388, 0.871, 1)
+
         var bars: [(percentage: Float, color: SIMD4<Float>)] = [
-            (healthPercentage, healthColor(percentage: healthPercentage))
+            (healthPercentage, healthColor)
         ]
         if maxSp > 0 {
             bars.append((Float(sp) / Float(maxSp), spellPointsColor))
@@ -57,56 +46,75 @@ struct Gauge {
 
         var vertices: [SpriteVertex] = []
         for bar in bars {
-            vertices += makeBarVertices(top: top, percentage: bar.percentage, fillColor: bar.color)
+            vertices += makeBarVertices(
+                top: top,
+                height: barHeight,
+                percentage: bar.percentage,
+                fillColor: bar.color
+            )
             top -= barHeight - barSpacing
         }
-        return vertices
+        return BarMesh(vertices: vertices)
     }
 
-    private func healthColor(percentage: Float) -> SIMD4<Float> {
-        switch objectType {
-        case .monster, .abr, .bionic:
-            percentage < 0.25 ? [1, 1, 0, 1] : [1, 0, 0.906, 1]
-        default:
-            percentage < 0.25 ? [1, 0, 0, 1] : [0.063, 0.937, 0.129, 1]
-        }
+    /// A caster's skill cast progress bar, sitting above its anchor.
+    static func mesh(cast: MapObjectCast, time: ContinuousClock.Instant) -> BarMesh {
+        let barTop: Float = 90
+        let barHeight: Float = 6
+        let castColor = SIMD4<Float>(0, 1, 0, 1)
+
+        let vertices = makeBarVertices(
+            top: barTop,
+            height: barHeight,
+            percentage: cast.progress(at: time),
+            fillColor: castColor
+        )
+        return BarMesh(vertices: vertices)
     }
 
-    private func makeBarVertices(
+    /// One bordered bar with a filled part, centered on x with its top edge at `top`.
+    private static func makeBarVertices(
         top: Float,
+        height: Float,
         percentage: Float,
         fillColor: SIMD4<Float>
     ) -> [SpriteVertex] {
+        let barWidth: Float = 60
+        let borderWidth: Float = 1
+        let borderColor = SIMD4<Float>(0.063, 0.094, 0.612, 1)
+        let backgroundColor = SIMD4<Float>(0.259, 0.259, 0.259, 1)
+
         let left = -barWidth / 2
-        let bottom = top - barHeight
+        let bottom = top - height
 
         let innerWidth = barWidth - borderWidth * 2
+        let innerHeight = height - borderWidth * 2
         let fillWidth = max(0, innerWidth * min(max(percentage, 0), 1))
 
         return makeQuadVertices(
             left: left,
             bottom: bottom,
             width: barWidth,
-            height: barHeight,
+            height: height,
             color: borderColor
         )
         + makeQuadVertices(
             left: left + borderWidth,
             bottom: bottom + borderWidth,
             width: innerWidth,
-            height: barHeight - borderWidth * 2,
+            height: innerHeight,
             color: backgroundColor
         )
         + makeQuadVertices(
             left: left + borderWidth,
             bottom: bottom + borderWidth,
             width: fillWidth,
-            height: barHeight - borderWidth * 2,
+            height: innerHeight,
             color: fillColor
         )
     }
 
-    private func makeQuadVertices(
+    private static func makeQuadVertices(
         left: Float,
         bottom: Float,
         width: Float,

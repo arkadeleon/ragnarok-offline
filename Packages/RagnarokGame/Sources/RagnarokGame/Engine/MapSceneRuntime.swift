@@ -163,20 +163,38 @@ final class MapSceneRuntime {
                 $0.resourceGroup.creationTime < $1.resourceGroup.creationTime
             }
 
-        snapshot.gauges = scene.gaugeObjectIDs.compactMap { objectID in
+        snapshot.bars = scene.hpspBarObjectIDs.compactMap { objectID in
             guard let object = scene.objects[objectID],
                   object.effectState != .cloak,
                   let worldPosition = worldPositions[objectID] else {
                 return nil
             }
-            let guage = Gauge(object: object)
-            let vertices = guage.makeVertices()
-            guard !vertices.isEmpty else {
+            let mesh = BarMesh.mesh(
+                hp: object.hp,
+                maxHp: object.maxHp,
+                sp: object.sp,
+                maxSp: object.maxSp,
+                objectType: object.type
+            )
+            guard !mesh.vertices.isEmpty else {
                 return nil
             }
-            return MapSceneRenderSnapshot.Gauge(
-                vertices: vertices,
+            return MapSceneRenderSnapshot.Bar(
+                vertices: mesh.vertices,
                 worldPosition: worldPosition + [0, 0, -0.8]
+            )
+        }
+
+        snapshot.bars += scene.objects.values.compactMap { object in
+            guard let cast = object.cast,
+                  object.effectState != .cloak,
+                  let worldPosition = worldPositions[object.objectID] else {
+                return nil
+            }
+            let mesh = BarMesh.mesh(cast: cast, time: now)
+            return MapSceneRenderSnapshot.Bar(
+                vertices: mesh.vertices,
+                worldPosition: worldPosition
             )
         }
 

@@ -39,8 +39,8 @@ public final class MapScene {
     var objects: [GameObjectID: MapSceneMapObject] = [:]
     var items: [GameObjectID : MapSceneDroppedItem] = [:]
 
-    /// The objects that show a gauge above them.
-    var gaugeObjectIDs: Set<GameObjectID> = []
+    /// The objects that show health and spell point bars above them.
+    var hpspBarObjectIDs: Set<GameObjectID> = []
 
     let pathFinder: PathFinder
 
@@ -87,7 +87,7 @@ public final class MapScene {
         )
         objects[player.objectID] = player
 
-        gaugeObjectIDs.insert(player.objectID)
+        hpspBarObjectIDs.insert(player.objectID)
     }
 
     func load() async {

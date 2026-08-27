@@ -99,7 +99,7 @@ extension MapScene {
         object.maxHp = maxHp
 
         if object.type == .monster {
-            gaugeObjectIDs.insert(objectID)
+            hpspBarObjectIDs.insert(objectID)
         }
     }
 
@@ -191,8 +191,9 @@ extension MapScene {
         )
         object.stopMovement()
         object.perform(.die, completion: .indefinite)
+        object.cast = nil
 
-        gaugeObjectIDs.remove(objectID)
+        hpspBarObjectIDs.remove(objectID)
 
         if objectID == player.objectID {
             state.isPlayerDead = true
@@ -206,7 +207,7 @@ extension MapScene {
         }
 
         if objectID == player.objectID {
-            gaugeObjectIDs.insert(objectID)
+            hpspBarObjectIDs.insert(objectID)
             state.isPlayerDead = false
         }
     }
@@ -321,9 +322,13 @@ extension MapScene {
         addArrowProjectileEffect(for: objectAction)
     }
 
-    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID) {
+    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, castTime: Duration) {
         guard let sourceObject = objects[sourceObjectID] else {
             return
+        }
+
+        if castTime > .zero {
+            sourceObject.cast = MapObjectCast(startTime: .now, duration: castTime)
         }
 
         let currentTime = CACurrentMediaTime()
@@ -338,6 +343,10 @@ extension MapScene {
                 delay: 0
             )
         }
+    }
+
+    public func onMapObjectSkillCastCancelled(sourceObjectID: GameObjectID) {
+        objects[sourceObjectID]?.cast = nil
     }
 
     public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
@@ -492,7 +501,7 @@ extension MapScene {
 
     func removeObject(objectID: GameObjectID) {
         objects.removeValue(forKey: objectID)
-        gaugeObjectIDs.remove(objectID)
+        hpspBarObjectIDs.remove(objectID)
 
         let ownedEffectObjectIDs = effects.compactMap { effectID, effect in
             effect.ownerObjectID == objectID ? effectID : nil

@@ -1,5 +1,5 @@
 //
-//  GaugeRenderer.swift
+//  BarRenderer.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/8/12.
@@ -10,7 +10,7 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
-final class GaugeRenderer {
+final class BarRenderer {
     let device: any MTLDevice
 
     private let renderPipelineState: any MTLRenderPipelineState
@@ -38,7 +38,7 @@ final class GaugeRenderer {
         renderPipelineDescriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
         renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
 
-        // Gauges are always visible.
+        // Bars are always visible.
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = .always
         depthStencilDescriptor.isDepthWriteEnabled = false
@@ -51,7 +51,7 @@ final class GaugeRenderer {
             mipmapped: false
         )
         whiteTexture = device.makeTexture(descriptor: textureDescriptor)
-        whiteTexture?.label = "gauge-white"
+        whiteTexture?.label = "bar-white"
         whiteTexture?.replace(
             region: MTLRegionMake2D(0, 0, 1, 1),
             mipmapLevel: 0,
@@ -61,12 +61,12 @@ final class GaugeRenderer {
     }
 
     func render(
-        gauges: [MapSceneRenderSnapshot.Gauge],
+        bars: [MapSceneRenderSnapshot.Bar],
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard !gauges.isEmpty, let whiteTexture else {
+        guard !bars.isEmpty, let whiteTexture else {
             return
         }
 
@@ -74,12 +74,12 @@ final class GaugeRenderer {
         renderCommandEncoder.setDepthStencilState(depthStencilState)
         renderCommandEncoder.setFragmentTexture(whiteTexture, index: 0)
 
-        for gauge in gauges {
+        for bar in bars {
             var uniforms = SpriteVertexUniforms(
                 modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
                 projectionMatrix: camera.projectionMatrix,
-                spriteWorldPosition: SIMD4<Float>(gauge.worldPosition, 0),
+                spriteWorldPosition: SIMD4<Float>(bar.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
                 viewport: .zero,
                 fogUse: 0,
@@ -88,7 +88,7 @@ final class GaugeRenderer {
                 fogColor: .zero
             )
 
-            gauge.vertices.withUnsafeBytes { bytes in
+            bar.vertices.withUnsafeBytes { bytes in
                 renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
             }
             renderCommandEncoder.setVertexBytes(
@@ -101,7 +101,7 @@ final class GaugeRenderer {
                 length: MemoryLayout<SpriteVertexUniforms>.stride,
                 index: 0
             )
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: gauge.vertices.count)
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: bar.vertices.count)
         }
     }
 }
