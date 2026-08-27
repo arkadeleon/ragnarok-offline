@@ -44,6 +44,7 @@ public final class EffectRenderResourceGroup {
         assetGroup: EffectAssetGroup,
         creationTime: TimeInterval,
         delay: TimeInterval = 0,
+        duration: TimeInterval? = nil,
         worldPosition: SIMD3<Float> = .zero,
         sourceWorldPosition: SIMD3<Float>? = nil
     ) {
@@ -59,7 +60,8 @@ public final class EffectRenderResourceGroup {
                         device: device,
                         effect: effect,
                         instance: instance,
-                        asset: asset
+                        asset: asset,
+                        duration: duration
                     )
                     resources.append(.`2D`(resource))
 
@@ -74,7 +76,8 @@ public final class EffectRenderResourceGroup {
                         device: device,
                         effect: effect,
                         instance: instance,
-                        asset: asset
+                        asset: asset,
+                        duration: duration
                     )
                     resources.append(.`3D`(resource))
 
@@ -89,7 +92,8 @@ public final class EffectRenderResourceGroup {
                         device: device,
                         effect: effect,
                         instance: instance,
-                        asset: asset
+                        asset: asset,
+                        duration: duration
                     )
                     resources.append(.cylinder(resource))
 
@@ -101,7 +105,8 @@ public final class EffectRenderResourceGroup {
                 let resource = SPREffectRenderResource(
                     device: device,
                     effect: effect,
-                    asset: asset
+                    asset: asset,
+                    duration: duration
                 )
                 resources.append(.spr(resource))
 
@@ -112,7 +117,8 @@ public final class EffectRenderResourceGroup {
                 let resource = STREffectRenderResource(
                     device: device,
                     effect: effect,
-                    asset: asset
+                    asset: asset,
+                    duration: duration
                 )
                 resources.append(.str(resource))
 

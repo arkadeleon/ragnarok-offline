@@ -16,13 +16,20 @@ public final class STREffectRenderResource {
     public let definition: STREffectDefinition?
     public let animation: STRAnimation
     public let textures: [String : any MTLTexture]
+    public let duration: TimeInterval
 
-    public convenience init(device: any MTLDevice, effect: STREffect, asset: STREffectAsset) {
+    public convenience init(
+        device: any MTLDevice,
+        effect: STREffect,
+        asset: STREffectAsset,
+        duration: TimeInterval? = nil
+    ) {
         self.init(
             device: device,
             definition: effect.definition,
             animation: asset.animation,
-            textureImages: asset.textureImages
+            textureImages: asset.textureImages,
+            duration: duration
         )
     }
 
@@ -30,7 +37,8 @@ public final class STREffectRenderResource {
         device: any MTLDevice,
         definition: STREffectDefinition? = nil,
         animation: STRAnimation,
-        textureImages: [String : CGImage]
+        textureImages: [String : CGImage],
+        duration: TimeInterval? = nil
     ) {
         var textures: [String : any MTLTexture] = [:]
         for (textureName, textureImage) in textureImages {
@@ -42,12 +50,13 @@ public final class STREffectRenderResource {
         self.definition = definition
         self.animation = animation
         self.textures = textures
+        self.duration = duration ?? animation.duration
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
         guard elapsedTime >= 0 else {
             return false
         }
-        return elapsedTime >= animation.duration
+        return elapsedTime >= duration
     }
 }

@@ -25,10 +25,16 @@ public final class CylinderEffectRenderResource {
         definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, effect: CylinderEffect, instance: CylinderEffect.Instance, asset: CylinderEffectAsset) {
+    public init(
+        device: any MTLDevice,
+        effect: CylinderEffect,
+        instance: CylinderEffect.Instance,
+        asset: CylinderEffectAsset,
+        duration: TimeInterval? = nil
+    ) {
         let definition = effect.definition
 
-        self.animation = CylinderEffectAnimation(effect: effect, instance: instance)
+        self.animation = CylinderEffectAnimation(effect: effect, instance: instance, duration: duration)
         self.vertices = Self.makeVertices(
             totalCircleSides: definition.totalCircleSides,
             visibleCircleSides: definition.visibleCircleSides,

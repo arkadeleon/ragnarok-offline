@@ -25,8 +25,14 @@ public final class ThreeDEffectRenderResource {
         definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, effect: ThreeDEffect, instance: ThreeDEffect.Instance, asset: ThreeDEffectAsset) {
-        self.animation = ThreeDEffectAnimation(effect: effect, instance: instance, asset: asset)
+    public init(
+        device: any MTLDevice,
+        effect: ThreeDEffect,
+        instance: ThreeDEffect.Instance,
+        asset: ThreeDEffectAsset,
+        duration: TimeInterval? = nil
+    ) {
+        self.animation = ThreeDEffectAnimation(effect: effect, instance: instance, asset: asset, duration: duration)
         self.vertices = [
             ThreeDEffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             ThreeDEffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),

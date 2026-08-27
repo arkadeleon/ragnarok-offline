@@ -122,14 +122,14 @@ extension MapScene {
         )
 
         if object.job == 45 { // JT_WARPNPC
-            addEffect(
-                for: .id(.ef_warpzone2),
+            let effect = MapSceneEffect(
+                reference: .id(.ef_warpzone2),
                 creationTime: CACurrentMediaTime(),
                 gridPosition: position,
                 targetObjectID: object.objectID,
-                ownerObjectID: object.objectID,
-                delay: 0
+                ownerObjectID: object.objectID
             )
+            effects[effect.id] = effect
         }
     }
 
@@ -191,7 +191,7 @@ extension MapScene {
         )
         object.stopMovement()
         object.perform(.die, completion: .indefinite)
-        object.cast = nil
+        cancelCast(for: object)
 
         hpspBarObjectIDs.remove(objectID)
 
@@ -322,31 +322,59 @@ extension MapScene {
         addArrowProjectileEffect(for: objectAction)
     }
 
-    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, castTime: Duration) {
+    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, element: Element, castTime: Duration) {
         guard let sourceObject = objects[sourceObjectID] else {
             return
         }
 
-        if castTime > .zero {
-            sourceObject.cast = MapObjectCast(startTime: .now, duration: castTime)
-        }
-
         let currentTime = CACurrentMediaTime()
 
-        for effectReference in SkillEffectTable.beginCastEffects(for: skillID) {
-            addEffect(
-                for: effectReference,
+        if castTime > .zero {
+            let effectID: EffectID = switch element {
+            case .water: .ef_beginspell2
+            case .earth: .ef_beginspell5
+            case .fire: .ef_beginspell3
+            case .wind: .ef_beginspell4
+            case .poison: .ef_beginspell7
+            case .holy, .ghost: .ef_beginspell6
+            case .dark, .undead: .ef_darkcasting
+            default: .ef_beginspell
+            }
+
+            let spellEffect = MapSceneEffect(
+                reference: .id(effectID),
                 creationTime: currentTime,
                 gridPosition: sourceObject.gridPosition,
                 targetObjectID: sourceObjectID,
                 ownerObjectID: sourceObjectID,
-                delay: 0
+                duration: castTime.timeInterval
             )
+            effects[spellEffect.id] = spellEffect
+
+            cancelCast(for: sourceObject)
+            sourceObject.cast = MapObjectCast(
+                startTime: .now,
+                duration: castTime,
+                spellEffectObjectID: spellEffect.id
+            )
+        }
+
+        for effectReference in SkillEffectTable.beginCastEffects(for: skillID) {
+            let effect = MapSceneEffect(
+                reference: effectReference,
+                creationTime: currentTime,
+                gridPosition: sourceObject.gridPosition,
+                targetObjectID: sourceObjectID,
+                ownerObjectID: sourceObjectID
+            )
+            effects[effect.id] = effect
         }
     }
 
     public func onMapObjectSkillCastCancelled(sourceObjectID: GameObjectID) {
-        objects[sourceObjectID]?.cast = nil
+        if let sourceObject = objects[sourceObjectID] {
+            cancelCast(for: sourceObject)
+        }
     }
 
     public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
@@ -453,14 +481,14 @@ extension MapScene {
         }
 
         if let effectID {
-            addEffect(
-                for: .id(effectID),
+            let effect = MapSceneEffect(
+                reference: .id(effectID),
                 creationTime: CACurrentMediaTime(),
                 gridPosition: object.gridPosition,
                 targetObjectID: objectID,
-                ownerObjectID: objectID,
-                delay: 0
+                ownerObjectID: objectID
             )
+            effects[effect.id] = effect
         }
     }
 
@@ -474,15 +502,15 @@ extension MapScene {
         let currentTime = CACurrentMediaTime()
 
         for effectReference in SkillEffectTable.effects(for: skillID) {
-            addEffect(
-                for: effectReference,
+            let effect = MapSceneEffect(
+                reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: position,
                 sourceWorldPosition: worldPosition(forObjectID: sourceObjectID),
                 targetObjectID: nil,
-                ownerObjectID: nil,
-                delay: 0
+                ownerObjectID: nil
             )
+            effects[effect.id] = effect
         }
     }
 }
@@ -543,6 +571,13 @@ extension MapScene {
             object.stopMovement()
             object.perform(.idle, completion: .indefinite)
         }
+    }
+
+    private func cancelCast(for object: MapSceneMapObject) {
+        if let spellEffectObjectID = object.cast?.spellEffectObjectID {
+            removeEffect(objectID: spellEffectObjectID)
+        }
+        object.cast = nil
     }
 
     private func afterAttackAction(for object: MapSceneMapObject?) -> SpriteActionType {
@@ -707,14 +742,15 @@ extension MapScene {
             return
         }
 
-        addEffect(
-            for: .id(.ef_hit1),
+        let effect = MapSceneEffect(
+            reference: .id(.ef_hit1),
             creationTime: CACurrentMediaTime(),
             gridPosition: targetObject.gridPosition,
             targetObjectID: targetObject.objectID,
             ownerObjectID: nil,
             delay: .milliseconds(objectAction.sourceSpeed)
         )
+        effects[effect.id] = effect
     }
 
     private func addArrowProjectileEffect(for objectAction: MapObjectAction) {
@@ -733,8 +769,8 @@ extension MapScene {
             return
         }
 
-        addEffect(
-            for: .name("ef_arrow_projectile"),
+        let effect = MapSceneEffect(
+            reference: .name("ef_arrow_projectile"),
             creationTime: CACurrentMediaTime(),
             gridPosition: targetObject.gridPosition,
             sourceWorldPosition: worldPosition(for: sourceObject),
@@ -742,6 +778,7 @@ extension MapScene {
             ownerObjectID: nil,
             delay: .milliseconds(objectAction.sourceSpeed)
         )
+        effects[effect.id] = effect
     }
 
     private func addSkillBeforeHitEffects(for objectSkill: MapObjectSkill) {
@@ -756,8 +793,8 @@ extension MapScene {
 
         for effectReference in SkillEffectTable.beforeHitEffects(for: skillID) {
             for i in 0..<count {
-                addEffect(
-                    for: effectReference,
+                let effect = MapSceneEffect(
+                    reference: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
                     sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
@@ -765,6 +802,7 @@ extension MapScene {
                     ownerObjectID: nil,
                     delay: .milliseconds(200 * i)
                 )
+                effects[effect.id] = effect
             }
         }
     }
@@ -781,8 +819,8 @@ extension MapScene {
 
         for effectReference in SkillEffectTable.hitEffects(for: skillID) {
             for i in 0..<count {
-                addEffect(
-                    for: effectReference,
+                let effect = MapSceneEffect(
+                    reference: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
                     sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
@@ -790,6 +828,7 @@ extension MapScene {
                     ownerObjectID: nil,
                     delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
                 )
+                effects[effect.id] = effect
             }
         }
     }
@@ -806,8 +845,8 @@ extension MapScene {
         let currentTime = CACurrentMediaTime()
 
         for effectReference in SkillEffectTable.effects(for: skillID) {
-            addEffect(
-                for: effectReference,
+            let effect = MapSceneEffect(
+                reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
                 sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
@@ -815,6 +854,7 @@ extension MapScene {
                 ownerObjectID: nil,
                 delay: .milliseconds(objectSkill.attackDelay)
             )
+            effects[effect.id] = effect
         }
     }
 
@@ -828,37 +868,16 @@ extension MapScene {
         let currentTime = CACurrentMediaTime()
 
         for effectReference in SkillEffectTable.successEffects(for: skillID) {
-            addEffect(
-                for: effectReference,
+            let effect = MapSceneEffect(
+                reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
                 sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
                 targetObjectID: objectSkill.targetObjectID,
-                ownerObjectID: nil,
-                delay: 0
+                ownerObjectID: nil
             )
+            effects[effect.id] = effect
         }
-    }
-
-    private func addEffect(
-        for effectReference: EffectReference,
-        creationTime: TimeInterval,
-        gridPosition: SIMD2<Int>,
-        sourceWorldPosition: SIMD3<Float>? = nil,
-        targetObjectID: GameObjectID?,
-        ownerObjectID: GameObjectID?,
-        delay: TimeInterval
-    ) {
-        let effect = MapSceneEffect(
-            reference: effectReference,
-            creationTime: creationTime,
-            gridPosition: gridPosition,
-            sourceWorldPosition: sourceWorldPosition,
-            targetObjectID: targetObjectID,
-            ownerObjectID: ownerObjectID,
-            delay: delay
-        )
-        effects[effect.id] = effect
     }
 
     func removeEffect(objectID: UUID) {

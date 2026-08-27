@@ -5,9 +5,12 @@
 //  Created by Leon Li on 2026/8/27.
 //
 
+import Foundation
+
 struct MapObjectCast {
     var startTime: ContinuousClock.Instant
     var duration: Duration
+    var spellEffectObjectID: UUID?
 
     func progress(at time: ContinuousClock.Instant) -> Float {
         guard duration > .zero else {

@@ -25,8 +25,14 @@ public final class TwoDEffectRenderResource {
         definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, effect: TwoDEffect, instance: TwoDEffect.Instance, asset: TwoDEffectAsset) {
-        self.animation = TwoDEffectAnimation(effect: effect, instance: instance)
+    public init(
+        device: any MTLDevice,
+        effect: TwoDEffect,
+        instance: TwoDEffect.Instance,
+        asset: TwoDEffectAsset,
+        duration: TimeInterval? = nil
+    ) {
+        self.animation = TwoDEffectAnimation(effect: effect, instance: instance, duration: duration)
         self.vertices = [
             TwoDEffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             TwoDEffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),

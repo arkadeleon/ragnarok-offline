@@ -169,6 +169,7 @@ final class MapSceneRenderResources {
                     assetGroup: assetGroup,
                     creationTime: effect.creationTime,
                     delay: effect.delay,
+                    duration: effect.duration,
                     worldPosition: worldPosition,
                     sourceWorldPosition: effect.sourceWorldPosition
                 )

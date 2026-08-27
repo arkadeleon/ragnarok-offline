@@ -26,6 +26,8 @@ final class MapSceneEffect: Identifiable {
 
     let delay: TimeInterval
 
+    let duration: TimeInterval?
+
     init(
         reference: EffectReference,
         creationTime: TimeInterval,
@@ -33,7 +35,8 @@ final class MapSceneEffect: Identifiable {
         sourceWorldPosition: SIMD3<Float>? = nil,
         targetObjectID: GameObjectID?,
         ownerObjectID: GameObjectID?,
-        delay: TimeInterval = 0
+        delay: TimeInterval = 0,
+        duration: TimeInterval? = nil
     ) {
         self.id = UUID()
         self.reference = reference
@@ -43,5 +46,6 @@ final class MapSceneEffect: Identifiable {
         self.targetObjectID = targetObjectID
         self.ownerObjectID = ownerObjectID
         self.delay = delay
+        self.duration = duration
     }
 }

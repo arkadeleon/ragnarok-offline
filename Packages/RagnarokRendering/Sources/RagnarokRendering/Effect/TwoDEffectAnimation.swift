@@ -21,14 +21,20 @@ public struct TwoDEffectAnimation: Sendable {
 
     public let effect: TwoDEffect
     public let instance: TwoDEffect.Instance
+    public let duration: TimeInterval
 
     private var definition: TwoDEffectDefinition {
         effect.definition
     }
 
-    public init(effect: TwoDEffect, instance: TwoDEffect.Instance) {
+    public init(
+        effect: TwoDEffect,
+        instance: TwoDEffect.Instance,
+        duration: TimeInterval? = nil
+    ) {
         self.effect = effect
         self.instance = instance
+        self.duration = duration ?? instance.duration
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
@@ -37,7 +43,7 @@ public struct TwoDEffectAnimation: Sendable {
         }
 
         let elapsedTime = elapsedTime - instance.delay
-        return elapsedTime >= 0 && elapsedTime >= instance.duration
+        return elapsedTime >= 0 && elapsedTime >= duration
     }
 
     public func sample(
@@ -49,7 +55,7 @@ public struct TwoDEffectAnimation: Sendable {
             return nil
         }
 
-        let progress = progress(elapsedTime: elapsedTime, duration: instance.duration)
+        let progress = progress(elapsedTime: elapsedTime, duration: duration)
 
         let mapOffset = interpolate(
             instance.positionStart,
@@ -80,7 +86,7 @@ public struct TwoDEffectAnimation: Sendable {
         )
 
         let alphaMax = min(max(definition.alphaMax, 0), 1)
-        let alpha = fadeAlpha(elapsedTime: elapsedTime, duration: instance.duration, alphaMax: alphaMax) ?? alphaMax
+        let alpha = fadeAlpha(elapsedTime: elapsedTime, duration: duration, alphaMax: alphaMax) ?? alphaMax
 
         var angle = instance.baseAngle
         if definition.rotates {
@@ -103,7 +109,7 @@ public struct TwoDEffectAnimation: Sendable {
         }
 
         if definition.repeats {
-            elapsedTime.formTruncatingRemainder(dividingBy: instance.duration)
+            elapsedTime.formTruncatingRemainder(dividingBy: duration)
         }
         return elapsedTime
     }

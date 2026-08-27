@@ -17,6 +17,7 @@ public final class SPREffectRenderResource {
     public let vertices: [SPREffectVertex]
     public let textures: [(any MTLTexture)?]
     public let frameSize: SIMD2<Float>
+    public let duration: TimeInterval?
 
     private let playbackFrameInterval: TimeInterval
 
@@ -28,7 +29,12 @@ public final class SPREffectRenderResource {
         effect.definition.rendersBeforeEntities
     }
 
-    public init(device: any MTLDevice, effect: SPREffect, asset: SPREffectAsset) {
+    public init(
+        device: any MTLDevice,
+        effect: SPREffect,
+        asset: SPREffectAsset,
+        duration: TimeInterval? = nil
+    ) {
         self.effect = effect
 
         self.vertices = [
@@ -44,6 +50,8 @@ public final class SPREffectRenderResource {
         }
         self.frameSize = asset.frameSize
 
+        self.duration = duration ?? effect.definition.duration
+
         // The definition may override the sprite's own interval.
         self.playbackFrameInterval = max(effect.definition.frameInterval ?? asset.frameInterval, 1 / 60)
     }
@@ -57,7 +65,7 @@ public final class SPREffectRenderResource {
             return false
         }
 
-        if let duration = definition.duration {
+        if let duration {
             return elapsedTime >= duration
         }
 

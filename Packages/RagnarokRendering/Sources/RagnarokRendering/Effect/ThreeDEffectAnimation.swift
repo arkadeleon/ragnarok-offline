@@ -29,12 +29,18 @@ public struct ThreeDEffectAnimation: Sendable {
     public let instance: ThreeDEffect.Instance
     public let frames: [ThreeDEffectAsset.Frame]
     public let frameDelay: TimeInterval
+    public let duration: TimeInterval
 
     private var definition: ThreeDEffectDefinition {
         effect.definition
     }
 
-    public init(effect: ThreeDEffect, instance: ThreeDEffect.Instance, asset: ThreeDEffectAsset) {
+    public init(
+        effect: ThreeDEffect,
+        instance: ThreeDEffect.Instance,
+        asset: ThreeDEffectAsset,
+        duration: TimeInterval? = nil
+    ) {
         let definition = effect.definition
 
         self.effect = effect
@@ -50,6 +56,8 @@ public struct ThreeDEffectAnimation: Sendable {
         } else {
             self.frameDelay = definition.frameDelay
         }
+
+        self.duration = duration ?? definition.duration
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
@@ -58,7 +66,7 @@ public struct ThreeDEffectAnimation: Sendable {
         }
 
         let elapsedTime = elapsedTime - instance.delay
-        return elapsedTime >= 0 && elapsedTime >= definition.duration
+        return elapsedTime >= 0 && elapsedTime >= duration
     }
 
     public func sample(
@@ -136,16 +144,16 @@ public struct ThreeDEffectAnimation: Sendable {
         }
 
         if definition.repeats {
-            elapsedTime.formTruncatingRemainder(dividingBy: definition.duration)
+            elapsedTime.formTruncatingRemainder(dividingBy: duration)
         }
         return elapsedTime
     }
 
     private func progress(elapsedTime: TimeInterval) -> Float {
-        guard definition.duration > 0 else {
+        guard duration > 0 else {
             return 0
         }
-        return Float(min(max(elapsedTime / definition.duration, 0), 1))
+        return Float(min(max(elapsedTime / duration, 0), 1))
     }
 
     private func frameIndex(elapsedTime: TimeInterval) -> Int {
@@ -241,7 +249,6 @@ public struct ThreeDEffectAnimation: Sendable {
     // Fading in occupies the first quarter of the duration, fading out the last quarter;
     // nil outside both windows.
     private func fadeAlpha(elapsedTime: TimeInterval, alphaMax: Float) -> Float? {
-        let duration = definition.duration
         guard duration > 0 else {
             return nil
         }

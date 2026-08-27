@@ -22,14 +22,20 @@ public struct CylinderEffectAnimation: Sendable {
 
     public let effect: CylinderEffect
     public let instance: CylinderEffect.Instance
+    public let duration: TimeInterval
 
     private var definition: CylinderEffectDefinition {
         effect.definition
     }
 
-    public init(effect: CylinderEffect, instance: CylinderEffect.Instance) {
+    public init(
+        effect: CylinderEffect,
+        instance: CylinderEffect.Instance,
+        duration: TimeInterval? = nil
+    ) {
         self.effect = effect
         self.instance = instance
+        self.duration = duration ?? effect.definition.duration
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
@@ -42,7 +48,7 @@ public struct CylinderEffectAnimation: Sendable {
             return false
         }
 
-        return elapsedTime >= definition.duration
+        return elapsedTime >= duration
     }
 
     public func sample(
@@ -55,7 +61,6 @@ public struct CylinderEffectAnimation: Sendable {
             return nil
         }
 
-        let duration = definition.duration
         if definition.repeats {
             elapsedTime.formTruncatingRemainder(dividingBy: duration)
         }
