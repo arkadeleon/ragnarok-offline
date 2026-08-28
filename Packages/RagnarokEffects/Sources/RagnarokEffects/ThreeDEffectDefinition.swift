@@ -17,12 +17,8 @@ public struct EffectAxes: Sendable {
 }
 
 // Ported from roBrowserLegacy EffectTable.js (Swift property → JS key):
-// - fileName:                       file
-// - fileNames:                      fileList
-// - frameDelay:                     frameDelay
-// - spriteName:                     spriteName, absoluteSpriteName (full path relative to data\sprite)
-// - playSprite:                     playSprite
-// - spriteFrameDelay:               sprDelay
+// - kind (.sprite):                 spriteName, absoluteSpriteName (full path relative to data\sprite), playSprite, sprDelay
+// - kind (.textures):               file, fileList, frameDelay
 // - soundName:                      wav
 // - delaySound:                     delayWav
 // - randomNumberRange:              rand
@@ -87,12 +83,12 @@ public struct EffectAxes: Sendable {
 // - soulStrikePattern:              soulStrikePattern
 // - drainPattern:                   drainPattern
 public struct ThreeDEffectDefinition: Sendable {
-    public var fileName: String?
-    public var fileNames: [String]
-    public var frameDelay: TimeInterval
-    public var spriteName: String?
-    public var playSprite: Bool
-    public var spriteFrameDelay: TimeInterval
+    public enum Kind: Sendable {
+        case sprite(spriteName: String, playSprite: Bool, frameDelay: TimeInterval)
+        case textures(fileNames: [String], frameDelay: TimeInterval)
+    }
+
+    public var kind: ThreeDEffectDefinition.Kind
     public var soundName: String?
     public var delaySound: TimeInterval
     public var randomNumberRange: ClosedRange<Int>?
@@ -165,14 +161,33 @@ public struct ThreeDEffectDefinition: Sendable {
     public var drainPattern: Bool
 }
 
+extension ThreeDEffectDefinition.Kind {
+    public static func sprite(
+        _ spriteName: String,
+        playSprite: Bool = false,
+        frameDelay: TimeInterval = 0
+    ) -> ThreeDEffectDefinition.Kind {
+        .sprite(spriteName: spriteName, playSprite: playSprite, frameDelay: frameDelay)
+    }
+
+    public static func texture(
+        _ fileName: String,
+        frameDelay: TimeInterval = 0.1
+    ) -> ThreeDEffectDefinition.Kind {
+        .textures(fileNames: [fileName], frameDelay: frameDelay)
+    }
+
+    public static func textures(
+        _ fileNames: [String],
+        frameDelay: TimeInterval = 0.1
+    ) -> ThreeDEffectDefinition.Kind {
+        .textures(fileNames: fileNames, frameDelay: frameDelay)
+    }
+}
+
 extension EffectDefinition {
     public static func `3D`(
-        fileName: String? = nil,
-        fileNames: [String] = [],
-        frameDelay: TimeInterval = 0.1,
-        spriteName: String? = nil,
-        playSprite: Bool = false,
-        spriteFrameDelay: TimeInterval = 0,
+        kind: ThreeDEffectDefinition.Kind,
         soundName: String? = nil,
         delaySound: TimeInterval = 0,
         randomNumberRange: ClosedRange<Int>? = nil,
@@ -238,12 +253,7 @@ extension EffectDefinition {
         drainPattern: Bool = false
     ) -> EffectDefinition {
         let definition = ThreeDEffectDefinition(
-            fileName: fileName,
-            fileNames: fileNames,
-            frameDelay: frameDelay,
-            spriteName: spriteName,
-            playSprite: playSprite,
-            spriteFrameDelay: spriteFrameDelay,
+            kind: kind,
             soundName: soundName,
             delaySound: delaySound,
             randomNumberRange: randomNumberRange,

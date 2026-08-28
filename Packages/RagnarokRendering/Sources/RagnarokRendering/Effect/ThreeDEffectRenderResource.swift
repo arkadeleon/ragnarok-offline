@@ -66,14 +66,13 @@ public final class ThreeDEffectRenderResource {
 
         self.frames = animation.frames
 
-        // A sprite's own interval wins over the definition's, unless the
-        // definition asks for a specific sprite frame delay.
-        if definition.spriteFrameDelay > 0 {
-            self.frameDelay = definition.spriteFrameDelay
-        } else if let frameInterval = animation.frameInterval {
-            self.frameDelay = frameInterval
-        } else {
-            self.frameDelay = definition.frameDelay
+        switch definition.kind {
+        case .sprite(_, _, let frameDelay):
+            // The sprite's own interval drives playback unless the definition
+            // asks for a specific delay.
+            self.frameDelay = frameDelay > 0 ? frameDelay : (animation.frameInterval ?? 0)
+        case .textures(_, let frameDelay):
+            self.frameDelay = frameDelay
         }
 
         self.textures = animation.images.enumerated().map { index, image in

@@ -41,10 +41,10 @@ public struct EffectAssetLoader: Sendable {
         case .`3D`(let definition):
             let effect = ThreeDEffect(definition: definition)
             let animation: ThreeDEffectAnimation
-            switch effect.kind {
-            case .sprite(let spriteName, let playSprite):
+            switch definition.kind {
+            case .sprite(let spriteName, let playSprite, _):
                 animation = try await loadThreeDAnimation(spriteName: spriteName, playSprite: playSprite)
-            case .textures(let fileNames):
+            case .textures(let fileNames, _):
                 animation = try await loadThreeDAnimation(textureNames: fileNames)
             }
             return .`3D`(effect, animation: animation)

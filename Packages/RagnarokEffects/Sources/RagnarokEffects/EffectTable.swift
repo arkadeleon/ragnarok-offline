@@ -16,7 +16,7 @@ public enum EffectTable {
     private static let table: [EffectID : [EffectDefinition]] = [
         .ef_hit1: [
             .`3D`(
-                fileName: "effect\\pok3.tga",
+                kind: .texture("effect\\pok3.tga"),
                 duration: 0.3,
                 duplicate: EffectParameters.Duplicate(count: 4, interval: 0),
                 attachedToTarget: false,
@@ -185,7 +185,7 @@ public enum EffectTable {
         ],
         .ef_endure: [
             .`3D`(
-                fileName: "effect\\endure.tga",
+                kind: .texture("effect\\endure.tga"),
                 soundName: "effect\\ef_endure.wav",
                 duration: 1,
                 attachedToTarget: true,
@@ -215,7 +215,7 @@ public enum EffectTable {
         ],
         .ef_soulstrike: [
             .`3D`(
-                fileName: "effect\\pok3.tga",
+                kind: .texture("effect\\pok3.tga"),
                 soundName: "effect\\ef_soulstrike.wav",
                 duration: 0.2,
                 delayLate: 0.25,
@@ -229,8 +229,7 @@ public enum EffectTable {
                 size: [50, 50]
             ),
             .`3D`(
-                spriteName: K2L("이팩트\\particle1"),
-                playSprite: true,
+                kind: .sprite(K2L("이팩트\\particle1"), playSprite: true),
                 duration: 0.25,
                 duplicate: EffectParameters.Duplicate(count: 5, interval: 0.02),
                 attachedToTarget: false,
@@ -305,8 +304,7 @@ public enum EffectTable {
         ],
         .ef_fireball: [
             .`3D`(
-                spriteName: K2L("이팩트\\fireball"),
-                playSprite: true,
+                kind: .sprite(K2L("이팩트\\fireball"), playSprite: true),
                 duration: 0.25,
                 delayOffset: 0.16,
                 duplicate: EffectParameters.Duplicate(count: 5, interval: 0, delayOffsetDelta: -0.04, alphaMaxDelta: 0.2),
@@ -353,7 +351,7 @@ public enum EffectTable {
         ],
         .ef_incagility: [
             .`3D`(
-                fileName: "effect\\ac_center2.tga",
+                kind: .texture("effect\\ac_center2.tga"),
                 duration: 1,
                 delayLate: 0.5,
                 duplicate: EffectParameters.Duplicate(count: 7, interval: 0.2),
@@ -368,7 +366,7 @@ public enum EffectTable {
                 sizeYRandomRange: 30...60
             ),
             .`3D`(
-                fileName: "effect\\ac_center2.tga",
+                kind: .texture("effect\\ac_center2.tga"),
                 duration: 1,
                 delayOffset: 0.4,
                 duplicate: EffectParameters.Duplicate(count: 3, interval: 0.2),
@@ -383,7 +381,7 @@ public enum EffectTable {
                 sizeYRandomRange: 30...60
             ),
             .`3D`(
-                fileName: "effect\\ac_center2.tga",
+                kind: .texture("effect\\ac_center2.tga"),
                 duration: 1,
                 duplicate: EffectParameters.Duplicate(count: 10, interval: 0),
                 attachedToTarget: true,
@@ -397,7 +395,7 @@ public enum EffectTable {
                 sizeYRandomRange: 30...60
             ),
             .`3D`(
-                fileName: "effect\\agi_up.bmp",
+                kind: .texture("effect\\agi_up.bmp"),
                 soundName: "effect\\ef_incagility.wav",
                 duration: 1,
                 attachedToTarget: true,
@@ -414,7 +412,7 @@ public enum EffectTable {
         ],
         .ef_decagility: [
             .`3D`(
-                fileName: "effect\\ac_center2.tga",
+                kind: .texture("effect\\ac_center2.tga"),
                 duration: 1,
                 duplicate: EffectParameters.Duplicate(count: 20, interval: 0),
                 attachedToTarget: true,
@@ -428,7 +426,7 @@ public enum EffectTable {
                 sizeYRandomRange: 30...60
             ),
             .`3D`(
-                fileName: "effect\\slow.bmp",
+                kind: .texture("effect\\slow.bmp"),
                 soundName: "effect\\ef_decagility.wav",
                 duration: 1,
                 attachedToTarget: true,
@@ -466,7 +464,7 @@ public enum EffectTable {
         ],
         .ef_smoke: [
             .`3D`(
-                spriteName: K2L("이팩트\\굴뚝연기"),
+                kind: .sprite(K2L("이팩트\\굴뚝연기")),
                 duration: 10,
                 repeats: true,
                 delay: 0.1,
@@ -488,8 +486,7 @@ public enum EffectTable {
         ],
         .ef_torch: [
             .`3D`(
-                spriteName: K2L("이팩트\\torch_01"),
-                playSprite: true,
+                kind: .sprite(K2L("이팩트\\torch_01"), playSprite: true),
                 duration: 0.6,
                 repeats: true,
                 attachedToTarget: true,
@@ -534,7 +531,7 @@ public enum EffectTable {
                 spriteOffset: [0, -120]
             ),
             .`3D`(
-                spriteName: K2L("이팩트\\particle6"),
+                kind: .sprite(K2L("이팩트\\particle6")),
                 duration: 1.2,
                 delayOffset: 0.3,
                 duplicate: EffectParameters.Duplicate(count: 6, interval: 0),
@@ -552,7 +549,7 @@ public enum EffectTable {
                 size: [50, 50]
             ),
             .`3D`(
-                spriteName: K2L("이팩트\\particle6"),
+                kind: .sprite(K2L("이팩트\\particle6")),
                 duration: 1.2,
                 delayOffset: 0.4,
                 duplicate: EffectParameters.Duplicate(count: 6, interval: 0),
@@ -568,7 +565,7 @@ public enum EffectTable {
                 size: [50, 50]
             ),
             .`3D`(
-                fileName: "effect\\pok2.tga",
+                kind: .texture("effect\\pok2.tga"),
                 soundName: "effect\\ef_blessing.wav",
                 duration: 2.5,
                 attachedToTarget: false,
@@ -896,7 +893,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .`3D`(
-                fileName: "effect\\pok3.tga",
+                kind: .texture("effect\\pok3.tga"),
                 duration: 1.3,
                 delayOffset: 0.4,
                 duplicate: EffectParameters.Duplicate(count: 15, interval: 0.01),
@@ -914,7 +911,7 @@ public enum EffectTable {
                 sizeYRandomRange: 7...11
             ),
             .`3D`(
-                fileName: "effect\\pok3.tga",
+                kind: .texture("effect\\pok3.tga"),
                 duration: 1.1,
                 delayLate: 0.2,
                 duplicate: EffectParameters.Duplicate(count: 7, interval: 0.05),
@@ -962,7 +959,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .`3D`(
-                fileName: "effect\\pok3.tga",
+                kind: .texture("effect\\pok3.tga"),
                 duration: 1,
                 delayOffset: 0.4,
                 duplicate: EffectParameters.Duplicate(count: 10, interval: 0.01),
@@ -982,7 +979,7 @@ public enum EffectTable {
                 sizeYRandomRange: 7...11
             ),
             .`3D`(
-                fileName: "effect\\pok3.tga",
+                kind: .texture("effect\\pok3.tga"),
                 duration: 0.9,
                 delayLate: 0.2,
                 duplicate: EffectParameters.Duplicate(count: 5, interval: 0.05),
@@ -1037,7 +1034,7 @@ public enum EffectTable {
                 animation: .shrinkRadius
             ),
             .`3D`(
-                fileName: "effect\\pok1.tga",
+                kind: .texture("effect\\pok1.tga"),
                 duration: 1,
                 repeats: true,
                 duplicate: EffectParameters.Duplicate(count: 5, interval: 0.3),
@@ -1083,7 +1080,7 @@ public enum EffectTable {
     private static let namedTable: [String : [EffectDefinition]] = [
         "ef_arrow_projectile": [
             .`3D`(
-                spriteName: "npc\\skel_archer_arrow",
+                kind: .sprite("npc\\skel_archer_arrow"),
                 duration: 0.14,
                 attachedToTarget: true,
                 zIndex: 1,
@@ -1100,7 +1097,7 @@ public enum EffectTable {
         ],
         "ef_arrow_shower_projectile": [
             .`3D`(
-                spriteName: "npc\\skel_archer_arrow",
+                kind: .sprite("npc\\skel_archer_arrow"),
                 duration: 0.14,
                 duplicate: EffectParameters.Duplicate(count: 10, interval: 0),
                 attachedToTarget: false,
@@ -1120,7 +1117,7 @@ public enum EffectTable {
         ],
         "ef_coldbolt": [
             .`3D`(
-                fileName: "effect\\icearrow.tga",
+                kind: .texture("effect\\icearrow.tga"),
                 soundName: "effect\\ef_icearrow%d.wav",
                 randomNumberRange: 1...3,
                 duration: 0.5,
@@ -1148,15 +1145,14 @@ public enum EffectTable {
         ],
         "ef_firebolt": [
             .`3D`(
-                fileNames: [
+                kind: .textures([
                     K2L("effect\\불화살1.tga"),
                     K2L("effect\\불화살2.tga"),
                     K2L("effect\\불화살3.tga"),
                     K2L("effect\\불화살4.tga"),
                     K2L("effect\\불화살5.tga"),
                     K2L("effect\\불화살6.tga"),
-                ],
-                frameDelay: 0.03,
+                ], frameDelay: 0.03),
                 soundName: "effect\\ef_firearrow%d.wav",
                 randomNumberRange: 1...3,
                 duration: 0.5,
