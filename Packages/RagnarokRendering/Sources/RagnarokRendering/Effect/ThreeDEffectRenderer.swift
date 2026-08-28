@@ -48,7 +48,7 @@ public final class ThreeDEffectRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let sample = resource.animation.sample(
+        let sample = resource.sample(
             atElapsedTime: elapsedTime,
             worldPosition: worldPosition,
             sourceWorldPosition: sourceWorldPosition,

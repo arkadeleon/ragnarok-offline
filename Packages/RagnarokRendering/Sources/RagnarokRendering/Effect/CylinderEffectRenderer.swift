@@ -40,13 +40,8 @@ public final class CylinderEffectRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let sample = resource.animation.sample(
-            atElapsedTime: elapsedTime,
-            cameraAzimuth: camera.azimuth,
-            cameraElevation: camera.elevation
-        )
-        guard let sample,
-              !resource.vertices.isEmpty,
+        guard !resource.vertices.isEmpty,
+              let sample = resource.sample(atElapsedTime: elapsedTime, cameraAzimuth: camera.azimuth, cameraElevation: camera.elevation),
               let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }
