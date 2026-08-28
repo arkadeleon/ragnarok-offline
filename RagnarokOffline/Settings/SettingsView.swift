@@ -30,6 +30,12 @@ struct SettingsView: View {
             }
 
             Section {
+                NavigationLink {
+                    ServerConfigurationView(serverConfiguration: serverConfiguration)
+                } label: {
+                    Text("Server Configuration")
+                }
+
                 Toggle("Resume Servers Automatically", isOn: $settings.automaticallyResumesServers)
             } header: {
                 Text("Server")
