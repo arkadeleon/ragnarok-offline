@@ -65,21 +65,21 @@ struct ServerView: View {
             ToolbarItemGroup {
                 Button {
                     Task {
-                        await serverManager.stopServer(server)
-                    }
-                } label: {
-                    Image(systemName: "stop.fill")
-                }
-                .disabled(stopDisabled)
-
-                Button {
-                    Task {
                         try await serverManager.startServer(server)
                     }
                 } label: {
                     Image(systemName: "play.fill")
                 }
                 .disabled(startDisabled)
+
+                Button {
+                    Task {
+                        await serverManager.stopServer(server)
+                    }
+                } label: {
+                    Image(systemName: "stop.fill")
+                }
+                .disabled(stopDisabled)
             }
 
             #if os(iOS) || os(macOS)
