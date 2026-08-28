@@ -12,9 +12,7 @@ public struct CylinderEffectAsset: Sendable {
     public let textureImage: CGImage
 
     static func load(textureName: String, using resourceManager: ResourceManager) async throws -> CylinderEffectAsset {
-        let texturePath = ResourcePath.effectDirectory
-            .appending(textureName)
-            .appendingPathExtension("tga")
+        let texturePath = ResourcePath.effectDirectory.appending(subpath: textureName)
         let image = try await resourceManager.image(at: texturePath)
 
         return CylinderEffectAsset(textureImage: image.cgImage)

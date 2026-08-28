@@ -200,7 +200,7 @@ public enum EffectTable {
         ],
         .ef_beginspell: [
             .cylinder(
-                textureName: "ring_yellow",
+                textureName: "ring_yellow.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 1,
                 attachedToTarget: true,
@@ -246,7 +246,7 @@ public enum EffectTable {
         ],
         .ef_bash: [
             .cylinder(
-                textureName: "alpha_down",
+                textureName: "alpha_down.tga",
                 soundName: "effect\\ef_bash.wav",
                 duration: 1,
                 attachedToTarget: true,
@@ -263,7 +263,7 @@ public enum EffectTable {
                 fixedPerspective: true
             ),
             .cylinder(
-                textureName: "alpha_center",
+                textureName: "alpha_center.tga",
                 duration: 1,
                 duplicate: EffectParameters.Duplicate(count: 10, interval: 0),
                 attachedToTarget: true,
@@ -283,7 +283,7 @@ public enum EffectTable {
                 fixedPerspective: true
             ),
             .cylinder(
-                textureName: "alpha_center",
+                textureName: "alpha_center.tga",
                 duration: 1,
                 duplicate: EffectParameters.Duplicate(count: 8, interval: 0),
                 attachedToTarget: true,
@@ -583,7 +583,7 @@ public enum EffectTable {
         ],
         .ef_beginspell2: [
             .cylinder(
-                textureName: "ring_blue",
+                textureName: "ring_blue.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -597,7 +597,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_blue",
+                textureName: "ring_blue.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -611,7 +611,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_blue",
+                textureName: "ring_blue.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 0.9,
                 attachedToTarget: true,
@@ -628,7 +628,7 @@ public enum EffectTable {
         ],
         .ef_beginspell3: [
             .cylinder(
-                textureName: "ring_red",
+                textureName: "ring_red.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -642,7 +642,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_red",
+                textureName: "ring_red.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -656,7 +656,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_red",
+                textureName: "ring_red.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 0.9,
                 attachedToTarget: true,
@@ -673,7 +673,7 @@ public enum EffectTable {
         ],
         .ef_beginspell4: [
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -687,7 +687,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -701,7 +701,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 0.9,
                 attachedToTarget: true,
@@ -718,7 +718,7 @@ public enum EffectTable {
         ],
         .ef_beginspell5: [
             .cylinder(
-                textureName: "ring_yellow",
+                textureName: "ring_yellow.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .oneMinusSourceAlpha,
@@ -731,7 +731,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_yellow",
+                textureName: "ring_yellow.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .oneMinusSourceAlpha,
@@ -744,7 +744,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_yellow",
+                textureName: "ring_yellow.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 0.9,
                 attachedToTarget: true,
@@ -760,7 +760,7 @@ public enum EffectTable {
         ],
         .ef_beginspell6: [
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 0.9,
                 attachedToTarget: true,
@@ -776,7 +776,7 @@ public enum EffectTable {
         ],
         .ef_beginspell7: [
             .cylinder(
-                textureName: "ring_purple",
+                textureName: "ring_purple.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -790,7 +790,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_purple",
+                textureName: "ring_purple.tga",
                 duration: 0.9,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -804,7 +804,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_purple",
+                textureName: "ring_purple.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 0.9,
                 attachedToTarget: true,
@@ -867,7 +867,7 @@ public enum EffectTable {
         ],
         .ef_heal: [
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 soundName: "_heal_effect.wav",
                 duration: 1.5,
                 attachedToTarget: true,
@@ -882,7 +882,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 duration: 1.5,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -935,7 +935,7 @@ public enum EffectTable {
         ],
         .ef_heal3: [
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 soundName: "_heal_effect.wav",
                 duration: 1,
                 attachedToTarget: true,
@@ -949,7 +949,7 @@ public enum EffectTable {
                 rotatesContinuously: true
             ),
             .cylinder(
-                textureName: "ring_white",
+                textureName: "ring_white.tga",
                 duration: 1,
                 attachedToTarget: true,
                 blendMode: .one,
@@ -1005,7 +1005,7 @@ public enum EffectTable {
         ],
         .ef_warpzone2: [
             .cylinder(
-                textureName: "ring_blue",
+                textureName: "ring_blue.tga",
                 duration: 4,
                 repeats: true,
                 duplicate: EffectParameters.Duplicate(count: 4, interval: 1),
@@ -1021,7 +1021,7 @@ public enum EffectTable {
                 animation: .shrinkRadius
             ),
             .cylinder(
-                textureName: "ring_blue",
+                textureName: "ring_blue.tga",
                 duration: 4,
                 repeats: true,
                 duplicate: EffectParameters.Duplicate(count: 4, interval: 1),
@@ -1064,7 +1064,7 @@ public enum EffectTable {
         ],
         .ef_darkcasting: [
             .cylinder(
-                textureName: "ring_black",
+                textureName: "ring_black.tga",
                 soundName: "effect\\ef_beginspell.wav",
                 duration: 0.9,
                 attachedToTarget: true,
@@ -1133,7 +1133,7 @@ public enum EffectTable {
                 angle: 112.5
             ),
             .cylinder(
-                textureName: "ring_blue",
+                textureName: "ring_blue.tga",
                 duration: 1,
                 delayLate: 0.5,
                 attachedToTarget: false,
