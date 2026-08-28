@@ -12,7 +12,7 @@ public enum EffectAsset: Sendable {
     case `2D`(TwoDEffect, textureImage: CGImage)
     case `3D`(ThreeDEffect, ThreeDEffectAsset)
     case cylinder(CylinderEffect, textureImage: CGImage)
-    case spr(SPREffect, SPREffectAsset)
+    case spr(SPREffect, SPRAnimation)
     case str(STREffect, STREffectAsset)
     case wav(WAVEffect)
 }

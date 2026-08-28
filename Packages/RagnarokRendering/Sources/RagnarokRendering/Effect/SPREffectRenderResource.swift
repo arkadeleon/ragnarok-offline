@@ -32,7 +32,7 @@ public final class SPREffectRenderResource {
     public init(
         device: any MTLDevice,
         effect: SPREffect,
-        asset: SPREffectAsset,
+        animation: SPRAnimation,
         duration: TimeInterval? = nil
     ) {
         self.effect = effect
@@ -45,15 +45,15 @@ public final class SPREffectRenderResource {
             SPREffectVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
             SPREffectVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
-        self.textures = asset.frameImages.enumerated().map { index, frameImage in
+        self.textures = animation.frameImages.enumerated().map { index, frameImage in
             MetalTextureFactory.makeTexture(from: frameImage, device: device, label: "sprEffect[\(index)]")
         }
-        self.frameSize = asset.frameSize
+        self.frameSize = animation.frameSize
 
         self.duration = duration ?? effect.definition.duration
 
         // The definition may override the sprite's own interval.
-        self.playbackFrameInterval = max(effect.definition.frameInterval ?? asset.frameInterval, 1 / 60)
+        self.playbackFrameInterval = max(effect.definition.frameInterval ?? animation.frameInterval, 1 / 60)
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {

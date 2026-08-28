@@ -98,11 +98,11 @@ public final class EffectRenderResourceGroup {
                         sounds.append(sound)
                     }
                 }
-            case .spr(let effect, let asset):
+            case .spr(let effect, let animation):
                 let resource = SPREffectRenderResource(
                     device: device,
                     effect: effect,
-                    asset: asset,
+                    animation: animation,
                     duration: duration
                 )
                 resources.append(.spr(resource))

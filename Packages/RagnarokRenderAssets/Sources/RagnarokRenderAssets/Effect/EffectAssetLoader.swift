@@ -5,7 +5,9 @@
 //  Created by Leon Li on 2026/6/30.
 //
 
+import RagnarokCore
 import RagnarokEffects
+import RagnarokFileFormats
 import RagnarokResources
 
 public struct EffectAssetLoader: Sendable {
@@ -63,13 +65,11 @@ public struct EffectAssetLoader: Sendable {
             return .cylinder(effect, textureImage: image.cgImage)
         case .spr(let definition):
             let effect = SPREffect(definition: definition)
-            let asset = try await SPREffectAsset.load(
+            let animation = try await loadSPRAnimation(
                 fileName: definition.fileName,
-                actionIndex: definition.actionIndex,
-                using: resourceManager,
-                cache: cache
+                actionIndex: definition.actionIndex
             )
-            return .spr(effect, asset)
+            return .spr(effect, animation)
         case .str(let definition):
             let effect = STREffect(definition: definition)
             let asset = try await STREffectAsset.load(
@@ -81,6 +81,22 @@ public struct EffectAssetLoader: Sendable {
         case .wav(let definition):
             let effect = WAVEffect(definition: definition)
             return .wav(effect)
+        }
+    }
+
+    private func loadSPRAnimation(fileName: String, actionIndex: Int) async throws -> SPRAnimation {
+        try await cache.resource(forIdentifier: "SPREffect/\(fileName)#\(actionIndex)") {
+            let spritePath = ResourcePath.spriteDirectory
+                .appending(K2L("이팩트"))
+                .appending(fileName)
+
+            async let actData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("act"))
+            async let sprData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("spr"))
+
+            let act = try await ACT(data: actData)
+            let spr = try await SPR(data: sprData)
+
+            return SPRAnimation(act: act, spr: spr, actionIndex: actionIndex)
         }
     }
 }
