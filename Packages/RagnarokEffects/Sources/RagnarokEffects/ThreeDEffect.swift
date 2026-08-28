@@ -182,6 +182,21 @@ public struct ThreeDEffect: Sendable {
     public let definition: ThreeDEffectDefinition
     public let instances: [ThreeDEffect.Instance]
 
+    public enum Kind: Sendable {
+        case sprite(spriteName: String, playSprite: Bool)
+        case textures(fileNames: [String])
+    }
+
+    public var kind: ThreeDEffect.Kind {
+        if let spriteName = definition.spriteName {
+            .sprite(spriteName: spriteName, playSprite: definition.playSprite)
+        } else if definition.fileNames.isEmpty {
+            .textures(fileNames: definition.fileName.map { [$0] } ?? [])
+        } else {
+            .textures(fileNames: definition.fileNames)
+        }
+    }
+
     public init(definition: ThreeDEffectDefinition) {
         self.definition = definition
 

@@ -68,13 +68,13 @@ public final class EffectRenderResourceGroup {
                         sounds.append(sound)
                     }
                 }
-            case .`3D`(let effect, let asset):
+            case .`3D`(let effect, let animation):
                 for instance in effect.instances {
                     let resource = ThreeDEffectRenderResource(
                         device: device,
                         effect: effect,
                         instance: instance,
-                        asset: asset,
+                        animation: animation,
                         duration: duration
                     )
                     resources.append(.`3D`(resource))

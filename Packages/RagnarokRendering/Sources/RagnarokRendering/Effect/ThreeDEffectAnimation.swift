@@ -27,7 +27,7 @@ public struct ThreeDEffectAnimation: Sendable {
 
     public let effect: ThreeDEffect
     public let instance: ThreeDEffect.Instance
-    public let frames: [ThreeDEffectAsset.Frame]
+    public let frames: [ThreeDAnimation.Frame]
     public let frameDelay: TimeInterval
     public let duration: TimeInterval
 
@@ -38,20 +38,20 @@ public struct ThreeDEffectAnimation: Sendable {
     public init(
         effect: ThreeDEffect,
         instance: ThreeDEffect.Instance,
-        asset: ThreeDEffectAsset,
+        animation: ThreeDAnimation,
         duration: TimeInterval? = nil
     ) {
         let definition = effect.definition
 
         self.effect = effect
         self.instance = instance
-        self.frames = asset.frames
+        self.frames = animation.frames
 
         // A sprite's own interval wins over the definition's, unless the
         // definition asks for a specific sprite frame delay.
         if definition.spriteFrameDelay > 0 {
             self.frameDelay = definition.spriteFrameDelay
-        } else if let frameInterval = asset.frameInterval {
+        } else if let frameInterval = animation.frameInterval {
             self.frameDelay = frameInterval
         } else {
             self.frameDelay = definition.frameDelay

@@ -29,10 +29,10 @@ public final class ThreeDEffectRenderResource {
         device: any MTLDevice,
         effect: ThreeDEffect,
         instance: ThreeDEffect.Instance,
-        asset: ThreeDEffectAsset,
+        animation: ThreeDAnimation,
         duration: TimeInterval? = nil
     ) {
-        self.animation = ThreeDEffectAnimation(effect: effect, instance: instance, asset: asset, duration: duration)
+        self.animation = ThreeDEffectAnimation(effect: effect, instance: instance, animation: animation, duration: duration)
         self.vertices = [
             ThreeDEffectVertex(position: [-0.5,  0.5], textureCoordinate: [0, 0]),
             ThreeDEffectVertex(position: [ 0.5,  0.5], textureCoordinate: [1, 0]),
@@ -41,7 +41,7 @@ public final class ThreeDEffectRenderResource {
             ThreeDEffectVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
             ThreeDEffectVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
-        self.textures = asset.images.enumerated().map { index, image in
+        self.textures = animation.images.enumerated().map { index, image in
             MetalTextureFactory.makeTexture(from: image, device: device, label: "3DEffect[\(index)]")
         }
     }

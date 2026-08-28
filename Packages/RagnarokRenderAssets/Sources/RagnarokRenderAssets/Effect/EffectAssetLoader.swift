@@ -40,25 +40,14 @@ public struct EffectAssetLoader: Sendable {
             return .`2D`(effect, textureImage: image.cgImage)
         case .`3D`(let definition):
             let effect = ThreeDEffect(definition: definition)
-            let asset: ThreeDEffectAsset
-            if let spriteName = definition.spriteName {
-                asset = try await ThreeDEffectAsset.load(
-                    spriteName: spriteName,
-                    playSprite: definition.playSprite,
-                    using: resourceManager,
-                    cache: cache
-                )
-            } else {
-                let textureNames = definition.fileNames.isEmpty
-                    ? definition.fileName.map { [$0] } ?? []
-                    : definition.fileNames
-                asset = try await ThreeDEffectAsset.load(
-                    textureNames: textureNames,
-                    using: resourceManager,
-                    cache: cache
-                )
+            let animation: ThreeDAnimation
+            switch effect.kind {
+            case .sprite(let spriteName, let playSprite):
+                animation = try await loadThreeDAnimation(spriteName: spriteName, playSprite: playSprite)
+            case .textures(let fileNames):
+                animation = try await loadThreeDAnimation(textureNames: fileNames)
             }
-            return .`3D`(effect, asset)
+            return .`3D`(effect, animation)
         case .cylinder(let definition):
             let effect = CylinderEffect(definition: definition)
             let texturePath = ResourcePath.effectDirectory.appending(subpath: definition.textureName)
@@ -78,6 +67,34 @@ public struct EffectAssetLoader: Sendable {
         case .wav(let definition):
             let effect = WAVEffect(definition: definition)
             return .wav(effect)
+        }
+    }
+
+    private func loadThreeDAnimation(spriteName: String, playSprite: Bool) async throws -> ThreeDAnimation {
+        try await cache.resource(forIdentifier: "3DEffect/sprite/\(spriteName)#\(playSprite)") {
+            let spritePath = ResourcePath.spriteDirectory.appending(subpath: spriteName)
+
+            async let actData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("act"))
+            async let sprData = resourceManager.contentsOfResource(at: spritePath.appendingPathExtension("spr"))
+
+            let act = try await ACT(data: actData)
+            let spr = try await SPR(data: sprData)
+
+            return ThreeDAnimation(act: act, spr: spr, playSprite: playSprite)
+        }
+    }
+
+    private func loadThreeDAnimation(textureNames: [String]) async throws -> ThreeDAnimation {
+        try await cache.resource(forIdentifier: "3DEffect/textures/\(textureNames.joined(separator: "|"))") {
+            var images: [CGImage] = []
+            for textureName in textureNames {
+                let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
+                let removesMagentaPixels = textureName.lowercased().hasSuffix(".bmp")
+                let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
+                images.append(image.cgImage)
+            }
+
+            return ThreeDAnimation(images: images)
         }
     }
 
