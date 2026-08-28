@@ -1,5 +1,5 @@
 //
-//  SPRAnimation.swift
+//  SPREffectAnimation.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/9.
@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import RagnarokFileFormats
 
-public struct SPRAnimation: Sendable {
+public struct SPREffectAnimation: Sendable {
     public let frameImages: [CGImage]
     public let frameInterval: TimeInterval
     public let frameSize: SIMD2<Float>

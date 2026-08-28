@@ -40,14 +40,14 @@ public struct EffectAssetLoader: Sendable {
             return .`2D`(effect, textureImage: image.cgImage)
         case .`3D`(let definition):
             let effect = ThreeDEffect(definition: definition)
-            let animation: ThreeDAnimation
+            let animation: ThreeDEffectAnimation
             switch effect.kind {
             case .sprite(let spriteName, let playSprite):
                 animation = try await loadThreeDAnimation(spriteName: spriteName, playSprite: playSprite)
             case .textures(let fileNames):
                 animation = try await loadThreeDAnimation(textureNames: fileNames)
             }
-            return .`3D`(effect, animation)
+            return .`3D`(effect, animation: animation)
         case .cylinder(let definition):
             let effect = CylinderEffect(definition: definition)
             let texturePath = ResourcePath.effectDirectory.appending(subpath: definition.textureName)
@@ -59,18 +59,18 @@ public struct EffectAssetLoader: Sendable {
                 fileName: definition.fileName,
                 actionIndex: definition.actionIndex
             )
-            return .spr(effect, animation)
+            return .spr(effect, animation: animation)
         case .str(let definition):
             let effect = STREffect(definition: definition)
             let animation = try await loadSTRAnimation(fileName: effect.fileName)
-            return .str(effect, animation)
+            return .str(effect, animation: animation)
         case .wav(let definition):
             let effect = WAVEffect(definition: definition)
             return .wav(effect)
         }
     }
 
-    private func loadThreeDAnimation(spriteName: String, playSprite: Bool) async throws -> ThreeDAnimation {
+    private func loadThreeDAnimation(spriteName: String, playSprite: Bool) async throws -> ThreeDEffectAnimation {
         try await cache.resource(forIdentifier: "3DEffect/sprite/\(spriteName)#\(playSprite)") {
             let spritePath = ResourcePath.spriteDirectory.appending(subpath: spriteName)
 
@@ -80,11 +80,11 @@ public struct EffectAssetLoader: Sendable {
             let act = try await ACT(data: actData)
             let spr = try await SPR(data: sprData)
 
-            return ThreeDAnimation(act: act, spr: spr, playSprite: playSprite)
+            return ThreeDEffectAnimation(act: act, spr: spr, playSprite: playSprite)
         }
     }
 
-    private func loadThreeDAnimation(textureNames: [String]) async throws -> ThreeDAnimation {
+    private func loadThreeDAnimation(textureNames: [String]) async throws -> ThreeDEffectAnimation {
         try await cache.resource(forIdentifier: "3DEffect/textures/\(textureNames.joined(separator: "|"))") {
             var images: [CGImage] = []
             for textureName in textureNames {
@@ -94,11 +94,11 @@ public struct EffectAssetLoader: Sendable {
                 images.append(image.cgImage)
             }
 
-            return ThreeDAnimation(images: images)
+            return ThreeDEffectAnimation(images: images)
         }
     }
 
-    private func loadSPRAnimation(fileName: String, actionIndex: Int) async throws -> SPRAnimation {
+    private func loadSPRAnimation(fileName: String, actionIndex: Int) async throws -> SPREffectAnimation {
         try await cache.resource(forIdentifier: "SPREffect/\(fileName)#\(actionIndex)") {
             let spritePath = ResourcePath.spriteDirectory
                 .appending(K2L("이팩트"))
@@ -110,11 +110,11 @@ public struct EffectAssetLoader: Sendable {
             let act = try await ACT(data: actData)
             let spr = try await SPR(data: sprData)
 
-            return SPRAnimation(act: act, spr: spr, actionIndex: actionIndex)
+            return SPREffectAnimation(act: act, spr: spr, actionIndex: actionIndex)
         }
     }
 
-    private func loadSTRAnimation(fileName: String) async throws -> STRAnimation {
+    private func loadSTRAnimation(fileName: String) async throws -> STREffectAnimation {
         try await cache.resource(forIdentifier: "STREffect/\(fileName)") {
             let strPath = ResourcePath.effectDirectory.appending(subpath: fileName)
             let strData = try await resourceManager.contentsOfResource(at: strPath)
@@ -129,7 +129,7 @@ public struct EffectAssetLoader: Sendable {
                 }
             }
 
-            return STRAnimation(str: str, textureImages: textureImages)
+            return STREffectAnimation(str: str, textureImages: textureImages)
         }
     }
 }

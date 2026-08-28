@@ -1,5 +1,5 @@
 //
-//  ThreeDAnimation.swift
+//  ThreeDEffectAnimation.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2026/7/9.
@@ -9,7 +9,7 @@ import CoreGraphics
 import Foundation
 import RagnarokFileFormats
 
-public struct ThreeDAnimation: Sendable {
+public struct ThreeDEffectAnimation: Sendable {
     public struct Layer: Sendable {
         public let imageIndex: Int
         public let sizeFactor: SIMD2<Float>
@@ -36,11 +36,11 @@ public struct ThreeDAnimation: Sendable {
     }
 
     public struct Frame: Sendable {
-        public let layers: [ThreeDAnimation.Layer]
+        public let layers: [ThreeDEffectAnimation.Layer]
     }
 
     public let images: [CGImage]
-    public let frames: [ThreeDAnimation.Frame]
+    public let frames: [ThreeDEffectAnimation.Frame]
     public let frameInterval: TimeInterval?
 
     public init(act: ACT, spr: SPR, playSprite: Bool) {
@@ -50,11 +50,11 @@ public struct ThreeDAnimation: Sendable {
         let usedFrames = playSprite ? actionFrames : Array(actionFrames.prefix(1))
 
         var images: [CGImage] = []
-        var frames: [ThreeDAnimation.Frame] = []
+        var frames: [ThreeDEffectAnimation.Frame] = []
         var imageIndicesBySprite: [SIMD2<Int> : Int] = [:]
 
         for frame in usedFrames {
-            var layers: [ThreeDAnimation.Layer] = []
+            var layers: [ThreeDEffectAnimation.Layer] = []
             for layer in frame.layers where layer.spriteIndex >= 0 {
                 guard let spriteType = SPR.SpriteType(rawValue: Int(layer.spriteType)),
                       let typedImages = spriteImages[spriteType] else {
@@ -77,7 +77,7 @@ public struct ThreeDAnimation: Sendable {
                     imageIndicesBySprite[spriteKey] = imageIndex
                 }
 
-                layers.append(ThreeDAnimation.Layer(
+                layers.append(ThreeDEffectAnimation.Layer(
                     imageIndex: imageIndex,
                     sizeFactor: [
                         Float(image.width) * layer.scale.x / 100,
@@ -97,7 +97,7 @@ public struct ThreeDAnimation: Sendable {
                     isMirrored: layer.isMirrored != 0
                 ))
             }
-            frames.append(ThreeDAnimation.Frame(layers: layers))
+            frames.append(ThreeDEffectAnimation.Frame(layers: layers))
         }
 
         self.images = images
@@ -108,8 +108,8 @@ public struct ThreeDAnimation: Sendable {
     public init(images: [CGImage]) {
         self.images = images
         self.frames = images.indices.map { imageIndex in
-            let layer = ThreeDAnimation.Layer(imageIndex: imageIndex, sizeFactor: [1, 1])
-            return ThreeDAnimation.Frame(layers: [layer])
+            let layer = ThreeDEffectAnimation.Layer(imageIndex: imageIndex, sizeFactor: [1, 1])
+            return ThreeDEffectAnimation.Frame(layers: [layer])
         }
         self.frameInterval = nil
     }

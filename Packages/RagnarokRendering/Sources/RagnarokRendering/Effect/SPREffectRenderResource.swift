@@ -32,7 +32,7 @@ public final class SPREffectRenderResource {
     public init(
         device: any MTLDevice,
         effect: SPREffect,
-        animation: SPRAnimation,
+        animation: SPREffectAnimation,
         duration: TimeInterval? = nil
     ) {
         self.effect = effect

@@ -14,14 +14,15 @@ import simd
 
 public final class STREffectRenderResource {
     public let definition: STREffectDefinition?
-    public let animation: STRAnimation
+    public let fps: Int
+    public let frames: [STREffectAnimation.Frame]
     public let textures: [String : any MTLTexture]
     public let duration: TimeInterval
 
     public convenience init(
         device: any MTLDevice,
         effect: STREffect,
-        animation: STRAnimation,
+        animation: STREffectAnimation,
         duration: TimeInterval? = nil
     ) {
         self.init(
@@ -35,7 +36,7 @@ public final class STREffectRenderResource {
     public init(
         device: any MTLDevice,
         definition: STREffectDefinition? = nil,
-        animation: STRAnimation,
+        animation: STREffectAnimation,
         duration: TimeInterval? = nil
     ) {
         var textures: [String : any MTLTexture] = [:]
@@ -46,7 +47,8 @@ public final class STREffectRenderResource {
         }
 
         self.definition = definition
-        self.animation = animation
+        self.fps = animation.fps
+        self.frames = animation.frames
         self.textures = textures
         self.duration = duration ?? animation.duration
     }
@@ -56,5 +58,14 @@ public final class STREffectRenderResource {
             return false
         }
         return elapsedTime >= duration
+    }
+
+    public func frame(atElapsedTime elapsedTime: TimeInterval) -> STREffectAnimation.Frame? {
+        guard !frames.isEmpty, elapsedTime >= 0 else {
+            return nil
+        }
+
+        let frameIndex = Int(elapsedTime * TimeInterval(fps)) % frames.count
+        return frames[frameIndex]
     }
 }

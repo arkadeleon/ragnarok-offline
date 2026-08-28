@@ -1,5 +1,5 @@
 //
-//  STRAnimation.swift
+//  STREffectAnimation.swift
 //  RagnarokRenderAssets
 //
 //  Created by Leon Li on 2023/11/24.
@@ -10,9 +10,9 @@ import Foundation
 import RagnarokFileFormats
 import RagnarokShaders
 
-public struct STRAnimation: Sendable {
+public struct STREffectAnimation: Sendable {
     public let fps: Int
-    public let frames: [STRAnimation.Frame]
+    public let frames: [STREffectAnimation.Frame]
     public let textureImages: [String : CGImage]
 
     public var duration: TimeInterval {
@@ -22,10 +22,10 @@ public struct STRAnimation: Sendable {
     public init(str: STR, textureImages: [String : CGImage]) {
         fps = Int(str.fps)
 
-        var frames: [STRAnimation.Frame] = []
+        var frames: [STREffectAnimation.Frame] = []
         let frameCount = str.maxKeyframeIndex + 1
         for frameIndex in 0..<frameCount {
-            var sprites: [STRAnimation.Sprite] = []
+            var sprites: [STREffectAnimation.Sprite] = []
 
             for layer in str.layers {
                 var lastFrame = 0
@@ -70,7 +70,7 @@ public struct STRAnimation: Sendable {
                     }
 
                     let textureName = layer.textures[Int(from.textureIndex)]
-                    let sprite = STRAnimation.Sprite(
+                    let sprite = STREffectAnimation.Sprite(
                         uv: from.uv,
                         xy: from.xy,
                         textureName: textureName,
@@ -119,7 +119,7 @@ public struct STRAnimation: Sendable {
                 let angle = from.angle + to.angle * Float(delta)
                 let color = from.color + to.color * Float(delta)
 
-                let sprite = STRAnimation.Sprite(
+                let sprite = STREffectAnimation.Sprite(
                     uv: uv,
                     xy: xy,
                     textureName: textureName,
@@ -132,31 +132,22 @@ public struct STRAnimation: Sendable {
                 sprites.append(sprite)
             }
 
-            let frame = STRAnimation.Frame(sprites: sprites)
+            let frame = STREffectAnimation.Frame(sprites: sprites)
             frames.append(frame)
         }
         self.frames = frames
 
         self.textureImages = textureImages
     }
-
-    public func frame(atElapsedTime elapsedTime: TimeInterval) -> STRAnimation.Frame? {
-        guard !frames.isEmpty, elapsedTime >= 0 else {
-            return nil
-        }
-
-        let frameIndex = Int(elapsedTime * TimeInterval(fps)) % frames.count
-        return frames[frameIndex]
-    }
 }
 
-extension STRAnimation {
+extension STREffectAnimation {
     public struct Frame: Sendable {
-        public let sprites: [STRAnimation.Sprite]
+        public let sprites: [STREffectAnimation.Sprite]
     }
 }
 
-extension STRAnimation {
+extension STREffectAnimation {
     public struct Sprite: Sendable {
         public let vertices: [STREffectVertex]
         public let textureName: String

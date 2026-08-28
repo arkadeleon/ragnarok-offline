@@ -41,7 +41,7 @@ public final class STREffectRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard let frame = resource.animation.frame(atElapsedTime: elapsedTime) else {
+        guard let frame = resource.frame(atElapsedTime: elapsedTime) else {
             return
         }
 

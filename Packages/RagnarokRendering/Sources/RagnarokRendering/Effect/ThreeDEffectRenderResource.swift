@@ -30,7 +30,7 @@ public final class ThreeDEffectRenderResource {
     public let effect: ThreeDEffect
     public let instance: ThreeDEffect.Instance
     public let vertices: [ThreeDEffectVertex]
-    public let frames: [ThreeDAnimation.Frame]
+    public let frames: [ThreeDEffectAnimation.Frame]
     public let frameDelay: TimeInterval
     public let textures: [(any MTLTexture)?]
     public let duration: TimeInterval
@@ -47,7 +47,7 @@ public final class ThreeDEffectRenderResource {
         device: any MTLDevice,
         effect: ThreeDEffect,
         instance: ThreeDEffect.Instance,
-        animation: ThreeDAnimation,
+        animation: ThreeDEffectAnimation,
         duration: TimeInterval? = nil
     ) {
         let definition = effect.definition

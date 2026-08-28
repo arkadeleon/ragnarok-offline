@@ -87,7 +87,7 @@ struct STRFileEffectView: View {
         }
 
         let device = MTLCreateSystemDefaultDevice()!
-        let animation = STRAnimation(str: str, textureImages: textureImages)
+        let animation = STREffectAnimation(str: str, textureImages: textureImages)
         let renderer = try STRFilePreviewRenderer(device: device, configuration: .default, animation: animation)
         return renderer
     }
