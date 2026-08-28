@@ -31,11 +31,10 @@ public struct EffectAssetLoader: Sendable {
         switch definition {
         case .`2D`(let definition):
             let effect = TwoDEffect(definition: definition)
-            let asset = try await TwoDEffectAsset.load(
-                fileName: definition.fileName,
-                using: resourceManager
-            )
-            return .`2D`(effect, asset)
+            let texturePath = ResourcePath.textureDirectory.appending(subpath: definition.fileName)
+            let removesMagentaPixels = definition.fileName.lowercased().hasSuffix(".bmp")
+            let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
+            return .`2D`(effect, textureImage: image.cgImage)
         case .`3D`(let definition):
             let effect = ThreeDEffect(definition: definition)
             let asset: ThreeDEffectAsset
@@ -59,11 +58,9 @@ public struct EffectAssetLoader: Sendable {
             return .`3D`(effect, asset)
         case .cylinder(let definition):
             let effect = CylinderEffect(definition: definition)
-            let asset = try await CylinderEffectAsset.load(
-                textureName: definition.textureName,
-                using: resourceManager
-            )
-            return .cylinder(effect, asset)
+            let texturePath = ResourcePath.effectDirectory.appending(subpath: definition.textureName)
+            let image = try await resourceManager.image(at: texturePath)
+            return .cylinder(effect, textureImage: image.cgImage)
         case .spr(let definition):
             let effect = SPREffect(definition: definition)
             let asset = try await SPREffectAsset.load(

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/6/25.
 //
 
+import CoreGraphics
 import Foundation
 import Metal
 import RagnarokEffects
@@ -29,7 +30,7 @@ public final class CylinderEffectRenderResource {
         device: any MTLDevice,
         effect: CylinderEffect,
         instance: CylinderEffect.Instance,
-        asset: CylinderEffectAsset,
+        textureImage: CGImage,
         duration: TimeInterval? = nil
     ) {
         let definition = effect.definition
@@ -40,7 +41,7 @@ public final class CylinderEffectRenderResource {
             visibleCircleSides: definition.visibleCircleSides,
             textureRepeatX: definition.textureRepeatX
         )
-        self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "cylinderEffect")
+        self.texture = MetalTextureFactory.makeTexture(from: textureImage, device: device, label: "cylinderEffect")
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {

@@ -53,13 +53,13 @@ public final class EffectRenderResourceGroup {
 
         for asset in assetGroup.assets {
             switch asset {
-            case .`2D`(let effect, let asset):
+            case .`2D`(let effect, let textureImage):
                 for instance in effect.instances {
                     let resource = TwoDEffectRenderResource(
                         device: device,
                         effect: effect,
                         instance: instance,
-                        asset: asset,
+                        textureImage: textureImage,
                         duration: duration
                     )
                     resources.append(.`2D`(resource))
@@ -83,13 +83,13 @@ public final class EffectRenderResourceGroup {
                         sounds.append(sound)
                     }
                 }
-            case .cylinder(let effect, let asset):
+            case .cylinder(let effect, let textureImage):
                 for instance in effect.instances {
                     let resource = CylinderEffectRenderResource(
                         device: device,
                         effect: effect,
                         instance: instance,
-                        asset: asset,
+                        textureImage: textureImage,
                         duration: duration
                     )
                     resources.append(.cylinder(resource))

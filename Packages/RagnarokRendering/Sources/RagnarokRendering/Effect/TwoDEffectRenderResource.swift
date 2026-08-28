@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/7/9.
 //
 
+import CoreGraphics
 import Foundation
 import Metal
 import RagnarokEffects
@@ -29,7 +30,7 @@ public final class TwoDEffectRenderResource {
         device: any MTLDevice,
         effect: TwoDEffect,
         instance: TwoDEffect.Instance,
-        asset: TwoDEffectAsset,
+        textureImage: CGImage,
         duration: TimeInterval? = nil
     ) {
         self.animation = TwoDEffectAnimation(effect: effect, instance: instance, duration: duration)
@@ -41,7 +42,7 @@ public final class TwoDEffectRenderResource {
             TwoDEffectVertex(position: [ 0.5, -0.5], textureCoordinate: [1, 1]),
             TwoDEffectVertex(position: [-0.5, -0.5], textureCoordinate: [0, 1]),
         ]
-        self.texture = MetalTextureFactory.makeTexture(from: asset.textureImage, device: device, label: "2DEffect")
+        self.texture = MetalTextureFactory.makeTexture(from: textureImage, device: device, label: "2DEffect")
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
