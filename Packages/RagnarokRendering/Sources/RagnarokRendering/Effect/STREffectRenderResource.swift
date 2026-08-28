@@ -21,14 +21,13 @@ public final class STREffectRenderResource {
     public convenience init(
         device: any MTLDevice,
         effect: STREffect,
-        asset: STREffectAsset,
+        animation: STRAnimation,
         duration: TimeInterval? = nil
     ) {
         self.init(
             device: device,
             definition: effect.definition,
-            animation: asset.animation,
-            textureImages: asset.textureImages,
+            animation: animation,
             duration: duration
         )
     }
@@ -37,11 +36,10 @@ public final class STREffectRenderResource {
         device: any MTLDevice,
         definition: STREffectDefinition? = nil,
         animation: STRAnimation,
-        textureImages: [String : CGImage],
         duration: TimeInterval? = nil
     ) {
         var textures: [String : any MTLTexture] = [:]
-        for (textureName, textureImage) in textureImages {
+        for (textureName, textureImage) in animation.textureImages {
             if let texture = MetalTextureFactory.makeTexture(from: textureImage, device: device, label: textureName) {
                 textures[textureName] = texture
             }

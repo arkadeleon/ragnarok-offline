@@ -5,21 +5,24 @@
 //  Created by Leon Li on 2023/11/24.
 //
 
+import CoreGraphics
 import Foundation
 import RagnarokFileFormats
 import RagnarokShaders
 
-public struct STRAnimation {
-    public var fps: Int
-    public var frames: [STRAnimation.Frame] = []
+public struct STRAnimation: Sendable {
+    public let fps: Int
+    public let frames: [STRAnimation.Frame]
+    public let textureImages: [String : CGImage]
 
     public var duration: TimeInterval {
         return TimeInterval(frames.count) / TimeInterval(fps)
     }
 
-    public init(str: STR) {
+    public init(str: STR, textureImages: [String : CGImage]) {
         fps = Int(str.fps)
 
+        var frames: [STRAnimation.Frame] = []
         let frameCount = str.maxKeyframeIndex + 1
         for frameIndex in 0..<frameCount {
             var sprites: [STRAnimation.Sprite] = []
@@ -132,6 +135,9 @@ public struct STRAnimation {
             let frame = STRAnimation.Frame(sprites: sprites)
             frames.append(frame)
         }
+        self.frames = frames
+
+        self.textureImages = textureImages
     }
 
     public func frame(atElapsedTime elapsedTime: TimeInterval) -> STRAnimation.Frame? {
@@ -145,21 +151,21 @@ public struct STRAnimation {
 }
 
 extension STRAnimation {
-    public struct Frame {
-        public var sprites: [STRAnimation.Sprite] = []
+    public struct Frame: Sendable {
+        public let sprites: [STRAnimation.Sprite]
     }
 }
 
 extension STRAnimation {
-    public struct Sprite {
-        public var vertices: [STREffectVertex] = []
-        public var textureName: String
+    public struct Sprite: Sendable {
+        public let vertices: [STREffectVertex]
+        public let textureName: String
 
-        public var position: SIMD2<Float>
-        public var angle: Float
-        public var color: SIMD4<Float>
-        public var sourceAlpha: Int32
-        public var destinationAlpha: Int32
+        public let position: SIMD2<Float>
+        public let angle: Float
+        public let color: SIMD4<Float>
+        public let sourceAlpha: Int32
+        public let destinationAlpha: Int32
 
         init(
             uv: SIMD8<Float>,

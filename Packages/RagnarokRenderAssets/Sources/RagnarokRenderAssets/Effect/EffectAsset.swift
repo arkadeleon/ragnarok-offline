@@ -13,6 +13,6 @@ public enum EffectAsset: Sendable {
     case `3D`(ThreeDEffect, ThreeDEffectAsset)
     case cylinder(CylinderEffect, textureImage: CGImage)
     case spr(SPREffect, SPRAnimation)
-    case str(STREffect, STREffectAsset)
+    case str(STREffect, STRAnimation)
     case wav(WAVEffect)
 }

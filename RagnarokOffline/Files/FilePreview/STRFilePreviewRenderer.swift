@@ -24,15 +24,14 @@ public class STRFilePreviewRenderer: Renderer {
 
     public let camera = Camera()
 
-    public init(device: any MTLDevice, configuration: RenderConfiguration, animation: STRAnimation, textureImages: [String : CGImage]) throws {
+    public init(device: any MTLDevice, configuration: RenderConfiguration, animation: STRAnimation) throws {
         self.device = device
         self.configuration = configuration
 
         effectRenderer = try STREffectRenderer(device: device, configuration: configuration)
         effectResource = STREffectRenderResource(
             device: device,
-            animation: animation,
-            textureImages: textureImages
+            animation: animation
         )
         creationTime = CACurrentMediaTime()
 

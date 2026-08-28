@@ -110,11 +110,11 @@ public final class EffectRenderResourceGroup {
                 if let sound = effect.sound {
                     sounds.append(sound)
                 }
-            case .str(let effect, let asset):
+            case .str(let effect, let animation):
                 let resource = STREffectRenderResource(
                     device: device,
                     effect: effect,
-                    asset: asset,
+                    animation: animation,
                     duration: duration
                 )
                 resources.append(.str(resource))

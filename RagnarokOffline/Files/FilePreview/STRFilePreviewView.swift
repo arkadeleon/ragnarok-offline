@@ -75,30 +75,20 @@ struct STRFileEffectView: View {
 
         let data = try await file.contents()
         let str = try STR(data: data)
-        let animation = STRAnimation(str: str)
 
-        let device = MTLCreateSystemDefaultDevice()!
         var textureImages: [String : CGImage] = [:]
-
-        for frame in animation.frames {
-            for sprite in frame.sprites {
-                let textureName = sprite.textureName
-                if let _ = textureImages[textureName] {
-                    continue
-                }
-
-                let texturePath = node.path.replacingLastComponent(textureName)
-                guard let data = try? await grfArchive.contentsOfEntryNode(at: texturePath) else {
-                    continue
-                }
-
-                if let textureImage = CGImageCreateWithData(data)?.removingMagentaPixels() {
-                    textureImages[textureName] = textureImage
-                }
+        let textureNames = Set(str.layers.flatMap(\.textures))
+        for textureName in textureNames {
+            let texturePath = node.path.replacingLastComponent(textureName)
+            if let data = try? await grfArchive.contentsOfEntryNode(at: texturePath),
+               let textureImage = CGImageCreateWithData(data)?.removingMagentaPixels() {
+                textureImages[textureName] = textureImage
             }
         }
 
-        let renderer = try STRFilePreviewRenderer(device: device, configuration: .default, animation: animation, textureImages: textureImages)
+        let device = MTLCreateSystemDefaultDevice()!
+        let animation = STRAnimation(str: str, textureImages: textureImages)
+        let renderer = try STRFilePreviewRenderer(device: device, configuration: .default, animation: animation)
         return renderer
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/6/30.
 //
 
+import CoreGraphics
 import RagnarokCore
 import RagnarokEffects
 import RagnarokFileFormats
@@ -72,12 +73,8 @@ public struct EffectAssetLoader: Sendable {
             return .spr(effect, animation)
         case .str(let definition):
             let effect = STREffect(definition: definition)
-            let asset = try await STREffectAsset.load(
-                fileName: effect.fileName,
-                using: resourceManager,
-                cache: cache
-            )
-            return .str(effect, asset)
+            let animation = try await loadSTRAnimation(fileName: effect.fileName)
+            return .str(effect, animation)
         case .wav(let definition):
             let effect = WAVEffect(definition: definition)
             return .wav(effect)
@@ -97,6 +94,25 @@ public struct EffectAssetLoader: Sendable {
             let spr = try await SPR(data: sprData)
 
             return SPRAnimation(act: act, spr: spr, actionIndex: actionIndex)
+        }
+    }
+
+    private func loadSTRAnimation(fileName: String) async throws -> STRAnimation {
+        try await cache.resource(forIdentifier: "STREffect/\(fileName)") {
+            let strPath = ResourcePath.effectDirectory.appending(subpath: fileName)
+            let strData = try await resourceManager.contentsOfResource(at: strPath)
+            let str = try STR(data: strData)
+
+            var textureImages: [String : CGImage] = [:]
+            let textureNames = Set(str.layers.flatMap(\.textures))
+            for textureName in textureNames {
+                let texturePath = ResourcePath.effectDirectory.appending(subpath: textureName)
+                if let image = try? await resourceManager.image(at: texturePath, removesMagentaPixels: true) {
+                    textureImages[textureName] = image.cgImage
+                }
+            }
+
+            return STRAnimation(str: str, textureImages: textureImages)
         }
     }
 }
