@@ -16,6 +16,10 @@ import rAthenaWeb
 let serverWorkingDirectoryURL = URL.libraryDirectory.appending(path: "rathena", directoryHint: .isDirectory)
 
 let serverConfiguration = ServerConfiguration(
+    battle_conf: """
+        area_size: 26
+        max_walk_path: 32
+        """,
     char_conf: """
         login_ip: 127.0.0.1
         stdout_with_ansisequence: yes
