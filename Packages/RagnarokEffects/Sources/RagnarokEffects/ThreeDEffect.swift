@@ -180,14 +180,13 @@ public struct ThreeDEffect: Sendable {
     }
 
     public let definition: ThreeDEffectDefinition
+    public let instances: [ThreeDEffect.Instance]
 
     public init(definition: ThreeDEffectDefinition) {
         self.definition = definition
-    }
 
-    public func makeInstances() -> [ThreeDEffect.Instance] {
         let patternIndex = Int.random(in: 0..<5)
-        return (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+        self.instances = (0..<definition.duplicate.count).map { duplicateID in
             ThreeDEffect.Instance(definition: definition, duplicateID: duplicateID, patternIndex: patternIndex)
         }
     }

@@ -54,8 +54,7 @@ public final class EffectRenderResourceGroup {
         for asset in assetGroup.assets {
             switch asset {
             case .`2D`(let effect, let asset):
-                let instances = effect.makeInstances()
-                for instance in instances {
+                for instance in effect.instances {
                     let resource = TwoDEffectRenderResource(
                         device: device,
                         effect: effect,
@@ -70,8 +69,7 @@ public final class EffectRenderResourceGroup {
                     }
                 }
             case .`3D`(let effect, let asset):
-                let instances = effect.makeInstances()
-                for instance in instances {
+                for instance in effect.instances {
                     let resource = ThreeDEffectRenderResource(
                         device: device,
                         effect: effect,
@@ -86,8 +84,7 @@ public final class EffectRenderResourceGroup {
                     }
                 }
             case .cylinder(let effect, let asset):
-                let instances = effect.makeInstances()
-                for instance in instances {
+                for instance in effect.instances {
                     let resource = CylinderEffectRenderResource(
                         device: device,
                         effect: effect,

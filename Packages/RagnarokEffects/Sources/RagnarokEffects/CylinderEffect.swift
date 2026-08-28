@@ -46,13 +46,12 @@ public struct CylinderEffect: Sendable {
     }
 
     public let definition: CylinderEffectDefinition
+    public let instances: [CylinderEffect.Instance]
 
     public init(definition: CylinderEffectDefinition) {
         self.definition = definition
-    }
 
-    public func makeInstances() -> [CylinderEffect.Instance] {
-        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+        self.instances = (0..<definition.duplicate.count).map { duplicateID in
             CylinderEffect.Instance(definition: definition, duplicateID: duplicateID)
         }
     }

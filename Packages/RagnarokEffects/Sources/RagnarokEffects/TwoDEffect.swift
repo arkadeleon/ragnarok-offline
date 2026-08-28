@@ -158,13 +158,12 @@ public struct TwoDEffect: Sendable {
     }
 
     public let definition: TwoDEffectDefinition
+    public let instances: [TwoDEffect.Instance]
 
     public init(definition: TwoDEffectDefinition) {
         self.definition = definition
-    }
 
-    public func makeInstances() -> [TwoDEffect.Instance] {
-        (0..<max(definition.duplicate.count, 1)).map { duplicateID in
+        self.instances = (0..<definition.duplicate.count).map { duplicateID in
             TwoDEffect.Instance(definition: definition, duplicateID: duplicateID)
         }
     }
