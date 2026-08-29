@@ -14,6 +14,7 @@ import SwiftUI
 private let imageSize = CGSize(width: 1280, height: 1024)
 
 struct WorldMapView: View {
+    var currentMapName: String
     var onClose: () -> Void = {}
 
     @Environment(GameContext.self) private var gameContext
@@ -23,7 +24,7 @@ struct WorldMapView: View {
     @State private var mapImage: CGImage?
 
     var body: some View {
-        WorldMapImageView(world: selectedWorld, image: mapImage)
+        WorldMapImageView(world: selectedWorld, image: mapImage, currentMapName: currentMapName)
             .background {
                 Color.black.ignoresSafeArea()
             }
@@ -74,6 +75,7 @@ struct WorldMapView: View {
 private struct WorldMapImageView: View {
     var world: WorldViewData.World?
     var image: CGImage?
+    var currentMapName: String
 
     var body: some View {
         GeometryReader { geometry in
@@ -86,18 +88,102 @@ private struct WorldMapImageView: View {
                 }
 
                 if let world {
-                    Canvas { context, _ in
-                        for map in world.maps {
-                            let rect = map.rect.scaled(by: scale)
-                            let path = Path(roundedRect: rect, cornerRadius: 4)
-                            context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: 1)
-                        }
-                    }
+                    WorldMapSectionsView(world: world, currentMapName: currentMapName, scale: scale)
                 }
             }
             .frame(width: imageSize.width * scale, height: imageSize.height * scale)
             .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
         }
+    }
+}
+
+private struct WorldMapSectionsView: View {
+    var world: WorldViewData.World
+    var currentMapName: String
+    var scale: CGFloat
+
+    var body: some View {
+        Canvas { context, _ in
+            let entrancesByGroupIndex = Dictionary(
+                world.dungeons.map({ ($0.groupIndex, $0) }),
+                uniquingKeysWith: { first, _ in first }
+            )
+
+            for map in world.maps {
+                guard let dungeon = entrancesByGroupIndex[map.groupIndex],
+                      let line = connector(from: dungeon.rect.scaled(by: scale), to: map.rect.scaled(by: scale)) else {
+                    continue
+                }
+
+                context.stroke(line, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.5))), lineWidth: 1)
+            }
+
+            // Floors of the same dungeon often share a spot. Filling every one of
+            // them would stack up to a solid box, so only the first is filled.
+            var filledOrigins: Set<SIMD2<Int>> = []
+
+            let entrances = world.dungeons.map({ ($0.rect, true) })
+            let sections = world.maps.map({ ($0.rect, entrancesByGroupIndex[$0.groupIndex] != nil) })
+
+            for (rect, isDungeon) in entrances + sections {
+                let path = Path(roundedRect: rect.scaled(by: scale), cornerRadius: 4)
+
+                guard isDungeon else {
+                    context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: 1)
+                    continue
+                }
+
+                if filledOrigins.insert(SIMD2(rect.left, rect.top)).inserted {
+                    context.fill(path, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.4))))
+                }
+                context.stroke(path, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.6))), lineWidth: 1)
+            }
+
+            if let currentMap = world.maps.first(where: { $0.mapName.mapNameStem == currentMapName.mapNameStem }) {
+                let path = Path(roundedRect: currentMap.rect.scaled(by: scale), cornerRadius: 4)
+                context.fill(path, with: .color(Color(#colorLiteral(red: 1, green: 0.5019607843, blue: 0, alpha: 0.5))))
+                context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: 1)
+            }
+        }
+    }
+
+    // A line from the edge of a dungeon entrance to the edge of one of its floors.
+    private func connector(from entrance: CGRect, to floor: CGRect) -> Path? {
+        let start = CGPoint(x: entrance.midX, y: entrance.midY)
+        let end = CGPoint(x: floor.midX, y: floor.midY)
+
+        let distance = hypot(end.x - start.x, end.y - start.y)
+        let angle = atan2(end.y - start.y, end.x - start.x)
+
+        let startOffset = radius(of: entrance.size, at: angle)
+        let endOffset = radius(of: floor.size, at: angle)
+        guard distance > startOffset + endOffset else {
+            return nil
+        }
+
+        var path = Path()
+        path.move(to: CGPoint(x: start.x + cos(angle) * startOffset, y: start.y + sin(angle) * startOffset))
+        path.addLine(to: CGPoint(x: end.x - cos(angle) * endOffset, y: end.y - sin(angle) * endOffset))
+        return path
+    }
+
+    // The distance from the center of a rect to its edge along an angle.
+    private func radius(of size: CGSize, at angle: CGFloat) -> CGFloat {
+        let absCos = abs(cos(angle))
+        let absSin = abs(sin(angle))
+
+        if size.width * absSin <= size.height * absCos {
+            return size.width / (2 * absCos)
+        } else {
+            return size.height / (2 * absSin)
+        }
+    }
+}
+
+extension String {
+    /// The map name without its `gat` or `rsw` extension.
+    fileprivate var mapNameStem: String {
+        split(separator: ".", maxSplits: 1).first.map(String.init) ?? self
     }
 }
 
@@ -113,6 +199,6 @@ extension WorldViewData.Rect {
 }
 
 #Preview {
-    WorldMapView()
+    WorldMapView(currentMapName: "prontera.gat")
         .environment(GameContext.testing)
 }
