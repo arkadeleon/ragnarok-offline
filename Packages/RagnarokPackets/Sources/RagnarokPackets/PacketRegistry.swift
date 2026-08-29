@@ -583,7 +583,8 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_ZC_ACK_REQNAMEALL: PACKET_ZC_ACK_REQNAMEALL.self,
 
     // | 0x196, 0x43f, 0x983 | `clif_status_change_sub` |
-//  packet_header_status_changeType: PACKET_ZC_MSG_STATE_CHANGE.self,
+    packet_header_status_change_endType: PACKET_ZC_MSG_STATE_CHANGE.self,
+    packet_header_status_changeType: PACKET_ZC_MSG_STATE_CHANGE3.self,
 
     // | 0x199, 0x99b | `clif_map_property` |
     packet_header_maptypeproperty2Type: PACKET_ZC_MAPPROPERTY_R2.self,
