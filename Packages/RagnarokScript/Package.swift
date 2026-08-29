@@ -24,6 +24,7 @@ let package = Package(
         .target(
             name: "RagnarokScript",
             dependencies: [
+                "RagnarokCore",
                 "RagnarokResources",
                 .product(name: "RagnarokLua", package: "ragnarok-lua"),
             ]
