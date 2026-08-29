@@ -26,7 +26,7 @@ struct TextFilePreviewView: View {
         switch file.utType {
         case .lub:
             let decompiler = LuaDecompiler()
-            data = try decompiler.decompileData(data)
+            data = try decompiler.decompile(data)
         default:
             break
         }

@@ -5,75 +5,71 @@
 //  Created by Leon Li on 2025/3/3.
 //
 
-@preconcurrency import RagnarokLua
+import RagnarokLua
 import RagnarokResources
 
 final public class ScriptContext: Resource {
     let context: LuaContext
-    let contextQueue: DispatchQueue
 
     init(context: LuaContext) {
         self.context = context
-        self.contextQueue = DispatchQueue(label: "com.github.arkadeleon.ragnarok-offline.script-context")
     }
 
     public func accessoryName(forAccessoryID accessoryID: Int) -> String? {
         // The script answers with an empty string for an accessory it has no name for.
-        let result = call("ReqAccName", with: [accessoryID], to: String.self)
+        let result = call("ReqAccName", with: [.number(Double(accessoryID))]).stringValue
         return result?.isEmpty == false ? result : nil
     }
 
     public func jobName(forJobID jobID: Int) -> String? {
-        let result = call("ReqJobName", with: [jobID], to: String.self)
+        let result = call("ReqJobName", with: [.number(Double(jobID))]).stringValue
         return result
     }
 
     public func robeName(forRobeID robeID: Int, checkEnglish: Bool) -> String? {
         // The script answers with an empty string for a robe it has no name for.
-        let result = call("ReqRobSprName_V2", with: [robeID, checkEnglish], to: String.self)
+        let result = call("ReqRobSprName_V2", with: [.number(Double(robeID)), .boolean(checkEnglish)]).stringValue
         return result?.isEmpty == false ? result : nil
     }
 
     public func shadowFactor(forJobID jobID: Int) -> Double? {
-        let result = call("ReqshadowFactor", with: [jobID], to: Double.self)
+        let result = call("ReqshadowFactor", with: [.number(Double(jobID))]).numberValue
         return result
     }
 
     public func statusIconName(forStatusID statusID: Int) -> String? {
-        let result = call("statusIconName", with: [statusID], to: String.self)
+        let result = call("statusIconName", with: [.number(Double(statusID))]).stringValue
         return result
     }
 
     public func weaponName(forWeaponID weaponID: Int) -> String? {
         // The script answers with an empty string for a weapon it has no name for.
-        let result = call("ReqWeaponName", with: [weaponID], to: String.self)
+        let result = call("ReqWeaponName", with: [.number(Double(weaponID))]).stringValue
         return result?.isEmpty == false ? result : nil
     }
 
     public func realWeaponID(forWeaponID weaponID: Int) -> Int? {
-        let result = call("GetRealWeaponId", with: [weaponID], to: Int.self)
+        let result = call("GetRealWeaponId", with: [.number(Double(weaponID))]).intValue
         return result
     }
 
     public func drawOnTop(forRobeID robeID: Int, genderID: Int, jobID: Int, actionIndex: Int, frameIndex: Int) -> Bool {
-        let result = call("_New_DrawOnTop", with: [robeID, genderID, jobID, actionIndex, frameIndex], to: Bool.self)
+        let arguments: [LuaValue] = [robeID, genderID, jobID, actionIndex, frameIndex].map { .number(Double($0)) }
+        let result = call("_New_DrawOnTop", with: arguments).booleanValue
         return result ?? false
     }
 
     public func isTopLayer(forRobeID robeID: Int) -> Bool {
-        let result = call("IsTopLayer", with: [robeID], to: Bool.self)
+        let result = call("IsTopLayer", with: [.number(Double(robeID))]).booleanValue
         return result ?? false
     }
 
-    private func call<T>(_ name: String, with args: [Any], to resultType: T.Type) -> T? {
-        contextQueue.sync {
-            do {
-                let result = try context.call(name, with: args)
-                return result as? T
-            } catch {
-                logger.warning("\(error)")
-                return nil
-            }
+    private func call(_ name: String, with arguments: [LuaValue]) -> LuaValue {
+        do {
+            return try context.call(name, with: arguments)
+        } catch {
+            logger.warning("\(error)")
+            return .nil
         }
     }
 }

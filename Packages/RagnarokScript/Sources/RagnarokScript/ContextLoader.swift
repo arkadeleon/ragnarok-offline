@@ -5,7 +5,8 @@
 //  Created by Leon Li on 2026/6/23.
 //
 
-@preconcurrency import RagnarokLua
+import Foundation
+import RagnarokLua
 import RagnarokResources
 
 actor ContextLoader {
@@ -120,7 +121,7 @@ actor ContextLoader {
         await loadScript(offsetitempos, in: context)
 
         do {
-            try context.parse("""
+            try context.evaluate("""
             function GetSkillName(skillID)
                 return SKILL_INFO_LIST[skillID]["SkillName"]
             end
@@ -133,7 +134,7 @@ actor ContextLoader {
         }
 
         do {
-            try context.parse("""
+            try context.evaluate("""
             function statusIconName(statusID)
                 local gold = StateIconImgList[PRIORITY_GOLD][statusID]
                 local red = StateIconImgList[PRIORITY_RED][statusID]
