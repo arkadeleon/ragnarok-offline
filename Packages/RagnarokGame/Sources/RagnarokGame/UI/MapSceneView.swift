@@ -45,12 +45,17 @@ struct MapSceneView: View {
             #endif
         }
         .overlay(alignment: .bottomLeading) {
+            #if os(iOS)
             ThumbstickView(value: $movementValue)
                 .padding(.leading, 16)
                 .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
                 .onReceive(timer) { _ in
                     runtime.scene.handleMovement(movementValue)
                 }
+            #elseif os(macOS)
+            ChatBoxView()
+                .frame(width: 440)
+            #endif
         }
         .overlay(alignment: .bottomTrailing) {
             ActionControlPadView(
@@ -88,10 +93,10 @@ struct MapSceneView: View {
                 .padding(.trailing, 16)
         }
         .overlay(alignment: .bottom) {
+            #if os(iOS)
             ChatBoxView()
                 .frame(width: chatBoxWidth)
                 .offset(y: chatBoxOffsetY)
-                #if os(iOS)
                 .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { notification in
                     let frameEnd = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
                     let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
@@ -111,7 +116,7 @@ struct MapSceneView: View {
                         }
                     }
                 }
-                #endif
+            #endif
         }
         .overlay(alignment: .center) {
             if let item = presentedMenuItem {
