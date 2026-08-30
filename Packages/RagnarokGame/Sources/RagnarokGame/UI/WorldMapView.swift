@@ -115,29 +115,80 @@ private struct WorldMapImageView: View {
 
     @State private var worldImage: CGImage?
 
+    @State private var viewport = WorldMapViewport()
+    @GestureState private var gestureTransform = WorldMapViewport.Transform()
+
     var body: some View {
         GeometryReader { geometry in
-            let scale = min(geometry.size.width / imageSize.width, geometry.size.height / imageSize.height)
+            let fittedScale = min(geometry.size.width / imageSize.width, geometry.size.height / imageSize.height)
+            let fittedMapSize = CGSize(width: imageSize.width * fittedScale, height: imageSize.height * fittedScale)
+            let displayedViewport = viewport.applying(gestureTransform, containerSize: geometry.size, fittedMapSize: fittedMapSize)
 
             ZStack {
-                if let worldImage {
-                    Image(decorative: worldImage, scale: 1)
-                        .resizable()
-                }
+                ZStack {
+                    if let worldImage {
+                        Image(decorative: worldImage, scale: 1)
+                            .resizable()
+                    }
 
-                if let world {
-                    WorldMapSectionsView(world: world, currentMapName: currentMapName, selectedSection: selectedSection, scale: scale)
+                    if let world {
+                        WorldMapSectionsView(
+                            world: world,
+                            currentMapName: currentMapName,
+                            selectedSection: selectedSection,
+                            fittedScale: fittedScale,
+                            zoomScale: displayedViewport.zoomScale
+                        )
+                    }
                 }
+                .frame(width: fittedMapSize.width, height: fittedMapSize.height)
+                .scaleEffect(displayedViewport.zoomScale)
+                .offset(displayedViewport.offset)
             }
-            .frame(width: imageSize.width * scale, height: imageSize.height * scale)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(.rect)
-            .onTapGesture { location in
-                selectedSection = section(at: location, scale: scale)
+            .gesture(
+                MagnifyGesture()
+                    .simultaneously(with: DragGesture(minimumDistance: 8))
+                    .updating($gestureTransform) { value, state, _ in
+                        state = WorldMapViewport.Transform(
+                            magnification: value.first?.magnification ?? 1,
+                            anchor: value.first.map { CGPoint(x: $0.startAnchor.x, y: $0.startAnchor.y) },
+                            translation: value.second?.translation ?? .zero
+                        )
+                    }
+                    .onEnded { value in
+                        let transform = WorldMapViewport.Transform(
+                            magnification: value.first?.magnification ?? 1,
+                            anchor: value.first.map { CGPoint(x: $0.startAnchor.x, y: $0.startAnchor.y) },
+                            translation: value.second?.translation ?? .zero
+                        )
+                        viewport = viewport.applying(
+                            transform,
+                            containerSize: geometry.size,
+                            fittedMapSize: fittedMapSize
+                        )
+                    }
+            )
+            .simultaneousGesture(
+                SpatialTapGesture()
+                    .onEnded { value in
+                        selectedSection = section(
+                            at: value.location,
+                            viewport: displayedViewport,
+                            containerSize: geometry.size,
+                            fittedMapSize: fittedMapSize
+                        )
+                    }
+            )
+            .onChange(of: geometry.size) {
+                viewport = viewport.clamped(containerSize: geometry.size, fittedMapSize: fittedMapSize)
             }
-            .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
         }
+        .clipped()
         .task(id: world?.imageName) {
             worldImage = nil
+            viewport = WorldMapViewport()
 
             guard let imageName = world?.imageName else {
                 return
@@ -148,12 +199,16 @@ private struct WorldMapImageView: View {
         }
     }
 
-    private func section(at location: CGPoint, scale: CGFloat) -> WorldMapSection? {
-        guard let world else {
+    private func section(
+        at location: CGPoint,
+        viewport: WorldMapViewport,
+        containerSize: CGSize,
+        fittedMapSize: CGSize
+    ) -> WorldMapSection? {
+        guard let world,
+              let point = viewport.imagePoint(at: location, containerSize: containerSize, fittedMapSize: fittedMapSize, imageSize: imageSize) else {
             return nil
         }
-
-        let point = CGPoint(x: location.x / scale, y: location.y / scale)
 
         // Every dungeon entrance sits inside a map, so the smaller target wins.
         if let dungeon = world.dungeons.first(where: { $0.rect.contains(point) }) {
@@ -174,7 +229,8 @@ private struct WorldMapSectionsView: View {
     var world: WorldViewData.World
     var currentMapName: String
     var selectedSection: WorldMapSection?
-    var scale: CGFloat
+    var fittedScale: CGFloat
+    var zoomScale: CGFloat
 
     var body: some View {
         Canvas { context, _ in
@@ -185,11 +241,11 @@ private struct WorldMapSectionsView: View {
 
             for map in world.maps {
                 guard let dungeon = entrancesByGroupIndex[map.groupIndex],
-                      let line = connector(from: dungeon.rect.scaled(by: scale), to: map.rect.scaled(by: scale)) else {
+                      let line = connector(from: dungeon.rect.scaled(by: fittedScale), to: map.rect.scaled(by: fittedScale)) else {
                     continue
                 }
 
-                context.stroke(line, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.5))), lineWidth: 1)
+                context.stroke(line, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.5))), lineWidth: strokeWidth)
             }
 
             // Floors of the same dungeon often share a spot. Filling every one of
@@ -200,31 +256,39 @@ private struct WorldMapSectionsView: View {
             let sections = world.maps.map({ ($0.rect, entrancesByGroupIndex[$0.groupIndex] != nil) })
 
             for (rect, isDungeon) in entrances + sections {
-                let path = Path(roundedRect: rect.scaled(by: scale), cornerRadius: 4)
+                let path = Path(roundedRect: rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
 
                 guard isDungeon else {
-                    context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: 1)
+                    context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: strokeWidth)
                     continue
                 }
 
                 if filledOrigins.insert(SIMD2(rect.left, rect.top)).inserted {
                     context.fill(path, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.4))))
                 }
-                context.stroke(path, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.6))), lineWidth: 1)
+                context.stroke(path, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.6))), lineWidth: strokeWidth)
             }
 
             if let currentMap = world.maps.first(where: { $0.mapName.mapNameStem == currentMapName.mapNameStem }) {
-                let path = Path(roundedRect: currentMap.rect.scaled(by: scale), cornerRadius: 4)
+                let path = Path(roundedRect: currentMap.rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
                 context.fill(path, with: .color(Color(#colorLiteral(red: 1, green: 0.5019607843, blue: 0, alpha: 0.5))))
-                context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: 1)
+                context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: strokeWidth)
             }
 
             if let selectedSection {
-                let path = Path(roundedRect: selectedSection.rect.scaled(by: scale), cornerRadius: 4)
+                let path = Path(roundedRect: selectedSection.rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
                 context.fill(path, with: .color(Color(#colorLiteral(red: 0, green: 0.5019607843, blue: 1, alpha: 0.5))))
-                context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: 1)
+                context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: strokeWidth)
             }
         }
+    }
+
+    private var strokeWidth: CGFloat {
+        1 / zoomScale
+    }
+
+    private var cornerRadius: CGFloat {
+        4 / zoomScale
     }
 
     // A line from the edge of a dungeon entrance to the edge of one of its floors.
