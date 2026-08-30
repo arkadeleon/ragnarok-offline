@@ -137,6 +137,10 @@ struct MapSceneView: View {
                     SkillListView(skillList: gameContext.skillList) {
                         presentedMenuItem = nil
                     }
+                case .worldMap:
+                    WorldMapView(currentMapName: runtime.scene.mapName) {
+                        presentedMenuItem = nil
+                    }
                 case .options:
                     OptionsView(isPlayerDead: runtime.scene.state.isPlayerDead) {
                         presentedMenuItem = nil

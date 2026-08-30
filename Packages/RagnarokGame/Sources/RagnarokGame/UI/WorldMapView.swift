@@ -78,19 +78,19 @@ struct WorldMapView: View {
                 .frame(width: 120, height: 20)
                 .disabled(worlds.isEmpty)
                 .shadow(color: .black.opacity(0.5), radius: 3, y: 1)
-                .padding(10)
+                .padding(16)
             }
             .overlay(alignment: .topTrailing) {
                 Button("close", action: onClose)
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                     .shadow(color: .black.opacity(0.5), radius: 3, y: 1)
-                    .padding(10)
+                    .padding(16)
             }
             .overlay(alignment: .bottomLeading) {
                 if let selectedSection {
                     WorldMapSectionInfoView(section: selectedSection)
-                        .padding(10)
+                        .padding(16)
                 }
             }
             .task {

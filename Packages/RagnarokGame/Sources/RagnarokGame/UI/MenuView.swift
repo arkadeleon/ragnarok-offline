@@ -12,6 +12,7 @@ enum MenuItem {
     case equipment
     case inventory
     case skill
+    case worldMap
     case options
 }
 
@@ -58,17 +59,21 @@ struct MenuView: View {
                     GridRow {
                         GameButton("menu_icon/bt_guild.bmp") {
                         }
+                        .disabled(true)
                         GameButton("menu_icon/bt_battle.bmp") {
                         }
+                        .disabled(true)
                         GameButton("menu_icon/bt_quest.bmp") {
                         }
+                        .disabled(true)
                         GameButton("menu_icon/bt_map.bmp") {
+                            action(.worldMap)
                         }
                         GameButton("menu_icon/bt_navigation.bmp") {
                         }
+                        .disabled(true)
                     }
                     .frame(width: 32, height: 34)
-                    .disabled(true)
 
                     GridRow {
                         GameButton("menu_icon/bt_option.bmp") {
