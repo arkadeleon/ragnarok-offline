@@ -52,6 +52,7 @@ struct WorldMapView: View {
     var currentMapName: String
     var onClose: () -> Void = {}
 
+    @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
 
     @State private var worlds: [WorldViewData.World] = []
@@ -64,33 +65,31 @@ struct WorldMapView: View {
                 Color.black.ignoresSafeArea()
             }
             .overlay(alignment: .topLeading) {
-                Menu {
+                Menu("world") {
                     ForEach(worlds.indices, id: \.self) { index in
                         Button(worlds[index].name) {
                             selectedWorldIndex = index
                         }
                     }
-                } label: {
-                    Text(selectedWorld?.name ?? "")
                 }
                 .menuStyle(.button)
                 .buttonStyle(.game)
-                .frame(width: 120, height: 20)
-                .disabled(worlds.isEmpty)
-                .shadow(color: .black.opacity(0.5), radius: 3, y: 1)
+                .frame(width: 60, height: 20)
                 .padding(16)
+                .disabled(worlds.isEmpty)
             }
             .overlay(alignment: .topTrailing) {
                 Button("close", action: onClose)
                     .buttonStyle(.game)
-                    .frame(width: 42, height: 20)
-                    .shadow(color: .black.opacity(0.5), radius: 3, y: 1)
+                    .frame(width: 60, height: 20)
                     .padding(16)
             }
             .overlay(alignment: .bottomLeading) {
                 if let selectedSection {
-                    WorldMapSectionInfoView(section: selectedSection)
-                        .padding(16)
+                    WorldMapSectionInfoView(section: selectedSection) {
+                        teleport(to: selectedSection)
+                    }
+                    .padding(16)
                 }
             }
             .task {
@@ -103,6 +102,15 @@ struct WorldMapView: View {
 
     private var selectedWorld: WorldViewData.World? {
         worlds.indices.contains(selectedWorldIndex) ? worlds[selectedWorldIndex] : nil
+    }
+
+    private func teleport(to section: WorldMapSection) {
+        guard let mapName = section.mapName else {
+            return
+        }
+
+        gameSession.sendMessage("@warp \(mapName.mapNameStem)")
+        onClose()
     }
 }
 
@@ -326,6 +334,7 @@ private struct WorldMapSectionsView: View {
 
 private struct WorldMapSectionInfoView: View {
     var section: WorldMapSection
+    var teleportAction: () -> Void
 
     @Environment(GameContext.self) private var gameContext
 
@@ -349,6 +358,7 @@ private struct WorldMapSectionInfoView: View {
             Text(mapName)
                 .font(.game(weight: .bold))
                 .foregroundStyle(Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)))
+                .frame(maxWidth: 150)
                 .padding(.top, 3)
 
             if let mapName = section.mapName {
@@ -364,9 +374,14 @@ private struct WorldMapSectionInfoView: View {
                     .foregroundStyle(Color.white)
                     .padding(.vertical, 2)
             }
+
+            Button("teleport", action: teleportAction)
+                .buttonStyle(.game)
+                .frame(width: 60, height: 20)
+                .padding(.top, 3)
+                .disabled(section.mapName == nil)
         }
         .multilineTextAlignment(.center)
-        .shadow(color: .black, radius: 1)
         .padding(5)
         .background(Color.black.opacity(0.85))
         .clipShape(RoundedRectangle(cornerRadius: 4))
@@ -418,6 +433,9 @@ extension WorldViewData.Rect {
 }
 
 #Preview {
+    let gameSession = GameSession.testing
+
     WorldMapView(currentMapName: "prontera.gat")
-        .environment(GameContext.testing)
+        .environment(gameSession)
+        .environment(gameSession.context)
 }
