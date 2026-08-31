@@ -21,18 +21,15 @@ private struct WorldMapStack: Equatable {
     var maps: [WorldViewData.Map]
 }
 
-// A map, a map stack or a dungeon entrance the player picked on the world map.
+// A map or a map stack the player picked on the world map.
 private enum WorldMapSection: Equatable {
     case map(WorldViewData.Map)
     case mapStack(WorldMapStack)
-    case dungeonEntrance(WorldViewData.DungeonEntrance)
 
-    /// The maps drawn at this spot. A dungeon entrance has none.
     var maps: [WorldViewData.Map] {
         switch self {
         case .map(let map): [map]
         case .mapStack(let stack): stack.maps
-        case .dungeonEntrance: []
         }
     }
 
@@ -40,7 +37,6 @@ private enum WorldMapSection: Equatable {
         switch self {
         case .map(let map): map.rect
         case .mapStack(let stack): stack.rect
-        case .dungeonEntrance(let entrance): entrance.rect
         }
     }
 }
@@ -200,11 +196,6 @@ private struct WorldMapImageView: View {
             return nil
         }
 
-        // Every dungeon entrance sits inside a map, so the smaller target wins.
-        if let entrance = world.dungeonEntrances.first(where: { $0.rect.cgRect.contains(point) }) {
-            return .dungeonEntrance(entrance)
-        }
-
         // Floors of one dungeon share a rect, so every map drawn at the picked
         // spot becomes one stack.
         if let map = world.maps.first(where: { $0.rect.cgRect.contains(point) }) {
@@ -262,6 +253,20 @@ private struct WorldMapSectionsView: View {
                     context.fill(path, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.4))))
                 }
                 context.stroke(path, with: .color(Color(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.6))), lineWidth: strokeWidth)
+            }
+
+            // A dungeon is named on the floors its entrance points to, not on the
+            // entrance itself.
+            for entrance in world.dungeonEntrances {
+                guard let map = world.maps.first(where: { $0.groupIndex == entrance.groupIndex }) else {
+                    continue
+                }
+
+                let rect = map.rect.scaled(by: fittedScale)
+                let text = Text(entrance.name)
+                    .font(.game(size: 11 * fittedScale))
+                    .foregroundStyle(Color.white)
+                context.draw(text, at: CGPoint(x: rect.midX, y: rect.midY), anchor: .center)
             }
 
             if let currentMap = world.maps.first(where: { $0.mapName.mapNameStem == currentMapName.mapNameStem }) {
@@ -344,21 +349,21 @@ private struct WorldMapSectionInfoView: View {
                     MapStackThumbnails(maps: stack.maps, selectedMap: $selectedMap)
                 }
 
-                Text(name)
-                    .font(.game(weight: .bold))
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(maxWidth: previewSize)
-
                 if let selectedMap {
+                    Text(name(of: selectedMap))
+                        .font(.game(weight: .bold))
+                        .foregroundStyle(Color.gameLabel)
+                        .frame(maxWidth: previewSize)
+
                     Text(selectedMap.mapName.mapNameStem)
                         .font(.game(size: 11))
                         .foregroundStyle(Color.gameLabel)
-                }
 
-                if !monsterLevel.isEmpty {
-                    Text(verbatim: "Lv. \(monsterLevel)")
-                        .font(.game(size: 11))
-                        .foregroundStyle(Color.gameLabel)
+                    if !selectedMap.monsterLevel.isEmpty {
+                        Text(verbatim: "Lv. \(selectedMap.monsterLevel)")
+                            .font(.game(size: 11))
+                            .foregroundStyle(Color.gameLabel)
+                    }
                 }
             }
             .multilineTextAlignment(.center)
@@ -383,25 +388,8 @@ private struct WorldMapSectionInfoView: View {
         }
     }
 
-    private var name: String {
-        switch section {
-        case .map, .mapStack:
-            guard let selectedMap else {
-                return ""
-            }
-            return gameContext.mapNameTable.localizedMapName(forMapName: selectedMap.mapName.mapNameStem) ?? selectedMap.name
-        case .dungeonEntrance(let entrance):
-            return entrance.name
-        }
-    }
-
-    private var monsterLevel: String {
-        switch section {
-        case .map, .mapStack:
-            selectedMap?.monsterLevel ?? ""
-        case .dungeonEntrance(let entrance):
-            entrance.monsterLevel
-        }
+    private func name(of map: WorldViewData.Map) -> String {
+        gameContext.mapNameTable.localizedMapName(forMapName: map.mapName.mapNameStem) ?? map.name
     }
 }
 
