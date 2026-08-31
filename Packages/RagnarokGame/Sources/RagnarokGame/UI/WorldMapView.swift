@@ -13,36 +13,33 @@ import SwiftUI
 // Every world map image is this size, and the rects are pixels in it.
 private let imageSize = CGSize(width: 1280, height: 1024)
 
-// A map or a dungeon entrance the player picked on the world map.
-private enum WorldMapSection {
+// The map preview in the section info is this wide and tall.
+private let previewSize: CGFloat = 150
+
+private struct WorldMapStack: Equatable {
+    var rect: WorldViewData.Rect
+    var maps: [WorldViewData.Map]
+}
+
+// A map, a map stack or a dungeon entrance the player picked on the world map.
+private enum WorldMapSection: Equatable {
     case map(WorldViewData.Map)
+    case mapStack(WorldMapStack)
     case dungeonEntrance(WorldViewData.DungeonEntrance)
 
-    var name: String {
+    /// The maps drawn at this spot. A dungeon entrance has none.
+    var maps: [WorldViewData.Map] {
         switch self {
-        case .map(let map): map.name
-        case .dungeonEntrance(let entrance): entrance.name
-        }
-    }
-
-    /// The map name with the rsw extension. A dungeon entrance has none.
-    var mapName: String? {
-        switch self {
-        case .map(let map): map.mapName
-        case .dungeonEntrance: nil
-        }
-    }
-
-    var monsterLevel: String {
-        switch self {
-        case .map(let map): map.monsterLevel
-        case .dungeonEntrance(let entrance): entrance.monsterLevel
+        case .map(let map): [map]
+        case .mapStack(let stack): stack.maps
+        case .dungeonEntrance: []
         }
     }
 
     var rect: WorldViewData.Rect {
         switch self {
         case .map(let map): map.rect
+        case .mapStack(let stack): stack.rect
         case .dungeonEntrance(let entrance): entrance.rect
         }
     }
@@ -89,8 +86,9 @@ struct WorldMapView: View {
         }
         .overlay(alignment: .bottomLeading) {
             if let selectedSection {
-                WorldMapSectionInfoView(section: selectedSection) {
-                    teleport(to: selectedSection)
+                WorldMapSectionInfoView(section: selectedSection) { map in
+                    gameSession.sendMessage("@warp \(map.mapName.mapNameStem)")
+                    onClose()
                 }
                 .padding(16)
             }
@@ -102,15 +100,6 @@ struct WorldMapView: View {
         .onChange(of: selectedWorld) {
             selectedSection = nil
         }
-    }
-
-    private func teleport(to section: WorldMapSection) {
-        guard let mapName = section.mapName else {
-            return
-        }
-
-        gameSession.sendMessage("@warp \(mapName.mapNameStem)")
-        onClose()
     }
 }
 
@@ -214,10 +203,15 @@ private struct WorldMapImageView: View {
             return .dungeonEntrance(entrance)
         }
 
-        // Floors of one dungeon share a rect, and the first of them is the one
-        // drawn filled, so it stands for the whole stack.
+        // Floors of one dungeon share a rect, so every map drawn at the picked
+        // spot becomes one stack.
         if let map = world.maps.first(where: { $0.rect.cgRect.contains(point) }) {
-            return .map(map)
+            let maps = world.maps.filter { $0.rect == map.rect }
+            if maps.count > 1 {
+                return .mapStack(WorldMapStack(rect: map.rect, maps: maps))
+            } else {
+                return .map(map)
+            }
         }
 
         return nil
@@ -325,79 +319,141 @@ private struct WorldMapSectionsView: View {
 
 private struct WorldMapSectionInfoView: View {
     var section: WorldMapSection
-    var teleportAction: () -> Void
+    var teleportAction: (WorldViewData.Map) -> Void
 
     @Environment(GameContext.self) private var gameContext
 
-    @State private var mapImage: CGImage?
+    @State private var selectedMap: WorldViewData.Map?
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 4) {
             ZStack {
                 Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1))
 
-                if let mapImage {
-                    Image(decorative: mapImage, scale: 1)
-                        .resizable()
-                        .interpolation(.none)
-                        .aspectRatio(contentMode: .fill)
+                if let selectedMap {
+                    MapPreviewImage(map: selectedMap)
                 }
             }
-            .frame(width: 150, height: 150)
-            .clipped()
+            .frame(width: previewSize, height: previewSize)
 
-            Text(mapName)
+            if case .mapStack(let stack) = section {
+                MapStackThumbnails(maps: stack.maps, selectedMap: $selectedMap)
+            }
+
+            Text(name)
                 .font(.game(weight: .bold))
                 .foregroundStyle(Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)))
-                .frame(maxWidth: 150)
-                .padding(.top, 3)
+                .frame(maxWidth: previewSize)
 
-            if let mapName = section.mapName {
-                Text(mapName.mapNameStem)
+            if let selectedMap {
+                Text(selectedMap.mapName.mapNameStem)
                     .font(.game(size: 11))
                     .foregroundStyle(Color.white)
-                    .padding(.vertical, 2)
             }
 
-            if !section.monsterLevel.isEmpty {
-                Text(verbatim: "Lv. \(section.monsterLevel)")
+            if !monsterLevel.isEmpty {
+                Text(verbatim: "Lv. \(monsterLevel)")
                     .font(.game(size: 11))
                     .foregroundStyle(Color.white)
-                    .padding(.vertical, 2)
             }
 
-            Button("teleport", action: teleportAction)
-                .buttonStyle(.game)
-                .frame(width: 60, height: 20)
-                .padding(.top, 3)
-                .disabled(section.mapName == nil)
+            Button("teleport") {
+                if let selectedMap {
+                    teleportAction(selectedMap)
+                }
+            }
+            .buttonStyle(.game)
+            .frame(width: 60, height: 20)
+            .disabled(selectedMap == nil)
         }
         .multilineTextAlignment(.center)
-        .padding(5)
+        .padding(4)
         .background(Color.black.opacity(0.85))
         .clipShape(RoundedRectangle(cornerRadius: 4))
         .overlay {
             RoundedRectangle(cornerRadius: 4)
                 .strokeBorder(Color(#colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)), lineWidth: 1)
         }
-        .task(id: section.mapName) {
-            mapImage = nil
-
-            guard let mapName = section.mapName else {
-                return
-            }
-
-            let imagePath = ResourcePath.generateMapImagePath(mapName: mapName.mapNameStem)
-            mapImage = try? await gameContext.resourceManager.image(at: imagePath, removesMagentaPixels: true).cgImage
+        .onChange(of: section, initial: true) {
+            selectedMap = section.maps.first
         }
     }
 
-    private var mapName: String {
-        guard let mapName = section.mapName,
-              let localizedMapName = gameContext.mapNameTable.localizedMapName(forMapName: mapName.mapNameStem) else {
-            return section.name
+    private var name: String {
+        switch section {
+        case .map, .mapStack:
+            guard let selectedMap else {
+                return ""
+            }
+            return gameContext.mapNameTable.localizedMapName(forMapName: selectedMap.mapName.mapNameStem) ?? selectedMap.name
+        case .dungeonEntrance(let entrance):
+            return entrance.name
         }
-        return localizedMapName
+    }
+
+    private var monsterLevel: String {
+        switch section {
+        case .map, .mapStack:
+            selectedMap?.monsterLevel ?? ""
+        case .dungeonEntrance(let entrance):
+            entrance.monsterLevel
+        }
+    }
+}
+
+private struct MapStackThumbnails: View {
+    var maps: [WorldViewData.Map]
+    @Binding var selectedMap: WorldViewData.Map?
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 4) {
+                ForEach(maps, id: \.mapName) { map in
+                    Button {
+                        selectedMap = map
+                    } label: {
+                        MapPreviewImage(map: map)
+                            .frame(width: 32, height: 32)
+                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 2)
+                                    .strokeBorder(map == selectedMap ? Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)), lineWidth: 1)
+                            }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
+        .frame(width: previewSize)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+}
+
+private struct MapPreviewImage: View {
+    var map: WorldViewData.Map
+
+    @Environment(GameContext.self) private var gameContext
+
+    @State private var mapImage: CGImage?
+
+    var body: some View {
+        ZStack {
+            Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1))
+
+            if let mapImage {
+                Image(decorative: mapImage, scale: 1)
+                    .resizable()
+                    .interpolation(.none)
+                    .aspectRatio(contentMode: .fill)
+            }
+        }
+        .task(id: map) {
+            mapImage = nil
+
+            let imagePath = ResourcePath.generateMapImagePath(mapName: map.mapName.mapNameStem)
+            mapImage = try? await gameContext.resourceManager.image(at: imagePath, removesMagentaPixels: true).cgImage
+        }
     }
 }
 
