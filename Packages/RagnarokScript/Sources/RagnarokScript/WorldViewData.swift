@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/8/30.
 //
 
+import CoreGraphics
 import RagnarokResources
 
 final public class WorldViewData: Resource {
@@ -23,16 +24,25 @@ extension WorldViewData {
         public var top: Int
         public var right: Int
         public var bottom: Int
+
+        public var cgRect: CGRect {
+            CGRect(
+                x: left,
+                y: top,
+                width: right - left,
+                height: bottom - top
+            )
+        }
     }
 
-    public struct World: Sendable {
+    public struct World: Equatable, Sendable {
         public var name: String
         public var imageName: String
         public var maps: [WorldViewData.Map]
         public var dungeonEntrances: [WorldViewData.DungeonEntrance]
     }
 
-    public struct Map: Sendable {
+    public struct Map: Equatable, Sendable {
 
         /// Maps sharing a group index are floors represented by the entrance with that index.
         /// Group indices from 100 up have no dungeon entrance and stand on their own.
@@ -49,7 +59,7 @@ extension WorldViewData {
         public var monsterLevel: String
     }
 
-    public struct DungeonEntrance: Sendable {
+    public struct DungeonEntrance: Equatable, Sendable {
 
         /// Matches this world-map entrance node to its dungeon floor maps.
         public var groupIndex: Int

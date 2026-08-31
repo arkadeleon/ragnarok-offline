@@ -56,52 +56,52 @@ struct WorldMapView: View {
     @Environment(GameContext.self) private var gameContext
 
     @State private var worlds: [WorldViewData.World] = []
-    @State private var selectedWorldIndex = 0
+    @State private var selectedWorld: WorldViewData.World?
     @State private var selectedSection: WorldMapSection?
 
     var body: some View {
-        WorldMapImageView(world: selectedWorld, currentMapName: currentMapName, selectedSection: $selectedSection)
-            .background {
-                Color.black.ignoresSafeArea()
+        ZStack {
+            Color.black.ignoresSafeArea()
+
+            if let selectedWorld {
+                WorldMapImageView(world: selectedWorld, currentMapName: currentMapName, selectedSection: $selectedSection)
             }
-            .overlay(alignment: .topLeading) {
-                Menu("world") {
-                    ForEach(worlds.indices, id: \.self) { index in
-                        Button(worlds[index].name) {
-                            selectedWorldIndex = index
-                        }
+        }
+        .overlay(alignment: .topLeading) {
+            Menu("world") {
+                ForEach(worlds, id: \.name) { world in
+                    Button(world.name) {
+                        selectedWorld = world
                     }
                 }
-                .menuStyle(.button)
+            }
+            .menuStyle(.button)
+            .buttonStyle(.game)
+            .frame(width: 60, height: 20)
+            .padding(16)
+            .disabled(worlds.isEmpty)
+        }
+        .overlay(alignment: .topTrailing) {
+            Button("close", action: onClose)
                 .buttonStyle(.game)
                 .frame(width: 60, height: 20)
                 .padding(16)
-                .disabled(worlds.isEmpty)
-            }
-            .overlay(alignment: .topTrailing) {
-                Button("close", action: onClose)
-                    .buttonStyle(.game)
-                    .frame(width: 60, height: 20)
-                    .padding(16)
-            }
-            .overlay(alignment: .bottomLeading) {
-                if let selectedSection {
-                    WorldMapSectionInfoView(section: selectedSection) {
-                        teleport(to: selectedSection)
-                    }
-                    .padding(16)
+        }
+        .overlay(alignment: .bottomLeading) {
+            if let selectedSection {
+                WorldMapSectionInfoView(section: selectedSection) {
+                    teleport(to: selectedSection)
                 }
+                .padding(16)
             }
-            .task {
-                worlds = await gameContext.resourceManager.worldViewData().worlds
-            }
-            .onChange(of: selectedWorldIndex) {
-                selectedSection = nil
-            }
-    }
-
-    private var selectedWorld: WorldViewData.World? {
-        worlds.indices.contains(selectedWorldIndex) ? worlds[selectedWorldIndex] : nil
+        }
+        .task {
+            worlds = await gameContext.resourceManager.worldViewData().worlds
+            selectedWorld = worlds.first
+        }
+        .onChange(of: selectedWorld) {
+            selectedSection = nil
+        }
     }
 
     private func teleport(to section: WorldMapSection) {
@@ -115,7 +115,7 @@ struct WorldMapView: View {
 }
 
 private struct WorldMapImageView: View {
-    var world: WorldViewData.World?
+    var world: WorldViewData.World
     var currentMapName: String
     @Binding var selectedSection: WorldMapSection?
 
@@ -133,26 +133,22 @@ private struct WorldMapImageView: View {
             let displayedViewport = viewport.applying(gestureTransform, containerSize: geometry.size, fittedMapSize: fittedMapSize)
 
             ZStack {
-                ZStack {
-                    if let worldImage {
-                        Image(decorative: worldImage, scale: 1)
-                            .resizable()
-                    }
-
-                    if let world {
-                        WorldMapSectionsView(
-                            world: world,
-                            currentMapName: currentMapName,
-                            selectedSection: selectedSection,
-                            fittedScale: fittedScale,
-                            zoomScale: displayedViewport.zoomScale
-                        )
-                    }
+                if let worldImage {
+                    Image(decorative: worldImage, scale: 1)
+                        .resizable()
                 }
-                .frame(width: fittedMapSize.width, height: fittedMapSize.height)
-                .scaleEffect(displayedViewport.zoomScale)
-                .offset(displayedViewport.offset)
+
+                WorldMapSectionsView(
+                    world: world,
+                    currentMapName: currentMapName,
+                    selectedSection: selectedSection,
+                    fittedScale: fittedScale,
+                    zoomScale: displayedViewport.zoomScale
+                )
             }
+            .frame(width: fittedMapSize.width, height: fittedMapSize.height)
+            .scaleEffect(displayedViewport.zoomScale)
+            .offset(displayedViewport.offset)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .contentShape(.rect)
             .gesture(
@@ -194,15 +190,11 @@ private struct WorldMapImageView: View {
             }
         }
         .clipped()
-        .task(id: world?.imageName) {
+        .task(id: world.imageName) {
             worldImage = nil
             viewport = WorldMapViewport()
 
-            guard let imageName = world?.imageName else {
-                return
-            }
-
-            let imagePath = ResourcePath.userInterfaceDirectory.appending([imageName])
+            let imagePath = ResourcePath.userInterfaceDirectory.appending([world.imageName])
             worldImage = try? await gameContext.resourceManager.image(at: imagePath).cgImage
         }
     }
@@ -213,19 +205,18 @@ private struct WorldMapImageView: View {
         containerSize: CGSize,
         fittedMapSize: CGSize
     ) -> WorldMapSection? {
-        guard let world,
-              let point = viewport.imagePoint(at: location, containerSize: containerSize, fittedMapSize: fittedMapSize, imageSize: imageSize) else {
+        guard let point = viewport.imagePoint(at: location, containerSize: containerSize, fittedMapSize: fittedMapSize, imageSize: imageSize) else {
             return nil
         }
 
         // Every dungeon entrance sits inside a map, so the smaller target wins.
-        if let entrance = world.dungeonEntrances.first(where: { $0.rect.contains(point) }) {
+        if let entrance = world.dungeonEntrances.first(where: { $0.rect.cgRect.contains(point) }) {
             return .dungeonEntrance(entrance)
         }
 
         // Floors of one dungeon share a rect, and the first of them is the one
         // drawn filled, so it stands for the whole stack.
-        if let map = world.maps.first(where: { $0.rect.contains(point) }) {
+        if let map = world.maps.first(where: { $0.rect.cgRect.contains(point) }) {
             return .map(map)
         }
 
@@ -418,10 +409,6 @@ extension String {
 }
 
 extension WorldViewData.Rect {
-    fileprivate func contains(_ point: CGPoint) -> Bool {
-        CGFloat(left) <= point.x && point.x < CGFloat(right) && CGFloat(top) <= point.y && point.y < CGFloat(bottom)
-    }
-
     fileprivate func scaled(by scale: CGFloat) -> CGRect {
         CGRect(
             x: CGFloat(left) * scale,
