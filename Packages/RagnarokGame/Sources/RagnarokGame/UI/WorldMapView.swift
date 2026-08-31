@@ -89,6 +89,8 @@ struct WorldMapView: View {
                 WorldMapSectionInfoView(section: selectedSection) { map in
                     gameSession.sendMessage("@warp \(map.mapName.mapNameStem)")
                     onClose()
+                } closeAction: {
+                    self.selectedSection = nil
                 }
                 .padding(16)
             }
@@ -320,60 +322,62 @@ private struct WorldMapSectionsView: View {
 private struct WorldMapSectionInfoView: View {
     var section: WorldMapSection
     var teleportAction: (WorldViewData.Map) -> Void
+    var closeAction: () -> Void
 
     @Environment(GameContext.self) private var gameContext
 
     @State private var selectedMap: WorldViewData.Map?
 
     var body: some View {
-        VStack(spacing: 4) {
-            ZStack {
-                Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1))
+        GameWindow {
+            VStack(spacing: 4) {
+                ZStack {
+                    Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1))
+
+                    if let selectedMap {
+                        MapPreviewImage(map: selectedMap)
+                    }
+                }
+                .frame(width: previewSize, height: previewSize)
+
+                if case .mapStack(let stack) = section {
+                    MapStackThumbnails(maps: stack.maps, selectedMap: $selectedMap)
+                }
+
+                Text(name)
+                    .font(.game(weight: .bold))
+                    .foregroundStyle(Color.gameLabel)
+                    .frame(maxWidth: previewSize)
 
                 if let selectedMap {
-                    MapPreviewImage(map: selectedMap)
+                    Text(selectedMap.mapName.mapNameStem)
+                        .font(.game(size: 11))
+                        .foregroundStyle(Color.gameLabel)
+                }
+
+                if !monsterLevel.isEmpty {
+                    Text(verbatim: "Lv. \(monsterLevel)")
+                        .font(.game(size: 11))
+                        .foregroundStyle(Color.gameLabel)
                 }
             }
-            .frame(width: previewSize, height: previewSize)
-
-            if case .mapStack(let stack) = section {
-                MapStackThumbnails(maps: stack.maps, selectedMap: $selectedMap)
-            }
-
-            Text(name)
-                .font(.game(weight: .bold))
-                .foregroundStyle(Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)))
-                .frame(maxWidth: previewSize)
-
-            if let selectedMap {
-                Text(selectedMap.mapName.mapNameStem)
-                    .font(.game(size: 11))
-                    .foregroundStyle(Color.white)
-            }
-
-            if !monsterLevel.isEmpty {
-                Text(verbatim: "Lv. \(monsterLevel)")
-                    .font(.game(size: 11))
-                    .foregroundStyle(Color.white)
-            }
-
-            Button("teleport") {
-                if let selectedMap {
-                    teleportAction(selectedMap)
+            .multilineTextAlignment(.center)
+            .padding(4)
+        } titleBar: {
+            GameTitleBar(closeAction: closeAction)
+        } bottomBar: {
+            GameBottomBar {
+                Button("teleport") {
+                    if let selectedMap {
+                        teleportAction(selectedMap)
+                    }
                 }
+                .buttonStyle(.game)
+                .frame(width: 60, height: 20)
+                .disabled(selectedMap == nil)
             }
-            .buttonStyle(.game)
-            .frame(width: 60, height: 20)
-            .disabled(selectedMap == nil)
         }
-        .multilineTextAlignment(.center)
-        .padding(4)
-        .background(Color.black.opacity(0.85))
-        .clipShape(RoundedRectangle(cornerRadius: 4))
-        .overlay {
-            RoundedRectangle(cornerRadius: 4)
-                .strokeBorder(Color(#colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)), lineWidth: 1)
-        }
+        .frame(width: previewSize + 8)
         .onChange(of: section, initial: true) {
             selectedMap = section.maps.first
         }
