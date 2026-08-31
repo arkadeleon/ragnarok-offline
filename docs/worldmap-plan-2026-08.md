@@ -15,7 +15,7 @@ bytecode, same format as the scripts `ContextLoader` already loads:
 | File | Global | Contents |
 | --- | --- | --- |
 | `worldviewdata_Language.lub` | `WORLD_MSGID` | name id → name string |
-| `worldviewdata_table.lub` | `worldtable_*` | map sections and dungeon boxes |
+| `worldviewdata_table.lub` | `worldtable_*` | map sections and dungeon entrance boxes |
 | `worldviewdata_list.lub` | `World_List` | the nine world maps |
 | `worldviewdata_info.lub` | `worldview_info` | box colors, alphas, font sizes |
 | `worldviewdata_f.lub` | query functions | thin accessors, not needed |
@@ -44,19 +44,19 @@ A map table row has eight columns:
 -- group, rsw name, left, top, right, bottom, name, monster level
 ```
 
-A dungeon table row (`<mapTable>_Dun`) has seven, and no rsw name:
+A dungeon entrance table row (`<mapTable>_Dun`) has seven, and no rsw name:
 
 ```lua
 {1, 725, 17, 745, 37, WORLD_MSGID.MSI_DUN1, "110~130"}
 -- group, left, top, right, bottom, name, monster level range
 ```
 
-Rows sharing a group number belong to one dungeon: the `_Dun` row is the
-entrance box drawn on the map, the map rows are its floors. Groups numbered 100
-and up have no `_Dun` row — those are standalone fields and towns.
+Rows sharing a group number belong to one dungeon: the `_Dun` row is its
+entrance box drawn on the world map, and the map rows are its floors. Groups
+numbered 100 and up have no `_Dun` row — those are standalone fields and towns.
 
-367 sections and 51 dungeon boxes across the nine maps, against 209 sections
-across four maps in the roBrowser table.
+367 sections and 51 dungeon entrance boxes across the nine maps, against 209
+sections across four maps in the roBrowser table.
 
 Rects are pixels in a 1280x1024 space, and every world map image is 1280x1024,
 so a rect maps to the drawn image by a single scale factor. Note the columns are
@@ -79,15 +79,15 @@ localized and covers 332 of the 367 rsw names. The 35 it misses are newer maps:
 `odin_past`, `ygg_roots`, `prt_mk`, `abyss_04`, `bif_fild0*`, `gw_fild0*`,
 `dic_dun03`, `ein_dun03`, `mag_dun03`.
 
-Dungeon boxes have no rsw name at all, so `MapNameTable` cannot name them. Their
-only source is `WORLD_MSGID`.
+Dungeon entrance boxes have no rsw name at all, so `MapNameTable` cannot name
+them. Their only source is `WORLD_MSGID`.
 
 Two ways out, decided before Step 3:
 
 1. Bump `ragnarok-lua` to `master`, which replaces the Objective-C context with
    a Swift one whose `LuaValue.string(using:)` decodes CP949. `ScriptContext`
    and `ContextLoader` need migrating to the new API — small, but its own change.
-2. Leave dungeon boxes unnamed for now and show only the level range.
+2. Leave dungeon entrance boxes unnamed for now and show only the level range.
 
 ## Not in scope
 
@@ -108,12 +108,12 @@ Each step is one reviewable change.
    parses the three lub files into Swift values, reached through
    `ResourceManager.worldViewData()` like `scriptContext()`. Its own Lua context,
    loaded on demand — the global `ContextLoader` runs at startup and nothing else
-   needs these tables. Tests cover the row shapes and the group/dungeon pairing.
+   needs these tables. Tests cover the row shapes and the map/entrance pairing.
 2. **Static map.** `WorldMapView`: aspect-fit background, world map switcher,
    section rects drawn with `Canvas`. No interaction yet.
-3. **Dungeons.** Dungeon boxes, floor-to-entrance connector lines (the geometry
-   in `WorldMap.js` `createWorldMapView` carries over), and the current map
-   highlighted from `MapScene.mapName`.
+3. **Dungeons.** Dungeon entrance boxes, floor-to-entrance connector lines (the
+   geometry in `WorldMap.js` `createWorldMapView` carries over), and the current
+   map highlighted from `MapScene.mapName`.
 4. **Selection.** Tap or hover a section to show its name, rsw name, monster
    level, and the `map/<rsw>.bmp` thumbnail, loaded the way `MinimapView` does.
 5. **Zoom and pan.** A 1280x1024 map scaled to an iPhone screen leaves sections

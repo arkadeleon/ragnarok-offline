@@ -43,12 +43,12 @@ struct WorldViewDataLoader {
         return WorldViewData(worlds: worlds)
     }
 
-    // A world is `{name, map table name, dungeon table name, image name}`.
+    // A world is `{name, map table name, dungeon entrance table name, image name}`.
     private func world(from value: LuaValue, in context: LuaContext) -> WorldViewData.World? {
         guard let columns = value.arrayValue, columns.count >= 4,
               let name = columns[0].stringValue,
               let mapTableName = columns[1].stringValue,
-              let dungeonTableName = columns[2].stringValue,
+              let dungeonEntranceTableName = columns[2].stringValue,
               let imageName = columns[3].stringValue else {
             return nil
         }
@@ -56,15 +56,15 @@ struct WorldViewDataLoader {
         let maps = (context[mapTableName].arrayValue ?? []).compactMap { value in
             map(from: value)
         }
-        let dungeons = (context[dungeonTableName].arrayValue ?? []).compactMap { value in
-            dungeon(from: value)
+        let dungeonEntrances = (context[dungeonEntranceTableName].arrayValue ?? []).compactMap { value in
+            dungeonEntrance(from: value)
         }
 
         return WorldViewData.World(
             name: name,
             imageName: imageName,
             maps: maps,
-            dungeons: dungeons
+            dungeonEntrances: dungeonEntrances
         )
     }
 
@@ -86,15 +86,15 @@ struct WorldViewDataLoader {
         )
     }
 
-    // A dungeon is `{group, left, top, right, bottom, name, monster level}`.
-    private func dungeon(from value: LuaValue) -> WorldViewData.Dungeon? {
+    // A dungeon entrance is `{group, left, top, right, bottom, name, monster level}`.
+    private func dungeonEntrance(from value: LuaValue) -> WorldViewData.DungeonEntrance? {
         guard let columns = value.arrayValue, columns.count >= 7,
               let groupIndex = columns[0].intValue,
               let rect = rect(from: columns[1...4]) else {
             return nil
         }
 
-        return WorldViewData.Dungeon(
+        return WorldViewData.DungeonEntrance(
             groupIndex: groupIndex,
             rect: rect,
             name: name(from: columns[5]),

@@ -29,16 +29,16 @@ extension WorldViewData {
         public var name: String
         public var imageName: String
         public var maps: [WorldViewData.Map]
-        public var dungeons: [WorldViewData.Dungeon]
+        public var dungeonEntrances: [WorldViewData.DungeonEntrance]
     }
 
     public struct Map: Sendable {
 
-        /// Maps sharing a group index belong to the dungeon with that index.
-        /// Group indices from 100 up have no dungeon and stand on their own.
+        /// Maps sharing a group index are floors represented by the entrance with that index.
+        /// Group indices from 100 up have no dungeon entrance and stand on their own.
         public var groupIndex: Int
 
-        /// The map name with the rsw extension, such as `tha_t01.rsw`.
+        /// The map name with the rsw extension, such as `prontera.rsw`.
         public var mapName: String
 
         public var rect: WorldViewData.Rect
@@ -49,8 +49,9 @@ extension WorldViewData {
         public var monsterLevel: String
     }
 
-    public struct Dungeon: Sendable {
+    public struct DungeonEntrance: Sendable {
 
+        /// Matches this world-map entrance node to its dungeon floor maps.
         public var groupIndex: Int
 
         public var rect: WorldViewData.Rect

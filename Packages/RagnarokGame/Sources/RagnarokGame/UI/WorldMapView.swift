@@ -16,12 +16,12 @@ private let imageSize = CGSize(width: 1280, height: 1024)
 // A map or a dungeon entrance the player picked on the world map.
 private enum WorldMapSection {
     case map(WorldViewData.Map)
-    case dungeon(WorldViewData.Dungeon)
+    case dungeonEntrance(WorldViewData.DungeonEntrance)
 
     var name: String {
         switch self {
         case .map(let map): map.name
-        case .dungeon(let dungeon): dungeon.name
+        case .dungeonEntrance(let entrance): entrance.name
         }
     }
 
@@ -29,21 +29,21 @@ private enum WorldMapSection {
     var mapName: String? {
         switch self {
         case .map(let map): map.mapName
-        case .dungeon: nil
+        case .dungeonEntrance: nil
         }
     }
 
     var monsterLevel: String {
         switch self {
         case .map(let map): map.monsterLevel
-        case .dungeon(let dungeon): dungeon.monsterLevel
+        case .dungeonEntrance(let entrance): entrance.monsterLevel
         }
     }
 
     var rect: WorldViewData.Rect {
         switch self {
         case .map(let map): map.rect
-        case .dungeon(let dungeon): dungeon.rect
+        case .dungeonEntrance(let entrance): entrance.rect
         }
     }
 }
@@ -219,8 +219,8 @@ private struct WorldMapImageView: View {
         }
 
         // Every dungeon entrance sits inside a map, so the smaller target wins.
-        if let dungeon = world.dungeons.first(where: { $0.rect.contains(point) }) {
-            return .dungeon(dungeon)
+        if let entrance = world.dungeonEntrances.first(where: { $0.rect.contains(point) }) {
+            return .dungeonEntrance(entrance)
         }
 
         // Floors of one dungeon share a rect, and the first of them is the one
@@ -243,13 +243,13 @@ private struct WorldMapSectionsView: View {
     var body: some View {
         Canvas { context, _ in
             let entrancesByGroupIndex = Dictionary(
-                world.dungeons.map({ ($0.groupIndex, $0) }),
+                world.dungeonEntrances.map({ ($0.groupIndex, $0) }),
                 uniquingKeysWith: { first, _ in first }
             )
 
             for map in world.maps {
-                guard let dungeon = entrancesByGroupIndex[map.groupIndex],
-                      let line = connector(from: dungeon.rect.scaled(by: fittedScale), to: map.rect.scaled(by: fittedScale)) else {
+                guard let entrance = entrancesByGroupIndex[map.groupIndex],
+                      let line = connector(from: entrance.rect.scaled(by: fittedScale), to: map.rect.scaled(by: fittedScale)) else {
                     continue
                 }
 
@@ -260,13 +260,13 @@ private struct WorldMapSectionsView: View {
             // them would stack up to a solid box, so only the first is filled.
             var filledOrigins: Set<SIMD2<Int>> = []
 
-            let entrances = world.dungeons.map({ ($0.rect, true) })
+            let entrances = world.dungeonEntrances.map({ ($0.rect, true) })
             let sections = world.maps.map({ ($0.rect, entrancesByGroupIndex[$0.groupIndex] != nil) })
 
-            for (rect, isDungeon) in entrances + sections {
+            for (rect, isDungeonEntrance) in entrances + sections {
                 let path = Path(roundedRect: rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
 
-                guard isDungeon else {
+                guard isDungeonEntrance else {
                     context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: strokeWidth)
                     continue
                 }
