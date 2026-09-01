@@ -26,13 +26,19 @@ struct WorldMapView: View {
     @State private var worlds: [WorldViewData.World] = []
     @State private var selectedWorld: WorldViewData.World?
     @State private var selectedMap: WorldViewData.Map?
+    @State private var showsMapPreviews = false
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
             if let selectedWorld {
-                WorldMapImageView(world: selectedWorld, currentMapName: currentMapName, selectedMap: $selectedMap)
+                WorldMapImageView(
+                    world: selectedWorld,
+                    currentMapName: currentMapName,
+                    showsMapPreviews: showsMapPreviews,
+                    selectedMap: $selectedMap
+                )
             }
         }
         .overlay(alignment: .topLeading) {
@@ -62,6 +68,14 @@ struct WorldMapView: View {
             }
             .padding(16)
         }
+        .overlay(alignment: .bottomTrailing) {
+            Button(showsMapPreviews ? "hide maps" : "show maps") {
+                showsMapPreviews.toggle()
+            }
+            .buttonStyle(.game)
+            .frame(width: 80, height: 20)
+            .padding(16)
+        }
         .task {
             worlds = await gameContext.resourceManager.worldViewData().worlds
             selectedWorld = worlds.first
@@ -83,6 +97,7 @@ struct WorldMapView: View {
 private struct WorldMapImageView: View {
     var world: WorldViewData.World
     var currentMapName: String
+    var showsMapPreviews: Bool
     @Binding var selectedMap: WorldViewData.Map?
 
     @Environment(GameContext.self) private var gameContext
@@ -102,6 +117,10 @@ private struct WorldMapImageView: View {
                 if let worldImage {
                     Image(decorative: worldImage, scale: 1)
                         .resizable()
+                }
+
+                if showsMapPreviews {
+                    WorldMapPreviewsView(world: world, fittedScale: fittedScale)
                 }
 
                 WorldMapOverlayView(
@@ -306,6 +325,8 @@ private struct WorldMapInfoView: View {
                 VStack(spacing: 4) {
                     MapPreviewImage(map: map)
                         .frame(width: previewSize, height: previewSize)
+                        .background(Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1)))
+                        .clipped()
 
                     if maps.count > 1 {
                         MapStackThumbnails(maps: maps, selectedMap: map) { map in
@@ -352,6 +373,28 @@ private struct WorldMapInfoView: View {
     }
 }
 
+private struct WorldMapPreviewsView: View {
+    var world: WorldViewData.World
+    var fittedScale: CGFloat
+
+    var body: some View {
+        ZStack {
+            ForEach(maps, id: \.mapName) { map in
+                let rect = map.rect.scaled(by: fittedScale)
+                MapPreviewImage(map: map)
+                    .frame(width: rect.width, height: rect.height)
+                    .clipped()
+                    .position(x: rect.midX, y: rect.midY)
+            }
+        }
+    }
+
+    private var maps: [WorldViewData.Map] {
+        let dungeonGroupIndices = Set(world.dungeonEntrances.map(\.groupIndex))
+        return world.maps.filter { !dungeonGroupIndices.contains($0.groupIndex) }
+    }
+}
+
 private struct MapStackThumbnails: View {
     var maps: [WorldViewData.Map]
     var selectedMap: WorldViewData.Map
@@ -366,6 +409,7 @@ private struct MapStackThumbnails: View {
                     } label: {
                         MapPreviewImage(map: map)
                             .frame(width: 32, height: 32)
+                            .background(Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1)))
                             .clipShape(RoundedRectangle(cornerRadius: 2))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 2)
@@ -391,8 +435,6 @@ private struct MapPreviewImage: View {
 
     var body: some View {
         ZStack {
-            Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1))
-
             if let mapImage {
                 Image(decorative: mapImage, scale: 1)
                     .resizable()
