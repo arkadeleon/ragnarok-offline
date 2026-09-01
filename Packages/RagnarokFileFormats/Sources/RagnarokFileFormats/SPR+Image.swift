@@ -48,7 +48,7 @@ extension SPR {
             }
 
             let byteOrder = CGBitmapInfo.byteOrder32Big
-            let alphaInfo = CGImageAlphaInfo.last
+            let alphaInfo = CGImageAlphaInfo.premultipliedLast
             let bitmapInfo = CGBitmapInfo(rawValue: byteOrder.rawValue | alphaInfo.rawValue)
 
             var data = sprite.data
@@ -57,10 +57,13 @@ extension SPR {
             }
 
             let bitmapData = data
-                .map { colorIndex in
-                    var color = palette.colors[Int(colorIndex)]
-                    color.alpha = colorIndex == 0 ? 0 : 255
-                    return [color.red, color.green, color.blue, color.alpha]
+                .map { colorIndex -> [UInt8] in
+                    if colorIndex == 0 {
+                        return [0, 0, 0, 0]
+                    } else {
+                        let color = palette.colors[Int(colorIndex)]
+                        return [color.red, color.green, color.blue, 255]
+                    }
                 }
                 .flatMap({ $0 })
             guard let provider = CGDataProvider(data: Data(bitmapData) as CFData) else {

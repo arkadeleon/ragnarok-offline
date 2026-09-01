@@ -64,12 +64,13 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
     }
 
     SpriteFragmentOut out;
-    out.color = color * in.color;
+    // The texture is already premultiplied, so only the tint's alpha is applied here.
+    out.color = float4(color.rgb * in.color.rgb * in.color.a, color.a * in.color.a);
     out.depth = in.position.z;
 
     if (uniforms.fogUse) {
         float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
-        out.color.rgb = mix(out.color.rgb, uniforms.fogColor, fogAmount);
+        out.color.rgb = mix(out.color.rgb, uniforms.fogColor * out.color.a, fogAmount);
     }
 
     if (uniforms.cameraPosition.w != 0.0) {
