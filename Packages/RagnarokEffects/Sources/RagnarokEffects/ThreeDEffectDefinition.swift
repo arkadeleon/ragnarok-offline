@@ -68,8 +68,9 @@ public struct EffectAxes: Sendable {
 // - size:                           size, sizeX, sizeY
 // - sizeStart:                      sizeStart, sizeStartX, sizeStartY
 // - sizeEnd:                        sizeEnd, sizeEndX, sizeEndY
-// - sizeXRandomRange:               sizeRand, sizeRandX, sizeRandXMiddle
-// - sizeYRandomRange:               sizeRand, sizeRandY, sizeRandYMiddle
+// - sizeRandomRange:                sizeRand (one roll, both axes get it)
+// - sizeXRandomRange:               sizeRandX, sizeRandXMiddle
+// - sizeYRandomRange:               sizeRandY, sizeRandYMiddle
 // - smoothSize:                     sizeSmooth
 // - angle:                          angle
 // - targetAngle:                    toAngle
@@ -143,6 +144,7 @@ public struct ThreeDEffectDefinition: Sendable {
     public var size: SIMD2<Float>
     public var sizeStart: SIMD2<Float>?
     public var sizeEnd: SIMD2<Float>?
+    public var sizeRandomRange: ClosedRange<Float>?
     public var sizeXRandomRange: ClosedRange<Float>?
     public var sizeYRandomRange: ClosedRange<Float>?
     public var smoothSize: Bool
@@ -237,6 +239,7 @@ extension EffectDefinition {
         size: SIMD2<Float> = [100, 100],
         sizeStart: SIMD2<Float>? = nil,
         sizeEnd: SIMD2<Float>? = nil,
+        sizeRandomRange: ClosedRange<Float>? = nil,
         sizeXRandomRange: ClosedRange<Float>? = nil,
         sizeYRandomRange: ClosedRange<Float>? = nil,
         smoothSize: Bool = false,
@@ -303,6 +306,7 @@ extension EffectDefinition {
             size: size,
             sizeStart: sizeStart,
             sizeEnd: sizeEnd,
+            sizeRandomRange: sizeRandomRange,
             sizeXRandomRange: sizeXRandomRange,
             sizeYRandomRange: sizeYRandomRange,
             smoothSize: smoothSize,

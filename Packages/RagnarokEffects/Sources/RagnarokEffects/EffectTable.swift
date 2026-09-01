@@ -31,8 +31,7 @@ public enum EffectTable {
                 positionEndYRandomRange: -2...2,
                 positionEndZRandomRange: -2...2,
                 size: [10, 10],
-                sizeXRandomRange: -10...30,
-                sizeYRandomRange: -10...30,
+                sizeRandomRange: -10...30,
                 smoothSize: true
             ),
         ],
@@ -907,8 +906,7 @@ public enum EffectTable {
                 positionYRandomRange: -1.5...1.5,
                 positionEndZRandomRange: 4...8,
                 size: [9, 9],
-                sizeXRandomRange: 7...11,
-                sizeYRandomRange: 7...11
+                sizeRandomRange: 7...11
             ),
             .`3D`(
                 kind: .texture("effect\\pok3.tga"),
@@ -926,8 +924,7 @@ public enum EffectTable {
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: -1...1,
                 size: [9, 9],
-                sizeXRandomRange: 7...11,
-                sizeYRandomRange: 7...11
+                sizeRandomRange: 7...11
             ),
         ],
         .ef_heal3: [
@@ -975,8 +972,7 @@ public enum EffectTable {
                 positionYRandomRange: -1.5...1.5,
                 positionEndZRandomRange: 3...9,
                 size: [9, 9],
-                sizeXRandomRange: 7...11,
-                sizeYRandomRange: 7...11
+                sizeRandomRange: 7...11
             ),
             .`3D`(
                 kind: .texture("effect\\pok3.tga"),
@@ -996,8 +992,7 @@ public enum EffectTable {
                 positionYRandomRange: -1...1,
                 positionStartZRandomRange: -1...1,
                 size: [9, 9],
-                sizeXRandomRange: 7...11,
-                sizeYRandomRange: 7...11
+                sizeRandomRange: 7...11
             ),
         ],
         .ef_warpzone2: [

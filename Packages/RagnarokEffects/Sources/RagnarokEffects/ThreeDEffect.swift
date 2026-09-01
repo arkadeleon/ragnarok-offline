@@ -155,6 +155,11 @@ public struct ThreeDEffect: Sendable {
             var sizeStart = definition.sizeStart ?? definition.size
             var sizeEnd = definition.sizeEnd ?? definition.size
 
+            if let range = definition.sizeRandomRange {
+                let random = Float.random(in: range)
+                sizeStart = [random, random]
+                sizeEnd = [random, random]
+            }
             if let range = definition.sizeXRandomRange {
                 let random = Float.random(in: range)
                 sizeStart.x = random
