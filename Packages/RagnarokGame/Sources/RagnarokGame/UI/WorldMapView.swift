@@ -381,7 +381,7 @@ private struct WorldMapPreviewsView: View {
         ZStack {
             ForEach(maps, id: \.mapName) { map in
                 let rect = map.rect.scaled(by: fittedScale)
-                MapPreviewImage(map: map)
+                MapPreviewImage(map: map, thumbnailPixelSize: CGSize(width: 60, height: 60))
                     .frame(width: rect.width, height: rect.height)
                     .clipped()
                     .position(x: rect.midX, y: rect.midY)
@@ -407,8 +407,8 @@ private struct MapStackThumbnails: View {
                     Button {
                         selectAction(map)
                     } label: {
-                        MapPreviewImage(map: map)
-                            .frame(width: 32, height: 32)
+                        MapPreviewImage(map: map, thumbnailPixelSize: CGSize(width: 30, height: 30))
+                            .frame(width: 30, height: 30)
                             .background(Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1)))
                             .clipShape(RoundedRectangle(cornerRadius: 2))
                             .overlay {
@@ -428,6 +428,7 @@ private struct MapStackThumbnails: View {
 
 private struct MapPreviewImage: View {
     var map: WorldViewData.Map
+    var thumbnailPixelSize: CGSize?
 
     @Environment(GameContext.self) private var gameContext
 
@@ -444,9 +445,7 @@ private struct MapPreviewImage: View {
         }
         .task(id: map) {
             mapImage = nil
-
-            let imagePath = ResourcePath.generateMapImagePath(mapName: map.mapName.mapNameStem)
-            mapImage = try? await gameContext.resourceManager.image(at: imagePath, removesMagentaPixels: true).cgImage
+            mapImage = try? await gameContext.resourceManager.mapImage(forMapName: map.mapName.mapNameStem, thumbnailPixelSize: thumbnailPixelSize).cgImage
         }
     }
 }

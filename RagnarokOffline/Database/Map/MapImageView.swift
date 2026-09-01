@@ -12,7 +12,7 @@ struct MapImageView: View {
 
     var body: some View {
         ZStack {
-            if let mapImage = map.image {
+            if let mapImage = map.smallImage {
                 Image(decorative: mapImage.cgImage, scale: 1)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -24,7 +24,7 @@ struct MapImageView: View {
         }
         .frame(width: 40, height: 40)
         .task {
-            await map.fetchImage()
+            await map.fetchSmallImage()
         }
     }
 }

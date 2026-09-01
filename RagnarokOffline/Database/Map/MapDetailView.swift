@@ -18,7 +18,7 @@ struct MapDetailView: View {
     var body: some View {
         DatabaseRecordDetailView {
             ZStack {
-                if let mapImage = map.image {
+                if let mapImage = map.originalImage {
                     Image(decorative: mapImage.cgImage, scale: 1)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -53,7 +53,7 @@ struct MapDetailView: View {
         }
         .navigationTitle(map.displayName)
         .task {
-            await map.fetchImage()
+            await map.fetchOriginalImage()
         }
         .task {
             spawningMonsters = await database.spawningMonsters(forMapName: map.name)

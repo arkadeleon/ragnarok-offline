@@ -19,7 +19,8 @@ final class MapModel {
 
     let localizedName: String?
 
-    var image: Resources.Image?
+    var smallImage: Resources.Image?
+    var originalImage: Resources.Image?
 
     var displayName: String {
         localizedName ?? map.name
@@ -37,10 +38,17 @@ final class MapModel {
     }
 
     @MainActor
-    func fetchImage() async {
-        if image == nil {
-            let path = ResourcePath.generateMapImagePath(mapName: map.name)
-            image = try? await resourceManager.image(at: path, removesMagentaPixels: true)
+    func fetchSmallImage() async {
+        if smallImage == nil {
+            let thumbnailPixelSize = CGSize(width: 60, height: 60)
+            smallImage = try? await resourceManager.mapImage(forMapName: map.name, thumbnailPixelSize: thumbnailPixelSize)
+        }
+    }
+
+    @MainActor
+    func fetchOriginalImage() async {
+        if originalImage == nil {
+            originalImage = try? await resourceManager.mapImage(forMapName: map.name)
         }
     }
 }

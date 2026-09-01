@@ -60,10 +60,9 @@ struct MinimapView: View {
         .frame(width: mapSize)
         .task(id: scene.mapName) {
             let mapName = scene.mapName.split(separator: ".", maxSplits: 1).first.map(String.init) ?? scene.mapName
-            let mapImagePath = ResourcePath.generateMapImagePath(mapName: mapName)
-            let arrowImagePath = ResourcePath.userInterfaceDirectory.appending(["map", "map_arrow.bmp"])
+            async let mapImageResource = try? gameContext.resourceManager.mapImage(forMapName: mapName)
 
-            async let mapImageResource = try? gameContext.resourceManager.image(at: mapImagePath, removesMagentaPixels: true)
+            let arrowImagePath = ResourcePath.userInterfaceDirectory.appending(["map", "map_arrow.bmp"])
             async let arrowImageResource = try? gameContext.resourceManager.image(at: arrowImagePath, removesMagentaPixels: true)
 
             mapImage = await mapImageResource?.cgImage

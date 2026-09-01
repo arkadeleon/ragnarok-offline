@@ -48,7 +48,7 @@ extension CGImage {
             width: Int(targetSize.width),
             height: Int(targetSize.height),
             bitsPerComponent: 8,
-            bytesPerRow: width * 4,
+            bytesPerRow: Int(targetSize.width) * 4,
             space: colorSpace,
             bitmapInfo: bitmapInfo
         ) else {
