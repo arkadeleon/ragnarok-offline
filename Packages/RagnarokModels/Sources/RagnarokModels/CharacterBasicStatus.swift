@@ -62,7 +62,7 @@ public struct CharacterBasicStatus: Sendable {
         flee = Int(packet.avoidSuccessValue)
         flee2 = Int(packet.plusAvoidSuccessValue)
         critical = Int(packet.criticalSuccessValue)
-        aspd = Int(packet.ASPD + packet.plusASPD) / 4
+        aspd = Int(packet.ASPD + packet.plusASPD)
         statusPoint = Int(packet.point)
     }
 }

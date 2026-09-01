@@ -185,7 +185,7 @@ public struct CharacterStatus {
         case .critical:
             critical = value
         case .aspd:
-            aspd = value / 4
+            aspd = value
         case .statuspoint:
             statusPoint = value
         case .skillpoint:

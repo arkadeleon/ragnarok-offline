@@ -53,7 +53,7 @@ struct StatusView: View {
                             SecondaryStatRow("Def", value: "\(status.def)")
                             SecondaryStatRow("Mdef", value: "\(status.mdef)")
                             SecondaryStatRow("Flee", value: "\(status.flee)")
-                            SecondaryStatRow("Aspd", value: "\(status.aspd)")
+                            SecondaryStatRow("Aspd", value: "\((2000 - status.aspd) / 10)")
                         }
                     }
 
