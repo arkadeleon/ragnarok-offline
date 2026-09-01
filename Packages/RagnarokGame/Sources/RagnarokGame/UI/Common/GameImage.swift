@@ -49,8 +49,13 @@ struct GameImage<Content>: View where Content: View {
 }
 
 #Preview {
-    GameImage("win_msgbox.bmp")
-        .frame(width: 280, height: 120)
-        .padding()
-        .environment(GameContext.testing)
+    GameImage("bgi_temp.bmp") { image in
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+    }
+    .frame(width: 280, height: 120)
+    .clipped()
+    .padding()
+    .environment(GameContext.testing)
 }

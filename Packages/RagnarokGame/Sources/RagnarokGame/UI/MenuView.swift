@@ -23,16 +23,8 @@ struct MenuView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if !isExpanded {
-                GameButton("menu_icon/bt_menu_normal.bmp") {
-                    isExpanded.toggle()
-                }
-                .frame(width: 219, height: 9)
-            } else {
-                GameButton("menu_icon/bt_menu_close_normal.bmp") {
-                    isExpanded.toggle()
-                }
-                .frame(width: 219, height: 9)
+            MenuExpandButton(isExpanded: isExpanded) {
+                isExpanded.toggle()
             }
 
             if isExpanded {
@@ -111,13 +103,49 @@ struct MenuView: View {
                 }
                 .padding(10)
                 .background(.black.opacity(0.5))
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .clipShape(RoundedRectangle(cornerRadius: 3))
             }
         }
     }
 
     init(action: @escaping (MenuItem) -> Void) {
         self.action = action
+    }
+}
+
+private struct MenuExpandButton: View {
+    var isExpanded: Bool
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            RoundedRectangle(cornerRadius: 3)
+                .fill(.white)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color(#colorLiteral(red: 0.9607843137, green: 0.9764705882, blue: 0.9921568627, alpha: 1)),
+                                    Color(#colorLiteral(red: 0.9137254902, green: 0.9411764706, blue: 0.9803921569, alpha: 1)),
+                                    Color(#colorLiteral(red: 0.8509803922, green: 0.8980392157, blue: 0.9647058824, alpha: 1)),
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .padding(1)
+                }
+                .overlay {
+                    GameTriangle()
+                        .fill(Color(#colorLiteral(red: 0.2156862745, green: 0.2980392157, blue: 0.4705882353, alpha: 1)))
+                        .frame(width: 9, height: 5)
+                        .rotationEffect(.degrees(isExpanded ? 0 : 180))
+                }
+                .frame(width: 220, height: 12)
+                .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
     }
 }
 
