@@ -58,6 +58,7 @@ final class TileSelectorRenderer {
         )
 
         var fragmentUniforms = TileFragmentUniforms(
+            color: [1, 1, 1, 1],
             fogUse: fog.isEnabled ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,
@@ -80,28 +81,83 @@ final class TileSelectorRenderer {
             length: MemoryLayout<TileFragmentUniforms>.stride,
             index: 0
         )
-        renderCommandEncoder.setFragmentTexture(tileSelector.texture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
+    /// Four corner brackets, each an L, sized as fractions of the tile.
     private func makeVertices(position: SIMD2<Int>, cell: MapGrid.Cell) -> [TileVertex] {
-        let x = Float(position.x)
-        let y = Float(position.y)
+        let length: Float = 9 / 32
+        let thickness: Float = 4 / 32
 
-        // The model matrix turns these into render space. The +0.1 vertical offset
-        // keeps the overlay above the tile surface.
-        let p0 = SIMD3<Float>(x, -(cell.bottomLeftAltitude + 0.1), y)
-        let p1 = SIMD3<Float>(x + 1, -(cell.bottomRightAltitude + 0.1), y)
-        let p2 = SIMD3<Float>(x + 1, -(cell.topRightAltitude + 0.1), y + 1)
-        let p3 = SIMD3<Float>(x, -(cell.topLeftAltitude + 0.1), y + 1)
+        // Cutting the L along the diagonal of its elbow leaves two congruent
+        // trapezoids. Corners are offsets from the tile corner toward the middle,
+        // and swapping u and v maps one trapezoid onto the other.
+        let trapezoids: [(SIMD2<Float>, SIMD2<Float>, SIMD2<Float>, SIMD2<Float>)] = [
+            ([0, 0], [length, 0], [length, thickness], [thickness, thickness]),
+            ([0, 0], [thickness, thickness], [thickness, length], [0, length]),
+        ]
+
+        var vertices: [TileVertex] = []
+        vertices.reserveCapacity(4 * trapezoids.count * 6)
+
+        let corners: [SIMD2<Float>] = [[0, 0], [1, 0], [1, 1], [0, 1]]
+        for corner in corners {
+            let inward: SIMD2<Float> = [
+                corner.x == 0 ? 1 : -1,
+                corner.y == 0 ? 1 : -1,
+            ]
+
+            for (a, b, c, d) in trapezoids {
+                vertices += makeQuad(
+                    corner + inward * a,
+                    corner + inward * b,
+                    corner + inward * c,
+                    corner + inward * d,
+                    position: position,
+                    cell: cell
+                )
+            }
+        }
+
+        return vertices
+    }
+
+    private func makeQuad(_ a: SIMD2<Float>, _ b: SIMD2<Float>, _ c: SIMD2<Float>, _ d: SIMD2<Float>, position: SIMD2<Int>, cell: MapGrid.Cell) -> [TileVertex] {
+        let p0 = makePosition(a, position: position, cell: cell)
+        let p1 = makePosition(b, position: position, cell: cell)
+        let p2 = makePosition(c, position: position, cell: cell)
+        let p3 = makePosition(d, position: position, cell: cell)
 
         return [
-            TileVertex(position: p0, textureCoordinate: [0, 0]),
-            TileVertex(position: p1, textureCoordinate: [1, 0]),
-            TileVertex(position: p2, textureCoordinate: [1, 1]),
-            TileVertex(position: p2, textureCoordinate: [1, 1]),
-            TileVertex(position: p3, textureCoordinate: [0, 1]),
-            TileVertex(position: p0, textureCoordinate: [0, 0]),
+            TileVertex(position: p0),
+            TileVertex(position: p1),
+            TileVertex(position: p2),
+            TileVertex(position: p2),
+            TileVertex(position: p3),
+            TileVertex(position: p0),
         ]
+    }
+
+    /// Turns a point in tile space, where (0, 0) is the tile's bottom left and
+    /// (1, 1) its top right, into the space the model matrix expects. The altitude
+    /// follows the same two triangles the ground is built from, so the brackets stay
+    /// parallel to the surface on cells whose corners are not coplanar. The 0.1
+    /// offset lifts them above it.
+    private func makePosition(_ point: SIMD2<Float>, position: SIMD2<Int>, cell: MapGrid.Cell) -> SIMD3<Float> {
+        let altitude = if point.y <= point.x {
+            cell.bottomLeftAltitude
+                + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * point.x
+                + (cell.topRightAltitude - cell.bottomRightAltitude) * point.y
+        } else {
+            cell.bottomLeftAltitude
+                + (cell.topRightAltitude - cell.topLeftAltitude) * point.x
+                + (cell.topLeftAltitude - cell.bottomLeftAltitude) * point.y
+        }
+
+        return SIMD3<Float>(
+            Float(position.x) + point.x,
+            -(altitude + 0.1),
+            Float(position.y) + point.y
+        )
     }
 }

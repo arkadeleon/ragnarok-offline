@@ -48,14 +48,6 @@ final class MapSceneRuntime {
 
         renderResources.loadWorld(worldAsset)
 
-        do {
-            let path = ResourcePath.textureDirectory.appending(["grid.tga"])
-            let image = try await scene.resourceManager.image(at: path)
-            renderResources.loadTileSelectorTexture(from: image.cgImage)
-        } catch {
-            logger.warning("Map scene failed to load grid.tga: \(error)")
-        }
-
         renderResources.prepareSprites(resourceManager: scene.resourceManager)
 
         do {
@@ -139,13 +131,11 @@ final class MapSceneRuntime {
         snapshot.spriteDrawables = renderResources.spriteDrawables
 
         if let tileSelector = scene.tileSelector,
-           let tileSelectorTexture = renderResources.tileSelectorTexture,
            !tileSelector.isExpired(at: now),
            scene.mapGrid.contains(tileSelector.position) {
             snapshot.tileSelector = MapSceneRenderSnapshot.TileSelector(
                 position: tileSelector.position,
-                cell: scene.mapGrid[tileSelector.position],
-                texture: tileSelectorTexture
+                cell: scene.mapGrid[tileSelector.position]
             )
         }
 

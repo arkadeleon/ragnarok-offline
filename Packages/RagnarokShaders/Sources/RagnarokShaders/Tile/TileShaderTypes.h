@@ -9,7 +9,6 @@
 
 typedef struct {
     vector_float3 position;
-    vector_float2 textureCoordinate;
 } TileVertex;
 
 typedef struct {
@@ -19,6 +18,7 @@ typedef struct {
 } TileVertexUniforms;
 
 typedef struct {
+    vector_float4 color;
     int fogUse;
     float fogNear;
     float fogFar;

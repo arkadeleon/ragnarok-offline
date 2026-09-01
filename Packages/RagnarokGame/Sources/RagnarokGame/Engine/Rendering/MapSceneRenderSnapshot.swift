@@ -28,7 +28,6 @@ struct MapSceneRenderSnapshot {
     struct TileSelector {
         let position: SIMD2<Int>
         let cell: MapGrid.Cell
-        let texture: any MTLTexture
     }
 
     struct CombatText {

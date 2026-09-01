@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/8/24.
 //
 
-import CoreGraphics
 import Foundation
 import Metal
 import RagnarokEffects
@@ -19,7 +18,6 @@ final class MapSceneRenderResources {
     let device: any MTLDevice
 
     private(set) var world: WorldRenderResource?
-    private(set) var tileSelectorTexture: (any MTLTexture)?
 
     private var spriteAssetStore: SpriteAssetStore?
     private(set) var spriteDrawables: [SpriteLayerDrawable] = []
@@ -38,14 +36,6 @@ final class MapSceneRenderResources {
 
     func loadWorld(_ asset: WorldAsset) {
         world = WorldRenderResource(device: device, asset: asset)
-    }
-
-    func loadTileSelectorTexture(from image: CGImage?) {
-        tileSelectorTexture = MetalTextureFactory.makeTexture(
-            from: image,
-            device: device,
-            label: "tile-selector"
-        )
     }
 
     func prepareSprites(resourceManager: ResourceManager) {
@@ -215,7 +205,6 @@ final class MapSceneRenderResources {
         effectResources.removeAll()
 
         world = nil
-        tileSelectorTexture = nil
     }
 
     private func cancelEffectLoads() {
