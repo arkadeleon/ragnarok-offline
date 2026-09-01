@@ -6,7 +6,6 @@
 //
 
 import CoreGraphics
-import RagnarokResources
 import RagnarokSprite
 import SwiftUI
 
@@ -20,14 +19,12 @@ struct MinimapView: View {
 
     @State private var zoomLevel = 0
     @State private var mapImage: CGImage?
-    @State private var arrowImage: CGImage?
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             MinimapMapView(
                 scene: scene,
                 mapImage: mapImage,
-                arrowImage: arrowImage,
                 zoomFactor: zoomFactors[zoomLevel],
                 showsFullMap: zoomLevel == 0
             )
@@ -60,13 +57,7 @@ struct MinimapView: View {
         .frame(width: mapSize)
         .task(id: scene.mapName) {
             let mapName = scene.mapName.split(separator: ".", maxSplits: 1).first.map(String.init) ?? scene.mapName
-            async let mapImageResource = try? gameContext.resourceManager.mapImage(forMapName: mapName)
-
-            let arrowImagePath = ResourcePath.userInterfaceDirectory.appending(["map", "map_arrow.bmp"])
-            async let arrowImageResource = try? gameContext.resourceManager.image(at: arrowImagePath, removesMagentaPixels: true)
-
-            mapImage = await mapImageResource?.cgImage
-            arrowImage = await arrowImageResource?.cgImage
+            mapImage = try? await gameContext.resourceManager.mapImage(forMapName: mapName).cgImage
         }
     }
 
@@ -86,7 +77,6 @@ struct MinimapView: View {
 private struct MinimapMapView: View {
     var scene: MapScene
     var mapImage: CGImage?
-    var arrowImage: CGImage?
     var zoomFactor: Int
     var showsFullMap: Bool
 
@@ -103,12 +93,9 @@ private struct MinimapMapView: View {
                     .position(mapCenter(for: mapImage, playerPosition: scene.state.playerPosition))
             }
 
-            if let arrowImage {
-                Image(decorative: arrowImage, scale: 1)
-                    .interpolation(.none)
-                    .rotationEffect(arrowRotation(for: scene.state.playerDirection))
-                    .position(arrowPosition(for: scene.state.playerPosition))
-            }
+            MinimapArrowView()
+                .rotationEffect(arrowRotation(for: scene.state.playerDirection))
+                .position(arrowPosition(for: scene.state.playerPosition))
         }
         .frame(width: mapSize, height: mapSize)
         .clipped()
@@ -174,5 +161,39 @@ private struct MinimapMapView: View {
             x: startX + CGFloat(position.x) * scale,
             y: startY + mapSize - CGFloat(position.y) * scale
         )
+    }
+}
+
+private struct MinimapArrowView: View {
+    var body: some View {
+        MinimapArrowShape()
+            .fill(.white)
+            .frame(width: 12, height: 12)
+            .clipped()
+            .overlay {
+                Color(red: 1, green: 0, blue: 0)
+                    .frame(width: 2, height: 2)
+            }
+    }
+}
+
+private struct MinimapArrowShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        let corners = [
+            CGPoint(x: 6, y: -2.75),
+            CGPoint(x: 12.5, y: 12),
+            CGPoint(x: 6, y: 7.25),
+            CGPoint(x: -0.5, y: 12),
+        ]
+
+        var path = Path()
+        path.addLines(corners.map { corner in
+            CGPoint(
+                x: rect.minX + rect.width * corner.x / 12,
+                y: rect.minY + rect.height * corner.y / 12
+            )
+        })
+        path.closeSubpath()
+        return path
     }
 }
