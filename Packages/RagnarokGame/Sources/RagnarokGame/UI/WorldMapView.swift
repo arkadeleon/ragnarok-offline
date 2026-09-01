@@ -312,6 +312,28 @@ private struct WorldMapOverlayView: View {
     }
 }
 
+private struct WorldMapPreviewsView: View {
+    var world: WorldViewData.World
+    var fittedScale: CGFloat
+
+    var body: some View {
+        ZStack {
+            ForEach(maps, id: \.mapName) { map in
+                let rect = map.rect.scaled(by: fittedScale)
+                MapPreviewImage(map: map, thumbnailPixelSize: CGSize(width: 60, height: 60))
+                    .frame(width: rect.width, height: rect.height)
+                    .clipped()
+                    .position(x: rect.midX, y: rect.midY)
+            }
+        }
+    }
+
+    private var maps: [WorldViewData.Map] {
+        let dungeonGroupIndices = Set(world.dungeonEntrances.map(\.groupIndex))
+        return world.maps.filter { !dungeonGroupIndices.contains($0.groupIndex) }
+    }
+}
+
 private struct WorldMapInfoView: View {
     var maps: [WorldViewData.Map]
     @Binding var selectedMap: WorldViewData.Map?
@@ -370,28 +392,6 @@ private struct WorldMapInfoView: View {
 
     private func name(of map: WorldViewData.Map) -> String {
         gameContext.mapNameTable.localizedMapName(forMapName: map.mapName.mapNameStem) ?? map.name
-    }
-}
-
-private struct WorldMapPreviewsView: View {
-    var world: WorldViewData.World
-    var fittedScale: CGFloat
-
-    var body: some View {
-        ZStack {
-            ForEach(maps, id: \.mapName) { map in
-                let rect = map.rect.scaled(by: fittedScale)
-                MapPreviewImage(map: map, thumbnailPixelSize: CGSize(width: 60, height: 60))
-                    .frame(width: rect.width, height: rect.height)
-                    .clipped()
-                    .position(x: rect.midX, y: rect.midY)
-            }
-        }
-    }
-
-    private var maps: [WorldViewData.Map] {
-        let dungeonGroupIndices = Set(world.dungeonEntrances.map(\.groupIndex))
-        return world.maps.filter { !dungeonGroupIndices.contains($0.groupIndex) }
     }
 }
 
