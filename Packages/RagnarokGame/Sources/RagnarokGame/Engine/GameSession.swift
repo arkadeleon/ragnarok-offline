@@ -92,7 +92,6 @@ final public class GameSession {
 
     @ObservationIgnored var mapClient: NetworkClient?
     @ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?
-    @ObservationIgnored var currentMapServer: MapServerInfo?
 
     public var mapScene: MapScene? {
         mapRuntime?.scene
@@ -118,6 +117,7 @@ final public class GameSession {
     }
 
     public func stop() {
+        exitSession()
         state = .stopped
     }
 
@@ -130,7 +130,10 @@ final public class GameSession {
     }
 
     func exitSession() {
+        mapRuntime?.unload()
+
         stopAllClients()
+        resetLoginPhase()
 
         isDisconnected = false
         errorMessages.removeAll()
@@ -140,14 +143,13 @@ final public class GameSession {
         stopMapClient()
         stopCharClient()
         stopLoginClient()
-
-        resetLoginPhase()
     }
 
     func exitCurrentPhase() {
         switch stage {
         case .login(.login):
             stopAllClients()
+            resetLoginPhase()
         case .login(.loggingIn), .login(.charServerList):
             stopLoginClient()
             resetLoginPhase()
@@ -161,7 +163,14 @@ final public class GameSession {
             stopCharClient()
             resetLoginPhase()
         case .map:
-            stopAllClients()
+            mapRuntime?.unload()
+            stopMapClient()
+            if let charServer {
+                stage = .login(.connectingCharServer(charServer))
+                startCharClient(charServer)
+            } else {
+                stage = .login(.login)
+            }
         }
     }
 
@@ -171,7 +180,6 @@ final public class GameSession {
         charServer = nil
         characters = []
         character = nil
-        currentMapServer = nil
         selectedCharacterSlot = 0
         maxCharacterSlots = 9
 
@@ -554,8 +562,6 @@ final public class GameSession {
 
         context.playerStatus = CharacterStatus(from: character)
 
-        self.currentMapServer = mapServer
-
         let client = NetworkClient(
             name: "Map",
             address: mapServer.ip,
@@ -634,29 +640,11 @@ final public class GameSession {
             errorMessages.append(errorMessage)
         case let packet as PACKET_ZC_RESTART_ACK:
             if packet.type == 1 {
-                stopMapClient()
-
-                currentMapServer = nil
-
-                if let charServer {
-                    stage = .login(.connectingCharServer(charServer))
-                    startCharClient(charServer)
-                } else {
-                    stage = .login(.login)
-                }
+                exitCurrentPhase()
             }
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
             if packet.result == 0 {
-                stopMapClient()
-
-                currentMapServer = nil
-
-                if let charServer {
-                    stage = .login(.connectingCharServer(charServer))
-                    startCharClient(charServer)
-                } else {
-                    stage = .login(.login)
-                }
+                exitCurrentPhase()
             }
         case let packet as PACKET_ZC_AID:
             account?.update(accountID: packet.accountID)
