@@ -17,12 +17,14 @@ final class GameAudioPlayer {
     private var bgmName: String?
     private var bgmPlayer: AVAudioPlayer?
 
-    private let soundEffectEngine = GameAudioEngine()
-    private var soundEffects: [String : GameSoundEffect] = [:]
-    private var soundEffectLoadTasks: [String : Task<Void, Never>] = [:]
+    private let soundEffectEngine: GameAudioEngine
+    private let soundEffectCache: GameAudioCache
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
+
+        self.soundEffectEngine = GameAudioEngine()
+        self.soundEffectCache = GameAudioCache(resourceManager: resourceManager)
 
         #if !os(macOS)
         do {
@@ -88,57 +90,15 @@ final class GameAudioPlayer {
             guard let self else {
                 return
             }
-            guard let soundEffect = await soundEffect(forSoundName: soundName) else {
+            guard let soundEffect = await soundEffectCache.soundEffect(forSoundName: soundName) else {
                 return
             }
             soundEffectEngine.play(soundEffect)
         }
     }
 
-    private func soundEffect(forSoundName soundName: String) async -> GameSoundEffect? {
-        if let cachedSoundEffect = soundEffects[soundName] {
-            return cachedSoundEffect
-        }
-
-        if let existingTask = soundEffectLoadTasks[soundName] {
-            await existingTask.value
-            return soundEffects[soundName]
-        }
-
-        let loadTask = Task { @MainActor [weak self] in
-            guard let self else {
-                return
-            }
-
-            let wavPath = ResourcePath(components: ["data", "wav", soundName])
-            guard let wavData = try? await resourceManager.contentsOfResource(at: wavPath) else {
-                return
-            }
-            guard let buffer = await AVAudioPCMBuffer.buffer(from: wavData, format: soundEffectEngine.format) else {
-                return
-            }
-
-            guard !Task.isCancelled else {
-                return
-            }
-
-            soundEffects[soundName] = GameSoundEffect(name: soundName, buffer: buffer)
-        }
-
-        soundEffectLoadTasks[soundName] = loadTask
-        await loadTask.value
-        soundEffectLoadTasks[soundName] = nil
-
-        return soundEffects[soundName]
-    }
-
     func stopSoundEffects() {
-        for task in soundEffectLoadTasks.values {
-            task.cancel()
-        }
-        soundEffectLoadTasks.removeAll()
-
         soundEffectEngine.stop()
-        soundEffects.removeAll()
+        soundEffectCache.removeAll()
     }
 }

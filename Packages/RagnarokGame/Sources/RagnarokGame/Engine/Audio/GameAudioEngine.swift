@@ -9,13 +9,8 @@ import AVFAudio
 import Foundation
 
 /// Plays decoded sound effects through a pool of player nodes.
-///
-/// A node can only play buffers in the format it was connected with, so every sound
-/// effect handed to ``play(_:)`` has to be decoded to ``format``.
 @MainActor
 final class GameAudioEngine {
-    let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2)!
-
     private let engine = AVAudioEngine()
 
     private var idleNodes: [AVAudioPlayerNode] = []
@@ -76,7 +71,7 @@ final class GameAudioEngine {
     private func makeNode() -> AVAudioPlayerNode {
         let node = AVAudioPlayerNode()
         engine.attach(node)
-        engine.connect(node, to: engine.mainMixerNode, format: format)
+        engine.connect(node, to: engine.mainMixerNode, format: GameAudio.format)
         return node
     }
 
