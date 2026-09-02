@@ -72,7 +72,7 @@ struct LoginView: View {
         } bottomBar: {
             GameBottomBar {
                 Button("login") {
-                    gameSession.loginAudioPlayer.playButtonSound()
+                    gameSession.audioPlayer.playButtonSoundEffect()
                     gameSession.login(username: username, password: password)
                 }
                 .buttonStyle(.game)

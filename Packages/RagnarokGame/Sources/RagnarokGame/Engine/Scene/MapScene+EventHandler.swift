@@ -309,7 +309,9 @@ extension MapScene {
                     sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
                 }
                 if SpriteJob(rawValue: sourceObject.job).isPlayer {
-                    audioPlayer.playSound(named: WeaponSoundTable.attackSoundNames(for: sourceObject.weaponType).randomElement())
+                    if let soundName = WeaponSoundTable.attackSoundNames(for: sourceObject.weaponType).randomElement() {
+                        audioPlayer.playSoundEffect(named: soundName)
+                    }
                 }
             }
 
@@ -408,7 +410,7 @@ extension MapScene {
             )
             addCombatText(combatText)
 
-            audioPlayer.playSound(named: "_heal_effect.wav")
+            audioPlayer.playSoundEffect(named: "_heal_effect.wav")
         }
 
         if objectSkill.damage >= 0,
@@ -623,7 +625,10 @@ extension MapScene {
                 delay: .milliseconds(objectAction.sourceSpeed)
             )
             addCombatText(combatText)
-            audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
+
+            if let hitSoundName {
+                audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+            }
 
             if objectAction.damage2 > 0 {
                 let combatText2 = CombatText(
@@ -633,7 +638,10 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
                 addCombatText(combatText2)
-                audioPlayer.playSound(named: hitSoundName, after: combatText2.delay)
+
+                if let hitSoundName {
+                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText2.delay)
+                }
             }
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
             let count = objectAction.damage > 1 ? 2 : 1
@@ -645,7 +653,10 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed)
                 )
                 addCombatText(combatText)
-                audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
+
+                if let hitSoundName {
+                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+                }
             }
             if objectAction.damage2 > 0 {
                 let combatText = CombatText(
@@ -655,7 +666,10 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                 )
                 addCombatText(combatText)
-                audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
+
+                if let hitSoundName {
+                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+                }
 
                 let combatText2 = CombatText(
                     creationTime: now,
@@ -664,7 +678,10 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
                 addCombatText(combatText2)
-                audioPlayer.playSound(named: hitSoundName, after: combatText2.delay)
+
+                if let hitSoundName {
+                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText2.delay)
+                }
             } else {
                 let combatText = CombatText(
                     creationTime: now,
@@ -673,7 +690,10 @@ extension MapScene {
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                 )
                 addCombatText(combatText)
-                audioPlayer.playSound(named: hitSoundName, after: combatText.delay)
+
+                if let hitSoundName {
+                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+                }
             }
 
             // Monsters taking more than one hit show a combo text.

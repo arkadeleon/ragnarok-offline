@@ -34,7 +34,7 @@ struct CharServerListView: View {
             GameBottomBar {
                 Button("OK") {
                     if let charServer = charServers.first {
-                        gameSession.loginAudioPlayer.playButtonSound()
+                        gameSession.audioPlayer.playButtonSoundEffect()
                         gameSession.selectCharServer(charServer)
                     }
                 }

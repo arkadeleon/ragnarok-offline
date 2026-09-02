@@ -90,7 +90,7 @@ final class MapSceneRuntime {
             scene.effects,
             worldPositions: effectWorldPositions
         ) { [audioPlayer = scene.audioPlayer] soundName, delay in
-            audioPlayer.playSound(named: soundName, after: .seconds(delay))
+            audioPlayer.playSoundEffect(named: soundName, after: .seconds(delay))
         }
     }
 

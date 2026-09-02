@@ -89,7 +89,7 @@ struct CharacterSelectView: View {
 
                 if selectedCharacter != nil {
                     Button("OK") {
-                        gameSession.loginAudioPlayer.playButtonSound()
+                        gameSession.audioPlayer.playButtonSoundEffect()
                         gameSession.selectCharacter(slot: gameSession.selectedCharacterSlot)
                     }
                     .buttonStyle(.game)

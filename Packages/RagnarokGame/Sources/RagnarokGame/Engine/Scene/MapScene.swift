@@ -30,9 +30,8 @@ public final class MapScene {
 
     let player: MapSceneMapObject
     let resourceManager: ResourceManager
+    let audioPlayer: GameAudioPlayer
     weak var gameSession: GameSession?
-
-    let audioPlayer: MapAudioPlayer
 
     let state: MapSceneState
 
@@ -63,13 +62,14 @@ public final class MapScene {
         character: CharacterInfo,
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
+        audioPlayer: GameAudioPlayer,
         gameSession: GameSession
     ) {
         self.mapName = mapName
         self.mapGrid = mapGrid
         self.resourceManager = resourceManager
+        self.audioPlayer = audioPlayer
         self.gameSession = gameSession
-        self.audioPlayer = MapAudioPlayer(resourceManager: resourceManager)
 
         self.state = MapSceneState(
             playerPosition: playerPosition,
@@ -98,7 +98,8 @@ public final class MapScene {
         arrivalTask?.cancel()
         arrivalTask = nil
         pendingArrivalAction = nil
-        audioPlayer.stopAll()
+        audioPlayer.stopBGM()
+        audioPlayer.stopSoundEffects()
         items.removeAll()
         combatTexts.removeAll()
         effects.removeAll()

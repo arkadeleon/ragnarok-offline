@@ -60,11 +60,11 @@ struct LoginStageView: View {
         .ignoresSafeArea()
         .onAppear {
             Task {
-                await gameSession.loginAudioPlayer.playBGM()
+                await gameSession.audioPlayer.playLoginBGM()
             }
         }
         .onDisappear {
-            gameSession.loginAudioPlayer.stopBGM()
+            gameSession.audioPlayer.stopBGM()
         }
     }
 }

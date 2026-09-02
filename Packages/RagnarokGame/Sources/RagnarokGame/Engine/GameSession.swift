@@ -26,6 +26,7 @@ final public class GameSession {
     public static let immersiveSpaceID = "Game"
 
     let context: GameContext
+    let audioPlayer: GameAudioPlayer
 
     public struct Configuration: Codable, Hashable {
         public var serverAddress: String
@@ -83,8 +84,6 @@ final public class GameSession {
     var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
 
-    let loginAudioPlayer: LoginAudioPlayer
-
     @ObservationIgnored var loginClient: NetworkClient?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
 
@@ -109,7 +108,7 @@ final public class GameSession {
 
     public init(resourceManager: ResourceManager) {
         self.context = GameContext(resourceManager: resourceManager)
-        self.loginAudioPlayer = LoginAudioPlayer(resourceManager: resourceManager)
+        self.audioPlayer = GameAudioPlayer(resourceManager: resourceManager)
     }
 
     // MARK: - Public
@@ -693,6 +692,7 @@ final public class GameSession {
                     character: character,
                     playerPosition: position,
                     resourceManager: context.resourceManager,
+                    audioPlayer: audioPlayer,
                     gameSession: self
                 )
                 let renderResources = MapSceneRenderResources(device: device)
