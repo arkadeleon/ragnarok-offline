@@ -60,14 +60,21 @@ final class GameAudioPlayer {
         }
 
         stopBGM()
+        bgmName = mp3Name
 
         let bgmPath = ResourcePath(components: ["BGM", mp3Name])
-        guard let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath) else {
+        let bgmData = try? await resourceManager.contentsOfResource(at: bgmPath)
+
+        guard bgmName == mp3Name else {
             return
         }
 
-        bgmName = mp3Name
-        bgmPlayer = try? AVAudioPlayer(data: bgmData)
+        guard let bgmData, let player = try? AVAudioPlayer(data: bgmData) else {
+            bgmName = nil
+            return
+        }
+
+        bgmPlayer = player
         bgmPlayer?.numberOfLoops = -1
         bgmPlayer?.play()
     }
