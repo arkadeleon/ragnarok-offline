@@ -20,6 +20,8 @@ final class GameAudioPlayer {
     private let soundEffectEngine: GameAudioEngine
     private let soundEffectCache: GameAudioCache
 
+    private var soundEffectTasks: [UUID : Task<Void, Never>] = [:]
+
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
 
@@ -83,21 +85,42 @@ final class GameAudioPlayer {
     }
 
     func playSoundEffect(named soundName: String, after delay: Duration = .zero) {
-        Task { [weak self] in
+        let playbackID = UUID()
+
+        soundEffectTasks[playbackID] = Task { [weak self] in
             if delay > .zero {
-                try await Task.sleep(for: delay)
+                try? await Task.sleep(for: delay)
             }
             guard let self else {
                 return
             }
+
+            defer {
+                soundEffectTasks[playbackID] = nil
+            }
+
+            if Task.isCancelled {
+                return
+            }
+
             guard let soundEffect = await soundEffectCache.soundEffect(forSoundName: soundName) else {
                 return
             }
+
+            if Task.isCancelled {
+                return
+            }
+
             soundEffectEngine.play(soundEffect)
         }
     }
 
     func stopSoundEffects() {
+        for task in soundEffectTasks.values {
+            task.cancel()
+        }
+        soundEffectTasks.removeAll()
+
         soundEffectEngine.stop()
         soundEffectCache.removeAll()
     }
