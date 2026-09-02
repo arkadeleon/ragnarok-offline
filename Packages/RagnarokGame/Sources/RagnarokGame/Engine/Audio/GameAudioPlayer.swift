@@ -17,9 +17,9 @@ final class GameAudioPlayer {
     private var bgmName: String?
     private var bgmPlayer: AVAudioPlayer?
 
-    private var soundEffectDataCache: [String : Data] = [:]
-    private var soundEffectDataLoadTasks: [String : Task<Data?, Never>] = [:]
-    private var activeSoundEffectPlayers: [UUID : AVAudioPlayer] = [:]
+    private let soundEffectEngine = GameAudioEngine()
+    private var soundEffects: [String : GameSoundEffect] = [:]
+    private var soundEffectLoadTasks: [String : Task<Void, Never>] = [:]
 
     init(resourceManager: ResourceManager) {
         self.resourceManager = resourceManager
@@ -88,79 +88,57 @@ final class GameAudioPlayer {
             guard let self else {
                 return
             }
-            guard let wavData = await soundEffectData(forSoundName: soundName) else {
+            guard let soundEffect = await soundEffect(forSoundName: soundName) else {
                 return
             }
-            play(wavData)
+            soundEffectEngine.play(soundEffect)
         }
     }
 
-    private func soundEffectData(forSoundName soundName: String) async -> Data? {
-        if let cachedData = soundEffectDataCache[soundName] {
-            return cachedData
+    private func soundEffect(forSoundName soundName: String) async -> GameSoundEffect? {
+        if let cachedSoundEffect = soundEffects[soundName] {
+            return cachedSoundEffect
         }
 
-        if let existingTask = soundEffectDataLoadTasks[soundName] {
-            return await existingTask.value
+        if let existingTask = soundEffectLoadTasks[soundName] {
+            await existingTask.value
+            return soundEffects[soundName]
         }
 
-        let loadTask: Task<Data?, Never> = Task { [weak self] in
+        let loadTask = Task { @MainActor [weak self] in
             guard let self else {
-                return nil
+                return
             }
 
             let wavPath = ResourcePath(components: ["data", "wav", soundName])
-            return try? await resourceManager.contentsOfResource(at: wavPath)
-        }
-
-        soundEffectDataLoadTasks[soundName] = loadTask
-        let wavData = await loadTask.value
-        soundEffectDataLoadTasks[soundName] = nil
-
-        if let wavData {
-            soundEffectDataCache[soundName] = wavData
-        }
-
-        return wavData
-    }
-
-    private func play(_ wavData: Data) {
-        let playbackID = UUID()
-        guard let player = try? AVAudioPlayer(data: wavData) else {
-            return
-        }
-        let cleanupDelay = max(player.duration, 0) + 0.1
-
-        activeSoundEffectPlayers[playbackID] = player
-        player.prepareToPlay()
-
-        guard player.play() else {
-            activeSoundEffectPlayers[playbackID]?.stop()
-            activeSoundEffectPlayers[playbackID] = nil
-            return
-        }
-
-        Task { [weak self] in
-            try? await Task.sleep(for: .seconds(cleanupDelay))
-            guard let self else {
+            guard let wavData = try? await resourceManager.contentsOfResource(at: wavPath) else {
                 return
             }
-            activeSoundEffectPlayers[playbackID]?.stop()
-            activeSoundEffectPlayers[playbackID] = nil
+            guard let buffer = await AVAudioPCMBuffer.buffer(from: wavData, format: soundEffectEngine.format) else {
+                return
+            }
+
+            guard !Task.isCancelled else {
+                return
+            }
+
+            soundEffects[soundName] = GameSoundEffect(name: soundName, buffer: buffer)
         }
+
+        soundEffectLoadTasks[soundName] = loadTask
+        await loadTask.value
+        soundEffectLoadTasks[soundName] = nil
+
+        return soundEffects[soundName]
     }
 
     func stopSoundEffects() {
-        for task in soundEffectDataLoadTasks.values {
+        for task in soundEffectLoadTasks.values {
             task.cancel()
         }
-        soundEffectDataLoadTasks.removeAll()
+        soundEffectLoadTasks.removeAll()
 
-        for player in activeSoundEffectPlayers.values {
-            player.stop()
-        }
-        activeSoundEffectPlayers.removeAll()
-
-        soundEffectDataCache.removeAll()
+        soundEffectEngine.stop()
+        soundEffects.removeAll()
     }
 }
