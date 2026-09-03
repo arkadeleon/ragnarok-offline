@@ -7,17 +7,40 @@
 
 import AVFAudio
 import Foundation
+import simd
 
 /// Plays decoded sound effects through a pool of player nodes.
+///
+/// A sound effect can be given a source, and is then played quieter the further the
+/// listener stands from it. Its volume keeps up with the listener while it plays.
 @MainActor
 final class GameAudioEngine {
+    private struct Playback {
+        var node: AVAudioPlayerNode
+        var source: GameAudio.Source?
+    }
+
     private let engine = AVAudioEngine()
 
     private var idleNodes: [AVAudioPlayerNode] = []
-    private var activeNodes: [UUID : AVAudioPlayerNode] = [:]
+    private var playbacks: [UUID : GameAudioEngine.Playback] = [:]
     private var lastPlayTimes: [String : ContinuousClock.Instant] = [:]
 
-    func play(_ soundEffect: GameSoundEffect, volume: Float = 1) {
+    private var listenerPosition: SIMD3<Float> = .zero
+
+    func setListenerPosition(_ position: SIMD3<Float>) {
+        guard position != listenerPosition else {
+            return
+        }
+
+        listenerPosition = position
+
+        for playback in playbacks.values where playback.source != nil {
+            playback.node.volume = volume(from: playback.source)
+        }
+    }
+
+    func play(_ soundEffect: GameSoundEffect, from source: GameAudio.Source? = nil) {
         let now = ContinuousClock.now
         if let lastPlayTime = lastPlayTimes[soundEffect.name], now - lastPlayTime < .milliseconds(100) {
             return
@@ -33,9 +56,9 @@ final class GameAudioEngine {
         lastPlayTimes[soundEffect.name] = now
 
         let playbackID = UUID()
-        activeNodes[playbackID] = node
+        playbacks[playbackID] = GameAudioEngine.Playback(node: node, source: source)
 
-        node.volume = volume
+        node.volume = volume(from: source)
         node.scheduleBuffer(soundEffect.buffer, completionCallbackType: .dataPlayedBack) { [weak self] _ in
             Task { @MainActor in
                 self?.finishPlayback(id: playbackID)
@@ -45,11 +68,12 @@ final class GameAudioEngine {
     }
 
     func stop() {
-        for node in activeNodes.values {
-            node.stop()
-            idleNodes.append(node)
+        for playback in playbacks.values {
+            playback.node.stop()
+            idleNodes.append(playback.node)
         }
-        activeNodes.removeAll()
+        playbacks.removeAll()
+
         lastPlayTimes.removeAll()
 
         engine.stop()
@@ -76,12 +100,28 @@ final class GameAudioEngine {
         return node
     }
 
+    private func volume(from source: GameAudio.Source?) -> Float {
+        guard let source else {
+            return 1
+        }
+
+        guard source.isInRange(ofListenerAtPosition: listenerPosition) else {
+            return 0
+        }
+
+        let distance = source.distance(toListenerAtPosition: listenerPosition)
+
+        // The volume drops in a straight line from about 1 next to the source
+        // to 0 at 25 cells away, and never falls below 0.1.
+        return max(1 - abs((distance - 1) * (1 - 0.01) / (25 - 1) + 0.01), 0.1)
+    }
+
     private func finishPlayback(id: UUID) {
-        guard let node = activeNodes.removeValue(forKey: id) else {
+        guard let playback = playbacks.removeValue(forKey: id) else {
             return
         }
 
-        node.stop()
-        idleNodes.append(node)
+        playback.node.stop()
+        idleNodes.append(playback.node)
     }
 }

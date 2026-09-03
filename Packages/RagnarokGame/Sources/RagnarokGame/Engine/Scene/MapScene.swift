@@ -352,17 +352,23 @@ extension MapScene {
     }
 
     private func updateSounds(at now: ContinuousClock.Instant) {
-        let playerPosition = SIMD2<Float>(player.gridPosition)
+        let listenerPosition = worldPosition(for: player)
+        audioPlayer.setListenerPosition(listenerPosition)
 
         for sound in sounds {
             if let nextPlayTime = sound.nextPlayTime, now < nextPlayTime {
                 continue
             }
-            guard let volume = sound.volume(forListenerAtPosition: playerPosition) else {
+
+            let source = GameAudio.Source(position: sound.position, range: sound.range)
+            guard source.isInRange(ofListenerAtPosition: listenerPosition) else {
                 continue
             }
 
-            audioPlayer.playSoundEffect(named: sound.name, volume: volume)
+            audioPlayer.playSoundEffect(
+                named: sound.name,
+                from: source
+            )
 
             sound.nextPlayTime = now + sound.playInterval
         }

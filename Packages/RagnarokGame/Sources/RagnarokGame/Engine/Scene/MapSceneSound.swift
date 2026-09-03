@@ -7,12 +7,13 @@
 
 import Foundation
 import RagnarokFileFormats
-import simd
 
 final class MapSceneSound {
     let name: String
 
-    let gridPosition: SIMD2<Float>
+    /// Where the sound sits, in world units. Only x and y count toward what the
+    /// listener hears.
+    let position: SIMD3<Float>
 
     /// How far the sound carries, in cells.
     let range: Float
@@ -26,25 +27,15 @@ final class MapSceneSound {
     init(sound: RSW.Objects.Sound, gnd: GND) {
         name = sound.waveName
 
-        gridPosition = [
+        position = [
             sound.position.x + Float(gnd.width),
             sound.position.z + Float(gnd.height),
+            -sound.position.y,
         ]
 
         range = sound.range / 5
 
         // RSW before 2.0 carries no cycle, and repeat every 7 seconds.
         playInterval = .seconds(sound.cycle > 0 ? Double(sound.cycle) : 7)
-    }
-
-    func volume(forListenerAtPosition listenerPosition: SIMD2<Float>) -> Float? {
-        let distance = simd_distance(gridPosition, listenerPosition).rounded(.down)
-        guard distance <= range else {
-            return nil
-        }
-
-        // The volume drops in a straight line from about 1 next to the sound
-        // to 0 at 25 cells away, and never falls below 0.1.
-        return max(1 - abs((distance - 1) * (1 - 0.01) / (25 - 1) + 0.01), 0.1)
     }
 }
