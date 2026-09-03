@@ -47,6 +47,8 @@ public final class MapScene {
 
     var effects: [UUID : MapSceneEffect] = [:]
 
+    var sounds: [MapSceneSound] = []
+
     var fog: Fog = .disabled
     var tileSelector: TileSelector?
 
@@ -103,6 +105,7 @@ public final class MapScene {
         items.removeAll()
         combatTexts.removeAll()
         effects.removeAll()
+        sounds.removeAll()
         tileSelector = nil
     }
 
@@ -343,6 +346,25 @@ extension MapScene {
         let playerDirection = player.movement?.direction ?? player.action.direction
         if state.playerDirection != playerDirection {
             state.playerDirection = playerDirection
+        }
+
+        updateSounds(at: now)
+    }
+
+    private func updateSounds(at now: ContinuousClock.Instant) {
+        let playerPosition = SIMD2<Float>(player.gridPosition)
+
+        for sound in sounds {
+            if let nextPlayTime = sound.nextPlayTime, now < nextPlayTime {
+                continue
+            }
+            guard let volume = sound.volume(forListenerAtPosition: playerPosition) else {
+                continue
+            }
+
+            audioPlayer.playSoundEffect(named: sound.name, volume: volume)
+
+            sound.nextPlayTime = now + sound.playInterval
         }
     }
 

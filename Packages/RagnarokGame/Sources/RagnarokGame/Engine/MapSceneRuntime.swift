@@ -41,6 +41,10 @@ final class MapSceneRuntime {
             progress: progress
         )
 
+        scene.sounds = world.rsw.sounds.map { sound in
+            MapSceneSound(sound: sound, gnd: world.gnd)
+        }
+
         let fogParameterTable = await scene.resourceManager.fogParameterTable()
         if let parameter = fogParameterTable.fogParameter(forMapName: scene.mapName) {
             scene.fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)

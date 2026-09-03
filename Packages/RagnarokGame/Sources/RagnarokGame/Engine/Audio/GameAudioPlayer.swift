@@ -91,7 +91,7 @@ final class GameAudioPlayer {
         playSoundEffect(named: K2L("버튼소리.wav"))
     }
 
-    func playSoundEffect(named soundName: String, after delay: Duration = .zero) {
+    func playSoundEffect(named soundName: String, volume: Float = 1, after delay: Duration = .zero) {
         let playbackID = UUID()
 
         soundEffectTasks[playbackID] = Task { [weak self] in
@@ -118,7 +118,7 @@ final class GameAudioPlayer {
                 return
             }
 
-            soundEffectEngine.play(soundEffect)
+            soundEffectEngine.play(soundEffect, volume: volume)
         }
     }
 

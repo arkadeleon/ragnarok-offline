@@ -17,7 +17,7 @@ final class GameAudioEngine {
     private var activeNodes: [UUID : AVAudioPlayerNode] = [:]
     private var lastPlayTimes: [String : ContinuousClock.Instant] = [:]
 
-    func play(_ soundEffect: GameSoundEffect) {
+    func play(_ soundEffect: GameSoundEffect, volume: Float = 1) {
         let now = ContinuousClock.now
         if let lastPlayTime = lastPlayTimes[soundEffect.name], now - lastPlayTime < .milliseconds(100) {
             return
@@ -35,6 +35,7 @@ final class GameAudioEngine {
         let playbackID = UUID()
         activeNodes[playbackID] = node
 
+        node.volume = volume
         node.scheduleBuffer(soundEffect.buffer, completionCallbackType: .dataPlayedBack) { [weak self] _ in
             Task { @MainActor in
                 self?.finishPlayback(id: playbackID)
