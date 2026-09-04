@@ -345,7 +345,9 @@ extension MapScene {
         spriteLoader.load(objects: objects, items: items)
 
         for object in objects.values {
+            let previousAction = object.resolvedAction
             object.resolvedAction = resolveAction(for: object)
+            playActionSound(for: object, previousAction: previousAction)
         }
 
         let playerPosition = player.gridPosition
@@ -396,6 +398,33 @@ extension MapScene {
             elapsedTime: action.elapsedTime,
             frameIndex: frameIndex ?? 0
         )
+    }
+
+    private func playActionSound(for object: MapSceneMapObject, previousAction: ResolvedSpriteAction?) {
+        guard object.type != .pet,
+              let composedSprite = object.composedSprite,
+              let resolvedAction = object.resolvedAction else {
+            return
+        }
+
+        if let previousAction,
+           previousAction.actionType == resolvedAction.actionType,
+           previousAction.frameIndex == resolvedAction.frameIndex {
+            return
+        }
+
+        guard let soundName = composedSprite.mainFrameSound(
+            forActionType: resolvedAction.actionType,
+            direction: resolvedAction.direction,
+            headDirection: resolvedAction.headDirection,
+            frameIndex: resolvedAction.frameIndex
+        ) else {
+            return
+        }
+
+        // An object can be heard however far away it is. Only the volume falls off.
+        let source = GameAudio.Source(position: worldPosition(for: object), range: .infinity)
+        audioPlayer.playSoundEffect(named: soundName, from: source)
     }
 
     private func updateSounds(at now: ContinuousClock.Instant) {

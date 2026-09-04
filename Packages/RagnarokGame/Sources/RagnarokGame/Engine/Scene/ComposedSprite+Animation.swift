@@ -80,6 +80,46 @@ extension ComposedSprite {
         )
         return Int(elapsedTime / frameInterval)
     }
+
+    /// The sound the main part carries on the frame it has reached, if that frame has one.
+    ///
+    /// `frameIndex` is the unwrapped count, so this wraps it the same way the renderer does.
+    func mainFrameSound(
+        forActionType actionType: SpriteActionType,
+        direction: SpriteDirection,
+        headDirection: SpriteHeadDirection,
+        frameIndex: Int
+    ) -> String? {
+        let actionIndex = actionType.calculateActionIndex(forJobID: configuration.job.rawValue, direction: direction)
+
+        guard let mainPart,
+              let mainAction = mainPart.sprite.act.action(at: actionIndex), !mainAction.frames.isEmpty else {
+            return nil
+        }
+
+        let frameRange = mainPart.frameRange(
+            action: mainAction,
+            actionType: actionType,
+            headDirection: headDirection
+        )
+        guard !frameRange.isEmpty else {
+            return nil
+        }
+
+        let localFrameIndex: Int
+        if actionType.repeats {
+            localFrameIndex = frameIndex % frameRange.count
+        } else {
+            localFrameIndex = min(frameIndex, frameRange.count - 1)
+        }
+
+        let soundIndex = Int(mainAction.frames[frameRange.lowerBound + localFrameIndex].soundIndex)
+        guard mainPart.sprite.act.sounds.indices.contains(soundIndex) else {
+            return nil
+        }
+
+        return mainPart.sprite.act.sounds[soundIndex]
+    }
 }
 
 extension ComposedSprite.Part {
