@@ -110,7 +110,10 @@ extension ComposedSprite {
         if actionType.repeats {
             localFrameIndex = frameIndex % frameRange.count
         } else {
-            localFrameIndex = min(frameIndex, frameRange.count - 1)
+            guard frameIndex < frameRange.count else {
+                return nil
+            }
+            localFrameIndex = frameIndex
         }
 
         let soundIndex = Int(mainAction.frames[frameRange.lowerBound + localFrameIndex].soundIndex)
