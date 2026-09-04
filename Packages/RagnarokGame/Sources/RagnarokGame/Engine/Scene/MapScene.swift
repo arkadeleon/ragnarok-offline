@@ -114,54 +114,6 @@ public final class MapScene {
     }
 
     func handleMovement(_ movementValue: CGPoint) {
-        onMovementValueChanged(movementValue: movementValue)
-    }
-
-    func handleInteraction(_ result: HitTestResult) {
-        switch result {
-        case .ground(let position):
-            selectGround(at: position)
-        case .mapObject(let objectID):
-            handleMapObjectSelection(objectID: objectID)
-        case .mapItem(let objectID):
-            gameSession?.pickUpItem(objectID: objectID)
-        }
-    }
-
-    func selectGround(at position: SIMD2<Int>) {
-        tileSelector = mapGrid.contains(position)
-            ? TileSelector(position: position, showTime: .now)
-            : nil
-        gameSession?.requestMove(to: position)
-    }
-
-    func resetCamera() {
-        cameraState.azimuth = 0
-        cameraState.elevation = .pi / 4
-    }
-
-    private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneMapObject? {
-        objects.values
-            .filter {
-                $0.type == type && !$0.isDead
-            }
-            .min {
-                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
-            }
-    }
-
-    private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneDroppedItem? {
-        items.values.min {
-            distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
-        }
-    }
-
-    private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
-        let d = a &- b
-        return d.x * d.x + d.y * d.y
-    }
-
-    private func onMovementValueChanged(movementValue: CGPoint) {
         let position = player.nextPosition(at: .now) ?? player.gridPosition
 
         let joystickInput = SIMD2<Float>(
@@ -196,9 +148,36 @@ public final class MapScene {
         }
     }
 
+    func handleInteraction(_ result: HitTestResult) {
+        switch result {
+        case .ground(let position):
+            if mapGrid.contains(position) {
+                tileSelector = TileSelector(position: position, showTime: .now)
+            } else {
+                tileSelector = nil
+            }
+            gameSession?.requestMove(to: position)
+        case .mapObject(let objectID):
+            if let target = objects[objectID], !target.isDead {
+                switch target.type {
+                case .monster:
+                    attackMonster(targetID: target.objectID)
+                case .npc:
+                    gameSession?.talkToNPC(npcID: target.objectID)
+                default:
+                    break
+                }
+            }
+        case .mapItem(let objectID):
+            if let item = items[objectID] {
+                pickUpItem(item)
+            }
+        }
+    }
+
     func attackNearestMonster() {
         if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
-            attackMonster(target)
+            attackMonster(targetID: target.objectID)
         }
     }
 
@@ -217,7 +196,7 @@ public final class MapScene {
         }
 
         if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
-            attackMonster(target, skill: skill)
+            useSkill(skill, on: target)
         }
     }
 
@@ -227,23 +206,9 @@ public final class MapScene {
         }
     }
 
-    private func handleMapObjectSelection(objectID: GameObjectID) {
-        guard let target = objects[objectID], !target.isDead else {
-            return
-        }
-
-        switch target.type {
-        case .monster:
-            attackMonster(target)
-        case .npc:
-            gameSession?.talkToNPC(npcID: target.objectID)
-        default:
-            break
-        }
-    }
-
-    private func attackMonster(_ target: MapSceneMapObject) {
-        attackMonster(targetID: target.objectID)
+    func resetCamera() {
+        cameraState.azimuth = 0
+        cameraState.elevation = .pi / 4
     }
 
     private func attackMonster(targetID: GameObjectID) {
@@ -253,6 +218,7 @@ public final class MapScene {
 
         let startPosition = player.gridPosition
         let attackRange = gameSession?.context.playerStatus.attackRange ?? 1
+
         switch decideMovement(from: startPosition, toward: target.gridPosition, within: attackRange) {
         case .alreadyInRange:
             gameSession?.requestAction(._repeat, onTarget: targetID)
@@ -267,9 +233,10 @@ public final class MapScene {
         }
     }
 
-    private func attackMonster(_ target: MapSceneMapObject, skill: SkillInfo) {
+    private func useSkill(_ skill: SkillInfo, on target: MapSceneMapObject) {
         let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
+
         movePlayerToward(targetPosition: targetPosition, within: skillRange) {
             if skill.isGroundTargetedSkill {
                 self.gameSession?.useSkill(
@@ -293,17 +260,6 @@ public final class MapScene {
         }
     }
 
-    private func decideMovement(from playerPosition: SIMD2<Int>, toward targetPosition: SIMD2<Int>, within range: Int) -> MapMovementDecision {
-        let path = pathFinder.findPath(from: playerPosition, to: targetPosition, within: range)
-        if path.isEmpty {
-            return .noPath
-        } else if path == [playerPosition] {
-            return .alreadyInRange
-        } else {
-            return .moveTo(path.last ?? targetPosition)
-        }
-    }
-
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
         let startPosition = player.gridPosition
         switch decideMovement(from: startPosition, toward: targetPosition, within: range) {
@@ -316,6 +272,38 @@ public final class MapScene {
         case .noPath:
             break
         }
+    }
+
+    private func decideMovement(from playerPosition: SIMD2<Int>, toward targetPosition: SIMD2<Int>, within range: Int) -> MapMovementDecision {
+        let path = pathFinder.findPath(from: playerPosition, to: targetPosition, within: range)
+        if path.isEmpty {
+            return .noPath
+        } else if path == [playerPosition] {
+            return .alreadyInRange
+        } else {
+            return .moveTo(path.last ?? targetPosition)
+        }
+    }
+
+    private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneMapObject? {
+        objects.values
+            .filter {
+                $0.type == type && !$0.isDead
+            }
+            .min {
+                distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
+            }
+    }
+
+    private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneDroppedItem? {
+        items.values.min {
+            distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
+        }
+    }
+
+    private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
+        let d = a &- b
+        return d.x * d.x + d.y * d.y
     }
 }
 
