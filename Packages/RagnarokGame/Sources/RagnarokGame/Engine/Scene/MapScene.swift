@@ -381,20 +381,6 @@ extension MapScene {
             action.actionType = .idle
         }
 
-        // An action that plays once hands over to the next action.
-        if case .once(let nextActionType) = action.completion,
-           action.actionType != nextActionType,
-           let duration = composedSprite.duration(
-               forActionType: action.actionType,
-               direction: action.direction,
-               headDirection: action.headDirection,
-               attackDelay: object.attackDelay
-           ),
-           action.elapsedTime >= duration {
-            action.actionType = nextActionType
-            action.elapsedTime -= duration
-        }
-
         let frameIndex = composedSprite.mainFrameIndex(
             forActionType: action.actionType,
             direction: action.direction,

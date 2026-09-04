@@ -35,11 +35,23 @@ struct SpriteAction: Sendable {
         self.completion = completion
     }
 
-    mutating func update(atTime time: ContinuousClock.Instant) {
+    /// `onceDuration` is how long the current action takes to play through once, which
+    /// only the sprite knows. A `.once` action cannot end without it.
+    mutating func update(atTime time: ContinuousClock.Instant, onceDuration: Duration?) {
         let elapsed = startTime.duration(to: time)
-        if case .after(let duration, let nextActionType) = completion, elapsed >= duration {
-            let overflow = elapsed - duration
-            actionType = nextActionType
+
+        let nextAction: (actionType: SpriteActionType, duration: Duration)? = switch completion {
+        case .indefinite:
+            nil
+        case .after(let duration, let nextActionType):
+            (nextActionType, duration)
+        case .once(let nextActionType):
+            nextActionType == actionType ? nil : onceDuration.map { (nextActionType, $0) }
+        }
+
+        if let nextAction, elapsed >= nextAction.duration {
+            let overflow = elapsed - nextAction.duration
+            actionType = nextAction.actionType
             startTime = time - overflow
             elapsedTime = overflow
             completion = .indefinite

@@ -186,7 +186,19 @@ final class MapSceneMapObject {
     }
 
     func update(at time: ContinuousClock.Instant) {
-        action.update(atTime: time)
+        let onceDuration: Duration?
+        if case .once = action.completion {
+            onceDuration = composedSprite?.duration(
+                forActionType: action.actionType,
+                direction: action.direction,
+                headDirection: action.headDirection,
+                attackDelay: attackDelay
+            )
+        } else {
+            onceDuration = nil
+        }
+
+        action.update(atTime: time, onceDuration: onceDuration)
         movement?.update(atTime: time)
         death?.update(at: time)
 

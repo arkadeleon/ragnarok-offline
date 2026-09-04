@@ -125,10 +125,31 @@ Each step compiles and is reviewed on its own.
 3. **Write `.once` completion back.** Move the roll-to-next-action out of the resolver into
    `MapScene.update(at:)`. This is the real bug fix. Audit first: anything that assumes
    `object.action.actionType` never changes on its own may need adjusting.
+   *Done. The audit found nothing at risk — `.after` already changed `actionType` on its own,
+   so no caller could have depended on it staying put. It also found the trap: `.after`
+   rebases `startTime`, so writing the rolled-over `elapsedTime` back without rebasing would
+   be undone by the next update. `.once` now lives beside `.after` in `SpriteAction.update`
+   and shares that rebasing. See the two deliberate divergences below.*
 4. **Play ACT frame sounds from the scene.** Recover the `soundIndex` / `act.sounds` lookup and
    `ComposedSprite.Part.isBody` from `stash@{0}`; drop the rest of that stash.
 5. **Delete the dead paths.** Whatever plumbing is left over once the resolver only reads
    `object.animation`.
+
+## Deliberate divergences from the old behavior
+
+Both come from step 3, and both were raised in review. They are choices, not oversights.
+
+**Action timing no longer depends on the camera.** The old code worked out how long a `.once`
+action runs from the camera-adjusted direction, because it did the rollover on the derived
+action. It now uses the direction the object faces in the world. Turning the camera should not
+change when an attack ends. The two only differ if a sprite gives its 8 directions different
+frame counts or animation speeds, which RO's ACT files do not.
+
+**A `.once` action now expires while the object walks.** The old derived action forced
+`completion` to `.indefinite` while moving, so a `.once` action survived the whole walk and
+rolled over on the first frame after stopping. It now ends on schedule. On screen this is the
+same — walking overrides what is drawn either way, and the old code rolled over immediately on
+stopping — but `object.action` is now correct during the walk, which is the point of the step.
 
 ## Risks
 
