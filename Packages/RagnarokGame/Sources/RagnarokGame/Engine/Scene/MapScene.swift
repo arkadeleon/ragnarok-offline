@@ -413,13 +413,21 @@ extension MapScene {
             return
         }
 
-        guard let soundName = composedSprite.mainFrameSound(
+        guard var soundName = composedSprite.mainFrameSound(
             forActionType: resolvedAction.actionType,
             direction: resolvedAction.direction,
             headDirection: resolvedAction.headDirection,
             frameIndex: resolvedAction.frameIndex
         ) else {
             return
+        }
+
+        if soundName == "atk" {
+            guard let weaponSoundName = WeaponSoundTable.attackSoundNames(for: object.weaponType).first else {
+                return
+            }
+
+            soundName = weaponSoundName
         }
 
         // An object can be heard however far away it is. Only the volume falls off.

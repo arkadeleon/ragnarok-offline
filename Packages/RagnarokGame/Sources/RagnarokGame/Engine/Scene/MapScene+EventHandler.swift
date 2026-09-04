@@ -308,11 +308,6 @@ extension MapScene {
                 if let targetObject = objects[objectAction.targetObjectID] {
                     sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
                 }
-                if SpriteJob(rawValue: sourceObject.job).isPlayer {
-                    if let soundName = WeaponSoundTable.attackSoundNames(for: sourceObject.weaponType).randomElement() {
-                        audioPlayer.playSoundEffect(named: soundName)
-                    }
-                }
             }
 
             sourceObject.perform(presentationActionType, completion: completion)
@@ -615,6 +610,7 @@ extension MapScene {
             isPlayer: objects[objectAction.targetObjectID]?.type == .pc
         )
         let hitSoundName = hitSoundName(for: objectAction)
+        let hitSoundSource = GameAudio.Source(position: initialWorldPosition, range: .infinity)
 
         switch objectAction.type {
         case .normal, .endure, .critical:
@@ -627,7 +623,7 @@ extension MapScene {
             addCombatText(combatText)
 
             if let hitSoundName {
-                audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+                audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
             }
 
             if objectAction.damage2 > 0 {
@@ -640,7 +636,7 @@ extension MapScene {
                 addCombatText(combatText2)
 
                 if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText2.delay)
+                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText2.delay)
                 }
             }
         case .multi_hit, .multi_hit_endure, .multi_hit_critical:
@@ -655,7 +651,7 @@ extension MapScene {
                 addCombatText(combatText)
 
                 if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
                 }
             }
             if objectAction.damage2 > 0 {
@@ -668,7 +664,7 @@ extension MapScene {
                 addCombatText(combatText)
 
                 if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
                 }
 
                 let combatText2 = CombatText(
@@ -680,7 +676,7 @@ extension MapScene {
                 addCombatText(combatText2)
 
                 if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText2.delay)
+                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText2.delay)
                 }
             } else {
                 let combatText = CombatText(
@@ -692,7 +688,7 @@ extension MapScene {
                 addCombatText(combatText)
 
                 if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, after: combatText.delay)
+                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
                 }
             }
 
