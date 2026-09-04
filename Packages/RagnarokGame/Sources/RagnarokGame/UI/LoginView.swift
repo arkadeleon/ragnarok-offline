@@ -48,7 +48,7 @@ struct LoginView: View {
                         .foregroundStyle(Color.gameProminentLabel)
                         .frame(width: 70, alignment: .trailing)
 
-                    TextField(String(), text: $password)
+                    SecureField(String(), text: $password)
                         .textFieldStyle(.plain)
                         #if !os(macOS)
                         .textInputAutocapitalization(.never)
@@ -74,6 +74,7 @@ struct LoginView: View {
                 Button("login") {
                     gameSession.audioPlayer.playButtonSoundEffect()
                     gameSession.login(username: username, password: password)
+                    username = usernameWithoutSuffix
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
@@ -90,13 +91,16 @@ struct LoginView: View {
         .frame(width: 280)
     }
 
-    private var isValidUsername: Bool {
-        let username = username.replacingOccurrences(
+    private var usernameWithoutSuffix: String {
+        username.replacingOccurrences(
             of: "_[mMfF]$",
             with: "",
             options: .regularExpression
         )
-        return username.count >= 6
+    }
+
+    private var isValidUsername: Bool {
+        usernameWithoutSuffix.count >= 6
     }
 
     private var isValidPassword: Bool {
