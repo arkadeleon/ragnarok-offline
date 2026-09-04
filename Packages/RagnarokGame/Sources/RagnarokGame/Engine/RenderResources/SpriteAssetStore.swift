@@ -6,7 +6,6 @@
 //
 
 import Metal
-import RagnarokModels
 import RagnarokSprite
 
 @MainActor
