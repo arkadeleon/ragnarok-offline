@@ -80,6 +80,7 @@ final class GameAudioPlayer {
 
         bgmPlayer = player
         bgmPlayer?.numberOfLoops = -1
+        bgmPlayer?.volume = GameAudio.bgmVolume
         bgmPlayer?.play()
     }
 

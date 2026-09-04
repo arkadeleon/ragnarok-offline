@@ -12,6 +12,12 @@ enum GameAudio {
     /// The format every sound effect is decoded into.
     static let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2)!
 
+    /// How loud the background music plays.
+    static let bgmVolume: Float = 0.5
+
+    /// How loud sound effects play, before the distance to the listener is taken into account.
+    static let soundEffectVolume: Float = 0.5
+
     /// Where a sound effect comes from, and how far it carries, in world units.
     /// Only x and y count toward what the listener hears.
     struct Source {

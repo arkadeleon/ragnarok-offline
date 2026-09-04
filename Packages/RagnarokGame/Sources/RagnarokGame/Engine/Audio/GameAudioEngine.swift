@@ -84,6 +84,8 @@ final class GameAudioEngine {
             return true
         }
 
+        engine.mainMixerNode.outputVolume = GameAudio.soundEffectVolume
+
         do {
             try engine.start()
             return true
