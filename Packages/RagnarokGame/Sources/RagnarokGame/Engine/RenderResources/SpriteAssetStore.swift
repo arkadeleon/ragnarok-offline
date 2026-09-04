@@ -11,7 +11,7 @@ import RagnarokSprite
 @MainActor
 final class SpriteAssetStore {
     private struct Textures {
-        let sprite: ObjectIdentifier
+        let sprite: AnyObject
         let partTextures: SpritePartTextures
     }
 
@@ -94,13 +94,12 @@ final class SpriteAssetStore {
         in textures: inout [GameObjectID : Textures],
         objectID: GameObjectID
     ) -> SpritePartTextures {
-        let identity = ObjectIdentifier(sprite)
-        if let existing = textures[objectID], existing.sprite == identity {
+        if let existing = textures[objectID], existing.sprite === sprite {
             return existing.partTextures
         }
 
         let partTextures = SpritePartTextures(device: device)
-        textures[objectID] = Textures(sprite: identity, partTextures: partTextures)
+        textures[objectID] = Textures(sprite: sprite, partTextures: partTextures)
         return partTextures
     }
 }
