@@ -46,14 +46,12 @@ final class MapSceneRenderResources {
     func synchronizeSprites(
         objects: [GameObjectID : MapSceneMapObject],
         items: [GameObjectID : MapSceneDroppedItem],
-        worldPositions: [GameObjectID : SIMD3<Float>],
-        camera: MapCameraState
+        worldPositions: [GameObjectID : SIMD3<Float>]
     ) {
         spriteDrawables = spriteAssetStore?.sync(
             objects: objects,
             items: items,
-            worldPositions: worldPositions,
-            camera: camera
+            worldPositions: worldPositions
         ) ?? []
     }
 

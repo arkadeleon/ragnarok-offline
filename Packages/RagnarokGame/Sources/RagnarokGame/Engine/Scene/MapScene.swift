@@ -344,6 +344,10 @@ extension MapScene {
 
         spriteLoader.load(objects: objects, items: items)
 
+        for object in objects.values {
+            object.resolvedAction = resolveAction(for: object)
+        }
+
         let playerPosition = player.gridPosition
         if state.playerPosition != playerPosition {
             state.playerPosition = playerPosition
@@ -355,6 +359,57 @@ extension MapScene {
         }
 
         updateSounds(at: now)
+    }
+
+    private func resolveAction(for object: MapSceneMapObject) -> ResolvedSpriteAction? {
+        guard let composedSprite = object.composedSprite else {
+            return nil
+        }
+
+        var action = object.action
+
+        if let movement = object.movement, movement.isMoving {
+            action.actionType = .walk
+            action.direction = movement.direction ?? action.direction
+            action.elapsedTime = movement.animationElapsedTime
+            action.completion = .indefinite
+        }
+
+        action.direction = action.direction.adjustedForCameraAzimuth(cameraState.azimuth)
+
+        if !SpriteActionType.availableActionTypes(forJobID: object.job).contains(action.actionType) {
+            action.actionType = .idle
+        }
+
+        // An action that plays once hands over to the next action.
+        if case .once(let nextActionType) = action.completion,
+           action.actionType != nextActionType,
+           let duration = composedSprite.duration(
+               forActionType: action.actionType,
+               direction: action.direction,
+               headDirection: action.headDirection,
+               attackDelay: object.attackDelay
+           ),
+           action.elapsedTime >= duration {
+            action.actionType = nextActionType
+            action.elapsedTime -= duration
+        }
+
+        let frameIndex = composedSprite.mainFrameIndex(
+            forActionType: action.actionType,
+            direction: action.direction,
+            headDirection: action.headDirection,
+            elapsedTime: action.elapsedTime,
+            attackDelay: object.attackDelay
+        )
+
+        return ResolvedSpriteAction(
+            actionType: action.actionType,
+            direction: action.direction,
+            headDirection: action.headDirection,
+            elapsedTime: action.elapsedTime,
+            frameIndex: frameIndex ?? 0
+        )
     }
 
     private func updateSounds(at now: ContinuousClock.Instant) {

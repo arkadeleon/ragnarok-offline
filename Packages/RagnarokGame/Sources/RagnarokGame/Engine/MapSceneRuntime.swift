@@ -81,8 +81,7 @@ final class MapSceneRuntime {
         renderResources.synchronizeSprites(
             objects: scene.objects,
             items: scene.items,
-            worldPositions: makeWorldPositions(),
-            camera: scene.cameraState
+            worldPositions: makeWorldPositions()
         )
 
         renderResources.synchronizeCombatTexts(scene.combatTexts)

@@ -19,7 +19,7 @@ final public class ComposedSprite: Sendable {
     public let parts: [ComposedSprite.Part]
     public let imf: IMF?
 
-    var mainPart: ComposedSprite.Part? {
+    public var mainPart: ComposedSprite.Part? {
         parts.first {
             $0.semantic == .main || $0.semantic == .playerBody
         }

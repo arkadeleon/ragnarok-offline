@@ -28,8 +28,7 @@ final class SpriteAssetStore {
     func sync(
         objects: [GameObjectID : MapSceneMapObject],
         items: [GameObjectID : MapSceneDroppedItem],
-        worldPositions: [GameObjectID : SIMD3<Float>],
-        camera: MapCameraState
+        worldPositions: [GameObjectID : SIMD3<Float>]
     ) -> [SpriteLayerDrawable] {
         for objectID in Set(objectTextures.keys).subtracting(objects.keys) {
             objectTextures.removeValue(forKey: objectID)
@@ -54,8 +53,7 @@ final class SpriteAssetStore {
                 object,
                 composedSprite: composedSprite,
                 partTextures: partTextures(for: composedSprite, in: &objectTextures, objectID: objectID),
-                worldPosition: worldPosition,
-                camera: camera
+                worldPosition: worldPosition
             )
             guard !drawables.isEmpty else {
                 continue

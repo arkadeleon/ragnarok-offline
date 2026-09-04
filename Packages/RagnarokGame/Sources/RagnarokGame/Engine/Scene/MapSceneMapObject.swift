@@ -47,6 +47,9 @@ final class MapSceneMapObject {
     /// How long one attack takes.
     var attackDelay: Duration = .milliseconds(300)
 
+    /// What the object is showing right now, rebuilt every update.
+    var resolvedAction: ResolvedSpriteAction?
+
     var isDead: Bool {
         death != nil
     }
