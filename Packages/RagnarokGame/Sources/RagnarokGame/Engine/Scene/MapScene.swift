@@ -37,6 +37,7 @@ public final class MapScene {
 
     var objects: [GameObjectID: MapSceneMapObject] = [:]
     var items: [GameObjectID : MapSceneDroppedItem] = [:]
+    let spriteLoader: SpriteLoader
 
     /// The objects that show health and spell point bars above them.
     var hpspBarObjectIDs: Set<GameObjectID> = []
@@ -78,6 +79,8 @@ public final class MapScene {
             playerDirection: .south
         )
 
+        self.spriteLoader = SpriteLoader(resourceManager: resourceManager)
+
         self.pathFinder = PathFinder(mapGrid: self.mapGrid)
 
         self.player = MapSceneMapObject(
@@ -103,6 +106,7 @@ public final class MapScene {
         audioPlayer.stopBGM()
         audioPlayer.stopSoundEffects()
         items.removeAll()
+        spriteLoader.cancelAll()
         combatTexts.removeAll()
         effects.removeAll()
         sounds.removeAll()
@@ -337,6 +341,8 @@ extension MapScene {
                 object.gridPosition = movement.currentPosition
             }
         }
+
+        spriteLoader.load(objects: objects, items: items)
 
         let playerPosition = player.gridPosition
         if state.playerPosition != playerPosition {

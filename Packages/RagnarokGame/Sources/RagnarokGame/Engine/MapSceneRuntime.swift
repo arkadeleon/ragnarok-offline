@@ -52,7 +52,7 @@ final class MapSceneRuntime {
 
         renderResources.loadWorld(worldAsset)
 
-        renderResources.prepareSprites(resourceManager: scene.resourceManager)
+        renderResources.prepareSprites()
 
         do {
             try await renderResources.prepareCombatTexts(resourceManager: scene.resourceManager)

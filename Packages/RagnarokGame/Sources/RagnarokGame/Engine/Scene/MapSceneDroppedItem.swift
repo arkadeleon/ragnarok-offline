@@ -6,6 +6,7 @@
 //
 
 import RagnarokModels
+import RagnarokSprite
 import simd
 
 final class MapSceneDroppedItem {
@@ -13,6 +14,8 @@ final class MapSceneDroppedItem {
     let itemID: Int
 
     var gridPosition: SIMD2<Int>
+
+    var sprite: SpriteResource?
 
     init(item: DroppedItem, gridPosition: SIMD2<Int>) {
         objectID = item.objectID

@@ -38,12 +38,8 @@ final class MapSceneRenderResources {
         world = WorldRenderResource(device: device, asset: asset)
     }
 
-    func prepareSprites(resourceManager: ResourceManager) {
-        spriteAssetStore?.cancelAllTasks()
-        spriteAssetStore = SpriteAssetStore(
-            device: device,
-            resourceManager: resourceManager
-        )
+    func prepareSprites() {
+        spriteAssetStore = SpriteAssetStore(device: device)
         spriteDrawables.removeAll()
     }
 
@@ -192,7 +188,6 @@ final class MapSceneRenderResources {
     }
 
     func removeAll() {
-        spriteAssetStore?.cancelAllTasks()
         spriteAssetStore = nil
         spriteDrawables.removeAll()
 

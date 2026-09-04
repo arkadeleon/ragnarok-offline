@@ -37,6 +37,8 @@ final class MapSceneMapObject {
 
     var gridPosition: SIMD2<Int>
 
+    var composedSprite: ComposedSprite?
+
     var action: SpriteAction
     var movement: MapObjectMovement?
     var death: MapObjectDeath?

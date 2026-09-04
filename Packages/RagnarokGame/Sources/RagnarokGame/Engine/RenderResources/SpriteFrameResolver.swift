@@ -24,13 +24,11 @@ struct SpriteFrameResolver {
 
     func resolve(
         _ object: MapSceneMapObject,
-        assets: ObjectSpriteAssets,
+        composedSprite: ComposedSprite,
+        partTextures: SpritePartTextures,
         worldPosition: SIMD3<Float>,
         camera: MapCameraState
     ) -> [SpriteLayerDrawable] {
-        let composedSprite = assets.composedSprite
-        let partTextures = assets.partTextures
-
         var action = action(for: object, camera: camera)
         if case .once(let nextActionType) = action.completion,
            let duration = onceDuration(composedSprite: composedSprite, action: action, attackDelay: object.attackDelay),
@@ -151,12 +149,10 @@ struct SpriteFrameResolver {
 
     func resolve(
         objectID: GameObjectID,
-        assets: ItemSpriteAssets,
+        sprite: SpriteResource,
+        partTextures: SpritePartTextures,
         worldPosition: SIMD3<Float>
     ) -> [SpriteLayerDrawable] {
-        let sprite = assets.sprite
-        let partTextures = assets.partTextures
-
         guard let action = sprite.act.action(at: 0),
               let frame = action.frames.first else {
             return []
