@@ -181,6 +181,18 @@ extension MapScene {
 
     public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
         guard type == .dead, let object = objects[objectID] else {
+            if type == .respawn || type == .teleport,
+               let object = objects[objectID], object.effectState != .invisible {
+                let effect = MapSceneEffect(
+                    reference: .id(.ef_teleportation2),
+                    creationTime: CACurrentMediaTime(),
+                    gridPosition: object.gridPosition,
+                    targetObjectID: nil,
+                    ownerObjectID: nil
+                )
+                effects[effect.id] = effect
+            }
+
             removeObject(objectID: objectID)
             return
         }
