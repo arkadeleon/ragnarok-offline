@@ -52,6 +52,7 @@ let serverConfiguration = ServerConfiguration(
               luk: true
               mount_peco: true
               autoloot: true
+              effect: true
             Permissions:
               any_warp: true
         """,

@@ -501,6 +501,21 @@ extension MapScene {
         }
     }
 
+    public func onEffectSpawned(effectID: EffectID, objectID: GameObjectID) {
+        guard let object = objects[objectID] else {
+            return
+        }
+
+        let effect = MapSceneEffect(
+            reference: .id(effectID),
+            creationTime: CACurrentMediaTime(),
+            gridPosition: object.gridPosition,
+            targetObjectID: objectID,
+            ownerObjectID: objectID
+        )
+        effects[effect.id] = effect
+    }
+
     // MARK: - Other
 
     public func onGroundSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, position: SIMD2<Int>) {

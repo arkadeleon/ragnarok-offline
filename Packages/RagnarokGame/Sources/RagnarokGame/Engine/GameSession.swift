@@ -883,6 +883,10 @@ final public class GameSession {
             if let effect = NotifyEffect(rawValue: Int(packet.effectId)) {
                 mapScene?.onSpecialEffectSpawned(effect: effect, objectID: packet.aid)
             }
+        case let packet as PACKET_ZC_NOTIFY_EFFECT2:
+            if let effectID = EffectID(rawValue: Int(packet.effectID)) {
+                mapScene?.onEffectSpawned(effectID: effectID, objectID: packet.AID)
+            }
         case let packet as PACKET_ZC_SAY_DIALOG:
             if dialog?.npcID == packet.NpcID {
                 dialog?.update(from: packet)
