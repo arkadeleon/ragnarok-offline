@@ -726,6 +726,14 @@ final public class GameSession {
                let element = Element(rawValue: Int(packet.element)) {
                 mapScene?.onMapObjectSkillCast(skillID: skillID, sourceObjectID: packet.srcId, element: element, castTime: .milliseconds(packet.delayTime))
             }
+        case let packet as PACKET_ZC_AUTORUN_SKILL:
+            var skill = SkillInfo()
+            skill.skillID = Int(packet.skill_id)
+            skill.flag = Int(packet.skill_type)
+            skill.level = Int(packet.skill_lv)
+            skill.spCost = Int(packet.skill_sp)
+            skill.attackRange = Int(packet.skill_range)
+            mapScene?.useSkillOnNearestMonster(skill)
         case let packet as PACKET_ZC_DISPEL:
             mapScene?.onMapObjectSkillCastCancelled(sourceObjectID: packet.gid)
         case let packet as PACKET_ZC_USE_SKILL:
