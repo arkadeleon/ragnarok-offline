@@ -348,6 +348,22 @@ public enum EffectTable {
                 attachedToTarget: false
             ),
         ],
+        .ef_teleportation: [
+            .cylinder(
+                textureName: "ring_blue.tga",
+                soundName: "effect\\ef_teleportation.wav",
+                duration: 1,
+                attachedToTarget: true,
+                blendMode: .oneMinusSourceAlpha,
+                alpha: 0.5,
+                fades: true,
+                topRadius: 0.7,
+                bottomRadius: 0.8,
+                height: 35,
+                animation: .growThenShrinkHeight,
+                rotatesContinuously: true
+            ),
+        ],
         .ef_incagility: [
             .`3D`(
                 kind: .texture("effect\\ac_center2.tga"),
@@ -859,6 +875,65 @@ public enum EffectTable {
             .str(
                 fileName: "joblvup.str",
                 attachedToTarget: true
+            ),
+        ],
+        .ef_teleportation2: [
+            .cylinder(
+                textureName: "ring_blue.tga",
+                soundName: "effect\\ef_teleportation.wav",
+                duration: 1.5,
+                attachedToTarget: true,
+                blendMode: .one,
+                color: [0.6, 0.6, 1],
+                alpha: 0.5,
+                fades: true,
+                topRadius: 0.3,
+                bottomRadius: 0.3,
+                height: 35,
+                animation: .growThenShrinkHeight,
+                rotatesContinuously: true
+            ),
+            .cylinder(
+                textureName: "ring_blue.tga",
+                duration: 1.5,
+                attachedToTarget: true,
+                blendMode: .one,
+                color: [0.6, 0.6, 1],
+                alpha: 0.5,
+                fades: true,
+                topRadius: 0.8,
+                bottomRadius: 0.6,
+                height: 25,
+                animation: .growThenShrinkHeight,
+                rotatesContinuously: true
+            ),
+            .cylinder(
+                textureName: "ring_blue.tga",
+                duration: 1.5,
+                attachedToTarget: true,
+                blendMode: .one,
+                color: [0.6, 0.6, 1],
+                alpha: 0.5,
+                fades: true,
+                topRadius: 1,
+                bottomRadius: 0.8,
+                height: 13,
+                animation: .growThenShrinkHeight,
+                rotatesContinuously: true
+            ),
+            .cylinder(
+                textureName: "ring_blue.tga",
+                duration: 1.5,
+                attachedToTarget: true,
+                blendMode: .one,
+                color: [0.6, 0.6, 1],
+                alpha: 0.5,
+                fades: true,
+                topRadius: 1.3,
+                bottomRadius: 1,
+                height: 5,
+                animation: .growThenShrinkHeight,
+                rotatesContinuously: true
             ),
         ],
         .ef_heal: [
