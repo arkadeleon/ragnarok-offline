@@ -140,13 +140,13 @@ final class MapSpatialInput {
         if let orbit, let position = pinches[orbit.id]?.draggingPosition {
             let travel = position - orbit.startPosition
 
-            let azimuth = orbit.cameraState.azimuth + simd_dot(travel, headRight) * Self.azimuthPerMeter
-            scene.cameraState.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
+            let azimuth = orbit.azimuth + simd_dot(travel, headRight) * Self.azimuthPerMeter
+            scene.camera.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
 
-            var elevation = orbit.cameraState.elevation + simd_dot(travel, headUp) * Self.elevationPerMeter
+            var elevation = orbit.elevation + simd_dot(travel, headUp) * Self.elevationPerMeter
             elevation = max(elevation, Self.minimumElevation)
             elevation = min(elevation, Self.maximumElevation)
-            scene.cameraState.elevation = elevation
+            scene.camera.elevation = elevation
             return
         }
 
@@ -158,7 +158,12 @@ final class MapSpatialInput {
             orbit = nil
             return
         }
-        orbit = Orbit(id: id, startPosition: position, cameraState: scene.cameraState)
+        orbit = Orbit(
+            id: id,
+            startPosition: position,
+            azimuth: scene.camera.azimuth,
+            elevation: scene.camera.elevation
+        )
     }
 }
 
@@ -186,13 +191,14 @@ private struct Pinch {
     }
 }
 
-/// The hand that rotates the camera now. `startPosition` and `cameraState` are saved when
+/// The hand that rotates the camera now. The starting position and camera angles are saved when
 /// the hand starts to rotate. Every change is measured from these saved values, and nothing
 /// is added up frame by frame, so the camera cannot drift.
 private struct Orbit {
     var id: SpatialEventCollection.Event.ID
     var startPosition: SIMD3<Float>
-    var cameraState: MapCameraState
+    var azimuth: Float
+    var elevation: Float
 }
 
 #endif

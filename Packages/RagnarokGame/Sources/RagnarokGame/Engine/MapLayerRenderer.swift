@@ -164,8 +164,8 @@ final class MapLayerRenderer {
             viewMatrix: originFromEye.inverse * worldPlacement,
             projectionMatrix: drawable.computeProjection(convention: .rightUpBack, viewIndex: viewIndex),
             position: (worldPlacement.inverse * originFromEye.columns.3).xyz,
-            azimuth: scene.cameraState.azimuth,
-            elevation: scene.cameraState.elevation
+            azimuth: scene.camera.azimuth,
+            elevation: scene.camera.elevation
         )
     }
 

@@ -97,31 +97,31 @@ final class MapSceneRuntime {
         }
     }
 
-    /// The game camera, orbiting the player at `cameraState` and drawn into `viewport`.
+    /// Builds the render camera from the scene camera's settings and smoothed focus.
     ///
     /// iOS and macOS draw the map from this camera. visionOS draws it from the eye instead,
     /// and uses this camera's view matrix to place the map around the viewer.
     func makeCamera(viewport: MTLViewport) -> RenderCamera {
-        let cameraState = scene.cameraState
-        let targetPosition = scene.worldPosition(for: scene.player)
+        let camera = scene.camera
+        let targetPosition = camera.target ?? scene.worldPosition(for: scene.player)
         let worldTarget = MapSceneRenderer.renderPosition(for: targetPosition) + Self.cameraTargetOffset
 
         let cameraOrientation =
-            simd_quatf(angle: -cameraState.azimuth, axis: [0, 1, 0]) *
-            simd_quatf(angle: -cameraState.elevation, axis: [1, 0, 0])
-        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, cameraState.distance])
+            simd_quatf(angle: -camera.azimuth, axis: [0, 1, 0]) *
+            simd_quatf(angle: -camera.elevation, axis: [1, 0, 0])
+        let cameraPosition = worldTarget + cameraOrientation.act([0, 0, camera.distance])
         let cameraUp = cameraOrientation.act([0, 1, 0])
 
         let viewportHeight = max(Float(viewport.height), 1)
         let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
-        let farZ = max(cameraState.distance * 4, 1000)
+        let farZ = max(camera.distance * 4, 1000)
 
         return RenderCamera(
             viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
             projectionMatrix: perspective(radians(Self.cameraFieldOfViewDegrees), aspectRatio, 0.1, farZ),
             position: cameraPosition,
-            azimuth: cameraState.azimuth,
-            elevation: cameraState.elevation
+            azimuth: camera.azimuth,
+            elevation: camera.elevation
         )
     }
 
@@ -221,7 +221,7 @@ final class MapSceneRuntime {
                 guard let animation = combatText.animation(
                     at: now,
                     anchor: anchor,
-                    cameraAzimuth: scene.cameraState.azimuth
+                    cameraAzimuth: scene.camera.azimuth
                 ) else {
                     return nil
                 }

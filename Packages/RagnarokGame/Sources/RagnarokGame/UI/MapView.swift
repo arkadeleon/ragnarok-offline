@@ -147,8 +147,8 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         }
 
         scene.resetCamera()
-        baseAzimuth = scene.cameraState.azimuth
-        baseElevation = scene.cameraState.elevation
+        baseAzimuth = scene.camera.azimuth
+        baseElevation = scene.camera.elevation
     }
 
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -158,10 +158,10 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 
         switch gestureRecognizer.state {
         case .began:
-            baseAzimuth = scene.cameraState.azimuth
+            baseAzimuth = scene.camera.azimuth
         case .changed:
             let azimuth = baseAzimuth + Float(gestureRecognizer.translation(in: mtkView).x) * 0.01
-            scene.cameraState.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
+            scene.camera.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
         default:
             break
         }
@@ -174,12 +174,12 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 
         switch gestureRecognizer.state {
         case .began:
-            baseElevation = scene.cameraState.elevation
+            baseElevation = scene.camera.elevation
         case .changed:
             var elevation = baseElevation + Float(gestureRecognizer.translation(in: mtkView).y) * 0.01
             elevation = max(elevation, .pi / 12)
             elevation = min(elevation, .pi / 3)
-            scene.cameraState.elevation = elevation
+            scene.camera.elevation = elevation
         default:
             break
         }
@@ -192,12 +192,12 @@ final class MapViewController: UIViewController, MTKViewDelegate {
 
         switch gestureRecognizer.state {
         case .began:
-            baseDistance = scene.cameraState.distance
+            baseDistance = scene.camera.distance
         case .changed:
             var distance = baseDistance * Float(1 / gestureRecognizer.scale)
             distance = max(distance, 3)
             distance = min(distance, 120)
-            scene.cameraState.distance = distance
+            scene.camera.distance = distance
         default:
             break
         }
@@ -333,16 +333,16 @@ final class MapViewController: NSViewController, MTKViewDelegate {
 
         switch gestureRecognizer.state {
         case .began:
-            baseAzimuth = scene.cameraState.azimuth
-            baseElevation = scene.cameraState.elevation
+            baseAzimuth = scene.camera.azimuth
+            baseElevation = scene.camera.elevation
         case .changed:
             let azimuth = baseAzimuth + Float(gestureRecognizer.translation(in: mtkView).x) * 0.01
-            scene.cameraState.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
+            scene.camera.azimuth = azimuth.truncatingRemainder(dividingBy: .pi * 2)
 
             var elevation = baseElevation - Float(gestureRecognizer.translation(in: mtkView).y) * 0.01
             elevation = max(elevation, .pi / 12)
             elevation = min(elevation, .pi / 3)
-            scene.cameraState.elevation = elevation
+            scene.camera.elevation = elevation
         default:
             break
         }
@@ -355,7 +355,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
 
         switch gestureRecognizer.state {
         case .began:
-            baseDistance = scene.cameraState.distance
+            baseDistance = scene.camera.distance
         case .changed:
             var scale = 1 + gestureRecognizer.magnification
             scale = max(scale, .leastNonzeroMagnitude)
@@ -363,7 +363,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
             var distance = baseDistance * Float(1 / scale)
             distance = max(distance, 3)
             distance = min(distance, 120)
-            scene.cameraState.distance = distance
+            scene.camera.distance = distance
         default:
             break
         }

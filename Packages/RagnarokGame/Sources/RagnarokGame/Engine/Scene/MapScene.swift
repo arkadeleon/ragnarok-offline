@@ -56,7 +56,7 @@ public final class MapScene {
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
 
-    var cameraState = MapCameraState()
+    var camera = MapSceneCamera()
 
     init(
         mapName: String,
@@ -100,6 +100,7 @@ public final class MapScene {
     }
 
     func unload() {
+        camera.reset()
         arrivalTask?.cancel()
         arrivalTask = nil
         pendingArrivalAction = nil
@@ -120,7 +121,7 @@ public final class MapScene {
             Float(movementValue.x),
             Float(-movementValue.y)
         )
-        let angle = -cameraState.azimuth
+        let angle = -camera.azimuth
         let cosAngle = cos(angle)
         let sinAngle = sin(angle)
         let worldInput = SIMD2<Float>(
@@ -207,8 +208,8 @@ public final class MapScene {
     }
 
     func resetCamera() {
-        cameraState.azimuth = 0
-        cameraState.elevation = .pi / 4
+        camera.azimuth = 0
+        camera.elevation = .pi / 4
     }
 
     private func attackMonster(targetID: GameObjectID) {
@@ -330,6 +331,8 @@ extension MapScene {
             }
         }
 
+        camera.update(playerPosition: worldPosition(for: player), at: now)
+
         spriteLoader.load(objects: objects, items: items)
 
         for object in objects.values {
@@ -365,7 +368,7 @@ extension MapScene {
             action.completion = .indefinite
         }
 
-        action.direction = action.direction.adjustedForCameraAzimuth(cameraState.azimuth)
+        action.direction = action.direction.adjustedForCameraAzimuth(camera.azimuth)
 
         if !SpriteActionType.availableActionTypes(forJobID: object.job).contains(action.actionType) {
             action.actionType = .idle
