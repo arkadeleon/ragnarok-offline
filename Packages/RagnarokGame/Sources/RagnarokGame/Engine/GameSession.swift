@@ -652,10 +652,16 @@ final public class GameSession {
             let packet = PacketFactory.CZ_PING_LIVE()
             mapClient?.sendPacket(packet)
         case let packet as PACKET_ZC_NPCACK_MAPMOVE:
-            mapRuntime?.unload()
-
-            let mapName = packet.mapName
+            let mapName = packet.mapName.replacingOccurrences(of: ".gat", with: ".rsw")
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
+
+            if let mapScene, mapScene.mapName == mapName {
+                mapScene.jump(toPosition: position)
+                notifyMapLoaded()
+                break
+            }
+
+            mapRuntime?.unload()
 
             let progress = Progress()
             stage = .map(.loading(progress))
@@ -669,7 +675,6 @@ final public class GameSession {
                     fatalError("GameSession: Metal is not available on this device")
                 }
 
-                let mapName = mapName.replacingOccurrences(of: ".gat", with: ".rsw")
                 let world = try await context.resourceManager.world(mapName: mapName)
                 let mapGrid = MapGrid(gat: world.gat)
 

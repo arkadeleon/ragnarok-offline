@@ -114,6 +114,28 @@ public final class MapScene {
         tileSelector = nil
     }
 
+    func jump(toPosition position: SIMD2<Int>) {
+        arrivalTask?.cancel()
+        arrivalTask = nil
+        pendingArrivalAction = nil
+
+        for objectID in Array(objects.keys) where objectID != player.objectID {
+            removeObject(objectID: objectID)
+        }
+
+        items.removeAll()
+        combatTexts.removeAll()
+        effects.removeAll()
+        tileSelector = nil
+
+        player.stopMovement()
+        player.cast = nil
+        player.gridPosition = position
+        player.perform(.idle, completion: .indefinite)
+
+        camera.reset()
+    }
+
     func handleMovement(_ movementValue: CGPoint) {
         let position = player.nextPosition(at: .now) ?? player.gridPosition
 
