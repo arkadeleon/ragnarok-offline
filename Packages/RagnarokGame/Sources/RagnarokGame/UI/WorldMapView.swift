@@ -16,6 +16,20 @@ private let imageSize = CGSize(width: 1280, height: 1024)
 // The map preview in the info window is this wide and tall.
 private let previewSize: CGFloat = 150
 
+private enum WorldMapMode: CaseIterable {
+    case plain
+    case mapPreviews
+    case monsterLevels
+
+    var name: String {
+        switch self {
+        case .plain: "plain"
+        case .mapPreviews: "maps"
+        case .monsterLevels: "levels"
+        }
+    }
+}
+
 struct WorldMapView: View {
     var currentMapName: String
     var onClose: () -> Void = {}
@@ -25,8 +39,8 @@ struct WorldMapView: View {
 
     @State private var worlds: [WorldViewData.World] = []
     @State private var selectedWorld: WorldViewData.World?
+    @State private var selectedMode: WorldMapMode = .plain
     @State private var selectedMap: WorldViewData.Map?
-    @State private var showsMapPreviews = false
 
     var body: some View {
         ZStack {
@@ -35,8 +49,8 @@ struct WorldMapView: View {
             if let selectedWorld {
                 WorldMapImageView(
                     world: selectedWorld,
+                    mode: selectedMode,
                     currentMapName: currentMapName,
-                    showsMapPreviews: showsMapPreviews,
                     selectedMap: $selectedMap
                 )
             }
@@ -69,11 +83,16 @@ struct WorldMapView: View {
             .padding(16)
         }
         .overlay(alignment: .bottomTrailing) {
-            Button(showsMapPreviews ? "hide maps" : "show maps") {
-                showsMapPreviews.toggle()
+            Menu("mode") {
+                ForEach(WorldMapMode.allCases, id: \.self) { mode in
+                    Button(mode.name) {
+                        selectedMode = mode
+                    }
+                }
             }
+            .menuStyle(.button)
             .buttonStyle(.game)
-            .frame(width: 80, height: 20)
+            .frame(width: 60, height: 20)
             .padding(16)
         }
         .task {
@@ -96,8 +115,8 @@ struct WorldMapView: View {
 
 private struct WorldMapImageView: View {
     var world: WorldViewData.World
+    var mode: WorldMapMode
     var currentMapName: String
-    var showsMapPreviews: Bool
     @Binding var selectedMap: WorldViewData.Map?
 
     @Environment(GameContext.self) private var gameContext
@@ -119,7 +138,7 @@ private struct WorldMapImageView: View {
                         .resizable()
                 }
 
-                if showsMapPreviews {
+                if mode == .mapPreviews {
                     WorldMapPreviewsView(world: world, fittedScale: fittedScale)
                 }
 
@@ -127,6 +146,7 @@ private struct WorldMapImageView: View {
                     world: world,
                     currentMapName: currentMapName,
                     selectedMap: selectedMap,
+                    showsMonsterLevels: mode == .monsterLevels,
                     fittedScale: fittedScale,
                     zoomScale: displayedViewport.zoomScale
                 )
@@ -203,6 +223,7 @@ private struct WorldMapOverlayView: View {
     var world: WorldViewData.World
     var currentMapName: String
     var selectedMap: WorldViewData.Map?
+    var showsMonsterLevels: Bool
     var fittedScale: CGFloat
     var zoomScale: CGFloat
 
@@ -257,6 +278,33 @@ private struct WorldMapOverlayView: View {
                 context.draw(text, at: CGPoint(x: rect.midX, y: rect.midY), anchor: .center)
             }
 
+            if showsMonsterLevels {
+                // A dungeon's level range covers all of its floors, so it is drawn
+                // once, under the dungeon name.
+                var labeledOrigins: Set<SIMD2<Int>> = []
+
+                for entrance in world.dungeonEntrances where !entrance.monsterLevel.isEmpty {
+                    guard let map = world.maps.first(where: { $0.groupIndex == entrance.groupIndex }) else {
+                        continue
+                    }
+
+                    labeledOrigins.insert(SIMD2(map.rect.left, map.rect.top))
+
+                    let rect = map.rect.scaled(by: fittedScale)
+                    draw(entrance.monsterLevel, in: rect, y: rect.minY + rect.height * 0.8, size: 8, context: context)
+                }
+
+                for map in world.maps where !map.monsterLevel.isEmpty {
+                    guard entrancesByGroupIndex[map.groupIndex] == nil,
+                          labeledOrigins.insert(SIMD2(map.rect.left, map.rect.top)).inserted else {
+                        continue
+                    }
+
+                    let rect = map.rect.scaled(by: fittedScale)
+                    draw(map.monsterLevel, in: rect, y: rect.midY, size: 20, context: context)
+                }
+            }
+
             if let currentMap = world.maps.first(where: { $0.mapName.mapNameStem == currentMapName.mapNameStem }) {
                 let path = Path(roundedRect: currentMap.rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
                 context.fill(path, with: .color(Color(#colorLiteral(red: 1, green: 0.5019607843, blue: 0, alpha: 0.5))))
@@ -309,6 +357,13 @@ private struct WorldMapOverlayView: View {
         } else {
             return size.height / (2 * absSin)
         }
+    }
+
+    private func draw(_ monsterLevel: String, in rect: CGRect, y: CGFloat, size: CGFloat, context: GraphicsContext) {
+        let text = Text(verbatim: "\(monsterLevel)")
+            .font(.game(size: size * fittedScale, weight: .bold))
+            .foregroundStyle(Color.white)
+        context.draw(text, at: CGPoint(x: rect.midX, y: y), anchor: .center)
     }
 }
 
