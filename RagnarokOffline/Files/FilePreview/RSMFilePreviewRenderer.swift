@@ -16,19 +16,23 @@ public class RSMFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
     public let configuration: RenderConfiguration
 
-    let modelBoundingBox: RSMModelBoundingBox
-    let modelResource: RSMModelRenderResource
     let modelRenderer: RSMModelRenderer
+    let modelResource: RSMModelRenderResource
+    let modelBoundingBox: RSMModelBoundingBox
+    let fog: Fog
 
-    public let camera = Camera()
+    public let camera: Camera
 
     public init(device: any MTLDevice, configuration: RenderConfiguration, asset: RSMModelRenderAsset) throws {
         self.device = device
         self.configuration = configuration
 
-        modelBoundingBox = asset.boundingBox
-        modelResource = RSMModelRenderResource(device: device, asset: asset, light: .preview)
         modelRenderer = try RSMModelRenderer(device: device, configuration: configuration)
+        modelResource = RSMModelRenderResource(device: device, asset: asset, light: .preview)
+        modelBoundingBox = asset.boundingBox
+        fog = Fog()
+
+        camera = Camera()
     }
 
     public func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
@@ -63,7 +67,7 @@ public class RSMFilePreviewRenderer: Renderer {
             modelRenderer.render(
                 resources: [modelResource],
                 atTime: frame.time,
-                fog: .disabled,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

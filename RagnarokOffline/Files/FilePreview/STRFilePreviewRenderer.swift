@@ -21,8 +21,9 @@ public class STRFilePreviewRenderer: Renderer {
     let effectRenderer: STREffectRenderer
     let effectResource: STREffectRenderResource
     let creationTime: TimeInterval
+    let fog: Fog
 
-    public let camera = Camera()
+    public let camera: Camera
 
     public init(device: any MTLDevice, configuration: RenderConfiguration, animation: STREffectAnimation) throws {
         self.device = device
@@ -31,7 +32,9 @@ public class STRFilePreviewRenderer: Renderer {
         effectRenderer = try STREffectRenderer(device: device, configuration: configuration)
         effectResource = STREffectRenderResource(device: device, animation: animation)
         creationTime = CACurrentMediaTime()
+        fog = Fog()
 
+        camera = Camera()
         camera.fovy = 15
         camera.nearZ = 1
         camera.farZ = 1000
@@ -70,7 +73,7 @@ public class STRFilePreviewRenderer: Renderer {
                 resource: effectResource,
                 elapsedTime: frame.time - creationTime,
                 spritePosition: .zero,
-                fog: .disabled,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

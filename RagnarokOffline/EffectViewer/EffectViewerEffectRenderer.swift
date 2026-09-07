@@ -21,6 +21,7 @@ class EffectViewerEffectRenderer: Renderer {
 
     private let effectRenderer: EffectRenderer
     private let effectResourceGroup: EffectRenderResourceGroup
+    private let fog: Fog
 
     let camera: OrbitalCamera
 
@@ -35,6 +36,7 @@ class EffectViewerEffectRenderer: Renderer {
             creationTime: CACurrentMediaTime(),
             delay: 0
         )
+        fog = Fog()
 
         camera = OrbitalCamera(distance: 20)
         camera.fovy = 45
@@ -78,7 +80,7 @@ class EffectViewerEffectRenderer: Renderer {
             effectRenderer.render(
                 resourceGroup: effectResourceGroup,
                 atTime: frame.time,
-                fog: .disabled,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

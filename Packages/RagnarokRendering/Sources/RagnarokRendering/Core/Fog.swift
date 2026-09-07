@@ -8,8 +8,6 @@
 import simd
 
 public struct Fog: Sendable {
-    public static let disabled = Fog()
-
     public var isEnabled = false
 
     /// How far from the camera the fog starts, in world units.
@@ -18,9 +16,9 @@ public struct Fog: Sendable {
     /// How far from the camera the fog reaches its full strength, in world units.
     public var far: Float = 0
 
-    public var color = SIMD3<Float>()
+    public var color: SIMD3<Float> = .zero
 
-    private init() {}
+    public init() {}
 
     /// Creates the fog from the distances a map states as fractions.
     public init(near: Float, far: Float, color: SIMD3<Float>) {

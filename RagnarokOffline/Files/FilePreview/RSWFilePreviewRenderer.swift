@@ -16,9 +16,10 @@ public class RSWFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
     public let configuration: RenderConfiguration
 
-    let groundAsset: GroundRenderAsset
-    let worldResource: WorldRenderResource
     let worldRenderer: WorldRenderer
+    let worldResource: WorldRenderResource
+    let groundAsset: GroundRenderAsset
+    let fog: Fog
 
     public let camera: OrbitalCamera
 
@@ -29,10 +30,11 @@ public class RSWFilePreviewRenderer: Renderer {
     public init(device: any MTLDevice, configuration: RenderConfiguration, worldAsset: WorldAsset) throws {
         self.device = device
         self.configuration = configuration
-        self.groundAsset = worldAsset.ground
 
-        worldResource = WorldRenderResource(device: device, asset: worldAsset)
         worldRenderer = try WorldRenderer(device: device, configuration: configuration)
+        worldResource = WorldRenderResource(device: device, asset: worldAsset)
+        groundAsset = worldAsset.ground
+        fog = Fog()
 
         let defaultDistance = -groundAsset.altitude / 5 + 200
         camera = OrbitalCamera(distance: defaultDistance)
@@ -86,7 +88,7 @@ public class RSWFilePreviewRenderer: Renderer {
             worldRenderer.render(
                 resource: worldResource,
                 atTime: frame.time,
-                fog: .disabled,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder
@@ -95,7 +97,7 @@ public class RSWFilePreviewRenderer: Renderer {
             worldRenderer.renderEffects(
                 resource: worldResource,
                 atTime: frame.time,
-                fog: .disabled,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

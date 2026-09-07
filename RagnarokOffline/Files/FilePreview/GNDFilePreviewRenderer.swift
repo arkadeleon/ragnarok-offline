@@ -16,19 +16,21 @@ class GNDFilePreviewRenderer: Renderer {
     let device: any MTLDevice
     let configuration: RenderConfiguration
 
-    let groundAsset: GroundRenderAsset
-    let groundResource: GroundRenderResource
     let groundRenderer: GroundRenderer
+    let groundResource: GroundRenderResource
+    let groundAsset: GroundRenderAsset
+    let fog: Fog
 
     let camera: OrbitalCamera
 
     init(device: any MTLDevice, configuration: RenderConfiguration, asset: GroundRenderAsset) throws {
         self.device = device
         self.configuration = configuration
-        groundAsset = asset
 
-        groundResource = GroundRenderResource(device: device, asset: asset, light: .preview)
         groundRenderer = try GroundRenderer(device: device, configuration: configuration)
+        groundResource = GroundRenderResource(device: device, asset: asset, light: .preview)
+        groundAsset = asset
+        fog = Fog()
 
         let defaultDistance = -asset.altitude / 5 + 200
         camera = OrbitalCamera(distance: defaultDistance)
@@ -70,7 +72,7 @@ class GNDFilePreviewRenderer: Renderer {
             groundRenderer.render(
                 resource: groundResource,
                 atTime: frame.time,
-                fog: .disabled,
+                fog: fog,
                 modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder

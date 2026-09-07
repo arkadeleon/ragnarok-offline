@@ -12,6 +12,7 @@ import RagnarokConstants
 import RagnarokCore
 import RagnarokModels
 import RagnarokPackets
+import RagnarokRenderAssets
 import RagnarokRendering
 import RagnarokResources
 import RagnarokSprite
@@ -27,36 +28,31 @@ private enum MapMovementDecision {
 public final class MapScene {
     let mapName: String
     let mapGrid: MapGrid
+    let pathFinder: PathFinder
 
-    let player: MapSceneMapObject
     let resourceManager: ResourceManager
+    let spriteLoader: SpriteLoader
     let audioPlayer: GameAudioPlayer
     weak var gameSession: GameSession?
 
     let state: MapSceneState
 
-    var objects: [GameObjectID: MapSceneMapObject] = [:]
-    var items: [GameObjectID : MapSceneDroppedItem] = [:]
-    let spriteLoader: SpriteLoader
+    var camera = MapSceneCamera()
 
-    /// The objects that show health and spell point bars above them.
-    var hpspBarObjectIDs: Set<GameObjectID> = []
-
-    let pathFinder: PathFinder
-
-    var combatTexts: [UUID : CombatText] = [:]
-
-    var effects: [UUID : MapSceneEffect] = [:]
-
+    var fog = Fog()
     var sounds: [MapSceneSound] = []
 
-    var fog: Fog = .disabled
+    let player: MapSceneMapObject
+    var objects: [GameObjectID: MapSceneMapObject] = [:]
+    var items: [GameObjectID : MapSceneDroppedItem] = [:]
+    var hpspBarObjectIDs: Set<GameObjectID> = []
+
+    var effects: [UUID : MapSceneEffect] = [:]
+    var combatTexts: [UUID : CombatText] = [:]
     var tileSelector: TileSelector?
 
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
-
-    var camera = MapSceneCamera()
 
     init(
         mapName: String,
@@ -70,7 +66,10 @@ public final class MapScene {
     ) {
         self.mapName = mapName
         self.mapGrid = mapGrid
+        self.pathFinder = PathFinder(mapGrid: mapGrid)
+
         self.resourceManager = resourceManager
+        self.spriteLoader = SpriteLoader(resourceManager: resourceManager)
         self.audioPlayer = audioPlayer
         self.gameSession = gameSession
 
@@ -79,10 +78,6 @@ public final class MapScene {
             playerDirection: .south
         )
 
-        self.spriteLoader = SpriteLoader(resourceManager: resourceManager)
-
-        self.pathFinder = PathFinder(mapGrid: self.mapGrid)
-
         self.player = MapSceneMapObject(
             account: account,
             character: character,
@@ -90,50 +85,62 @@ public final class MapScene {
             direction: .south,
             headDirection: .lookForward
         )
-        objects[player.objectID] = player
-
-        hpspBarObjectIDs.insert(player.objectID)
     }
 
-    func load() async {
+    func load(world: WorldResource) async {
+        let fogParameterTable = await resourceManager.fogParameterTable()
+        if let parameter = fogParameterTable.fogParameter(forMapName: mapName) {
+            fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
+        }
+
+        sounds = world.rsw.sounds.map { sound in
+            MapSceneSound(sound: sound, gnd: world.gnd)
+        }
+
+        objects[player.objectID] = player
+        hpspBarObjectIDs.insert(player.objectID)
+
         await audioPlayer.playBGM(forMapName: mapName)
     }
 
     func unload() {
+        spriteLoader.cancelAll()
+        audioPlayer.stopBGM()
+        audioPlayer.stopSoundEffects()
+
         camera.reset()
+        sounds.removeAll()
+        objects.removeAll()
+        items.removeAll()
+        hpspBarObjectIDs.removeAll()
+        effects.removeAll()
+        combatTexts.removeAll()
+        tileSelector = nil
+
         arrivalTask?.cancel()
         arrivalTask = nil
         pendingArrivalAction = nil
-        audioPlayer.stopBGM()
-        audioPlayer.stopSoundEffects()
-        items.removeAll()
-        spriteLoader.cancelAll()
-        combatTexts.removeAll()
-        effects.removeAll()
-        sounds.removeAll()
-        tileSelector = nil
     }
 
     func jump(toPosition position: SIMD2<Int>) {
-        arrivalTask?.cancel()
-        arrivalTask = nil
-        pendingArrivalAction = nil
-
-        for objectID in Array(objects.keys) where objectID != player.objectID {
-            removeObject(objectID: objectID)
-        }
-
+        camera.reset()
+        objects.removeAll()
         items.removeAll()
-        combatTexts.removeAll()
+        hpspBarObjectIDs.removeAll()
         effects.removeAll()
+        combatTexts.removeAll()
         tileSelector = nil
 
         player.stopMovement()
         player.cast = nil
         player.gridPosition = position
         player.perform(.idle, completion: .indefinite)
+        objects[player.objectID] = player
+        hpspBarObjectIDs.insert(player.objectID)
 
-        camera.reset()
+        arrivalTask?.cancel()
+        arrivalTask = nil
+        pendingArrivalAction = nil
     }
 
     func handleMovement(_ movementValue: CGPoint) {
