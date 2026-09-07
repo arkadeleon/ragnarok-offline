@@ -152,6 +152,9 @@ struct MapSceneView: View {
             if let dialog = gameSession.dialog {
                 NPCDialogView(dialog: dialog)
             }
+            if let warpList = gameSession.warpList {
+                WarpListView(warpList: warpList)
+            }
         }
         .onChange(of: runtime.scene.state.isPlayerDead) { _, newValue in
             if newValue {

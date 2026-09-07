@@ -83,6 +83,7 @@ final public class GameSession {
 
     var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
+    var warpList: WarpList?
 
     @ObservationIgnored var loginClient: NetworkClient?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
@@ -726,6 +727,8 @@ final public class GameSession {
                let element = Element(rawValue: Int(packet.element)) {
                 mapScene?.onMapObjectSkillCast(skillID: skillID, sourceObjectID: packet.srcId, element: element, castTime: .milliseconds(packet.delayTime))
             }
+        case let packet as PACKET_ZC_WARPLIST:
+            warpList = WarpList(from: packet)
         case let packet as PACKET_ZC_AUTORUN_SKILL:
             var skill = SkillInfo()
             skill.skillID = Int(packet.skill_id)
@@ -1116,6 +1119,21 @@ final public class GameSession {
             position: position
         )
         mapClient.sendPacket(packet)
+    }
+
+    func selectWarpPoint(mapName: String) {
+        guard let mapClient, let warpList else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_SELECT_WARPPOINT(skillID: warpList.skillID, mapName: mapName)
+        mapClient.sendPacket(packet)
+
+        self.warpList = nil
+    }
+
+    func cancelWarpPoint() {
+        selectWarpPoint(mapName: "cancel")
     }
 
     // MARK: - Chat

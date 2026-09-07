@@ -247,6 +247,15 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_SELECT_WARPPOINT` | `clif_parse_UseSkillMap` |
+    public static func CZ_SELECT_WARPPOINT(skillID: Int, mapName: String) -> PACKET_CZ_SELECT_WARPPOINT {
+        var packet = PACKET_CZ_SELECT_WARPPOINT()
+        packet.packetType = HEADER_CZ_SELECT_WARPPOINT
+        packet.skill_id = Int16(skillID)
+        packet.mapname = mapName
+        return packet
+    }
+
     /// | `PACKET_CZ_CONTACTNPC` | `clif_parse_NpcClicked` |
     public static func CZ_CONTACTNPC(npcID: UInt32) -> PACKET_CZ_CONTACTNPC {
         var packet = PACKET_CZ_CONTACTNPC()
