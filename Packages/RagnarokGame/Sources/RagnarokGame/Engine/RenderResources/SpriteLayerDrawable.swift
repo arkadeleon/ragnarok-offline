@@ -15,5 +15,6 @@ struct SpriteLayerDrawable {
     var vertices: [SpriteVertex]
     var texture: any MTLTexture
     var worldPosition: SIMD3<Float>
+    var shadow: Float
     var isVisible: Bool
 }

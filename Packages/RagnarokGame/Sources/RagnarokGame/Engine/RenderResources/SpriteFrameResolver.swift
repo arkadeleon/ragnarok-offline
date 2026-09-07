@@ -23,7 +23,8 @@ struct SpriteFrameResolver {
         _ object: MapSceneMapObject,
         composedSprite: ComposedSprite,
         partTextures: SpritePartTextures,
-        worldPosition: SIMD3<Float>
+        worldPosition: SIMD3<Float>,
+        shadow: Float
     ) -> [SpriteLayerDrawable] {
         guard let resolvedAction = object.resolvedAction else {
             return []
@@ -132,6 +133,7 @@ struct SpriteFrameResolver {
                 vertices: $0.vertices,
                 texture: $0.texture,
                 worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+                shadow: shadow,
                 isVisible: object.effectState != .cloak
             )
         }
@@ -141,7 +143,8 @@ struct SpriteFrameResolver {
         objectID: GameObjectID,
         sprite: SpriteResource,
         partTextures: SpritePartTextures,
-        worldPosition: SIMD3<Float>
+        worldPosition: SIMD3<Float>,
+        shadow: Float
     ) -> [SpriteLayerDrawable] {
         guard let action = sprite.act.action(at: 0),
               let frame = action.frames.first else {
@@ -176,6 +179,7 @@ struct SpriteFrameResolver {
                 ),
                 texture: texture,
                 worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+                shadow: shadow,
                 isVisible: true
             )
         }

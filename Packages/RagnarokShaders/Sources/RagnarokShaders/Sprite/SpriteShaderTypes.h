@@ -20,6 +20,7 @@ typedef struct {
     vector_float4 spriteWorldPosition;  // xyz = world-space anchor, w = unused
     vector_float4 cameraPosition;       // xyz = render-space camera position, w = 1 outputs vertical-plane depth
     vector_float4 viewport;             // origin and size of the viewport, in pixels
+    float shadow;                       // the ground's light reaching the sprite, 0...1
 
     int fogUse;
     float fogNear;

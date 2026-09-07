@@ -38,8 +38,8 @@ final class MapSceneRenderResources {
         world = WorldRenderResource(device: device, asset: asset)
     }
 
-    func prepareSprites() {
-        spriteAssetStore = SpriteAssetStore(device: device)
+    func prepareSprites(shadowmap: GroundShadowmap) {
+        spriteAssetStore = SpriteAssetStore(device: device, shadowmap: shadowmap)
         spriteDrawables.removeAll()
     }
 

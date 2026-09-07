@@ -65,7 +65,7 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
 
     SpriteFragmentOut out;
     // The texture is already premultiplied, so only the tint's alpha is applied here.
-    out.color = float4(color.rgb * in.color.rgb * in.color.a, color.a * in.color.a);
+    out.color = float4(color.rgb * in.color.rgb * in.color.a * uniforms.shadow, color.a * in.color.a);
     out.depth = in.position.z;
 
     if (uniforms.fogUse) {

@@ -6,6 +6,7 @@
 //
 
 import Metal
+import RagnarokRenderAssets
 import RagnarokSprite
 
 @MainActor
@@ -16,12 +17,14 @@ final class SpriteAssetStore {
     }
 
     private let device: any MTLDevice
+    private let shadowmap: GroundShadowmap
 
     private var objectTextures: [GameObjectID : Textures] = [:]
     private var itemTextures: [GameObjectID : Textures] = [:]
 
-    init(device: any MTLDevice) {
+    init(device: any MTLDevice, shadowmap: GroundShadowmap) {
         self.device = device
+        self.shadowmap = shadowmap
     }
 
     func sync(
@@ -52,7 +55,8 @@ final class SpriteAssetStore {
                 object,
                 composedSprite: composedSprite,
                 partTextures: partTextures(for: composedSprite, in: &objectTextures, objectID: objectID),
-                worldPosition: worldPosition
+                worldPosition: worldPosition,
+                shadow: shadowmap.shadowFactor(x: worldPosition.x, y: worldPosition.y)
             )
             guard !drawables.isEmpty else {
                 continue
@@ -70,7 +74,8 @@ final class SpriteAssetStore {
                 objectID: objectID,
                 sprite: sprite,
                 partTextures: partTextures(for: sprite, in: &itemTextures, objectID: objectID),
-                worldPosition: worldPosition
+                worldPosition: worldPosition,
+                shadow: shadowmap.shadowFactor(x: worldPosition.x, y: worldPosition.y)
             )
             guard !drawables.isEmpty else {
                 continue

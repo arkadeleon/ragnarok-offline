@@ -62,6 +62,7 @@ final class CombatTextRenderer {
                 spriteWorldPosition: SIMD4<Float>(combatText.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
                 viewport: .zero,
+                shadow: 1,
                 fogUse: 0,
                 fogNear: 0,
                 fogFar: 0,

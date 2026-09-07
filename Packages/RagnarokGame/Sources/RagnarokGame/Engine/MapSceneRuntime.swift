@@ -43,7 +43,7 @@ final class MapSceneRuntime {
 
         renderResources.loadWorld(worldAsset)
 
-        renderResources.prepareSprites()
+        renderResources.prepareSprites(shadowmap: GroundShadowmap(gnd: world.gnd))
 
         do {
             try await renderResources.prepareCombatTexts(resourceManager: scene.resourceManager)

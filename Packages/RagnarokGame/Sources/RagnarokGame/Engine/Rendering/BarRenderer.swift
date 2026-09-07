@@ -82,6 +82,7 @@ final class BarRenderer {
                 spriteWorldPosition: SIMD4<Float>(bar.worldPosition, 0),
                 cameraPosition: SIMD4<Float>(camera.position, 0),
                 viewport: .zero,
+                shadow: 1,
                 fogUse: 0,
                 fogNear: 0,
                 fogFar: 0,

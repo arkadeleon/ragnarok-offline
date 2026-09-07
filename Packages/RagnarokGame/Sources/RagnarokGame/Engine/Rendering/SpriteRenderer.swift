@@ -72,6 +72,7 @@ final class SpriteRenderer {
                     Float(viewport.width),
                     Float(viewport.height)
                 ),
+                shadow: drawable.shadow,
                 fogUse: fog.isEnabled ? 1 : 0,
                 fogNear: fog.near,
                 fogFar: fog.far,
