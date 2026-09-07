@@ -49,9 +49,15 @@ struct GNDFilePreviewView: View {
                 }
 
                 NavigationLink {
-                    GNDFileLightmapAtlasView(file: file)
+                    GNDFileLightmapView(file: file)
                 } label: {
-                    Label(String("Lightmap Atlas"), systemImage: "photo")
+                    Label(String("Lightmap"), systemImage: "lightbulb")
+                }
+
+                NavigationLink {
+                    GNDFileShadowmapView(file: file)
+                } label: {
+                    Label(String("Shadowmap"), systemImage: "circle.lefthalf.filled")
                 }
             } label: {
                 Image(systemName: "ellipsis")
@@ -253,12 +259,12 @@ struct GNDFileTextureAtlasView: View {
     }
 }
 
-struct GNDFileLightmapAtlasView: View {
+struct GNDFileLightmapView: View {
     var file: File
 
     var body: some View {
         AsyncContentView {
-            try await loadGNDLightmapAtlasImage()
+            try await loadGNDLightmapImage()
         } content: { image in
             Image(decorative: image, scale: 1)
                 .resizable()
@@ -266,12 +272,36 @@ struct GNDFileLightmapAtlasView: View {
         }
     }
 
-    private func loadGNDLightmapAtlasImage() async throws -> CGImage {
+    private func loadGNDLightmapImage() async throws -> CGImage {
         let gndData = try await file.contents()
         let gnd = try GND(data: gndData)
 
-        let lightmapAtlas = GroundLightmapAtlas(lightmap: gnd.lightmap)
-        guard let image = lightmapAtlas.makeCGImage() else {
+        guard let image = gnd.lightmapImage() else {
+            throw FileError.imageGenerationFailed
+        }
+
+        return image
+    }
+}
+
+struct GNDFileShadowmapView: View {
+    var file: File
+
+    var body: some View {
+        AsyncContentView {
+            try await loadGNDShadowmapImage()
+        } content: { image in
+            Image(decorative: image, scale: 1)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+    }
+
+    private func loadGNDShadowmapImage() async throws -> CGImage {
+        let gndData = try await file.contents()
+        let gnd = try GND(data: gndData)
+
+        guard let image = gnd.shadowmapImage() else {
             throw FileError.imageGenerationFailed
         }
 
