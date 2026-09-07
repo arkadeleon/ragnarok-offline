@@ -36,16 +36,37 @@ extension GND: Encodable {
 
 extension GND.Lightmap: Encodable {
     enum CodingKeys: String, CodingKey {
-        case per_cell
-        case count
-        case data
+        case sliceCount
+        case sliceWidth
+        case sliceHeight
+        case pixelFormat
+        case shadowmapPixels
+        case lightmapPixels
     }
 
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(per_cell, forKey: .per_cell)
-        try container.encode(count, forKey: .count)
-        try container.encode(data, forKey: .data)
+        try container.encode(sliceCount, forKey: .sliceCount)
+        try container.encode(sliceWidth, forKey: .sliceWidth)
+        try container.encode(sliceHeight, forKey: .sliceHeight)
+        try container.encode(pixelFormat, forKey: .pixelFormat)
+        try container.encode(shadowmapPixels, forKey: .shadowmapPixels)
+        try container.encode(lightmapPixels, forKey: .lightmapPixels)
+    }
+}
+
+extension GND.Lightmap.LightmapPixel: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case red
+        case green
+        case blue
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(red, forKey: .red)
+        try container.encode(green, forKey: .green)
+        try container.encode(blue, forKey: .blue)
     }
 }
 

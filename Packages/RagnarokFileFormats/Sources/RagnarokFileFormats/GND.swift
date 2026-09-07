@@ -42,17 +42,7 @@ public struct GND: FileFormat {
             textures.append(texture)
         }
 
-        let count = try decoder.decode(Int32.self)
-        let per_cell_x = try decoder.decode(Int32.self)
-        let per_cell_y = try decoder.decode(Int32.self)
-        let size_cell = try decoder.decode(Int32.self)
-        let per_cell = per_cell_x * per_cell_y * size_cell
-
-        lightmap = try GND.Lightmap(
-            per_cell: per_cell,
-            count: count,
-            data: decoder.decode([UInt8].self, count: Int(count) * Int(per_cell) * 4)
-        )
+        lightmap = try decoder.decode(GND.Lightmap.self)
 
         let surfaceCount = try decoder.decode(Int32.self)
         for _ in 0..<surfaceCount {
@@ -73,10 +63,50 @@ public struct GND: FileFormat {
 }
 
 extension GND {
-    public struct Lightmap: Sendable {
-        public var per_cell: Int32
-        public var count: Int32
-        public var data: [UInt8]
+    public struct Lightmap: BinaryDecodable, Sendable {
+        public struct LightmapPixel: BinaryDecodable, Sendable {
+            public var red: UInt8
+            public var green: UInt8
+            public var blue: UInt8
+
+            public init(from decoder: BinaryDecoder) throws {
+                red = try decoder.decode(UInt8.self)
+                green = try decoder.decode(UInt8.self)
+                blue = try decoder.decode(UInt8.self)
+            }
+        }
+
+        public var sliceCount: Int32
+        public var sliceWidth: Int32
+        public var sliceHeight: Int32
+        public var pixelFormat: Int32
+        public var shadowmapPixels: [UInt8] = []
+        public var lightmapPixels: [LightmapPixel] = []
+
+        public init(from decoder: BinaryDecoder) throws {
+            sliceCount = try decoder.decode(Int32.self)
+            sliceWidth = try decoder.decode(Int32.self)
+            sliceHeight = try decoder.decode(Int32.self)
+
+            // Usually 1.
+            pixelFormat = try decoder.decode(Int32.self)
+
+            let pixelsPerSlice = Int(sliceWidth * sliceHeight)
+
+            for _ in 0..<sliceCount {
+                let shadowmapPerSlice = try decoder.decode([UInt8].self, count: pixelsPerSlice)
+                shadowmapPixels.append(contentsOf: shadowmapPerSlice)
+
+                let lightmapPerSlice = try decoder.decode([LightmapPixel].self, count: pixelsPerSlice)
+                lightmapPixels.append(contentsOf: lightmapPerSlice)
+            }
+        }
+
+        /// Where the pixel at `x`, `y` of a slice sits in `shadowmapPixels` and `lightmapPixels`.
+        public func pixelIndex(inSlice slice: Int, x: Int, y: Int) -> Int {
+            let pixelsPerSlice = Int(sliceWidth * sliceHeight)
+            return slice * pixelsPerSlice + x + y * Int(sliceWidth)
+        }
     }
 }
 

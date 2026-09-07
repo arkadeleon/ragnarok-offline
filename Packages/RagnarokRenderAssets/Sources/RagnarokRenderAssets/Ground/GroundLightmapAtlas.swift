@@ -19,9 +19,7 @@ public struct GroundLightmapAtlas {
     public init(lightmap: GND.Lightmap) {
         self.lightmap = lightmap
 
-        let count     = Int(lightmap.count)
-        let data      = lightmap.data
-        let per_cell  = Int(lightmap.per_cell)
+        let count = Int(lightmap.sliceCount)
 
         let width = Int(roundf(sqrtf(Float(count))))
         let height = Int(ceilf(sqrtf(Float(count))))
@@ -32,17 +30,19 @@ public struct GroundLightmapAtlas {
         var out: [UInt8] = Array(repeating: 0, count: potWidth * potHeight * 4)
 
         for i in 0..<count {
-            let pos   = i * 4 * per_cell
-            let x     = (i % width) * 8
-            let y     = (i / width) * 8
+            let x = (i % width) * 8
+            let y = (i / width) * 8
 
             for _x in 0..<8 {
                 for _y in 0..<8 {
+                    let pixelIndex = lightmap.pixelIndex(inSlice: i, x: _x, y: _y)
+                    let lightmapPixel = lightmap.lightmapPixels[pixelIndex]
+
                     let idx = ((x + _x) + (y + _y) * potWidth) * 4
-                    out[idx + 0] = (data[pos + per_cell + (_x + _y * 8) * 3 + 0] >> 4) << 4 // Posterisation
-                    out[idx + 1] = (data[pos + per_cell + (_x + _y * 8) * 3 + 1] >> 4) << 4 // Posterisation
-                    out[idx + 2] = (data[pos + per_cell + (_x + _y * 8) * 3 + 2] >> 4) << 4 // Posterisation
-                    out[idx + 3] = data[pos + (_x + _y * 8)]
+                    out[idx + 0] = (lightmapPixel.red >> 4) << 4    // Posterisation
+                    out[idx + 1] = (lightmapPixel.green >> 4) << 4  // Posterisation
+                    out[idx + 2] = (lightmapPixel.blue >> 4) << 4   // Posterisation
+                    out[idx + 3] = lightmap.shadowmapPixels[pixelIndex]
                 }
             }
         }
@@ -81,10 +81,10 @@ public struct GroundLightmapAtlas {
     }
 
     func uv(forLightmapSliceIndex i: Int) -> (u1: Float, u2: Float, v1: Float, v2: Float) {
-        let l_count_w  = roundf(sqrtf(Float(lightmap.count)))
-        let l_count_h  = ceilf(sqrtf(Float(lightmap.count)))
-        let l_width    = powf(2, ceilf(logf(l_count_w * 8) / logf(2)))
-        let l_height   = powf(2, ceilf(logf(l_count_h * 8) / logf(2)))
+        let l_count_w = roundf(sqrtf(Float(lightmap.sliceCount)))
+        let l_count_h = ceilf(sqrtf(Float(lightmap.sliceCount)))
+        let l_width = powf(2, ceilf(logf(l_count_w * 8) / logf(2)))
+        let l_height = powf(2, ceilf(logf(l_count_h * 8) / logf(2)))
 
         let uv = (
             u1: ((Float(i % Int(l_count_w)) + 0.125) / l_count_w) * ((l_count_w * 8) / l_width),
