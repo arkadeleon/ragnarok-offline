@@ -1,5 +1,5 @@
 {
-  "originHash" : "003d349ac7ff16f9975d084ac0ac41da0bd4c1fa17bc2f7128224bd1010056a4",
+  "originHash" : "433aac8a5fc8d72f664e36c1a6b2f7d16200e1238120ff872d3e00d1a8a17c83",
   "pins" : [
     {
       "identity" : "ragnarok-grf",
@@ -43,7 +43,7 @@
       "location" : "https://github.com/arkadeleon/swift-rapidyaml.git",
       "state" : {
         "branch" : "master",
-        "revision" : "75396650414fe5a3b8713a5ba9c02af8d878b3c9"
+        "revision" : "de45c5c421b2e549953e8b252ba156c61beaa8f7"
       }
     }
   ],
