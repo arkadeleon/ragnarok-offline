@@ -25,9 +25,9 @@ struct SpriteFrameResolver {
         partTextures: SpritePartTextures,
         worldPosition: SIMD3<Float>,
         shadow: Float
-    ) -> [SpriteLayerDrawable] {
+    ) -> SpriteDrawable? {
         guard let resolvedAction = object.resolvedAction else {
-            return []
+            return nil
         }
 
         let actionIndex = resolvedAction.actionType.calculateActionIndex(
@@ -127,16 +127,19 @@ struct SpriteFrameResolver {
             }
         }
 
-        return resolvedLayers.map {
-            SpriteLayerDrawable(
-                objectID: object.objectID,
-                vertices: $0.vertices,
-                texture: $0.texture,
-                worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
-                shadow: shadow,
-                isVisible: object.effectState != .cloak
-            )
+        guard !resolvedLayers.isEmpty else {
+            return nil
         }
+
+        return SpriteDrawable(
+            objectID: object.objectID,
+            worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+            shadow: shadow,
+            isVisible: object.effectState != .cloak,
+            layers: resolvedLayers.map {
+                SpriteDrawable.Layer(vertices: $0.vertices, texture: $0.texture)
+            }
+        )
     }
 
     func resolve(
@@ -145,13 +148,13 @@ struct SpriteFrameResolver {
         partTextures: SpritePartTextures,
         worldPosition: SIMD3<Float>,
         shadow: Float
-    ) -> [SpriteLayerDrawable] {
+    ) -> SpriteDrawable? {
         guard let action = sprite.act.action(at: 0),
               let frame = action.frames.first else {
-            return []
+            return nil
         }
 
-        return frame.layers.enumerated().compactMap { layerIndex, layer in
+        let layers = frame.layers.enumerated().compactMap { layerIndex, layer -> SpriteDrawable.Layer? in
             guard layer.color.alpha != 0,
                   let image = sprite.image(for: layer),
                   image.width * image.height > 1 else {
@@ -167,8 +170,7 @@ struct SpriteFrameResolver {
                 return nil
             }
 
-            return SpriteLayerDrawable(
-                objectID: objectID,
+            return SpriteDrawable.Layer(
                 vertices: makeVertices(
                     layer: layer,
                     parentOffset: .zero,
@@ -177,12 +179,21 @@ struct SpriteFrameResolver {
                     height: image.height,
                     opacity: 1
                 ),
-                texture: texture,
-                worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
-                shadow: shadow,
-                isVisible: true
+                texture: texture
             )
         }
+
+        guard !layers.isEmpty else {
+            return nil
+        }
+
+        return SpriteDrawable(
+            objectID: objectID,
+            worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+            shadow: shadow,
+            isVisible: true,
+            layers: layers
+        )
     }
 
     private func makeVertices(

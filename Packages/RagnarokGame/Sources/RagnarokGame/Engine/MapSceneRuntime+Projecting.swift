@@ -64,36 +64,32 @@ extension MapSceneRuntime {
             return []
         }
 
-        // The layers of an object share an anchor, so merge their bounds before hit
-        // testing, to grow the object to the minimum tap size once instead of per layer.
-        var bounds: [GameObjectID : SpriteBounds] = [:]
-        for drawable in renderResources.spriteDrawables where drawable.isVisible {
-            guard let layerBounds = spriteBounds(for: drawable) else {
-                continue
-            }
-            bounds[drawable.objectID, default: layerBounds].formUnion(layerBounds)
-        }
-
         var distances: [GameObjectID : Float] = [:]
-        for (objectID, objectBounds) in bounds {
-            // Items are too small to tap reliably; everything else is already big enough.
-            let minimumSize: Float = scene.items[objectID] != nil ? 30 : 0
-            guard let distance = hitDistance(ray, bounds: objectBounds, minimumSize: minimumSize, camera: lastCamera) else {
+        for drawable in renderResources.spriteDrawables where drawable.isVisible {
+            guard let bounds = spriteBounds(for: drawable) else {
                 continue
             }
-            distances[objectID] = distance
+
+            // Items are too small to tap reliably; everything else is already big enough.
+            let minimumSize: Float = scene.items[drawable.objectID] != nil ? 30 : 0
+            guard let distance = hitDistance(ray, bounds: bounds, minimumSize: minimumSize, camera: lastCamera) else {
+                continue
+            }
+            distances[drawable.objectID] = distance
         }
 
         return distances.sorted { $0.value < $1.value }.map(\.key)
     }
 
-    private func spriteBounds(for drawable: SpriteLayerDrawable) -> SpriteBounds? {
+    private func spriteBounds(for drawable: SpriteDrawable) -> SpriteBounds? {
         var minimum = SIMD2<Float>(repeating: .infinity)
         var maximum = SIMD2<Float>(repeating: -.infinity)
 
-        for vertex in drawable.vertices {
-            minimum = simd_min(minimum, vertex.position)
-            maximum = simd_max(maximum, vertex.position)
+        for layer in drawable.layers {
+            for vertex in layer.vertices {
+                minimum = simd_min(minimum, vertex.position)
+                maximum = simd_max(maximum, vertex.position)
+            }
         }
 
         guard minimum.x < maximum.x, minimum.y < maximum.y else {
@@ -170,10 +166,5 @@ private struct SpriteBounds {
 
     var extent: SIMD2<Float> {
         (maximum - minimum) / 2
-    }
-
-    mutating func formUnion(_ other: SpriteBounds) {
-        minimum = simd_min(minimum, other.minimum)
-        maximum = simd_max(maximum, other.maximum)
     }
 }

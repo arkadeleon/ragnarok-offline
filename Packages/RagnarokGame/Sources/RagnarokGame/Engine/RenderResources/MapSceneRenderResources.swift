@@ -20,7 +20,7 @@ final class MapSceneRenderResources {
     private(set) var world: WorldRenderResource?
 
     private var spriteAssetStore: SpriteAssetStore?
-    private(set) var spriteDrawables: [SpriteLayerDrawable] = []
+    private(set) var spriteDrawables: [SpriteDrawable] = []
 
     private var combatTextSpriteSet: CombatTextSpriteSet?
     private var combatTextResources: [UUID : CombatTextRenderResource] = [:]

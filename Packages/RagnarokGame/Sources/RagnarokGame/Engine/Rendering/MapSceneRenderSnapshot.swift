@@ -39,7 +39,7 @@ struct MapSceneRenderSnapshot {
     var fog: Fog
     var world: WorldRenderResource?
     var tileSelector: TileSelector?
-    var spriteDrawables: [SpriteLayerDrawable] = []
+    var spriteDrawables: [SpriteDrawable] = []
     var effects: [Effect] = []
     var bars: [Bar] = []
     var combatTexts: [CombatText] = []

@@ -1,5 +1,5 @@
 //
-//  SpriteLayerDrawable.swift
+//  SpriteDrawable.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/6/23.
@@ -10,11 +10,15 @@ import RagnarokModels
 import RagnarokShaders
 import simd
 
-struct SpriteLayerDrawable {
+struct SpriteDrawable {
+    struct Layer {
+        var vertices: [SpriteVertex]
+        var texture: any MTLTexture
+    }
+
     let objectID: GameObjectID
-    var vertices: [SpriteVertex]
-    var texture: any MTLTexture
     var worldPosition: SIMD3<Float>
     var shadow: Float
     var isVisible: Bool
+    var layers: [SpriteDrawable.Layer]
 }

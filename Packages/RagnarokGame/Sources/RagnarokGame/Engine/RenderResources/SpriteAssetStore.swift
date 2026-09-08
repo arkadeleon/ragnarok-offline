@@ -31,7 +31,7 @@ final class SpriteAssetStore {
         objects: [GameObjectID : MapSceneMapObject],
         items: [GameObjectID : MapSceneDroppedItem],
         worldPositions: [GameObjectID : SIMD3<Float>]
-    ) -> [SpriteLayerDrawable] {
+    ) -> [SpriteDrawable] {
         for objectID in Set(objectTextures.keys).subtracting(objects.keys) {
             objectTextures.removeValue(forKey: objectID)
         }
@@ -40,7 +40,7 @@ final class SpriteAssetStore {
             itemTextures.removeValue(forKey: objectID)
         }
 
-        var sprites: [(objectID: GameObjectID, worldPosition: SIMD3<Float>, drawables: [SpriteLayerDrawable])] = []
+        var sprites: [SpriteDrawable] = []
         sprites.reserveCapacity(objects.count + items.count)
 
         let frameResolver = SpriteFrameResolver()
@@ -51,17 +51,17 @@ final class SpriteAssetStore {
                 continue
             }
 
-            let drawables = frameResolver.resolve(
+            let drawable = frameResolver.resolve(
                 object,
                 composedSprite: composedSprite,
                 partTextures: partTextures(for: composedSprite, in: &objectTextures, objectID: objectID),
                 worldPosition: worldPosition,
                 shadow: shadowmap.shadowFactor(x: worldPosition.x, y: worldPosition.y)
             )
-            guard !drawables.isEmpty else {
+            guard let drawable else {
                 continue
             }
-            sprites.append((objectID, worldPosition, drawables))
+            sprites.append(drawable)
         }
 
         for (objectID, item) in items {
@@ -70,17 +70,17 @@ final class SpriteAssetStore {
                 continue
             }
 
-            let drawables = frameResolver.resolve(
+            let drawable = frameResolver.resolve(
                 objectID: objectID,
                 sprite: sprite,
                 partTextures: partTextures(for: sprite, in: &itemTextures, objectID: objectID),
                 worldPosition: worldPosition,
                 shadow: shadowmap.shadowFactor(x: worldPosition.x, y: worldPosition.y)
             )
-            guard !drawables.isEmpty else {
+            guard let drawable else {
                 continue
             }
-            sprites.append((objectID, worldPosition, drawables))
+            sprites.append(drawable)
         }
 
         sprites.sort {
@@ -91,7 +91,7 @@ final class SpriteAssetStore {
             }
         }
 
-        return sprites.flatMap(\.drawables)
+        return sprites
     }
 
     private func partTextures(
