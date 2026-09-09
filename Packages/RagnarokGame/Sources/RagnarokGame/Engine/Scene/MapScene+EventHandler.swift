@@ -47,7 +47,7 @@ extension MapScene {
             kind: .hpRecovery,
             delay: .zero
         )
-        addCombatText(combatText)
+        combatTexts.append(combatText)
     }
 
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
@@ -64,7 +64,7 @@ extension MapScene {
             kind: .spRecovery,
             delay: .zero
         )
-        addCombatText(combatText)
+        combatTexts.append(combatText)
     }
 
     public func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -415,7 +415,7 @@ extension MapScene {
                 kind: .hpRecovery,
                 delay: .zero
             )
-            addCombatText(combatText)
+            combatTexts.append(combatText)
 
             audioPlayer.playSoundEffect(named: "_heal_effect.wav")
         }
@@ -441,7 +441,7 @@ extension MapScene {
                     amount: damage / count,
                     delay: delay
                 )
-                addCombatText(combatText)
+                combatTexts.append(combatText)
 
                 if showsComboText {
                     let comboText = CombatText(
@@ -451,7 +451,7 @@ extension MapScene {
                         kind: i + 1 == count ? .finalCombo : .combo,
                         delay: delay
                     )
-                    addCombatText(comboText)
+                    combatTexts.append(comboText)
                 }
             }
         }
@@ -647,7 +647,7 @@ extension MapScene {
                 amount: objectAction.damage,
                 delay: .milliseconds(objectAction.sourceSpeed)
             )
-            addCombatText(combatText)
+            combatTexts.append(combatText)
 
             if let hitSoundName {
                 audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
@@ -660,7 +660,7 @@ extension MapScene {
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                addCombatText(combatText2)
+                combatTexts.append(combatText2)
 
                 if let hitSoundName {
                     audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText2.delay)
@@ -675,7 +675,7 @@ extension MapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed)
                 )
-                addCombatText(combatText)
+                combatTexts.append(combatText)
 
                 if let hitSoundName {
                     audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
@@ -688,7 +688,7 @@ extension MapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                 )
-                addCombatText(combatText)
+                combatTexts.append(combatText)
 
                 if let hitSoundName {
                     audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
@@ -700,7 +700,7 @@ extension MapScene {
                     amount: objectAction.damage2,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                 )
-                addCombatText(combatText2)
+                combatTexts.append(combatText2)
 
                 if let hitSoundName {
                     audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText2.delay)
@@ -712,7 +712,7 @@ extension MapScene {
                     amount: objectAction.damage / count,
                     delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                 )
-                addCombatText(combatText)
+                combatTexts.append(combatText)
 
                 if let hitSoundName {
                     audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
@@ -729,7 +729,7 @@ extension MapScene {
                         kind: .combo,
                         delay: .milliseconds(objectAction.sourceSpeed)
                     )
-                    addCombatText(comboText)
+                    combatTexts.append(comboText)
                 }
 
                 if objectAction.damage2 > 0 {
@@ -740,7 +740,7 @@ extension MapScene {
                         kind: .combo,
                         delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
                     )
-                    addCombatText(comboText)
+                    combatTexts.append(comboText)
 
                     let finalComboText = CombatText(
                         creationTime: now,
@@ -749,7 +749,7 @@ extension MapScene {
                         kind: .finalCombo,
                         delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
                     )
-                    addCombatText(finalComboText)
+                    combatTexts.append(finalComboText)
                 } else {
                     let finalComboText = CombatText(
                         creationTime: now,
@@ -758,20 +758,12 @@ extension MapScene {
                         kind: .finalCombo,
                         delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
                     )
-                    addCombatText(finalComboText)
+                    combatTexts.append(finalComboText)
                 }
             }
         default:
             break
         }
-    }
-
-    private func addCombatText(_ combatText: CombatText) {
-        guard combatTexts[combatText.id] == nil else {
-            return
-        }
-
-        combatTexts[combatText.id] = combatText
     }
 }
 

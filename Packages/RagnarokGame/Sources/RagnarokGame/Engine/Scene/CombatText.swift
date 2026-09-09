@@ -5,10 +5,9 @@
 //  Created by Leon Li on 2026/5/31.
 //
 
-import Foundation
 import simd
 
-struct CombatText: Identifiable, Sendable {
+final class CombatText: Sendable {
     struct Target: Sendable {
         let objectID: GameObjectID
         let initialWorldPosition: SIMD3<Float>
@@ -28,7 +27,6 @@ struct CombatText: Identifiable, Sendable {
         }
     }
 
-    let id: UUID
     let creationTime: ContinuousClock.Instant
     let target: CombatText.Target
     let amount: Int
@@ -57,7 +55,6 @@ struct CombatText: Identifiable, Sendable {
         kind: CombatText.Kind? = nil,
         delay: Duration
     ) {
-        self.id = UUID()
         self.creationTime = creationTime
         self.target = target
         self.amount = amount

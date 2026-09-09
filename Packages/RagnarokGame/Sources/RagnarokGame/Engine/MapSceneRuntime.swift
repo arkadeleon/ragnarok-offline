@@ -176,7 +176,7 @@ final class MapSceneRuntime {
 
         // A target shows one combo text at a time: the newest one that has started
         // hides the ones before it.
-        let comboTexts = scene.combatTexts.values
+        let comboTexts = scene.combatTexts
             .filter { $0.kind.isCombo && $0.startTime <= now }
             .map { ($0.target.objectID, $0) }
         let latestComboTexts = Dictionary(
@@ -184,16 +184,13 @@ final class MapSceneRuntime {
             uniquingKeysWith: { $0.startTime > $1.startTime ? $0 : $1 }
         )
 
-        snapshot.combatTexts = scene.combatTexts.values
+        snapshot.combatTexts = scene.combatTexts
             .filter { combatText in
                 if combatText.kind.isCombo, let latestComboText = latestComboTexts[combatText.target.objectID] {
-                    return combatText.id == latestComboText.id
+                    combatText === latestComboText
                 } else {
-                    return true
+                    true
                 }
-            }
-            .sorted {
-                $0.creationTime < $1.creationTime
             }
             .compactMap { combatText in
                 guard let combatTextGlyphSet = renderResources.combatTextGlyphSet else {

@@ -48,7 +48,7 @@ public final class MapScene {
     var hpspBarObjectIDs: Set<GameObjectID> = []
 
     var effects: [UUID : MapSceneEffect] = [:]
-    var combatTexts: [UUID : CombatText] = [:]
+    var combatTexts: [CombatText] = []
     var tileSelector: TileSelector?
 
     var pendingArrivalAction: (@MainActor () -> Void)?
@@ -346,11 +346,8 @@ extension MapScene {
             removeObject(objectID: objectID)
         }
 
-        let expiredCombatTextObjectIDs = combatTexts.compactMap { combatTextObjectID, combatText in
-            combatText.isExpired(at: now) ? combatTextObjectID : nil
-        }
-        for combatTextObjectID in expiredCombatTextObjectIDs {
-            combatTexts.removeValue(forKey: combatTextObjectID)
+        combatTexts.removeAll { combatText in
+            combatText.isExpired(at: now)
         }
 
         for object in objects.values {
