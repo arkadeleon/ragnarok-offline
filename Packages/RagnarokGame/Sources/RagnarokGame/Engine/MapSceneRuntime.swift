@@ -44,13 +44,7 @@ final class MapSceneRuntime {
         renderResources.loadWorld(worldAsset)
 
         renderResources.prepareSprites(shadowmap: GroundShadowmap(gnd: world.gnd))
-
-        do {
-            try await renderResources.prepareCombatTexts(resourceManager: scene.resourceManager)
-        } catch {
-            logger.warning("Map scene failed to load combat text sprites: \(error)")
-        }
-
+        await renderResources.prepareCombatTexts(resourceManager: scene.resourceManager)
         renderResources.prepareEffects(resourceManager: scene.resourceManager)
 
         await scene.load(world: world)
@@ -74,8 +68,6 @@ final class MapSceneRuntime {
             items: scene.items,
             worldPositions: makeWorldPositions()
         )
-
-        renderResources.synchronizeCombatTexts(scene.combatTexts)
 
         let effectWorldPositions = scene.effects.mapValues { effect in
             scene.mapGrid.worldPosition(for: effect.gridPosition)
@@ -204,7 +196,7 @@ final class MapSceneRuntime {
                 $0.creationTime < $1.creationTime
             }
             .compactMap { combatText in
-                guard let resource = renderResources.combatTextResource(for: combatText.id) else {
+                guard let combatTextGlyphSet = renderResources.combatTextGlyphSet else {
                     return nil
                 }
 
@@ -217,12 +209,23 @@ final class MapSceneRuntime {
                     return nil
                 }
 
+                let mesh = CombatTextMesh(
+                    for: combatText,
+                    glyphSet: combatTextGlyphSet,
+                    scale: animation.scale,
+                    alpha: animation.alpha
+                )
+                guard !mesh.vertices.isEmpty else {
+                    return nil
+                }
+
                 return MapSceneRenderSnapshot.CombatText(
-                    vertices: resource.makeVertices(scale: animation.scale, alpha: animation.alpha),
-                    worldPosition: animation.worldPosition,
-                    texture: resource.texture
+                    vertices: mesh.vertices,
+                    worldPosition: animation.worldPosition
                 )
             }
+
+        snapshot.combatTextTexture = renderResources.combatTextTexture
 
         return snapshot
     }

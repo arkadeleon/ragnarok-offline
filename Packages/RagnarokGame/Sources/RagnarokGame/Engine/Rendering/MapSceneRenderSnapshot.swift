@@ -33,7 +33,6 @@ struct MapSceneRenderSnapshot {
     struct CombatText {
         let vertices: [SpriteVertex]
         let worldPosition: SIMD3<Float>
-        let texture: any MTLTexture
     }
 
     var fog: Fog
@@ -43,4 +42,5 @@ struct MapSceneRenderSnapshot {
     var effects: [Effect] = []
     var bars: [Bar] = []
     var combatTexts: [CombatText] = []
+    var combatTextTexture: (any MTLTexture)?
 }

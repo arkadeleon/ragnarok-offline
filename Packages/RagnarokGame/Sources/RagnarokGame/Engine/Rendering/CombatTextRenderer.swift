@@ -43,16 +43,18 @@ final class CombatTextRenderer {
 
     func render(
         combatTexts: [MapSceneRenderSnapshot.CombatText],
+        texture: (any MTLTexture)?,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard !combatTexts.isEmpty else {
+        guard !combatTexts.isEmpty, let texture else {
             return
         }
 
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
+        renderCommandEncoder.setFragmentTexture(texture, index: 0)
 
         for combatText in combatTexts {
             var uniforms = SpriteVertexUniforms(
@@ -82,7 +84,6 @@ final class CombatTextRenderer {
                 length: MemoryLayout<SpriteVertexUniforms>.stride,
                 index: 0
             )
-            renderCommandEncoder.setFragmentTexture(combatText.texture, index: 0)
             renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: combatText.vertices.count)
         }
     }

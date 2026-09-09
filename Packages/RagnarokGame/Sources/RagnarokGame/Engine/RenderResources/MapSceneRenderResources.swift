@@ -22,8 +22,8 @@ final class MapSceneRenderResources {
     private var spriteAssetStore: SpriteAssetStore?
     private(set) var spriteDrawables: [SpriteDrawable] = []
 
-    private var combatTextSpriteSet: CombatTextSpriteSet?
-    private var combatTextResources: [UUID : CombatTextRenderResource] = [:]
+    private(set) var combatTextGlyphSet: CombatTextGlyphSet?
+    private(set) var combatTextTexture: (any MTLTexture)?
 
     private var effectAssetLoader: EffectAssetLoader?
     private var effectObjectIDs: Set<UUID> = []
@@ -55,39 +55,21 @@ final class MapSceneRenderResources {
         ) ?? []
     }
 
-    func prepareCombatTexts(resourceManager: ResourceManager) async throws {
-        combatTextSpriteSet = nil
-        combatTextResources.removeAll()
-        combatTextSpriteSet = try await CombatTextSpriteSet(resourceManager: resourceManager)
-    }
+    func prepareCombatTexts(resourceManager: ResourceManager) async {
+        combatTextGlyphSet = nil
+        combatTextTexture = nil
 
-    func synchronizeCombatTexts(_ combatTexts: [UUID : CombatText]) {
-        let currentIDs = Set(combatTexts.keys)
-        for combatTextObjectID in Set(combatTextResources.keys).subtracting(currentIDs) {
-            combatTextResources.removeValue(forKey: combatTextObjectID)
+        do {
+            let glyphSet = try await CombatTextGlyphSet(resourceManager: resourceManager)
+            combatTextGlyphSet = glyphSet
+            combatTextTexture = MetalTextureFactory.makeTexture(
+                from: glyphSet.atlasImage,
+                device: device,
+                label: "combat-text-atlas"
+            )
+        } catch {
+            logger.warning("Map scene failed to load combat text glyphs: \(error)")
         }
-
-        for (combatTextObjectID, combatText) in combatTexts where combatTextResources[combatTextObjectID] == nil {
-            addCombatText(combatText)
-        }
-    }
-
-    private func addCombatText(_ combatText: CombatText) {
-        guard let combatTextSpriteSet,
-              combatTextResources[combatText.id] == nil,
-              let resource = CombatTextRenderResource(
-                  device: device,
-                  combatText: combatText,
-                  spriteSet: combatTextSpriteSet
-              ) else {
-            return
-        }
-
-        combatTextResources[combatText.id] = resource
-    }
-
-    func combatTextResource(for objectID: UUID) -> CombatTextRenderResource? {
-        combatTextResources[objectID]
     }
 
     func prepareEffects(resourceManager: ResourceManager) {
@@ -189,8 +171,8 @@ final class MapSceneRenderResources {
         spriteAssetStore = nil
         spriteDrawables.removeAll()
 
-        combatTextSpriteSet = nil
-        combatTextResources.removeAll()
+        combatTextGlyphSet = nil
+        combatTextTexture = nil
 
         cancelEffectLoads()
         effectAssetLoader = nil

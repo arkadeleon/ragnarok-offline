@@ -182,6 +182,7 @@ final class MapSceneRenderer {
         // Combat text renders last so nothing draws over it.
         combatTextRenderer.render(
             combatTexts: snapshot.combatTexts,
+            texture: snapshot.combatTextTexture,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
