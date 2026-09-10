@@ -23,6 +23,7 @@ final class GameContext {
     var playerStatus: CharacterStatus
     var inventory: Inventory
     var skillList: SkillList
+    var shortcutList: ShortcutList
     let messageCenter: MessageCenter
 
     init(resourceManager: ResourceManager) {
@@ -36,6 +37,7 @@ final class GameContext {
         self.playerStatus = CharacterStatus()
         self.inventory = Inventory()
         self.skillList = SkillList()
+        self.shortcutList = ShortcutList()
         self.messageCenter = MessageCenter(
             itemInfoTable: itemInfoTable,
             messageStringTable: messageStringTable

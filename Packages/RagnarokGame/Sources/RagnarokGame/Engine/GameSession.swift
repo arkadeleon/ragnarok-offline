@@ -750,6 +750,8 @@ final public class GameSession {
                 let position = SIMD2(Int(packet.xPos), Int(packet.yPos))
                 mapScene?.onGroundSkillCast(skillID: skillID, sourceObjectID: packet.AID, position: position)
             }
+        case let packet as PACKET_ZC_SHORTCUT_KEY_LIST:
+            context.shortcutList.update(from: packet)
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 context.playerStatus.update(property: sp, value: Int(packet.count))
@@ -945,8 +947,6 @@ final public class GameSession {
             let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
             errorMessages.append(errorMessage)
         case _ as PACKET_ZC_FRIENDS_LIST:
-            break
-        case _ as PACKET_ZC_SHORTCUT_KEY_LIST:
             break
         case _ as PACKET_ZC_EXTEND_BODYITEM_SIZE:
             break
@@ -1200,6 +1200,28 @@ final public class GameSession {
 
         let packet = PacketFactory.CZ_ITEM_THROW(index: index, amount: amount)
         mapClient.sendPacket(packet)
+    }
+
+    // MARK: - Shortcut
+
+    func setShortcut(_ shortcut: Shortcut, atRow row: Int, column: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        var shortcutList = context.shortcutList
+        shortcutList.setShortcut(shortcut, atRow: row, column: column)
+
+        for change in shortcutList.changes(from: context.shortcutList) {
+            let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
+            mapClient.sendPacket(packet)
+        }
+
+        context.shortcutList = shortcutList
+    }
+
+    func removeShortcut(atRow row: Int, column: Int) {
+        setShortcut(.empty, atRow: row, column: column)
     }
 
     // MARK: - NPC
