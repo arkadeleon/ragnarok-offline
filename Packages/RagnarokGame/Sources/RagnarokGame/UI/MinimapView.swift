@@ -107,12 +107,17 @@ private struct MinimapMapView: View {
             return CGSize(width: mapSize, height: mapSize)
         }
 
-        let sourceSize = CGFloat(zoomFactor * 40)
-        let scale = mapSize / sourceSize
+        let scale = mapDisplayScale(for: image)
         return CGSize(
             width: CGFloat(image.width) * scale,
             height: CGFloat(image.height) * scale
         )
+    }
+
+    private func mapDisplayScale(for image: CGImage) -> CGFloat {
+        let sourceSize = CGFloat(zoomFactor * 40)
+        let fillScale = mapSize / CGFloat(min(image.width, image.height))
+        return max(mapSize / sourceSize, fillScale)
     }
 
     private func mapCenter(for image: CGImage, playerPosition: SIMD2<Int>) -> CGPoint {
@@ -120,13 +125,25 @@ private struct MinimapMapView: View {
             return CGPoint(x: mapSize / 2, y: mapSize / 2)
         }
 
-        let sourceSize = CGFloat(zoomFactor * 40)
-        let scale = mapSize / sourceSize
+        let scale = mapDisplayScale(for: image)
+        let displaySize = mapDisplaySize(for: image)
         let sourceCenter = sourcePoint(for: playerPosition, in: image)
-        return CGPoint(
+        let center = CGPoint(
             x: mapSize / 2 + (CGFloat(image.width) / 2 - sourceCenter.x) * scale,
             y: mapSize / 2 + (CGFloat(image.height) / 2 - sourceCenter.y) * scale
         )
+
+        return CGPoint(
+            x: clamp(center.x, displayLength: displaySize.width),
+            y: clamp(center.y, displayLength: displaySize.height)
+        )
+    }
+
+    private func clamp(_ center: CGFloat, displayLength: CGFloat) -> CGFloat {
+        guard displayLength > mapSize else {
+            return mapSize / 2
+        }
+        return min(max(center, mapSize - displayLength / 2), displayLength / 2)
     }
 
     private func arrowRotation(for direction: SpriteDirection) -> Angle {
@@ -134,11 +151,17 @@ private struct MinimapMapView: View {
     }
 
     private func arrowPosition(for position: SIMD2<Int>) -> CGPoint {
-        if showsFullMap {
-            projectedPoint(for: position)
-        } else {
-            CGPoint(x: mapSize / 2, y: mapSize / 2)
+        guard !showsFullMap, let mapImage else {
+            return projectedPoint(for: position)
         }
+
+        let scale = mapDisplayScale(for: mapImage)
+        let center = mapCenter(for: mapImage, playerPosition: position)
+        let sourceCenter = sourcePoint(for: position, in: mapImage)
+        return CGPoint(
+            x: center.x + (sourceCenter.x - CGFloat(mapImage.width) / 2) * scale,
+            y: center.y + (sourceCenter.y - CGFloat(mapImage.height) / 2) * scale
+        )
     }
 
     private func sourcePoint(for position: SIMD2<Int>, in image: CGImage) -> CGPoint {
