@@ -1224,6 +1224,17 @@ final public class GameSession {
         setShortcut(.empty, atRow: row, column: column)
     }
 
+    func setShortcutRowShift(_ rowShift: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        context.shortcutList.rowShift = rowShift
+
+        let packet = PacketFactory.CZ_SHORTCUTKEYBAR_ROTATE2(rowShift: rowShift)
+        mapClient.sendPacket(packet)
+    }
+
     // MARK: - NPC
 
     func talkToNPC(npcID: GameObjectID) {

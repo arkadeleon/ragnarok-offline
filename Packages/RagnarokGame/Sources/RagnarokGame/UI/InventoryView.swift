@@ -39,20 +39,24 @@ struct InventoryView: View {
 
     var body: some View {
         ZStack {
-            GameWindow {
-                VStack(spacing: 0) {
-                    tabBar
-                    itemGrid
+            VStack(spacing: 3) {
+                GameWindow {
+                    VStack(spacing: 0) {
+                        tabBar
+                        itemGrid
+                    }
+                } titleBar: {
+                    GameTitleBar(closeAction: onClose)
                 }
-            } titleBar: {
-                GameTitleBar(closeAction: onClose)
-            }
-            .geometryGroup()
-            .blur(radius: selectedItem == nil ? 0 : 5)
-            .frame(width: 280)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                selectedItem = nil
+                .geometryGroup()
+                .blur(radius: selectedItem == nil ? 0 : 5)
+                .frame(width: 280)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    selectedItem = nil
+                }
+
+                ShortcutBarView()
             }
 
             contextMenu

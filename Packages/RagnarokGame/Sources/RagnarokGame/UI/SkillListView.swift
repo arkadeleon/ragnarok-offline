@@ -19,30 +19,34 @@ struct SkillListView: View {
     @State private var selectedSkillID: Int?
 
     var body: some View {
-        GameWindow {
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(skillList.sortedSkills, id: \.skillID) { skill in
-                        SkillListRow(skill: skill, isSelected: (selectedSkillID == skill.skillID))
-                            .onTapGesture {
-                                selectedSkillID = skill.skillID
-                            }
+        VStack(spacing: 3) {
+            GameWindow {
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(skillList.sortedSkills, id: \.skillID) { skill in
+                            SkillListRow(skill: skill, isSelected: (selectedSkillID == skill.skillID))
+                                .onTapGesture {
+                                    selectedSkillID = skill.skillID
+                                }
+                        }
                     }
                 }
+                .frame(height: 220)
+            } titleBar: {
+                GameTitleBar(closeAction: onClose)
+            } bottomBar: {
+                GameBottomBar()
+                    .overlay(alignment: .leading) {
+                        Text(verbatim: "Skill Points: \(gameContext.playerStatus.skillPoint)")
+                            .font(.game())
+                            .foregroundStyle(Color.gameProminentLabel)
+                            .padding(.leading, 10)
+                    }
             }
-            .frame(height: 220)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
-        } bottomBar: {
-            GameBottomBar()
-                .overlay(alignment: .leading) {
-                    Text(verbatim: "Skill Points: \(gameContext.playerStatus.skillPoint)")
-                        .font(.game())
-                        .foregroundStyle(Color.gameProminentLabel)
-                        .padding(.leading, 10)
-                }
+            .frame(width: 300)
+
+            ShortcutBarView()
         }
-        .frame(width: 300)
     }
 }
 
@@ -255,5 +259,6 @@ private struct SkillUpgradeTrendShape: Shape {
 
     SkillListView(skillList: gameContext.skillList)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(GameSession.testing)
         .environment(gameContext)
 }
