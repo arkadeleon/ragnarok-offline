@@ -13,29 +13,19 @@ struct GameBottomBar<Actions>: View where Actions: View {
     @Environment(\.displayScale) private var displayScale
 
     var body: some View {
-        GeometryReader { geometry in
-            let stripeCount = max(0, Int((geometry.size.height + 2) / 4))
-
-            ZStack(alignment: .top) {
-                VStack(spacing: 2) {
-                    ForEach(0..<stripeCount, id: \.self) { _ in
-                        Color(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)).frame(height: 2)
-                    }
-                }
-            }
+        HStack(spacing: 3) {
+            actions
         }
+        .padding(.horizontal, 5)
+        .frame(maxWidth: .infinity, alignment: .trailing)
         .frame(height: height)
-        .background(Color.white)
+        .background {
+            GameStripeView()
+        }
         .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
         .overlay {
             UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
                 .strokeBorder(Color.gameBoxBorder, lineWidth: 1 / displayScale)
-        }
-        .overlay(alignment: .trailing) {
-            HStack(spacing: 3) {
-                actions
-            }
-            .padding(.horizontal, 5)
         }
     }
 
@@ -53,7 +43,12 @@ struct GameBottomBar<Actions>: View where Actions: View {
 }
 
 #Preview {
-    GameBottomBar()
-        .frame(width: 280)
-        .padding()
+    GameBottomBar {
+        Button("OK") {
+        }
+        .buttonStyle(.game)
+        .frame(width: 42, height: 20)
+    }
+    .frame(width: 280)
+    .padding()
 }
