@@ -15,7 +15,7 @@ struct SkillDatabaseView: View {
     @State private var filteredSkills: [SkillModel] = []
 
     var body: some View {
-        AdaptiveView {
+        SizeClassAdaptiveView {
             List(filteredSkills) { skill in
                 NavigationLink(value: skill) {
                     SkillCell(skill: skill)

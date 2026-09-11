@@ -19,7 +19,7 @@ struct ItemDatabaseView: View {
     @State private var isFilterPresented = false
 
     var body: some View {
-        AdaptiveView {
+        SizeClassAdaptiveView {
             List(filteredItems) { item in
                 NavigationLink(value: item) {
                     ItemCell(item: item)

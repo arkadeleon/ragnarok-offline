@@ -16,7 +16,7 @@ struct MonsterSummonDatabaseView: View {
     @State private var filteredMonsterSummons: [MonsterSummonModel] = []
 
     var body: some View {
-        AdaptiveView {
+        SizeClassAdaptiveView {
             List(filteredMonsterSummons) { monsterSummon in
                 NavigationLink(monsterSummon.displayName, value: monsterSummon)
             }

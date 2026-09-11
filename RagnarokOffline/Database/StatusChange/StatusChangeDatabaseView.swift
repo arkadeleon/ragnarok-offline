@@ -15,7 +15,7 @@ struct StatusChangeDatabaseView: View {
     @State private var filteredStatusChanges: [StatusChangeModel] = []
 
     var body: some View {
-        AdaptiveView {
+        SizeClassAdaptiveView {
             List(filteredStatusChanges) { statusChange in
                 NavigationLink(value: statusChange) {
                     StatusChangeCell(statusChange: statusChange)

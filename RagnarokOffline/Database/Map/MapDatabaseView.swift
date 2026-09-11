@@ -15,7 +15,7 @@ struct MapDatabaseView: View {
     @State private var filteredMaps: [MapModel] = []
 
     var body: some View {
-        AdaptiveView {
+        SizeClassAdaptiveView {
             List(filteredMaps) { map in
                 NavigationLink(value: map) {
                     MapCell(map: map)
