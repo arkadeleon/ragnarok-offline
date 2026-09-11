@@ -12,7 +12,7 @@ struct CharacterSimulatorView: View {
     @Environment(CharacterSimulator.self) private var characterSimulator
 
     var body: some View {
-        SizeClassAdaptiveView {
+        AspectRatioAdaptiveView {
             VStack(spacing: 0) {
                 CharacterRenderingView()
                     .frame(minHeight: 0, maxHeight: 300)
@@ -22,7 +22,7 @@ struct CharacterSimulatorView: View {
                 CharacterConfigurationView()
                     .frame(minHeight: 0, maxHeight: .infinity)
             }
-        } regular: {
+        } wide: {
             HStack {
                 CharacterRenderingView()
                     .frame(minWidth: 0, maxWidth: .infinity)
