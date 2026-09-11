@@ -10,7 +10,7 @@ import RagnarokModels
 import RagnarokResources
 import SwiftUI
 
-private let slotSize: CGFloat = 28
+private let slotSize: CGFloat = 32
 private let iconSize: CGFloat = 24
 
 struct ShortcutBarView: View {
@@ -19,21 +19,23 @@ struct ShortcutBarView: View {
     @Environment(\.displayScale) private var displayScale
 
     var body: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: 4) {
             ForEach(0..<8, id: \.self) { column in
                 ShortcutSlotView(shortcut: gameContext.shortcutList.rows[row][column])
             }
 
             Button {
-                gameSession.setShortcutRowShift(row)
+                gameSession.setShortcutRowShift((row + 1) % gameContext.shortcutList.rows.count)
             } label: {
                 Text(verbatim: "\(row + 1)")
             }
             .buttonStyle(.game)
-            .frame(width: slotSize, height: slotSize)
+            .frame(width: 24, height: slotSize)
         }
-        .padding(6)
-        .background(Color.white)
+        .padding(4)
+        .background {
+            GameStripeView()
+        }
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .overlay {
             RoundedRectangle(cornerRadius: 3)
@@ -60,13 +62,14 @@ private struct ShortcutSlotView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 3)
-                .fill(Color.gameSecondaryBoxBackground)
+                .fill(Color.white)
 
             if let iconImage {
                 Image(decorative: iconImage.cgImage, scale: 1)
                     .resizable()
                     .interpolation(.none)
                     .frame(width: iconSize, height: iconSize)
+                    .opacity(isAvailable ? 1 : 0.4)
             }
 
             if let label {
@@ -78,7 +81,7 @@ private struct ShortcutSlotView: View {
             }
         }
         .frame(width: slotSize, height: slotSize)
-        .opacity(isAvailable ? 1 : 0.4)
+        .border(Color.gameBoxBorder)
         .task(id: shortcut) {
             switch shortcut {
             case .empty:

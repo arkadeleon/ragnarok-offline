@@ -19,7 +19,7 @@ struct SkillListView: View {
     @State private var selectedSkillID: Int?
 
     var body: some View {
-        VStack(spacing: 3) {
+        VStack(spacing: 4) {
             GameWindow {
                 ScrollView {
                     LazyVStack(spacing: 0) {
@@ -43,7 +43,7 @@ struct SkillListView: View {
                             .padding(.leading, 10)
                     }
             }
-            .frame(width: 300)
+            .frame(width: 320)
 
             ShortcutBarView()
         }

@@ -39,7 +39,7 @@ struct InventoryView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 3) {
+            VStack(spacing: 4) {
                 GameWindow {
                     VStack(spacing: 0) {
                         tabBar
@@ -50,7 +50,7 @@ struct InventoryView: View {
                 }
                 .geometryGroup()
                 .blur(radius: selectedItem == nil ? 0 : 5)
-                .frame(width: 280)
+                .frame(width: 320)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     selectedItem = nil
@@ -105,7 +105,7 @@ struct InventoryView: View {
 
     private var itemGrid: some View {
         ZStack(alignment: .top) {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], spacing: 4) {
                 ForEach(0..<64) { _ in
                     ZStack(alignment: .center) {
                         Ellipse()
@@ -117,9 +117,8 @@ struct InventoryView: View {
                     .frame(width: 32, height: 32)
                 }
             }
-            .frame(width: 32 * 8, height: 32 * 8)
 
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], spacing: 4) {
                 ForEach(items, id: \.index) { item in
                     InventoryItemView(item: item)
                         .matchedGeometryEffect(
@@ -132,7 +131,6 @@ struct InventoryView: View {
                         }
                 }
             }
-            .frame(width: 32 * 8)
         }
         .padding(.horizontal, 12)
         .padding(.bottom, 12)
