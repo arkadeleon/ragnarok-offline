@@ -30,72 +30,72 @@ struct MenuView: View {
             if isExpanded {
                 Grid(horizontalSpacing: 10, verticalSpacing: 10) {
                     GridRow {
-                        GameButton("menu_icon/bt_status.bmp") {
+                        GameImageButton("menu_icon/bt_status.bmp") {
                             action(.status)
                         }
-                        GameButton("menu_icon/bt_equip.bmp") {
+                        GameImageButton("menu_icon/bt_equip.bmp") {
                             action(.equipment)
                         }
-                        GameButton("menu_icon/bt_item.bmp") {
+                        GameImageButton("menu_icon/bt_item.bmp") {
                             action(.inventory)
                         }
-                        GameButton("menu_icon/bt_skill.bmp") {
+                        GameImageButton("menu_icon/bt_skill.bmp") {
                             action(.skill)
                         }
-                        GameButton("menu_icon/bt_party.bmp") {
+                        GameImageButton("menu_icon/bt_party.bmp") {
                         }
                         .disabled(true)
                     }
                     .frame(width: 32, height: 34)
 
                     GridRow {
-                        GameButton("menu_icon/bt_guild.bmp") {
+                        GameImageButton("menu_icon/bt_guild.bmp") {
                         }
                         .disabled(true)
-                        GameButton("menu_icon/bt_battle.bmp") {
+                        GameImageButton("menu_icon/bt_battle.bmp") {
                         }
                         .disabled(true)
-                        GameButton("menu_icon/bt_quest.bmp") {
+                        GameImageButton("menu_icon/bt_quest.bmp") {
                         }
                         .disabled(true)
-                        GameButton("menu_icon/bt_map.bmp") {
+                        GameImageButton("menu_icon/bt_map.bmp") {
                             action(.worldMap)
                         }
-                        GameButton("menu_icon/bt_navigation.bmp") {
+                        GameImageButton("menu_icon/bt_navigation.bmp") {
                         }
                         .disabled(true)
                     }
                     .frame(width: 32, height: 34)
 
                     GridRow {
-                        GameButton("menu_icon/bt_option.bmp") {
+                        GameImageButton("menu_icon/bt_option.bmp") {
                             action(.options)
                         }
-                        GameButton("menu_icon/bt_bank.bmp") {
+                        GameImageButton("menu_icon/bt_bank.bmp") {
                         }
                         .disabled(true)
-                        GameButton("menu_icon/bt_rec.bmp") {
+                        GameImageButton("menu_icon/bt_rec.bmp") {
                         }
                         .disabled(true)
-                        GameButton("menu_icon/bt_mail.bmp") {
+                        GameImageButton("menu_icon/bt_mail.bmp") {
                         }
                         .disabled(true)
-                        GameButton("menu_icon/bt_achievement.bmp") {
+                        GameImageButton("menu_icon/bt_achievement.bmp") {
                         }
                         .disabled(true)
                     }
                     .frame(width: 32, height: 34)
 
                     GridRow {
-                        GameButton("menu_icon/bt_tip.bmp") {
+                        GameImageButton("menu_icon/bt_tip.bmp") {
                         }
-                        GameButton("menu_icon/bt_keyboard.bmp") {
+                        GameImageButton("menu_icon/bt_keyboard.bmp") {
                         }
-                        GameButton("menu_icon/bt_attendance.bmp") {
+                        GameImageButton("menu_icon/bt_attendance.bmp") {
                         }
-                        GameButton("menu_icon/bt_adventureragency.bmp") {
+                        GameImageButton("menu_icon/bt_adventureragency.bmp") {
                         }
-                        GameButton("menu_icon/bt_repute.bmp") {
+                        GameImageButton("menu_icon/bt_repute.bmp") {
                         }
                     }
                     .frame(width: 32, height: 34)

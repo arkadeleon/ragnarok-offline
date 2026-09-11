@@ -1,5 +1,5 @@
 //
-//  GameButton.swift
+//  GameImageButton.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2024/9/9.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GameButton: View {
+struct GameImageButton: View {
     var imageName: String
     var action: () -> Void
 
@@ -25,7 +25,7 @@ struct GameButton: View {
 }
 
 #Preview {
-    GameButton("menu_icon/bt_status.bmp") {
+    GameImageButton("menu_icon/bt_status.bmp") {
     }
     .environment(GameContext.testing)
 }
