@@ -10,6 +10,7 @@ import RagnarokModels
 import RagnarokResources
 import SwiftUI
 
+private let columnCount = 8
 private let slotSize: CGFloat = 32
 private let iconSize: CGFloat = 24
 
@@ -20,20 +21,29 @@ struct ShortcutBarView: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            ForEach(0..<8, id: \.self) { column in
+            ForEach(0..<columnCount, id: \.self) { column in
                 let slot = ShortcutSlot(row: row, column: column)
                 ShortcutSlotView(slot: slot, shortcut: gameContext.shortcutList.rows[row][column])
             }
-
+        }
+        .frame(width: 320)
+        .overlay(alignment: .leading) {
+            Text(verbatim: "\(row + 1)")
+                .font(.game())
+                .foregroundStyle(Color.gameLabel)
+                .frame(width: sideWidth)
+        }
+        .overlay(alignment: .trailing) {
             Button {
                 gameSession.setShortcutRowShift((row + 1) % gameContext.shortcutList.rows.count)
             } label: {
-                Text(verbatim: "\(row + 1)")
+                Image(systemName: "arrow.clockwise")
+                    .font(.game(size: 11, weight: .bold))
             }
-            .buttonStyle(.game)
-            .frame(width: 24, height: slotSize)
+            .buttonStyle(.plain)
+            .frame(width: sideWidth, height: slotSize)
         }
-        .padding(4)
+        .padding(.vertical, 4)
         .background {
             GameStripeView()
         }
@@ -50,6 +60,10 @@ struct ShortcutBarView: View {
         row = max(row, 0)
         row = min(row, rows.count - 1)
         return row
+    }
+
+    private var sideWidth: CGFloat {
+        (320 - (slotSize * CGFloat(columnCount) + 4 * CGFloat(columnCount - 1))) / 2
     }
 }
 
