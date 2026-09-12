@@ -21,7 +21,8 @@ struct ShortcutBarView: View {
     var body: some View {
         HStack(spacing: 4) {
             ForEach(0..<8, id: \.self) { column in
-                ShortcutSlotView(shortcut: gameContext.shortcutList.rows[row][column])
+                let slot = ShortcutSlot(row: row, column: column)
+                ShortcutSlotView(slot: slot, shortcut: gameContext.shortcutList.rows[row][column])
             }
 
             Button {
@@ -53,24 +54,20 @@ struct ShortcutBarView: View {
 }
 
 private struct ShortcutSlotView: View {
+    var slot: ShortcutSlot
     var shortcut: Shortcut
 
     @Environment(GameContext.self) private var gameContext
-
-    @State private var iconImage: Resources.Image?
+    @Environment(ShortcutDragState.self) private var dragState
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 3)
-                .fill(Color.white)
+                .fill(isTargeted ? Color(#colorLiteral(red: 0.7098039216, green: 1, blue: 0.7098039216, alpha: 1)) : Color.white)
 
-            if let iconImage {
-                Image(decorative: iconImage.cgImage, scale: 1)
-                    .resizable()
-                    .interpolation(.none)
-                    .frame(width: iconSize, height: iconSize)
-                    .opacity(isAvailable ? 1 : 0.4)
-            }
+            ShortcutIconView(shortcut: shortcut)
+                .frame(width: iconSize, height: iconSize)
+                .opacity(isAvailable ? 1 : 0.4)
 
             if let label {
                 Text(verbatim: label)
@@ -82,22 +79,12 @@ private struct ShortcutSlotView: View {
         }
         .frame(width: slotSize, height: slotSize)
         .border(Color.gameBoxBorder)
-        .task(id: shortcut) {
-            switch shortcut {
-            case .empty:
-                iconImage = nil
-            case .item(let itemID):
-                iconImage = try? await gameContext.resourceManager.itemIconImage(forItemID: itemID)
-            case .skill(let skillID, _):
-                guard let skillID = SkillID(rawValue: skillID) else {
-                    iconImage = nil
-                    return
-                }
+        .shortcutDropTarget(slot)
+        .shortcutDragSource(shortcut, from: slot)
+    }
 
-                let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skillID.stringValue)
-                iconImage = try? await gameContext.resourceManager.image(at: path, removesMagentaPixels: true)
-            }
-        }
+    private var isTargeted: Bool {
+        dragState.targetSlot == slot
     }
 
     /// An item which is no longer in the inventory is dimmed.
@@ -126,6 +113,40 @@ private struct ShortcutSlotView: View {
     }
 }
 
+struct ShortcutIconView: View {
+    var shortcut: Shortcut
+
+    @Environment(GameContext.self) private var gameContext
+
+    @State private var iconImage: Resources.Image?
+
+    var body: some View {
+        ZStack {
+            if let iconImage {
+                Image(decorative: iconImage.cgImage, scale: 1)
+                    .resizable()
+                    .interpolation(.none)
+            }
+        }
+        .task(id: shortcut) {
+            switch shortcut {
+            case .empty:
+                iconImage = nil
+            case .item(let itemID):
+                iconImage = try? await gameContext.resourceManager.itemIconImage(forItemID: itemID)
+            case .skill(let skillID, _):
+                guard let skillID = SkillID(rawValue: skillID) else {
+                    iconImage = nil
+                    return
+                }
+
+                let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skillID.stringValue)
+                iconImage = try? await gameContext.resourceManager.image(at: path, removesMagentaPixels: true)
+            }
+        }
+    }
+}
+
 #Preview {
     let gameContext = {
         let gameContext = GameContext.testing
@@ -147,6 +168,7 @@ private struct ShortcutSlotView: View {
     }()
 
     ShortcutBarView()
+        .shortcutDragContainer()
         .padding()
         .environment(GameSession.testing)
         .environment(gameContext)

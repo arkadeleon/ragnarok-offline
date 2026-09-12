@@ -58,6 +58,7 @@ struct InventoryView: View {
 
                 ShortcutBarView()
             }
+            .shortcutDragContainer()
 
             contextMenu
                 .transition(.opacity.combined(with: .scale).animation(.bouncy(duration: 0.25, extraBounce: 0.2)))
@@ -121,6 +122,7 @@ struct InventoryView: View {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], spacing: 4) {
                 ForEach(items, id: \.index) { item in
                     InventoryItemView(item: item)
+                        .contentShape(Rectangle())
                         .matchedGeometryEffect(
                             id: item.index,
                             in: itemNamespace,
@@ -129,6 +131,7 @@ struct InventoryView: View {
                         .onTapGesture {
                             selectedItem = item
                         }
+                        .shortcutDragSource(.item(itemID: item.itemID))
                 }
             }
         }

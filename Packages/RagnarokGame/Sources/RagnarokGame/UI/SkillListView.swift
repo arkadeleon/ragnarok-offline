@@ -28,6 +28,7 @@ struct SkillListView: View {
                                 .onTapGesture {
                                     selectedSkillID = skill.skillID
                                 }
+                                .shortcutDragSource(shortcut(for: skill))
                         }
                     }
                 }
@@ -46,6 +47,16 @@ struct SkillListView: View {
             .frame(width: 320)
 
             ShortcutBarView()
+        }
+        .shortcutDragContainer()
+    }
+
+    /// Only a learned, active skill can be put in the shortcut bar.
+    private func shortcut(for skill: SkillInfo) -> Shortcut {
+        if skill.level > 0 && !skill.isPassiveSkill {
+            .skill(skillID: skill.skillID, level: skill.level)
+        } else {
+            .empty
         }
     }
 }
@@ -108,14 +119,11 @@ private struct SkillListRow: View {
     var body: some View {
         HStack(spacing: 0) {
             HStack(spacing: 8) {
-                Group {
+                ZStack {
                     if let iconImage {
                         Image(decorative: iconImage.cgImage, scale: 1)
                             .resizable()
                             .interpolation(.none)
-                    } else {
-                        RoundedRectangle(cornerRadius: 3)
-                            .fill(Color(#colorLiteral(red: 0.9137254902, green: 0.9137254902, blue: 0.9137254902, alpha: 1)))
                     }
                 }
                 .frame(width: 24, height: 24)

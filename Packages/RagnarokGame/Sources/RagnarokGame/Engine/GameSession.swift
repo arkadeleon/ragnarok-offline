@@ -1224,6 +1224,30 @@ final public class GameSession {
         setShortcut(.empty, atRow: row, column: column)
     }
 
+    func moveShortcut(
+        _ shortcut: Shortcut,
+        fromRow sourceRow: Int,
+        column sourceColumn: Int,
+        toRow targetRow: Int,
+        column targetColumn: Int
+    ) {
+        guard let mapClient,
+              context.shortcutList.rows[sourceRow][sourceColumn] == shortcut else {
+            return
+        }
+
+        var shortcutList = context.shortcutList
+        shortcutList.setShortcut(.empty, atRow: sourceRow, column: sourceColumn)
+        shortcutList.setShortcut(shortcut, atRow: targetRow, column: targetColumn)
+
+        for change in shortcutList.changes(from: context.shortcutList) {
+            let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
+            mapClient.sendPacket(packet)
+        }
+
+        context.shortcutList = shortcutList
+    }
+
     func setShortcutRowShift(_ rowShift: Int) {
         guard let mapClient else {
             return
