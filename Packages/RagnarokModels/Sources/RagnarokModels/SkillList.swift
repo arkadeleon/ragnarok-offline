@@ -14,12 +14,6 @@ public struct SkillList {
         skills.values.sorted()
     }
 
-    public var activeSkills: [SkillInfo] {
-        sortedSkills.filter { skill in
-            skill.level > 0 && !skill.isPassiveSkill
-        }
-    }
-
     public init() {
     }
 

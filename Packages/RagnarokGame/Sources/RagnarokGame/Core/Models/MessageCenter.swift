@@ -22,6 +22,7 @@ final class MessageCenter {
 
     enum MessageCategory {
         case item
+        case skill
         case battle
         case exp
     }
@@ -112,6 +113,19 @@ final class MessageCenter {
             let message = MessageCenter.Message(content: messageString, type: .error, category: .item)
             messages.append(message)
         }
+    }
+
+    // MARK: - Skill
+
+    func addMessage(for packet: PACKET_ZC_ACK_TOUSESKILL) {
+        guard packet.flag == 0 else {
+            return
+        }
+
+        let useSkillFailedMessage = UseSkillFailedMessage(from: packet)
+        let messageString = messageStringTable.localizedMessageString(forID: useSkillFailedMessage.messageID)
+        let message = MessageCenter.Message(content: messageString, type: .error, category: .skill)
+        messages.append(message)
     }
 
     // MARK: - Battle

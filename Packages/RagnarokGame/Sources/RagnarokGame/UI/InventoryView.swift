@@ -28,7 +28,7 @@ struct InventoryView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 4) {
+            VStack(spacing: 3) {
                 GameWindow {
                     VStack(spacing: 0) {
                         tabBar

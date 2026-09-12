@@ -19,7 +19,7 @@ struct SkillListView: View {
     @State private var selectedSkillID: Int?
 
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 3) {
             GameWindow {
                 ScrollView {
                     LazyVStack(spacing: 0) {
@@ -70,14 +70,6 @@ private struct SkillListRow: View {
 
     @State private var iconImage: Resources.Image?
 
-    private var isPassiveSkill: Bool {
-        if skill.flag < 0 {
-            skill.spCost == 0
-        } else {
-            skill.flag == SkillInfoFlag.passive.rawValue
-        }
-    }
-
     private var isDisabled: Bool {
         skill.level == 0
     }
@@ -109,7 +101,7 @@ private struct SkillListRow: View {
             .clear
         } else if isDisabled {
             Color(#colorLiteral(red: 0.7098039216, green: 0.7098039216, blue: 0.7098039216, alpha: 1))
-        } else if isPassiveSkill {
+        } else if skill.isPassiveSkill {
             Color(#colorLiteral(red: 0.4509803922, green: 0.8352941176, blue: 0.9333333333, alpha: 1))
         } else {
             Color(#colorLiteral(red: 0.4509803922, green: 0.6117647059, blue: 0.9333333333, alpha: 1))
@@ -147,7 +139,7 @@ private struct SkillListRow: View {
             .padding(.trailing, 8)
 
             if !isDisabled {
-                Text(verbatim: isPassiveSkill ? "Passive" : "SP: \(skill.spCost)")
+                Text(verbatim: skill.isPassiveSkill ? "Passive" : "SP: \(skill.spCost)")
                     .font(.game(size: 11))
                     .foregroundStyle(Color.gameLabel)
                     .frame(width: 64, alignment: .trailing)

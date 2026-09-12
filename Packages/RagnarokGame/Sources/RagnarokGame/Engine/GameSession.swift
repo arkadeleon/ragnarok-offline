@@ -739,6 +739,8 @@ final public class GameSession {
             mapScene?.useSkillOnNearestMonster(skill, level: skill.level)
         case let packet as PACKET_ZC_DISPEL:
             mapScene?.onMapObjectSkillCastCancelled(sourceObjectID: packet.gid)
+        case let packet as PACKET_ZC_ACK_TOUSESKILL:
+            context.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_USE_SKILL:
             let objectSkill = MapObjectSkill(from: packet)
             mapScene?.onMapObjectSkillPerformed(objectSkill: objectSkill)
