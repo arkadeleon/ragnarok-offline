@@ -211,22 +211,22 @@ public final class MapScene {
         }
     }
 
-    func useSkillOnNearestMonster(_ skill: SkillInfo) {
-        guard skill.level > 0 else {
+    func useSkillOnNearestMonster(_ skill: SkillInfo, level: Int) {
+        guard skill.level > 0, level > 0 else {
             return
         }
 
         if skill.isSelfOnlySkill || skill.isSupportSkill {
             gameSession?.useSkill(
                 skillID: skill.skillID,
-                level: skill.level,
+                level: level,
                 onTarget: player.objectID
             )
             return
         }
 
         if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
-            useSkill(skill, on: target)
+            useSkill(skill, level: level, on: target)
         }
     }
 
@@ -263,7 +263,7 @@ public final class MapScene {
         }
     }
 
-    private func useSkill(_ skill: SkillInfo, on target: MapSceneMapObject) {
+    private func useSkill(_ skill: SkillInfo, level: Int, on target: MapSceneMapObject) {
         let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
 
@@ -271,13 +271,13 @@ public final class MapScene {
             if skill.isGroundTargetedSkill {
                 self.gameSession?.useSkill(
                     skillID: skill.skillID,
-                    level: skill.level,
+                    level: level,
                     toGround: targetPosition
                 )
             } else {
                 self.gameSession?.useSkill(
                     skillID: skill.skillID,
-                    level: skill.level,
+                    level: level,
                     onTarget: target.objectID
                 )
             }

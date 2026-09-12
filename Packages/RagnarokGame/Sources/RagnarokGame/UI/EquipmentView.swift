@@ -67,7 +67,7 @@ private struct EquipmentCharacterView: View {
 
     var body: some View {
         ZStack {
-            EquipmentCharacterBackground()
+            GameStripeView()
 
             EquipmentCharacterShadow()
                 .offset(y: 50)
@@ -75,20 +75,6 @@ private struct EquipmentCharacterView: View {
             if let characterAnimation, let firstFrame = characterAnimation.firstFrame {
                 Image(decorative: firstFrame, scale: 2)
                     .offset(y: 10)
-            }
-        }
-    }
-}
-
-private struct EquipmentCharacterBackground: View {
-    var body: some View {
-        GeometryReader { geometry in
-            let stripeCount = max(0, Int((geometry.size.height + 2) / 4))
-
-            VStack(spacing: 2) {
-                ForEach(0..<stripeCount, id: \.self) { _ in
-                    Color(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.9490196078, alpha: 1)).frame(height: 2)
-                }
             }
         }
     }

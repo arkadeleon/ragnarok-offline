@@ -61,9 +61,10 @@ extension SkillInfo {
 
     public var isPassiveSkill: Bool {
         if flag < 0 {
-            return spCost == 0
+            spCost == 0
+        } else {
+            flag == SkillInfoFlag.passive.rawValue
         }
-        return flag == SkillInfoFlag.passive.rawValue
     }
 
     public var isGroundTargetedSkill: Bool {

@@ -26,34 +26,28 @@ struct InventoryView: View {
 
     @Namespace private var itemNamespace
 
-    private var items: [InventoryItem] {
-        switch tab {
-        case .item:
-            inventory.usableItems
-        case .gear:
-            inventory.equipItems
-        case .etc:
-            inventory.etcItems
-        }
-    }
-
     var body: some View {
         ZStack {
-            GameWindow {
-                VStack(spacing: 0) {
-                    tabBar
-                    itemGrid
+            VStack(spacing: 3) {
+                GameWindow {
+                    VStack(spacing: 0) {
+                        tabBar
+                        itemGrid
+                    }
+                } titleBar: {
+                    GameTitleBar(closeAction: onClose)
                 }
-            } titleBar: {
-                GameTitleBar(closeAction: onClose)
+                .geometryGroup()
+                .blur(radius: selectedItem == nil ? 0 : 5)
+                .frame(width: 320)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    selectedItem = nil
+                }
+
+                ShortcutBarView()
             }
-            .geometryGroup()
-            .blur(radius: selectedItem == nil ? 0 : 5)
-            .frame(width: 280)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                selectedItem = nil
-            }
+            .shortcutDragContainer()
 
             contextMenu
                 .transition(.opacity.combined(with: .scale).animation(.bouncy(duration: 0.25, extraBounce: 0.2)))
@@ -100,36 +94,37 @@ struct InventoryView: View {
     }
 
     private var itemGrid: some View {
-        ZStack(alignment: .top) {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
-                ForEach(0..<64) { _ in
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], spacing: 4) {
+                ForEach(0..<slotCount, id: \.self) { slot in
                     ZStack(alignment: .center) {
                         Ellipse()
                             .fill(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
                             .blur(radius: 2)
                             .frame(width: 24, height: 12)
                             .offset(y: 5)
+
+                        if slot < items.count {
+                            let item = items[slot]
+
+                            InventoryItemView(item: item)
+                                .contentShape(Rectangle())
+                                .matchedGeometryEffect(
+                                    id: item.index,
+                                    in: itemNamespace,
+                                    anchor: .bottom
+                                )
+                                .onTapGesture {
+                                    selectedItem = item
+                                }
+                                .shortcutDragSource(.item(itemID: item.itemID))
+                        }
                     }
                     .frame(width: 32, height: 32)
                 }
             }
-            .frame(width: 32 * 8, height: 32 * 8)
-
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 0)], spacing: 0) {
-                ForEach(items, id: \.index) { item in
-                    InventoryItemView(item: item)
-                        .matchedGeometryEffect(
-                            id: item.index,
-                            in: itemNamespace,
-                            anchor: .bottom
-                        )
-                        .onTapGesture {
-                            selectedItem = item
-                        }
-                }
-            }
-            .frame(width: 32 * 8)
         }
+        .frame(height: 32 * 6 + 4 * 5)
         .padding(.horizontal, 12)
         .padding(.bottom, 12)
     }
@@ -187,6 +182,21 @@ struct InventoryView: View {
             )
         }
     }
+
+    private var items: [InventoryItem] {
+        switch tab {
+        case .item:
+            inventory.usableItems
+        case .gear:
+            inventory.equipItems
+        case .etc:
+            inventory.etcItems
+        }
+    }
+
+    private var slotCount: Int {
+        max(items.count, 48)
+    }
 }
 
 private struct InventoryItemView: View {
@@ -205,6 +215,7 @@ private struct InventoryItemView: View {
             Text(verbatim: "\(item.amount)")
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
+                .shadow(color: .white, radius: 1)
                 .offset(x: 5, y: 10)
 
             if item.isEquipped {
@@ -241,30 +252,35 @@ private struct InventoryItemActionButton: View {
 
 #Preview {
     let inventory = {
-        var redPotion = InventoryItem()
-        redPotion.index = 0
-        redPotion.itemID = 501
-        redPotion.type = .healing
-        redPotion.amount = 2
+        var inventory = Inventory()
+        var index = 0
+
+        for itemID in 501...599 {
+            var item = InventoryItem()
+            item.index = index
+            item.itemID = itemID
+            item.type = .healing
+            item.amount = index + 1
+            inventory.append(item: item)
+            index += 1
+        }
 
         var sword = InventoryItem()
-        sword.index = 1
+        sword.index = index
         sword.itemID = 1101
         sword.type = .weapon
         sword.amount = 1
+        inventory.append(item: sword)
 
         var shield = InventoryItem()
-        shield.index = 2
+        shield.index = index + 1
         shield.itemID = 2101
         shield.type = .armor
         shield.amount = 1
         shield.location = .left_hand
         shield.equippedLocation = .left_hand
-
-        var inventory = Inventory()
-        inventory.append(item: redPotion)
-        inventory.append(item: sword)
         inventory.append(item: shield)
+
         return inventory
     }()
 

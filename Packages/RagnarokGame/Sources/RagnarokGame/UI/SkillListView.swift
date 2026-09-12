@@ -19,30 +19,45 @@ struct SkillListView: View {
     @State private var selectedSkillID: Int?
 
     var body: some View {
-        GameWindow {
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(skillList.sortedSkills, id: \.skillID) { skill in
-                        SkillListRow(skill: skill, isSelected: (selectedSkillID == skill.skillID))
-                            .onTapGesture {
-                                selectedSkillID = skill.skillID
-                            }
+        VStack(spacing: 3) {
+            GameWindow {
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(skillList.sortedSkills, id: \.skillID) { skill in
+                            SkillListRow(skill: skill, isSelected: (selectedSkillID == skill.skillID))
+                                .onTapGesture {
+                                    selectedSkillID = skill.skillID
+                                }
+                                .shortcutDragSource(shortcut(for: skill))
+                        }
                     }
                 }
+                .frame(height: 220)
+            } titleBar: {
+                GameTitleBar(closeAction: onClose)
+            } bottomBar: {
+                GameBottomBar()
+                    .overlay(alignment: .leading) {
+                        Text(verbatim: "Skill Points: \(gameContext.playerStatus.skillPoint)")
+                            .font(.game())
+                            .foregroundStyle(Color.gameProminentLabel)
+                            .padding(.leading, 10)
+                    }
             }
-            .frame(height: 220)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
-        } bottomBar: {
-            GameBottomBar()
-                .overlay(alignment: .leading) {
-                    Text(verbatim: "Skill Points: \(gameContext.playerStatus.skillPoint)")
-                        .font(.game())
-                        .foregroundStyle(Color.gameProminentLabel)
-                        .padding(.leading, 10)
-                }
+            .frame(width: 320)
+
+            ShortcutBarView()
         }
-        .frame(width: 300)
+        .shortcutDragContainer()
+    }
+
+    /// Only a learned, active skill can be put in the shortcut bar.
+    private func shortcut(for skill: SkillInfo) -> Shortcut {
+        if skill.level > 0 && !skill.isPassiveSkill {
+            .skill(skillID: skill.skillID, level: skill.level)
+        } else {
+            .empty
+        }
     }
 }
 
@@ -54,14 +69,6 @@ private struct SkillListRow: View {
     @Environment(\.upgradeSkillLevel) private var upgradeSkillLevel
 
     @State private var iconImage: Resources.Image?
-
-    private var isPassiveSkill: Bool {
-        if skill.flag < 0 {
-            skill.spCost == 0
-        } else {
-            skill.flag == SkillInfoFlag.passive.rawValue
-        }
-    }
 
     private var isDisabled: Bool {
         skill.level == 0
@@ -94,7 +101,7 @@ private struct SkillListRow: View {
             .clear
         } else if isDisabled {
             Color(#colorLiteral(red: 0.7098039216, green: 0.7098039216, blue: 0.7098039216, alpha: 1))
-        } else if isPassiveSkill {
+        } else if skill.isPassiveSkill {
             Color(#colorLiteral(red: 0.4509803922, green: 0.8352941176, blue: 0.9333333333, alpha: 1))
         } else {
             Color(#colorLiteral(red: 0.4509803922, green: 0.6117647059, blue: 0.9333333333, alpha: 1))
@@ -104,14 +111,11 @@ private struct SkillListRow: View {
     var body: some View {
         HStack(spacing: 0) {
             HStack(spacing: 8) {
-                Group {
+                ZStack {
                     if let iconImage {
                         Image(decorative: iconImage.cgImage, scale: 1)
                             .resizable()
                             .interpolation(.none)
-                    } else {
-                        RoundedRectangle(cornerRadius: 3)
-                            .fill(Color(#colorLiteral(red: 0.9137254902, green: 0.9137254902, blue: 0.9137254902, alpha: 1)))
                     }
                 }
                 .frame(width: 24, height: 24)
@@ -135,7 +139,7 @@ private struct SkillListRow: View {
             .padding(.trailing, 8)
 
             if !isDisabled {
-                Text(verbatim: isPassiveSkill ? "Passive" : "SP: \(skill.spCost)")
+                Text(verbatim: skill.isPassiveSkill ? "Passive" : "SP: \(skill.spCost)")
                     .font(.game(size: 11))
                     .foregroundStyle(Color.gameLabel)
                     .frame(width: 64, alignment: .trailing)
@@ -255,5 +259,6 @@ private struct SkillUpgradeTrendShape: Shape {
 
     SkillListView(skillList: gameContext.skillList)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(GameSession.testing)
         .environment(gameContext)
 }

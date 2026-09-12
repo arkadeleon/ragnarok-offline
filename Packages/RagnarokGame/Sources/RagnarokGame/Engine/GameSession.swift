@@ -736,9 +736,11 @@ final public class GameSession {
             skill.level = Int(packet.skill_lv)
             skill.spCost = Int(packet.skill_sp)
             skill.attackRange = Int(packet.skill_range)
-            mapScene?.useSkillOnNearestMonster(skill)
+            mapScene?.useSkillOnNearestMonster(skill, level: skill.level)
         case let packet as PACKET_ZC_DISPEL:
             mapScene?.onMapObjectSkillCastCancelled(sourceObjectID: packet.gid)
+        case let packet as PACKET_ZC_ACK_TOUSESKILL:
+            context.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_USE_SKILL:
             let objectSkill = MapObjectSkill(from: packet)
             mapScene?.onMapObjectSkillPerformed(objectSkill: objectSkill)
@@ -750,6 +752,8 @@ final public class GameSession {
                 let position = SIMD2(Int(packet.xPos), Int(packet.yPos))
                 mapScene?.onGroundSkillCast(skillID: skillID, sourceObjectID: packet.AID, position: position)
             }
+        case let packet as PACKET_ZC_SHORTCUT_KEY_LIST:
+            context.shortcutList.update(from: packet)
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
                 context.playerStatus.update(property: sp, value: Int(packet.count))
@@ -945,8 +949,6 @@ final public class GameSession {
             let errorMessage = GameSession.ErrorMessage(content: localizedMessage)
             errorMessages.append(errorMessage)
         case _ as PACKET_ZC_FRIENDS_LIST:
-            break
-        case _ as PACKET_ZC_SHORTCUT_KEY_LIST:
             break
         case _ as PACKET_ZC_EXTEND_BODYITEM_SIZE:
             break
@@ -1200,6 +1202,78 @@ final public class GameSession {
 
         let packet = PacketFactory.CZ_ITEM_THROW(index: index, amount: amount)
         mapClient.sendPacket(packet)
+    }
+
+    // MARK: - Shortcut
+
+    func setShortcut(_ shortcut: Shortcut, atRow row: Int, column: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        var shortcutList = context.shortcutList
+        shortcutList.setShortcut(shortcut, atRow: row, column: column)
+
+        for change in shortcutList.changes(from: context.shortcutList) {
+            let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
+            mapClient.sendPacket(packet)
+        }
+
+        context.shortcutList = shortcutList
+    }
+
+    func removeShortcut(atRow row: Int, column: Int) {
+        setShortcut(.empty, atRow: row, column: column)
+    }
+
+    func moveShortcut(
+        _ shortcut: Shortcut,
+        fromRow sourceRow: Int,
+        column sourceColumn: Int,
+        toRow targetRow: Int,
+        column targetColumn: Int
+    ) {
+        guard let mapClient,
+              context.shortcutList.rows[sourceRow][sourceColumn] == shortcut else {
+            return
+        }
+
+        var shortcutList = context.shortcutList
+        shortcutList.setShortcut(.empty, atRow: sourceRow, column: sourceColumn)
+        shortcutList.setShortcut(shortcut, atRow: targetRow, column: targetColumn)
+
+        for change in shortcutList.changes(from: context.shortcutList) {
+            let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
+            mapClient.sendPacket(packet)
+        }
+
+        context.shortcutList = shortcutList
+    }
+
+    func setShortcutRowShift(_ rowShift: Int) {
+        guard let mapClient else {
+            return
+        }
+
+        context.shortcutList.rowShift = rowShift
+
+        let packet = PacketFactory.CZ_SHORTCUTKEYBAR_ROTATE2(rowShift: rowShift)
+        mapClient.sendPacket(packet)
+    }
+
+    func useShortcut(_ shortcut: Shortcut) {
+        switch shortcut {
+        case .empty:
+            break
+        case .item(let itemID):
+            if let item = context.inventory.items.values.first(where: { $0.itemID == itemID }) {
+                useItem(at: item.index)
+            }
+        case .skill(let skillID, let level):
+            if let skill = context.skillList.skills[skillID] {
+                mapScene?.useSkillOnNearestMonster(skill, level: level)
+            }
+        }
     }
 
     // MARK: - NPC

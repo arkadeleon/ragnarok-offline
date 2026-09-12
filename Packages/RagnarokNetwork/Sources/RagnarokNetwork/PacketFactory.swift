@@ -256,6 +256,25 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_SHORTCUT_KEY_CHANGE2` | `clif_parse_Hotkey` |
+    public static func CZ_SHORTCUT_KEY_CHANGE2(change: ShortcutChange) -> PACKET_CZ_SHORTCUT_KEY_CHANGE2 {
+        var packet = PACKET_CZ_SHORTCUT_KEY_CHANGE2()
+        packet.packetType = HEADER_CZ_SHORTCUT_KEY_CHANGE2
+        packet.tab = 0
+        packet.index = UInt16(change.index)
+        packet.hotkey = hotkey_data(from: change.shortcut)
+        return packet
+    }
+
+    /// | `PACKET_CZ_SHORTCUTKEYBAR_ROTATE2` | `clif_parse_HotkeyRowShift` |
+    public static func CZ_SHORTCUTKEYBAR_ROTATE2(rowShift: Int) -> PACKET_CZ_SHORTCUTKEYBAR_ROTATE2 {
+        var packet = PACKET_CZ_SHORTCUTKEYBAR_ROTATE2()
+        packet.packetType = HEADER_CZ_SHORTCUTKEYBAR_ROTATE2
+        packet.tab = 0
+        packet.rowshift = UInt8(rowShift)
+        return packet
+    }
+
     /// | `PACKET_CZ_CONTACTNPC` | `clif_parse_NpcClicked` |
     public static func CZ_CONTACTNPC(npcID: UInt32) -> PACKET_CZ_CONTACTNPC {
         var packet = PACKET_CZ_CONTACTNPC()
