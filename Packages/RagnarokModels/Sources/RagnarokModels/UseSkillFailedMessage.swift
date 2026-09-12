@@ -22,7 +22,8 @@ public struct UseSkillFailedMessage: Sendable {
         case  8: 247    // A Blue Gemstone is needed
         case  9: 580    // Weight is over 50%
         case 13: 1398   // Holy Water is needed
-        case 83: 661    // Cannot be used on this map
+        case 83: 1954   // Chat rooms and vending cannot be used at this location
+        case 87: 2563   // This skill cannot be used on this map
         default: 285    // Skill failed
         }
 

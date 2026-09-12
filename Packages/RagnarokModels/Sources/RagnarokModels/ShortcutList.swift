@@ -8,6 +8,7 @@
 import RagnarokPackets
 
 private let columnCount = 9
+private let visibleColumnCount = 8
 private let rowCount = 4
 
 public struct ShortcutChange: Equatable, Sendable {
@@ -23,10 +24,10 @@ public struct ShortcutList: Equatable, Sendable {
     /// See `hotkey_rowshift`.
     public var rowShift: Int
 
-    /// The rows which hold at least one shortcut.
+    /// The rows which hold at least one visible shortcut.
     public var nonEmptyRows: [Int] {
         rows.indices.filter { row in
-            !rows[row].allSatisfy({ $0 == .empty })
+            !rows[row].prefix(visibleColumnCount).allSatisfy({ $0 == .empty })
         }
     }
 
