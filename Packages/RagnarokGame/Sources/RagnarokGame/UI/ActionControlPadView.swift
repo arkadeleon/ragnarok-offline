@@ -5,10 +5,7 @@
 //  Created by Leon Li on 2026/3/4.
 //
 
-import RagnarokConstants
-import RagnarokCore
 import RagnarokModels
-import RagnarokResources
 import SwiftUI
 
 private let ringInnerRadius: CGFloat = 40
@@ -16,40 +13,26 @@ private let ringOuterRadius: CGFloat = 88
 private let sectorSweepAngle: Angle = .degrees(360 / 9)
 private let sectorGap: CGFloat = 4
 
-private let shortcutsPerPage = 8
-private let shortcutPageCount = 2
+private let shortcutsPerRow = 8
 
 struct ActionControlPadView: View {
     var onAttack: () -> Void
     var onPickup: () -> Void
-    var onSkill: (SkillInfo) -> Void
+    var onShortcut: (Shortcut) -> Void
 
     @Environment(GameContext.self) private var gameContext
 
-    @State private var currentPage = 0
+    @State private var currentRow = 0
     @State private var dialAngle: Angle = .zero
-
-    /// The shortcuts on the current page.
-    private var shortcutSkills: [SkillInfo] {
-        let activeSkills = gameContext.skillList.activeSkills
-        let startIndex = currentPage * shortcutsPerPage
-        guard startIndex < activeSkills.count else {
-            return []
-        }
-        let endIndex = min(startIndex + shortcutsPerPage, activeSkills.count)
-        return Array(activeSkills[startIndex..<endIndex])
-    }
 
     var body: some View {
         ZStack {
             ZStack {
-                ForEach(0..<shortcutsPerPage, id: \.self) { index in
-                    let skill = (index < shortcutSkills.count) ? shortcutSkills[index] : nil
+                ForEach(0..<shortcutsPerRow, id: \.self) { column in
+                    let shortcut = gameContext.shortcutList.rows[row][column]
 
-                    SkillShortcutButton(centerAngle: .degrees(45 + 40 * Double(index + 1)), skill: skill) {
-                        if let skill {
-                            onSkill(skill)
-                        }
+                    ShortcutActionButton(centerAngle: .degrees(45 + 40 * Double(column + 1)), shortcut: shortcut) {
+                        onShortcut(shortcut)
                     }
                 }
             }
@@ -91,11 +74,26 @@ struct ActionControlPadView: View {
         .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
     }
 
+    private var row: Int {
+        let nonEmptyRows = gameContext.shortcutList.nonEmptyRows
+        if nonEmptyRows.contains(currentRow) {
+            return currentRow
+        }
+        return nonEmptyRows.first ?? currentRow
+    }
+
     private func turnDial() {
+        let nonEmptyRows = gameContext.shortcutList.nonEmptyRows
+        guard nonEmptyRows.count > 1 else {
+            return
+        }
+
+        let nextRow = nonEmptyRows.first(where: { $0 > row }) ?? nonEmptyRows[0]
+
         withAnimation(.easeIn(duration: 0.15)) {
             dialAngle = sectorSweepAngle
         } completion: {
-            currentPage = (currentPage + 1) % shortcutPageCount
+            currentRow = nextRow
 
             withAnimation(.easeOut(duration: 0.35)) {
                 dialAngle = .zero
@@ -126,18 +124,14 @@ private struct RoundActionButton<Content>: View where Content: View {
     }
 }
 
-private struct SkillShortcutButton: View {
+private struct ShortcutActionButton: View {
     var centerAngle: Angle
-    var skill: SkillInfo?
+    var shortcut: Shortcut
     var action: () -> Void
 
     @Environment(GameContext.self) private var gameContext
 
-    @State private var iconImage: Resources.Image?
-
     var body: some View {
-        let iconImageKey = iconImage.map({ ObjectIdentifier($0) })
-
         RingSectorActionButton(
             centerAngle: centerAngle,
             innerRadius: ringInnerRadius,
@@ -146,26 +140,21 @@ private struct SkillShortcutButton: View {
             action: action
         ) {
             ZStack {
-                if let iconImage {
-                    Image(decorative: iconImage.cgImage, scale: 1)
-                        .resizable()
-                        .interpolation(.none)
-                        .transition(.opacity)
-                        .id(iconImageKey)
+                ShortcutIconView(shortcut: shortcut)
+                    .opacity(gameContext.isShortcutAvailable(shortcut) ? 1 : 0.4)
+                    .id(shortcut)
+                    .transition(.opacity)
+
+                if let label = gameContext.shortcutLabel(shortcut) {
+                    Text(verbatim: label)
+                        .font(.game(size: 11))
+                        .foregroundStyle(Color.white)
+                        .shadow(color: .black, radius: 1)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                 }
             }
-            .animation(.easeInOut(duration: 0.2), value: iconImageKey)
         }
-        .animation(.easeInOut(duration: 0.2), value: skill == nil)
-        .task(id: skill?.skillID) {
-            guard let skill, let skillID = SkillID(rawValue: skill.skillID) else {
-                iconImage = nil
-                return
-            }
-
-            let path = ResourcePath.generateSkillIconImagePath(skillAegisName: skillID.stringValue)
-            iconImage = try? await gameContext.resourceManager.image(at: path, removesMagentaPixels: true)
-        }
+        .animation(.easeInOut(duration: 0.2), value: shortcut)
     }
 }
 
@@ -213,19 +202,25 @@ private struct RingSectorActionButton<Content>: View where Content: View {
     let gameContext = {
         let gameContext = GameContext(resourceManager: .testing)
 
-        for skillID in [5, 7, 10, 16, 17, 18, 19, 20, 21, 25, 26, 28] {
-            var skill = SkillInfo()
-            skill.skillID = skillID
-            skill.flag = SkillInfoFlag.attack.rawValue
-            skill.level = 1
-            skill.attackRange = 1
-            gameContext.skillList.skills[skillID] = skill
+        var redPotion = InventoryItem()
+        redPotion.index = 0
+        redPotion.itemID = 501
+        redPotion.type = .healing
+        redPotion.amount = 12
+        gameContext.inventory.append(item: redPotion)
+
+        var shortcutList = ShortcutList()
+        for (column, skillID) in [5, 7, 10, 16, 17, 18, 19].enumerated() {
+            shortcutList.setShortcut(.skill(skillID: skillID, level: 1), atRow: 0, column: column)
         }
+        shortcutList.setShortcut(.item(itemID: 501), atRow: 0, column: 7)
+        shortcutList.setShortcut(.skill(skillID: 28, level: 10), atRow: 2, column: 0)
+        gameContext.shortcutList = shortcutList
 
         return gameContext
     }()
 
-    ActionControlPadView(onAttack: {}, onPickup: {}, onSkill: { _ in })
+    ActionControlPadView(onAttack: {}, onPickup: {}, onShortcut: { _ in })
         .padding()
         .background(Color.black)
         .environment(gameContext)

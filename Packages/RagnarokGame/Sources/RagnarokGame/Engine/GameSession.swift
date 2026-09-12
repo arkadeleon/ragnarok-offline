@@ -736,7 +736,7 @@ final public class GameSession {
             skill.level = Int(packet.skill_lv)
             skill.spCost = Int(packet.skill_sp)
             skill.attackRange = Int(packet.skill_range)
-            mapScene?.useSkillOnNearestMonster(skill)
+            mapScene?.useSkillOnNearestMonster(skill, level: skill.level)
         case let packet as PACKET_ZC_DISPEL:
             mapScene?.onMapObjectSkillCastCancelled(sourceObjectID: packet.gid)
         case let packet as PACKET_ZC_USE_SKILL:
@@ -1257,6 +1257,21 @@ final public class GameSession {
 
         let packet = PacketFactory.CZ_SHORTCUTKEYBAR_ROTATE2(rowShift: rowShift)
         mapClient.sendPacket(packet)
+    }
+
+    func useShortcut(_ shortcut: Shortcut) {
+        switch shortcut {
+        case .empty:
+            break
+        case .item(let itemID):
+            if let item = context.inventory.items.values.first(where: { $0.itemID == itemID }) {
+                useItem(at: item.index)
+            }
+        case .skill(let skillID, let level):
+            if let skill = context.skillList.skills[skillID] {
+                mapScene?.useSkillOnNearestMonster(skill, level: level)
+            }
+        }
     }
 
     // MARK: - NPC

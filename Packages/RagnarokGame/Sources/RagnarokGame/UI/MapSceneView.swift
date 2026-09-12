@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
+import Combine
 import SwiftUI
 import ThumbstickView
 
@@ -65,8 +66,8 @@ struct MapSceneView: View {
                 onPickup: {
                     runtime.scene.pickUpNearestItem()
                 },
-                onSkill: { skill in
-                    runtime.scene.useSkillOnNearestMonster(skill)
+                onShortcut: { shortcut in
+                    gameSession.useShortcut(shortcut)
                 }
             )
             .padding(.trailing, 16)

@@ -67,9 +67,9 @@ private struct ShortcutSlotView: View {
 
             ShortcutIconView(shortcut: shortcut)
                 .frame(width: iconSize, height: iconSize)
-                .opacity(isAvailable ? 1 : 0.4)
+                .opacity(gameContext.isShortcutAvailable(shortcut) ? 1 : 0.4)
 
-            if let label {
+            if let label = gameContext.shortcutLabel(shortcut) {
                 Text(verbatim: label)
                     .font(.game(size: 11))
                     .foregroundStyle(Color.gameLabel)
@@ -85,31 +85,6 @@ private struct ShortcutSlotView: View {
 
     private var isTargeted: Bool {
         dragState.targetSlot == slot
-    }
-
-    /// An item which is no longer in the inventory is dimmed.
-    private var isAvailable: Bool {
-        switch shortcut {
-        case .empty, .skill:
-            true
-        case .item(let itemID):
-            gameContext.inventory.items.values.contains(where: { $0.itemID == itemID })
-        }
-    }
-
-    private var label: String? {
-        switch shortcut {
-        case .empty:
-            return nil
-        case .item(let itemID):
-            if let inventoryItem = gameContext.inventory.items.values.first(where: { $0.itemID == itemID }) {
-                return "\(inventoryItem.amount)"
-            } else {
-                return nil
-            }
-        case .skill(_, let level):
-            return "\(level)"
-        }
     }
 }
 

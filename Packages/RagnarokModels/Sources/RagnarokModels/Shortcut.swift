@@ -7,7 +7,7 @@
 
 import RagnarokPackets
 
-public enum Shortcut: Equatable, Sendable {
+public enum Shortcut: Hashable, Sendable {
     case empty
     case item(itemID: Int)
     case skill(skillID: Int, level: Int)
