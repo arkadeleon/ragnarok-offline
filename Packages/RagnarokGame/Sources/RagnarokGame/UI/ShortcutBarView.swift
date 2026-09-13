@@ -20,29 +20,31 @@ struct ShortcutBarView: View {
     @Environment(\.displayScale) private var displayScale
 
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<columnCount, id: \.self) { column in
-                let slot = ShortcutSlot(row: row, column: column)
-                ShortcutSlotView(slot: slot, shortcut: gameContext.shortcutList.rows[row][column])
-            }
-        }
-        .frame(width: 320)
-        .overlay(alignment: .leading) {
+        HStack(spacing: 0) {
             Text(verbatim: "\(row + 1)")
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
-                .frame(width: sideWidth)
-        }
-        .overlay(alignment: .trailing) {
+                .frame(width: 12)
+
+            HStack(spacing: 4) {
+                ForEach(0..<columnCount, id: \.self) { column in
+                    let slot = ShortcutSlot(row: row, column: column)
+                    ShortcutSlotView(slot: slot, shortcut: gameContext.shortcutList.rows[row][column])
+                }
+            }
+
             Button {
                 gameSession.setShortcutRowShift((row + 1) % gameContext.shortcutList.rows.count)
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .font(.game(size: 11, weight: .bold))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: slotSize)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .frame(width: sideWidth, height: slotSize)
         }
+        .frame(width: 320)
         .padding(.vertical, 4)
         .background {
             GameStripeView()
