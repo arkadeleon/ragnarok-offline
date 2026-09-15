@@ -22,6 +22,12 @@ struct GameButtonStyle: ButtonStyle {
     }
 }
 
+extension ButtonStyle where Self == GameButtonStyle {
+    static var game: GameButtonStyle {
+        GameButtonStyle()
+    }
+}
+
 private struct GameButtonBackground: View {
     var isPressed: Bool
 
@@ -116,12 +122,6 @@ private struct GameButtonBackground: View {
             startPoint: .top,
             endPoint: .bottom
         )
-    }
-}
-
-extension ButtonStyle where Self == GameButtonStyle {
-    static var game: GameButtonStyle {
-        GameButtonStyle()
     }
 }
 
