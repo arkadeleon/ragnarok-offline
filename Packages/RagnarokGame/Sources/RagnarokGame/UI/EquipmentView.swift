@@ -69,7 +69,7 @@ private struct EquipmentCharacterView: View {
         ZStack {
             GameStripeView()
 
-            EquipmentCharacterShadow()
+            GameCharacterShadowView()
                 .offset(y: 50)
 
             if let characterAnimation, let firstFrame = characterAnimation.firstFrame {
@@ -77,15 +77,6 @@ private struct EquipmentCharacterView: View {
                     .offset(y: 10)
             }
         }
-    }
-}
-
-private struct EquipmentCharacterShadow: View {
-    var body: some View {
-        Ellipse()
-            .fill(Color(#colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.5725490196, alpha: 1)))
-            .blur(radius: 4)
-            .frame(width: 38, height: 24)
     }
 }
 
@@ -163,7 +154,7 @@ private struct EquipmentSlotImage: View {
 
     var body: some View {
         ZStack {
-            EquipmentSlotShadow()
+            GameItemShadowView()
                 .offset(y: 5)
 
             if let iconImage {
@@ -178,15 +169,6 @@ private struct EquipmentSlotImage: View {
                 iconImage = nil
             }
         }
-    }
-}
-
-private struct EquipmentSlotShadow: View {
-    var body: some View {
-        Ellipse()
-            .fill(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
-            .blur(radius: 1)
-            .frame(width: 18, height: 9)
     }
 }
 

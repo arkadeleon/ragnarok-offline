@@ -215,10 +215,7 @@ private struct CharacterSlotPanel: View {
                                             .strokeBorder(Color.gameBoxBorder, lineWidth: 2)
                                     }
 
-                                    Ellipse()
-                                        .fill(Color(#colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.5725490196, alpha: 1)))
-                                        .blur(radius: 4)
-                                        .frame(width: 38, height: 24)
+                                    GameCharacterShadowView()
                                         .offset(y: 48)
 
                                     if let characterAnimation = characterAnimations[slot],

@@ -98,10 +98,7 @@ struct InventoryView: View {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], spacing: 4) {
                 ForEach(0..<slotCount, id: \.self) { slot in
                     ZStack(alignment: .center) {
-                        Ellipse()
-                            .fill(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
-                            .blur(radius: 2)
-                            .frame(width: 24, height: 12)
+                        GameItemShadowView()
                             .offset(y: 5)
 
                         if slot < items.count {

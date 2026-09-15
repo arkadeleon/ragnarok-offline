@@ -117,10 +117,7 @@ private struct CharacterPreviewPanel: View {
     var body: some View {
         VStack(spacing: 11) {
             ZStack {
-                Ellipse()
-                    .fill(Color(#colorLiteral(red: 0.5725490196, green: 0.5725490196, blue: 0.5725490196, alpha: 1)))
-                    .blur(radius: 4)
-                    .frame(width: 38, height: 24)
+                GameCharacterShadowView()
                     .offset(y: 42.5)
 
                 Button {
