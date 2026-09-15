@@ -36,7 +36,7 @@ struct LoginView: View {
                         .background(Color.gameSecondaryBoxBackground)
                         .overlay {
                             Rectangle()
-                                .strokeBorder(Color.gameBoxBorder, lineWidth: 1)
+                                .strokeBorder(Color.gameBoxBorder)
                         }
 
                     Spacer()
@@ -61,7 +61,7 @@ struct LoginView: View {
                         .background(Color.gameSecondaryBoxBackground)
                         .overlay {
                             Rectangle()
-                                .strokeBorder(Color.gameBoxBorder, lineWidth: 1)
+                                .strokeBorder(Color.gameBoxBorder)
                         }
 
                     Spacer()

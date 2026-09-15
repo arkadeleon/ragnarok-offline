@@ -20,7 +20,7 @@ struct GameProgressBar: View {
                     .frame(height: 15)
                     .overlay(
                         RoundedRectangle(cornerRadius: 2)
-                            .strokeBorder(Color(#colorLiteral(red: 0, green: 1, blue: 1, alpha: 1)), lineWidth: 1)
+                            .strokeBorder(Color(#colorLiteral(red: 0, green: 1, blue: 1, alpha: 1)))
                     )
 
                 RoundedRectangle(cornerRadius: 1)
@@ -42,4 +42,5 @@ struct GameProgressBar: View {
 
 #Preview {
     GameProgressBar(progress: Progress())
+        .padding()
 }

@@ -113,7 +113,7 @@ private struct PrimaryStatRow: View {
             .background(Color.gameSecondaryBoxBackground)
             .overlay(
                 Rectangle()
-                    .strokeBorder(Color.gameBoxBorder, lineWidth: 1)
+                    .strokeBorder(Color.gameBoxBorder)
             )
 
             Text("\(value3)")
@@ -122,7 +122,7 @@ private struct PrimaryStatRow: View {
                 .frame(width: 20, height: 24)
                 .overlay(
                     Rectangle()
-                        .strokeBorder(Color.gameBoxBorder, lineWidth: 1)
+                        .strokeBorder(Color.gameBoxBorder)
                 )
         }
         .frame(height: 24)

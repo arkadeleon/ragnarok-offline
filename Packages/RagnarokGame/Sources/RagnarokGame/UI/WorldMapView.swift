@@ -468,7 +468,7 @@ private struct MapStackThumbnails: View {
                             .clipShape(RoundedRectangle(cornerRadius: 2))
                             .overlay {
                                 RoundedRectangle(cornerRadius: 2)
-                                    .strokeBorder(map == selectedMap ? Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)), lineWidth: 1)
+                                    .strokeBorder(map == selectedMap ? Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
                             }
                     }
                     .buttonStyle(.plain)

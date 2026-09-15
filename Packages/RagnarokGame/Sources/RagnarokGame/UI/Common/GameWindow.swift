@@ -12,8 +12,6 @@ struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, Title
     var titleBar: TitleBar
     var bottomBar: BottomBar
 
-    @Environment(\.displayScale) private var displayScale
-
     var body: some View {
         VStack(spacing: 0) {
             titleBar
@@ -22,10 +20,10 @@ struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, Title
                 .frame(maxWidth: .infinity)
                 .background(Color.white)
                 .overlay(alignment: .leading) {
-                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1 / displayScale)
+                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
                 }
                 .overlay(alignment: .trailing) {
-                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1 / displayScale)
+                    Rectangle().fill(Color.gameBoxBorder).frame(width: 1)
                 }
 
             bottomBar

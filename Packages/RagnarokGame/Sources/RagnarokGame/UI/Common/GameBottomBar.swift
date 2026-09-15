@@ -10,8 +10,6 @@ import SwiftUI
 struct GameBottomBar<Actions>: View where Actions: View {
     var actions: Actions
 
-    @Environment(\.displayScale) private var displayScale
-
     var body: some View {
         HStack(spacing: 3) {
             actions
@@ -25,7 +23,7 @@ struct GameBottomBar<Actions>: View where Actions: View {
         .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
         .overlay {
             UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
-                .strokeBorder(Color.gameBoxBorder, lineWidth: 1 / displayScale)
+                .strokeBorder(Color.gameBoxBorder)
         }
     }
 

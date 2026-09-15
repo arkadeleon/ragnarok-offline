@@ -198,7 +198,7 @@ private struct CharacterPreviewPanel: View {
                     .frame(width: 101, height: 18)
                     .background(Color.gameSecondaryBoxBackground)
                     .overlay {
-                        Rectangle().strokeBorder(Color.gameBoxBorder, lineWidth: 1)
+                        Rectangle().strokeBorder(Color.gameBoxBorder)
                     }
             }
         }

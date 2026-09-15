@@ -176,12 +176,6 @@ private struct SkillUpgradeButton: View {
     var body: some View {
         Button(action: action) {
             ZStack {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(Color(#colorLiteral(red: 0.9686274510, green: 0.9686274510, blue: 0.9686274510, alpha: 1)))
-
-                RoundedRectangle(cornerRadius: 4)
-                    .strokeBorder(Color(#colorLiteral(red: 0.6941176471, green: 0.6941176471, blue: 0.6941176471, alpha: 1)), lineWidth: 1)
-
                 SkillUpgradeTrendShape()
                     .stroke(Color(#colorLiteral(red: 0.5843137255, green: 0.7019607843, blue: 0.9607843137, alpha: 1)), style: StrokeStyle(lineWidth: 2.8))
 
@@ -193,9 +187,9 @@ private struct SkillUpgradeButton: View {
                     .foregroundStyle(Color.gameLabel)
                     .offset(y: 6.5)
             }
-            .frame(width: 24, height: 24)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.game)
+        .frame(width: 24, height: 24)
     }
 }
 

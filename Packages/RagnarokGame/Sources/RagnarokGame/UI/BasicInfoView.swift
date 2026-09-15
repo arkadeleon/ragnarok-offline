@@ -119,7 +119,7 @@ private struct BasicInfoHPSPBar: View {
                 .clipShape(RoundedRectangle(cornerRadius: 4))
                 .overlay {
                     RoundedRectangle(cornerRadius: 4)
-                        .strokeBorder(Color(#colorLiteral(red: 0.3686274510, green: 0.3725490196, blue: 0.3803921569, alpha: 1)), lineWidth: 1)
+                        .strokeBorder(Color(#colorLiteral(red: 0.3686274510, green: 0.3725490196, blue: 0.3803921569, alpha: 1)))
                 }
                 .overlay {
                     Text(verbatim: "\(current)/\(max)")
@@ -177,7 +177,7 @@ private struct BasicInfoExpBar: View {
                 }
                 .overlay {
                     Rectangle()
-                        .strokeBorder(Color(#colorLiteral(red: 0.6862745098, green: 0.6862745098, blue: 0.6862745098, alpha: 1)), lineWidth: 1)
+                        .strokeBorder(Color(#colorLiteral(red: 0.6862745098, green: 0.6862745098, blue: 0.6862745098, alpha: 1)))
                 }
             }
             .frame(width: 110, height: 4)

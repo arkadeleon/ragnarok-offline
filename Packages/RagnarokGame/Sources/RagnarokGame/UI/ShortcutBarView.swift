@@ -17,7 +17,6 @@ private let iconSize: CGFloat = 24
 struct ShortcutBarView: View {
     @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
-    @Environment(\.displayScale) private var displayScale
 
     var body: some View {
         HStack(spacing: 0) {
@@ -52,7 +51,7 @@ struct ShortcutBarView: View {
         .clipShape(RoundedRectangle(cornerRadius: 3))
         .overlay {
             RoundedRectangle(cornerRadius: 3)
-                .strokeBorder(Color.gameBoxBorder, lineWidth: 1 / displayScale)
+                .strokeBorder(Color.gameBoxBorder)
         }
     }
 
