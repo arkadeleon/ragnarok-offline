@@ -177,16 +177,25 @@ private struct SkillUpgradeButton: View {
         Button(action: action) {
             ZStack {
                 SkillUpgradeTrendShape()
-                    .stroke(Color(#colorLiteral(red: 0.5843137255, green: 0.7019607843, blue: 0.9607843137, alpha: 1)), style: StrokeStyle(lineWidth: 2.8))
-
-                SkillUpgradeTrendShape()
-                    .stroke(Color(#colorLiteral(red: 0.3215686275, green: 0.4745098039, blue: 0.8392156863, alpha: 1)), style: StrokeStyle(lineWidth: 1.4))
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color(#colorLiteral(red: 0.4392156863, green: 0.5490196078, blue: 0.8156862745, alpha: 1)),
+                                Color(#colorLiteral(red: 0.3764705882, green: 0.5019607843, blue: 0.7843137255, alpha: 1)),
+                                Color(#colorLiteral(red: 0.6588235294, green: 0.7215686275, blue: 0.8784313725, alpha: 1)),
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
 
                 Text(verbatim: "Lv UP")
                     .font(.game(size: 6.5, weight: .black))
+                    .tracking(-0.15)
                     .foregroundStyle(Color.gameLabel)
-                    .offset(y: 6.5)
+                    .offset(y: 5.5)
             }
+            .frame(width: 24, height: 24)
         }
         .buttonStyle(.game)
         .frame(width: 24, height: 24)
@@ -196,19 +205,21 @@ private struct SkillUpgradeButton: View {
 private struct SkillUpgradeTrendShape: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-
-        path.move(to: CGPoint(x: 5, y: 12.5))
-        path.addLine(to: CGPoint(x: 9, y: 8.8))
-        path.addLine(to: CGPoint(x: 12, y: 6))
-        path.addLine(to: CGPoint(x: 14.8, y: 8.9))
-        path.addLine(to: CGPoint(x: 18.2, y: 5.5))
-
-        path.move(to: CGPoint(x: 18.2, y: 5.5))
-        path.addLine(to: CGPoint(x: 16.3, y: 5.5))
-        path.addLine(to: CGPoint(x: 18.2, y: 7.4))
+        path.move(to: CGPoint(x: 3, y: 13))
+        path.addLine(to: CGPoint(x: 10.5, y: 5.5))
+        path.addQuadCurve(to: CGPoint(x: 11.5, y: 5.5), control: CGPoint(x: 11, y: 5))
+        path.addLine(to: CGPoint(x: 15.5, y: 9.5))
+        path.addLine(to: CGPoint(x: 18.875, y: 6.125))
+        path.addLine(to: CGPoint(x: 17, y: 4.25))
+        path.addLine(to: CGPoint(x: 22, y: 4.25))
+        path.addLine(to: CGPoint(x: 22, y: 9.25))
+        path.addLine(to: CGPoint(x: 20.125, y: 7.375))
+        path.addLine(to: CGPoint(x: 16.2, y: 11.3))
+        path.addQuadCurve(to: CGPoint(x: 14.8, y: 11.3), control: CGPoint(x: 15.5, y: 12))
+        path.addLine(to: CGPoint(x: 11, y: 7.5))
+        path.addLine(to: CGPoint(x: 8.5, y: 13))
         path.closeSubpath()
-
-        return path
+        return path.applying(CGAffineTransform(scaleX: rect.width / 24, y: rect.height / 24))
     }
 }
 
