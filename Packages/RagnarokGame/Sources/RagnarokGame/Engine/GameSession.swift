@@ -83,6 +83,8 @@ final public class GameSession {
 
     var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
+    var dealSelectionNPCID: UInt32?
+    var npcShop: NPCShop?
     var warpList: WarpList?
 
     @ObservationIgnored var loginClient: NetworkClient?
@@ -166,6 +168,10 @@ final public class GameSession {
         case .map:
             mapRuntime?.unload()
             stopMapClient()
+            dialog = nil
+            dealSelectionNPCID = nil
+            npcShop = nil
+            warpList = nil
             if let charServer {
                 stage = .login(.connectingCharServer(charServer))
                 startCharClient(charServer)
@@ -918,6 +924,18 @@ final public class GameSession {
             break
         case _ as PACKET_ZC_COMPASS:
             break
+        case let packet as PACKET_ZC_SELECT_DEALTYPE:
+            dealSelectionNPCID = packet.npcId
+        case let packet as PACKET_ZC_PC_PURCHASE_ITEMLIST:
+            npcShop = NPCShop(from: packet)
+        case let packet as PACKET_ZC_PC_SELL_ITEMLIST:
+            npcShop = NPCShop(from: packet)
+        case let packet as PACKET_ZC_PC_PURCHASE_RESULT:
+            npcShop = nil
+            context.messageCenter.addMessage(for: packet)
+        case let packet as PACKET_ZC_PC_SELL_RESULT:
+            npcShop = nil
+            context.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_NOTIFY_CHAT:
             let message = ChatMessage(from: packet)
             context.messageCenter.add(message)
@@ -1276,7 +1294,7 @@ final public class GameSession {
         }
     }
 
-    // MARK: - NPC
+    // MARK: - NPC Dialog
 
     func talkToNPC(npcID: GameObjectID) {
         guard let mapClient else {
@@ -1352,6 +1370,52 @@ final public class GameSession {
         mapClient.sendPacket(packet)
 
         dialog?.clearInput()
+    }
+
+    // MARK: - NPC Shop
+
+    func selectDealType(_ dealType: NPCShopDealType) {
+        guard let mapClient, let npcID = dealSelectionNPCID else {
+            return
+        }
+
+        dealSelectionNPCID = nil
+
+        let packet = PacketFactory.CZ_ACK_SELECT_DEALTYPE(npcID: npcID, dealType: dealType)
+        mapClient.sendPacket(packet)
+    }
+
+    func cancelDealSelection() {
+        dealSelectionNPCID = nil
+    }
+
+    func purchaseItems(_ purchases: [NPCShopPurchase]) {
+        guard let mapClient else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_PC_PURCHASE_ITEMLIST(purchases: purchases)
+        mapClient.sendPacket(packet)
+    }
+
+    func sellItems(_ sales: [NPCShopSale]) {
+        guard let mapClient else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_PC_SELL_ITEMLIST(sales: sales)
+        mapClient.sendPacket(packet)
+    }
+
+    func closeNPCShop() {
+        guard let mapClient else {
+            return
+        }
+
+        npcShop = nil
+
+        let packet = PacketFactory.CZ_NPC_TRADE_QUIT()
+        mapClient.sendPacket(packet)
     }
 }
 
