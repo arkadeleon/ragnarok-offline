@@ -38,6 +38,7 @@
 		35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */ = {isa = PBXBuildFile; productRef = 35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */; };
 		35B2C4712EAF5D2900A4FD11 /* RagnarokDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 35B2C4702EAF5D2900A4FD11 /* RagnarokDatabase */; };
 		35BB2F9A2EFE86FC0047040D /* RagnarokLocalization in Frameworks */ = {isa = PBXBuildFile; productRef = 35BB2F992EFE86FC0047040D /* RagnarokLocalization */; };
+		35C00B80305BEDC400E58975 /* DataCompression in Frameworks */ = {isa = PBXBuildFile; productRef = 35C00B7F305BEDC400E58975 /* DataCompression */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3558A3B52DFC22EA0038DFC3 /* rAthenaLogin in Frameworks */,
+				35C00B80305BEDC400E58975 /* DataCompression in Frameworks */,
 				354FCEA42F14B9FA00995F35 /* JSONViewer in Frameworks */,
 				356B59FB302F010200D3FE6A /* RagnarokReality in Frameworks */,
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
@@ -301,6 +303,7 @@
 				354FCEA32F14B9FA00995F35 /* JSONViewer */,
 				356B59FA302F010200D3FE6A /* RagnarokReality */,
 				357396A2305BC94400B317C9 /* RagnarokGRF */,
+				35C00B7F305BEDC400E58975 /* DataCompression */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -933,6 +936,10 @@
 		35BB2F992EFE86FC0047040D /* RagnarokLocalization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RagnarokLocalization;
+		};
+		35C00B7F305BEDC400E58975 /* DataCompression */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DataCompression;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

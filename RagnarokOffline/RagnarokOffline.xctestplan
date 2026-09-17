@@ -158,6 +158,13 @@
         "identifier" : "RagnarokGRFTests",
         "name" : "RagnarokGRFTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/DataCompression",
+        "identifier" : "DataCompressionTests",
+        "name" : "DataCompressionTests"
+      }
     }
   ],
   "version" : 1

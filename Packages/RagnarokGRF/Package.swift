@@ -17,14 +17,14 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../BinaryIO"),
-        .package(url: "https://github.com/mihai8804858/swift-gzip", branch: "main"),
+        .package(path: "../DataCompression"),
     ],
     targets: [
         .target(
             name: "RagnarokGRF",
             dependencies: [
                 "BinaryIO",
-                .product(name: "SwiftGzip", package: "swift-gzip"),
+                "DataCompression",
             ]
         ),
         .testTarget(

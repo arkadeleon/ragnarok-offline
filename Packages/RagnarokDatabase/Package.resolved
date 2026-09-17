@@ -1,15 +1,6 @@
 {
-  "originHash" : "fcbb8c077aec7c1fdec19ea2e6f8f94c3915ef1f6b442cc6e92b877e32d85a9e",
+  "originHash" : "16342dbd8d8db5846a9e74bf7a6706496edcc16fc5695e61fb7015fdc0923f6e",
   "pins" : [
-    {
-      "identity" : "swift-gzip",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mihai8804858/swift-gzip",
-      "state" : {
-        "branch" : "main",
-        "revision" : "97c502f10283dbd80eda534d164b715c9c973d72"
-      }
-    },
     {
       "identity" : "swift-rapidyaml",
       "kind" : "remoteSourceControl",
