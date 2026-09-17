@@ -156,10 +156,7 @@ private struct NPCShopItemRow: View {
     var body: some View {
         HStack(spacing: 5) {
             ZStack(alignment: .center) {
-                Ellipse()
-                    .fill(Color(#colorLiteral(red: 0.7960784314, green: 0.831372549, blue: 0.8980392157, alpha: 1)))
-                    .blur(radius: 2)
-                    .frame(width: 24, height: 12)
+                GameItemShadowView()
                     .offset(y: 5)
 
                 if let iconImage {
@@ -177,11 +174,12 @@ private struct NPCShopItemRow: View {
             .frame(width: 32, height: 32)
 
             Text(gameContext.itemInfoTable.localizedIdentifiedItemName(forItemID: entry.itemID) ?? "\(entry.itemID)")
-                .lineLimit(1)
+                .lineLimit(2)
 
             Spacer(minLength: 5)
 
             Text(verbatim: "\(entry.unitPrice) Z")
+                .lineLimit(1)
 
             GameStepper(value: $amount, in: 0...(entry.availableAmount ?? Int.max))
                 .padding(.horizontal, 5)
