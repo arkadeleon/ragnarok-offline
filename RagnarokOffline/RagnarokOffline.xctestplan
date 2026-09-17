@@ -144,6 +144,20 @@
         "identifier" : "RagnarokScriptTests",
         "name" : "RagnarokScriptTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokEffects",
+        "identifier" : "RagnarokEffectsTests",
+        "name" : "RagnarokEffectsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/RagnarokGRF",
+        "identifier" : "RagnarokGRFTests",
+        "name" : "RagnarokGRFTests"
+      }
     }
   ],
   "version" : 1

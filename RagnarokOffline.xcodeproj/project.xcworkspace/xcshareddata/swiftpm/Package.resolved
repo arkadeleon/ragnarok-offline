@@ -1,15 +1,6 @@
 {
-  "originHash" : "433aac8a5fc8d72f664e36c1a6b2f7d16200e1238120ff872d3e00d1a8a17c83",
+  "originHash" : "00213a44287277cd34e4d29db717cde5ce88d9e7f6f96dddff29f45f587fa9d2",
   "pins" : [
-    {
-      "identity" : "ragnarok-grf",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/arkadeleon/ragnarok-grf.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "a150461686db1c711e61857827983004bae4f21c"
-      }
-    },
     {
       "identity" : "ragnarok-lua",
       "kind" : "remoteSourceControl",
