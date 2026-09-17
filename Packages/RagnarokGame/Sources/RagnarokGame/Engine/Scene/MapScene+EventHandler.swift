@@ -20,6 +20,8 @@ extension MapScene {
 
     public func onPlayerStatusChanged(property: StatusProperty, value: Int) {
         switch property {
+        case .speed:
+            player.speed = value
         case .hp:
             player.hp = value
         case .maxhp:
@@ -154,6 +156,7 @@ extension MapScene {
                 headDirection: .lookForward
             )
         } else {
+            objects[object.objectID]?.speed = object.speed
             objects[object.objectID]?.gridPosition = endPosition
         }
 
