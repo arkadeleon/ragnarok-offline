@@ -220,7 +220,7 @@ let registeredPackets: [Int16 : any DecodablePacket.Type] = [
     HEADER_ZC_PC_PURCHASE_RESULT: PACKET_ZC_PC_PURCHASE_RESULT.self,
 
     // | 0xcb | `clif_npc_sell_result` |
-//  HEADER_ZC_PC_SELL_RESULT: PACKET_ZC_PC_SELL_RESULT.self,
+    HEADER_ZC_PC_SELL_RESULT: PACKET_ZC_PC_SELL_RESULT.self,
 
     // | 0xcd | `clif_GM_kickack` |
 //  HEADER_ZC_ACK_DISCONNECT_CHARACTER: PACKET_ZC_ACK_DISCONNECT_CHARACTER.self,

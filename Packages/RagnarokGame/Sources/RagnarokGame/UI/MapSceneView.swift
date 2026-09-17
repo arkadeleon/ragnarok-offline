@@ -156,6 +156,12 @@ struct MapSceneView: View {
             if let warpList = gameSession.warpList {
                 WarpListView(warpList: warpList)
             }
+            if let npcShop = gameSession.npcShop {
+                NPCShopView(shop: npcShop)
+            }
+            if gameSession.dealSelectionNPCID != nil {
+                NPCShopDealTypeView()
+            }
         }
         .onChange(of: runtime.scene.state.isPlayerDead) { _, newValue in
             if newValue {

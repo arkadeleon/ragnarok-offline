@@ -328,6 +328,50 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_ACK_SELECT_DEALTYPE` | `clif_parse_NpcBuySellSelected` |
+    public static func CZ_ACK_SELECT_DEALTYPE(npcID: UInt32, dealType: NPCShopDealType) -> PACKET_CZ_ACK_SELECT_DEALTYPE {
+        var packet = PACKET_CZ_ACK_SELECT_DEALTYPE()
+        packet.packetType = HEADER_CZ_ACK_SELECT_DEALTYPE
+        packet.GID = npcID
+        packet.type = dealType.rawValue
+        return packet
+    }
+
+    /// | `PACKET_CZ_PC_PURCHASE_ITEMLIST` | `clif_parse_NpcBuyListSend` |
+    public static func CZ_PC_PURCHASE_ITEMLIST(purchases: [NPCShopPurchase]) -> PACKET_CZ_PC_PURCHASE_ITEMLIST {
+        var packet = PACKET_CZ_PC_PURCHASE_ITEMLIST()
+        packet.packetType = 0xc8
+        packet.packetLength = Int16(2 + 2 + purchases.count * PACKET_CZ_PC_PURCHASE_ITEMLIST_sub.size)
+        packet.items = purchases.map { purchase in
+            var item = PACKET_CZ_PC_PURCHASE_ITEMLIST_sub()
+            item.amount = UInt16(purchase.amount)
+            item.itemId = UInt32(purchase.itemID)
+            return item
+        }
+        return packet
+    }
+
+    /// | `PACKET_CZ_PC_SELL_ITEMLIST` | `clif_parse_NpcSellListSend` |
+    public static func CZ_PC_SELL_ITEMLIST(sales: [NPCShopSale]) -> PACKET_CZ_PC_SELL_ITEMLIST {
+        var packet = PACKET_CZ_PC_SELL_ITEMLIST()
+        packet.packetType = HEADER_CZ_PC_SELL_ITEMLIST
+        packet.packetLength = Int16(2 + 2 + sales.count * PACKET_CZ_PC_SELL_ITEMLIST_sub.size)
+        packet.sellList = sales.map { sale in
+            var item = PACKET_CZ_PC_SELL_ITEMLIST_sub()
+            item.index = UInt16(sale.index)
+            item.amount = UInt16(sale.amount)
+            return item
+        }
+        return packet
+    }
+
+    /// | `PACKET_CZ_NPC_TRADE_QUIT` | `clif_parse_NPCShopClosed` |
+    public static func CZ_NPC_TRADE_QUIT() -> PACKET_CZ_NPC_TRADE_QUIT {
+        var packet = PACKET_CZ_NPC_TRADE_QUIT()
+        packet.packetType = HEADER_CZ_NPC_TRADE_QUIT
+        return packet
+    }
+
     /// | `PACKET_CZ_PING_LIVE` | `clif_parse_dull` |
     public static func CZ_PING_LIVE() -> PACKET_CZ_PING_LIVE {
         var packet = PACKET_CZ_PING_LIVE()

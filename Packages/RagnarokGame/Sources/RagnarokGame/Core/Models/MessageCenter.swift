@@ -175,4 +175,34 @@ final class MessageCenter {
             }
         }
     }
+
+    // MARK: - NPC Shop
+
+    func addMessage(for packet: PACKET_ZC_PC_PURCHASE_RESULT) {
+        let messageID: Int = switch packet.result {
+        case 0: 54
+        case 1: 55
+        case 2: 56
+        case 4: 230
+        case 5: 281
+        case 7: 1797
+        default: 57
+        }
+        let messageString = messageStringTable.localizedMessageString(forID: messageID)
+        let message = MessageCenter.Message(content: messageString, type: packet.result == 0 ? .system : .error, category: .item)
+        messages.append(message)
+    }
+
+    func addMessage(for packet: PACKET_ZC_PC_SELL_RESULT) {
+        let messageID = packet.result == 0 ? 54 : 57
+        let messageString = messageStringTable.localizedMessageString(forID: messageID)
+        let message = MessageCenter.Message(content: messageString, type: packet.result == 0 ? .system : .error, category: .item)
+        messages.append(message)
+    }
+
+    func addInsufficientZenyMessage() {
+        let messageString = messageStringTable.localizedMessageString(forID: 55)
+        let message = MessageCenter.Message(content: messageString, type: .error, category: .item)
+        messages.append(message)
+    }
 }
