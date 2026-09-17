@@ -88,16 +88,14 @@ public struct NPCShopSale: Sendable { public let index: Int; public let amount: 
 **`UI/NPCShopDealTypeView.swift`（新建，小）**：基于 `MessageBoxView(msg 92)`，bottomBar 三个 `.buttonStyle(.game)` 按钮 Buy / Sell / Cancel（尺寸同 `WarpListView` 的 42×20），分别调用 `gameSession.selectDealType(.buy / .sell)`、`cancelDealSelection()`。
 
 **`UI/NPCShopView.swift`（新建，主窗口）**，`var shop: NPCShop`，`@Environment(GameSession.self)`、`@Environment(GameContext.self)`：
-- 布局：`GameWindow`，宽 280（与 NPC 对话/传送列表一致），`GameTitleBar(closeAction: gameSession.closeNPCShop)`。内容自上而下：
-  1. 标题行（msg 186 / 185）+ 商品列表 `ScrollView`（高约 130，参考 `NPCDialogMessageBox`）。每行：32×32 图标（`resourceManager.itemIconImage(forItemID:)`，写成 file-private 的 `NPCShopItemRow`）、名称（`itemInfoTable.localizedIdentifiedItemName(forItemID:)`，缺省显示 ID）、单价「N Zeny」；卖出模式额外显示背包持有数量。
-  2. 标题行（msg 166 / 168）+ 购物车列表（高约 80，参考 `WarpListBox`），每行：图标、名称、`数量 × 单价`。
-  3. 合计行：「Total : N Zeny」+ 当前持有 zeny（`gameContext.playerStatus.zeny`）。
-- 交互（移动端不做拖拽，用点按）：
-  - 点商品行 → 弹出数量输入层（复用 `InventoryView.contextMenu` 那种 `Material.bar` 圆角弹层 + `matchedGeometryEffect` 的样式；含 `-` / 数字 `TextField`(numberPad) / `+` / 「Add」），确认后写入 `@State cart: [Int: Int]`（key：买=itemID，卖=inventory index）。
-  - 卖出模式上限 = `gameContext.inventory.items[index]?.amount`；买入模式无上限，但 `total + unit × count > zeny` 时拒绝并走 msg 55（与 roBrowser 一致）。
-  - 点购物车行 → 从购物车移除（或减一，选其一即可，roBrowser 是拖回去减任意数量，这里做「移除」）。
-- bottomBar：`GameBottomBar` 里「Buy」/「Sell」（购物车为空时 disabled）+「Cancel」→ `closeNPCShop()`。提交时把 `cart` 映射为 `[NPCShopPurchase]` / `[NPCShopSale]`。
-- `.onChange(of: shop)` 时清空 `cart`（同 `WarpListView.onChange(of: warpList.mapNames)`）。给 `NPCShop` 加 `Equatable`。
+- 布局：`GameWindow`，宽 320，`GameTitleBar(closeAction: gameSession.closeNPCShop)`。内容自上而下：
+  1. 标题行（msg 186 / 185）+ 商品列表 `ScrollView`（高 200）。每行（file-private 的 `NPCShopItemRow`）：32×32 图标（`resourceManager.itemIconImage(forItemID:)`）、名称（`itemInfoTable.localizedIdentifiedItemName(forItemID:)`，缺省显示 ID）+ 单价「N Zeny」两行，卖出模式单价后面附背包持有数量；右侧行内步进器 `[-] 数量 TextField(numberPad) [+]`。数量 > 0 的行高亮，即视为"已加入"，不另做购物车列表。
+  2. 合计行：「Total : N Zeny」+ 当前持有 zeny（`gameContext.playerStatus.zeny`）。
+- 交互：
+  - `@State amounts: [Int: Int]`（key：买=itemID，卖=inventory index），每行通过 `Binding` 走统一的 `setAmount(_:for:)` 做钳制：卖出上限 = `gameContext.inventory.items[index]?.amount`；买入时若 `其它行合计 + 单价×数量 > zeny` 则钳到买得起的最大值并走 msg 55（`addInsufficientZenyMessage()`）。
+  - `-` 在 0 时 disabled，`+` 在到达卖出上限时 disabled；TextField `onSubmit` 时解析并走同一钳制。
+- bottomBar：`GameBottomBar` 里「Buy」/「Sell」（合计为 0 时 disabled）+「Cancel」→ `closeNPCShop()`。提交时把 `amounts` 中 > 0 的按列表顺序映射为 `[NPCShopPurchase]` / `[NPCShopSale]`。
+- `.onChange(of: shop)` 时清空 `amounts`（同 `WarpListView.onChange(of: warpList.mapNames)`）。`NPCShop` 已是 `Equatable`。
 - 卖出列表过滤：`index` 在 `gameContext.inventory.items` 中找不到的条目不显示（roBrowser `setList` SELL 分支同样跳过）。
 - `#Preview`：用 `GameSession.testing` / `GameContext.testing`，构造 `.buy([...501/502/1101...])` 和 `.sell` 两个预览。
 
