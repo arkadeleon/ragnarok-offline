@@ -379,7 +379,7 @@ private struct StatArrowButton: View {
         Button(action: action) {
             VStack(spacing: 2) {
                 ZStack {
-                    GameTriangle()
+                    GameSymbol.triangle
                         .fill(Color(#colorLiteral(red: 0.7725490196, green: 0.8117647059, blue: 0.8901960784, alpha: 1)))
                         .stroke(Color(#colorLiteral(red: 0.4980392157, green: 0.5607843137, blue: 0.6941176471, alpha: 1)), lineWidth: 1)
                 }

@@ -137,7 +137,7 @@ private struct MenuExpandButton: View {
                         .padding(1)
                 }
                 .overlay {
-                    GameTriangle()
+                    GameSymbol.triangle
                         .fill(Color(#colorLiteral(red: 0.2156862745, green: 0.2980392157, blue: 0.4705882353, alpha: 1)))
                         .frame(width: 9, height: 5)
                         .rotationEffect(.degrees(isExpanded ? 0 : 180))
