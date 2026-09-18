@@ -11,6 +11,9 @@ enum GameSymbol: Shape {
     case minus
     case plus
     case triangle
+    case leftArrowTriangle
+    case rightArrowTriangle
+    case upArrowTriangle
 
     nonisolated func path(in rect: CGRect) -> Path {
         switch self {
@@ -43,6 +46,33 @@ enum GameSymbol: Shape {
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
             path.closeSubpath()
             return path
+        case .leftArrowTriangle:
+            var path = Path()
+            path.move(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX - rect.width / 4, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.maxX - rect.width / 4, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            path.closeSubpath()
+            return path
+        case .rightArrowTriangle:
+            var path = Path()
+            path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX + rect.width / 4, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.minX + rect.width / 4, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.closeSubpath()
+            return path
+        case .upArrowTriangle:
+            var path = Path()
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY - rect.height / 4))
+            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - rect.height / 4))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+            path.closeSubpath()
+            return path
         }
     }
 }
@@ -53,6 +83,9 @@ enum GameSymbol: Shape {
             GameSymbol.minus
             GameSymbol.plus
             GameSymbol.triangle
+            GameSymbol.leftArrowTriangle
+            GameSymbol.rightArrowTriangle
+            GameSymbol.upArrowTriangle
         }
         .frame(width: 24, height: 24)
     }

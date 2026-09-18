@@ -123,7 +123,7 @@ private struct CharacterPreviewPanel: View {
                 Button {
                     character.headPalette = (character.headPalette + 1) % 10
                 } label: {
-                    GameUpArrow()
+                    GameSymbol.upArrowTriangle
                         .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
                         .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
                         .frame(width: 13, height: 10)
@@ -135,7 +135,7 @@ private struct CharacterPreviewPanel: View {
                 Button {
                     character.head = character.head <= 2 ? 26 : character.head - 1
                 } label: {
-                    GameLeftArrow()
+                    GameSymbol.leftArrowTriangle
                         .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
                         .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
                         .frame(width: 10, height: 13)
@@ -147,7 +147,7 @@ private struct CharacterPreviewPanel: View {
                 Button {
                     character.head = character.head >= 26 ? 2 : character.head + 1
                 } label: {
-                    GameRightArrow()
+                    GameSymbol.rightArrowTriangle
                         .fill(Color(#colorLiteral(red: 0.6666666667, green: 0.7294117647, blue: 0.8862745098, alpha: 1)))
                         .stroke(Color(#colorLiteral(red: 0.4588235294, green: 0.5490196078, blue: 0.8196078431, alpha: 1)), lineWidth: 1)
                         .frame(width: 10, height: 13)
