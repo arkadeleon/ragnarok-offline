@@ -12,14 +12,14 @@ enum GameSymbol: Shape {
     case plus
 
     func path(in rect: CGRect) -> Path {
-        let rect = rect.insetBy(dx: 0.5, dy: 0.5)
-        let (x0, x1, x2, x3) = (rect.minX, rect.midX - 1.5, rect.midX + 1.5, rect.maxX)
-        let (y0, y1, y2, y3) = (rect.minY, rect.midY - 1.5, rect.midY + 1.5, rect.maxY)
-
         switch self {
         case .minus:
-            return Path(CGRect(x: x0, y: y1, width: x3 - x0, height: y2 - y1))
+            let thickness = min(rect.width, rect.height) / 3
+            return Path(CGRect(x: rect.minX, y: rect.midY - thickness / 2, width: rect.width, height: thickness))
         case .plus:
+            let thickness = min(rect.width, rect.height) / 3
+            let (x0, x1, x2, x3) = (rect.minX, rect.midX - thickness / 2, rect.midX + thickness / 2, rect.maxX)
+            let (y0, y1, y2, y3) = (rect.minY, rect.midY - thickness / 2, rect.midY + thickness / 2, rect.maxY)
             var path = Path()
             path.move(to: CGPoint(x: x1, y: y0))
             path.addLine(to: CGPoint(x: x2, y: y0))
@@ -39,28 +39,13 @@ enum GameSymbol: Shape {
     }
 }
 
-struct GameSymbolView: View {
-    var symbol: GameSymbol
-    var isPressed: Bool
-
-    var body: some View {
-        let fill = isPressed ? Color(#colorLiteral(red: 0.4313725490, green: 0.5176470588, blue: 0.7764705882, alpha: 1)) : Color(#colorLiteral(red: 0.4549019608, green: 0.5490196078, blue: 0.8196078431, alpha: 1))
-        let outline = isPressed ? Color(#colorLiteral(red: 0.4274509804, green: 0.4588235294, blue: 0.5607843137, alpha: 1)) : Color(#colorLiteral(red: 0.4509803922, green: 0.4862745098, blue: 0.5921568627, alpha: 1))
-
-        ZStack {
-            symbol
-                .fill(fill)
-            symbol
-                .stroke(outline, lineWidth: 1)
-        }
-        .frame(width: 9, height: 9)
-    }
-}
-
 #Preview {
     HStack(spacing: 12) {
-        GameSymbolView(symbol: .minus, isPressed: false)
-        GameSymbolView(symbol: .plus, isPressed: false)
+        Group {
+            GameSymbol.minus
+            GameSymbol.plus
+        }
+        .frame(width: 24, height: 24)
     }
     .padding()
 }
