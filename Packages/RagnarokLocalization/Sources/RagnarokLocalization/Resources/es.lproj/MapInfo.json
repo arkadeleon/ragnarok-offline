@@ -1,0 +1,4569 @@
+{
+  "1@4cdn" : {
+    "displayName" : "Cueva Ilusoria de la Prueba Final",
+    "signMainTitle" : "Cueva Ilusoria de la Prueba Final"
+  },
+  "1@4drk" : {
+    "displayName" : "Prueba del Dragón",
+    "signMainTitle" : "Prueba del Dragón"
+  },
+  "1@4igd" : {
+    "displayName" : "Campo de Entrenamiento de la Justicia",
+    "signMainTitle" : "Campo de Entrenamiento de la Justicia"
+  },
+  "1@4inq" : {
+    "displayName" : "Sótano del Monasterio",
+    "signMainTitle" : "Sótano del Monasterio"
+  },
+  "1@4mag" : {
+    "displayName" : "Fuente de Poder Mágico",
+    "signMainTitle" : "Fuente de Poder Mágico"
+  },
+  "1@4mst" : {
+    "displayName" : "Núcleo de Juperos VT",
+    "signMainTitle" : "Núcleo de Juperos VT"
+  },
+  "1@4sac" : {
+    "displayName" : "Mansión de las Sombras",
+    "signMainTitle" : "Mansión de las Sombras"
+  },
+  "1@4tro" : {
+    "displayName" : "Embarcación de Kvasir",
+    "signMainTitle" : "Embarcación de Kvasir"
+  },
+  "1@4win" : {
+    "displayName" : "Bosque Profundo de Luluka",
+    "signMainTitle" : "Bosque Profundo de Luluka"
+  },
+  "1@adv" : {
+    "displayName" : "Cuarteles del clérigo",
+    "signMainTitle" : "Cuarteles del clérigo"
+  },
+  "1@advs" : {
+    "displayName" : "Cuarteles clericales",
+    "signMainTitle" : "Cuarteles clericales"
+  },
+  "1@air1" : {
+    "displayName" : "Aeronave",
+    "signMainTitle" : "Aeronave"
+  },
+  "1@air2" : {
+    "displayName" : "Aeronave",
+    "signMainTitle" : "Aeronave"
+  },
+  "1@bamn" : {
+    "displayName" : "Jardín al Atardecer",
+    "signMainTitle" : "Jardín al Atardecer"
+  },
+  "1@bamq" : {
+    "displayName" : "Depósito del Dirigible",
+    "signMainTitle" : "Depósito del Dirigible"
+  },
+  "1@begi" : {
+    "displayName" : "Aldea de Poring",
+    "signMainTitle" : "Aldea de Poring"
+  },
+  "1@cash" : {
+    "displayName" : "Cueva del pulpo",
+    "signMainTitle" : "Cueva del pulpo"
+  },
+  "1@cata" : {
+    "displayName" : "Catacumba",
+    "signMainTitle" : "Catacumba"
+  },
+  "1@ch_t" : {
+    "displayName" : "Torre de la constelación",
+    "signMainTitle" : "Torre de la constelación"
+  },
+  "1@ch_u" : {
+    "displayName" : "Torre Hundida",
+    "signMainTitle" : "Torre Hundida",
+    "signSubTitle" : "Zona erosionada de la antigua Torre Infinita"
+  },
+  "1@cor" : {
+    "displayName" : "Memorial COR",
+    "signMainTitle" : "COR"
+  },
+  "1@crd" : {
+    "displayName" : "Isla volcánica de Korodo",
+    "signMainTitle" : "Isla volcánica de Korodo"
+  },
+  "1@def01" : {
+    "displayName" : "Mazmorra de la oleada: Bosque",
+    "signMainTitle" : "Bosque",
+    "signSubTitle" : "Mazmorra de la oleada"
+  },
+  "1@def02" : {
+    "displayName" : "Mazmorra de la oleada: Cielo",
+    "signMainTitle" : "Cielo",
+    "signSubTitle" : "Mazmorra de la oleada"
+  },
+  "1@def03" : {
+    "displayName" : "Mazmorra de la oleada: Lava",
+    "signMainTitle" : "Lava",
+    "signSubTitle" : "Mazmorra de la oleada"
+  },
+  "1@drdo" : {
+    "displayName" : "El Dorado legendario",
+    "signMainTitle" : "El Dorado legendario"
+  },
+  "1@dth1" : {
+    "displayName" : "Isla Bios (Mañana)",
+    "signMainTitle" : "Isla Bios"
+  },
+  "1@dth2" : {
+    "displayName" : "Isla Bios (Tarde)",
+    "signMainTitle" : "Isla Bios"
+  },
+  "1@dth3" : {
+    "displayName" : "Isla Bios (Noche)",
+    "signMainTitle" : "Isla Bios"
+  },
+  "1@ecl" : {
+    "displayName" : "Dentro de Eclage"
+  },
+  "1@eom" : {
+    "displayName" : "Templo del Rey Demonio",
+    "signMainTitle" : "Templo del Rey Demonio"
+  },
+  "1@exds" : {
+    "displayName" : "Monte desconocido",
+    "signMainTitle" : "Monte desconocido"
+  },
+  "1@exhn" : {
+    "displayName" : "Recuerdos del aprendiz",
+    "signMainTitle" : "Recuerdos del aprendiz"
+  },
+  "1@exnw" : {
+    "displayName" : "Clana Nemieri",
+    "signMainTitle" : "Clana Nemieri"
+  },
+  "1@exse" : {
+    "displayName" : "Oficina de Eunha",
+    "signMainTitle" : "Oficina de Eunha"
+  },
+  "1@exsh" : {
+    "displayName" : "Profundidades del bosque",
+    "signMainTitle" : "Profundidades del bosque"
+  },
+  "1@exsr" : {
+    "displayName" : "Mundo interior",
+    "signMainTitle" : "Mundo interior"
+  },
+  "1@face" : {
+    "displayName" : "Nido de Lombrirrostro",
+    "signMainTitle" : "Nido de Lombrirrostro"
+  },
+  "1@ffp" : {
+    "displayName" : "Escondite de restos",
+    "signMainTitle" : "Escondite de restos"
+  },
+  "1@gat" : {
+    "displayName" : "Dentro del Portal Sospechoso",
+    "signMainTitle" : "Dentro del Portal Sospechoso",
+    "signSubTitle" : "Eagle Brothers"
+  },
+  "1@ge_sn" : {
+    "displayName" : "Torneo Nocturno",
+    "signMainTitle" : "Torneo Nocturno"
+  },
+  "1@ge_st" : {
+    "displayName" : "Torneo de magia de Geffen",
+    "signMainTitle" : "Torneo de magia de Geffen"
+  },
+  "1@gef" : {
+    "displayName" : "Torneo de magia de Geffen",
+    "signMainTitle" : "Torneo de magia de Geffen"
+  },
+  "1@gef_in" : {
+    "displayName" : "Torneo de magia de Geffen"
+  },
+  "1@ghg" : {
+    "displayName" : "Ortus Aqua",
+    "signMainTitle" : "Ortus Aqua",
+    "signSubTitle" : "Jardín Suspendido"
+  },
+  "1@gl_he" : {
+    "displayName" : "Dimensión contaminada",
+    "signMainTitle" : "Dimensión contaminada",
+    "signSubTitle" : "Glastheim"
+  },
+  "1@gl_k" : {
+    "displayName" : "Antigua caballería, piso 1",
+    "signMainTitle" : "Antigua caballería, piso 1",
+    "signSubTitle" : "Antiguo Glastheim"
+  },
+  "1@gl_k2" : {
+    "displayName" : "Antigua caballería, piso 1",
+    "signMainTitle" : "Antigua caballería, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "1@gl_kh" : {
+    "displayName" : "Antigua caballería, piso 1",
+    "signMainTitle" : "Antigua caballería, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "1@gl_prq" : {
+    "displayName" : "La caída de Glastheim",
+    "signMainTitle" : "La caída de Glastheim"
+  },
+  "1@glast" : {
+    "displayName" : "Glastheim del pasado",
+    "signMainTitle" : "Glastheim del pasado"
+  },
+  "1@gol1" : {
+    "displayName" : "Cámara de pruebas biológicas",
+    "signMainTitle" : "Cámara de pruebas biológicas",
+    "signSubTitle" : "Camino de expedición"
+  },
+  "1@gol2" : {
+    "displayName" : "Morgue",
+    "signMainTitle" : "Morgue",
+    "signSubTitle" : "Camino de expedición"
+  },
+  "1@halo" : {
+    "displayName" : "Sitio del festival de Halloween",
+    "signMainTitle" : "Sitio del festival de Halloween"
+  },
+  "1@herbs" : {
+    "displayName" : "Jardín Oculto",
+    "signMainTitle" : "Jardín Oculto"
+  },
+  "1@infi" : {
+    "displayName" : "Espacio infinito",
+    "signMainTitle" : "Espacio infinito"
+  },
+  "1@jtb" : {
+    "displayName" : "Sueños y sombras",
+    "signMainTitle" : "Sueños y sombras"
+  },
+  "1@lab" : {
+    "displayName" : "Laboratorio Central",
+    "signMainTitle" : "Laboratorio Central"
+  },
+  "1@lhz" : {
+    "displayName" : "Laboratorio de Vorseff",
+    "signMainTitle" : "Laboratorio de Vorseff"
+  },
+  "1@lost" : {
+    "displayName" : "Menagerie Olvidada por el Tiempo",
+    "signMainTitle" : "Menagerie Olvidada por el Tiempo",
+    "signSubTitle" : "Lost Valley"
+  },
+  "1@ma_b" : {
+    "displayName" : "Escondite de Bakonawa",
+    "signMainTitle" : "Escondite de Bakonawa"
+  },
+  "1@ma_c" : {
+    "displayName" : "Cueva de Buwaya",
+    "signMainTitle" : "Cueva de Buwaya"
+  },
+  "1@ma_h" : {
+    "displayName" : "Hospital Bangungot, piso 2",
+    "signMainTitle" : "Hospital Bangungot, piso 2"
+  },
+  "1@mcd" : {
+    "displayName" : "A los pies del Rey",
+    "signMainTitle" : "A los pies del Rey"
+  },
+  "1@md_gef" : {
+    "displayName" : "Mazmorra del recuerdo de viernes",
+    "signMainTitle" : "Mazmorra del recuerdo de viernes"
+  },
+  "1@md_pay" : {
+    "displayName" : "Mazmorra del recuerdo de fin de semana",
+    "signMainTitle" : "Mazmorra del recuerdo de fin de semana"
+  },
+  "1@mir" : {
+    "displayName" : "Salón de Ymir",
+    "signMainTitle" : "Salón de Ymir"
+  },
+  "1@mist" : {
+    "displayName" : "Bosque brumoso",
+    "signMainTitle" : "Bosque brumoso"
+  },
+  "1@mjo1" : {
+    "displayName" : "Lugar del accidente aéreo",
+    "signMainTitle" : "Lugar del accidente",
+    "signSubTitle" : "Monte Mjolnir"
+  },
+  "1@mjo2" : {
+    "displayName" : "Cueva de Mjolnir",
+    "signMainTitle" : "Cueva olvidada",
+    "signSubTitle" : "Monte Mjolnir"
+  },
+  "1@nyd" : {
+    "displayName" : "Nido de Nidhogg",
+    "signMainTitle" : "Nido de Nidhogg"
+  },
+  "1@nyr" : {
+    "displayName" : "Jardines de Sessrumnir",
+    "signMainTitle" : "Jardines de Sessrumnir"
+  },
+  "1@orcs" : {
+    "displayName" : "Cueva de Orcos",
+    "signMainTitle" : "Cueva de Orcos"
+  },
+  "1@os_a" : {
+    "displayName" : "Misión de ocupación OS",
+    "signMainTitle" : "Misión de ocupación OS"
+  },
+  "1@os_b" : {
+    "displayName" : "OS restringido",
+    "signMainTitle" : "OS restringido"
+  },
+  "1@oz" : {
+    "displayName" : "Laberinto de Oz",
+    "signMainTitle" : "Laberinto de Oz"
+  },
+  "1@pbs" : {
+    "displayName" : "Parque del Baby Shark",
+    "signMainTitle" : "Parque del Baby Shark",
+    "signSubTitle" : "Baby Shark - Pinkfong"
+  },
+  "1@pop1" : {
+    "displayName" : "Despacho de la papisa",
+    "signMainTitle" : "Despacho de la papisa",
+    "signSubTitle" : "Media luna a la luz del día"
+  },
+  "1@pop2" : {
+    "displayName" : "De vuelta a casa",
+    "signMainTitle" : "De vuelta a casa",
+    "signSubTitle" : "Media luna a la luz del día"
+  },
+  "1@pop3" : {
+    "displayName" : "El jardín del cielo",
+    "signMainTitle" : "El jardín del cielo",
+    "signSubTitle" : "Media luna a la luz del día"
+  },
+  "1@pump" : {
+    "displayName" : "Alcantarilla",
+    "signMainTitle" : "Alcantarilla"
+  },
+  "1@rev" : {
+    "displayName" : "Cueva de Mors",
+    "signMainTitle" : "Cueva de Mors"
+  },
+  "1@rgsr" : {
+    "displayName" : "Regenschirm",
+    "signMainTitle" : "Regenschirm",
+    "signSubTitle" : "Laboratorio de la Corporación"
+  },
+  "1@sara" : {
+    "displayName" : "Memoria de Sarah",
+    "signMainTitle" : "Memoria de Sarah"
+  },
+  "1@slw" : {
+    "displayName" : "Laboratorio Werner",
+    "signMainTitle" : "Salón central",
+    "signSubTitle" : "Laboratorio Werner"
+  },
+  "1@soul" : {
+    "displayName" : "Camino del alma"
+  },
+  "1@spa" : {
+    "displayName" : "Palacio fantasma",
+    "signMainTitle" : "Palacio fantasma"
+  },
+  "1@spa2" : {
+    "displayName" : "Tumba del Arrepentimiento",
+    "signMainTitle" : "Tumba del Arrepentimiento"
+  },
+  "1@sthb" : {
+    "displayName" : "Susurro oscuro",
+    "signMainTitle" : "Susurro oscuro"
+  },
+  "1@sthc" : {
+    "displayName" : "Sala secreta",
+    "signMainTitle" : "Sala secreta"
+  },
+  "1@sthd" : {
+    "displayName" : "La cima de la fortaleza",
+    "signMainTitle" : "La cima de la fortaleza"
+  },
+  "1@swat" : {
+    "displayName" : "Base militar",
+    "signMainTitle" : "Base militar"
+  },
+  "1@tcamp" : {
+    "displayName" : "Base militar del Volcán Thor",
+    "signMainTitle" : "Base militar de Thor"
+  },
+  "1@thts" : {
+    "displayName" : "Torre de Thanatos",
+    "signMainTitle" : "Torre de Thanatos",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "1@tnm1" : {
+    "displayName" : "Planta superior de la Torre del Diablo",
+    "signMainTitle" : "Planta superior de la Torre del Diablo"
+  },
+  "1@tnm2" : {
+    "displayName" : "ÿltima planta de la Torre del Diablo",
+    "signMainTitle" : "ÿltima planta de la Torre del Diablo"
+  },
+  "1@tnm3" : {
+    "displayName" : "Castillo subterráneo de Morroc",
+    "signMainTitle" : "Castillo subterráneo de Morroc"
+  },
+  "1@tower" : {
+    "displayName" : "Planta más baja de la Torre infinita",
+    "signMainTitle" : "Planta más baja de la Torre infinita"
+  },
+  "1@tre" : {
+    "displayName" : "Barco hundido sospechoso",
+    "signMainTitle" : "Barco hundido sospechoso"
+  },
+  "1@uns" : {
+    "displayName" : "Sala final",
+    "signMainTitle" : "La última Sala"
+  },
+  "1@vrsn" : {
+    "displayName" : "La base secreta del Dr. Eggman",
+    "signMainTitle" : "Base secreta",
+    "signSubTitle" : "Libros fantásticos - Sonic"
+  },
+  "1@xm_d" : {
+    "displayName" : "Fábrica de juguetes de terror",
+    "signMainTitle" : "Fábrica de juguetes de terror"
+  },
+  "1@xm_d2" : {
+    "displayName" : "Fábrica de juguetes de terror",
+    "signMainTitle" : "Fábrica de juguetes de terror"
+  },
+  "2@cata" : {
+    "displayName" : "Santuario sellado",
+    "signMainTitle" : "Santuario sellado"
+  },
+  "2@ch_t" : {
+    "displayName" : "Torre de la constelación",
+    "signMainTitle" : "Torre de la constelación"
+  },
+  "2@exds" : {
+    "displayName" : "Monte desconocido",
+    "signMainTitle" : "Monte desconocido"
+  },
+  "2@gl_k" : {
+    "displayName" : "Antigua caballería, piso 2",
+    "signMainTitle" : "Antigua caballería, piso 2",
+    "signSubTitle" : "Antiguo Glastheim"
+  },
+  "2@gl_k2" : {
+    "displayName" : "Antigua caballería, piso 2",
+    "signMainTitle" : "Antigua caballería, piso 2",
+    "signSubTitle" : "Glastheim"
+  },
+  "2@gl_kh" : {
+    "displayName" : "Antigua caballería, piso 2",
+    "signMainTitle" : "Antigua caballería, piso 2",
+    "signSubTitle" : "Glastheim"
+  },
+  "2@mir" : {
+    "displayName" : "Salón de Ymir",
+    "signMainTitle" : "Salón de Ymir"
+  },
+  "2@nyd" : {
+    "displayName" : "Nido de Nidhogg",
+    "signMainTitle" : "Nido de Nidhogg"
+  },
+  "2@nyr" : {
+    "displayName" : "Almacén de corazones",
+    "signMainTitle" : "Almacén de corazones",
+    "signSubTitle" : "El santuario de Raquel"
+  },
+  "2@orcs" : {
+    "displayName" : "Cueva de Orcos",
+    "signMainTitle" : "Cueva de Orcos"
+  },
+  "2@pump" : {
+    "displayName" : "Alcantarilla",
+    "signMainTitle" : "Alcantarilla"
+  },
+  "2@thts" : {
+    "displayName" : "Advertencia del ángel",
+    "signMainTitle" : "Advertencia del ángel",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "2@tower" : {
+    "displayName" : "Planta baja de la Torre infinita",
+    "signMainTitle" : "Planta baja de la Torre infinita"
+  },
+  "3@ch_t" : {
+    "displayName" : "Torre de la constelación",
+    "signMainTitle" : "Torre de la constelación"
+  },
+  "3@thts" : {
+    "displayName" : "Recuerdo de odio",
+    "signMainTitle" : "Recuerdo de odio",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "3@tower" : {
+    "displayName" : "Planta intermedia de la Torre infinita",
+    "signMainTitle" : "Planta intermedia de la Torre infinita"
+  },
+  "4@thts" : {
+    "displayName" : "Recuerdo de Angustia",
+    "signMainTitle" : "Recuerdo de Angustia",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "4@tower" : {
+    "displayName" : "Planta superior de la Torre infinita",
+    "signMainTitle" : "Planta superior de la Torre infinita"
+  },
+  "5@thts" : {
+    "displayName" : "Recuerdo de tristeza",
+    "signMainTitle" : "Recuerdo de tristeza",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "5@tower" : {
+    "displayName" : "ÿltima planta de la Torre infinita",
+    "signMainTitle" : "ÿltima planta de la Torre infinita"
+  },
+  "6@thts" : {
+    "displayName" : "Recuerdo de desesperación",
+    "signMainTitle" : "Recuerdo de desesperación",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "6@tower" : {
+    "displayName" : "Torre infinita (zona desconocida)"
+  },
+  "7@thts" : {
+    "displayName" : "Sala de la ira",
+    "signMainTitle" : "Sala de la ira",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "8@thts" : {
+    "displayName" : "Torre de Thanatos",
+    "signMainTitle" : "Maestro espadachín Recuerdo de Thanatos",
+    "signSubTitle" : "Recuerdo de Thanatos"
+  },
+  "abbey01" : {
+    "displayName" : "Monasterio de la Isla anónima, piso 1",
+    "signMainTitle" : "Monasterio, piso 1",
+    "signSubTitle" : "Isla anónima"
+  },
+  "abbey02" : {
+    "displayName" : "Sótano del monasterio de la Isla anónima, piso 1",
+    "signMainTitle" : "Sótano del monasterio, piso 1",
+    "signSubTitle" : "Isla anónima"
+  },
+  "abbey03" : {
+    "displayName" : "Sótano del monasterio de la Isla anónima, piso 2",
+    "signMainTitle" : "Sótano del monasterio, piso 2",
+    "signSubTitle" : "Isla anónima"
+  },
+  "abbey03a" : {
+    "displayName" : "Sótano del monasterio de la Isla anónima, piso 2",
+    "signMainTitle" : "Sótano del monasterio, piso 2",
+    "signSubTitle" : "Isla anónima"
+  },
+  "abbey03b" : {
+    "displayName" : "Sótano del monasterio de la Isla anónima, piso 2",
+    "signMainTitle" : "Sótano del monasterio, piso 2",
+    "signSubTitle" : "Isla anónima"
+  },
+  "abyss_01" : {
+    "displayName" : "Cueva subterránea del Lago del abismo de Hugel, piso 1",
+    "signMainTitle" : "Cueva subterránea, piso 1",
+    "signSubTitle" : "Lago del abismo, Hugel"
+  },
+  "abyss_02" : {
+    "displayName" : "Cueva subterránea del Lago del abismo de Hugel, piso 2",
+    "signMainTitle" : "Cueva subterránea, piso 2",
+    "signSubTitle" : "Lago del abismo, Hugel"
+  },
+  "abyss_03" : {
+    "displayName" : "Cueva subterránea del Lago del abismo de Hugel, piso 3",
+    "signMainTitle" : "Cueva subterránea, piso 3",
+    "signSubTitle" : "Lago del abismo, Hugel"
+  },
+  "abyss_03a" : {
+    "displayName" : "Cueva subterr?nea del Lago del abismo de Hugel, piso 3",
+    "signMainTitle" : "Cueva subterr?nea, piso 3",
+    "signSubTitle" : "Lago del abismo, Hugel"
+  },
+  "abyss_03b" : {
+    "displayName" : "Cueva subterr?nea del Lago del abismo de Hugel, piso 3",
+    "signMainTitle" : "Cueva subterr?nea, piso 3",
+    "signSubTitle" : "Lago del abismo, Hugel"
+  },
+  "abyss_04" : {
+    "displayName" : "Cueva subterránea del lago Abismo (4)",
+    "signMainTitle" : "Cueva subterránea del lago Abismo (4)",
+    "signSubTitle" : "Lago del abismo, Hugel"
+  },
+  "airplane" : {
+    "displayName" : "Aeronave",
+    "signMainTitle" : "Aeronave"
+  },
+  "airplane_01" : {
+    "displayName" : "Aeronave",
+    "signMainTitle" : "Aeronave"
+  },
+  "airport" : {
+    "displayName" : "Aeropuerto de Einbroch",
+    "signMainTitle" : "Aeropuerto de Einbroch"
+  },
+  "alb2trea" : {
+    "displayName" : "Isla de Alberta",
+    "signMainTitle" : "Isla de Alberta",
+    "signSubTitle" : "Alberta"
+  },
+  "alb_ship" : {
+    "displayName" : "Interior del barco de Alberta"
+  },
+  "alberta" : {
+    "displayName" : "Alberta, la ciudad portuaria",
+    "signMainTitle" : "Alberta",
+    "signSubTitle" : "Ciudad portuaria en el reino de Rune-Midgarts"
+  },
+  "alberta_in" : {
+    "displayName" : "Interior de Alberta"
+  },
+  "alde_alche" : {
+    "displayName" : "Centro de cambio de clase a Alquimista"
+  },
+  "alde_dun01" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso subterráneo 1",
+    "signMainTitle" : "Torre del reloj, piso subterráneo 1",
+    "signSubTitle" : "Aldebaran"
+  },
+  "alde_dun02" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso subterráneo 2",
+    "signMainTitle" : "Torre del reloj, piso subterráneo 2",
+    "signSubTitle" : "Aldebaran"
+  },
+  "alde_dun03" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso subterráneo 3",
+    "signMainTitle" : "Torre del reloj, piso subterráneo 3",
+    "signSubTitle" : "Aldebaran"
+  },
+  "alde_dun04" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso subterráneo 4",
+    "signMainTitle" : "Torre del reloj, piso subterráneo 4",
+    "signSubTitle" : "Aldebaran"
+  },
+  "alde_gld" : {
+    "displayName" : "Luina, la ciudad satélite de Aldebaran",
+    "signMainTitle" : "Luina",
+    "signSubTitle" : "Ciudad satélite de Aldebaran"
+  },
+  "aldeba_in" : {
+    "displayName" : "Interior de Aldebaran"
+  },
+  "aldebaran" : {
+    "displayName" : "Aldebaran, la ciudad fronteriza",
+    "signMainTitle" : "Aldebaran",
+    "signSubTitle" : "Ciudad fronteriza en el reino de Rune-Midgarts"
+  },
+  "aldeg_cas01" : {
+    "displayName" : "Neuschwanstein",
+    "signMainTitle" : "Neuschwanstein",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas02" : {
+    "displayName" : "Hohenschwangau",
+    "signMainTitle" : "Hohenschwangau",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas03" : {
+    "displayName" : "Nuenberg",
+    "signMainTitle" : "Nuenberg",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas04" : {
+    "displayName" : "Wuerzburg",
+    "signMainTitle" : "Wuerzburg",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas05" : {
+    "displayName" : "Rothenburg",
+    "signMainTitle" : "Rothenburg",
+    "signSubTitle" : "Luina"
+  },
+  "ama_dun01" : {
+    "displayName" : "Laberinto de tatami de Amatsu",
+    "signMainTitle" : "Laberinto de tatami de Amatsu"
+  },
+  "ama_dun02" : {
+    "displayName" : "Campo de batalla del bosque subterráneo de Amatsu",
+    "signMainTitle" : "Campo de batalla del bosque subterráneo de Amatsu"
+  },
+  "ama_dun03" : {
+    "displayName" : "Santuario subterráneo de Amatsu",
+    "signMainTitle" : "Santuario subterráneo de Amatsu"
+  },
+  "ama_fild01" : {
+    "displayName" : "Campo de Amatsu",
+    "signMainTitle" : "Campo de Amatsu"
+  },
+  "ama_in01" : {
+    "displayName" : "Interior de Amatsu"
+  },
+  "ama_in02" : {
+    "displayName" : "Interior de Tengugak"
+  },
+  "ama_test" : {
+    "displayName" : "Lugar de experiencias de Momotaro, Amatsu",
+    "signMainTitle" : "Lugar de experiencias de Momotaro, Amatsu"
+  },
+  "amatsu" : {
+    "displayName" : "Amatsu, la tierra de los Tengu",
+    "signMainTitle" : "Amatsu",
+    "signSubTitle" : "Tierra de los Tengu"
+  },
+  "amicitia1" : {
+    "displayName" : "Laboratorio Abandonado de Amicitia",
+    "signMainTitle" : "Piso 1 Laboratorio Central",
+    "signSubTitle" : "Laboratorio Abandonado de Amicitia"
+  },
+  "amicitia2" : {
+    "displayName" : "Laboratorio Abandonado de Amicitia",
+    "signMainTitle" : "Piso 2 Sala de Cultivo Intensivo",
+    "signSubTitle" : "Laboratorio Abandonado de Amicitia"
+  },
+  "ant_d02_i" : {
+    "displayName" : "Jardín de la Percepción",
+    "signMainTitle" : "Jardín de la Percepción",
+    "signSubTitle" : "Ilusión"
+  },
+  "anthell01" : {
+    "displayName" : "Infierno de hormigas de Morroc, piso 1",
+    "signMainTitle" : "Infierno de hormigas, piso 1",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "anthell02" : {
+    "displayName" : "Mazmorra del Infierno de hormigas de Morroc, piso 2",
+    "signMainTitle" : "Infierno de hormigas, piso 2",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "arena_room" : {
+    "displayName" : "Sala de espera de la arena",
+    "signMainTitle" : "Sala de espera de la arena"
+  },
+  "aru_gld" : {
+    "displayName" : "Valfreyja",
+    "signMainTitle" : "Valfreyja",
+    "signSubTitle" : "Rachel"
+  },
+  "arug_cas01" : {
+    "displayName" : "Mardol",
+    "signMainTitle" : "Mardol",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas02" : {
+    "displayName" : "Syr",
+    "signMainTitle" : "Syr",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas03" : {
+    "displayName" : "Horn",
+    "signMainTitle" : "Horn",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas04" : {
+    "displayName" : "Gefn",
+    "signMainTitle" : "Gefn",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas05" : {
+    "displayName" : "Badanis",
+    "signMainTitle" : "Badanis",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_dun01" : {
+    "displayName" : "Mazmorra subterránea del gremio",
+    "signMainTitle" : "Mazmorra subterránea del gremio",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_que01" : {
+    "displayName" : "Pradera de Morestone",
+    "signMainTitle" : "Pradera de Morestone"
+  },
+  "auction_01" : {
+    "displayName" : "Salón de subastas"
+  },
+  "auction_02" : {
+    "displayName" : "Liga de los Exploradores",
+    "signMainTitle" : "Liga de los Exploradores"
+  },
+  "ayo_dun01" : {
+    "displayName" : "Laberinto del antiguo santuario de Ayothaya",
+    "signMainTitle" : "Laberinto del antiguo santuario de Ayothaya"
+  },
+  "ayo_dun02" : {
+    "displayName" : "Interior del antiguo santuario de Ayothaya",
+    "signMainTitle" : "Interior del antiguo santuario de Ayothaya"
+  },
+  "ayo_fild01" : {
+    "displayName" : "Campo de Ayothaya",
+    "signMainTitle" : "Campo de Ayothaya"
+  },
+  "ayo_fild02" : {
+    "displayName" : "Campo de Ayothaya",
+    "signMainTitle" : "Campo de Ayothaya"
+  },
+  "ayo_in01" : {
+    "displayName" : "Interior de Ayothaya"
+  },
+  "ayo_in02" : {
+    "displayName" : "Interior de Ayothaya"
+  },
+  "ayothaya" : {
+    "displayName" : "Ayothaya",
+    "signMainTitle" : "Ayothaya"
+  },
+  "ba_2whs01" : {
+    "displayName" : "Almacén Tártaro - Planta Superior",
+    "signMainTitle" : "Almacén Tártaro - Planta Superior"
+  },
+  "ba_2whs02" : {
+    "displayName" : "Almacén Tártaro - Planta Inferior",
+    "signMainTitle" : "Almacén Tártaro - Planta Inferior"
+  },
+  "ba_bath" : {
+    "displayName" : "Sauna Meditatio",
+    "signMainTitle" : "Sauna Meditatio"
+  },
+  "ba_chess" : {
+    "displayName" : "Jardín de Ajedrez",
+    "signMainTitle" : "Jardín de Ajedrez"
+  },
+  "ba_go" : {
+    "displayName" : "Campo de Batalla Acuático",
+    "signMainTitle" : "Campo de Batalla Acuático"
+  },
+  "ba_in01" : {
+    "displayName" : "Interior de la Mansión Varmunt"
+  },
+  "ba_lib" : {
+    "displayName" : "Pasillo de la Biblioteca de los Recuerdos",
+    "signMainTitle" : "Pasillo de los Recuerdos",
+    "signSubTitle" : "Biblioteca"
+  },
+  "ba_lost" : {
+    "displayName" : "Invernadero de Pitayas",
+    "signMainTitle" : "Invernadero de Pitayas"
+  },
+  "ba_maison" : {
+    "displayName" : "Jardín de la Mansión Varmunt",
+    "signMainTitle" : "Jardín de la Mansión Varmunt"
+  },
+  "ba_pw01" : {
+    "displayName" : "Primera Planta Mágica",
+    "signMainTitle" : "Primera Planta Mágica"
+  },
+  "ba_pw02" : {
+    "displayName" : "Estación de Alcantarillado",
+    "signMainTitle" : "Estación de Alcantarillado"
+  },
+  "ba_pw03" : {
+    "displayName" : "Segunda Planta Mágica",
+    "signMainTitle" : "Segunda Planta Mágica"
+  },
+  "bat_a01" : {
+    "displayName" : "Cañón Tierra",
+    "signMainTitle" : "Cañón Tierra",
+    "signSubTitle" : "Campo de batalla"
+  },
+  "bat_a02" : {
+    "displayName" : "Cañón Tierra",
+    "signMainTitle" : "Cañón Tierra",
+    "signSubTitle" : "Campo de batalla"
+  },
+  "bat_b01" : {
+    "displayName" : "Flavius",
+    "signMainTitle" : "Flavius",
+    "signSubTitle" : "Campo de batalla"
+  },
+  "bat_b02" : {
+    "displayName" : "Flavius",
+    "signMainTitle" : "Flavius",
+    "signSubTitle" : "Campo de batalla"
+  },
+  "bat_c01" : {
+    "displayName" : "Krieger von Midgard"
+  },
+  "bat_c02" : {
+    "displayName" : "Krieger von Midgard"
+  },
+  "bat_c03" : {
+    "displayName" : "Krieger von Midgard"
+  },
+  "bat_room" : {
+    "displayName" : "Sala de espera del campo de batalla",
+    "signMainTitle" : "Sala de espera del campo de batalla"
+  },
+  "beach_dun" : {
+    "displayName" : "Cueva de Karu al oeste de Comodo",
+    "signMainTitle" : "Cueva de Karu al oeste",
+    "signSubTitle" : "Comodo"
+  },
+  "beach_dun2" : {
+    "displayName" : "Cueva de Luanda al norte de Comodo",
+    "signMainTitle" : "Cueva del norte de Luanda",
+    "signSubTitle" : "Comodo"
+  },
+  "beach_dun3" : {
+    "displayName" : "Cueva de Mao al este de Comodo",
+    "signMainTitle" : "Cueva Mao al este",
+    "signSubTitle" : "Comodo"
+  },
+  "bif_fild01" : {
+    "displayName" : "Sur de Bifrost",
+    "signMainTitle" : "Sur de Bifrost"
+  },
+  "bif_fild02" : {
+    "displayName" : "Norte de Bifrost",
+    "signMainTitle" : "Norte de Bifrost"
+  },
+  "bl_death" : {
+    "displayName" : "Cementerio de la Biosfera",
+    "signMainTitle" : "Cementerio",
+    "signSubTitle" : "Biosfera de Varmunt"
+  },
+  "bl_grass" : {
+    "displayName" : "Biosfera - Savannah",
+    "signMainTitle" : "Sabana",
+    "signSubTitle" : "Biosfera de Varmunt"
+  },
+  "bl_ice" : {
+    "displayName" : "Biosfera - Tundra",
+    "signMainTitle" : "Tundra",
+    "signSubTitle" : "Biosfera de Varmunt"
+  },
+  "bl_lava" : {
+    "displayName" : "Biosfera - Infierno",
+    "signMainTitle" : "Infierno",
+    "signSubTitle" : "Biosfera de Varmunt"
+  },
+  "bossnia_01" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bossnia_02" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bossnia_03" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bossnia_04" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bra_dun01" : {
+    "displayName" : "Entrada a la cueva de la cascada de Brasillis",
+    "signMainTitle" : "Entrada a la cueva de la cascada",
+    "signSubTitle" : "Brasilis"
+  },
+  "bra_dun02" : {
+    "displayName" : "Dentro de la cueva de la cascada de Brasilis",
+    "signMainTitle" : "Dentro de la cueva de la cascada",
+    "signSubTitle" : "Brasilis"
+  },
+  "bra_fild01" : {
+    "displayName" : "Campo de Brasilis",
+    "signMainTitle" : "Campo de Brasilis"
+  },
+  "bra_in01" : {
+    "displayName" : "Dentro de Brasilis"
+  },
+  "brasilis" : {
+    "displayName" : "Brasilis",
+    "signMainTitle" : "Brasilis"
+  },
+  "brz_gld" : {
+    "displayName" : "Palacio del Milenio",
+    "signMainTitle" : "Palacio del Milenio"
+  },
+  "brz_god" : {
+    "displayName" : "Aruanda",
+    "signMainTitle" : "Aruanda"
+  },
+  "brz_n" : {
+    "displayName" : "Festival Brasilis",
+    "signMainTitle" : "Festival Brasilis"
+  },
+  "c_tower1" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso 1",
+    "signMainTitle" : "Torre del reloj, piso 1",
+    "signSubTitle" : "Aldebaran"
+  },
+  "c_tower2" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso 2",
+    "signMainTitle" : "Torre del reloj, piso 2",
+    "signSubTitle" : "Aldebaran"
+  },
+  "c_tower2_" : {
+    "displayName" : "Torre del reloj del tiempo retorcido, piso 2",
+    "signMainTitle" : "Torre del reloj, piso 2",
+    "signSubTitle" : "Tiempo retorcido"
+  },
+  "c_tower3" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso 3",
+    "signMainTitle" : "Torre del reloj, piso 3",
+    "signSubTitle" : "Aldebaran"
+  },
+  "c_tower3_" : {
+    "displayName" : "Torre del reloj del tiempo retorcido, piso 3",
+    "signMainTitle" : "Torre del reloj, piso 3",
+    "signSubTitle" : "Tiempo retorcido"
+  },
+  "c_tower4" : {
+    "displayName" : "Torre del reloj de Aldebaran, piso 4",
+    "signMainTitle" : "Torre del reloj, piso 4",
+    "signSubTitle" : "Aldebaran"
+  },
+  "cave" : {
+    "displayName" : "Aldea de la cueva",
+    "signMainTitle" : "Aldea de la cueva"
+  },
+  "clb_kuma" : {
+    "displayName" : "Granja Temática de Kumamoto",
+    "signMainTitle" : "Granja Temática de Kumamoto",
+    "signSubTitle" : "Kumamon"
+  },
+  "clock_01" : {
+    "displayName" : "Cámara desconocida de la Torre del Reloj",
+    "signMainTitle" : "Cámara desconocida",
+    "signSubTitle" : "Torre del Reloj"
+  },
+  "cmd_fild01" : {
+    "displayName" : "Bosque de Papuchicha en Comodo",
+    "signMainTitle" : "Bosque de Papuchicha en Comodo",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild02" : {
+    "displayName" : "Playa de Kokomo en Comodo",
+    "signMainTitle" : "Playa de Kokomo",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild03" : {
+    "displayName" : "Pantano de Zenhai",
+    "signMainTitle" : "Pantano de Zenhai",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild04" : {
+    "displayName" : "Playa de Kokomo en Comodo",
+    "signMainTitle" : "Playa de Kokomo",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild06" : {
+    "displayName" : "Fortaleza de Saint Darmain, lado oeste",
+    "signMainTitle" : "Oeste de la fortaleza de Saint Darmain"
+  },
+  "cmd_fild07" : {
+    "displayName" : "Faro de Pharos",
+    "signMainTitle" : "Faro de Pharos"
+  },
+  "cmd_fild08" : {
+    "displayName" : "Fortaleza de Saint Darmain, lado este",
+    "signMainTitle" : "Este de la fortaleza de Saint Darmain"
+  },
+  "cmd_fild09" : {
+    "displayName" : "Fortaleza de Saint Darmain, lado sur",
+    "signMainTitle" : "Sur de la fortaleza de Saint Darmain"
+  },
+  "cmd_in01" : {
+    "displayName" : "Interior de Comodo"
+  },
+  "cmd_in02" : {
+    "displayName" : "Interior de Comodo"
+  },
+  "com_d02_i" : {
+    "displayName" : "Ilusión de Luanda",
+    "signMainTitle" : "Cueva de Luanda",
+    "signSubTitle" : "Ilusión de Luanda"
+  },
+  "comodo" : {
+    "displayName" : "Comodo, la ciudad costera",
+    "signMainTitle" : "Comodo",
+    "signSubTitle" : "Ciudad costera del reino de Rune-Midgarts"
+  },
+  "conch_in" : {
+    "displayName" : "Interior de Con-Chilina",
+    "signMainTitle" : "Interior de Con-Chilina",
+    "signSubTitle" : "Ciudad portuaria Lasagna"
+  },
+  "dali" : {
+    "displayName" : "Grieta dimensional",
+    "signMainTitle" : "Grieta dimensional"
+  },
+  "dali02" : {
+    "displayName" : "Grieta dimensional",
+    "signMainTitle" : "Grieta dimensional"
+  },
+  "dew_dun01" : {
+    "displayName" : "Isla volcánica de Krakatau",
+    "signMainTitle" : "Isla volcánica de Krakatau"
+  },
+  "dew_dun02" : {
+    "displayName" : "Cueva de Istana",
+    "signMainTitle" : "Cueva de Istana"
+  },
+  "dew_fild01" : {
+    "displayName" : "Campo Dewata, aldea de la tribu zati",
+    "signMainTitle" : "Dentro de la aldea de la tribu zati",
+    "signSubTitle" : "Dewata"
+  },
+  "dew_in01" : {
+    "displayName" : "Interior de la aldea de la tribu zati"
+  },
+  "dewata" : {
+    "displayName" : "Dewata",
+    "signMainTitle" : "Dewata"
+  },
+  "dic_dun01" : {
+    "displayName" : "Túnel de Kamidal",
+    "signMainTitle" : "Túnel de Kamidal",
+    "signSubTitle" : "Jotunheim"
+  },
+  "dic_dun02" : {
+    "displayName" : "Agujero de Scaraba",
+    "signMainTitle" : "Agujero de Scaraba",
+    "signSubTitle" : "Túnel de Kamidal"
+  },
+  "dic_dun02a" : {
+    "displayName" : "Agujero de Scaraba",
+    "signMainTitle" : "Agujero de Scaraba",
+    "signSubTitle" : "T?nel de Kamidal"
+  },
+  "dic_dun02b" : {
+    "displayName" : "Agujero de Scaraba",
+    "signMainTitle" : "Agujero de Scaraba",
+    "signSubTitle" : "T?nel de Kamidal"
+  },
+  "dic_dun03" : {
+    "displayName" : "Agujero de Scaraba",
+    "signMainTitle" : "Agujero de Scaraba",
+    "signSubTitle" : "Túnel de Kamidal"
+  },
+  "dic_fild01" : {
+    "displayName" : "Alrededores de la montaña Kamidal",
+    "signMainTitle" : "Alrededores de la montaña Kamidal",
+    "signSubTitle" : "Jotunheim"
+  },
+  "dic_fild02" : {
+    "displayName" : "Alrededores de la montaña Kamidal",
+    "signMainTitle" : "Alrededores de la montaña Kamidal",
+    "signSubTitle" : "Jotunheim"
+  },
+  "dic_in01" : {
+    "displayName" : "Interior de El Dicastes"
+  },
+  "dicastes01" : {
+    "displayName" : "El Dicastes, la capital de los saphas",
+    "signMainTitle" : "El Dicastes",
+    "signSubTitle" : "Capital de los saphas, Jotunheim"
+  },
+  "dicastes02" : {
+    "displayName" : "Bosque de Jorhi de Brumbeld",
+    "signMainTitle" : "Bosque de Jorhi de Brumbeld",
+    "signSubTitle" : "El Dicastes"
+  },
+  "e_hugel" : {
+    "displayName" : "Hugel invadido",
+    "signMainTitle" : "Hugel invadido"
+  },
+  "e_tower" : {
+    "displayName" : "Isla de la Niebla",
+    "signMainTitle" : "Isla de la Niebla"
+  },
+  "ecl_fild01" : {
+    "displayName" : "Tierra de pimpollos",
+    "signMainTitle" : "Tierra de pimpollos"
+  },
+  "ecl_hub01" : {
+    "displayName" : "Perímetro de Eclage"
+  },
+  "ecl_in01" : {
+    "displayName" : "Dentro de Eclage"
+  },
+  "ecl_in02" : {
+    "displayName" : "Dentro de Eclage"
+  },
+  "ecl_in03" : {
+    "displayName" : "Dentro de Eclage"
+  },
+  "ecl_in04" : {
+    "displayName" : "Dentro de Eclage"
+  },
+  "ecl_tdun01" : {
+    "displayName" : "Torre Bifrost, piso 1",
+    "signMainTitle" : "Torre Bifrost, piso 1"
+  },
+  "ecl_tdun02" : {
+    "displayName" : "Torre Bifrost, piso 2",
+    "signMainTitle" : "Torre Bifrost, piso 2"
+  },
+  "ecl_tdun03" : {
+    "displayName" : "Torre Bifrost, piso 3",
+    "signMainTitle" : "Torre Bifrost, piso 3"
+  },
+  "ecl_tdun04" : {
+    "displayName" : "Torre Bifrost, piso 4",
+    "signMainTitle" : "Torre Bifrost, piso 4"
+  },
+  "eclage" : {
+    "displayName" : "Eclage, capital de los laphines",
+    "signMainTitle" : "Eclage",
+    "signSubTitle" : "Capital de los laphines, Alfheim"
+  },
+  "ein_d02_i" : {
+    "displayName" : "Ilusión de osito de peluche",
+    "signMainTitle" : "Imperio Nasáreo",
+    "signSubTitle" : "Ilusión de osito de peluche"
+  },
+  "ein_dun01" : {
+    "displayName" : "Mazmorra de la mina de Einbech, piso 1",
+    "signMainTitle" : "Mazmorra de la mina de Einbech, piso 1"
+  },
+  "ein_dun02" : {
+    "displayName" : "Mazmorra de la mina de Einbech, piso 2",
+    "signMainTitle" : "Mazmorra de la mina de Einbech, piso 2"
+  },
+  "ein_dun03" : {
+    "displayName" : "Mina de mazmorra (3)",
+    "signMainTitle" : "Mina de mazmorra (3)"
+  },
+  "ein_fild01" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_fild03" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_fild04" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_fild05" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_fild06" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_fild07" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_fild08" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_fild09" : {
+    "displayName" : "Campo de Einbroch",
+    "signMainTitle" : "Campo de Einbroch"
+  },
+  "ein_in01" : {
+    "displayName" : "Interior"
+  },
+  "einbech" : {
+    "displayName" : "Einbech, la aldea minera",
+    "signMainTitle" : "Einbech",
+    "signSubTitle" : "Aldea minera, República de Schwarzwald"
+  },
+  "einbroch" : {
+    "displayName" : "Einbroch, la ciudad industrial",
+    "signMainTitle" : "Einbroch",
+    "signSubTitle" : "Ciudad industrial, República de Schwarzwald"
+  },
+  "evt_bomb" : {
+    "displayName" : "Laberinto de eventos"
+  },
+  "force_1-1" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_1-2" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_1-3" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_2-1" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_2-2" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_2-3" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_3-1" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_3-2" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_3-3" : {
+    "displayName" : "Modo contrarreloj"
+  },
+  "force_map1" : {
+    "displayName" : "Laberinto de las Valquirias",
+    "signMainTitle" : "Urd",
+    "signSubTitle" : "Laberinto de las Valquirias"
+  },
+  "force_map2" : {
+    "displayName" : "Laberinto de las Valquirias",
+    "signMainTitle" : "Verdandi",
+    "signSubTitle" : "Laberinto de las Valquirias"
+  },
+  "force_map3" : {
+    "displayName" : "Laberinto de las Valquirias",
+    "signMainTitle" : "Skuld",
+    "signSubTitle" : "Laberinto de las Valquirias"
+  },
+  "gef_d01_i" : {
+    "displayName" : "Ilusión vampírica",
+    "signMainTitle" : "Página 250",
+    "signSubTitle" : "Ilusión vampírica"
+  },
+  "gef_dun00" : {
+    "displayName" : "Mazmorra subterránea de Geffen, piso 1",
+    "signMainTitle" : "Mazmorra de Geffen, piso 1"
+  },
+  "gef_dun01" : {
+    "displayName" : "Mazmorra subterránea de Geffen, piso 2",
+    "signMainTitle" : "Mazmorra de Geffen, piso 2"
+  },
+  "gef_dun02" : {
+    "displayName" : "Mazmorra subterránea de Geffen, piso 3",
+    "signMainTitle" : "Mazmorra de Geffen, piso 3"
+  },
+  "gef_dun03" : {
+    "displayName" : "Mazmorra de Geffenia",
+    "signMainTitle" : "Geffenia",
+    "signSubTitle" : "Geffen"
+  },
+  "gef_f10_a" : {
+    "displayName" : "Pueblo de Orco",
+    "signMainTitle" : "Pueblo de Orco",
+    "signSubTitle" : "Campo de Geffen"
+  },
+  "gef_f10_b" : {
+    "displayName" : "Pueblo de Orco",
+    "signMainTitle" : "Pueblo de Orco",
+    "signSubTitle" : "Campo de Geffen"
+  },
+  "gef_f10_c" : {
+    "displayName" : "Pueblo de Orco",
+    "signMainTitle" : "Pueblo de Orco",
+    "signSubTitle" : "Campo de Geffen"
+  },
+  "gef_fild00" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild01" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild02" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild03" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild04" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild05" : {
+    "displayName" : "Aldea gitana",
+    "signMainTitle" : "Aldea gitana",
+    "signSubTitle" : "Campo de Geffen"
+  },
+  "gef_fild06" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild07" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild08" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild09" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild10" : {
+    "displayName" : "Pueblo de Orco",
+    "signMainTitle" : "Pueblo de Orco",
+    "signSubTitle" : "Campo de Geffen"
+  },
+  "gef_fild11" : {
+    "displayName" : "Campo de Geffen",
+    "signMainTitle" : "Campo de Geffen"
+  },
+  "gef_fild13" : {
+    "displayName" : "Britonia",
+    "signMainTitle" : "Britonia",
+    "signSubTitle" : "Campo de Geffen"
+  },
+  "gef_tower" : {
+    "displayName" : "Torre de Geffen",
+    "signMainTitle" : "Torre",
+    "signSubTitle" : "Geffen"
+  },
+  "gefenia01" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "gefenia02" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "gefenia03" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "gefenia04" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "geffen" : {
+    "displayName" : "Geffen, la ciudad mágica",
+    "signMainTitle" : "Geffen",
+    "signSubTitle" : "Ciudad mágica en el reino de Rune-Midgarts"
+  },
+  "geffen_in" : {
+    "displayName" : "Interior de Geffen"
+  },
+  "gefg_cas01" : {
+    "displayName" : "Repherion",
+    "signMainTitle" : "Repherion",
+    "signSubTitle" : "Britonia"
+  },
+  "gefg_cas02" : {
+    "displayName" : "Eeyolbriggar",
+    "signMainTitle" : "Eeyolbriggar",
+    "signSubTitle" : "Britonia"
+  },
+  "gefg_cas03" : {
+    "displayName" : "Yesnelph",
+    "signMainTitle" : "Yesnelph",
+    "signSubTitle" : "Britonia"
+  },
+  "gefg_cas04" : {
+    "displayName" : "Bergel",
+    "signMainTitle" : "Bergel",
+    "signSubTitle" : "Britonia"
+  },
+  "gefg_cas05" : {
+    "displayName" : "Mersetzdeitz",
+    "signMainTitle" : "Mersetzdeitz",
+    "signSubTitle" : "Britonia"
+  },
+  "gl_cas01" : {
+    "displayName" : "Castillo de Glastheim, piso 1",
+    "signMainTitle" : "Castillo de Glastheim, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_cas01_" : {
+    "displayName" : "Abismo de Glastheim, piso 1",
+    "signMainTitle" : "Abismo, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_cas02" : {
+    "displayName" : "Castillo de Glastheim, piso 2",
+    "signMainTitle" : "Castillo de Glastheim, piso 2",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_cas02_" : {
+    "displayName" : "Pasillo del piso 2",
+    "signMainTitle" : "Pasillo del piso 2",
+    "signSubTitle" : "Antiguo Glastheim"
+  },
+  "gl_church" : {
+    "displayName" : "Monasterio de Glastheim",
+    "signMainTitle" : "Monasterio",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_church_a" : {
+    "displayName" : "Monasterio de Glastheim",
+    "signMainTitle" : "Monasterio",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_church_b" : {
+    "displayName" : "Monasterio de Glastheim",
+    "signMainTitle" : "Monasterio",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_chyard" : {
+    "displayName" : "Catacumbas de Glastheim",
+    "signMainTitle" : "Catacumbas",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_chyard_" : {
+    "displayName" : "Cementerio del monasterio",
+    "signMainTitle" : "Cementerio del monasterio",
+    "signSubTitle" : "Antiguo Glastheim"
+  },
+  "gl_dun01" : {
+    "displayName" : "Cueva subterránea de Glastheim, piso 1",
+    "signMainTitle" : "Cueva subterránea, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_dun02" : {
+    "displayName" : "Cueva subterránea de Glastheim, piso 2",
+    "signMainTitle" : "Cueva subterránea, piso 2",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_in01" : {
+    "displayName" : "Interior de Glastheim",
+    "signMainTitle" : "Interior de Glastheim",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_knt01" : {
+    "displayName" : "Caballería de Glastheim, piso 1",
+    "signMainTitle" : "Caballería, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_knt02" : {
+    "displayName" : "Caballería de Glastheim, piso 2",
+    "signMainTitle" : "Caballería, piso 2",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_prison" : {
+    "displayName" : "Prisión subterránea de Glastheim, piso 1",
+    "signMainTitle" : "Infraprisión, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_prison1" : {
+    "displayName" : "Infraprisión de Glastheim, piso 2",
+    "signMainTitle" : "Infraprisión, piso 2",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_sew01" : {
+    "displayName" : "Alcantarilla de Glastheim, piso 1",
+    "signMainTitle" : "Alcantarilla, piso 1",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_sew02" : {
+    "displayName" : "Alcantarilla de Glastheim, piso 2",
+    "signMainTitle" : "Alcantarilla, piso 2",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_sew03" : {
+    "displayName" : "Alcantarilla de Glastheim, piso 3",
+    "signMainTitle" : "Alcantarilla, piso 3",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_sew04" : {
+    "displayName" : "Alcantarilla de Glastheim, piso 4",
+    "signMainTitle" : "Alcantarilla, piso 4",
+    "signSubTitle" : "Glastheim"
+  },
+  "gl_step" : {
+    "displayName" : "Mazmorra de las escaleras de Glastheim",
+    "signMainTitle" : "Mazmorra de las escaleras",
+    "signSubTitle" : "Glastheim"
+  },
+  "glast_01" : {
+    "displayName" : "Glastheim",
+    "signMainTitle" : "Glastheim"
+  },
+  "gld2_ald" : {
+    "displayName" : "Salón del abismo: Lágrimas del héroe",
+    "signMainTitle" : "Lágrimas del héroe",
+    "signSubTitle" : "Salón del abismo de Luina"
+  },
+  "gld2_gef" : {
+    "displayName" : "Salón del abismo: Colina de los muertos",
+    "signMainTitle" : "Colina de los muertos",
+    "signSubTitle" : "Salón del abismo, Britonia"
+  },
+  "gld2_pay" : {
+    "displayName" : "Salón del abismo: Viento antiguo",
+    "signMainTitle" : "Viento antiguo",
+    "signSubTitle" : "Salón del abismo, lago Greenwood"
+  },
+  "gld2_prt" : {
+    "displayName" : "Salón del abismo: Camino del guerrero",
+    "signMainTitle" : "Camino del guerrero",
+    "signSubTitle" : "Salón del abismo, reino de Valkiria"
+  },
+  "gld_dun01" : {
+    "displayName" : "Mazmorra subterránea del lago Greenwood",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 1",
+    "signSubTitle" : "Lago Greenwood"
+  },
+  "gld_dun01_2" : {
+    "displayName" : "Mazmorra del lago Greenwood, piso 2",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 2",
+    "signSubTitle" : "Lago Greenwood"
+  },
+  "gld_dun02" : {
+    "displayName" : "Mazmorra subterránea de Luina",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 1",
+    "signSubTitle" : "Luina"
+  },
+  "gld_dun02_2" : {
+    "displayName" : "Mazmorra de Luina, piso 2",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 2",
+    "signSubTitle" : "Luina"
+  },
+  "gld_dun03" : {
+    "displayName" : "Mazmorra subterránea del reino de Valkiria",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 1",
+    "signSubTitle" : "Reino de Valkiria"
+  },
+  "gld_dun03_2" : {
+    "displayName" : "Mazmorra del reino de Valkiria, piso 2",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 2",
+    "signSubTitle" : "Reino de Valkiria"
+  },
+  "gld_dun04" : {
+    "displayName" : "Mazmorra subterránea de Britonia, piso 1",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 1",
+    "signSubTitle" : "Britonia"
+  },
+  "gld_dun04_2" : {
+    "displayName" : "Mazmorra de Britonia, piso 2",
+    "signMainTitle" : "Mazmorra subterránea del gremio, piso 2",
+    "signSubTitle" : "Britonia"
+  },
+  "gon_dun01" : {
+    "displayName" : "Santuario de la reina de Kunlun",
+    "signMainTitle" : "Santuario de la reina de Kunlun",
+    "signSubTitle" : "Kunlun"
+  },
+  "gon_dun02" : {
+    "displayName" : "Damas del ermitaño de Kunlun",
+    "signMainTitle" : "Damas del ermitaño",
+    "signSubTitle" : "Kunlun"
+  },
+  "gon_dun03" : {
+    "displayName" : "Arcadia en Kunlun",
+    "signMainTitle" : "Arcadia",
+    "signSubTitle" : "Kunlun"
+  },
+  "gon_fild01" : {
+    "displayName" : "Campo de Kunlun",
+    "signMainTitle" : "Campo de Kunlun"
+  },
+  "gon_in" : {
+    "displayName" : "Interior de Kunlun"
+  },
+  "gon_test" : {
+    "displayName" : "Arena de batalla de Kunlun",
+    "signMainTitle" : "Arena de batalla de Kunlun"
+  },
+  "gonryun" : {
+    "displayName" : "Kunlun, la tierra de los ermitaños",
+    "signMainTitle" : "Kunlun",
+    "signSubTitle" : "Tierra de los ermitaños"
+  },
+  "grademk" : {
+    "displayName" : "Instalación de Mejora de Grado",
+    "signSubTitle" : "Instalación de Mejora de Grado"
+  },
+  "guild_room" : {
+    "displayName" : "Sala de espera de la arena de la guerra de gremios",
+    "signMainTitle" : "Sala de espera de la arena de la guerra de gremios"
+  },
+  "guild_vs1" : {
+    "displayName" : "Arena de la guerra de gremios",
+    "signMainTitle" : "Arena de la guerra de gremios"
+  },
+  "guild_vs2" : {
+    "displayName" : "Arena de la guerra de gremios",
+    "signMainTitle" : "Arena de la guerra de gremios"
+  },
+  "guild_vs3" : {
+    "displayName" : "Arena de la guerra de gremios",
+    "signMainTitle" : "Arena de la guerra de gremios"
+  },
+  "guild_vs4" : {
+    "displayName" : "Arena de la guerra de gremios",
+    "signMainTitle" : "Arena de la guerra de gremios"
+  },
+  "guild_vs5" : {
+    "displayName" : "Arena de la guerra de gremios",
+    "signMainTitle" : "Arena de la guerra de gremios"
+  },
+  "gw_fild01" : {
+    "displayName" : "Bosque del Lobo Gris (1)",
+    "signMainTitle" : "Bosque Gris"
+  },
+  "gw_fild02" : {
+    "displayName" : "Bosque del Lobo Gris (2)",
+    "signMainTitle" : "Bosque Gris"
+  },
+  "har_in01" : {
+    "displayName" : "Cresta rocosa"
+  },
+  "harboro1" : {
+    "displayName" : "Cresta rocosa",
+    "signMainTitle" : "Cresta rocosa"
+  },
+  "harboro2" : {
+    "displayName" : "Alcantarilla",
+    "signMainTitle" : "Alcantarilla",
+    "signSubTitle" : "Cresta rocosa"
+  },
+  "himinn" : {
+    "displayName" : "Salón de Valkiria (Himinn)",
+    "signMainTitle" : "Salón de Valkiria"
+  },
+  "httyd_01" : {
+    "displayName" : "Lago del Abismo (Evento)",
+    "signMainTitle" : "Lago del Abismo",
+    "signSubTitle" : "Cómo Entrenar a tu Dragón"
+  },
+  "httyd_02" : {
+    "displayName" : "Cueva del Lago del Abismo (Evento)",
+    "signMainTitle" : "Cueva del Abismo",
+    "signSubTitle" : "Cómo Entrenar a tu Dragón"
+  },
+  "hu_fild01" : {
+    "displayName" : "Entrada a la Torre de Thanatos",
+    "signMainTitle" : "Entrada a la Torre de Thanatos"
+  },
+  "hu_fild02" : {
+    "displayName" : "Campo de Hugel",
+    "signMainTitle" : "Campo de Hugel"
+  },
+  "hu_fild03" : {
+    "displayName" : "Coto de cacería real",
+    "signMainTitle" : "Coto de cacería real"
+  },
+  "hu_fild04" : {
+    "displayName" : "Campo de Hugel",
+    "signMainTitle" : "Campo de Hugel"
+  },
+  "hu_fild05" : {
+    "displayName" : "Lago del abismo, Hugel",
+    "signMainTitle" : "Lago del abismo, Hugel"
+  },
+  "hu_fild06" : {
+    "displayName" : "Campo de Hugel",
+    "signMainTitle" : "Campo de Hugel"
+  },
+  "hu_in01" : {
+    "displayName" : "Interior de Hugel"
+  },
+  "hugel" : {
+    "displayName" : "Hugel, la pintoresca aldea jardín",
+    "signMainTitle" : "Hugel",
+    "signSubTitle" : "Aldea jardín, República de Schwarzwald"
+  },
+  "hunter_1-1" : {
+    "displayName" : "Centro de cambio de clase a Cazador"
+  },
+  "hunter_2-1" : {
+    "displayName" : "Centro de cambio de clase a Cazador"
+  },
+  "hunter_3-1" : {
+    "displayName" : "Centro de cambio de clase a Cazador"
+  },
+  "ice_d03_i" : {
+    "displayName" : "Ilusión de hielo",
+    "signMainTitle" : "Cueva de hielo",
+    "signSubTitle" : "Ilusión de hielo"
+  },
+  "ice_dun01" : {
+    "displayName" : "Cueva de hielo de Rachel, piso 1",
+    "signMainTitle" : "Cueva de hielo de Rachel, piso 1"
+  },
+  "ice_dun02" : {
+    "displayName" : "Cueva de hielo de Rachel, piso 2",
+    "signMainTitle" : "Cueva de hielo de Rachel, piso 2"
+  },
+  "ice_dun03" : {
+    "displayName" : "Cueva de hielo de Rachel, piso 3",
+    "signMainTitle" : "Cueva de hielo de Rachel, piso 3"
+  },
+  "ice_dun04" : {
+    "displayName" : "Cueva de hielo de Rachel, espacio sellado",
+    "signMainTitle" : "Cueva de hielo de Rachel, espacio sellado"
+  },
+  "in_hunter" : {
+    "displayName" : "Gremio de Cazadores",
+    "signMainTitle" : "Gremio de Cazadores"
+  },
+  "in_moc_16" : {
+    "displayName" : "Gremio de Asesinos",
+    "signMainTitle" : "Desierto Sograt",
+    "signSubTitle" : "Gremio de Asesinos"
+  },
+  "in_orcs01" : {
+    "displayName" : "Dentro del Pueblo de Orco"
+  },
+  "in_rogue" : {
+    "displayName" : "Interior del gremio de Pícaros"
+  },
+  "in_sphinx1" : {
+    "displayName" : "Mazmorra de la esfinge de Morroc, piso 1",
+    "signMainTitle" : "Mazmorra de la esfinge, piso 1",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "in_sphinx2" : {
+    "displayName" : "Mazmorra de la esfinge de Morroc, piso 2",
+    "signMainTitle" : "Mazmorra de la esfinge, piso 2",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "in_sphinx3" : {
+    "displayName" : "Mazmorra de la esfinge de Morroc, piso 3",
+    "signMainTitle" : "Mazmorra de la esfinge, piso 3",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "in_sphinx4" : {
+    "displayName" : "Mazmorra de la esfinge de Morroc, piso 4",
+    "signMainTitle" : "Mazmorra de la esfinge, piso 4",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "in_sphinx5" : {
+    "displayName" : "Mazmorra de la esfinge de Morroc, piso 5",
+    "signMainTitle" : "Mazmorra de la esfinge, piso 5",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "int_land" : {
+    "displayName" : "Isla remota",
+    "signMainTitle" : "Isla remota"
+  },
+  "int_land01" : {
+    "displayName" : "Isla remota",
+    "signMainTitle" : "Isla remota"
+  },
+  "int_land02" : {
+    "displayName" : "Isla remota",
+    "signMainTitle" : "Isla remota"
+  },
+  "int_land03" : {
+    "displayName" : "Isla remota",
+    "signMainTitle" : "Isla remota"
+  },
+  "int_land04" : {
+    "displayName" : "Isla remota",
+    "signMainTitle" : "Isla remota"
+  },
+  "itemmall" : {
+    "displayName" : "Centro comercial de objetos"
+  },
+  "iz_ac01" : {
+    "displayName" : "Academia de criaturas, piso 1",
+    "signMainTitle" : "Academia de criaturas, piso 1"
+  },
+  "iz_ac01_a" : {
+    "displayName" : "Academia de criaturas, piso 1",
+    "signMainTitle" : "Academia de criaturas, piso 1"
+  },
+  "iz_ac01_b" : {
+    "displayName" : "Academia de criaturas, piso 1",
+    "signMainTitle" : "Academia de criaturas, piso 1"
+  },
+  "iz_ac01_c" : {
+    "displayName" : "Academia de criaturas, piso 1",
+    "signMainTitle" : "Academia de criaturas, piso 1"
+  },
+  "iz_ac01_d" : {
+    "displayName" : "Academia de criaturas, piso 1",
+    "signMainTitle" : "Academia de criaturas, piso 1"
+  },
+  "iz_ac02" : {
+    "displayName" : "Academia de criaturas, piso 2",
+    "signMainTitle" : "Academia de criaturas, piso 2"
+  },
+  "iz_ac02_a" : {
+    "displayName" : "Academia de criaturas, piso 2",
+    "signMainTitle" : "Academia de criaturas, piso 2"
+  },
+  "iz_ac02_b" : {
+    "displayName" : "Academia de criaturas, piso 2",
+    "signMainTitle" : "Academia de criaturas, piso 2"
+  },
+  "iz_ac02_c" : {
+    "displayName" : "Academia de criaturas, piso 2",
+    "signMainTitle" : "Academia de criaturas, piso 2"
+  },
+  "iz_ac02_d" : {
+    "displayName" : "Academia de criaturas, piso 2",
+    "signMainTitle" : "Academia de criaturas, piso 2"
+  },
+  "iz_d04_i" : {
+    "displayName" : "Ilusión submarina (1)",
+    "signMainTitle" : "Ilusión submarina (1)"
+  },
+  "iz_d05_i" : {
+    "displayName" : "Ilusión submarina (2)",
+    "signMainTitle" : "Ilusión submarina (2)"
+  },
+  "iz_dun00" : {
+    "displayName" : "Mazmorra de la cueva submarina de Izlude, piso 1",
+    "signMainTitle" : "Cueva submarina de Izlude, piso 1",
+    "signSubTitle" : "Isla Byalan"
+  },
+  "iz_dun01" : {
+    "displayName" : "Mazmorra de la cueva submarina de Izlude, piso 2",
+    "signMainTitle" : "Cueva submarina de Izlude, piso 2",
+    "signSubTitle" : "Isla Byalan"
+  },
+  "iz_dun02" : {
+    "displayName" : "Mazmorra de la cueva submarina de Izlude, piso 3",
+    "signMainTitle" : "Cueva submarina de Izlude, piso 3",
+    "signSubTitle" : "Isla Byalan"
+  },
+  "iz_dun03" : {
+    "displayName" : "Mazmorra de la cueva submarina de Izlude, piso 4",
+    "signMainTitle" : "Cueva submarina de Izlude, piso 4",
+    "signSubTitle" : "Isla Byalan"
+  },
+  "iz_dun04" : {
+    "displayName" : "Mazmorra de la cueva submarina de Izlude, piso 5",
+    "signMainTitle" : "Cueva submarina de Izlude, piso 5",
+    "signSubTitle" : "Isla Byalan"
+  },
+  "iz_dun05" : {
+    "displayName" : "Mazmorra de la cueva submarina de Izlude, piso 6",
+    "signMainTitle" : "Cueva submarina, piso 6",
+    "signSubTitle" : "Izlude"
+  },
+  "iz_int" : {
+    "displayName" : "Ferry varado",
+    "signMainTitle" : "Ferry varado"
+  },
+  "iz_int01" : {
+    "displayName" : "Ferry varado",
+    "signMainTitle" : "Ferry varado"
+  },
+  "iz_int02" : {
+    "displayName" : "Ferry varado",
+    "signMainTitle" : "Ferry varado"
+  },
+  "iz_int03" : {
+    "displayName" : "Ferry varado",
+    "signMainTitle" : "Ferry varado"
+  },
+  "iz_int04" : {
+    "displayName" : "Ferry varado",
+    "signMainTitle" : "Ferry varado"
+  },
+  "iz_ng01" : {
+    "displayName" : "Mapa guía para Ninjas"
+  },
+  "izlu2dun" : {
+    "displayName" : "Isla Byalan",
+    "signMainTitle" : "Isla Byalan",
+    "signSubTitle" : "Izlude"
+  },
+  "izlude" : {
+    "displayName" : "Izlude, la ciudad satélite",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Ciudad satélite de Prontera, reino de Rune-Midgarts"
+  },
+  "izlude_a" : {
+    "displayName" : "Izlude, la ciudad satélite",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Ciudad satélite de Prontera, reino de Rune-Midgarts"
+  },
+  "izlude_b" : {
+    "displayName" : "Izlude, la ciudad satélite",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Ciudad satélite de Prontera, reino de Rune-Midgarts"
+  },
+  "izlude_c" : {
+    "displayName" : "Izlude, la ciudad satélite",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Ciudad satélite de Prontera, reino de Rune-Midgarts"
+  },
+  "izlude_d" : {
+    "displayName" : "Izlude, la ciudad satélite",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Ciudad satélite de Prontera, reino de Rune-Midgarts"
+  },
+  "izlude_in" : {
+    "displayName" : "Interior de Izlude"
+  },
+  "jawaii" : {
+    "displayName" : "Jawaii, la isla Luna de miel",
+    "signMainTitle" : "Jawaii",
+    "signSubTitle" : "Isla Luna de miel"
+  },
+  "jawaii_in" : {
+    "displayName" : "Interior de Jawaii"
+  },
+  "job3_arch01" : {
+    "displayName" : "Sala de espera de cambio de clase a Arzobispo"
+  },
+  "job3_arch02" : {
+    "displayName" : "Templo de Odín de Hugel"
+  },
+  "job3_arch03" : {
+    "displayName" : "Sala de espera de cambio de clase a Arzobispo"
+  },
+  "job3_gen01" : {
+    "displayName" : "Laboratorio de Genetista"
+  },
+  "job3_guil01" : {
+    "displayName" : "Taberna secreta"
+  },
+  "job3_guil02" : {
+    "displayName" : "Interior del antiguo depósito"
+  },
+  "job3_guil03" : {
+    "displayName" : "Mansión aislada"
+  },
+  "job3_rang01" : {
+    "displayName" : "Sala de espera de cambio de clase a Errante"
+  },
+  "job3_rang02" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Errante"
+  },
+  "job3_rune01" : {
+    "displayName" : "Interior del templario del Caballero rúnico"
+  },
+  "job3_rune02" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Caballero rúnico"
+  },
+  "job3_rune03" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Caballero rúnico"
+  },
+  "job3_war01" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Brujo"
+  },
+  "job3_war02" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Brujo"
+  },
+  "job4_bio" : {
+    "displayName" : "Jardín Secreto",
+    "signMainTitle" : "Jardín Secreto"
+  },
+  "job4_mag" : {
+    "displayName" : "Fuente de Poder Mágico",
+    "signMainTitle" : "Fuente de Poder Mágico"
+  },
+  "job4_tro" : {
+    "displayName" : "Embarcación Vacía de Kvasir",
+    "signMainTitle" : "Embarcación Vacía de Kvasir"
+  },
+  "job_cru" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Cruzado"
+  },
+  "job_duncer" : {
+    "displayName" : "Teatro de Comodo"
+  },
+  "job_gun" : {
+    "displayName" : "Refugio de la liberación",
+    "signMainTitle" : "Refugio de la liberación"
+  },
+  "job_hunte" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Cazadore"
+  },
+  "job_knt" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Caballero"
+  },
+  "job_ko" : {
+    "displayName" : "Lugar oculto"
+  },
+  "job_monk" : {
+    "displayName" : "Abadía de Santa Capitolina"
+  },
+  "job_prist" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Sacerdote"
+  },
+  "job_sage" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Sabio"
+  },
+  "job_soul" : {
+    "displayName" : "Tu corazón"
+  },
+  "job_star" : {
+    "displayName" : "El sol, la luna y las estrellas"
+  },
+  "job_thief1" : {
+    "displayName" : "Centro de cambio de clase a Ladrón"
+  },
+  "job_wiz" : {
+    "displayName" : "Salón de pruebas de cambio de clase a Hechicero"
+  },
+  "jupe_area1" : {
+    "displayName" : "Zona restringida de Juperos",
+    "signMainTitle" : "Zona restringida de Juperos"
+  },
+  "jupe_area2" : {
+    "displayName" : "Zona restringida de Juperos",
+    "signMainTitle" : "Zona restringida de Juperos"
+  },
+  "jupe_cave" : {
+    "displayName" : "Entrada a la cueva de Juperos",
+    "signMainTitle" : "Entrada a la cueva de Juperos"
+  },
+  "jupe_core" : {
+    "displayName" : "Núcleo de Juperos",
+    "signMainTitle" : "Núcleo de Juperos"
+  },
+  "jupe_core2" : {
+    "displayName" : "Núcleo de Juperos",
+    "signMainTitle" : "Núcleo de Juperos"
+  },
+  "jupe_ele" : {
+    "displayName" : "Ascensor de Juperos",
+    "signMainTitle" : "Ascensor de Juperos"
+  },
+  "jupe_ele_r" : {
+    "displayName" : "Sala de ascensores de Juperos",
+    "signMainTitle" : "Sala de ascensores de Juperos"
+  },
+  "jupe_gate" : {
+    "displayName" : "Zona restringida de Juperos",
+    "signMainTitle" : "Zona restringida de Juperos"
+  },
+  "juperos_01" : {
+    "displayName" : "Fuera de las ruinas de Juperos",
+    "signMainTitle" : "Fuera de las ruinas de Juperos"
+  },
+  "juperos_01a" : {
+    "displayName" : "Fuera de las ruinas de Juperos",
+    "signMainTitle" : "Fuera de las ruinas de Juperos"
+  },
+  "juperos_01b" : {
+    "displayName" : "Fuera de las ruinas de Juperos",
+    "signMainTitle" : "Fuera de las ruinas de Juperos"
+  },
+  "juperos_02" : {
+    "displayName" : "Interior de las ruinas de Juperos",
+    "signMainTitle" : "Interior de las ruinas de Juperos"
+  },
+  "kh_dun01" : {
+    "displayName" : "Fábrica de robots, piso 1",
+    "signMainTitle" : "Fábrica de robots, piso 1"
+  },
+  "kh_dun02" : {
+    "displayName" : "Fábrica de robots, piso 2",
+    "signMainTitle" : "Fábrica de robots, piso 2"
+  },
+  "kh_kiehl01" : {
+    "displayName" : "Sala de Kiehl"
+  },
+  "kh_kiehl02" : {
+    "displayName" : "La última sala de Kiehl"
+  },
+  "kh_mansion" : {
+    "displayName" : "Mansión de Kiel Hyre",
+    "signMainTitle" : "Mansión de Kiel Hyre"
+  },
+  "kh_rossi" : {
+    "displayName" : "Mansión de Rosimier",
+    "signMainTitle" : "Mansión de Rosimier"
+  },
+  "kh_school" : {
+    "displayName" : "Academia Kiel Hyre",
+    "signMainTitle" : "Academia Kiel Hyre"
+  },
+  "kh_vila" : {
+    "displayName" : "Cabaña de Kiel Hyre",
+    "signMainTitle" : "Cabaña de Kiel Hyre"
+  },
+  "knight_1-1" : {
+    "displayName" : "Centro de cambio de clase a Caballero"
+  },
+  "knight_2-1" : {
+    "displayName" : "Centro de cambio de clase a Caballero"
+  },
+  "knight_3-1" : {
+    "displayName" : "Centro de cambio de clase a Caballero"
+  },
+  "lasa_dun01" : {
+    "displayName" : "Guarida del Dragón",
+    "signMainTitle" : "Guarida del Dragón, piso 1"
+  },
+  "lasa_dun02" : {
+    "displayName" : "Guarida del Dragón",
+    "signMainTitle" : "Guarida del Dragón, piso 2"
+  },
+  "lasa_dun03" : {
+    "displayName" : "Guarida del Dragón",
+    "signMainTitle" : "Guarida del Dragón, piso 3"
+  },
+  "lasa_dun_q" : {
+    "displayName" : "Guarida del Dragón",
+    "signMainTitle" : "Guarida del Dragón"
+  },
+  "lasa_fild01" : {
+    "displayName" : "Guardia de la llanura de Ravioli",
+    "signMainTitle" : "Guardia de la llanura de Ravioli",
+    "signSubTitle" : "Lasagna"
+  },
+  "lasa_fild02" : {
+    "displayName" : "Bosque de Ravioli",
+    "signMainTitle" : "Bosque de Ravioli"
+  },
+  "lasa_in01" : {
+    "displayName" : "Dentro de Lasagna"
+  },
+  "lasa_sea" : {
+    "displayName" : "Cueva de Miaul",
+    "signMainTitle" : "Cueva de Miaul"
+  },
+  "lasagna" : {
+    "displayName" : "Ciudad portuaria Lasagna",
+    "signMainTitle" : "Lasagna",
+    "signSubTitle" : "Ciudad portuaria del continente de la pasta"
+  },
+  "lhz_airport" : {
+    "displayName" : "Aeropuerto de Lighthalzen",
+    "signMainTitle" : "Aeropuerto de Lighthalzen"
+  },
+  "lhz_cube" : {
+    "displayName" : "Sala del cubo"
+  },
+  "lhz_d_n2" : {
+    "displayName" : "Espacio de pensamientos",
+    "signMainTitle" : "Espacio de pensamientos"
+  },
+  "lhz_dun01" : {
+    "displayName" : "Sótano del biolaboratorio, piso 1",
+    "signMainTitle" : "Sótano del biolaboratorio, piso 1"
+  },
+  "lhz_dun02" : {
+    "displayName" : "Sótano del biolaboratorio, piso 2",
+    "signMainTitle" : "Sótano del biolaboratorio, piso 2"
+  },
+  "lhz_dun03" : {
+    "displayName" : "Sótano del biolaboratorio, piso 3",
+    "signMainTitle" : "Sótano del biolaboratorio, piso 3"
+  },
+  "lhz_dun04" : {
+    "displayName" : "Sótano del biolaboratorio, piso 4",
+    "signMainTitle" : "Sótano del biolaboratorio, piso 4"
+  },
+  "lhz_dun_n" : {
+    "displayName" : "Tumba de los caídos",
+    "signMainTitle" : "Tumba de los caídos"
+  },
+  "lhz_fild01" : {
+    "displayName" : "Campo de Lighthalzen",
+    "signMainTitle" : "Campo de Lighthalzen"
+  },
+  "lhz_fild02" : {
+    "displayName" : "Campo de Lighthalzen (Valle de la Parca)",
+    "signMainTitle" : "Valle de la Parca",
+    "signSubTitle" : "Campo de Lighthalzen "
+  },
+  "lhz_fild03" : {
+    "displayName" : "Campo de Lighthalzen",
+    "signMainTitle" : "Campo de Lighthalzen"
+  },
+  "lhz_in01" : {
+    "displayName" : "Sede de la Corporación Rekenber",
+    "signMainTitle" : "Sede de la Corporación Rekenber"
+  },
+  "lhz_in02" : {
+    "displayName" : "Interior de Lighthalzen"
+  },
+  "lhz_in03" : {
+    "displayName" : "Interior de Lighthalzen"
+  },
+  "lhz_que01" : {
+    "displayName" : "Interior de Lighthalzen"
+  },
+  "lighthalzen" : {
+    "displayName" : "Lighthalzen, la ciudad corporativa",
+    "signMainTitle" : "Lighthalzen",
+    "signSubTitle" : "Ciudad corporativa, República de Schwarzwald"
+  },
+  "lou_dun01" : {
+    "displayName" : "La Tumba real",
+    "signMainTitle" : "La Tumba real"
+  },
+  "lou_dun02" : {
+    "displayName" : "Interior de la Tumba real",
+    "signMainTitle" : "Interior de la Tumba real"
+  },
+  "lou_dun03" : {
+    "displayName" : "Suei Long Gon",
+    "signMainTitle" : "Suei Long Gon"
+  },
+  "lou_fild01" : {
+    "displayName" : "Campo de Luoyang",
+    "signMainTitle" : "Campo de Luoyang"
+  },
+  "lou_fild01a" : {
+    "displayName" : "Campo de Luoyang",
+    "signMainTitle" : "Campo de Luoyang"
+  },
+  "lou_fild01b" : {
+    "displayName" : "Campo de Luoyang",
+    "signMainTitle" : "Campo de Luoyang"
+  },
+  "lou_in01" : {
+    "displayName" : "Interior de Luoyang"
+  },
+  "lou_in02" : {
+    "displayName" : "Interior de Luoyang"
+  },
+  "louyang" : {
+    "displayName" : "Luoyang, la tierra alta",
+    "signMainTitle" : "Luoyang",
+    "signSubTitle" : "Tierra alta"
+  },
+  "ma_dun01" : {
+    "displayName" : "Hospital Bangungot, piso 1",
+    "signMainTitle" : "Hospital Bangungot, piso 1"
+  },
+  "ma_fild01" : {
+    "displayName" : "Baryo Mahiwaga",
+    "signMainTitle" : "Baryo Mahiwaga",
+    "signSubTitle" : "Puerto Malaya"
+  },
+  "ma_fild02" : {
+    "displayName" : "Bosque",
+    "signMainTitle" : "Bosque",
+    "signSubTitle" : "Puerto Malaya"
+  },
+  "ma_in01" : {
+    "displayName" : "Dentro de Malaya"
+  },
+  "ma_scene01" : {
+    "displayName" : "Lago Bakonawa",
+    "signMainTitle" : "Lago Bakonawa",
+    "signSubTitle" : "Puerto Malaya"
+  },
+  "ma_zif01" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif02" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif03" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif04" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif05" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif06" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif07" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif08" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif09" : {
+    "displayName" : "Dentro de Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "mag_dun01" : {
+    "displayName" : "Juno Norgroad, piso 1",
+    "signMainTitle" : "Juno Norgroad, piso 1"
+  },
+  "mag_dun01a" : {
+    "displayName" : "Juno Norgroad, piso 1",
+    "signMainTitle" : "Juno Norgroad, piso 1"
+  },
+  "mag_dun01b" : {
+    "displayName" : "Juno Norgroad, piso 1",
+    "signMainTitle" : "Juno Norgroad, piso 1"
+  },
+  "mag_dun02" : {
+    "displayName" : "Juno Norgroad, piso 2",
+    "signMainTitle" : "Juno Norgroad, piso 2"
+  },
+  "mag_dun02a" : {
+    "displayName" : "Juno Norgroad, piso 2",
+    "signMainTitle" : "Juno Norgroad, piso 2"
+  },
+  "mag_dun02b" : {
+    "displayName" : "Juno Norgroad, piso 2",
+    "signMainTitle" : "Juno Norgroad, piso 2"
+  },
+  "mag_dun03" : {
+    "displayName" : "Juno Norgroad, piso 3",
+    "signMainTitle" : "Norgroad, piso 3"
+  },
+  "mal_dun01" : {
+    "displayName" : "Zona de coral estrellado",
+    "signMainTitle" : "Zona de coral estrellado"
+  },
+  "mal_in01" : {
+    "displayName" : "Interior de la isla de Malangdo"
+  },
+  "mal_in02" : {
+    "displayName" : "Interior del barco",
+    "signMainTitle" : "Interior del barco mariposa",
+    "signSubTitle" : "Isla de Malangdo"
+  },
+  "malangdo" : {
+    "displayName" : "Isla de Malangdo",
+    "signMainTitle" : "Isla de Malangdo"
+  },
+  "malaya" : {
+    "displayName" : "Puerto Malaya",
+    "signMainTitle" : "Puerto Malaya"
+  },
+  "man_fild01" : {
+    "displayName" : "Campo de Manuk"
+  },
+  "man_fild02" : {
+    "displayName" : "Campo de Manuk",
+    "signMainTitle" : "Campo de Manuk"
+  },
+  "man_fild03" : {
+    "displayName" : "Campo de Manuk",
+    "signMainTitle" : "Campo de Manuk"
+  },
+  "man_in01" : {
+    "displayName" : "Interior de Manuk"
+  },
+  "manuk" : {
+    "displayName" : "Aldea minera de Manuk",
+    "signMainTitle" : "Manuk",
+    "signSubTitle" : "Aldea minera de los saphas, Jotunheim"
+  },
+  "mid_camp" : {
+    "displayName" : "Puesto de las Fuerzas Aliadas de Midgard",
+    "signMainTitle" : "Puesto de las Fuerzas Aliadas de Midgard",
+    "signSubTitle" : "Jotunheim"
+  },
+  "mid_campin" : {
+    "displayName" : "Interior del puesto de las Fuerzas Aliadas de Midgard"
+  },
+  "mjo_dun01" : {
+    "displayName" : "Fosa abandonada de Mjolnir, piso 1",
+    "signMainTitle" : "Fosa abandonada, piso 1",
+    "signSubTitle" : "Lado norte del Monte Mjolnir"
+  },
+  "mjo_dun02" : {
+    "displayName" : "Fosa abandonada de Mjolnir, piso 2",
+    "signMainTitle" : "Fosa abandonada, piso 2",
+    "signSubTitle" : "Lado norte del Monte Mjolnir"
+  },
+  "mjo_dun03" : {
+    "displayName" : "Fosa abandonada de Mjolnir, piso 3",
+    "signMainTitle" : "Fosa abandonada, piso 3",
+    "signSubTitle" : "Lado norte del Monte Mjolnir"
+  },
+  "mjolnir_01" : {
+    "displayName" : "Monte Mjolnir, lado norte",
+    "signMainTitle" : "Monte Mjolnir, lado norte"
+  },
+  "mjolnir_02" : {
+    "displayName" : "Monte Mjolnir, lado norte",
+    "signMainTitle" : "Monte Mjolnir, lado norte"
+  },
+  "mjolnir_03" : {
+    "displayName" : "Monte Mjolnir, lado norte",
+    "signMainTitle" : "Monte Mjolnir, lado norte"
+  },
+  "mjolnir_04" : {
+    "displayName" : "Monte Mjolnir, lado norte",
+    "signMainTitle" : "Monte Mjolnir, lado norte"
+  },
+  "mjolnir_05" : {
+    "displayName" : "Monte Mjolnir, lado norte",
+    "signMainTitle" : "Monte Mjolnir, lado norte"
+  },
+  "mjolnir_06" : {
+    "displayName" : "Monte Mjolnir, lado sur",
+    "signMainTitle" : "Monte Mjolnir, lado sur"
+  },
+  "mjolnir_07" : {
+    "displayName" : "Monte Mjolnir, lado sur",
+    "signMainTitle" : "Monte Mjolnir, lado sur"
+  },
+  "mjolnir_07a" : {
+    "displayName" : "Monte Mjolnir, lado sur",
+    "signMainTitle" : "Monte Mjolnir, lado sur"
+  },
+  "mjolnir_07b" : {
+    "displayName" : "Monte Mjolnir, lado sur",
+    "signMainTitle" : "Monte Mjolnir, lado sur"
+  },
+  "mjolnir_08" : {
+    "displayName" : "Monte Mjolnir, lado sur",
+    "signMainTitle" : "Monte Mjolnir, lado sur"
+  },
+  "mjolnir_09" : {
+    "displayName" : "Monte Mjolnir, pie sur",
+    "signMainTitle" : "Monte Mjolnir, pie sur"
+  },
+  "mjolnir_10" : {
+    "displayName" : "Monte Mjolnir, lado sur",
+    "signMainTitle" : "Monte Mjolnir, lado sur"
+  },
+  "mjolnir_11" : {
+    "displayName" : "Monte Mjolnir, lado sur",
+    "signMainTitle" : "Monte Mjolnir, lado sur"
+  },
+  "mjolnir_12" : {
+    "displayName" : "Monte Mjolnir, pie norte",
+    "signMainTitle" : "Monte Mjolnir, pie norte"
+  },
+  "moc_fild01" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild02" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild03" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild07" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild11" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild12" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild13" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild16" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild17" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild18" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild19" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "moc_fild20" : {
+    "displayName" : "Grieta dimensional en el desierto Sograt",
+    "signMainTitle" : "Grieta dimensional",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "moc_fild21" : {
+    "displayName" : "Grieta dimensional en el desierto Sograt",
+    "signMainTitle" : "Grieta dimensional",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "moc_fild22" : {
+    "displayName" : "Grieta dimensional en el desierto Sograt",
+    "signMainTitle" : "Grieta dimensional",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "moc_fild22b" : {
+    "displayName" : "Grieta dimensional en el desierto Sograt",
+    "signMainTitle" : "Grieta dimensional",
+    "signSubTitle" : "Desierto Sograt"
+  },
+  "moc_para01" : {
+    "displayName" : "Dentro del Grupo de Edén de Morroc",
+    "signMainTitle" : "Grupo Del Edén"
+  },
+  "moc_para0a" : {
+    "displayName" : "Dentro del Grupo de Edén de Morroc",
+    "signMainTitle" : "Grupo Del Edén"
+  },
+  "moc_para0b" : {
+    "displayName" : "Dentro del Grupo de Edén de Morroc",
+    "signMainTitle" : "Grupo Del Edén"
+  },
+  "moc_para0c" : {
+    "displayName" : "Dentro del Grupo de Edén de Morroc",
+    "signMainTitle" : "Grupo Del Edén"
+  },
+  "moc_pryd01" : {
+    "displayName" : "Pirámide de Morroc, piso 1",
+    "signMainTitle" : "Pirámide, piso 1",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd02" : {
+    "displayName" : "Pirámide de Morroc, piso 2",
+    "signMainTitle" : "Pirámide, piso 2",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd03" : {
+    "displayName" : "Pirámide de Morroc, piso 3",
+    "signMainTitle" : "Pirámide, piso 3",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd04" : {
+    "displayName" : "Pirámide de Morroc, piso 4",
+    "signMainTitle" : "Pirámide, piso 4",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd05" : {
+    "displayName" : "Pirámide subterránea de Morroc, piso 1",
+    "signMainTitle" : "Pirámide subterránea, piso 1",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd06" : {
+    "displayName" : "Pirámide subterránea de Morroc, piso 2",
+    "signMainTitle" : "Pirámide subterránea, piso 2",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_prydb1" : {
+    "displayName" : "Gremio de Ladrones",
+    "signMainTitle" : "Gremio de Ladrones",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_prydn1" : {
+    "displayName" : "Pirámide subterránea de Morroc, piso 1: Pesadilla",
+    "signMainTitle" : "Pirámide subterránea, piso 1"
+  },
+  "moc_prydn2" : {
+    "displayName" : "Pirámide subterránea de Morroc, piso 2: Pesadilla",
+    "signMainTitle" : "Pirámide subterránea, piso 2"
+  },
+  "moc_ruins" : {
+    "displayName" : "Ruinas de Morroc",
+    "signMainTitle" : "Ruinas de Morroc"
+  },
+  "monk_in" : {
+    "displayName" : "Interior de la Abadía de Santa Capitolina",
+    "signMainTitle" : "Abadía de Santa Capitolina"
+  },
+  "monk_test" : {
+    "displayName" : "Abadía de Santa Capitolina"
+  },
+  "mora" : {
+    "displayName" : "Mora, la aldea de los laphines",
+    "signMainTitle" : "Mora",
+    "signSubTitle" : "Aldea de los laphines, Bifrost"
+  },
+  "moro_cav" : {
+    "displayName" : "Cueva del fuego",
+    "signMainTitle" : "Cueva del fuego"
+  },
+  "moro_vol" : {
+    "displayName" : "Círculo de fuego",
+    "signMainTitle" : "Círculo de fuego"
+  },
+  "morocc" : {
+    "displayName" : "Morroc, la ciudad del desierto",
+    "signMainTitle" : "Morroc",
+    "signSubTitle" : "Ciudad del desierto en el reino de Rune-Midgarts"
+  },
+  "morocc_in" : {
+    "displayName" : "Interior de Morroc"
+  },
+  "moscovia" : {
+    "displayName" : "Moscovia",
+    "signMainTitle" : "Moscovia"
+  },
+  "mosk_dun01" : {
+    "displayName" : "Bosque de Moscovia",
+    "signMainTitle" : "Bosque de Moscovia"
+  },
+  "mosk_dun02" : {
+    "displayName" : "Bosque profundo de Moscovia",
+    "signMainTitle" : "Bosque profundo",
+    "signSubTitle" : "Moscovia"
+  },
+  "mosk_dun03" : {
+    "displayName" : "Bosque muy profundo de Moscovia",
+    "signMainTitle" : "Bosque muy profundo",
+    "signSubTitle" : "Moscovia"
+  },
+  "mosk_fild01" : {
+    "displayName" : "Isla de las ballenas",
+    "signMainTitle" : "Isla de las ballenas",
+    "signSubTitle" : "Moscovia"
+  },
+  "mosk_fild02" : {
+    "displayName" : "Campo de Moscovia",
+    "signMainTitle" : "Campo de Moscovia"
+  },
+  "mosk_in" : {
+    "displayName" : "Interior de Moscovia"
+  },
+  "mosk_ship" : {
+    "displayName" : "Barco"
+  },
+  "nameless_i" : {
+    "displayName" : "Isla anónima",
+    "signMainTitle" : "Isla anónima"
+  },
+  "nameless_in" : {
+    "displayName" : "Interior de la Isla anónima"
+  },
+  "nameless_n" : {
+    "displayName" : "Isla anónima",
+    "signMainTitle" : "Isla anónima"
+  },
+  "new_1-1" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_1-2" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_1-3" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_1-4" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_2-1" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_2-2" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_2-3" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_2-4" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_3-1" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_3-2" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_3-3" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_3-4" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_4-1" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_4-2" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_4-3" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_4-4" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_5-1" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_5-2" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "new_5-3" : {
+    "displayName" : "Campo de entrenamiento de principiantes",
+    "signMainTitle" : "Campo de entrenamiento de principiantes"
+  },
+  "nif_dun01" : {
+    "displayName" : "Mazmorra de Niflheim - Salón de los Muertos",
+    "signMainTitle" : "Salón de los Muertos",
+    "signSubTitle" : "Mazmorra de Niflheim Piso 1"
+  },
+  "nif_dun02" : {
+    "displayName" : "Mazmorra de Niflheim - Ópera en Ruinas",
+    "signMainTitle" : "Ópera en Ruinas",
+    "signSubTitle" : "Mazmorra de Niflheim Piso 2"
+  },
+  "nif_fild01" : {
+    "displayName" : "Skellington, la aldea lejana de Niflheim",
+    "signMainTitle" : "Aldea lejana de Skellington",
+    "signSubTitle" : "Niflheim"
+  },
+  "nif_fild02" : {
+    "displayName" : "Valle de Gyoll en Niflheim",
+    "signMainTitle" : "Valle de Gyoll",
+    "signSubTitle" : "Niflheim"
+  },
+  "nif_in" : {
+    "displayName" : "Interior de Niflheim"
+  },
+  "niflheim" : {
+    "displayName" : "Niflheim, el reino de los muertos",
+    "signMainTitle" : "Niflheim",
+    "signSubTitle" : "El reino de los muertos"
+  },
+  "nyd_dun01" : {
+    "displayName" : "Herida del saqueador de Brasilis, piso 1",
+    "signMainTitle" : "Herida del saqueador, piso 1"
+  },
+  "nyd_dun02" : {
+    "displayName" : "Herida del saqueador de Brasilis, piso 2",
+    "signMainTitle" : "Herida del saqueador, piso 2"
+  },
+  "odin_past" : {
+    "displayName" : "Antiguo templo de Odín",
+    "signMainTitle" : "Antiguo templo de Odín"
+  },
+  "odin_tem01" : {
+    "displayName" : "Templo de Odín de Hugel, lado oeste",
+    "signMainTitle" : "Templo de Odín, lado oeste"
+  },
+  "odin_tem02" : {
+    "displayName" : "Templo de Odín de Hugel, lado sur",
+    "signMainTitle" : "Templo de Odín, lado sur"
+  },
+  "odin_tem02a" : {
+    "displayName" : "Templo de Od?n de Hugel, lado sur",
+    "signMainTitle" : "Templo de Od?n, lado sur"
+  },
+  "odin_tem02b" : {
+    "displayName" : "Templo de Od?n de Hugel, lado sur",
+    "signMainTitle" : "Templo de Od?n, lado sur"
+  },
+  "odin_tem03" : {
+    "displayName" : "Templo de Odín de Hugel, lado norte",
+    "signMainTitle" : "Templo de Odín, lado norte"
+  },
+  "orcsdun01" : {
+    "displayName" : "Cueva de Orcos de Geffen, piso 1",
+    "signMainTitle" : "Cueva de Orcos, piso 1",
+    "signSubTitle" : "Pueblo de Orco"
+  },
+  "orcsdun01_a" : {
+    "displayName" : "Cueva de Orcos de Geffen, piso 1",
+    "signMainTitle" : "Cueva de Orcos, piso 1",
+    "signSubTitle" : "Pueblo de Orco"
+  },
+  "orcsdun01_b" : {
+    "displayName" : "Cueva de Orcos de Geffen, piso 1",
+    "signMainTitle" : "Cueva de Orcos, piso 1",
+    "signSubTitle" : "Pueblo de Orco"
+  },
+  "orcsdun01_c" : {
+    "displayName" : "Cueva de Orcos de Geffen, piso 1",
+    "signMainTitle" : "Cueva de Orcos, piso 1",
+    "signSubTitle" : "Pueblo de Orco"
+  },
+  "orcsdun02" : {
+    "displayName" : "Cueva de Orcos de Geffen, piso 2",
+    "signMainTitle" : "Cueva de Orcos, piso 2",
+    "signSubTitle" : "Pueblo de Orco"
+  },
+  "ordeal_1-1" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_1-2" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_1-3" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_1-4" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_2-1" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_2-2" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_2-3" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_2-4" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_3-1" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_3-2" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_3-3" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "ordeal_3-4" : {
+    "displayName" : "Modo de batalla dura"
+  },
+  "oz_dun01" : {
+    "displayName" : "Laberinto de Oz (1)",
+    "signMainTitle" : "Laberinto de Oz (1)"
+  },
+  "oz_dun02" : {
+    "displayName" : "Laberinto de Oz (2)",
+    "signMainTitle" : "Laberinto de Oz (2)"
+  },
+  "p_track01" : {
+    "displayName" : "Estadio de carreras de monstruos",
+    "signMainTitle" : "Estadio de carreras de monstruos"
+  },
+  "p_track02" : {
+    "displayName" : "Estadio de carreras de monstruos",
+    "signMainTitle" : "Estadio de carreras de monstruos"
+  },
+  "paramk" : {
+    "displayName" : "Mercado de Edén"
+  },
+  "pay_arche" : {
+    "displayName" : "Aldea de los Arqueros de Payon",
+    "signMainTitle" : "Aldea de los Arqueros",
+    "signSubTitle" : "Payon"
+  },
+  "pay_d03_i" : {
+    "displayName" : "Ilusión lunar",
+    "signMainTitle" : "Pueblo abandonado",
+    "signSubTitle" : "Ilusión lunar"
+  },
+  "pay_dun00" : {
+    "displayName" : "Cueva de Payon, piso 1",
+    "signMainTitle" : "Cueva de Payon, piso 1",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_dun00_a" : {
+    "displayName" : "Cueva de Payon, piso 1",
+    "signMainTitle" : "Cueva de Payon, piso 1",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_dun00_b" : {
+    "displayName" : "Cueva de Payon, piso 1",
+    "signMainTitle" : "Cueva de Payon, piso 1",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_dun00_c" : {
+    "displayName" : "Cueva de Payon, piso 1",
+    "signMainTitle" : "Cueva de Payon, piso 1",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_dun01" : {
+    "displayName" : "Cueva de Payon, piso 2",
+    "signMainTitle" : "Cueva de Payon, piso 2",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_dun02" : {
+    "displayName" : "Cueva de Payon, piso 3",
+    "signMainTitle" : "Cueva de Payon, piso 3",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_dun03" : {
+    "displayName" : "Cueva de Payon, piso 4 (aldea abandonada)",
+    "signMainTitle" : "Cueva de Payon, piso 4, aldea abandonada",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_dun04" : {
+    "displayName" : "Cueva de Payon, piso 5 (aldea abandonada)",
+    "signMainTitle" : "Cueva de Payon, piso 5, aldea abandonada",
+    "signSubTitle" : "Aldea de los Arqueros de Payon"
+  },
+  "pay_fild01" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_fild02" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_fild03" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_fild04" : {
+    "displayName" : "Desierto Sograt",
+    "signMainTitle" : "Desierto Sograt"
+  },
+  "pay_fild06" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_fild07" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_fild08" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_fild09" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_fild10" : {
+    "displayName" : "Bosque de Payon",
+    "signMainTitle" : "Bosque de Payon"
+  },
+  "pay_gld" : {
+    "displayName" : "Lago Greenwood",
+    "signMainTitle" : "Lago Greenwood",
+    "signSubTitle" : "Payon"
+  },
+  "pay_mk" : {
+    "displayName" : "Bazar Payon",
+    "signMainTitle" : "Bazar"
+  },
+  "payg_cas01" : {
+    "displayName" : "Palacio del Sol",
+    "signMainTitle" : "Palacio del Sol",
+    "signSubTitle" : "Lago Greenwood"
+  },
+  "payg_cas02" : {
+    "displayName" : "Palácio do Lago Sagrado",
+    "signMainTitle" : "Palácio do Lago Sagrado",
+    "signSubTitle" : "Lago Greenwood"
+  },
+  "payg_cas03" : {
+    "displayName" : "Palacio de las Sombras",
+    "signMainTitle" : "Palacio de las Sombras",
+    "signSubTitle" : "Lago Greenwood"
+  },
+  "payg_cas04" : {
+    "displayName" : "Palacio Escarlata",
+    "signMainTitle" : "Palacio Escarlata",
+    "signSubTitle" : "Lago Greenwood"
+  },
+  "payg_cas05" : {
+    "displayName" : "Palacio de la Colina",
+    "signMainTitle" : "Palacio de la Colina",
+    "signSubTitle" : "Lago Greenwood"
+  },
+  "payon" : {
+    "displayName" : "Payon, la aldea de la montaña",
+    "signMainTitle" : "Payon",
+    "signSubTitle" : "Aldea de la montaña en el reino de Rune-Midgarts"
+  },
+  "payon_in01" : {
+    "displayName" : "Interior de Payon"
+  },
+  "payon_in02" : {
+    "displayName" : "Interior de Payon"
+  },
+  "payon_in03" : {
+    "displayName" : "Interior de Payon"
+  },
+  "pbse" : {
+    "displayName" : "Parque del Baby Shark",
+    "signMainTitle" : "Parque del Baby Shark",
+    "signSubTitle" : "Baby Shark - Pinkfong"
+  },
+  "poring_w01" : {
+    "displayName" : "Sala de espera de la guerra de Poring",
+    "signMainTitle" : "Sala de espera de la guerra de Poring"
+  },
+  "poring_w02" : {
+    "displayName" : "Zona de guerra de Poring",
+    "signMainTitle" : "Zona de guerra de Poring"
+  },
+  "priest_1-1" : {
+    "displayName" : "Centro de cambio de clase a Sacerdote"
+  },
+  "priest_2-1" : {
+    "displayName" : "Centro de cambio de clase a Sacerdote"
+  },
+  "priest_3-1" : {
+    "displayName" : "Centro de cambio de clase a Sacerdote"
+  },
+  "prontera" : {
+    "displayName" : "Prontera, capital del reino de Rune-Midgarts",
+    "signMainTitle" : "Prontera",
+    "signSubTitle" : "Capital del reino de Rune-Midgarts"
+  },
+  "prt_are01" : {
+    "displayName" : "Arena",
+    "signMainTitle" : "Arena"
+  },
+  "prt_are_in" : {
+    "displayName" : "Sala de espera de la arena",
+    "signMainTitle" : "Sala de espera de la arena"
+  },
+  "prt_arena01" : {
+    "displayName" : "Arena",
+    "signMainTitle" : "Arena"
+  },
+  "prt_cas" : {
+    "displayName" : "Palacio de Prontera",
+    "signMainTitle" : "Palacio de Prontera",
+    "signSubTitle" : "Hogar de las familias reales"
+  },
+  "prt_cas_q" : {
+    "displayName" : "Cuarteles de los Nobles",
+    "signMainTitle" : "Cuarteles de los Nobles",
+    "signSubTitle" : "Palacio de Prontera"
+  },
+  "prt_castle" : {
+    "displayName" : "Interior del castillo de Prontera",
+    "signMainTitle" : "Castillo de Prontera"
+  },
+  "prt_church" : {
+    "displayName" : "Interior del santuario de Prontera",
+    "signMainTitle" : "Santuario de Prontera"
+  },
+  "prt_elib" : {
+    "displayName" : "Biblioteca Este de Prontera",
+    "signSubTitle" : "Biblioteca Este de Prontera"
+  },
+  "prt_evt_in" : {
+    "displayName" : "Cabaña del coto de cacería"
+  },
+  "prt_fild00" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild01" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild02" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild03" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild04" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild05" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild06" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild07" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild08" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild08a" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo sur de Prontera"
+  },
+  "prt_fild08b" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo sur de Prontera"
+  },
+  "prt_fild08c" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo sur de Prontera"
+  },
+  "prt_fild08d" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo sur de Prontera"
+  },
+  "prt_fild09" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild10" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_fild11" : {
+    "displayName" : "Campo de Prontera",
+    "signMainTitle" : "Campo de Prontera"
+  },
+  "prt_gld" : {
+    "displayName" : "Reino de Valkiria",
+    "signMainTitle" : "Reino de Valkiria",
+    "signSubTitle" : "Prontera"
+  },
+  "prt_in" : {
+    "displayName" : "Interior de Prontera"
+  },
+  "prt_lib" : {
+    "displayName" : "Memorial de las Familias Reales (Presente)",
+    "signMainTitle" : "Presente",
+    "signSubTitle" : "Memorial de las Familias Reales (Presente)"
+  },
+  "prt_lib_q" : {
+    "displayName" : "Memorial de las Familias Reales (Pasado)"
+  },
+  "prt_maze01" : {
+    "displayName" : "Bosque de laberinto de Prontera, piso 1",
+    "signMainTitle" : "Bosque de laberinto, piso 1",
+    "signSubTitle" : "Campo de Prontera"
+  },
+  "prt_maze02" : {
+    "displayName" : "Bosque de laberinto de Prontera, piso 2",
+    "signMainTitle" : "Bosque de laberinto, piso 2",
+    "signSubTitle" : "Campo de Prontera"
+  },
+  "prt_maze03" : {
+    "displayName" : "Bosque de laberinto de Prontera, piso 3",
+    "signMainTitle" : "Bosque de laberinto, piso 3",
+    "signSubTitle" : "Campo de Prontera"
+  },
+  "prt_mk" : {
+    "displayName" : "Bazar Prontera",
+    "signMainTitle" : "Bazar"
+  },
+  "prt_mk_a" : {
+    "displayName" : "Bazar Prontera",
+    "signMainTitle" : "Bazar"
+  },
+  "prt_monk" : {
+    "displayName" : "Abadía de Santa Capitolina",
+    "signMainTitle" : "Abadía de Santa Capitolina"
+  },
+  "prt_mz03_i" : {
+    "displayName" : "Ilusión del laberinto",
+    "signMainTitle" : "Laberinto del bosque",
+    "signSubTitle" : "Ilusión del laberinto"
+  },
+  "prt_pri00" : {
+    "displayName" : "Cárcel de Prontera"
+  },
+  "prt_prison" : {
+    "displayName" : "Prisión de Prontera",
+    "signMainTitle" : "Prisión subterránea",
+    "signSubTitle" : "Palacio de Prontera"
+  },
+  "prt_q" : {
+    "displayName" : "Prontera destruida",
+    "signMainTitle" : "Prontera destruida"
+  },
+  "prt_sewb1" : {
+    "displayName" : "Alcantarilla de Prontera, piso 1",
+    "signMainTitle" : "Alcantarilla, piso 1",
+    "signSubTitle" : "Campo de Prontera"
+  },
+  "prt_sewb2" : {
+    "displayName" : "Alcantarilla de Prontera, piso 2",
+    "signMainTitle" : "Alcantarilla, piso 2",
+    "signSubTitle" : "Campo de Prontera"
+  },
+  "prt_sewb3" : {
+    "displayName" : "Alcantarilla de Prontera, piso 3",
+    "signMainTitle" : "Alcantarilla, piso 3",
+    "signSubTitle" : "Campo de Prontera"
+  },
+  "prt_sewb4" : {
+    "displayName" : "Alcantarilla de Prontera, piso 4",
+    "signMainTitle" : "Alcantarilla, piso 4",
+    "signSubTitle" : "Campo de Prontera"
+  },
+  "prtg_cas01" : {
+    "displayName" : "Kriemhild",
+    "signMainTitle" : "Kriemhild",
+    "signSubTitle" : "Reino de Valkiria"
+  },
+  "prtg_cas02" : {
+    "displayName" : "Swanhild",
+    "signMainTitle" : "Swanhild",
+    "signSubTitle" : "Reino de Valkiria"
+  },
+  "prtg_cas03" : {
+    "displayName" : "Fadhgridh",
+    "signMainTitle" : "Fadhgridh",
+    "signSubTitle" : "Reino de Valkiria"
+  },
+  "prtg_cas04" : {
+    "displayName" : "Skoegul",
+    "signMainTitle" : "Skoegul",
+    "signSubTitle" : "Reino de Valkiria"
+  },
+  "prtg_cas05" : {
+    "displayName" : "Gondul",
+    "signMainTitle" : "Gondul",
+    "signSubTitle" : "Reino de Valkiria"
+  },
+  "pub_cat" : {
+    "displayName" : "Maullido de Bala",
+    "signMainTitle" : "Maullido de Bala",
+    "signSubTitle" : "Taberna de Einbroch"
+  },
+  "pvp_2vs2" : {
+    "displayName" : "JcJ: Coliseo de eventos",
+    "signMainTitle" : "Coliseo de eventos (JcJ)"
+  },
+  "pvp_c_room" : {
+    "displayName" : "JcJ: Sala de espera",
+    "signMainTitle" : "Sala de espera (JcJ)"
+  },
+  "pvp_n_1-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_1-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_1-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_1-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_1-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_2-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_2-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_2-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_2-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_2-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_3-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_3-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_3-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_3-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_3-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_4-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_4-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_4-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_4-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_4-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_5-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_5-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_5-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_5-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_5-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_6-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_6-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_6-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_6-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_6-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_7-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_7-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_7-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_7-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_7-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_8-1" : {
+    "displayName" : "JcJ: Sala Sándwich",
+    "signMainTitle" : "Sala Sándwich (JcJ)"
+  },
+  "pvp_n_8-2" : {
+    "displayName" : "JcJ: Sala Rockera",
+    "signMainTitle" : "Sala Rockera (JcJ)"
+  },
+  "pvp_n_8-3" : {
+    "displayName" : "JcJ: Sala Cuatro",
+    "signMainTitle" : "Sala Cuatro (JcJ)"
+  },
+  "pvp_n_8-4" : {
+    "displayName" : "JcJ: Sala Bajo la cruz",
+    "signMainTitle" : "Sala Bajo la cruz (JcJ)"
+  },
+  "pvp_n_8-5" : {
+    "displayName" : "JcJ: Sala Brújula",
+    "signMainTitle" : "Sala Brújula (JcJ)"
+  },
+  "pvp_n_room" : {
+    "displayName" : "JcJ: Sala de espera",
+    "signMainTitle" : "Sala de espera (JcJ)"
+  },
+  "pvp_y_1-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_1-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_1-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_1-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_1-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_2-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_2-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_2-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_2-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_2-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_3-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_3-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_3-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_3-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_3-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_4-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_4-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_4-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_4-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_4-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_5-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_5-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_5-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_5-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_5-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_6-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_6-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_6-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_6-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_6-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_7-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_7-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_7-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_7-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_7-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_8-1" : {
+    "displayName" : "JcJ: Prontera",
+    "signMainTitle" : "Prontera (JcJ)"
+  },
+  "pvp_y_8-2" : {
+    "displayName" : "JcJ: Izlude",
+    "signMainTitle" : "Izlude (JcJ)"
+  },
+  "pvp_y_8-3" : {
+    "displayName" : "JcJ: Payon",
+    "signMainTitle" : "Payon (JcJ)"
+  },
+  "pvp_y_8-4" : {
+    "displayName" : "JcJ: Alberta",
+    "signMainTitle" : "Alberta (JcJ)"
+  },
+  "pvp_y_8-5" : {
+    "displayName" : "JcJ: Morroc",
+    "signMainTitle" : "Morroc (JcJ)"
+  },
+  "pvp_y_room" : {
+    "displayName" : "JcJ: Sala de espera",
+    "signMainTitle" : "Sala de espera (JcJ)"
+  },
+  "que_avan01" : {
+    "displayName" : "Laboratorio de Avant"
+  },
+  "que_bingo" : {
+    "displayName" : "Sala de bingo"
+  },
+  "que_dan01" : {
+    "displayName" : "Campo de Hugel"
+  },
+  "que_dan02" : {
+    "displayName" : "Interior de la casa abandonada de Juno"
+  },
+  "que_god01" : {
+    "displayName" : "Mapa de misión"
+  },
+  "que_god02" : {
+    "displayName" : "Mapa de misión"
+  },
+  "que_house_s" : {
+    "displayName" : "Casa rara"
+  },
+  "que_hugel" : {
+    "displayName" : "Templo subterráneo de Odín",
+    "signMainTitle" : "Templo subterráneo de Odín"
+  },
+  "que_job01" : {
+    "displayName" : "Taberna secreta",
+    "signMainTitle" : "Taberna secreta"
+  },
+  "que_lhz" : {
+    "displayName" : "Sótano del biolaboratorio, piso 4",
+    "signMainTitle" : "Sótano del biolaboratorio, piso 4"
+  },
+  "que_ng" : {
+    "displayName" : "Zona desconocida"
+  },
+  "que_qaru01" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qaru02" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qaru03" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qaru04" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qaru05" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qsch01" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qsch02" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qsch03" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qsch04" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_qsch05" : {
+    "displayName" : "Okolnir falaz",
+    "signMainTitle" : "Okolnir falaz"
+  },
+  "que_rachel" : {
+    "displayName" : "Dentro del templo"
+  },
+  "que_san04" : {
+    "displayName" : "Interior del Santuario"
+  },
+  "que_swat" : {
+    "displayName" : "Base militar de Cazador de corazones",
+    "signMainTitle" : "Base militar de Cazador de corazones"
+  },
+  "que_temsky" : {
+    "displayName" : "Despacho de la papisa (El jardín del cielo)",
+    "signMainTitle" : "El jardín del cielo",
+    "signSubTitle" : "Despacho de la papisa en Cheshrumnir"
+  },
+  "que_thor" : {
+    "displayName" : "Mazmorra del volcán Thor",
+    "signMainTitle" : "Mazmorra del volcán Thor"
+  },
+  "que_thr" : {
+    "displayName" : "Dentro del volcán de Thor",
+    "signMainTitle" : "Dentro del volcán de Thor"
+  },
+  "quiz_00" : {
+    "displayName" : "Arena de cuestionarios",
+    "signMainTitle" : "Arena de cuestionarios"
+  },
+  "quiz_01" : {
+    "displayName" : "Arena de cuestionarios",
+    "signMainTitle" : "Arena de cuestionarios"
+  },
+  "quiz_02" : {
+    "displayName" : "Arena de cuestionarios"
+  },
+  "quiz_test" : {
+    "displayName" : "Salón de pruebas"
+  },
+  "ra_fild01" : {
+    "displayName" : "Pradera de Audhumbla, Rachel",
+    "signMainTitle" : "Pradera de Audhumbla"
+  },
+  "ra_fild02" : {
+    "displayName" : "Cañón de Oz",
+    "signMainTitle" : "Cañón de Oz"
+  },
+  "ra_fild03" : {
+    "displayName" : "Llanura de Ida, Rachel",
+    "signMainTitle" : "Llanura de Ida"
+  },
+  "ra_fild04" : {
+    "displayName" : "Pradera de Audhumbla, Rachel",
+    "signMainTitle" : "Pradera de Audhumbla"
+  },
+  "ra_fild05" : {
+    "displayName" : "Pradera de Audhumbla, Rachel",
+    "signMainTitle" : "Pradera de Audhumbla"
+  },
+  "ra_fild06" : {
+    "displayName" : "Portus Luna",
+    "signMainTitle" : "Portus Luna"
+  },
+  "ra_fild07" : {
+    "displayName" : "Cañón de Oz",
+    "signMainTitle" : "Cañón de Oz"
+  },
+  "ra_fild08" : {
+    "displayName" : "Llanura de Ida, Rachel",
+    "signMainTitle" : "Llanura de Ida"
+  },
+  "ra_fild09" : {
+    "displayName" : "Pradera de Audhumbla",
+    "signMainTitle" : "Pradera de Audhumbla"
+  },
+  "ra_fild10" : {
+    "displayName" : "Cañón de Oz en Rachel",
+    "signMainTitle" : "Cañón de Oz"
+  },
+  "ra_fild11" : {
+    "displayName" : "Pradera de Ida en Rachel",
+    "signMainTitle" : "Pradera de Ida"
+  },
+  "ra_fild12" : {
+    "displayName" : "Llanura de Ida, Rachel",
+    "signMainTitle" : "Llanura de Ida"
+  },
+  "ra_fild12a" : {
+    "displayName" : "Llanura de Ida, Rachel",
+    "signMainTitle" : "Llanura de Ida"
+  },
+  "ra_fild12b" : {
+    "displayName" : "Llanura de Ida, Rachel",
+    "signMainTitle" : "Llanura de Ida"
+  },
+  "ra_fild13" : {
+    "displayName" : "Costa de las Lágrimas",
+    "signMainTitle" : "Costa de las Lágrimas"
+  },
+  "ra_in01" : {
+    "displayName" : "Interior de Rachel"
+  },
+  "ra_san01" : {
+    "displayName" : "Tierra sagrada de Rachel, piso 1, lado norte",
+    "signMainTitle" : "Tierra sagrada, piso 1, lado norte",
+    "signSubTitle" : "Templo de Cheshrumnir, Rachel"
+  },
+  "ra_san01a" : {
+    "displayName" : "Tierra sagrada de Rachel, piso 1, lado norte",
+    "signMainTitle" : "Tierra sagrada, piso 1, lado norte",
+    "signSubTitle" : "Templo de Cheshrumnir, Rachel"
+  },
+  "ra_san01b" : {
+    "displayName" : "Tierra sagrada de Rachel, piso 1, lado norte",
+    "signMainTitle" : "Tierra sagrada, piso 1, lado norte",
+    "signSubTitle" : "Templo de Cheshrumnir, Rachel"
+  },
+  "ra_san02" : {
+    "displayName" : "Tierra sagrada de Rachel, piso 1, lado oeste",
+    "signMainTitle" : "Tierra sagrada, piso 1, lado oeste",
+    "signSubTitle" : "Templo de Cheshrumnir, Rachel"
+  },
+  "ra_san03" : {
+    "displayName" : "Tierra sagrada de Rachel, piso 1, lado este",
+    "signMainTitle" : "Tierra sagrada, piso 1, lado este",
+    "signSubTitle" : "Templo de Cheshrumnir, Rachel"
+  },
+  "ra_san04" : {
+    "displayName" : "Tierra sagrada de Rachel, piso 1, lado sur",
+    "signMainTitle" : "Tierra sagrada, piso 1, lado sur",
+    "signSubTitle" : "Templo de Cheshrumnir, Rachel"
+  },
+  "ra_san05" : {
+    "displayName" : "Tierra sagrada de Rachel, piso 2, centro",
+    "signMainTitle" : "Tierra sagrada, piso 2, centro",
+    "signSubTitle" : "Templo de Cheshrumnir, Rachel"
+  },
+  "ra_temin" : {
+    "displayName" : "Dentro del templo"
+  },
+  "ra_temple" : {
+    "displayName" : "Gran templo de Freyja (Cheshrumnir)",
+    "signMainTitle" : "Cheshrumnir",
+    "signSubTitle" : "Gran templo de Freyja, Arunafeltz"
+  },
+  "ra_temsky" : {
+    "displayName" : "Despacho de la papisa (El jardín del cielo)",
+    "signMainTitle" : "El jardín del cielo",
+    "signSubTitle" : "Despacho de la papisa en Cheshrumnir"
+  },
+  "rachel" : {
+    "displayName" : "Rachel, la capital de los Estados Arunafeltz",
+    "signMainTitle" : "Rachel",
+    "signSubTitle" : "Capital de los Estados Arunafeltz"
+  },
+  "rebel_in" : {
+    "displayName" : "Clan Nemieri",
+    "signMainTitle" : "Clan Nemieri"
+  },
+  "rgsr_in" : {
+    "displayName" : "Pantalla de regeneración",
+    "signMainTitle" : "Pantalla de regeneración"
+  },
+  "rockmi1" : {
+    "displayName" : "Mina de Cresta rocosa",
+    "signMainTitle" : "Mina de Cresta rocosa, piso 1"
+  },
+  "rockmi2" : {
+    "displayName" : "Mina de Cresta rocosa",
+    "signMainTitle" : "Mina de Cresta rocosa, piso 2"
+  },
+  "rockrdg1" : {
+    "displayName" : "Desierto de Kiwawa",
+    "signMainTitle" : "Desierto de Kiwawa",
+    "signSubTitle" : "Cresta rocosa"
+  },
+  "rockrdg2" : {
+    "displayName" : "Desierto de Kiwawa",
+    "signMainTitle" : "Desierto de Kiwawa",
+    "signSubTitle" : "Cresta rocosa"
+  },
+  "s_atelier" : {
+    "displayName" : "Taller de sombras"
+  },
+  "sch_gld" : {
+    "displayName" : "Nidabehl",
+    "signMainTitle" : "Nidabehl",
+    "signSubTitle" : "Juno"
+  },
+  "schg_cas01" : {
+    "displayName" : "Himinn",
+    "signMainTitle" : "Himinn",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas02" : {
+    "displayName" : "Andlangr",
+    "signMainTitle" : "Andlangr",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas03" : {
+    "displayName" : "Vidblainn",
+    "signMainTitle" : "Vidblainn",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas04" : {
+    "displayName" : "Hljod",
+    "signMainTitle" : "Hljod",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas05" : {
+    "displayName" : "Schatirnil",
+    "signMainTitle" : "Schatirnil",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_dun01" : {
+    "displayName" : "Mazmorra subterránea del gremio",
+    "signMainTitle" : "Mazmorra subterránea del gremio",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_que01" : {
+    "displayName" : "Pradera de Morestone",
+    "signMainTitle" : "Pradera de Morestone"
+  },
+  "sec_in01" : {
+    "displayName" : "Interior de Valhalla"
+  },
+  "sec_in02" : {
+    "displayName" : "Interior de Valhalla"
+  },
+  "sec_pri" : {
+    "displayName" : "Sala de meditación (prisión de Valhalla)"
+  },
+  "silk_lair" : {
+    "displayName" : "Guarida de Pitón"
+  },
+  "slabw01" : {
+    "displayName" : "Laboratorio Werner",
+    "signMainTitle" : "Laboratorio Werner"
+  },
+  "sp_cor" : {
+    "displayName" : "Distrito COR",
+    "signMainTitle" : "COR",
+    "signSubTitle" : "Seguridad fronteriza"
+  },
+  "sp_os" : {
+    "displayName" : "Distrito OS",
+    "signMainTitle" : "OS",
+    "signSubTitle" : "Seguridad fronteriza"
+  },
+  "sp_rudus" : {
+    "displayName" : "Rudus, depósito de relaves (1)",
+    "signMainTitle" : "Rudus (1)",
+    "signSubTitle" : "Depósito de relaves"
+  },
+  "sp_rudus2" : {
+    "displayName" : "Rudus, depósito de relaves (2)",
+    "signMainTitle" : "Rudus (2)",
+    "signSubTitle" : "Depósito de relaves"
+  },
+  "sp_rudus3" : {
+    "displayName" : "Rudus, depósito de relaves (3)",
+    "signMainTitle" : "Rudus (3)",
+    "signSubTitle" : "Depósito de relaves"
+  },
+  "sp_rudus4" : {
+    "displayName" : "Rudus Piso 4 - Área de Desecho de Experimentos",
+    "signMainTitle" : "Rudus Piso 4",
+    "signSubTitle" : "Área de Desecho de Experimentos"
+  },
+  "spl_fild01" : {
+    "displayName" : "Campo de Splendide",
+    "signMainTitle" : "Campo de Splendide"
+  },
+  "spl_fild02" : {
+    "displayName" : "Campo de Splendide",
+    "signMainTitle" : "Campo de Splendide"
+  },
+  "spl_fild03" : {
+    "displayName" : "Campo de Splendide",
+    "signMainTitle" : "Campo de Splendide"
+  },
+  "spl_in01" : {
+    "displayName" : "Interior del centro de mando del campo de Splendide"
+  },
+  "spl_in02" : {
+    "displayName" : "Interior de Splendide"
+  },
+  "splendide" : {
+    "displayName" : "Base avanzada de los laphines, Splendide",
+    "signMainTitle" : "Splendide",
+    "signSubTitle" : "Base avanzada de los laphines, Jotunheim"
+  },
+  "star_frst" : {
+    "displayName" : "Bosque de Meteoro",
+    "signMainTitle" : "Bosque de Meteoro"
+  },
+  "star_in" : {
+    "displayName" : "Dentro del bosque de Meteoro"
+  },
+  "sword_3-1" : {
+    "displayName" : "Centro de cambio de clase a Espadachín"
+  },
+  "te_alde_gld" : {
+    "displayName" : "Kafragarten",
+    "signMainTitle" : "Kafragarten",
+    "signSubTitle" : "Rune-Midgarts"
+  },
+  "te_aldecas01" : {
+    "displayName" : "Leliah",
+    "signMainTitle" : "Leliah",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas02" : {
+    "displayName" : "Pavianne",
+    "signMainTitle" : "Pavianne",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas03" : {
+    "displayName" : "Jasmine",
+    "signMainTitle" : "Jasmine",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas04" : {
+    "displayName" : "Roxie",
+    "signMainTitle" : "Roxie",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas05" : {
+    "displayName" : "Curly Sue",
+    "signMainTitle" : "Curly Sue",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas1" : {
+    "displayName" : "Leliah",
+    "signMainTitle" : "Leliah",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas2" : {
+    "displayName" : "Pavianne",
+    "signMainTitle" : "Pavianne",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas3" : {
+    "displayName" : "Jasmine",
+    "signMainTitle" : "Jasmine",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas4" : {
+    "displayName" : "Roxie",
+    "signMainTitle" : "Roxie",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas5" : {
+    "displayName" : "Curly Sue",
+    "signMainTitle" : "Curly Sue",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_prt_gld" : {
+    "displayName" : "Gloria",
+    "signMainTitle" : "Gloria",
+    "signSubTitle" : "Rune-Midgarts"
+  },
+  "te_prtcas01" : {
+    "displayName" : "Gaebolg",
+    "signMainTitle" : "Gaebolg",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas02" : {
+    "displayName" : "Richard",
+    "signMainTitle" : "Richard",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas03" : {
+    "displayName" : "Wigner",
+    "signMainTitle" : "Wigner",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas04" : {
+    "displayName" : "Heine",
+    "signMainTitle" : "Heine",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas05" : {
+    "displayName" : "Nerius",
+    "signMainTitle" : "Nerius",
+    "signSubTitle" : "Gloria"
+  },
+  "teg_dun01" : {
+    "displayName" : "Mazmorra subterránea del gremio",
+    "signMainTitle" : "Mazmorra subterránea del gremio",
+    "signSubTitle" : "Gloria"
+  },
+  "teg_dun02" : {
+    "displayName" : "Mazmorra subterránea del gremio",
+    "signMainTitle" : "Mazmorra subterránea del gremio",
+    "signSubTitle" : "Kafragarten"
+  },
+  "tha_t01" : {
+    "displayName" : "Entrada a la planta baja del museo de la Torre de Thanatos",
+    "signMainTitle" : "Entrada al museo",
+    "signSubTitle" : "Planta baja de la Torre de Thanatos"
+  },
+  "tha_t02" : {
+    "displayName" : "Planta baja del museo de la Torre de Thanatos",
+    "signMainTitle" : "Museo",
+    "signSubTitle" : "Planta baja de la Torre de Thanatos"
+  },
+  "tha_t03" : {
+    "displayName" : "Área abandonada de la planta baja de la Torre de Thanatos",
+    "signMainTitle" : "Área abandonada",
+    "signSubTitle" : "Planta baja de la Torre de Thanatos"
+  },
+  "tha_t04" : {
+    "displayName" : "Área abandonada de la planta baja de la Torre de Thanatos",
+    "signMainTitle" : "Área abandonada",
+    "signSubTitle" : "Planta baja de la Torre de Thanatos"
+  },
+  "tha_t05" : {
+    "displayName" : "Planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "tha_t06" : {
+    "displayName" : "Planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "tha_t07" : {
+    "displayName" : "Sala del ángel de la planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Sala del ángel",
+    "signSubTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "tha_t08" : {
+    "displayName" : "Sala del ángel de la planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Sala del ángel",
+    "signSubTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "tha_t09" : {
+    "displayName" : "Sala de la angustia de la planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Sala de la angustia",
+    "signSubTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "tha_t10" : {
+    "displayName" : "Sala de la tristeza de la planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Sala de la tristeza",
+    "signSubTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "tha_t11" : {
+    "displayName" : "Sala de la desesperación de la planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Sala de la desesperación",
+    "signSubTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "tha_t12" : {
+    "displayName" : "Sala del odio de la planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Sala del odio",
+    "signSubTitle" : "Planta superior de la Torre de Thanatos"
+  },
+  "thana_boss" : {
+    "displayName" : "Torre de Thanatos (zona desconocida)"
+  },
+  "thana_scene01" : {
+    "displayName" : "Entrada a la Torre de Thanatos",
+    "signMainTitle" : "Entrada a la Torre de Thanatos"
+  },
+  "thana_step" : {
+    "displayName" : "Escalera hacia la planta superior de la Torre de Thanatos",
+    "signMainTitle" : "Escalera hacia la planta superior de la Torre de Thanatos"
+  },
+  "thor_camp" : {
+    "displayName" : "Campamento del volcán Thor",
+    "signMainTitle" : "Campamento del volcán Thor"
+  },
+  "thor_v01" : {
+    "displayName" : "Mazmorra del volcán Thor, piso 1",
+    "signMainTitle" : "Mazmorra del volcán Thor, piso 1"
+  },
+  "thor_v02" : {
+    "displayName" : "Mazmorra del volcán Thor, piso 2",
+    "signMainTitle" : "Mazmorra del volcán Thor, piso 2"
+  },
+  "thor_v03" : {
+    "displayName" : "Mazmorra del volcán Thor, piso 3",
+    "signMainTitle" : "Mazmorra del volcán Thor, piso 3"
+  },
+  "thor_v03a" : {
+    "displayName" : "Mazmorra del volcán Thor, piso 3",
+    "signMainTitle" : "Mazmorra del volcán Thor, piso 3"
+  },
+  "thor_v03b" : {
+    "displayName" : "Mazmorra del volcán Thor, piso 3",
+    "signMainTitle" : "Mazmorra del volcán Thor, piso 3"
+  },
+  "tra_fild" : {
+    "displayName" : "Campo de entrenamiento de Prontera",
+    "signMainTitle" : "Campo de entrenamiento de Prontera"
+  },
+  "treasure01" : {
+    "displayName" : "Barco hundido de Alberta, piso 1",
+    "signMainTitle" : "Barco hundido, piso 1",
+    "signSubTitle" : "Alberta"
+  },
+  "treasure02" : {
+    "displayName" : "Barco hundido de Alberta, piso 2",
+    "signMainTitle" : "Barco hundido, piso 2",
+    "signSubTitle" : "Alberta"
+  },
+  "treasure_n1" : {
+    "displayName" : "Barco hundido de Izlude, piso 1",
+    "signMainTitle" : "Barco hundido de Izlude, piso 1"
+  },
+  "treasure_n2" : {
+    "displayName" : "Barco hundido de Izlude, piso 2",
+    "signMainTitle" : "Barco hundido de Izlude, piso 2"
+  },
+  "tur_d03_i" : {
+    "displayName" : "Ilusión de tortuga (1)",
+    "signMainTitle" : "Pueblo de las Buenas Tortugas",
+    "signSubTitle" : "Ilusión de tortuga"
+  },
+  "tur_d04_i" : {
+    "displayName" : "Ilusión de tortuga (2)",
+    "signMainTitle" : "Palacio de la Tortuga",
+    "signSubTitle" : "Ilusión de tortuga"
+  },
+  "tur_dun01" : {
+    "displayName" : "Isla Tortuga",
+    "signMainTitle" : "Isla Tortuga"
+  },
+  "tur_dun02" : {
+    "displayName" : "Mazmorra de la Isla Tortuga",
+    "signMainTitle" : "Mazmorra de la Isla Tortuga"
+  },
+  "tur_dun03" : {
+    "displayName" : "Aldea de las tortugas buenas",
+    "signMainTitle" : "Aldea de las tortugas buenas"
+  },
+  "tur_dun04" : {
+    "displayName" : "Palacio de las tortugas",
+    "signMainTitle" : "Palacio de las tortugas"
+  },
+  "tur_dun05" : {
+    "displayName" : "Zona pantanosa subterránea",
+    "signMainTitle" : "Zona pantanosa subterránea"
+  },
+  "tur_dun06" : {
+    "displayName" : "Zona pantanosa subterránea",
+    "signMainTitle" : "Zona pantanosa subterránea"
+  },
+  "turbo_e_16" : {
+    "displayName" : "Estadio Pista turbo"
+  },
+  "turbo_e_4" : {
+    "displayName" : "Estadio Pista turbo"
+  },
+  "turbo_e_8" : {
+    "displayName" : "Estadio Pista turbo"
+  },
+  "turbo_n_1" : {
+    "displayName" : "Estadio Pista turbo"
+  },
+  "turbo_n_16" : {
+    "displayName" : "Estadio Pista turbo"
+  },
+  "turbo_n_4" : {
+    "displayName" : "Estadio Pista turbo"
+  },
+  "turbo_n_8" : {
+    "displayName" : "Estadio Pista turbo"
+  },
+  "turbo_room" : {
+    "displayName" : "Sala de espera de Pista turbo",
+    "signMainTitle" : "Sala de espera de Pista turbo"
+  },
+  "um_dun01" : {
+    "displayName" : "Carpintería en el árbol de Umbala",
+    "signMainTitle" : "Carpintería en el árbol",
+    "signSubTitle" : "Umbala"
+  },
+  "um_dun02" : {
+    "displayName" : "Pasaje a un mundo extranjero de Umbala",
+    "signMainTitle" : "Pasaje en el árbol",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild01" : {
+    "displayName" : "Bosque de Luluka en Umbala",
+    "signMainTitle" : "Bosque de Luluka",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild02" : {
+    "displayName" : "Bosque de Hoomga en Umbala",
+    "signMainTitle" : "Bosque de Hoomga",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild03" : {
+    "displayName" : "Pantano de Kalala en Umbala",
+    "signMainTitle" : "Pantano de Kalala",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild04" : {
+    "displayName" : "Selva de Hoomga en Umbala",
+    "signMainTitle" : "Bosque de Hoomga",
+    "signSubTitle" : "Umbala"
+  },
+  "um_in" : {
+    "displayName" : "Interior de Umbala"
+  },
+  "umbala" : {
+    "displayName" : "Aldea de la tribu Wootan, Umbala",
+    "signMainTitle" : "Umbala",
+    "signSubTitle" : "Aldea de la tribu Wootan"
+  },
+  "un_bk_q" : {
+    "displayName" : "Refugio subterráneo",
+    "signMainTitle" : "Refugio subterráneo"
+  },
+  "un_bunker" : {
+    "displayName" : "Refugio subterráneo",
+    "signMainTitle" : "Refugio subterráneo"
+  },
+  "un_myst" : {
+    "displayName" : "Túnel de refugio",
+    "signMainTitle" : "Túnel de refugio"
+  },
+  "valkyrie" : {
+    "displayName" : "Salón de Valkiria (Sala de honor)",
+    "signMainTitle" : "Salón de Valkiria",
+    "signSubTitle" : "Sala de honor"
+  },
+  "ve_fild01" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild02" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild03" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild03a" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild03b" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild04" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild05" : {
+    "displayName" : "Alrededores de Veins (5)",
+    "signMainTitle" : "Alrededores de Veins (5)"
+  },
+  "ve_fild06" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild07" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild07a" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_fild07b" : {
+    "displayName" : "Campo de Veins",
+    "signMainTitle" : "Campo de Veins"
+  },
+  "ve_in" : {
+    "displayName" : "Interior de Veins"
+  },
+  "ve_in02" : {
+    "displayName" : "Interior de Veins"
+  },
+  "veins" : {
+    "displayName" : "Veins, la aldea del cañón",
+    "signMainTitle" : "Veins",
+    "signSubTitle" : "Aldea del cañón, Arunafeltz"
+  },
+  "ver_eju" : {
+    "displayName" : "Ruina del oeste de Juperos",
+    "signMainTitle" : "Ruinas de Juperos",
+    "signSubTitle" : "Lado Oeste"
+  },
+  "ver_tunn" : {
+    "displayName" : "Túnel de Verus",
+    "signMainTitle" : "Túnel de Verus",
+    "signSubTitle" : "Verus"
+  },
+  "verus01" : {
+    "displayName" : "Laboratorio de Experimentos OPTATIO",
+    "signMainTitle" : "OPTATIO",
+    "signSubTitle" : "Laboratorio de experimentos"
+  },
+  "verus02" : {
+    "displayName" : "Instituto de Investigación WISH",
+    "signMainTitle" : "WISH",
+    "signSubTitle" : "Instituto de Investigación"
+  },
+  "verus03" : {
+    "displayName" : "Plaza central de Verus",
+    "signMainTitle" : "Plaza central",
+    "signSubTitle" : "Verus"
+  },
+  "verus04" : {
+    "displayName" : "Centro Verus",
+    "signMainTitle" : "Verus",
+    "signSubTitle" : "Sitio arqueológico"
+  },
+  "vis_h01" : {
+    "displayName" : "Pasillo de los espectros, piso 1",
+    "signMainTitle" : "Pasillo de los espectros, piso 1"
+  },
+  "vis_h02" : {
+    "displayName" : "Pasillo de los espectros, piso 2",
+    "signMainTitle" : "Pasillo de los espectros, piso 2"
+  },
+  "vis_h03" : {
+    "displayName" : "Pasillo de los espectros, piso 3",
+    "signMainTitle" : "Pasillo de los espectros, piso 3"
+  },
+  "vis_h04" : {
+    "displayName" : "Pasillo de los espectros, piso 4",
+    "signMainTitle" : "Pasillo de los espectros, piso 4"
+  },
+  "wizard_1-1" : {
+    "displayName" : "Centro de cambio de clase a Hechicero"
+  },
+  "wizard_2-1" : {
+    "displayName" : "Centro de cambio de clase a Hechicero"
+  },
+  "wizard_3-1" : {
+    "displayName" : "Centro de cambio de clase a Hechicero"
+  },
+  "wolfvill" : {
+    "displayName" : "Pueblo del Lobo Gris",
+    "signMainTitle" : "Aldea",
+    "signSubTitle" : "Lobo gris"
+  },
+  "x_lhz" : {
+    "displayName" : "Lighthalzen del mundo paralelo",
+    "signMainTitle" : "Lighthalzen",
+    "signSubTitle" : "Mundo paralelo"
+  },
+  "x_prt" : {
+    "displayName" : "Prontera del mundo paralelo",
+    "signMainTitle" : "Prontera",
+    "signSubTitle" : "Mundo paralelo"
+  },
+  "x_ra" : {
+    "displayName" : "Rachel del mundo paralelo",
+    "signMainTitle" : "Rachel",
+    "signSubTitle" : "Mundo paralelo"
+  },
+  "xmas" : {
+    "displayName" : "Lutie, la aldea de la nieve",
+    "signMainTitle" : "Lutie",
+    "signSubTitle" : "Aldea de la nieve"
+  },
+  "xmas_dun01" : {
+    "displayName" : "Depósito de la fábrica de juguetes de Lutie",
+    "signMainTitle" : "Depósito de la fábrica de juguetes",
+    "signSubTitle" : "Lutie"
+  },
+  "xmas_dun02" : {
+    "displayName" : "Sala de control de juguetes de Lutie",
+    "signMainTitle" : "Sala de control de juguetes",
+    "signSubTitle" : "Lutie"
+  },
+  "xmas_fild01" : {
+    "displayName" : "Llanura de Lutie",
+    "signMainTitle" : "Llanura de Lutie"
+  },
+  "xmas_in" : {
+    "displayName" : "Interior de Lutie"
+  },
+  "y_airport" : {
+    "displayName" : "Aeropuerto de Juno",
+    "signMainTitle" : "Aeropuerto de Juno"
+  },
+  "yggdrasil01" : {
+    "displayName" : "Fuente de Hvergelmir (tronco de Yggdrasil)",
+    "signMainTitle" : "Fuente de Hvergelmir"
+  },
+  "yuno" : {
+    "displayName" : "Juno, capital de la República de Schwarzwald",
+    "signMainTitle" : "Juno",
+    "signSubTitle" : "Capital de la República de Schwarzwald"
+  },
+  "yuno_fild01" : {
+    "displayName" : "Punto de control fronterizo de Schwarzwald",
+    "signMainTitle" : "Punto de control fronterizo de Schwarzwald"
+  },
+  "yuno_fild02" : {
+    "displayName" : "Cabaña de Kiel Hyre",
+    "signMainTitle" : "Cabaña de Kiel Hyre"
+  },
+  "yuno_fild03" : {
+    "displayName" : "Meseta de El Mes",
+    "signMainTitle" : "Meseta de El Mes"
+  },
+  "yuno_fild04" : {
+    "displayName" : "Meseta de El Mes",
+    "signMainTitle" : "Meseta de El Mes"
+  },
+  "yuno_fild06" : {
+    "displayName" : "Meseta de El Mes",
+    "signMainTitle" : "Meseta de El Mes"
+  },
+  "yuno_fild07" : {
+    "displayName" : "Cañón El Mes (Valle del abismo)",
+    "signMainTitle" : "Cañón El Mes",
+    "signSubTitle" : "Valle del abismo"
+  },
+  "yuno_fild08" : {
+    "displayName" : "Academia Kiel Hyre, Juno",
+    "signMainTitle" : "Academia Kiel Hyre, Juno"
+  },
+  "yuno_fild09" : {
+    "displayName" : "Campamento de guardias de Schwarzwald",
+    "signMainTitle" : "Campamento de guardias de Schwarzwald"
+  },
+  "yuno_fild11" : {
+    "displayName" : "Campo de Juno",
+    "signMainTitle" : "Campo de Juno"
+  },
+  "yuno_fild12" : {
+    "displayName" : "Punto de control fronterizo de Schwarzwald",
+    "signMainTitle" : "Punto de control fronterizo de Schwarzwald"
+  },
+  "yuno_in01" : {
+    "displayName" : "Interior de Juno"
+  },
+  "yuno_in02" : {
+    "displayName" : "Interior del Castillo del Sabio"
+  },
+  "yuno_in03" : {
+    "displayName" : "Interior de Juno"
+  },
+  "yuno_in04" : {
+    "displayName" : "Biblioteca de la República",
+    "signMainTitle" : "Biblioteca de la República"
+  },
+  "yuno_in05" : {
+    "displayName" : "Central eléctrica del Corazón de Ymir",
+    "signMainTitle" : "Central eléctrica del Corazón de Ymir"
+  },
+  "yuno_pre" : {
+    "displayName" : "Edificios gubernamentales de Schwarzwald",
+    "signMainTitle" : "Edificios gubernamentales de Schwarzwald"
+  },
+  "z_agit" : {
+    "displayName" : "Escondite de la pandilla Z",
+    "signMainTitle" : "Escondite de la pandilla Z"
+  }
+}

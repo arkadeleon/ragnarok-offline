@@ -27089,6 +27089,21 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "수속성알"
   },
+  "0009169" : {
+    "identifiedItemResourceName" : "무속성알",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "무속성알"
+  },
+  "0009170" : {
+    "identifiedItemResourceName" : "성속성알",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "성속성알"
+  },
+  "0009171" : {
+    "identifiedItemResourceName" : "Timeholder_Egg",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Timeholder_Egg"
+  },
   "0009183" : {
     "identifiedItemResourceName" : "CLB_SS_Egg01",
     "slotCount" : 0,
@@ -27098,6 +27113,16 @@
     "identifiedItemResourceName" : "CLB_SS_Egg02",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "CLB_SS_Egg02"
+  },
+  "0009187" : {
+    "identifiedItemResourceName" : "성속성알",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "성속성알"
+  },
+  "0009190" : {
+    "identifiedItemResourceName" : "지속성알",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "지속성알"
   },
   "0009192" : {
     "identifiedItemResourceName" : "풍속성알",
@@ -37489,11 +37514,6 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "오래된보라상자"
   },
-  "0014229" : {
-    "identifiedItemResourceName" : "벚꽃스크롤",
-    "slotCount" : 0,
-    "unidentifiedItemResourceName" : "벚꽃스크롤"
-  },
   "0014230" : {
     "identifiedItemResourceName" : "오래된보라상자",
     "slotCount" : 0,
@@ -39383,6 +39403,11 @@
     "identifiedItemResourceName" : "행운의막대과자",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "행운의막대과자"
+  },
+  "0014622" : {
+    "identifiedItemResourceName" : "벚꽃스크롤",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "벚꽃스크롤"
   },
   "0014623" : {
     "identifiedItemResourceName" : "금보물상자",
@@ -48524,6 +48549,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "글래스"
   },
+  "0019929" : {
+    "identifiedItemResourceName" : "클래식리본",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0019930" : {
     "identifiedItemResourceName" : "천사의미니실크햇",
     "slotCount" : 0,
@@ -48723,6 +48753,11 @@
     "identifiedItemResourceName" : "냉기입김",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
+  },
+  "0019993" : {
+    "identifiedItemResourceName" : "입에무는주먹밥",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "마스크"
   },
   "0019996" : {
     "identifiedItemResourceName" : "마왕",
@@ -49009,6 +49044,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "햇"
   },
+  "0020112" : {
+    "identifiedItemResourceName" : "아쿠아텐갤론햇",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
   "0020114" : {
     "identifiedItemResourceName" : "장례건",
     "slotCount" : 0,
@@ -49163,6 +49203,11 @@
     "identifiedItemResourceName" : "양털모자2",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "햇"
+  },
+  "0020167" : {
+    "identifiedItemResourceName" : "데비루치헤드폰",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
   },
   "0020171" : {
     "identifiedItemResourceName" : "세피아캡",
@@ -49478,6 +49523,11 @@
     "identifiedItemResourceName" : "SLEEPYCAT_HAT",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "캡"
+  },
+  "0020264" : {
+    "identifiedItemResourceName" : "블러드서커",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "마스크"
   },
   "0020266" : {
     "identifiedItemResourceName" : "비밀의지퍼",
@@ -59959,6 +60009,41 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "슈즈쉐도우"
   },
+  "0024993" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "0024994" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "0024995" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "0024996" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "0024997" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "0024998" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "0024999" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
   "0025000" : {
     "identifiedItemResourceName" : "영혼의조각",
     "slotCount" : 0,
@@ -63839,6 +63924,11 @@
     "slotCount" : 4,
     "unidentifiedItemResourceName" : "액스"
   },
+  "0028145" : {
+    "identifiedItemResourceName" : "Midgard_2h_Axe_JP",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "액스"
+  },
   "0028200" : {
     "identifiedItemResourceName" : "엔드오브호라이즌",
     "slotCount" : 1,
@@ -67084,6 +67174,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "햇"
   },
+  "0031250" : {
+    "identifiedItemResourceName" : "Wonderful_Beast_Ear",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0031251" : {
     "identifiedItemResourceName" : "Cat_Mouth",
     "slotCount" : 0,
@@ -67093,6 +67188,11 @@
     "identifiedItemResourceName" : "멜론헬멧",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "캡"
+  },
+  "0031258" : {
+    "identifiedItemResourceName" : "White_Clay_Filler",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
   },
   "0031259" : {
     "identifiedItemResourceName" : "Bubble_A_Angel_H",
@@ -67299,6 +67399,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0031417" : {
+    "identifiedItemResourceName" : "주먹밥모자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
   "0031425" : {
     "identifiedItemResourceName" : "낙지풍선",
     "slotCount" : 0,
@@ -67333,6 +67438,11 @@
     "identifiedItemResourceName" : "C_Snow_Bear_Hood",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
+  },
+  "0031445" : {
+    "identifiedItemResourceName" : "Feather_Fedora_TW",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
   },
   "0031448" : {
     "identifiedItemResourceName" : "스팅실크리본",
@@ -67529,10 +67639,20 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0031542" : {
+    "identifiedItemResourceName" : "Clay_Poring_Jar",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0031545" : {
     "identifiedItemResourceName" : "C_Eremes_Scarf_BU",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
+  },
+  "0031547" : {
+    "identifiedItemResourceName" : "C_Poporing_Mascot_Costume",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
   },
   "0031552" : {
     "identifiedItemResourceName" : "블루리본",
@@ -67729,6 +67849,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0031638" : {
+    "identifiedItemResourceName" : "C_Straight_Long_RD",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0031667" : {
     "identifiedItemResourceName" : "PoringBeret",
     "slotCount" : 0,
@@ -67876,6 +68001,11 @@
   },
   "0031732" : {
     "identifiedItemResourceName" : "BearBalloon",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0031734" : {
+    "identifiedItemResourceName" : "CitrusRibbon",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -70219,6 +70349,16 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "암흑의의지"
   },
+  "0100582" : {
+    "identifiedItemResourceName" : "RemodelCube",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "RemodelCube"
+  },
+  "0100584" : {
+    "identifiedItemResourceName" : "RemodelCube",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "RemodelCube"
+  },
   "0100585" : {
     "identifiedItemResourceName" : "초록상자",
     "slotCount" : 0,
@@ -70480,9 +70620,9 @@
     "unidentifiedItemResourceName" : "Auto_M_I_Box_A"
   },
   "0100754" : {
-    "identifiedItemResourceName" : "폭탄링상자",
+    "identifiedItemResourceName" : "pro선물상자",
     "slotCount" : 0,
-    "unidentifiedItemResourceName" : "폭탄링상자"
+    "unidentifiedItemResourceName" : "pro선물상자"
   },
   "0100783" : {
     "identifiedItemResourceName" : "라피네뚝딱상자",
@@ -73929,6 +74069,16 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "2024ROS_Box"
   },
+  "0103218" : {
+    "identifiedItemResourceName" : "Angel_Song",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Angel_Song"
+  },
+  "0103219" : {
+    "identifiedItemResourceName" : "Watch_lubricant",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Watch_lubricant"
+  },
   "0103234" : {
     "identifiedItemResourceName" : "초록상자",
     "slotCount" : 0,
@@ -73990,9 +74140,9 @@
     "unidentifiedItemResourceName" : "RemodelCube"
   },
   "0103314" : {
-    "identifiedItemResourceName" : "22th_Present_Box",
+    "identifiedItemResourceName" : "23th_Present_Box",
     "slotCount" : 0,
-    "unidentifiedItemResourceName" : "22th_Present_Box"
+    "unidentifiedItemResourceName" : "23th_Present_Box"
   },
   "0103316" : {
     "identifiedItemResourceName" : "쉐도우큐브",
@@ -74444,6 +74594,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "초록상자"
   },
+  "0103619" : {
+    "identifiedItemResourceName" : "다이아보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "다이아보물상자"
+  },
   "0103622" : {
     "identifiedItemResourceName" : "상인전직상자",
     "slotCount" : 0,
@@ -74473,6 +74628,11 @@
     "identifiedItemResourceName" : "상인전직상자",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "상인전직상자"
+  },
+  "0103628" : {
+    "identifiedItemResourceName" : "어질요리03",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "어질요리03"
   },
   "0103634" : {
     "identifiedItemResourceName" : "선물상자_4",
@@ -74544,10 +74704,1020 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "Winter_Cookie"
   },
+  "0103871" : {
+    "identifiedItemResourceName" : "보라쉐도우큐브",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보라쉐도우큐브"
+  },
+  "0103872" : {
+    "identifiedItemResourceName" : "쉐도우큐브",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "쉐도우큐브"
+  },
+  "0103873" : {
+    "identifiedItemResourceName" : "라피네뚝딱상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "라피네뚝딱상자"
+  },
+  "0103874" : {
+    "identifiedItemResourceName" : "화자리스크롤",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "화자리스크롤"
+  },
+  "0103875" : {
+    "identifiedItemResourceName" : "Costama_Egg121",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Costama_Egg121"
+  },
   "0103891" : {
     "identifiedItemResourceName" : "졸린상자",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "졸린상자"
+  },
+  "0103898" : {
+    "identifiedItemResourceName" : "Luxurious_Blue_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Luxurious_Blue_Box"
+  },
+  "0103899" : {
+    "identifiedItemResourceName" : "Luxurious_Blue_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Luxurious_Blue_Box"
+  },
+  "0103900" : {
+    "identifiedItemResourceName" : "Luxurious_Blue_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Luxurious_Blue_Box"
+  },
+  "0103903" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0103904" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0103905" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0103906" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0103909" : {
+    "identifiedItemResourceName" : "초록상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "초록상자"
+  },
+  "0103991" : {
+    "identifiedItemResourceName" : "백금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "백금보물상자"
+  },
+  "0104000" : {
+    "identifiedItemResourceName" : "Ch1_Warp_Leaf",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Warp_Leaf"
+  },
+  "0104002" : {
+    "identifiedItemResourceName" : "동보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "동보물상자"
+  },
+  "0104003" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0104004" : {
+    "identifiedItemResourceName" : "금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "금보물상자"
+  },
+  "0104005" : {
+    "identifiedItemResourceName" : "백금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "백금보물상자"
+  },
+  "0104006" : {
+    "identifiedItemResourceName" : "나무보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "나무보물상자"
+  },
+  "0104007" : {
+    "identifiedItemResourceName" : "철보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "철보물상자"
+  },
+  "0104008" : {
+    "identifiedItemResourceName" : "진주보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "진주보물상자"
+  },
+  "0104009" : {
+    "identifiedItemResourceName" : "다이아보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "다이아보물상자"
+  },
+  "0104174" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0104175" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_1"
+  },
+  "0104205" : {
+    "identifiedItemResourceName" : "선물상자_5",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "선물상자_5"
+  },
+  "0104206" : {
+    "identifiedItemResourceName" : "전투교범",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "전투교범"
+  },
+  "0104233" : {
+    "identifiedItemResourceName" : "EXP_Drop_Up_Buff",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "EXP_Drop_Up_Buff"
+  },
+  "0104236" : {
+    "identifiedItemResourceName" : "CLB_HM_Card_WE",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_Card_WE"
+  },
+  "0104237" : {
+    "identifiedItemResourceName" : "CLB_HM_Card_GR",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_Card_GR"
+  },
+  "0104238" : {
+    "identifiedItemResourceName" : "CLB_HM_Card_PK",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_Card_PK"
+  },
+  "0104239" : {
+    "identifiedItemResourceName" : "CLB_HM_Card_PP",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_Card_PP"
+  },
+  "0104386" : {
+    "identifiedItemResourceName" : "CLB_HM_MunchCardPack",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_MunchCardPack"
+  },
+  "0104419" : {
+    "identifiedItemResourceName" : "CLB_HM_Masitta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_Masitta"
+  },
+  "0104420" : {
+    "identifiedItemResourceName" : "CLB_HM_PC_Onion",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_PC_Onion"
+  },
+  "0104421" : {
+    "identifiedItemResourceName" : "CLB_HM_DubleBurger",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_DubleBurger"
+  },
+  "0104451" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104452" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104453" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104454" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104455" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104456" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104457" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104458" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104459" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104460" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104461" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104462" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104463" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104464" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104465" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104466" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104467" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104468" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104469" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104470" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104471" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104472" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104473" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104474" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104475" : {
+    "identifiedItemResourceName" : "Rt_Ep19_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_C"
+  },
+  "0104476" : {
+    "identifiedItemResourceName" : "Rt_Ep19_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep19_A"
+  },
+  "0104477" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104478" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104479" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104480" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104481" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104482" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104483" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104484" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104485" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104486" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104487" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104488" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104489" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104490" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104491" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104492" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104493" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104494" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104495" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104496" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104497" : {
+    "identifiedItemResourceName" : "Rt_Ep20_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_C"
+  },
+  "0104498" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104499" : {
+    "identifiedItemResourceName" : "Rt_Ep20_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep20_A"
+  },
+  "0104501" : {
+    "identifiedItemResourceName" : "초록상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "초록상자"
+  },
+  "0104537" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0104538" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_1"
+  },
+  "0104714" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0104715" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0104716" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0104741" : {
+    "identifiedItemResourceName" : "Rt_Ch01_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_A"
+  },
+  "0104742" : {
+    "identifiedItemResourceName" : "Rt_Ch01_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_C"
+  },
+  "0104743" : {
+    "identifiedItemResourceName" : "Rt_Ch01_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_A"
+  },
+  "0104744" : {
+    "identifiedItemResourceName" : "Rt_Ch01_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_C"
+  },
+  "0104745" : {
+    "identifiedItemResourceName" : "Rt_Ch01_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_A"
+  },
+  "0104746" : {
+    "identifiedItemResourceName" : "Rt_Ch01_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_A"
+  },
+  "0104747" : {
+    "identifiedItemResourceName" : "Rt_Ch01_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_C"
+  },
+  "0104748" : {
+    "identifiedItemResourceName" : "Rt_Ch01_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_A"
+  },
+  "0104749" : {
+    "identifiedItemResourceName" : "Rt_Ch01_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_A"
+  },
+  "0104750" : {
+    "identifiedItemResourceName" : "Rt_Ch01_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ch01_A"
+  },
+  "0104901" : {
+    "identifiedItemResourceName" : "초록상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "초록상자"
+  },
+  "0105031" : {
+    "identifiedItemResourceName" : "리본",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0105045" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_1"
+  },
+  "0105046" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_2"
+  },
+  "0105047" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_3"
+  },
+  "0105059" : {
+    "identifiedItemResourceName" : "Evt_20th_Whitegold",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Whitegold"
+  },
+  "0105161" : {
+    "identifiedItemResourceName" : "Entwined_Singularity",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Entwined_Singularity"
+  },
+  "0105162" : {
+    "identifiedItemResourceName" : "Singularity_Of_Fron",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Singularity_Of_Fron"
+  },
+  "0105163" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105164" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105165" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105166" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105167" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105168" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105169" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105170" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105171" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105172" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105173" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105174" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105175" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105176" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105177" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105178" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105179" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105180" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105181" : {
+    "identifiedItemResourceName" : "Fron_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fron_Fix"
+  },
+  "0105219" : {
+    "identifiedItemResourceName" : "핫도그상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "핫도그상자"
+  },
+  "0105220" : {
+    "identifiedItemResourceName" : "핫도그상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "핫도그상자"
+  },
+  "0105356" : {
+    "identifiedItemResourceName" : "23th_Present_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "23th_Present_Box"
+  },
+  "0105357" : {
+    "identifiedItemResourceName" : "23th_Present_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "23th_Present_Box"
+  },
+  "0105415" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105416" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105417" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105418" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105419" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105420" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105421" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105422" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105488" : {
+    "identifiedItemResourceName" : "All_In_One_Healing",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "All_In_One_Healing"
+  },
+  "0105489" : {
+    "identifiedItemResourceName" : "All_In_One_buff",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "All_In_One_buff"
+  },
+  "0105490" : {
+    "identifiedItemResourceName" : "2024ROS_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "2024ROS_Box"
+  },
+  "0105518" : {
+    "identifiedItemResourceName" : "초록상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "초록상자"
+  },
+  "0105526" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_1"
+  },
+  "0105527" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_1"
+  },
+  "0105528" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_1"
+  },
+  "0105615" : {
+    "identifiedItemResourceName" : "Evt_RagFes_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_RagFes_Box"
+  },
+  "0105616" : {
+    "identifiedItemResourceName" : "R_Ep1921_Album",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Ep1921_Album"
+  },
+  "0105617" : {
+    "identifiedItemResourceName" : "R_Ep1921_Boss",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Ep1921_Boss"
+  },
+  "0105619" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105620" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105621" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105622" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105623" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105624" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105625" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105626" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105627" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105628" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105629" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105630" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105631" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105632" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105633" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105634" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105635" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105636" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105637" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105638" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105639" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105640" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105641" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105642" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105643" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105644" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105645" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105646" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105647" : {
+    "identifiedItemResourceName" : "Rt_Ep21_A",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_A"
+  },
+  "0105648" : {
+    "identifiedItemResourceName" : "Rt_Ep21_C",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Rt_Ep21_C"
+  },
+  "0105685" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105686" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105687" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105688" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105689" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105690" : {
+    "identifiedItemResourceName" : "A_DM_Fix",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "A_DM_Fix"
+  },
+  "0105715" : {
+    "identifiedItemResourceName" : "오래된노란상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "오래된노란상자"
+  },
+  "0105737" : {
+    "identifiedItemResourceName" : "비바투스제련망치",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "비바투스제련망치"
+  },
+  "0105738" : {
+    "identifiedItemResourceName" : "비바투스제련망치",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "비바투스제련망치"
+  },
+  "0105828" : {
+    "identifiedItemResourceName" : "졸린상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "졸린상자"
+  },
+  "0105829" : {
+    "identifiedItemResourceName" : "졸린상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "졸린상자"
+  },
+  "0105830" : {
+    "identifiedItemResourceName" : "잠긴실버갑옷상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "잠긴실버갑옷상자"
+  },
+  "0105831" : {
+    "identifiedItemResourceName" : "잠긴실버갑옷상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "잠긴실버갑옷상자"
+  },
+  "0105832" : {
+    "identifiedItemResourceName" : "핫도그상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "핫도그상자"
+  },
+  "0105833" : {
+    "identifiedItemResourceName" : "핫도그상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "핫도그상자"
+  },
+  "0105834" : {
+    "identifiedItemResourceName" : "핫도그상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "핫도그상자"
+  },
+  "0105835" : {
+    "identifiedItemResourceName" : "핫도그상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "핫도그상자"
+  },
+  "0105836" : {
+    "identifiedItemResourceName" : "특별한크리스마스상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "특별한크리스마스상자"
+  },
+  "0105917" : {
+    "identifiedItemResourceName" : "Luxurious_Blue_Box",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Luxurious_Blue_Box"
+  },
+  "0105927" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0105928" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
+  },
+  "0105929" : {
+    "identifiedItemResourceName" : "Re_Costama_Box_2023_4",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Re_Costama_Box_2023_4"
   },
   "0200000" : {
     "identifiedItemResourceName" : "거미줄",
@@ -75443,6 +76613,446 @@
     "identifiedItemResourceName" : "금보물상자",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "금보물상자"
+  },
+  "0200514" : {
+    "identifiedItemResourceName" : "빨간상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "빨간상자"
+  },
+  "0200515" : {
+    "identifiedItemResourceName" : "오래된노란상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "오래된노란상자"
+  },
+  "0200516" : {
+    "identifiedItemResourceName" : "오래된노란상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "오래된노란상자"
+  },
+  "0200517" : {
+    "identifiedItemResourceName" : "캐시상자_노랑",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_노랑"
+  },
+  "0200518" : {
+    "identifiedItemResourceName" : "캐시상자_노랑",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_노랑"
+  },
+  "0200519" : {
+    "identifiedItemResourceName" : "캐시상자_보라",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_보라"
+  },
+  "0200520" : {
+    "identifiedItemResourceName" : "캐시상자_빨강",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_빨강"
+  },
+  "0200521" : {
+    "identifiedItemResourceName" : "캐시상자_빨강",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_빨강"
+  },
+  "0200522" : {
+    "identifiedItemResourceName" : "폭우의상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "폭우의상자"
+  },
+  "0200523" : {
+    "identifiedItemResourceName" : "폭우의상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "폭우의상자"
+  },
+  "0200524" : {
+    "identifiedItemResourceName" : "햇빛의상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇빛의상자"
+  },
+  "0200525" : {
+    "identifiedItemResourceName" : "햇빛의상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇빛의상자"
+  },
+  "0200534" : {
+    "identifiedItemResourceName" : "소원상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "소원상자"
+  },
+  "0200535" : {
+    "identifiedItemResourceName" : "소원상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "소원상자"
+  },
+  "0200536" : {
+    "identifiedItemResourceName" : "소원상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "소원상자"
+  },
+  "0200537" : {
+    "identifiedItemResourceName" : "졸린상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "졸린상자"
+  },
+  "0200538" : {
+    "identifiedItemResourceName" : "졸린상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "졸린상자"
+  },
+  "0200539" : {
+    "identifiedItemResourceName" : "캐시상자_녹색",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_녹색"
+  },
+  "0200540" : {
+    "identifiedItemResourceName" : "캐시상자_녹색",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_녹색"
+  },
+  "0200541" : {
+    "identifiedItemResourceName" : "햇빛의상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇빛의상자"
+  },
+  "0200542" : {
+    "identifiedItemResourceName" : "햇빛의상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇빛의상자"
+  },
+  "0200543" : {
+    "identifiedItemResourceName" : "응급처치상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "응급처치상자"
+  },
+  "0200544" : {
+    "identifiedItemResourceName" : "응급처치상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "응급처치상자"
+  },
+  "0200545" : {
+    "identifiedItemResourceName" : "캐시상자_검정",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_검정"
+  },
+  "0200546" : {
+    "identifiedItemResourceName" : "캐시상자_빨강",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_빨강"
+  },
+  "0200547" : {
+    "identifiedItemResourceName" : "캐시상자_빨강",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_빨강"
+  },
+  "0200548" : {
+    "identifiedItemResourceName" : "캐시상자_보라",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_보라"
+  },
+  "0200549" : {
+    "identifiedItemResourceName" : "캐시상자_보라",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_보라"
+  },
+  "0200550" : {
+    "identifiedItemResourceName" : "졸린상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "졸린상자"
+  },
+  "0200551" : {
+    "identifiedItemResourceName" : "졸린상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "졸린상자"
+  },
+  "0200552" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200553" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200554" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200555" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200556" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200557" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200558" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200559" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200560" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200561" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200562" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200595" : {
+    "identifiedItemResourceName" : "동보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "동보물상자"
+  },
+  "0200596" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0200597" : {
+    "identifiedItemResourceName" : "금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "금보물상자"
+  },
+  "0200614" : {
+    "identifiedItemResourceName" : "캐시상자_빨강",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_빨강"
+  },
+  "0200615" : {
+    "identifiedItemResourceName" : "캐시상자_빨강",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_빨강"
+  },
+  "0200616" : {
+    "identifiedItemResourceName" : "캐시상자_노랑",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_노랑"
+  },
+  "0200617" : {
+    "identifiedItemResourceName" : "캐시상자_노랑",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캐시상자_노랑"
+  },
+  "0200621" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200622" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200623" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200665" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200666" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200667" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200669" : {
+    "identifiedItemResourceName" : "동보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "동보물상자"
+  },
+  "0200670" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0200671" : {
+    "identifiedItemResourceName" : "금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "금보물상자"
+  },
+  "0200700" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200701" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200702" : {
+    "identifiedItemResourceName" : "보물상자_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "보물상자_"
+  },
+  "0200713" : {
+    "identifiedItemResourceName" : "NewServer_Package",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "NewServer_Package"
+  },
+  "0200714" : {
+    "identifiedItemResourceName" : "NewServer_Package",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "NewServer_Package"
+  },
+  "0200715" : {
+    "identifiedItemResourceName" : "NewServer_Package",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "NewServer_Package"
+  },
+  "0200716" : {
+    "identifiedItemResourceName" : "햇빛의상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇빛의상자"
+  },
+  "0200717" : {
+    "identifiedItemResourceName" : "응급처치상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "응급처치상자"
+  },
+  "0200718" : {
+    "identifiedItemResourceName" : "응급처치상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "응급처치상자"
+  },
+  "0200719" : {
+    "identifiedItemResourceName" : "응급처치상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "응급처치상자"
+  },
+  "0200721" : {
+    "identifiedItemResourceName" : "동보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "동보물상자"
+  },
+  "0200722" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0200723" : {
+    "identifiedItemResourceName" : "금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "금보물상자"
+  },
+  "0200724" : {
+    "identifiedItemResourceName" : "다이아보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "다이아보물상자"
+  },
+  "0200764" : {
+    "identifiedItemResourceName" : "동보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "동보물상자"
+  },
+  "0200765" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0200766" : {
+    "identifiedItemResourceName" : "금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "금보물상자"
+  },
+  "0200767" : {
+    "identifiedItemResourceName" : "MD_Airboat_Expbox",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "MD_Airboat_Expbox"
+  },
+  "0200768" : {
+    "identifiedItemResourceName" : "MD_Airboat_Expbox",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "MD_Airboat_Expbox"
+  },
+  "0200769" : {
+    "identifiedItemResourceName" : "MD_Airboat_Expbox",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "MD_Airboat_Expbox"
+  },
+  "0200770" : {
+    "identifiedItemResourceName" : "MD_Airboat_Expbox",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "MD_Airboat_Expbox"
+  },
+  "0200785" : {
+    "identifiedItemResourceName" : "다이아보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "다이아보물상자"
+  },
+  "0200786" : {
+    "identifiedItemResourceName" : "동보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "동보물상자자"
+  },
+  "0200787" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0200788" : {
+    "identifiedItemResourceName" : "금보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "금보물상자"
+  },
+  "0200789" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0200790" : {
+    "identifiedItemResourceName" : "은보물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "은보물상자"
+  },
+  "0200791" : {
+    "identifiedItemResourceName" : "pro선물상자",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "pro선물상자"
+  },
+  "0200792" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200793" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
+  },
+  "0200794" : {
+    "identifiedItemResourceName" : "Evt_20th_Return",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Evt_20th_Return"
   },
   "0300000" : {
     "identifiedItemResourceName" : "이름없는카드",
@@ -77150,6 +78760,226 @@
     "unidentifiedItemResourceName" : "이름없는카드"
   },
   "0300614" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300618" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300633" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300634" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300635" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300636" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300637" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300638" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300639" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300640" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300641" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300642" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300643" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300644" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300645" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300646" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300647" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300648" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300649" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300650" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300651" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300652" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300653" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300654" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300655" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300656" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300657" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300658" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300659" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300660" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300661" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300662" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300663" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300664" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300665" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300666" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300667" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300715" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300716" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300717" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300718" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300719" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300720" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300721" : {
+    "identifiedItemResourceName" : "이름없는카드",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이름없는카드"
+  },
+  "0300722" : {
     "identifiedItemResourceName" : "이름없는카드",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "이름없는카드"
@@ -87839,6 +89669,21 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "용의보주_황"
   },
+  "0313558" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0313559" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0313560" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
   "0313561" : {
     "identifiedItemResourceName" : "Wolf_Orb_Life",
     "slotCount" : 0,
@@ -87888,6 +89733,1241 @@
     "identifiedItemResourceName" : "Wolf_Orb_Un_Vit",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "Wolf_Orb_Un_Vit"
+  },
+  "0313725" : {
+    "identifiedItemResourceName" : "Wolf_Orb_Critical_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Wolf_Orb_Critical_1"
+  },
+  "0313726" : {
+    "identifiedItemResourceName" : "Lord_Knight_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Lord_Knight_Figure"
+  },
+  "0313727" : {
+    "identifiedItemResourceName" : "Lord_Knight_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Lord_Knight_Figure"
+  },
+  "0313728" : {
+    "identifiedItemResourceName" : "Lord_Knight_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Lord_Knight_Figure"
+  },
+  "0313729" : {
+    "identifiedItemResourceName" : "ClownGypsy_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "ClownGypsy_Figure"
+  },
+  "0313730" : {
+    "identifiedItemResourceName" : "ClownGypsy_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "ClownGypsy_Figure"
+  },
+  "0313731" : {
+    "identifiedItemResourceName" : "ClownGypsy_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "ClownGypsy_Figure"
+  },
+  "0313732" : {
+    "identifiedItemResourceName" : "블랙캣",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "블랙캣"
+  },
+  "0313733" : {
+    "identifiedItemResourceName" : "블랙캣",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "블랙캣"
+  },
+  "0313734" : {
+    "identifiedItemResourceName" : "블랙캣",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "블랙캣"
+  },
+  "0313735" : {
+    "identifiedItemResourceName" : "Lord_Knight_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Lord_Knight_Figure"
+  },
+  "0313736" : {
+    "identifiedItemResourceName" : "ClownGypsy_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "ClownGypsy_Figure"
+  },
+  "0313737" : {
+    "identifiedItemResourceName" : "블랙캣",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "블랙캣"
+  },
+  "0313798" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313799" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313800" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313801" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313802" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313803" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313804" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313805" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313806" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313807" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313808" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313809" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313810" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313811" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313812" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313813" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313814" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313815" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313816" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313817" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313818" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313819" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313820" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313821" : {
+    "identifiedItemResourceName" : "Glacier_F_Orb_141",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Glacier_F_Orb_141"
+  },
+  "0313822" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313823" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313824" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313825" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313826" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313827" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313828" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313829" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313830" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313831" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313832" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313833" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313834" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313835" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313836" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313837" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313838" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313839" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313840" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313841" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313842" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313843" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313844" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313845" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0313846" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313847" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0313848" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313849" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313850" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313851" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313852" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0313853" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Life",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Life"
+  },
+  "0313854" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Life",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Life"
+  },
+  "0313855" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Life",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Life"
+  },
+  "0313856" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Life",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Life"
+  },
+  "0313857" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Life",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Life"
+  },
+  "0313858" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Regiment",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Regiment"
+  },
+  "0313859" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Regiment",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Regiment"
+  },
+  "0313860" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Regiment",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Regiment"
+  },
+  "0313861" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Regiment",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Regiment"
+  },
+  "0313862" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Regiment",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Regiment"
+  },
+  "0313863" : {
+    "identifiedItemResourceName" : "Ch01_S_E_GAE",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_GAE"
+  },
+  "0313864" : {
+    "identifiedItemResourceName" : "Ch01_S_E_GAE",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_GAE"
+  },
+  "0313865" : {
+    "identifiedItemResourceName" : "Ch01_S_E_GAE",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_GAE"
+  },
+  "0313866" : {
+    "identifiedItemResourceName" : "Ch01_S_E_GAE",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_GAE"
+  },
+  "0313867" : {
+    "identifiedItemResourceName" : "Ch01_S_E_GAE",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_GAE"
+  },
+  "0313868" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Immo",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Immo"
+  },
+  "0313869" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Immo",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Immo"
+  },
+  "0313870" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Immo",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Immo"
+  },
+  "0313871" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Immo",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Immo"
+  },
+  "0313872" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Immo",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Immo"
+  },
+  "0313873" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Vain",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Vain"
+  },
+  "0313874" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Vain",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Vain"
+  },
+  "0313875" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Vain",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Vain"
+  },
+  "0313876" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Vain",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Vain"
+  },
+  "0313877" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Vain",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Vain"
+  },
+  "0313878" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Flame",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Flame"
+  },
+  "0313879" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Flame",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Flame"
+  },
+  "0313880" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Flame",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Flame"
+  },
+  "0313881" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Flame",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Flame"
+  },
+  "0313882" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Flame",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Flame"
+  },
+  "0313883" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Frozen",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Frozen"
+  },
+  "0313884" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Frozen",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Frozen"
+  },
+  "0313885" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Frozen",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Frozen"
+  },
+  "0313886" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Frozen",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Frozen"
+  },
+  "0313887" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Frozen",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Frozen"
+  },
+  "0313888" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Earth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Earth"
+  },
+  "0313889" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Earth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Earth"
+  },
+  "0313890" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Earth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Earth"
+  },
+  "0313891" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Earth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Earth"
+  },
+  "0313892" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Earth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Earth"
+  },
+  "0313893" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Death",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Death"
+  },
+  "0313894" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Death",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Death"
+  },
+  "0313895" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Death",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Death"
+  },
+  "0313896" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Death",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Death"
+  },
+  "0313897" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Death",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Death"
+  },
+  "0313898" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Poison",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Poison"
+  },
+  "0313899" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Poison",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Poison"
+  },
+  "0313900" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Poison",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Poison"
+  },
+  "0313901" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Poison",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Poison"
+  },
+  "0313902" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Poison",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Poison"
+  },
+  "0313903" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Fighting",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Fighting"
+  },
+  "0313904" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Fighting",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Fighting"
+  },
+  "0313905" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Fighting",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Fighting"
+  },
+  "0313906" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Fighting",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Fighting"
+  },
+  "0313907" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Fighting",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Fighting"
+  },
+  "0313908" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Fighting",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Fighting"
+  },
+  "0313909" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Prudence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Prudence"
+  },
+  "0313910" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Prudence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Prudence"
+  },
+  "0313911" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Prudence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Prudence"
+  },
+  "0313912" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Prudence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Prudence"
+  },
+  "0313913" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Prudence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Prudence"
+  },
+  "0313914" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Prudence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Prudence"
+  },
+  "0313915" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Pride",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Pride"
+  },
+  "0313916" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Pride",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Pride"
+  },
+  "0313917" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Pride",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Pride"
+  },
+  "0313918" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Pride",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Pride"
+  },
+  "0313919" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Pride",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Pride"
+  },
+  "0313920" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Pride",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Pride"
+  },
+  "0313921" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Sageness",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Sageness"
+  },
+  "0313922" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Sageness",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Sageness"
+  },
+  "0313923" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Sageness",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Sageness"
+  },
+  "0313924" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Sageness",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Sageness"
+  },
+  "0313925" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Sageness",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Sageness"
+  },
+  "0313926" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Sageness",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Sageness"
+  },
+  "0313927" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Volition",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Volition"
+  },
+  "0313928" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Volition",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Volition"
+  },
+  "0313929" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Volition",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Volition"
+  },
+  "0313930" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Volition",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Volition"
+  },
+  "0313931" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Volition",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Volition"
+  },
+  "0313932" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Volition",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Volition"
+  },
+  "0313933" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Will",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Will"
+  },
+  "0313934" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Will",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Will"
+  },
+  "0313935" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Will",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Will"
+  },
+  "0313936" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Will",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Will"
+  },
+  "0313937" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Will",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Will"
+  },
+  "0313938" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Will",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Will"
+  },
+  "0313939" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Life",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Life"
+  },
+  "0313940" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Regiment",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Regiment"
+  },
+  "0313941" : {
+    "identifiedItemResourceName" : "Ch01_S_E_GAE",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_GAE"
+  },
+  "0313942" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Immo",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Immo"
+  },
+  "0313943" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Vain",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Vain"
+  },
+  "0313944" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Flame",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Flame"
+  },
+  "0313945" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Frozen",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Frozen"
+  },
+  "0313946" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Earth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Earth"
+  },
+  "0313947" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Death",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Death"
+  },
+  "0313948" : {
+    "identifiedItemResourceName" : "Ch01_S_E_Poison",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_S_E_Poison"
+  },
+  "0313955" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0313956" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0313957" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0314021" : {
+    "identifiedItemResourceName" : "Assasin_Cross_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Assasin_Cross_Figure"
+  },
+  "0314022" : {
+    "identifiedItemResourceName" : "Assasin_Cross_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Assasin_Cross_Figure"
+  },
+  "0314023" : {
+    "identifiedItemResourceName" : "Assasin_Cross_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Assasin_Cross_Figure"
+  },
+  "0314024" : {
+    "identifiedItemResourceName" : "Assasin_Cross_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Assasin_Cross_Figure"
+  },
+  "0314025" : {
+    "identifiedItemResourceName" : "Champion_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Champion_Figure"
+  },
+  "0314026" : {
+    "identifiedItemResourceName" : "Champion_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Champion_Figure"
+  },
+  "0314027" : {
+    "identifiedItemResourceName" : "Champion_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Champion_Figure"
+  },
+  "0314028" : {
+    "identifiedItemResourceName" : "Champion_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Champion_Figure"
+  },
+  "0314029" : {
+    "identifiedItemResourceName" : "도깨비불",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "도깨비불"
+  },
+  "0314030" : {
+    "identifiedItemResourceName" : "도깨비불",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "도깨비불"
+  },
+  "0314031" : {
+    "identifiedItemResourceName" : "도깨비불",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "도깨비불"
+  },
+  "0314032" : {
+    "identifiedItemResourceName" : "도깨비불",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "도깨비불"
+  },
+  "0314066" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0314094" : {
+    "identifiedItemResourceName" : "ROS_BlueSpirit_Effect",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "ROS_BlueSpirit_Effect"
+  },
+  "0314095" : {
+    "identifiedItemResourceName" : "ROS_RedSpirit_Effect",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "ROS_RedSpirit_Effect"
+  },
+  "0314171" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0314172" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0314181" : {
+    "identifiedItemResourceName" : "High_Priest_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Priest_Figure"
+  },
+  "0314182" : {
+    "identifiedItemResourceName" : "High_Priest_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Priest_Figure"
+  },
+  "0314183" : {
+    "identifiedItemResourceName" : "High_Priest_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Priest_Figure"
+  },
+  "0314184" : {
+    "identifiedItemResourceName" : "High_Priest_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Priest_Figure"
+  },
+  "0314185" : {
+    "identifiedItemResourceName" : "Stalker_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Stalker_Figure"
+  },
+  "0314186" : {
+    "identifiedItemResourceName" : "Stalker_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Stalker_Figure"
+  },
+  "0314187" : {
+    "identifiedItemResourceName" : "Stalker_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Stalker_Figure"
+  },
+  "0314188" : {
+    "identifiedItemResourceName" : "Stalker_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Stalker_Figure"
+  },
+  "0314189" : {
+    "identifiedItemResourceName" : "피규어",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "피규어"
+  },
+  "0314190" : {
+    "identifiedItemResourceName" : "피규어",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "피규어"
+  },
+  "0314191" : {
+    "identifiedItemResourceName" : "피규어",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "피규어"
+  },
+  "0314192" : {
+    "identifiedItemResourceName" : "피규어",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "피규어"
+  },
+  "0314212" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0314213" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0314214" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "0314230" : {
+    "identifiedItemResourceName" : "Ch01_1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_1"
+  },
+  "0314231" : {
+    "identifiedItemResourceName" : "Ch01_2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_2"
+  },
+  "0314232" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0314233" : {
+    "identifiedItemResourceName" : "Ch01_3",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch01_3"
+  },
+  "0314243" : {
+    "identifiedItemResourceName" : "T_D_Jewel_POW",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "T_D_Jewel_POW"
+  },
+  "0314244" : {
+    "identifiedItemResourceName" : "T_D_Jewel_POW",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "T_D_Jewel_POW"
+  },
+  "0314245" : {
+    "identifiedItemResourceName" : "T_D_Jewel_POW",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "T_D_Jewel_POW"
+  },
+  "0314246" : {
+    "identifiedItemResourceName" : "T_D_Jewel_CON",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "T_D_Jewel_CON"
+  },
+  "0314247" : {
+    "identifiedItemResourceName" : "T_D_Jewel_CON",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "T_D_Jewel_CON"
+  },
+  "0314248" : {
+    "identifiedItemResourceName" : "T_D_Jewel_CON",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "T_D_Jewel_CON"
+  },
+  "0314249" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314250" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314251" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314252" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314253" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314254" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314255" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314256" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314257" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314258" : {
+    "identifiedItemResourceName" : "Fierce_A_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Fierce_A_Jewel"
+  },
+  "0314259" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314260" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314261" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314262" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314263" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314264" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314265" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314266" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314267" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314268" : {
+    "identifiedItemResourceName" : "Great_C_Jewel",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Great_C_Jewel"
+  },
+  "0314661" : {
+    "identifiedItemResourceName" : "Barmund_Sta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Barmund_Sta"
+  },
+  "0314662" : {
+    "identifiedItemResourceName" : "Barmund_Sta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Barmund_Sta"
+  },
+  "0314663" : {
+    "identifiedItemResourceName" : "Barmund_Sta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Barmund_Sta"
+  },
+  "0314664" : {
+    "identifiedItemResourceName" : "Barmund_Sta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Barmund_Sta"
+  },
+  "0314665" : {
+    "identifiedItemResourceName" : "Barmund_Sta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Barmund_Sta"
+  },
+  "0314666" : {
+    "identifiedItemResourceName" : "블루젬스톤",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "블루젬스톤"
+  },
+  "0314667" : {
+    "identifiedItemResourceName" : "High_Wizard_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Wizard_Figure"
+  },
+  "0314668" : {
+    "identifiedItemResourceName" : "Creator_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Creator_Figure"
+  },
+  "0314669" : {
+    "identifiedItemResourceName" : "푸른야광석",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "푸른야광석"
+  },
+  "0314670" : {
+    "identifiedItemResourceName" : "High_Wizard_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Wizard_Figure"
+  },
+  "0314671" : {
+    "identifiedItemResourceName" : "High_Wizard_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Wizard_Figure"
+  },
+  "0314672" : {
+    "identifiedItemResourceName" : "High_Wizard_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "High_Wizard_Figure"
+  },
+  "0314673" : {
+    "identifiedItemResourceName" : "Creator_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Creator_Figure"
+  },
+  "0314674" : {
+    "identifiedItemResourceName" : "Creator_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Creator_Figure"
+  },
+  "0314675" : {
+    "identifiedItemResourceName" : "Creator_Figure",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Creator_Figure"
+  },
+  "0314676" : {
+    "identifiedItemResourceName" : "푸른야광석",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "푸른야광석"
+  },
+  "0314677" : {
+    "identifiedItemResourceName" : "푸른야광석",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "푸른야광석"
+  },
+  "0314678" : {
+    "identifiedItemResourceName" : "푸른야광석",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "푸른야광석"
   },
   "0400000" : {
     "identifiedItemResourceName" : "휘파람",
@@ -88614,6 +91694,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "캡"
   },
+  "0400356" : {
+    "identifiedItemResourceName" : "C_Ignis_Cap_BU",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
   "0400359" : {
     "identifiedItemResourceName" : "햇",
     "slotCount" : 1,
@@ -88999,6 +92084,16 @@
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "헬름"
   },
+  "0400633" : {
+    "identifiedItemResourceName" : "Chic_Peony",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400634" : {
+    "identifiedItemResourceName" : "Ghost_Whisper",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0400650" : {
     "identifiedItemResourceName" : "Flash_of_Lightning",
     "slotCount" : 1,
@@ -89049,6 +92144,16 @@
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "헬름"
   },
+  "0400683" : {
+    "identifiedItemResourceName" : "C_Bell_Flower_Hat",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
+  },
+  "0400684" : {
+    "identifiedItemResourceName" : "C_Jerboa_Headband",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "머리띠"
+  },
   "0400692" : {
     "identifiedItemResourceName" : "C_Gold_Paeonia",
     "slotCount" : 0,
@@ -89073,6 +92178,11 @@
     "identifiedItemResourceName" : "Flash_of_Lightning",
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400703" : {
+    "identifiedItemResourceName" : "Altair_Hat",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
   },
   "0400715" : {
     "identifiedItemResourceName" : "Rising_Circlet",
@@ -89099,6 +92209,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "햇"
   },
+  "0400727" : {
+    "identifiedItemResourceName" : "C_Doram_Headband",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "머리띠"
+  },
   "0400739" : {
     "identifiedItemResourceName" : "Marin_Pattern_Hat",
     "slotCount" : 0,
@@ -89109,6 +92224,36 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0400744" : {
+    "identifiedItemResourceName" : "C_CLB_KP_Po",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0400745" : {
+    "identifiedItemResourceName" : "C_CLB_KP_DC",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0400746" : {
+    "identifiedItemResourceName" : "C_CLB_KP_Ta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0400747" : {
+    "identifiedItemResourceName" : "C_CLB_KP_SF",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0400748" : {
+    "identifiedItemResourceName" : "C_CLB_KP_Zh",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0400749" : {
+    "identifiedItemResourceName" : "C_Guide_Of_Dead_Cap",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
+  },
   "0400751" : {
     "identifiedItemResourceName" : "YellowKitty_HeadPhone",
     "slotCount" : 0,
@@ -89118,6 +92263,256 @@
     "identifiedItemResourceName" : "PGstone_Knit_Hat_GR",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "햇"
+  },
+  "0400757" : {
+    "identifiedItemResourceName" : "C_WH_Fox_Hood_Twin",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400760" : {
+    "identifiedItemResourceName" : "C_Wedjat",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400767" : {
+    "identifiedItemResourceName" : "VIP_Hair_2025",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
+  },
+  "0400792" : {
+    "identifiedItemResourceName" : "Garden_Of_Heaven",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
+  },
+  "0400795" : {
+    "identifiedItemResourceName" : "C_Thornbush_Hairband_BU",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400803" : {
+    "identifiedItemResourceName" : "C_Muka_Sombrero",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
+  },
+  "0400818" : {
+    "identifiedItemResourceName" : "C_CLB_HM_Uzagi",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
+  },
+  "0400913" : {
+    "identifiedItemResourceName" : "C_CLB_DT_TS_Mini",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400914" : {
+    "identifiedItemResourceName" : "C_CLB_DT_TS_Drooping",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0400919" : {
+    "identifiedItemResourceName" : "C_Petal_Hood",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0400930" : {
+    "identifiedItemResourceName" : "Steamroller",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "마스크"
+  },
+  "0400951" : {
+    "identifiedItemResourceName" : "C_2508_Salt_Hat",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400956" : {
+    "identifiedItemResourceName" : "C_Chestnut_Helmet",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400963" : {
+    "identifiedItemResourceName" : "C_Ear_Of_Nyar_WH",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400964" : {
+    "identifiedItemResourceName" : "C_Ear_Of_Nyar_GY",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0400965" : {
+    "identifiedItemResourceName" : "C_Divine_Veil",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0400975" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400976" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400977" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400978" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400979" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400980" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400981" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400982" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400983" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400984" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400985" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400986" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400987" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400988" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400989" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400990" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400991" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0400992" : {
+    "identifiedItemResourceName" : "Frontier_R_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401000" : {
+    "identifiedItemResourceName" : "C_Liamette_Hair_Band",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "머리띠"
+  },
+  "0401001" : {
+    "identifiedItemResourceName" : "C_N_Piamette_Bonnet",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0401014" : {
+    "identifiedItemResourceName" : "Two_tone_Cap",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0401055" : {
+    "identifiedItemResourceName" : "Poenetentia_P_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401056" : {
+    "identifiedItemResourceName" : "Poenetentia_B_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401057" : {
+    "identifiedItemResourceName" : "Poenetentia_S_Crown",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401058" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401059" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401060" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401062" : {
+    "identifiedItemResourceName" : "Magma_Ignis_Cap",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "캡"
+  },
+  "0401115" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401116" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401117" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401118" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401119" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
+  },
+  "0401120" : {
+    "identifiedItemResourceName" : "Midgard_Diadem_JP",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "헬름"
   },
   "0410005" : {
     "identifiedItemResourceName" : "C_Magic_Heir_TW",
@@ -89274,6 +92669,16 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0410108" : {
+    "identifiedItemResourceName" : "C_B_Shiba_Inu_TW",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410122" : {
+    "identifiedItemResourceName" : "C_B_Thin_Eyes_B_TW",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0410126" : {
     "identifiedItemResourceName" : "Professor_MiniGlass",
     "slotCount" : 0,
@@ -89386,6 +92791,11 @@
   },
   "0410193" : {
     "identifiedItemResourceName" : "C_Gulaling_Mini",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410198" : {
+    "identifiedItemResourceName" : "C_2022Cosutama_Imp_JP",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -89574,13 +92984,28 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0410278" : {
+    "identifiedItemResourceName" : "C_Blink_Eyes_Bloody",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0410279" : {
     "identifiedItemResourceName" : "Autumn_Full_Moon",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0410280" : {
+    "identifiedItemResourceName" : "C_Niflheim_Night_Sky",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0410286" : {
     "identifiedItemResourceName" : "EvilEye_of_FalseGods",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410289" : {
+    "identifiedItemResourceName" : "C_Baby_Gloom",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -89616,6 +93041,11 @@
   },
   "0410315" : {
     "identifiedItemResourceName" : "C_Consecrate_F_Aureola",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410316" : {
+    "identifiedItemResourceName" : "Bear_Candy_Cart",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -89666,6 +93096,66 @@
   },
   "0410364" : {
     "identifiedItemResourceName" : "Wisdom_Core_Headphones",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410384" : {
+    "identifiedItemResourceName" : "C_Blink_Eyes_WH_Serpent",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410385" : {
+    "identifiedItemResourceName" : "C_Libra_Of_Judgement",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410387" : {
+    "identifiedItemResourceName" : "C_Maid_Frill",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410399" : {
+    "identifiedItemResourceName" : "C_Capybara",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410430" : {
+    "identifiedItemResourceName" : "C_Blink_Eyes_Forest",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410440" : {
+    "identifiedItemResourceName" : "C_CLB_DT_TS_Hat",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "스마일"
+  },
+  "0410456" : {
+    "identifiedItemResourceName" : "C_WH_Cat_Eyes",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410457" : {
+    "identifiedItemResourceName" : "C_YL_Cat_Eyes",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410458" : {
+    "identifiedItemResourceName" : "C_Divine_Twinkling",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410471" : {
+    "identifiedItemResourceName" : "C_Gear_Monocle",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410474" : {
+    "identifiedItemResourceName" : "C_Chained_Bear",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0410491" : {
+    "identifiedItemResourceName" : "C_Violet_Starlight",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -89799,6 +93289,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0420046" : {
+    "identifiedItemResourceName" : "Royal_Mantle",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0420047" : {
     "identifiedItemResourceName" : "C_H_Knight_Cloak",
     "slotCount" : 0,
@@ -89811,6 +93306,11 @@
   },
   "0420050" : {
     "identifiedItemResourceName" : "C_Hair_Bun_Wave",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420054" : {
+    "identifiedItemResourceName" : "C_Smokie_Muffler",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -90264,6 +93764,21 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0420271" : {
+    "identifiedItemResourceName" : "Cosmic_Connection",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420273" : {
+    "identifiedItemResourceName" : "C_Rose_Wave_BD",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420276" : {
+    "identifiedItemResourceName" : "C_Rose_Wave_SVB",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0420303" : {
     "identifiedItemResourceName" : "C_Chaos_Emerald",
     "slotCount" : 0,
@@ -90281,6 +93796,16 @@
   },
   "0420307" : {
     "identifiedItemResourceName" : "C_Meer_Hair",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420321" : {
+    "identifiedItemResourceName" : "C_Neon_Half_Long",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420325" : {
+    "identifiedItemResourceName" : "C_Chewy_Low_Twin",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -90304,8 +93829,18 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0420344" : {
+    "identifiedItemResourceName" : "Book_of_Sorcery",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0420345" : {
     "identifiedItemResourceName" : "C_Ribbon_Braid_Hair",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420346" : {
+    "identifiedItemResourceName" : "C_Angel_Berry_Wig",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -90319,8 +93854,38 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0420351" : {
+    "identifiedItemResourceName" : "C_Auspicloud",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420352" : {
+    "identifiedItemResourceName" : "C_Pool",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420353" : {
+    "identifiedItemResourceName" : "C_Cha_Ex_Twin",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0420354" : {
     "identifiedItemResourceName" : "C_Candle_Set",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420358" : {
+    "identifiedItemResourceName" : "C_Experiment_Mind",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420359" : {
+    "identifiedItemResourceName" : "Sound_of_Catbell",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420366" : {
+    "identifiedItemResourceName" : "C_Angel_Berry_Wig_N",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
@@ -90339,10 +93904,155 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0420382" : {
+    "identifiedItemResourceName" : "Atque_Poenitentia",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420383" : {
+    "identifiedItemResourceName" : "C_Sparkly_Rainbow_Hair",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420384" : {
+    "identifiedItemResourceName" : "C_Commentary_Booth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420385" : {
+    "identifiedItemResourceName" : "C_Adventurer_Map",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420395" : {
+    "identifiedItemResourceName" : "C_S_Two_Side_Up_SV",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0420421" : {
     "identifiedItemResourceName" : "Cat_Ears_Cape_Blue",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "마스크"
+  },
+  "0420423" : {
+    "identifiedItemResourceName" : "C_InkPainting_Day",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420424" : {
+    "identifiedItemResourceName" : "C_InkPainting_Night",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420426" : {
+    "identifiedItemResourceName" : "C_WH_Fox_Hood_Twin_N",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420429" : {
+    "identifiedItemResourceName" : "C_Guide_Of_Dead_Text",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420430" : {
+    "identifiedItemResourceName" : "C_Medjed_Text",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420435" : {
+    "identifiedItemResourceName" : "C_Sberry_Donut_In_Mouth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420439" : {
+    "identifiedItemResourceName" : "C_Kitchen_Car2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420448" : {
+    "identifiedItemResourceName" : "C_Deep_You_N",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420449" : {
+    "identifiedItemResourceName" : "C_Deep_You",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420451" : {
+    "identifiedItemResourceName" : "C_CLB_HM_Munch",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420511" : {
+    "identifiedItemResourceName" : "C_Over_Cloud",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420512" : {
+    "identifiedItemResourceName" : "C_Aurora_On_Clouds",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420514" : {
+    "identifiedItemResourceName" : "C_Wonderful_Long_N",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420515" : {
+    "identifiedItemResourceName" : "C_Wonderful_Long",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420516" : {
+    "identifiedItemResourceName" : "C_Forest_Friends",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420532" : {
+    "identifiedItemResourceName" : "C_Immortal_H_Power",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420552" : {
+    "identifiedItemResourceName" : "C_Divine_Sky_Invite",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420553" : {
+    "identifiedItemResourceName" : "C_Snug_Nyar_Hair",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420554" : {
+    "identifiedItemResourceName" : "C_Waggy_Nyar_Hair",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420570" : {
+    "identifiedItemResourceName" : "C_Feather_Hair_TT",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420571" : {
+    "identifiedItemResourceName" : "C_Feather_Hair_BD",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420575" : {
+    "identifiedItemResourceName" : "C_N_Piamette_RollHair",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420576" : {
+    "identifiedItemResourceName" : "C_Nightmare_Chain",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
+  "0420642" : {
+    "identifiedItemResourceName" : "OpenAir_Headset_Red",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
   },
   "0430005" : {
     "identifiedItemResourceName" : "Tiger_Glass",
@@ -90478,6 +94188,16 @@
     "identifiedItemResourceName" : "C_Helm_Of_Galaxia",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "헬름"
+  },
+  "0440019" : {
+    "identifiedItemResourceName" : "C_Alecsander",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
+  },
+  "0440020" : {
+    "identifiedItemResourceName" : "C_Cassandra",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "햇"
   },
   "0450000" : {
     "identifiedItemResourceName" : "스캐퓰러",
@@ -91424,6 +95144,16 @@
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "메일"
   },
+  "0450440" : {
+    "identifiedItemResourceName" : "Entwined_Armor",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "우든메일"
+  },
+  "0450441" : {
+    "identifiedItemResourceName" : "Entwined_Robe",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "코튼셔츠"
+  },
   "0460005" : {
     "identifiedItemResourceName" : "MD_Geffen_Shield",
     "slotCount" : 1,
@@ -91909,6 +95639,41 @@
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "부츠"
   },
+  "0470333" : {
+    "identifiedItemResourceName" : "Entwined_Boots",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "부츠"
+  },
+  "0470334" : {
+    "identifiedItemResourceName" : "Entwined_Shoes",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "샌들"
+  },
+  "0470335" : {
+    "identifiedItemResourceName" : "Dimension_B_Greave",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "부츠"
+  },
+  "0470336" : {
+    "identifiedItemResourceName" : "Dimension_H_Boots",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "부츠"
+  },
+  "0470337" : {
+    "identifiedItemResourceName" : "Dimension_S_Shoes",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "슈즈"
+  },
+  "0470338" : {
+    "identifiedItemResourceName" : "Dimension_M_Shoes",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "슈즈"
+  },
+  "0470339" : {
+    "identifiedItemResourceName" : "Dimension_E_Boots",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "부츠"
+  },
   "0480000" : {
     "identifiedItemResourceName" : "웤웤망토",
     "slotCount" : 1,
@@ -92374,6 +96139,11 @@
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "후드"
   },
+  "0480235" : {
+    "identifiedItemResourceName" : "C_Diabolic_Friend",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
   "0480236" : {
     "identifiedItemResourceName" : "C_Big_Magic_Book",
     "slotCount" : 0,
@@ -92446,6 +96216,11 @@
   },
   "0480295" : {
     "identifiedItemResourceName" : "C_Sakura_Branch",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480296" : {
+    "identifiedItemResourceName" : "C_Sakura_Fubuki",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
@@ -92604,8 +96379,18 @@
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "후드"
   },
+  "0480419" : {
+    "identifiedItemResourceName" : "C_Cyber_Sword",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
   "0480420" : {
     "identifiedItemResourceName" : "C_Cyber_Rifle",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480421" : {
+    "identifiedItemResourceName" : "C_Defense_Shield",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
@@ -92619,8 +96404,33 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
+  "0480430" : {
+    "identifiedItemResourceName" : "C_Sakura_Rod",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480431" : {
+    "identifiedItemResourceName" : "C_Sweet_Flower_Garden",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480432" : {
+    "identifiedItemResourceName" : "C_Glass_Rose_Garden",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
   "0480433" : {
     "identifiedItemResourceName" : "C_Twin_Edge",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480437" : {
+    "identifiedItemResourceName" : "C_Hemel_Sword",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480438" : {
+    "identifiedItemResourceName" : "C_Big_Treasure_Chest",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
@@ -92634,6 +96444,16 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
+  "0480456" : {
+    "identifiedItemResourceName" : "C_Plant_Outing_Set",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480457" : {
+    "identifiedItemResourceName" : "C_Galapago_Aquarium",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
   "0480459" : {
     "identifiedItemResourceName" : "C_Archmage_Wand",
     "slotCount" : 0,
@@ -92644,13 +96464,38 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
+  "0480469" : {
+    "identifiedItemResourceName" : "C_Con_of_Singapura_MSP",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
+  },
   "0480470" : {
     "identifiedItemResourceName" : "C_Summer_Beach",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "리본"
   },
+  "0480473" : {
+    "identifiedItemResourceName" : "C_FB_EvilSprit",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480476" : {
+    "identifiedItemResourceName" : "C_Poring_Cream_Soda",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480477" : {
+    "identifiedItemResourceName" : "C_Poring_Swim_Ring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
   "0480478" : {
     "identifiedItemResourceName" : "Poporing_Pool_Ring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480486" : {
+    "identifiedItemResourceName" : "C_Shiba_Tail",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
@@ -92658,6 +96503,21 @@
     "identifiedItemResourceName" : "C_Paw_Bag",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
+  },
+  "0480492" : {
+    "identifiedItemResourceName" : "C_Alice_Broom",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480493" : {
+    "identifiedItemResourceName" : "C_Bloody_Murderer_Knife",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480494" : {
+    "identifiedItemResourceName" : "C_Halloween_Candypouch",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "리본"
   },
   "0480495" : {
     "identifiedItemResourceName" : "Yorscalp_Manteau",
@@ -92667,6 +96527,11 @@
   "0480496" : {
     "identifiedItemResourceName" : "Yorscalp_Muffler",
     "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480503" : {
+    "identifiedItemResourceName" : "Stellar_Gratia",
+    "slotCount" : 0,
     "unidentifiedItemResourceName" : "후드"
   },
   "0480505" : {
@@ -92696,6 +96561,126 @@
   },
   "0480511" : {
     "identifiedItemResourceName" : "Kingly_Manteau",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480517" : {
+    "identifiedItemResourceName" : "C_CLB_KP_DMS",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480521" : {
+    "identifiedItemResourceName" : "C_White_Fox_Tail",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480523" : {
+    "identifiedItemResourceName" : "C_Libra_Wing",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480545" : {
+    "identifiedItemResourceName" : "Entwined_Manteau",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "망토"
+  },
+  "0480546" : {
+    "identifiedItemResourceName" : "Entwined_Muffler",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480556" : {
+    "identifiedItemResourceName" : "C_Blue_Rose_Parasol",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480565" : {
+    "identifiedItemResourceName" : "C_CLB_HM_Noni",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480566" : {
+    "identifiedItemResourceName" : "C_Immortal_H_Wing",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480595" : {
+    "identifiedItemResourceName" : "C_CLB_DT_TS_Wing",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480596" : {
+    "identifiedItemResourceName" : "C_CLB_DT_TS_Hood",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480611" : {
+    "identifiedItemResourceName" : "C_Immortal_H_Spear",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480616" : {
+    "identifiedItemResourceName" : "C_Qualifier_1st",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480617" : {
+    "identifiedItemResourceName" : "C_Qualifier_2nd",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480618" : {
+    "identifiedItemResourceName" : "C_Qualifier_3rd",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480627" : {
+    "identifiedItemResourceName" : "C_2025RosFesta",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480629" : {
+    "identifiedItemResourceName" : "C_Clock_Rod",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480631" : {
+    "identifiedItemResourceName" : "C_Detective_Mag_Glass",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480632" : {
+    "identifiedItemResourceName" : "C_N_Mad_Bunny",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480669" : {
+    "identifiedItemResourceName" : "Glotoneria",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480670" : {
+    "identifiedItemResourceName" : "Sagittarius_Manteau_J",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480671" : {
+    "identifiedItemResourceName" : "Avareco",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480672" : {
+    "identifiedItemResourceName" : "Gemini_Manteau_J",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480673" : {
+    "identifiedItemResourceName" : "Libra_Manteau_J",
+    "slotCount" : 1,
+    "unidentifiedItemResourceName" : "후드"
+  },
+  "0480674" : {
+    "identifiedItemResourceName" : "Fafnir_Manteau",
     "slotCount" : 1,
     "unidentifiedItemResourceName" : "후드"
   },
@@ -93779,6 +97764,21 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "소드"
   },
+  "0500119" : {
+    "identifiedItemResourceName" : "Encroached_Sword",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "소드"
+  },
+  "0500120" : {
+    "identifiedItemResourceName" : "Falx",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "소드"
+  },
+  "0500134" : {
+    "identifiedItemResourceName" : "Midgard_Sword_JP",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바스타드소드"
+  },
   "0510001" : {
     "identifiedItemResourceName" : "Blut_Dagger",
     "slotCount" : 2,
@@ -94129,6 +98129,11 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "나이프"
   },
+  "0510140" : {
+    "identifiedItemResourceName" : "Encroached_Dagger",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "나이프"
+  },
   "0510150" : {
     "identifiedItemResourceName" : "Demonius_Furious",
     "slotCount" : 2,
@@ -94161,6 +98166,16 @@
   },
   "0510172" : {
     "identifiedItemResourceName" : "Time_Gap_SS_Dagger2",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "나이프"
+  },
+  "0510192" : {
+    "identifiedItemResourceName" : "Frontier_ABC_Dagger",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "나이프"
+  },
+  "0510199" : {
+    "identifiedItemResourceName" : "Midgard_Knife_JP",
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "나이프"
   },
@@ -94386,6 +98401,26 @@
   },
   "0530060" : {
     "identifiedItemResourceName" : "Time_Gap_Spear_IG",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "쟈벨린"
+  },
+  "0530071" : {
+    "identifiedItemResourceName" : "Encroached_Spear",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "쟈벨린"
+  },
+  "0530072" : {
+    "identifiedItemResourceName" : "Frontier_IG_Spear",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "쟈벨린"
+  },
+  "0530074" : {
+    "identifiedItemResourceName" : "Espetar",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "쟈벨린"
+  },
+  "0530076" : {
+    "identifiedItemResourceName" : "Midgard_Spear_JP",
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "쟈벨린"
   },
@@ -94736,6 +98771,41 @@
   },
   "0540096" : {
     "identifiedItemResourceName" : "Time_Gap_EM_S_Book",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "북"
+  },
+  "0540109" : {
+    "identifiedItemResourceName" : "Encroached_Book",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "북"
+  },
+  "0540110" : {
+    "identifiedItemResourceName" : "Frontier_EM_Book",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "북"
+  },
+  "0540111" : {
+    "identifiedItemResourceName" : "Frontier_SKE_Book",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "북"
+  },
+  "0540114" : {
+    "identifiedItemResourceName" : "Elemental_Spirits",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "북"
+  },
+  "0540115" : {
+    "identifiedItemResourceName" : "Book_Of_Crimson_M",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "북"
+  },
+  "0540119" : {
+    "identifiedItemResourceName" : "Judgment_Day",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "북"
+  },
+  "0540122" : {
+    "identifiedItemResourceName" : "Midgard_Book_JP",
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "북"
   },
@@ -95239,6 +99309,11 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "롯드"
   },
+  "0550137" : {
+    "identifiedItemResourceName" : "Encroached_Staff",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
   "0550141" : {
     "identifiedItemResourceName" : "SaintWand_Furious",
     "slotCount" : 2,
@@ -95291,6 +99366,36 @@
   },
   "0550159" : {
     "identifiedItemResourceName" : "Time_Gap_SH_Foxtail",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0550174" : {
+    "identifiedItemResourceName" : "Encroached_Foxtail",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0550176" : {
+    "identifiedItemResourceName" : "Frontier_CD_Rod",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0550177" : {
+    "identifiedItemResourceName" : "Frontier_HN_Rod",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0550178" : {
+    "identifiedItemResourceName" : "Frontier_SH_Foxtail",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0550187" : {
+    "identifiedItemResourceName" : "Midgard_Foxtail_JP",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0550190" : {
+    "identifiedItemResourceName" : "Midgard_Wand_JP",
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "롯드"
   },
@@ -95494,6 +99599,21 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "바그낙"
   },
+  "0560080" : {
+    "identifiedItemResourceName" : "Encroached_Knuckle",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바그낙"
+  },
+  "0560081" : {
+    "identifiedItemResourceName" : "Frontier_IQ_Claw",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바그낙"
+  },
+  "0560086" : {
+    "identifiedItemResourceName" : "Midgard_Knuckle_JP",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바그낙"
+  },
   "0570000" : {
     "identifiedItemResourceName" : "Blut_Guiter",
     "slotCount" : 2,
@@ -95679,6 +99799,21 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "바이올린"
   },
+  "0570086" : {
+    "identifiedItemResourceName" : "Encroached_Instrument",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바이올린"
+  },
+  "0570087" : {
+    "identifiedItemResourceName" : "Frontier_TR_Vilolin",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바이올린"
+  },
+  "0570090" : {
+    "identifiedItemResourceName" : "Geige",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바이올린"
+  },
   "0580000" : {
     "identifiedItemResourceName" : "Blut_Whip",
     "slotCount" : 2,
@@ -95861,6 +99996,21 @@
   },
   "0580075" : {
     "identifiedItemResourceName" : "Time_Gap_TR_Ribbon",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "로프"
+  },
+  "0580086" : {
+    "identifiedItemResourceName" : "Encroached_Whip",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "로프"
+  },
+  "0580087" : {
+    "identifiedItemResourceName" : "Frontier_TR_Rope",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "로프"
+  },
+  "0580090" : {
+    "identifiedItemResourceName" : "Needle_Whip",
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "로프"
   },
@@ -96094,8 +100244,28 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "메이스"
   },
+  "0590081" : {
+    "identifiedItemResourceName" : "Encroached_Mace",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "클럽"
+  },
   "0590087" : {
     "identifiedItemResourceName" : "Hammer_Furious",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "메이스"
+  },
+  "0590107" : {
+    "identifiedItemResourceName" : "Frontier_BO_Hall",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "클럽"
+  },
+  "0590111" : {
+    "identifiedItemResourceName" : "Submarine_Anchor",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "메이스"
+  },
+  "0590112" : {
+    "identifiedItemResourceName" : "Jack_O_Rush",
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "메이스"
   },
@@ -96239,9 +100409,19 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "바스타드소드"
   },
+  "0600056" : {
+    "identifiedItemResourceName" : "Encroached_T_Sword",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "바스타드소드"
+  },
   "0600059" : {
     "identifiedItemResourceName" : "Slayer_Furious",
     "slotCount" : 2,
+    "unidentifiedItemResourceName" : "바스타드소드"
+  },
+  "0600071" : {
+    "identifiedItemResourceName" : "Frontier_DK_T_Sword",
+    "slotCount" : 3,
     "unidentifiedItemResourceName" : "바스타드소드"
   },
   "0610000" : {
@@ -96439,6 +100619,21 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "풍마_편익"
   },
+  "0610084" : {
+    "identifiedItemResourceName" : "Encroached_Katar",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "쥬르"
+  },
+  "0610085" : {
+    "identifiedItemResourceName" : "Frontier_SHC_Katar",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "쥬르"
+  },
+  "0610089" : {
+    "identifiedItemResourceName" : "Vida_Nocturno",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "쥬르"
+  },
   "0620003" : {
     "identifiedItemResourceName" : "PT_B_Axe",
     "slotCount" : 0,
@@ -96544,6 +100739,11 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "액스"
   },
+  "0620038" : {
+    "identifiedItemResourceName" : "Encroached_T_Axe",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "액스"
+  },
   "0620040" : {
     "identifiedItemResourceName" : "GiganticAxe_Furious",
     "slotCount" : 2,
@@ -96552,6 +100752,11 @@
   "0620043" : {
     "identifiedItemResourceName" : "Time_Gap_MT_Axe",
     "slotCount" : 2,
+    "unidentifiedItemResourceName" : "액스"
+  },
+  "0620058" : {
+    "identifiedItemResourceName" : "Frontier_MT_T_Axe",
+    "slotCount" : 3,
     "unidentifiedItemResourceName" : "액스"
   },
   "0630003" : {
@@ -96663,6 +100868,16 @@
     "identifiedItemResourceName" : "Time_Gap_DK_Spear",
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "랜스"
+  },
+  "0630059" : {
+    "identifiedItemResourceName" : "Encroached_T_Spear",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "쟈벨린"
+  },
+  "0630060" : {
+    "identifiedItemResourceName" : "FaceWormQueen_Horn",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "쟈벨린"
   },
   "0640000" : {
     "identifiedItemResourceName" : "Blut_Wand",
@@ -96849,6 +101064,11 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "롯드"
   },
+  "0640051" : {
+    "identifiedItemResourceName" : "Encroached_T_Staff",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "롯드"
+  },
   "0640053" : {
     "identifiedItemResourceName" : "Flame_Staff_Furious",
     "slotCount" : 2,
@@ -96857,6 +101077,21 @@
   "0640054" : {
     "identifiedItemResourceName" : "Time_Gap_Staff_AG",
     "slotCount" : 2,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0640064" : {
+    "identifiedItemResourceName" : "Frontier_AG_Staff",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0640065" : {
+    "identifiedItemResourceName" : "Frontier_SOA_Staff",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "롯드"
+  },
+  "0640067" : {
+    "identifiedItemResourceName" : "Wepawet",
+    "slotCount" : 3,
     "unidentifiedItemResourceName" : "롯드"
   },
   "0650003" : {
@@ -96999,9 +101234,19 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "풍마_편익"
   },
+  "0650048" : {
+    "identifiedItemResourceName" : "Encroached_Humma",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "풍마_편익"
+  },
   "0650049" : {
     "identifiedItemResourceName" : "WheelHumma_Furious",
     "slotCount" : 2,
+    "unidentifiedItemResourceName" : "풍마_편익"
+  },
+  "0650058" : {
+    "identifiedItemResourceName" : "Frontier_SS_Humma",
+    "slotCount" : 3,
     "unidentifiedItemResourceName" : "풍마_편익"
   },
   "0700000" : {
@@ -97309,6 +101554,26 @@
     "slotCount" : 2,
     "unidentifiedItemResourceName" : "보우"
   },
+  "0700117" : {
+    "identifiedItemResourceName" : "Encroached_Bow",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "보우"
+  },
+  "0700119" : {
+    "identifiedItemResourceName" : "Frontier_WH_Bow",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "보우"
+  },
+  "0700121" : {
+    "identifiedItemResourceName" : "Beargun_Crossbow",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "보우"
+  },
+  "0700125" : {
+    "identifiedItemResourceName" : "Midgard_Bow_JP",
+    "slotCount" : 2,
+    "unidentifiedItemResourceName" : "보우"
+  },
   "0800000" : {
     "identifiedItemResourceName" : "크림즌볼트",
     "slotCount" : 1,
@@ -97542,6 +101807,16 @@
   "0810042" : {
     "identifiedItemResourceName" : "Rifle_Furious",
     "slotCount" : 2,
+    "unidentifiedItemResourceName" : "라이플"
+  },
+  "0810048" : {
+    "identifiedItemResourceName" : "Encroached_Rifle",
+    "slotCount" : 3,
+    "unidentifiedItemResourceName" : "라이플"
+  },
+  "0810049" : {
+    "identifiedItemResourceName" : "Frontier_NW_Rifle",
+    "slotCount" : 3,
     "unidentifiedItemResourceName" : "라이플"
   },
   "0820000" : {
@@ -97847,6 +102122,11 @@
   "0840032" : {
     "identifiedItemResourceName" : "Dimen_NW_Launcher",
     "slotCount" : 2,
+    "unidentifiedItemResourceName" : "디스트로이어"
+  },
+  "0840039" : {
+    "identifiedItemResourceName" : "Agent_Launcher",
+    "slotCount" : 3,
     "unidentifiedItemResourceName" : "디스트로이어"
   },
   "1000000" : {
@@ -101734,6 +106014,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "EpisodClear20"
   },
+  "1001215" : {
+    "identifiedItemResourceName" : "EpisodClear21",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "EpisodClear21"
+  },
   "1001216" : {
     "identifiedItemResourceName" : "작은찹쌀반죽",
     "slotCount" : 0,
@@ -103824,6 +108109,11 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "Savage_Trap"
   },
+  "1001886" : {
+    "identifiedItemResourceName" : "카프라코인",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "카프라코인"
+  },
   "1001903" : {
     "identifiedItemResourceName" : "눈의결정",
     "slotCount" : 0,
@@ -103838,6 +108128,966 @@
     "identifiedItemResourceName" : "냥뱃지",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "냥뱃지"
+  },
+  "1001907" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1001908" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1001909" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1001938" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001939" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001940" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001941" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001942" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001943" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001944" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001945" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001946" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001947" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001948" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001949" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001950" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1001972" : {
+    "identifiedItemResourceName" : "Ch1_Root_Coin",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Root_Coin"
+  },
+  "1001973" : {
+    "identifiedItemResourceName" : "Ch1_Purifi_Amulet",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Purifi_Amulet"
+  },
+  "1001974" : {
+    "identifiedItemResourceName" : "Ch1_Sample",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Sample"
+  },
+  "1001975" : {
+    "identifiedItemResourceName" : "Ch1_Gray_Petal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Gray_Petal"
+  },
+  "1001976" : {
+    "identifiedItemResourceName" : "Ch1_Broken_Petal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Broken_Petal"
+  },
+  "1001977" : {
+    "identifiedItemResourceName" : "Ch1_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Hal"
+  },
+  "1001978" : {
+    "identifiedItemResourceName" : "Ch1_Scalet_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Scalet_Hal"
+  },
+  "1001979" : {
+    "identifiedItemResourceName" : "Ch1_Light_Green_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Light_Green_Hal"
+  },
+  "1001980" : {
+    "identifiedItemResourceName" : "Ch1_Light_Yellow_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Light_Yellow_Hal"
+  },
+  "1001981" : {
+    "identifiedItemResourceName" : "Ch1_Sky_Blue_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Sky_Blue_Hal"
+  },
+  "1001982" : {
+    "identifiedItemResourceName" : "Ch1_Purple_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Purple_Hal"
+  },
+  "1001983" : {
+    "identifiedItemResourceName" : "Ch1_Black_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Black_Hal"
+  },
+  "1001984" : {
+    "identifiedItemResourceName" : "Ch1_Ultimate_Hal",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Ultimate_Hal"
+  },
+  "1001985" : {
+    "identifiedItemResourceName" : "Ch1_Steako",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Steako"
+  },
+  "1001986" : {
+    "identifiedItemResourceName" : "Ch1_Black_Wing",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Black_Wing"
+  },
+  "1001987" : {
+    "identifiedItemResourceName" : "Ch1_Huge_Leaf",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Huge_Leaf"
+  },
+  "1001988" : {
+    "identifiedItemResourceName" : "Ch1_Sound_Bean",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Sound_Bean"
+  },
+  "1001989" : {
+    "identifiedItemResourceName" : "Ch1_Red_Ash",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Red_Ash"
+  },
+  "1001990" : {
+    "identifiedItemResourceName" : "Ch1_Fire_Ring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Fire_Ring"
+  },
+  "1001991" : {
+    "identifiedItemResourceName" : "Ch1_Big_Tooth",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Big_Tooth"
+  },
+  "1001992" : {
+    "identifiedItemResourceName" : "Ch1_Noise",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Noise"
+  },
+  "1001993" : {
+    "identifiedItemResourceName" : "Ch1_Purple_Anemone",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Purple_Anemone"
+  },
+  "1001994" : {
+    "identifiedItemResourceName" : "Ch1_Black_Tulip",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Black_Tulip"
+  },
+  "1001995" : {
+    "identifiedItemResourceName" : "Ch1_Calendula_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Calendula_"
+  },
+  "1001996" : {
+    "identifiedItemResourceName" : "Ch1_Mana_Ring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Mana_Ring"
+  },
+  "1001997" : {
+    "identifiedItemResourceName" : "Frontier_Magic_Dust",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Magic_Dust"
+  },
+  "1001998" : {
+    "identifiedItemResourceName" : "Frontier_M_Stone",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_M_Stone"
+  },
+  "1001999" : {
+    "identifiedItemResourceName" : "Illusion_Fragment_BL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Fragment_BL"
+  },
+  "1002000" : {
+    "identifiedItemResourceName" : "Illusion_Fragment_YL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Fragment_YL"
+  },
+  "1002001" : {
+    "identifiedItemResourceName" : "Illusion_Fragment_GR",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Fragment_GR"
+  },
+  "1002002" : {
+    "identifiedItemResourceName" : "Illusion_Fragment_BK",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Fragment_BK"
+  },
+  "1002003" : {
+    "identifiedItemResourceName" : "Illusion_Stone_BL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Stone_BL"
+  },
+  "1002004" : {
+    "identifiedItemResourceName" : "Illusion_Stone_YL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Stone_YL"
+  },
+  "1002005" : {
+    "identifiedItemResourceName" : "Illusion_Stone_GR",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Stone_GR"
+  },
+  "1002006" : {
+    "identifiedItemResourceName" : "Illusion_Stone_BK",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Illusion_Stone_BK"
+  },
+  "1002007" : {
+    "identifiedItemResourceName" : "Frontier_Stone_BL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Stone_BL"
+  },
+  "1002008" : {
+    "identifiedItemResourceName" : "Frontier_Stone_YL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Stone_YL"
+  },
+  "1002009" : {
+    "identifiedItemResourceName" : "Frontier_Stone_GR",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Stone_GR"
+  },
+  "1002010" : {
+    "identifiedItemResourceName" : "Frontier_Stone_BK",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Stone_BK"
+  },
+  "1002011" : {
+    "identifiedItemResourceName" : "Chaotic_Rune_Ore",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Chaotic_Rune_Ore"
+  },
+  "1002012" : {
+    "identifiedItemResourceName" : "Chaotic_Rune",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Chaotic_Rune"
+  },
+  "1002013" : {
+    "identifiedItemResourceName" : "Chaotic_Essence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Chaotic_Essence"
+  },
+  "1002014" : {
+    "identifiedItemResourceName" : "Disparate_Rune_Ore",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Disparate_Rune_Ore"
+  },
+  "1002015" : {
+    "identifiedItemResourceName" : "Disparate_Rune",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Disparate_Rune"
+  },
+  "1002016" : {
+    "identifiedItemResourceName" : "Disparate_Essence",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Disparate_Essence"
+  },
+  "1002017" : {
+    "identifiedItemResourceName" : "Ch1_Scabiosa_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Scabiosa_"
+  },
+  "1002018" : {
+    "identifiedItemResourceName" : "Ch1_Myosotis_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Myosotis_"
+  },
+  "1002019" : {
+    "identifiedItemResourceName" : "Ch1_Lobelia_",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Lobelia_"
+  },
+  "1002020" : {
+    "identifiedItemResourceName" : "Ch1_Teardrop",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Teardrop"
+  },
+  "1002021" : {
+    "identifiedItemResourceName" : "Ch1_Yggpy",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Yggpy"
+  },
+  "1002034" : {
+    "identifiedItemResourceName" : "Dimension_Energy_BL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Energy_BL"
+  },
+  "1002035" : {
+    "identifiedItemResourceName" : "Dimension_Energy_YL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Energy_YL"
+  },
+  "1002036" : {
+    "identifiedItemResourceName" : "Dimension_Energy_GR",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Energy_GR"
+  },
+  "1002037" : {
+    "identifiedItemResourceName" : "Dimension_Energy_BK",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Energy_BK"
+  },
+  "1002038" : {
+    "identifiedItemResourceName" : "Dimension_Essence_BL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Essence_BL"
+  },
+  "1002039" : {
+    "identifiedItemResourceName" : "Dimension_Essence_YL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Essence_YL"
+  },
+  "1002040" : {
+    "identifiedItemResourceName" : "Dimension_Essence_GR",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Essence_GR"
+  },
+  "1002041" : {
+    "identifiedItemResourceName" : "Dimension_Essence_BK",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimension_Essence_BK"
+  },
+  "1002048" : {
+    "identifiedItemResourceName" : "Ch1_Lava_Jelly",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ch1_Lava_Jelly"
+  },
+  "1002069" : {
+    "identifiedItemResourceName" : "CLB_HM_Munch_Coin",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_Munch_Coin"
+  },
+  "1002094" : {
+    "identifiedItemResourceName" : "Hunters_Dinner",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Hunters_Dinner"
+  },
+  "1002096" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002097" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002098" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002099" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002100" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002101" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002102" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002103" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002104" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002105" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002106" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002107" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002108" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002109" : {
+    "identifiedItemResourceName" : "R_Glacier_Armor",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Armor"
+  },
+  "1002110" : {
+    "identifiedItemResourceName" : "R_Glacier_Manteau",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Manteau"
+  },
+  "1002111" : {
+    "identifiedItemResourceName" : "R_Glacier_Ring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Ring"
+  },
+  "1002112" : {
+    "identifiedItemResourceName" : "R_Glacier_Boots",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Boots"
+  },
+  "1002113" : {
+    "identifiedItemResourceName" : "R_Glacier_Robe",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Robe"
+  },
+  "1002114" : {
+    "identifiedItemResourceName" : "R_Glacier_Muffler",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Muffler"
+  },
+  "1002115" : {
+    "identifiedItemResourceName" : "R_Glacier_Earring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Earring"
+  },
+  "1002116" : {
+    "identifiedItemResourceName" : "R_Glacier_Shoes",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Shoes"
+  },
+  "1002117" : {
+    "identifiedItemResourceName" : "R_Glacier_Pendant",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Pendant"
+  },
+  "1002118" : {
+    "identifiedItemResourceName" : "R_Glacier_Necklace",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Necklace"
+  },
+  "1002119" : {
+    "identifiedItemResourceName" : "R_Glacier_Guard",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Glacier_Guard"
+  },
+  "1002137" : {
+    "identifiedItemResourceName" : "Pow_Meteor_Extract",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Pow_Meteor_Extract"
+  },
+  "1002138" : {
+    "identifiedItemResourceName" : "Wis_Meteor_Extract",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Wis_Meteor_Extract"
+  },
+  "1002139" : {
+    "identifiedItemResourceName" : "Spl_Meteor_Extract",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Spl_Meteor_Extract"
+  },
+  "1002140" : {
+    "identifiedItemResourceName" : "Sta_Meteor_Extract",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Sta_Meteor_Extract"
+  },
+  "1002141" : {
+    "identifiedItemResourceName" : "Con_Meteor_Extract",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Con_Meteor_Extract"
+  },
+  "1002142" : {
+    "identifiedItemResourceName" : "Crt_Meteor_Extract",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Crt_Meteor_Extract"
+  },
+  "1002143" : {
+    "identifiedItemResourceName" : "Frontier_Extract_BL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Extract_BL"
+  },
+  "1002144" : {
+    "identifiedItemResourceName" : "Frontier_Extract_YL",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Extract_YL"
+  },
+  "1002145" : {
+    "identifiedItemResourceName" : "Frontier_Extract_GR",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Extract_GR"
+  },
+  "1002146" : {
+    "identifiedItemResourceName" : "Frontier_Extract_BK",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Frontier_Extract_BK"
+  },
+  "1002185" : {
+    "identifiedItemResourceName" : "원고용지",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "원고용지"
+  },
+  "1002186" : {
+    "identifiedItemResourceName" : "ROS_Pre_Certificate",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "ROS_Pre_Certificate"
+  },
+  "1002187" : {
+    "identifiedItemResourceName" : "Guarantee_5w2a_Ticket",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Guarantee_5w2a_Ticket"
+  },
+  "1002188" : {
+    "identifiedItemResourceName" : "Guarantee_5w2a_Ticket",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Guarantee_5w2a_Ticket"
+  },
+  "1002189" : {
+    "identifiedItemResourceName" : "Guarantee_5w2a_Ticket",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Guarantee_5w2a_Ticket"
+  },
+  "1002190" : {
+    "identifiedItemResourceName" : "Guarantee_5w2a_Ticket",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Guarantee_5w2a_Ticket"
+  },
+  "1002191" : {
+    "identifiedItemResourceName" : "Guarantee_5w2a_Ticket",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Guarantee_5w2a_Ticket"
+  },
+  "1002192" : {
+    "identifiedItemResourceName" : "Guarantee_5w2a_Ticket",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Guarantee_5w2a_Ticket"
+  },
+  "1002193" : {
+    "identifiedItemResourceName" : "블루크리스탈조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "블루크리스탈조각"
+  },
+  "1002194" : {
+    "identifiedItemResourceName" : "블루크리스탈조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "블루크리스탈조각"
+  },
+  "1002224" : {
+    "identifiedItemResourceName" : "CLB_DT_Ticket",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_DT_Ticket"
+  },
+  "1002239" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002240" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002243" : {
+    "identifiedItemResourceName" : "R_Entwined_Armor",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Entwined_Armor"
+  },
+  "1002244" : {
+    "identifiedItemResourceName" : "R_Entwined_Robe",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Entwined_Robe"
+  },
+  "1002245" : {
+    "identifiedItemResourceName" : "R_Entwined_Manteau",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Entwined_Manteau"
+  },
+  "1002246" : {
+    "identifiedItemResourceName" : "R_Entwined_Muffler",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Entwined_Muffler"
+  },
+  "1002247" : {
+    "identifiedItemResourceName" : "R_Entwined_Boots",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Entwined_Boots"
+  },
+  "1002248" : {
+    "identifiedItemResourceName" : "R_Dimension_B_Greave",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Dimension_B_Greave"
+  },
+  "1002249" : {
+    "identifiedItemResourceName" : "R_Dimension_H_Boots",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Dimension_H_Boots"
+  },
+  "1002250" : {
+    "identifiedItemResourceName" : "R_Dimension_S_Shoes",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Dimension_S_Shoes"
+  },
+  "1002251" : {
+    "identifiedItemResourceName" : "R_Dimension_M_Shoes",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Dimension_M_Shoes"
+  },
+  "1002252" : {
+    "identifiedItemResourceName" : "R_Dimension_E_Boots",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Dimension_E_Boots"
+  },
+  "1002253" : {
+    "identifiedItemResourceName" : "R_Entwined_Shoes",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Entwined_Shoes"
+  },
+  "1002273" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002274" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002275" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002276" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002277" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002278" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002279" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002280" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002281" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002282" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002283" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002284" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002285" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002286" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002289" : {
+    "identifiedItemResourceName" : "22nd_Souvenir_Medal1",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "22nd_Souvenir_Medal1"
+  },
+  "1002290" : {
+    "identifiedItemResourceName" : "22nd_Souvenir_Medal2",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "22nd_Souvenir_Medal2"
+  },
+  "1002294" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002295" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002296" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002331" : {
+    "identifiedItemResourceName" : "Physical_TuningScroll",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Physical_TuningScroll"
+  },
+  "1002332" : {
+    "identifiedItemResourceName" : "Magical_TuningScroll",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Magical_TuningScroll"
+  },
+  "1002333" : {
+    "identifiedItemResourceName" : "Tiem_SpellScroll",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Tiem_SpellScroll"
+  },
+  "1002334" : {
+    "identifiedItemResourceName" : "Dimansion_SpellScroll",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Dimansion_SpellScroll"
+  },
+  "1002335" : {
+    "identifiedItemResourceName" : "Pure_SpellScoll",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Pure_SpellScoll"
+  },
+  "1002336" : {
+    "identifiedItemResourceName" : "Polluted_SpellScroll",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Polluted_SpellScroll"
+  },
+  "1002337" : {
+    "identifiedItemResourceName" : "Immortal_SpellScroll",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Immortal_SpellScroll"
+  },
+  "1002356" : {
+    "identifiedItemResourceName" : "25_A_Ev_Photo",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "25_A_Ev_Photo"
+  },
+  "1002394" : {
+    "identifiedItemResourceName" : "발자국이펙트",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "발자국이펙트"
+  },
+  "1002395" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002396" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002397" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002398" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002399" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002404" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002405" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002406" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002407" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002408" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002409" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002410" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002411" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002412" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002413" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002414" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002415" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002416" : {
+    "identifiedItemResourceName" : "영혼의조각",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "영혼의조각"
+  },
+  "1002442" : {
+    "identifiedItemResourceName" : "EpisodClear21",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "EpisodClear21"
+  },
+  "1002473" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Armor",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Armor"
+  },
+  "1002474" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Robe",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Robe"
+  },
+  "1002475" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Manteau",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Manteau"
+  },
+  "1002476" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Muffler",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Muffler"
+  },
+  "1002477" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Boots",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Boots"
+  },
+  "1002478" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Shoes",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Shoes"
+  },
+  "1002479" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Ring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Ring"
+  },
+  "1002480" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Glove",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Glove"
+  },
+  "1002481" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Earring",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Earring"
+  },
+  "1002482" : {
+    "identifiedItemResourceName" : "R_Gaebolg_Necklace",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "R_Gaebolg_Necklace"
   },
   "1100000" : {
     "identifiedItemResourceName" : "개구리알",
@@ -103944,6 +109194,51 @@
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "Macaron"
   },
+  "1100027" : {
+    "identifiedItemResourceName" : "Ep20_Ice_Egg",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "Ep20_Ice_Egg"
+  },
+  "1100028" : {
+    "identifiedItemResourceName" : "어질요리02",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "어질요리02"
+  },
+  "1100029" : {
+    "identifiedItemResourceName" : "추억이가득한고기만두",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "추억이가득한고기만두"
+  },
+  "1100032" : {
+    "identifiedItemResourceName" : "CLB_HM_3Cheese",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_3Cheese"
+  },
+  "1100033" : {
+    "identifiedItemResourceName" : "CLB_HM_Pizzalio",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_Pizzalio"
+  },
+  "1100034" : {
+    "identifiedItemResourceName" : "CLB_HM_PC_Yangnyeom",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_PC_Yangnyeom"
+  },
+  "1100035" : {
+    "identifiedItemResourceName" : "CLB_HM_PC_Hot_Fried",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_HM_PC_Hot_Fried"
+  },
+  "1100036" : {
+    "identifiedItemResourceName" : "CLB_DT_Fish",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "CLB_DT_Fish"
+  },
+  "1100037" : {
+    "identifiedItemResourceName" : "카나페",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "카나페"
+  },
   "1200000" : {
     "identifiedItemResourceName" : "은화살",
     "slotCount" : 0,
@@ -103983,5 +109278,450 @@
     "identifiedItemResourceName" : "자르곤",
     "slotCount" : 0,
     "unidentifiedItemResourceName" : "자르곤"
+  },
+  "1270000" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270001" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270002" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270003" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270004" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270005" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270006" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270007" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270008" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270009" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270010" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270011" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270012" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270013" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270014" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270015" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270016" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270023" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270024" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270025" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270026" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270027" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270028" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270029" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270030" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270031" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270032" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270033" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270034" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270035" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270036" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270037" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270038" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270039" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270040" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270041" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270042" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270043" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270044" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270045" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270046" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270079" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270080" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270081" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270082" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270083" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270084" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270085" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270086" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270087" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270088" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270089" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270090" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270091" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270092" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270093" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270094" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270095" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270096" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270097" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270098" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270099" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270100" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270101" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270102" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270115" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270116" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270117" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270118" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270119" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270120" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270121" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270122" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270123" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270124" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270125" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270126" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270130" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270131" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270132" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270133" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270134" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270135" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270136" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270137" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
+  },
+  "1270138" : {
+    "identifiedItemResourceName" : "SV_Earring_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "이어링쉐도우"
+  },
+  "1270139" : {
+    "identifiedItemResourceName" : "SV_Pendant_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "펜던트쉐도우"
+  },
+  "1270140" : {
+    "identifiedItemResourceName" : "SV_Armor_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "아머쉐도우"
+  },
+  "1270141" : {
+    "identifiedItemResourceName" : "SV_Shoes_Shadow",
+    "slotCount" : 0,
+    "unidentifiedItemResourceName" : "슈즈쉐도우"
   }
 }

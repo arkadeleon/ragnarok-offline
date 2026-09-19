@@ -1,0 +1,1145 @@
+{
+  "0000" : {
+    "statusDescription" : "Провокация"
+  },
+  "0001" : {
+    "statusDescription" : "Стойкость"
+  },
+  "0002" : {
+    "statusDescription" : "Стальной Вихрь"
+  },
+  "0003" : {
+    "statusDescription" : "Концентрация"
+  },
+  "0004" : {
+    "statusDescription" : "Спрятаться"
+  },
+  "0005" : {
+    "statusDescription" : "Скрыться"
+  },
+  "0006" : {
+    "statusDescription" : "Нанесение Яда"
+  },
+  "0007" : {
+    "statusDescription" : "Реакция на Яд"
+  },
+  "0008" : {
+    "statusDescription" : "Болотная Трясина"
+  },
+  "0009" : {
+    "statusDescription" : "Ангелус"
+  },
+  "0010" : {
+    "statusDescription" : "Благословение"
+  },
+  "0011" : {
+    "statusDescription" : "Сигнум Круцис"
+  },
+  "0012" : {
+    "statusDescription" : "Повышение ловкости"
+  },
+  "0013" : {
+    "statusDescription" : "Понижение ловкости"
+  },
+  "0014" : {
+    "statusDescription" : "Замедление Яда"
+  },
+  "0015" : {
+    "statusDescription" : "Импозицио Манус"
+  },
+  "0016" : {
+    "statusDescription" : "Суфрагиум"
+  },
+  "0017" : {
+    "statusDescription" : "Асперсио"
+  },
+  "0018" : {
+    "statusDescription" : "%s"
+  },
+  "0019" : {
+    "statusDescription" : "Кирие Элейсон"
+  },
+  "0020" : {
+    "statusDescription" : "Магнификат"
+  },
+  "0021" : {
+    "statusDescription" : "Глория"
+  },
+  "0022" : {
+    "statusDescription" : "Лекс Этерна"
+  },
+  "0023" : {
+    "statusDescription" : "Адреналин"
+  },
+  "0024" : {
+    "statusDescription" : "Усовершенствование Оружия"
+  },
+  "0025" : {
+    "statusDescription" : "Сила Тора"
+  },
+  "0026" : {
+    "statusDescription" : "Увеличение Мощи"
+  },
+  "0027" : {
+    "statusDescription" : "Верховая Езда"
+  },
+  "0028" : {
+    "statusDescription" : "Контроль Сокола"
+  },
+  "0029" : {
+    "statusDescription" : "Притвориться Мертвым"
+  },
+  "0030" : {
+    "statusDescription" : "Безумный Крик"
+  },
+  "0031" : {
+    "statusDescription" : "Энергетическая Защита"
+  },
+  "0032" : {
+    "statusDescription" : "Сломанная броня"
+  },
+  "0033" : {
+    "statusDescription" : "Сломанное оружие"
+  },
+  "0034" : {
+    "statusDescription" : "Тьма - Фантом"
+  },
+  "0035" : {
+    "statusDescription" : "Превышение веса 50%"
+  },
+  "0036" : {
+    "statusDescription" : "Превышение веса 90%"
+  },
+  "0037" : {
+    "statusDescription" : "Зелье Концентрации"
+  },
+  "0038" : {
+    "statusDescription" : "Пробуждающее зелье"
+  },
+  "0039" : {
+    "statusDescription" : "Зелье Бесстрашия"
+  },
+  "0041" : {
+    "statusDescription" : "%s"
+  },
+  "0042" : {
+    "statusDescription" : "Официальный значок"
+  },
+  "0050" : {
+    "statusDescription" : "Выбить Оружие"
+  },
+  "0051" : {
+    "statusDescription" : "Выбить Щит"
+  },
+  "0052" : {
+    "statusDescription" : "СНять броню"
+  },
+  "0053" : {
+    "statusDescription" : "Снять шлем"
+  },
+  "0054" : {
+    "statusDescription" : "Химзащита Оружия"
+  },
+  "0055" : {
+    "statusDescription" : "Химзащита Щита"
+  },
+  "0056" : {
+    "statusDescription" : "Химзащита брони"
+  },
+  "0057" : {
+    "statusDescription" : "Химзащита шлема"
+  },
+  "0058" : {
+    "statusDescription" : "Автозащита"
+  },
+  "0059" : {
+    "statusDescription" : "Отражающий Щит"
+  },
+  "0061" : {
+    "statusDescription" : "Стойкость Души"
+  },
+  "0062" : {
+    "statusDescription" : "Защитная Аура"
+  },
+  "0064" : {
+    "statusDescription" : "Асперсио"
+  },
+  "0065" : {
+    "statusDescription" : "Автозаклинание"
+  },
+  "0068" : {
+    "statusDescription" : "Стальной Шквал"
+  },
+  "0087" : {
+    "statusDescription" : "Стальное Тело"
+  },
+  "0088" : {
+    "statusDescription" : "Удар Азуры"
+  },
+  "0090" : {
+    "statusDescription" : "Огнемет"
+  },
+  "0091" : {
+    "statusDescription" : "Цунами"
+  },
+  "0092" : {
+    "statusDescription" : "Зачаровать Ветром"
+  },
+  "0093" : {
+    "statusDescription" : "Зачаровать Землей"
+  },
+  "0097" : {
+    "statusDescription" : "Вы получили элемент 'Нежить'"
+  },
+  "0104" : {
+    "statusDescription" : "Парирование"
+  },
+  "0106" : {
+    "statusDescription" : "Отдых"
+  },
+  "0110" : {
+    "statusDescription" : "Ассумпцио"
+  },
+  "0112" : {
+    "statusDescription" : "%s"
+  },
+  "0114" : {
+    "statusDescription" : "Нанесение Яда"
+  },
+  "0115" : {
+    "statusDescription" : "Сила Воли"
+  },
+  "0116" : {
+    "statusDescription" : "Скорость Ветра"
+  },
+  "0117" : {
+    "statusDescription" : "Закалка"
+  },
+  "0118" : {
+    "statusDescription" : "Ускорение Телеги"
+  },
+  "0120" : {
+    "statusDescription" : "Защитный Инстинкт"
+  },
+  "0121" : {
+    "statusDescription" : "Марионетка"
+  },
+  "0122" : {
+    "statusDescription" : "Марионетка"
+  },
+  "0124" : {
+    "statusDescription" : "Кровотечение"
+  },
+  "0125" : {
+    "statusDescription" : "Роковой Удар"
+  },
+  "0130" : {
+    "statusDescription" : "Мама, папа, я люблю вас!"
+  },
+  "0132" : {
+    "statusDescription" : "Бесконтрольная Ярость"
+  },
+  "0135" : {
+    "statusDescription" : "Удар Торнадо"
+  },
+  "0137" : {
+    "statusDescription" : "Удар Метеора"
+  },
+  "0139" : {
+    "statusDescription" : "Удар Урагана"
+  },
+  "0141" : {
+    "statusDescription" : "Стойка Молнии"
+  },
+  "0143" : {
+    "statusDescription" : "Стойка Дракона"
+  },
+  "0145" : {
+    "statusDescription" : "Спринт"
+  },
+  "0146" : {
+    "statusDescription" : "%s"
+  },
+  "0147" : {
+    "statusDescription" : "Двойной Адреналин"
+  },
+  "0148" : {
+    "statusDescription" : "%s"
+  },
+  "0150" : {
+    "statusDescription" : "%s"
+  },
+  "0151" : {
+    "statusDescription" : "%s"
+  },
+  "0156" : {
+    "statusDescription" : "Ка-Рил"
+  },
+  "0157" : {
+    "statusDescription" : "Ка-Хи"
+  },
+  "0158" : {
+    "statusDescription" : "Ка-Пе"
+  },
+  "0161" : {
+    "statusDescription" : "Стальной Ветер"
+  },
+  "0169" : {
+    "statusDescription" : "Защита Звезды"
+  },
+  "0170" : {
+    "statusDescription" : "Защита Луны"
+  },
+  "0171" : {
+    "statusDescription" : "Защита Звезды"
+  },
+  "0181" : {
+    "statusDescription" : "Слепок Памяти"
+  },
+  "0182" : {
+    "statusDescription" : "%s"
+  },
+  "0186" : {
+    "statusDescription" : "Двойной Заряд"
+  },
+  "0188" : {
+    "statusDescription" : "Сила Тора Макс."
+  },
+  "0191" : {
+    "statusDescription" : "Карты Судьбы"
+  },
+  "0197" : {
+    "statusDescription" : "Сжатие"
+  },
+  "0198" : {
+    "statusDescription" : "Пылающая Сфера"
+  },
+  "0200" : {
+    "statusDescription" : "Обездвиживание"
+  },
+  "0201" : {
+    "statusDescription" : "Обездвиживание"
+  },
+  "0203" : {
+    "statusDescription" : "Противостояние"
+  },
+  "0204" : {
+    "statusDescription" : "Пулеметная Лихорадка"
+  },
+  "0205" : {
+    "statusDescription" : "Happy Break"
+  },
+  "0206" : {
+    "statusDescription" : "Защита Цикады"
+  },
+  "0207" : {
+    "statusDescription" : "Зеркальное Отражение"
+  },
+  "0208" : {
+    "statusDescription" : "Аура Ниндзя"
+  },
+  "0209" : {
+    "statusDescription" : "Ужас Стрелка"
+  },
+  "0210" : {
+    "statusDescription" : "Повышение точности"
+  },
+  "0217" : {
+    "statusDescription" : "Езда на грифоне"
+  },
+  "0241" : {
+    "statusDescription" : "%s"
+  },
+  "0242" : {
+    "statusDescription" : "%s"
+  },
+  "0243" : {
+    "statusDescription" : "%s"
+  },
+  "0244" : {
+    "statusDescription" : "%s"
+  },
+  "0245" : {
+    "statusDescription" : "%s"
+  },
+  "0246" : {
+    "statusDescription" : "%s"
+  },
+  "0247" : {
+    "statusDescription" : "%s"
+  },
+  "0248" : {
+    "statusDescription" : "%s"
+  },
+  "0249" : {
+    "statusDescription" : "%s"
+  },
+  "0250" : {
+    "statusDescription" : "Увеличение опыта"
+  },
+  "0251" : {
+    "statusDescription" : "%s"
+  },
+  "0252" : {
+    "statusDescription" : "%s"
+  },
+  "0271" : {
+    "statusDescription" : "%s"
+  },
+  "0272" : {
+    "statusDescription" : "%s"
+  },
+  "0273" : {
+    "statusDescription" : "%s"
+  },
+  "0274" : {
+    "statusDescription" : "%s"
+  },
+  "0275" : {
+    "statusDescription" : "%s"
+  },
+  "0276" : {
+    "statusDescription" : "%s"
+  },
+  "0282" : {
+    "statusDescription" : "Подготовка"
+  },
+  "0286" : {
+    "statusDescription" : "Критическое ранение"
+  },
+  "0289" : {
+    "statusDescription" : "%s"
+  },
+  "0290" : {
+    "statusDescription" : "Зелье физической защиты"
+  },
+  "0291" : {
+    "statusDescription" : "Зелье магической защиты"
+  },
+  "0292" : {
+    "statusDescription" : "Восстанавливающее зелье"
+  },
+  "0293" : {
+    "statusDescription" : "Зелье Жизни - Малое"
+  },
+  "0294" : {
+    "statusDescription" : "Зелье Жизни - Среднее"
+  },
+  "0295" : {
+    "statusDescription" : "Абразив"
+  },
+  "0296" : {
+    "statusDescription" : "Приветствие"
+  },
+  "0297" : {
+    "statusDescription" : "Таблетка HP+"
+  },
+  "0298" : {
+    "statusDescription" : "%s"
+  },
+  "0299" : {
+    "statusDescription" : "Таблетка SP+"
+  },
+  "0300" : {
+    "statusDescription" : "Зелье SP+"
+  },
+  "0301" : {
+    "statusDescription" : "Защищающее зелье"
+  },
+  "0302" : {
+    "statusDescription" : "Изменение параметров"
+  },
+  "0304" : {
+    "statusDescription" : "Адская сила"
+  },
+  "0312" : {
+    "statusDescription" : "Увеличение профессионального опыта"
+  },
+  "0313" : {
+    "statusDescription" : "%s"
+  },
+  "0314" : {
+    "statusDescription" : "Спасибо Вам"
+  },
+  "0316" : {
+    "statusDescription" : "Зачаровать Клинок"
+  },
+  "0318" : {
+    "statusDescription" : "Обновление"
+  },
+  "0319" : {
+    "statusDescription" : "Гигантский рост"
+  },
+  "0320" : {
+    "statusDescription" : "Каменная кожа"
+  },
+  "0321" : {
+    "statusDescription" : "Выносливость"
+  },
+  "0322" : {
+    "statusDescription" : "Боевой дух"
+  },
+  "0323" : {
+    "statusDescription" : "Изобилие"
+  },
+  "0333" : {
+    "statusDescription" : "Исчезновение"
+  },
+  "0334" : {
+    "statusDescription" : "Защитная Иллюзия"
+  },
+  "0336" : {
+    "statusDescription" : "Обновление"
+  },
+  "0337" : {
+    "statusDescription" : "Блокировка Оружием"
+  },
+  "0341" : {
+    "statusDescription" : "Отравленное Оружие"
+  },
+  "0342" : {
+    "statusDescription" : "Токсин"
+  },
+  "0343" : {
+    "statusDescription" : "Паралич"
+  },
+  "0344" : {
+    "statusDescription" : "Отравленное кровотечение"
+  },
+  "0345" : {
+    "statusDescription" : "Волшебный гриб"
+  },
+  "0346" : {
+    "statusDescription" : "Смертельное ранение"
+  },
+  "0347" : {
+    "statusDescription" : "Лихорадка"
+  },
+  "0348" : {
+    "statusDescription" : "Проклятие невнимания"
+  },
+  "0349" : {
+    "statusDescription" : "Пиявка"
+  },
+  "0351" : {
+    "statusDescription" : "Морозный Туман"
+  },
+  "0352" : {
+    "statusDescription" : "Ветер Страха"
+  },
+  "0354" : {
+    "statusDescription" : "Бездонная Топь"
+  },
+  "0355" : {
+    "statusDescription" : "Осознанное Заклятие"
+  },
+  "0357" : {
+    "statusDescription" : "Вскочить на Варга"
+  },
+  "0361" : {
+    "statusDescription" : "Ускорение"
+  },
+  "0362" : {
+    "statusDescription" : "Зависание"
+  },
+  "0368" : {
+    "statusDescription" : "Свиток Тао Гун"
+  },
+  "0369" : {
+    "statusDescription" : "Свиток хозяйки"
+  },
+  "0370" : {
+    "statusDescription" : "Свиток Орка-героя"
+  },
+  "0371" : {
+    "statusDescription" : "Свиток главного Орка"
+  },
+  "0373" : {
+    "statusDescription" : "Перегрев"
+  },
+  "0374" : {
+    "statusDescription" : "Смена Формы"
+  },
+  "0375" : {
+    "statusDescription" : "Инфракрасное Сканирование"
+  },
+  "0377" : {
+    "statusDescription" : "Нейтральный Барьер"
+  },
+  "0379" : {
+    "statusDescription" : "Невидимое Поле"
+  },
+  "0381" : {
+    "statusDescription" : "Золото Манука"
+  },
+  "0382" : {
+    "statusDescription" : "Manuk's Will"
+  },
+  "0383" : {
+    "statusDescription" : "Фрукт Пингвикулы"
+  },
+  "0384" : {
+    "statusDescription" : "Мед"
+  },
+  "0385" : {
+    "statusDescription" : "Репродукция"
+  },
+  "0386" : {
+    "statusDescription" : "Вера Манука"
+  },
+  "0387" : {
+    "statusDescription" : "Слеза Корнуса"
+  },
+  "0388" : {
+    "statusDescription" : "%s"
+  },
+  "0389" : {
+    "statusDescription" : "%s"
+  },
+  "0390" : {
+    "statusDescription" : "Отражение Урона"
+  },
+  "0391" : {
+    "statusDescription" : "Ярость"
+  },
+  "0393" : {
+    "statusDescription" : "Заклинание Тени"
+  },
+  "0394" : {
+    "statusDescription" : "Смертельная Связь"
+  },
+  "0396" : {
+    "statusDescription" : "Заклятие Щита"
+  },
+  "0397" : {
+    "statusDescription" : "Заклятие Щита"
+  },
+  "0398" : {
+    "statusDescription" : "Заклятие Щита"
+  },
+  "0399" : {
+    "statusDescription" : "Облако Краски"
+  },
+  "0401" : {
+    "statusDescription" : "Кара"
+  },
+  "0402" : {
+    "statusDescription" : "Защищающий Cвет"
+  },
+  "0403" : {
+    "statusDescription" : "Невидимость"
+  },
+  "0404" : {
+    "statusDescription" : "Заражение"
+  },
+  "0405" : {
+    "statusDescription" : "Объединение"
+  },
+  "0407" : {
+    "statusDescription" : "Воодушевление"
+  },
+  "0408" : {
+    "statusDescription" : "Лик Истощения"
+  },
+  "0409" : {
+    "statusDescription" : "Лик Скорби"
+  },
+  "0410" : {
+    "statusDescription" : "Энергия Дракона"
+  },
+  "0411" : {
+    "statusDescription" : "Лик Невежества"
+  },
+  "0412" : {
+    "statusDescription" : "Лик Апатии"
+  },
+  "0413" : {
+    "statusDescription" : "Встречный Ветер"
+  },
+  "0414" : {
+    "statusDescription" : "Акараже"
+  },
+  "0415" : {
+    "statusDescription" : "Лик Неудачи"
+  },
+  "0418" : {
+    "statusDescription" : "Лик Слабости"
+  },
+  "0419" : {
+    "statusDescription" : "Отблеск Луны"
+  },
+  "0421" : {
+    "statusDescription" : "Снять Украшение"
+  },
+  "0423" : {
+    "statusDescription" : "Печенье"
+  },
+  "0425" : {
+    "statusDescription" : "Прикосновение Энергии"
+  },
+  "0426" : {
+    "statusDescription" : "Прикосновение Силы"
+  },
+  "0427" : {
+    "statusDescription" : "Прикосновение Стойкости"
+  },
+  "0429" : {
+    "statusDescription" : "Крещендо"
+  },
+  "0430" : {
+    "statusDescription" : "Романс"
+  },
+  "0435" : {
+    "statusDescription" : "Шепот Морфея"
+  },
+  "0436" : {
+    "statusDescription" : "Круг Жизни"
+  },
+  "0437" : {
+    "statusDescription" : "Ледяной Замедлитель"
+  },
+  "0438" : {
+    "statusDescription" : "Элегия"
+  },
+  "0439" : {
+    "statusDescription" : "Песнь Вдохновения"
+  },
+  "0441" : {
+    "statusDescription" : "Танец с Волками"
+  },
+  "0442" : {
+    "statusDescription" : "Борьба с Ветряными Мельницами"
+  },
+  "0443" : {
+    "statusDescription" : "Песнь Покровительства"
+  },
+  "0444" : {
+    "statusDescription" : "Гармония"
+  },
+  "0445" : {
+    "statusDescription" : "Стихийное Усиление"
+  },
+  "0446" : {
+    "statusDescription" : "Пламя Жизни"
+  },
+  "0447" : {
+    "statusDescription" : "Лунная Соната"
+  },
+  "0448" : {
+    "statusDescription" : "Безумие"
+  },
+  "0450" : {
+    "statusDescription" : "Анализ"
+  },
+  "0451" : {
+    "statusDescription" : "Слеза Лерада"
+  },
+  "0452" : {
+    "statusDescription" : "Мелодия Забвения"
+  },
+  "0453" : {
+    "statusDescription" : "Боевой Клич"
+  },
+  "0454" : {
+    "statusDescription" : "Бесконечный Напев"
+  },
+  "0461" : {
+    "statusDescription" : "Ускорение Телеги"
+  },
+  "0463" : {
+    "statusDescription" : "Терновая Ловушка"
+  },
+  "0472" : {
+    "statusDescription" : "Таинство"
+  },
+  "0473" : {
+    "statusDescription" : "Ассумпцио"
+  },
+  "0476" : {
+    "statusDescription" : "Зубная боль"
+  },
+  "0491" : {
+    "statusDescription" : "Дикарь"
+  },
+  "0492" : {
+    "statusDescription" : "Коктейль Вог"
+  },
+  "0493" : {
+    "statusDescription" : "Вырезка"
+  },
+  "0494" : {
+    "statusDescription" : "Холодный чай"
+  },
+  "0495" : {
+    "statusDescription" : "Травяная настойка"
+  },
+  "0496" : {
+    "statusDescription" : "Спагетти"
+  },
+  "0573" : {
+    "statusDescription" : "Ягода Мора"
+  },
+  "0577" : {
+    "statusDescription" : "Болеутоляющее"
+  },
+  "0578" : {
+    "statusDescription" : "Зелье Жизни"
+  },
+  "0579" : {
+    "statusDescription" : "Воскрешающее зелье"
+  },
+  "0580" : {
+    "statusDescription" : "Свет Регена"
+  },
+  "0581" : {
+    "statusDescription" : "Превышение скорости"
+  },
+  "0583" : {
+    "statusDescription" : "Сила Одина"
+  },
+  "0584" : {
+    "statusDescription" : "Режим бойца"
+  },
+  "0605" : {
+    "statusDescription" : "Поток Магмы"
+  },
+  "0606" : {
+    "statusDescription" : "Каменная броня"
+  },
+  "0607" : {
+    "statusDescription" : "Вулканическое оружие"
+  },
+  "0608" : {
+    "statusDescription" : "Вулканический пепел"
+  },
+  "0611" : {
+    "statusDescription" : "Леденец"
+  },
+  "0613" : {
+    "statusDescription" : "Езда"
+  },
+  "0616" : {
+    "statusDescription" : "Задержка Макро"
+  },
+  "0618" : {
+    "statusDescription" : "Лоток Маланго"
+  },
+  "0621" : {
+    "statusDescription" : "Трансформация"
+  },
+  "0622" : {
+    "statusDescription" : "Сидеть"
+  },
+  "0630" : {
+    "statusDescription" : "Макро"
+  },
+  "0632" : {
+    "statusDescription" : "%s"
+  },
+  "0633" : {
+    "statusDescription" : "%s"
+  },
+  "0634" : {
+    "statusDescription" : "%s"
+  },
+  "0635" : {
+    "statusDescription" : "%s"
+  },
+  "0636" : {
+    "statusDescription" : "%s"
+  },
+  "0637" : {
+    "statusDescription" : "Восстановление прекращено"
+  },
+  "0638" : {
+    "statusDescription" : "%s"
+  },
+  "0639" : {
+    "statusDescription" : "%s"
+  },
+  "0640" : {
+    "statusDescription" : "Физическая защита снижена"
+  },
+  "0641" : {
+    "statusDescription" : "Магическая защита снижена"
+  },
+  "0646" : {
+    "statusDescription" : "Безупречный Дух"
+  },
+  "0647" : {
+    "statusDescription" : "Зелье проворства"
+  },
+  "0650" : {
+    "statusDescription" : "Приветственный фейрверк"
+  },
+  "0652" : {
+    "statusDescription" : "Шестнадцатая Ночь"
+  },
+  "0654" : {
+    "statusDescription" : "Срыв Покровов"
+  },
+  "0655" : {
+    "statusDescription" : "Подавление Ауры"
+  },
+  "0656" : {
+    "statusDescription" : "Воин Тени"
+  },
+  "0657" : {
+    "statusDescription" : "Искажение Луны"
+  },
+  "0658" : {
+    "statusDescription" : "Древний амулет Элементов"
+  },
+  "0659" : {
+    "statusDescription" : "Фаза Луны"
+  },
+  "0660" : {
+    "statusDescription" : "Кровавая Луна"
+  },
+  "0662" : {
+    "statusDescription" : "Зелье боевого духа"
+  },
+  "0663" : {
+    "statusDescription" : "Сильное зелье боевого духа"
+  },
+  "0664" : {
+    "statusDescription" : "Зелье берсерка"
+  },
+  "0666" : {
+    "statusDescription" : "Мистический порошок"
+  },
+  "0670" : {
+    "statusDescription" : "Мистическое зелье"
+  },
+  "0675" : {
+    "statusDescription" : "Цветок ветра"
+  },
+  "0676" : {
+    "statusDescription" : "Свет защиты"
+  },
+  "0677" : {
+    "statusDescription" : "Магическая энергия пропитывает вас,"
+  },
+  "0678" : {
+    "statusDescription" : "Вокруг вас воздвигнут магический барьер,"
+  },
+  "0679" : {
+    "statusDescription" : "Святая сила пропитывает вас,"
+  },
+  "0680" : {
+    "statusDescription" : "Мощный щит антимагии защищает вас."
+  },
+  "0681" : {
+    "statusDescription" : "Вармунт дарует вам силу,"
+  },
+  "0682" : {
+    "statusDescription" : "Ваши доспехи приобрели"
+  },
+  "0683" : {
+    "statusDescription" : "Максимальный запас HP и SP увеличен."
+  },
+  "0685" : {
+    "statusDescription" : "ALMIGHTY"
+  },
+  "0686" : {
+    "statusDescription" : "Кровь Ётуна"
+  },
+  "0687" : {
+    "statusDescription" : "Сердце Голема"
+  },
+  "0688" : {
+    "statusDescription" : "Слеза Эльфа(Оглушение)"
+  },
+  "0689" : {
+    "statusDescription" : "Слеза Эльфа(Окаменение)"
+  },
+  "0690" : {
+    "statusDescription" : "Слеза Эльфа(Заморозка)"
+  },
+  "0691" : {
+    "statusDescription" : "Слеза Эльфа(Сон)"
+  },
+  "0692" : {
+    "statusDescription" : "Слеза Эльфа(Проклятие)"
+  },
+  "0693" : {
+    "statusDescription" : "Слеза Эльфа(Молчание)"
+  },
+  "0694" : {
+    "statusDescription" : "Слеза Эльфа(Слепота)"
+  },
+  "0710" : {
+    "statusDescription" : "Ледяная бомба"
+  },
+  "0715" : {
+    "statusDescription" : "Песня богатства"
+  },
+  "0716" : {
+    "statusDescription" : "Оферториум"
+  },
+  "0717" : {
+    "statusDescription" : "Улучшенный телекинез"
+  },
+  "0720" : {
+    "statusDescription" : "Полный вперед"
+  },
+  "0721" : {
+    "statusDescription" : "Отскок"
+  },
+  "0722" : {
+    "statusDescription" : "Безграничность"
+  },
+  "0723" : {
+    "statusDescription" : "Оберег короля"
+  },
+  "0724" : {
+    "statusDescription" : "MAX ATK"
+  },
+  "0725" : {
+    "statusDescription" : "MIN ATK"
+  },
+  "0726" : {
+    "statusDescription" : "MAX MATK"
+  },
+  "0727" : {
+    "statusDescription" : "MIN MATK"
+  },
+  "0730" : {
+    "statusDescription" : "Черный коготь"
+  },
+  "0736" : {
+    "statusDescription" : "Лед"
+  },
+  "0737" : {
+    "statusDescription" : "Ожог"
+  },
+  "0741" : {
+    "statusDescription" : "Странный Ньюоз"
+  },
+  "0742" : {
+    "statusDescription" : "Непреклонная воля"
+  },
+  "0743" : {
+    "statusDescription" : "Блеф Ротерта"
+  },
+  "0744" : {
+    "statusDescription" : "Скромность Гельки"
+  },
+  "0745" : {
+    "statusDescription" : "Слава Аранга"
+  },
+  "0746" : {
+    "statusDescription" : "Скрупулезность Минминга"
+  },
+  "0747" : {
+    "statusDescription" : "Искринность Роэля"
+  },
+  "0748" : {
+    "statusDescription" : "Точность Лунайна"
+  },
+  "0749" : {
+    "statusDescription" : "Холод Лаги"
+  },
+  "0750" : {
+    "statusDescription" : "Бесполезность Джека Меллоди"
+  },
+  "0751" : {
+    "statusDescription" : "Кружка Боза"
+  },
+  "0752" : {
+    "statusDescription" : "Связывающая ловушка"
+  },
+  "0753" : {
+    "statusDescription" : "Внутренняя цепь"
+  },
+  "0755" : {
+    "statusDescription" : "Маркер Кримсона"
+  },
+  "0758" : {
+    "statusDescription" : "Платиновый Альтер"
+  },
+  "0759" : {
+    "statusDescription" : "Горячая бочка"
+  },
+  "0760" : {
+    "statusDescription" : "Удар анти-материи"
+  },
+  "0762" : {
+    "statusDescription" : "Клан мечей"
+  },
+  "0763" : {
+    "statusDescription" : "Клан Арх жезла"
+  },
+  "0764" : {
+    "statusDescription" : "Клан Золотая булава"
+  },
+  "0765" : {
+    "statusDescription" : "Клан Арбалет"
+  },
+  "0766" : {
+    "statusDescription" : "Сила 30 сек."
+  },
+  "0767" : {
+    "statusDescription" : "Ум 30 сек."
+  },
+  "0768" : {
+    "statusDescription" : "Здоровье 30 сек."
+  },
+  "0769" : {
+    "statusDescription" : "Магия 30 сек."
+  },
+  "0770" : {
+    "statusDescription" : "Легкость 30 сек."
+  },
+  "0771" : {
+    "statusDescription" : "Ускорение 30 сек."
+  },
+  "0772" : {
+    "statusDescription" : "Прочность 30 сек."
+  },
+  "0773" : {
+    "statusDescription" : "Безопасность 30 сек."
+  },
+  "0774" : {
+    "statusDescription" : "Удача 30 сек."
+  },
+  "0775" : {
+    "statusDescription" : "Точность 30 сек."
+  },
+  "0776" : {
+    "statusDescription" : "Находится на границе живых и мертвых!"
+  },
+  "0777" : {
+    "statusDescription" : "Фестиваль Дано"
+  },
+  "0778" : {
+    "statusDescription" : "Головокружение"
+  },
+  "0780" : {
+    "statusDescription" : "%s"
+  },
+  "0783" : {
+    "statusDescription" : "Тушеные говяжьи ребра"
+  },
+  "0784" : {
+    "statusDescription" : "Тушеные свиные ребра"
+  },
+  "0785" : {
+    "statusDescription" : "Усиление стихии"
+  },
+  "0786" : {
+    "statusDescription" : "Усиление стихии"
+  },
+  "0787" : {
+    "statusDescription" : "Усиление стихии"
+  },
+  "0788" : {
+    "statusDescription" : "Усиление стихии"
+  },
+  "0789" : {
+    "statusDescription" : "Усиление стихии"
+  },
+  "0790" : {
+    "statusDescription" : "Усиление стихии"
+  }
+}

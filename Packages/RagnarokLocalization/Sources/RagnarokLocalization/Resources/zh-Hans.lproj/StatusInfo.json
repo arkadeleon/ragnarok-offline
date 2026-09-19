@@ -1,0 +1,2105 @@
+{
+  "0000" : {
+    "statusDescription" : "挑衅(Provoke)"
+  },
+  "0001" : {
+    "statusDescription" : "霸体(Endure)"
+  },
+  "0002" : {
+    "statusDescription" : "双手剑攻击速度增加(Two Hand Quicken)"
+  },
+  "0003" : {
+    "statusDescription" : "心神凝聚(Attention concentrate)"
+  },
+  "0004" : {
+    "statusDescription" : "隐匿(Hiding)"
+  },
+  "0005" : {
+    "statusDescription" : "伪装(Cloaking)"
+  },
+  "0006" : {
+    "statusDescription" : "涂毒(Enchant Poison)"
+  },
+  "0007" : {
+    "statusDescription" : "毒性反弹(Poison React)"
+  },
+  "0008" : {
+    "statusDescription" : "泥沼地(Quagmire)"
+  },
+  "0009" : {
+    "statusDescription" : "天使之障壁(Angelus)"
+  },
+  "0010" : {
+    "statusDescription" : "天使之赐福(Blessing)"
+  },
+  "0011" : {
+    "statusDescription" : "天使之光(Signum Crucis)"
+  },
+  "0012" : {
+    "statusDescription" : "加速术(Increase agility)"
+  },
+  "0013" : {
+    "statusDescription" : "敏捷降低(Decrease agility)"
+  },
+  "0014" : {
+    "statusDescription" : "缓毒术(Slow Poison)"
+  },
+  "0015" : {
+    "statusDescription" : "神威祈福(Impositio Manus)"
+  },
+  "0016" : {
+    "statusDescription" : "牺牲祈福(Suffragium)"
+  },
+  "0017" : {
+    "statusDescription" : "洒水祈福(Aspersio)"
+  },
+  "0018" : {
+    "statusDescription" : "%s"
+  },
+  "0019" : {
+    "statusDescription" : "霸邪之阵(Kyrie Eleison)"
+  },
+  "0020" : {
+    "statusDescription" : "圣母之颂歌(Magnificat)"
+  },
+  "0021" : {
+    "statusDescription" : "幸运之颂歌(Gloria)"
+  },
+  "0022" : {
+    "statusDescription" : "天使之怒(Lex Aeterna)"
+  },
+  "0023" : {
+    "statusDescription" : "速度激发(Adrenaline Rush)"
+  },
+  "0024" : {
+    "statusDescription" : "无视体型攻击(Weapon Perfection)"
+  },
+  "0025" : {
+    "statusDescription" : "凶砍(Over Thrust)"
+  },
+  "0026" : {
+    "statusDescription" : "武器值最大化(Maximize Power)"
+  },
+  "0027" : {
+    "statusDescription" : "骑宠出租中"
+  },
+  "0028" : {
+    "statusDescription" : "驯鹰术(Falconry Mastery)"
+  },
+  "0029" : {
+    "statusDescription" : "装死"
+  },
+  "0030" : {
+    "statusDescription" : "大声呐喊"
+  },
+  "0031" : {
+    "statusDescription" : "能量外套(Energy Coat)"
+  },
+  "0032" : {
+    "statusDescription" : "防具破坏"
+  },
+  "0033" : {
+    "statusDescription" : "武器破坏"
+  },
+  "0034" : {
+    "statusDescription" : "幻觉"
+  },
+  "0035" : {
+    "statusDescription" : "负重量70%以上"
+  },
+  "0036" : {
+    "statusDescription" : "负重量90%以上"
+  },
+  "0037" : {
+    "statusDescription" : "集中药水"
+  },
+  "0038" : {
+    "statusDescription" : "觉醒药水"
+  },
+  "0039" : {
+    "statusDescription" : "%s"
+  },
+  "0041" : {
+    "statusDescription" : "%s"
+  },
+  "0042" : {
+    "statusDescription" : "移动速度增加"
+  },
+  "0050" : {
+    "statusDescription" : "卸除武器"
+  },
+  "0051" : {
+    "statusDescription" : "卸除盾牌"
+  },
+  "0052" : {
+    "statusDescription" : "卸除铠甲"
+  },
+  "0053" : {
+    "statusDescription" : "卸除头盔"
+  },
+  "0054" : {
+    "statusDescription" : "化学武器保护 (Chemical Protection Weapon)"
+  },
+  "0055" : {
+    "statusDescription" : "化学盾牌保护(Chemical Protection Shield)"
+  },
+  "0056" : {
+    "statusDescription" : "化学铠甲保护 (Chemical Protection armor)"
+  },
+  "0057" : {
+    "statusDescription" : "化学头盔保护 (Chemical Protection Helm)"
+  },
+  "0058" : {
+    "statusDescription" : "自动防御(Auto Guard)"
+  },
+  "0059" : {
+    "statusDescription" : "反射盾(Reflect Shield)"
+  },
+  "0061" : {
+    "statusDescription" : "神佑之光(Providence)"
+  },
+  "0062" : {
+    "statusDescription" : "光之盾(Defender)"
+  },
+  "0064" : {
+    "statusDescription" : "洒水祈福(Aspersio)"
+  },
+  "0065" : {
+    "statusDescription" : "自动念咒(AutoSPell)"
+  },
+  "0068" : {
+    "statusDescription" : "长矛加速术(Spear Quicken)"
+  },
+  "0070" : {
+    "statusDescription" : "吹口哨"
+  },
+  "0071" : {
+    "statusDescription" : "刺客的黄昏"
+  },
+  "0072" : {
+    "statusDescription" : "布莱奇之诗"
+  },
+  "0073" : {
+    "statusDescription" : "伊登的苹果"
+  },
+  "0074" : {
+    "statusDescription" : "无限哼唱声"
+  },
+  "0075" : {
+    "statusDescription" : "勿忘我"
+  },
+  "0076" : {
+    "statusDescription" : "女神之吻"
+  },
+  "0077" : {
+    "statusDescription" : "为您服务"
+  },
+  "0078" : {
+    "statusDescription" : "经验值倍增"
+  },
+  "0079" : {
+    "statusDescription" : "永远的混沌"
+  },
+  "0080" : {
+    "statusDescription" : "战鼓震天"
+  },
+  "0081" : {
+    "statusDescription" : "尼贝隆根之戒指"
+  },
+  "0082" : {
+    "statusDescription" : "洛奇的悲鸣"
+  },
+  "0083" : {
+    "statusDescription" : "触媒之所"
+  },
+  "0084" : {
+    "statusDescription" : "不死神齐格弗里德"
+  },
+  "0087" : {
+    "statusDescription" : "金刚不坏"
+  },
+  "0088" : {
+    "statusDescription" : "阿修罗霸凰拳"
+  },
+  "0090" : {
+    "statusDescription" : "火属性附加 (Flame Launcher)"
+  },
+  "0091" : {
+    "statusDescription" : "水属性附加(Frost Weapon)"
+  },
+  "0092" : {
+    "statusDescription" : "风属性附加(Lightning Loader)"
+  },
+  "0093" : {
+    "statusDescription" : "地属性附加(Seismic Weapon)"
+  },
+  "0097" : {
+    "statusDescription" : "%s"
+  },
+  "0103" : {
+    "statusDescription" : "灵气剑"
+  },
+  "0104" : {
+    "statusDescription" : "双剑格挡(Parrying)"
+  },
+  "0105" : {
+    "statusDescription" : "集中攻击"
+  },
+  "0106" : {
+    "statusDescription" : "极速回复(Tension Relax)"
+  },
+  "0108" : {
+    "statusDescription" : "舍命攻击"
+  },
+  "0110" : {
+    "statusDescription" : "圣母之祈福 (Assumptio)"
+  },
+  "0112" : {
+    "statusDescription" : "%s"
+  },
+  "0113" : {
+    "statusDescription" : "魔力增幅"
+  },
+  "0114" : {
+    "statusDescription" : "致命涂毒(Enchant Deadly Poison)"
+  },
+  "0115" : {
+    "statusDescription" : "狙杀瞄准(True Sight)"
+  },
+  "0116" : {
+    "statusDescription" : "风之步(Wind Walk)"
+  },
+  "0117" : {
+    "statusDescription" : "野蛮凶砍 (Meltdown)"
+  },
+  "0118" : {
+    "statusDescription" : "手推车加速(Cart Boost)"
+  },
+  "0120" : {
+    "statusDescription" : "霸王魂"
+  },
+  "0121" : {
+    "statusDescription" : "傀儡师的把戏(施展)"
+  },
+  "0122" : {
+    "statusDescription" : "傀儡师的把戏(目标)"
+  },
+  "0124" : {
+    "statusDescription" : "出血"
+  },
+  "0125" : {
+    "statusDescription" : "巧打(Joint Beat)"
+  },
+  "0130" : {
+    "statusDescription" : "爸妈我爱您"
+  },
+  "0132" : {
+    "statusDescription" : "狂暴状态(Auto Berserk)"
+  },
+  "0135" : {
+    "statusDescription" : "回旋准备"
+  },
+  "0137" : {
+    "statusDescription" : "砸踢准备"
+  },
+  "0139" : {
+    "statusDescription" : "踢准备"
+  },
+  "0141" : {
+    "statusDescription" : "还击准备"
+  },
+  "0143" : {
+    "statusDescription" : "落法"
+  },
+  "0145" : {
+    "statusDescription" : "冲刺"
+  },
+  "0146" : {
+    "statusDescription" : "%s"
+  },
+  "0147" : {
+    "statusDescription" : "所有速度激发"
+  },
+  "0148" : {
+    "statusDescription" : "%s"
+  },
+  "0149" : {
+    "statusDescription" : "灵魂赋予状态"
+  },
+  "0150" : {
+    "statusDescription" : "%s"
+  },
+  "0151" : {
+    "statusDescription" : "%s"
+  },
+  "0156" : {
+    "statusDescription" : "凯易哲"
+  },
+  "0157" : {
+    "statusDescription" : "凯阿希"
+  },
+  "0158" : {
+    "statusDescription" : "凯诬仆"
+  },
+  "0161" : {
+    "statusDescription" : "单手剑攻击速度增加"
+  },
+  "0169" : {
+    "statusDescription" : "太阳的平安感"
+  },
+  "0170" : {
+    "statusDescription" : "月亮的平安感"
+  },
+  "0171" : {
+    "statusDescription" : "星星的平安感"
+  },
+  "0181" : {
+    "statusDescription" : "自由保护(Preserve)"
+  },
+  "0182" : {
+    "statusDescription" : "%s"
+  },
+  "0186" : {
+    "statusDescription" : "双倍投掷(Double Casting)"
+  },
+  "0188" : {
+    "statusDescription" : "凶砍最大值(Overthrust Max)"
+  },
+  "0191" : {
+    "statusDescription" : "命运的塔罗牌 (Tarot Card of Fate)"
+  },
+  "0197" : {
+    "statusDescription" : "退缩"
+  },
+  "0198" : {
+    "statusDescription" : "火狩芽(Sight Blaster)"
+  },
+  "0200" : {
+    "statusDescription" : "紧密的约束(Close Confine)"
+  },
+  "0201" : {
+    "statusDescription" : "紧密的约束(Close Confine)"
+  },
+  "0203" : {
+    "statusDescription" : "疯狂凯斯乐"
+  },
+  "0204" : {
+    "statusDescription" : "格林狂热"
+  },
+  "0205" : {
+    "statusDescription" : "快乐的休息"
+  },
+  "0206" : {
+    "statusDescription" : "金蝉脱壳"
+  },
+  "0207" : {
+    "statusDescription" : "幻影分身"
+  },
+  "0208" : {
+    "statusDescription" : "念"
+  },
+  "0209" : {
+    "statusDescription" : "终极闪躲"
+  },
+  "0210" : {
+    "statusDescription" : "命中率递增"
+  },
+  "0217" : {
+    "statusDescription" : "狮鹫兽搭乘中"
+  },
+  "0241" : {
+    "statusDescription" : "%s"
+  },
+  "0242" : {
+    "statusDescription" : "%s"
+  },
+  "0243" : {
+    "statusDescription" : "%s"
+  },
+  "0244" : {
+    "statusDescription" : "%s"
+  },
+  "0245" : {
+    "statusDescription" : "%s"
+  },
+  "0246" : {
+    "statusDescription" : "%s"
+  },
+  "0247" : {
+    "statusDescription" : "%s"
+  },
+  "0248" : {
+    "statusDescription" : "%s"
+  },
+  "0249" : {
+    "statusDescription" : "%s"
+  },
+  "0250" : {
+    "statusDescription" : "%s"
+  },
+  "0251" : {
+    "statusDescription" : "%s"
+  },
+  "0252" : {
+    "statusDescription" : "%s"
+  },
+  "0271" : {
+    "statusDescription" : "%s"
+  },
+  "0272" : {
+    "statusDescription" : "%s"
+  },
+  "0273" : {
+    "statusDescription" : "%s"
+  },
+  "0274" : {
+    "statusDescription" : "%s"
+  },
+  "0275" : {
+    "statusDescription" : "%s"
+  },
+  "0276" : {
+    "statusDescription" : "%s"
+  },
+  "0282" : {
+    "statusDescription" : "减缓咏唱"
+  },
+  "0286" : {
+    "statusDescription" : "致命伤口"
+  },
+  "0289" : {
+    "statusDescription" : "%s"
+  },
+  "0290" : {
+    "statusDescription" : "物理防御药水"
+  },
+  "0291" : {
+    "statusDescription" : "魔法防御药水"
+  },
+  "0292" : {
+    "statusDescription" : "恢复力提升药水"
+  },
+  "0293" : {
+    "statusDescription" : "小型生命水"
+  },
+  "0294" : {
+    "statusDescription" : "中型生命水"
+  },
+  "0295" : {
+    "statusDescription" : "研磨剂"
+  },
+  "0296" : {
+    "statusDescription" : "幻影的酒杯"
+  },
+  "0297" : {
+    "statusDescription" : "仙丹"
+  },
+  "0298" : {
+    "statusDescription" : "%s"
+  },
+  "0299" : {
+    "statusDescription" : "???"
+  },
+  "0300" : {
+    "statusDescription" : "SP消耗量减少药水"
+  },
+  "0301" : {
+    "statusDescription" : "异常状态抵抗药水"
+  },
+  "0302" : {
+    "statusDescription" : "属性变化卷轴"
+  },
+  "0304" : {
+    "statusDescription" : "地狱之权威"
+  },
+  "0312" : {
+    "statusDescription" : "%s"
+  },
+  "0313" : {
+    "statusDescription" : "%s"
+  },
+  "0314" : {
+    "statusDescription" : "天使的守护"
+  },
+  "0316" : {
+    "statusDescription" : "魔力剑(Enchant Blade)"
+  },
+  "0318" : {
+    "statusDescription" : "一号符文石：恢复(Refresh)"
+  },
+  "0319" : {
+    "statusDescription" : "突里萨兹符文石：力量成长"
+  },
+  "0320" : {
+    "statusDescription" : "九号符文石：硬石皮肤(Stone Hard Skin)"
+  },
+  "0321" : {
+    "statusDescription" : "伊札符文石：生命激化"
+  },
+  "0322" : {
+    "statusDescription" : "艾伊瓦兹符文石：提升斗志"
+  },
+  "0323" : {
+    "statusDescription" : "六号符文石：丰足(Abundance)"
+  },
+  "0331" : {
+    "statusDescription" : "羔羊歌颂 (LAUDAAGNUS)"
+  },
+  "0332" : {
+    "statusDescription" : "折枝赞颂 (LAUDARAMUS)"
+  },
+  "0333" : {
+    "statusDescription" : "伪装强化(CLOAKING EXCEED)"
+  },
+  "0334" : {
+    "statusDescription" : "幻影步(HALLUCINATIONWALK)"
+  },
+  "0336" : {
+    "statusDescription" : "净化 (RENOVATIO\/净化)"
+  },
+  "0337" : {
+    "statusDescription" : "武器抵御(WEAPON BLOCKING)"
+  },
+  "0340" : {
+    "statusDescription" : "赎罪"
+  },
+  "0341" : {
+    "statusDescription" : "剧毒武器"
+  },
+  "0342" : {
+    "statusDescription" : "麻醉之毒"
+  },
+  "0343" : {
+    "statusDescription" : "麻痹之毒"
+  },
+  "0344" : {
+    "statusDescription" : "衰弱之毒"
+  },
+  "0345" : {
+    "statusDescription" : "狂笑之毒 "
+  },
+  "0346" : {
+    "statusDescription" : "污染之毒"
+  },
+  "0347" : {
+    "statusDescription" : "热病之毒"
+  },
+  "0348" : {
+    "statusDescription" : "失忆之毒"
+  },
+  "0349" : {
+    "statusDescription" : "吸血之毒"
+  },
+  "0351" : {
+    "statusDescription" : "结冰"
+  },
+  "0352" : {
+    "statusDescription" : "微风恐惧(FEAR BREEZE)"
+  },
+  "0354" : {
+    "statusDescription" : "深渊沼地(MARSH OF ABYSS)"
+  },
+  "0355" : {
+    "statusDescription" : "魔法省悟"
+  },
+  "0356" : {
+    "statusDescription" : "魔力冻结"
+  },
+  "0357" : {
+    "statusDescription" : "骑狼术(WUG RIDER)"
+  },
+  "0361" : {
+    "statusDescription" : "魔导机甲加速"
+  },
+  "0362" : {
+    "statusDescription" : "悬停"
+  },
+  "0368" : {
+    "statusDescription" : "塔奥群卡卷轴"
+  },
+  "0369" : {
+    "statusDescription" : "蜂后卷轴"
+  },
+  "0370" : {
+    "statusDescription" : "兽人英雄卷轴"
+  },
+  "0371" : {
+    "statusDescription" : "兽人酋长卷轴"
+  },
+  "0373" : {
+    "statusDescription" : "过热(Over Heat)"
+  },
+  "0374" : {
+    "statusDescription" : "形态转换"
+  },
+  "0375" : {
+    "statusDescription" : "红外线扫瞄"
+  },
+  "0376" : {
+    "statusDescription" : "磁场"
+  },
+  "0377" : {
+    "statusDescription" : "中性防护罩"
+  },
+  "0379" : {
+    "statusDescription" : "隐形力场"
+  },
+  "0381" : {
+    "statusDescription" : "马努克的良机"
+  },
+  "0382" : {
+    "statusDescription" : "马努克的意志"
+  },
+  "0383" : {
+    "statusDescription" : "捕虫堇妖果酱"
+  },
+  "0384" : {
+    "statusDescription" : "鲁修拉的蜜酱"
+  },
+  "0385" : {
+    "statusDescription" : "繁殖"
+  },
+  "0386" : {
+    "statusDescription" : "马努克的信念"
+  },
+  "0387" : {
+    "statusDescription" : "独角飞马之泪"
+  },
+  "0388" : {
+    "statusDescription" : "%s"
+  },
+  "0389" : {
+    "statusDescription" : "%s"
+  },
+  "0390" : {
+    "statusDescription" : "坚盾护体"
+  },
+  "0391" : {
+    "statusDescription" : "先锋部队"
+  },
+  "0393" : {
+    "statusDescription" : "自动魅影念咒"
+  },
+  "0394" : {
+    "statusDescription" : "魅影形态"
+  },
+  "0396" : {
+    "statusDescription" : "盾咒-防"
+  },
+  "0397" : {
+    "statusDescription" : "盾咒-魔"
+  },
+  "0398" : {
+    "statusDescription" : "盾咒-炼"
+  },
+  "0399" : {
+    "statusDescription" : "人体彩绘"
+  },
+  "0400" : {
+    "statusDescription" : "强化攻击"
+  },
+  "0401" : {
+    "statusDescription" : "讴歌"
+  },
+  "0402" : {
+    "statusDescription" : "威信"
+  },
+  "0403" : {
+    "statusDescription" : "透明术"
+  },
+  "0404" : {
+    "statusDescription" : "致命感染"
+  },
+  "0405" : {
+    "statusDescription" : "聚集"
+  },
+  "0407" : {
+    "statusDescription" : "灵感"
+  },
+  "0408" : {
+    "statusDescription" : "面具:无力"
+  },
+  "0409" : {
+    "statusDescription" : "面具:忧郁"
+  },
+  "0410" : {
+    "statusDescription" : "潜龙升天"
+  },
+  "0411" : {
+    "statusDescription" : "面具:无知"
+  },
+  "0412" : {
+    "statusDescription" : "面具:懒散"
+  },
+  "0413" : {
+    "statusDescription" : "闪电步"
+  },
+  "0414" : {
+    "statusDescription" : "阿卡拉杰油炸饼"
+  },
+  "0415" : {
+    "statusDescription" : "面具:不幸"
+  },
+  "0417" : {
+    "statusDescription" : "咒缚阵"
+  },
+  "0418" : {
+    "statusDescription" : "面具:衰弱"
+  },
+  "0419" : {
+    "statusDescription" : "破碎柱"
+  },
+  "0421" : {
+    "statusDescription" : "卸除配件"
+  },
+  "0423" : {
+    "statusDescription" : "教皇饼干"
+  },
+  "0425" : {
+    "statusDescription" : "点穴 - 球"
+  },
+  "0426" : {
+    "statusDescription" : "点穴 - 反"
+  },
+  "0427" : {
+    "statusDescription" : "点穴 - 活"
+  },
+  "0429" : {
+    "statusDescription" : "摇摆舞"
+  },
+  "0430" : {
+    "statusDescription" : "恋人交响乐"
+  },
+  "0435" : {
+    "statusDescription" : "沉睡"
+  },
+  "0436" : {
+    "statusDescription" : "循环的大自然之音"
+  },
+  "0437" : {
+    "statusDescription" : "液体冷却弹"
+  },
+  "0438" : {
+    "statusDescription" : "羞怯一天的忧郁"
+  },
+  "0439" : {
+    "statusDescription" : "魔力之歌"
+  },
+  "0441" : {
+    "statusDescription" : "与狼共舞"
+  },
+  "0442" : {
+    "statusDescription" : "朝风车突击"
+  },
+  "0443" : {
+    "statusDescription" : "回音之歌"
+  },
+  "0444" : {
+    "statusDescription" : "和声演奏"
+  },
+  "0445" : {
+    "statusDescription" : "打击强化"
+  },
+  "0446" : {
+    "statusDescription" : "加热术"
+  },
+  "0447" : {
+    "statusDescription" : "月光小夜曲"
+  },
+  "0448" : {
+    "statusDescription" : "疯狂"
+  },
+  "0450" : {
+    "statusDescription" : "解析"
+  },
+  "0451" : {
+    "statusDescription" : "雷拉多露水"
+  },
+  "0452" : {
+    "statusDescription" : "消沉旋律"
+  },
+  "0453" : {
+    "statusDescription" : "战嚎的彼端"
+  },
+  "0454" : {
+    "statusDescription" : "无限哼唱声"
+  },
+  "0461" : {
+    "statusDescription" : "手推车加速"
+  },
+  "0463" : {
+    "statusDescription" : "荆棘陷阱"
+  },
+  "0464" : {
+    "statusDescription" : "吸血植物"
+  },
+  "0470" : {
+    "statusDescription" : "曼陀罗魔花的尖叫"
+  },
+  "0472" : {
+    "statusDescription" : "圣典"
+  },
+  "0473" : {
+    "statusDescription" : "圣母之祈福 (Assumptio)"
+  },
+  "0476" : {
+    "statusDescription" : "腹痛"
+  },
+  "0480" : {
+    "statusDescription" : "HP增加药水"
+  },
+  "0481" : {
+    "statusDescription" : "SP增加药水"
+  },
+  "0482" : {
+    "statusDescription" : "浓缩白色药水"
+  },
+  "0484" : {
+    "statusDescription" : "攻速增加浓缩汁"
+  },
+  "0486" : {
+    "statusDescription" : "挥击药水"
+  },
+  "0487" : {
+    "statusDescription" : "魔力药水"
+  },
+  "0490" : {
+    "statusDescription" : "极限空虚"
+  },
+  "0491" : {
+    "statusDescription" : "烤野猪"
+  },
+  "0492" : {
+    "statusDescription" : "狼血鸡尾酒"
+  },
+  "0493" : {
+    "statusDescription" : "小牛排"
+  },
+  "0494" : {
+    "statusDescription" : "城间冰茶"
+  },
+  "0495" : {
+    "statusDescription" : "药草蒸茅膏菜"
+  },
+  "0496" : {
+    "statusDescription" : "毕帝特龙尾面"
+  },
+  "0573" : {
+    "statusDescription" : "穆拉浆果"
+  },
+  "0576" : {
+    "statusDescription" : "麻痹"
+  },
+  "0577" : {
+    "statusDescription" : "镇痛剂"
+  },
+  "0578" : {
+    "statusDescription" : "LIFEPOTION"
+  },
+  "0579" : {
+    "statusDescription" : "活性化药水"
+  },
+  "0583" : {
+    "statusDescription" : "奥丁之神力"
+  },
+  "0607" : {
+    "statusDescription" : "火山尘暴"
+  },
+  "0611" : {
+    "statusDescription" : "魔法糖果"
+  },
+  "0613" : {
+    "statusDescription" : "骑乘中"
+  },
+  "0616" : {
+    "statusDescription" : "自动练功系统"
+  },
+  "0618" : {
+    "statusDescription" : "绵绵岛猫食罐头"
+  },
+  "0620" : {
+    "statusDescription" : "重击强袭"
+  },
+  "0621" : {
+    "statusDescription" : "变身魔物"
+  },
+  "0622" : {
+    "statusDescription" : "坐下"
+  },
+  "0630" : {
+    "statusDescription" : "自动练功系统使用"
+  },
+  "0632" : {
+    "statusDescription" : "%s"
+  },
+  "0633" : {
+    "statusDescription" : "%s"
+  },
+  "0634" : {
+    "statusDescription" : "%s"
+  },
+  "0635" : {
+    "statusDescription" : "%s"
+  },
+  "0636" : {
+    "statusDescription" : "%s"
+  },
+  "0637" : {
+    "statusDescription" : "不可恢复状态"
+  },
+  "0638" : {
+    "statusDescription" : "%s"
+  },
+  "0639" : {
+    "statusDescription" : "%s"
+  },
+  "0640" : {
+    "statusDescription" : "DEF固定成特定百分比"
+  },
+  "0641" : {
+    "statusDescription" : "MDEF固定成特定百分比"
+  },
+  "0646" : {
+    "statusDescription" : "明镜止水"
+  },
+  "0647" : {
+    "statusDescription" : "ASPD强化药水"
+  },
+  "0650" : {
+    "statusDescription" : "加油鞭炮"
+  },
+  "0652" : {
+    "statusDescription" : "第16个夜晚"
+  },
+  "0654" : {
+    "statusDescription" : "踏影"
+  },
+  "0655" : {
+    "statusDescription" : "虚无缥缈之影"
+  },
+  "0656" : {
+    "statusDescription" : "影子武士"
+  },
+  "0657" : {
+    "statusDescription" : "变形的上弦月"
+  },
+  "0658" : {
+    "statusDescription" : "古代神灵平安符"
+  },
+  "0659" : {
+    "statusDescription" : "阴月的幻影"
+  },
+  "0660" : {
+    "statusDescription" : "不祥的红月"
+  },
+  "0662" : {
+    "statusDescription" : "战斗灵药"
+  },
+  "0663" : {
+    "statusDescription" : "高级战斗灵药"
+  },
+  "0664" : {
+    "statusDescription" : "红色狂暴药水"
+  },
+  "0666" : {
+    "statusDescription" : "神奇粉末"
+  },
+  "0670" : {
+    "statusDescription" : "神圣生命水"
+  },
+  "0675" : {
+    "statusDescription" : "茂盛的花瓣"
+  },
+  "0681" : {
+    "statusDescription" : "所有能力值"
+  },
+  "0685" : {
+    "statusDescription" : "万能年糕"
+  },
+  "0716" : {
+    "statusDescription" : "奉献颂"
+  },
+  "0717" : {
+    "statusDescription" : "终极念力"
+  },
+  "0720" : {
+    "statusDescription" : "加大油门"
+  },
+  "0721" : {
+    "statusDescription" : "回弹"
+  },
+  "0722" : {
+    "statusDescription" : "精英狙击"
+  },
+  "0724" : {
+    "statusDescription" : "MAX ATK"
+  },
+  "0725" : {
+    "statusDescription" : "MIN ATK"
+  },
+  "0726" : {
+    "statusDescription" : "MAX MATK"
+  },
+  "0727" : {
+    "statusDescription" : "MIN MATK"
+  },
+  "0730" : {
+    "statusDescription" : "致命爪痕"
+  },
+  "0752" : {
+    "statusDescription" : "暗黑地狱"
+  },
+  "0753" : {
+    "statusDescription" : "无限连锁"
+  },
+  "0755" : {
+    "statusDescription" : "血色烙印"
+  },
+  "0756" : {
+    "statusDescription" : "破坏怒吼"
+  },
+  "0758" : {
+    "statusDescription" : "白金祭坛"
+  },
+  "0759" : {
+    "statusDescription" : "加速子弹"
+  },
+  "0760" : {
+    "statusDescription" : "毁灭重击"
+  },
+  "0762" : {
+    "statusDescription" : "长剑战队"
+  },
+  "0763" : {
+    "statusDescription" : "言灵魔杖战队"
+  },
+  "0764" : {
+    "statusDescription" : "黄金之锤战队"
+  },
+  "0765" : {
+    "statusDescription" : "十字弓战队"
+  },
+  "0766" : {
+    "statusDescription" : "强烈的30秒"
+  },
+  "0767" : {
+    "statusDescription" : "聪明的30秒"
+  },
+  "0768" : {
+    "statusDescription" : "体力的30秒"
+  },
+  "0769" : {
+    "statusDescription" : "魔力的30秒"
+  },
+  "0770" : {
+    "statusDescription" : "轻盈的30秒"
+  },
+  "0771" : {
+    "statusDescription" : "变快的30秒"
+  },
+  "0772" : {
+    "statusDescription" : "可靠的30秒"
+  },
+  "0773" : {
+    "statusDescription" : "安全的30秒"
+  },
+  "0774" : {
+    "statusDescription" : "幸运的30秒"
+  },
+  "0775" : {
+    "statusDescription" : "和谐的30秒"
+  },
+  "0776" : {
+    "statusDescription" : "您处于生者与死者的分界线上!"
+  },
+  "0777" : {
+    "statusDescription" : "端午节庆典"
+  },
+  "0778" : {
+    "statusDescription" : "后遗症"
+  },
+  "0785" : {
+    "statusDescription" : "属性强化"
+  },
+  "0786" : {
+    "statusDescription" : "属性强化"
+  },
+  "0787" : {
+    "statusDescription" : "属性强化"
+  },
+  "0788" : {
+    "statusDescription" : "属性强化"
+  },
+  "0789" : {
+    "statusDescription" : "属性强化"
+  },
+  "0790" : {
+    "statusDescription" : "属性强化"
+  },
+  "0815" : {
+    "statusDescription" : "跳级公会"
+  },
+  "0867" : {
+    "statusDescription" : "魔幻香水"
+  },
+  "0873" : {
+    "statusDescription" : "明亮的圣水"
+  },
+  "0875" : {
+    "statusDescription" : "石化"
+  },
+  "0876" : {
+    "statusDescription" : "冰冻"
+  },
+  "0877" : {
+    "statusDescription" : "晕眩"
+  },
+  "0878" : {
+    "statusDescription" : "睡眠"
+  },
+  "0880" : {
+    "statusDescription" : "石化"
+  },
+  "0881" : {
+    "statusDescription" : "着火"
+  },
+  "0882" : {
+    "statusDescription" : "隔离"
+  },
+  "0883" : {
+    "statusDescription" : "毒"
+  },
+  "0884" : {
+    "statusDescription" : "诅咒"
+  },
+  "0885" : {
+    "statusDescription" : "沉默"
+  },
+  "0886" : {
+    "statusDescription" : "混乱"
+  },
+  "0890" : {
+    "statusDescription" : "毒液"
+  },
+  "0891" : {
+    "statusDescription" : "恐怖"
+  },
+  "0893" : {
+    "statusDescription" : "俯身"
+  },
+  "0894" : {
+    "statusDescription" : "撒粉"
+  },
+  "0896" : {
+    "statusDescription" : "根茎缠绕"
+  },
+  "0897" : {
+    "statusDescription" : "给武器赋予无属性"
+  },
+  "0898" : {
+    "statusDescription" : "给武器赋予水属性"
+  },
+  "0899" : {
+    "statusDescription" : "给武器赋予地属性"
+  },
+  "0900" : {
+    "statusDescription" : "给武器赋予火属性"
+  },
+  "0901" : {
+    "statusDescription" : "给武器赋予风属性"
+  },
+  "0902" : {
+    "statusDescription" : "给武器赋予毒属性"
+  },
+  "0903" : {
+    "statusDescription" : "给武器赋予圣属性"
+  },
+  "0904" : {
+    "statusDescription" : "给武器赋予暗属性"
+  },
+  "0905" : {
+    "statusDescription" : "给武器赋予念属性"
+  },
+  "0906" : {
+    "statusDescription" : "给武器赋予不死属性"
+  },
+  "0907" : {
+    "statusDescription" : "无属性耐性"
+  },
+  "0908" : {
+    "statusDescription" : "水属性耐性"
+  },
+  "0909" : {
+    "statusDescription" : "地属性耐性"
+  },
+  "0910" : {
+    "statusDescription" : "火属性耐性"
+  },
+  "0911" : {
+    "statusDescription" : "风属性耐性"
+  },
+  "0912" : {
+    "statusDescription" : "毒属性耐性"
+  },
+  "0913" : {
+    "statusDescription" : "圣属性耐性"
+  },
+  "0914" : {
+    "statusDescription" : "暗属性耐性"
+  },
+  "0915" : {
+    "statusDescription" : "念属性耐性"
+  },
+  "0916" : {
+    "statusDescription" : "不死属性耐性"
+  },
+  "0917" : {
+    "statusDescription" : "咬伤"
+  },
+  "0918" : {
+    "statusDescription" : "卷甲虫暴冲"
+  },
+  "0919" : {
+    "statusDescription" : "金枪鱼派对"
+  },
+  "0920" : {
+    "statusDescription" : "虾群"
+  },
+  "0921" : {
+    "statusDescription" : "鲜虾"
+  },
+  "0933" : {
+    "statusDescription" : "躲藏"
+  },
+  "0935" : {
+    "statusDescription" : "卡鲁哇牛奶"
+  },
+  "0936" : {
+    "statusDescription" : "罗勒"
+  },
+  "0937" : {
+    "statusDescription" : "灵魂魔珠"
+  },
+  "0941" : {
+    "statusDescription" : "降低死亡惩罚"
+  },
+  "0942" : {
+    "statusDescription" : "增加仓库格数"
+  },
+  "0950" : {
+    "statusDescription" : "嘶嘶声"
+  },
+  "0952" : {
+    "statusDescription" : "喵喵草"
+  },
+  "0953" : {
+    "statusDescription" : "喵喵不休"
+  },
+  "0961" : {
+    "statusDescription" : "舔毛"
+  },
+  "0962" : {
+    "statusDescription" : "鲜虾的守护"
+  },
+  "0963" : {
+    "statusDescription" : "强化药水SS"
+  },
+  "0964" : {
+    "statusDescription" : "强化药水SC"
+  },
+  "0965" : {
+    "statusDescription" : "强化药水AC"
+  },
+  "0966" : {
+    "statusDescription" : "魔术弹"
+  },
+  "0983" : {
+    "statusDescription" : "提高掉宝率"
+  },
+  "0984" : {
+    "statusDescription" : "提高经验值"
+  },
+  "0992" : {
+    "statusDescription" : "爸比妈咪请加油"
+  },
+  "0995" : {
+    "statusDescription" : "小型魔力药水"
+  },
+  "1000" : {
+    "statusDescription" : "回避率增加"
+  },
+  "1001" : {
+    "statusDescription" : "坟墓的庇佑"
+  },
+  "1002" : {
+    "statusDescription" : "坟墓的庇佑"
+  },
+  "1003" : {
+    "statusDescription" : "坟墓的庇佑"
+  },
+  "1004" : {
+    "statusDescription" : "坟墓的庇佑"
+  },
+  "1013" : {
+    "statusDescription" : "全素质下降"
+  },
+  "1014" : {
+    "statusDescription" : "重力增加"
+  },
+  "1031" : {
+    "statusDescription" : "增加攻击力"
+  },
+  "1032" : {
+    "statusDescription" : "魔法攻击力增加"
+  },
+  "1033" : {
+    "statusDescription" : "增加攻击速度"
+  },
+  "1034" : {
+    "statusDescription" : "终极料理"
+  },
+  "1035" : {
+    "statusDescription" : "月亮光辉"
+  },
+  "1036" : {
+    "statusDescription" : "太阳光辉"
+  },
+  "1037" : {
+    "statusDescription" : "星星光辉"
+  },
+  "1038" : {
+    "statusDescription" : "月亮英姿"
+  },
+  "1039" : {
+    "statusDescription" : "宇宙英姿"
+  },
+  "1040" : {
+    "statusDescription" : "太阳英姿"
+  },
+  "1041" : {
+    "statusDescription" : "星星标志"
+  },
+  "1042" : {
+    "statusDescription" : "朔月"
+  },
+  "1043" : {
+    "statusDescription" : "星星英姿"
+  },
+  "1044" : {
+    "statusDescription" : "次元之书"
+  },
+  "1047" : {
+    "statusDescription" : "创星之书"
+  },
+  "1048" : {
+    "statusDescription" : "流星陨落"
+  },
+  "1050" : {
+    "statusDescription" : "重力调整"
+  },
+  "1053" : {
+    "statusDescription" : "灵魂蓄积"
+  },
+  "1054" : {
+    "statusDescription" : "灵魂收割"
+  },
+  "1055" : {
+    "statusDescription" : "灵魂集结"
+  },
+  "1056" : {
+    "statusDescription" : "赋予影子灵魂"
+  },
+  "1057" : {
+    "statusDescription" : "赋予精灵灵魂"
+  },
+  "1058" : {
+    "statusDescription" : "赋予隼鹰灵魂"
+  },
+  "1059" : {
+    "statusDescription" : "赋予巨人灵魂"
+  },
+  "1060" : {
+    "statusDescription" : "灵魂分裂"
+  },
+  "1065" : {
+    "statusDescription" : "极限药水"
+  },
+  "1088" : {
+    "statusDescription" : "合奏疲劳状态"
+  },
+  "1089" : {
+    "statusDescription" : "临机应变"
+  },
+  "1095" : {
+    "statusDescription" : "安希拉"
+  },
+  "1107" : {
+    "statusDescription" : "反击状态"
+  },
+  "1121" : {
+    "statusDescription" : "圣母之祈福"
+  },
+  "1122" : {
+    "statusDescription" : "神圣殿堂"
+  },
+  "1125" : {
+    "statusDescription" : "邪灵诅咒"
+  },
+  "1126" : {
+    "statusDescription" : "毁灭之声"
+  },
+  "1132" : {
+    "statusDescription" : "增加ATK"
+  },
+  "1133" : {
+    "statusDescription" : "增加MATK"
+  },
+  "1135" : {
+    "statusDescription" : "热腾腾的传统面"
+  },
+  "1136" : {
+    "statusDescription" : "香甜的奶油意面"
+  },
+  "1137" : {
+    "statusDescription" : " 对全体型伤害增加"
+  },
+  "1141" : {
+    "statusDescription" : "结霜状态"
+  },
+  "1142" : {
+    "statusDescription" : "魔力中毒"
+  },
+  "1150" : {
+    "statusDescription" : "死亡投射"
+  },
+  "1151" : {
+    "statusDescription" : "毁灭飓风"
+  },
+  "1152" : {
+    "statusDescription" : "魔力巅峰"
+  },
+  "1154" : {
+    "statusDescription" : "力量分享符文石：符文爆发"
+  },
+  "1155" : {
+    "statusDescription" : "沐浴剂A"
+  },
+  "1156" : {
+    "statusDescription" : "沐浴剂B"
+  },
+  "1157" : {
+    "statusDescription" : "沐浴剂C"
+  },
+  "1158" : {
+    "statusDescription" : "香薰精油"
+  },
+  "1160" : {
+    "statusDescription" : "强烈信念"
+  },
+  "1161" : {
+    "statusDescription" : "真诚信念"
+  },
+  "1162" : {
+    "statusDescription" : "坚定信念"
+  },
+  "1165" : {
+    "statusDescription" : "地狱植物"
+  },
+  "1167" : {
+    "statusDescription" : "设定射击点"
+  },
+  "1169" : {
+    "statusDescription" : "黄金抵抗药水"
+  },
+  "1170" : {
+    "statusDescription" : "红色药草活化液"
+  },
+  "1171" : {
+    "statusDescription" : "蓝色药草活化液"
+  },
+  "1172" : {
+    "statusDescription" : "剑气"
+  },
+  "1173" : {
+    "statusDescription" : "剑气-标记"
+  },
+  "1174" : {
+    "statusDescription" : "蓄力刺击"
+  },
+  "1176" : {
+    "statusDescription" : "龙之光环"
+  },
+  "1178" : {
+    "statusDescription" : "活力之源"
+  },
+  "1182" : {
+    "statusDescription" : "天崩地裂"
+  },
+  "1183" : {
+    "statusDescription" : "焰色绽放"
+  },
+  "1184" : {
+    "statusDescription" : "冰晶波爆"
+  },
+  "1190" : {
+    "statusDescription" : "圣油洗礼"
+  },
+  "1192" : {
+    "statusDescription" : "暗影超越"
+  },
+  "1193" : {
+    "statusDescription" : "利刃旋舞"
+  },
+  "1194" : {
+    "statusDescription" : "见血封喉"
+  },
+  "1195" : {
+    "statusDescription" : "暗影之力"
+  },
+  "1197" : {
+    "statusDescription" : "治愈誓约"
+  },
+  "1198" : {
+    "statusDescription" : "破魔圣光"
+  },
+  "1199" : {
+    "statusDescription" : "锐利圣光"
+  },
+  "1200" : {
+    "statusDescription" : "爆裂圣光"
+  },
+  "1201" : {
+    "statusDescription" : "权能"
+  },
+  "1202" : {
+    "statusDescription" : "防御姿势"
+  },
+  "1203" : {
+    "statusDescription" : "攻击姿势"
+  },
+  "1204" : {
+    "statusDescription" : "守护之盾"
+  },
+  "1205" : {
+    "statusDescription" : "漆黑"
+  },
+  "1206" : {
+    "statusDescription" : "寂静"
+  },
+  "1207" : {
+    "statusDescription" : "无力"
+  },
+  "1208" : {
+    "statusDescription" : "急冻"
+  },
+  "1209" : {
+    "statusDescription" : "晕厥"
+  },
+  "1210" : {
+    "statusDescription" : "急流"
+  },
+  "1211" : {
+    "statusDescription" : "晶化"
+  },
+  "1212" : {
+    "statusDescription" : "火灾"
+  },
+  "1213" : {
+    "statusDescription" : "不幸"
+  },
+  "1214" : {
+    "statusDescription" : "剧毒"
+  },
+  "1215" : {
+    "statusDescription" : "忧郁"
+  },
+  "1216" : {
+    "statusDescription" : "圣火"
+  },
+  "1217" : {
+    "statusDescription" : "回弹之盾"
+  },
+  "1220" : {
+    "statusDescription" : "神圣之盾"
+  },
+  "1221" : {
+    "statusDescription" : "终极牺牲"
+  },
+  "1222" : {
+    "statusDescription" : "盛大审判"
+  },
+  "1223" : {
+    "statusDescription" : "盾牌投掷"
+  },
+  "1226" : {
+    "statusDescription" : "暗影之力"
+  },
+  "1227" : {
+    "statusDescription" : "全心奉献"
+  },
+  "1228" : {
+    "statusDescription" : "祝福赞歌"
+  },
+  "1230" : {
+    "statusDescription" : "第一击：烙印"
+  },
+  "1231" : {
+    "statusDescription" : "审判烙印"
+  },
+  "1232" : {
+    "statusDescription" : "第二章：审判者"
+  },
+  "1233" : {
+    "statusDescription" : "闪光连击"
+  },
+  "1234" : {
+    "statusDescription" : "第一章：信念之力"
+  },
+  "1235" : {
+    "statusDescription" : "战斧践踏"
+  },
+  "1236" : {
+    "statusDescription" : "启动攻击装置"
+  },
+  "1237" : {
+    "statusDescription" : "启动防御装置"
+  },
+  "1242" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1243" : {
+    "statusDescription" : "深渊匕首"
+  },
+  "1244" : {
+    "statusDescription" : "深渊领域"
+  },
+  "1245" : {
+    "statusDescription" : "深渊杀手"
+  },
+  "1247" : {
+    "statusDescription" : "影子化学保护"
+  },
+  "1248" : {
+    "statusDescription" : "研究报告"
+  },
+  "1249" : {
+    "statusDescription" : "地狱树粉"
+  },
+  "1250" : {
+    "statusDescription" : "风印"
+  },
+  "1252" : {
+    "statusDescription" : "狂风之灾"
+  },
+  "1256" : {
+    "statusDescription" : "神秘交响曲"
+  },
+  "1257" : {
+    "statusDescription" : "克瓦希尔奏鸣曲"
+  },
+  "1258" : {
+    "statusDescription" : "混声烙印"
+  },
+  "1259" : {
+    "statusDescription" : "葛帔尼亚夜曲"
+  },
+  "1260" : {
+    "statusDescription" : "矿工狂想曲"
+  },
+  "1261" : {
+    "statusDescription" : "幕间曲"
+  },
+  "1262" : {
+    "statusDescription" : "爪哇小夜曲"
+  },
+  "1263" : {
+    "statusDescription" : "普隆德拉进行曲"
+  },
+  "1271" : {
+    "statusDescription" : "咒术附魔"
+  },
+  "1303" : {
+    "statusDescription" : "生命体召唤"
+  },
+  "1307" : {
+    "statusDescription" : "强效战斗药"
+  },
+  "1308" : {
+    "statusDescription" : "活力药剂"
+  },
+  "1309" : {
+    "statusDescription" : "万能药剂"
+  },
+  "1310" : {
+    "statusDescription" : "毒雾"
+  },
+  "1313" : {
+    "statusDescription" : "岩壁"
+  },
+  "1315" : {
+    "statusDescription" : "支配烙印准备"
+  },
+  "1316" : {
+    "statusDescription" : "盾咒"
+  },
+  "1318" : {
+    "statusDescription" : "毒云"
+  },
+  "1319" : {
+    "statusDescription" : "爆炸孢子"
+  },
+  "1326" : {
+    "statusDescription" : "灭魔散弹"
+  },
+  "1330" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1331" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1332" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1333" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1334" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1335" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1336" : {
+    "statusDescription" : "卸除影子"
+  },
+  "1337" : {
+    "statusDescription" : "红色魔方的诅咒"
+  },
+  "1338" : {
+    "statusDescription" : "红色魔方的诅咒"
+  },
+  "1341" : {
+    "statusDescription" : "曼陀罗"
+  },
+  "1342" : {
+    "statusDescription" : "黄金音调"
+  },
+  "1343" : {
+    "statusDescription" : "强化属性"
+  },
+  "1345" : {
+    "statusDescription" : "激活专注瞄准"
+  },
+  "1347" : {
+    "statusDescription" : "榴弹碎片"
+  },
+  "1348" : {
+    "statusDescription" : "榴弹碎片"
+  },
+  "1349" : {
+    "statusDescription" : "榴弹碎片"
+  },
+  "1350" : {
+    "statusDescription" : "榴弹碎片"
+  },
+  "1351" : {
+    "statusDescription" : "榴弹碎片"
+  },
+  "1352" : {
+    "statusDescription" : "榴弹碎片"
+  },
+  "1353" : {
+    "statusDescription" : "自动射击发射器"
+  },
+  "1354" : {
+    "statusDescription" : "王牌出手"
+  },
+  "1355" : {
+    "statusDescription" : "榴弹精通"
+  },
+  "1356" : {
+    "statusDescription" : "护身符"
+  },
+  "1357" : {
+    "statusDescription" : "武士符"
+  },
+  "1358" : {
+    "statusDescription" : "法师符"
+  },
+  "1359" : {
+    "statusDescription" : "五行符"
+  },
+  "1360" : {
+    "statusDescription" : "东方的佑护"
+  },
+  "1361" : {
+    "statusDescription" : "西方的佑护"
+  },
+  "1362" : {
+    "statusDescription" : "南方的佑护"
+  },
+  "1363" : {
+    "statusDescription" : "北方的佑护"
+  },
+  "1364" : {
+    "statusDescription" : "四方五行的佑护"
+  },
+  "1365" : {
+    "statusDescription" : "天地神灵"
+  },
+  "1366" : {
+    "statusDescription" : "虎高空"
+  },
+  "1367" : {
+    "statusDescription" : "神龟海洋庆典"
+  },
+  "1368" : {
+    "statusDescription" : "神龟沙滩节"
+  },
+  "1369" : {
+    "statusDescription" : "神龟剧烈震荡"
+  },
+  "1370" : {
+    "statusDescription" : "玄鹿五色角"
+  },
+  "1371" : {
+    "statusDescription" : "玄鹿五色角"
+  },
+  "1372" : {
+    "statusDescription" : "玄鹿五色角"
+  },
+  "1373" : {
+    "statusDescription" : "玄鹿五色角"
+  },
+  "1374" : {
+    "statusDescription" : "玄鹿五色角"
+  },
+  "1375" : {
+    "statusDescription" : "玄鹿五色角"
+  },
+  "1376" : {
+    "statusDescription" : "玄鹿五色角"
+  },
+  "1377" : {
+    "statusDescription" : "急速交流"
+  },
+  "1378" : {
+    "statusDescription" : "灵物祝福"
+  },
+  "1379" : {
+    "statusDescription" : "灵物祝福副作用"
+  },
+  "1380" : {
+    "statusDescription" : "连续盾击冲撞"
+  },
+  "1381" : {
+    "statusDescription" : "酷寒"
+  },
+  "1382" : {
+    "statusDescription" : "重力场"
+  },
+  "1383" : {
+    "statusDescription" : "突破极限"
+  },
+  "1384" : {
+    "statusDescription" : "突破规矩"
+  },
+  "1385" : {
+    "statusDescription" : "日出"
+  },
+  "1386" : {
+    "statusDescription" : "正午"
+  },
+  "1387" : {
+    "statusDescription" : "日落"
+  },
+  "1388" : {
+    "statusDescription" : "月出"
+  },
+  "1389" : {
+    "statusDescription" : "午夜"
+  },
+  "1390" : {
+    "statusDescription" : "月落"
+  },
+  "1391" : {
+    "statusDescription" : "天命落星"
+  },
+  "1392" : {
+    "statusDescription" : "天气合一"
+  },
+  "1393" : {
+    "statusDescription" : "影子隐身"
+  },
+  "1395" : {
+    "statusDescription" : "噩梦"
+  },
+  "1396" : {
+    "statusDescription" : "小面庆典 - 美味蝴蝶面"
+  },
+  "1397" : {
+    "statusDescription" : "小面庆典 - 奶油鲜虾意大利面"
+  },
+  "1398" : {
+    "statusDescription" : "小面庆典 - 番茄汤面"
+  },
+  "1399" : {
+    "statusDescription" : "小面庆典 - 韩式宴会面"
+  },
+  "1400" : {
+    "statusDescription" : "酱油拌面"
+  },
+  "1402" : {
+    "statusDescription" : "震颤"
+  },
+  "1403" : {
+    "statusDescription" : "疾冲"
+  },
+  "1425" : {
+    "statusDescription" : "移动速度增加"
+  },
+  "1426" : {
+    "statusDescription" : "攻速增加"
+  },
+  "1427" : {
+    "statusDescription" : "MHP增加"
+  },
+  "1428" : {
+    "statusDescription" : "MSP增加"
+  },
+  "1429" : {
+    "statusDescription" : "HIT增加"
+  },
+  "1430" : {
+    "statusDescription" : "DEF增加"
+  },
+  "1431" : {
+    "statusDescription" : "MDEF增加"
+  },
+  "1432" : {
+    "statusDescription" : "主人公buff"
+  },
+  "1433" : {
+    "statusDescription" : "主人公buff"
+  },
+  "1434" : {
+    "statusDescription" : "主人公buff"
+  },
+  "1435" : {
+    "statusDescription" : "主人公buff"
+  },
+  "1439" : {
+    "statusDescription" : "主人公BUFF"
+  },
+  "1440" : {
+    "statusDescription" : "主人公BUFF"
+  },
+  "1441" : {
+    "statusDescription" : "主人公BUFF"
+  },
+  "1442" : {
+    "statusDescription" : "主人公BUFF"
+  },
+  "1443" : {
+    "statusDescription" : "主人公BUFF"
+  },
+  "1444" : {
+    "statusDescription" : "希罗斯里亚紫色药草酱"
+  },
+  "1445" : {
+    "statusDescription" : "希罗斯里亚红色药草酱"
+  },
+  "1446" : {
+    "statusDescription" : "希罗斯里亚蓝色药草酱"
+  },
+  "1447" : {
+    "statusDescription" : "希罗斯里亚黄色药草酱"
+  },
+  "1448" : {
+    "statusDescription" : "希罗斯里亚白色药草酱"
+  },
+  "1449" : {
+    "statusDescription" : "希罗斯里亚城主庇佑"
+  },
+  "1459" : {
+    "statusDescription" : "逆鳞糯米糕"
+  },
+  "1460" : {
+    "statusDescription" : "新年红烧牛小排"
+  },
+  "1461" : {
+    "statusDescription" : "新年年糕汤"
+  },
+  "1469" : {
+    "statusDescription" : "蒙布朗蛋糕"
+  },
+  "1470" : {
+    "statusDescription" : "蒙布朗蛋糕"
+  },
+  "1471" : {
+    "statusDescription" : "甜甜可丽饼"
+  },
+  "1472" : {
+    "statusDescription" : "茂密樱花树枝"
+  },
+  "1473" : {
+    "statusDescription" : "夏季韩式宴会面"
+  },
+  "1474" : {
+    "statusDescription" : "香料烤鱿鱼"
+  },
+  "1475" : {
+    "statusDescription" : "甜甜西瓜布丁"
+  },
+  "1476" : {
+    "statusDescription" : "冰凉西瓜汁"
+  },
+  "1477" : {
+    "statusDescription" : "冰凉红豆刨冰"
+  },
+  "1478" : {
+    "statusDescription" : "咸奶油爆米花"
+  },
+  "1480" : {
+    "statusDescription" : "活动BUFF"
+  },
+  "1484" : {
+    "statusDescription" : "学术会秘密文件"
+  },
+  "1485" : {
+    "statusDescription" : "学术会米饼"
+  },
+  "1486" : {
+    "statusDescription" : "学术会奶油饼干"
+  },
+  "1487" : {
+    "statusDescription" : "学术会即溶咖啡"
+  },
+  "1489" : {
+    "statusDescription" : "肉量加倍三明治"
+  },
+  "1490" : {
+    "statusDescription" : "暖胃香料红酒"
+  },
+  "1491" : {
+    "statusDescription" : "暖心蛋酒"
+  },
+  "1498" : {
+    "statusDescription" : "ROS荣耀之光"
+  },
+  "1509" : {
+    "statusDescription" : "特性增强药剂"
+  },
+  "1510" : {
+    "statusDescription" : "速度增强药剂"
+  },
+  "1561" : {
+    "statusDescription" : "经验值、掉宝率增加"
+  },
+  "1562" : {
+    "statusDescription" : "经验值、掉宝率增加"
+  },
+  "1563" : {
+    "statusDescription" : "经验值、掉宝率增加"
+  }
+}

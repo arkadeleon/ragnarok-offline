@@ -105,7 +105,7 @@
     "statusDescription" : "Dark Illusion"
   },
   "0035" : {
-    "statusDescription" : "Weight over 50%"
+    "statusDescription" : "Weight over 70%"
   },
   "0036" : {
     "statusDescription" : "Weight Over 90%"
@@ -170,6 +170,51 @@
   "0068" : {
     "statusDescription" : "Spear Quicken"
   },
+  "0070" : {
+    "statusDescription" : "Perfect Tablature"
+  },
+  "0071" : {
+    "statusDescription" : "Impressive Riff"
+  },
+  "0072" : {
+    "statusDescription" : "Magic Strings"
+  },
+  "0073" : {
+    "statusDescription" : "Song of Lutie"
+  },
+  "0074" : {
+    "statusDescription" : "Focus Ballet"
+  },
+  "0075" : {
+    "statusDescription" : "Slow Grace"
+  },
+  "0076" : {
+    "statusDescription" : "Lady Luck"
+  },
+  "0077" : {
+    "statusDescription" : "Gypsy's Kiss"
+  },
+  "0078" : {
+    "statusDescription" : "Mental Sensing"
+  },
+  "0079" : {
+    "statusDescription" : "Down Tempo"
+  },
+  "0080" : {
+    "statusDescription" : "Battle Theme"
+  },
+  "0081" : {
+    "statusDescription" : "Harmonic Lick"
+  },
+  "0082" : {
+    "statusDescription" : "Classical Pluck"
+  },
+  "0083" : {
+    "statusDescription" : "Power Cord"
+  },
+  "0084" : {
+    "statusDescription" : "Acoustic Rhythm"
+  },
   "0087" : {
     "statusDescription" : "Undestructable "
   },
@@ -191,8 +236,14 @@
   "0097" : {
     "statusDescription" : "%s"
   },
+  "0103" : {
+    "statusDescription" : "Aura Blade"
+  },
   "0104" : {
     "statusDescription" : "Parry"
+  },
+  "0105" : {
+    "statusDescription" : "Spear Dynamo"
   },
   "0106" : {
     "statusDescription" : "Relax"
@@ -202,6 +253,9 @@
   },
   "0112" : {
     "statusDescription" : "%s"
+  },
+  "0113" : {
+    "statusDescription" : "Magic Amplification"
   },
   "0114" : {
     "statusDescription" : "Enchant Deadly Poison"
@@ -265,6 +319,9 @@
   },
   "0148" : {
     "statusDescription" : "%s"
+  },
+  "0149" : {
+    "statusDescription" : "Soul Bestowal Status"
   },
   "0150" : {
     "statusDescription" : "%s"
@@ -339,7 +396,7 @@
     "statusDescription" : "Ninja Aura"
   },
   "0209" : {
-    "statusDescription" : "Gunslinger's_Panic"
+    "statusDescription" : "Gunslinger's Panic"
   },
   "0210" : {
     "statusDescription" : "Increase Accuracy"
@@ -465,22 +522,28 @@
     "statusDescription" : "Enchant Blade"
   },
   "0318" : {
-    "statusDescription" : "Refresh"
+    "statusDescription" : "Nosiege Runestone : Refresh"
   },
   "0319" : {
-    "statusDescription" : "Giant Cross"
+    "statusDescription" : "Turisus Runestone : Giant Growth"
   },
   "0320" : {
-    "statusDescription" : "Stonehard Skin"
+    "statusDescription" : "Hagalas Runestone : Skin of Stone"
   },
   "0321" : {
-    "statusDescription" : "Vitality Activation"
+    "statusDescription" : "Isia Runestone: Vitality Activation"
   },
   "0322" : {
-    "statusDescription" : "Fighting Spirit"
+    "statusDescription" : "Asir Runestone : Determination"
   },
   "0323" : {
-    "statusDescription" : "Abundance"
+    "statusDescription" : "Urj Runestone : Abundance"
+  },
+  "0331" : {
+    "statusDescription" : "LAUDAAGNUS"
+  },
+  "0332" : {
+    "statusDescription" : "LAUDARAMUS"
   },
   "0333" : {
     "statusDescription" : "Cloaking Exceed"
@@ -494,8 +557,11 @@
   "0337" : {
     "statusDescription" : "Weapon Blocking"
   },
+  "0340" : {
+    "statusDescription" : "Expiatio"
+  },
   "0341" : {
-    "statusDescription" : "Poisonous Weapon"
+    "statusDescription" : "POISONING WEAPON"
   },
   "0342" : {
     "statusDescription" : "Toxin"
@@ -533,6 +599,9 @@
   "0355" : {
     "statusDescription" : "Recognized Spell"
   },
+  "0356" : {
+    "statusDescription" : "Stasis"
+  },
   "0357" : {
     "statusDescription" : "Warg Rider"
   },
@@ -562,6 +631,9 @@
   },
   "0375" : {
     "statusDescription" : "Infra Red Scan"
+  },
+  "0376" : {
+    "statusDescription" : "Magnetic Field"
   },
   "0377" : {
     "statusDescription" : "Neutral Barrier"
@@ -597,13 +669,13 @@
     "statusDescription" : "%s"
   },
   "0390" : {
-    "statusDescription" : "Reflect Damage"
+    "statusDescription" : "Reflect Damage Reduction"
   },
   "0391" : {
     "statusDescription" : "Vanguard Force"
   },
   "0393" : {
-    "statusDescription" : "Shadow Spell"
+    "statusDescription" : "Auto Shadow Spell"
   },
   "0394" : {
     "statusDescription" : "Shadow Formation"
@@ -619,6 +691,9 @@
   },
   "0399" : {
     "statusDescription" : "Body Painting"
+  },
+  "0400" : {
+    "statusDescription" : "Exceed Break"
   },
   "0401" : {
     "statusDescription" : "Adoramus"
@@ -645,7 +720,7 @@
     "statusDescription" : "Masquerade: Gloomy (Mask: Depression)"
   },
   "0410" : {
-    "statusDescription" : "Rising Dragon"
+    "statusDescription" : "Raising Dragon"
   },
   "0411" : {
     "statusDescription" : "Masquerade: Ignorance (Mask : Ignorance)"
@@ -658,6 +733,9 @@
   },
   "0415" : {
     "statusDescription" : "Masquerade : Unlucky (Mask : Unlucky)"
+  },
+  "0417" : {
+    "statusDescription" : "CURSED CIRCLE"
   },
   "0418" : {
     "statusDescription" : "Masquerade : Weakness (Mask : Weakness)"
@@ -672,13 +750,13 @@
     "statusDescription" : "Pope Cookie"
   },
   "0425" : {
-    "statusDescription" : "Gentle Touch - Silence"
+    "statusDescription" : "Gentle Touch - Energy Gain"
   },
   "0426" : {
-    "statusDescription" : "Gentle Touch - Opposite"
+    "statusDescription" : "Gentle Touch - Convert"
   },
   "0427" : {
-    "statusDescription" : "Gentle Touch - Alive"
+    "statusDescription" : "Gentle Touch - Revitalize"
   },
   "0429" : {
     "statusDescription" : "Swing Dance"
@@ -714,7 +792,7 @@
     "statusDescription" : "Harmonize"
   },
   "0445" : {
-    "statusDescription" : "Strike"
+    "statusDescription" : "Striking"
   },
   "0446" : {
     "statusDescription" : "Warmer"
@@ -746,6 +824,12 @@
   "0463" : {
     "statusDescription" : "Thorns Trap"
   },
+  "0464" : {
+    "statusDescription" : "Blood Sucker"
+  },
+  "0470" : {
+    "statusDescription" : "Howling of  Mandragora"
+  },
   "0472" : {
     "statusDescription" : "Sacrament"
   },
@@ -754,6 +838,24 @@
   },
   "0476" : {
     "statusDescription" : "Stomachache"
+  },
+  "0480" : {
+    "statusDescription" : "HP Increase Potion"
+  },
+  "0481" : {
+    "statusDescription" : "SP Increase Potion"
+  },
+  "0482" : {
+    "statusDescription" : "Enriched White PotionZ"
+  },
+  "0483" : {
+    "statusDescription" : "Vitata500"
+  },
+  "0484" : {
+    "statusDescription" : "Enrich Celermine Juice"
+  },
+  "0490" : {
+    "statusDescription" : "Extreme Vacuum"
   },
   "0491" : {
     "statusDescription" : "Savage BBQ"
@@ -775,6 +877,12 @@
   },
   "0573" : {
     "statusDescription" : "Mora Berry"
+  },
+  "0576" : {
+    "statusDescription" : "Paralysis"
+  },
+  "0577" : {
+    "statusDescription" : "Pain Killer"
   },
   "0578" : {
     "statusDescription" : "Life Potion"
@@ -817,6 +925,9 @@
   },
   "0618" : {
     "statusDescription" : "Malang Island Cat Can"
+  },
+  "0620" : {
+    "statusDescription" : "Rhydo Runestone : Crushing Strike"
   },
   "0621" : {
     "statusDescription" : "Monster Transformation"
@@ -887,6 +998,18 @@
   "0660" : {
     "statusDescription" : "Omnius Red Moon"
   },
+  "0664" : {
+    "statusDescription" : "Red Booster"
+  },
+  "0675" : {
+    "statusDescription" : "Voluminous Spray of Flowers"
+  },
+  "0681" : {
+    "statusDescription" : "All abilities"
+  },
+  "0685" : {
+    "statusDescription" : "Almighty"
+  },
   "0702" : {
     "statusDescription" : "Add P.damage"
   },
@@ -895,6 +1018,15 @@
   },
   "0704" : {
     "statusDescription" : "Reduce the damage"
+  },
+  "0705" : {
+    "statusDescription" : "Accumulating Energy"
+  },
+  "0706" : {
+    "statusDescription" : "Accumulating Energy"
+  },
+  "0707" : {
+    "statusDescription" : "Accumulating Energy"
   },
   "0711" : {
     "statusDescription" : "Power of Fenrir"
@@ -915,7 +1047,7 @@
     "statusDescription" : "Rebound"
   },
   "0722" : {
-    "statusDescription" : "UNLIMIT"
+    "statusDescription" : "Unlimit"
   },
   "0723" : {
     "statusDescription" : "KINGS GRACE"
@@ -938,8 +1070,11 @@
   "0755" : {
     "statusDescription" : "Crimson Market"
   },
+  "0756" : {
+    "statusDescription" : "Howling Mine"
+  },
   "0758" : {
-    "statusDescription" : "Platinum Alter"
+    "statusDescription" : "Platinum Altar"
   },
   "0759" : {
     "statusDescription" : "Heat Barrel"
@@ -991,5 +1126,962 @@
   },
   "0778" : {
     "statusDescription" : "After Effect"
+  },
+  "0783" : {
+    "statusDescription" : "Braised Short Ribs"
+  },
+  "0784" : {
+    "statusDescription" : "Braised Spare Ribs"
+  },
+  "0786" : {
+    "statusDescription" : "Boost Attribute"
+  },
+  "0790" : {
+    "statusDescription" : "Boost Attribute"
+  },
+  "0867" : {
+    "statusDescription" : "Limit Power Boster"
+  },
+  "0873" : {
+    "statusDescription" : "Shining Holly Water"
+  },
+  "0875" : {
+    "statusDescription" : "Petrification"
+  },
+  "0876" : {
+    "statusDescription" : "Frost"
+  },
+  "0877" : {
+    "statusDescription" : "Stun"
+  },
+  "0878" : {
+    "statusDescription" : "Sleep"
+  },
+  "0880" : {
+    "statusDescription" : "Petrification"
+  },
+  "0881" : {
+    "statusDescription" : "Burning"
+  },
+  "0882" : {
+    "statusDescription" : "Isolation"
+  },
+  "0883" : {
+    "statusDescription" : "Poison"
+  },
+  "0884" : {
+    "statusDescription" : "Curse"
+  },
+  "0885" : {
+    "statusDescription" : "Silence"
+  },
+  "0886" : {
+    "statusDescription" : "Confusion"
+  },
+  "0890" : {
+    "statusDescription" : "Fatal Poison"
+  },
+  "0891" : {
+    "statusDescription" : "Fear"
+  },
+  "0893" : {
+    "statusDescription" : "Stoop"
+  },
+  "0894" : {
+    "statusDescription" : "CN Powdering"
+  },
+  "0896" : {
+    "statusDescription" : "SV Root Twist"
+  },
+  "0897" : {
+    "statusDescription" : "Give Neutral property to the weapon"
+  },
+  "0898" : {
+    "statusDescription" : "Give Water property to the weapon"
+  },
+  "0899" : {
+    "statusDescription" : "Give Earth property to the weapon"
+  },
+  "0900" : {
+    "statusDescription" : "Give Fire property to the weapon"
+  },
+  "0901" : {
+    "statusDescription" : "Give Wind property to the weapon"
+  },
+  "0902" : {
+    "statusDescription" : "Give Poison property to the weapon"
+  },
+  "0903" : {
+    "statusDescription" : "Give Holy property to the weapon"
+  },
+  "0904" : {
+    "statusDescription" : "Give Shadow property to the weapon"
+  },
+  "0905" : {
+    "statusDescription" : "Give Ghost property to the weapon"
+  },
+  "0906" : {
+    "statusDescription" : "Give Undead property to the weapon"
+  },
+  "0907" : {
+    "statusDescription" : "Resist to Neutral property"
+  },
+  "0908" : {
+    "statusDescription" : "Resist to Water property"
+  },
+  "0909" : {
+    "statusDescription" : "Resist to Earth property"
+  },
+  "0910" : {
+    "statusDescription" : "Resist to Fire property"
+  },
+  "0911" : {
+    "statusDescription" : "Resist to Wind property"
+  },
+  "0912" : {
+    "statusDescription" : "Resist to Poison property"
+  },
+  "0913" : {
+    "statusDescription" : "Resist to Holy property"
+  },
+  "0914" : {
+    "statusDescription" : "Resist to Shadow property"
+  },
+  "0915" : {
+    "statusDescription" : "Resist to Ghost property"
+  },
+  "0916" : {
+    "statusDescription" : "Resist to Undead property"
+  },
+  "0917" : {
+    "statusDescription" : "Scar of Tarou"
+  },
+  "0918" : {
+    "statusDescription" : "Arclouse Dash"
+  },
+  "0919" : {
+    "statusDescription" : "Tuna Party"
+  },
+  "0920" : {
+    "statusDescription" : "Bunch of Shrimp"
+  },
+  "0921" : {
+    "statusDescription" : "Fresh Shrimp"
+  },
+  "0922" : {
+    "statusDescription" : "%s"
+  },
+  "0924" : {
+    "statusDescription" : "%s"
+  },
+  "0926" : {
+    "statusDescription" : "Rune Berkana"
+  },
+  "0927" : {
+    "statusDescription" : "Rune Raido"
+  },
+  "0928" : {
+    "statusDescription" : "Rune Turizas"
+  },
+  "0929" : {
+    "statusDescription" : "Rune Hagalaz"
+  },
+  "0930" : {
+    "statusDescription" : "Rune Isa"
+  },
+  "0931" : {
+    "statusDescription" : "Rune Asir"
+  },
+  "0932" : {
+    "statusDescription" : "Rune Urj"
+  },
+  "0933" : {
+    "statusDescription" : "Hide"
+  },
+  "0935" : {
+    "statusDescription" : "Kahluna Milk"
+  },
+  "0936" : {
+    "statusDescription" : "Basil"
+  },
+  "0937" : {
+    "statusDescription" : "Sprite Mable"
+  },
+  "0938" : {
+    "statusDescription" : "Increase Drop Rate"
+  },
+  "0939" : {
+    "statusDescription" : "EXP up"
+  },
+  "0940" : {
+    "statusDescription" : "Job EXP up"
+  },
+  "0941" : {
+    "statusDescription" : "Decrease Death Penalty"
+  },
+  "0942" : {
+    "statusDescription" : "Expand Storage"
+  },
+  "0962" : {
+    "statusDescription" : "Shrimp's Blessing"
+  },
+  "0963" : {
+    "statusDescription" : "Build Up Potion SS"
+  },
+  "0964" : {
+    "statusDescription" : "Build Up Potion SC"
+  },
+  "0965" : {
+    "statusDescription" : "Build Up Potion AC"
+  },
+  "0966" : {
+    "statusDescription" : "Magical Bullet"
+  },
+  "0983" : {
+    "statusDescription" : "Increase Drop Rate"
+  },
+  "0984" : {
+    "statusDescription" : "EXP Up"
+  },
+  "0985" : {
+    "statusDescription" : "Job EXP up"
+  },
+  "0992" : {
+    "statusDescription" : "Go! Mom and Dad."
+  },
+  "0996" : {
+    "statusDescription" : "Shining Def Scroll"
+  },
+  "1001" : {
+    "statusDescription" : "Bed of Honor"
+  },
+  "1002" : {
+    "statusDescription" : "Bed of Honor"
+  },
+  "1003" : {
+    "statusDescription" : "Bed of Honor"
+  },
+  "1004" : {
+    "statusDescription" : "Bed of Honor"
+  },
+  "1013" : {
+    "statusDescription" : "All stats reduced"
+  },
+  "1014" : {
+    "statusDescription" : "increase in gravity"
+  },
+  "1031" : {
+    "statusDescription" : "Boost Attack"
+  },
+  "1032" : {
+    "statusDescription" : "Boost Magic Attack"
+  },
+  "1033" : {
+    "statusDescription" : "Boost Attack Speed"
+  },
+  "1035" : {
+    "statusDescription" : "Lunar Luminance"
+  },
+  "1036" : {
+    "statusDescription" : "Solar Luminance"
+  },
+  "1037" : {
+    "statusDescription" : "Stellar Luminance"
+  },
+  "1038" : {
+    "statusDescription" : "Lunar Stance"
+  },
+  "1039" : {
+    "statusDescription" : "Universal Stance"
+  },
+  "1040" : {
+    "statusDescription" : "Solar Stance"
+  },
+  "1041" : {
+    "statusDescription" : "Star Mark"
+  },
+  "1042" : {
+    "statusDescription" : "New Moon"
+  },
+  "1043" : {
+    "statusDescription" : "Stellar Stance"
+  },
+  "1044" : {
+    "statusDescription" : "Book of Dimensions"
+  },
+  "1047" : {
+    "statusDescription" : "Star Creator's Book"
+  },
+  "1048" : {
+    "statusDescription" : "Falling Stars"
+  },
+  "1050" : {
+    "statusDescription" : "Gravity Control"
+  },
+  "1053" : {
+    "statusDescription" : "Soul Collection"
+  },
+  "1054" : {
+    "statusDescription" : "Soul Harvest"
+  },
+  "1055" : {
+    "statusDescription" : "Soul Bind"
+  },
+  "1056" : {
+    "statusDescription" : "Shadow Soul Bestowal"
+  },
+  "1057" : {
+    "statusDescription" : "Fairy Soul Bestowal"
+  },
+  "1058" : {
+    "statusDescription" : "Falcon Soul Bestowal"
+  },
+  "1059" : {
+    "statusDescription" : "Golem Soul Bestowal"
+  },
+  "1060" : {
+    "statusDescription" : "Soul Division"
+  },
+  "1065" : {
+    "statusDescription" : "Infinity Drink"
+  },
+  "1084" : {
+    "statusDescription" : "Increase item drop rate"
+  },
+  "1085" : {
+    "statusDescription" : "Increase EXP"
+  },
+  "1088" : {
+    "statusDescription" : "Fatigue after duet"
+  },
+  "1089" : {
+    "statusDescription" : "Amp"
+  },
+  "1095" : {
+    "statusDescription" : "Ancilla"
+  },
+  "1107" : {
+    "statusDescription" : "Counter Stance"
+  },
+  "1121" : {
+    "statusDescription" : "Assumptio"
+  },
+  "1122" : {
+    "statusDescription" : "Basilica"
+  },
+  "1125" : {
+    "statusDescription" : "Soul Curse"
+  },
+  "1126" : {
+    "statusDescription" : "Song of Destruction"
+  },
+  "1130" : {
+    "statusDescription" : "Help Angel"
+  },
+  "1132" : {
+    "statusDescription" : "Be strong!!"
+  },
+  "1133" : {
+    "statusDescription" : "Be smart!!"
+  },
+  "1135" : {
+    "statusDescription" : "Be nimble!!"
+  },
+  "1136" : {
+    "statusDescription" : "Noodle Festa - Watermelon Pudding"
+  },
+  "1137" : {
+    "statusDescription" : "Noodle Festa - Cream Noodles"
+  },
+  "1141" : {
+    "statusDescription" : "Frozen Status"
+  },
+  "1142" : {
+    "statusDescription" : "Magic Poison"
+  },
+  "1147" : {
+    "statusDescription" : "Reckless Rush"
+  },
+  "1150" : {
+    "statusDescription" : "Deadly Projection"
+  },
+  "1151" : {
+    "statusDescription" : "Destructive Hurricane"
+  },
+  "1152" : {
+    "statusDescription" : "Climax"
+  },
+  "1154" : {
+    "statusDescription" : "Lux Anima Rune Stone: Lux Anima"
+  },
+  "1155" : {
+    "statusDescription" : "Bath Salt A"
+  },
+  "1156" : {
+    "statusDescription" : "Bath Salt B"
+  },
+  "1157" : {
+    "statusDescription" : "Bath Salt C"
+  },
+  "1158" : {
+    "statusDescription" : "Aromatherapy Oil"
+  },
+  "1160" : {
+    "statusDescription" : "Powerful Faith"
+  },
+  "1161" : {
+    "statusDescription" : "Sincere Faith"
+  },
+  "1162" : {
+    "statusDescription" : "Firm Faith"
+  },
+  "1165" : {
+    "statusDescription" : "Hell Plant"
+  },
+  "1167" : {
+    "statusDescription" : "Selects bombing location"
+  },
+  "1169" : {
+    "statusDescription" : "Ref T Potion"
+  },
+  "1170" : {
+    "statusDescription" : "Red Herb Activation"
+  },
+  "1171" : {
+    "statusDescription" : "Blue Herb Activation"
+  },
+  "1172" : {
+    "statusDescription" : "Servant Weapon"
+  },
+  "1173" : {
+    "statusDescription" : "Servant Weapon Sign"
+  },
+  "1174" : {
+    "statusDescription" : "Charging Pierce"
+  },
+  "1176" : {
+    "statusDescription" : "Dragonic Aura"
+  },
+  "1178" : {
+    "statusDescription" : "Vigor"
+  },
+  "1182" : {
+    "statusDescription" : "Violent Quake"
+  },
+  "1183" : {
+    "statusDescription" : "All Bloom"
+  },
+  "1184" : {
+    "statusDescription" : "Crystal Impact)"
+  },
+  "1190" : {
+    "statusDescription" : "Oleum Sanctum"
+  },
+  "1192" : {
+    "statusDescription" : "Shadow Exceed"
+  },
+  "1193" : {
+    "statusDescription" : "Dancing Knife"
+  },
+  "1194" : {
+    "statusDescription" : "Potent Venom"
+  },
+  "1195" : {
+    "statusDescription" : "Enchanting Shadow"
+  },
+  "1197" : {
+    "statusDescription" : "Mediale"
+  },
+  "1198" : {
+    "statusDescription" : "Argutus Vita"
+  },
+  "1199" : {
+    "statusDescription" : "Argutus Telum"
+  },
+  "1200" : {
+    "statusDescription" : "Presens Acies"
+  },
+  "1201" : {
+    "statusDescription" : "Competentia"
+  },
+  "1202" : {
+    "statusDescription" : "Guard Stance"
+  },
+  "1203" : {
+    "statusDescription" : "Attack Stance"
+  },
+  "1204" : {
+    "statusDescription" : "Guardian Shield"
+  },
+  "1205" : {
+    "statusDescription" : "Deep Blind"
+  },
+  "1206" : {
+    "statusDescription" : "Deep Silence"
+  },
+  "1207" : {
+    "statusDescription" : "Lassitude"
+  },
+  "1208" : {
+    "statusDescription" : "Frostbite"
+  },
+  "1209" : {
+    "statusDescription" : "Swooning"
+  },
+  "1210" : {
+    "statusDescription" : "Lightning Strike"
+  },
+  "1211" : {
+    "statusDescription" : "Crystallized"
+  },
+  "1212" : {
+    "statusDescription" : "Conflagration"
+  },
+  "1213" : {
+    "statusDescription" : "Misfortune"
+  },
+  "1214" : {
+    "statusDescription" : "Deadly Poison"
+  },
+  "1215" : {
+    "statusDescription" : "Depression"
+  },
+  "1216" : {
+    "statusDescription" : "Holy Flame"
+  },
+  "1217" : {
+    "statusDescription" : "Rebound Shield"
+  },
+  "1220" : {
+    "statusDescription" : "Holy Shield"
+  },
+  "1221" : {
+    "statusDescription" : "Ultimate Sacrifice"
+  },
+  "1222" : {
+    "statusDescription" : "Grand Judgement"
+  },
+  "1223" : {
+    "statusDescription" : "Shield Shooting"
+  },
+  "1226" : {
+    "statusDescription" : "Enchanting Shadow"
+  },
+  "1227" : {
+    "statusDescription" : "Religio"
+  },
+  "1228" : {
+    "statusDescription" : "Benedictum"
+  },
+  "1230" : {
+    "statusDescription" : "First Brand"
+  },
+  "1231" : {
+    "statusDescription" : "Judgment Brand"
+  },
+  "1232" : {
+    "statusDescription" : "Chapter 2: The Judge"
+  },
+  "1233" : {
+    "statusDescription" : "Final Chapter: Flames of Annihilation"
+  },
+  "1234" : {
+    "statusDescription" : "Chapter 1: Power of Faith"
+  },
+  "1235" : {
+    "statusDescription" : "Axe Stomp"
+  },
+  "1236" : {
+    "statusDescription" : "Activate Attack Device"
+  },
+  "1237" : {
+    "statusDescription" : "Activate Defense Device"
+  },
+  "1242" : {
+    "statusDescription" : "Divest Shadow"
+  },
+  "1243" : {
+    "statusDescription" : "Abyss Dagger"
+  },
+  "1244" : {
+    "statusDescription" : "From the Abyss"
+  },
+  "1245" : {
+    "statusDescription" : "Abyss Slayer"
+  },
+  "1247" : {
+    "statusDescription" : "Shadow Protection"
+  },
+  "1248" : {
+    "statusDescription" : "Research Report"
+  },
+  "1249" : {
+    "statusDescription" : "Hell Tree Spore"
+  },
+  "1250" : {
+    "statusDescription" : "Wind Sign"
+  },
+  "1252" : {
+    "statusDescription" : "Calamity Gale"
+  },
+  "1256" : {
+    "statusDescription" : "Mystic Symphony"
+  },
+  "1257" : {
+    "statusDescription" : "Kvasir Sonata"
+  },
+  "1258" : {
+    "statusDescription" : "Sound Blend"
+  },
+  "1259" : {
+    "statusDescription" : "Geffenia Nocturne"
+  },
+  "1260" : {
+    "statusDescription" : "Miner Rhapsody"
+  },
+  "1261" : {
+    "statusDescription" : "Musical Interlude"
+  },
+  "1262" : {
+    "statusDescription" : "Jawaii Serenade"
+  },
+  "1263" : {
+    "statusDescription" : "Prontera March"
+  },
+  "1271" : {
+    "statusDescription" : "Spell Enchanting"
+  },
+  "1303" : {
+    "statusDescription" : "Call Homunculus"
+  },
+  "1310" : {
+    "statusDescription" : "Poison Mist"
+  },
+  "1313" : {
+    "statusDescription" : "Stone Wall"
+  },
+  "1315" : {
+    "statusDescription" : "Overbrand Ready"
+  },
+  "1316" : {
+    "statusDescription" : "Shield Spell"
+  },
+  "1318" : {
+    "statusDescription" : "Cloud Poison"
+  },
+  "1319" : {
+    "statusDescription" : "Spore Explosion"
+  },
+  "1321" : {
+    "statusDescription" : "Shiny Physical DEF Scroll"
+  },
+  "1326" : {
+    "statusDescription" : "Massive Flame Blaster"
+  },
+  "1330" : {
+    "statusDescription" : "Strip Shadow"
+  },
+  "1331" : {
+    "statusDescription" : "Strip Shadow"
+  },
+  "1332" : {
+    "statusDescription" : "Strip Shadow"
+  },
+  "1333" : {
+    "statusDescription" : "Strip Shadow"
+  },
+  "1334" : {
+    "statusDescription" : "Strip Shadow"
+  },
+  "1335" : {
+    "statusDescription" : "Strip Shadow"
+  },
+  "1336" : {
+    "statusDescription" : "Strip Shadow"
+  },
+  "1337" : {
+    "statusDescription" : "Curse of Red Cube"
+  },
+  "1338" : {
+    "statusDescription" : "Curse of Blue Cube"
+  },
+  "1345" : {
+    "statusDescription" : "Activate Focus Aim"
+  },
+  "1347" : {
+    "statusDescription" : "Grenade Fragment"
+  },
+  "1348" : {
+    "statusDescription" : "Grenade Fragment"
+  },
+  "1349" : {
+    "statusDescription" : "Grenade Fragment"
+  },
+  "1350" : {
+    "statusDescription" : "Grenade Fragment"
+  },
+  "1351" : {
+    "statusDescription" : "Grenade Fragment"
+  },
+  "1352" : {
+    "statusDescription" : "Grenade Fragment"
+  },
+  "1353" : {
+    "statusDescription" : "Auto-Firing Launcher"
+  },
+  "1354" : {
+    "statusDescription" : "Hidden Card"
+  },
+  "1355" : {
+    "statusDescription" : "Grenade Mastery"
+  },
+  "1356" : {
+    "statusDescription" : "Protection Talisman"
+  },
+  "1357" : {
+    "statusDescription" : "Warrior Talisman"
+  },
+  "1358" : {
+    "statusDescription" : "Magician Talisman"
+  },
+  "1359" : {
+    "statusDescription" : "5 Element Talisman"
+  },
+  "1360" : {
+    "statusDescription" : "Protection of the East"
+  },
+  "1361" : {
+    "statusDescription" : "Protection of the West"
+  },
+  "1362" : {
+    "statusDescription" : "Protection of the South"
+  },
+  "1363" : {
+    "statusDescription" : "Protection of the North"
+  },
+  "1364" : {
+    "statusDescription" : "Protection of the Four Elements"
+  },
+  "1365" : {
+    "statusDescription" : "Spirit of Heaven and Earth"
+  },
+  "1366" : {
+    "statusDescription" : "Hogogong"
+  },
+  "1367" : {
+    "statusDescription" : "Kisul Marine Fest"
+  },
+  "1368" : {
+    "statusDescription" : "Kisul Sandy Fest"
+  },
+  "1369" : {
+    "statusDescription" : "Kisul Rampage"
+  },
+  "1370" : {
+    "statusDescription" : "Colors of Hyunrok"
+  },
+  "1371" : {
+    "statusDescription" : "Colors of Hyunrok"
+  },
+  "1372" : {
+    "statusDescription" : "Colors of Hyunrok"
+  },
+  "1373" : {
+    "statusDescription" : "Colors of Hyunrok"
+  },
+  "1374" : {
+    "statusDescription" : "Colors of Hyunrok"
+  },
+  "1375" : {
+    "statusDescription" : "Colors of Hyunrok"
+  },
+  "1376" : {
+    "statusDescription" : "Colors of Hyunrok"
+  },
+  "1377" : {
+    "statusDescription" : "Temporary Communion"
+  },
+  "1378" : {
+    "statusDescription" : "Mystical Creatures Blessing"
+  },
+  "1379" : {
+    "statusDescription" : "Mystical Blessing Side Effects"
+  },
+  "1380" : {
+    "statusDescription" : "Shield Chain Rush"
+  },
+  "1381" : {
+    "statusDescription" : "Bitter Cold"
+  },
+  "1382" : {
+    "statusDescription" : "Ground Gravity"
+  },
+  "1383" : {
+    "statusDescription" : "Breakthrough the Limit"
+  },
+  "1384" : {
+    "statusDescription" : "Rule Breaking"
+  },
+  "1385" : {
+    "statusDescription" : "Sunrise"
+  },
+  "1386" : {
+    "statusDescription" : "Noon"
+  },
+  "1387" : {
+    "statusDescription" : "Sunset"
+  },
+  "1388" : {
+    "statusDescription" : "Moonrise"
+  },
+  "1389" : {
+    "statusDescription" : "Midnight"
+  },
+  "1390" : {
+    "statusDescription" : "Moonset"
+  },
+  "1391" : {
+    "statusDescription" : "Star Burst"
+  },
+  "1392" : {
+    "statusDescription" : "Enchanting Sky"
+  },
+  "1393" : {
+    "statusDescription" : "Shadow Cloaking"
+  },
+  "1395" : {
+    "statusDescription" : "Nightmare"
+  },
+  "1402" : {
+    "statusDescription" : "Quake"
+  },
+  "1403" : {
+    "statusDescription" : "Rush"
+  },
+  "1425" : {
+    "statusDescription" : "Increase Movement Speed"
+  },
+  "1426" : {
+    "statusDescription" : "Increase ASPD"
+  },
+  "1427" : {
+    "statusDescription" : "Increase MHP"
+  },
+  "1428" : {
+    "statusDescription" : "Increase MSP"
+  },
+  "1429" : {
+    "statusDescription" : "Increase HIT"
+  },
+  "1430" : {
+    "statusDescription" : "Increase DEF"
+  },
+  "1431" : {
+    "statusDescription" : "Increase MDEF"
+  },
+  "1432" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1433" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1434" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1435" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1439" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1440" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1441" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1442" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1443" : {
+    "statusDescription" : "Main character buff"
+  },
+  "1444" : {
+    "statusDescription" : "Herosia Purple Herb Jam"
+  },
+  "1445" : {
+    "statusDescription" : "Herosia Red Herb Jam"
+  },
+  "1446" : {
+    "statusDescription" : "Herosia Blue Herb Jam"
+  },
+  "1447" : {
+    "statusDescription" : "Herosia Yellow Herb Jam"
+  },
+  "1448" : {
+    "statusDescription" : "Herosia White Herb Jam"
+  },
+  "1449" : {
+    "statusDescription" : "The protection of the Lord of Herostria"
+  },
+  "1453" : {
+    "statusDescription" : "Marked"
+  },
+  "1454" : {
+    "statusDescription" : "Sealed"
+  },
+  "1455" : {
+    "statusDescription" : "Frost Storm"
+  },
+  "1456" : {
+    "statusDescription" : "Stunned"
+  },
+  "1457" : {
+    "statusDescription" : "Warm Shield"
+  },
+  "1473" : {
+    "statusDescription" : "Summer Noodles"
+  },
+  "1474" : {
+    "statusDescription" : "Herb-Grilled Squid"
+  },
+  "1475" : {
+    "statusDescription" : "Sweet Watermelon Pudding"
+  },
+  "1476" : {
+    "statusDescription" : "Frosty Watermelon Juice"
+  },
+  "1477" : {
+    "statusDescription" : "Refreshing Patbingsu"
+  },
+  "1478" : {
+    "statusDescription" : "Gourmet Butter Popcorn"
+  },
+  "1509" : {
+    "statusDescription" : "Force Booster"
+  },
+  "1510" : {
+    "statusDescription" : "Speed Booster"
+  },
+  "1511" : {
+    "statusDescription" : "Resistant Feather"
+  },
+  "1512" : {
+    "statusDescription" : "Light Feather"
+  },
+  "1513" : {
+    "statusDescription" : "Glamorous Feather"
+  },
+  "1514" : {
+    "statusDescription" : "Massive Feather"
+  },
+  "1524" : {
+    "statusDescription" : "[Collab] Delicious Buff"
+  },
+  "1525" : {
+    "statusDescription" : "[Collab] Fresh Buff"
+  },
+  "1688" : {
+    "statusDescription" : "Blocked"
   }
 }

@@ -83,7 +83,7 @@ final class DatabaseModel {
     var scriptCommands = ScriptCommands()
 
     private let itemInfoTable: ItemInfoTable
-    private let mapNameTable: MapNameTable
+    private let mapInfoTable: MapInfoTable
     private let messageStringTable: MessageStringTable
     private let monsterNameTable: MonsterNameTable
     private let skillInfoTable: SkillInfoTable
@@ -104,7 +104,7 @@ final class DatabaseModel {
         self.resourceManager = resourceManager
 
         itemInfoTable = ItemInfoTable()
-        mapNameTable = MapNameTable()
+        mapInfoTable = MapInfoTable()
         messageStringTable = MessageStringTable()
         monsterNameTable = MonsterNameTable()
         skillInfoTable = SkillInfoTable()
@@ -230,7 +230,7 @@ final class DatabaseModel {
             }
 
             self.maps = maps.map { map in
-                let localizedName = mapNameTable.localizedMapName(forMapName: map.name)
+                let localizedName = mapInfoTable.localizedMapName(forMapName: map.name)
                 let model = MapModel(mode: mode, map: map, localizedName: localizedName, resourceManager: resourceManager)
                 return model
             }

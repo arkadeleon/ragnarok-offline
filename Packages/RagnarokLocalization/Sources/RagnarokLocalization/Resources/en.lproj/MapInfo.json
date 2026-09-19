@@ -1,0 +1,4577 @@
+{
+  "1@20cn1" : {
+    "displayName" : "Canyon Exploration",
+    "signMainTitle" : "Canyon Exploration"
+  },
+  "1@20cn2" : {
+    "displayName" : "Canyon Exploration",
+    "signMainTitle" : "Canyon Exploration"
+  },
+  "1@4cdn" : {
+    "displayName" : "Last Ordeal Phantom Cave",
+    "signMainTitle" : "Last Ordeal Phantom Cave"
+  },
+  "1@4drk" : {
+    "displayName" : "Dragon's Test",
+    "signMainTitle" : "Dragon's Test"
+  },
+  "1@4igd" : {
+    "displayName" : "Tourney Hall of Justice",
+    "signMainTitle" : "Tourney Hall of Justice"
+  },
+  "1@4inq" : {
+    "displayName" : "Monastery Basement",
+    "signMainTitle" : "Monastery Basement"
+  },
+  "1@4mag" : {
+    "displayName" : "Mana Spring",
+    "signMainTitle" : "Mana Spring"
+  },
+  "1@4mst" : {
+    "displayName" : "Juperos Core VT",
+    "signMainTitle" : "Juperos Core VT"
+  },
+  "1@4sac" : {
+    "displayName" : "Shadow Manor",
+    "signMainTitle" : "Shadow Manor"
+  },
+  "1@4tro" : {
+    "displayName" : "Kvasir's Chest",
+    "signMainTitle" : "Kvasir's Chest"
+  },
+  "1@4win" : {
+    "displayName" : "Deep Luluka Forest",
+    "signMainTitle" : "Deep Luluka Forest"
+  },
+  "1@adv" : {
+    "displayName" : "High Priest Villa",
+    "signMainTitle" : "High Priest Villa"
+  },
+  "1@advs" : {
+    "displayName" : "Villa of Deception",
+    "signMainTitle" : "Villa of Deception"
+  },
+  "1@air1" : {
+    "displayName" : "Airship",
+    "signMainTitle" : "Airship"
+  },
+  "1@air2" : {
+    "displayName" : "Airship",
+    "signMainTitle" : "Airship"
+  },
+  "1@ba_go" : {
+    "displayName" : "Garden of Time - Hall of Life",
+    "signMainTitle" : "Hall of Life",
+    "signSubTitle" : "Garden of Time"
+  },
+  "1@begi" : {
+    "displayName" : "Poring Village",
+    "signMainTitle" : "Poring Village"
+  },
+  "1@cash" : {
+    "displayName" : "Octopus Cave",
+    "signMainTitle" : "Octopus Cave"
+  },
+  "1@cata" : {
+    "displayName" : "Catacomb",
+    "signMainTitle" : "Catacomb"
+  },
+  "1@ch_t" : {
+    "displayName" : "Constellation Tower",
+    "signMainTitle" : "Constellation Tower"
+  },
+  "1@ch_u" : {
+    "displayName" : "Sunken Tower",
+    "signMainTitle" : "Sunken Tower",
+    "signSubTitle" : "Old Endless Tower Erosion Site"
+  },
+  "1@cor" : {
+    "displayName" : "Cor Memorial",
+    "signMainTitle" : "Cor"
+  },
+  "1@crd" : {
+    "displayName" : "Volcanic Island Korodo",
+    "signMainTitle" : "Volcanic Island Korodo"
+  },
+  "1@def01" : {
+    "displayName" : "Wave Dungeon - Forest",
+    "signMainTitle" : "Forest",
+    "signSubTitle" : "Wave Dungeon"
+  },
+  "1@def02" : {
+    "displayName" : "Wave Dungeon - Sky",
+    "signMainTitle" : "Sky",
+    "signSubTitle" : "Wave Dungeon"
+  },
+  "1@def03" : {
+    "displayName" : "Wave Dungeon - Lava",
+    "signMainTitle" : "Lava",
+    "signSubTitle" : "Wave Dungeon"
+  },
+  "1@drdo" : {
+    "displayName" : "Legendary Dorado",
+    "signMainTitle" : "Legendary Dorado"
+  },
+  "1@dth1" : {
+    "displayName" : "Isle of Bios",
+    "signMainTitle" : "Isle of Bios"
+  },
+  "1@dth2" : {
+    "displayName" : "Isle of Bios",
+    "signMainTitle" : "Isle of Bios"
+  },
+  "1@dth3" : {
+    "displayName" : "Isle of Bios",
+    "signMainTitle" : "Isle of Bios"
+  },
+  "1@ecl" : {
+    "displayName" : "Inside Eclage"
+  },
+  "1@eom" : {
+    "displayName" : "Temple of Demon God",
+    "signMainTitle" : "Temple of Demon God"
+  },
+  "1@exds" : {
+    "displayName" : "The Foot of an Unknown Mountain",
+    "signMainTitle" : "The Foot of an Unknown Mountain"
+  },
+  "1@exhn" : {
+    "displayName" : "Novice's Memories",
+    "signMainTitle" : "Novice's Memories"
+  },
+  "1@exnw" : {
+    "displayName" : "Clana Nemieri",
+    "signMainTitle" : "Clana Nemieri"
+  },
+  "1@exse" : {
+    "displayName" : "Eunha Celestial Branch Office",
+    "signMainTitle" : "Eunha Celestial Branch Office"
+  },
+  "1@exsh" : {
+    "displayName" : "Deep Forest",
+    "signMainTitle" : "Deep Forest"
+  },
+  "1@exsr" : {
+    "displayName" : "Inner World",
+    "signMainTitle" : "Inner World"
+  },
+  "1@f_lake" : {
+    "displayName" : "Garden of Time - Lake of Fire",
+    "signMainTitle" : "Lake of Fire",
+    "signSubTitle" : "Garden of Time"
+  },
+  "1@face" : {
+    "displayName" : "Faceworm Nest",
+    "signMainTitle" : "Faceworm Nest"
+  },
+  "1@ffp" : {
+    "displayName" : "Remnants Hideout",
+    "signMainTitle" : "Remnants Hideout"
+  },
+  "1@gat" : {
+    "displayName" : "Inside Anomaly Fissure",
+    "signMainTitle" : "Inside Anomaly Fissure",
+    "signSubTitle" : "Gatchaman"
+  },
+  "1@ge_sn" : {
+    "displayName" : "Geffen Night Arena",
+    "signMainTitle" : "Geffen Night Arena"
+  },
+  "1@ge_st" : {
+    "displayName" : "Geffen Magic Tournament",
+    "signMainTitle" : "Geffen Magic Tournament"
+  },
+  "1@gef" : {
+    "displayName" : "Geffen Magic Tournament",
+    "signMainTitle" : "Geffen Magic Tournament"
+  },
+  "1@gef_in" : {
+    "displayName" : "Geffen Magic Tournament"
+  },
+  "1@gl_he" : {
+    "displayName" : "Tainted Dimension",
+    "signMainTitle" : "Tainted Dimension",
+    "signSubTitle" : "Glast Heim"
+  },
+  "1@gl_k" : {
+    "displayName" : "Old Chivalry Floor 1",
+    "signMainTitle" : "Old Chivalry Floor 1",
+    "signSubTitle" : "Old Glast Heim"
+  },
+  "1@gl_k2" : {
+    "displayName" : "Old Chivalry Floor 1",
+    "signMainTitle" : "Old Chivalry Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "1@gl_kh" : {
+    "displayName" : "Old Chivalry Floor 1",
+    "signMainTitle" : "Old Chivalry Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "1@gl_prq" : {
+    "displayName" : "The Fall of Glast Heim",
+    "signMainTitle" : "The Fall of Glast Heim"
+  },
+  "1@glast" : {
+    "displayName" : "Glast Heim of the Past",
+    "signMainTitle" : "Glast Heim of the Past"
+  },
+  "1@gol1" : {
+    "displayName" : "Bio Test Chamber",
+    "signMainTitle" : "Bio Test Chamber",
+    "signSubTitle" : "Expedition Path"
+  },
+  "1@gol2" : {
+    "displayName" : "Morgue",
+    "signMainTitle" : "Morgue",
+    "signSubTitle" : "Expedition Path"
+  },
+  "1@halo" : {
+    "displayName" : "Halloween Festival Site",
+    "signMainTitle" : "Halloween Festival Site"
+  },
+  "1@infi" : {
+    "displayName" : "Infinite Space",
+    "signMainTitle" : "Infinite Space"
+  },
+  "1@iwp" : {
+    "displayName" : "Frozen Scale Hill",
+    "signMainTitle" : "Frozen Scale Hill"
+  },
+  "1@jorchs" : {
+    "displayName" : "Chaotic Serpent's Nest",
+    "signMainTitle" : "Chaotic Serpent's Nest"
+  },
+  "1@jorlab" : {
+    "displayName" : "Bagot's Laboratory",
+    "signMainTitle" : "Bagot's Laboratory"
+  },
+  "1@jtb" : {
+    "displayName" : "Dreams and Shadows",
+    "signMainTitle" : "Dreams and Shadows"
+  },
+  "1@lab" : {
+    "displayName" : "Central Laboratory",
+    "signMainTitle" : "Central Laboratory"
+  },
+  "1@lhz" : {
+    "displayName" : "Vorseff's Laboratory",
+    "signMainTitle" : "Vorseff's Laboratory"
+  },
+  "1@ma_b" : {
+    "displayName" : "Bakonawa Hideout",
+    "signMainTitle" : "Bakonawa Hideout"
+  },
+  "1@ma_c" : {
+    "displayName" : "Buwaya Cave",
+    "signMainTitle" : "Buwaya Cave"
+  },
+  "1@ma_h" : {
+    "displayName" : "Bangungot Hospital Floor 2",
+    "signMainTitle" : "Bangungot Hospital Floor 2"
+  },
+  "1@mcd" : {
+    "displayName" : "At the King's Heel",
+    "signMainTitle" : "At the King's Heel"
+  },
+  "1@md_gef" : {
+    "displayName" : "Friday Memorial",
+    "signMainTitle" : "Friday Memorial"
+  },
+  "1@md_pay" : {
+    "displayName" : "Weekend Memorial",
+    "signMainTitle" : "Weekend Memorial"
+  },
+  "1@mir" : {
+    "displayName" : "Ritual Chamber",
+    "signMainTitle" : "Ritual Chamber"
+  },
+  "1@mist" : {
+    "displayName" : "Hazy Forest",
+    "signMainTitle" : "Hazy Forest"
+  },
+  "1@mjo1" : {
+    "displayName" : "Mjolnir Mountains Airplane Crash Site",
+    "signMainTitle" : "Airplane Crash Site",
+    "signSubTitle" : "Mjolnir Mountains"
+  },
+  "1@mjo2" : {
+    "displayName" : "Mjolnir Mountains Forgotten Cavity",
+    "signMainTitle" : "Forgotten Cavity",
+    "signSubTitle" : "Mjolnir Mountains"
+  },
+  "1@nyd" : {
+    "displayName" : "Nidhoggur's Nest",
+    "signMainTitle" : "Nidhoggur's Nest"
+  },
+  "1@nyr" : {
+    "displayName" : "Sanctuary Sessrumnir Garden",
+    "signMainTitle" : "Sanctuary Sessrumnir Garden"
+  },
+  "1@orcs" : {
+    "displayName" : "Orc Cave",
+    "signMainTitle" : "Orc Cave"
+  },
+  "1@os_a" : {
+    "displayName" : "Os Occupation",
+    "signMainTitle" : "Os Occupation"
+  },
+  "1@os_b" : {
+    "displayName" : "Blockaded Os",
+    "signMainTitle" : "Blockaded Os"
+  },
+  "1@oz" : {
+    "displayName" : "Oz Labyrinth",
+    "signMainTitle" : "Oz Labyrinth"
+  },
+  "1@pop1" : {
+    "displayName" : "Pope's Office",
+    "signMainTitle" : "Pope's Office",
+    "signSubTitle" : "Half Moon in the Daylight"
+  },
+  "1@pop2" : {
+    "displayName" : "Way Back Home",
+    "signMainTitle" : "Way Back Home",
+    "signSubTitle" : "Half Moon in the Daylight"
+  },
+  "1@pop3" : {
+    "displayName" : "The Garden of Heaven",
+    "signMainTitle" : "The Garden of Heaven",
+    "signSubTitle" : "Half Moon in the Daylight"
+  },
+  "1@pump" : {
+    "displayName" : "Culvert",
+    "signMainTitle" : "Culvert"
+  },
+  "1@rev" : {
+    "displayName" : "Morse's Cave",
+    "signMainTitle" : "Morse's Cave"
+  },
+  "1@rgsr" : {
+    "displayName" : "Regenschirm",
+    "signMainTitle" : "Regenschirm",
+    "signSubTitle" : "Corporate Laboratory"
+  },
+  "1@sara" : {
+    "displayName" : "Sarah's Memory",
+    "signMainTitle" : "Sarah's Memory"
+  },
+  "1@slug" : {
+    "displayName" : "Sticky Sea",
+    "signMainTitle" : "Sticky Sea"
+  },
+  "1@slw" : {
+    "displayName" : "Central Room of Werner's Laboratory",
+    "signMainTitle" : "Central Room",
+    "signSubTitle" : "Werner's Laboratory"
+  },
+  "1@soul" : {
+    "displayName" : "Soul Path"
+  },
+  "1@spa" : {
+    "displayName" : "Ghost Palace",
+    "signMainTitle" : "Ghost Palace"
+  },
+  "1@spa2" : {
+    "displayName" : "Tomb of Remorse",
+    "signMainTitle" : "Tomb of Remorse"
+  },
+  "1@sthb" : {
+    "displayName" : "Inside the Sky Fortress",
+    "signMainTitle" : "Inside the Sky Fortress"
+  },
+  "1@sthc" : {
+    "displayName" : "Sky Fortress Secret Rooms",
+    "signMainTitle" : "Sky Fortress Secret Rooms"
+  },
+  "1@sthd" : {
+    "displayName" : "Sky Fortress Top Floor",
+    "signMainTitle" : "Sky Fortress Top Floor"
+  },
+  "1@swat" : {
+    "displayName" : "Heart Hunter Military Base",
+    "signMainTitle" : "Heart Hunter Military Base"
+  },
+  "1@tcamp" : {
+    "displayName" : "Thor Volcano Military Base",
+    "signMainTitle" : "Thor Volcano Military Base"
+  },
+  "1@thts" : {
+    "displayName" : "Thanatos Tower",
+    "signMainTitle" : "Thanatos Tower",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "1@tnm1" : {
+    "displayName" : "Devil's Tower Upper Floor",
+    "signMainTitle" : "Devil's Tower Upper Floor"
+  },
+  "1@tnm2" : {
+    "displayName" : "Devil's Tower Top Floor",
+    "signMainTitle" : "Devil's Tower Top Floor"
+  },
+  "1@tnm3" : {
+    "displayName" : "Morroc Castle Underground",
+    "signMainTitle" : "Morroc Castle Underground"
+  },
+  "1@tower" : {
+    "displayName" : "Endless Tower Lowest Floor",
+    "signMainTitle" : "Endless Tower Lowest Floor"
+  },
+  "1@tre" : {
+    "displayName" : "Suspicious Shipwreck",
+    "signMainTitle" : "Suspicious Shipwreck"
+  },
+  "1@twas" : {
+    "displayName" : "Isolated Sanctuary",
+    "signMainTitle" : "Isolated Sanctuary"
+  },
+  "1@twbs" : {
+    "displayName" : "Isolated Sanctuary",
+    "signMainTitle" : "Isolated Sanctuary"
+  },
+  "1@twig" : {
+    "displayName" : "Twig's Nest",
+    "signMainTitle" : "Twig's Nest"
+  },
+  "1@twsd" : {
+    "displayName" : "Drift Ice Zone",
+    "signMainTitle" : "Drift Ice Zone"
+  },
+  "1@uns" : {
+    "displayName" : "The Last Room",
+    "signMainTitle" : "The Last Room"
+  },
+  "1@vrac1" : {
+    "displayName" : "Fantasy Series-Academy 1st floor",
+    "signMainTitle" : "1st floor of Criatura Academy",
+    "signSubTitle" : "Fantasy Series-"
+  },
+  "1@vrac2" : {
+    "displayName" : "Fantasy Series-Academy 2nd floor",
+    "signMainTitle" : "2nd floor of Kritura Academy",
+    "signSubTitle" : "Fantasy Series-"
+  },
+  "1@vrcas" : {
+    "displayName" : "Fantasy - Lilium Palace",
+    "signMainTitle" : "Lilium Palace",
+    "signSubTitle" : "Fantasy Series-001"
+  },
+  "1@vrclo" : {
+    "displayName" : "Fantasy Series - Mirror Monastery",
+    "signMainTitle" : "Mirror Monastery",
+    "signSubTitle" : "Fantasy Series-005"
+  },
+  "1@vrev" : {
+    "displayName" : "Fantasy - Amicitia's Secret Lab",
+    "signMainTitle" : "Amicitia's Secret Lab",
+    "signSubTitle" : "Fantasy Series-003"
+  },
+  "1@vrgen" : {
+    "displayName" : "Fantasy - Genetic Lab",
+    "signMainTitle" : "Genetic Lab",
+    "signSubTitle" : "Fantasy Series-004"
+  },
+  "1@vrhha" : {
+    "displayName" : "Fantasy Series-Heart Hunter Training Center",
+    "signMainTitle" : "Heart Hunter Training Center",
+    "signSubTitle" : "Fantasy Series-008"
+  },
+  "1@vrpo" : {
+    "displayName" : "Fantasy Series-Poring Terra",
+    "signMainTitle" : "Poring Terra",
+    "signSubTitle" : "Fantasy Series-007"
+  },
+  "1@whl" : {
+    "displayName" : "Inside the Airship Wild (No. 1)",
+    "signMainTitle" : "Inside the Airship Wild (No. 1)",
+    "signSubTitle" : "Varmundt's Collection No. 3"
+  },
+  "1@xm_d" : {
+    "displayName" : "Horror Toy Factory",
+    "signMainTitle" : "Horror Toy Factory"
+  },
+  "1@xm_d2" : {
+    "displayName" : "Horror Toy Factory",
+    "signMainTitle" : "Horror Toy Factory"
+  },
+  "2@cata" : {
+    "displayName" : "Sealed Shrine",
+    "signMainTitle" : "Sealed Shrine"
+  },
+  "2@ch_t" : {
+    "displayName" : "Constellation Tower",
+    "signMainTitle" : "Constellation Tower"
+  },
+  "2@exds" : {
+    "displayName" : "The Foot of an Unknown Mountain",
+    "signMainTitle" : "The Foot of an Unknown Mountain"
+  },
+  "2@gl_k" : {
+    "displayName" : "Old Chivalry Floor 2",
+    "signMainTitle" : "Old Chivalry Floor 2",
+    "signSubTitle" : "Old Glast Heim"
+  },
+  "2@gl_k2" : {
+    "displayName" : "Old Chivalry Floor 2",
+    "signMainTitle" : "Old Chivalry Floor 2",
+    "signSubTitle" : "Glast Heim"
+  },
+  "2@gl_kh" : {
+    "displayName" : "Old Chivalry Floor 2",
+    "signMainTitle" : "Old Chivalry Floor 2",
+    "signSubTitle" : "Glast Heim"
+  },
+  "2@mir" : {
+    "displayName" : "Ritual Chamber",
+    "signMainTitle" : "Ritual Chamber"
+  },
+  "2@nyd" : {
+    "displayName" : "Nidhoggur's Nest",
+    "signMainTitle" : "Nidhoggur's Nest"
+  },
+  "2@nyr" : {
+    "displayName" : "Sanctuary Sessrumnir Heart Storage",
+    "signMainTitle" : "Heart Storage",
+    "signSubTitle" : "Sanctuary Sessrumnir Heart Storage"
+  },
+  "2@orcs" : {
+    "displayName" : "Orc Cave",
+    "signMainTitle" : "Orc Cave"
+  },
+  "2@pump" : {
+    "displayName" : "Culvert",
+    "signMainTitle" : "Culvert"
+  },
+  "2@thts" : {
+    "displayName" : "Angel's Warning",
+    "signMainTitle" : "Angel's Warning",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "2@tower" : {
+    "displayName" : "Endless Tower Lower Floor",
+    "signMainTitle" : "Endless Tower Lower Floor"
+  },
+  "2@vrclo" : {
+    "displayName" : "Fantasy Series-All those moments",
+    "signMainTitle" : "All those moments",
+    "signSubTitle" : "Fantasy Series-005"
+  },
+  "3@ch_t" : {
+    "displayName" : "Constellation Tower",
+    "signMainTitle" : "Constellation Tower"
+  },
+  "3@thts" : {
+    "displayName" : "Memory of Hatred",
+    "signMainTitle" : "Memory of Hatred",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "3@tower" : {
+    "displayName" : "Endless Tower Middle Floor",
+    "signMainTitle" : "Endless Tower Middle Floor"
+  },
+  "4@thts" : {
+    "displayName" : "Memory of Agony",
+    "signMainTitle" : "Memory of Agony",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "4@tower" : {
+    "displayName" : "Endless Tower Upper Floor",
+    "signMainTitle" : "Endless Tower Upper Floor"
+  },
+  "5@thts" : {
+    "displayName" : "Memory of Sorrow",
+    "signMainTitle" : "Memory of Sorrow",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "5@tower" : {
+    "displayName" : "Endless Tower Top Floor",
+    "signMainTitle" : "Endless Tower Top Floor"
+  },
+  "6@thts" : {
+    "displayName" : "Memory of Despair",
+    "signMainTitle" : "Memory of Despair",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "6@tower" : {
+    "displayName" : "Endless Tower (Unknown Area)"
+  },
+  "7@thts" : {
+    "displayName" : "Memory of Anger",
+    "signMainTitle" : "Memory of Anger",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "8@thts" : {
+    "displayName" : "Thanatos Tower",
+    "signMainTitle" : "Memory of Thanatos",
+    "signSubTitle" : "Memory of Thanatos"
+  },
+  "abbey01" : {
+    "displayName" : "Nameless Island Monastery Floor 1",
+    "signMainTitle" : "Monastery Floor 1",
+    "signSubTitle" : "Nameless Island"
+  },
+  "abbey02" : {
+    "displayName" : "Nameless Island Monastery Basement Floor 1",
+    "signMainTitle" : "Monastery Basement Floor 1",
+    "signSubTitle" : "Nameless Island"
+  },
+  "abbey03" : {
+    "displayName" : "Nameless Island Monastery Basement Floor 2",
+    "signMainTitle" : "Monastery Basement Floor 2",
+    "signSubTitle" : "Nameless Island"
+  },
+  "abyss_01" : {
+    "displayName" : "Hugel Abyss Lake Underground Cave Floor 1",
+    "signMainTitle" : "Underground Cave Floor 1",
+    "signSubTitle" : "Abyss Lake, Hugel"
+  },
+  "abyss_02" : {
+    "displayName" : "Hugel Abyss Lake Underground Cave Floor 2",
+    "signMainTitle" : "Underground Cave Floor 2",
+    "signSubTitle" : "Abyss Lake, Hugel"
+  },
+  "abyss_03" : {
+    "displayName" : "Hugel Abyss Lake Underground Cave Floor 3",
+    "signMainTitle" : "Underground Cave Floor 3",
+    "signSubTitle" : "Abyss Lake, Hugel"
+  },
+  "abyss_04" : {
+    "displayName" : "Hugel Abyss Lake Underground Cave Floor 4",
+    "signMainTitle" : "Abyss Underground Cave Floor 4",
+    "signSubTitle" : "Hugel Abyss Lake"
+  },
+  "air_if" : {
+    "displayName" : "Inside the Airship IF",
+    "signMainTitle" : "Inside the Airship IF"
+  },
+  "airplane" : {
+    "displayName" : "Airship",
+    "signMainTitle" : "Airship"
+  },
+  "airplane_01" : {
+    "displayName" : "Airship",
+    "signMainTitle" : "Airship"
+  },
+  "airport" : {
+    "displayName" : "Einbroch Airport",
+    "signMainTitle" : "Einbroch Airport"
+  },
+  "alb2trea" : {
+    "displayName" : "Alberta Island",
+    "signMainTitle" : "Alberta Island",
+    "signSubTitle" : "Alberta"
+  },
+  "alb_ship" : {
+    "displayName" : "Inside Alberta Ship"
+  },
+  "alberta" : {
+    "displayName" : "Alberta, the Port City",
+    "signMainTitle" : "Alberta",
+    "signSubTitle" : "Port City in Rune-Midgarts Kingdom"
+  },
+  "alberta_in" : {
+    "displayName" : "Inside Alberta"
+  },
+  "alde_alche" : {
+    "displayName" : "Alchemist Job Change Center"
+  },
+  "alde_dun01" : {
+    "displayName" : "Al De Baran Clock Tower Underground Floor 1",
+    "signMainTitle" : "Clock Tower Underground Floor 1",
+    "signSubTitle" : "Al De Baran"
+  },
+  "alde_dun02" : {
+    "displayName" : "Al De Baran Clock Tower Underground Floor 2",
+    "signMainTitle" : "Clock Tower Underground Floor 2",
+    "signSubTitle" : "Al De Baran"
+  },
+  "alde_dun03" : {
+    "displayName" : "Al De Baran Clock Tower Underground Floor 3",
+    "signMainTitle" : "Clock Tower Underground Floor 3",
+    "signSubTitle" : "Al De Baran"
+  },
+  "alde_dun04" : {
+    "displayName" : "Al De Baran Clock Tower Underground Floor 4",
+    "signMainTitle" : "Clock Tower Underground Floor 4",
+    "signSubTitle" : "Al De Baran"
+  },
+  "alde_gld" : {
+    "displayName" : "Luina, the Satellite City of Al De Baran",
+    "signMainTitle" : "Luina",
+    "signSubTitle" : "Satellite City of Al De Baran"
+  },
+  "aldeba_in" : {
+    "displayName" : "Inside Al De Baran"
+  },
+  "aldebaran" : {
+    "displayName" : "Al De Baran, the Border City",
+    "signMainTitle" : "Al De Baran",
+    "signSubTitle" : "Border City in Rune-Midgarts Kingdom"
+  },
+  "aldeg_cas01" : {
+    "displayName" : "Neuschwanstein",
+    "signMainTitle" : "Neuschwanstein",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas02" : {
+    "displayName" : "Hohenschwangau",
+    "signMainTitle" : "Hohenschwangau",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas03" : {
+    "displayName" : "Nuenberg",
+    "signMainTitle" : "Nuenberg",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas04" : {
+    "displayName" : "Wuerzburg",
+    "signMainTitle" : "Wuerzburg",
+    "signSubTitle" : "Luina"
+  },
+  "aldeg_cas05" : {
+    "displayName" : "Rothenburg",
+    "signMainTitle" : "Rothenburg",
+    "signSubTitle" : "Luina"
+  },
+  "ama_dun01" : {
+    "displayName" : "Amatsu Tatami Maze",
+    "signMainTitle" : "Amatsu Tatami Maze"
+  },
+  "ama_dun02" : {
+    "displayName" : "Amatsu Underground Forest Battleground",
+    "signMainTitle" : "Amatsu Underground Forest Battleground"
+  },
+  "ama_dun03" : {
+    "displayName" : "Amatsu Underground Shrine",
+    "signMainTitle" : "Amatsu Underground Shrine"
+  },
+  "ama_fild01" : {
+    "displayName" : "Amatsu Field",
+    "signMainTitle" : "Amatsu Field"
+  },
+  "ama_in01" : {
+    "displayName" : "Inside Amatsu"
+  },
+  "ama_in02" : {
+    "displayName" : "Inside Tengugak"
+  },
+  "ama_test" : {
+    "displayName" : "Momotaro Experience Place, Amatsu",
+    "signMainTitle" : "Momotaro Experience Place, Amatsu"
+  },
+  "amatsu" : {
+    "displayName" : "Amatsu, the Land of Tengus",
+    "signMainTitle" : "Amatsu",
+    "signSubTitle" : "Land of Tengus"
+  },
+  "amicitia1" : {
+    "displayName" : "Abandoned Lab Amicitia",
+    "signMainTitle" : "Floor 1 General Research Center",
+    "signSubTitle" : "Abandoned Lab Amicitia"
+  },
+  "amicitia2" : {
+    "displayName" : "Abandoned Lab Amicitia",
+    "signMainTitle" : "Floor 2 Intensive Culture Room",
+    "signSubTitle" : "Abandoned Lab Amicitia"
+  },
+  "ant_d02_i" : {
+    "displayName" : "Garden of Awareness",
+    "signMainTitle" : "Illusion of Twin",
+    "signSubTitle" : "illusion"
+  },
+  "anthell01" : {
+    "displayName" : "Morroc Ant Hell Floor 1",
+    "signMainTitle" : "Ant Hell Floor 1",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "anthell02" : {
+    "displayName" : "Morroc Ant Hell Dungeon Floor 2",
+    "signMainTitle" : "Ant Hell Floor 2",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "arena_room" : {
+    "displayName" : "Arena Waiting Room",
+    "signMainTitle" : "Arena Waiting Room"
+  },
+  "aru_gld" : {
+    "displayName" : "Valfreyja",
+    "signMainTitle" : "Valfreyja",
+    "signSubTitle" : "Rachel"
+  },
+  "arug_cas01" : {
+    "displayName" : "Mardoll",
+    "signMainTitle" : "Mardoll",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas02" : {
+    "displayName" : "Cyr",
+    "signMainTitle" : "Cyr",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas03" : {
+    "displayName" : "Horn",
+    "signMainTitle" : "Horn",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas04" : {
+    "displayName" : "Gefn",
+    "signMainTitle" : "Gefn",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_cas05" : {
+    "displayName" : "Badanis",
+    "signMainTitle" : "Badanis",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_dun01" : {
+    "displayName" : "Guild Underground Dungeon",
+    "signMainTitle" : "Guild Underground Dungeon",
+    "signSubTitle" : "Valfreyja"
+  },
+  "arug_que01" : {
+    "displayName" : "Morestone Prairie",
+    "signMainTitle" : "Morestone Prairie"
+  },
+  "auction_01" : {
+    "displayName" : "Auction Hall"
+  },
+  "auction_02" : {
+    "displayName" : "Auction Hall"
+  },
+  "ayo_dun01" : {
+    "displayName" : "Ayothaya Ancient Shrine Maze",
+    "signMainTitle" : "Ayothaya Ancient Shrine Maze"
+  },
+  "ayo_dun02" : {
+    "displayName" : "Inside Ayothaya Ancient Shrine",
+    "signMainTitle" : "Inside Ayothaya Ancient Shrine"
+  },
+  "ayo_fild01" : {
+    "displayName" : "Ayothaya Field",
+    "signMainTitle" : "Ayothaya Field"
+  },
+  "ayo_fild02" : {
+    "displayName" : "Ayothaya Field",
+    "signMainTitle" : "Ayothaya Field"
+  },
+  "ayo_in01" : {
+    "displayName" : "Inside Ayothaya"
+  },
+  "ayo_in02" : {
+    "displayName" : "Inside Ayothaya"
+  },
+  "ayothaya" : {
+    "displayName" : "Ayothaya",
+    "signMainTitle" : "Ayothaya"
+  },
+  "bat_a01" : {
+    "displayName" : "Tierra Canyon",
+    "signMainTitle" : "Tierra Canyon",
+    "signSubTitle" : "Battleground"
+  },
+  "bat_a02" : {
+    "displayName" : "Tierra Canyon",
+    "signMainTitle" : "Tierra Canyon",
+    "signSubTitle" : "Battleground"
+  },
+  "bat_b01" : {
+    "displayName" : "Flavius",
+    "signMainTitle" : "Flavius",
+    "signSubTitle" : "Battleground"
+  },
+  "bat_b02" : {
+    "displayName" : "Flavius",
+    "signMainTitle" : "Flavius",
+    "signSubTitle" : "Battleground"
+  },
+  "bat_c01" : {
+    "displayName" : "Krieger von Midgard"
+  },
+  "bat_c02" : {
+    "displayName" : "Krieger von Midgard"
+  },
+  "bat_c03" : {
+    "displayName" : "Krieger von Midgard"
+  },
+  "bat_room" : {
+    "displayName" : "Battleground Waiting Room",
+    "signMainTitle" : "Battleground Waiting Room"
+  },
+  "beach_dun" : {
+    "displayName" : "Comodo Western Cave Karu",
+    "signMainTitle" : "Western Cave Karu",
+    "signSubTitle" : "Comodo"
+  },
+  "beach_dun2" : {
+    "displayName" : "Northern Comodo Cave Luanda",
+    "signMainTitle" : "Northern Cave Luanda",
+    "signSubTitle" : "Comodo"
+  },
+  "beach_dun3" : {
+    "displayName" : "Comodo Eastern Cave Mao",
+    "signMainTitle" : "Eastern Cave Mao",
+    "signSubTitle" : "Comodo"
+  },
+  "bif_fild01" : {
+    "displayName" : "South of Bifrost",
+    "signMainTitle" : "South of Bifrost"
+  },
+  "bif_fild02" : {
+    "displayName" : "North of Bifrost",
+    "signMainTitle" : "North of Bifrost"
+  },
+  "bl_death" : {
+    "displayName" : "Biosphere Environment - Death",
+    "signMainTitle" : "Biosphere - Death",
+    "signSubTitle" : "Varmund's Biosphere"
+  },
+  "bl_grass" : {
+    "displayName" : "Biosphere Environment - Grass",
+    "signMainTitle" : "Biosphere - Grass",
+    "signSubTitle" : "Varmund's Biosphere"
+  },
+  "bl_ice" : {
+    "displayName" : "Biosphere Environment - Ice",
+    "signMainTitle" : "Biosphere - Ice",
+    "signSubTitle" : "Varmund's Biosphere"
+  },
+  "bl_lava" : {
+    "displayName" : "Biosphere Environment - Fire",
+    "signMainTitle" : "Biosphere - Fire",
+    "signSubTitle" : "Varmund's Biosphere"
+  },
+  "bl_soul" : {
+    "displayName" : "Biosphere Environment - Soul",
+    "signMainTitle" : "Biosphere - Soul",
+    "signSubTitle" : "Varmund's Biosphere"
+  },
+  "bl_temple" : {
+    "displayName" : "Biosphere Environment - Temple",
+    "signMainTitle" : "Biosphere - Temple",
+    "signSubTitle" : "Varmund's Biosphere"
+  },
+  "bl_venom" : {
+    "displayName" : "Biosphere Environment - Venom",
+    "signMainTitle" : "Biosphere - Venom",
+    "signSubTitle" : "Varmund's Biosphere"
+  },
+  "bossnia_01" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bossnia_02" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bossnia_03" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bossnia_04" : {
+    "displayName" : "Bossnia",
+    "signMainTitle" : "Bossnia"
+  },
+  "bphunt_high" : {
+    "displayName" : "High Level Hunting Ground",
+    "signMainTitle" : "High Level Hunting Ground",
+    "signSubTitle" : "Battle Pass"
+  },
+  "bphunt_low" : {
+    "displayName" : "Low Level Hunting Ground",
+    "signMainTitle" : "Low Level Hunting Ground",
+    "signSubTitle" : "Battle Pass"
+  },
+  "bphunt_mid" : {
+    "displayName" : "Middle Level Hunting Ground",
+    "signMainTitle" : "Middle Level Hunting Ground",
+    "signSubTitle" : "Battle Pass"
+  },
+  "bra_dun01" : {
+    "displayName" : "Brasillis Waterfall Cave Entrance",
+    "signMainTitle" : "Waterfall Cave Entrance",
+    "signSubTitle" : "Brasilis"
+  },
+  "bra_dun02" : {
+    "displayName" : "Inside Brasilis Waterfall Cave",
+    "signMainTitle" : "Inside Waterfall Cave",
+    "signSubTitle" : "Brasilis"
+  },
+  "bra_fild01" : {
+    "displayName" : "Brasilis Field",
+    "signMainTitle" : "Brasilis Field"
+  },
+  "bra_in01" : {
+    "displayName" : "Inside Brasilis"
+  },
+  "brasilis" : {
+    "displayName" : "Brasilis",
+    "signMainTitle" : "Brasilis"
+  },
+  "c_tower1" : {
+    "displayName" : "Al De Baran Clock Tower Floor 1",
+    "signMainTitle" : "Clock Tower Floor 1",
+    "signSubTitle" : "Al De Baran"
+  },
+  "c_tower2" : {
+    "displayName" : "Al De Baran Clock Tower Floor 2",
+    "signMainTitle" : "Clock Tower Floor 2",
+    "signSubTitle" : "Al De Baran"
+  },
+  "c_tower2_" : {
+    "displayName" : "Clock Tower of Twisted Time Floor 2",
+    "signMainTitle" : "Clock Tower Floor 2",
+    "signSubTitle" : "Twisted Time"
+  },
+  "c_tower3" : {
+    "displayName" : "Al De Baran Clock Tower Floor 3",
+    "signMainTitle" : "Clock Tower Floor 3",
+    "signSubTitle" : "Al De Baran"
+  },
+  "c_tower3_" : {
+    "displayName" : "Clock Tower of Twisted Time Floor 3",
+    "signMainTitle" : "Clock Tower Floor 3",
+    "signSubTitle" : "Twisted Time"
+  },
+  "c_tower4" : {
+    "displayName" : "Al De Baran Clock Tower Floor 4",
+    "signMainTitle" : "Clock Tower Floor 4",
+    "signSubTitle" : "Al De Baran"
+  },
+  "cave" : {
+    "displayName" : "Cave Village",
+    "signMainTitle" : "Cave Village"
+  },
+  "clb_kuma" : {
+    "displayName" : "Kumamoto Experience Farm",
+    "signMainTitle" : "Kumamoto Experience Farm",
+    "signSubTitle" : "Kumamon"
+  },
+  "clock_01" : {
+    "displayName" : "Clock Tower Unknown Basement",
+    "signMainTitle" : "Unknown Basement",
+    "signSubTitle" : "Clock Tower"
+  },
+  "cmd_fild01" : {
+    "displayName" : "Comodo Papuchicha Forest",
+    "signMainTitle" : "Comodo Papuchicha Forest",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild02" : {
+    "displayName" : "Comodo Kokomo Beach",
+    "signMainTitle" : "Kokomo Beach",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild03" : {
+    "displayName" : "Zenhai Marsh",
+    "signMainTitle" : "Zenhai Marsh",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild04" : {
+    "displayName" : "Comodo Kokomo Beach",
+    "signMainTitle" : "Kokomo Beach",
+    "signSubTitle" : "Comodo"
+  },
+  "cmd_fild06" : {
+    "displayName" : "Fortress Saint Darmain, West Side",
+    "signMainTitle" : "West of Fortress Saint Darmain"
+  },
+  "cmd_fild07" : {
+    "displayName" : "Pharos Lighthouse",
+    "signMainTitle" : "Pharos Lighthouse"
+  },
+  "cmd_fild08" : {
+    "displayName" : "Fortress Saint Darmai, East Side",
+    "signMainTitle" : "East of Fortress Saint Darmain"
+  },
+  "cmd_fild09" : {
+    "displayName" : "Fortress Saint Darmain, South Side",
+    "signMainTitle" : "South of Fortress Saint Darmain"
+  },
+  "cmd_in01" : {
+    "displayName" : "Inside Comodo"
+  },
+  "cmd_in02" : {
+    "displayName" : "Inside Comodo"
+  },
+  "com_d02_i" : {
+    "displayName" : "Northern Cave Luanda",
+    "signMainTitle" : "Northern Cave Luanda",
+    "signSubTitle" : "Illusion"
+  },
+  "comodo" : {
+    "displayName" : "Comodo, the Beach Town",
+    "signMainTitle" : "Comodo",
+    "signSubTitle" : "Rune-Midgarts Kingdom Beach town"
+  },
+  "conch_in" : {
+    "displayName" : "Inside the Kon-Kilina",
+    "signMainTitle" : "Inside the Kon-Kilina",
+    "signSubTitle" : "Port City Lasagna"
+  },
+  "dali" : {
+    "displayName" : "Dimensional Gap",
+    "signMainTitle" : "Dimensional Gap"
+  },
+  "dali02" : {
+    "displayName" : "Dimensional Gap",
+    "signMainTitle" : "Dimensional Gap"
+  },
+  "dew_dun01" : {
+    "displayName" : "Krakatau Volcanic Island",
+    "signMainTitle" : "Krakatau Volcanic Island"
+  },
+  "dew_dun02" : {
+    "displayName" : "Istana Cave",
+    "signMainTitle" : "Istana Cave"
+  },
+  "dew_fild01" : {
+    "displayName" : "Dewata Field_Zati Tribe's Village",
+    "signMainTitle" : "Inside Zati Tribe's Village",
+    "signSubTitle" : "Dewata"
+  },
+  "dew_in01" : {
+    "displayName" : "Inside the Zati Tribe's Village"
+  },
+  "dewata" : {
+    "displayName" : "Dewata",
+    "signMainTitle" : "Dewata"
+  },
+  "dic_dun01" : {
+    "displayName" : "Kamidal Tunnel",
+    "signMainTitle" : "Kamidal Tunnel",
+    "signSubTitle" : "Jotunheim"
+  },
+  "dic_dun02" : {
+    "displayName" : "Scaraba Hole",
+    "signMainTitle" : "Scaraba Hole",
+    "signSubTitle" : "Kamidal Tunnel"
+  },
+  "dic_dun03" : {
+    "displayName" : "Scaraba Hole",
+    "signMainTitle" : "Scaraba Hole",
+    "signSubTitle" : "Kamidal Tunnel"
+  },
+  "dic_fild01" : {
+    "displayName" : "Outskirts of Kamidal Mountain",
+    "signMainTitle" : "Outskirts of Kamidal Mountain",
+    "signSubTitle" : "Jotunheim"
+  },
+  "dic_fild02" : {
+    "displayName" : "Outskirts of Kamidal Mountain",
+    "signMainTitle" : "Outskirts of Kamidal Mountain",
+    "signSubTitle" : "Jotunheim"
+  },
+  "dic_in01" : {
+    "displayName" : "Inside the El Dicastes"
+  },
+  "dicastes01" : {
+    "displayName" : "El Dicastes, the Capital of Sapha",
+    "signMainTitle" : "El Dicastes",
+    "signSubTitle" : "Capital of Sapha, Jotunheim"
+  },
+  "dicastes02" : {
+    "displayName" : "Jorhi Forest of Brumbeld",
+    "signMainTitle" : "Jorhi Forest of Brumbeld",
+    "signSubTitle" : "El Dicastes"
+  },
+  "e_hugel" : {
+    "displayName" : "Invaded Hugel",
+    "signMainTitle" : "Invaded Hugel"
+  },
+  "e_tower" : {
+    "displayName" : "Misty Island",
+    "signMainTitle" : "Misty Island"
+  },
+  "ecl_fild01" : {
+    "displayName" : "Blooming Flower Land",
+    "signMainTitle" : "Blooming Flower Land"
+  },
+  "ecl_hub01" : {
+    "displayName" : "Eclage Perimeter"
+  },
+  "ecl_in01" : {
+    "displayName" : "Inside Eclage"
+  },
+  "ecl_in02" : {
+    "displayName" : "Inside Eclage"
+  },
+  "ecl_in03" : {
+    "displayName" : "Inside Eclage"
+  },
+  "ecl_in04" : {
+    "displayName" : "Inside Eclage"
+  },
+  "ecl_tdun01" : {
+    "displayName" : "Bifrost Tower Floor 1",
+    "signMainTitle" : "Bifrost Tower Floor 1"
+  },
+  "ecl_tdun02" : {
+    "displayName" : "Bifrost Tower Floor 2",
+    "signMainTitle" : "Bifrost Tower Floor 2"
+  },
+  "ecl_tdun03" : {
+    "displayName" : "Bifrost Tower Floor 3",
+    "signMainTitle" : "Bifrost Tower Floor 3"
+  },
+  "ecl_tdun04" : {
+    "displayName" : "Bifrost Tower Floor 4",
+    "signMainTitle" : "Bifrost Tower Floor 4"
+  },
+  "eclage" : {
+    "displayName" : "Eclage, the Capital of Laphine",
+    "signMainTitle" : "Eclage",
+    "signSubTitle" : "Capital of Laphine, Alfheim"
+  },
+  "ein_d02_i" : {
+    "displayName" : "Nasarian Empire",
+    "signMainTitle" : "Nasarian Empire",
+    "signSubTitle" : "Illusion"
+  },
+  "ein_dun01" : {
+    "displayName" : "Einbech Mine Dungeon Floor 1",
+    "signMainTitle" : "Einbech Mine Dungeon Floor 1"
+  },
+  "ein_dun02" : {
+    "displayName" : "Einbech Mine Dungeon Floor 2",
+    "signMainTitle" : "Einbech Mine Dungeon Floor 2"
+  },
+  "ein_dun03" : {
+    "displayName" : "Einbech Mine Floor 3",
+    "signMainTitle" : "Einbech Mine Floor 3"
+  },
+  "ein_fild01" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_fild03" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_fild04" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_fild05" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_fild06" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_fild07" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_fild08" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_fild09" : {
+    "displayName" : "Einbroch Field",
+    "signMainTitle" : "Einbroch Field"
+  },
+  "ein_in01" : {
+    "displayName" : "Interior"
+  },
+  "einbech" : {
+    "displayName" : "Einbech, the Mining Village",
+    "signMainTitle" : "Einbech",
+    "signSubTitle" : "Mining village, Schwarzwald Republic"
+  },
+  "einbroch" : {
+    "displayName" : "Einbroch, the Industrial City",
+    "signMainTitle" : "Einbroch",
+    "signSubTitle" : "Industrial City, Schwarzwald Republic"
+  },
+  "evt_bomb" : {
+    "displayName" : "Event Labyrinth"
+  },
+  "for_dun01" : {
+    "displayName" : "Garden of Time - Forgotten Time Zone 1",
+    "signMainTitle" : "Forgotten Time Zone 1",
+    "signSubTitle" : "Garden of Time"
+  },
+  "for_dun02" : {
+    "displayName" : "Garden of Time - Forgotten Time Zone 2",
+    "signMainTitle" : "Forgotten Time Zone 2",
+    "signSubTitle" : "Garden of Time"
+  },
+  "force_1-1" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_1-2" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_1-3" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_2-1" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_2-2" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_2-3" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_3-1" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_3-2" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "force_3-3" : {
+    "displayName" : "Time Attack Mode"
+  },
+  "gef_d01_i" : {
+    "displayName" : "Page 250",
+    "signMainTitle" : "Page 250",
+    "signSubTitle" : "Illusion"
+  },
+  "gef_dun00" : {
+    "displayName" : "Geffen Underground Dungeon Floor 1",
+    "signMainTitle" : "Geffen Dungeon Floor 1"
+  },
+  "gef_dun01" : {
+    "displayName" : "Geffen Underground Dungeon Floor 2",
+    "signMainTitle" : "Geffen Dungeon Floor 2"
+  },
+  "gef_dun02" : {
+    "displayName" : "Geffen Underground Dungeon Floor 3",
+    "signMainTitle" : "Geffen Dungeon Floor 3"
+  },
+  "gef_dun03" : {
+    "displayName" : "Geffenia Dungeon",
+    "signMainTitle" : "Geffenia",
+    "signSubTitle" : "Geffen"
+  },
+  "gef_fild00" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild01" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild02" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild03" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild04" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild05" : {
+    "displayName" : "Gypsy Village",
+    "signMainTitle" : "Gypsy Village",
+    "signSubTitle" : "Geffen Field"
+  },
+  "gef_fild06" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild07" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild08" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild09" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild10" : {
+    "displayName" : "Orc Village",
+    "signMainTitle" : "Orc Village",
+    "signSubTitle" : "Geffen Field"
+  },
+  "gef_fild11" : {
+    "displayName" : "Geffen Field",
+    "signMainTitle" : "Geffen Field"
+  },
+  "gef_fild13" : {
+    "displayName" : "Britoniah",
+    "signMainTitle" : "Britoniah",
+    "signSubTitle" : "Geffen Field"
+  },
+  "gef_tower" : {
+    "displayName" : "Geffen Tower",
+    "signMainTitle" : "Tower",
+    "signSubTitle" : "Geffen"
+  },
+  "gefenia01" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "gefenia02" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "gefenia03" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "gefenia04" : {
+    "displayName" : "Geffenia",
+    "signMainTitle" : "Geffenia"
+  },
+  "geffen" : {
+    "displayName" : "Geffen, the City of Magic",
+    "signMainTitle" : "Geffen",
+    "signSubTitle" : "City of Magic in Rune-Midgarts Kingdom"
+  },
+  "geffen_in" : {
+    "displayName" : "Inside Geffen"
+  },
+  "gefg_cas01" : {
+    "displayName" : "Repherion",
+    "signMainTitle" : "Repherion",
+    "signSubTitle" : "Britoniah"
+  },
+  "gefg_cas02" : {
+    "displayName" : "Eeyolbriggar",
+    "signMainTitle" : "Eeyolbriggar",
+    "signSubTitle" : "Britoniah"
+  },
+  "gefg_cas03" : {
+    "displayName" : "Yesnelph",
+    "signMainTitle" : "Yesnelph",
+    "signSubTitle" : "Britoniah"
+  },
+  "gefg_cas04" : {
+    "displayName" : "Bergel",
+    "signMainTitle" : "Bergel",
+    "signSubTitle" : "Britoniah"
+  },
+  "gefg_cas05" : {
+    "displayName" : "Mersetzdeitz",
+    "signMainTitle" : "Mersetzdeitz",
+    "signSubTitle" : "Britoniah"
+  },
+  "gl_cas01" : {
+    "displayName" : "Glast Heim Castle Floor 1",
+    "signMainTitle" : "Glast Heim Castle Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_cas01_" : {
+    "displayName" : "Glast Heim Abyss Floor 1",
+    "signMainTitle" : "Abyss Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_cas02" : {
+    "displayName" : "Glast Heim Castle Floor 2",
+    "signMainTitle" : "Glast Heim Castle Floor 2",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_cas02_" : {
+    "displayName" : "Floor 2 Corridor",
+    "signMainTitle" : "Floor 2 Corridor",
+    "signSubTitle" : "Old Glast Heim"
+  },
+  "gl_church" : {
+    "displayName" : "Glast Heim Monastery",
+    "signMainTitle" : "Monastery",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_chyard" : {
+    "displayName" : "Glast Heim Catacombs",
+    "signMainTitle" : "Catacombs",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_chyard_" : {
+    "displayName" : "Monastery Graveyard",
+    "signMainTitle" : "Monastery Graveyard",
+    "signSubTitle" : "Old Glast Heim"
+  },
+  "gl_dun01" : {
+    "displayName" : "Glast Heim Underground Cave Floor 1",
+    "signMainTitle" : "Underground Cave Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_dun02" : {
+    "displayName" : "Glast Heim Underground Cave Floor 2",
+    "signMainTitle" : "Underground Cave Floor 2",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_in01" : {
+    "displayName" : "Inside Glast Heim",
+    "signMainTitle" : "Inside Glast Heim",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_knt01" : {
+    "displayName" : "Glast Heim Chivalry Floor 1",
+    "signMainTitle" : "Chivalry Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_knt02" : {
+    "displayName" : "Glast Heim Chivalry Floor 2",
+    "signMainTitle" : "Chivalry Floor 2",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_prison" : {
+    "displayName" : "Glast Heim Underground Prison Floor 1",
+    "signMainTitle" : "Underprison Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_prison1" : {
+    "displayName" : "Glast Heim Underprison Floor 2",
+    "signMainTitle" : "Underprison Floor 2",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_sew01" : {
+    "displayName" : "Glast Heim Culvert Floor 1",
+    "signMainTitle" : "Culvert Floor 1",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_sew02" : {
+    "displayName" : "Glast Heim Culvert Floor 2",
+    "signMainTitle" : "Culvert Floor 2",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_sew03" : {
+    "displayName" : "Glast Heim Culvert Floor 3",
+    "signMainTitle" : "Culvert Floor 3",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_sew04" : {
+    "displayName" : "Glast Heim Culvert Floor 4",
+    "signMainTitle" : "Culvert Floor 4",
+    "signSubTitle" : "Glast Heim"
+  },
+  "gl_step" : {
+    "displayName" : "Glast Heim Staircase Dungeon",
+    "signMainTitle" : "Staircase Dungeon",
+    "signSubTitle" : "Glast Heim"
+  },
+  "glast_01" : {
+    "displayName" : "Glast Heim",
+    "signMainTitle" : "Glast Heim"
+  },
+  "gld2_ald" : {
+    "displayName" : "Hall of Abyss: Hero's Tears",
+    "signMainTitle" : "Hero's Tears",
+    "signSubTitle" : "Luina Hall of Abyss"
+  },
+  "gld2_gef" : {
+    "displayName" : "Hall of Abyss: Hill of the Dead",
+    "signMainTitle" : "Hill of the Dead",
+    "signSubTitle" : "Hall of Abyss, Britoniah"
+  },
+  "gld2_pay" : {
+    "displayName" : "Hall of Abyss: Ancient Wind",
+    "signMainTitle" : "Ancient Wind",
+    "signSubTitle" : "Hall of Abyss, Greenwood Lake"
+  },
+  "gld2_prt" : {
+    "displayName" : "Hall of Abyss: Warrior's Road",
+    "signMainTitle" : "Warrior's Road",
+    "signSubTitle" : "Hall of Abyss, Valkyrie Realm"
+  },
+  "gld_dun01" : {
+    "displayName" : "Greenwood Lake Underground Dungeon",
+    "signMainTitle" : "Guild Underground Dungeon Floor 1",
+    "signSubTitle" : "Greenwood Lake"
+  },
+  "gld_dun01_2" : {
+    "displayName" : "Greenwood Lake Dungeon Floor 2",
+    "signMainTitle" : "Guild Underground Dungeon Floor 2",
+    "signSubTitle" : "Greenwood Lake"
+  },
+  "gld_dun02" : {
+    "displayName" : "Luina Underground Dungeon",
+    "signMainTitle" : "Guild Underground Dungeon Floor 1",
+    "signSubTitle" : "Luina"
+  },
+  "gld_dun02_2" : {
+    "displayName" : "Luina Dungeon Floor 2",
+    "signMainTitle" : "Guild Underground Dungeon Floor 2",
+    "signSubTitle" : "Luina"
+  },
+  "gld_dun03" : {
+    "displayName" : "Valkyrie Realm Underground Dungeon",
+    "signMainTitle" : "Guild Underground Dungeon Floor 1",
+    "signSubTitle" : "Valkyrie Realm"
+  },
+  "gld_dun03_2" : {
+    "displayName" : "Valkyrie Realm Dungeon Floor 2",
+    "signMainTitle" : "Guild Underground Dungeon Floor 2",
+    "signSubTitle" : "Valkyrie Realm"
+  },
+  "gld_dun04" : {
+    "displayName" : "Britoniah Underground Dungeon Floor 1",
+    "signMainTitle" : "Guild Underground Dungeon Floor 1",
+    "signSubTitle" : "Britoniah"
+  },
+  "gld_dun04_2" : {
+    "displayName" : "Britoniah Dungeon Floor 2",
+    "signMainTitle" : "Guild Underground Dungeon Floor 2",
+    "signSubTitle" : "Britoniah"
+  },
+  "gon_dun01" : {
+    "displayName" : "Shrine of Kunlun Queen",
+    "signMainTitle" : "Shrine of Kunlun Queen",
+    "signSubTitle" : "Kunlun"
+  },
+  "gon_dun02" : {
+    "displayName" : "Hermit's Checkers in Kunlun",
+    "signMainTitle" : "Hermit's Checkers",
+    "signSubTitle" : "Kunlun"
+  },
+  "gon_dun03" : {
+    "displayName" : "Kunlun Arcadia",
+    "signMainTitle" : "Arcadia",
+    "signSubTitle" : "Kunlun"
+  },
+  "gon_fild01" : {
+    "displayName" : "Kunlun Field",
+    "signMainTitle" : "Kunlun Field"
+  },
+  "gon_in" : {
+    "displayName" : "Inside Kunlun"
+  },
+  "gon_test" : {
+    "displayName" : "Kunlun Battle Arena",
+    "signMainTitle" : "Kunlun Battle Arena"
+  },
+  "gonryun" : {
+    "displayName" : "Kunlun, the Hermit Land",
+    "signMainTitle" : "Kunlun",
+    "signSubTitle" : "Hermit Land"
+  },
+  "grademk" : {
+    "displayName" : "Grade-up Center",
+    "signSubTitle" : "Grade-up Center"
+  },
+  "guild_room" : {
+    "displayName" : "Guild War Arena Waiting Room",
+    "signMainTitle" : "Guild War Arena Waiting Room"
+  },
+  "guild_vs1" : {
+    "displayName" : "Guild War Arena",
+    "signMainTitle" : "Guild War Arena"
+  },
+  "guild_vs2" : {
+    "displayName" : "Guild War Arena",
+    "signMainTitle" : "Guild War Arena"
+  },
+  "guild_vs3" : {
+    "displayName" : "Guild War Arena",
+    "signMainTitle" : "Guild War Arena"
+  },
+  "guild_vs4" : {
+    "displayName" : "Guild War Arena",
+    "signMainTitle" : "Guild War Arena"
+  },
+  "guild_vs5" : {
+    "displayName" : "Guild War Arena",
+    "signMainTitle" : "Guild War Arena"
+  },
+  "gw_fild01" : {
+    "displayName" : "Gray Wolf Forest",
+    "signMainTitle" : "Gray Wolf Forest"
+  },
+  "gw_fild02" : {
+    "displayName" : "Gray Wolf Forest",
+    "signMainTitle" : "Gray Wolf Forest"
+  },
+  "har_in01" : {
+    "displayName" : "Rock Ridge"
+  },
+  "harboro1" : {
+    "displayName" : "Rock Ridge",
+    "signMainTitle" : "Rock Ridge"
+  },
+  "harboro2" : {
+    "displayName" : "Culvert",
+    "signMainTitle" : "Culvert",
+    "signSubTitle" : "Rock Ridge"
+  },
+  "hero_dun1" : {
+    "displayName" : "Sanctuary Herosria PvP",
+    "signMainTitle" : "PvP Dungeon",
+    "signSubTitle" : "Sanctuary Herosria"
+  },
+  "hero_ent1" : {
+    "displayName" : "Herosria 1st Hero's Gate",
+    "signMainTitle" : "The First Hero's Gate",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_ent2" : {
+    "displayName" : "Herosria 2nd Hero's Gate",
+    "signMainTitle" : "The Second Hero's Gate",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_ent3" : {
+    "displayName" : "Herosria 3rd Hero's Gate",
+    "signMainTitle" : "The Third Hero's Gate",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_in1" : {
+    "displayName" : "Herosria Spring Garden",
+    "signMainTitle" : "Spring Garden",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_in2" : {
+    "displayName" : "Herosria Summer Garden",
+    "signMainTitle" : "Summer Garden",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_in3" : {
+    "displayName" : "Herosria Autumn Garden",
+    "signMainTitle" : "Autumn Garden",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_in4" : {
+    "displayName" : "Herosria Winter Garden",
+    "signMainTitle" : "Winter Garden",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_lb" : {
+    "displayName" : "Herosria Garden of Dawn",
+    "signMainTitle" : "Garden of Dawn",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_out1" : {
+    "displayName" : "Herosria Silvarium",
+    "signMainTitle" : "Silvarium",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_out2" : {
+    "displayName" : "Herosria Lacusarium",
+    "signMainTitle" : "Lacusarium",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_out3" : {
+    "displayName" : "Herosria Bastitarium",
+    "signMainTitle" : "Bastitarium",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_out4" : {
+    "displayName" : "Herosria Lavinarium",
+    "signMainTitle" : "Lavinarium",
+    "signSubTitle" : "Herosria"
+  },
+  "hero_tra" : {
+    "displayName" : "Herosria Training Ground",
+    "signMainTitle" : "Training ground",
+    "signSubTitle" : "Sanctuary Herosria"
+  },
+  "herosria" : {
+    "displayName" : "Sanctuary Herosria Room",
+    "signMainTitle" : "The Jewel Room",
+    "signSubTitle" : "Sanctuary Herosria"
+  },
+  "himinn" : {
+    "displayName" : "Valkyrie Hall (Himinn)",
+    "signMainTitle" : "Valkyrie Hall"
+  },
+  "httyd_01" : {
+    "displayName" : "Tranquil Abyss Lake",
+    "signMainTitle" : "Tranquil Abyss Lake",
+    "signSubTitle" : "How to Train Your Dragon"
+  },
+  "httyd_02" : {
+    "displayName" : "Abyss Lake Underground Cave",
+    "signMainTitle" : "Abyss Lake Underground Cave",
+    "signSubTitle" : "How to Train Your Dragon"
+  },
+  "hu_fild01" : {
+    "displayName" : "Thanatos Tower Entrance",
+    "signMainTitle" : "Thanatos Tower Entrance"
+  },
+  "hu_fild02" : {
+    "displayName" : "Hugel Field",
+    "signMainTitle" : "Hugel Field"
+  },
+  "hu_fild03" : {
+    "displayName" : "Royal Hunting Ground",
+    "signMainTitle" : "Royal Hunting Ground"
+  },
+  "hu_fild04" : {
+    "displayName" : "Hugel Field",
+    "signMainTitle" : "Hugel Field"
+  },
+  "hu_fild05" : {
+    "displayName" : "Abyss Lake, Hugel",
+    "signMainTitle" : "Abyss Lake, Hugel"
+  },
+  "hu_fild06" : {
+    "displayName" : "Hugel Field",
+    "signMainTitle" : "Hugel Field"
+  },
+  "hu_in01" : {
+    "displayName" : "Inside Hugel"
+  },
+  "hugel" : {
+    "displayName" : "Hugel, the Quaint Garden Village",
+    "signMainTitle" : "Hugel",
+    "signSubTitle" : "Garden Village, Schwarzwald Republic"
+  },
+  "hunter_1-1" : {
+    "displayName" : "Hunter Job Change Center"
+  },
+  "hunter_2-1" : {
+    "displayName" : "Hunter Job Change Center"
+  },
+  "hunter_3-1" : {
+    "displayName" : "Hunter Job Change Center"
+  },
+  "icas_in" : {
+    "displayName" : "Inside the Ice Castle",
+    "signMainTitle" : "Ice Castle Interior"
+  },
+  "icas_in2" : {
+    "displayName" : "Inside the Ice Castle",
+    "signMainTitle" : "Inside the Ice Castle"
+  },
+  "ice_d03_i" : {
+    "displayName" : "Frozen Memory",
+    "signMainTitle" : "Frozen Memory",
+    "signSubTitle" : "Illusion"
+  },
+  "ice_dun01" : {
+    "displayName" : "Rachel Ice Cave Floor 1",
+    "signMainTitle" : "Rachel Ice Cave Floor 1"
+  },
+  "ice_dun02" : {
+    "displayName" : "Rachel Ice Cave Floor 2",
+    "signMainTitle" : "Rachel Ice Cave Floor 2"
+  },
+  "ice_dun03" : {
+    "displayName" : "Rachel Ice Cave Floor 3",
+    "signMainTitle" : "Rachel Ice Cave Floor 3"
+  },
+  "ice_dun04" : {
+    "displayName" : "Rachel Ice Cave, Sealed Space",
+    "signMainTitle" : "Rachel Ice Cave, Sealed Space"
+  },
+  "icecastle" : {
+    "displayName" : "Issgard, the Ice Castle",
+    "signMainTitle" : "Ice Castle",
+    "signSubTitle" : "Issgard"
+  },
+  "in_hunter" : {
+    "displayName" : "Hunter Guild",
+    "signMainTitle" : "Hunter Guild"
+  },
+  "in_moc_16" : {
+    "displayName" : "Assassin Guild",
+    "signMainTitle" : "Sograt Desert",
+    "signSubTitle" : "Assassin Guild"
+  },
+  "in_orcs01" : {
+    "displayName" : "Inside Orc Village"
+  },
+  "in_rogue" : {
+    "displayName" : "Inside the Rogue Guild"
+  },
+  "in_sphinx1" : {
+    "displayName" : "Morroc Sphinx Dungeon Floor 1",
+    "signMainTitle" : "Sphinx Dungeon Floor 1",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "in_sphinx2" : {
+    "displayName" : "Morroc Sphinx Dungeon Floor 2",
+    "signMainTitle" : "Sphinx Dungeon Floor 2",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "in_sphinx3" : {
+    "displayName" : "Morroc Sphinx Dungeon Floor 3",
+    "signMainTitle" : "Sphinx Dungeon Floor 3",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "in_sphinx4" : {
+    "displayName" : "Morroc Sphinx Dungeon Floor 4",
+    "signMainTitle" : "Sphinx Dungeon Floor 4",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "in_sphinx5" : {
+    "displayName" : "Morroc Sphinx Dungeon Floor 5",
+    "signMainTitle" : "Sphinx Dungeon Floor 5",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "int_land" : {
+    "displayName" : "Remote Island",
+    "signMainTitle" : "Remote Island"
+  },
+  "int_land01" : {
+    "displayName" : "Remote Island",
+    "signMainTitle" : "Remote Island"
+  },
+  "int_land02" : {
+    "displayName" : "Remote Island",
+    "signMainTitle" : "Remote Island"
+  },
+  "int_land03" : {
+    "displayName" : "Remote Island",
+    "signMainTitle" : "Remote Island"
+  },
+  "int_land04" : {
+    "displayName" : "Remote Island",
+    "signMainTitle" : "Remote Island"
+  },
+  "itemmall" : {
+    "displayName" : "Item Mall"
+  },
+  "iz_ac01" : {
+    "displayName" : "Criatura Academy Floor 1",
+    "signSubTitle" : "Criatura Academy Floor 1"
+  },
+  "iz_ac01_a" : {
+    "displayName" : "Criatura Academy Floor 1",
+    "signSubTitle" : "Criatura Academy Floor 1"
+  },
+  "iz_ac01_b" : {
+    "displayName" : "Criatura Academy Floor 1",
+    "signSubTitle" : "Criatura Academy Floor 1"
+  },
+  "iz_ac01_c" : {
+    "displayName" : "Criatura Academy Floor 1",
+    "signSubTitle" : "Criatura Academy Floor 1"
+  },
+  "iz_ac01_d" : {
+    "displayName" : "Criatura Academy Floor 1",
+    "signSubTitle" : "Criatura Academy Floor 1"
+  },
+  "iz_ac02" : {
+    "displayName" : "Criatura Academy Floor 2",
+    "signSubTitle" : "Criatura Academy Floor 2"
+  },
+  "iz_ac02_a" : {
+    "displayName" : "Criatura Academy Floor 2",
+    "signSubTitle" : "Criatura Academy Floor 2"
+  },
+  "iz_ac02_b" : {
+    "displayName" : "Criatura Academy Floor 2",
+    "signSubTitle" : "Criatura Academy Floor 2"
+  },
+  "iz_ac02_c" : {
+    "displayName" : "Criatura Academy Floor 2",
+    "signSubTitle" : "Criatura Academy Floor 2"
+  },
+  "iz_ac02_d" : {
+    "displayName" : "Criatura Academy Floor 2",
+    "signSubTitle" : "Criatura Academy Floor 2"
+  },
+  "iz_d04_i" : {
+    "displayName" : "Illusion of Underwater 1F",
+    "signMainTitle" : "Illusion of Underwater 1F"
+  },
+  "iz_d05_i" : {
+    "displayName" : "Illusion of Underwater 2F",
+    "signMainTitle" : "Illusion of Underwater 2F"
+  },
+  "iz_dun00" : {
+    "displayName" : "Izlude Underwater Cave Dungeon Floor 1",
+    "signMainTitle" : "Izlude Underwater Cave Floor 1",
+    "signSubTitle" : "Byalan Island"
+  },
+  "iz_dun01" : {
+    "displayName" : "Izlude Underwater Cave Dungeon Floor 2",
+    "signMainTitle" : "Izlude Underwater Cave Floor 2",
+    "signSubTitle" : "Byalan Island"
+  },
+  "iz_dun02" : {
+    "displayName" : "Izlude Underwater Cave Dungeon Floor 3",
+    "signMainTitle" : "Izlude Underwater Cave Floor 3",
+    "signSubTitle" : "Byalan Island"
+  },
+  "iz_dun03" : {
+    "displayName" : "Izlude Underwater Cave Dungeon Floor 4",
+    "signMainTitle" : "Izlude Underwater Cave Floor 4",
+    "signSubTitle" : "Byalan Island"
+  },
+  "iz_dun04" : {
+    "displayName" : "Izlude Underwater Cave Dungeon Floor 5",
+    "signMainTitle" : "Izlude Underwater Cave Floor 5",
+    "signSubTitle" : "Byalan Island"
+  },
+  "iz_dun05" : {
+    "displayName" : "Izlude Underwater Cave Dungeon Floor 6",
+    "signMainTitle" : "Underwater Cave Floor 6",
+    "signSubTitle" : "Izlude"
+  },
+  "iz_int" : {
+    "displayName" : "Stranded Ferry",
+    "signMainTitle" : "Stranded Ferry"
+  },
+  "iz_int01" : {
+    "displayName" : "Stranded Ferry",
+    "signMainTitle" : "Stranded Ferry"
+  },
+  "iz_int02" : {
+    "displayName" : "Stranded Ferry",
+    "signMainTitle" : "Stranded Ferry"
+  },
+  "iz_int03" : {
+    "displayName" : "Stranded Ferry",
+    "signMainTitle" : "Stranded Ferry"
+  },
+  "iz_int04" : {
+    "displayName" : "Stranded Ferry",
+    "signMainTitle" : "Stranded Ferry"
+  },
+  "iz_ng01" : {
+    "displayName" : "Ninja Tutorial Map"
+  },
+  "izlu2dun" : {
+    "displayName" : "Byalan Island",
+    "signMainTitle" : "Byalan Island",
+    "signSubTitle" : "Izlude"
+  },
+  "izlude" : {
+    "displayName" : "Izlude, the Satellite City",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Satelite City of Prontera, Rune-Midgarts Kingdom"
+  },
+  "izlude_a" : {
+    "displayName" : "Izlude, the Satellite City",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Satelite City of Prontera, Rune-Midgarts Kingdom"
+  },
+  "izlude_b" : {
+    "displayName" : "Izlude, the Satellite City",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Satelite City of Prontera, Rune-Midgarts Kingdom"
+  },
+  "izlude_c" : {
+    "displayName" : "Izlude, the Satellite City",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Satelite City of Prontera, Rune-Midgarts Kingdom"
+  },
+  "izlude_d" : {
+    "displayName" : "Izlude, the Satellite City",
+    "signMainTitle" : "Izlude",
+    "signSubTitle" : "Satelite City of Prontera, Rune-Midgarts Kingdom"
+  },
+  "izlude_in" : {
+    "displayName" : "Inside Izlude"
+  },
+  "jawaii" : {
+    "displayName" : "Jawaii, the Honeymoon Island",
+    "signMainTitle" : "Jawaii",
+    "signSubTitle" : "Honeymoon Island"
+  },
+  "jawaii_in" : {
+    "displayName" : "Inside Jawaii"
+  },
+  "job3_arch01" : {
+    "displayName" : "Arch Bishop Job Change Waiting Room"
+  },
+  "job3_arch02" : {
+    "displayName" : "Hugel Odin's Temple"
+  },
+  "job3_arch03" : {
+    "displayName" : "Arch Bishop Job Change Waiting Room"
+  },
+  "job3_gen01" : {
+    "displayName" : "Geneticist Laboratory"
+  },
+  "job3_guil01" : {
+    "displayName" : "Secret Tavern"
+  },
+  "job3_guil02" : {
+    "displayName" : "Inside the Old Warehouse"
+  },
+  "job3_guil03" : {
+    "displayName" : "Isolated Mansion"
+  },
+  "job3_rang01" : {
+    "displayName" : "Waiting Room for Ranger Job Change"
+  },
+  "job3_rang02" : {
+    "displayName" : "Ranger Job Change Test Hall"
+  },
+  "job3_rune01" : {
+    "displayName" : "Inside of Rune Knight Templar"
+  },
+  "job3_rune02" : {
+    "displayName" : "Rune Knight Job Change Test Hall"
+  },
+  "job3_rune03" : {
+    "displayName" : "Rune Knight Job Change Test Hall"
+  },
+  "job3_war01" : {
+    "displayName" : "Warlock Job Change Test Hall"
+  },
+  "job3_war02" : {
+    "displayName" : "Warlock Job Change Test Hall"
+  },
+  "job4_bio" : {
+    "displayName" : "Secret Flower Garden",
+    "signMainTitle" : "Secret Flower Garden"
+  },
+  "job4_mag" : {
+    "displayName" : "Mana Spring",
+    "signMainTitle" : "Mana Spring"
+  },
+  "job4_tro" : {
+    "displayName" : "Empty Kvasir's Chest",
+    "signMainTitle" : "Empty Kvasir's Chest"
+  },
+  "job_cru" : {
+    "displayName" : "Crusader Job Change Test Hall"
+  },
+  "job_duncer" : {
+    "displayName" : "Comodo Theatre"
+  },
+  "job_gun" : {
+    "displayName" : "Shelter of Liberation",
+    "signMainTitle" : "Shelter of Liberation"
+  },
+  "job_hunte" : {
+    "displayName" : "Hunter Job Change Test Hall"
+  },
+  "job_knt" : {
+    "displayName" : "Knight Job Change Test Hall"
+  },
+  "job_ko" : {
+    "displayName" : "Hidden Place"
+  },
+  "job_monk" : {
+    "displayName" : "St. Capitolina Abbey"
+  },
+  "job_prist" : {
+    "displayName" : "Priest Job Change Test Hall"
+  },
+  "job_sage" : {
+    "displayName" : "Sage Job Change Test Hall"
+  },
+  "job_soul" : {
+    "displayName" : "Your Heart"
+  },
+  "job_star" : {
+    "displayName" : "The Sun, the Moon, and the Stars"
+  },
+  "job_thief1" : {
+    "displayName" : "Thief Job Change Center"
+  },
+  "job_wiz" : {
+    "displayName" : "Wizard Job Change Test Hall"
+  },
+  "jor_ab01" : {
+    "displayName" : "Abandoned Pit - 1st Floor",
+    "signMainTitle" : "Abandoned Pit - 1st Floor"
+  },
+  "jor_ab02" : {
+    "displayName" : "Abandoned Pit - 2nd Floor",
+    "signMainTitle" : "Abandoned Pit - 2nd Floor"
+  },
+  "jor_back1" : {
+    "displayName" : "Frozen Scale Hill",
+    "signMainTitle" : "Frozen Scale Hill"
+  },
+  "jor_back2" : {
+    "displayName" : "Frozen Scale Plains",
+    "signMainTitle" : "Frozen Scale Plains"
+  },
+  "jor_back3" : {
+    "displayName" : "Frozen Scale Glacier",
+    "signMainTitle" : "Frozen Scale Glacier"
+  },
+  "jor_back4" : {
+    "displayName" : "Frozen Scale Beach",
+    "signMainTitle" : "Frozen Scale Beach"
+  },
+  "jor_back5" : {
+    "displayName" : "Ancient Ice Canyon East",
+    "signMainTitle" : "Ancient Ice Canyon East"
+  },
+  "jor_back6" : {
+    "displayName" : "Ancient Ice Canyon West",
+    "signMainTitle" : "Ancient Ice Canyon West"
+  },
+  "jor_dun01" : {
+    "displayName" : "Warmth of the Serpent God - 1st Floor",
+    "signMainTitle" : "Warmth of the Serpent God - 1st Floor"
+  },
+  "jor_dun02" : {
+    "displayName" : "Warmth of the Serpent God - 2nd Floor",
+    "signMainTitle" : "Warmth of the Serpent God - 2nd Floor"
+  },
+  "jor_dun03" : {
+    "displayName" : "Inside the Serpent's Nest",
+    "signMainTitle" : "Inside the Serpent's Nest"
+  },
+  "jor_maze" : {
+    "displayName" : "Snake Labyrinth",
+    "signMainTitle" : "Snake Labyrinth"
+  },
+  "jor_nest" : {
+    "displayName" : "Serpent's Nest",
+    "signMainTitle" : "Serpent's Nest",
+    "signSubTitle" : "Rgan's Hideout"
+  },
+  "jor_que" : {
+    "displayName" : "Abandoned Warmth of the Serpent God",
+    "signMainTitle" : "Abandoned Warmth of the Serpent God"
+  },
+  "jor_root1" : {
+    "displayName" : "Snake God's Root 1F",
+    "signMainTitle" : "Snake God's Root 1F"
+  },
+  "jor_root2" : {
+    "displayName" : "Snake God's Root 2F",
+    "signMainTitle" : "Snake God's Root 2F"
+  },
+  "jor_root3" : {
+    "displayName" : "Deep Root Cave",
+    "signMainTitle" : "Deep Root Cave"
+  },
+  "jor_safty1" : {
+    "displayName" : "Safe Place",
+    "signSubTitle" : "Safe Place"
+  },
+  "jor_safty2" : {
+    "displayName" : "Safe Place",
+    "signSubTitle" : "Safe Place"
+  },
+  "jor_sanct" : {
+    "displayName" : "Sacred Root",
+    "signMainTitle" : "Sacred Root",
+    "signSubTitle" : "Rgan Hideout"
+  },
+  "jor_tail" : {
+    "displayName" : "Frozen Tail",
+    "signMainTitle" : "Frozen Tail"
+  },
+  "jor_twice" : {
+    "displayName" : "Drift Ice Zone",
+    "signMainTitle" : "Drift Ice Zone"
+  },
+  "jor_twig" : {
+    "displayName" : "Issgard Sanctuary Twig's Nest",
+    "signMainTitle" : "Twig's Nest",
+    "signSubTitle" : "Issgard Sanctuary"
+  },
+  "jupe_area1" : {
+    "displayName" : "Juperos Restricted Zone",
+    "signMainTitle" : "Juperos Restricted Zone"
+  },
+  "jupe_area2" : {
+    "displayName" : "Juperos Restricted Zone",
+    "signMainTitle" : "Juperos Restricted Zone"
+  },
+  "jupe_cave" : {
+    "displayName" : "Juperos Cave Entrance",
+    "signMainTitle" : "Juperos Cave Entrance"
+  },
+  "jupe_core" : {
+    "displayName" : "Juperos Core",
+    "signMainTitle" : "Juperos Core"
+  },
+  "jupe_core2" : {
+    "displayName" : "Juperos Core",
+    "signMainTitle" : "Juperos Core"
+  },
+  "jupe_ele" : {
+    "displayName" : "Juperos Elevator",
+    "signMainTitle" : "Juperos Elevator"
+  },
+  "jupe_ele_r" : {
+    "displayName" : "Juperos Elevator Room",
+    "signMainTitle" : "Juperos Elevator Room"
+  },
+  "jupe_gate" : {
+    "displayName" : "Juperos Restricted Zone",
+    "signMainTitle" : "Juperos Restricted Zone"
+  },
+  "juperos_01" : {
+    "displayName" : "Outside the Ruins of Juperos",
+    "signMainTitle" : "Outside the Ruins of Juperos"
+  },
+  "juperos_02" : {
+    "displayName" : "Inside the Ruins of Juperos",
+    "signMainTitle" : "Inside the Ruins of Juperos"
+  },
+  "kh_dun01" : {
+    "displayName" : "Robot Factory Floor 1",
+    "signMainTitle" : "Robot Factory Floor 1"
+  },
+  "kh_dun02" : {
+    "displayName" : "Robot Factory Floor 2",
+    "signMainTitle" : "Robot Factory Floor 2"
+  },
+  "kh_kiehl01" : {
+    "displayName" : "Kiehl's Room"
+  },
+  "kh_kiehl02" : {
+    "displayName" : "Kiehl's Last Room"
+  },
+  "kh_mansion" : {
+    "displayName" : "Kiel Hyre's Mansion",
+    "signMainTitle" : "Kiel Hyre's Mansion"
+  },
+  "kh_rossi" : {
+    "displayName" : "The Rosimier's Mansion",
+    "signMainTitle" : "The Rosimier's Mansion"
+  },
+  "kh_school" : {
+    "displayName" : "Kiel Hyre Academy",
+    "signMainTitle" : "Kiel Hyre Academy"
+  },
+  "kh_vila" : {
+    "displayName" : "Kiel Hyre's Cottage",
+    "signMainTitle" : "Kiel Hyre's Cottage"
+  },
+  "knight_1-1" : {
+    "displayName" : "Knight Job Change Center"
+  },
+  "knight_2-1" : {
+    "displayName" : "Knight Job Change Center"
+  },
+  "knight_3-1" : {
+    "displayName" : "Knight Job Change Center"
+  },
+  "lasa_dun01" : {
+    "displayName" : "Dragon's Lair",
+    "signMainTitle" : "Dragon's Lair Floor 1"
+  },
+  "lasa_dun02" : {
+    "displayName" : "Dragon's Lair",
+    "signMainTitle" : "Dragon's Lair Floor 2"
+  },
+  "lasa_dun03" : {
+    "displayName" : "Dragon's Lair",
+    "signMainTitle" : "Dragon's Lair Floor 3"
+  },
+  "lasa_dun_q" : {
+    "displayName" : "Dragon's Lair",
+    "signMainTitle" : "Dragon's Lair"
+  },
+  "lasa_fild01" : {
+    "displayName" : "Ravioli Plain Watch",
+    "signMainTitle" : "Ravioli Plain Watch",
+    "signSubTitle" : "Lasagna"
+  },
+  "lasa_fild02" : {
+    "displayName" : "Ravioli Forest",
+    "signMainTitle" : "Ravioli Forest"
+  },
+  "lasa_in01" : {
+    "displayName" : "Inside Lasagna"
+  },
+  "lasa_sea" : {
+    "displayName" : "Nyail Cave",
+    "signMainTitle" : "Nyail Cave"
+  },
+  "lasagna" : {
+    "displayName" : "Port City Lasagna",
+    "signMainTitle" : "Lasagna",
+    "signSubTitle" : "Port City of Pasta Continent"
+  },
+  "lhz_airport" : {
+    "displayName" : "Lighthalzen Airport",
+    "signMainTitle" : "Lighthalzen Airport"
+  },
+  "lhz_cube" : {
+    "displayName" : "Cube Room"
+  },
+  "lhz_d_n2" : {
+    "displayName" : "Space of Thoughts",
+    "signMainTitle" : "Space of Thoughts"
+  },
+  "lhz_dun01" : {
+    "displayName" : "Bio Lab Basement Floor 1",
+    "signMainTitle" : "Bio Lab Basement Floor 1"
+  },
+  "lhz_dun02" : {
+    "displayName" : "Bio Lab Basement Floor 2",
+    "signMainTitle" : "Bio Lab Basement Floor 2"
+  },
+  "lhz_dun03" : {
+    "displayName" : "Bio Lab Basement Floor 3",
+    "signMainTitle" : "Bio Lab Basement Floor 3"
+  },
+  "lhz_dun04" : {
+    "displayName" : "Bio Lab Basement Floor 4",
+    "signMainTitle" : "Bio Lab Basement Floor 4"
+  },
+  "lhz_dun_n" : {
+    "displayName" : "Tomb of the Fallen",
+    "signMainTitle" : "Tomb of the Fallen"
+  },
+  "lhz_fild01" : {
+    "displayName" : "Lighthalzen Field",
+    "signMainTitle" : "Lighthalzen Field"
+  },
+  "lhz_fild02" : {
+    "displayName" : "Lighthalzen Field (Grim Reaper's Valley)",
+    "signMainTitle" : "Grim Reaper's Valley",
+    "signSubTitle" : "Lighthalzen Field "
+  },
+  "lhz_fild03" : {
+    "displayName" : "Lighthalzen Field",
+    "signMainTitle" : "Lighthalzen Field"
+  },
+  "lhz_in01" : {
+    "displayName" : "Rekenber Corporation Headquarters",
+    "signMainTitle" : "Rekenber Corporation Headquarters"
+  },
+  "lhz_in02" : {
+    "displayName" : "Inside Lighthalzen"
+  },
+  "lhz_in03" : {
+    "displayName" : "Inside Lighthalzen"
+  },
+  "lhz_que01" : {
+    "displayName" : "Inside Lighthalzen"
+  },
+  "lighthalzen" : {
+    "displayName" : "Lighthalzen, the Corporate City",
+    "signMainTitle" : "Lighthalzen",
+    "signSubTitle" : "Corporate City, Schwarzwald Republic"
+  },
+  "lou_dun01" : {
+    "displayName" : "The Royal Tomb",
+    "signMainTitle" : "The Royal Tomb"
+  },
+  "lou_dun02" : {
+    "displayName" : "Inside the Royal Tomb",
+    "signMainTitle" : "Inside the Royal Tomb"
+  },
+  "lou_dun03" : {
+    "displayName" : "Suei Long Gon",
+    "signMainTitle" : "Suei Long Gon"
+  },
+  "lou_fild01" : {
+    "displayName" : "Louyang Field",
+    "signMainTitle" : "Louyang Field"
+  },
+  "lou_in01" : {
+    "displayName" : "Inside Louyang"
+  },
+  "lou_in02" : {
+    "displayName" : "Inside Louyang"
+  },
+  "louyang" : {
+    "displayName" : "Louyang, the Highland",
+    "signMainTitle" : "Louyang",
+    "signSubTitle" : "Highland"
+  },
+  "ma_dun01" : {
+    "displayName" : "Bangungot Hospital Floor 1",
+    "signMainTitle" : "Bangungot Hospital Floor 1"
+  },
+  "ma_fild01" : {
+    "displayName" : "Baryo Mahiwaga",
+    "signMainTitle" : "Baryo Mahiwaga",
+    "signSubTitle" : "Port Malaya"
+  },
+  "ma_fild02" : {
+    "displayName" : "Forest",
+    "signMainTitle" : "Forest",
+    "signSubTitle" : "Port Malaya"
+  },
+  "ma_in01" : {
+    "displayName" : "Inside Malaya"
+  },
+  "ma_scene01" : {
+    "displayName" : "Bakonawa Lake",
+    "signMainTitle" : "Bakonawa Lake",
+    "signSubTitle" : "Port Malaya"
+  },
+  "ma_zif01" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif02" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif03" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif04" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif05" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif06" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif07" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif08" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "ma_zif09" : {
+    "displayName" : "Inside Jeepney",
+    "signMainTitle" : "Jeepney"
+  },
+  "mag_dun01" : {
+    "displayName" : "Juno Norgroad Floor 1",
+    "signMainTitle" : "Juno Norgroad Floor 1"
+  },
+  "mag_dun02" : {
+    "displayName" : "Juno Norgroad Floor 2",
+    "signMainTitle" : "Juno Norgroad Floor 2"
+  },
+  "mag_dun03" : {
+    "displayName" : "Juno Norgroad Floor 3",
+    "signMainTitle" : "Norgroad Floor 3"
+  },
+  "mal_dun01" : {
+    "displayName" : "Starry Coral Area",
+    "signMainTitle" : "Starry Coral Area"
+  },
+  "mal_in01" : {
+    "displayName" : "Inside the Malangdo Island"
+  },
+  "mal_in02" : {
+    "displayName" : "Inside the Ship",
+    "signMainTitle" : "Inside the Butterfly Ship",
+    "signSubTitle" : "Malangdo Island"
+  },
+  "malangdo" : {
+    "displayName" : "Malangdo Island",
+    "signMainTitle" : "Malangdo Island"
+  },
+  "malaya" : {
+    "displayName" : "Port Malaya",
+    "signMainTitle" : "Port Malaya"
+  },
+  "man_fild01" : {
+    "displayName" : "Manuk Field"
+  },
+  "man_fild02" : {
+    "displayName" : "Manuk Field",
+    "signMainTitle" : "Manuk Field"
+  },
+  "man_fild03" : {
+    "displayName" : "Manuk Field",
+    "signMainTitle" : "Manuk Field"
+  },
+  "man_in01" : {
+    "displayName" : "Inside Manuk"
+  },
+  "manuk" : {
+    "displayName" : "Mining Village Manuk",
+    "signMainTitle" : "Manuk",
+    "signSubTitle" : "Mining Village of Sapha, Jotunheim"
+  },
+  "mid_camp" : {
+    "displayName" : "Midgard Allied Forces Post",
+    "signMainTitle" : "Midgard Allied Forces Post",
+    "signSubTitle" : "Jotunheim"
+  },
+  "mid_campin" : {
+    "displayName" : "Inside the Midgard Allied Forces Post"
+  },
+  "mjo_dun01" : {
+    "displayName" : "Mjolnir Dead Pit Floor 1",
+    "signMainTitle" : "Dead Pit Floor 1",
+    "signSubTitle" : "North Side of Mt. Mjolnir"
+  },
+  "mjo_dun02" : {
+    "displayName" : "Mjolnir Dead Pit Floor 2",
+    "signMainTitle" : "Dead Pit Floor 2",
+    "signSubTitle" : "North Side of Mt. Mjolnir"
+  },
+  "mjo_dun03" : {
+    "displayName" : "Mjolnir Dead Pit Floor 3",
+    "signMainTitle" : "Dead Pit Floor 3",
+    "signSubTitle" : "North Side of Mt. Mjolnir"
+  },
+  "mjo_wst01" : {
+    "displayName" : "Mjolnir Underground Caverns",
+    "signMainTitle" : "Mjolnir Underground Caverns"
+  },
+  "mjolnir_01" : {
+    "displayName" : "Mt. Mjolnir North Side",
+    "signMainTitle" : "Mt. Mjolnir North Side"
+  },
+  "mjolnir_02" : {
+    "displayName" : "Mt. Mjolnir North Side",
+    "signMainTitle" : "Mt. Mjolnir North Side"
+  },
+  "mjolnir_03" : {
+    "displayName" : "Mt. Mjolnir North Side",
+    "signMainTitle" : "Mt. Mjolnir North Side"
+  },
+  "mjolnir_04" : {
+    "displayName" : "Mt. Mjolnir North Side",
+    "signMainTitle" : "Mt. Mjolnir North Side"
+  },
+  "mjolnir_05" : {
+    "displayName" : "Mt. Mjolnir North Side",
+    "signMainTitle" : "Mt. Mjolnir North Side"
+  },
+  "mjolnir_06" : {
+    "displayName" : "Mt. Mjolnir South Side",
+    "signMainTitle" : "Mt. Mjolnir South Side"
+  },
+  "mjolnir_07" : {
+    "displayName" : "Mt. Mjolnir South Side",
+    "signMainTitle" : "Mt. Mjolnir South Side"
+  },
+  "mjolnir_08" : {
+    "displayName" : "Mt. Mjolnir South Side",
+    "signMainTitle" : "Mt. Mjolnir South Side"
+  },
+  "mjolnir_09" : {
+    "displayName" : "Mt. Mjolnir Southern Foot",
+    "signMainTitle" : "Mt. Mjolnir Southern Foot"
+  },
+  "mjolnir_10" : {
+    "displayName" : "Mt. Mjolnir South Side",
+    "signMainTitle" : "Mt. Mjolnir South Side"
+  },
+  "mjolnir_11" : {
+    "displayName" : "Mt. Mjolnir South Side",
+    "signMainTitle" : "Mt. Mjolnir South Side"
+  },
+  "mjolnir_12" : {
+    "displayName" : "Mt. Mjolnir Northern Foot",
+    "signMainTitle" : "Mt. Mjolnir Northern Foot"
+  },
+  "moc_fild01" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild02" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild03" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild07" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild11" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild12" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild13" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild16" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild17" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild18" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild19" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "moc_fild20" : {
+    "displayName" : "Dimensional Gap in Sograt Desert",
+    "signMainTitle" : "Dimensional Gap",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "moc_fild21" : {
+    "displayName" : "Dimensional Gap in Sograt Desert",
+    "signMainTitle" : "Dimensional Gap",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "moc_fild22" : {
+    "displayName" : "Dimensional Gap in Sograt Desert",
+    "signMainTitle" : "Dimensional Gap",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "moc_fild22b" : {
+    "displayName" : "Dimensional Gap in Sograt Desert",
+    "signMainTitle" : "Dimensional Gap",
+    "signSubTitle" : "Sograt Desert"
+  },
+  "moc_para01" : {
+    "displayName" : "Inside Morroc Eden Group",
+    "signMainTitle" : "Eden Group"
+  },
+  "moc_pryd01" : {
+    "displayName" : "Morroc Pyramid Floor 1",
+    "signMainTitle" : "Pyramid Floor 1",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd02" : {
+    "displayName" : "Morroc Pyramid Floor 2",
+    "signMainTitle" : "Pyramid Floor 2",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd03" : {
+    "displayName" : "Morroc Pyramid Floor 3",
+    "signMainTitle" : "Pyramid Floor 3",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd04" : {
+    "displayName" : "Morroc Pyramid Floor 4",
+    "signMainTitle" : "Pyramid Floor 4",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd05" : {
+    "displayName" : "Morroc Pyramid Underground Floor 1",
+    "signMainTitle" : "Pyramid Underground Floor 1",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_pryd06" : {
+    "displayName" : "Morroc Pyramid Underground Floor 2",
+    "signMainTitle" : "Pyramid Underground Floor 2",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_prydb1" : {
+    "displayName" : "Thief Guild",
+    "signMainTitle" : "Thief Guild",
+    "signSubTitle" : "Morroc"
+  },
+  "moc_prydn1" : {
+    "displayName" : "Morroc Pyramid Underground Floor 1 - Nightmare",
+    "signMainTitle" : "Pyramid Underground Floor 1"
+  },
+  "moc_prydn2" : {
+    "displayName" : "Morroc Pyramid Underground Floor 2 - Nightmare",
+    "signMainTitle" : "Pyramid Underground Floor 2"
+  },
+  "moc_ruins" : {
+    "displayName" : "Morroc Ruins",
+    "signMainTitle" : "Morroc Ruins"
+  },
+  "monk_in" : {
+    "displayName" : "Inside St. Capitolina Abbey",
+    "signMainTitle" : "St. Capitolina Abbey"
+  },
+  "monk_test" : {
+    "displayName" : "St. Capitolina Abbey"
+  },
+  "mora" : {
+    "displayName" : "Mora, the Laphine Village",
+    "signMainTitle" : "Mora",
+    "signSubTitle" : "Laphine Village, Bifrost"
+  },
+  "moro_cav" : {
+    "displayName" : "Flame Cave",
+    "signMainTitle" : "Flame Cave"
+  },
+  "moro_vol" : {
+    "displayName" : "Flame Basin",
+    "signMainTitle" : "Flame Basin"
+  },
+  "morocc" : {
+    "displayName" : "Morroc, the Desert City",
+    "signMainTitle" : "Morroc",
+    "signSubTitle" : "Desert City in Rune-Midgarts Kingdom"
+  },
+  "morocc_in" : {
+    "displayName" : "Inside Morroc"
+  },
+  "moscovia" : {
+    "displayName" : "Moscovia",
+    "signMainTitle" : "Moscovia"
+  },
+  "mosk_dun01" : {
+    "displayName" : "Moscovia Forest",
+    "signMainTitle" : "Moscovia Forest"
+  },
+  "mosk_dun02" : {
+    "displayName" : "Moscovia Deep Forest",
+    "signMainTitle" : "Deep Forest",
+    "signSubTitle" : "Moscovia"
+  },
+  "mosk_dun03" : {
+    "displayName" : "Moscovia Very Deep Forest",
+    "signMainTitle" : "Very Deep Forest",
+    "signSubTitle" : "Moscovia"
+  },
+  "mosk_fild01" : {
+    "displayName" : "Whale Island",
+    "signMainTitle" : "Whale Island",
+    "signSubTitle" : "Moscovia"
+  },
+  "mosk_fild02" : {
+    "displayName" : "Moscovia Field",
+    "signMainTitle" : "Moscovia Field"
+  },
+  "mosk_in" : {
+    "displayName" : "Inside Moscovia"
+  },
+  "mosk_ship" : {
+    "displayName" : "Ship"
+  },
+  "nameless_i" : {
+    "displayName" : "Nameless Island",
+    "signMainTitle" : "Nameless Island"
+  },
+  "nameless_in" : {
+    "displayName" : "Inside the Nameless Island"
+  },
+  "nameless_n" : {
+    "displayName" : "Nameless Island",
+    "signMainTitle" : "Nameless Island"
+  },
+  "new_1-1" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_1-2" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_1-3" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_1-4" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_2-1" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_2-2" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_2-3" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_2-4" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_3-1" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_3-2" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_3-3" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_3-4" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_4-1" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_4-2" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_4-3" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_4-4" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_5-1" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_5-2" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "new_5-3" : {
+    "displayName" : "Novice Training Ground",
+    "signMainTitle" : "Novice Training Ground"
+  },
+  "nif_dun01" : {
+    "displayName" : "Nifflheim Dungeon Banquet Hall of the Dead",
+    "signMainTitle" : "Banquet Hall of the Dead",
+    "signSubTitle" : "Nifflheim Dungeon Floor 1"
+  },
+  "nif_dun02" : {
+    "displayName" : "Nifflheim Dungeon Collapsed Opera House",
+    "signMainTitle" : "Collapsed Opera House",
+    "signSubTitle" : "Nifflheim Dungeon Floor 2"
+  },
+  "nif_fild01" : {
+    "displayName" : "Skelington, the far village of Niflhiem",
+    "signMainTitle" : "Far village Skelington",
+    "signSubTitle" : "Niflhiem"
+  },
+  "nif_fild02" : {
+    "displayName" : "Valley of Gyoll in Niflhiem",
+    "signMainTitle" : "Valley of Gyoll",
+    "signSubTitle" : "Niflhiem"
+  },
+  "nif_in" : {
+    "displayName" : "Inside Niflhiem"
+  },
+  "niflheim" : {
+    "displayName" : "Niflhiem, the Realm of the Dead",
+    "signMainTitle" : "Niflhiem",
+    "signSubTitle" : "Realm of the Dead"
+  },
+  "nyd_dun01" : {
+    "displayName" : "Brasillis Ravager's Wound Floor 1",
+    "signMainTitle" : "Ravager's Wound Floor 1"
+  },
+  "nyd_dun02" : {
+    "displayName" : "Brasillis Ravager's Wound Floor 2",
+    "signMainTitle" : "Ravager's Wound Floor 2"
+  },
+  "odin_past" : {
+    "displayName" : "Ancient Odin's Temple",
+    "signMainTitle" : "Ancient Odin's Temple"
+  },
+  "odin_tem01" : {
+    "displayName" : "Hugel Odin's Temple, West Side",
+    "signMainTitle" : "Odin's Temple, West Side"
+  },
+  "odin_tem02" : {
+    "displayName" : "Hugel Odin's Temple, South Side",
+    "signMainTitle" : "Odin's Temple South Side"
+  },
+  "odin_tem03" : {
+    "displayName" : "Hugel Odin's Temple North Side",
+    "signMainTitle" : "Odin's Temple North Side"
+  },
+  "orcsdun01" : {
+    "displayName" : "Geffen Orc Cave Floor 1",
+    "signMainTitle" : "Orc Cave Floor 1",
+    "signSubTitle" : "Orc Village"
+  },
+  "orcsdun02" : {
+    "displayName" : "Geffen Orc Cave Floor 2",
+    "signMainTitle" : "Orc Cave Floor 2",
+    "signSubTitle" : "Orc Village"
+  },
+  "ordeal_1-1" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_1-2" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_1-3" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_1-4" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_2-1" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_2-2" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_2-3" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_2-4" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_3-1" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_3-2" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_3-3" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "ordeal_3-4" : {
+    "displayName" : "Battle Ordeal Mode"
+  },
+  "oz_dun01" : {
+    "displayName" : "Oz Labyrinth 1F",
+    "signMainTitle" : "Oz Labyrinth 1F"
+  },
+  "oz_dun02" : {
+    "displayName" : "Oz Labyrinth 2F",
+    "signMainTitle" : "Oz Labyrinth 2F"
+  },
+  "p_track01" : {
+    "displayName" : "Monster Race Stadium",
+    "signMainTitle" : "Monster Race Stadium"
+  },
+  "p_track02" : {
+    "displayName" : "Monster Race Stadium",
+    "signMainTitle" : "Monster Race Stadium"
+  },
+  "paramk" : {
+    "displayName" : "Para Market"
+  },
+  "pay_arche" : {
+    "displayName" : "Payon Archer Village",
+    "signMainTitle" : "Archer Village",
+    "signSubTitle" : "Payon"
+  },
+  "pay_d03_i" : {
+    "displayName" : "Nightmare of Moonlight Flower",
+    "signMainTitle" : "Nightmare of Moonlight Flower",
+    "signSubTitle" : "Illusion"
+  },
+  "pay_dun00" : {
+    "displayName" : "Payon Cave Floor 1",
+    "signMainTitle" : "Payon Cave Floor 1",
+    "signSubTitle" : "Payon Archer Village"
+  },
+  "pay_dun01" : {
+    "displayName" : "Payon Cave Floor 2",
+    "signMainTitle" : "Payon Cave Floor 2",
+    "signSubTitle" : "Payon Archer Village"
+  },
+  "pay_dun02" : {
+    "displayName" : "Payon Cave Floor 3",
+    "signMainTitle" : "Payon Cave Floor 3",
+    "signSubTitle" : "Payon Archer Village"
+  },
+  "pay_dun03" : {
+    "displayName" : "Payon Cave Floor 4 (Abandoned Village)",
+    "signMainTitle" : "Payon Cave Floor 4 Abandoned Village",
+    "signSubTitle" : "Payon Archer Village"
+  },
+  "pay_dun04" : {
+    "displayName" : "Payon Cave Floor 5 (Abandoned Village)",
+    "signMainTitle" : "Payon Cave Floor 5 Abandoned Village",
+    "signSubTitle" : "Payon Archer Village"
+  },
+  "pay_fild01" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_fild02" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_fild03" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_fild04" : {
+    "displayName" : "Sograt Desert",
+    "signMainTitle" : "Sograt Desert"
+  },
+  "pay_fild06" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_fild07" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_fild08" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_fild09" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_fild10" : {
+    "displayName" : "Payon Forest",
+    "signMainTitle" : "Payon Forest"
+  },
+  "pay_gld" : {
+    "displayName" : "Greenwood Lake",
+    "signMainTitle" : "Greenwood Lake",
+    "signSubTitle" : "Payon"
+  },
+  "payg_cas01" : {
+    "displayName" : "Bright Arbor",
+    "signMainTitle" : "Bright Arbor",
+    "signSubTitle" : "Greenwood Lake"
+  },
+  "payg_cas02" : {
+    "displayName" : "Sacred Altar",
+    "signMainTitle" : "Sacred Altar",
+    "signSubTitle" : "Greenwood Lake"
+  },
+  "payg_cas03" : {
+    "displayName" : "Holy Shadow",
+    "signMainTitle" : "Holy Shadow",
+    "signSubTitle" : "Greenwood Lake"
+  },
+  "payg_cas04" : {
+    "displayName" : "Scarlet Palace",
+    "signMainTitle" : "Scarlet Palace",
+    "signSubTitle" : "Greenwood Lake"
+  },
+  "payg_cas05" : {
+    "displayName" : "Bamboo Grove Hill",
+    "signMainTitle" : "Bamboo Grove Hill",
+    "signSubTitle" : "Greenwood Lake"
+  },
+  "payon" : {
+    "displayName" : "Payon, the Mountain Village",
+    "signMainTitle" : "Payon",
+    "signSubTitle" : "Mountain Village in Rune-Midgarts Kingdom"
+  },
+  "payon_in01" : {
+    "displayName" : "Inside Payon"
+  },
+  "payon_in02" : {
+    "displayName" : "Inside Payon"
+  },
+  "payon_in03" : {
+    "displayName" : "Inside Payon"
+  },
+  "poring_w01" : {
+    "displayName" : "Poring War Waiting Room",
+    "signMainTitle" : "Poring War Waiting Room"
+  },
+  "poring_w02" : {
+    "displayName" : "Poring War Zone",
+    "signMainTitle" : "Poring War Zone"
+  },
+  "priest_1-1" : {
+    "displayName" : "Priest Job Change Center"
+  },
+  "priest_2-1" : {
+    "displayName" : "Priest Job Change Center"
+  },
+  "priest_3-1" : {
+    "displayName" : "Priest Job Change Center"
+  },
+  "prontera" : {
+    "displayName" : "Prontera, the Capital of Rune-Midgarts Kingdom",
+    "signMainTitle" : "Prontera",
+    "signSubTitle" : "Capital of Rune-Midgarts Kingdom"
+  },
+  "prt_are01" : {
+    "displayName" : "Arena",
+    "signMainTitle" : "Arena"
+  },
+  "prt_are_in" : {
+    "displayName" : "Arena Waiting Room",
+    "signMainTitle" : "Arena Waiting Room"
+  },
+  "prt_arena01" : {
+    "displayName" : "Arena",
+    "signMainTitle" : "Arena"
+  },
+  "prt_cas" : {
+    "displayName" : "Central Palace of Prontera",
+    "signMainTitle" : "Central Palace",
+    "signSubTitle" : "Prontera Palace"
+  },
+  "prt_cas_q" : {
+    "displayName" : "Detached Palace of Prontera",
+    "signMainTitle" : "Detached Palace",
+    "signSubTitle" : "Prontera Palace"
+  },
+  "prt_castle" : {
+    "displayName" : "Inside Prontera Castle",
+    "signMainTitle" : "Prontera Castle"
+  },
+  "prt_church" : {
+    "displayName" : "Inside Prontera Sanctuary",
+    "signMainTitle" : "Prontera Sanctuary"
+  },
+  "prt_elib" : {
+    "displayName" : "Prontera East Library",
+    "signSubTitle" : "Prontera East Library"
+  },
+  "prt_evt_in" : {
+    "displayName" : "Hunting Ground Cabin"
+  },
+  "prt_fild00" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild01" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild02" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild03" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild04" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild05" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild06" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild07" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild08" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild08a" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera South Field"
+  },
+  "prt_fild08b" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera South Field"
+  },
+  "prt_fild08c" : {
+    "displayName" : "Prontera Field",
+    "signSubTitle" : "Prontera South Field"
+  },
+  "prt_fild08d" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera South Field"
+  },
+  "prt_fild09" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild10" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_fild11" : {
+    "displayName" : "Prontera Field",
+    "signMainTitle" : "Prontera Field"
+  },
+  "prt_gld" : {
+    "displayName" : "Valkyrie Realm",
+    "signMainTitle" : "Valkyrie Realm",
+    "signSubTitle" : "Prontera"
+  },
+  "prt_in" : {
+    "displayName" : "Inside Prontera"
+  },
+  "prt_lib" : {
+    "displayName" : "Royal Memory",
+    "signMainTitle" : "Royal Memory",
+    "signSubTitle" : "Prontera Palace"
+  },
+  "prt_lib_q" : {
+    "displayName" : "Royal Memory of the Past"
+  },
+  "prt_maze01" : {
+    "displayName" : "Prontera Labyrinth Forest Floor 1",
+    "signMainTitle" : "Labyrinth Forest Floor 1",
+    "signSubTitle" : "Prontera Field"
+  },
+  "prt_maze02" : {
+    "displayName" : "Prontera Labyrinth Forest Floor 2",
+    "signMainTitle" : "Labyrinth Forest Floor 2",
+    "signSubTitle" : "Prontera Field"
+  },
+  "prt_maze03" : {
+    "displayName" : "Prontera Labyrinth Forest Floor 3",
+    "signMainTitle" : "Labyrinth Forest Floor 3",
+    "signSubTitle" : "Prontera Field"
+  },
+  "prt_monk" : {
+    "displayName" : "St. Capitolina Abbey",
+    "signMainTitle" : "St. Capitolina Abbey"
+  },
+  "prt_mz03_i" : {
+    "displayName" : "Twisted Labyrinth Forest",
+    "signMainTitle" : "Twisted Labyrinth Forest",
+    "signSubTitle" : "Illusion"
+  },
+  "prt_pri00" : {
+    "displayName" : "Prison of Prontera"
+  },
+  "prt_prison" : {
+    "displayName" : "Underground Prison of Prontera",
+    "signMainTitle" : "Underground Prison",
+    "signSubTitle" : "Prontera Palace"
+  },
+  "prt_q" : {
+    "displayName" : "Invaded Prontera",
+    "signMainTitle" : "Invaded Prontera"
+  },
+  "prt_sewb1" : {
+    "displayName" : "Prontera Culvert Floor 1",
+    "signMainTitle" : "Culvert Floor 1",
+    "signSubTitle" : "Prontera Field"
+  },
+  "prt_sewb2" : {
+    "displayName" : "Prontera Culvert Floor 2",
+    "signMainTitle" : "Culvert Floor 2",
+    "signSubTitle" : "Prontera Field"
+  },
+  "prt_sewb3" : {
+    "displayName" : "Prontera Culvert Floor 3",
+    "signMainTitle" : "Culvert Floor 3",
+    "signSubTitle" : "Prontera Field"
+  },
+  "prt_sewb4" : {
+    "displayName" : "Prontera Culvert Floor 4",
+    "signMainTitle" : "Culvert Floor 4",
+    "signSubTitle" : "Prontera Field"
+  },
+  "prtg_cas01" : {
+    "displayName" : "Kriemhild",
+    "signMainTitle" : "Kriemhild",
+    "signSubTitle" : "Valkyrie Realm"
+  },
+  "prtg_cas02" : {
+    "displayName" : "Swanhild",
+    "signMainTitle" : "Swanhild",
+    "signSubTitle" : "Valkyrie Realm"
+  },
+  "prtg_cas03" : {
+    "displayName" : "Fadhgridh",
+    "signMainTitle" : "Fadhgridh",
+    "signSubTitle" : "Valkyrie Realm"
+  },
+  "prtg_cas04" : {
+    "displayName" : "Skoegul",
+    "signMainTitle" : "Skoegul",
+    "signSubTitle" : "Valkyrie Realm"
+  },
+  "prtg_cas05" : {
+    "displayName" : "Gondul",
+    "signMainTitle" : "Gondul",
+    "signSubTitle" : "Valkyrie Realm"
+  },
+  "pub_cat" : {
+    "displayName" : "Cat on a Bullet",
+    "signMainTitle" : "Cat on a Bullet",
+    "signSubTitle" : "Einbroch Rebellion Pub"
+  },
+  "pvp_2vs2" : {
+    "displayName" : "PvP: Event Coliseum",
+    "signMainTitle" : "PvP Event Coliseum"
+  },
+  "pvp_c_room" : {
+    "displayName" : "PvP: Waiting Room",
+    "signMainTitle" : "PvP Waiting Room"
+  },
+  "pvp_n_1-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_1-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_1-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_1-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_1-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_2-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_2-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_2-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_2-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_2-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_3-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_3-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_3-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_3-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_3-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_4-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_4-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_4-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_4-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_4-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_5-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_5-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_5-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_5-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_5-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_6-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_6-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_6-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_6-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_6-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_7-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_7-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_7-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_7-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_7-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_8-1" : {
+    "displayName" : "PvP: Room Sandwich",
+    "signMainTitle" : "PvP Room Sandwich"
+  },
+  "pvp_n_8-2" : {
+    "displayName" : "PvP: Room Rock On",
+    "signMainTitle" : "PvP Room Rock On"
+  },
+  "pvp_n_8-3" : {
+    "displayName" : "PvP: Four Room",
+    "signMainTitle" : "PvP Four Room"
+  },
+  "pvp_n_8-4" : {
+    "displayName" : "PvP: Room Undercross",
+    "signMainTitle" : "PvP Room Undercross"
+  },
+  "pvp_n_8-5" : {
+    "displayName" : "PvP: Room Compass",
+    "signMainTitle" : "PvP Room Compass"
+  },
+  "pvp_n_room" : {
+    "displayName" : "PvP: Waiting Room",
+    "signMainTitle" : "PvP Waiting Room"
+  },
+  "pvp_y_1-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_1-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_1-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_1-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_1-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_2-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_2-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_2-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_2-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_2-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_3-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_3-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_3-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_3-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_3-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_4-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_4-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_4-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_4-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_4-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_5-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_5-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_5-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_5-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_5-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_6-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_6-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_6-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_6-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_6-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_7-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_7-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_7-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_7-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_7-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_8-1" : {
+    "displayName" : "PvP: Prontera",
+    "signMainTitle" : "PvP Prontera"
+  },
+  "pvp_y_8-2" : {
+    "displayName" : "PvP: Izlude",
+    "signMainTitle" : "PvP Izlude"
+  },
+  "pvp_y_8-3" : {
+    "displayName" : "PvP: Payon",
+    "signMainTitle" : "PvP Payon"
+  },
+  "pvp_y_8-4" : {
+    "displayName" : "PvP: Alberta",
+    "signMainTitle" : "PvP Alberta"
+  },
+  "pvp_y_8-5" : {
+    "displayName" : "PvP: Morroc",
+    "signMainTitle" : "PvP Morroc"
+  },
+  "pvp_y_room" : {
+    "displayName" : "PvP: Waiting Room",
+    "signMainTitle" : "PvP Waiting Room"
+  },
+  "que_avan01" : {
+    "displayName" : "Avant's Laboratory"
+  },
+  "que_bingo" : {
+    "displayName" : "Bingo Game Room"
+  },
+  "que_dan01" : {
+    "displayName" : "Hugel Field"
+  },
+  "que_dan02" : {
+    "displayName" : "Inside the Abandoned House in Juno"
+  },
+  "que_god01" : {
+    "displayName" : "Quest Map"
+  },
+  "que_god02" : {
+    "displayName" : "Quest Map"
+  },
+  "que_house_s" : {
+    "displayName" : "Weird House"
+  },
+  "que_hugel" : {
+    "displayName" : "Odin's Temple Underground",
+    "signMainTitle" : "Odin's Temple Underground"
+  },
+  "que_job01" : {
+    "displayName" : "Secret Tavern",
+    "signMainTitle" : "Secret Tavern"
+  },
+  "que_lhz" : {
+    "displayName" : "Bio Lab Basement Floor 4",
+    "signMainTitle" : "Bio Lab Basement Floor 4"
+  },
+  "que_ng" : {
+    "displayName" : "Unknown Area"
+  },
+  "que_qaru01" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qaru02" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qaru03" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qaru04" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qaru05" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qsch01" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qsch02" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qsch03" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qsch04" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_qsch05" : {
+    "displayName" : "Fallacious Okolnir",
+    "signMainTitle" : "Fallacious Okolnir"
+  },
+  "que_rachel" : {
+    "displayName" : "Inside the Temple"
+  },
+  "que_swat" : {
+    "displayName" : "Heart Hunter Military Base",
+    "signMainTitle" : "Heart Hunter Military Base"
+  },
+  "que_temsky" : {
+    "displayName" : "Pope's Office (The Garden of Heaven)",
+    "signMainTitle" : "The Garden of Heaven",
+    "signSubTitle" : "Pope's Office in Cheshrumnir"
+  },
+  "que_thor" : {
+    "displayName" : "Thor Volcano Dungeon",
+    "signMainTitle" : "Thor Volcano Dungeon"
+  },
+  "que_thr" : {
+    "displayName" : "Inside Thor Volcano",
+    "signMainTitle" : "Inside Thor Volcano"
+  },
+  "quiz_00" : {
+    "displayName" : "Quiz Arena",
+    "signMainTitle" : "Quiz Arena"
+  },
+  "quiz_01" : {
+    "displayName" : "Quiz Arena",
+    "signMainTitle" : "Quiz Arena"
+  },
+  "quiz_02" : {
+    "displayName" : "Quiz Arena"
+  },
+  "quiz_test" : {
+    "displayName" : "Test Hall"
+  },
+  "ra_fild01" : {
+    "displayName" : "Audumbla Grassland, Rachel",
+    "signMainTitle" : "Audumbla Grassland"
+  },
+  "ra_fild02" : {
+    "displayName" : "Rachel Oz Gorge",
+    "signMainTitle" : "Oz Gorge"
+  },
+  "ra_fild03" : {
+    "displayName" : "Plain of Ida, Rachel",
+    "signMainTitle" : "Plain of Ida"
+  },
+  "ra_fild04" : {
+    "displayName" : "Audumbla Grassland, Rachel",
+    "signMainTitle" : "Audumbla Grassland"
+  },
+  "ra_fild05" : {
+    "displayName" : "Audumbla Grassland, Rachel",
+    "signMainTitle" : "Audumbla Grassland"
+  },
+  "ra_fild06" : {
+    "displayName" : "Portus Luna",
+    "signMainTitle" : "Portus Luna"
+  },
+  "ra_fild07" : {
+    "displayName" : "Rachel Oz Gorge",
+    "signMainTitle" : "Oz Gorge"
+  },
+  "ra_fild08" : {
+    "displayName" : "Plain of Ida, Rachel",
+    "signMainTitle" : "Plain of Ida"
+  },
+  "ra_fild09" : {
+    "displayName" : "Rachel Audhumbla Grassland",
+    "signMainTitle" : "Audhumbla Grassland"
+  },
+  "ra_fild10" : {
+    "displayName" : "Rachel Oz Gorge",
+    "signMainTitle" : "Oz Gorge"
+  },
+  "ra_fild11" : {
+    "displayName" : "Rachel Ida Grassland",
+    "signMainTitle" : "Ida Grassland"
+  },
+  "ra_fild12" : {
+    "displayName" : "Plain of Ida, Rachel",
+    "signMainTitle" : "Plain of Ida"
+  },
+  "ra_fild13" : {
+    "displayName" : "Rachel Shore of Tears",
+    "signMainTitle" : "Shore of Tears"
+  },
+  "ra_in01" : {
+    "displayName" : "Inside Rachel"
+  },
+  "ra_pol01" : {
+    "displayName" : "Power Twisted Plains",
+    "signMainTitle" : "Power Twisted Plains"
+  },
+  "ra_san01" : {
+    "displayName" : "Rachel Holy Ground Floor 1, North Side",
+    "signMainTitle" : "Holy Ground Floor 1, North Side",
+    "signSubTitle" : "Temple Cheshrumnir, Rachel"
+  },
+  "ra_san02" : {
+    "displayName" : "Rachel Holy Ground Floor 1, West Side",
+    "signMainTitle" : "Holy Ground Floor 1, West Side",
+    "signSubTitle" : "Temple Cheshrumnir, Rachel"
+  },
+  "ra_san03" : {
+    "displayName" : "Rachel Holy Ground Floor 1, East Side",
+    "signMainTitle" : "Holy Ground Floor 1, East Side",
+    "signSubTitle" : "Temple Cheshrumnir, Rachel"
+  },
+  "ra_san04" : {
+    "displayName" : "Rachel Holy Ground Floor 1, South Side",
+    "signMainTitle" : "Holy Ground Floor 1, South Side",
+    "signSubTitle" : "Temple Cheshrumnir, Rachel"
+  },
+  "ra_san05" : {
+    "displayName" : "Rachel Holy Ground Floor 2, Center",
+    "signMainTitle" : "Holy Ground Floor 2, Center",
+    "signSubTitle" : "Temple Cheshrumnir, Rachel"
+  },
+  "ra_temin" : {
+    "displayName" : "Inside the Temple"
+  },
+  "ra_temple" : {
+    "displayName" : "Freyja Grand Temple (Cheshrumnir)",
+    "signMainTitle" : "Cheshrumnir",
+    "signSubTitle" : "Freyja Grand Temple, Arunafeltz"
+  },
+  "ra_temsky" : {
+    "displayName" : "Pope's Office (The Garden of Heaven)",
+    "signMainTitle" : "The Garden of Heaven",
+    "signSubTitle" : "Pope's Office in Cheshrumnir"
+  },
+  "rachel" : {
+    "displayName" : "Rachel, the Capital of Arunafeltz States",
+    "signMainTitle" : "Rachel",
+    "signSubTitle" : "Capital of Arunafeltz States"
+  },
+  "rebel_in" : {
+    "displayName" : "Clana Nemieri",
+    "signMainTitle" : "Clana Nemieri"
+  },
+  "rgsr_in" : {
+    "displayName" : "Rekenber Laboratory",
+    "signMainTitle" : "Rekenber Laboratory"
+  },
+  "rockmi1" : {
+    "displayName" : "Rock Ridge Mine",
+    "signMainTitle" : "Rock Ridge Mine Floor 1"
+  },
+  "rockmi2" : {
+    "displayName" : "Rock Ridge Mine",
+    "signMainTitle" : "Rock Ridge Mine Floor 2"
+  },
+  "rockrdg1" : {
+    "displayName" : "Kiwawa Desert",
+    "signMainTitle" : "Kiwawa Desert",
+    "signSubTitle" : "Rock Ridge"
+  },
+  "rockrdg2" : {
+    "displayName" : "Kiwawa Desert",
+    "signMainTitle" : "Kiwawa Desert",
+    "signSubTitle" : "Rock Ridge"
+  },
+  "s_atelier" : {
+    "displayName" : "Shadow Workshop"
+  },
+  "sch_gld" : {
+    "displayName" : "Nidabehl",
+    "signMainTitle" : "Nidabehl",
+    "signSubTitle" : "Juno"
+  },
+  "schg_cas01" : {
+    "displayName" : "Himinn",
+    "signMainTitle" : "Himinn",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas02" : {
+    "displayName" : "Andlangr",
+    "signMainTitle" : "Andlangr",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas03" : {
+    "displayName" : "Vidblainn",
+    "signMainTitle" : "Vidblainn",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas04" : {
+    "displayName" : "Hljod",
+    "signMainTitle" : "Hljod",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_cas05" : {
+    "displayName" : "Schatirnil",
+    "signMainTitle" : "Schatirnil",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_dun01" : {
+    "displayName" : "Guild Underground Dungeon",
+    "signMainTitle" : "Guild Underground Dungeon",
+    "signSubTitle" : "Nidabehl"
+  },
+  "schg_que01" : {
+    "displayName" : "Morestone Prairie",
+    "signMainTitle" : "Morestone Prairie"
+  },
+  "sec_in01" : {
+    "displayName" : "Inside Valhalla"
+  },
+  "sec_in02" : {
+    "displayName" : "Inside Valhalla"
+  },
+  "sec_pri" : {
+    "displayName" : "Room of Meditation (Valhalla Prison)"
+  },
+  "silk_lair" : {
+    "displayName" : "Python's Lair"
+  },
+  "slabw01" : {
+    "displayName" : "Werner's Laboratory",
+    "signMainTitle" : "Werner's Laboratory"
+  },
+  "sp_cor" : {
+    "displayName" : "Special Security Area Cor",
+    "signMainTitle" : "Cor",
+    "signSubTitle" : "Special Security Area"
+  },
+  "sp_os" : {
+    "displayName" : "Special Security Area Os",
+    "signMainTitle" : "Os",
+    "signSubTitle" : "Special Security Area"
+  },
+  "sp_rudus" : {
+    "displayName" : "Laboratory Waste Disposal Plant Rudus Floor 1",
+    "signMainTitle" : "Rudus Floor 1",
+    "signSubTitle" : "Laboratory Waste Disposal Plant"
+  },
+  "sp_rudus2" : {
+    "displayName" : "Laboratory Waste Disposal Plant Rudus Floor 2",
+    "signMainTitle" : "Rudus Floor 2",
+    "signSubTitle" : "Laboratory Waste Disposal Plant"
+  },
+  "sp_rudus3" : {
+    "displayName" : "Laboratory Waste Disposal Plant Rudus Floor 3",
+    "signMainTitle" : "Rudus Floor 3",
+    "signSubTitle" : "Laboratory Waste Disposal Plant"
+  },
+  "sp_rudus4" : {
+    "displayName" : "Laboratory Waste Disposal Plant Rudus Floor 4",
+    "signMainTitle" : "Rudus Floor 4",
+    "signSubTitle" : "Laboratory Waste Disposal Plant"
+  },
+  "spl_fild01" : {
+    "displayName" : "Splendide Field",
+    "signMainTitle" : "Splendide Field"
+  },
+  "spl_fild02" : {
+    "displayName" : "Splendide Field",
+    "signMainTitle" : "Splendide Field"
+  },
+  "spl_fild03" : {
+    "displayName" : "Splendide Field",
+    "signMainTitle" : "Splendide Field"
+  },
+  "spl_in01" : {
+    "displayName" : "Inside Splendide Field Command Center"
+  },
+  "spl_in02" : {
+    "displayName" : "Inside Splendide"
+  },
+  "splendide" : {
+    "displayName" : "Laphine Advanced Base Splendide",
+    "signMainTitle" : "Splendide",
+    "signSubTitle" : "Laphine Advanced Base, Jotunheim"
+  },
+  "star_frst" : {
+    "displayName" : "Meteor Forest",
+    "signMainTitle" : "Meteor Forest"
+  },
+  "star_in" : {
+    "displayName" : "Inside Meteor Forest"
+  },
+  "sword_3-1" : {
+    "displayName" : "Swordsman Job Change Center"
+  },
+  "t_garden" : {
+    "displayName" : "Garden of Time",
+    "signMainTitle" : "Garden of Time"
+  },
+  "te_alde_gld" : {
+    "displayName" : "Kafragarten",
+    "signMainTitle" : "Kafragarten",
+    "signSubTitle" : "Rune-Midgarts"
+  },
+  "te_aldecas01" : {
+    "displayName" : "Leliah",
+    "signMainTitle" : "Leliah",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas02" : {
+    "displayName" : "Pavianne",
+    "signMainTitle" : "Pavianne",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas03" : {
+    "displayName" : "Jasmine",
+    "signMainTitle" : "Jasmine",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas04" : {
+    "displayName" : "Roxie",
+    "signMainTitle" : "Roxie",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_aldecas05" : {
+    "displayName" : "Curly Sue",
+    "signMainTitle" : "Curly Sue",
+    "signSubTitle" : "Kafragarten"
+  },
+  "te_prt_gld" : {
+    "displayName" : "Gloria",
+    "signMainTitle" : "Gloria",
+    "signSubTitle" : "Rune-Midgarts"
+  },
+  "te_prtcas01" : {
+    "displayName" : "Gaebolg",
+    "signMainTitle" : "Gaebolg",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas02" : {
+    "displayName" : "Richard",
+    "signMainTitle" : "Richard",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas03" : {
+    "displayName" : "Wigner",
+    "signMainTitle" : "Wigner",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas04" : {
+    "displayName" : "Heine",
+    "signMainTitle" : "Heine",
+    "signSubTitle" : "Gloria"
+  },
+  "te_prtcas05" : {
+    "displayName" : "Nerius",
+    "signMainTitle" : "Nerius",
+    "signSubTitle" : "Gloria"
+  },
+  "teg_dun01" : {
+    "displayName" : "Guild Underground Dungeon",
+    "signMainTitle" : "Guild Underground Dungeon",
+    "signSubTitle" : "Gloria"
+  },
+  "teg_dun02" : {
+    "displayName" : "Guild Underground Dungeon",
+    "signMainTitle" : "Guild Underground Dungeon",
+    "signSubTitle" : "Kafragarten"
+  },
+  "tha_t01" : {
+    "displayName" : "Thanatos Tower Lower Floor Museum Entrance",
+    "signMainTitle" : "Museum Entrance",
+    "signSubTitle" : "Thanatos Tower Lower Floor"
+  },
+  "tha_t02" : {
+    "displayName" : "Thanatos Tower Lower Floor Museum",
+    "signMainTitle" : "Museum",
+    "signSubTitle" : "Thanatos Tower Lower Floor"
+  },
+  "tha_t03" : {
+    "displayName" : "Thanatos Tower Lower Floor Abandoned Space",
+    "signMainTitle" : "Abandoned Space",
+    "signSubTitle" : "Thanatos Tower Lower Floor"
+  },
+  "tha_t04" : {
+    "displayName" : "Thanatos Tower Lower Floor Abandoned Space",
+    "signMainTitle" : "Abandoned Space",
+    "signSubTitle" : "Thanatos Tower Lower Floor"
+  },
+  "tha_t05" : {
+    "displayName" : "Thanatos Tower Upper Floor",
+    "signMainTitle" : "Thanatos Tower Upper Floor"
+  },
+  "tha_t06" : {
+    "displayName" : "Thanatos Tower Upper Floor",
+    "signMainTitle" : "Thanatos Tower Upper Floor"
+  },
+  "tha_t07" : {
+    "displayName" : "Thanatos Tower Upper Floor Room of Angel",
+    "signMainTitle" : "Room of Angel",
+    "signSubTitle" : "Thanatos Tower Upper Floor"
+  },
+  "tha_t08" : {
+    "displayName" : "Thanatos Tower Upper Floor Room of Angel",
+    "signMainTitle" : "Room of Angel",
+    "signSubTitle" : "Thanatos Tower Upper Floor"
+  },
+  "tha_t09" : {
+    "displayName" : "Thanatos Tower Upper Floor Room of Anguish",
+    "signMainTitle" : "Room of Anguish",
+    "signSubTitle" : "Thanatos Tower Upper Floor"
+  },
+  "tha_t10" : {
+    "displayName" : "Thanatos Tower Upper Floor Room of Sadness",
+    "signMainTitle" : "Room of Sadness",
+    "signSubTitle" : "Thanatos Tower Upper Floor"
+  },
+  "tha_t11" : {
+    "displayName" : "Thanatos Tower Upper Floor Room of Despair",
+    "signMainTitle" : "Room of Despair",
+    "signSubTitle" : "Thanatos Tower Upper Floor"
+  },
+  "tha_t12" : {
+    "displayName" : "Thanatos Tower Upper Floor Room of Hatred",
+    "signMainTitle" : "Room of Hatred",
+    "signSubTitle" : "Thanatos Tower Upper Floor"
+  },
+  "thana_boss" : {
+    "displayName" : "Thanatos Tower (Unknown Area)"
+  },
+  "thana_scene01" : {
+    "displayName" : "Thanatos Tower Entrance",
+    "signMainTitle" : "Thanatos Tower Entrance"
+  },
+  "thana_step" : {
+    "displayName" : "Thanatos Tower Upper Floor Staircase",
+    "signMainTitle" : "Thanatos Tower Upper Floor Staircase"
+  },
+  "thor_camp" : {
+    "displayName" : "Thor Volcano Camp",
+    "signMainTitle" : "Thor Volcano Camp"
+  },
+  "thor_v01" : {
+    "displayName" : "Thor Volcano Dungeon Floor 1",
+    "signMainTitle" : "Thor Volcano Dungeon Floor 1"
+  },
+  "thor_v02" : {
+    "displayName" : "Thor Volcano Dungeon Floor 2",
+    "signMainTitle" : "Thor Volcano Dungeon Floor 2"
+  },
+  "thor_v03" : {
+    "displayName" : "Thor Volcano Dungeon Floor 3",
+    "signMainTitle" : "Thor Volcano Dungeon Floor 3"
+  },
+  "tra_fild" : {
+    "displayName" : "Prontera Training Ground",
+    "signMainTitle" : "Prontera Training Ground"
+  },
+  "treasure01" : {
+    "displayName" : "Alberta Sunken Ship Floor 1",
+    "signMainTitle" : "Sunken Ship Floor 1",
+    "signSubTitle" : "Alberta"
+  },
+  "treasure02" : {
+    "displayName" : "Alberta Sunken Ship Floor 2",
+    "signMainTitle" : "Sunken Ship Floor 2",
+    "signSubTitle" : "Alberta"
+  },
+  "treasure_n1" : {
+    "displayName" : "Izlude Shipwreck Floor 1",
+    "signMainTitle" : "Izlude Shipwreck Floor 1"
+  },
+  "treasure_n2" : {
+    "displayName" : "Izlude Shipwreck Floor 2",
+    "signMainTitle" : "Izlude Shipwreck Floor 2"
+  },
+  "tur_d03_i" : {
+    "displayName" : "Lonesome Good Turtles Village",
+    "signMainTitle" : "Lonesome Good Turtles Village",
+    "signSubTitle" : "Illusion"
+  },
+  "tur_d04_i" : {
+    "displayName" : "Gloomy Turtle Palace",
+    "signMainTitle" : "Gloomy Turtle Palace",
+    "signSubTitle" : "Illusion"
+  },
+  "tur_dun01" : {
+    "displayName" : "Turtle Island",
+    "signMainTitle" : "Turtle Island"
+  },
+  "tur_dun02" : {
+    "displayName" : "Turtle Island Dungeon",
+    "signMainTitle" : "Turtle Island Dungeon"
+  },
+  "tur_dun03" : {
+    "displayName" : "Good Turtles Village",
+    "signMainTitle" : "Good Turtles Village"
+  },
+  "tur_dun04" : {
+    "displayName" : "Turtle Palace",
+    "signMainTitle" : "Turtle Palace"
+  },
+  "tur_dun05" : {
+    "displayName" : "Underground Swamp Zone",
+    "signMainTitle" : "Underground Swamp Zone"
+  },
+  "tur_dun06" : {
+    "displayName" : "Underground Swamp Zone",
+    "signMainTitle" : "Underground Swamp Zone"
+  },
+  "turbo_e_16" : {
+    "displayName" : "Turbo Track Stadium"
+  },
+  "turbo_e_4" : {
+    "displayName" : "Turbo Track Stadium"
+  },
+  "turbo_e_8" : {
+    "displayName" : "Turbo Track Stadium"
+  },
+  "turbo_n_1" : {
+    "displayName" : "Turbo Track Stadium"
+  },
+  "turbo_n_16" : {
+    "displayName" : "Turbo Track Stadium"
+  },
+  "turbo_n_4" : {
+    "displayName" : "Turbo Track Stadium"
+  },
+  "turbo_n_8" : {
+    "displayName" : "Turbo Track Stadium"
+  },
+  "turbo_room" : {
+    "displayName" : "Turbo Track Waiting Room",
+    "signMainTitle" : "Turbo Track Waiting Room"
+  },
+  "um_dun01" : {
+    "displayName" : "Umbala Carpenter's Shop in the Tree",
+    "signMainTitle" : "Carpenter's Shop in the Tree",
+    "signSubTitle" : "Umbala"
+  },
+  "um_dun02" : {
+    "displayName" : "Umbala Passage to a Foreign World",
+    "signMainTitle" : "Passage in the Tree",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild01" : {
+    "displayName" : "Luluka Forest in Umbala",
+    "signMainTitle" : "Luluka Forest",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild02" : {
+    "displayName" : "Umbala Hoomga Forest",
+    "signMainTitle" : "Hoomga Forest",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild03" : {
+    "displayName" : "Kalala Swamp in Umbala",
+    "signMainTitle" : "Kalala Swamp",
+    "signSubTitle" : "Umbala"
+  },
+  "um_fild04" : {
+    "displayName" : "Hoomga Jungle in Umbala",
+    "signMainTitle" : "Hoomga Forest",
+    "signSubTitle" : "Umbala"
+  },
+  "um_in" : {
+    "displayName" : "Inside Umbala"
+  },
+  "umbala" : {
+    "displayName" : "Wootan Tribe's Village, Umbala",
+    "signMainTitle" : "Umbala",
+    "signSubTitle" : "Wootan Tribe's Village"
+  },
+  "un_bk_q" : {
+    "displayName" : "Underground Bunker",
+    "signMainTitle" : "Underground Bunker"
+  },
+  "un_bunker" : {
+    "displayName" : "Underground Bunker",
+    "signMainTitle" : "Underground Bunker"
+  },
+  "un_myst" : {
+    "displayName" : "Underground Tunnel",
+    "signMainTitle" : "Underground Tunnel"
+  },
+  "valkyrie" : {
+    "displayName" : "Valkyrie Hall (The Hall of Honor)",
+    "signMainTitle" : "Valkyrie Hall",
+    "signSubTitle" : "The Hall of Honor"
+  },
+  "ve_fild01" : {
+    "displayName" : "Veins Field",
+    "signMainTitle" : "Veins Field"
+  },
+  "ve_fild02" : {
+    "displayName" : "Veins Field",
+    "signMainTitle" : "Veins Field"
+  },
+  "ve_fild03" : {
+    "displayName" : "Veins Field",
+    "signMainTitle" : "Veins Field"
+  },
+  "ve_fild04" : {
+    "displayName" : "Veins Field",
+    "signMainTitle" : "Veins Field"
+  },
+  "ve_fild06" : {
+    "displayName" : "Veins Field",
+    "signMainTitle" : "Veins Field"
+  },
+  "ve_fild07" : {
+    "displayName" : "Veins Field",
+    "signMainTitle" : "Veins Field"
+  },
+  "ve_in" : {
+    "displayName" : "Inside Veins"
+  },
+  "ve_in02" : {
+    "displayName" : "Inside Veins"
+  },
+  "veins" : {
+    "displayName" : "Veins, the Canyon Village",
+    "signMainTitle" : "Veins",
+    "signSubTitle" : "Canyon village, Arunafeltz"
+  },
+  "ver_eju" : {
+    "displayName" : "Eastern Ruins of Juperos",
+    "signMainTitle" : "Eastern Ruins",
+    "signSubTitle" : "Juperos"
+  },
+  "ver_tunn" : {
+    "displayName" : "Outer Tunnel of Verus",
+    "signMainTitle" : "Outer Tunnel",
+    "signSubTitle" : "Verus"
+  },
+  "verus01" : {
+    "displayName" : "Laboratory - OPTATIO",
+    "signMainTitle" : "Laboratory - OPTATIO",
+    "signSubTitle" : "Verus City"
+  },
+  "verus02" : {
+    "displayName" : "Research Building - WISH",
+    "signMainTitle" : "Research Building - WISH",
+    "signSubTitle" : "Verus City"
+  },
+  "verus03" : {
+    "displayName" : "Verus Central Square",
+    "signMainTitle" : "Central Square",
+    "signSubTitle" : "Verus City"
+  },
+  "verus04" : {
+    "displayName" : "Excavation Site of Verus",
+    "signMainTitle" : "Residential Building - HOPE",
+    "signSubTitle" : "Excavation Site, Verus City"
+  },
+  "vis_h01" : {
+    "displayName" : "Corridor of Phantoms Floor 1",
+    "signMainTitle" : "Corridor of Phantoms Floor 1"
+  },
+  "vis_h02" : {
+    "displayName" : "Corridor of Phantoms Floor 2",
+    "signMainTitle" : "Corridor of Phantoms Floor 2"
+  },
+  "vis_h03" : {
+    "displayName" : "Corridor of Phantoms Floor 3",
+    "signMainTitle" : "Corridor of Phantoms Floor 3"
+  },
+  "vis_h04" : {
+    "displayName" : "Corridor of Phantoms Floor 4",
+    "signMainTitle" : "Corridor of Phantoms Floor 4"
+  },
+  "vr_bob" : {
+    "displayName" : "Fantasy Series - Today's Table",
+    "signMainTitle" : "Today's table",
+    "signSubTitle" : "Fantasy Series-006"
+  },
+  "wizard_1-1" : {
+    "displayName" : "Wizard Job Change Center"
+  },
+  "wizard_2-1" : {
+    "displayName" : "Wizard Job Change Center"
+  },
+  "wizard_3-1" : {
+    "displayName" : "Wizard Job Change Center"
+  },
+  "wolfvill" : {
+    "displayName" : "Gray Wolf Village",
+    "signMainTitle" : "Gray Wolf Village",
+    "signSubTitle" : "Native Hideout"
+  },
+  "x_lhz" : {
+    "displayName" : "Lighthalzen of Parallell World",
+    "signMainTitle" : "Lighthalzen",
+    "signSubTitle" : "Parallell World"
+  },
+  "x_prt" : {
+    "displayName" : "Prontera of Parallell World",
+    "signMainTitle" : "Prontera",
+    "signSubTitle" : "Parallell World"
+  },
+  "x_prt_evt" : {
+    "displayName" : "Dimensional Prontera",
+    "signMainTitle" : "Prontera Night Market",
+    "signSubTitle" : "Beyond the Dimension"
+  },
+  "x_prt_in" : {
+    "displayName" : "Inside Dimensional Prontera"
+  },
+  "x_ra" : {
+    "displayName" : "Rachel of Parallell World",
+    "signMainTitle" : "Rachel",
+    "signSubTitle" : "Parallell World"
+  },
+  "xmas" : {
+    "displayName" : "Lutie, the Snow Village",
+    "signMainTitle" : "Lutie",
+    "signSubTitle" : "Snow Village"
+  },
+  "xmas_dun01" : {
+    "displayName" : "Lutie Toy Factory Warehouse",
+    "signMainTitle" : "Toy Factory Warehouse",
+    "signSubTitle" : "Lutie"
+  },
+  "xmas_dun02" : {
+    "displayName" : "Lutie Toy Monitoring Room",
+    "signMainTitle" : "Toy Monitoring Room",
+    "signSubTitle" : "Lutie"
+  },
+  "xmas_fild01" : {
+    "displayName" : "Lutie Field",
+    "signMainTitle" : "Lutie Field"
+  },
+  "xmas_in" : {
+    "displayName" : "Inside Lutie"
+  },
+  "y_airport" : {
+    "displayName" : "Juno Airport",
+    "signMainTitle" : "Juno Airport"
+  },
+  "yggdrasil01" : {
+    "displayName" : "Hvergelmir's Fountain (Trunk of Yggdrasil)",
+    "signMainTitle" : "Hvergelmir's Fountain"
+  },
+  "yuno" : {
+    "displayName" : "Juno, the Capital of Schwarzwald Republic",
+    "signMainTitle" : "Juno",
+    "signSubTitle" : "The Capital of Schwarzwald Republic"
+  },
+  "yuno_fild01" : {
+    "displayName" : "Schwarzwald Border Checkpoint",
+    "signMainTitle" : "Schwarzwald Border Checkpoint"
+  },
+  "yuno_fild02" : {
+    "displayName" : "Kiel Hyre's Cottage",
+    "signMainTitle" : "Kiel Hyre's Cottage"
+  },
+  "yuno_fild03" : {
+    "displayName" : "El Mes Plateau",
+    "signMainTitle" : "El Mes Plateau"
+  },
+  "yuno_fild04" : {
+    "displayName" : "El Mes Plateau",
+    "signMainTitle" : "El Mes Plateau"
+  },
+  "yuno_fild06" : {
+    "displayName" : "El Mes Plateau",
+    "signMainTitle" : "El Mes Plateau"
+  },
+  "yuno_fild07" : {
+    "displayName" : "El Mes Gorge (Valley of Abyss)",
+    "signMainTitle" : "El Mes Gorge",
+    "signSubTitle" : "Valley of Abyss"
+  },
+  "yuno_fild08" : {
+    "displayName" : "Kiel Hyre Academy, Juno",
+    "signMainTitle" : "Kiel Hyre Academy, Juno"
+  },
+  "yuno_fild09" : {
+    "displayName" : "Schwarzwald Guards Camp",
+    "signMainTitle" : "Schwarzwald Guards Camp"
+  },
+  "yuno_fild11" : {
+    "displayName" : "Juno Field",
+    "signMainTitle" : "Juno Field"
+  },
+  "yuno_fild12" : {
+    "displayName" : "Schwarzwald Border Checkpoint",
+    "signMainTitle" : "Schwarzwald Border Checkpoint"
+  },
+  "yuno_in01" : {
+    "displayName" : "Inside Juno"
+  },
+  "yuno_in02" : {
+    "displayName" : "Inside the Sage Castle"
+  },
+  "yuno_in03" : {
+    "displayName" : "Inside Juno"
+  },
+  "yuno_in04" : {
+    "displayName" : "Republic Library",
+    "signMainTitle" : "Republic Library"
+  },
+  "yuno_in05" : {
+    "displayName" : "Power Plant of Ymir's Heart",
+    "signMainTitle" : "Power Plant of Ymir's Heart"
+  },
+  "yuno_pre" : {
+    "displayName" : "Schwarzwald Government Buildings",
+    "signMainTitle" : "Schwarzwald Government Buildings"
+  },
+  "z_agit" : {
+    "displayName" : "Z Gang's Hideout",
+    "signMainTitle" : "Z Gang's Hideout"
+  }
+}

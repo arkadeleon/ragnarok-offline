@@ -1,0 +1,1592 @@
+{
+  "0000" : {
+    "statusDescription" : "Provocar"
+  },
+  "0001" : {
+    "statusDescription" : "Vigor"
+  },
+  "0002" : {
+    "statusDescription" : "Rapidez com Duas Mãos"
+  },
+  "0003" : {
+    "statusDescription" : "Concentrar"
+  },
+  "0004" : {
+    "statusDescription" : "Esconderijo"
+  },
+  "0005" : {
+    "statusDescription" : "Furtividade"
+  },
+  "0006" : {
+    "statusDescription" : "Envenenar Arma"
+  },
+  "0007" : {
+    "statusDescription" : "Refletir Veneno"
+  },
+  "0008" : {
+    "statusDescription" : "Pântano dos Mortos"
+  },
+  "0009" : {
+    "statusDescription" : "Angelus"
+  },
+  "0010" : {
+    "statusDescription" : "Bênção"
+  },
+  "0011" : {
+    "statusDescription" : "Signum Crucis"
+  },
+  "0012" : {
+    "statusDescription" : "Aumentar Agilidade"
+  },
+  "0013" : {
+    "statusDescription" : "Diminuir Agilidade"
+  },
+  "0014" : {
+    "statusDescription" : "Retardar Veneno"
+  },
+  "0015" : {
+    "statusDescription" : "Impositio Manus"
+  },
+  "0016" : {
+    "statusDescription" : "Suffragium"
+  },
+  "0017" : {
+    "statusDescription" : "Aspersio"
+  },
+  "0018" : {
+    "statusDescription" : "Armadura Abençoada"
+  },
+  "0019" : {
+    "statusDescription" : "Kyrie Eleison"
+  },
+  "0020" : {
+    "statusDescription" : "Magnificat"
+  },
+  "0021" : {
+    "statusDescription" : "Glória"
+  },
+  "0022" : {
+    "statusDescription" : "Lex Aeterna"
+  },
+  "0023" : {
+    "statusDescription" : "Adrenalina Pura"
+  },
+  "0024" : {
+    "statusDescription" : "Manejo Perfeito"
+  },
+  "0025" : {
+    "statusDescription" : "Força Violenta"
+  },
+  "0026" : {
+    "statusDescription" : "Amplificar Poder"
+  },
+  "0027" : {
+    "statusDescription" : "Montaria"
+  },
+  "0028" : {
+    "statusDescription" : "Ave de Rapina"
+  },
+  "0029" : {
+    "statusDescription" : "Fingir de morto"
+  },
+  "0030" : {
+    "statusDescription" : "Grito de Guerra"
+  },
+  "0031" : {
+    "statusDescription" : "Proteção Arcana"
+  },
+  "0032" : {
+    "statusDescription" : "Armadura quebrada"
+  },
+  "0033" : {
+    "statusDescription" : "Arma quebrada"
+  },
+  "0034" : {
+    "statusDescription" : "Alucinação"
+  },
+  "0035" : {
+    "statusDescription" : "50% acima do peso"
+  },
+  "0036" : {
+    "statusDescription" : "90% acima do peso"
+  },
+  "0037" : {
+    "statusDescription" : "Poção da Concentração"
+  },
+  "0038" : {
+    "statusDescription" : "Poção do Despertar"
+  },
+  "0039" : {
+    "statusDescription" : "Em Fúria!"
+  },
+  "0041" : {
+    "statusDescription" : "%s"
+  },
+  "0042" : {
+    "statusDescription" : "Movimento acelerado"
+  },
+  "0050" : {
+    "statusDescription" : "Remover Arma"
+  },
+  "0051" : {
+    "statusDescription" : "Remover Escudo"
+  },
+  "0052" : {
+    "statusDescription" : "Remover Armadura"
+  },
+  "0053" : {
+    "statusDescription" : "Remover Capacete"
+  },
+  "0054" : {
+    "statusDescription" : "Revestir Arma"
+  },
+  "0055" : {
+    "statusDescription" : "Revestir Escudo"
+  },
+  "0056" : {
+    "statusDescription" : "Revestir Armadura"
+  },
+  "0057" : {
+    "statusDescription" : "Revestir Capacete"
+  },
+  "0058" : {
+    "statusDescription" : "Bloqueio"
+  },
+  "0059" : {
+    "statusDescription" : "Escudo Refletor"
+  },
+  "0061" : {
+    "statusDescription" : "Divina Providência"
+  },
+  "0062" : {
+    "statusDescription" : "Aura Sagrada"
+  },
+  "0064" : {
+    "statusDescription" : "Aspersio"
+  },
+  "0065" : {
+    "statusDescription" : "Desejo Arcano"
+  },
+  "0068" : {
+    "statusDescription" : "Rapidez com Lança"
+  },
+  "0070" : {
+    "statusDescription" : "Assovio"
+  },
+  "0071" : {
+    "statusDescription" : "Crepúsculo Sangrento"
+  },
+  "0072" : {
+    "statusDescription" : "Poema de Bragi"
+  },
+  "0073" : {
+    "statusDescription" : "Maçãs de Idun"
+  },
+  "0074" : {
+    "statusDescription" : "Sibilo"
+  },
+  "0075" : {
+    "statusDescription" : "Não me Abandones"
+  },
+  "0076" : {
+    "statusDescription" : "Beijo da Sorte"
+  },
+  "0077" : {
+    "statusDescription" : "Dança Cigana"
+  },
+  "0078" : {
+    "statusDescription" : "Banquete de Njord"
+  },
+  "0079" : {
+    "statusDescription" : "Ritmo Caótico"
+  },
+  "0080" : {
+    "statusDescription" : "Rufar dos Tambores"
+  },
+  "0081" : {
+    "statusDescription" : "Anel dos Nibelungos"
+  },
+  "0082" : {
+    "statusDescription" : "Lamento de Loki"
+  },
+  "0083" : {
+    "statusDescription" : "Canção Preciosa"
+  },
+  "0084" : {
+    "statusDescription" : "Ode a Siegfried"
+  },
+  "0087" : {
+    "statusDescription" : "Corpo Fechado"
+  },
+  "0088" : {
+    "statusDescription" : "Punho Supremo de Asura"
+  },
+  "0090" : {
+    "statusDescription" : "Chamas"
+  },
+  "0091" : {
+    "statusDescription" : "Geada"
+  },
+  "0092" : {
+    "statusDescription" : "Ventania"
+  },
+  "0093" : {
+    "statusDescription" : "Terremoto"
+  },
+  "0097" : {
+    "statusDescription" : "Zumbificação"
+  },
+  "0103" : {
+    "statusDescription" : "Lâmina de Aura"
+  },
+  "0104" : {
+    "statusDescription" : "Aparar Golpe"
+  },
+  "0105" : {
+    "statusDescription" : "Dedicação"
+  },
+  "0106" : {
+    "statusDescription" : "Relaxar"
+  },
+  "0110" : {
+    "statusDescription" : "Assumptio"
+  },
+  "0112" : {
+    "statusDescription" : "Terreno Encantado"
+  },
+  "0113" : {
+    "statusDescription" : "Amplificação Mística"
+  },
+  "0114" : {
+    "statusDescription" : "Encantar com Veneno Mortal"
+  },
+  "0115" : {
+    "statusDescription" : "Visão Real"
+  },
+  "0116" : {
+    "statusDescription" : "Caminho do Vento"
+  },
+  "0117" : {
+    "statusDescription" : "Golpe Estilhaçante"
+  },
+  "0118" : {
+    "statusDescription" : "Impulso do Carrinho"
+  },
+  "0120" : {
+    "statusDescription" : "Instinto de Defesa"
+  },
+  "0121" : {
+    "statusDescription" : "Controle de Marionete"
+  },
+  "0122" : {
+    "statusDescription" : "Controle de Marionete"
+  },
+  "0124" : {
+    "statusDescription" : "Sangramento"
+  },
+  "0125" : {
+    "statusDescription" : "Ataque Vital"
+  },
+  "0130" : {
+    "statusDescription" : "Mãe, Pai, amo vocês!"
+  },
+  "0132" : {
+    "statusDescription" : "Instinto de Sobrevivência"
+  },
+  "0135" : {
+    "statusDescription" : "Postura do Tornado"
+  },
+  "0137" : {
+    "statusDescription" : "Postura da Patada Voadora"
+  },
+  "0139" : {
+    "statusDescription" : "Postura da Rasteira"
+  },
+  "0141" : {
+    "statusDescription" : "Postura do Contrachute"
+  },
+  "0143" : {
+    "statusDescription" : "Cambalhota"
+  },
+  "0145" : {
+    "statusDescription" : "Cólera"
+  },
+  "0146" : {
+    "statusDescription" : "%s"
+  },
+  "0147" : {
+    "statusDescription" : "Adrenalina Concentrada"
+  },
+  "0148" : {
+    "statusDescription" : "%s"
+  },
+  "0149" : {
+    "statusDescription" : "Espírito"
+  },
+  "0150" : {
+    "statusDescription" : "%s"
+  },
+  "0151" : {
+    "statusDescription" : "%s"
+  },
+  "0156" : {
+    "statusDescription" : "Kaizel"
+  },
+  "0157" : {
+    "statusDescription" : "Kaahi"
+  },
+  "0158" : {
+    "statusDescription" : "Kaupe"
+  },
+  "0161" : {
+    "statusDescription" : "Rapidez com Uma Mão"
+  },
+  "0169" : {
+    "statusDescription" : "Proteção Solar"
+  },
+  "0170" : {
+    "statusDescription" : "Proteção Lunar"
+  },
+  "0171" : {
+    "statusDescription" : "Proteção Estelar"
+  },
+  "0181" : {
+    "statusDescription" : "Preservar"
+  },
+  "0182" : {
+    "statusDescription" : "%s"
+  },
+  "0186" : {
+    "statusDescription" : "Lanças Duplas"
+  },
+  "0188" : {
+    "statusDescription" : "Força Violentíssima"
+  },
+  "0191" : {
+    "statusDescription" : "Destino nas Cartas"
+  },
+  "0197" : {
+    "statusDescription" : "Submissão"
+  },
+  "0198" : {
+    "statusDescription" : "Explosão Protetora"
+  },
+  "0200" : {
+    "statusDescription" : "Confinamento"
+  },
+  "0201" : {
+    "statusDescription" : "Confinamento"
+  },
+  "0203" : {
+    "statusDescription" : "Resistência Final"
+  },
+  "0204" : {
+    "statusDescription" : "Ataque Gatling"
+  },
+  "0205" : {
+    "statusDescription" : "Pausa Feliz"
+  },
+  "0206" : {
+    "statusDescription" : "Troca de Pele"
+  },
+  "0207" : {
+    "statusDescription" : "Imagem Falsa"
+  },
+  "0208" : {
+    "statusDescription" : "Aura ninja"
+  },
+  "0209" : {
+    "statusDescription" : "Pânico do Justiceiro"
+  },
+  "0210" : {
+    "statusDescription" : "Aumentar Precisão"
+  },
+  "0217" : {
+    "statusDescription" : "Montar Grifo"
+  },
+  "0241" : {
+    "statusDescription" : "%s"
+  },
+  "0242" : {
+    "statusDescription" : "%s"
+  },
+  "0243" : {
+    "statusDescription" : "%s"
+  },
+  "0244" : {
+    "statusDescription" : "%s"
+  },
+  "0245" : {
+    "statusDescription" : "%s"
+  },
+  "0246" : {
+    "statusDescription" : "%s"
+  },
+  "0247" : {
+    "statusDescription" : "%s"
+  },
+  "0248" : {
+    "statusDescription" : "%s"
+  },
+  "0249" : {
+    "statusDescription" : "%s"
+  },
+  "0250" : {
+    "statusDescription" : "%s"
+  },
+  "0251" : {
+    "statusDescription" : "%s"
+  },
+  "0252" : {
+    "statusDescription" : "%s"
+  },
+  "0271" : {
+    "statusDescription" : "%s"
+  },
+  "0272" : {
+    "statusDescription" : "%s"
+  },
+  "0273" : {
+    "statusDescription" : "%s"
+  },
+  "0274" : {
+    "statusDescription" : "%s"
+  },
+  "0275" : {
+    "statusDescription" : "%s"
+  },
+  "0276" : {
+    "statusDescription" : "%s"
+  },
+  "0282" : {
+    "statusDescription" : "Conjuração Lenta"
+  },
+  "0286" : {
+    "statusDescription" : "Ferimento Crítico"
+  },
+  "0289" : {
+    "statusDescription" : "%s"
+  },
+  "0290" : {
+    "statusDescription" : "Poção de DEF"
+  },
+  "0291" : {
+    "statusDescription" : "Poção de DEFM"
+  },
+  "0292" : {
+    "statusDescription" : "Poção da Regeneração"
+  },
+  "0293" : {
+    "statusDescription" : "Poção Menor de Vida"
+  },
+  "0294" : {
+    "statusDescription" : "Poção Média de Vida"
+  },
+  "0295" : {
+    "statusDescription" : "Abrasivo"
+  },
+  "0296" : {
+    "statusDescription" : "Cálice da Ilusão"
+  },
+  "0297" : {
+    "statusDescription" : "Pílula de HP"
+  },
+  "0298" : {
+    "statusDescription" : "Poção Mental"
+  },
+  "0299" : {
+    "statusDescription" : "Pílula de SP"
+  },
+  "0300" : {
+    "statusDescription" : "Suco de Gato"
+  },
+  "0301" : {
+    "statusDescription" : "Mega Resistência"
+  },
+  "0302" : {
+    "statusDescription" : "Propriedade"
+  },
+  "0304" : {
+    "statusDescription" : "Poder Infernal"
+  },
+  "0312" : {
+    "statusDescription" : "%s"
+  },
+  "0313" : {
+    "statusDescription" : "%s"
+  },
+  "0314" : {
+    "statusDescription" : "Muito obrigado!"
+  },
+  "0316" : {
+    "statusDescription" : "Encantar Lâmina"
+  },
+  "0318" : {
+    "statusDescription" : "Purificação"
+  },
+  "0319" : {
+    "statusDescription" : "Força Titânica"
+  },
+  "0320" : {
+    "statusDescription" : "Escamas Rochosas"
+  },
+  "0321" : {
+    "statusDescription" : "Vitalidade Rúnica"
+  },
+  "0322" : {
+    "statusDescription" : "Aura de Combate"
+  },
+  "0323" : {
+    "statusDescription" : "Regeneração Espiritual"
+  },
+  "0331" : {
+    "statusDescription" : "Lauda Agnus"
+  },
+  "0332" : {
+    "statusDescription" : "Lauda Ramus"
+  },
+  "0333" : {
+    "statusDescription" : "Ocultação"
+  },
+  "0334" : {
+    "statusDescription" : "Passos da Ilusão"
+  },
+  "0336" : {
+    "statusDescription" : "Renovatio"
+  },
+  "0337" : {
+    "statusDescription" : "Reflexo de Combate"
+  },
+  "0340" : {
+    "statusDescription" : "Expiatio"
+  },
+  "0341" : {
+    "statusDescription" : "Aplicar Toxina"
+  },
+  "0342" : {
+    "statusDescription" : "Cicuta"
+  },
+  "0343" : {
+    "statusDescription" : "Curare"
+  },
+  "0344" : {
+    "statusDescription" : "Beladona"
+  },
+  "0345" : {
+    "statusDescription" : "Waraitake"
+  },
+  "0346" : {
+    "statusDescription" : "Squamata"
+  },
+  "0347" : {
+    "statusDescription" : "Pirexia"
+  },
+  "0348" : {
+    "statusDescription" : "Oblivium"
+  },
+  "0349" : {
+    "statusDescription" : "Vípera"
+  },
+  "0351" : {
+    "statusDescription" : "Hipotermia"
+  },
+  "0352" : {
+    "statusDescription" : "Disparo Selvagem"
+  },
+  "0354" : {
+    "statusDescription" : "Pântano de Niflheim"
+  },
+  "0355" : {
+    "statusDescription" : "Maestria Arcana"
+  },
+  "0356" : {
+    "statusDescription" : "Distorção Arcana"
+  },
+  "0357" : {
+    "statusDescription" : "Montaria em Worg"
+  },
+  "0361" : {
+    "statusDescription" : "Aceleração"
+  },
+  "0362" : {
+    "statusDescription" : "Planar"
+  },
+  "0368" : {
+    "statusDescription" : "Pergaminho Tao Gunka"
+  },
+  "0369" : {
+    "statusDescription" : "Pergaminho Abelha Rainha"
+  },
+  "0370" : {
+    "statusDescription" : "Pergaminhp Orc Herói"
+  },
+  "0371" : {
+    "statusDescription" : "Pergaminho Senhor dos Orcs"
+  },
+  "0373" : {
+    "statusDescription" : "Superaquecimento"
+  },
+  "0374" : {
+    "statusDescription" : "Reconfigurar Elemento"
+  },
+  "0375" : {
+    "statusDescription" : "Sensor Infravermelho"
+  },
+  "0376" : {
+    "statusDescription" : "Campo Magnético"
+  },
+  "0377" : {
+    "statusDescription" : "Campo Protetor"
+  },
+  "0379" : {
+    "statusDescription" : "Campo de Invisibilidade"
+  },
+  "0381" : {
+    "statusDescription" : "Oportunidade de Manuk"
+  },
+  "0382" : {
+    "statusDescription" : "Coragem de Manuk"
+  },
+  "0383" : {
+    "statusDescription" : "Geleia de Frutas de Pinguicula"
+  },
+  "0384" : {
+    "statusDescription" : "Geleia de Mel de Vagalume"
+  },
+  "0385" : {
+    "statusDescription" : "Mimetismo"
+  },
+  "0386" : {
+    "statusDescription" : "Fé de Manuk"
+  },
+  "0387" : {
+    "statusDescription" : "Lágrima de Cornus"
+  },
+  "0388" : {
+    "statusDescription" : "%s"
+  },
+  "0389" : {
+    "statusDescription" : "%s"
+  },
+  "0390" : {
+    "statusDescription" : "Reflexão Amplificada"
+  },
+  "0391" : {
+    "statusDescription" : "Proteção da Vanguarda"
+  },
+  "0393" : {
+    "statusDescription" : "Desejo das Sombras"
+  },
+  "0394" : {
+    "statusDescription" : "Vínculo Sombrio"
+  },
+  "0396" : {
+    "statusDescription" : "Aegis Domini"
+  },
+  "0397" : {
+    "statusDescription" : "Aegis Domini"
+  },
+  "0398" : {
+    "statusDescription" : "Aegis Domini"
+  },
+  "0399" : {
+    "statusDescription" : "Borrifar Tinta"
+  },
+  "0400" : {
+    "statusDescription" : "Exceder Limite"
+  },
+  "0401" : {
+    "statusDescription" : "Adoramus"
+  },
+  "0402" : {
+    "statusDescription" : "Prestigio Divino"
+  },
+  "0403" : {
+    "statusDescription" : "Forma Etérea"
+  },
+  "0404" : {
+    "statusDescription" : "Pestilência"
+  },
+  "0405" : {
+    "statusDescription" : "Formação Real"
+  },
+  "0407" : {
+    "statusDescription" : "Consagração"
+  },
+  "0408" : {
+    "statusDescription" : "Máscara da Fraqueza"
+  },
+  "0409" : {
+    "statusDescription" : "Máscara da Melancolia"
+  },
+  "0410" : {
+    "statusDescription" : "Dragão Ascendente"
+  },
+  "0411" : {
+    "statusDescription" : "Máscara da Tolice"
+  },
+  "0412" : {
+    "statusDescription" : "Máscara da Ociosidade"
+  },
+  "0413" : {
+    "statusDescription" : "Salto Relâmpago"
+  },
+  "0414" : {
+    "statusDescription" : "Acarajé"
+  },
+  "0415" : {
+    "statusDescription" : "Máscara do Infortúnio"
+  },
+  "0417" : {
+    "statusDescription" : "Campo Amaldiçoado"
+  },
+  "0418" : {
+    "statusDescription" : "Máscara da Vulnerabilidade"
+  },
+  "0419" : {
+    "statusDescription" : "Cotovelada Ascendente"
+  },
+  "0421" : {
+    "statusDescription" : "Remover Acessório"
+  },
+  "0423" : {
+    "statusDescription" : "Biscoito da Papisa"
+  },
+  "0425" : {
+    "statusDescription" : "Chakra da Energia"
+  },
+  "0426" : {
+    "statusDescription" : "Chakra da Fúria"
+  },
+  "0427" : {
+    "statusDescription" : "Chakra do Vigor"
+  },
+  "0429" : {
+    "statusDescription" : "Ritmo Contagiante"
+  },
+  "0430" : {
+    "statusDescription" : "Balada Sinfônica"
+  },
+  "0435" : {
+    "statusDescription" : "Sono Profundo"
+  },
+  "0436" : {
+    "statusDescription" : "Sibilo de Eir"
+  },
+  "0437" : {
+    "statusDescription" : "Cristalização"
+  },
+  "0438" : {
+    "statusDescription" : "Ode a Hela"
+  },
+  "0439" : {
+    "statusDescription" : "Canção de Alfheim"
+  },
+  "0441" : {
+    "statusDescription" : "Dança com Lobos"
+  },
+  "0442" : {
+    "statusDescription" : "Sinfonia dos Ventos"
+  },
+  "0443" : {
+    "statusDescription" : "Canção de Balder"
+  },
+  "0444" : {
+    "statusDescription" : "Harmonizar"
+  },
+  "0445" : {
+    "statusDescription" : "Encanto de Órion"
+  },
+  "0446" : {
+    "statusDescription" : "Aquecer Terreno"
+  },
+  "0447" : {
+    "statusDescription" : "Serenata ao Luar"
+  },
+  "0448" : {
+    "statusDescription" : "Loucura"
+  },
+  "0450" : {
+    "statusDescription" : "Analisar"
+  },
+  "0451" : {
+    "statusDescription" : "Orvalho de Idun"
+  },
+  "0452" : {
+    "statusDescription" : "Cântico da Iluminação"
+  },
+  "0453" : {
+    "statusDescription" : "Clamor de Batalha"
+  },
+  "0454" : {
+    "statusDescription" : "Murmúrio Perene"
+  },
+  "0461" : {
+    "statusDescription" : "Propulsão do Carrinho"
+  },
+  "0463" : {
+    "statusDescription" : "Armadilha de Espinhos"
+  },
+  "0470" : {
+    "statusDescription" : "Grito da Mandrágora"
+  },
+  "0472" : {
+    "statusDescription" : "Sacramentum"
+  },
+  "0473" : {
+    "statusDescription" : "Assumptio"
+  },
+  "0476" : {
+    "statusDescription" : "Dor de Barriga"
+  },
+  "0480" : {
+    "statusDescription" : "Poção de HP"
+  },
+  "0481" : {
+    "statusDescription" : "Poção de SP"
+  },
+  "0482" : {
+    "statusDescription" : "Poção Branca Especial"
+  },
+  "0483" : {
+    "statusDescription" : "Poção Vitata 500"
+  },
+  "0484" : {
+    "statusDescription" : "Suco Celular Enriquecido"
+  },
+  "0490" : {
+    "statusDescription" : "Tornado"
+  },
+  "0491" : {
+    "statusDescription" : "Churrasco de Selvagem"
+  },
+  "0492" : {
+    "statusDescription" : "Coquetel Uivante"
+  },
+  "0493" : {
+    "statusDescription" : "Carne ao Vinho"
+  },
+  "0494" : {
+    "statusDescription" : "Chá Gelado de Siroma"
+  },
+  "0495" : {
+    "statusDescription" : "Cozido de Drosera"
+  },
+  "0496" : {
+    "statusDescription" : "Macarrão com Petite"
+  },
+  "0534" : {
+    "statusDescription" : "Elemental: Modo de espera"
+  },
+  "0535" : {
+    "statusDescription" : "Elemental: modo passivo"
+  },
+  "0536" : {
+    "statusDescription" : "Elemental: modo defensivo"
+  },
+  "0537" : {
+    "statusDescription" : "Elemental: modo ofensivo"
+  },
+  "0573" : {
+    "statusDescription" : "Fruto de Mora"
+  },
+  "0577" : {
+    "statusDescription" : "Analgésico"
+  },
+  "0578" : {
+    "statusDescription" : "Poção Maior de Vida"
+  },
+  "0579" : {
+    "statusDescription" : "Poção Energizante"
+  },
+  "0580" : {
+    "statusDescription" : "Luz da Criação"
+  },
+  "0581" : {
+    "statusDescription" : "Esquiva Especial"
+  },
+  "0583" : {
+    "statusDescription" : "Poder de Odin"
+  },
+  "0584" : {
+    "statusDescription" : "Modo Lutador"
+  },
+  "0605" : {
+    "statusDescription" : "Fluxo de Magma"
+  },
+  "0606" : {
+    "statusDescription" : "Armadura de Granito"
+  },
+  "0607" : {
+    "statusDescription" : "Tremor de Fogo"
+  },
+  "0608" : {
+    "statusDescription" : "Cinzas Vulcânicas"
+  },
+  "0611" : {
+    "statusDescription" : "Doce Mágico"
+  },
+  "0613" : {
+    "statusDescription" : "Montaria"
+  },
+  "0615" : {
+    "statusDescription" : "Utilizando Macro"
+  },
+  "0616" : {
+    "statusDescription" : "Tempo de espera de uso de Macro"
+  },
+  "0618" : {
+    "statusDescription" : "Comida de Gato"
+  },
+  "0620" : {
+    "statusDescription" : "Golpe Titânico"
+  },
+  "0621" : {
+    "statusDescription" : "Disface"
+  },
+  "0622" : {
+    "statusDescription" : "Sentar"
+  },
+  "0632" : {
+    "statusDescription" : "%s"
+  },
+  "0633" : {
+    "statusDescription" : "%s"
+  },
+  "0634" : {
+    "statusDescription" : "%s"
+  },
+  "0635" : {
+    "statusDescription" : "%s"
+  },
+  "0636" : {
+    "statusDescription" : "%s"
+  },
+  "0637" : {
+    "statusDescription" : "Irrecuperável"
+  },
+  "0638" : {
+    "statusDescription" : "DEF zero"
+  },
+  "0639" : {
+    "statusDescription" : "DEFM zero"
+  },
+  "0640" : {
+    "statusDescription" : "DEF zero"
+  },
+  "0641" : {
+    "statusDescription" : "DEFM zero"
+  },
+  "0646" : {
+    "statusDescription" : "Purificação da Alma"
+  },
+  "0647" : {
+    "statusDescription" : "Poção de Ouro"
+  },
+  "0650" : {
+    "statusDescription" : "Fogo de Artifício"
+  },
+  "0652" : {
+    "statusDescription" : "Inspiração"
+  },
+  "0654" : {
+    "statusDescription" : "Esmagamento Sombrio"
+  },
+  "0655" : {
+    "statusDescription" : "Vazio das Sombras"
+  },
+  "0656" : {
+    "statusDescription" : "Contrato das Sombras"
+  },
+  "0657" : {
+    "statusDescription" : "Distorção Crescente"
+  },
+  "0658" : {
+    "statusDescription" : "Amuleto do Espírito"
+  },
+  "0659" : {
+    "statusDescription" : "Ilusão do Luar"
+  },
+  "0660" : {
+    "statusDescription" : "Luar Sinistro"
+  },
+  "0662" : {
+    "statusDescription" : "Pílula de Combate"
+  },
+  "0663" : {
+    "statusDescription" : "Grande Pílula de Combate"
+  },
+  "0664" : {
+    "statusDescription" : "Elixir Rubro"
+  },
+  "0666" : {
+    "statusDescription" : "Pó Místico"
+  },
+  "0670" : {
+    "statusDescription" : "Água Milagrosa"
+  },
+  "0675" : {
+    "statusDescription" : "Ç³¼ºÇÑ ²É°¡Áö"
+  },
+  "0676" : {
+    "statusDescription" : "Luz Protetora"
+  },
+  "0677" : {
+    "statusDescription" : "Ataque Temporal"
+  },
+  "0678" : {
+    "statusDescription" : "Defesa Temporal"
+  },
+  "0679" : {
+    "statusDescription" : "Cura Temporal"
+  },
+  "0680" : {
+    "statusDescription" : "Escudo Temporal"
+  },
+  "0681" : {
+    "statusDescription" : "Estado Temporal"
+  },
+  "0682" : {
+    "statusDescription" : "Poder Temporal"
+  },
+  "0683" : {
+    "statusDescription" : "Energia Temporal"
+  },
+  "0685" : {
+    "statusDescription" : "Bolinho Divino"
+  },
+  "0686" : {
+    "statusDescription" : "Sangue de Gigante"
+  },
+  "0687" : {
+    "statusDescription" : "Núcleo Golem"
+  },
+  "0688" : {
+    "statusDescription" : "Fada da Estrela"
+  },
+  "0689" : {
+    "statusDescription" : "Fada da Pedra"
+  },
+  "0690" : {
+    "statusDescription" : "Fada do Gelo"
+  },
+  "0691" : {
+    "statusDescription" : "Fada do Sonho"
+  },
+  "0692" : {
+    "statusDescription" : "Fada da Sorte"
+  },
+  "0693" : {
+    "statusDescription" : "Fada da Música"
+  },
+  "0694" : {
+    "statusDescription" : "Fada da Luz"
+  },
+  "0697" : {
+    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â"
+  },
+  "0698" : {
+    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â"
+  },
+  "0699" : {
+    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­"
+  },
+  "0700" : {
+    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­"
+  },
+  "0702" : {
+    "statusDescription" : "Bênção da Lydia"
+  },
+  "0703" : {
+    "statusDescription" : "Bênção da Fenrir"
+  },
+  "0704" : {
+    "statusDescription" : "Bênção de Chaos"
+  },
+  "0705" : {
+    "statusDescription" : "Bênção de Reno"
+  },
+  "0706" : {
+    "statusDescription" : "Bênção de Reno"
+  },
+  "0707" : {
+    "statusDescription" : "Bênção de Reno"
+  },
+  "0711" : {
+    "statusDescription" : "Poder da Fenrir"
+  },
+  "0715" : {
+    "statusDescription" : "Canção de Frigga"
+  },
+  "0716" : {
+    "statusDescription" : "Offertorium"
+  },
+  "0717" : {
+    "statusDescription" : "Telecinesia"
+  },
+  "0720" : {
+    "statusDescription" : "Poder Máximo"
+  },
+  "0721" : {
+    "statusDescription" : "Fadiga"
+  },
+  "0722" : {
+    "statusDescription" : "Ilimitar"
+  },
+  "0723" : {
+    "statusDescription" : "Graça Real"
+  },
+  "0730" : {
+    "statusDescription" : "Garra Sombria"
+  },
+  "0736" : {
+    "statusDescription" : "Frio"
+  },
+  "0737" : {
+    "statusDescription" : "Queimadura"
+  },
+  "0752" : {
+    "statusDescription" : "Armadilha Aderente"
+  },
+  "0753" : {
+    "statusDescription" : "Reação Ilimitada"
+  },
+  "0755" : {
+    "statusDescription" : "Marcação"
+  },
+  "0756" : {
+    "statusDescription" : "Granada"
+  },
+  "0758" : {
+    "statusDescription" : "Proteção Platina"
+  },
+  "0759" : {
+    "statusDescription" : "Furor"
+  },
+  "0760" : {
+    "statusDescription" : "Anti-matéria"
+  },
+  "0762" : {
+    "statusDescription" : "Espada Escarlate"
+  },
+  "0763" : {
+    "statusDescription" : "Cajado Celeste"
+  },
+  "0764" : {
+    "statusDescription" : "Maça Dourada"
+  },
+  "0765" : {
+    "statusDescription" : "Balestra Esmeralda"
+  },
+  "0766" : {
+    "statusDescription" : "Carta para KDY"
+  },
+  "0767" : {
+    "statusDescription" : "Carta para KJH"
+  },
+  "0768" : {
+    "statusDescription" : "Carta para LMH"
+  },
+  "0769" : {
+    "statusDescription" : "Carta para LMS"
+  },
+  "0770" : {
+    "statusDescription" : "Carta para CHJ"
+  },
+  "0771" : {
+    "statusDescription" : "Carta para KJK"
+  },
+  "0772" : {
+    "statusDescription" : "Carta para MISA"
+  },
+  "0773" : {
+    "statusDescription" : "Carta para YAOB"
+  },
+  "0774" : {
+    "statusDescription" : "Carta para LEONA"
+  },
+  "0775" : {
+    "statusDescription" : "Carta para BIBIC"
+  },
+  "0776" : {
+    "statusDescription" : "Morto-Vivo!"
+  },
+  "0778" : {
+    "statusDescription" : "Efeito negativo"
+  },
+  "0783" : {
+    "statusDescription" : "Costelinha Grelhada"
+  },
+  "0784" : {
+    "statusDescription" : "Costela Refogada"
+  },
+  "0867" : {
+    "statusDescription" : "Poção Ilimitada"
+  },
+  "0873" : {
+    "statusDescription" : "Poção Sagrada"
+  },
+  "0875" : {
+    "statusDescription" : "Petrificação"
+  },
+  "0876" : {
+    "statusDescription" : "Congelamento"
+  },
+  "0877" : {
+    "statusDescription" : "Atordoamento"
+  },
+  "0878" : {
+    "statusDescription" : "Sono"
+  },
+  "0880" : {
+    "statusDescription" : "Petrificação"
+  },
+  "0881" : {
+    "statusDescription" : "Incêndio"
+  },
+  "0882" : {
+    "statusDescription" : "Exílio"
+  },
+  "0883" : {
+    "statusDescription" : "Envenenamento"
+  },
+  "0884" : {
+    "statusDescription" : "Maldição"
+  },
+  "0885" : {
+    "statusDescription" : "Silêncio"
+  },
+  "0886" : {
+    "statusDescription" : "Caos"
+  },
+  "0890" : {
+    "statusDescription" : "Envenenamento Mortal"
+  },
+  "0891" : {
+    "statusDescription" : "Medo"
+  },
+  "0893" : {
+    "statusDescription" : "Quatro Patas"
+  },
+  "0894" : {
+    "statusDescription" : "Pulverizar"
+  },
+  "0896" : {
+    "statusDescription" : "Hera Venenosa"
+  },
+  "0897" : {
+    "statusDescription" : "Neutro"
+  },
+  "0898" : {
+    "statusDescription" : "Água"
+  },
+  "0899" : {
+    "statusDescription" : "Terra"
+  },
+  "0900" : {
+    "statusDescription" : "Fogo"
+  },
+  "0901" : {
+    "statusDescription" : "Vento"
+  },
+  "0902" : {
+    "statusDescription" : "Veneno"
+  },
+  "0903" : {
+    "statusDescription" : "Sagrado"
+  },
+  "0904" : {
+    "statusDescription" : "Sombrio"
+  },
+  "0905" : {
+    "statusDescription" : "Fantasma"
+  },
+  "0906" : {
+    "statusDescription" : "Maldito"
+  },
+  "0907" : {
+    "statusDescription" : "Neutro"
+  },
+  "0908" : {
+    "statusDescription" : "Água"
+  },
+  "0909" : {
+    "statusDescription" : "Terra"
+  },
+  "0910" : {
+    "statusDescription" : "Fogo"
+  },
+  "0911" : {
+    "statusDescription" : "Vento"
+  },
+  "0912" : {
+    "statusDescription" : "Veneno"
+  },
+  "0913" : {
+    "statusDescription" : "Sagrado"
+  },
+  "0914" : {
+    "statusDescription" : "Sombrio"
+  },
+  "0915" : {
+    "statusDescription" : "Fantasma"
+  },
+  "0916" : {
+    "statusDescription" : "Maldito"
+  },
+  "0917" : {
+    "statusDescription" : "Leptospirose"
+  },
+  "0918" : {
+    "statusDescription" : "Impulso de Arclouse"
+  },
+  "0919" : {
+    "statusDescription" : "Proteção da Orla"
+  },
+  "0920" : {
+    "statusDescription" : "Chuva de Mariscos"
+  },
+  "0921" : {
+    "statusDescription" : "Camarão Fresquinho"
+  },
+  "0926" : {
+    "statusDescription" : "Runa Berkana"
+  },
+  "0927" : {
+    "statusDescription" : "Runa Raido"
+  },
+  "0928" : {
+    "statusDescription" : "Runa Turizas"
+  },
+  "0929" : {
+    "statusDescription" : "Runa Hagalaz"
+  },
+  "0930" : {
+    "statusDescription" : "Runa Isa"
+  },
+  "0931" : {
+    "statusDescription" : "Runa Othila"
+  },
+  "0932" : {
+    "statusDescription" : "Runa Uruz"
+  },
+  "0933" : {
+    "statusDescription" : "Escondido"
+  },
+  "0935" : {
+    "statusDescription" : "Leite de Kaluna"
+  },
+  "0936" : {
+    "statusDescription" : "Manjericão"
+  },
+  "0937" : {
+    "statusDescription" : "Invocação"
+  },
+  "0942" : {
+    "statusDescription" : "Manual de Mascar"
+  },
+  "0950" : {
+    "statusDescription" : "Riscar Fósforo"
+  },
+  "0952" : {
+    "statusDescription" : "Mato de Gato"
+  },
+  "0953" : {
+    "statusDescription" : "Despertar"
+  },
+  "0961" : {
+    "statusDescription" : "Lambida"
+  },
+  "0962" : {
+    "statusDescription" : "Festa do Camarão"
+  },
+  "0963" : {
+    "statusDescription" : "Poção SS"
+  },
+  "0964" : {
+    "statusDescription" : "Poção SC"
+  },
+  "0965" : {
+    "statusDescription" : "Poção AC"
+  },
+  "0966" : {
+    "statusDescription" : "Bala Mágica"
+  },
+  "0983" : {
+    "statusDescription" : "Manual de Mascar"
+  },
+  "0984" : {
+    "statusDescription" : "Manual de Mascar"
+  },
+  "0990" : {
+    "statusDescription" : "Poção Fantástica"
+  },
+  "0992" : {
+    "statusDescription" : "Animação!"
+  },
+  "0995" : {
+    "statusDescription" : "Poção Menor de Mana"
+  },
+  "0996" : {
+    "statusDescription" : "Escrituras"
+  },
+  "1001" : {
+    "statusDescription" : "RT-017"
+  },
+  "1002" : {
+    "statusDescription" : "RT-017"
+  },
+  "1003" : {
+    "statusDescription" : "RT-017"
+  },
+  "1004" : {
+    "statusDescription" : "RT-017"
+  },
+  "1013" : {
+    "statusDescription" : "Perda Total"
+  },
+  "1014" : {
+    "statusDescription" : "Gravidade Gradual"
+  },
+  "1031" : {
+    "statusDescription" : "Saboroso!"
+  },
+  "1032" : {
+    "statusDescription" : "Delicioso!"
+  },
+  "1033" : {
+    "statusDescription" : "Gostoso!"
+  },
+  "1035" : {
+    "statusDescription" : "Luz Lunar"
+  },
+  "1036" : {
+    "statusDescription" : "Luz Solar"
+  },
+  "1037" : {
+    "statusDescription" : "Luz Estelar"
+  },
+  "1038" : {
+    "statusDescription" : "Postura Lunar"
+  },
+  "1039" : {
+    "statusDescription" : "Postura do Universo"
+  },
+  "1040" : {
+    "statusDescription" : "Postura Solar"
+  },
+  "1041" : {
+    "statusDescription" : "Chute Estelar"
+  },
+  "1042" : {
+    "statusDescription" : "Penumbra"
+  },
+  "1043" : {
+    "statusDescription" : "Postura Estelar"
+  },
+  "1044" : {
+    "statusDescription" : "Livro das Dimensões"
+  },
+  "1047" : {
+    "statusDescription" : "Livro da Criação"
+  },
+  "1048" : {
+    "statusDescription" : "Chuva Estelar"
+  },
+  "1050" : {
+    "statusDescription" : "Controle Gravitacional"
+  },
+  "1053" : {
+    "statusDescription" : "Coletar Alma"
+  },
+  "1054" : {
+    "statusDescription" : "Ceifar Alma"
+  },
+  "1055" : {
+    "statusDescription" : "União Espiritual"
+  },
+  "1056" : {
+    "statusDescription" : "Espírito das Sombras"
+  },
+  "1057" : {
+    "statusDescription" : "Espírito da Fada"
+  },
+  "1058" : {
+    "statusDescription" : "Espírito do Falcão"
+  },
+  "1059" : {
+    "statusDescription" : "Espírito do Golem"
+  },
+  "1060" : {
+    "statusDescription" : "Divisão de Alma"
+  },
+  "1065" : {
+    "statusDescription" : "Poção do Infinito"
+  },
+  "1083" : {
+    "statusDescription" : "Caçada Real"
+  },
+  "1088" : {
+    "statusDescription" : "Cansaço"
+  },
+  "1089" : {
+    "statusDescription" : "Aquecimento"
+  },
+  "1095" : {
+    "statusDescription" : "Ancilla"
+  },
+  "1107" : {
+    "statusDescription" : "Reflexo"
+  },
+  "1121" : {
+    "statusDescription" : "Assumptio"
+  },
+  "1122" : {
+    "statusDescription" : "Basílica"
+  },
+  "1125" : {
+    "statusDescription" : "Assombração"
+  },
+  "1126" : {
+    "statusDescription" : "Prelúdio do Ragnarök"
+  },
+  "1130" : {
+    "statusDescription" : "Sob Proteção"
+  },
+  "1132" : {
+    "statusDescription" : "Festividade"
+  },
+  "1133" : {
+    "statusDescription" : "Solenidade"
+  },
+  "1135" : {
+    "statusDescription" : "Festival"
+  },
+  "1136" : {
+    "statusDescription" : "Raminho de Flores"
+  },
+  "1137" : {
+    "statusDescription" : "Bolinho de Cerejeira"
+  },
+  "1141" : {
+    "statusDescription" : "Calafrio"
+  },
+  "1142" : {
+    "statusDescription" : "Vício Mágico"
+  },
+  "1154" : {
+    "statusDescription" : "Luz da Alma"
+  },
+  "1396" : {
+    "statusDescription" : "Farfalle"
+  },
+  "1397" : {
+    "statusDescription" : "Festival do Macarrão"
+  },
+  "1398" : {
+    "statusDescription" : "Festival do Macarrão"
+  },
+  "1399" : {
+    "statusDescription" : "Festival do Macarrão"
+  }
+}

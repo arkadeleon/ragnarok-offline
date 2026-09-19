@@ -1,0 +1,2234 @@
+{
+  "0000" : {
+    "statusDescription" : "プロボック"
+  },
+  "0001" : {
+    "statusDescription" : "インデュア"
+  },
+  "0002" : {
+    "statusDescription" : "ツーハンドクイッケン"
+  },
+  "0003" : {
+    "statusDescription" : "集中力向上"
+  },
+  "0004" : {
+    "statusDescription" : "ハイディング"
+  },
+  "0005" : {
+    "statusDescription" : "クローキング"
+  },
+  "0006" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0007" : {
+    "statusDescription" : "ポイズンリアクト"
+  },
+  "0008" : {
+    "statusDescription" : "クァグマイア"
+  },
+  "0009" : {
+    "statusDescription" : "エンジェラス"
+  },
+  "0010" : {
+    "statusDescription" : "ブレッシング"
+  },
+  "0011" : {
+    "statusDescription" : "シグナムクルシス"
+  },
+  "0012" : {
+    "statusDescription" : "速度増加"
+  },
+  "0013" : {
+    "statusDescription" : "速度減少"
+  },
+  "0014" : {
+    "statusDescription" : "スローポイズン"
+  },
+  "0015" : {
+    "statusDescription" : "イムポシティオマヌス"
+  },
+  "0016" : {
+    "statusDescription" : "サフラギウム"
+  },
+  "0017" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0018" : {
+    "statusDescription" : "鎧属性付与"
+  },
+  "0019" : {
+    "statusDescription" : "キリエエレイソン"
+  },
+  "0020" : {
+    "statusDescription" : "マグニフィカート"
+  },
+  "0021" : {
+    "statusDescription" : "グロリア"
+  },
+  "0022" : {
+    "statusDescription" : "レックスエーテルナ"
+  },
+  "0023" : {
+    "statusDescription" : "アドレナリンラッシュ"
+  },
+  "0024" : {
+    "statusDescription" : "ウェポンパーフェクション"
+  },
+  "0025" : {
+    "statusDescription" : "オーバートラスト"
+  },
+  "0026" : {
+    "statusDescription" : "マキシマイズパワー"
+  },
+  "0027" : {
+    "statusDescription" : "騎乗中"
+  },
+  "0028" : {
+    "statusDescription" : "ファルコンマスタリー"
+  },
+  "0029" : {
+    "statusDescription" : "死んだふり"
+  },
+  "0030" : {
+    "statusDescription" : "ラウドボイス"
+  },
+  "0031" : {
+    "statusDescription" : "エナジーコート"
+  },
+  "0032" : {
+    "statusDescription" : "鎧破壊状態"
+  },
+  "0033" : {
+    "statusDescription" : "武器破壊状態"
+  },
+  "0034" : {
+    "statusDescription" : "幻覚"
+  },
+  "0035" : {
+    "statusDescription" : "重量70%以上"
+  },
+  "0036" : {
+    "statusDescription" : "重量90%以上"
+  },
+  "0037" : {
+    "statusDescription" : "攻撃速度増加"
+  },
+  "0038" : {
+    "statusDescription" : "攻撃速度増加"
+  },
+  "0039" : {
+    "statusDescription" : "攻撃速度増加"
+  },
+  "0041" : {
+    "statusDescription" : "移動速度増加(速度変化ポーション(UP))"
+  },
+  "0042" : {
+    "statusDescription" : "移動速度増加"
+  },
+  "0050" : {
+    "statusDescription" : "武器装備不可"
+  },
+  "0051" : {
+    "statusDescription" : "盾装備不可"
+  },
+  "0052" : {
+    "statusDescription" : "鎧装備不可"
+  },
+  "0053" : {
+    "statusDescription" : "兜装備不可"
+  },
+  "0054" : {
+    "statusDescription" : "ケミカルウェポンチャージ"
+  },
+  "0055" : {
+    "statusDescription" : "ケミカルシールドチャージ"
+  },
+  "0056" : {
+    "statusDescription" : "ケミカルアーマーチャージ"
+  },
+  "0057" : {
+    "statusDescription" : "ケミカルヘルムチャージ"
+  },
+  "0058" : {
+    "statusDescription" : "オートガード"
+  },
+  "0059" : {
+    "statusDescription" : "リフレクトシールド"
+  },
+  "0060" : {
+    "statusDescription" : "ディボーション"
+  },
+  "0061" : {
+    "statusDescription" : "プロヴィデンス"
+  },
+  "0062" : {
+    "statusDescription" : "ディフェンダー"
+  },
+  "0064" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0065" : {
+    "statusDescription" : "オートマジシャンスペル"
+  },
+  "0068" : {
+    "statusDescription" : "スピアクイッケン"
+  },
+  "0070" : {
+    "statusDescription" : "口笛"
+  },
+  "0071" : {
+    "statusDescription" : "夕陽のアサシンクロス"
+  },
+  "0072" : {
+    "statusDescription" : "ブラギの詩"
+  },
+  "0073" : {
+    "statusDescription" : "イドゥンの林檎"
+  },
+  "0074" : {
+    "statusDescription" : "ハミング"
+  },
+  "0075" : {
+    "statusDescription" : "私を忘れないで…"
+  },
+  "0076" : {
+    "statusDescription" : "幸運のキス"
+  },
+  "0077" : {
+    "statusDescription" : "サービスフォーユー"
+  },
+  "0078" : {
+    "statusDescription" : "ニヨルドの宴"
+  },
+  "0079" : {
+    "statusDescription" : "永遠の混沌"
+  },
+  "0080" : {
+    "statusDescription" : "戦太鼓の響き"
+  },
+  "0081" : {
+    "statusDescription" : "ニーベルングの指輪"
+  },
+  "0082" : {
+    "statusDescription" : "ロキの叫び"
+  },
+  "0083" : {
+    "statusDescription" : "深淵の中に"
+  },
+  "0084" : {
+    "statusDescription" : "不死身のジークフリード"
+  },
+  "0087" : {
+    "statusDescription" : "金剛"
+  },
+  "0088" : {
+    "statusDescription" : "阿修羅覇凰拳"
+  },
+  "0090" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0091" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0092" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0093" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0097" : {
+    "statusDescription" : "不死属性付与"
+  },
+  "0103" : {
+    "statusDescription" : "オーラブレイド"
+  },
+  "0104" : {
+    "statusDescription" : "パリイング"
+  },
+  "0105" : {
+    "statusDescription" : "コンセントレイション"
+  },
+  "0106" : {
+    "statusDescription" : "テンションリラックス"
+  },
+  "0107" : {
+    "statusDescription" : "バーサーク"
+  },
+  "0110" : {
+    "statusDescription" : "アスムプティオ"
+  },
+  "0112" : {
+    "statusDescription" : "属性場活性"
+  },
+  "0114" : {
+    "statusDescription" : "エンチャントデッドリーポイズン"
+  },
+  "0115" : {
+    "statusDescription" : "トゥルーサイト"
+  },
+  "0116" : {
+    "statusDescription" : "ウィンドウォーク"
+  },
+  "0117" : {
+    "statusDescription" : "メルトダウン"
+  },
+  "0118" : {
+    "statusDescription" : "カートブースト"
+  },
+  "0120" : {
+    "statusDescription" : "リジェクトソード"
+  },
+  "0121" : {
+    "statusDescription" : "マリオネットコントロール"
+  },
+  "0122" : {
+    "statusDescription" : "マリオネットコントロール"
+  },
+  "0124" : {
+    "statusDescription" : "出血"
+  },
+  "0125" : {
+    "statusDescription" : "ジョイントビート"
+  },
+  "0130" : {
+    "statusDescription" : "ママ、パパ、大好き"
+  },
+  "0131" : {
+    "statusDescription" : "属性物理攻撃力増加"
+  },
+  "0132" : {
+    "statusDescription" : "オートバーサーク"
+  },
+  "0135" : {
+    "statusDescription" : "フェオリチャギの構え"
+  },
+  "0137" : {
+    "statusDescription" : "ネリョチャギの構え"
+  },
+  "0139" : {
+    "statusDescription" : "トルリョチャギの構え"
+  },
+  "0141" : {
+    "statusDescription" : "アプチャオルリギの構え"
+  },
+  "0143" : {
+    "statusDescription" : "落法"
+  },
+  "0145" : {
+    "statusDescription" : "スパート"
+  },
+  "0146" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0147" : {
+    "statusDescription" : "フルアドレナリンラッシュ"
+  },
+  "0148" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0149" : {
+    "statusDescription" : "職業系の魂"
+  },
+  "0150" : {
+    "statusDescription" : "%s"
+  },
+  "0151" : {
+    "statusDescription" : "%s"
+  },
+  "0156" : {
+    "statusDescription" : "カイゼル"
+  },
+  "0157" : {
+    "statusDescription" : "カアヒ"
+  },
+  "0158" : {
+    "statusDescription" : "カウプ"
+  },
+  "0161" : {
+    "statusDescription" : "ワンハンドクイッケン"
+  },
+  "0169" : {
+    "statusDescription" : "太陽の安楽"
+  },
+  "0170" : {
+    "statusDescription" : "月の安楽"
+  },
+  "0171" : {
+    "statusDescription" : "星の安楽"
+  },
+  "0181" : {
+    "statusDescription" : "プリザーブ"
+  },
+  "0182" : {
+    "statusDescription" : "チェイスウォーク"
+  },
+  "0186" : {
+    "statusDescription" : "ダブルキャスティング"
+  },
+  "0188" : {
+    "statusDescription" : "オーバートラストマックス"
+  },
+  "0191" : {
+    "statusDescription" : "運命のタロットカード"
+  },
+  "0197" : {
+    "statusDescription" : "シュリンク"
+  },
+  "0198" : {
+    "statusDescription" : "サイトブラスター"
+  },
+  "0200" : {
+    "statusDescription" : "クローズコンファイン"
+  },
+  "0201" : {
+    "statusDescription" : "クローズコンファイン"
+  },
+  "0203" : {
+    "statusDescription" : "マッドネスキャンセラー"
+  },
+  "0204" : {
+    "statusDescription" : "ガトリングフィーバー"
+  },
+  "0205" : {
+    "statusDescription" : "楽しい"
+  },
+  "0206" : {
+    "statusDescription" : "空蝉"
+  },
+  "0207" : {
+    "statusDescription" : "影分身"
+  },
+  "0208" : {
+    "statusDescription" : "念"
+  },
+  "0209" : {
+    "statusDescription" : "アジャストメント"
+  },
+  "0210" : {
+    "statusDescription" : "インクリージングアキュラシー"
+  },
+  "0217" : {
+    "statusDescription" : "騎乗中"
+  },
+  "0241" : {
+    "statusDescription" : "Str増加(料理)"
+  },
+  "0242" : {
+    "statusDescription" : "Agi増加(料理)"
+  },
+  "0243" : {
+    "statusDescription" : "Vit増加(料理)"
+  },
+  "0244" : {
+    "statusDescription" : "Dex増加(料理)"
+  },
+  "0245" : {
+    "statusDescription" : "Int増加(料理)"
+  },
+  "0246" : {
+    "statusDescription" : "Luk増加(料理)"
+  },
+  "0247" : {
+    "statusDescription" : "料理"
+  },
+  "0248" : {
+    "statusDescription" : "料理"
+  },
+  "0249" : {
+    "statusDescription" : "料理"
+  },
+  "0250" : {
+    "statusDescription" : "獲得経験値増加"
+  },
+  "0251" : {
+    "statusDescription" : "[SP]生命保険証"
+  },
+  "0252" : {
+    "statusDescription" : "ドロップ率増加"
+  },
+  "0271" : {
+    "statusDescription" : "Str増加(スペシャル料理)"
+  },
+  "0272" : {
+    "statusDescription" : "Agi増加(スペシャル料理)"
+  },
+  "0273" : {
+    "statusDescription" : "Vit増加(スペシャル料理)"
+  },
+  "0274" : {
+    "statusDescription" : "Dex増加(スペシャル料理)"
+  },
+  "0275" : {
+    "statusDescription" : "Int増加(スペシャル料理)"
+  },
+  "0276" : {
+    "statusDescription" : "Luk増加(スペシャル料理)"
+  },
+  "0282" : {
+    "statusDescription" : "スローキャスト"
+  },
+  "0284" : {
+    "statusDescription" : "ストーンスキン"
+  },
+  "0286" : {
+    "statusDescription" : "致命的な傷"
+  },
+  "0289" : {
+    "statusDescription" : "移動速度増加(馬牌)"
+  },
+  "0290" : {
+    "statusDescription" : "物理防御力増加ポーション"
+  },
+  "0291" : {
+    "statusDescription" : "魔法防御力増加ポーション"
+  },
+  "0292" : {
+    "statusDescription" : "回復力増加ポーション"
+  },
+  "0293" : {
+    "statusDescription" : "小型生命水"
+  },
+  "0294" : {
+    "statusDescription" : "中型生命水"
+  },
+  "0295" : {
+    "statusDescription" : "研磨剤"
+  },
+  "0296" : {
+    "statusDescription" : "歓迎のさかずき"
+  },
+  "0297" : {
+    "statusDescription" : "ディファンダン"
+  },
+  "0298" : {
+    "statusDescription" : "メンタルポーション"
+  },
+  "0299" : {
+    "statusDescription" : "テチョンダン"
+  },
+  "0300" : {
+    "statusDescription" : "SP消費量減少ポーション"
+  },
+  "0301" : {
+    "statusDescription" : "状態異常抵抗ポーション"
+  },
+  "0302" : {
+    "statusDescription" : "鎧属性変更"
+  },
+  "0304" : {
+    "statusDescription" : "ヘルの権能"
+  },
+  "0305" : {
+    "statusDescription" : "収監中"
+  },
+  "0312" : {
+    "statusDescription" : "獲得経験値増加"
+  },
+  "0313" : {
+    "statusDescription" : "吹け！春風！"
+  },
+  "0314" : {
+    "statusDescription" : "天使の守護"
+  },
+  "0316" : {
+    "statusDescription" : "エンチャントブレイド"
+  },
+  "0318" : {
+    "statusDescription" : "リフレッシュ"
+  },
+  "0319" : {
+    "statusDescription" : "ジャイアントグロース"
+  },
+  "0320" : {
+    "statusDescription" : "ストーンハードスキン"
+  },
+  "0321" : {
+    "statusDescription" : "バイタリティアクティベーション"
+  },
+  "0322" : {
+    "statusDescription" : "ファイティングスピリット"
+  },
+  "0323" : {
+    "statusDescription" : "アバンダンス"
+  },
+  "0331" : {
+    "statusDescription" : "ラウダアグヌス"
+  },
+  "0332" : {
+    "statusDescription" : "ラウダラムス"
+  },
+  "0333" : {
+    "statusDescription" : "クローキングエクシード"
+  },
+  "0334" : {
+    "statusDescription" : "ハルシネーションウォーク"
+  },
+  "0336" : {
+    "statusDescription" : "レノヴァティオ"
+  },
+  "0337" : {
+    "statusDescription" : "ウェポンブロッキング"
+  },
+  "0340" : {
+    "statusDescription" : "エクスピアティオ"
+  },
+  "0341" : {
+    "statusDescription" : "ポイズニングウェポン"
+  },
+  "0342" : {
+    "statusDescription" : "トキシン"
+  },
+  "0343" : {
+    "statusDescription" : "パラライズ"
+  },
+  "0344" : {
+    "statusDescription" : "ベナムブリード"
+  },
+  "0345" : {
+    "statusDescription" : "マジックマッシュルーム"
+  },
+  "0346" : {
+    "statusDescription" : "デスハート"
+  },
+  "0347" : {
+    "statusDescription" : "パイアレクシア"
+  },
+  "0348" : {
+    "statusDescription" : "オブリビオンカース"
+  },
+  "0349" : {
+    "statusDescription" : "リーチエンド"
+  },
+  "0351" : {
+    "statusDescription" : "氷結"
+  },
+  "0352" : {
+    "statusDescription" : "フィアーブリーズ"
+  },
+  "0354" : {
+    "statusDescription" : "マーシュオブアビス"
+  },
+  "0355" : {
+    "statusDescription" : "リコグナイズドスペル"
+  },
+  "0356" : {
+    "statusDescription" : "魔力封印"
+  },
+  "0357" : {
+    "statusDescription" : "ウォーグ騎乗中"
+  },
+  "0361" : {
+    "statusDescription" : "アクセラレーション"
+  },
+  "0362" : {
+    "statusDescription" : "ホバーリング"
+  },
+  "0368" : {
+    "statusDescription" : "タオグンカスクロール"
+  },
+  "0369" : {
+    "statusDescription" : "ミストレススクロール"
+  },
+  "0370" : {
+    "statusDescription" : "オークヒーロースクロール"
+  },
+  "0371" : {
+    "statusDescription" : "オークロードスクロール"
+  },
+  "0373" : {
+    "statusDescription" : "オーバーヒート"
+  },
+  "0374" : {
+    "statusDescription" : "シェイプシフト"
+  },
+  "0375" : {
+    "statusDescription" : "インフラレッドスキャン"
+  },
+  "0376" : {
+    "statusDescription" : "マグネティックフィールド"
+  },
+  "0377" : {
+    "statusDescription" : "ニュートラルバリアー"
+  },
+  "0379" : {
+    "statusDescription" : "ステルスフィールド"
+  },
+  "0381" : {
+    "statusDescription" : "マヌクの豪気"
+  },
+  "0382" : {
+    "statusDescription" : "マヌクの意志"
+  },
+  "0383" : {
+    "statusDescription" : "ピンギキュラの果実ジャム"
+  },
+  "0384" : {
+    "statusDescription" : "ルシオラヴェスパのハチ蜜"
+  },
+  "0385" : {
+    "statusDescription" : "リプロデュース"
+  },
+  "0386" : {
+    "statusDescription" : "マヌクの信念"
+  },
+  "0387" : {
+    "statusDescription" : "コルヌスの涙"
+  },
+  "0388" : {
+    "statusDescription" : "Str増加スクロール"
+  },
+  "0389" : {
+    "statusDescription" : "Int増加スクロール"
+  },
+  "0390" : {
+    "statusDescription" : "リフレクトダメージ"
+  },
+  "0391" : {
+    "statusDescription" : "フォースオブバンガード"
+  },
+  "0393" : {
+    "statusDescription" : "オートシャドウスペル"
+  },
+  "0394" : {
+    "statusDescription" : "シャドウフォーム"
+  },
+  "0396" : {
+    "statusDescription" : "シールドスペルLv1"
+  },
+  "0397" : {
+    "statusDescription" : "シールドスペルLv2"
+  },
+  "0398" : {
+    "statusDescription" : "シールドスペルLv3"
+  },
+  "0399" : {
+    "statusDescription" : "ボディペインティング"
+  },
+  "0400" : {
+    "statusDescription" : "イクシードブレイク"
+  },
+  "0401" : {
+    "statusDescription" : "アドラムス"
+  },
+  "0402" : {
+    "statusDescription" : "プレスティージ"
+  },
+  "0403" : {
+    "statusDescription" : "インビジビリティ"
+  },
+  "0404" : {
+    "statusDescription" : "デッドリーインフェクト"
+  },
+  "0405" : {
+    "statusDescription" : "バンディング"
+  },
+  "0407" : {
+    "statusDescription" : "インスピレーション"
+  },
+  "0408" : {
+    "statusDescription" : "マスカレード：エナベーション"
+  },
+  "0409" : {
+    "statusDescription" : "マスカレード：グルーミー"
+  },
+  "0410" : {
+    "statusDescription" : "潜龍昇天"
+  },
+  "0411" : {
+    "statusDescription" : "マスカレード：イグノアランス"
+  },
+  "0412" : {
+    "statusDescription" : "マスカレード：レイジネス"
+  },
+  "0413" : {
+    "statusDescription" : "閃電歩"
+  },
+  "0414" : {
+    "statusDescription" : "アカラジェ"
+  },
+  "0415" : {
+    "statusDescription" : "マスカレード：アンラッキー"
+  },
+  "0417" : {
+    "statusDescription" : "呪縛陣"
+  },
+  "0418" : {
+    "statusDescription" : "マスカレード：ウィークネス"
+  },
+  "0421" : {
+    "statusDescription" : "アクセサリー解除"
+  },
+  "0423" : {
+    "statusDescription" : "教皇のクッキー"
+  },
+  "0425" : {
+    "statusDescription" : "点穴 -球-"
+  },
+  "0426" : {
+    "statusDescription" : "点穴 -反-"
+  },
+  "0427" : {
+    "statusDescription" : "点穴 -活-"
+  },
+  "0429" : {
+    "statusDescription" : "スイングダンス"
+  },
+  "0430" : {
+    "statusDescription" : "恋人たちの為のシンフォニー"
+  },
+  "0435" : {
+    "statusDescription" : "深い睡眠"
+  },
+  "0436" : {
+    "statusDescription" : "循鰍ｷる自然の音"
+  },
+  "0437" : {
+    "statusDescription" : "冷凍"
+  },
+  "0438" : {
+    "statusDescription" : "メランコリー"
+  },
+  "0439" : {
+    "statusDescription" : "マナの歌"
+  },
+  "0441" : {
+    "statusDescription" : "ダンスウィズウォーグ"
+  },
+  "0442" : {
+    "statusDescription" : "風車に向かって突撃"
+  },
+  "0443" : {
+    "statusDescription" : "エコーの歌"
+  },
+  "0444" : {
+    "statusDescription" : "ハーモナイズ"
+  },
+  "0445" : {
+    "statusDescription" : "ストライキング"
+  },
+  "0446" : {
+    "statusDescription" : "ウォーマー"
+  },
+  "0447" : {
+    "statusDescription" : "月明かりのセレナーデ"
+  },
+  "0448" : {
+    "statusDescription" : "狂乱"
+  },
+  "0450" : {
+    "statusDescription" : "アナライズ"
+  },
+  "0451" : {
+    "statusDescription" : "レーラズの霧"
+  },
+  "0452" : {
+    "statusDescription" : "メロディーオブシンク"
+  },
+  "0453" : {
+    "statusDescription" : "ビヨンドオブウォークライ"
+  },
+  "0454" : {
+    "statusDescription" : "エンドレスハミングボイス"
+  },
+  "0461" : {
+    "statusDescription" : "改造カートブースト"
+  },
+  "0463" : {
+    "statusDescription" : "ソーントラップ"
+  },
+  "0470" : {
+    "statusDescription" : "精神衝撃"
+  },
+  "0472" : {
+    "statusDescription" : "サクラメント"
+  },
+  "0473" : {
+    "statusDescription" : "[SP]アスムプティオ"
+  },
+  "0476" : {
+    "statusDescription" : "腹痛"
+  },
+  "0480" : {
+    "statusDescription" : "HP増加ポーション"
+  },
+  "0481" : {
+    "statusDescription" : "SP増加ポーション"
+  },
+  "0482" : {
+    "statusDescription" : "濃縮ホワイトポーションZ"
+  },
+  "0483" : {
+    "statusDescription" : "ビタタ500"
+  },
+  "0484" : {
+    "statusDescription" : "濃縮サラマインジュース"
+  },
+  "0490" : {
+    "statusDescription" : "バキュームエクストリーム"
+  },
+  "0491" : {
+    "statusDescription" : "サベージの丸焼き"
+  },
+  "0492" : {
+    "statusDescription" : "カクテルウォーグブラッド"
+  },
+  "0493" : {
+    "statusDescription" : "ミノタウロスのカルビ"
+  },
+  "0494" : {
+    "statusDescription" : "シロマアイスティー"
+  },
+  "0495" : {
+    "statusDescription" : "ドロセラのハーブ煮"
+  },
+  "0496" : {
+    "statusDescription" : "プティットのしっぽ麺"
+  },
+  "0573" : {
+    "statusDescription" : "モーラベリー"
+  },
+  "0576" : {
+    "statusDescription" : "麻痺"
+  },
+  "0577" : {
+    "statusDescription" : "ペインキラー"
+  },
+  "0578" : {
+    "statusDescription" : "迅速な命の水"
+  },
+  "0579" : {
+    "statusDescription" : "活性化ポーション"
+  },
+  "0580" : {
+    "statusDescription" : "再生の光"
+  },
+  "0581" : {
+    "statusDescription" : "オーバードブースト"
+  },
+  "0583" : {
+    "statusDescription" : "オーディンの力"
+  },
+  "0584" : {
+    "statusDescription" : "スタイルチェンジ"
+  },
+  "0605" : {
+    "statusDescription" : "マグマフロー"
+  },
+  "0606" : {
+    "statusDescription" : "グラニティックアーマー"
+  },
+  "0607" : {
+    "statusDescription" : "パイロクラスティック"
+  },
+  "0608" : {
+    "statusDescription" : "火山灰"
+  },
+  "0611" : {
+    "statusDescription" : "魔法キャンデー"
+  },
+  "0613" : {
+    "statusDescription" : "騎乗中"
+  },
+  "0616" : {
+    "statusDescription" : "マクロディレイ"
+  },
+  "0618" : {
+    "statusDescription" : "サポート魔法"
+  },
+  "0620" : {
+    "statusDescription" : "クラッシュストライク"
+  },
+  "0621" : {
+    "statusDescription" : "変身中"
+  },
+  "0622" : {
+    "statusDescription" : "座る"
+  },
+  "0630" : {
+    "statusDescription" : "マクロ"
+  },
+  "0632" : {
+    "statusDescription" : "%s"
+  },
+  "0633" : {
+    "statusDescription" : "%s"
+  },
+  "0634" : {
+    "statusDescription" : "%s"
+  },
+  "0635" : {
+    "statusDescription" : "%s"
+  },
+  "0636" : {
+    "statusDescription" : "%s"
+  },
+  "0637" : {
+    "statusDescription" : "回復不能"
+  },
+  "0638" : {
+    "statusDescription" : "%s"
+  },
+  "0639" : {
+    "statusDescription" : "%s"
+  },
+  "0640" : {
+    "statusDescription" : "[SP]Def固定"
+  },
+  "0641" : {
+    "statusDescription" : "[SP]Mdef固定"
+  },
+  "0646" : {
+    "statusDescription" : "明鏡止水"
+  },
+  "0647" : {
+    "statusDescription" : "[SP]ASPD強化ポーション"
+  },
+  "0650" : {
+    "statusDescription" : "応援爆竹"
+  },
+  "0652" : {
+    "statusDescription" : "十六夜"
+  },
+  "0654" : {
+    "statusDescription" : "幻術 -影踏み-"
+  },
+  "0655" : {
+    "statusDescription" : "幻術 -虚無の影-"
+  },
+  "0656" : {
+    "statusDescription" : "幻術 -分身-"
+  },
+  "0657" : {
+    "statusDescription" : "幻術 -残月-"
+  },
+  "0658" : {
+    "statusDescription" : "古代精霊のお守り"
+  },
+  "0659" : {
+    "statusDescription" : "幻術 -朧幻想-"
+  },
+  "0660" : {
+    "statusDescription" : "幻術 -紅月-"
+  },
+  "0662" : {
+    "statusDescription" : "戦闘薬"
+  },
+  "0663" : {
+    "statusDescription" : "高級戦闘薬"
+  },
+  "0664" : {
+    "statusDescription" : "レッドブースター"
+  },
+  "0666" : {
+    "statusDescription" : "ミスティックパウダー"
+  },
+  "0670" : {
+    "statusDescription" : "神妙な命の水"
+  },
+  "0675" : {
+    "statusDescription" : "ふんだんなの花ｂﾌ"
+  },
+  "0676" : {
+    "statusDescription" : "守護の光"
+  },
+  "0677" : {
+    "statusDescription" : "力の加護"
+  },
+  "0678" : {
+    "statusDescription" : "魔法の盾"
+  },
+  "0679" : {
+    "statusDescription" : "聖なる力"
+  },
+  "0680" : {
+    "statusDescription" : "不思議な力"
+  },
+  "0681" : {
+    "statusDescription" : "ステータス増加"
+  },
+  "0682" : {
+    "statusDescription" : "守護の力"
+  },
+  "0683" : {
+    "statusDescription" : "HPSP増加"
+  },
+  "0685" : {
+    "statusDescription" : "攻撃力増加(スペシャル料理)"
+  },
+  "0686" : {
+    "statusDescription" : "霜巨人の血"
+  },
+  "0687" : {
+    "statusDescription" : "ゴーレムの核"
+  },
+  "0688" : {
+    "statusDescription" : "妖精の涙（スタン）"
+  },
+  "0689" : {
+    "statusDescription" : "妖精の涙（石化）"
+  },
+  "0690" : {
+    "statusDescription" : "妖精の涙（凍結）"
+  },
+  "0691" : {
+    "statusDescription" : "妖精の涙（睡眠）"
+  },
+  "0692" : {
+    "statusDescription" : "妖精の涙（呪い）"
+  },
+  "0693" : {
+    "statusDescription" : "妖精の涙（沈黙）"
+  },
+  "0694" : {
+    "statusDescription" : "妖精の涙（暗黒）"
+  },
+  "0697" : {
+    "statusDescription" : "ハッピーハロウィン"
+  },
+  "0699" : {
+    "statusDescription" : "滞在鉛\\時間"
+  },
+  "0700" : {
+    "statusDescription" : "変身中"
+  },
+  "0702" : {
+    "statusDescription" : "リディアの応援"
+  },
+  "0703" : {
+    "statusDescription" : "ロキの応援"
+  },
+  "0704" : {
+    "statusDescription" : "ケイオスの応援"
+  },
+  "0705" : {
+    "statusDescription" : "未精製エネルギー"
+  },
+  "0706" : {
+    "statusDescription" : "精製されたエネルギー"
+  },
+  "0707" : {
+    "statusDescription" : "高純度エネルギー"
+  },
+  "0710" : {
+    "statusDescription" : "凍結爆弾"
+  },
+  "0711" : {
+    "statusDescription" : "フェンリルの力"
+  },
+  "0714" : {
+    "statusDescription" : "移動不可"
+  },
+  "0715" : {
+    "statusDescription" : "フリッグの歌"
+  },
+  "0716" : {
+    "statusDescription" : "オフェルトリウム"
+  },
+  "0717" : {
+    "statusDescription" : "テレキネシスインテンス"
+  },
+  "0720" : {
+    "statusDescription" : "フルスロットル"
+  },
+  "0721" : {
+    "statusDescription" : "リバウンド"
+  },
+  "0722" : {
+    "statusDescription" : "アンリミット"
+  },
+  "0723" : {
+    "statusDescription" : "キングスグレイス"
+  },
+  "0724" : {
+    "statusDescription" : "MAX ATK"
+  },
+  "0725" : {
+    "statusDescription" : "MIN ATK"
+  },
+  "0726" : {
+    "statusDescription" : "MAX MATK"
+  },
+  "0727" : {
+    "statusDescription" : "MIN MATK"
+  },
+  "0730" : {
+    "statusDescription" : "ダーククロー"
+  },
+  "0731" : {
+    "statusDescription" : "No Text"
+  },
+  "0732" : {
+    "statusDescription" : "No Text"
+  },
+  "0733" : {
+    "statusDescription" : "No Text"
+  },
+  "0736" : {
+    "statusDescription" : "永久霜"
+  },
+  "0737" : {
+    "statusDescription" : "獄炎呪"
+  },
+  "0741" : {
+    "statusDescription" : "No Text"
+  },
+  "0742" : {
+    "statusDescription" : "No Text"
+  },
+  "0743" : {
+    "statusDescription" : "No Text"
+  },
+  "0744" : {
+    "statusDescription" : "No Text"
+  },
+  "0745" : {
+    "statusDescription" : "No Text"
+  },
+  "0746" : {
+    "statusDescription" : "No Text"
+  },
+  "0747" : {
+    "statusDescription" : "No Text"
+  },
+  "0748" : {
+    "statusDescription" : "No Text"
+  },
+  "0749" : {
+    "statusDescription" : "No Text"
+  },
+  "0750" : {
+    "statusDescription" : "No Text"
+  },
+  "0751" : {
+    "statusDescription" : "ボザのコップ"
+  },
+  "0752" : {
+    "statusDescription" : "バインド"
+  },
+  "0753" : {
+    "statusDescription" : "エターナルチェーン"
+  },
+  "0755" : {
+    "statusDescription" : "烙印"
+  },
+  "0756" : {
+    "statusDescription" : "リモート爆弾"
+  },
+  "0758" : {
+    "statusDescription" : "プラチナムアルター"
+  },
+  "0759" : {
+    "statusDescription" : "ヒートバレル"
+  },
+  "0760" : {
+    "statusDescription" : "アンチマテリアルブラスト"
+  },
+  "0762" : {
+    "statusDescription" : "ソードクラン"
+  },
+  "0763" : {
+    "statusDescription" : "アークワンドクラン"
+  },
+  "0764" : {
+    "statusDescription" : "ゴールデンメイスクラン"
+  },
+  "0765" : {
+    "statusDescription" : "クロスボウクラン"
+  },
+  "0766" : {
+    "statusDescription" : "福音"
+  },
+  "0767" : {
+    "statusDescription" : "残影ウォーム"
+  },
+  "0768" : {
+    "statusDescription" : "ノピティギウォーム"
+  },
+  "0770" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "0771" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "0772" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "0773" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "0774" : {
+    "statusDescription" : "竜の眷属"
+  },
+  "0775" : {
+    "statusDescription" : "邪眼の呪い"
+  },
+  "0776" : {
+    "statusDescription" : "黄昏"
+  },
+  "0777" : {
+    "statusDescription" : "端午の節句"
+  },
+  "0778" : {
+    "statusDescription" : "ヒートバレルペナルティ"
+  },
+  "0780" : {
+    "statusDescription" : "台湾イベントバフ"
+  },
+  "0783" : {
+    "statusDescription" : "スペアリブ"
+  },
+  "0784" : {
+    "statusDescription" : "No Text"
+  },
+  "0785" : {
+    "statusDescription" : "月の加護"
+  },
+  "0786" : {
+    "statusDescription" : "火の加護"
+  },
+  "0787" : {
+    "statusDescription" : "水の加護"
+  },
+  "0788" : {
+    "statusDescription" : "؂ÌÁì"
+  },
+  "0789" : {
+    "statusDescription" : "金の加護"
+  },
+  "0790" : {
+    "statusDescription" : "里の加護"
+  },
+  "0791" : {
+    "statusDescription" : "光の盾"
+  },
+  "0815" : {
+    "statusDescription" : "ジャンピングクラン"
+  },
+  "0816" : {
+    "statusDescription" : "サポート魔法"
+  },
+  "0817" : {
+    "statusDescription" : "リリーフポーション"
+  },
+  "0827" : {
+    "statusDescription" : "皇帝への献身"
+  },
+  "0828" : {
+    "statusDescription" : "魔力空間"
+  },
+  "0831" : {
+    "statusDescription" : "オートスペル(うずくまる)"
+  },
+  "0833" : {
+    "statusDescription" : "オートスペル(アースクエイク)"
+  },
+  "0836" : {
+    "statusDescription" : "オートスペル(フルストリップ)"
+  },
+  "0838" : {
+    "statusDescription" : "認定戦受付待機時間"
+  },
+  "0839" : {
+    "statusDescription" : "旗利用不猿條ﾔ"
+  },
+  "0840" : {
+    "statusDescription" : "ガチャドラの加護"
+  },
+  "0841" : {
+    "statusDescription" : "ガチャドラの加護"
+  },
+  "0842" : {
+    "statusDescription" : "ガチャドラの加護"
+  },
+  "0843" : {
+    "statusDescription" : "ガチャドラの加護"
+  },
+  "0860" : {
+    "statusDescription" : "生存者の証"
+  },
+  "0861" : {
+    "statusDescription" : "変身中"
+  },
+  "0862" : {
+    "statusDescription" : "生存者の証"
+  },
+  "0873" : {
+    "statusDescription" : "神力"
+  },
+  "0875" : {
+    "statusDescription" : "石化"
+  },
+  "0876" : {
+    "statusDescription" : "凍結"
+  },
+  "0877" : {
+    "statusDescription" : "スタン"
+  },
+  "0878" : {
+    "statusDescription" : "睡眠"
+  },
+  "0880" : {
+    "statusDescription" : "石化進行中"
+  },
+  "0881" : {
+    "statusDescription" : "発火"
+  },
+  "0882" : {
+    "statusDescription" : "ホワイトインプリズン"
+  },
+  "0883" : {
+    "statusDescription" : "毒"
+  },
+  "0884" : {
+    "statusDescription" : "呪い"
+  },
+  "0885" : {
+    "statusDescription" : "沈黙"
+  },
+  "0886" : {
+    "statusDescription" : "混乱"
+  },
+  "0890" : {
+    "statusDescription" : "猛毒"
+  },
+  "0891" : {
+    "statusDescription" : "恐怖"
+  },
+  "0893" : {
+    "statusDescription" : "うずくまる"
+  },
+  "0894" : {
+    "statusDescription" : "イヌハッカシャワー"
+  },
+  "0896" : {
+    "statusDescription" : "マタタビの根っこ"
+  },
+  "0897" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0898" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0899" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0900" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0901" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0902" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0903" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0904" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0905" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0906" : {
+    "statusDescription" : "武器属性付与"
+  },
+  "0907" : {
+    "statusDescription" : "無属性攻撃耐性"
+  },
+  "0908" : {
+    "statusDescription" : "水属性攻撃耐性"
+  },
+  "0909" : {
+    "statusDescription" : "地属性攻撃耐性"
+  },
+  "0910" : {
+    "statusDescription" : "火属性攻撃耐性"
+  },
+  "0911" : {
+    "statusDescription" : "風属性攻撃耐性"
+  },
+  "0912" : {
+    "statusDescription" : "毒属性攻撃耐性"
+  },
+  "0913" : {
+    "statusDescription" : "聖属性攻撃耐性"
+  },
+  "0914" : {
+    "statusDescription" : "闇属性攻撃耐性"
+  },
+  "0915" : {
+    "statusDescription" : "念属性攻撃耐性"
+  },
+  "0916" : {
+    "statusDescription" : "不死属性攻撃耐性"
+  },
+  "0917" : {
+    "statusDescription" : "タロウの傷"
+  },
+  "0918" : {
+    "statusDescription" : "アクラウスダッシュ"
+  },
+  "0919" : {
+    "statusDescription" : "マグロシールド"
+  },
+  "0920" : {
+    "statusDescription" : "エビ三昧"
+  },
+  "0921" : {
+    "statusDescription" : "新鮮なエビ"
+  },
+  "0926" : {
+    "statusDescription" : "ベルカナの増幅"
+  },
+  "0927" : {
+    "statusDescription" : "ライゾの増幅"
+  },
+  "0928" : {
+    "statusDescription" : "スリサズの増幅"
+  },
+  "0929" : {
+    "statusDescription" : "ハガラズの増幅"
+  },
+  "0930" : {
+    "statusDescription" : "イスの増幅"
+  },
+  "0931" : {
+    "statusDescription" : "エイシルの増幅"
+  },
+  "0932" : {
+    "statusDescription" : "ウルズの増幅"
+  },
+  "0933" : {
+    "statusDescription" : "かくれる"
+  },
+  "0935" : {
+    "statusDescription" : "カルーニャミルク"
+  },
+  "0936" : {
+    "statusDescription" : "バジル"
+  },
+  "0937" : {
+    "statusDescription" : "にゃん魂"
+  },
+  "0938" : {
+    "statusDescription" : "ドロップ率増加"
+  },
+  "0939" : {
+    "statusDescription" : "獲得経験値増加"
+  },
+  "0940" : {
+    "statusDescription" : "獲得経験値増加"
+  },
+  "0941" : {
+    "statusDescription" : "生命保険証"
+  },
+  "0942" : {
+    "statusDescription" : "倉庫拡張"
+  },
+  "0950" : {
+    "statusDescription" : "警戒"
+  },
+  "0952" : {
+    "statusDescription" : "ニャングラス"
+  },
+  "0953" : {
+    "statusDescription" : "チャタリング"
+  },
+  "0961" : {
+    "statusDescription" : "グルーミング"
+  },
+  "0962" : {
+    "statusDescription" : "エビパーティー"
+  },
+  "0966" : {
+    "statusDescription" : "マジカルバレット"
+  },
+  "0979" : {
+    "statusDescription" : "破滅の呪印"
+  },
+  "0981" : {
+    "statusDescription" : "属性耐性低下"
+  },
+  "0983" : {
+    "statusDescription" : "ドロップ率増加"
+  },
+  "0984" : {
+    "statusDescription" : "獲得経験値増加"
+  },
+  "0985" : {
+    "statusDescription" : "獲得経験値増加"
+  },
+  "0986" : {
+    "statusDescription" : "プロンテラ軍丸薬"
+  },
+  "0992" : {
+    "statusDescription" : "ママ、パパ、頑張って"
+  },
+  "1013" : {
+    "statusDescription" : "オールステータスダウン"
+  },
+  "1014" : {
+    "statusDescription" : "重力増加"
+  },
+  "1035" : {
+    "statusDescription" : "月の光"
+  },
+  "1036" : {
+    "statusDescription" : "太陽の光"
+  },
+  "1037" : {
+    "statusDescription" : "星の光"
+  },
+  "1038" : {
+    "statusDescription" : "月の構え"
+  },
+  "1039" : {
+    "statusDescription" : "宇宙の構え"
+  },
+  "1040" : {
+    "statusDescription" : "太陽の構え"
+  },
+  "1041" : {
+    "statusDescription" : "星の印"
+  },
+  "1042" : {
+    "statusDescription" : "朔月"
+  },
+  "1043" : {
+    "statusDescription" : "星の構え"
+  },
+  "1044" : {
+    "statusDescription" : "次元の書"
+  },
+  "1045" : {
+    "statusDescription" : "次元の書(新星爆発)"
+  },
+  "1047" : {
+    "statusDescription" : "創星の書"
+  },
+  "1048" : {
+    "statusDescription" : "流星落下"
+  },
+  "1049" : {
+    "statusDescription" : "新星爆発"
+  },
+  "1050" : {
+    "statusDescription" : "重力調節"
+  },
+  "1053" : {
+    "statusDescription" : "魂の蓄積"
+  },
+  "1054" : {
+    "statusDescription" : "魂の収穫"
+  },
+  "1055" : {
+    "statusDescription" : "魂の連結"
+  },
+  "1056" : {
+    "statusDescription" : "影の魂"
+  },
+  "1057" : {
+    "statusDescription" : "妖精の魂"
+  },
+  "1058" : {
+    "statusDescription" : "鷹の魂"
+  },
+  "1059" : {
+    "statusDescription" : "ゴーレムの魂"
+  },
+  "1060" : {
+    "statusDescription" : "魂の分裂"
+  },
+  "1064" : {
+    "statusDescription" : "エスハ"
+  },
+  "1066" : {
+    "statusDescription" : "死の呪い"
+  },
+  "1067" : {
+    "statusDescription" : "闇の王冠"
+  },
+  "1068" : {
+    "statusDescription" : "光の王冠"
+  },
+  "1069" : {
+    "statusDescription" : "霧の王冠"
+  },
+  "1070" : {
+    "statusDescription" : "魔力空間"
+  },
+  "1071" : {
+    "statusDescription" : "皇帝への献身"
+  },
+  "1072" : {
+    "statusDescription" : "竜の眷属"
+  },
+  "1073" : {
+    "statusDescription" : "邪眼の呪い"
+  },
+  "1088" : {
+    "statusDescription" : "合奏疲労"
+  },
+  "1089" : {
+    "statusDescription" : "アドリブ"
+  },
+  "1095" : {
+    "statusDescription" : "アンシラ"
+  },
+  "1107" : {
+    "statusDescription" : "カウンタースラッシュ"
+  },
+  "1117" : {
+    "statusDescription" : "跳躍阻害"
+  },
+  "1125" : {
+    "statusDescription" : "死霊憑依"
+  },
+  "1126" : {
+    "statusDescription" : "サウンドオブディストラクション"
+  },
+  "1130" : {
+    "statusDescription" : "Vg³܏¯Ä"
+  },
+  "1132" : {
+    "statusDescription" : "ロイヤル・スウィーツ"
+  },
+  "1147" : {
+    "statusDescription" : "猪突猛進"
+  },
+  "1150" : {
+    "statusDescription" : "デッドリープロジェクション"
+  },
+  "1151" : {
+    "statusDescription" : "クライマックスハリケーン"
+  },
+  "1152" : {
+    "statusDescription" : "クライマックス"
+  },
+  "1155" : {
+    "statusDescription" : "特定のモンスターに与えるダメージ増減"
+  },
+  "1156" : {
+    "statusDescription" : "特定のモンスターから受けるダメージ増減"
+  },
+  "1157" : {
+    "statusDescription" : "スキルディレイ増減"
+  },
+  "1158" : {
+    "statusDescription" : "一部のスキルの再使用待機時間増減"
+  },
+  "1160" : {
+    "statusDescription" : "強靭な信念"
+  },
+  "1161" : {
+    "statusDescription" : "忠実な信念"
+  },
+  "1162" : {
+    "statusDescription" : "堅固な信念"
+  },
+  "1163" : {
+    "statusDescription" : "Atk増加"
+  },
+  "1164" : {
+    "statusDescription" : "Def増加"
+  },
+  "1167" : {
+    "statusDescription" : "ロックオン"
+  },
+  "1172" : {
+    "statusDescription" : "サーヴァントウェポン"
+  },
+  "1173" : {
+    "statusDescription" : "サーヴァントサイン"
+  },
+  "1174" : {
+    "statusDescription" : "チャージングピアース"
+  },
+  "1176" : {
+    "statusDescription" : "ドラゴニックオーラ"
+  },
+  "1178" : {
+    "statusDescription" : "ヴィゴール"
+  },
+  "1182" : {
+    "statusDescription" : "クライマックスクエイク"
+  },
+  "1183" : {
+    "statusDescription" : "クライマックスブルーム"
+  },
+  "1184" : {
+    "statusDescription" : "クライマックスインパクト"
+  },
+  "1190" : {
+    "statusDescription" : "聖油洗礼"
+  },
+  "1192" : {
+    "statusDescription" : "シャドウエクシード"
+  },
+  "1193" : {
+    "statusDescription" : "ダンシングナイフ"
+  },
+  "1194" : {
+    "statusDescription" : "ポテントベナム"
+  },
+  "1195" : {
+    "statusDescription" : "シャドウペイン"
+  },
+  "1197" : {
+    "statusDescription" : "メディアリボトゥム"
+  },
+  "1198" : {
+    "statusDescription" : "アルグトゥスヴィタ"
+  },
+  "1199" : {
+    "statusDescription" : "アルグトゥステルム"
+  },
+  "1200" : {
+    "statusDescription" : "プレセンスアキエース"
+  },
+  "1201" : {
+    "statusDescription" : "コンペテンティア"
+  },
+  "1202" : {
+    "statusDescription" : "ガードスタンス"
+  },
+  "1203" : {
+    "statusDescription" : "アタックスタンス"
+  },
+  "1204" : {
+    "statusDescription" : "ガーディアンシールド"
+  },
+  "1205" : {
+    "statusDescription" : "漆黒"
+  },
+  "1206" : {
+    "statusDescription" : "静寂"
+  },
+  "1207" : {
+    "statusDescription" : "無気力"
+  },
+  "1208" : {
+    "statusDescription" : "急冷"
+  },
+  "1209" : {
+    "statusDescription" : "失神"
+  },
+  "1210" : {
+    "statusDescription" : "激流"
+  },
+  "1211" : {
+    "statusDescription" : "結晶化"
+  },
+  "1212" : {
+    "statusDescription" : "火災"
+  },
+  "1213" : {
+    "statusDescription" : "不幸"
+  },
+  "1214" : {
+    "statusDescription" : "強毒"
+  },
+  "1215" : {
+    "statusDescription" : "憂鬱"
+  },
+  "1216" : {
+    "statusDescription" : "聖火"
+  },
+  "1217" : {
+    "statusDescription" : "リバウンドシールド"
+  },
+  "1220" : {
+    "statusDescription" : "ホーリーシールド"
+  },
+  "1221" : {
+    "statusDescription" : "アルティメットサクリファイス"
+  },
+  "1222" : {
+    "statusDescription" : "グランドジャッジメント"
+  },
+  "1223" : {
+    "statusDescription" : "シールドシューティング"
+  },
+  "1226" : {
+    "statusDescription" : "エンチャンティングシャドウ"
+  },
+  "1227" : {
+    "statusDescription" : "レリギオ"
+  },
+  "1228" : {
+    "statusDescription" : "ベネディクトゥム"
+  },
+  "1230" : {
+    "statusDescription" : "第一撃：烙印"
+  },
+  "1231" : {
+    "statusDescription" : "第二撃：烙印"
+  },
+  "1232" : {
+    "statusDescription" : "第二章：審判者"
+  },
+  "1233" : {
+    "statusDescription" : "最終章：滅魔の炎"
+  },
+  "1234" : {
+    "statusDescription" : "第一章：信念の力"
+  },
+  "1235" : {
+    "statusDescription" : "アックスストンプ"
+  },
+  "1236" : {
+    "statusDescription" : "攻撃装置有効化"
+  },
+  "1237" : {
+    "statusDescription" : "防御装置有効化"
+  },
+  "1242" : {
+    "statusDescription" : "ストリップシャドウ"
+  },
+  "1243" : {
+    "statusDescription" : "アビスダガー"
+  },
+  "1244" : {
+    "statusDescription" : "フロムジアビス"
+  },
+  "1245" : {
+    "statusDescription" : "アビススレイヤー"
+  },
+  "1247" : {
+    "statusDescription" : "フルシャドウチャージ"
+  },
+  "1248" : {
+    "statusDescription" : "リサーチレポート"
+  },
+  "1249" : {
+    "statusDescription" : "ヘルダスティ"
+  },
+  "1250" : {
+    "statusDescription" : "ウィンドサイン"
+  },
+  "1252" : {
+    "statusDescription" : "カラミティゲイル"
+  },
+  "1256" : {
+    "statusDescription" : "ミスティックシンフォニー"
+  },
+  "1257" : {
+    "statusDescription" : "ソナタオブクヴァシル"
+  },
+  "1258" : {
+    "statusDescription" : "サウンドブレンド"
+  },
+  "1259" : {
+    "statusDescription" : "ゲフェニアノクターン"
+  },
+  "1260" : {
+    "statusDescription" : "鉱員のラプソディ"
+  },
+  "1261" : {
+    "statusDescription" : "ミュージカルインタールード"
+  },
+  "1262" : {
+    "statusDescription" : "夕焼けのセレナーデ"
+  },
+  "1263" : {
+    "statusDescription" : "プロンテラマーチ"
+  },
+  "1271" : {
+    "statusDescription" : "スペルエンチャンティング"
+  },
+  "1303" : {
+    "statusDescription" : "ホムンクルス召喚"
+  },
+  "1310" : {
+    "statusDescription" : "ポイズンミスト"
+  },
+  "1313" : {
+    "statusDescription" : "シュタインワンド"
+  },
+  "1326" : {
+    "statusDescription" : "炎火滅魔神弾"
+  },
+  "1330" : {
+    "statusDescription" : "ストリップシャドウウェポン"
+  },
+  "1331" : {
+    "statusDescription" : "ストリップシャドウアーマー"
+  },
+  "1332" : {
+    "statusDescription" : "ストリップシャドウシールド"
+  },
+  "1333" : {
+    "statusDescription" : "ストリップシャドウシューズ"
+  },
+  "1334" : {
+    "statusDescription" : "ストリップシャドウアクセサリー2"
+  },
+  "1335" : {
+    "statusDescription" : "ストリップシャドウアクセサリー1"
+  },
+  "1336" : {
+    "statusDescription" : "ストリップシャドウ"
+  },
+  "1337" : {
+    "statusDescription" : "カーズオブレッドキューブ"
+  },
+  "1338" : {
+    "statusDescription" : "カーズオブブルーキューブ"
+  },
+  "1341" : {
+    "statusDescription" : "トキシンオブマンドラ"
+  },
+  "1342" : {
+    "statusDescription" : "ゴールデントーン"
+  },
+  "1343" : {
+    "statusDescription" : "テンパリング"
+  },
+  "1345" : {
+    "statusDescription" : "インテンシブエイム"
+  },
+  "1347" : {
+    "statusDescription" : "グレネードフラグメント"
+  },
+  "1348" : {
+    "statusDescription" : "グレネードフラグメント"
+  },
+  "1349" : {
+    "statusDescription" : "グレネードフラグメント"
+  },
+  "1350" : {
+    "statusDescription" : "グレネードフラグメント"
+  },
+  "1351" : {
+    "statusDescription" : "グレネードフラグメント"
+  },
+  "1352" : {
+    "statusDescription" : "グレネードフラグメント"
+  },
+  "1353" : {
+    "statusDescription" : "オートファイアリングランチャー"
+  },
+  "1354" : {
+    "statusDescription" : "ヒドゥンカード"
+  },
+  "1355" : {
+    "statusDescription" : "グレネードマスタリー"
+  },
+  "1356" : {
+    "statusDescription" : "守護符"
+  },
+  "1357" : {
+    "statusDescription" : "武士符"
+  },
+  "1358" : {
+    "statusDescription" : "法師符"
+  },
+  "1359" : {
+    "statusDescription" : "五行符"
+  },
+  "1360" : {
+    "statusDescription" : "雛ｴ符"
+  },
+  "1361" : {
+    "statusDescription" : "白虎符"
+  },
+  "1362" : {
+    "statusDescription" : "朱雀符"
+  },
+  "1363" : {
+    "statusDescription" : "玄武符"
+  },
+  "1364" : {
+    "statusDescription" : "四方五行陣"
+  },
+  "1365" : {
+    "statusDescription" : "天地神霊"
+  },
+  "1366" : {
+    "statusDescription" : "タイガーハウリング"
+  },
+  "1367" : {
+    "statusDescription" : "マリンフェスティバル"
+  },
+  "1368" : {
+    "statusDescription" : "サンドフェスティバル"
+  },
+  "1369" : {
+    "statusDescription" : "タートルランページ"
+  },
+  "1370" : {
+    "statusDescription" : "レインボーホーン"
+  },
+  "1371" : {
+    "statusDescription" : "レインボーホーン"
+  },
+  "1372" : {
+    "statusDescription" : "レインボーホーン"
+  },
+  "1373" : {
+    "statusDescription" : "レインボーホーン"
+  },
+  "1374" : {
+    "statusDescription" : "レインボーホーン"
+  },
+  "1375" : {
+    "statusDescription" : "レインボーホーン"
+  },
+  "1376" : {
+    "statusDescription" : "賢鹿のイヌハッカ"
+  },
+  "1377" : {
+    "statusDescription" : "三霊一体"
+  },
+  "1378" : {
+    "statusDescription" : "にゃんブレッシング"
+  },
+  "1379" : {
+    "statusDescription" : "にゃんブレッシングリバウンド"
+  },
+  "1380" : {
+    "statusDescription" : "シールドチェーンラッシュ"
+  },
+  "1381" : {
+    "statusDescription" : "ジャックフロストノヴァ"
+  },
+  "1382" : {
+    "statusDescription" : "グラウンドグラビテーション"
+  },
+  "1383" : {
+    "statusDescription" : "ブレイキングリミット"
+  },
+  "1384" : {
+    "statusDescription" : "ルールブレイク"
+  },
+  "1385" : {
+    "statusDescription" : "日出"
+  },
+  "1386" : {
+    "statusDescription" : "正午"
+  },
+  "1387" : {
+    "statusDescription" : "日没"
+  },
+  "1388" : {
+    "statusDescription" : "月出"
+  },
+  "1389" : {
+    "statusDescription" : "正子"
+  },
+  "1390" : {
+    "statusDescription" : "月没"
+  },
+  "1392" : {
+    "statusDescription" : "天気の身"
+  },
+  "1393" : {
+    "statusDescription" : "影隠れ"
+  },
+  "1395" : {
+    "statusDescription" : "悪夢"
+  },
+  "1402" : {
+    "statusDescription" : "クエイク"
+  },
+  "1403" : {
+    "statusDescription" : "ラッシュ"
+  },
+  "1432" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1433" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1434" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1435" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1439" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1440" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1441" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1442" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1443" : {
+    "statusDescription" : "幻想叢書バフ"
+  },
+  "1453" : {
+    "statusDescription" : "ターゲットマーカー"
+  },
+  "1454" : {
+    "statusDescription" : "ブロックシール"
+  },
+  "1455" : {
+    "statusDescription" : "フロストフィールド"
+  },
+  "1456" : {
+    "statusDescription" : "待機"
+  },
+  "1457" : {
+    "statusDescription" : "ウォームシールド"
+  },
+  "1495" : {
+    "statusDescription" : "次元魔力耐性"
+  },
+  "1496" : {
+    "statusDescription" : "次元魔力耐性"
+  },
+  "1560" : {
+    "statusDescription" : "ヒットアンドスライディング"
+  },
+  "1587" : {
+    "statusDescription" : "カルマ値"
+  },
+  "1588" : {
+    "statusDescription" : "特定のモンスターに与えるダメージ増減"
+  },
+  "1589" : {
+    "statusDescription" : "特定のモンスターから受けるダメージ増減"
+  },
+  "1590" : {
+    "statusDescription" : "一部のスキルの再使用待機時間増減"
+  },
+  "1593" : {
+    "statusDescription" : "P.Atk増加"
+  },
+  "1594" : {
+    "statusDescription" : "S.Matk増加"
+  },
+  "1665" : {
+    "statusDescription" : "ミステリーパウダー"
+  },
+  "1666" : {
+    "statusDescription" : "ワイルドウォーク"
+  },
+  "1667" : {
+    "statusDescription" : "四色符：火"
+  },
+  "1668" : {
+    "statusDescription" : "四色符：水"
+  },
+  "1669" : {
+    "statusDescription" : "四色符：風"
+  },
+  "1670" : {
+    "statusDescription" : "四色符：地"
+  },
+  "1671" : {
+    "statusDescription" : "オーバーカミングクライシス"
+  },
+  "1674" : {
+    "statusDescription" : "スロースキル"
+  },
+  "1689" : {
+    "statusDescription" : "ペット変身"
+  }
+}

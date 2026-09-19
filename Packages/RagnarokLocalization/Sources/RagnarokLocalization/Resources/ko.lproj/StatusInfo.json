@@ -2345,11 +2345,47 @@
   "1493" : {
     "statusDescription" : "스노우 쿠키"
   },
+  "1495" : {
+    "statusDescription" : "차원 마력 저항성 부여(1단계)"
+  },
+  "1496" : {
+    "statusDescription" : "차원 마력 저항성 부여(2단계)"
+  },
+  "1498" : {
+    "statusDescription" : "ROS 영광의 빛"
+  },
+  "1500" : {
+    "statusDescription" : "차원 마력 저항성 부여(3단계)"
+  },
+  "1502" : {
+    "statusDescription" : "차원 마력 저항성 부여(4단계)"
+  },
   "1509" : {
     "statusDescription" : "포스 부스터"
   },
   "1510" : {
     "statusDescription" : "스피드 부스터"
+  },
+  "1511" : {
+    "statusDescription" : "아무튼 행운 카드"
+  },
+  "1512" : {
+    "statusDescription" : "초록빛 행운 카드"
+  },
+  "1513" : {
+    "statusDescription" : "핑크빛 행운 카드"
+  },
+  "1514" : {
+    "statusDescription" : "보랏빛 행운 카드"
+  },
+  "1515" : {
+    "statusDescription" : "한맥 마시따 버거"
+  },
+  "1516" : {
+    "statusDescription" : "포켓치킨 어니언크림"
+  },
+  "1517" : {
+    "statusDescription" : "한맥 더블벅"
   },
   "1560" : {
     "statusDescription" : "체이싱"
@@ -2374,5 +2410,8 @@
   },
   "1671" : {
     "statusDescription" : "위기극복"
+  },
+  "1688" : {
+    "statusDescription" : "블럭 상태"
   }
 }

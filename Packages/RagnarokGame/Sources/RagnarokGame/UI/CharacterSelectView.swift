@@ -317,7 +317,7 @@ private struct CharacterInfoPanel: View {
         guard !character.mapName.isEmpty else {
             return ""
         }
-        guard let mapName = gameContext.mapNameTable.localizedMapName(forMapName: character.mapName) else {
+        guard let mapName = gameContext.mapInfoTable.localizedMapName(forMapName: character.mapName) else {
             return character.mapName
         }
         return mapName

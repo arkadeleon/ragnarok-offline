@@ -86,7 +86,7 @@ private struct WarpListBox: View {
 
     private func displayName(forMapName mapName: String) -> String {
         let mapNameStem = mapName.split(separator: ".", maxSplits: 1).first.map(String.init) ?? mapName
-        return gameContext.mapNameTable.localizedMapName(forMapName: mapNameStem) ?? mapNameStem
+        return gameContext.mapInfoTable.localizedMapName(forMapName: mapNameStem) ?? mapNameStem
     }
 }
 

@@ -1,0 +1,2300 @@
+{
+  "1@cash" : {
+    "displayName" : "Пещера осьминогов"
+  },
+  "1@cata" : {
+    "displayName" : "Катакомбы"
+  },
+  "1@ecl" : {
+    "displayName" : "Сердце Эрклажа"
+  },
+  "1@gl_k" : {
+    "displayName" : "Старый Гластхейм (1й этаж)"
+  },
+  "1@lhz" : {
+    "displayName" : "Лаборатория Борсева"
+  },
+  "1@ma_b" : {
+    "displayName" : "Убежище Баконавы"
+  },
+  "1@ma_c" : {
+    "displayName" : "Логово Бувоя"
+  },
+  "1@ma_h" : {
+    "displayName" : "Госпиталь (2-й этаж)"
+  },
+  "1@mist" : {
+    "displayName" : "Лабиринт туманного леса"
+  },
+  "1@nyd" : {
+    "displayName" : "Логово Нидхог"
+  },
+  "1@orcs" : {
+    "displayName" : "Подземные пещеры орков"
+  },
+  "1@pump" : {
+    "displayName" : "Водосток"
+  },
+  "1@tower" : {
+    "displayName" : "Бесконечная Башня"
+  },
+  "2@cata" : {
+    "displayName" : "Запечатанная Святыня"
+  },
+  "2@gl_k" : {
+    "displayName" : "Старый Гластхейм (2й этаж)"
+  },
+  "2@nyd" : {
+    "displayName" : "Логово Нидхог"
+  },
+  "2@orcs" : {
+    "displayName" : "Подземные пещеры орков"
+  },
+  "2@pump" : {
+    "displayName" : "Водосток"
+  },
+  "2@tower" : {
+    "displayName" : "Бесконечная Башня"
+  },
+  "3@tower" : {
+    "displayName" : "Бесконечная Башня"
+  },
+  "4@tower" : {
+    "displayName" : "Бесконечная Башня"
+  },
+  "5@tower" : {
+    "displayName" : "Бесконечная Башня"
+  },
+  "6@tower" : {
+    "displayName" : "Бесконечная Башня (Неизвестная зона)"
+  },
+  "abbey01" : {
+    "displayName" : "Монастырь безымянного острова 1-й уровень"
+  },
+  "abbey02" : {
+    "displayName" : "Подвал в Монастыре безымянного острова 1-й уровень"
+  },
+  "abbey03" : {
+    "displayName" : "Подвал в Монастыре безымянного острова 2-й уровень"
+  },
+  "abyss_01" : {
+    "displayName" : "Пещера под Бездонным озером, 1-й уровень"
+  },
+  "abyss_02" : {
+    "displayName" : "Пещера под Бездонным озером, 2-й уровень"
+  },
+  "abyss_03" : {
+    "displayName" : "Пещера под Бездонным озером, 3-й уровень"
+  },
+  "airplane" : {
+    "displayName" : "Дирижабль"
+  },
+  "airplane_01" : {
+    "displayName" : "Дирижабль"
+  },
+  "airport" : {
+    "displayName" : "Аэропорт Эйнброх"
+  },
+  "alb2trea" : {
+    "displayName" : "Остров рядом с Альбертой"
+  },
+  "alb_ship" : {
+    "displayName" : "Корабль Альберты"
+  },
+  "alberta" : {
+    "displayName" : "Портовый город Альберта"
+  },
+  "alberta_in" : {
+    "displayName" : "Альберта"
+  },
+  "alde_alche" : {
+    "displayName" : "Гильдия Алхимиков"
+  },
+  "alde_dun01" : {
+    "displayName" : "Подземелье Альдебарана, 1-й уровень"
+  },
+  "alde_dun02" : {
+    "displayName" : "Подземелье Альдебарана, 2-й уровень"
+  },
+  "alde_dun03" : {
+    "displayName" : "Подземелье Альдебарана, 3-й уровень"
+  },
+  "alde_dun04" : {
+    "displayName" : "Подземелье Альдебарана, 4-й уровень"
+  },
+  "alde_gld" : {
+    "displayName" : "Луина, город-спутник Альдебарана"
+  },
+  "aldeba_in" : {
+    "displayName" : "Альдебаран"
+  },
+  "aldebaran" : {
+    "displayName" : "Пограничный город Альдебаран"
+  },
+  "aldeg_cas01" : {
+    "displayName" : "Верденберг"
+  },
+  "aldeg_cas02" : {
+    "displayName" : "Хиделбург"
+  },
+  "aldeg_cas03" : {
+    "displayName" : "Неленберг"
+  },
+  "aldeg_cas04" : {
+    "displayName" : "Кардиф"
+  },
+  "aldeg_cas05" : {
+    "displayName" : "Роденбург"
+  },
+  "ama_dun01" : {
+    "displayName" : "Амацу, Лабиринт Татами"
+  },
+  "ama_dun02" : {
+    "displayName" : "Амацу, Подземный лес"
+  },
+  "ama_dun03" : {
+    "displayName" : "Амацу, Подземная часовня"
+  },
+  "ama_fild01" : {
+    "displayName" : "Окрестности Амацу"
+  },
+  "ama_in01" : {
+    "displayName" : "Амацу"
+  },
+  "ama_in02" : {
+    "displayName" : "Дворец правителя Амацу"
+  },
+  "ama_test" : {
+    "displayName" : "Амацу, Путешествие Момотаро"
+  },
+  "amatsu" : {
+    "displayName" : "Амацу, страна Тэнгу"
+  },
+  "anthell01" : {
+    "displayName" : "Муравейник, 1-й уровень"
+  },
+  "anthell02" : {
+    "displayName" : "Муравейник, 2-й уровень"
+  },
+  "arena_room" : {
+    "displayName" : "Зал ожидания"
+  },
+  "aru_gld" : {
+    "displayName" : "Валфрейя"
+  },
+  "arug_cas01" : {
+    "displayName" : "Мардол"
+  },
+  "arug_cas02" : {
+    "displayName" : "Шейт"
+  },
+  "arug_cas03" : {
+    "displayName" : "Хорн"
+  },
+  "arug_cas04" : {
+    "displayName" : "Гелун"
+  },
+  "arug_cas05" : {
+    "displayName" : "Ванадис"
+  },
+  "arug_dun01" : {
+    "displayName" : "Подземелье замков"
+  },
+  "arug_que01" : {
+    "displayName" : "Морстонские Прерии"
+  },
+  "auction_01" : {
+    "displayName" : "Аукцион"
+  },
+  "auction_02" : {
+    "displayName" : "Аукцион"
+  },
+  "ayo_dun01" : {
+    "displayName" : "Древний лабиринт Аотайя"
+  },
+  "ayo_dun02" : {
+    "displayName" : "Древняя часовня Аотайя"
+  },
+  "ayo_fild01" : {
+    "displayName" : "Окрестности Аотайи"
+  },
+  "ayo_fild02" : {
+    "displayName" : "Окрестности Аотайи"
+  },
+  "ayo_in01" : {
+    "displayName" : "Аотайя"
+  },
+  "ayo_in02" : {
+    "displayName" : "Аотайя"
+  },
+  "ayothaya" : {
+    "displayName" : "Аотайя"
+  },
+  "bat_a01" : {
+    "displayName" : "Каньон Тиера"
+  },
+  "bat_a02" : {
+    "displayName" : "Каньон Тиера"
+  },
+  "bat_b01" : {
+    "displayName" : "Флавиан"
+  },
+  "bat_b02" : {
+    "displayName" : "Флавиан"
+  },
+  "bat_c01" : {
+    "displayName" : "Крюгер фон Мидгард"
+  },
+  "bat_c02" : {
+    "displayName" : "Крюгер фон Мидгард"
+  },
+  "bat_c03" : {
+    "displayName" : "Крюгер фон Мидгард"
+  },
+  "bat_room" : {
+    "displayName" : "Арена: Зал ожидания"
+  },
+  "beach_dun" : {
+    "displayName" : "Кару, западная пещера Комодо"
+  },
+  "beach_dun2" : {
+    "displayName" : "Руанд, северная пещера Комодо"
+  },
+  "beach_dun3" : {
+    "displayName" : "Мао, восточная пещера Комодо"
+  },
+  "bif_fild01" : {
+    "displayName" : "Бифрост, Южная часть"
+  },
+  "bif_fild02" : {
+    "displayName" : "Бифрост, Северная часть"
+  },
+  "bif_in01.gat" : {
+    "displayName" : "Деревня Мора, племя Рафле"
+  },
+  "bossnia_01" : {
+    "displayName" : "Босния"
+  },
+  "bossnia_02" : {
+    "displayName" : "Босния"
+  },
+  "bossnia_03" : {
+    "displayName" : "Босния"
+  },
+  "bossnia_04" : {
+    "displayName" : "Босния"
+  },
+  "bra_dun01" : {
+    "displayName" : "Вход в подводную пещеру Бразилис"
+  },
+  "bra_dun02" : {
+    "displayName" : "Территория подводной пещеры Бразилис"
+  },
+  "bra_fild01" : {
+    "displayName" : "Поле Бразилис"
+  },
+  "bra_in01" : {
+    "displayName" : "Территория Бразилис"
+  },
+  "brasilis" : {
+    "displayName" : "Бразилис"
+  },
+  "c_tower1" : {
+    "displayName" : "Часовая башня Альдебарана, 1-й уровень"
+  },
+  "c_tower2" : {
+    "displayName" : "Часовая башня Альдебарана, 2-й уровень"
+  },
+  "c_tower3" : {
+    "displayName" : "Часовая башня Альдебарана, 3-й уровень"
+  },
+  "c_tower4" : {
+    "displayName" : "Часовая башня Альдебарана, 4-й уровень"
+  },
+  "cave" : {
+    "displayName" : "Пещерная деревня"
+  },
+  "cmd_fild01" : {
+    "displayName" : "Лес Папучико"
+  },
+  "cmd_fild02" : {
+    "displayName" : "Пляж Кокомо"
+  },
+  "cmd_fild03" : {
+    "displayName" : "Болота Зенаи"
+  },
+  "cmd_fild04" : {
+    "displayName" : "Пляж Кокомо"
+  },
+  "cmd_fild06" : {
+    "displayName" : "Крепость Сандаруман (запад)"
+  },
+  "cmd_fild07" : {
+    "displayName" : "Маяк Фарос"
+  },
+  "cmd_fild08" : {
+    "displayName" : "Крепость Сандаруман (восток)"
+  },
+  "cmd_fild09" : {
+    "displayName" : "Крепость Сандаруман (юг)"
+  },
+  "cmd_in01" : {
+    "displayName" : "Комодо"
+  },
+  "cmd_in02" : {
+    "displayName" : "Комодо"
+  },
+  "comodo" : {
+    "displayName" : "Комодо, прибрежный город"
+  },
+  "dew_dun01" : {
+    "displayName" : "Вулканический остров Кракато"
+  },
+  "dew_dun02" : {
+    "displayName" : "Пещера Истана"
+  },
+  "dew_fild01" : {
+    "displayName" : "Дэвата_Деревня Джати"
+  },
+  "dew_in01" : {
+    "displayName" : "Деревня Джати"
+  },
+  "dewata" : {
+    "displayName" : "Дэвата"
+  },
+  "dic_dun01" : {
+    "displayName" : "Туннель Камидаль"
+  },
+  "dic_dun02" : {
+    "displayName" : "Холл Скараба"
+  },
+  "dic_dun03" : {
+    "displayName" : "Холл Скараба"
+  },
+  "dic_fild01" : {
+    "displayName" : "Горный хребет Камидаль"
+  },
+  "dic_fild02" : {
+    "displayName" : "Горный хребет Камидаль"
+  },
+  "dic_in01" : {
+    "displayName" : "Территория Дикастеса"
+  },
+  "dicastes01" : {
+    "displayName" : "Столица Сафа, Эль Дикастес"
+  },
+  "dicastes02" : {
+    "displayName" : "Лес Брумвельд Орхи"
+  },
+  "e_tower" : {
+    "displayName" : "Туманный остров"
+  },
+  "ecl_fild01" : {
+    "displayName" : "Цветущая земля"
+  },
+  "ecl_hub01" : {
+    "displayName" : "Эрклаж - внешняя часть"
+  },
+  "ecl_in01" : {
+    "displayName" : "Эрклаж"
+  },
+  "ecl_in02" : {
+    "displayName" : "Эрклаж"
+  },
+  "ecl_in03" : {
+    "displayName" : "Эрклаж"
+  },
+  "ecl_in04" : {
+    "displayName" : "Эрклаж"
+  },
+  "ecl_tdun01" : {
+    "displayName" : "Бифрост - 1й этаж"
+  },
+  "ecl_tdun02" : {
+    "displayName" : "Бифрост - 2й этаж"
+  },
+  "ecl_tdun03" : {
+    "displayName" : "Бифрост - 3й этаж"
+  },
+  "ecl_tdun04" : {
+    "displayName" : "Бифрост - 4й этаж"
+  },
+  "eclage" : {
+    "displayName" : "Эрклаж"
+  },
+  "ein_dun01" : {
+    "displayName" : "Старый рудник Эйнбех, 1-й уровень"
+  },
+  "ein_dun02" : {
+    "displayName" : "Старый рудник Эйнбех, 2-й уровень"
+  },
+  "ein_fild01" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_fild03" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_fild04" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_fild05" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_fild06" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_fild07" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_fild08" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_fild09" : {
+    "displayName" : "Окрестности Эйнброха"
+  },
+  "ein_in01" : {
+    "displayName" : "Внутри"
+  },
+  "einbech" : {
+    "displayName" : "Эйнбех, деревня шахтеров"
+  },
+  "einbroch" : {
+    "displayName" : "Эйнброх, Железный Город"
+  },
+  "evt_xmas13" : {
+    "displayName" : "Снежная поляна"
+  },
+  "force_1-1" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_1-2" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_1-3" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_2-1" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_2-2" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_2-3" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_3-1" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_3-2" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "force_3-3" : {
+    "displayName" : "Арена для боев на время"
+  },
+  "gef_dun00" : {
+    "displayName" : "Подземелье Геффена"
+  },
+  "gef_dun01" : {
+    "displayName" : "Подземелье Геффена"
+  },
+  "gef_dun02" : {
+    "displayName" : "Подземелье Геффена"
+  },
+  "gef_dun03" : {
+    "displayName" : "Геффения"
+  },
+  "gef_fild00" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild01" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild02" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild03" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild04" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild05" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild06" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild07" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild08" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild09" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild10" : {
+    "displayName" : "Деревня орков"
+  },
+  "gef_fild11" : {
+    "displayName" : "Окрестности Геффена"
+  },
+  "gef_fild13" : {
+    "displayName" : "Бретония"
+  },
+  "gef_tower" : {
+    "displayName" : "Центральная башня Геффена"
+  },
+  "gefenia01" : {
+    "displayName" : "Геффения"
+  },
+  "gefenia02" : {
+    "displayName" : "Геффения"
+  },
+  "gefenia03" : {
+    "displayName" : "Геффения"
+  },
+  "gefenia04" : {
+    "displayName" : "Геффения"
+  },
+  "geffen" : {
+    "displayName" : "Магический город Геффен"
+  },
+  "geffen_in" : {
+    "displayName" : "Геффен"
+  },
+  "gefg_cas01" : {
+    "displayName" : "Рефрион"
+  },
+  "gefg_cas02" : {
+    "displayName" : "Юльбриго"
+  },
+  "gefg_cas03" : {
+    "displayName" : "Иснельф"
+  },
+  "gefg_cas04" : {
+    "displayName" : "Бергель"
+  },
+  "gefg_cas05" : {
+    "displayName" : "Мельсдеч"
+  },
+  "gl_cas01" : {
+    "displayName" : "Гластхейм, 1-й уровень"
+  },
+  "gl_cas02" : {
+    "displayName" : "Гластхейм, 2-й уровень"
+  },
+  "gl_cas02_" : {
+    "displayName" : "Гластхейм, 2-й уровень"
+  },
+  "gl_church" : {
+    "displayName" : "Монастырь Гластхейма"
+  },
+  "gl_chyard" : {
+    "displayName" : "Кладбище Гластхейма"
+  },
+  "gl_chyard_" : {
+    "displayName" : "Кладбище Гластхейма"
+  },
+  "gl_dun01" : {
+    "displayName" : "Подземелье Гластхейма, 1-й уровень"
+  },
+  "gl_dun02" : {
+    "displayName" : "Подземелье Гластхейма, 2-й уровень"
+  },
+  "gl_in01" : {
+    "displayName" : "Гластхейм"
+  },
+  "gl_knt01" : {
+    "displayName" : "Казармы Гластхейма, 1-й уровень"
+  },
+  "gl_knt02" : {
+    "displayName" : "Казармы Гластхейма, 2-й уровень"
+  },
+  "gl_prison" : {
+    "displayName" : "Подземная тюрьма Гластхейма, 1-й уровень"
+  },
+  "gl_prison1" : {
+    "displayName" : "Подземная тюрьма Гластхейма, 2-й уровень"
+  },
+  "gl_sew01" : {
+    "displayName" : "Канализация Гластхейма, 1-й уровень"
+  },
+  "gl_sew02" : {
+    "displayName" : "Канализация Гластхейма, 2-й уровень"
+  },
+  "gl_sew03" : {
+    "displayName" : "Канализация Гластхейма, 3-й уровень"
+  },
+  "gl_sew04" : {
+    "displayName" : "Канализация Гластхейма, 4-й уровень"
+  },
+  "gl_step" : {
+    "displayName" : "Подземелье Гластхейма"
+  },
+  "glast_01" : {
+    "displayName" : "Гластхейм"
+  },
+  "gld_dun01" : {
+    "displayName" : "Подземелье замков"
+  },
+  "gld_dun02" : {
+    "displayName" : "Подземелье замков"
+  },
+  "gld_dun03" : {
+    "displayName" : "Подземелье замков"
+  },
+  "gld_dun04" : {
+    "displayName" : "Подземелье замков"
+  },
+  "gon_dun01" : {
+    "displayName" : "Святилище Си Ван Му"
+  },
+  "gon_dun02" : {
+    "displayName" : "Доска для игры в го"
+  },
+  "gon_dun03" : {
+    "displayName" : "Аркадия"
+  },
+  "gon_fild01" : {
+    "displayName" : "Окрестности Кунлуна"
+  },
+  "gon_in" : {
+    "displayName" : "Кунлун"
+  },
+  "gon_test" : {
+    "displayName" : "Боевая арена Кунлун"
+  },
+  "gonryun" : {
+    "displayName" : "Кунлун, остров отшельников"
+  },
+  "guild_room" : {
+    "displayName" : "Зал ожидания Арены"
+  },
+  "guild_vs1" : {
+    "displayName" : "Арена"
+  },
+  "guild_vs2" : {
+    "displayName" : "Арена"
+  },
+  "guild_vs3" : {
+    "displayName" : "Арена"
+  },
+  "guild_vs4" : {
+    "displayName" : "Арена"
+  },
+  "guild_vs5" : {
+    "displayName" : "Арена"
+  },
+  "himinn" : {
+    "displayName" : "Зал Валькирий"
+  },
+  "hu_fild01" : {
+    "displayName" : "Вход в Башню Танатос"
+  },
+  "hu_fild02" : {
+    "displayName" : "Окрестности Хугеля"
+  },
+  "hu_fild04" : {
+    "displayName" : "Окрестности Хугеля"
+  },
+  "hu_fild05" : {
+    "displayName" : "Бездонное озеро Хугеля"
+  },
+  "hu_fild06" : {
+    "displayName" : "Окрестности Хугеля"
+  },
+  "hu_in01" : {
+    "displayName" : "Хугель"
+  },
+  "hugel" : {
+    "displayName" : "Хугель, цветущий городок"
+  },
+  "hunter_1-1" : {
+    "displayName" : "Гильдия Охотников"
+  },
+  "hunter_2-1" : {
+    "displayName" : "Гильдия Охотников"
+  },
+  "hunter_3-1" : {
+    "displayName" : "Гильдия Охотников"
+  },
+  "ice_dun01" : {
+    "displayName" : "Ледяная Пещера, 1-й уровень"
+  },
+  "ice_dun02" : {
+    "displayName" : "Ледяная Пещера, 2-й уровень"
+  },
+  "ice_dun03" : {
+    "displayName" : "Ледяная Пещера, 3-й уровень"
+  },
+  "ice_dun04" : {
+    "displayName" : "Ледяная Пещера, Запечатанная часть"
+  },
+  "in_hunter" : {
+    "displayName" : "Гильдия Охотников"
+  },
+  "in_moc_16" : {
+    "displayName" : "Гильдия Убийц"
+  },
+  "in_orcs01" : {
+    "displayName" : "Деревня орков"
+  },
+  "in_rogue" : {
+    "displayName" : "Гильдия Разбойников"
+  },
+  "in_sphinx1" : {
+    "displayName" : "Сфинкс, 1-й уровень"
+  },
+  "in_sphinx2" : {
+    "displayName" : "Сфинкс, 2-й уровень"
+  },
+  "in_sphinx3" : {
+    "displayName" : "Сфинкс, 3-й уровень"
+  },
+  "in_sphinx4" : {
+    "displayName" : "Сфинкс, 4-й уровень"
+  },
+  "in_sphinx5" : {
+    "displayName" : "Сфинкс, 5-й уровень"
+  },
+  "itemmall" : {
+    "displayName" : "Рынок"
+  },
+  "iz_dun00" : {
+    "displayName" : "Подземелье Байлана, 1-й уровень"
+  },
+  "iz_dun01" : {
+    "displayName" : "Подземелье Байлана, 2-й уровень"
+  },
+  "iz_dun02" : {
+    "displayName" : "Подземелье Байлана, 3-й уровень"
+  },
+  "iz_dun03" : {
+    "displayName" : "Подземелье Байлана, 4-й уровень"
+  },
+  "iz_dun04" : {
+    "displayName" : "Подземелье Байлана, 5-й уровень"
+  },
+  "iz_dun05" : {
+    "displayName" : "Подземелье Байлана, 6-й уровень"
+  },
+  "izlu2dun" : {
+    "displayName" : "Остров Байлан"
+  },
+  "izlude" : {
+    "displayName" : "Город-спутник Излюд"
+  },
+  "izlude_in" : {
+    "displayName" : "Излюд"
+  },
+  "jawaii" : {
+    "displayName" : "Яваи, Рай для молодоженов"
+  },
+  "jawaii_in" : {
+    "displayName" : "Яваи"
+  },
+  "job3_arch01" : {
+    "displayName" : "Гильдия архиепископов"
+  },
+  "job3_arch02" : {
+    "displayName" : "Хигель, храм Одина"
+  },
+  "job3_arch03" : {
+    "displayName" : "Гильдия архиепископов"
+  },
+  "job3_gen01" : {
+    "displayName" : "Генетическая лаборатория"
+  },
+  "job3_guil01" : {
+    "displayName" : "Частная таверна"
+  },
+  "job3_guil02" : {
+    "displayName" : "Внутри ветхого склада"
+  },
+  "job3_guil03" : {
+    "displayName" : "Уединенная обитель"
+  },
+  "job3_rang01" : {
+    "displayName" : "Гильдия рейнджеров"
+  },
+  "job3_rang02" : {
+    "displayName" : "Экзаминационная рейнджеров"
+  },
+  "job3_rune01" : {
+    "displayName" : "Внутри Гильдии рунных рыцарей"
+  },
+  "job3_rune02" : {
+    "displayName" : "Экзаминационная рунных рыцарей"
+  },
+  "job3_rune03" : {
+    "displayName" : "Экзаминационная рунных рыцарей"
+  },
+  "job3_war01" : {
+    "displayName" : "Экзаминационная колдунов"
+  },
+  "job3_war02" : {
+    "displayName" : "Экзаминационная колдунов"
+  },
+  "job_cru" : {
+    "displayName" : "Экзаменационная Крестоносцев"
+  },
+  "job_duncer" : {
+    "displayName" : "Театр Комодо"
+  },
+  "job_hunte" : {
+    "displayName" : "Экзаменационная Охотников"
+  },
+  "job_knt" : {
+    "displayName" : "Экзаменационная Рыцарей"
+  },
+  "job_monk" : {
+    "displayName" : "Монастырь Св. Катарины"
+  },
+  "job_prist" : {
+    "displayName" : "Экзаменационная Священников"
+  },
+  "job_sage" : {
+    "displayName" : "Экзаменационная Мудрецов"
+  },
+  "job_soul" : {
+    "displayName" : "Ваше сердце"
+  },
+  "job_star" : {
+    "displayName" : "Солнце, Луна и Звезды"
+  },
+  "job_thief1" : {
+    "displayName" : "Грибная ферма"
+  },
+  "job_wiz" : {
+    "displayName" : "Экзаменационная Волшебников"
+  },
+  "jupe_area1" : {
+    "displayName" : "Юперос, запретная зона"
+  },
+  "jupe_area2" : {
+    "displayName" : "Юперос, запретная зона"
+  },
+  "jupe_cave" : {
+    "displayName" : "Вход в подземелье Юперос"
+  },
+  "jupe_core" : {
+    "displayName" : "Центр Юпероса"
+  },
+  "jupe_core2" : {
+    "displayName" : "Центр Юпероса"
+  },
+  "jupe_ele" : {
+    "displayName" : "Лифт Юпероса"
+  },
+  "jupe_ele_r" : {
+    "displayName" : "Лифт Юпероса"
+  },
+  "jupe_gate" : {
+    "displayName" : "Юперос, запретная зона"
+  },
+  "juperos_01" : {
+    "displayName" : "Развалины Юпероса, Снаружи"
+  },
+  "juperos_02" : {
+    "displayName" : "Развалины Юпероса, Внутри"
+  },
+  "kh_dun01" : {
+    "displayName" : "Завод роботов, 1-й уровень"
+  },
+  "kh_dun02" : {
+    "displayName" : "Завод роботов, 2-й уровень"
+  },
+  "kh_kiehl01" : {
+    "displayName" : "Комната Киеля"
+  },
+  "kh_kiehl02" : {
+    "displayName" : "Комната Киеля"
+  },
+  "kh_mansion" : {
+    "displayName" : "Особняк Киеля Кайра"
+  },
+  "kh_rossi" : {
+    "displayName" : "Особняк семьи Розимьер"
+  },
+  "kh_school" : {
+    "displayName" : "Академия Киеля Кайра"
+  },
+  "kh_vila" : {
+    "displayName" : "Домик Киеля Кайра"
+  },
+  "knight_1-1" : {
+    "displayName" : "Рыцарский Орден"
+  },
+  "knight_2-1" : {
+    "displayName" : "Рыцарский Орден"
+  },
+  "knight_3-1" : {
+    "displayName" : "Рыцарский Орден"
+  },
+  "lhz_airport" : {
+    "displayName" : "Аэропорт Лайтхайзена"
+  },
+  "lhz_cube" : {
+    "displayName" : "Кубическая комната"
+  },
+  "lhz_dun01" : {
+    "displayName" : "Соматологическая лаборатория, 1-й уровень"
+  },
+  "lhz_dun02" : {
+    "displayName" : "Соматологическая лаборатория, 2-й уровень"
+  },
+  "lhz_dun03" : {
+    "displayName" : "Соматологическая лаборатория, 3-й уровень"
+  },
+  "lhz_dun04" : {
+    "displayName" : "Соматологическая лаборатория, 4-й уровень"
+  },
+  "lhz_fild01" : {
+    "displayName" : "Окрестности Лайтхайзена"
+  },
+  "lhz_fild02" : {
+    "displayName" : "Окрестности Лайтхайзена (Долина Жнецов)"
+  },
+  "lhz_fild03" : {
+    "displayName" : "Окрестности Лайтхайзена"
+  },
+  "lhz_in01" : {
+    "displayName" : "Штаб-квартира Корпорации 'Рекенбер'"
+  },
+  "lhz_in02" : {
+    "displayName" : "Лайтхайзен"
+  },
+  "lhz_in03" : {
+    "displayName" : "Лайтхайзен"
+  },
+  "lhz_que01" : {
+    "displayName" : "Лайтхайзен"
+  },
+  "lighthalzen" : {
+    "displayName" : "Лайтхайзен, Город корпораций"
+  },
+  "lou_dun01" : {
+    "displayName" : "Королевская гробница"
+  },
+  "lou_dun02" : {
+    "displayName" : "Королевская гробница"
+  },
+  "lou_dun03" : {
+    "displayName" : "Дворец Шэнь Ян"
+  },
+  "lou_fild01" : {
+    "displayName" : "Окрестности Лоянга"
+  },
+  "lou_in01" : {
+    "displayName" : "Лоянг"
+  },
+  "lou_in02" : {
+    "displayName" : "Лоянг"
+  },
+  "louyang" : {
+    "displayName" : "Лоянг"
+  },
+  "ma_dun01" : {
+    "displayName" : "Госпиталь (1-й этаж)"
+  },
+  "ma_fild01" : {
+    "displayName" : "Таинственная деревня"
+  },
+  "ma_fild02" : {
+    "displayName" : "Лес"
+  },
+  "ma_in01" : {
+    "displayName" : "Порт Малайя"
+  },
+  "ma_scene01" : {
+    "displayName" : "Озеро Баконавы"
+  },
+  "ma_zif01" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif02" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif03" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif04" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif05" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif06" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif07" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif08" : {
+    "displayName" : "Джипни"
+  },
+  "ma_zif09" : {
+    "displayName" : "Джипни"
+  },
+  "mag_dun01" : {
+    "displayName" : "Муспельхейм, 1-й уровень"
+  },
+  "mag_dun02" : {
+    "displayName" : "Муспельхейм, 2-й уровень"
+  },
+  "mal_dun01" : {
+    "displayName" : "Звездная равнина"
+  },
+  "mal_in01" : {
+    "displayName" : "На острове Маллан"
+  },
+  "mal_in02" : {
+    "displayName" : "Внутри корабля"
+  },
+  "malangdo" : {
+    "displayName" : "Остров Маллан"
+  },
+  "malaya" : {
+    "displayName" : "Порт Малайя"
+  },
+  "man_fild01" : {
+    "displayName" : "Окрестности Манука"
+  },
+  "man_fild02" : {
+    "displayName" : "Окрестности Манука"
+  },
+  "man_fild03" : {
+    "displayName" : "Окрестности Манука"
+  },
+  "man_in01" : {
+    "displayName" : "Центр Манука"
+  },
+  "manuk" : {
+    "displayName" : "Город шахтеров Манук"
+  },
+  "mid_camp" : {
+    "displayName" : "Лагерь Союзных войск Мидгард"
+  },
+  "mid_campin" : {
+    "displayName" : "Лагерь Союзных войск Мидгард"
+  },
+  "mjo_dun01" : {
+    "displayName" : "Заброшенная шахта, 1-й уровень"
+  },
+  "mjo_dun02" : {
+    "displayName" : "Заброшенная шахта, 2-й уровень"
+  },
+  "mjo_dun03" : {
+    "displayName" : "Заброшенная шахта, 3-й уровень"
+  },
+  "mjolnir_01" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_02" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_03" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_04" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_05" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_06" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_07" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_08" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_09" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_10" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_11" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "mjolnir_12" : {
+    "displayName" : "Горная гряда Мьелльнир"
+  },
+  "moc_fild01" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild02" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild03" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild07" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild11" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild12" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild13" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild16" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild17" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild18" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild19" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "moc_fild20" : {
+    "displayName" : "Разлом Пространства"
+  },
+  "moc_fild21" : {
+    "displayName" : "Разлом Пространства"
+  },
+  "moc_fild22" : {
+    "displayName" : "Разлом Пространства"
+  },
+  "moc_fild22b" : {
+    "displayName" : "Разлом Пространства"
+  },
+  "moc_para01" : {
+    "displayName" : "Райский уголок Моррока"
+  },
+  "moc_pryd01" : {
+    "displayName" : "Пирамида, 1-й уровень"
+  },
+  "moc_pryd02" : {
+    "displayName" : "Пирамида, 2-й уровень"
+  },
+  "moc_pryd03" : {
+    "displayName" : "Пирамида, 3-й уровень"
+  },
+  "moc_pryd04" : {
+    "displayName" : "Пирамида, 4-й уровень"
+  },
+  "moc_pryd05" : {
+    "displayName" : "Подземелье Пирамиды 1-й уровень"
+  },
+  "moc_pryd06" : {
+    "displayName" : "Подземелье Пирамиды 2-й уровень"
+  },
+  "moc_prydb1" : {
+    "displayName" : "Гильдия Воров"
+  },
+  "moc_prydn1" : {
+    "displayName" : "Пирамида (1й этаж) - Испытание"
+  },
+  "moc_prydn2" : {
+    "displayName" : "Пирамида (2й этаж) - Испытание"
+  },
+  "moc_ruins" : {
+    "displayName" : "Песчаный город Моррок"
+  },
+  "monk_in" : {
+    "displayName" : "Монастырь"
+  },
+  "monk_test" : {
+    "displayName" : "Монастырь Св. Катарины"
+  },
+  "morocc" : {
+    "displayName" : "Песчаный город Моррок"
+  },
+  "morocc_in" : {
+    "displayName" : "Моррок"
+  },
+  "moscovia" : {
+    "displayName" : "Сказочный город Московия"
+  },
+  "mosk_dun01" : {
+    "displayName" : "Лес Московии"
+  },
+  "mosk_dun02" : {
+    "displayName" : "Темный лес Московии"
+  },
+  "mosk_dun03" : {
+    "displayName" : "Дремучий лес Московии"
+  },
+  "mosk_fild01" : {
+    "displayName" : "Остров Кита"
+  },
+  "mosk_fild02" : {
+    "displayName" : "Окрестности Московии"
+  },
+  "mosk_in" : {
+    "displayName" : "Внутри Московии"
+  },
+  "mosk_ship" : {
+    "displayName" : "Корабль"
+  },
+  "nameless_i" : {
+    "displayName" : "Безымянный остров"
+  },
+  "nameless_in" : {
+    "displayName" : "На Безымянном острове"
+  },
+  "nameless_n" : {
+    "displayName" : "Безымянный остров"
+  },
+  "new_1-1" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_1-2" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_1-3" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_1-4" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_2-1" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_2-2" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_2-3" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_2-4" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_3-1" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_3-2" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_3-3" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_3-4" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_4-1" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_4-2" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_4-3" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_4-4" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_5-1" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_5-2" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_5-3" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "new_5-4" : {
+    "displayName" : "Тренировочный центр"
+  },
+  "nif_fild01" : {
+    "displayName" : "Деревня скелетов"
+  },
+  "nif_fild02" : {
+    "displayName" : "Призрачный кратер"
+  },
+  "nif_in" : {
+    "displayName" : "Нифльхейм"
+  },
+  "niflheim" : {
+    "displayName" : "Нифльхейм"
+  },
+  "nyd_dun01" : {
+    "displayName" : "Рана головореза Терры 1-й уровень"
+  },
+  "nyd_dun02" : {
+    "displayName" : "Рана головореза Терры 2-й уровень"
+  },
+  "odin_tem01" : {
+    "displayName" : "Храм Одина, Западная часть"
+  },
+  "odin_tem02" : {
+    "displayName" : "Храм Одина, Южная часть"
+  },
+  "odin_tem03" : {
+    "displayName" : "Храм Одина, Северная часть"
+  },
+  "orcsdun01" : {
+    "displayName" : "Геффен, Подземелье орков, 1-й уровень"
+  },
+  "orcsdun02" : {
+    "displayName" : "Геффен, Подземелье орков, 2-й уровень"
+  },
+  "ordeal_1-1" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_1-2" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_1-3" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_1-4" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_2-1" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_2-2" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_2-3" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_2-4" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_3-1" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_3-2" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_3-3" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "ordeal_3-4" : {
+    "displayName" : "Арена боевого крещения"
+  },
+  "p_track01" : {
+    "displayName" : "Ипподром"
+  },
+  "p_track02" : {
+    "displayName" : "Ипподром"
+  },
+  "pay_arche" : {
+    "displayName" : "Деревня лучников Пайона"
+  },
+  "pay_dun00" : {
+    "displayName" : "Пещеры Пайона, 1-й уровень"
+  },
+  "pay_dun01" : {
+    "displayName" : "Пещеры Пайона, 2-й уровень"
+  },
+  "pay_dun02" : {
+    "displayName" : "Пещеры Пайона, 3-й уровень"
+  },
+  "pay_dun03" : {
+    "displayName" : "Пещеры Пайона, 4-й уровень"
+  },
+  "pay_dun04" : {
+    "displayName" : "Пещеры Пайона, 5-й уровень"
+  },
+  "pay_fild01" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_fild02" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_fild03" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_fild04" : {
+    "displayName" : "Пустыня Сограт"
+  },
+  "pay_fild06" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_fild07" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_fild08" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_fild09" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_fild10" : {
+    "displayName" : "Леса Пайона"
+  },
+  "pay_gld" : {
+    "displayName" : "Чунгрим"
+  },
+  "payg_cas01" : {
+    "displayName" : "Алый дом"
+  },
+  "payg_cas02" : {
+    "displayName" : "Небесный мост"
+  },
+  "payg_cas03" : {
+    "displayName" : "Тень Будды"
+  },
+  "payg_cas04" : {
+    "displayName" : "Красная башня"
+  },
+  "payg_cas05" : {
+    "displayName" : "Бамбуковый лес"
+  },
+  "payon" : {
+    "displayName" : "Горный город Пайон"
+  },
+  "payon_in01" : {
+    "displayName" : "Пайон"
+  },
+  "payon_in02" : {
+    "displayName" : "Пайон"
+  },
+  "payon_in03" : {
+    "displayName" : "Пайон"
+  },
+  "poring_w01" : {
+    "displayName" : "Приемная Поринга"
+  },
+  "poring_w02" : {
+    "displayName" : "Арена Поринга"
+  },
+  "priest_1-1" : {
+    "displayName" : "Святилище"
+  },
+  "priest_2-1" : {
+    "displayName" : "Святилище"
+  },
+  "priest_3-1" : {
+    "displayName" : "Святилище"
+  },
+  "prontera" : {
+    "displayName" : "Стольный град Пронтера"
+  },
+  "prt_are01" : {
+    "displayName" : "Арена"
+  },
+  "prt_are_in" : {
+    "displayName" : "Зал ожидания"
+  },
+  "prt_arena01" : {
+    "displayName" : "Арена"
+  },
+  "prt_castle" : {
+    "displayName" : "Замок Пронтеры"
+  },
+  "prt_church" : {
+    "displayName" : "Церковь Пронтеры"
+  },
+  "prt_fild00" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild01" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild02" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild03" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild04" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild05" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild06" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild07" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild08" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild09" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild10" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_fild11" : {
+    "displayName" : "Окрестности Пронтеры"
+  },
+  "prt_gld" : {
+    "displayName" : "Царство Валькирий"
+  },
+  "prt_in" : {
+    "displayName" : "Пронтера"
+  },
+  "prt_maze01" : {
+    "displayName" : "Лес-Лабиринт Пронтеры, 1-й уровень"
+  },
+  "prt_maze02" : {
+    "displayName" : "Лес-Лабиринт Пронтеры, 2-й уровень"
+  },
+  "prt_maze03" : {
+    "displayName" : "Лес-Лабиринт Пронтеры, 3-й уровень"
+  },
+  "prt_monk" : {
+    "displayName" : "Монастырь Св. Катарины"
+  },
+  "prt_sewb1" : {
+    "displayName" : "Канализация Пронтеры, 1-й уровень"
+  },
+  "prt_sewb2" : {
+    "displayName" : "Канализация Пронтеры, 2-й уровень"
+  },
+  "prt_sewb3" : {
+    "displayName" : "Канализация Пронтеры, 3-й уровень"
+  },
+  "prt_sewb4" : {
+    "displayName" : "Канализация Пронтеры, 4-й уровень"
+  },
+  "prtg_cas01" : {
+    "displayName" : "Кримхилт"
+  },
+  "prtg_cas02" : {
+    "displayName" : "Сбанхилт"
+  },
+  "prtg_cas03" : {
+    "displayName" : "Ладрикс"
+  },
+  "prtg_cas04" : {
+    "displayName" : "Линдерхоф"
+  },
+  "prtg_cas05" : {
+    "displayName" : "Гвендл"
+  },
+  "pvp_2vs2" : {
+    "displayName" : "Арена: Особое событие"
+  },
+  "pvp_c_room" : {
+    "displayName" : "Арена: Зал ожидания"
+  },
+  "pvp_n_1-1" : {
+    "displayName" : "Арена: Комната отдыха"
+  },
+  "pvp_n_1-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_1-3" : {
+    "displayName" : "Пещеры"
+  },
+  "pvp_n_1-4" : {
+    "displayName" : "Арена Валькирий"
+  },
+  "pvp_n_1-5" : {
+    "displayName" : "Подвал"
+  },
+  "pvp_n_2-1" : {
+    "displayName" : "Арена: Комната отдыха"
+  },
+  "pvp_n_2-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_2-3" : {
+    "displayName" : "Арена: 4 комнаты"
+  },
+  "pvp_n_2-4" : {
+    "displayName" : "Арена: Комната с распятием"
+  },
+  "pvp_n_2-5" : {
+    "displayName" : "Арена: Компас"
+  },
+  "pvp_n_3-1" : {
+    "displayName" : "Арена: Комната отдыха"
+  },
+  "pvp_n_3-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_3-3" : {
+    "displayName" : "Арена: 4 комнаты"
+  },
+  "pvp_n_3-4" : {
+    "displayName" : "Арена: Комната с распятием"
+  },
+  "pvp_n_3-5" : {
+    "displayName" : "Арена: Компас"
+  },
+  "pvp_n_4-1" : {
+    "displayName" : "Арена: Комната отдыха"
+  },
+  "pvp_n_4-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_4-3" : {
+    "displayName" : "Арена: 4 комнаты"
+  },
+  "pvp_n_4-4" : {
+    "displayName" : "Арена: Комната с распятием"
+  },
+  "pvp_n_4-5" : {
+    "displayName" : "Арена: Компас"
+  },
+  "pvp_n_5-1" : {
+    "displayName" : "Арена: Комната отдыха"
+  },
+  "pvp_n_5-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_5-3" : {
+    "displayName" : "Арена: 4 комнаты"
+  },
+  "pvp_n_5-4" : {
+    "displayName" : "Арена: Комната с распятием"
+  },
+  "pvp_n_5-5" : {
+    "displayName" : "Арена: Компас"
+  },
+  "pvp_n_6-1" : {
+    "displayName" : "Арена: Комната отдыха"
+  },
+  "pvp_n_6-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_6-3" : {
+    "displayName" : "Арена: 4 комнаты"
+  },
+  "pvp_n_6-4" : {
+    "displayName" : "Арена: Комната с распятием"
+  },
+  "pvp_n_6-5" : {
+    "displayName" : "Арена: Компас"
+  },
+  "pvp_n_7-1" : {
+    "displayName" : "Арена: Комната отдыха"
+  },
+  "pvp_n_7-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_7-3" : {
+    "displayName" : "Арена: 4 комнаты"
+  },
+  "pvp_n_7-4" : {
+    "displayName" : "Арена: Комната с распятием"
+  },
+  "pvp_n_7-5" : {
+    "displayName" : "Арена: Компас"
+  },
+  "pvp_n_8-1" : {
+    "displayName" : "Колизей"
+  },
+  "pvp_n_8-2" : {
+    "displayName" : "Арена: Захват"
+  },
+  "pvp_n_8-3" : {
+    "displayName" : "Арена: 4 комнаты"
+  },
+  "pvp_n_8-4" : {
+    "displayName" : "Арена: Комната с распятием"
+  },
+  "pvp_n_8-5" : {
+    "displayName" : "Арена: Компас"
+  },
+  "pvp_n_room" : {
+    "displayName" : "Арена: Зал ожидания"
+  },
+  "pvp_y_1-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_1-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_1-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_1-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_1-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_2-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_2-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_2-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_2-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_2-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_3-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_3-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_3-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_3-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_3-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_4-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_4-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_4-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_4-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_4-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_5-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_5-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_5-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_5-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_5-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_6-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_6-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_6-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_6-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_6-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_7-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_7-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_7-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_7-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_7-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_8-1" : {
+    "displayName" : "Арена: Пронтера"
+  },
+  "pvp_y_8-2" : {
+    "displayName" : "Арена: Излюд"
+  },
+  "pvp_y_8-3" : {
+    "displayName" : "Арена: Пайон"
+  },
+  "pvp_y_8-4" : {
+    "displayName" : "Арена: Альберта"
+  },
+  "pvp_y_8-5" : {
+    "displayName" : "Арена: Моррок"
+  },
+  "pvp_y_room" : {
+    "displayName" : "Арена: Зал ожидания"
+  },
+  "que_avan01" : {
+    "displayName" : "Лаборатория Эйванта"
+  },
+  "que_bingo" : {
+    "displayName" : "Игровой зал"
+  },
+  "que_dan01" : {
+    "displayName" : "Окрестности Хугеля"
+  },
+  "que_dan02" : {
+    "displayName" : "Заброшенный дом в Юно"
+  },
+  "que_god01" : {
+    "displayName" : "Комната испытаний"
+  },
+  "que_god02" : {
+    "displayName" : "Комната испытаний"
+  },
+  "que_house_s" : {
+    "displayName" : "Странный дом"
+  },
+  "que_hugel" : {
+    "displayName" : "Катакомбы Храма Одина"
+  },
+  "que_job01" : {
+    "displayName" : "Частная таверна"
+  },
+  "que_lhz" : {
+    "displayName" : "Соматологическая лаборатория, 4-й уровень"
+  },
+  "que_qaru01" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qaru02" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qaru03" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qaru04" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qaru05" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qsch01" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qsch02" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qsch03" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qsch04" : {
+    "displayName" : "Окольнир"
+  },
+  "que_qsch05" : {
+    "displayName" : "Окольнир"
+  },
+  "que_rachel" : {
+    "displayName" : "В Храме Фрейи"
+  },
+  "que_temsky" : {
+    "displayName" : "Небесный сад"
+  },
+  "que_thor" : {
+    "displayName" : "Подземелье Вулкана Тора"
+  },
+  "quiz_00" : {
+    "displayName" : "Зал состязаний"
+  },
+  "quiz_01" : {
+    "displayName" : "Зал состязаний"
+  },
+  "quiz_02" : {
+    "displayName" : "Зал состязаний"
+  },
+  "quiz_test" : {
+    "displayName" : "Зал испытаний"
+  },
+  "ra_fild01" : {
+    "displayName" : "Луга Аудумлы"
+  },
+  "ra_fild03" : {
+    "displayName" : "Равнина Идун"
+  },
+  "ra_fild04" : {
+    "displayName" : "Луга Аудумлы"
+  },
+  "ra_fild05" : {
+    "displayName" : "Луга Аудумлы"
+  },
+  "ra_fild06" : {
+    "displayName" : "Врата Луны"
+  },
+  "ra_fild08" : {
+    "displayName" : "Равнина Идун"
+  },
+  "ra_fild12" : {
+    "displayName" : "Равнина Идун"
+  },
+  "ra_in01" : {
+    "displayName" : "Рашель"
+  },
+  "ra_san01" : {
+    "displayName" : "Святые Земли, 1-й уровень, Северная сторона"
+  },
+  "ra_san02" : {
+    "displayName" : "Святые Земли, 1-й уровень, Западная сторона"
+  },
+  "ra_san03" : {
+    "displayName" : "Святые Земли, 1-й уровень, Восточная сторона"
+  },
+  "ra_san04" : {
+    "displayName" : "Святые Земли, 1-й уровень, Южная сторона"
+  },
+  "ra_san05" : {
+    "displayName" : "Святые Земли, 2-й уровень, Центр"
+  },
+  "ra_temin" : {
+    "displayName" : "В Храме Фрейи"
+  },
+  "ra_temple" : {
+    "displayName" : "Сессрумнир, Храм богини Фрейи"
+  },
+  "ra_temsky" : {
+    "displayName" : "Райский Сад"
+  },
+  "rachel" : {
+    "displayName" : "Рашель, столица государства Арунафельц"
+  },
+  "s_atelier" : {
+    "displayName" : "Комната теней"
+  },
+  "sch_gld" : {
+    "displayName" : "Нидхёгг"
+  },
+  "schg_cas01" : {
+    "displayName" : "Химин"
+  },
+  "schg_cas02" : {
+    "displayName" : "Андлеран"
+  },
+  "schg_cas03" : {
+    "displayName" : "Бидлинд"
+  },
+  "schg_cas04" : {
+    "displayName" : "Гэлид"
+  },
+  "schg_cas05" : {
+    "displayName" : "Шантри"
+  },
+  "schg_dun01" : {
+    "displayName" : "Подземелье замков"
+  },
+  "schg_que01" : {
+    "displayName" : "Морстонские Прерии"
+  },
+  "sec_in01" : {
+    "displayName" : "Дворец Вальгалла"
+  },
+  "sec_in02" : {
+    "displayName" : "Дворец Вальгалла"
+  },
+  "sec_pri" : {
+    "displayName" : "Зал для медитаций (Тюрьма Вальгаллы)"
+  },
+  "spl_fild01" : {
+    "displayName" : "Великолепные Поля"
+  },
+  "spl_fild02" : {
+    "displayName" : "Великолепные Поля"
+  },
+  "spl_fild03" : {
+    "displayName" : "Великолепные Поля"
+  },
+  "spl_in01" : {
+    "displayName" : "Штаб Терры"
+  },
+  "spl_in02" : {
+    "displayName" : "Центр Терры"
+  },
+  "splendide" : {
+    "displayName" : "Лагерь Лафин"
+  },
+  "sword_3-1" : {
+    "displayName" : "Экзаменационная Мечников"
+  },
+  "te_alde_gld" : {
+    "displayName" : "Луина ТЕ"
+  },
+  "te_aldecas1" : {
+    "displayName" : "Гларис"
+  },
+  "te_aldecas2" : {
+    "displayName" : "Дифорте"
+  },
+  "te_aldecas3" : {
+    "displayName" : "Сорин"
+  },
+  "te_aldecas4" : {
+    "displayName" : "Бенет"
+  },
+  "te_aldecas5" : {
+    "displayName" : "Дорблю"
+  },
+  "te_prt_gld" : {
+    "displayName" : "Царство Валькирий ТЕ"
+  },
+  "te_prtcas01" : {
+    "displayName" : "Геобург"
+  },
+  "te_prtcas02" : {
+    "displayName" : "Рихальт"
+  },
+  "te_prtcas03" : {
+    "displayName" : "Вигнер"
+  },
+  "te_prtcas04" : {
+    "displayName" : "Хайн"
+  },
+  "te_prtcas05" : {
+    "displayName" : "Нерий"
+  },
+  "teg_dun01" : {
+    "displayName" : "Подземелье гильдии"
+  },
+  "teg_dun02" : {
+    "displayName" : "Подземелье гильдии"
+  },
+  "tha_t01" : {
+    "displayName" : "Башня Танатос - Нижний уровень, Вход в музей"
+  },
+  "tha_t02" : {
+    "displayName" : "Башня Танатос - Нижний уровень, Музей"
+  },
+  "tha_t03" : {
+    "displayName" : "Башня Танатос - Нижний уровень, Покинутая комната"
+  },
+  "tha_t04" : {
+    "displayName" : "Башня Танатос - Нижний уровень, Покинутая комната"
+  },
+  "tha_t05" : {
+    "displayName" : "Башня Танатос - Верхние этажи"
+  },
+  "tha_t06" : {
+    "displayName" : "Башня Танатос - Верхние этажи"
+  },
+  "tha_t07" : {
+    "displayName" : "Башня Танатос - Верхние этажи, Комната ангелов"
+  },
+  "tha_t08" : {
+    "displayName" : "Башня Танатос - Верхние этажи, Комната ангелов"
+  },
+  "tha_t09" : {
+    "displayName" : "Башня Танатос - Верхние этажи, Комната боли"
+  },
+  "tha_t10" : {
+    "displayName" : "Башня Танатос - Верхние этажи, Комната печали"
+  },
+  "tha_t11" : {
+    "displayName" : "Башня Танатос - Верхние этажи, Комната отчаяния"
+  },
+  "tha_t12" : {
+    "displayName" : "Башня Танатос - Верхние этажи, Комната гнева"
+  },
+  "thana_boss" : {
+    "displayName" : "Башня Танатос - Неизвестная зона"
+  },
+  "thana_scene01" : {
+    "displayName" : "Вход в Башню Танатос"
+  },
+  "thana_step" : {
+    "displayName" : "Башня Танатос - Верхние этажи, Лестница"
+  },
+  "thor_camp" : {
+    "displayName" : "Аванпост на Вулкане Тора"
+  },
+  "thor_v01" : {
+    "displayName" : "Подземелье Вулкана Тора уровень 1"
+  },
+  "thor_v02" : {
+    "displayName" : "Подземелье Вулкана Тора уровень 2"
+  },
+  "thor_v03" : {
+    "displayName" : "Подземелье Вулкана Тора уровень 3"
+  },
+  "treasure01" : {
+    "displayName" : "Затонувший корабль Альберты, 1-й уровень"
+  },
+  "treasure02" : {
+    "displayName" : "Затонувший корабль Альберты, 2-й уровень"
+  },
+  "tur_dun01" : {
+    "displayName" : "Черепаший остров"
+  },
+  "tur_dun02" : {
+    "displayName" : "Подземелье Черепашьего острова"
+  },
+  "tur_dun03" : {
+    "displayName" : "Деревня Черепахи"
+  },
+  "tur_dun04" : {
+    "displayName" : "Дворец Черепахи"
+  },
+  "tur_dun05" : {
+    "displayName" : "Подземное болото"
+  },
+  "tur_dun06" : {
+    "displayName" : "Подземное болото"
+  },
+  "turbo_e_16" : {
+    "displayName" : "Гоночная трасса"
+  },
+  "turbo_e_4" : {
+    "displayName" : "Гоночная трасса"
+  },
+  "turbo_e_8" : {
+    "displayName" : "Гоночная трасса"
+  },
+  "turbo_n_1" : {
+    "displayName" : "Гоночная трасса"
+  },
+  "turbo_n_16" : {
+    "displayName" : "Гоночная трасса"
+  },
+  "turbo_n_4" : {
+    "displayName" : "Гоночная трасса"
+  },
+  "turbo_n_8" : {
+    "displayName" : "Гоночная трасса"
+  },
+  "turbo_room" : {
+    "displayName" : "Зал ожидания гоночной трассы"
+  },
+  "um_dun01" : {
+    "displayName" : "Столярная мастерская"
+  },
+  "um_dun02" : {
+    "displayName" : "Путь в другой мир"
+  },
+  "um_fild01" : {
+    "displayName" : "Умбала, Лес Рурука"
+  },
+  "um_fild02" : {
+    "displayName" : "Умбала, Лес Хумга"
+  },
+  "um_fild03" : {
+    "displayName" : "Умбала, Болото Карара"
+  },
+  "um_fild04" : {
+    "displayName" : "Умбала, Джунгли Хумга"
+  },
+  "um_in" : {
+    "displayName" : "Умбала"
+  },
+  "umbala" : {
+    "displayName" : "Умбала, деревня племени вутанов"
+  },
+  "valkyrie" : {
+    "displayName" : "Зал Славы"
+  },
+  "ve_fild01" : {
+    "displayName" : "Окрестности Вейнса"
+  },
+  "ve_fild02" : {
+    "displayName" : "Окрестности Вейнса"
+  },
+  "ve_fild03" : {
+    "displayName" : "Окрестности Вейнса"
+  },
+  "ve_fild04" : {
+    "displayName" : "Окрестности Вейнса"
+  },
+  "ve_fild06" : {
+    "displayName" : "Окрестности Вейнса"
+  },
+  "ve_fild07" : {
+    "displayName" : "Окрестности Вейнса"
+  },
+  "ve_in" : {
+    "displayName" : "Территория Вейнса"
+  },
+  "ve_in02" : {
+    "displayName" : "Территория Вейнса"
+  },
+  "veins" : {
+    "displayName" : "Вейнс"
+  },
+  "wizard_1-1" : {
+    "displayName" : "Академия Волшебников"
+  },
+  "wizard_2-1" : {
+    "displayName" : "Академия Волшебников"
+  },
+  "wizard_3-1" : {
+    "displayName" : "Академия Волшебников"
+  },
+  "xmas" : {
+    "displayName" : "Люти, заснеженная деревня"
+  },
+  "xmas_dun01" : {
+    "displayName" : "Фабрика игрушек"
+  },
+  "xmas_dun02" : {
+    "displayName" : "Склад игрушек"
+  },
+  "xmas_fild01" : {
+    "displayName" : "Окрестности Люти"
+  },
+  "xmas_in" : {
+    "displayName" : "Люти"
+  },
+  "y_airport" : {
+    "displayName" : "Аэропорт Юно"
+  },
+  "yggdrasil01" : {
+    "displayName" : "Корень Ясеня Иггдрасиль"
+  },
+  "yuno" : {
+    "displayName" : "Юно, столица республики Шварцвальт"
+  },
+  "yuno_fild01" : {
+    "displayName" : "Пограничный пост Шварцвальта"
+  },
+  "yuno_fild02" : {
+    "displayName" : "Усадьба Киеля Кайра"
+  },
+  "yuno_fild03" : {
+    "displayName" : "Плато Эльмес"
+  },
+  "yuno_fild04" : {
+    "displayName" : "Плато Эльмес"
+  },
+  "yuno_fild06" : {
+    "displayName" : "Плато Эльмес"
+  },
+  "yuno_fild07" : {
+    "displayName" : "Каньон Эльмес"
+  },
+  "yuno_fild08" : {
+    "displayName" : "Академия Киеля Кайра"
+  },
+  "yuno_fild09" : {
+    "displayName" : "Военный лагерь Шварцвальта"
+  },
+  "yuno_fild11" : {
+    "displayName" : "Окрестности Юно"
+  },
+  "yuno_fild12" : {
+    "displayName" : "Пограничный пост Шварцвальта"
+  },
+  "yuno_in01" : {
+    "displayName" : "Юно"
+  },
+  "yuno_in02" : {
+    "displayName" : "Замок Мудрецов"
+  },
+  "yuno_in03" : {
+    "displayName" : "Юно"
+  },
+  "yuno_in04" : {
+    "displayName" : "Республиканская библиотека"
+  },
+  "yuno_in05" : {
+    "displayName" : "Комната двигателя Сердца Имира"
+  },
+  "yuno_pre" : {
+    "displayName" : "Дворец правительства Шварцвальта"
+  },
+  "z_agit" : {
+    "displayName" : "Бандитский притон"
+  }
+}

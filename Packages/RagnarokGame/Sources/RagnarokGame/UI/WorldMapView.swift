@@ -446,7 +446,7 @@ private struct WorldMapInfoView: View {
     }
 
     private func name(of map: WorldViewData.Map) -> String {
-        gameContext.mapNameTable.localizedMapName(forMapName: map.mapName.mapNameStem) ?? map.name
+        gameContext.mapInfoTable.localizedMapName(forMapName: map.mapName.mapNameStem) ?? map.name
     }
 }
 

@@ -16,7 +16,7 @@ final class GameContext {
     let resourceManager: ResourceManager
 
     let itemInfoTable: ItemInfoTable
-    let mapNameTable: MapNameTable
+    let mapInfoTable: MapInfoTable
     let messageStringTable: MessageStringTable
     let skillInfoTable: SkillInfoTable
 
@@ -30,7 +30,7 @@ final class GameContext {
         self.resourceManager = resourceManager
 
         self.itemInfoTable = ItemInfoTable()
-        self.mapNameTable = MapNameTable()
+        self.mapInfoTable = MapInfoTable()
         self.messageStringTable = MessageStringTable()
         self.skillInfoTable = SkillInfoTable()
 
