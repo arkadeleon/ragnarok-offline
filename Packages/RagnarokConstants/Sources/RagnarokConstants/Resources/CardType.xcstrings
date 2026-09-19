@@ -28,12 +28,6 @@
             "value" : "Pesona"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incantesimo"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,12 +103,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Normal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Normale"
           }
         },
         "ja" : {

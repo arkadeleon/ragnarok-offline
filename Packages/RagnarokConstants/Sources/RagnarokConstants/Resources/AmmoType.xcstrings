@@ -28,12 +28,6 @@
             "value" : "Panah"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Freccia"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,12 +103,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peluru"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Proiettile"
           }
         },
         "ja" : {
@@ -194,12 +182,6 @@
             "value" : "Bola Meriam"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Palla di Cannone"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,12 +257,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Belati"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pugnale"
           }
         },
         "ja" : {
@@ -360,12 +336,6 @@
             "value" : "Granat"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Granata"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -438,12 +408,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kunai"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kunai"
@@ -526,12 +490,6 @@
             "value" : "Selongsong"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cartuccia"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -604,12 +562,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Shuriken"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shuriken"
@@ -690,12 +642,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Senjata Lempar"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arma da Lancio"
           }
         },
         "ja" : {

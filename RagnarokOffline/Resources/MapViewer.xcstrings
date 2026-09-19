@@ -27,12 +27,6 @@
             "value" : "Pilih peta"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scegli una mappa"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,12 +101,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pilih peta untuk ditampilkan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scegli una mappa da visualizzare"
           }
         },
         "ja" : {
@@ -191,12 +179,6 @@
             "value" : "Peta"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mappa"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,12 +253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Penampil Peta"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visualizzatore Mappe"
           }
         },
         "ja" : {
@@ -355,12 +331,6 @@
             "value" : "Tidak Ada Peta Dipilih"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessuna Mappa Selezionata"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -435,12 +405,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak Ada Hasil"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun Risultato"
           }
         },
         "ja" : {

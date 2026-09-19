@@ -28,12 +28,6 @@
             "value" : "Gelap"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oscurità"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,12 +103,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tanah"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Terra"
           }
         },
         "ja" : {
@@ -194,12 +182,6 @@
             "value" : "Diberkahi"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incantato"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,12 +257,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Api"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fuoco"
           }
         },
         "ja" : {
@@ -360,12 +336,6 @@
             "value" : "Hantu"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spettro"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -441,12 +411,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Suci"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sacro"
           }
         },
         "ja" : {
@@ -526,12 +490,6 @@
             "value" : "Netral"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neutrale"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -607,12 +565,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Racun"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Veleno"
           }
         },
         "ja" : {
@@ -692,12 +644,6 @@
             "value" : "Acak"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Casuale"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -773,12 +719,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mayat Hidup"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Non-morto"
           }
         },
         "ja" : {
@@ -858,12 +798,6 @@
             "value" : "Air"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Acqua"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -941,12 +875,6 @@
             "value" : "Senjata"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arma"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1022,12 +950,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Angin"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vento"
           }
         },
         "ja" : {

@@ -27,12 +27,6 @@
             "value" : "Salin Kunci"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copia chiave"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,12 +101,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Salin Nilai"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copia valore"
           }
         },
         "ja" : {
@@ -191,12 +179,6 @@
             "value" : "Gagal mengurai JSON"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Impossibile analizzare JSON"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,12 +253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mengurai JSON..."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Analisi JSON..."
           }
         },
         "ja" : {

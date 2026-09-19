@@ -51,13 +51,6 @@ final class MapNameTableTests: XCTestCase {
         XCTAssertEqual(prontera, "Kota Prontera")
     }
 
-    func testItalian() async throws {
-        let locale = Locale(languageCode: .italian)
-        let mapNameTable = MapNameTable(locale: locale)
-        let prontera = mapNameTable.localizedMapName(forMapName: "prontera")
-        XCTAssertEqual(prontera, "Prontera City, Capitol of Rune-Midgard")
-    }
-
     func testJapanese() async throws {
         let locale = Locale(languageCode: .japanese)
         let mapNameTable = MapNameTable(locale: locale)

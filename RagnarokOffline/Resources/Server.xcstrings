@@ -27,12 +27,6 @@
             "value" : "Server Karakter"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server personaggi"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,12 +101,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Server Login"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server login"
           }
         },
         "ja" : {
@@ -191,12 +179,6 @@
             "value" : "Server Map"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server mappe"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,12 +253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "BELUM DIMULAI"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NON AVVIATO"
           }
         },
         "ja" : {
@@ -355,12 +331,6 @@
             "value" : "BERJALAN"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "IN ESECUZIONE"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -432,12 +402,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Server"
@@ -519,12 +483,6 @@
             "value" : "Server belum dimulai"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server non avviato"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -599,12 +557,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mulai Server"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avvia Server"
           }
         },
         "ja" : {
@@ -683,12 +635,6 @@
             "value" : "MEMULAI"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "IN AVVIO"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -763,12 +709,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "DIHENTIKAN"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ARRESTATO"
           }
         },
         "ja" : {
@@ -847,12 +787,6 @@
             "value" : "MENGHENTIKAN"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "IN ARRESTO"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -929,12 +863,6 @@
             "value" : "Ketuk Mulai untuk menjalankan server"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tocca Avvia per eseguire il server"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1009,12 +937,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Server Web"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server web"
           }
         },
         "ja" : {

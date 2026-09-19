@@ -28,12 +28,6 @@
             "value" : "Besar"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Grande"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -111,12 +105,6 @@
             "value" : "Sedang"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Medio"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -192,12 +180,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kecil"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Piccolo"
           }
         },
         "ja" : {

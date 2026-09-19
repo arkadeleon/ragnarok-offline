@@ -27,12 +27,6 @@
             "value" : "Pilih efek"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scegli un effetto"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,12 +101,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pilih efek untuk ditampilkan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scegli un effetto da visualizzare"
           }
         },
         "ja" : {
@@ -191,12 +179,6 @@
             "value" : "Efek"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Effetto"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,12 +253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Penampil Efek"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visualizzatore Effetti"
           }
         },
         "ja" : {
@@ -355,12 +331,6 @@
             "value" : "Tidak Ada Efek Dipilih"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun Effetto Selezionato"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -435,12 +405,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Putar Ulang"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Riproduci"
           }
         },
         "ja" : {

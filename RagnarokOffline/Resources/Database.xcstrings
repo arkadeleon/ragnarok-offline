@@ -27,12 +27,6 @@
             "value" : "(Item Telur Pet)"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(Oggetto uovo pet)"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,12 +101,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "(Item Equip)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(Oggetto equip)"
           }
         },
         "ja" : {
@@ -191,12 +179,6 @@
             "value" : "(Makanan Pet)"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(Cibo pet)"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -273,12 +255,6 @@
             "value" : "(Item Tame)"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "(Oggetto tame)"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -331,18 +307,6 @@
     },
     "Aegis Name" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aegis 名称"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aegis 名稱"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -365,12 +329,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nama Aegis"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nome Aegis"
           }
         },
         "ja" : {
@@ -408,23 +366,23 @@
             "state" : "translated",
             "value" : "Aegis adı"
           }
-        }
-      }
-    },
-    "Agi" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AGI"
+            "value" : "Aegis 名称"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AGI"
+            "value" : "Aegis 名稱"
           }
-        },
+        }
+      }
+    },
+    "Agi" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -444,12 +402,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AGI"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "AGI"
@@ -490,23 +442,23 @@
             "state" : "translated",
             "value" : "AGI"
           }
-        }
-      }
-    },
-    "AI" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AI"
+            "value" : "AGI"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AI"
+            "value" : "AGI"
           }
-        },
+        }
+      }
+    },
+    "AI" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -529,12 +481,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "AI"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "IA"
           }
         },
         "ja" : {
@@ -572,23 +518,23 @@
             "state" : "translated",
             "value" : "Yapay zeka"
           }
-        }
-      }
-    },
-    "Allow Auto Feed" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "允许自动喂食"
+            "value" : "AI"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "允許自動餵食"
+            "value" : "AI"
           }
-        },
+        }
+      }
+    },
+    "Allow Auto Feed" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -611,12 +557,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Izinkan Auto Feed"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Consenti auto feed"
           }
         },
         "ja" : {
@@ -654,6 +594,18 @@
             "state" : "translated",
             "value" : "Otomatik beslemeye izin ver"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允许自动喂食"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允許自動餵食"
+          }
         }
       }
     },
@@ -681,12 +633,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jenis Ammo"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipo munizioni"
           }
         },
         "ja" : {
@@ -741,18 +687,6 @@
     },
     "AP Factor" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AP 系数"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AP 係數"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -775,12 +709,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Faktor AP"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fattore AP"
           }
         },
         "ja" : {
@@ -818,23 +746,23 @@
             "state" : "translated",
             "value" : "AP katsayısı"
           }
-        }
-      }
-    },
-    "AP Increase" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AP 增量"
+            "value" : "AP 系数"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AP 增量"
+            "value" : "AP 係數"
           }
-        },
+        }
+      }
+    },
+    "AP Increase" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -857,12 +785,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kenaikan AP"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incremento AP"
           }
         },
         "ja" : {
@@ -900,23 +822,23 @@
             "state" : "translated",
             "value" : "AP artışı"
           }
-        }
-      }
-    },
-    "Armor Level" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "防具等级"
+            "value" : "AP 增量"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "防具等級"
+            "value" : "AP 增量"
           }
-        },
+        }
+      }
+    },
+    "Armor Level" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -939,12 +861,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Level Armor"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello armatura"
           }
         },
         "ja" : {
@@ -982,23 +898,23 @@
             "state" : "translated",
             "value" : "Zırh seviyesi"
           }
-        }
-      }
-    },
-    "Attack" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATK"
+            "value" : "防具等级"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATK"
+            "value" : "防具等級"
           }
-        },
+        }
+      }
+    },
+    "Attack" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1018,12 +934,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ATK"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ATK"
@@ -1064,23 +974,23 @@
             "state" : "translated",
             "value" : "ATK"
           }
-        }
-      }
-    },
-    "Attack Delay" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻击间隔"
+            "value" : "ATK"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻擊間隔"
+            "value" : "ATK"
           }
-        },
+        }
+      }
+    },
+    "Attack Delay" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1103,12 +1013,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delay Serangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delay attacco"
           }
         },
         "ja" : {
@@ -1146,23 +1050,23 @@
             "state" : "translated",
             "value" : "Saldırı gecikmesi"
           }
-        }
-      }
-    },
-    "Attack Motion" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻击动作"
+            "value" : "攻击间隔"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻擊動作"
+            "value" : "攻擊間隔"
           }
-        },
+        }
+      }
+    },
+    "Attack Motion" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1185,12 +1089,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Motion Serangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Animazione attacco"
           }
         },
         "ja" : {
@@ -1228,23 +1126,23 @@
             "state" : "translated",
             "value" : "Saldırı animasyonu"
           }
-        }
-      }
-    },
-    "Attack Range" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻击距离"
+            "value" : "攻击动作"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻擊距離"
+            "value" : "攻擊動作"
           }
-        },
+        }
+      }
+    },
+    "Attack Range" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1267,12 +1165,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jarak Serangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Raggio attacco"
           }
         },
         "ja" : {
@@ -1310,23 +1202,23 @@
             "state" : "translated",
             "value" : "Saldırı menzili"
           }
-        }
-      }
-    },
-    "Attack Rate" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻击率"
+            "value" : "攻击距离"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻擊率"
+            "value" : "攻擊距離"
           }
-        },
+        }
+      }
+    },
+    "Attack Rate" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1349,12 +1241,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rate Serangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate attacco"
           }
         },
         "ja" : {
@@ -1392,6 +1278,18 @@
             "state" : "translated",
             "value" : "Saldırı oranı"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "攻击率"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "攻擊率"
+          }
         }
       }
     },
@@ -1416,12 +1314,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Base ASPD"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base ASPD"
@@ -1479,18 +1371,6 @@
     },
     "Base Attack" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "基础 ATK"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "基礎 ATK"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1513,12 +1393,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base ATK"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ATK base"
           }
         },
         "ja" : {
@@ -1556,6 +1430,18 @@
             "state" : "translated",
             "value" : "Temel ATK"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础 ATK"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基礎 ATK"
+          }
         }
       }
     },
@@ -1583,12 +1469,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base EXP"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "EXP base"
           }
         },
         "ja" : {
@@ -1662,12 +1542,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Base HP"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base HP"
@@ -1749,12 +1623,6 @@
             "value" : "Base Level"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello base"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1807,18 +1675,6 @@
     },
     "Base Magic Attack" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "基础 MATK"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "基礎 MATK"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1841,12 +1697,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base MATK"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MATK base"
           }
         },
         "ja" : {
@@ -1884,6 +1734,18 @@
             "state" : "translated",
             "value" : "Temel MATK"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础 MATK"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基礎 MATK"
+          }
         }
       }
     },
@@ -1908,12 +1770,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Base SP"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base SP"
@@ -1995,12 +1851,6 @@
             "value" : "Bonus Stat"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stat bonus"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2053,18 +1903,6 @@
     },
     "Buy" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "买价"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "買價"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2087,12 +1925,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beli"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compra"
           }
         },
         "ja" : {
@@ -2130,23 +1962,23 @@
             "state" : "translated",
             "value" : "Alış"
           }
-        }
-      }
-    },
-    "Capture Rate" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捕捉率"
+            "value" : "买价"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捕捉率"
+            "value" : "買價"
           }
-        },
+        }
+      }
+    },
+    "Capture Rate" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2169,12 +2001,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rate Tangkap"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate cattura"
           }
         },
         "ja" : {
@@ -2212,6 +2038,18 @@
             "state" : "translated",
             "value" : "Yakalama oranı"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "捕捉率"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "捕捉率"
+          }
         }
       }
     },
@@ -2239,12 +2077,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jenis Kartu"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipo carta"
           }
         },
         "ja" : {
@@ -2299,18 +2131,6 @@
     },
     "Change Target Rate" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "换目标率"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "換目標率"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2333,12 +2153,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rate Ganti Target"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate cambio bersaglio"
           }
         },
         "ja" : {
@@ -2376,23 +2190,23 @@
             "state" : "translated",
             "value" : "Hedef değiştirme oranı"
           }
-        }
-      }
-    },
-    "Chase Range" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "追击距离"
+            "value" : "换目标率"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "追擊距離"
+            "value" : "換目標率"
           }
-        },
+        }
+      }
+    },
+    "Chase Range" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2415,12 +2229,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jarak Kejar"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Raggio inseguimento"
           }
         },
         "ja" : {
@@ -2458,23 +2266,23 @@
             "state" : "translated",
             "value" : "Takip menzili"
           }
-        }
-      }
-    },
-    "Class" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "类别"
+            "value" : "追击距离"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "類別"
+            "value" : "追擊距離"
           }
-        },
+        }
+      }
+    },
+    "Class" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2497,12 +2305,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Class"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Classe"
           }
         },
         "ja" : {
@@ -2540,6 +2342,18 @@
             "state" : "translated",
             "value" : "Sınıf"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类别"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "類別"
+          }
         }
       }
     },
@@ -2567,12 +2381,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Class"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Classi"
           }
         },
         "ja" : {
@@ -2627,18 +2435,6 @@
     },
     "Client Attack Motion" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "客户端攻击动作"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "用戶端攻擊動作"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2661,12 +2457,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Motion Serangan Client"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Animazione attacco client"
           }
         },
         "ja" : {
@@ -2704,23 +2494,23 @@
             "state" : "translated",
             "value" : "İstemci saldırı animasyonu"
           }
-        }
-      }
-    },
-    "Damage Motion" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "受击动作"
+            "value" : "客户端攻击动作"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "受擊動作"
+            "value" : "用戶端攻擊動作"
           }
-        },
+        }
+      }
+    },
+    "Damage Motion" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2743,12 +2533,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Motion Damage"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Animazione danno"
           }
         },
         "ja" : {
@@ -2786,23 +2570,23 @@
             "state" : "translated",
             "value" : "Hasar animasyonu"
           }
-        }
-      }
-    },
-    "Damage Taken" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "承受伤害"
+            "value" : "受击动作"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "承受傷害"
+            "value" : "受擊動作"
           }
-        },
+        }
+      }
+    },
+    "Damage Taken" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2825,12 +2609,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Damage Diterima"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Danno subito"
           }
         },
         "ja" : {
@@ -2868,6 +2646,18 @@
             "state" : "translated",
             "value" : "Alınan hasar"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "承受伤害"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "承受傷害"
+          }
         }
       }
     },
@@ -2895,12 +2685,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Default"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Predefinito"
           }
         },
         "ja" : {
@@ -2955,18 +2739,6 @@
     },
     "Defense" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DEF"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DEF"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2986,12 +2758,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DEF"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "DEF"
@@ -3032,6 +2798,18 @@
             "state" : "translated",
             "value" : "DEF"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEF"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEF"
+          }
         }
       }
     },
@@ -3059,12 +2837,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deskripsi"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Descrizione"
           }
         },
         "ja" : {
@@ -3119,18 +2891,6 @@
     },
     "Dex" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DEX"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DEX"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3150,12 +2910,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DEX"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "DEX"
@@ -3196,6 +2950,18 @@
             "state" : "translated",
             "value" : "DEX"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEX"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEX"
+          }
         }
       }
     },
@@ -3223,12 +2989,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drop dari"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drop da"
           }
         },
         "ja" : {
@@ -3302,12 +3062,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drop"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drop"
@@ -3389,12 +3143,6 @@
             "value" : "Elemen"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elemento"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3447,18 +3195,6 @@
     },
     "Element Level" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "属性等级"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "屬性等級"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3481,12 +3217,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Level Elemen"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello elemento"
           }
         },
         "ja" : {
@@ -3524,6 +3254,18 @@
             "state" : "translated",
             "value" : "Element seviyesi"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "属性等级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屬性等級"
+          }
         }
       }
     },
@@ -3551,12 +3293,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "End saat End"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Termina alla fine"
           }
         },
         "ja" : {
@@ -3635,12 +3371,6 @@
             "value" : "End saat Start"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Termina all’inizio"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3715,12 +3445,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Return saat End"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ritorno alla fine"
           }
         },
         "ja" : {
@@ -3799,12 +3523,6 @@
             "value" : "Script Equip"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Script equip"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3879,12 +3597,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gagal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fallimento"
           }
         },
         "ja" : {
@@ -3963,12 +3675,6 @@
             "value" : "Filter"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtro"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4021,18 +3727,6 @@
     },
     "Fullness" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "饱食度"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "飽食度"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4055,12 +3749,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kekenyangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sazietà"
           }
         },
         "ja" : {
@@ -4098,23 +3786,23 @@
             "state" : "translated",
             "value" : "Tokluk"
           }
-        }
-      }
-    },
-    "Gender" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "性别"
+            "value" : "饱食度"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "性別"
+            "value" : "飽食度"
           }
-        },
+        }
+      }
+    },
+    "Gender" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4137,12 +3825,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gender"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sesso"
           }
         },
         "ja" : {
@@ -4180,23 +3862,23 @@
             "state" : "translated",
             "value" : "Cinsiyet"
           }
-        }
-      }
-    },
-    "Gradable" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可升阶"
+            "value" : "性别"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可升階"
+            "value" : "性別"
           }
-        },
+        }
+      }
+    },
+    "Gradable" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4219,12 +3901,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bisa Grade"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gradabile"
           }
         },
         "ja" : {
@@ -4262,23 +3938,23 @@
             "state" : "translated",
             "value" : "Grade yapılabilir"
           }
-        }
-      }
-    },
-    "HP" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HP"
+            "value" : "可升阶"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HP"
+            "value" : "可升階"
           }
-        },
+        }
+      }
+    },
+    "HP" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4298,12 +3974,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HP"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "HP"
@@ -4344,23 +4014,23 @@
             "state" : "translated",
             "value" : "HP"
           }
-        }
-      }
-    },
-    "HP Factor" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HP 系数"
+            "value" : "HP"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HP 係數"
+            "value" : "HP"
           }
-        },
+        }
+      }
+    },
+    "HP Factor" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4383,12 +4053,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Faktor HP"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fattore HP"
           }
         },
         "ja" : {
@@ -4426,23 +4090,23 @@
             "state" : "translated",
             "value" : "HP katsayısı"
           }
-        }
-      }
-    },
-    "HP Increase" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HP 增量"
+            "value" : "HP 系数"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HP 增量"
+            "value" : "HP 係數"
           }
-        },
+        }
+      }
+    },
+    "HP Increase" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4465,12 +4129,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kenaikan HP"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incremento HP"
           }
         },
         "ja" : {
@@ -4508,23 +4166,23 @@
             "state" : "translated",
             "value" : "HP artışı"
           }
-        }
-      }
-    },
-    "Hunger Increase" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "饥饿增加量"
+            "value" : "HP 增量"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "飢餓增加量"
+            "value" : "HP 增量"
           }
-        },
+        }
+      }
+    },
+    "Hunger Increase" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4547,12 +4205,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kenaikan Lapar"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incremento fame"
           }
         },
         "ja" : {
@@ -4590,23 +4242,23 @@
             "state" : "translated",
             "value" : "Açlık artışı"
           }
-        }
-      }
-    },
-    "Hungry Delay" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "饥饿间隔"
+            "value" : "饥饿增加量"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "飢餓間隔"
+            "value" : "飢餓增加量"
           }
-        },
+        }
+      }
+    },
+    "Hungry Delay" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4629,12 +4281,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delay Lapar"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intervallo fame"
           }
         },
         "ja" : {
@@ -4672,23 +4318,23 @@
             "state" : "translated",
             "value" : "Açlık aralığı"
           }
-        }
-      }
-    },
-    "Icon" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "图标"
+            "value" : "饥饿间隔"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "圖示"
+            "value" : "飢餓間隔"
           }
-        },
+        }
+      }
+    },
+    "Icon" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4711,12 +4357,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ikon"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Icona"
           }
         },
         "ja" : {
@@ -4754,23 +4394,23 @@
             "state" : "translated",
             "value" : "Simge"
           }
-        }
-      }
-    },
-    "ID" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ID"
+            "value" : "图标"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ID"
+            "value" : "圖示"
           }
-        },
+        }
+      }
+    },
+    "ID" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4790,12 +4430,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ID"
@@ -4836,6 +4470,18 @@
             "state" : "translated",
             "value" : "ID"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID"
+          }
         }
       }
     },
@@ -4860,12 +4506,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Info"
@@ -4923,18 +4563,6 @@
     },
     "Int" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INT"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INT"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4954,12 +4582,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INT"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "INT"
@@ -5000,23 +4622,23 @@
             "state" : "translated",
             "value" : "INT"
           }
-        }
-      }
-    },
-    "Intimacy Fed" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "喂食亲密度"
+            "value" : "INT"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "餵食親密度"
+            "value" : "INT"
           }
-        },
+        }
+      }
+    },
+    "Intimacy Fed" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5039,12 +4661,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intimacy Saat Diberi Makan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intimacy nutrito"
           }
         },
         "ja" : {
@@ -5082,23 +4698,23 @@
             "state" : "translated",
             "value" : "Beslenince yakınlık"
           }
-        }
-      }
-    },
-    "Intimacy Hungry" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "饥饿亲密度"
+            "value" : "喂食亲密度"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "飢餓親密度"
+            "value" : "餵食親密度"
           }
-        },
+        }
+      }
+    },
+    "Intimacy Hungry" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5121,12 +4737,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intimacy Saat Lapar"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intimacy affamato"
           }
         },
         "ja" : {
@@ -5164,23 +4774,23 @@
             "state" : "translated",
             "value" : "Açken yakınlık"
           }
-        }
-      }
-    },
-    "Intimacy Overfed" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "过度喂食亲密度"
+            "value" : "饥饿亲密度"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "過度餵食親密度"
+            "value" : "飢餓親密度"
           }
-        },
+        }
+      }
+    },
+    "Intimacy Overfed" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5203,12 +4813,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intimacy Saat Terlalu Kenyang"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intimacy sovralimentato"
           }
         },
         "ja" : {
@@ -5246,23 +4850,23 @@
             "state" : "translated",
             "value" : "Fazla beslenince yakınlık"
           }
-        }
-      }
-    },
-    "Intimacy OwnerDie" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "主人死亡亲密度"
+            "value" : "过度喂食亲密度"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "主人死亡親密度"
+            "value" : "過度餵食親密度"
           }
-        },
+        }
+      }
+    },
+    "Intimacy OwnerDie" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5285,12 +4889,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intimacy Saat Pemilik Mati"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intimacy morte padrone"
           }
         },
         "ja" : {
@@ -5328,23 +4926,23 @@
             "state" : "translated",
             "value" : "Sahibi ölünce yakınlık"
           }
-        }
-      }
-    },
-    "Intimacy Start" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "初始亲密度"
+            "value" : "主人死亡亲密度"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "初始親密度"
+            "value" : "主人死亡親密度"
           }
-        },
+        }
+      }
+    },
+    "Intimacy Start" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5367,12 +4965,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Intimacy Awal"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Intimacy iniziale"
           }
         },
         "ja" : {
@@ -5410,6 +5002,18 @@
             "state" : "translated",
             "value" : "Başlangıç yakınlığı"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初始亲密度"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初始親密度"
+          }
         }
       }
     },
@@ -5437,12 +5041,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Item"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database oggetti"
           }
         },
         "ja" : {
@@ -5497,18 +5095,6 @@
     },
     "Items" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "道具"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "道具"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5531,12 +5117,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Item"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oggetti"
           }
         },
         "ja" : {
@@ -5574,6 +5154,18 @@
             "state" : "translated",
             "value" : "Eşyalar"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "道具"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "道具"
+          }
         }
       }
     },
@@ -5601,12 +5193,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Job"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database job"
           }
         },
         "ja" : {
@@ -5680,12 +5266,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job EXP"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Job EXP"
@@ -5767,12 +5347,6 @@
             "value" : "Job Level"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello job"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5849,12 +5423,6 @@
             "value" : "Job"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5907,18 +5475,6 @@
     },
     "Level" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "等级"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "等級"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5941,12 +5497,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Level"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello"
           }
         },
         "ja" : {
@@ -5984,6 +5534,18 @@
             "state" : "translated",
             "value" : "Seviye"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等級"
+          }
         }
       }
     },
@@ -6011,12 +5573,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lokasi Equip"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Posizioni equip"
           }
         },
         "ja" : {
@@ -6071,18 +5627,6 @@
     },
     "Luk" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LUK"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LUK"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6102,12 +5646,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LUK"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "LUK"
@@ -6144,6 +5682,18 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LUK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LUK"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "LUK"
@@ -6153,18 +5703,6 @@
     },
     "Magic Attack" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MATK"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MATK"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6184,12 +5722,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MATK"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MATK"
@@ -6226,6 +5758,18 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MATK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MATK"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MATK"
@@ -6235,18 +5779,6 @@
     },
     "Magic Defense" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MDEF"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MDEF"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6266,12 +5798,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MDEF"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MDEF"
@@ -6308,6 +5834,18 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MDEF"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MDEF"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MDEF"
@@ -6317,18 +5855,6 @@
     },
     "Magic Resistance" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MRES"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MRES"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6348,12 +5874,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MRES"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MRES"
@@ -6390,6 +5910,18 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MRES"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MRES"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MRES"
@@ -6421,12 +5953,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Map"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database mappe"
           }
         },
         "ja" : {
@@ -6505,12 +6031,6 @@
             "value" : "Map"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mappe"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6563,18 +6083,6 @@
     },
     "Max Weight" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最大负重"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最大負重"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6597,12 +6105,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Berat Maksimum"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Peso massimo"
           }
         },
         "ja" : {
@@ -6640,23 +6142,23 @@
             "state" : "translated",
             "value" : "Maksimum ağırlık"
           }
-        }
-      }
-    },
-    "Maximum Attack" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最大 ATK"
+            "value" : "最大负重"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最大 ATK"
+            "value" : "最大負重"
           }
-        },
+        }
+      }
+    },
+    "Maximum Attack" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6679,12 +6181,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ATK Maksimum"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ATK massimo"
           }
         },
         "ja" : {
@@ -6722,23 +6218,23 @@
             "state" : "translated",
             "value" : "Maks. ATK"
           }
-        }
-      }
-    },
-    "Maximum Level" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最高等级"
+            "value" : "最大 ATK"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最高等級"
+            "value" : "最大 ATK"
           }
-        },
+        }
+      }
+    },
+    "Maximum Level" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6761,12 +6257,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Level Maksimum"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello massimo"
           }
         },
         "ja" : {
@@ -6804,23 +6294,23 @@
             "state" : "translated",
             "value" : "Maksimum seviye"
           }
-        }
-      }
-    },
-    "Minimum Attack" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最小 ATK"
+            "value" : "最高等级"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最小 ATK"
+            "value" : "最高等級"
           }
-        },
+        }
+      }
+    },
+    "Minimum Attack" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6843,12 +6333,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ATK Minimum"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ATK minimo"
           }
         },
         "ja" : {
@@ -6886,23 +6370,23 @@
             "state" : "translated",
             "value" : "Min. ATK"
           }
-        }
-      }
-    },
-    "Minimum Level" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最低等级"
+            "value" : "最小 ATK"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最低等級"
+            "value" : "最小 ATK"
           }
-        },
+        }
+      }
+    },
+    "Minimum Level" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6925,12 +6409,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Level Minimum"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello minimo"
           }
         },
         "ja" : {
@@ -6968,6 +6446,18 @@
             "state" : "translated",
             "value" : "Minimum seviye"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最低等级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最低等級"
+          }
         }
       }
     },
@@ -6995,12 +6485,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mode"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Modalità"
           }
         },
         "ja" : {
@@ -7079,12 +6563,6 @@
             "value" : "Monster"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostro"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7159,12 +6637,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Monster"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database mostri"
           }
         },
         "ja" : {
@@ -7243,12 +6715,6 @@
             "value" : "Database Summon Monster"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database summon mostri"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7323,12 +6789,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "monster"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "mostri"
           }
         },
         "ja" : {
@@ -7407,12 +6867,6 @@
             "value" : "Monster"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostri"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7489,12 +6943,6 @@
             "value" : "Drop MVP"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drop MVP"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7547,18 +6995,6 @@
     },
     "MVP Exp" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MVP 经验值"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MVP 經驗值"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7578,12 +7014,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MVP EXP"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MVP EXP"
@@ -7624,23 +7054,23 @@
             "state" : "translated",
             "value" : "MVP EXP"
           }
-        }
-      }
-    },
-    "Name" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "名称"
+            "value" : "MVP 经验值"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "名稱"
+            "value" : "MVP 經驗值"
           }
-        },
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7663,12 +7093,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nama"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nome"
           }
         },
         "ja" : {
@@ -7706,6 +7130,18 @@
             "state" : "translated",
             "value" : "Ad"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名稱"
+          }
         }
       }
     },
@@ -7733,12 +7169,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No"
           }
         },
         "ja" : {
@@ -7817,12 +7247,6 @@
             "value" : "Tidak Ada Hasil"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun risultato"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7897,12 +7321,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Pet"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database pet"
           }
         },
         "ja" : {
@@ -7981,12 +7399,6 @@
             "value" : "Race"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Razza"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8063,12 +7475,6 @@
             "value" : "Grup Race"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gruppi razza"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8121,18 +7527,6 @@
     },
     "Refinable" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "可精炼"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "可精煉"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8155,12 +7549,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bisa Refine"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Raffinabile"
           }
         },
         "ja" : {
@@ -8198,23 +7586,23 @@
             "state" : "translated",
             "value" : "Refine edilebilir"
           }
-        }
-      }
-    },
-    "Resistance" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RES"
+            "value" : "可精炼"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RES"
+            "value" : "可精煉"
           }
-        },
+        }
+      }
+    },
+    "Resistance" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8234,12 +7622,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "RES"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "RES"
@@ -8280,23 +7662,23 @@
             "state" : "translated",
             "value" : "RES"
           }
-        }
-      }
-    },
-    "Retaliate Rate" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反击率"
+            "value" : "RES"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反擊率"
+            "value" : "RES"
           }
-        },
+        }
+      }
+    },
+    "Retaliate Rate" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8319,12 +7701,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rate Balasan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate contrattacco"
           }
         },
         "ja" : {
@@ -8362,6 +7738,18 @@
             "state" : "translated",
             "value" : "Karşı saldırı oranı"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反击率"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反擊率"
+          }
         }
       }
     },
@@ -8386,12 +7774,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Script"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Script"
@@ -8449,18 +7831,6 @@
     },
     "Sell" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "卖价"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "賣價"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8483,12 +7853,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jual"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vendi"
           }
         },
         "ja" : {
@@ -8526,6 +7890,18 @@
             "state" : "translated",
             "value" : "Satış"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卖价"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "賣價"
+          }
         }
       }
     },
@@ -8553,12 +7929,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Size"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taglia"
           }
         },
         "ja" : {
@@ -8637,12 +8007,6 @@
             "value" : "Database Skill"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database skill"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8695,18 +8059,6 @@
     },
     "Skill Range" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "技能范围"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "技能範圍"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8729,12 +8081,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jarak Skill"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Raggio skill"
           }
         },
         "ja" : {
@@ -8772,6 +8118,18 @@
             "state" : "translated",
             "value" : "Yetenek menzili"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "技能范围"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "技能範圍"
+          }
         }
       }
     },
@@ -8796,12 +8154,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skill"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skill"
@@ -8859,18 +8211,6 @@
     },
     "Slots" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "插槽"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "插槽"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8890,12 +8230,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Slot"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slot"
@@ -8936,23 +8270,23 @@
             "state" : "translated",
             "value" : "Slotlar"
           }
-        }
-      }
-    },
-    "SP" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SP"
+            "value" : "插槽"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SP"
+            "value" : "插槽"
           }
-        },
+        }
+      }
+    },
+    "SP" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8972,12 +8306,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SP"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "SP"
@@ -9018,23 +8346,23 @@
             "state" : "translated",
             "value" : "SP"
           }
-        }
-      }
-    },
-    "SP Factor" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SP 系数"
+            "value" : "SP"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SP 係數"
+            "value" : "SP"
           }
-        },
+        }
+      }
+    },
+    "SP Factor" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9057,12 +8385,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Faktor SP"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fattore SP"
           }
         },
         "ja" : {
@@ -9100,23 +8422,23 @@
             "state" : "translated",
             "value" : "SP katsayısı"
           }
-        }
-      }
-    },
-    "SP Increase" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SP 增量"
+            "value" : "SP 系数"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SP 增量"
+            "value" : "SP 係數"
           }
-        },
+        }
+      }
+    },
+    "SP Increase" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9139,12 +8461,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kenaikan SP"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Incremento SP"
           }
         },
         "ja" : {
@@ -9182,23 +8498,23 @@
             "state" : "translated",
             "value" : "SP artışı"
           }
-        }
-      }
-    },
-    "Special Performance" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "特殊演出"
+            "value" : "SP 增量"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "特殊演出"
+            "value" : "SP 增量"
           }
-        },
+        }
+      }
+    },
+    "Special Performance" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9221,12 +8537,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Animasi Spesial"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Animazione speciale"
           }
         },
         "ja" : {
@@ -9264,23 +8574,23 @@
             "state" : "translated",
             "value" : "Özel animasyon"
           }
-        }
-      }
-    },
-    "Status" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "状态"
+            "value" : "特殊演出"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "狀態"
+            "value" : "特殊演出"
           }
-        },
+        }
+      }
+    },
+    "Status" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9300,12 +8610,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Status"
@@ -9346,6 +8650,18 @@
             "state" : "translated",
             "value" : "Durum"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "狀態"
+          }
         }
       }
     },
@@ -9373,12 +8689,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Status Effect"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database status effect"
           }
         },
         "ja" : {
@@ -9433,18 +8743,6 @@
     },
     "Str" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "STR"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "STR"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9464,12 +8762,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "STR"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "STR"
@@ -9510,6 +8802,18 @@
             "state" : "translated",
             "value" : "STR"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STR"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STR"
+          }
         }
       }
     },
@@ -9534,12 +8838,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Summon"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Summon"
@@ -9621,12 +8919,6 @@
             "value" : "Script Support"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Script supporto"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9679,18 +8971,6 @@
     },
     "Target Type" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目标类型"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目標類型"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9713,12 +8993,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jenis Target"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipo bersaglio"
           }
         },
         "ja" : {
@@ -9756,6 +9030,18 @@
             "state" : "translated",
             "value" : "Hedef türü"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目标类型"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目標類型"
+          }
         }
       }
     },
@@ -9783,12 +9069,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tipe"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipo"
           }
         },
         "ja" : {
@@ -9867,12 +9147,6 @@
             "value" : "Script Unequip"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Script unequip"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9925,18 +9199,6 @@
     },
     "View" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "外观编号"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "外觀編號"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9959,12 +9221,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ID Tampilan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ID aspetto"
           }
         },
         "ja" : {
@@ -10002,23 +9258,23 @@
             "state" : "translated",
             "value" : "Görünüm ID"
           }
-        }
-      }
-    },
-    "Vit" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VIT"
+            "value" : "外观编号"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VIT"
+            "value" : "外觀編號"
           }
-        },
+        }
+      }
+    },
+    "Vit" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10038,12 +9294,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VIT"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "VIT"
@@ -10084,23 +9334,23 @@
             "state" : "translated",
             "value" : "VIT"
           }
-        }
-      }
-    },
-    "Walk Speed" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移动速度"
+            "value" : "VIT"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移動速度"
+            "value" : "VIT"
           }
-        },
+        }
+      }
+    },
+    "Walk Speed" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10123,12 +9373,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kecepatan Jalan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Velocità movimento"
           }
         },
         "ja" : {
@@ -10166,23 +9410,23 @@
             "state" : "translated",
             "value" : "Hareket hızı"
           }
-        }
-      }
-    },
-    "Weapon Level" : {
-      "localizations" : {
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "武器等级"
+            "value" : "移动速度"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "武器等級"
+            "value" : "移動速度"
           }
-        },
+        }
+      }
+    },
+    "Weapon Level" : {
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10205,12 +9449,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Level Senjata"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Livello arma"
           }
         },
         "ja" : {
@@ -10248,6 +9486,18 @@
             "state" : "translated",
             "value" : "Silah seviyesi"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "武器等级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "武器等級"
+          }
         }
       }
     },
@@ -10275,12 +9525,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jenis Senjata"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tipo arma"
           }
         },
         "ja" : {
@@ -10335,18 +9579,6 @@
     },
     "Weight" : {
       "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重量"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "重量"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10369,12 +9601,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Berat"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Peso"
           }
         },
         "ja" : {
@@ -10412,6 +9638,18 @@
             "state" : "translated",
             "value" : "Ağırlık"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重量"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重量"
+          }
         }
       }
     },
@@ -10439,12 +9677,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ya"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sì"
           }
         },
         "ja" : {

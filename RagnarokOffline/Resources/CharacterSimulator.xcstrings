@@ -27,12 +27,6 @@
             "value" : "Aksi"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Azione"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,12 +101,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Simulator Karakter"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulatore Personaggio"
           }
         },
         "ja" : {
@@ -191,12 +179,6 @@
             "value" : "Warna Pakaian"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Colore Abiti"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,12 +253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bawaan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Predefinito"
           }
         },
         "ja" : {
@@ -355,12 +331,6 @@
             "value" : "Jubah"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mantello"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -435,12 +405,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jenis Kelamin"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sesso"
           }
         },
         "ja" : {
@@ -519,12 +483,6 @@
             "value" : "Warna Rambut"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Colore Capelli"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -599,12 +557,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gaya Rambut"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stile Capelli"
           }
         },
         "ja" : {
@@ -683,12 +635,6 @@
             "value" : "Kepala Bawah"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Testa Basso"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -763,12 +709,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Arah Kepala"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Direzione Testa"
           }
         },
         "ja" : {
@@ -847,12 +787,6 @@
             "value" : "Kepala Tengah"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Testa Medio"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -927,12 +861,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kepala Atas"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Testa Alto"
           }
         },
         "ja" : {
@@ -1011,12 +939,6 @@
             "value" : "Job"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Classe"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1091,12 +1013,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak ada"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessuno"
           }
         },
         "ja" : {

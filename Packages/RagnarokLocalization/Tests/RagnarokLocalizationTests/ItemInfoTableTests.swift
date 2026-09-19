@@ -51,13 +51,6 @@ final class ItemInfoTableTests: XCTestCase {
         XCTAssertEqual(apple, "Apple")
     }
 
-    func testItalian() async throws {
-        let locale = Locale(languageCode: .italian)
-        let itemInfoTable = ItemInfoTable(locale: locale)
-        let apple = itemInfoTable.localizedIdentifiedItemName(forItemID: 512)
-        XCTAssertEqual(apple, "Apple")
-    }
-
     func testJapanese() async throws {
         let locale = Locale(languageCode: .japanese)
         let itemInfoTable = ItemInfoTable(locale: locale)

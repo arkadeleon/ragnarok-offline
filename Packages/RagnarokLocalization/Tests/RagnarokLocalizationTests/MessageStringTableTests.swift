@@ -75,17 +75,6 @@ final class MessageStringTableTests: XCTestCase {
         XCTAssertEqual(youGotApple, "Apple yang kamu dapat adalah 1  ")
     }
 
-    func testItalian() async throws {
-        let locale = Locale(languageCode: .italian)
-        let messageStringTable = MessageStringTable(locale: locale)
-
-        let doYouAgree = messageStringTable.localizedMessageString(forID: 0)
-        XCTAssertEqual(doYouAgree, "Do you agree?")
-
-        let youGotApple = messageStringTable.localizedMessageString(forID: 153, arguments: "Apple", 1)
-        XCTAssertEqual(youGotApple, "You got Apple (1).")
-    }
-
     func testJapanese() async throws {
         let locale = Locale(languageCode: .japanese)
         let messageStringTable = MessageStringTable(locale: locale)

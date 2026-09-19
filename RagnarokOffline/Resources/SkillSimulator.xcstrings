@@ -33,12 +33,6 @@
             "value" : "%1$@ Job Lv: %2$lld"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -116,12 +110,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ Lv %2$lld"
@@ -209,12 +197,6 @@
             "value" : "Poin %1$@"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Punti %1$@"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -297,12 +279,6 @@
             "value" : "Skill %1$@"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abilità di %1$@"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -380,12 +356,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Base Lv: %1$lld"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base Lv: %1$lld"
@@ -473,12 +443,6 @@
             "value" : "Skill ini tidak bisa diturunkan. Dibutuhkan oleh %1$@."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Non puoi ridurre questa abilità. È richiesta da %1$@."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -559,12 +523,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Job"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Classe"
           }
         },
         "ja" : {
@@ -649,12 +607,6 @@
             "value" : "Prasyarat belum terpenuhi: %1$@."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prerequisiti mancanti: %1$@."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -735,12 +687,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Poin skill %1$@ tidak tersisa."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Non ci sono più punti abilità %1$@."
           }
         },
         "ja" : {
@@ -825,12 +771,6 @@
             "value" : "Membutuhkan %1$@ Job Lv %2$lld."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Richiede %1$@ Job Lv %2$lld."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -911,12 +851,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Membutuhkan %1$@."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Richiede %1$@."
           }
         },
         "ja" : {
@@ -1001,12 +935,6 @@
             "value" : "Membutuhkan Base Lv %1$lld."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Richiede Base Lv %1$lld."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1087,12 +1015,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reset"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reimposta"
           }
         },
         "ja" : {
@@ -1177,12 +1099,6 @@
             "value" : "Skill sudah berada di level 0."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "L'abilità è già al livello 0."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1263,12 +1179,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skill sudah berada di level maksimum."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "L'abilità è già al livello massimo."
           }
         },
         "ja" : {
@@ -1353,12 +1263,6 @@
             "value" : "Skill ini tidak tersedia di pohon skill ini."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Questa abilità non è disponibile in questo albero."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1441,12 +1345,6 @@
             "value" : "Simulasi Skill"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulatore abilità"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1527,12 +1425,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total Poin"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Punti totali"
           }
         },
         "ja" : {

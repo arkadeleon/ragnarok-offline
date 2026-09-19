@@ -28,12 +28,6 @@
             "value" : "Buku"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Libro"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,12 +103,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Busur"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arco"
           }
         },
         "ja" : {
@@ -194,12 +182,6 @@
             "value" : "Belati"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pugnale"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,12 +257,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tinju"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pugno"
           }
         },
         "ja" : {
@@ -360,12 +336,6 @@
             "value" : "Senapan Gatling"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mitragliatrice Gatling"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -443,12 +413,6 @@
             "value" : "Peluncur Granat"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lanciagranate"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -521,12 +485,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Huuma Shuriken"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Huuma Shuriken"
@@ -609,12 +567,6 @@
             "value" : "Katar"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Katar"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -690,12 +642,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Buku Jari"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tirapugni"
           }
         },
         "ja" : {
@@ -775,12 +721,6 @@
             "value" : "Gada"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mazza"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -856,12 +796,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alat Musik"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Strumento Musicale"
           }
         },
         "ja" : {
@@ -941,12 +875,6 @@
             "value" : "Kapak Satu Tangan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ascia a una mano"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1022,12 +950,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tombak Satu Tangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lancia a una mano"
           }
         },
         "ja" : {
@@ -1107,12 +1029,6 @@
             "value" : "Pedang Satu Tangan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spada a una mano"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1185,12 +1101,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Revolver"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Revolver"
@@ -1273,12 +1183,6 @@
             "value" : "Senapan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fucile"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1354,12 +1258,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Perisai"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scudo"
           }
         },
         "ja" : {
@@ -1439,12 +1337,6 @@
             "value" : "Senapan Pompa"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fucile a pompa"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1520,12 +1412,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tongkat"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bastone"
           }
         },
         "ja" : {
@@ -1605,12 +1491,6 @@
             "value" : "Kapak Dua Tangan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ascia a due mani"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1686,12 +1566,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gada Dua Tangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mazza a due mani"
           }
         },
         "ja" : {
@@ -1771,12 +1645,6 @@
             "value" : "Tombak Dua Tangan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lancia a due mani"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1852,12 +1720,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tongkat Dua Tangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bastone a due mani"
           }
         },
         "ja" : {
@@ -1937,12 +1799,6 @@
             "value" : "Pedang Dua Tangan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spada a due mani"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2018,12 +1874,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cambuk"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Frusta"
           }
         },
         "ja" : {

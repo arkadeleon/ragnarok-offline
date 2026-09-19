@@ -28,12 +28,6 @@
             "value" : "Keduanya"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entrambi"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -111,12 +105,6 @@
             "value" : "Perempuan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Femminile"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -192,12 +180,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Laki-laki"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Maschile"
           }
         },
         "ja" : {

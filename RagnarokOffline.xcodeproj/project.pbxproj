@@ -351,7 +351,6 @@
 				tr,
 				ru,
 				es,
-				it,
 			);
 			mainGroup = 35B3B8CB2A08BEA600B4540B;
 			packageReferences = (
@@ -709,6 +708,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RagnarokOffline/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -759,6 +759,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RagnarokOffline/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

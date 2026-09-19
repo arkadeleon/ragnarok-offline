@@ -28,12 +28,6 @@
             "value" : "Amunisi"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Munizioni"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,12 +103,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pelindung"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Armatura"
           }
         },
         "ja" : {
@@ -194,12 +182,6 @@
             "value" : "Kartu"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Carta"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -272,12 +254,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cash"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cash"
@@ -360,12 +336,6 @@
             "value" : "Konsumsi Tertunda"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Consumo ritardato"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -441,12 +411,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lain-lain"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Altro"
           }
         },
         "ja" : {
@@ -526,12 +490,6 @@
             "value" : "Penyembuhan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guarigione"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -607,12 +565,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peralatan Pet"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Equipaggiamento Pet"
           }
         },
         "ja" : {
@@ -692,12 +644,6 @@
             "value" : "Telur Pet"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uovo Pet"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -773,12 +719,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peralatan Bayangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Equipaggiamento d'Ombra"
           }
         },
         "ja" : {
@@ -858,12 +798,6 @@
             "value" : "Dapat Digunakan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Utilizzabile"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -939,12 +873,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Senjata"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arma"
           }
         },
         "ja" : {

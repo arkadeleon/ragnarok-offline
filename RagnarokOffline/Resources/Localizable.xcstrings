@@ -27,12 +27,6 @@
             "value" : "* Sebelum memulai, siapkan file klien lokal Anda, seperti data.grf. Anda dapat menggunakan **Klien jarak jauh** sebagai gantinya dengan mengaktifkan **Gunakan Klien jarak jauh** di **Pengaturan**."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "* Prima di iniziare, configura i file del client locale, come data.grf. Puoi usare **Client remoto** al loro posto attivando **Usa Client remoto** in **Impostazioni**."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,12 +101,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "* Sebelum memulai, siapkan file klien lokal Anda, seperti data.grf. Anda dapat menggunakan **Klien jarak jauh** sebagai gantinya jika langganan Anda aktif dan **Gunakan Klien jarak jauh** diaktifkan di **Pengaturan**."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "* Prima di iniziare, configura i file del client locale, come data.grf. Puoi usare **Client remoto** al loro posto se il tuo abbonamento è attivo e **Usa Client remoto** è attivato in **Impostazioni**."
           }
         },
         "ja" : {
@@ -191,12 +179,6 @@
             "value" : "* Mulai **Server Login**, **Server Karakter**, dan **Server Map** terlebih dahulu. **Klien game** tidak dapat login sebelum server-server ini berjalan."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "* Avvia prima il **server di login**, il **server personaggi** e il **server mappe**. Il **client di gioco** non può accedere finché questi server non sono in esecuzione."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,12 +253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "* **Klien game** ini masih dalam beta. Beberapa jendela dan tombol mungkin belum berfungsi."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "* Questo **client di gioco** è ancora in beta. Alcune finestre e pulsanti potrebbero non funzionare ancora."
           }
         },
         "ja" : {
@@ -355,12 +331,6 @@
             "value" : "* Untuk membuat akun baru, masukkan nama pengguna yang diakhiri dengan **_M** atau **_F**, seperti **ragnarok_M**, di jendela login."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "* Per creare un nuovo account, inserisci nella finestra di login un nome utente che termini con **_M** o **_F**, ad esempio **ragnarok_M**."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -435,12 +405,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Klien jarak jauh** adalah opsi berbayar yang menyediakan resource game seperti tekstur, sprite, dan model tanpa mengharuskan Anda menyimpan arsip klien lokal lengkap di perangkat ini."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Client remoto** è un'opzione a pagamento che fornisce risorse di gioco come texture, sprite e modelli senza richiedere di conservare un archivio completo del client locale su questo dispositivo."
           }
         },
         "ja" : {
@@ -519,12 +483,6 @@
             "value" : "**Klien jarak jauh** akan memerlukan langganan dalam pembaruan mendatang untuk membantu menutup biaya server. File klien lokal akan tetap berfungsi tanpa langganan."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Client remoto** richiederà un abbonamento in un prossimo aggiornamento per contribuire a coprire i costi del server. I file del client locale continueranno a funzionare senza abbonamento."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -599,12 +557,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld item"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "^[%lld elemento](inflect: true)"
           }
         },
         "ja" : {
@@ -686,12 +638,6 @@
             "value" : "Aktif"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Attivo"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -771,12 +717,6 @@
             "value" : "Batal"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Annulla"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -851,12 +791,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Simulator Karakter"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulatore personaggio"
           }
         },
         "ja" : {
@@ -935,12 +869,6 @@
             "value" : "Klien obrolan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Client di chat"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1017,12 +945,6 @@
             "value" : "Klien"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Client"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1094,12 +1016,6 @@
           }
         },
         "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database"
-          }
-        },
-        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database"
@@ -1181,12 +1097,6 @@
             "value" : "Hapus"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elimina"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1261,12 +1171,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selesai"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fine"
           }
         },
         "ja" : {
@@ -1348,12 +1252,6 @@
             "value" : "Ekstrak"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estrai"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1428,12 +1326,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Game"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gioco"
           }
         },
         "ja" : {
@@ -1512,12 +1404,6 @@
             "value" : "Beta Klien Game"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beta del client di gioco"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1592,12 +1478,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Resource game diperlukan untuk ikon item dan skill, sprite karakter dan monster, serta Klien game beta. Aktifkan **Gunakan Klien jarak jauh** untuk mengunduh resource dari server remote dan menyimpannya secara lokal di **File Klien Jarak Jauh**. Jika Anda sudah memiliki file klien lokal seperti data.grf, Anda dapat tetap menonaktifkan **Gunakan Klien jarak jauh** dan menggunakan file tersebut sebagai gantinya."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le risorse di gioco sono necessarie per le icone di oggetti e abilità, gli sprite di personaggi e mostri e il Client di gioco beta. Attiva **Usa Client remoto** per scaricare le risorse dal server remoto e memorizzarle localmente in **File di Client remoto**. Se hai già file del client locale come data.grf, puoi lasciare **Usa Client remoto** disattivato e utilizzare quei file al loro posto."
           }
         },
         "ja" : {
@@ -1679,12 +1559,6 @@
             "value" : "Hosting dan pengiriman file ini membutuhkan biaya berkelanjutan untuk penyimpanan server, bandwidth, dan pemeliharaan. Kontribusi dari pengguna **Klien jarak jauh** membantu menutup biaya ini dan menjaga fitur inti tetap gratis untuk semua orang."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ospitare e distribuire questi file comporta costi continui per spazio server, larghezza di banda e manutenzione. I contributi degli utenti di **Client remoto** aiutano a coprire questi costi e a mantenere gratuite per tutti le funzionalità principali."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1759,12 +1633,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak aktif"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Inattivo"
           }
         },
         "ja" : {
@@ -1843,12 +1711,6 @@
             "value" : "Database Item"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database oggetti"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1923,12 +1785,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Job"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database job"
           }
         },
         "ja" : {
@@ -2007,12 +1863,6 @@
             "value" : "File Klien Lokal"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "File di client locale"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2087,12 +1937,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peta"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mappa"
           }
         },
         "ja" : {
@@ -2171,12 +2015,6 @@
             "value" : "Database Map"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database mappe"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2251,12 +2089,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Penampil Peta"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visualizzatore mappe"
           }
         },
         "ja" : {
@@ -2341,12 +2173,6 @@
             "value" : "Database Monster"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database mostri"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2421,12 +2247,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Summon Monster"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database summon mostri"
           }
         },
         "ja" : {
@@ -2505,12 +2325,6 @@
             "value" : "Tidak ada berkas"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessun file"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2585,12 +2399,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nonaktif"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No"
           }
         },
         "ja" : {
@@ -2669,12 +2477,6 @@
             "value" : "Aktif"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sì"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2749,12 +2551,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Database Pet"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database pet"
           }
         },
         "ja" : {
@@ -2839,12 +2635,6 @@
             "value" : "Klien jarak jauh"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Client remoto"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2919,12 +2709,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "File Klien Jarak Jauh"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "File di Client remoto"
           }
         },
         "ja" : {
@@ -3003,12 +2787,6 @@
             "value" : "Klien jarak jauh tidak digunakan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Client remoto non in uso"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3085,12 +2863,6 @@
             "value" : "Reset"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ripristina"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3165,12 +2937,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Melanjutkan server secara otomatis"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Riprende automaticamente i server"
           }
         },
         "ja" : {
@@ -3252,12 +3018,6 @@
             "value" : "Server"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3332,12 +3092,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alamat server"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Indirizzo server"
           }
         },
         "ja" : {
@@ -3416,12 +3170,6 @@
             "value" : "Konfigurasi server"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Configurazione del server"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3496,12 +3244,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Berkas server"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "File del server"
           }
         },
         "ja" : {
@@ -3580,12 +3322,6 @@
             "value" : "Port server"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Porta server"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3660,12 +3396,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sebelum memulai game, siapkan file klien lokal dengan data.grf atau aktifkan Klien jarak jauh."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prima di avviare il gioco, configura i file del client locale con data.grf oppure attiva Client remoto."
           }
         },
         "ja" : {
@@ -3744,12 +3474,6 @@
             "value" : "Pengaturan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Impostazioni"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3824,12 +3548,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bagikan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Condividi"
           }
         },
         "ja" : {
@@ -3908,12 +3626,6 @@
             "value" : "Database Skill"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Database skill"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3988,12 +3700,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Simulator Skill"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simulatore abilità"
           }
         },
         "ja" : {
@@ -4075,12 +3781,6 @@
             "value" : "Mulai semua server"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avvia tutti i server"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4155,12 +3855,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mulai game"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Avvia gioco"
           }
         },
         "ja" : {
@@ -4239,12 +3933,6 @@
             "value" : "Hentikan semua server"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arresta tutti i server"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4321,12 +4009,6 @@
             "value" : "Langganan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abbonamento"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4401,12 +4083,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alat"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Strumenti"
           }
         },
         "ja" : {
@@ -4488,12 +4164,6 @@
             "value" : "Aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** untuk menelusuri file cache"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Attiva **Usa Client remoto** in **Impostazioni** per sfogliare i file memorizzati nella cache"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4570,12 +4240,6 @@
             "value" : "File tidak didukung"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "File non supportato"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4650,12 +4314,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gunakan Klien jarak jauh"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Usa Client remoto"
           }
         },
         "ja" : {
@@ -4737,12 +4395,6 @@
             "value" : "Saat **Klien jarak jauh** aktif, resource diunduh dari server remote dan disimpan secara lokal di **File Klien Jarak Jauh**. Jika Anda sudah memiliki file klien seperti data.grf, Anda dapat menggunakan klien lokal sebagai gantinya."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quando **Client remoto** è attivo, le risorse vengono scaricate dal server remoto e memorizzate localmente in **File di Client remoto**. Se hai già file client come data.grf, puoi usare il client locale al suo posto."
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4817,12 +4469,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saat diaktifkan, server yang berjalan sebelum app masuk ke latar belakang akan dilanjutkan secara otomatis saat app kembali ke latar depan."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quando attivo, i server in esecuzione prima che l'app passasse in background vengono ripresi automaticamente quando l'app torna in primo piano."
           }
         },
         "ja" : {

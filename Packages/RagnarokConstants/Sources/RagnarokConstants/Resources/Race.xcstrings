@@ -28,12 +28,6 @@
             "value" : "Malaikat"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Angelo"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,12 +103,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hewan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Animale"
           }
         },
         "ja" : {
@@ -194,12 +182,6 @@
             "value" : "Setengah-Manusia"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Semi-Umano"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -275,12 +257,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Iblis"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Demone"
           }
         },
         "ja" : {
@@ -360,12 +336,6 @@
             "value" : "Pemain Doram"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Giocatore Doram"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -441,12 +411,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naga"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drago"
           }
         },
         "ja" : {
@@ -526,12 +490,6 @@
             "value" : "Ikan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pesce"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -607,12 +565,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tak Berbentuk"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Senza forma"
           }
         },
         "ja" : {
@@ -692,12 +644,6 @@
             "value" : "Pemain Manusia"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Giocatore Umano"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -773,12 +719,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Serangga"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Insetto"
           }
         },
         "ja" : {
@@ -858,12 +798,6 @@
             "value" : "Tumbuhan"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pianta"
-          }
-        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -939,12 +873,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mayat Hidup"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Non-morto"
           }
         },
         "ja" : {
