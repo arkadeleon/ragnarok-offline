@@ -1,6 +1,6 @@
 //
 //  AttributedString+Description.swift
-//  RagnarokOffline
+//  RagnarokCore
 //
 //  Created by Leon Li on 2025/7/10.
 //
@@ -8,7 +8,9 @@
 import SwiftUI
 
 extension AttributedString {
-    init(description: String) {
+    /// Parses the `^RRGGBB` color codes used in item and skill descriptions.
+    /// - Parameter defaultColor: The color of text outside any color code. `^000000` resets to it.
+    public init(description: String, defaultColor: Color = .primary) {
         var description = description
 
         let regex = /\^[a-fA-F0-9]{6}/
@@ -22,14 +24,14 @@ extension AttributedString {
         let substrings = description.split(separator: "[COLOR]")
 
         var attributedString = AttributedString()
-        var color = Color.primary
+        var color = defaultColor
 
         for substring in substrings {
             if substring.contains(regex) {
                 let hexString = substring.replacingOccurrences(of: "^", with: "")
                 if let hexValue = Int(hexString, radix: 16) {
                     if hexValue == 0 {
-                        color = .primary
+                        color = defaultColor
                     } else {
                         color = Color(hex: hexValue)
                     }

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
+import RagnarokCore
 import SwiftUI
 
 struct ItemDetailView: View {
