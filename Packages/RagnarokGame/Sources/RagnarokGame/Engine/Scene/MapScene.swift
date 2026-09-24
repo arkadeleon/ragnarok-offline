@@ -165,12 +165,24 @@ public final class MapScene {
             return
         }
 
-        let normalizedDirection = worldInput / inputMagnitude
-        let desiredOffset = normalizedDirection * stepLength
-        let gridOffset = SIMD2<Int>(
-            Int(desiredOffset.x.rounded()),
-            Int(desiredOffset.y.rounded()),
-        )
+        // Snap to 8 directions. Each straight direction covers 60° (±30° around its axis),
+        // and each diagonal direction covers the remaining 30° (±15° around its diagonal).
+        let absX = abs(worldInput.x)
+        let absY = abs(worldInput.y)
+        let signX = worldInput.x < 0 ? -1 : 1
+        let signY = worldInput.y < 0 ? -1 : 1
+        let gridOffset: SIMD2<Int>
+        if min(absX, absY) <= max(absX, absY) * tan(.pi / 6) {
+            let straightStepLength = Int(stepLength.rounded())
+            if absX >= absY {
+                gridOffset = SIMD2(signX * straightStepLength, 0)
+            } else {
+                gridOffset = SIMD2(0, signY * straightStepLength)
+            }
+        } else {
+            let diagonalStepLength = Int((stepLength / Float(2).squareRoot()).rounded())
+            gridOffset = SIMD2(signX * diagonalStepLength, signY * diagonalStepLength)
+        }
 
         if gridOffset != .zero {
             let newPosition = position &+ gridOffset
