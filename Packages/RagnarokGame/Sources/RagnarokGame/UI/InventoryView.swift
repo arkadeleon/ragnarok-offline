@@ -340,7 +340,7 @@ private struct InventoryItemActions: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if item.isUsable {
-                InventoryItemActionButton(label: "Use") {
+                GameContextMenuButton(label: "Use") {
                     gameSession.useItem(at: item.index)
                     dismiss()
                 }
@@ -348,12 +348,12 @@ private struct InventoryItemActions: View {
 
             if item.isEquippable {
                 if item.isEquipped {
-                    InventoryItemActionButton(label: "Unequip") {
+                    GameContextMenuButton(label: "Unequip") {
                         gameSession.unequipItem(at: item.index)
                         dismiss()
                     }
                 } else {
-                    InventoryItemActionButton(label: "Equip") {
+                    GameContextMenuButton(label: "Equip") {
                         gameSession.equipItem(at: item.index, location: item.location)
                         dismiss()
                     }
@@ -362,17 +362,17 @@ private struct InventoryItemActions: View {
 
             if !item.isEquipped {
                 if item.amount > 1 {
-                    InventoryItemActionButton(label: "Throw One") {
+                    GameContextMenuButton(label: "Throw One") {
                         gameSession.throwItem(at: item.index, amount: 1)
                         dismiss()
                     }
 
-                    InventoryItemActionButton(label: "Throw All") {
+                    GameContextMenuButton(label: "Throw All") {
                         gameSession.throwItem(at: item.index, amount: item.amount)
                         dismiss()
                     }
                 } else {
-                    InventoryItemActionButton(label: "Throw") {
+                    GameContextMenuButton(label: "Throw") {
                         gameSession.throwItem(at: item.index, amount: 1)
                         dismiss()
                     }
@@ -386,24 +386,6 @@ private struct InventoryItemActions: View {
                 .stroke(Color.gameBoxBorder, lineWidth: 1)
                 .padding(2)
         }
-    }
-}
-
-private struct InventoryItemActionButton: View {
-    var label: String
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(verbatim: label)
-                .font(.game())
-                .foregroundStyle(Color.gameLabel)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
     }
 }
 

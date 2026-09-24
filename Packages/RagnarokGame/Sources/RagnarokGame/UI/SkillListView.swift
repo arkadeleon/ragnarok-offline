@@ -6,6 +6,7 @@
 //
 
 import RagnarokConstants
+import RagnarokCore
 import RagnarokModels
 import RagnarokResources
 import SwiftUI
@@ -44,11 +45,42 @@ struct SkillListView: View {
                             .padding(.leading, 10)
                     }
             }
+            .geometryGroup()
+            .blur(radius: selectedSkillID == nil ? 0 : 5)
             .frame(width: 320)
+            .overlay {
+                if selectedSkillID != nil {
+                    Color.clear
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedSkillID = nil
+                        }
+                }
+            }
+            .overlay {
+                contextMenu
+                    .transition(.opacity.combined(with: .scale).animation(.bouncy(duration: 0.25, extraBounce: 0.2)))
+            }
 
             ShortcutBarView()
         }
         .shortcutDragContainer()
+        .animation(.easeInOut(duration: 0.25), value: selectedSkillID)
+    }
+
+    @ViewBuilder private var contextMenu: some View {
+        if let selectedSkillID, let skill = skillList.skills[selectedSkillID] {
+            VStack(alignment: .leading, spacing: 3) {
+                SkillPreview(skill: skill)
+
+                if skill.level > 0 && !skill.isPassiveSkill {
+                    SkillActions(skill: skill) {
+                        self.selectedSkillID = nil
+                    }
+                }
+            }
+            .padding(.vertical, 20)
+        }
     }
 
     /// Only a learned, active skill can be put in the shortcut bar.
@@ -223,6 +255,62 @@ private struct SkillUpgradeTrendShape: Shape {
     }
 }
 
+private struct SkillPreview: View {
+    var skill: SkillInfo
+
+    @Environment(GameContext.self) private var gameContext
+
+    var body: some View {
+        ScrollView {
+            Text(AttributedString(description: description, defaultColor: .gameLabel))
+                .font(.game())
+                .lineSpacing(5)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(5)
+        .frame(width: 280)
+        .background(RoundedRectangle(cornerRadius: 5).fill(Material.bar))
+        .overlay {
+            RoundedRectangle(cornerRadius: 3)
+                .stroke(Color.gameBoxBorder, lineWidth: 1)
+                .padding(2)
+        }
+    }
+
+    private var description: String {
+        if let description = gameContext.skillInfoTable.localizedSkillDescription(forSkillID: skill.skillID) {
+            description
+        } else if let skillID = SkillID(rawValue: skill.skillID) {
+            skillID.stringValue
+        } else {
+            "Skill \(skill.skillID)"
+        }
+    }
+}
+
+private struct SkillActions: View {
+    var skill: SkillInfo
+    var dismiss: () -> Void
+
+    @Environment(GameSession.self) private var gameSession
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            GameContextMenuButton(label: "Use") {
+                gameSession.useShortcut(.skill(skillID: skill.skillID, level: skill.level))
+                dismiss()
+            }
+        }
+        .frame(width: 120)
+        .background(RoundedRectangle(cornerRadius: 5).fill(Material.bar))
+        .overlay {
+            RoundedRectangle(cornerRadius: 3)
+                .stroke(Color.gameBoxBorder, lineWidth: 1)
+                .padding(2)
+        }
+    }
+}
+
 #Preview {
     let gameContext = {
         let gameContext = GameContext.testing
@@ -263,7 +351,7 @@ private struct SkillUpgradeTrendShape: Shape {
     }()
 
     SkillListView(skillList: gameContext.skillList)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
         .environment(gameContext)
 }
