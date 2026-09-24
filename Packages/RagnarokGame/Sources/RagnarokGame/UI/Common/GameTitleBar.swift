@@ -36,7 +36,7 @@ struct GameTitleBar: View {
         .frame(height: 17)
         .overlay(alignment: .trailing) {
             if let closeAction {
-                GameWindowCloseButton(action: closeAction)
+                GameCloseButton(action: closeAction)
             }
         }
     }

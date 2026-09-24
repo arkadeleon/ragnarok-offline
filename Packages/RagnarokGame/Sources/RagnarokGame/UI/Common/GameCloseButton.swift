@@ -1,5 +1,5 @@
 //
-//  GameWindowCloseButton.swift
+//  GameCloseButton.swift
 //  RagnarokGame
 //
 //  Created by Leon Li on 2026/5/14.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GameWindowCloseButton: View {
+struct GameCloseButton: View {
     var action: () -> Void
 
     var body: some View {
@@ -26,7 +26,7 @@ struct GameWindowCloseButton: View {
 }
 
 #Preview {
-    GameWindowCloseButton {
+    GameCloseButton {
         // close action
     }
     .padding()

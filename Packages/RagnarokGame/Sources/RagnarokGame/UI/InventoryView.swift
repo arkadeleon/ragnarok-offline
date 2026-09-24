@@ -126,6 +126,11 @@ struct InventoryView: View {
         if let item = selectedItem {
             VStack(alignment: .leading, spacing: 3) {
                 InventoryItemPreview(item: item)
+                    .overlay(alignment: .topTrailing) {
+                        GameCloseButton {
+                            selectedItem = nil
+                        }
+                    }
 
                 InventoryItemActions(item: item) {
                     selectedItem = nil

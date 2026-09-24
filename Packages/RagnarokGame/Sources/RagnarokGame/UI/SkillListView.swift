@@ -72,6 +72,11 @@ struct SkillListView: View {
         if let selectedSkillID, let skill = skillList.skills[selectedSkillID] {
             VStack(alignment: .leading, spacing: 3) {
                 SkillPreview(skill: skill)
+                    .overlay(alignment: .topTrailing) {
+                        GameCloseButton {
+                            self.selectedSkillID = nil
+                        }
+                    }
 
                 if skill.level > 0 && !skill.isPassiveSkill {
                     SkillActions(skill: skill) {
