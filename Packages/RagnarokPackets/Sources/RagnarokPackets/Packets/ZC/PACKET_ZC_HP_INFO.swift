@@ -8,6 +8,10 @@
 import BinaryIO
 
 public struct PACKET_ZC_HP_INFO: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + 4 + 4
+    }
+
     public var packetType: Int16
     public var GID: UInt32
     public var HP: Int32

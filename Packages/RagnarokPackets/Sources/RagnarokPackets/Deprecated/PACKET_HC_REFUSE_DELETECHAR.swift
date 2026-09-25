@@ -13,6 +13,10 @@ public let _HEADER_HC_REFUSE_DELETECHAR: Int16 = 0x70
 /// See `chclif_refuse_delchar`
 @available(*, deprecated, message: "Use PACKET_HC_REFUSE_DELETECHAR instead.")
 public struct _PACKET_HC_REFUSE_DELETECHAR: DecodablePacket {
+    public static var size: Int {
+        2 + 1
+    }
+
     public var packetType: Int16
     public var errorCode: UInt8
 

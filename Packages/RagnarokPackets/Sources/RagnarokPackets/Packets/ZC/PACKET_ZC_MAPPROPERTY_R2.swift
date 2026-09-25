@@ -8,6 +8,10 @@
 import BinaryIO
 
 public struct PACKET_ZC_MAPPROPERTY_R2: DecodablePacket {
+    public static var size: Int {
+        2 + 2 + 4
+    }
+
     public var packetType: Int16
     public var type: Int16
     public var flags: UInt32

@@ -13,6 +13,10 @@ public let _HEADER_HC_REFUSE_MAKECHAR: Int16 = 0x6e
 /// See `chclif_createnewchar_refuse`
 @available(*, deprecated, message: "Use PACKET_HC_REFUSE_MAKECHAR instead.")
 public struct _PACKET_HC_REFUSE_MAKECHAR: DecodablePacket {
+    public static var size: Int {
+        2 + 1
+    }
+
     public var packetType: Int16
     public var errorCode: UInt8
 

@@ -14,6 +14,10 @@ public let _HEADER_HC_BLOCK_CHARACTER: Int16 = 0x20d
 /// See `chclif_block_character`
 @available(*, deprecated, message: "Use PACKET_HC_BLOCK_CHARACTER instead.")
 public struct _PACKET_HC_BLOCK_CHARACTER: DecodablePacket {
+    public static var size: Int {
+        -1
+    }
+
     public var packetType: Int16
     public var packetLength: Int16
     public var chars: [_CharBlockInfo]

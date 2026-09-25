@@ -11,6 +11,10 @@ public let HEADER_ZC_ACK_REQ_DISCONNECT: Int16 = 0x18b
 
 // See `clif_disconnect_ack`
 public struct PACKET_ZC_ACK_REQ_DISCONNECT: DecodablePacket {
+    public static var size: Int {
+        2 + 2
+    }
+
     public var packetType: Int16
     public var result: UInt16
 

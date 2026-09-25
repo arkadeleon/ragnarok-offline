@@ -13,6 +13,10 @@ public let _HEADER_HC_CHARLIST_NOTIFY: Int16 = 0x9a0
 /// See `chclif_charlist_notify`
 @available(*, deprecated, message: "Use PACKET_HC_CHARLIST_NOTIFY instead.")
 public struct _PACKET_HC_CHARLIST_NOTIFY: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + (PACKET_VERSION_RE && PACKET_VERSION >= 20151001 && PACKET_VERSION < 20180103 ? 4 : 0)
+    }
+
     public var packetType: Int16
     public var totalCount: UInt32
     public var charSlots: UInt32

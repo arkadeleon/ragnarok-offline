@@ -11,6 +11,10 @@ public let HEADER_ZC_RECOVER_PENALTY_OVERWEIGHT: Int16 = 0xade
 
 /// See `clif_weight_limit`
 public struct PACKET_ZC_RECOVER_PENALTY_OVERWEIGHT: DecodablePacket {
+    public static var size: Int {
+        2 + 4
+    }
+
     public var packetType: Int16
     public var percentage: UInt32
 

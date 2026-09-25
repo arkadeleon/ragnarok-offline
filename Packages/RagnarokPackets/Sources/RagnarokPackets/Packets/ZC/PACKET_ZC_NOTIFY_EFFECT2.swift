@@ -10,6 +10,10 @@ import BinaryIO
 public let HEADER_ZC_NOTIFY_EFFECT2: Int16 = 0x1f3
 
 public struct PACKET_ZC_NOTIFY_EFFECT2: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + 4
+    }
+
     public var packetType: Int16
     public var AID: UInt32
     public var effectID: UInt32

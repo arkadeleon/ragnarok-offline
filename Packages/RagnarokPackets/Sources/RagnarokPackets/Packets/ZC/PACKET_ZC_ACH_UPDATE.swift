@@ -9,6 +9,10 @@ import BinaryIO
 
 /// See `clif_achievement_update`
 public struct PACKET_ZC_ACH_UPDATE: DecodablePacket {
+    public static var size: Int {
+        2 + 64
+    }
+
     public var packetType: Int16
 
     public init(from decoder: BinaryDecoder) throws {

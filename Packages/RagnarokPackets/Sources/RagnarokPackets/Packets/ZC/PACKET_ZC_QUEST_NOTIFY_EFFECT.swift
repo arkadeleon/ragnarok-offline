@@ -10,6 +10,10 @@ import BinaryIO
 public let HEADER_ZC_QUEST_NOTIFY_EFFECT: Int16 = 0x446
 
 public struct PACKET_ZC_QUEST_NOTIFY_EFFECT: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + 2 + 2 + 2 + 2
+    }
+
     public var packetType: Int16
     public var npcID: UInt32
     public var x: Int16

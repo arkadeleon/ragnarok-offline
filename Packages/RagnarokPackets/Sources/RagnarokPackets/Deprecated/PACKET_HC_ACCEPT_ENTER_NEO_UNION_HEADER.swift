@@ -13,6 +13,10 @@ public let _HEADER_HC_ACCEPT_ENTER_NEO_UNION_HEADER: Int16 = 0x82d
 /// See `chclif_mmo_send082d`
 @available(*, deprecated, message: "Use PACKET_HC_ACCEPT_ENTER2 instead.")
 public struct _PACKET_HC_ACCEPT_ENTER_NEO_UNION_HEADER: DecodablePacket {
+    public static var size: Int {
+        2 + 2 + 1 + 1 + 1 + 1 + 1 + 20
+    }
+
     public var packetType: Int16
     public var totalSlot: UInt16
     public var normalSlot: UInt8

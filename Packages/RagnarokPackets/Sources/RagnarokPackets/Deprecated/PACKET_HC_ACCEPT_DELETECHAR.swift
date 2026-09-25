@@ -13,6 +13,10 @@ public let _HEADER_HC_ACCEPT_DELETECHAR: Int16 = 0x6f
 /// See `chclif_parse_delchar`
 @available(*, deprecated, message: "Use PACKET_HC_ACCEPT_DELETECHAR instead.")
 public struct _PACKET_HC_ACCEPT_DELETECHAR: DecodablePacket {
+    public static var size: Int {
+        2
+    }
+
     public var packetType: Int16
 
     public init(from decoder: BinaryDecoder) throws {

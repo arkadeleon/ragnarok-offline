@@ -10,6 +10,10 @@ import BinaryIO
 /// See `chclif_createnewchar`
 @available(*, deprecated, message: "Use PACKET_HC_ACCEPT_MAKECHAR instead.")
 public struct _PACKET_HC_ACCEPT_MAKECHAR: DecodablePacket {
+    public static var size: Int {
+        2 + CHARACTER_INFO.size
+    }
+
     public var packetType: Int16
     public var char: CHARACTER_INFO
 

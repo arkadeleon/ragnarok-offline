@@ -10,6 +10,10 @@ import BinaryIO
 public let HEADER_ZC_NOTIFY_EXP: Int16 = PACKET_VERSION >= 20170830 ? 0x0acc : 0x07f6
 
 public struct PACKET_ZC_NOTIFY_EXP: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + (PACKET_VERSION >= 20170830 ? 8 : 4) + 2 + 2
+    }
+
     public var packetType: Int16
     public var accountID: UInt32
     public var amount: Int64

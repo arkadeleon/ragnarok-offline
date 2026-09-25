@@ -11,6 +11,10 @@ import Foundation
 public let HEADER_ZC_NPC_CHAT: Int16 = 0x2c1
 
 public struct PACKET_ZC_NPC_CHAT: DecodablePacket {
+    public static var size: Int {
+        -1
+    }
+
     public var packetType: Int16
     public var packetLength: Int16
     public var accountID: UInt32

@@ -9,6 +9,10 @@ import BinaryIO
 
 /// See `clif_achievement_list_all`
 public struct PACKET_ZC_ALL_ACH_LIST: DecodablePacket {
+    public static var size: Int {
+        -1
+    }
+
     public var packetType: Int16
     public var packetLength: Int16
 

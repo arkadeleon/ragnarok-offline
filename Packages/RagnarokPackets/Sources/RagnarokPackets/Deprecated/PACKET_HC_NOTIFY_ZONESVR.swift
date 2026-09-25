@@ -14,6 +14,10 @@ public let _HEADER_HC_NOTIFY_ZONESVR: Int16 = PACKET_VERSION >= 20170315 ? 0xac5
 /// See `chclif_send_map_data`
 @available(*, deprecated, message: "Use PACKET_HC_NOTIFY_ZONESVR instead.")
 public struct _PACKET_HC_NOTIFY_ZONESVR: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + 16 + 4 + 2 + (PACKET_VERSION >= 20170315 ? 128 : 0)
+    }
+
     public var packetType: Int16
     public var charID: UInt32
     public var mapName: String

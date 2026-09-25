@@ -8,6 +8,10 @@
 import BinaryIO
 
 public struct PACKET_ZC_MSG_STATE_CHANGE: DecodablePacket {
+    public static var size: Int {
+        2 + 2 + 4 + 1
+    }
+
     public var packetType: Int16
     public var index: Int16
     public var AID: UInt32

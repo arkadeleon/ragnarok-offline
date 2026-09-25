@@ -12,6 +12,10 @@ public let HEADER_ZC_MAIL_RECEIVE: Int16 = 0x24a
 
 /// See `clif_Mail_new`
 public struct PACKET_ZC_MAIL_RECEIVE: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + 40 + 24
+    }
+
     public var packetType: Int16
     public var mailID: UInt32
     public var title: String

@@ -11,6 +11,10 @@ public let HEADER_ZC_PC_SELL_RESULT: Int16 = 0xcb
 
 /// See `clif_npc_sell_result`
 public struct PACKET_ZC_PC_SELL_RESULT: DecodablePacket {
+    public static var size: Int {
+        2 + 1
+    }
+
     public var packetType: Int16
     public var result: UInt8
 

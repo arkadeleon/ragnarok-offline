@@ -13,6 +13,10 @@ public let _HEADER_HC_SECOND_PASSWD_LOGIN: Int16 = 0x8b9
 /// See `chclif_pincode_sendstate`
 @available(*, deprecated, message: "Use PACKET_HC_SECOND_PASSWD_LOGIN instead.")
 public struct _PACKET_HC_SECOND_PASSWD_LOGIN: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + 4 + 2
+    }
+
     public var packetType: Int16
     public var pinCodeSeed: UInt32
     public var accountID: UInt32

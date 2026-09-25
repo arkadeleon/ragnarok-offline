@@ -13,6 +13,10 @@ public let _HEADER_HC_DELETE_CHAR_CANCEL: Int16 = 0x82c
 /// See `chclif_char_delete2_cancel_ack`
 @available(*, deprecated, message: "Use PACKET_HC_DELETE_CHAR3_CANCEL instead.")
 public struct _PACKET_HC_DELETE_CHAR_CANCEL: DecodablePacket {
+    public static var size: Int {
+        2 + 4 + 4
+    }
+
     public var packetType: Int16
     public var charID: UInt32
     public var result: UInt32

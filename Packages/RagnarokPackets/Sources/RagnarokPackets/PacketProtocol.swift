@@ -11,6 +11,8 @@ public protocol PacketProtocol: Sendable {
 }
 
 public protocol DecodablePacket: PacketProtocol {
+    static var size: Int { get }
+
     init(from decoder: BinaryDecoder) throws
 }
 
