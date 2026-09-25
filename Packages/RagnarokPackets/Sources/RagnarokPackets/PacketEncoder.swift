@@ -8,7 +8,7 @@
 import BinaryIO
 import Foundation
 
-final public class PacketEncoder {
+final public class PacketEncoder: Sendable {
     public init() {
     }
 

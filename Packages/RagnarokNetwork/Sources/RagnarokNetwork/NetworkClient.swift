@@ -21,6 +21,9 @@ final public class NetworkClient: Sendable {
     private let name: String
     private let connection: NWConnection
 
+    private let encoder = PacketEncoder()
+    private let decoder = PacketDecoder()
+
     public let errorStream: AsyncStream<NetworkClientError>
     private let errorContinuation: AsyncStream<NetworkClientError>.Continuation
 
@@ -86,7 +89,6 @@ final public class NetworkClient: Sendable {
 
     public func sendPacket(_ packet: some EncodablePacket) {
         do {
-            let encoder = PacketEncoder()
             let data = try encoder.encode(packet)
 
             connection.send(content: data, completion: .contentProcessed({ [weak self] error in
@@ -116,9 +118,7 @@ final public class NetworkClient: Sendable {
 
                     let remaining = content[count...]
                     do {
-                        let decoder = PacketDecoder()
-                        let packets = try decoder.decode(from: remaining)
-                        for packet in packets {
+                        try decoder.decode(from: remaining) { packet in
                             logger.info("Received packet: \(String(describing: packet))")
                             packetContinuation.yield(packet)
                         }
@@ -148,9 +148,7 @@ final public class NetworkClient: Sendable {
             if let content {
                 logger.info("Received \(content.count) bytes")
                 do {
-                    let decoder = PacketDecoder()
-                    let packets = try decoder.decode(from: content)
-                    for packet in packets {
+                    try decoder.decode(from: content) { packet in
                         logger.info("Received packet: \(String(describing: packet))")
                         packetContinuation.yield(packet)
                     }
