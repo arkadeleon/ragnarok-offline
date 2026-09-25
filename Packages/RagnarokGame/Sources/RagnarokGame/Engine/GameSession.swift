@@ -136,6 +136,7 @@ final public class GameSession {
         mapRuntime?.unload()
 
         stopAllClients()
+        resetMapPhase()
         resetLoginPhase()
 
         isDisconnected = false
@@ -168,10 +169,7 @@ final public class GameSession {
         case .map:
             mapRuntime?.unload()
             stopMapClient()
-            dialog = nil
-            dealSelectionNPCID = nil
-            npcShop = nil
-            warpList = nil
+            resetMapPhase()
             if let charServer {
                 stage = .login(.connectingCharServer(charServer))
                 startCharClient(charServer)
@@ -191,6 +189,19 @@ final public class GameSession {
         maxCharacterSlots = 9
 
         stage = .login(.login)
+    }
+
+    private func resetMapPhase() {
+        dialog = nil
+        dealSelectionNPCID = nil
+        npcShop = nil
+        warpList = nil
+        packetMessages = []
+
+        context.inventory = Inventory()
+        context.skillList = SkillList()
+        context.shortcutList = ShortcutList()
+        context.messageCenter.messages = []
     }
 
     // MARK: - Login Client
