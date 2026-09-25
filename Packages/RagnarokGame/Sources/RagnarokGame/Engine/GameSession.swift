@@ -204,6 +204,35 @@ final public class GameSession {
         context.messageCenter.messages = []
     }
 
+    private func handleClientError(_ error: NetworkClientError, from client: NetworkClient) {
+        switch error {
+        case .network, .disconnected:
+            switch stage {
+            case .login:
+                guard client === loginClient || client === charClient || client === mapClient else {
+                    break
+                }
+
+                stopAllClients()
+
+                let localizedMessage = context.messageStringTable.localizedMessageString(forID: 1)
+                let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+                    gameSession.removeErrorMessage(errorMessage)
+                    gameSession.resetLoginPhase()
+                }
+                errorMessages.append(errorMessage)
+            case .map:
+                guard client === mapClient else {
+                    break
+                }
+
+                isDisconnected = true
+            }
+        case .decoding, .encoding:
+            break
+        }
+    }
+
     // MARK: - Login Client
 
     func login(username: String, password: String) {
@@ -242,9 +271,7 @@ final public class GameSession {
         Task {
             for await error in client.errorStream {
                 logger.warning("\(error)")
-                if case .disconnected = error {
-                    isDisconnected = true
-                }
+                handleClientError(error, from: client)
             }
         }
 
@@ -401,9 +428,7 @@ final public class GameSession {
         Task {
             for await error in client.errorStream {
                 logger.warning("\(error)")
-                if case .disconnected = error {
-                    isDisconnected = true
-                }
+                handleClientError(error, from: client)
             }
         }
 
@@ -590,9 +615,7 @@ final public class GameSession {
         Task {
             for await error in client.errorStream {
                 logger.warning("\(error)")
-                if case .disconnected = error {
-                    isDisconnected = true
-                }
+                handleClientError(error, from: client)
             }
         }
 
