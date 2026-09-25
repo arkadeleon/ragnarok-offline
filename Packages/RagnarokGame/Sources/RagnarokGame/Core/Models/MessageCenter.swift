@@ -21,6 +21,7 @@ final class MessageCenter {
     }
 
     enum MessageCategory {
+        case general
         case item
         case skill
         case battle
@@ -203,6 +204,18 @@ final class MessageCenter {
     func addInsufficientZenyMessage() {
         let messageString = messageStringTable.localizedMessageString(forID: 55)
         let message = MessageCenter.Message(content: messageString, type: .error, category: .item)
+        messages.append(message)
+    }
+
+    // MARK: - Exit
+
+    func addMessage(for packet: PACKET_ZC_ACK_REQ_DISCONNECT) {
+        guard packet.result != 0 else {
+            return
+        }
+
+        let messageString = messageStringTable.localizedMessageString(forID: 502)
+        let message = MessageCenter.Message(content: messageString, type: .error, category: .general)
         messages.append(message)
     }
 }

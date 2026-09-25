@@ -684,9 +684,7 @@ final public class GameSession {
                 exitCurrentPhase()
             }
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
-            if packet.result == 0 {
-                exitCurrentPhase()
-            }
+            context.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_AID:
             account?.update(accountID: packet.accountID)
         case _ as PACKET_ZC_PING_LIVE:
