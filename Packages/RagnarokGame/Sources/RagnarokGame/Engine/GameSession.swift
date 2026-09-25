@@ -818,9 +818,21 @@ final public class GameSession {
         case _ as PACKET_ZC_INVENTORY_END:
             break
         case let packet as packet_itemlist_normal:
-            context.inventory.update(from: packet)
+            // invType: 0 = inventory, 1 = cart, 2 = storage, 3 = guild storage
+            switch packet.invType {
+            case 0:
+                context.inventory.update(from: packet)
+            default:
+                break
+            }
         case let packet as packet_itemlist_equip:
-            context.inventory.update(from: packet)
+            // invType: 0 = inventory, 1 = cart, 2 = storage, 3 = guild storage
+            switch packet.invType {
+            case 0:
+                context.inventory.update(from: packet)
+            default:
+                break
+            }
         case let packet as PACKET_ZC_ITEM_ENTRY:
             let item = DroppedItem(from: packet)
             let position = SIMD2(x: Int(packet.x), y: Int(packet.y))
