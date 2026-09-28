@@ -372,6 +372,28 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_STORE` | `clif_parse_MoveToKafra` |
+    public static func CZ_MOVE_ITEM_FROM_BODY_TO_STORE(index: Int, amount: Int) -> PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_STORE {
+        var packet = PACKET_CZ_MOVE_ITEM_FROM_BODY_TO_STORE()
+        packet.index = UInt16(index)
+        packet.amount = Int32(amount)
+        return packet
+    }
+
+    /// | `PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_BODY` | `clif_parse_MoveFromKafra` |
+    public static func CZ_MOVE_ITEM_FROM_STORE_TO_BODY(index: Int, amount: Int) -> PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_BODY {
+        var packet = PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_BODY()
+        packet.index = UInt16(index)
+        packet.amount = Int32(amount)
+        return packet
+    }
+
+    /// | `PACKET_CZ_CLOSE_STORE` | `clif_parse_CloseKafra` |
+    public static func CZ_CLOSE_STORE() -> PACKET_CZ_CLOSE_STORE {
+        let packet = PACKET_CZ_CLOSE_STORE()
+        return packet
+    }
+
     /// | `PACKET_CZ_PING_LIVE` | `clif_parse_dull` |
     public static func CZ_PING_LIVE() -> PACKET_CZ_PING_LIVE {
         var packet = PACKET_CZ_PING_LIVE()
