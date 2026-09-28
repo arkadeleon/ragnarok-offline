@@ -85,6 +85,7 @@ final public class GameSession {
     var dialog: NPCDialog?
     var dealSelectionNPCID: UInt32?
     var npcShop: NPCShop?
+    var storage: Storage?
     var warpList: WarpList?
 
     @ObservationIgnored var loginClient: NetworkClient?
@@ -195,6 +196,7 @@ final public class GameSession {
         dialog = nil
         dealSelectionNPCID = nil
         npcShop = nil
+        storage = nil
         warpList = nil
         packetMessages = []
 
@@ -834,8 +836,14 @@ final public class GameSession {
             }
         case let packet as PACKET_ZC_NOTIFY_EXP:
             context.messageCenter.addMessage(for: packet)
-        case _ as PACKET_ZC_INVENTORY_START:
-            break
+        case let packet as PACKET_ZC_INVENTORY_START:
+            // invType: 0 = inventory, 1 = cart, 2 = storage, 3 = guild storage
+            switch packet.invType {
+            case 2:
+                storage = Storage(name: packet.name)
+            default:
+                break
+            }
         case _ as PACKET_ZC_INVENTORY_END:
             break
         case let packet as packet_itemlist_normal:
@@ -843,6 +851,8 @@ final public class GameSession {
             switch packet.invType {
             case 0:
                 context.inventory.update(from: packet)
+            case 2:
+                storage?.update(from: packet)
             default:
                 break
             }
@@ -851,6 +861,8 @@ final public class GameSession {
             switch packet.invType {
             case 0:
                 context.inventory.update(from: packet)
+            case 2:
+                storage?.update(from: packet)
             default:
                 break
             }
@@ -980,6 +992,14 @@ final public class GameSession {
         case let packet as PACKET_ZC_PC_SELL_RESULT:
             npcShop = nil
             context.messageCenter.addMessage(for: packet)
+        case let packet as PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO:
+            storage?.update(from: packet)
+        case let packet as PACKET_ZC_ADD_ITEM_TO_STORE:
+            storage?.update(from: packet)
+        case let packet as PACKET_ZC_DELETE_ITEM_FROM_STORE:
+            storage?.update(from: packet)
+        case _ as PACKET_ZC_CLOSE_STORE:
+            storage = nil
         case let packet as PACKET_ZC_NOTIFY_CHAT:
             let message = ChatMessage(from: packet)
             context.messageCenter.add(message)
@@ -1459,6 +1479,37 @@ final public class GameSession {
         npcShop = nil
 
         let packet = PacketFactory.CZ_NPC_TRADE_QUIT()
+        mapClient.sendPacket(packet)
+    }
+
+    // MARK: - Storage
+
+    func moveItemToStorage(index: Int, amount: Int) {
+        guard let mapClient, storage != nil else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_MOVE_ITEM_FROM_BODY_TO_STORE(index: index, amount: amount)
+        mapClient.sendPacket(packet)
+    }
+
+    func moveItemFromStorage(index: Int, amount: Int) {
+        guard let mapClient, storage != nil else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_MOVE_ITEM_FROM_STORE_TO_BODY(index: index, amount: amount)
+        mapClient.sendPacket(packet)
+    }
+
+    func closeStorage() {
+        guard let mapClient else {
+            return
+        }
+
+        storage = nil
+
+        let packet = PacketFactory.CZ_CLOSE_STORE()
         mapClient.sendPacket(packet)
     }
 }
