@@ -29,10 +29,6 @@ struct WarpListView: View {
                 WarpListBox(mapNames: warpList.mapNames, selectedIndex: $selectedIndex)
             }
             .padding(5)
-        } titleBar: {
-            GameTitleBar {
-                gameSession.cancelWarpPoint()
-            }
         } bottomBar: {
             GameBottomBar {
                 Button {
@@ -52,6 +48,9 @@ struct WarpListView: View {
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
             }
+        }
+        .gameWindowCloseAction {
+            gameSession.cancelWarpPoint()
         }
         .frame(width: 280)
         .onChange(of: warpList.mapNames) {

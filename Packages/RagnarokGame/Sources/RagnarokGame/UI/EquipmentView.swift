@@ -50,9 +50,8 @@ struct EquipmentView: View {
                 .frame(width: 120)
             }
             .frame(height: 134)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
         }
+        .gameWindowCloseAction(onClose)
         .frame(width: 320)
         .task {
             if let character = gameSession.character {

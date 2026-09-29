@@ -62,9 +62,8 @@ struct StatusView: View {
                 }
             }
             .padding(6)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
         }
+        .gameWindowCloseAction(onClose)
         .frame(width: 320)
     }
 }

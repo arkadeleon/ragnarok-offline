@@ -78,9 +78,8 @@ struct OptionsView: View {
                 }
             }
             .padding(.vertical, 20)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
         }
+        .gameWindowCloseAction(onClose)
         .frame(width: 280)
     }
 }

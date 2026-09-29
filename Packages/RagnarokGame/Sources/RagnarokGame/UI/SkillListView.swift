@@ -34,8 +34,6 @@ struct SkillListView: View {
                     }
                 }
                 .frame(height: 220)
-            } titleBar: {
-                GameTitleBar(closeAction: onClose)
             } bottomBar: {
                 GameBottomBar()
                     .overlay(alignment: .leading) {
@@ -45,6 +43,7 @@ struct SkillListView: View {
                             .padding(.leading, 10)
                     }
             }
+            .gameWindowCloseAction(onClose)
             .geometryGroup()
             .blur(radius: selectedSkillID == nil ? 0 : 5)
             .frame(width: 320)

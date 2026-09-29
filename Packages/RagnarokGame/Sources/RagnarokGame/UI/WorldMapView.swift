@@ -434,10 +434,6 @@ private struct WorldMapInfoView: View {
                 }
                 .multilineTextAlignment(.center)
                 .padding(4)
-            } titleBar: {
-                GameTitleBar {
-                    selectedMap = nil
-                }
             } bottomBar: {
                 GameBottomBar {
                     Button {
@@ -448,6 +444,9 @@ private struct WorldMapInfoView: View {
                     .buttonStyle(.game)
                     .frame(width: 60, height: 20)
                 }
+            }
+            .gameWindowCloseAction {
+                selectedMap = nil
             }
             .frame(width: previewSize + 8)
         }

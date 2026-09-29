@@ -30,9 +30,8 @@ struct InventoryView: View {
                     tabBar
                     itemGrid
                 }
-            } titleBar: {
-                GameTitleBar(closeAction: onClose)
             }
+            .gameWindowCloseAction(onClose)
             .geometryGroup()
             .blur(radius: selectedItem == nil ? 0 : 5)
             .frame(width: 320)
