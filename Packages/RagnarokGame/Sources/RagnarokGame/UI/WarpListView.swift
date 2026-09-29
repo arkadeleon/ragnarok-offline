@@ -29,25 +29,30 @@ struct WarpListView: View {
                 WarpListBox(mapNames: warpList.mapNames, selectedIndex: $selectedIndex)
             }
             .padding(5)
-        } titleBar: {
-            GameTitleBar {
-                gameSession.cancelWarpPoint()
-            }
         } bottomBar: {
             GameBottomBar {
-                Button("OK") {
+                // btn_ok.bmp
+                Button {
                     let mapName = warpList.mapNames[selectedIndex]
                     gameSession.selectWarpPoint(mapName: mapName)
+                } label: {
+                    Text("OK", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
 
-                Button("cancel") {
+                // btn_cancel.bmp
+                Button {
                     gameSession.cancelWarpPoint()
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
             }
+        }
+        .gameWindowCloseAction {
+            gameSession.cancelWarpPoint()
         }
         .frame(width: 280)
         .onChange(of: warpList.mapNames) {

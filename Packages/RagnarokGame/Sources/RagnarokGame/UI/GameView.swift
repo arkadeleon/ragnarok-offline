@@ -30,9 +30,12 @@ public struct GameView: View {
         .overlay(alignment: .center) {
             if gameSession.isDisconnected {
                 MessageBoxView(gameSession.context.messageStringTable.localizedMessageString(forID: 2)) {
-                    Button("OK") {
+                    // btn_ok.bmp
+                    Button {
                         gameSession.exitSession()
                         exitGame()
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)

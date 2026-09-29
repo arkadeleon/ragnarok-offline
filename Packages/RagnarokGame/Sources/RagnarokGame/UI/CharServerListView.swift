@@ -14,6 +14,7 @@ struct CharServerListView: View {
     @Environment(GameSession.self) private var gameSession
 
     var body: some View {
+        // login_interface/win_service.bmp
         GameWindow {
             ScrollView {
                 VStack(spacing: 0) {
@@ -32,29 +33,36 @@ struct CharServerListView: View {
             .frame(height: 75)
         } bottomBar: {
             GameBottomBar {
-                Button("OK") {
+                // btn_ok.bmp
+                Button {
                     if let charServer = charServers.first {
                         gameSession.audioPlayer.playButtonSoundEffect()
                         gameSession.selectCharServer(charServer)
                     }
+                } label: {
+                    Text("OK", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
                 .disabled(charServers.isEmpty)
 
-                Button("cancel") {
+                // btn_cancel.bmp
+                Button {
                     gameSession.exitCurrentPhase()
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
             }
         }
+        .gameWindowTitle(Text("Service Select", bundle: #bundle))
         .frame(width: 280)
     }
 }
 
 #Preview {
     CharServerListView(charServers: [])
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
 }

@@ -29,10 +29,6 @@ struct NPCShopView: View {
                 }
             }
             .frame(height: 220)
-        } titleBar: {
-            GameTitleBar {
-                gameSession.closeNPCShop()
-            }
         } bottomBar: {
             GameBottomBar {
                 Text(verbatim: "Total : \(total) Zeny")
@@ -43,31 +39,53 @@ struct NPCShopView: View {
 
                 switch shop {
                 case .buy:
-                    Button("buy") {
+                    // btn_buy.bmp
+                    Button {
                         buy()
+                    } label: {
+                        Text("buy", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                     .disabled(total == 0)
                 case .sell:
-                    Button("sell") {
+                    // btn_sell.bmp
+                    Button {
                         sell()
+                    } label: {
+                        Text("sell", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                     .disabled(total == 0)
                 }
 
-                Button("cancel") {
+                // btn_cancel.bmp
+                Button {
                     gameSession.closeNPCShop()
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
             }
         }
+        .gameWindowTitle(title)
+        .gameWindowCloseAction {
+            gameSession.closeNPCShop()
+        }
         .frame(width: 320)
         .onChange(of: shop) {
             amounts = [:]
+        }
+    }
+
+    private var title: Text {
+        switch shop {
+        case .buy:
+            Text(gameContext.messageStringTable.localizedMessageString(forID: 186))
+        case .sell:
+            Text(gameContext.messageStringTable.localizedMessageString(forID: 185))
         }
     }
 

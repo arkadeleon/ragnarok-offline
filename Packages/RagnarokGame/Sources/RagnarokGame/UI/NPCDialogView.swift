@@ -33,34 +33,49 @@ struct NPCDialogView: View {
         } bottomBar: {
             GameBottomBar {
                 if let input = dialog.input {
-                    Button("OK") {
+                    // btn_ok.bmp
+                    Button {
                         confirmInput(input)
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 } else if dialog.menu != nil {
-                    Button("OK") {
+                    // btn_ok.bmp
+                    Button {
                         gameSession.selectMenu(UInt8(selectedMenuIndex + 1))
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
-                    Button("Cancel") {
+                    // btn_cancel.bmp
+                    Button {
                         gameSession.cancelMenu()
+                    } label: {
+                        Text("cancel", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 } else {
                     switch dialog.action {
                     case .next:
-                        Button("Next") {
+                        // btn_next.bmp
+                        Button {
                             gameSession.requestNextMessage()
+                        } label: {
+                            Text("next", bundle: #bundle)
                         }
                         .buttonStyle(.game)
                         .frame(width: 42, height: 20)
                     case .close:
-                        Button("Close") {
+                        // btn_close.bmp
+                        Button {
                             gameSession.closeDialog()
+                        } label: {
+                            Text("close", bundle: #bundle)
                         }
                         .buttonStyle(.game)
                         .frame(width: 42, height: 20)
@@ -145,7 +160,7 @@ private struct NPCDialogInputBox: View {
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
 
-            TextField("", text: $value)
+            TextField(String(), text: $value)
                 .textFieldStyle(.plain)
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)

@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, TitleBar: View, BottomBar: View {
+struct GameWindow<Content, BottomBar>: View where Content: View, BottomBar: View {
     var content: Content
-    var titleBar: TitleBar
     var bottomBar: BottomBar
+
+    @Environment(\.gameWindowTitle) private var title
+    @Environment(\.gameWindowCloseAction) private var closeAction
 
     var body: some View {
         VStack(spacing: 0) {
-            titleBar
+            GameTitleBar(title, closeAction: closeAction)
 
             content
                 .frame(maxWidth: .infinity)
@@ -32,37 +34,31 @@ struct GameWindow<Content, TitleBar, BottomBar>: View where Content: View, Title
 
     init(
         @ViewBuilder content: () -> Content,
-        @ViewBuilder titleBar: () -> TitleBar,
         @ViewBuilder bottomBar: () -> BottomBar
     ) {
         self.content = content()
-        self.titleBar = titleBar()
-        self.bottomBar = bottomBar()
-    }
-
-    init(
-        @ViewBuilder content: () -> Content,
-        @ViewBuilder titleBar: () -> TitleBar
-    ) where BottomBar == GameBottomBar<EmptyView> {
-        self.content = content()
-        self.titleBar = titleBar()
-        self.bottomBar = GameBottomBar()
-    }
-
-    init(
-        @ViewBuilder content: () -> Content,
-        @ViewBuilder bottomBar: () -> BottomBar
-    ) where TitleBar == GameTitleBar {
-        self.content = content()
-        self.titleBar = GameTitleBar()
         self.bottomBar = bottomBar()
     }
 
     init(
         @ViewBuilder content: () -> Content
-    ) where TitleBar == GameTitleBar, BottomBar == GameBottomBar<EmptyView> {
+    ) where BottomBar == GameBottomBar<EmptyView> {
         self.content = content()
-        self.titleBar = GameTitleBar()
         self.bottomBar = GameBottomBar()
+    }
+}
+
+extension EnvironmentValues {
+    @Entry var gameWindowTitle: Text?
+    @Entry var gameWindowCloseAction: (() -> Void)?
+}
+
+extension View {
+    nonisolated func gameWindowTitle(_ title: Text) -> some View {
+        environment(\.gameWindowTitle, title)
+    }
+
+    nonisolated func gameWindowCloseAction(_ closeAction: @escaping () -> Void) -> some View {
+        environment(\.gameWindowCloseAction, closeAction)
     }
 }

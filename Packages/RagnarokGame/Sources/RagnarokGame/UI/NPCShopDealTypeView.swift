@@ -13,20 +13,29 @@ struct NPCShopDealTypeView: View {
 
     var body: some View {
         MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 92)) {
-            Button("buy") {
+            // btn_buy.bmp
+            Button {
                 gameSession.selectDealType(.buy)
+            } label: {
+                Text("buy", bundle: #bundle)
             }
             .buttonStyle(.game)
             .frame(width: 42, height: 20)
 
-            Button("sell") {
+            // btn_sell.bmp
+            Button {
                 gameSession.selectDealType(.sell)
+            } label: {
+                Text("sell", bundle: #bundle)
             }
             .buttonStyle(.game)
             .frame(width: 42, height: 20)
 
-            Button("cancel") {
+            // btn_cancel.bmp
+            Button {
                 gameSession.cancelDealSelection()
+            } label: {
+                Text("cancel", bundle: #bundle)
             }
             .buttonStyle(.game)
             .frame(width: 42, height: 20)

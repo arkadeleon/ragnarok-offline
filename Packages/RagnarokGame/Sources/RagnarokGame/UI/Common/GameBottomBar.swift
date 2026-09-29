@@ -11,6 +11,9 @@ struct GameBottomBar<Actions>: View where Actions: View {
     var actions: Actions
 
     var body: some View {
+        // basic_interface/btnbar_left2.bmp
+        // basic_interface/btnbar_mid2.bmp
+        // basic_interface/btnbar_right2.bmp
         HStack(spacing: 3) {
             actions
         }

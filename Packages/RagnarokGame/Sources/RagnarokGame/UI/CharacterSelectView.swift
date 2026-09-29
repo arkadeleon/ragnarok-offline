@@ -36,6 +36,7 @@ struct CharacterSelectView: View {
     }
 
     var body: some View {
+        // login_interface/win_select.bmp
         GameWindow {
             ZStack(alignment: .bottomTrailing) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -49,14 +50,14 @@ struct CharacterSelectView: View {
 
                 VStack(alignment: .trailing, spacing: -6) {
                     HStack(alignment: .lastTextBaseline, spacing: 4) {
-                        Text("Select")
+                        Text(verbatim: "Select")
                             .font(.system(size: 36, weight: .black))
                             .italic()
-                        Text("Your")
+                        Text(verbatim: "Your")
                             .font(.system(size: 20, weight: .bold))
                             .italic()
                     }
-                    Text("Characters")
+                    Text(verbatim: "Characters")
                         .font(.system(size: 32, weight: .black))
                         .italic()
                 }
@@ -70,8 +71,11 @@ struct CharacterSelectView: View {
         } bottomBar: {
             GameBottomBar {
                 if selectedCharacter != nil {
-                    Button("del") {
+                    // btn_del.bmp
+                    Button {
                         showingDeleteConfirmation = true
+                    } label: {
+                        Text("del", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
@@ -80,59 +84,81 @@ struct CharacterSelectView: View {
                 Spacer()
 
                 if selectedCharacter == nil {
-                    Button("make") {
+                    // btn_make.bmp
+                    Button {
                         gameSession.makeCharacter(slot: gameSession.selectedCharacterSlot)
+                    } label: {
+                        Text("make", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 }
 
                 if selectedCharacter != nil {
-                    Button("OK") {
+                    // btn_ok.bmp
+                    Button {
                         gameSession.audioPlayer.playButtonSoundEffect()
                         gameSession.selectCharacter(slot: gameSession.selectedCharacterSlot)
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 }
 
-                Button("cancel") {
+                // btn_cancel.bmp
+                Button {
                     showingCancelConfirmation = true
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
 
             }
         }
+        .gameWindowTitle(Text("Character Select", bundle: #bundle))
         .frame(width: 576)
         .overlay(alignment: .center) {
             if showingDeleteConfirmation {
                 MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 19)) {
-                    Button("OK") {
+                    // btn_ok.bmp
+                    Button {
                         if let charID = selectedCharacter?.charID {
                             gameSession.deleteCharacter(charID: charID)
                         }
                         showingDeleteConfirmation = false
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
-                    Button("cancel") {
+                    // btn_cancel.bmp
+                    Button {
                         showingDeleteConfirmation = false
+                    } label: {
+                        Text("cancel", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 }
             } else if showingCancelConfirmation {
                 MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 17)) {
-                    Button("OK") {
+                    // btn_ok.bmp
+                    Button {
                         gameSession.exitCurrentPhase()
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
-                    Button("cancel") {
+                    // btn_cancel.bmp
+                    Button {
                         showingCancelConfirmation = false
+                    } label: {
+                        Text("cancel", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
@@ -185,6 +211,7 @@ private struct CharacterSlotPanel: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
+                // scroll1left.bmp
                 Button {
                     let newSlot = (gameSession.selectedCharacterSlot - 1 + gameSession.maxCharacterSlots) % gameSession.maxCharacterSlots
                     gameSession.selectedCharacterSlot = newSlot
@@ -236,6 +263,7 @@ private struct CharacterSlotPanel: View {
 
                 Spacer()
 
+                // scroll1right.bmp
                 Button {
                     let newSlot = (gameSession.selectedCharacterSlot + 1) % gameSession.maxCharacterSlots
                     gameSession.selectedCharacterSlot = newSlot
@@ -250,7 +278,7 @@ private struct CharacterSlotPanel: View {
                 .buttonStyle(.plain)
             }
 
-            Text("\(currentPage + 1) / \(totalPages)")
+            Text(verbatim: "\(currentPage + 1) / \(totalPages)")
                 .font(.game())
                 .frame(height: 23)
         }
@@ -259,6 +287,7 @@ private struct CharacterSlotPanel: View {
 
 private struct CharacterSlotSelectionFrame: View {
     var body: some View {
+        // login_interface/box_select.bmp
         ZStack(alignment: .topLeading) {
             Rectangle()
                 .strokeBorder(Color(#colorLiteral(red: 0.4823529412, green: 0.5686274510, blue: 0.7725490196, alpha: 1)), lineWidth: 4)
@@ -364,7 +393,7 @@ private struct CharacterInfoRow: View {
     }()
 
     CharacterSelectView(characters: [character])
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
         .environment(GameContext.testing)
 }

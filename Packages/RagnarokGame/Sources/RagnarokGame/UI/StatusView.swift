@@ -12,10 +12,12 @@ struct StatusView: View {
     var status: CharacterStatus
     var onClose: () -> Void = {}
 
+    @Environment(GameContext.self) private var gameContext
     @Environment(\.incrementStatusProperty) private var incrementStatusProperty
 
     var body: some View {
         GameWindow {
+            // basic_interface/statwin_bg.bmp
             HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: 6) {
                     PrimaryStatRow("Str", value: status.str, value2: status.str2, value3: status.str3) {
@@ -62,9 +64,9 @@ struct StatusView: View {
                 }
             }
             .padding(6)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
         }
+        .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 105)))
+        .gameWindowCloseAction(onClose)
         .frame(width: 320)
     }
 }
@@ -84,12 +86,12 @@ private struct PrimaryStatRow: View {
                 .frame(width: 24, alignment: .leading)
 
             HStack(spacing: 0) {
-                Text("\(value)")
+                Text(verbatim: "\(value)")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .frame(width: 24, height: 24)
 
-                Text("+\(value2)")
+                Text(verbatim: "+\(value2)")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .frame(width: 24, height: 24)
@@ -98,6 +100,7 @@ private struct PrimaryStatRow: View {
                     .fill(Color.gameBoxBorder)
                     .frame(width: 1)
 
+                // basic_interface/arw_right.bmp
                 Button(action: onIncrement) {
                     ZStack {
                         GameSymbol.rightArrowTriangle
@@ -116,7 +119,7 @@ private struct PrimaryStatRow: View {
                     .strokeBorder(Color.gameBoxBorder)
             )
 
-            Text("\(value3)")
+            Text(verbatim: "\(value3)")
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
                 .frame(width: 20, height: 24)
@@ -169,5 +172,6 @@ private struct SecondaryStatRow: View {
 
 #Preview {
     StatusView(status: CharacterStatus())
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+        .environment(GameContext.testing)
 }

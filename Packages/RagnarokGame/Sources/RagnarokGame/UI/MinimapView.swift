@@ -30,6 +30,7 @@ struct MinimapView: View {
             )
 
             HStack(spacing: 0) {
+                // map/map_plus0.bmp
                 Button(action: zoomIn) {
                     Image(systemName: "plus")
                         .font(.game(size: 10, weight: .bold))
@@ -41,6 +42,7 @@ struct MinimapView: View {
                 .buttonStyle(.plain)
                 .disabled(zoomLevel == zoomFactors.count - 1)
 
+                // map/map_minus0.bmp
                 Button(action: zoomOut) {
                     Image(systemName: "minus")
                         .font(.game(size: 10, weight: .bold))
@@ -189,6 +191,7 @@ private struct MinimapMapView: View {
 
 private struct MinimapArrowView: View {
     var body: some View {
+        // map/map_arrow.bmp
         MinimapArrowShape()
             .fill(.white)
             .frame(width: 12, height: 12)

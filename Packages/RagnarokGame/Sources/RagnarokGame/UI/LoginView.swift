@@ -15,10 +15,11 @@ struct LoginView: View {
     @AppStorage("game.password") private var password = ""
 
     var body: some View {
+        // login_interface/win_login.bmp
         GameWindow {
             VStack(alignment: .leading, spacing: 13) {
                 HStack(spacing: 10) {
-                    Text("ID")
+                    Text("ID", bundle: #bundle)
                         .font(.game(weight: .bold))
                         .foregroundStyle(Color.gameProminentLabel)
                         .frame(width: 70, alignment: .trailing)
@@ -43,7 +44,7 @@ struct LoginView: View {
                 }
 
                 HStack(spacing: 10) {
-                    Text("Password")
+                    Text("Password", bundle: #bundle)
                         .font(.game(weight: .bold))
                         .foregroundStyle(Color.gameProminentLabel)
                         .frame(width: 70, alignment: .trailing)
@@ -71,23 +72,30 @@ struct LoginView: View {
             .padding(.vertical, 13)
         } bottomBar: {
             GameBottomBar {
-                Button("login") {
+                // login_interface/btn_connect.bmp
+                Button {
                     gameSession.audioPlayer.playButtonSoundEffect()
                     gameSession.login(username: username, password: password)
                     username = usernameWithoutSuffix
+                } label: {
+                    Text("login", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
                 .disabled(!isValidUsername || !isValidPassword)
 
-                Button("exit") {
+                // login_interface/btn_exit.bmp
+                Button {
                     gameSession.exitSession()
                     exitGame()
+                } label: {
+                    Text("exit", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
             }
         }
+        .gameWindowTitle(Text("LogOn", bundle: #bundle))
         .frame(width: 280)
     }
 

@@ -19,6 +19,7 @@ struct ShortcutBarView: View {
     @Environment(GameContext.self) private var gameContext
 
     var body: some View {
+        // basic_interface/shortitem_bg.bmp
         HStack(spacing: 0) {
             Text(verbatim: "\(row + 1)")
                 .font(.game())

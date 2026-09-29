@@ -15,11 +15,13 @@ struct EquipmentView: View {
     var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var characterAnimation: SpriteAnimation?
 
     var body: some View {
         GameWindow {
+            // basic_interface/equipwin_bg.bmp
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
                     EquipmentLeftSlotRow(label: "head", location: .head_top)
@@ -50,9 +52,9 @@ struct EquipmentView: View {
                 .frame(width: 120)
             }
             .frame(height: 134)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
         }
+        .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 104)))
+        .gameWindowCloseAction(onClose)
         .frame(width: 320)
         .task {
             if let character = gameSession.character {
@@ -183,7 +185,7 @@ private struct EquipmentSlotDivider: View {
 
 #Preview {
     EquipmentView()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
         .environment(GameContext.testing)
 }

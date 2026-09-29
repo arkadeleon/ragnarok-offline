@@ -20,7 +20,7 @@ struct GameStepper: View {
             }
             .disabled(value <= bounds.lowerBound)
 
-            TextField("", text: $text)
+            TextField(String(), text: $text)
                 .textFieldStyle(.plain)
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)

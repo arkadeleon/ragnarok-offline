@@ -8,9 +8,40 @@
 import SwiftUI
 
 struct GameTitleBar: View {
+    var title: Text?
     var closeAction: (() -> Void)?
 
     var body: some View {
+        HStack(spacing: 0) {
+            if let title {
+                GameTitleBarButtonBackground(isPressed: false)
+                    .frame(width: 11, height: 11)
+                    .padding(.leading, 6)
+                    .padding(.trailing, 4)
+
+                title
+                    .font(.game(size: 11, weight: .bold))
+                    .foregroundStyle(Color.gameLabel)
+                    .shadow(color: .white, radius: 0, x: 1, y: 1)
+                    .lineLimit(1)
+            }
+
+            Spacer()
+
+            if let closeAction {
+                GameCloseButton(action: closeAction)
+            }
+        }
+        .frame(height: 17)
+        .background {
+            background
+        }
+    }
+
+    private var background: some View {
+        // basic_interface/titlebar_left.bmp
+        // basic_interface/titlebar_mid.bmp
+        // basic_interface/titlebar_right.bmp
         VStack(spacing: 0) {
             stripeGradient
                 .overlay(alignment: .leading) {
@@ -32,12 +63,6 @@ struct GameTitleBar: View {
 
             Color.black
                 .frame(height: 1)
-        }
-        .frame(height: 17)
-        .overlay(alignment: .trailing) {
-            if let closeAction {
-                GameCloseButton(action: closeAction)
-            }
         }
     }
 
@@ -108,12 +133,15 @@ struct GameTitleBar: View {
         }
         .allowsHitTesting(false)
     }
+
+    init(_ title: Text? = nil, closeAction: (() -> Void)? = nil) {
+        self.title = title
+        self.closeAction = closeAction
+    }
 }
 
 #Preview {
-    GameTitleBar {
-        // close action
-    }
-    .frame(width: 280)
-    .padding()
+    GameTitleBar(Text(verbatim: "message"))
+        .frame(width: 280)
+        .padding()
 }

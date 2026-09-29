@@ -12,7 +12,7 @@ import SwiftUI
 
 private enum InventoryTab {
     case item
-    case gear
+    case equip
     case etc
 }
 
@@ -20,19 +20,22 @@ struct InventoryView: View {
     var inventory: Inventory
     var onClose: () -> Void = {}
 
+    @Environment(GameContext.self) private var gameContext
+
     @State private var tab: InventoryTab = .item
     @State private var selectedItem: InventoryItem?
 
     var body: some View {
         VStack(spacing: 3) {
             GameWindow {
-                VStack(spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
                     tabBar
                     itemGrid
                 }
-            } titleBar: {
-                GameTitleBar(closeAction: onClose)
+                .fixedSize(horizontal: false, vertical: true)
             }
+            .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 106)))
+            .gameWindowCloseAction(onClose)
             .geometryGroup()
             .blur(radius: selectedItem == nil ? 0 : 5)
             .frame(width: 320)
@@ -57,47 +60,30 @@ struct InventoryView: View {
     }
 
     private var tabBar: some View {
-        HStack {
-            Button {
-                tab = .item
-            } label: {
-                Text(verbatim: "Item")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
+        GameVerticalTabBar(tabs: [.item, .equip, .etc], selection: $tab) { tab in
+            switch tab {
+            case .item:
+                // basic_interface/tab_itm_01.bmp
+                Text(verbatim: "item")
+            case .equip:
+                // basic_interface/tab_itm_02.bmp
+                Text(verbatim: "equip")
+            case .etc:
+                // basic_interface/tab_itm_03.bmp
+                Text(verbatim: "etc")
             }
-            .buttonStyle(.plain)
-
-            Button {
-                tab = .gear
-            } label: {
-                Text(verbatim: "Gear")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-
-            Button {
-                tab = .etc
-            } label: {
-                Text(verbatim: "Etc.")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
         }
-        .frame(width: 280, height: 20)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .background {
+            GameStripeView()
+        }
     }
 
     private var itemGrid: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], spacing: 4) {
                 ForEach(0..<slotCount, id: \.self) { slot in
+                    // basic_interface/itemwin_mid.bmp
                     ZStack(alignment: .center) {
                         GameItemShadowView()
                             .offset(y: 5)
@@ -116,10 +102,9 @@ struct InventoryView: View {
                     .frame(width: 32, height: 32)
                 }
             }
+            .padding(.vertical, 8)
         }
-        .frame(height: 32 * 6 + 4 * 5)
-        .padding(.horizontal, 12)
-        .padding(.bottom, 12)
+        .frame(height: 32 * 6 + 4 * 5 + 8 * 2)
     }
 
     @ViewBuilder private var contextMenu: some View {
@@ -143,7 +128,7 @@ struct InventoryView: View {
         switch tab {
         case .item:
             inventory.usableItems
-        case .gear:
+        case .equip:
             inventory.equipItems
         case .etc:
             inventory.etcItems
@@ -198,6 +183,7 @@ private struct InventoryItemPreview: View {
 
     var body: some View {
         VStack(spacing: 3) {
+            // basic_interface/collection_bg.bmp
             ZStack(alignment: .topLeading) {
                 VStack(spacing: 0) {
                     InventoryItemPreviewStripeView()

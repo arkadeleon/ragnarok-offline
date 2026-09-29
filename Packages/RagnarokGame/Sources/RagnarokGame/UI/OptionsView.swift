@@ -12,67 +12,90 @@ struct OptionsView: View {
     var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
     @Environment(\.exitGame) private var exitGame
 
     var body: some View {
         GameWindow {
             VStack(spacing: 3) {
                 if isPlayerDead {
-                    Button("Resurrection") {
+                    // esc_05a.bmp
+                    Button {
+                    } label: {
+                        Text("Resurrection", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
-                    Button("Return to last save point") {
+                    // esc_04a.bmp
+                    Button {
                         gameSession.returnToLastSavePoint()
+                    } label: {
+                        Text("Return to last save point", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                 } else {
-                    Button("Character Select") {
+                    // esc_01a.bmp
+                    Button {
                         gameSession.returnToCharacterSelect()
+                    } label: {
+                        Text("Character Select", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
 
-                    Button("Settings") {
-                    }
-                    .buttonStyle(.game)
-                    .frame(width: 220, height: 20)
-                    .disabled(true)
-
-                    Button("Sound") {
-                    }
-                    .buttonStyle(.game)
-                    .frame(width: 220, height: 20)
-                    .disabled(true)
-
-                    Button("BM/Shortcut Settings") {
+                    // esc_06a.bmp
+                    Button {
+                    } label: {
+                        Text("Settings", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
-                    Button("Exit") {
+                    // esc_07a.bmp
+                    Button {
+                    } label: {
+                        Text("Sound", bundle: #bundle)
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
+
+                    // esc_08a.bmp
+                    Button {
+                    } label: {
+                        Text("BM/Shortcut Settings", bundle: #bundle)
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
+
+                    // esc_03a.bmp
+                    Button {
                         gameSession.requestExit()
                         gameSession.exitSession()
                         exitGame()
+                    } label: {
+                        Text("Exit", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                 }
             }
             .padding(.vertical, 20)
-        } titleBar: {
-            GameTitleBar(closeAction: onClose)
         }
+        .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 1483)))
+        .gameWindowCloseAction(onClose)
         .frame(width: 280)
     }
 }
 
 #Preview {
     OptionsView(isPlayerDead: false)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

@@ -36,8 +36,11 @@ struct LoginStageView: View {
                     ZStack {
                         ForEach(gameSession.errorMessages.reversed()) { errorMessage in
                             MessageBoxView(errorMessage.content) {
-                                Button("OK") {
+                                // btn_ok.bmp
+                                Button {
                                     errorMessage.performAction(in: gameSession)
+                                } label: {
+                                    Text("OK", bundle: #bundle)
                                 }
                                 .buttonStyle(.game)
                                 .frame(width: 42, height: 20)
