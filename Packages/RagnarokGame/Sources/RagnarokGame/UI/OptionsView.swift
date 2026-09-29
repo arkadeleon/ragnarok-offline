@@ -18,46 +18,60 @@ struct OptionsView: View {
         GameWindow {
             VStack(spacing: 3) {
                 if isPlayerDead {
-                    Button("Resurrection") {
+                    Button {
+                    } label: {
+                        Text("Resurrection", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
-                    Button("Return to last save point") {
+                    Button {
                         gameSession.returnToLastSavePoint()
+                    } label: {
+                        Text("Return to last save point", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                 } else {
-                    Button("Character Select") {
+                    Button {
                         gameSession.returnToCharacterSelect()
+                    } label: {
+                        Text("Character Select", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
 
-                    Button("Settings") {
-                    }
-                    .buttonStyle(.game)
-                    .frame(width: 220, height: 20)
-                    .disabled(true)
-
-                    Button("Sound") {
-                    }
-                    .buttonStyle(.game)
-                    .frame(width: 220, height: 20)
-                    .disabled(true)
-
-                    Button("BM/Shortcut Settings") {
+                    Button {
+                    } label: {
+                        Text("Settings", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
-                    Button("Exit") {
+                    Button {
+                    } label: {
+                        Text("Sound", bundle: #bundle)
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
+
+                    Button {
+                    } label: {
+                        Text("BM/Shortcut Settings", bundle: #bundle)
+                    }
+                    .buttonStyle(.game)
+                    .frame(width: 220, height: 20)
+                    .disabled(true)
+
+                    Button {
                         gameSession.requestExit()
                         gameSession.exitSession()
                         exitGame()
+                    } label: {
+                        Text("Exit", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)

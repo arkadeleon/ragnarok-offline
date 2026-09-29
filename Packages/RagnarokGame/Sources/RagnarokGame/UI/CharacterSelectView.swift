@@ -49,14 +49,14 @@ struct CharacterSelectView: View {
 
                 VStack(alignment: .trailing, spacing: -6) {
                     HStack(alignment: .lastTextBaseline, spacing: 4) {
-                        Text("Select")
+                        Text(verbatim: "Select")
                             .font(.system(size: 36, weight: .black))
                             .italic()
-                        Text("Your")
+                        Text(verbatim: "Your")
                             .font(.system(size: 20, weight: .bold))
                             .italic()
                     }
-                    Text("Characters")
+                    Text(verbatim: "Characters")
                         .font(.system(size: 32, weight: .black))
                         .italic()
                 }
@@ -70,8 +70,10 @@ struct CharacterSelectView: View {
         } bottomBar: {
             GameBottomBar {
                 if selectedCharacter != nil {
-                    Button("del") {
+                    Button {
                         showingDeleteConfirmation = true
+                    } label: {
+                        Text("del", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
@@ -80,24 +82,30 @@ struct CharacterSelectView: View {
                 Spacer()
 
                 if selectedCharacter == nil {
-                    Button("make") {
+                    Button {
                         gameSession.makeCharacter(slot: gameSession.selectedCharacterSlot)
+                    } label: {
+                        Text("make", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 }
 
                 if selectedCharacter != nil {
-                    Button("OK") {
+                    Button {
                         gameSession.audioPlayer.playButtonSoundEffect()
                         gameSession.selectCharacter(slot: gameSession.selectedCharacterSlot)
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 }
 
-                Button("cancel") {
+                Button {
                     showingCancelConfirmation = true
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
@@ -108,31 +116,39 @@ struct CharacterSelectView: View {
         .overlay(alignment: .center) {
             if showingDeleteConfirmation {
                 MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 19)) {
-                    Button("OK") {
+                    Button {
                         if let charID = selectedCharacter?.charID {
                             gameSession.deleteCharacter(charID: charID)
                         }
                         showingDeleteConfirmation = false
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
-                    Button("cancel") {
+                    Button {
                         showingDeleteConfirmation = false
+                    } label: {
+                        Text("cancel", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 }
             } else if showingCancelConfirmation {
                 MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 17)) {
-                    Button("OK") {
+                    Button {
                         gameSession.exitCurrentPhase()
+                    } label: {
+                        Text("OK", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
-                    Button("cancel") {
+                    Button {
                         showingCancelConfirmation = false
+                    } label: {
+                        Text("cancel", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
@@ -250,7 +266,7 @@ private struct CharacterSlotPanel: View {
                 .buttonStyle(.plain)
             }
 
-            Text("\(currentPage + 1) / \(totalPages)")
+            Text(verbatim: "\(currentPage + 1) / \(totalPages)")
                 .font(.game())
                 .frame(height: 23)
         }

@@ -84,12 +84,12 @@ private struct PrimaryStatRow: View {
                 .frame(width: 24, alignment: .leading)
 
             HStack(spacing: 0) {
-                Text("\(value)")
+                Text(verbatim: "\(value)")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .frame(width: 24, height: 24)
 
-                Text("+\(value2)")
+                Text(verbatim: "+\(value2)")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .frame(width: 24, height: 24)
@@ -116,7 +116,7 @@ private struct PrimaryStatRow: View {
                     .strokeBorder(Color.gameBoxBorder)
             )
 
-            Text("\(value3)")
+            Text(verbatim: "\(value3)")
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
                 .frame(width: 20, height: 24)

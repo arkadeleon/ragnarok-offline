@@ -32,18 +32,22 @@ struct CharServerListView: View {
             .frame(height: 75)
         } bottomBar: {
             GameBottomBar {
-                Button("OK") {
+                Button {
                     if let charServer = charServers.first {
                         gameSession.audioPlayer.playButtonSoundEffect()
                         gameSession.selectCharServer(charServer)
                     }
+                } label: {
+                    Text("OK", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
                 .disabled(charServers.isEmpty)
 
-                Button("cancel") {
+                Button {
                     gameSession.exitCurrentPhase()
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)

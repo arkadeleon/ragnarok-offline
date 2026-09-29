@@ -40,14 +40,14 @@ struct CharacterMakeView: View {
 
                 VStack(alignment: .trailing, spacing: -6) {
                     HStack(alignment: .lastTextBaseline, spacing: 4) {
-                        Text("Make")
+                        Text(verbatim: "Make")
                             .font(.system(size: 36, weight: .black))
                             .italic()
-                        Text("Your")
+                        Text(verbatim: "Your")
                             .font(.system(size: 20, weight: .bold))
                             .italic()
                     }
-                    Text("Characters")
+                    Text(verbatim: "Characters")
                         .font(.system(size: 32, weight: .black))
                         .italic()
                 }
@@ -60,15 +60,19 @@ struct CharacterMakeView: View {
             }
         } bottomBar: {
             GameBottomBar {
-                Button("make") {
+                Button {
                     gameSession.createCharacter(character)
+                } label: {
+                    Text("make", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
                 .disabled(character.name.isEmpty)
 
-                Button("cancel") {
+                Button {
                     gameSession.exitCurrentPhase()
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)

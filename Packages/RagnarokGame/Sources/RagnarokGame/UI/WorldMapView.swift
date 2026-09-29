@@ -56,12 +56,14 @@ struct WorldMapView: View {
             }
         }
         .overlay(alignment: .topLeading) {
-            Menu("world") {
+            Menu {
                 ForEach(worlds, id: \.name) { world in
                     Button(world.name) {
                         selectedWorld = world
                     }
                 }
+            } label: {
+                Text("world", bundle: #bundle)
             }
             .menuStyle(.button)
             .buttonStyle(.game)
@@ -70,10 +72,12 @@ struct WorldMapView: View {
             .disabled(worlds.isEmpty)
         }
         .overlay(alignment: .topTrailing) {
-            Button("close", action: onClose)
-                .buttonStyle(.game)
-                .frame(width: 60, height: 20)
-                .padding(16)
+            Button(action: onClose) {
+                Text("close", bundle: #bundle)
+            }
+            .buttonStyle(.game)
+            .frame(width: 60, height: 20)
+            .padding(16)
         }
         .overlay(alignment: .bottomLeading) {
             WorldMapInfoView(maps: selectableMaps, selectedMap: $selectedMap) { map in
@@ -83,12 +87,14 @@ struct WorldMapView: View {
             .padding(16)
         }
         .overlay(alignment: .bottomTrailing) {
-            Menu("mode") {
+            Menu {
                 ForEach(WorldMapMode.allCases, id: \.self) { mode in
                     Button(mode.name) {
                         selectedMode = mode
                     }
                 }
+            } label: {
+                Text("mode", bundle: #bundle)
             }
             .menuStyle(.button)
             .buttonStyle(.game)
@@ -434,8 +440,10 @@ private struct WorldMapInfoView: View {
                 }
             } bottomBar: {
                 GameBottomBar {
-                    Button("teleport") {
+                    Button {
                         teleportAction(map)
+                    } label: {
+                        Text("teleport", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 60, height: 20)

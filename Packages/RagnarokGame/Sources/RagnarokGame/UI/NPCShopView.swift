@@ -43,23 +43,29 @@ struct NPCShopView: View {
 
                 switch shop {
                 case .buy:
-                    Button("buy") {
+                    Button {
                         buy()
+                    } label: {
+                        Text("buy", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                     .disabled(total == 0)
                 case .sell:
-                    Button("sell") {
+                    Button {
                         sell()
+                    } label: {
+                        Text("sell", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                     .disabled(total == 0)
                 }
 
-                Button("cancel") {
+                Button {
                     gameSession.closeNPCShop()
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)

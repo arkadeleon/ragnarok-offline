@@ -35,15 +35,19 @@ struct WarpListView: View {
             }
         } bottomBar: {
             GameBottomBar {
-                Button("OK") {
+                Button {
                     let mapName = warpList.mapNames[selectedIndex]
                     gameSession.selectWarpPoint(mapName: mapName)
+                } label: {
+                    Text("OK", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
 
-                Button("cancel") {
+                Button {
                     gameSession.cancelWarpPoint()
+                } label: {
+                    Text("cancel", bundle: #bundle)
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
