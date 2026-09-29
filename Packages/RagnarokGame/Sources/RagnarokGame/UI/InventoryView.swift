@@ -28,10 +28,11 @@ struct InventoryView: View {
     var body: some View {
         VStack(spacing: 3) {
             GameWindow {
-                VStack(spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
                     tabBar
                     itemGrid
                 }
+                .fixedSize(horizontal: false, vertical: true)
             }
             .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 106)))
             .gameWindowCloseAction(onClose)
@@ -59,44 +60,23 @@ struct InventoryView: View {
     }
 
     private var tabBar: some View {
-        HStack {
-            // basic_interface/tab_itm_01.bmp
-            Button {
-                tab = .item
-            } label: {
+        GameVerticalTabBar(tabs: [.item, .equip, .etc], selection: $tab) { tab in
+            switch tab {
+            case .item:
+                // basic_interface/tab_itm_01.bmp
                 Text(verbatim: "item")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-
-            // basic_interface/tab_itm_02.bmp
-            Button {
-                tab = .equip
-            } label: {
+            case .equip:
+                // basic_interface/tab_itm_02.bmp
                 Text(verbatim: "equip")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-
-            // basic_interface/tab_itm_03.bmp
-            Button {
-                tab = .etc
-            } label: {
+            case .etc:
+                // basic_interface/tab_itm_03.bmp
                 Text(verbatim: "etc")
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
         }
-        .frame(width: 280, height: 20)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .background {
+            GameStripeView()
+        }
     }
 
     private var itemGrid: some View {
@@ -122,10 +102,9 @@ struct InventoryView: View {
                     .frame(width: 32, height: 32)
                 }
             }
+            .padding(.vertical, 8)
         }
-        .frame(height: 32 * 6 + 4 * 5)
-        .padding(.horizontal, 12)
-        .padding(.bottom, 12)
+        .frame(height: 32 * 6 + 4 * 5 + 8 * 2)
     }
 
     @ViewBuilder private var contextMenu: some View {
