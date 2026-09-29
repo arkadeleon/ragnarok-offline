@@ -34,11 +34,14 @@ struct GameTitleBar: View {
         }
         .frame(height: 17)
         .background {
-            stripe
+            background
         }
     }
 
-    private var stripe: some View {
+    private var background: some View {
+        // basic_interface/titlebar_left.bmp
+        // basic_interface/titlebar_mid.bmp
+        // basic_interface/titlebar_right.bmp
         VStack(spacing: 0) {
             stripeGradient
                 .overlay(alignment: .leading) {

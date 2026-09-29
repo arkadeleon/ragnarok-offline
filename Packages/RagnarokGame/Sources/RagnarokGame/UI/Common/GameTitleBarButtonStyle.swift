@@ -31,6 +31,7 @@ struct GameTitleBarButtonBackground: View {
     var isPressed: Bool
 
     var body: some View {
+        // basic_interface/sys_base_off.bmp
         Circle()
             .fill(isPressed ? pressedGradient : normalGradient)
             .overlay {

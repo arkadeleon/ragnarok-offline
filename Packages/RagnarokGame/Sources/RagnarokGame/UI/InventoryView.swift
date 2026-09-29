@@ -12,7 +12,7 @@ import SwiftUI
 
 private enum InventoryTab {
     case item
-    case gear
+    case equip
     case etc
 }
 
@@ -60,10 +60,11 @@ struct InventoryView: View {
 
     private var tabBar: some View {
         HStack {
+            // basic_interface/tab_itm_01.bmp
             Button {
                 tab = .item
             } label: {
-                Text(verbatim: "Item")
+                Text(verbatim: "item")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .frame(maxWidth: .infinity)
@@ -71,10 +72,11 @@ struct InventoryView: View {
             }
             .buttonStyle(.plain)
 
+            // basic_interface/tab_itm_02.bmp
             Button {
-                tab = .gear
+                tab = .equip
             } label: {
-                Text(verbatim: "Gear")
+                Text(verbatim: "equip")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .frame(maxWidth: .infinity)
@@ -82,10 +84,11 @@ struct InventoryView: View {
             }
             .buttonStyle(.plain)
 
+            // basic_interface/tab_itm_03.bmp
             Button {
                 tab = .etc
             } label: {
-                Text(verbatim: "Etc.")
+                Text(verbatim: "etc")
                     .font(.game())
                     .foregroundStyle(Color.gameLabel)
                     .frame(maxWidth: .infinity)
@@ -100,6 +103,7 @@ struct InventoryView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], spacing: 4) {
                 ForEach(0..<slotCount, id: \.self) { slot in
+                    // basic_interface/itemwin_mid.bmp
                     ZStack(alignment: .center) {
                         GameItemShadowView()
                             .offset(y: 5)
@@ -145,7 +149,7 @@ struct InventoryView: View {
         switch tab {
         case .item:
             inventory.usableItems
-        case .gear:
+        case .equip:
             inventory.equipItems
         case .etc:
             inventory.etcItems
@@ -200,6 +204,7 @@ private struct InventoryItemPreview: View {
 
     var body: some View {
         VStack(spacing: 3) {
+            // basic_interface/collection_bg.bmp
             ZStack(alignment: .topLeading) {
                 VStack(spacing: 0) {
                     InventoryItemPreviewStripeView()

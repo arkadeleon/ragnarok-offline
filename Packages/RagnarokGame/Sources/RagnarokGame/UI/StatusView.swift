@@ -17,6 +17,7 @@ struct StatusView: View {
 
     var body: some View {
         GameWindow {
+            // basic_interface/statwin_bg.bmp
             HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: 6) {
                     PrimaryStatRow("Str", value: status.str, value2: status.str2, value3: status.str3) {
@@ -99,6 +100,7 @@ private struct PrimaryStatRow: View {
                     .fill(Color.gameBoxBorder)
                     .frame(width: 1)
 
+                // basic_interface/arw_right.bmp
                 Button(action: onIncrement) {
                     ZStack {
                         GameSymbol.rightArrowTriangle

@@ -21,6 +21,7 @@ struct EquipmentView: View {
 
     var body: some View {
         GameWindow {
+            // basic_interface/equipwin_bg.bmp
             HStack(spacing: 0) {
                 VStack(spacing: 0) {
                     EquipmentLeftSlotRow(label: "head", location: .head_top)

@@ -33,6 +33,7 @@ struct NPCDialogView: View {
         } bottomBar: {
             GameBottomBar {
                 if let input = dialog.input {
+                    // btn_ok.bmp
                     Button {
                         confirmInput(input)
                     } label: {
@@ -41,6 +42,7 @@ struct NPCDialogView: View {
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
                 } else if dialog.menu != nil {
+                    // btn_ok.bmp
                     Button {
                         gameSession.selectMenu(UInt8(selectedMenuIndex + 1))
                     } label: {
@@ -49,6 +51,7 @@ struct NPCDialogView: View {
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
+                    // btn_cancel.bmp
                     Button {
                         gameSession.cancelMenu()
                     } label: {
@@ -59,6 +62,7 @@ struct NPCDialogView: View {
                 } else {
                     switch dialog.action {
                     case .next:
+                        // btn_next.bmp
                         Button {
                             gameSession.requestNextMessage()
                         } label: {
@@ -67,6 +71,7 @@ struct NPCDialogView: View {
                         .buttonStyle(.game)
                         .frame(width: 42, height: 20)
                     case .close:
+                        // btn_close.bmp
                         Button {
                             gameSession.closeDialog()
                         } label: {

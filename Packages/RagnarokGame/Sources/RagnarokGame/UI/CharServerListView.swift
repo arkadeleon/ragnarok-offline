@@ -14,6 +14,7 @@ struct CharServerListView: View {
     @Environment(GameSession.self) private var gameSession
 
     var body: some View {
+        // login_interface/win_service.bmp
         GameWindow {
             ScrollView {
                 VStack(spacing: 0) {
@@ -32,6 +33,7 @@ struct CharServerListView: View {
             .frame(height: 75)
         } bottomBar: {
             GameBottomBar {
+                // btn_ok.bmp
                 Button {
                     if let charServer = charServers.first {
                         gameSession.audioPlayer.playButtonSoundEffect()
@@ -44,6 +46,7 @@ struct CharServerListView: View {
                 .frame(width: 42, height: 20)
                 .disabled(charServers.isEmpty)
 
+                // btn_cancel.bmp
                 Button {
                     gameSession.exitCurrentPhase()
                 } label: {

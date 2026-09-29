@@ -11,6 +11,7 @@ struct GameCloseButton: View {
     var action: () -> Void
 
     var body: some View {
+        // basic_interface/sys_close_off.bmp
         Button(action: action) {
             ZStack {
                 Capsule()

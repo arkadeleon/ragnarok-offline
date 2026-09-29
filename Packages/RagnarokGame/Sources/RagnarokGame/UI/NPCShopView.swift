@@ -39,6 +39,7 @@ struct NPCShopView: View {
 
                 switch shop {
                 case .buy:
+                    // btn_buy.bmp
                     Button {
                         buy()
                     } label: {
@@ -48,6 +49,7 @@ struct NPCShopView: View {
                     .frame(width: 42, height: 20)
                     .disabled(total == 0)
                 case .sell:
+                    // btn_sell.bmp
                     Button {
                         sell()
                     } label: {
@@ -58,6 +60,7 @@ struct NPCShopView: View {
                     .disabled(total == 0)
                 }
 
+                // btn_cancel.bmp
                 Button {
                     gameSession.closeNPCShop()
                 } label: {

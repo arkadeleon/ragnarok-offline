@@ -19,6 +19,7 @@ struct OptionsView: View {
         GameWindow {
             VStack(spacing: 3) {
                 if isPlayerDead {
+                    // esc_05a.bmp
                     Button {
                     } label: {
                         Text("Resurrection", bundle: #bundle)
@@ -27,6 +28,7 @@ struct OptionsView: View {
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
+                    // esc_04a.bmp
                     Button {
                         gameSession.returnToLastSavePoint()
                     } label: {
@@ -35,6 +37,7 @@ struct OptionsView: View {
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
                 } else {
+                    // esc_01a.bmp
                     Button {
                         gameSession.returnToCharacterSelect()
                     } label: {
@@ -43,6 +46,7 @@ struct OptionsView: View {
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
 
+                    // esc_06a.bmp
                     Button {
                     } label: {
                         Text("Settings", bundle: #bundle)
@@ -51,6 +55,7 @@ struct OptionsView: View {
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
+                    // esc_07a.bmp
                     Button {
                     } label: {
                         Text("Sound", bundle: #bundle)
@@ -59,6 +64,7 @@ struct OptionsView: View {
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
+                    // esc_08a.bmp
                     Button {
                     } label: {
                         Text("BM/Shortcut Settings", bundle: #bundle)
@@ -67,6 +73,7 @@ struct OptionsView: View {
                     .frame(width: 220, height: 20)
                     .disabled(true)
 
+                    // esc_03a.bmp
                     Button {
                         gameSession.requestExit()
                         gameSession.exitSession()

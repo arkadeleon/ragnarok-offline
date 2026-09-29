@@ -15,6 +15,7 @@ struct LoginView: View {
     @AppStorage("game.password") private var password = ""
 
     var body: some View {
+        // login_interface/win_login.bmp
         GameWindow {
             VStack(alignment: .leading, spacing: 13) {
                 HStack(spacing: 10) {
@@ -71,6 +72,7 @@ struct LoginView: View {
             .padding(.vertical, 13)
         } bottomBar: {
             GameBottomBar {
+                // login_interface/btn_connect.bmp
                 Button {
                     gameSession.audioPlayer.playButtonSoundEffect()
                     gameSession.login(username: username, password: password)
@@ -82,6 +84,7 @@ struct LoginView: View {
                 .frame(width: 42, height: 20)
                 .disabled(!isValidUsername || !isValidPassword)
 
+                // login_interface/btn_exit.bmp
                 Button {
                     gameSession.exitSession()
                     exitGame()

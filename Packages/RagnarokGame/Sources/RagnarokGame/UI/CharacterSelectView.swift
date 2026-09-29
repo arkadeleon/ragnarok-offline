@@ -36,6 +36,7 @@ struct CharacterSelectView: View {
     }
 
     var body: some View {
+        // login_interface/win_select.bmp
         GameWindow {
             ZStack(alignment: .bottomTrailing) {
                 VStack(alignment: .leading, spacing: 0) {
@@ -70,6 +71,7 @@ struct CharacterSelectView: View {
         } bottomBar: {
             GameBottomBar {
                 if selectedCharacter != nil {
+                    // btn_del.bmp
                     Button {
                         showingDeleteConfirmation = true
                     } label: {
@@ -82,6 +84,7 @@ struct CharacterSelectView: View {
                 Spacer()
 
                 if selectedCharacter == nil {
+                    // btn_make.bmp
                     Button {
                         gameSession.makeCharacter(slot: gameSession.selectedCharacterSlot)
                     } label: {
@@ -92,6 +95,7 @@ struct CharacterSelectView: View {
                 }
 
                 if selectedCharacter != nil {
+                    // btn_ok.bmp
                     Button {
                         gameSession.audioPlayer.playButtonSoundEffect()
                         gameSession.selectCharacter(slot: gameSession.selectedCharacterSlot)
@@ -102,6 +106,7 @@ struct CharacterSelectView: View {
                     .frame(width: 42, height: 20)
                 }
 
+                // btn_cancel.bmp
                 Button {
                     showingCancelConfirmation = true
                 } label: {
@@ -117,6 +122,7 @@ struct CharacterSelectView: View {
         .overlay(alignment: .center) {
             if showingDeleteConfirmation {
                 MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 19)) {
+                    // btn_ok.bmp
                     Button {
                         if let charID = selectedCharacter?.charID {
                             gameSession.deleteCharacter(charID: charID)
@@ -128,6 +134,7 @@ struct CharacterSelectView: View {
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
+                    // btn_cancel.bmp
                     Button {
                         showingDeleteConfirmation = false
                     } label: {
@@ -138,6 +145,7 @@ struct CharacterSelectView: View {
                 }
             } else if showingCancelConfirmation {
                 MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 17)) {
+                    // btn_ok.bmp
                     Button {
                         gameSession.exitCurrentPhase()
                     } label: {
@@ -146,6 +154,7 @@ struct CharacterSelectView: View {
                     .buttonStyle(.game)
                     .frame(width: 42, height: 20)
 
+                    // btn_cancel.bmp
                     Button {
                         showingCancelConfirmation = false
                     } label: {
@@ -202,6 +211,7 @@ private struct CharacterSlotPanel: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 0) {
+                // scroll1left.bmp
                 Button {
                     let newSlot = (gameSession.selectedCharacterSlot - 1 + gameSession.maxCharacterSlots) % gameSession.maxCharacterSlots
                     gameSession.selectedCharacterSlot = newSlot
@@ -253,6 +263,7 @@ private struct CharacterSlotPanel: View {
 
                 Spacer()
 
+                // scroll1right.bmp
                 Button {
                     let newSlot = (gameSession.selectedCharacterSlot + 1) % gameSession.maxCharacterSlots
                     gameSession.selectedCharacterSlot = newSlot
@@ -276,6 +287,7 @@ private struct CharacterSlotPanel: View {
 
 private struct CharacterSlotSelectionFrame: View {
     var body: some View {
+        // login_interface/box_select.bmp
         ZStack(alignment: .topLeading) {
             Rectangle()
                 .strokeBorder(Color(#colorLiteral(red: 0.4823529412, green: 0.5686274510, blue: 0.7725490196, alpha: 1)), lineWidth: 4)

@@ -211,6 +211,7 @@ private struct SkillUpgradeButton: View {
     var action: () -> Void
 
     var body: some View {
+        // basic_interface/skill_up_a.bmp
         Button(action: action) {
             ZStack {
                 SkillUpgradeTrendShape()

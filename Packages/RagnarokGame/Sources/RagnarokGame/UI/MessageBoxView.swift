@@ -12,6 +12,7 @@ struct MessageBoxView<Actions>: View where Actions: View {
     var actions: Actions
 
     var body: some View {
+        // win_msgbox.bmp
         GameWindow {
             Text(message)
                 .font(.game())

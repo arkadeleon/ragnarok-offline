@@ -16,6 +16,7 @@ struct BasicInfoView: View {
     @State private var isExpVisible = false
 
     var body: some View {
+        // basic_interface/basewin_bg.bmp
         GameWindow {
             VStack(alignment: .leading, spacing: 0) {
                 Text(verbatim: "\(character.name) | \(job)")

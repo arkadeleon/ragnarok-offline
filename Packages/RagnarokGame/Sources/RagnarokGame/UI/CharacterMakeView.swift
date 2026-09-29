@@ -20,6 +20,7 @@ struct CharacterMakeView: View {
     @State private var startDate: Date = .now
 
     var body: some View {
+        // login_interface/win_make.bmp
         GameWindow {
             ZStack(alignment: .bottomTrailing) {
                 HStack(alignment: .top, spacing: 0) {
@@ -61,6 +62,7 @@ struct CharacterMakeView: View {
             }
         } bottomBar: {
             GameBottomBar {
+                // btn_make.bmp
                 Button {
                     gameSession.createCharacter(character)
                 } label: {
@@ -70,6 +72,7 @@ struct CharacterMakeView: View {
                 .frame(width: 42, height: 20)
                 .disabled(character.name.isEmpty)
 
+                // btn_cancel.bmp
                 Button {
                     gameSession.exitCurrentPhase()
                 } label: {
@@ -126,6 +129,7 @@ private struct CharacterPreviewPanel: View {
                 GameCharacterShadowView()
                     .offset(y: 42.5)
 
+                // scroll0up.bmp
                 Button {
                     character.headPalette = (character.headPalette + 1) % 10
                 } label: {
@@ -138,6 +142,7 @@ private struct CharacterPreviewPanel: View {
                 .buttonStyle(.plain)
                 .offset(y: -57.5)
 
+                // scroll1left.bmp
                 Button {
                     character.head = character.head <= 2 ? 26 : character.head - 1
                 } label: {
@@ -150,6 +155,7 @@ private struct CharacterPreviewPanel: View {
                 .buttonStyle(.plain)
                 .offset(x: -40, y: -27.5)
 
+                // scroll1right.bmp
                 Button {
                     character.head = character.head >= 26 ? 2 : character.head + 1
                 } label: {
@@ -189,6 +195,7 @@ private struct CharacterPreviewPanel: View {
                     .font(.game(weight: .bold))
                     .foregroundStyle(Color.gameProminentLabel)
 
+                // login_interface/name-edit.bmp
                 TextField(String(), text: $character.name)
                     .textFieldStyle(.plain)
                     #if !os(macOS)
@@ -279,6 +286,7 @@ private struct StatHexagonPanel: View {
             }
             .frame(width: 158, height: 158)
 
+            // login_interface/arw-str0.bmp
             StatArrowButton("STR") {
                 if character.str < 9 && character.int > 1 {
                     character.str += 1
@@ -288,6 +296,7 @@ private struct StatHexagonPanel: View {
             .frame(width: 36, height: 36)
             .offset(y: -statButtonRadius)
 
+            // login_interface/arw-agi0.bmp
             StatArrowButton("AGI", rotation: .degrees(-60)) {
                 if character.agi < 9 && character.luk > 1 {
                     character.agi += 1
@@ -297,6 +306,7 @@ private struct StatHexagonPanel: View {
             .frame(width: 36, height: 36)
             .offset(x: -statButtonDiagonalX, y: -statButtonDiagonalY)
 
+            // login_interface/arw-vit0.bmp
             StatArrowButton("VIT", rotation: .degrees(60)) {
                 if character.vit < 9 && character.dex > 1 {
                     character.vit += 1
@@ -306,6 +316,7 @@ private struct StatHexagonPanel: View {
             .frame(width: 36, height: 36)
             .offset(x: statButtonDiagonalX, y: -statButtonDiagonalY)
 
+            // login_interface/arw-int0.bmp
             StatArrowButton("INT", rotation: .degrees(180)) {
                 if character.int < 9 && character.str > 1 {
                     character.int += 1
@@ -315,6 +326,7 @@ private struct StatHexagonPanel: View {
             .frame(width: 36, height: 36)
             .offset(y: statButtonRadius)
 
+            // login_interface/arw-dex0.bmp
             StatArrowButton("DEX", rotation: .degrees(-120)) {
                 if character.dex < 9 && character.vit > 1 {
                     character.dex += 1
@@ -324,6 +336,7 @@ private struct StatHexagonPanel: View {
             .frame(width: 36, height: 36)
             .offset(x: -statButtonDiagonalX, y: statButtonDiagonalY)
 
+            // login_interface/arw-luk0.bmp
             StatArrowButton("LUK", rotation: .degrees(120)) {
                 if character.luk < 9 && character.agi > 1 {
                     character.luk += 1
