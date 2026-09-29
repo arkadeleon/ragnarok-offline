@@ -162,10 +162,18 @@ struct MapSceneView: View {
             if gameSession.dealSelectionNPCID != nil {
                 NPCShopDealTypeView()
             }
+            if let storage = gameSession.storage {
+                StorageView(storage: storage)
+            }
         }
         .onChange(of: runtime.scene.state.isPlayerDead) { _, newValue in
             if newValue {
                 presentedMenuItem = .options
+            }
+        }
+        .onChange(of: gameSession.storage != nil) { _, isStorageOpen in
+            if isStorageOpen {
+                presentedMenuItem = nil
             }
         }
         .ignoresSafeArea()

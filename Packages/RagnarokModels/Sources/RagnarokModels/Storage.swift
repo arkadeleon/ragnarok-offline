@@ -14,21 +14,6 @@ public struct Storage: Sendable {
     public var amount = 0
     public var maxAmount = 0
 
-    public var usableItems: [InventoryItem] {
-        let usableItems = items.values.filter(\.isUsable)
-        return usableItems.sorted()
-    }
-
-    public var equipItems: [InventoryItem] {
-        let equipItems = items.values.filter(\.isEquippable)
-        return equipItems.sorted()
-    }
-
-    public var etcItems: [InventoryItem] {
-        let etcItems = items.values.filter(\.isEtc)
-        return etcItems.sorted()
-    }
-
     public init(name: String) {
         self.name = name
     }
