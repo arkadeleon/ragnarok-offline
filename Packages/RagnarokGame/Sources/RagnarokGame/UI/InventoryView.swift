@@ -170,34 +170,42 @@ private struct InventoryItemActions: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if item.isUsable {
-                GameContextMenuButton(label: "Use") {
+                GameContextMenuButton {
                     gameSession.useItem(at: item.index)
                     dismiss()
+                } label: {
+                    Text("Use", bundle: #bundle)
                 }
             }
 
             if item.isEquippable {
                 if item.isEquipped {
-                    GameContextMenuButton(label: "Unequip") {
+                    GameContextMenuButton {
                         gameSession.unequipItem(at: item.index)
                         dismiss()
+                    } label: {
+                        Text("Unequip", bundle: #bundle)
                     }
                 } else {
-                    GameContextMenuButton(label: "Equip") {
+                    GameContextMenuButton {
                         gameSession.equipItem(at: item.index, location: item.location)
                         dismiss()
+                    } label: {
+                        Text("Equip", bundle: #bundle)
                     }
                 }
             }
 
             if !item.isEquipped {
-                GameContextMenuButton(label: "Throw") {
+                GameContextMenuButton {
                     dismiss()
                     if item.amount > 1 {
                         throwingItem = item
                     } else {
                         gameSession.throwItem(at: item.index, amount: 1)
                     }
+                } label: {
+                    Text("Throw", bundle: #bundle)
                 }
             }
         }

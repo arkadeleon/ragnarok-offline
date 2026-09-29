@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-/// A left-aligned, full-width action row in a context menu.
-struct GameContextMenuButton: View {
-    var label: String
+struct GameContextMenuButton<Label>: View where Label: View {
     var action: () -> Void
+    @ViewBuilder var label: Label
 
     var body: some View {
         Button(action: action) {
-            Text(verbatim: label)
+            label
                 .font(.game())
                 .foregroundStyle(Color.gameLabel)
                 .padding(.horizontal, 10)
@@ -28,8 +27,15 @@ struct GameContextMenuButton: View {
 
 #Preview {
     VStack(alignment: .leading, spacing: 0) {
-        GameContextMenuButton(label: "Use") {}
-        GameContextMenuButton(label: "Throw") {}
+        GameContextMenuButton {
+        } label: {
+            Text(verbatim: "Use")
+        }
+
+        GameContextMenuButton {
+        } label: {
+            Text(verbatim: "Throw")
+        }
     }
     .frame(width: 120)
     .background(RoundedRectangle(cornerRadius: 5).fill(Material.bar))

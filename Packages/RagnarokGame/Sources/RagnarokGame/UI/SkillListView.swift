@@ -302,9 +302,11 @@ private struct SkillActions: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            GameContextMenuButton(label: "Use") {
+            GameContextMenuButton {
                 gameSession.useShortcut(.skill(skillID: skill.skillID, level: skill.level))
                 dismiss()
+            } label: {
+                Text("Use", bundle: #bundle)
             }
         }
         .frame(width: 120)

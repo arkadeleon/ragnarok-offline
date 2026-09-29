@@ -340,7 +340,7 @@ private struct StorageItemActions: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            GameContextMenuButton(label: isInStorage ? "Take" : "Store") {
+            GameContextMenuButton {
                 dismiss()
                 if item.amount > 1 {
                     movingItem = isInStorage ? .storage(item) : .inventory(item)
@@ -348,6 +348,12 @@ private struct StorageItemActions: View {
                     gameSession.moveItemFromStorage(index: item.index, amount: 1)
                 } else {
                     gameSession.moveItemToStorage(index: item.index, amount: 1)
+                }
+            } label: {
+                if isInStorage {
+                    Text("Take", bundle: #bundle)
+                } else {
+                    Text("Store", bundle: #bundle)
                 }
             }
         }
