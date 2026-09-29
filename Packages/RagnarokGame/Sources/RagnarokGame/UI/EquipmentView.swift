@@ -15,6 +15,7 @@ struct EquipmentView: View {
     var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var characterAnimation: SpriteAnimation?
 
@@ -51,6 +52,7 @@ struct EquipmentView: View {
             }
             .frame(height: 134)
         }
+        .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 104)))
         .gameWindowCloseAction(onClose)
         .frame(width: 320)
         .task {
@@ -182,7 +184,7 @@ private struct EquipmentSlotDivider: View {
 
 #Preview {
     EquipmentView()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
         .environment(GameContext.testing)
 }

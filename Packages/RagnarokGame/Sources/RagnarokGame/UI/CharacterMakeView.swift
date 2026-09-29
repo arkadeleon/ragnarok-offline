@@ -13,6 +13,7 @@ struct CharacterMakeView: View {
     var slot: Int
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
 
     @State private var character = CharacterInfo()
     @State private var characterAnimation: SpriteAnimation?
@@ -78,6 +79,7 @@ struct CharacterMakeView: View {
                 .frame(width: 42, height: 20)
             }
         }
+        .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 3355)))
         .frame(width: 576, height: 342)
         .task {
             character.job = 0
@@ -409,6 +411,7 @@ private struct StatArrowButton: View {
 
 #Preview {
     CharacterMakeView(slot: 0)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

@@ -12,6 +12,7 @@ struct OptionsView: View {
     var onClose: () -> Void = {}
 
     @Environment(GameSession.self) private var gameSession
+    @Environment(GameContext.self) private var gameContext
     @Environment(\.exitGame) private var exitGame
 
     var body: some View {
@@ -79,6 +80,7 @@ struct OptionsView: View {
             }
             .padding(.vertical, 20)
         }
+        .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 1483)))
         .gameWindowCloseAction(onClose)
         .frame(width: 280)
     }
@@ -86,6 +88,7 @@ struct OptionsView: View {
 
 #Preview {
     OptionsView(isPlayerDead: false)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
+        .environment(GameContext.testing)
 }

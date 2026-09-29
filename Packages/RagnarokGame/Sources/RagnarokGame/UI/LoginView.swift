@@ -92,6 +92,7 @@ struct LoginView: View {
                 .frame(width: 42, height: 20)
             }
         }
+        .gameWindowTitle(Text("LogOn", bundle: #bundle))
         .frame(width: 280)
     }
 

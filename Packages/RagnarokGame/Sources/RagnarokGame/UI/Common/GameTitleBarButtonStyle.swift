@@ -12,11 +12,11 @@ struct GameTitleBarButtonStyle: ButtonStyle {
         configuration.label
             .foregroundStyle(configuration.isPressed ? Color(#colorLiteral(red: 0.2823529412, green: 0.3882352941, blue: 0.5568627451, alpha: 1)) : Color(#colorLiteral(red: 0.0352941176, green: 0.137254902, blue: 0.3529411765, alpha: 1)))
             .shadow(color: .white.opacity(0.35), radius: 0, x: 0.3, y: 0.3)
-            .frame(width: 13, height: 13)
+            .frame(width: 11, height: 11)
             .background {
                 GameTitleBarButtonBackground(isPressed: configuration.isPressed)
             }
-            .padding(5)
+            .padding(6)
             .contentShape(Rectangle())
     }
 }
@@ -27,7 +27,7 @@ extension ButtonStyle where Self == GameTitleBarButtonStyle {
     }
 }
 
-private struct GameTitleBarButtonBackground: View {
+struct GameTitleBarButtonBackground: View {
     var isPressed: Bool
 
     var body: some View {

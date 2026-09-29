@@ -43,6 +43,7 @@ struct SkillListView: View {
                             .padding(.leading, 10)
                     }
             }
+            .gameWindowTitle(Text("Skill List", bundle: #bundle))
             .gameWindowCloseAction(onClose)
             .geometryGroup()
             .blur(radius: selectedSkillID == nil ? 0 : 5)

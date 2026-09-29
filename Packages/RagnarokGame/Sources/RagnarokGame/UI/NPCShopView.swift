@@ -67,12 +67,22 @@ struct NPCShopView: View {
                 .frame(width: 42, height: 20)
             }
         }
+        .gameWindowTitle(title)
         .gameWindowCloseAction {
             gameSession.closeNPCShop()
         }
         .frame(width: 320)
         .onChange(of: shop) {
             amounts = [:]
+        }
+    }
+
+    private var title: Text {
+        switch shop {
+        case .buy:
+            Text(gameContext.messageStringTable.localizedMessageString(forID: 186))
+        case .sell:
+            Text(gameContext.messageStringTable.localizedMessageString(forID: 185))
         }
     }
 

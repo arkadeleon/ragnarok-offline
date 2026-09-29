@@ -12,6 +12,7 @@ struct StatusView: View {
     var status: CharacterStatus
     var onClose: () -> Void = {}
 
+    @Environment(GameContext.self) private var gameContext
     @Environment(\.incrementStatusProperty) private var incrementStatusProperty
 
     var body: some View {
@@ -63,6 +64,7 @@ struct StatusView: View {
             }
             .padding(6)
         }
+        .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 105)))
         .gameWindowCloseAction(onClose)
         .frame(width: 320)
     }
@@ -168,5 +170,6 @@ private struct SecondaryStatRow: View {
 
 #Preview {
     StatusView(status: CharacterStatus())
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+        .environment(GameContext.testing)
 }

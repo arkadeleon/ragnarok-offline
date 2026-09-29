@@ -11,11 +11,12 @@ struct GameWindow<Content, BottomBar>: View where Content: View, BottomBar: View
     var content: Content
     var bottomBar: BottomBar
 
+    @Environment(\.gameWindowTitle) private var title
     @Environment(\.gameWindowCloseAction) private var closeAction
 
     var body: some View {
         VStack(spacing: 0) {
-            GameTitleBar(closeAction: closeAction)
+            GameTitleBar(title, closeAction: closeAction)
 
             content
                 .frame(maxWidth: .infinity)
@@ -48,10 +49,15 @@ struct GameWindow<Content, BottomBar>: View where Content: View, BottomBar: View
 }
 
 extension EnvironmentValues {
+    @Entry var gameWindowTitle: Text?
     @Entry var gameWindowCloseAction: (() -> Void)?
 }
 
 extension View {
+    nonisolated func gameWindowTitle(_ title: Text) -> some View {
+        environment(\.gameWindowTitle, title)
+    }
+
     nonisolated func gameWindowCloseAction(_ closeAction: @escaping () -> Void) -> some View {
         environment(\.gameWindowCloseAction, closeAction)
     }

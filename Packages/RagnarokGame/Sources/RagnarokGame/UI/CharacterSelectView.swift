@@ -112,6 +112,7 @@ struct CharacterSelectView: View {
 
             }
         }
+        .gameWindowTitle(Text("Character Select", bundle: #bundle))
         .frame(width: 576)
         .overlay(alignment: .center) {
             if showingDeleteConfirmation {
@@ -380,7 +381,7 @@ private struct CharacterInfoRow: View {
     }()
 
     CharacterSelectView(characters: [character])
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
         .environment(GameContext.testing)
 }

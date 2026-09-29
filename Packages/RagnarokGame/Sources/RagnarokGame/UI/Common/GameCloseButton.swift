@@ -14,10 +14,10 @@ struct GameCloseButton: View {
         Button(action: action) {
             ZStack {
                 Capsule()
-                    .frame(width: 8, height: 1.5)
+                    .frame(width: 7, height: 1.5)
                     .rotationEffect(.degrees(45))
                 Capsule()
-                    .frame(width: 8, height: 1.5)
+                    .frame(width: 7, height: 1.5)
                     .rotationEffect(.degrees(-45))
             }
         }

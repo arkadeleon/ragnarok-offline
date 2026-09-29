@@ -20,6 +20,8 @@ struct InventoryView: View {
     var inventory: Inventory
     var onClose: () -> Void = {}
 
+    @Environment(GameContext.self) private var gameContext
+
     @State private var tab: InventoryTab = .item
     @State private var selectedItem: InventoryItem?
 
@@ -31,6 +33,7 @@ struct InventoryView: View {
                     itemGrid
                 }
             }
+            .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 106)))
             .gameWindowCloseAction(onClose)
             .geometryGroup()
             .blur(radius: selectedItem == nil ? 0 : 5)

@@ -24,6 +24,7 @@ struct MessageBoxView<Actions>: View where Actions: View {
                 actions
             }
         }
+        .gameWindowTitle(Text("message", bundle: #bundle))
         .frame(width: 280)
     }
 
@@ -40,5 +41,5 @@ struct MessageBoxView<Actions>: View where Actions: View {
 
 #Preview {
     MessageBoxView("Please wait...")
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
 }

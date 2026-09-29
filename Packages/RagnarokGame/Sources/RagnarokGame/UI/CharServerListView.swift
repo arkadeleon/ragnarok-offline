@@ -53,12 +53,13 @@ struct CharServerListView: View {
                 .frame(width: 42, height: 20)
             }
         }
+        .gameWindowTitle(Text("Service Select", bundle: #bundle))
         .frame(width: 280)
     }
 }
 
 #Preview {
     CharServerListView(charServers: [])
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
         .environment(GameSession.testing)
 }
