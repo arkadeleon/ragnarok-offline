@@ -31,6 +31,14 @@ struct GameStepper: View {
                 #if !os(macOS)
                 .keyboardType(.numberPad)
                 #endif
+                .onChange(of: text) {
+                    if let newValue = Int(text) {
+                        var newValue = newValue
+                        newValue = max(newValue, bounds.lowerBound)
+                        newValue = min(newValue, bounds.upperBound)
+                        value = newValue
+                    }
+                }
                 .onSubmit {
                     var newValue = Int(text) ?? bounds.lowerBound
                     newValue = max(newValue, bounds.lowerBound)

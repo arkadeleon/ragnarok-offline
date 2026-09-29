@@ -20,10 +20,12 @@ struct InventoryView: View {
     var inventory: Inventory
     var onClose: () -> Void = {}
 
+    @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
 
     @State private var tab: InventoryTab = .item
     @State private var selectedItem: InventoryItem?
+    @State private var throwingItem: InventoryItem?
 
     var body: some View {
         VStack(spacing: 3) {
@@ -37,14 +39,15 @@ struct InventoryView: View {
             .gameWindowTitle(Text(gameContext.messageStringTable.localizedMessageString(forID: 106)))
             .gameWindowCloseAction(onClose)
             .geometryGroup()
-            .blur(radius: selectedItem == nil ? 0 : 5)
+            .blur(radius: selectedItem == nil && throwingItem == nil ? 0 : 5)
             .frame(width: 320)
             .overlay {
-                if selectedItem != nil {
+                if selectedItem != nil || throwingItem != nil {
                     Color.clear
                         .contentShape(Rectangle())
                         .onTapGesture {
                             selectedItem = nil
+                            throwingItem = nil
                         }
                 }
             }
@@ -52,11 +55,16 @@ struct InventoryView: View {
                 contextMenu
                     .transition(.opacity.combined(with: .scale).animation(.bouncy(duration: 0.25, extraBounce: 0.2)))
             }
+            .overlay {
+                throwAmountInputBox
+                    .transition(.opacity.combined(with: .scale).animation(.bouncy(duration: 0.25, extraBounce: 0.2)))
+            }
 
             ShortcutBarView()
         }
         .shortcutDragContainer()
         .animation(.easeInOut(duration: 0.25), value: selectedItem)
+        .animation(.easeInOut(duration: 0.25), value: throwingItem)
     }
 
     private var tabBar: some View {
@@ -117,9 +125,23 @@ struct InventoryView: View {
                         }
                     }
 
-                InventoryItemActions(item: item) {
+                InventoryItemActions(item: item, throwingItem: $throwingItem) {
                     selectedItem = nil
                 }
+            }
+        }
+    }
+
+    @ViewBuilder private var throwAmountInputBox: some View {
+        if let item = throwingItem {
+            GameNumberInputBox(
+                gameContext.itemInfoTable.localizedIdentifiedItemName(forItemID: item.itemID) ?? "\(item.itemID)",
+                bounds: 1...item.amount
+            ) { amount in
+                gameSession.throwItem(at: item.index, amount: amount)
+                throwingItem = nil
+            } onClose: {
+                throwingItem = nil
             }
         }
     }
@@ -324,6 +346,7 @@ private struct InventoryItemCardView: View {
 
 private struct InventoryItemActions: View {
     var item: InventoryItem
+    @Binding var throwingItem: InventoryItem?
     var dismiss: () -> Void
 
     @Environment(GameSession.self) private var gameSession
@@ -352,20 +375,12 @@ private struct InventoryItemActions: View {
             }
 
             if !item.isEquipped {
-                if item.amount > 1 {
-                    GameContextMenuButton(label: "Throw One") {
+                GameContextMenuButton(label: "Throw") {
+                    dismiss()
+                    if item.amount > 1 {
+                        throwingItem = item
+                    } else {
                         gameSession.throwItem(at: item.index, amount: 1)
-                        dismiss()
-                    }
-
-                    GameContextMenuButton(label: "Throw All") {
-                        gameSession.throwItem(at: item.index, amount: item.amount)
-                        dismiss()
-                    }
-                } else {
-                    GameContextMenuButton(label: "Throw") {
-                        gameSession.throwItem(at: item.index, amount: 1)
-                        dismiss()
                     }
                 }
             }
