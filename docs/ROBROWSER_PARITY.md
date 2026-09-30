@@ -106,9 +106,29 @@
   - 需要：背包里有齐格弗里德之证时启用，发送 `CZ_STANDING_RESURRECTION`。
   - 参考：`Engine/MapEngine.js#onResurectionRequest`、`Entity.js#haveSiegfriedItem`
 - [ ] **P2** 受击动作
-  - 现状：`onMapObjectActionPerformed` 只驱动攻击方，被攻击方不会播放 hurt 动作。
-  - 需要：被攻击方播放 hurt，endure 时不播。
-  - 参考：`Engine/MapEngine/Entity.js#onEntityWillBeHitSub`
+  - 现状：`onMapObjectActionPerformed` 和 `onMapObjectSkillPerformed` 只驱动攻击方，被攻击方不会播放 hurt 动作。
+  - 现状：收到 `ZC_NOTIFY_VANISH`（dead）就立刻播放 die，这时致死那一下还没命中，伤害数字在死亡之后才出现。
+  - 现状：`MapScene.resolveAction` 在对象移动时强制显示 walk，就算有 hurt 也会被盖掉。
+  - 需要：被攻击方在每一下命中时播放 hurt，持续一个受击硬直，之后转为 readyToAttack（没有这个动作的转为 idle）。
+    - 命中时刻：普通攻击的第 i 下在 `srcSpeed + 200ms × i`，左手（`damage2`）在 `srcSpeed + 350ms × i`；技能的第 i 下在 `attackMT + 200ms × i`。
+    - 受击硬直：普通攻击用 `ZC_NOTIFY_ACT` 的 `dmgSpeed`，技能用 `ZC_NOTIFY_SKILL` 的 `attackedMT`；为 0 时用 288ms（`AVG_ATTACKED_SPEED`）。这两个字段目前都没有放进 `MapObjectAction` / `MapObjectSkill`。
+    - 不播放：伤害为 0；伤害类型是 `endure`、`multi_hit_endure`、`splash_endure`、`lucy_dodge`（rAthena 在目标有 endure 时会改写成这些类型）；技能打中施法者自己，且伤害类型为 `single`。
+    - hurt 需要延迟到命中时刻才切换，现有的 `SpriteAction` 只能立即切换，需要加一个按时间排队的动作。
+  - 需要：死亡与最后一击同步。记录每个非玩家对象最后一下命中的时刻，死亡推迟到这个时刻之后 200ms（`C_DEATH_SYNC_OFFSET`）再播放；已经死亡的对象丢弃尚未播放的 hurt。
+  - 需要：移动中受击时打断行走动画播放 hurt，硬直结束后恢复行走。
+  - 参考：`Engine/MapEngine/Entity.js#onEntityWillBeHitSub`（`_deathSyncTick`、`resumeWalk`）、`Entity.js#onEntityVanish`
+- [ ] **P3** 双刀左手攻击动作
+  - 现状：攻击方的动作只按职业和武器类型选择。
+  - 需要：`ZC_NOTIFY_ACT` 带左手伤害（`damage2`）时播放 attack3；影忍者（`KAGEROU`、`OBORO`）例外，不用 attack3。
+  - 参考：`Engine/MapEngine/Entity.js#onEntityAction`
+- [ ] **P3** 弓箭攻击的命中时机
+  - 现状：伤害数字、命中特效和受击动作都在 `srcSpeed` 之后出现，弓箭攻击也一样。
+  - 需要：玩家用弓攻击时，命中时刻按攻击动作帧数和箭矢飞行时间往后推（`(m_attackMotion + 8 / motionSpeed) × motionSpeed × 24` 毫秒）。
+  - 参考：`Engine/MapEngine/Entity.js#onEntityAction`、`DB.getPCAttackMotion`
+- [ ] **P3** 攻击速度缺省值
+  - 现状：直接用 `ZC_NOTIFY_ACT` 的 `srcSpeed` 驱动攻击动作，为 0 时动作瞬间结束，很大时动作被拉得很慢。
+  - 需要：`srcSpeed` 为 0 时用 432ms（`AVG_ATTACK_SPEED`），并限制在 864ms（`MAX_ATTACKMT`）以内。
+  - 参考：`Engine/MapEngine/Entity.js#onEntityAction`
 
 ---
 
@@ -321,6 +341,13 @@
   - 参考：`MapControl.js#onAutoFollow`
 - [ ] **P2** 怪物普攻特效。
   - 参考：`DB/Monsters/AttackEffectTable.js`
+- [ ] **P2** 格挡特效
+  - 需要：目标处于 `SC_KYRIE`、`SC_AUTOGUARD` 或 `SC_PARRYING` 状态时，普通攻击的伤害为 0 就在命中时刻播放 `EF_GUARD`。
+  - 依赖：通过 `ZC_MSG_STATE_CHANGE` 记录这三个状态（§8.3）；`EffectTable` 里还没有 `ef_guard`。
+  - 参考：`Engine/MapEngine/Entity.js#onEntityAction`、`Entity.js#processBlockStatus`
+- [ ] **P3** 自己死亡时的特效
+  - 需要：自己死亡时播放 `EF_DEVIL`（其他玩家死亡不播）；`EffectTable` 里还没有 `ef_devil`。
+  - 参考：`Engine/MapEngine/Entity.js#onEntityVanish`
 
 ---
 
