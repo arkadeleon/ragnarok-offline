@@ -101,7 +101,7 @@
   - 显示地图名提示（`MapName`）。
   - 用 `Announce` 显示倍率信息。
   - 加载城镇招牌（Signboard）。
-- [ ] **P1** 死亡界面的“原地复活”按钮
+- [x] **P1** 死亡界面的“原地复活”按钮
   - 现状：一直处于禁用状态。
   - 需要：背包里有齐格弗里德之证时启用，发送 `CZ_STANDING_RESURRECTION`。
   - 参考：`Engine/MapEngine.js#onResurectionRequest`、`Entity.js#haveSiegfriedItem`
@@ -794,7 +794,7 @@
   - 需要：`CZ_REQ_OPEN_ROULETTE` / `ZC_ACK_OPEN_ROULETTE`、`CZ_REQ_ROULETTE_INFO` / `ZC_ACK_ROULETTE_INFO`、`CZ_REQ_GENERATE_ROULETTE` / `ZC_ACK_GENERATE_ROULETTE`、`CZ_RECV_ROULETTE_ITEM` / `ZC_RECV_ROULETTE_ITEM`、`CZ_REQ_CLOSE_ROULETTE` / `ZC_ACK_CLOSE_ROULETTE`。
 - [ ] **P3** 网咖金币计时：`ZC_GOLDPCCAFE_POINT`。
 - [ ] **P3** 在线人数：`/who`，发送 `CZ_REQ_USER_COUNT`，处理 `ZC_USER_COUNT`。
-- [ ] **P3** 站立复活：`CZ_STANDING_RESURRECTION`，见 §2。
+- [x] **P3** 站立复活：`CZ_STANDING_RESURRECTION`，见 §2。
 
 ---
 

@@ -169,6 +169,8 @@ struct MapSceneView: View {
         .onChange(of: runtime.scene.state.isPlayerDead) { _, newValue in
             if newValue {
                 presentedMenuItem = .options
+            } else if presentedMenuItem == .options {
+                presentedMenuItem = nil
             }
         }
         .onChange(of: gameSession.storage != nil) { _, isStorageOpen in

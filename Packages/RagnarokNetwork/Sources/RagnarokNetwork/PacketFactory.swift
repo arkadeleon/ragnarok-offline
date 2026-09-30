@@ -128,6 +128,12 @@ public enum PacketFactory {
         return packet
     }
 
+    /// | `PACKET_CZ_STANDING_RESURRECTION` | `clif_parse_AutoRevive` |
+    public static func CZ_STANDING_RESURRECTION() -> PACKET_CZ_STANDING_RESURRECTION {
+        let packet = PACKET_CZ_STANDING_RESURRECTION()
+        return packet
+    }
+
     /// | `PACKET_CZ_REQUEST_QUIT` | `clif_parse_QuitGame` |
     public static func CZ_REQUEST_QUIT() -> PACKET_CZ_REQUEST_QUIT {
         var packet = PACKET_CZ_REQUEST_QUIT()

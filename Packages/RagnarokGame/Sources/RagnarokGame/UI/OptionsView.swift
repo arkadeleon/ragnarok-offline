@@ -21,12 +21,13 @@ struct OptionsView: View {
                 if isPlayerDead {
                     // esc_05a.bmp
                     Button {
+                        gameSession.resurrectInPlace()
                     } label: {
                         Text("Resurrection", bundle: #bundle)
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
-                    .disabled(true)
+                    .disabled(!gameContext.inventory.hasTokenOfSiegfried)
 
                     // esc_04a.bmp
                     Button {

@@ -1086,6 +1086,15 @@ final public class GameSession {
         mapClient.sendPacket(packet)
     }
 
+    func resurrectInPlace() {
+        guard let mapClient else {
+            return
+        }
+
+        let packet = PacketFactory.CZ_STANDING_RESURRECTION()
+        mapClient.sendPacket(packet)
+    }
+
     func returnToLastSavePoint() {
         guard let mapClient else {
             return

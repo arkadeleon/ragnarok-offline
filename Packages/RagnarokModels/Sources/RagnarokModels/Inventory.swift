@@ -26,6 +26,14 @@ public struct Inventory {
         return etcItems.sorted()
     }
 
+    public var hasTokenOfSiegfried: Bool {
+        // F_Token_Of_Siegfried, E_Token_Of_Siegfried, Token_Of_Siegfried, DF_Token_Of_Siegfried
+        let itemIDs: Set<Int> = [6293, 6316, 7621, 25310]
+        return items.values.contains {
+            itemIDs.contains($0.itemID) && $0.amount > 0
+        }
+    }
+
     public init() {
     }
 
