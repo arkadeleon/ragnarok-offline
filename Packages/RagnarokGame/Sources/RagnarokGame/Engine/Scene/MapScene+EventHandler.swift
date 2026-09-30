@@ -328,7 +328,9 @@ extension MapScene {
             sourceObject.perform(presentationActionType, completion: completion)
         }
 
-        addCombatTextsAndPlayHitSound(for: objectAction, now: now)
+        let hits = MapObjectHit.hits(for: objectAction)
+
+        addCombatTexts(for: hits, targetObjectID: objectAction.targetObjectID, hitSoundName: hitSoundName(for: objectAction), now: now)
 
         addHitEffect(for: objectAction)
         addArrowProjectileEffect(for: objectAction)
@@ -423,44 +425,12 @@ extension MapScene {
             audioPlayer.playSoundEffect(named: "_heal_effect.wav")
         }
 
-        if objectSkill.damage >= 0,
-           let initialWorldPosition = worldPosition(forObjectID: objectSkill.targetObjectID) {
-            let count = objectSkill.count
-            let damage = objectSkill.damage
-            let target = CombatText.Target(
-                objectID: objectSkill.targetObjectID,
-                initialWorldPosition: initialWorldPosition,
-                isPlayer: objects[objectSkill.targetObjectID]?.type == .pc
-            )
+        let hits = MapObjectHit.hits(for: objectSkill)
 
-            let showsComboText = count > 1 && damage > 0 && isMonster(objectID: objectSkill.targetObjectID)
+        addCombatTexts(for: hits, targetObjectID: objectSkill.targetObjectID, now: now)
 
-            for i in 0..<count {
-                let delay: Duration = .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
-
-                let combatText = CombatText(
-                    creationTime: now,
-                    target: target,
-                    amount: damage / count,
-                    delay: delay
-                )
-                combatTexts.append(combatText)
-
-                if showsComboText {
-                    let comboText = CombatText(
-                        creationTime: now,
-                        target: target,
-                        amount: damage * (i + 1) / count,
-                        kind: i + 1 == count ? .finalCombo : .combo,
-                        delay: delay
-                    )
-                    combatTexts.append(comboText)
-                }
-            }
-        }
-
-        addSkillBeforeHitEffects(for: objectSkill)
-        addSkillHitEffects(for: objectSkill)
+        addSkillBeforeHitEffects(for: objectSkill, hits: hits)
+        addSkillHitEffects(for: objectSkill, hits: hits)
         addSkillEffects(for: objectSkill)
         addSkillSuccessEffects(for: objectSkill)
     }
@@ -629,143 +599,44 @@ extension MapScene {
 // MARK: - Combat Text
 
 extension MapScene {
-    private func addCombatTextsAndPlayHitSound(for objectAction: MapObjectAction, now: ContinuousClock.Instant) {
-        guard let initialWorldPosition = worldPosition(forObjectID: objectAction.targetObjectID) else {
+    private func addCombatTexts(for hits: [MapObjectHit], targetObjectID: GameObjectID, hitSoundName: String? = nil, now: ContinuousClock.Instant) {
+        guard !hits.isEmpty,
+              let initialWorldPosition = worldPosition(forObjectID: targetObjectID) else {
             return
         }
 
         let target = CombatText.Target(
-            objectID: objectAction.targetObjectID,
+            objectID: targetObjectID,
             initialWorldPosition: initialWorldPosition,
-            isPlayer: objects[objectAction.targetObjectID]?.type == .pc
+            isPlayer: objects[targetObjectID]?.type == .pc
         )
-        let hitSoundName = hitSoundName(for: objectAction)
         let hitSoundSource = GameAudio.Source(position: initialWorldPosition, range: .infinity)
+        let showsCombo = isMonster(objectID: targetObjectID)
 
-        switch objectAction.type {
-        case .normal, .endure, .critical:
+        for hit in hits {
             let combatText = CombatText(
                 creationTime: now,
                 target: target,
-                amount: objectAction.damage,
-                delay: .milliseconds(objectAction.sourceSpeed)
+                amount: hit.damage,
+                delay: hit.delay
             )
             combatTexts.append(combatText)
 
-            if let hitSoundName {
-                audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
-            }
-
-            if objectAction.damage2 > 0 {
-                let combatText2 = CombatText(
-                    creationTime: now,
-                    target: target,
-                    amount: objectAction.damage2,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
-                )
-                combatTexts.append(combatText2)
-
-                if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText2.delay)
-                }
-            }
-        case .multi_hit, .multi_hit_endure, .multi_hit_critical:
-            let count = objectAction.damage > 1 ? 2 : 1
-            if count == 2 {
-                let combatText = CombatText(
-                    creationTime: now,
-                    target: target,
-                    amount: objectAction.damage / count,
-                    delay: .milliseconds(objectAction.sourceSpeed)
-                )
-                combatTexts.append(combatText)
-
-                if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
-                }
-            }
-            if objectAction.damage2 > 0 {
-                let combatText = CombatText(
-                    creationTime: now,
-                    target: target,
-                    amount: objectAction.damage / count,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
-                )
-                combatTexts.append(combatText)
-
-                if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
-                }
-
-                let combatText2 = CombatText(
-                    creationTime: now,
-                    target: target,
-                    amount: objectAction.damage2,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
-                )
-                combatTexts.append(combatText2)
-
-                if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText2.delay)
-                }
-            } else {
-                let combatText = CombatText(
-                    creationTime: now,
-                    target: target,
-                    amount: objectAction.damage / count,
-                    delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
-                )
-                combatTexts.append(combatText)
-
-                if let hitSoundName {
-                    audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: combatText.delay)
-                }
-            }
-
             // Monsters taking more than one hit show a combo text.
-            if objectAction.damage > 0, isMonster(objectID: objectAction.targetObjectID) {
-                if objectAction.damage > 1 {
-                    let comboText = CombatText(
-                        creationTime: now,
-                        target: target,
-                        amount: objectAction.damage / 2,
-                        kind: .combo,
-                        delay: .milliseconds(objectAction.sourceSpeed)
-                    )
-                    combatTexts.append(comboText)
-                }
-
-                if objectAction.damage2 > 0 {
-                    let comboText = CombatText(
-                        creationTime: now,
-                        target: target,
-                        amount: objectAction.damage,
-                        kind: .combo,
-                        delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 / 2)
-                    )
-                    combatTexts.append(comboText)
-
-                    let finalComboText = CombatText(
-                        creationTime: now,
-                        target: target,
-                        amount: objectAction.damage + objectAction.damage2,
-                        kind: .finalCombo,
-                        delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200 * 1.75)
-                    )
-                    combatTexts.append(finalComboText)
-                } else {
-                    let finalComboText = CombatText(
-                        creationTime: now,
-                        target: target,
-                        amount: objectAction.damage,
-                        kind: .finalCombo,
-                        delay: .milliseconds(objectAction.sourceSpeed) + .milliseconds(200)
-                    )
-                    combatTexts.append(finalComboText)
-                }
+            if showsCombo, let combo = hit.combo {
+                let comboText = CombatText(
+                    creationTime: now,
+                    target: target,
+                    amount: combo.damage,
+                    kind: combo.isFinal ? .finalCombo : .combo,
+                    delay: hit.delay
+                )
+                combatTexts.append(comboText)
             }
-        default:
-            break
+
+            if let hitSoundName {
+                audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: hit.delay)
+            }
         }
     }
 }
@@ -819,7 +690,7 @@ extension MapScene {
         effects[effect.id] = effect
     }
 
-    private func addSkillBeforeHitEffects(for objectSkill: MapObjectSkill) {
+    private func addSkillBeforeHitEffects(for objectSkill: MapObjectSkill, hits: [MapObjectHit]) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
               let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition else {
@@ -827,10 +698,9 @@ extension MapScene {
         }
 
         let currentTime = CACurrentMediaTime()
-        let count = max(1, objectSkill.count)
 
         for effectReference in SkillEffectTable.beforeHitEffects(for: skillID) {
-            for i in 0..<count {
+            for i in hits.indices {
                 let effect = MapSceneEffect(
                     reference: effectReference,
                     creationTime: currentTime,
@@ -838,14 +708,14 @@ extension MapScene {
                     sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
-                    delay: .milliseconds(200 * i)
+                    delay: (MapObjectHit.multiHitInterval * i).timeInterval
                 )
                 effects[effect.id] = effect
             }
         }
     }
 
-    private func addSkillHitEffects(for objectSkill: MapObjectSkill) {
+    private func addSkillHitEffects(for objectSkill: MapObjectSkill, hits: [MapObjectHit]) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
               let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition else {
@@ -853,10 +723,9 @@ extension MapScene {
         }
 
         let currentTime = CACurrentMediaTime()
-        let count = max(1, objectSkill.count)
 
         for effectReference in SkillEffectTable.hitEffects(for: skillID) {
-            for i in 0..<count {
+            for hit in hits {
                 let effect = MapSceneEffect(
                     reference: effectReference,
                     creationTime: currentTime,
@@ -864,7 +733,7 @@ extension MapScene {
                     sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
-                    delay: .milliseconds(objectSkill.attackDelay) + .milliseconds(200 * i)
+                    delay: hit.delay.timeInterval
                 )
                 effects[effect.id] = effect
             }
