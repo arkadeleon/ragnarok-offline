@@ -48,7 +48,7 @@ public struct GroundRenderAsset {
         let width = Int(gnd.width)
         let height = Int(gnd.height)
 
-        let normals = getSmoothNormal(gnd: gnd)
+        let normals = calculateNormals(gnd: gnd)
 
         // Compile the mesh once so render backends can consume the same asset.
         for y in 0..<height {
@@ -104,30 +104,32 @@ public struct GroundRenderAsset {
                         let uv = textureAtlas.uv(for: surface)
                         let l = lightmapAtlas.uv(forLightmapSliceIndex: Int(surface.lightmapIndex))
 
+                        let normal: SIMD3<Float> = cube.topLeftAltitude < frontCube.bottomLeftAltitude ? [0, 0, 1] : [0, 0, -1]
+
                         let v0 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.topLeftAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [0, 0, 1],
+                            normal: normal,
                             textureCoordinate: [uv.u[0], uv.v[0]],
                             lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [0, 0, 1],
+                            normal: normal,
                             textureCoordinate: [uv.u[1], uv.v[1]],
                             lightmapCoordinate: [l.u2, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, frontCube.bottomRightAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [0, 0, 1],
+                            normal: normal,
                             textureCoordinate: [uv.u[3], uv.v[3]],
                             lightmapCoordinate: [l.u2, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 0) * 2, frontCube.bottomLeftAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [0, 0, 1],
+                            normal: normal,
                             textureCoordinate: [uv.u[2], uv.v[2]],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [0, 0]
@@ -145,30 +147,32 @@ public struct GroundRenderAsset {
                         let uv = textureAtlas.uv(for: surface)
                         let l = lightmapAtlas.uv(forLightmapSliceIndex: Int(surface.lightmapIndex))
 
+                        let normal: SIMD3<Float> = cube.topLeftAltitude < rightCube.bottomLeftAltitude ? [1, 0, 0] : [-1, 0, 0]
+
                         let v0 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [1, 0, 0],
+                            normal: normal,
                             textureCoordinate: [uv.u[0], uv.v[0]],
                             lightmapCoordinate: [l.u1, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.bottomRightAltitude / 5, (Float(y) + 0) * 2],
-                            normal: [1, 0, 0],
+                            normal: normal,
                             textureCoordinate: [uv.u[1], uv.v[1]],
                             lightmapCoordinate: [l.u2, l.v1],
                             tileColorCoordinate: [0, 0]
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.bottomLeftAltitude / 5, (Float(y) + 0) * 2],
-                            normal: [1, 0, 0],
+                            normal: normal,
                             textureCoordinate: [uv.u[3], uv.v[3]],
                             lightmapCoordinate: [l.u2, l.v2],
                             tileColorCoordinate: [0, 0]
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.topLeftAltitude / 5, (Float(y) + 1) * 2],
-                            normal: [1, 0, 0],
+                            normal: normal,
                             textureCoordinate: [uv.u[2], uv.v[2]],
                             lightmapCoordinate: [l.u1, l.v2],
                             tileColorCoordinate: [0, 0]
@@ -181,86 +185,64 @@ public struct GroundRenderAsset {
         }
     }
 
-    private func getSmoothNormal(gnd: GND) -> [[SIMD3<Float>]] {
+    private func calculateNormals(gnd: GND) -> [[SIMD3<Float>]] {
         let width = Int(gnd.width)
         let height = Int(gnd.height)
 
         let count = width * height
-        var tmp: [SIMD3<Float>] = Array(repeating: SIMD3<Float>(), count: count)
+        var defaultNormals = Array(repeating: Array(repeating: SIMD3<Float>(), count: 4), count: count)
+        var sharedNormals = Array(repeating: Array(repeating: SIMD3<Float>(), count: 4), count: count)
 
-        let vecInTmp: (Int) -> SIMD3<Float> = { index in
-            if index >= 0 && index < tmp.count {
-                return tmp[index]
-            } else {
-                return SIMD3<Float>()
-            }
+        for index in 0..<count {
+            let cube = gnd.cubes[index]
+            let v1 = SIMD3<Float>(0, cube.bottomLeftAltitude, 0)
+            let v2 = SIMD3<Float>(10, cube.bottomRightAltitude, 0)
+            let v3 = SIMD3<Float>(0, cube.topLeftAltitude, 10)
+            let v4 = SIMD3<Float>(10, cube.topRightAltitude, 10)
+
+            let normal1 = simd_normalize(simd_cross(v2 - v1, v3 - v1))
+            let normal2 = simd_normalize(simd_cross(v3 - v4, v2 - v4))
+            let normal = normal1 + normal2
+
+            defaultNormals[index] = [normal1, normal, normal, normal1]
+            sharedNormals[index] = [normal1, normal, normal, normal2]
         }
 
-        let normal = Array(repeating: SIMD3<Float>(), count: 4)
-        var normals = Array(repeating: normal, count: count)
+        let altitudes: (GND.Cube) -> [Float] = { cube in
+            [cube.bottomLeftAltitude, cube.bottomRightAltitude, cube.topLeftAltitude, cube.topRightAltitude]
+        }
+
+        var normals = defaultNormals
 
         for y in 0..<height {
             for x in 0..<width {
-                let cube = gnd.cubes[x + y * width]
+                let index = x + y * width
+                let cubeAltitudes = altitudes(gnd.cubes[index])
 
-                if cube.topSurfaceIndex > -1 {
-                    let a: SIMD3<Float> = [
-                        (Float(x) + 0) * 2,
-                        cube.bottomLeftAltitude / 5,
-                        (Float(y) + 0) * 2
-                    ]
-                    let b: SIMD3<Float> = [
-                        (Float(x) + 1) * 2,
-                        cube.bottomRightAltitude / 5,
-                        (Float(y) + 0) * 2
-                    ]
-                    let c: SIMD3<Float> = [
-                        (Float(x) + 1) * 2,
-                        cube.topLeftAltitude / 5,
-                        (Float(y) + 1) * 2
-                    ]
-                    let d: SIMD3<Float> = [
-                        (Float(x) + 0) * 2,
-                        cube.topRightAltitude / 5,
-                        (Float(y) + 1) * 2
-                    ]
-                    tmp[x + y * width] = calcNormal(a, b, c, d)
+                for corner in 0..<4 {
+                    var normal = defaultNormals[index][corner]
+
+                    for neighbor in 1..<4 {
+                        let nx = x + (neighbor % 2) * (corner % 2 == 0 ? -1 : 1)
+                        let ny = y + (neighbor / 2) * (corner < 2 ? -1 : 1)
+                        guard nx >= 0 && nx < width && ny >= 0 && ny < height else {
+                            continue
+                        }
+
+                        let neighborCorner = (corner + neighbor * (1 - 2 * (corner & 1))) & 3
+                        let neighborIndex = nx + ny * width
+                        guard altitudes(gnd.cubes[neighborIndex])[neighborCorner] == cubeAltitudes[corner] else {
+                            continue
+                        }
+
+                        normal += sharedNormals[neighborIndex][neighborCorner]
+                    }
+
+                    normals[index][corner] = simd_normalize(normal)
                 }
             }
         }
 
-        for y in 0..<height {
-            for x in 0..<width {
-                var normal = normals[x + y * width]
-
-                normal[0] += vecInTmp((x + 0) + (y + 0) * width)
-                normal[0] += vecInTmp((x - 1) + (y + 0) * width)
-                normal[0] += vecInTmp((x - 1) + (y - 1) * width)
-                normal[0] += vecInTmp((x + 0) + (y - 1) * width)
-                normal[0] = simd_normalize(normal[0])
-
-                normal[1] += vecInTmp((x + 0) + (y + 0) * width)
-                normal[1] += vecInTmp((x + 1) + (y + 0) * width)
-                normal[1] += vecInTmp((x + 1) + (y - 1) * width)
-                normal[1] += vecInTmp((x + 0) + (y - 1) * width)
-                normal[1] = simd_normalize(normal[1])
-
-                normal[2] += vecInTmp((x + 0) + (y + 0) * width)
-                normal[2] += vecInTmp((x + 1) + (y + 0) * width)
-                normal[2] += vecInTmp((x + 1) + (y + 1) * width)
-                normal[2] += vecInTmp((x + 0) + (y + 1) * width)
-                normal[2] = simd_normalize(normal[2])
-
-                normal[3] += vecInTmp((x + 0) + (y + 0) * width)
-                normal[3] += vecInTmp((x - 1) + (y + 0) * width)
-                normal[3] += vecInTmp((x - 1) + (y + 1) * width)
-                normal[3] += vecInTmp((x + 0) + (y + 1) * width)
-                normal[3] = simd_normalize(normal[3])
-
-                normals[x + y * width] = normal
-            }
-        }
-
-        return normals
+        return normals.map { [$0[0], $0[1], $0[3], $0[2]] }
     }
 }

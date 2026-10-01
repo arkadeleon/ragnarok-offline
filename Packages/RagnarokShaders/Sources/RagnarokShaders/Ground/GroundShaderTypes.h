@@ -21,14 +21,12 @@ typedef struct {
     matrix_float4x4 projectionMatrix;
 
     vector_float3 lightDirection;
+    vector_float3 lightAmbient;
+    vector_float3 lightDiffuse;
 } GroundVertexUniforms;
 
 typedef struct {
     int lightMapUse;
-
-    vector_float3 lightAmbient;
-    vector_float3 lightDiffuse;
-    float lightOpacity;
 
     int fogUse;
     float fogNear;

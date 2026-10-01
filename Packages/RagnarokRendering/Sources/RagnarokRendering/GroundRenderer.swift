@@ -56,14 +56,13 @@ public final class GroundRenderer {
             modelMatrix: modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix,
-            lightDirection: resource.light.direction
+            lightDirection: resource.light.direction,
+            lightAmbient: resource.light.ambient,
+            lightDiffuse: resource.light.diffuse
         )
 
         var fragmentUniforms = GroundFragmentUniforms(
             lightMapUse: resource.lightmapTexture == nil ? 0 : 1,
-            lightAmbient: resource.light.ambient,
-            lightDiffuse: resource.light.diffuse,
-            lightOpacity: resource.light.opacity,
             fogUse: fog.isEnabled ? 1 : 0,
             fogNear: fog.near,
             fogFar: fog.far,

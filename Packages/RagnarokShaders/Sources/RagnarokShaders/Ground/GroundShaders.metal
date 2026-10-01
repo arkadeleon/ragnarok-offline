@@ -9,13 +9,14 @@
 using namespace metal;
 
 #include "GroundShaderTypes.h"
+#include "../Shared/Lighting.h"
 
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
     float2 lightmapCoordinate;
     float2 tileColorCoordinate;
-    float lightWeighting;
+    float3 lightColor;
     float fogDepth;
 } RasterizerData;
 
@@ -39,7 +40,7 @@ groundVertexShader(const device GroundVertex *vertices [[buffer(0)]],
     out.textureCoordinate = in.textureCoordinate;
     out.lightmapCoordinate = in.lightmapCoordinate;
     out.tileColorCoordinate = in.tileColorCoordinate;
-    out.lightWeighting = max(dotProduct, 0.1);
+    out.lightColor = lightColor(dotProduct, uniforms.lightAmbient, uniforms.lightDiffuse);
     out.fogDepth = -viewPosition.z;
     return out;
 }
@@ -53,31 +54,23 @@ groundFragmentShader(RasterizerData in [[stage_in]],
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 texture = colorTexture.sample(textureSampler, in.textureCoordinate);
-    float lightWeight = 1.0;
 
     if (texture.a == 0.0) {
         discard_fragment();
     }
 
     if (in.tileColorCoordinate.x != 0.0 || in.tileColorCoordinate.y != 0.0) {
-        texture *= tileColor.sample(textureSampler, in.tileColorCoordinate);
-        lightWeight = in.lightWeighting;
+        texture.rgb *= tileColor.sample(textureSampler, in.tileColorCoordinate).rgb;
     }
 
-    float3 ambient = uniforms.lightAmbient * uniforms.lightOpacity;
-    float3 diffuse = uniforms.lightDiffuse * lightWeight;
-
-    float4 color;
+    float3 rgb = texture.rgb * in.lightColor;
 
     if (uniforms.lightMapUse) {
         float4 lightmapColor = lightmap.sample(textureSampler, in.lightmapCoordinate);
-        float3 lightColor = clamp((ambient + diffuse) * lightmapColor.a, 0.0, 1.0);
-        float3 rgb = texture.rgb * lightColor + clamp(lightmapColor.rgb, 0.0, 1.0);
-        color = float4(clamp(rgb, 0.0, 1.0), texture.a);
-    } else {
-        float3 lightColor = clamp(ambient + diffuse, 0.0, 1.0);
-        color = float4(texture.rgb * lightColor, texture.a);
+        rgb = rgb * lightmapColor.a + clamp(lightmapColor.rgb, 0.0, 1.0);
     }
+
+    float4 color = float4(clamp(rgb, 0.0, 1.0), texture.a);
 
     if (uniforms.fogUse) {
         float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
