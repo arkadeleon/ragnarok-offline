@@ -37,7 +37,7 @@ public struct WorldAssetLoader: Sendable {
             }
         }
 
-        async let groundTextureImages = resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+        async let groundTextureImages = resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: true) { _, _ in
             if let progress {
                 Task { @MainActor in
                     progress.completedUnitCount += 1

@@ -48,7 +48,7 @@ public final class GroundRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard resource.vertexCount > 0 else {
+        guard let vertexBuffer = resource.vertexBuffer else {
             return
         }
 
@@ -72,7 +72,7 @@ public final class GroundRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         renderCommandEncoder.setVertexBytes(
             &vertexUniforms,
             length: MemoryLayout<GroundVertexUniforms>.stride,
@@ -83,8 +83,11 @@ public final class GroundRenderer {
             length: MemoryLayout<GroundFragmentUniforms>.stride,
             index: 0
         )
-        renderCommandEncoder.setFragmentTexture(resource.baseColorTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(resource.lightmapTexture, index: 1)
-        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
+
+        for mesh in resource.meshes {
+            renderCommandEncoder.setFragmentTexture(mesh.texture, index: 0)
+            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: mesh.vertexStart, vertexCount: mesh.vertexCount)
+        }
     }
 }

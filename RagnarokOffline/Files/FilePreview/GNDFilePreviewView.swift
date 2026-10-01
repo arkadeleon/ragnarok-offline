@@ -43,12 +43,6 @@ struct GNDFilePreviewView: View {
                 }
 
                 NavigationLink {
-                    GNDFileTextureAtlasView(file: file, resourceManager: resourceManager)
-                } label: {
-                    Label(String("Texture Atlas"), systemImage: "photo")
-                }
-
-                NavigationLink {
                     GNDFileLightmapView(file: file)
                 } label: {
                     Label(String("Lightmap"), systemImage: "lightbulb")
@@ -108,7 +102,7 @@ struct GNDFileGroundView: View {
         progress.totalUnitCount = Int64(gnd.textures.count)
         progress.completedUnitCount = 0
 
-        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: true) { _, _ in
             progress.completedUnitCount += 1
         }
 
@@ -202,7 +196,7 @@ struct GNDFileGroundView: View {
         progress.totalUnitCount = Int64(gnd.textures.count)
         progress.completedUnitCount = 0
 
-        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
+        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: true) { _, _ in
             progress.completedUnitCount += 1
         }
 
@@ -219,45 +213,6 @@ struct GNDFileGroundView: View {
 }
 
 #endif
-
-struct GNDFileTextureAtlasView: View {
-    var file: File
-    var resourceManager: ResourceManager
-
-    private let progress = Progress()
-
-    var body: some View {
-        AsyncContentView {
-            try await loadGNDTextureAtlasImage()
-        } content: { image in
-            Image(decorative: image, scale: 1)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-        } placeholder: {
-            ProgressView(progress)
-                .progressViewStyle(.circular)
-        }
-    }
-
-    private func loadGNDTextureAtlasImage() async throws -> CGImage {
-        let gndData = try await file.contents()
-        let gnd = try GND(data: gndData)
-
-        progress.totalUnitCount = Int64(gnd.textures.count)
-        progress.completedUnitCount = 0
-
-        let textureImages = await resourceManager.textureImages(forNames: gnd.textures, removesMagentaPixels: false) { _, _ in
-            progress.completedUnitCount += 1
-        }
-
-        let textureAtlas = GroundTextureAtlas(gnd: gnd)
-        guard let image = textureAtlas.makeCGImage(textureImages: textureImages) else {
-            throw FileError.imageGenerationFailed
-        }
-
-        return image
-    }
-}
 
 struct GNDFileLightmapView: View {
     var file: File
