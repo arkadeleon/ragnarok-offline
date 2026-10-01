@@ -100,7 +100,7 @@
   - `PACKETVER >= 20130320` 时需要发送 `CZ_BLOCKING_PLAY_CANCEL`。
   - 显示地图名提示（`MapName`）。
   - 用 `Announce` 显示倍率信息。
-  - 加载城镇招牌（Signboard）。
+  - 加载城镇招牌，见 §6.4。
 - [x] **P1** 死亡界面的“原地复活”按钮
   - 现状：一直处于禁用状态。
   - 需要：背包里有齐格弗里德之证时启用，发送 `CZ_STANDING_RESURRECTION`。
@@ -290,8 +290,18 @@
 - [ ] **P2** 任务 NPC 头顶图标：`ZC_QUEST_NOTIFY_EFFECT`。
   - 参考：`Entity.js#onEntityQuestNotifyEffect`
 - [ ] **P2** 头顶脚本文字：`ZC_SHOWSCRIPT`。
-- [ ] **P2** 城镇招牌（3D 招牌，数据来自 signboardlist）。
-  - 参考：`Renderer/SignboardManager.js`、`DB.getAllSignboardsForMap`
+- [ ] **P2** 城镇招牌
+  - 现状：没有实现。
+  - 数据：客户端的 `SignBoardList.lub`，一张全局表 `SignBoardList`，每条是 `{地图名, x, y, 高度, 类型, 图标路径, 文字, 文字颜色}`。韩服共 886 条，分布在 129 张地图上。
+    - 图标路径相对于界面贴图目录，有的以 `유저인터페이스\` 开头；颜色有 `"r,g,b"` 和 `"#0xAARRGGBB"` 两种写法。
+    - 拉美客户端是带字段名的格式（`SignBoardList_data.lub`），文字在 `SignBoardList_<语言>.lub` 里，要先加载文字文件。
+  - 类型（官方枚举）：`IT_BMP = 1` 只有图标，比如武器商人头上的武器图标；`IT_SIGNBOARD = 3` 是图标加文字；`IT_SPRITE = 2` 在韩服数据里没有使用。
+  - 方案：用 `ragnarok-data-converter` 转换成 JSON。坐标、类型、图标以韩服为准；type 3 的文字按“地图名 + 坐标”匹配各地区客户端的翻译，匹配不到用韩文。
+  - 和 rAthena 的对应：约 62% 的招牌和 rAthena 的 NPC 在同一格，城镇商店基本都能对上；约 15% 所在的地图 rAthena 没有 NPC（如 `rag_fes_a`、`prt_mk`），约 19% 离最近的 NPC 超过 5 格（主要是 `tra_fild01`–`03`）。全部显示会有不少招牌悬在空格子上，可以只在附近 1–2 格内有 NPC 时才显示。
+  - 需要：进入地图时取出这张地图的招牌，在对应格子上方显示始终面向屏幕的图标，切换地图时清除。不需要服务端的包。
+  - type 3 的文字需要先有世界坐标的文字渲染，和实体名字（§6.1）共用。
+  - roBrowser 运行时直接读客户端文件，按类型用固定的屏幕偏移，没有使用高度和颜色；文字翻译读 `SystemEN/Sign_Data.lub`，按韩文原文查英文。
+  - 参考：`Renderer/SignboardManager.js`、`UI/Components/EntitySignboard/`、`DB/DBManager.js#loadSignBoardList/loadSignBoardData`、`Engine/MapEngine.js#onMapChange`
 
 ### 6.5 特殊移动与动作
 
