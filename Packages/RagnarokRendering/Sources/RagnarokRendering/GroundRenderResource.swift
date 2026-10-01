@@ -15,7 +15,6 @@ public class GroundRenderResource {
 
     let baseColorTexture: (any MTLTexture)?
     let lightmapTexture: (any MTLTexture)?
-    let tileColorTexture: (any MTLTexture)?
 
     var light: WorldLight
 
@@ -38,12 +37,6 @@ public class GroundRenderResource {
             from: asset.lightmapTextureImage,
             device: device,
             label: "ground-lightmap-texture"
-        )
-
-        tileColorTexture = MetalTextureFactory.makeTexture(
-            from: asset.tileColorTextureImage,
-            device: device,
-            label: "ground-tile-color-texture"
         )
 
         self.light = light

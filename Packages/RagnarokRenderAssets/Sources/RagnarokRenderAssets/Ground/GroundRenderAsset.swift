@@ -24,11 +24,9 @@ public struct GroundRenderAsset {
 
     public var textureAtlas: GroundTextureAtlas
     public var lightmapAtlas: GroundLightmapAtlas
-    public var tileColorMap: GroundTileColorMap
 
     public var baseColorTextureImage: CGImage?
     public var lightmapTextureImage: CGImage?
-    public var tileColorTextureImage: CGImage?
 
     public init(gat: GAT, gnd: GND, textureImages: [String : CGImage]) {
         width = Int(gat.width)
@@ -39,11 +37,9 @@ public struct GroundRenderAsset {
 
         textureAtlas = GroundTextureAtlas(gnd: gnd)
         lightmapAtlas = GroundLightmapAtlas(lightmap: gnd.lightmap)
-        tileColorMap = GroundTileColorMap(gnd: gnd)
 
         baseColorTextureImage = textureAtlas.makeCGImage(textureImages: textureImages)
         lightmapTextureImage = lightmapAtlas.makeCGImage()
-        tileColorTextureImage = tileColorMap.makeCGImage()
 
         let width = Int(gnd.width)
         let height = Int(gnd.height)
@@ -68,28 +64,28 @@ public struct GroundRenderAsset {
                             normal: n[0],
                             textureCoordinate: [uv.u[0], uv.v[0]],
                             lightmapCoordinate: [l.u1, l.v1],
-                            tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 0.5) / Float(height)]
+                            color: topSurfaceColor(in: gnd, x: x, y: y) ?? .zero
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.bottomRightAltitude / 5, (Float(y) + 0) * 2],
                             normal: n[1],
                             textureCoordinate: [uv.u[1], uv.v[1]],
                             lightmapCoordinate: [l.u2, l.v1],
-                            tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 0.5) / Float(height)]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y) ?? .zero
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
                             normal: n[2],
                             textureCoordinate: [uv.u[3], uv.v[3]],
                             lightmapCoordinate: [l.u2, l.v2],
-                            tileColorCoordinate: [(Float(x) + 1.5) / Float(width), (Float(y) + 1.5) / Float(height)]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y + 1) ?? .zero
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 0) * 2, cube.topLeftAltitude / 5, (Float(y) + 1) * 2],
                             normal: n[3],
                             textureCoordinate: [uv.u[2], uv.v[2]],
                             lightmapCoordinate: [l.u1, l.v2],
-                            tileColorCoordinate: [(Float(x) + 0.5) / Float(width), (Float(y) + 1.5) / Float(height)]
+                            color: topSurfaceColor(in: gnd, x: x, y: y + 1) ?? .zero
                         )
 
                         mesh.vertices += [v0, v1, v2, v2, v3, v0]
@@ -111,28 +107,28 @@ public struct GroundRenderAsset {
                             normal: normal,
                             textureCoordinate: [uv.u[0], uv.v[0]],
                             lightmapCoordinate: [l.u1, l.v1],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x, y: y + 1) ?? .one
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.topRightAltitude / 5, (Float(y) + 1) * 2],
                             normal: normal,
                             textureCoordinate: [uv.u[1], uv.v[1]],
                             lightmapCoordinate: [l.u2, l.v1],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y + 1) ?? .one
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, frontCube.bottomRightAltitude / 5, (Float(y) + 1) * 2],
                             normal: normal,
                             textureCoordinate: [uv.u[3], uv.v[3]],
                             lightmapCoordinate: [l.u2, l.v2],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y + 1) ?? .one
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 0) * 2, frontCube.bottomLeftAltitude / 5, (Float(y) + 1) * 2],
                             normal: normal,
                             textureCoordinate: [uv.u[2], uv.v[2]],
                             lightmapCoordinate: [l.u1, l.v2],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x, y: y + 1) ?? .one
                         )
 
                         mesh.vertices += [v0, v1, v2, v2, v3, v0]
@@ -154,28 +150,28 @@ public struct GroundRenderAsset {
                             normal: normal,
                             textureCoordinate: [uv.u[0], uv.v[0]],
                             lightmapCoordinate: [l.u1, l.v1],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y + 1) ?? .one
                         )
                         let v1 = GroundVertex(
                             position: [(Float(x) + 1) * 2, cube.bottomRightAltitude / 5, (Float(y) + 0) * 2],
                             normal: normal,
                             textureCoordinate: [uv.u[1], uv.v[1]],
                             lightmapCoordinate: [l.u2, l.v1],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y) ?? .one
                         )
                         let v2 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.bottomLeftAltitude / 5, (Float(y) + 0) * 2],
                             normal: normal,
                             textureCoordinate: [uv.u[3], uv.v[3]],
                             lightmapCoordinate: [l.u2, l.v2],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y) ?? .one
                         )
                         let v3 = GroundVertex(
                             position: [(Float(x) + 1) * 2, rightCube.topLeftAltitude / 5, (Float(y) + 1) * 2],
                             normal: normal,
                             textureCoordinate: [uv.u[2], uv.v[2]],
                             lightmapCoordinate: [l.u1, l.v2],
-                            tileColorCoordinate: [0, 0]
+                            color: topSurfaceColor(in: gnd, x: x + 1, y: y + 1) ?? .one
                         )
 
                         mesh.vertices += [v0, v1, v2, v2, v3, v0]
@@ -183,6 +179,23 @@ public struct GroundRenderAsset {
                 }
             }
         }
+    }
+
+    private func topSurfaceColor(in gnd: GND, x: Int, y: Int) -> SIMD3<Float>? {
+        let width = Int(gnd.width)
+        let height = Int(gnd.height)
+
+        guard x < width && y < height else {
+            return .one
+        }
+
+        let cube = gnd.cubes[x + y * width]
+        guard cube.topSurfaceIndex > -1 else {
+            return nil
+        }
+
+        let color = gnd.surfaces[Int(cube.topSurfaceIndex)].color
+        return [Float(color.red), Float(color.green), Float(color.blue)] / 255
     }
 
     private func calculateNormals(gnd: GND) -> [[SIMD3<Float>]] {

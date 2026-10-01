@@ -12,7 +12,7 @@ typedef struct {
     vector_float3 normal;
     vector_float2 textureCoordinate;
     vector_float2 lightmapCoordinate;
-    vector_float2 tileColorCoordinate;
+    vector_float3 color;
 } GroundVertex;
 
 typedef struct {

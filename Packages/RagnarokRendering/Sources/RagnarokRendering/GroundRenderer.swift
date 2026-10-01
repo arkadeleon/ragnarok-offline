@@ -85,7 +85,6 @@ public final class GroundRenderer {
         )
         renderCommandEncoder.setFragmentTexture(resource.baseColorTexture, index: 0)
         renderCommandEncoder.setFragmentTexture(resource.lightmapTexture, index: 1)
-        renderCommandEncoder.setFragmentTexture(resource.tileColorTexture, index: 2)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 }
