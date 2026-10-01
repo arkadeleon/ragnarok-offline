@@ -9,11 +9,12 @@
 using namespace metal;
 
 #include "ModelShaderTypes.h"
+#include "../Shared/Lighting.h"
 
 typedef struct {
     float4 position [[position]];
     float2 textureCoordinate;
-    float lightWeighting;
+    float3 lightColor;
     float alpha;
     float fogDepth;
 } RasterizerData;
@@ -40,7 +41,11 @@ modelVertexShader(const device ModelVertex *vertices [[buffer(0)]],
     RasterizerData out;
     out.position = uniforms.projectionMatrix * viewPosition;
     out.textureCoordinate = in.textureCoordinate;
-    out.lightWeighting = max(dotProduct, 0.5);
+    if (uniforms.shadeType == 0) {
+        out.lightColor = lightMaxColor(uniforms.lightAmbient, uniforms.lightDiffuse);
+    } else {
+        out.lightColor = lightColor(dotProduct, uniforms.lightAmbient, uniforms.lightDiffuse);
+    }
     out.alpha = in.alpha;
     out.fogDepth = -viewPosition.z;
     return out;
@@ -58,11 +63,7 @@ modelFragmentShader(RasterizerData in [[stage_in]],
         discard_fragment();
     }
 
-    float3 ambient = uniforms.lightAmbient * uniforms.lightOpacity;
-    float3 diffuse = uniforms.lightDiffuse * in.lightWeighting;
-    float4 lightColor = float4(ambient + diffuse, 1.0);
-
-    color.rgb *= clamp(lightColor.rgb, 0.0, 1.0);
+    color.rgb *= in.lightColor;
     color.a *= in.alpha;
 
     if (uniforms.fogUse) {

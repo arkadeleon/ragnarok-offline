@@ -17,6 +17,7 @@ public struct RSMModelRenderAsset {
     public let nodes: [RSMModelNode]
     public var boundingBox: RSMModelBoundingBox
     public let assetTransformMatrix: simd_float4x4
+    public let shadeType: Int32
     public var instance: RSMModelInstance
     public var textureImages: [String : CGImage]
     public let fps: Float
@@ -33,6 +34,7 @@ public struct RSMModelRenderAsset {
         self.textureImages = textureImages
         self.fps = rsm.fps
         self.animationLength = rsm.animationLength
+        self.shadeType = rsm.shadeType
 
         let tree = RSMModelTreeBuilder(rsm: rsm).build()
         self.rootNode = tree.rootNode

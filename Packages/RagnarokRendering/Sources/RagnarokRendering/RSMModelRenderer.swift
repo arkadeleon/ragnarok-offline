@@ -66,13 +66,13 @@ public final class RSMModelRenderer {
                 modelMatrix: modelMatrix,
                 viewMatrix: camera.viewMatrix,
                 projectionMatrix: camera.projectionMatrix,
-                lightDirection: resource.light.direction
+                lightDirection: resource.light.direction,
+                lightAmbient: resource.light.ambient,
+                lightDiffuse: resource.light.diffuse,
+                shadeType: resource.asset.shadeType
             )
 
             var fragmentUniforms = ModelFragmentUniforms(
-                lightAmbient: resource.light.ambient,
-                lightDiffuse: resource.light.diffuse,
-                lightOpacity: resource.light.opacity,
                 fogUse: fog.isEnabled ? 1 : 0,
                 fogNear: fog.near,
                 fogFar: fog.far,
