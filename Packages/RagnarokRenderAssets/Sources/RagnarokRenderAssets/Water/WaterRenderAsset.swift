@@ -39,7 +39,7 @@ public struct WaterParameters {
             wavePitch = rsw.water.wavePitch
             animationSpeed = rsw.water.animationSpeed
         }
-        opacity = (type == 4 || type == 6) ? 1.0 : 0.8
+        opacity = (type == 4 || type == 6) ? 1.0 : 144 / 255
     }
 }
 
