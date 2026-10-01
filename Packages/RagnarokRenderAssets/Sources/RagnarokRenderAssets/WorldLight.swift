@@ -32,9 +32,9 @@ public struct WorldLight: Sendable {
         let longitudeRadians = longitude * .pi / 180
         let latitudeRadians = latitude * .pi / 180
         self.direction = SIMD3<Float>(
-            Float(cos(longitudeRadians) * sin(latitudeRadians)),
+            Float(-sin(longitudeRadians) * sin(latitudeRadians)),
             Float(cos(latitudeRadians)),
-            Float(sin(longitudeRadians) * sin(latitudeRadians))
+            Float(cos(longitudeRadians) * sin(latitudeRadians))
         )
         self.diffuse = diffuse
         self.ambient = ambient
