@@ -42,7 +42,7 @@ waterFragmentShader(RasterizerData in [[stage_in]],
                     constant WaterFragmentUniforms &uniforms [[buffer(0)]],
                     texture2d<float> colorTexture [[texture(0)]])
 {
-    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
+    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear, mip_filter::linear);
     float4 color = float4(colorTexture.sample(textureSampler, in.textureCoordinate).rgb, uniforms.opacity);
 
     if (uniforms.fogUse) {

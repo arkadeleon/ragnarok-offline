@@ -35,6 +35,7 @@ public class GroundRenderResource {
         for (textureName, textureImage) in asset.textureImages {
             textures[textureName] = MetalTextureFactory.makeTexture(
                 from: textureImage,
+                mipmapped: true,
                 device: device,
                 label: textureName
             )

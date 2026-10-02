@@ -110,6 +110,7 @@ extension RSMModelRenderResource {
 
             let texture = MetalTextureFactory.makeTexture(
                 from: textureImage,
+                mipmapped: true,
                 device: device,
                 label: namespacedTextureName
             )

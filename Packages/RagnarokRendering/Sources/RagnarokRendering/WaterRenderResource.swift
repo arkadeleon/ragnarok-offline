@@ -38,7 +38,12 @@ public class WaterRenderResource {
         }
 
         textures = asset.textureImages.compactMap {
-            MetalTextureFactory.makeTexture(from: $0, device: device, label: "water")
+            MetalTextureFactory.makeTexture(
+                from: $0,
+                mipmapped: true,
+                device: device,
+                label: "water"
+            )
         }
 
         waveHeight = asset.parameters.waveHeight / 5

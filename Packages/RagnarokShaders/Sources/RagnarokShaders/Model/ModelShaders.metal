@@ -56,7 +56,7 @@ modelFragmentShader(RasterizerData in [[stage_in]],
                     constant ModelFragmentUniforms &uniforms [[buffer(0)]],
                     texture2d<float> colorTexture [[texture(0)]])
 {
-    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
+    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear, mip_filter::linear);
     float4 color = colorTexture.sample(textureSampler, in.textureCoordinate);
 
     if (color.a == 0.0) {

@@ -10,7 +10,12 @@ import Metal
 import MetalKit
 
 public enum MetalTextureFactory {
-    public static func makeTexture(from image: CGImage?, device: any MTLDevice, label: String) -> (any MTLTexture)? {
+    public static func makeTexture(
+        from image: CGImage?,
+        mipmapped: Bool = false,
+        device: any MTLDevice,
+        label: String
+    ) -> (any MTLTexture)? {
         guard let image else {
             return nil
         }
@@ -20,6 +25,7 @@ public enum MetalTextureFactory {
             cgImage: image,
             options: [
                 MTKTextureLoader.Option.SRGB: false,
+                MTKTextureLoader.Option.generateMipmaps: mipmapped,
             ]
         )
         texture?.label = label
