@@ -63,6 +63,8 @@ modelFragmentShader(RasterizerData in [[stage_in]],
         discard_fragment();
     }
 
+    color.rgb /= color.a;
+
     color.rgb *= in.lightColor;
     color.a *= in.alpha;
 

@@ -58,6 +58,8 @@ groundFragmentShader(RasterizerData in [[stage_in]],
         discard_fragment();
     }
 
+    texture.rgb /= texture.a;
+
     float3 rgb = texture.rgb * in.lightColor * in.color;
 
     if (uniforms.lightMapUse) {
