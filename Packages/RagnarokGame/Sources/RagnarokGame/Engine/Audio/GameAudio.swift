@@ -13,7 +13,7 @@ enum GameAudio {
     static let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2)!
 
     /// How loud the background music plays.
-    static let bgmVolume: Float = 0.5
+    static let bgmVolume: Float = 0.8
 
     /// How loud sound effects play, before the distance to the listener is taken into account.
     static let soundEffectVolume: Float = 0.5
