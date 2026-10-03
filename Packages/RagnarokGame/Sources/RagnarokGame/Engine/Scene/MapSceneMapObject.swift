@@ -161,6 +161,51 @@ final class MapSceneMapObject {
         action.direction = direction
     }
 
+    /// Turns the head toward `targetPosition` first, and the body only when the head cannot turn any further.
+    func look(at targetPosition: SIMD2<Int>) {
+        let delta = targetPosition &- gridPosition
+        let targetDirection = switch (delta.x.signum(), delta.y.signum()) {
+        case (1, 1): 5
+        case (1, 0): 6
+        case (1, _): 7
+        case (0, 1): 4
+        case (0, _): 0
+        case (_, 1): 3
+        case (_, 0): 2
+        default: 1
+        }
+
+        var direction = action.direction.rawValue
+        var headDirection = action.headDirection
+
+        if direction == targetDirection {
+            headDirection = .lookForward
+        } else {
+            switch (direction - targetDirection + 8) % 8 {
+            case 1 where headDirection == .lookLeft, 7 where headDirection == .lookRight:
+                direction = targetDirection
+                headDirection = .lookForward
+            case 1, 2, 3:
+                direction = (targetDirection + 1) % 8
+                headDirection = .lookLeft
+            case 5, 6, 7:
+                direction = (targetDirection + 7) % 8
+                headDirection = .lookRight
+            default:
+                switch headDirection {
+                case .lookForward:
+                    direction = targetDirection
+                case .lookRight:
+                    direction = (targetDirection + 7) % 8
+                case .lookLeft:
+                    direction = (targetDirection + 1) % 8
+                }
+            }
+        }
+
+        turn(direction: SpriteDirection(rawValue: direction)!, headDirection: headDirection)
+    }
+
     func replanMovement(
         startPosition: SIMD2<Int>,
         endPosition: SIMD2<Int>,

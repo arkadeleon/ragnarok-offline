@@ -129,7 +129,7 @@
   - 现状：直接用 `ZC_NOTIFY_ACT` 的 `srcSpeed` 驱动攻击动作，为 0 时动作瞬间结束，很大时动作被拉得很慢。
   - 需要：`srcSpeed` 为 0 时用 432ms（`AVG_ATTACK_SPEED`），并限制在 864ms（`MAX_ATTACKMT`）以内。
   - 参考：`Engine/MapEngine/Entity.js#onEntityAction`
-- [ ] **P3** 原地转向时先转头
+- [x] **P3** 原地转向时先转头
   - 现状：坐着点地面时，身体直接转到目标方向，头朝前。
   - 需要：和官方客户端一致，方向偏差小时只转头，偏差大时身体才跟着转。
   - 参考：`Renderer/Entity/Entity.js#lookTo`

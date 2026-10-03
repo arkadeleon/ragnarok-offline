@@ -194,11 +194,10 @@ public final class MapScene {
         switch result {
         case .ground(let position):
             if player.action.actionType == .sit {
-                let direction = SpriteDirection(sourcePosition: player.gridPosition, targetPosition: position)
-                player.turn(direction: direction, headDirection: .lookForward)
+                player.look(at: position)
                 gameSession?.changeDirection(
-                    direction: Direction(spriteDirection: direction),
-                    headDirection: .lookForward
+                    direction: Direction(spriteDirection: player.action.direction),
+                    headDirection: HeadDirection(spriteHeadDirection: player.action.headDirection)
                 )
             } else {
                 if mapGrid.contains(position) {

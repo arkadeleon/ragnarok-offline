@@ -34,3 +34,16 @@ public enum SpriteHeadDirection: Int, CaseIterable, CustomStringConvertible, Sen
         }
     }
 }
+
+extension HeadDirection {
+    public init(spriteHeadDirection: SpriteHeadDirection) {
+        switch spriteHeadDirection {
+        case .lookForward:
+            self = .lookForward
+        case .lookRight:
+            self = .lookRight
+        case .lookLeft:
+            self = .lookLeft
+        }
+    }
+}
