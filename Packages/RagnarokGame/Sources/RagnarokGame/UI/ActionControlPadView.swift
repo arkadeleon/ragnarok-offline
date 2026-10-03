@@ -18,6 +18,7 @@ private let shortcutsPerRow = 8
 struct ActionControlPadView: View {
     var onAttack: () -> Void
     var onPickup: () -> Void
+    var onSit: () -> Void
     var onShortcut: (Shortcut) -> Void
 
     @Environment(GameContext.self) private var gameContext
@@ -69,6 +70,18 @@ struct ActionControlPadView: View {
             ) {
                 GameSwordIcon()
                     .frame(width: 40, height: 40)
+            }
+
+            RingSectorActionButton(
+                centerAngle: .degrees(205),
+                innerRadius: ringOuterRadius + sectorGap,
+                outerRadius: ringOuterRadius + sectorGap + 32,
+                color: .orange.opacity(0.55),
+                action: onSit
+            ) {
+                Image(systemName: "figure.seated.side")
+                    .font(.game(size: 12, weight: .bold))
+                    .foregroundStyle(.white)
             }
         }
         .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
@@ -191,7 +204,7 @@ private struct RingSectorActionButton<Content>: View where Content: View {
                         y: contentRadius * sin(centerAngle.radians)
                     )
             }
-            .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
+            .frame(width: outerRadius * 2, height: outerRadius * 2)
             .contentShape(ringSector)
         }
         .buttonStyle(.plain)
@@ -220,7 +233,7 @@ private struct RingSectorActionButton<Content>: View where Content: View {
         return gameContext
     }()
 
-    ActionControlPadView(onAttack: {}, onPickup: {}, onShortcut: { _ in })
+    ActionControlPadView(onAttack: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .background(Color.black)
         .environment(gameContext)

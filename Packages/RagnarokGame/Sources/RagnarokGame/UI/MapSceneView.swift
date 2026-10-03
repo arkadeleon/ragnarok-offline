@@ -66,6 +66,9 @@ struct MapSceneView: View {
                 onPickup: {
                     runtime.scene.pickUpNearestItem()
                 },
+                onSit: {
+                    runtime.scene.toggleSit()
+                },
                 onShortcut: { shortcut in
                     gameSession.useShortcut(shortcut)
                 }

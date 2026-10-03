@@ -193,12 +193,21 @@ public final class MapScene {
     func handleInteraction(_ result: HitTestResult) {
         switch result {
         case .ground(let position):
-            if mapGrid.contains(position) {
-                tileSelector = TileSelector(position: position, showTime: .now)
+            if player.action.actionType == .sit {
+                let direction = SpriteDirection(sourcePosition: player.gridPosition, targetPosition: position)
+                player.turn(direction: direction, headDirection: .lookForward)
+                gameSession?.changeDirection(
+                    direction: Direction(spriteDirection: direction),
+                    headDirection: .lookForward
+                )
             } else {
-                tileSelector = nil
+                if mapGrid.contains(position) {
+                    tileSelector = TileSelector(position: position, showTime: .now)
+                } else {
+                    tileSelector = nil
+                }
+                gameSession?.requestMove(to: position)
             }
-            gameSession?.requestMove(to: position)
         case .mapObject(let objectID):
             if let target = objects[objectID], !target.isDead {
                 switch target.type {
@@ -246,6 +255,10 @@ public final class MapScene {
         if let target = nearestItem(fromPosition: player.gridPosition) {
             pickUpItem(target)
         }
+    }
+
+    func toggleSit() {
+        gameSession?.requestAction(player.action.actionType == .sit ? .stand_up : .sit_down)
     }
 
     func resetCamera() {

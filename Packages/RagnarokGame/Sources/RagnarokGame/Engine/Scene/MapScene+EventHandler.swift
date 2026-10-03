@@ -123,6 +123,19 @@ extension MapScene {
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
 
+        switch object.deadSitState {
+        case .standing:
+            break
+        case .dead:
+            mapObject.death = MapObjectDeath(
+                startTime: .now,
+                fadeDuration: object.type == .pc ? nil : .seconds(5)
+            )
+            mapObject.perform(.die, completion: .indefinite)
+        case .sitting:
+            mapObject.perform(.sit, completion: .indefinite)
+        }
+
         if object.job == 45 { // JT_WARPNPC
             let effect = MapSceneEffect(
                 reference: .id(.ef_warpzone2),

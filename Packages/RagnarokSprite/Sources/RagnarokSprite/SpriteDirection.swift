@@ -106,3 +106,26 @@ public enum SpriteDirection: Int, CaseIterable, CustomStringConvertible, Sendabl
         return SpriteDirection(rawValue: adjusted)!
     }
 }
+
+extension Direction {
+    public init(spriteDirection: SpriteDirection) {
+        switch spriteDirection {
+        case .south:
+            self = .south
+        case .southwest:
+            self = .southwest
+        case .west:
+            self = .west
+        case .northwest:
+            self = .northwest
+        case .north:
+            self = .north
+        case .northeast:
+            self = .northeast
+        case .east:
+            self = .east
+        case .southeast:
+            self = .southeast
+        }
+    }
+}

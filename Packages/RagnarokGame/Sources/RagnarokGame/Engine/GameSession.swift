@@ -1153,12 +1153,15 @@ final public class GameSession {
     /// Send ``PACKET_CZ_CHANGE_DIRECTION``
     ///
     /// Receive ``PACKET_ZC_CHANGE_DIRECTION``
-    func changeDirection(headDirection: UInt16, direction: UInt8) {
+    func changeDirection(direction: Direction, headDirection: HeadDirection) {
         guard let mapClient else {
             return
         }
 
-        let packet = PacketFactory.CZ_CHANGE_DIRECTION(headDirection: headDirection, direction: direction)
+        let packet = PacketFactory.CZ_CHANGE_DIRECTION(
+            headDirection: UInt16(headDirection.rawValue),
+            direction: UInt8(direction.rawValue)
+        )
         mapClient.sendPacket(packet)
     }
 

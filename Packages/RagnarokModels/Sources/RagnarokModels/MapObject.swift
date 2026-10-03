@@ -26,6 +26,13 @@ public enum MapObjectType: Int, Sendable {
     case bionic = 0xe
 }
 
+// See `view_data::dead_sit`
+public enum MapObjectDeadSitState: Int, Sendable {
+    case standing = 0
+    case dead = 1
+    case sitting = 2
+}
+
 /// Represents a player character, non-player character, monster on a map.
 public struct MapObject: Sendable {
     public let objectID: UInt32
@@ -47,6 +54,8 @@ public struct MapObject: Sendable {
 
     public let hp: Int
     public let maxHp: Int
+
+    public let deadSitState: MapObjectDeadSitState
 
     public let bodyState: StatusChangeOption1
     public let healthState: StatusChangeOption2
@@ -72,6 +81,8 @@ public struct MapObject: Sendable {
 
         self.hp = Int(packet.HP)
         self.maxHp = Int(packet.maxHP)
+
+        self.deadSitState = .standing
 
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
@@ -99,6 +110,8 @@ public struct MapObject: Sendable {
         self.hp = Int(packet.HP)
         self.maxHp = Int(packet.maxHP)
 
+        self.deadSitState = MapObjectDeadSitState(rawValue: Int(packet.state)) ?? .standing
+
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none
         self.effectState = StatusChangeOption(rawValue: Int(packet.effectState)) ?? .nothing
@@ -124,6 +137,8 @@ public struct MapObject: Sendable {
 
         self.hp = Int(packet.HP)
         self.maxHp = Int(packet.maxHP)
+
+        self.deadSitState = .standing
 
         self.bodyState = StatusChangeOption1(rawValue: Int(packet.bodyState)) ?? .none
         self.healthState = StatusChangeOption2(rawValue: Int(packet.healthState)) ?? .none

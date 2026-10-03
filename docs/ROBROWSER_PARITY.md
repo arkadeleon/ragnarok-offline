@@ -24,7 +24,7 @@
 | 维度 | roBrowserLegacy | RagnarokGame 现状 |
 | --- | --- | --- |
 | 订阅的服务端包 | 约 551 个（含版本变体） | `GameSession` 里有 111 个 `case`，其中 21 个是空处理 |
-| 发送的客户端包 | 约 270 种 | `PacketFactory` 里有 44 个构造器 |
+| 发送的客户端包 | 约 270 种 | `PacketFactory` 里有 45 个构造器 |
 | UI 组件 | 100 个（`UI/Components/*`） | 约 30 个 SwiftUI 视图；菜单里 14 个按钮处于禁用状态 |
 | 特效表 `EffectTable` | 约 615 个 EffectID | 46 个 |
 | 技能特效 `SkillEffect` | 约 1013 个技能 | 23 个 |
@@ -84,7 +84,7 @@
   - `npc2`（objecttype `0xC`）类型的 NPC 点击后没有反应，应当和 `npc` 一样对话。
   - 传送点（job 45，即 `JT_WARPNPC`）点击后会发 `CZ_CONTACTNPC`，应当改为走进传送点。
   - 点击 PC、宠物、生命体、佣兵时没有反应（缺上下文菜单，见 §15.7）。
-  - 和 NPC 对话时角色应当转向 NPC（发送 `CZ_CHANGE_DIRECTION`）。`PacketFactory.CZ_CHANGE_DIRECTION` 已存在，但没有调用方。
+  - 和 NPC 对话时角色应当转向 NPC（发送 `CZ_CHANGE_DIRECTION`）。可以复用 `GameSession.changeDirection`。
   - 参考：`Controls/EntityControl.js`
 - [ ] **P1** 删除角色
   - 现状：`CH_DELETE_CHAR3` 固定发送空的生日。
@@ -129,6 +129,10 @@
   - 现状：直接用 `ZC_NOTIFY_ACT` 的 `srcSpeed` 驱动攻击动作，为 0 时动作瞬间结束，很大时动作被拉得很慢。
   - 需要：`srcSpeed` 为 0 时用 432ms（`AVG_ATTACK_SPEED`），并限制在 864ms（`MAX_ATTACKMT`）以内。
   - 参考：`Engine/MapEngine/Entity.js#onEntityAction`
+- [ ] **P3** 原地转向时先转头
+  - 现状：坐着点地面时，身体直接转到目标方向，头朝前。
+  - 需要：和官方客户端一致，方向偏差小时只转头，偏差大时身体才跟着转。
+  - 参考：`Renderer/Entity/Entity.js#lookTo`
 
 ---
 
@@ -310,9 +314,11 @@
 - [ ] **P1** 带位移的攻击和技能：`ZC_NOTIFY_ACT_POSITION`、`ZC_NOTIFY_SKILL_POSITION`（冲锋攻击等）。
 - [ ] **P2** `ZC_NOTIFY_ACTENTRY`：进入视野的同时带动作。
 - [ ] **P2** 真剑白刃取 `ZC_BLADESTOP` 的表现。
-- [ ] **P1** 坐下和站起
-  - 需要：`/sit`、`/stand`、Insert 键，发送 `CZ_REQUEST_ACT`（type 2/3）。
-  - 现状：`GameSession.requestAction` 已存在，但没有 UI 入口。
+- [x] **P1** 坐下和站起
+  - 动作盘外圈加了坐下按钮，按当前动作发送 `CZ_REQUEST_ACT`（type 2/3）。
+  - 坐着时点地面改为原地转向，发送 `CZ_CHANGE_DIRECTION`。
+  - 进入视野时按 `packet_idle_unit.state`（`dead_sit`）显示坐下或倒地。
+  - `/sit`、`/stand` 见 §25，Insert 键见 §24。
 - [ ] **P2** 转身和转头
   - 需要：`/doridori`（`CZ_DORIDORI`）、`/bangbang`、`/bingbing`；Shift + 右键原地转向；发送 `CZ_CHANGE_DIRECTION`。
 - [ ] **P2** 物品掉落
@@ -1045,12 +1051,12 @@
 
 ## 附录 B：roBrowserLegacy 发送、RagnarokGame 未发送的客户端包
 
-RagnarokGame 已能发送 44 种客户端包：`CA_LOGIN`、`CA_CONNECT_INFO_CHANGED`、`CH_ENTER`、`CH_SELECT_CHAR`、`CH_MAKE_CHAR`、`CH_DELETE_CHAR3(_RESERVED)`、`CZ_ENTER`、`CZ_REQUEST_MOVE`、`CZ_REQUEST_ACT`、`CZ_CHANGE_DIRECTION`（未被调用）、`CZ_USE_SKILL(_TOGROUND)`、`CZ_USE_ITEM`、`CZ_REQ_WEAR_EQUIP`、`CZ_REQ_TAKEOFF_EQUIP`、`CZ_ITEM_PICKUP`、`CZ_ITEM_THROW`、`CZ_STATUS_CHANGE`、`CZ_ADVANCED_STATUS_CHANGE`、`CZ_UPGRADE_SKILLLEVEL`、`CZ_SHORTCUT_KEY_CHANGE2`、`CZ_SHORTCUTKEYBAR_ROTATE2`、NPC 对话和商店相关、仓库存取和关闭、`CZ_SELECT_WARPPOINT`、`CZ_RESTART`、`CZ_REQUEST_QUIT`、`CZ_REQUEST_TIME`、`CZ_PING_LIVE`、`CZ_NOTIFY_ACTORINIT`。
+RagnarokGame 已能发送 45 种客户端包：`CA_LOGIN`、`CA_CONNECT_INFO_CHANGED`、`CH_ENTER`、`CH_SELECT_CHAR`、`CH_MAKE_CHAR`、`CH_DELETE_CHAR3(_RESERVED)`、`CZ_ENTER`、`CZ_REQUEST_MOVE`、`CZ_REQUEST_ACT`、`CZ_CHANGE_DIRECTION`、`CZ_USE_SKILL(_TOGROUND)`、`CZ_USE_ITEM`、`CZ_REQ_WEAR_EQUIP`、`CZ_REQ_TAKEOFF_EQUIP`、`CZ_ITEM_PICKUP`、`CZ_ITEM_THROW`、`CZ_STATUS_CHANGE`、`CZ_ADVANCED_STATUS_CHANGE`、`CZ_UPGRADE_SKILLLEVEL`、`CZ_SHORTCUT_KEY_CHANGE2`、`CZ_SHORTCUTKEYBAR_ROTATE2`、NPC 对话和商店相关、仓库存取和关闭、`CZ_SELECT_WARPPOINT`、`CZ_STANDING_RESURRECTION`、`CZ_RESTART`、`CZ_REQUEST_QUIT`、`CZ_REQUEST_TIME`、`CZ_PING_LIVE`、`CZ_NOTIFY_ACTORINIT`。
 
 roBrowser 发送、RagnarokGame 未发送的包，按功能分组：
 
 - **登录和角色**：`CA_EXE_HASHCHECK`、`CA_LOGIN_HAN`、`CH_CHARLIST_REQ`、`CH_DELETE_CHAR3_CANCEL`、`CH_PINCODE_CHECK`、`CH_PINCODE_FIRST_PIN`、`CH_PINCODE_CHANGE`、`CH_PINCODE_REQUEST`
-- **会话**：`CZ_BLOCKING_PLAY_CANCEL`、`CZ_HBT`、`CZ_PING`、`CZ_CONFIG`、`CZ_STANDING_RESURRECTION`
+- **会话**：`CZ_BLOCKING_PLAY_CANCEL`、`CZ_HBT`、`CZ_PING`、`CZ_CONFIG`
 - **实体和名字**：`CZ_REQNAME(2)`、`CZ_REQNAME_BYGID(2)`、`CZ_REQ_EMOTION`、`CZ_DORIDORI`、`CZ_REQ_CHANGE_TITLE`、`CZ_CANCEL_LOCKON`、`CZ_REQ_CARTOFF`、`CZ_SELECTCART`、`CZ_REQ_CHANGECART`
 - **聊天**：`CZ_WHISPER`、`CZ_REQUEST_CHAT_PARTY`、`CZ_GUILD_CHAT`、`CZ_CLAN_CHAT`、`CZ_BROADCAST`、`CZ_LOCALBROADCAST`、`CZ_CHOPOKGI`
 - **技能**：`CZ_SELECTAUTOSPELL`、`CZ_SKILL_SELECT_RESPONSE`、`CZ_REMEMBER_WARPPOINT`、`CZ_REQ_MAKINGARROW`、`CZ_REQ_ITEMREPAIR`、`CZ_REQ_WEAPONREFINE`、`CZ_REQ_ITEMIDENTIFY`、`CZ_REQMAKINGITEM`、`CZ_REQ_MAKINGITEM`、`CZ_ITEMLISTWIN_RES(2)`
