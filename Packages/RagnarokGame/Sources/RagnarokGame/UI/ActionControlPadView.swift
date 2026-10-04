@@ -9,9 +9,10 @@ import RagnarokModels
 import SwiftUI
 
 private let ringInnerRadius: CGFloat = 40
-private let ringOuterRadius: CGFloat = 88
+private let ringOuterRadius: CGFloat = 84
 private let sectorSweepAngle: Angle = .degrees(360 / 9)
 private let sectorGap: CGFloat = 4
+private let supplementaryRingWidth: CGFloat = 28
 
 private let shortcutsPerRow = 8
 
@@ -42,25 +43,17 @@ struct ActionControlPadView: View {
             RingSectorActionButton(
                 centerAngle: .degrees(45),
                 innerRadius: ringInnerRadius,
-                outerRadius: (ringInnerRadius + ringOuterRadius) / 2 - sectorGap / 2,
-                color: .green.opacity(0.55),
-                action: onPickup
-            ) {
-                Image(systemName: "hand.wave")
-                    .font(.game(size: 12, weight: .bold))
-                    .foregroundStyle(.white)
-            }
-
-            RingSectorActionButton(
-                centerAngle: .degrees(45),
-                innerRadius: (ringInnerRadius + ringOuterRadius) / 2 + sectorGap / 2,
                 outerRadius: ringOuterRadius,
-                color: .blue.opacity(0.55),
+                color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)),
                 action: turnDial
             ) {
                 Image(systemName: "arrow.clockwise")
-                    .font(.game(size: 12, weight: .bold))
+                    .font(.game(size: 16, weight: .bold))
                     .foregroundStyle(.white)
+                    .shadow(color: Color(#colorLiteral(red: 0.09019607843, green: 0.09019607843, blue: 0.1098039216, alpha: 1)), radius: 0, x: 1)
+                    .shadow(color: Color(#colorLiteral(red: 0.09019607843, green: 0.09019607843, blue: 0.1098039216, alpha: 1)), radius: 0, x: -1)
+                    .shadow(color: Color(#colorLiteral(red: 0.09019607843, green: 0.09019607843, blue: 0.1098039216, alpha: 1)), radius: 0, y: 1)
+                    .shadow(color: Color(#colorLiteral(red: 0.09019607843, green: 0.09019607843, blue: 0.1098039216, alpha: 1)), radius: 0, y: -1)
             }
 
             RoundActionButton(
@@ -73,18 +66,49 @@ struct ActionControlPadView: View {
             }
 
             RingSectorActionButton(
+                centerAngle: .degrees(165),
+                innerRadius: ringOuterRadius + sectorGap,
+                outerRadius: ringOuterRadius + sectorGap + supplementaryRingWidth,
+                color: Color(#colorLiteral(red: 0.8877201569, green: 0.7630142746, blue: 0.3606613333, alpha: 0.55)),
+                action: {}
+            ) {
+            }
+
+            RingSectorActionButton(
                 centerAngle: .degrees(205),
                 innerRadius: ringOuterRadius + sectorGap,
-                outerRadius: ringOuterRadius + sectorGap + 32,
-                color: .orange.opacity(0.55),
+                outerRadius: ringOuterRadius + sectorGap + supplementaryRingWidth,
+                color: Color(#colorLiteral(red: 0.2328621177, green: 0.543450353, blue: 0.3646268235, alpha: 0.55)),
                 action: onSit
             ) {
                 Image(systemName: "figure.seated.side")
                     .font(.game(size: 12, weight: .bold))
                     .foregroundStyle(.white)
             }
+
+            RingSectorActionButton(
+                centerAngle: .degrees(245),
+                innerRadius: ringOuterRadius + sectorGap,
+                outerRadius: ringOuterRadius + sectorGap + supplementaryRingWidth,
+                color: Color(#colorLiteral(red: 0.2155968627, green: 0.3285380392, blue: 0.5614792157, alpha: 0.55)),
+                action: onPickup
+            ) {
+                Image(systemName: "hand.wave")
+                    .font(.game(size: 12, weight: .bold))
+                    .foregroundStyle(.white)
+            }
+
+            RingSectorActionButton(
+                centerAngle: .degrees(285),
+                innerRadius: ringOuterRadius + sectorGap,
+                outerRadius: ringOuterRadius + sectorGap + supplementaryRingWidth,
+                color: Color(#colorLiteral(red: 0.6283159216, green: 0.2047865098, blue: 0.1977276863, alpha: 0.55)),
+                action: {}
+            ) {
+            }
         }
         .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
+        .padding([.leading, .top], sectorGap + supplementaryRingWidth)
     }
 
     private var row: Int {
