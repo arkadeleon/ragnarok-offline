@@ -36,14 +36,14 @@ public struct GAT: FileFormat {
 }
 
 extension GAT {
-    public enum TileType: Int32, Sendable {
+    public enum TileType: UInt8, Sendable {
         case walkable = 0
         case noWalkable = 1
-        case noWalkableNoSnipable = 2
-        case walkable2 = 3
-        case unknown = 4
+        case walkable2 = 2
+        case walkableWater = 3
+        case walkable4 = 4
         case noWalkableSnipable = 5
-        case walkable3 = 6
+        case walkable6 = 6
     }
 
     public struct Tile: BinaryDecodable, Sendable {
@@ -59,8 +59,8 @@ extension GAT {
             topLeftAltitude = try decoder.decode(Float.self)
             topRightAltitude = try decoder.decode(Float.self)
 
-            let type = try GAT.TileType(rawValue: decoder.decode(Int32.self))
-            self.type = type ?? .walkable
+            let rawType = try decoder.decode(UInt32.self)
+            type = GAT.TileType(rawValue: UInt8(truncatingIfNeeded: rawType)) ?? .noWalkable
         }
     }
 }
@@ -80,8 +80,8 @@ extension GAT.Tile {
 
     public var isWalkable: Bool {
         switch type {
-        case .walkable, .walkable2, .walkable3: true
-        default: false
+        case .walkable, .walkable2, .walkableWater, .walkable4, .walkable6: true
+        case .noWalkable, .noWalkableSnipable: false
         }
     }
 }

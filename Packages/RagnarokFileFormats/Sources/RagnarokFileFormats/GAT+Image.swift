@@ -33,9 +33,9 @@ extension GAT {
 
                 let tile = tiles[tileIndex]
                 switch tile.type {
-                case .walkable, .walkable2, .unknown, .walkable3:
+                case .walkable, .walkable2, .walkableWater, .walkable4, .walkable6:
                     data[pixelIndex] = 25
-                case .noWalkable, .noWalkableNoSnipable:
+                case .noWalkable:
                     data[pixelIndex] = 153
                 case .noWalkableSnipable:
                     data[pixelIndex] = 70
