@@ -5,233 +5,299 @@
 //  Created by Leon Li on 2025/6/17.
 //
 
-import Foundation
+private let maxWalkPath = 32
+private let maxRequestPathLength = 32
+private let maxRequestPathLengthWithoutStraightLine = 14
+
+private let moveCost = 10
+private let diagonalMoveCost = 14
 
 final class PathFinder {
     let mapGrid: MapGrid
-
-    // Small tolerance so floating point noise does not break tie-breaking logic
-    private let tieBreakerEpsilon: Float = 0.0001
 
     init(mapGrid: MapGrid) {
         self.mapGrid = mapGrid
     }
 
     func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
-        return findPath(from: start, to: end, within: 0)
+        guard (0..<mapGrid.width).contains(start.x),
+              (0..<mapGrid.height).contains(start.y),
+              isPassable(end.x, end.y) else {
+            return []
+        }
+
+        var search = PathSearch()
+
+        let startIndex = PathSearch.index(x: start.x, y: start.y)
+        search.nodes[startIndex] = PathSearch.Node(
+            x: start.x,
+            y: start.y,
+            gCost: 0,
+            fCost: heuristic(start.x, start.y, end),
+            parent: nil,
+            isClosed: false
+        )
+        search.push(startIndex)
+
+        while true {
+            guard let current = search.pop() else {
+                return []
+            }
+
+            search.nodes[current].isClosed = true
+
+            let x = search.nodes[current].x
+            let y = search.nodes[current].y
+            let gCost = search.nodes[current].gCost
+
+            if x == end.x && y == end.y {
+                return reconstructPath(search: search, endIndex: current)
+            }
+
+            let canMoveNorth = isPassable(x, y + 1)
+            let canMoveSouth = isPassable(x, y - 1)
+            let canMoveEast = isPassable(x + 1, y)
+            let canMoveWest = isPassable(x - 1, y)
+
+            let neighbors: [(dx: Int, dy: Int, isAllowed: Bool)] = [
+                (1, -1, canMoveSouth && canMoveEast && isPassable(x + 1, y - 1)),
+                (1, 0, canMoveEast),
+                (1, 1, canMoveNorth && canMoveEast && isPassable(x + 1, y + 1)),
+                (0, 1, canMoveNorth),
+                (-1, 1, canMoveNorth && canMoveWest && isPassable(x - 1, y + 1)),
+                (-1, 0, canMoveWest),
+                (-1, -1, canMoveSouth && canMoveWest && isPassable(x - 1, y - 1)),
+                (0, -1, canMoveSouth),
+            ]
+
+            for (dx, dy, isAllowed) in neighbors where isAllowed {
+                let cost = (dx != 0 && dy != 0) ? diagonalMoveCost : moveCost
+                let isAdded = search.addNode(
+                    x: x + dx,
+                    y: y + dy,
+                    gCost: gCost + cost,
+                    hCost: heuristic(x + dx, y + dy, end),
+                    parent: current
+                )
+                guard isAdded else {
+                    return []
+                }
+            }
+        }
     }
 
-    /// Finds a path that ends within `range` tiles (Chebyshev distance) of `end`.
-    /// When `range` is zero this behaves identically to the original `findPath`.
+    /// Finds a path toward `end` and cuts it at the first position within `range` tiles (Chebyshev distance) of `end`.
     func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>, within range: Int) -> [SIMD2<Int>] {
-        let normalizedRange = max(range, 0)
+        let range = max(range, 0)
 
-        if normalizedRange == 0 {
-            return astarEntry(from: start, to: end)
-        }
-
-        // Start must be walkable; destination only needs to be inside the map.
-        guard isValidAndWalkable(position: start) && isInBounds(position: end) else {
-            return []
-        }
-
-        // Already inside the acceptable area.
-        if isWithinRange(position: start, to: end, range: normalizedRange) {
+        if isWithinRange(start, of: end, range: range) {
             return [start]
         }
 
-        return astar(from: start, to: end, range: normalizedRange)
-    }
-
-    private func astarEntry(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
-        // Check if start and end positions are valid and walkable
-        guard isValidAndWalkable(position: start) && isValidAndWalkable(position: end) else {
+        let path = findPath(from: start, to: end)
+        guard let index = path.firstIndex(where: { isWithinRange($0, of: end, range: range) }) else {
             return []
         }
 
-        // If start and end are the same, return single point
-        if start == end {
-            return [start]
-        }
-
-        return astar(from: start, to: end, range: 0)
+        return Array(path.prefix(through: index))
     }
 
-    private func astar(from start: SIMD2<Int>, to end: SIMD2<Int>, range: Int) -> [SIMD2<Int>] {
-        var openSet: Set<PathNode> = []    // Nodes to explore
-        var closedSet: Set<PathNode> = []  // Nodes already explored
-        var allNodes: [SIMD2<Int> : PathNode] = [:]
-
-        let startNode = PathNode(position: start)
-        startNode.gScore = 0
-        startNode.hScore = heuristic(from: start, to: end, range: range)
-        startNode.fScore = startNode.hScore
-
-        openSet.insert(startNode)
-        allNodes[start] = startNode
-
-        while !openSet.isEmpty {
-            // Find node with lowest fScore (most promising)
-            let current = openSet.min { lhs, rhs in
-                // Prefer nodes with lower total estimated cost (f), then
-                // lower heuristic (h) so we reach diagonals sooner, and finally
-                // higher g so straights are pushed later in the path
-                if abs(lhs.fScore - rhs.fScore) > tieBreakerEpsilon {
-                    return lhs.fScore < rhs.fScore
-                }
-
-                if abs(lhs.hScore - rhs.hScore) > tieBreakerEpsilon {
-                    return lhs.hScore < rhs.hScore
-                }
-
-                return lhs.gScore > rhs.gScore
-            }!
-
-            // Check if we reached the destination
-            if range == 0 {
-                if current.position == end {
-                    return reconstructPath(node: current)
-                }
-            } else if isWithinRange(position: current.position, to: end, range: range) {
-                return reconstructPath(node: current)
-            }
-
-            // Move current from open to closed set
-            openSet.remove(current)
-            closedSet.insert(current)
-
-            // Check all neighbors
-            for neighbor in neighbors(of: current.position) {
-                // Skip unwalkable tiles
-                if !isValidAndWalkable(position: neighbor) {
-                    continue
-                }
-
-                // Get or create neighbor node
-                let neighborNode = allNodes[neighbor] ?? PathNode(position: neighbor)
-                if allNodes[neighbor] == nil {
-                    allNodes[neighbor] = neighborNode
-                }
-
-                // Skip if already fully explored
-                if closedSet.contains(neighborNode) {
-                    continue
-                }
-
-                // Calculate cost to reach this neighbor through current node
-                let tentativeGScore = current.gScore + distance(from: current.position, to: neighbor)
-
-                let isInOpenSet = openSet.contains(neighborNode)
-                if !isInOpenSet {
-                    // New node to explore
-                    openSet.insert(neighborNode)
-                } else if tentativeGScore >= neighborNode.gScore {
-                    // We already found a better path to this node
-                    continue
-                }
-
-                // This is the best path to this neighbor so far
-                neighborNode.parent = current
-                neighborNode.gScore = tentativeGScore
-
-                // Cache heuristic to reuse in tie-breaking
-                neighborNode.hScore = heuristic(from: neighbor, to: end, range: range)
-                neighborNode.fScore = tentativeGScore + neighborNode.hScore
-            }
-        }
-
-        return [] // No path found
-    }
-
-    private func neighbors(of position: SIMD2<Int>) -> [SIMD2<Int>] {
-        var neighbors: [SIMD2<Int>] = []
-
-        // 8-directional movement (including diagonals)
-        let directions: [SIMD2<Int>] = [
-            SIMD2(-1, -1), SIMD2(0, -1), SIMD2(1, -1),  // Top row
-            SIMD2(-1,  0),               SIMD2(1,  0),   // Middle row
-            SIMD2(-1,  1), SIMD2(0,  1), SIMD2(1,  1)   // Bottom row
-        ]
-
-        for direction in directions {
-            let neighbor = position &+ direction
-            if isInBounds(position: neighbor) {
-                neighbors.append(neighbor)
-            }
-        }
-
-        return neighbors
-    }
-
-    private func isInBounds(position: SIMD2<Int>) -> Bool {
-        return position.x >= 0 && position.x < mapGrid.width &&
-               position.y >= 0 && position.y < mapGrid.height
-    }
-
-    private func isValidAndWalkable(position: SIMD2<Int>) -> Bool {
-        guard isInBounds(position: position) else {
+    func canRequestMove(from start: SIMD2<Int>, to end: SIMD2<Int>) -> Bool {
+        let path = findPath(from: start, to: end)
+        guard !path.isEmpty else {
             return false
         }
 
-        return mapGrid[position].isWalkable
-    }
-
-    private func isWithinRange(position: SIMD2<Int>, to target: SIMD2<Int>, range: Int) -> Bool {
-        guard range >= 0 else { return false }
-        return max(abs(target.x - position.x), abs(target.y - position.y)) <= range
-    }
-
-    private func heuristic(from start: SIMD2<Int>, to end: SIMD2<Int>, range: Int) -> Float {
-        // Octile distance (allows diagonal movement)
-        let normalizedRange = max(range, 0)
-        let dx = max(abs(end.x - start.x) - normalizedRange, 0)
-        let dy = max(abs(end.y - start.y) - normalizedRange, 0)
-        return Float(max(dx, dy)) + Float(min(dx, dy)) * (sqrt(2) - 1)
-    }
-
-    private func distance(from start: SIMD2<Int>, to end: SIMD2<Int>) -> Float {
-        let dx = end.x - start.x
-        let dy = end.y - start.y
-
-        if abs(dx) == 1 && abs(dy) == 1 {
-            // Diagonal movement cost
-            return sqrt(2)
-        } else {
-            // Straight movement cost
-            return 1
+        let length = path.count - 1
+        guard length <= maxRequestPathLength else {
+            return false
         }
+
+        return length <= maxRequestPathLengthWithoutStraightLine || canMoveStraight(from: start, to: end)
     }
 
-    private func reconstructPath(node: PathNode) -> [SIMD2<Int>] {
+    func canMoveStraight(from start: SIMD2<Int>, to end: SIMD2<Int>) -> Bool {
+        var x0 = start.x
+        var y0 = start.y
+        var x1 = end.x
+        var y1 = end.y
+
+        var dx = x1 - x0
+        if dx < 0 {
+            swap(&x0, &x1)
+            swap(&y0, &y1)
+            dx = -dx
+        }
+        let dy = y1 - y0
+
+        let weight = dx > abs(dy) ? dx : abs(dy)
+        var wx = 0
+        var wy = 0
+
+        while x0 != x1 || y0 != y1 {
+            wx += dx
+            wy += dy
+            if wx >= weight {
+                wx -= weight
+                x0 += 1
+            }
+            if wy >= weight {
+                wy -= weight
+                y0 += 1
+            } else if wy < 0 {
+                wy += weight
+                y0 -= 1
+            }
+            if (x0 != x1 || y0 != y1) && !isPassable(x0, y0) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    private func isPassable(_ x: Int, _ y: Int) -> Bool {
+        guard x >= 0 && x < mapGrid.width - 1 && y >= 0 && y < mapGrid.height - 1 else {
+            return false
+        }
+
+        return mapGrid[SIMD2(x, y)].isWalkable
+    }
+
+    private func heuristic(_ x: Int, _ y: Int, _ end: SIMD2<Int>) -> Int {
+        moveCost * (abs(end.x - x) + abs(end.y - y))
+    }
+
+    private func isWithinRange(_ position: SIMD2<Int>, of target: SIMD2<Int>, range: Int) -> Bool {
+        max(abs(target.x - position.x), abs(target.y - position.y)) <= range
+    }
+
+    private func reconstructPath(search: PathSearch, endIndex: Int) -> [SIMD2<Int>] {
         var path: [SIMD2<Int>] = []
-        var current: PathNode? = node
-
-        while let currentNode = current {
-            path.append(currentNode.position)
-            current = currentNode.parent
+        var index: Int? = endIndex
+        while let currentIndex = index {
+            let node = search.nodes[currentIndex]
+            path.append(SIMD2(node.x, node.y))
+            index = node.parent
         }
 
-        return Array(path.reversed())
+        guard path.count - 1 <= maxWalkPath else {
+            return []
+        }
+
+        return path.reversed()
     }
 }
 
-private class PathNode: Equatable, Hashable {
-    static func == (lhs: PathNode, rhs: PathNode) -> Bool {
-        return lhs.position == rhs.position
+private struct PathSearch {
+    struct Node {
+        var x = 0
+        var y = 0
+        var gCost = 0
+        var fCost = 0
+        var parent: Int?
+        var isClosed = false
     }
 
-    let position: SIMD2<Int>
-    var parent: PathNode?
-    var gScore: Float = .infinity   // Actual cost from start to this node
-    var fScore: Float = .infinity   // gScore + heuristic (estimated total cost)
-    var hScore: Float = .infinity   // Cached heuristic for tie-breaking preference
-
-    init(position: SIMD2<Int>) {
-        self.position = position
+    static func index(x: Int, y: Int) -> Int {
+        (x + y * maxWalkPath) & (maxWalkPath * maxWalkPath - 1)
     }
 
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(position.x)
-        hasher.combine(position.y)
+    var nodes = [PathSearch.Node](repeating: PathSearch.Node(), count: maxWalkPath * maxWalkPath)
+    var heap: [Int] = []
+
+    mutating func addNode(x: Int, y: Int, gCost: Int, hCost: Int, parent: Int) -> Bool {
+        let index = PathSearch.index(x: x, y: y)
+
+        if nodes[index].x == x && nodes[index].y == y {
+            if gCost < nodes[index].gCost {
+                nodes[index].gCost = gCost
+                nodes[index].parent = parent
+                nodes[index].fCost = gCost + hCost
+                if nodes[index].isClosed {
+                    push(index)
+                } else if !update(index) {
+                    return false
+                }
+                nodes[index].isClosed = false
+            }
+            return true
+        }
+
+        if nodes[index].x != 0 || nodes[index].y != 0 {
+            return false
+        }
+
+        nodes[index] = PathSearch.Node(
+            x: x,
+            y: y,
+            gCost: gCost,
+            fCost: gCost + hCost,
+            parent: parent,
+            isClosed: false
+        )
+        push(index)
+        return true
+    }
+
+    mutating func push(_ node: Int) {
+        heap.append(node)
+        moveUp(from: heap.count - 1, toward: 0)
+    }
+
+    mutating func pop() -> Int? {
+        guard let top = heap.first else {
+            return nil
+        }
+
+        let last = heap.removeLast()
+        if !heap.isEmpty {
+            heap[0] = last
+            moveDown(from: 0)
+        }
+        return top
+    }
+
+    private mutating func update(_ node: Int) -> Bool {
+        guard let index = heap.firstIndex(of: node) else {
+            return false
+        }
+
+        moveUp(from: index, toward: 0)
+        moveDown(from: index)
+        return true
+    }
+
+    private mutating func moveUp(from index: Int, toward startIndex: Int) {
+        var i = index
+        while i > startIndex {
+            let parent = (i - 1) / 2
+            if compare(heap[parent], heap[i]) <= 0 {
+                break
+            }
+            heap.swapAt(parent, i)
+            i = parent
+        }
+    }
+
+    private mutating func moveDown(from index: Int) {
+        var i = index
+        var left = i * 2 + 1
+        while left < heap.count {
+            let right = i * 2 + 2
+            if right >= heap.count || compare(heap[left], heap[right]) < 0 {
+                heap.swapAt(i, left)
+                i = left
+            } else {
+                heap.swapAt(i, right)
+                i = right
+            }
+            left = i * 2 + 1
+        }
+        moveUp(from: i, toward: index)
+    }
+
+    private func compare(_ lhs: Int, _ rhs: Int) -> Int {
+        nodes[lhs].fCost - nodes[rhs].fCost
     }
 }
