@@ -97,6 +97,9 @@ final public class GameSession {
     @ObservationIgnored var mapClient: NetworkClient?
     @ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?
 
+    @ObservationIgnored private var serverClock = ServerClock()
+    @ObservationIgnored private var serverTimeRequestTime: ContinuousClock.Instant?
+
     public var mapScene: MapScene? {
         mapRuntime?.scene
     }
@@ -607,6 +610,9 @@ final public class GameSession {
 
         context.playerStatus = CharacterStatus(from: character)
 
+        serverClock = ServerClock()
+        serverTimeRequestTime = nil
+
         let client = NetworkClient(
             name: "Map",
             address: mapServer.ip,
@@ -670,8 +676,8 @@ final public class GameSession {
 
     private func handleMapPacket(_ packet: any DecodablePacket) {
         switch packet {
-        case _ as PACKET_ZC_ACCEPT_ENTER:
-            break
+        case let packet as PACKET_ZC_ACCEPT_ENTER:
+            serverClock.synchronize(serverTick: packet.startTime, receiveTime: .now)
         case _ as PACKET_ZC_REFUSE_ENTER:
             stopMapClient()
 
@@ -748,7 +754,11 @@ final public class GameSession {
             }
         case let packet as PACKET_ZC_NOTIFY_PLAYERMOVE:
             let moveData = MoveData(from: packet.moveData)
-            mapScene?.onPlayerMoved(startPosition: moveData.startPosition, endPosition: moveData.endPosition)
+            mapScene?.onPlayerMoved(
+                startTime: serverClock.time(forServerTick: packet.moveStartTime),
+                startPosition: moveData.startPosition,
+                endPosition: moveData.endPosition
+            )
         case let packet as PACKET_ZC_STATUS:
             let basicStatus = CharacterBasicStatus(from: packet)
             context.playerStatus.update(from: basicStatus)
@@ -915,7 +925,12 @@ final public class GameSession {
             let object = MapObject(from: packet)
             let moveData = MoveData(from: packet.MoveData)
             logger.info("Object \(object.objectID) moved from \(moveData.startPosition) to \(moveData.endPosition)")
-            mapScene?.onMapObjectMoved(object: object, startPosition: moveData.startPosition, endPosition: moveData.endPosition)
+            mapScene?.onMapObjectMoved(
+                object: object,
+                startTime: serverClock.time(forServerTick: packet.moveStartTime),
+                startPosition: moveData.startPosition,
+                endPosition: moveData.endPosition
+            )
         case let packet as PACKET_ZC_STOPMOVE:
             let objectID = packet.AID
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
@@ -1025,6 +1040,12 @@ final public class GameSession {
             break
         case _ as PACKET_ZC_ACH_UPDATE:
             break
+        case let packet as PACKET_ZC_NOTIFY_TIME:
+            if let requestTime = serverTimeRequestTime {
+                let now = ContinuousClock.now
+                serverClock.synchronize(serverTick: packet.time, receiveTime: now, roundTripTime: requestTime.duration(to: now))
+                serverTimeRequestTime = nil
+            }
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)
             let localizedMessage = context.messageStringTable.localizedMessageString(forID: message.messageID)
@@ -1051,26 +1072,30 @@ final public class GameSession {
         }
     }
 
-    /// Keep alive.
+    /// Keep alive and synchronize the server clock.
     ///
-    /// Send ``PACKET_CZ_REQUEST_TIME`` every 10 seconds.
+    /// Send ``PACKET_CZ_REQUEST_TIME`` every second for the first 5 seconds, then every 10 seconds.
+    /// The map server drops it until the map is loaded, so it restarts after each map load.
     private func startMapKeepalive() {
         guard let mapClient else {
             return
         }
 
-        let startTime = Date.now
+        let startTime = ContinuousClock.now
 
+        mapKeepaliveTask?.cancel()
         mapKeepaliveTask = Task {
-            do {
-                while !Task.isCancelled {
-                    try await Task.sleep(for: .seconds(10))
+            var requestCount = 0
+            while !Task.isCancelled {
+                let now = ContinuousClock.now
+                let clientTime = Int(startTime.duration(to: now).timeInterval * 1000)
+                serverTimeRequestTime = now
 
-                    let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(Date.now.timeIntervalSince(startTime)))
-                    mapClient.sendPacket(packet)
-                }
-            } catch {
-                logger.warning("\(error)")
+                let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(truncatingIfNeeded: clientTime))
+                mapClient.sendPacket(packet)
+
+                try? await Task.sleep(for: requestCount < 5 ? .seconds(1) : .seconds(10))
+                requestCount += 1
             }
         }
     }
@@ -1084,6 +1109,8 @@ final public class GameSession {
 
         let packet = PacketFactory.CZ_NOTIFY_ACTORINIT()
         mapClient.sendPacket(packet)
+
+        startMapKeepalive()
     }
 
     func resurrectInPlace() {

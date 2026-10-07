@@ -23,6 +23,7 @@ struct MapObjectMovementPlanner {
 
     func replan(
         existingMovement: MapObjectMovement?,
+        incomingStartTime: ContinuousClock.Instant,
         incomingStartPosition: SIMD2<Int>,
         incomingEndPosition: SIMD2<Int>,
         speed: Int,
@@ -39,7 +40,7 @@ struct MapObjectMovementPlanner {
             startPosition: incomingStartPosition,
             endPosition: incomingEndPosition,
             path: incomingPath,
-            startTime: now,
+            startTime: startTime(incomingStartTime, duration: fallbackDuration, at: now),
             duration: fallbackDuration,
             speed: speed,
             animationElapsedOffset: fallbackAnimationElapsedOffset
@@ -77,11 +78,22 @@ struct MapObjectMovementPlanner {
 
         var total: Duration = .zero
         for index in 1..<path.count {
-            let direction = SpriteDirection(sourcePosition: path[index - 1], targetPosition: path[index])
-            let stepMilliseconds = direction.isDiagonal ? Int((Double(speed) * sqrt(2)).rounded()) : speed
-            total += .milliseconds(stepMilliseconds)
+            total += stepDuration(from: path[index - 1], to: path[index], speed: speed)
         }
         return total
+    }
+
+    private func startTime(
+        _ incomingStartTime: ContinuousClock.Instant,
+        duration: Duration,
+        at now: ContinuousClock.Instant
+    ) -> ContinuousClock.Instant {
+        let elapsed = incomingStartTime.duration(to: now)
+        guard elapsed > .zero && elapsed <= duration * 4 else {
+            return now
+        }
+
+        return now - min(elapsed, duration)
     }
 
     private func movementPath(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) -> [SIMD2<Int>] {

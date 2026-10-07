@@ -8,6 +8,11 @@
 import RagnarokSprite
 import simd
 
+func stepDuration(from sourcePosition: SIMD2<Int>, to targetPosition: SIMD2<Int>, speed: Int) -> Duration {
+    let direction = SpriteDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
+    return .milliseconds(direction.isDiagonal ? speed * 14 / 10 : speed)
+}
+
 public struct MapObjectMovement: Sendable {
     public struct Step: Sendable {
         public let sourcePosition: SIMD2<Int>
@@ -173,9 +178,7 @@ private struct MovementPathProgress {
         duration: Duration
     ) {
         self.stepDurations = (1..<path.count).map { index in
-            let direction = SpriteDirection(sourcePosition: path[index - 1], targetPosition: path[index])
-            let stepMilliseconds = direction.isDiagonal ? Int((Double(speed) * sqrt(2)).rounded()) : speed
-            return .milliseconds(stepMilliseconds)
+            stepDuration(from: path[index - 1], to: path[index], speed: speed)
         }
         self.startTime = startTime
         self.duration = duration

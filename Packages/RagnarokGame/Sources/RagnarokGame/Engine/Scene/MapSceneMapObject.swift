@@ -207,6 +207,7 @@ final class MapSceneMapObject {
     }
 
     func replanMovement(
+        startTime: ContinuousClock.Instant,
         startPosition: SIMD2<Int>,
         endPosition: SIMD2<Int>,
         speed: Int,
@@ -216,6 +217,7 @@ final class MapSceneMapObject {
         let planner = MapObjectMovementPlanner(pathFinder: pathFinder)
         var planned = planner.replan(
             existingMovement: movement,
+            incomingStartTime: startTime,
             incomingStartPosition: startPosition,
             incomingEndPosition: endPosition,
             speed: speed,

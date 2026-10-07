@@ -69,9 +69,10 @@ extension MapScene {
         combatTexts.append(combatText)
     }
 
-    public func onPlayerMoved(startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+    public func onPlayerMoved(startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let movement = moveObject(
             objectID: player.objectID,
+            startTime: startTime,
             startPosition: startPosition,
             endPosition: endPosition
         )
@@ -148,7 +149,7 @@ extension MapScene {
         }
     }
 
-    public func onMapObjectMoved(object: MapObject, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+    public func onMapObjectMoved(object: MapObject, startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let isNew = objects[object.objectID] == nil
 
         if isNew {
@@ -175,6 +176,7 @@ extension MapScene {
 
         _ = moveObject(
             objectID: object.objectID,
+            startTime: startTime,
             startPosition: startPosition,
             endPosition: endPosition
         )
@@ -549,13 +551,14 @@ extension MapScene {
         }
     }
 
-    func moveObject(objectID: GameObjectID, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovement? {
+    func moveObject(objectID: GameObjectID, startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovement? {
         guard let object = objects[objectID] else {
             return nil
         }
 
         let now = ContinuousClock.now
         let movement = object.replanMovement(
+            startTime: startTime,
             startPosition: startPosition,
             endPosition: endPosition,
             speed: object.speed,
