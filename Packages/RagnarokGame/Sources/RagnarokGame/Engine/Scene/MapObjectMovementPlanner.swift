@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-import RagnarokSprite
 import simd
 
 struct MapObjectMovementPlanner {
@@ -23,6 +22,7 @@ struct MapObjectMovementPlanner {
 
     func replan(
         existingMovement: MapObjectMovement?,
+        currentPosition: SIMD2<Int>,
         incomingStartTime: ContinuousClock.Instant,
         incomingStartPosition: SIMD2<Int>,
         incomingEndPosition: SIMD2<Int>,
@@ -30,44 +30,58 @@ struct MapObjectMovementPlanner {
         at now: ContinuousClock.Instant
     ) -> MapObjectMovement {
         let incomingPath = movementPath(from: incomingStartPosition, to: incomingEndPosition)
-        let fallbackAnimationElapsedOffset = if let existingMovement {
-            existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
-        } else {
-            Duration.zero
+        let incomingDuration = movementDuration(path: incomingPath, speed: speed)
+        let arrivalTime = startTime(incomingStartTime, duration: incomingDuration, at: now) + incomingDuration
+
+        var origin = MapObjectMovement.Location(position: currentPosition, point: SIMD2<Float>(currentPosition))
+        var animationElapsedOffset = Duration.zero
+        if let existingMovement, let location = existingMovement.location(at: now) {
+            origin = location
+            animationElapsedOffset = existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
         }
-        let fallbackDuration = movementDuration(path: incomingPath, speed: speed)
-        let fallbackMovement = MapObjectMovement(
-            startPosition: incomingStartPosition,
-            endPosition: incomingEndPosition,
-            path: incomingPath,
-            startTime: startTime(incomingStartTime, duration: fallbackDuration, at: now),
-            duration: fallbackDuration,
+
+        var waypoints = incomingPath
+        let startOffset = abs(SIMD2<Float>(incomingStartPosition) - origin.point)
+        if max(startOffset.x, startOffset.y) > 1 {
+            let nearestPosition = SIMD2<Int>(origin.point.rounded(.toNearestOrAwayFromZero))
+            let nearestOffset = incomingStartPosition &- nearestPosition
+            let isNearStart = max(abs(nearestOffset.x), abs(nearestOffset.y)) <= 16
+            let nearestPath = isNearStart ? findPath(nearestPosition, incomingEndPosition) : []
+            if nearestPath.isEmpty {
+                origin = MapObjectMovement.Location(position: incomingStartPosition, point: SIMD2<Float>(incomingStartPosition))
+            } else {
+                waypoints = nearestPath.count > 1 ? Array(nearestPath.dropFirst()) : nearestPath
+            }
+        } else {
+            while waypoints.count >= 2 {
+                let sourcePoint = SIMD2<Float>(waypoints[0])
+                let targetPoint = SIMD2<Float>(waypoints[1])
+                guard simd_dot(origin.point - sourcePoint, targetPoint - sourcePoint) > 0 else {
+                    break
+                }
+                waypoints.removeFirst()
+            }
+        }
+
+        if let firstWaypoint = waypoints.first, origin.point == SIMD2<Float>(firstWaypoint) {
+            origin = MapObjectMovement.Location(position: firstWaypoint, point: origin.point)
+            waypoints.removeFirst()
+        }
+
+        let stepDurations = fixedStepDurations(
+            origin: origin,
+            waypoints: waypoints,
             speed: speed,
-            animationElapsedOffset: fallbackAnimationElapsedOffset
+            arrivalTime: arrivalTime,
+            at: now
         )
 
-        guard let existingMovement else {
-            return fallbackMovement
-        }
-
-        guard let nextStep = existingMovement.nextStep(at: now) else {
-            return fallbackMovement
-        }
-
-        let nextPosition = nextStep.position
-        let suffixPath = movementPath(from: nextPosition, to: incomingEndPosition)
-        let prefixPath = Array(existingMovement.path.prefix(nextStep.index + 1))
-        let fullPath = prefixPath + Array(suffixPath.dropFirst())
-        let duration = movementDuration(path: fullPath, speed: speed)
-
         return MapObjectMovement(
-            startPosition: existingMovement.startPosition,
-            endPosition: incomingEndPosition,
-            path: fullPath,
-            startTime: existingMovement.startTime,
-            duration: duration,
-            speed: speed,
-            animationElapsedOffset: existingMovement.animationElapsedOffset
+            origin: origin,
+            waypoints: waypoints,
+            stepDurations: stepDurations,
+            startTime: now,
+            animationElapsedOffset: animationElapsedOffset
         )
     }
 
@@ -94,6 +108,34 @@ struct MapObjectMovementPlanner {
         }
 
         return now - min(elapsed, duration)
+    }
+
+    private func fixedStepDurations(
+        origin: MapObjectMovement.Location,
+        waypoints: [SIMD2<Int>],
+        speed: Int,
+        arrivalTime: ContinuousClock.Instant,
+        at now: ContinuousClock.Instant
+    ) -> [Duration] {
+        guard !waypoints.isEmpty else {
+            return []
+        }
+
+        let stepDurations = waypoints.indices.map { index in
+            if index == 0 {
+                stepDuration(from: origin.point, to: waypoints[0], speed: speed)
+            } else {
+                stepDuration(from: waypoints[index - 1], to: waypoints[index], speed: speed)
+            }
+        }
+
+        let totalDuration = stepDurations.reduce(.zero, +)
+        let difference = min(max(now.duration(to: arrivalTime) - totalDuration, .milliseconds(-2500)), .milliseconds(2500))
+        let adjustment = difference / stepDurations.count
+
+        return stepDurations.map { stepDuration in
+            max(stepDuration + adjustment, .milliseconds(10))
+        }
     }
 
     private func movementPath(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) -> [SIMD2<Int>] {

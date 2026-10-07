@@ -6,6 +6,7 @@
 //
 
 import RagnarokFileFormats
+import simd
 
 struct MapGrid {
     var width: Int
@@ -56,6 +57,24 @@ struct MapGrid {
         return [
             Float(gridPosition.x) + 0.5,
             Float(gridPosition.y) + 0.5,
+            altitude,
+        ]
+    }
+
+    func worldPosition(at gridPoint: SIMD2<Float>) -> SIMD3<Float> {
+        let point = gridPoint + 0.5
+        let x = min(max(Int(point.x.rounded(.down)), 0), width - 1)
+        let y = min(max(Int(point.y.rounded(.down)), 0), height - 1)
+        let fraction = simd_clamp(point - SIMD2<Float>(Float(x), Float(y)), .zero, .one)
+
+        let cell = self[SIMD2(x, y)]
+        let bottomAltitude = cell.bottomLeftAltitude + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * fraction.x
+        let topAltitude = cell.topLeftAltitude + (cell.topRightAltitude - cell.topLeftAltitude) * fraction.x
+        let altitude = bottomAltitude + (topAltitude - bottomAltitude) * fraction.y
+
+        return [
+            point.x,
+            point.y,
             altitude,
         ]
     }

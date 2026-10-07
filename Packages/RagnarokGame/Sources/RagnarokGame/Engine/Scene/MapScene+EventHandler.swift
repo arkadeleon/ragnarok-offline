@@ -171,7 +171,6 @@ extension MapScene {
             )
         } else {
             objects[object.objectID]?.speed = object.speed
-            objects[object.objectID]?.gridPosition = endPosition
         }
 
         _ = moveObject(
@@ -186,8 +185,6 @@ extension MapScene {
         if objects[objectID] != nil {
             stopObject(objectID: objectID, at: position)
         }
-
-        objects[objectID]?.gridPosition = position
 
         if objectID == player.objectID, let action = pendingArrivalAction {
             arrivalTask?.cancel()
@@ -580,8 +577,7 @@ extension MapScene {
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
         if let object = objects[objectID] {
-            object.gridPosition = position
-            object.stopMovement()
+            object.stopMovement(at: position)
             object.perform(.idle, completion: .indefinite)
         }
     }

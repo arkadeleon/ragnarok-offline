@@ -500,12 +500,8 @@ extension MapScene {
     }
 
     func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
-        if let step = object.movement?.currentStep {
-            mix(
-                mapGrid.worldPosition(for: step.sourcePosition),
-                mapGrid.worldPosition(for: step.targetPosition),
-                t: step.fraction
-            )
+        if let movement = object.movement, movement.isMoving {
+            mapGrid.worldPosition(at: movement.currentLocation.point)
         } else {
             mapGrid.worldPosition(for: object.gridPosition)
         }

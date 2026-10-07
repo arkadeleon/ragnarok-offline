@@ -70,13 +70,17 @@ public enum SpriteDirection: Int, CaseIterable, CustomStringConvertible, Sendabl
     }
 
     public init(sourcePosition: SIMD2<Int>, targetPosition: SIMD2<Int>) {
-        let delta = targetPosition &- sourcePosition
+        self.init(sourcePosition: SIMD2<Float>(sourcePosition), targetPosition: SIMD2<Float>(targetPosition))
+    }
+
+    public init(sourcePosition: SIMD2<Float>, targetPosition: SIMD2<Float>) {
+        let delta = targetPosition - sourcePosition
         guard delta != .zero else {
             self = .south
             return
         }
 
-        let angle = atan2(Float(delta.y), Float(delta.x))
+        let angle = atan2(delta.y, delta.x)
         let octant = Int((angle / (.pi / 4)).rounded())
         let normalizedOctant = ((octant % 8) + 8) % 8
 
