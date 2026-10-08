@@ -10,6 +10,9 @@ import SwiftUI
 /// A virtual thumbstick: drag anywhere in the circle to move the inner knob,
 /// which snaps back to center on release.
 ///
+/// The knob moves by how far the finger drags from where it first touched,
+/// so touching off center does not move the knob.
+///
 /// ```swift
 /// @State private var joystickValue: CGPoint = .zero
 ///
@@ -46,8 +49,8 @@ public struct ThumbstickView: View {
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
-                        let offsetX = value.location.x - largeRadius
-                        let offsetY = value.location.y - largeRadius
+                        let offsetX = value.translation.width
+                        let offsetY = value.translation.height
                         let distance = hypot(offsetX, offsetY)
                         let angle = atan2(offsetY, offsetX)
                         let maxDistance = smallCircleCenter.x
