@@ -92,9 +92,10 @@
 - [ ] **P1** 聊天颜色
   - 现状：`ChatMessage.color` 和 `MessageCenter.MessageType` 在 UI 里一律渲染成白色。
   - 需要：按消息类型着色，并支持 NPC 自定义颜色和 `ZC_MSG_COLOR`。
-- [ ] **P1** 时间同步
-  - 现状：发出了 `CZ_REQUEST_TIME`，但没有处理 `ZC_NOTIFY_TIME` 回包。
-  - 需要：用服务器 tick 校准移动和动作时间。
+- [x] **P1** 时间同步
+  - 处理 `ZC_NOTIFY_TIME`，按往返时间的一半把服务器 tick 换算成本地时间，只采用往返时间最短的样本。进图时先用 `ZC_ACCEPT_ENTER.startTime` 粗略同步。
+  - `CZ_REQUEST_TIME` 改为发送毫秒。进图后每秒发一次、连发 5 次，之后每 10 秒一次。地图加载期间服务端会丢掉这个包，所以每次加载完地图都重新开始。
+  - 移动包的 `moveStartTime` 换算成本地时间，用来对齐起步和到达时间。动作时间还没有用服务器 tick 校准。
   - 参考：`Engine/MapEngine.js#onPong`
 - [ ] **P1** 地图加载完成后的收尾，对齐 roBrowser `onMapChange`
   - `PACKETVER >= 20130320` 时需要发送 `CZ_BLOCKING_PLAY_CANCEL`。
@@ -979,7 +980,7 @@
 
 - **LoginEngine**：`AC_REFUSE_LOGIN_EX`、`AC_REFUSE_LOGIN_USA`、`AC_LOGIN_TAREN_REFUSE(2)`
 - **CharEngine**：`HC_SECOND_PASSWD_LOGIN`、`HC_ACCEPT_ENTER_NEO_UNION_LIST(2)`、`HC_ACCEPT_ENTER_NEO_UNION_HEADER`、`HC_CHARLIST_NOTIFY`、`HC_REFUSE_SELECTCHAR`、`HC_ACCEPT_DELETECHAR`、`HC_REFUSE_DELETECHAR`、`HC_ACCEPT_MAKECHAR_NEO_UNION`（旧版）、`HC_DELETE_CHAR3_CANCEL`（空处理）、`HC_BLOCK_CHARACTER`（空处理）
-- **MapEngine**：`ZC_NPCACK_SERVERMOVE(2)`、`ZC_ACCEPT_QUIT`、`ZC_REFUSE_QUIT`、`ZC_NOTIFY_TIME`、`ZC_CONFIG`、`ZC_CONFIG_NOTIFY(1–4)`
+- **MapEngine**：`ZC_NPCACK_SERVERMOVE(2)`、`ZC_ACCEPT_QUIT`、`ZC_REFUSE_QUIT`、`ZC_CONFIG`、`ZC_CONFIG_NOTIFY(1–4)`
 - **Main**：`ZC_BROADCAST(2)`、`ZC_MSG`、`ZC_MSG_COLOR`、`ZC_ATTACK_FAILURE_FOR_DISTANCE`、`ZC_ACTION_FAILURE`、`ZC_STATUS_CHANGE_ACK`、`ZC_NOTIFY_CARTITEM_COUNTINFO`、`ZC_UPDATE_MAPINFO`、`ZC_USER_COUNT`、`ZC_PERSONAL_INFORMATION(2)`、`ZC_ACK_STATUS_GM`、`ZC_ACK_RANKING(2)`、`ZC_ALCHEMIST_RANK`、`ZC_BLACKSMITH_RANK`、`ZC_TAEKWON_RANK`、`ZC_KILLER_RANK`
 - **MapState**：`ZC_MAPPROPERTY(_R2)`、`ZC_NOTIFY_MAPPROPERTY(2)`、`ZC_NOTIFY_RANKING`
 - **Entity**
