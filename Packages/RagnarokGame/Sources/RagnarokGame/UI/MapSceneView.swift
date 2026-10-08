@@ -23,9 +23,7 @@ struct MapSceneView: View {
     @State private var screenWidth: CGFloat = 320
     @State private var chatBoxOffsetY: CGFloat = 0
     @State private var presentedMenuItem: MenuItem?
-    @State private var movementValue: CGPoint = .zero
-
-    private let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
+    @State private var joystickValue: CGPoint = .zero
 
     var body: some View {
         ZStack {
@@ -47,11 +45,11 @@ struct MapSceneView: View {
         }
         .overlay(alignment: .bottomLeading) {
             #if os(iOS)
-            ThumbstickView(value: $movementValue)
+            ThumbstickView(value: $joystickValue)
                 .padding(.leading, 16)
                 .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
-                .onReceive(timer) { _ in
-                    runtime.scene.handleMovement(movementValue)
+                .onChange(of: joystickValue) { _, newValue in
+                    runtime.scene.joystickValue = newValue
                 }
             #elseif os(macOS)
             ChatBoxView()

@@ -8,13 +8,13 @@
 import RagnarokSprite
 import simd
 
-/// How long the server takes to walk one cell. Diagonal steps take `speed * 14 / 10`, matching the server.
+/// The time the server takes to walk one cell. A diagonal step takes `speed * 14 / 10`, the same as on the server.
 func stepDuration(from sourcePosition: SIMD2<Int>, to targetPosition: SIMD2<Int>, speed: Int) -> Duration {
     let direction = SpriteDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
     return .milliseconds(direction.isDiagonal ? speed * 14 / 10 : speed)
 }
 
-/// How long it takes to walk from a point that may lie between cells to a cell.
+/// The time it takes to walk from a point to a cell. The point can be between two cells.
 func stepDuration(from sourcePoint: SIMD2<Float>, to targetPosition: SIMD2<Int>, speed: Int) -> Duration {
     let sourcePosition = SIMD2<Int>(sourcePoint)
     if SIMD2<Float>(sourcePosition) == sourcePoint {
@@ -27,11 +27,21 @@ func stepDuration(from sourcePoint: SIMD2<Float>, to targetPosition: SIMD2<Int>,
 
 public struct MapObjectMovement: Sendable {
     public struct Location: Sendable {
-        /// The cell being left. Like the server, an object only enters a cell when it arrives.
+        /// The cell the object is leaving. Like on the server, the object is not in the next cell until it gets there.
         public let position: SIMD2<Int>
 
-        /// The exact position in grid coordinates.
+        /// The exact position on the grid. It can be between two cells.
         public let point: SIMD2<Float>
+    }
+
+    private struct Step {
+        /// The index of the waypoint the object is walking to.
+        let index: Int
+        let source: MapObjectMovement.Location
+        let targetPosition: SIMD2<Int>
+
+        /// How much of the step is done, from 0 to 1.
+        let fraction: Float
     }
 
     public let origin: MapObjectMovement.Location
@@ -55,9 +65,9 @@ public struct MapObjectMovement: Sendable {
         waypoints.last ?? origin.position
     }
 
-    var finalDirection: SpriteDirection {
+    var finalDirection: SpriteDirection? {
         guard let targetPosition = waypoints.last else {
-            return .south
+            return nil
         }
 
         let sourcePoint = waypoints.count >= 2 ? SIMD2<Float>(waypoints[waypoints.count - 2]) : origin.point
@@ -90,11 +100,12 @@ public struct MapObjectMovement: Sendable {
             return nil
         }
 
-        let point = mix(step.sourcePoint, SIMD2<Float>(step.targetPosition), t: step.fraction)
-        return MapObjectMovement.Location(position: step.sourcePosition, point: point)
+        let point = mix(step.source.point, SIMD2<Float>(step.targetPosition), t: step.fraction)
+        return MapObjectMovement.Location(position: step.source.position, point: point)
     }
 
-    /// A short walk to the position the server stopped at, or `nil` if it is more than one cell away.
+    /// Returns a short walk to the cell where the server stopped.
+    /// Returns `nil` if that cell is more than one cell away.
     func stopped(at position: SIMD2<Int>, speed: Int, at time: ContinuousClock.Instant) -> MapObjectMovement? {
         guard let origin = location(at: time) else {
             return nil
@@ -114,6 +125,31 @@ public struct MapObjectMovement: Sendable {
         )
     }
 
+    /// Returns this walk, but stopping at `position`.
+    /// Returns `nil` if the walk does not reach `position` after `time`.
+    func truncated(at position: SIMD2<Int>, after time: ContinuousClock.Instant) -> MapObjectMovement? {
+        guard let step = step(at: time), let index = waypoints[step.index...].firstIndex(of: position) else {
+            return nil
+        }
+
+        return MapObjectMovement(
+            origin: origin,
+            waypoints: Array(waypoints[...index]),
+            stepDurations: Array(stepDurations[...index]),
+            startTime: startTime,
+            animationElapsedOffset: animationElapsedOffset
+        )
+    }
+
+    /// The cells the object has not reached yet, starting with the cell it is walking to.
+    func upcomingPositions(at time: ContinuousClock.Instant) -> ArraySlice<SIMD2<Int>> {
+        guard let step = step(at: time) else {
+            return []
+        }
+
+        return waypoints[step.index...]
+    }
+
     func nextPosition(at time: ContinuousClock.Instant) -> SIMD2<Int>? {
         step(at: time)?.targetPosition
     }
@@ -128,12 +164,12 @@ public struct MapObjectMovement: Sendable {
         }
 
         currentLocation = location
-        direction = SpriteDirection(sourcePosition: step.sourcePoint, targetPosition: SIMD2<Float>(step.targetPosition))
+        direction = SpriteDirection(sourcePosition: step.source.point, targetPosition: SIMD2<Float>(step.targetPosition))
         animationElapsedTime = max(startTime.duration(to: time), .zero) + animationElapsedOffset
         isMoving = true
     }
 
-    private func step(at time: ContinuousClock.Instant) -> (sourcePosition: SIMD2<Int>, sourcePoint: SIMD2<Float>, targetPosition: SIMD2<Int>, fraction: Float)? {
+    private func step(at time: ContinuousClock.Instant) -> MapObjectMovement.Step? {
         let elapsed = startTime.duration(to: time)
         guard !waypoints.isEmpty, elapsed < duration else {
             return nil
@@ -153,10 +189,12 @@ public struct MapObjectMovement: Sendable {
             fraction = Float((elapsed - accumulated) / stepDurations[index])
         }
 
-        if index == 0 {
-            return (origin.position, origin.point, waypoints[0], fraction)
+        let source = if index == 0 {
+            origin
         } else {
-            return (waypoints[index - 1], SIMD2<Float>(waypoints[index - 1]), waypoints[index], fraction)
+            MapObjectMovement.Location(position: waypoints[index - 1], point: SIMD2<Float>(waypoints[index - 1]))
         }
+
+        return MapObjectMovement.Step(index: index, source: source, targetPosition: waypoints[index], fraction: fraction)
     }
 }

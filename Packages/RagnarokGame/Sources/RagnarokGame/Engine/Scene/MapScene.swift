@@ -54,6 +54,13 @@ public final class MapScene {
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
 
+    var joystickValue: CGPoint = .zero
+    private var joystickRequest: (target: SIMD2<Int>, octant: Int, time: ContinuousClock.Instant)?
+
+    /// The cell where the player stops after the joystick is let go. It is kept until the server agrees.
+    /// Until then, a late reply to an earlier request must not walk past this cell.
+    var joystickStopPosition: SIMD2<Int>?
+
     init(
         mapName: String,
         mapGrid: MapGrid,
@@ -143,51 +150,85 @@ public final class MapScene {
         pendingArrivalAction = nil
     }
 
-    func handleMovement(_ movementValue: CGPoint) {
-        let position = player.nextPosition(at: .now) ?? player.gridPosition
+    /// Walks in the joystick direction, like holding the mouse button in the official client.
+    /// It keeps asking for a cell a few steps ahead. When the joystick is let go, it stops at the next cell.
+    private func updateJoystickMovement(at now: ContinuousClock.Instant) {
+        let joystickInput = SIMD2<Float>(Float(joystickValue.x), Float(-joystickValue.y))
+        guard simd_length(joystickInput) > 15 else {
+            if joystickRequest != nil {
+                joystickRequest = nil
 
-        let joystickInput = SIMD2<Float>(
-            Float(movementValue.x),
-            Float(-movementValue.y)
-        )
-        let angle = -camera.azimuth
-        let cosAngle = cos(angle)
-        let sinAngle = sin(angle)
-        let worldInput = SIMD2<Float>(
-            joystickInput.x * cosAngle - joystickInput.y * sinAngle,
-            joystickInput.x * sinAngle + joystickInput.y * cosAngle
-        )
-
-        let deadZone: Float = 15
-        let stepLength: Float = 3
-        let inputMagnitude = simd_length(worldInput)
-        guard inputMagnitude > deadZone else {
+                // Stop one cell after the next cell, so the server tells other players.
+                // Stop now, because the server stops a little late.
+                let upcomingPositions = player.movement?.upcomingPositions(at: now) ?? []
+                if let stopPosition = upcomingPositions.dropFirst().first ?? upcomingPositions.first {
+                    player.endMovement(at: stopPosition, at: now)
+                    gameSession?.requestMove(to: stopPosition)
+                    joystickStopPosition = stopPosition
+                }
+            }
             return
         }
 
-        // Snap to 8 directions. Each straight direction covers 60° (±30° around its axis),
-        // and each diagonal direction covers the remaining 30° (±15° around its diagonal).
-        let absX = abs(worldInput.x)
-        let absY = abs(worldInput.y)
-        let signX = worldInput.x < 0 ? -1 : 1
-        let signY = worldInput.y < 0 ? -1 : 1
-        let gridOffset: SIMD2<Int>
-        if min(absX, absY) <= max(absX, absY) * tan(.pi / 6) {
-            let straightStepLength = Int(stepLength.rounded())
-            if absX >= absY {
-                gridOffset = SIMD2(signX * straightStepLength, 0)
-            } else {
-                gridOffset = SIMD2(0, signY * straightStepLength)
-            }
-        } else {
-            let diagonalStepLength = Int((stepLength / Float(2).squareRoot()).rounded())
-            gridOffset = SIMD2(signX * diagonalStepLength, signY * diagonalStepLength)
+        guard player.action.actionType != .sit else {
+            return
         }
 
-        if gridOffset != .zero {
-            let newPosition = position &+ gridOffset
-            gameSession?.requestMove(to: newPosition)
+        let azimuth = -camera.azimuth
+        let worldInput = SIMD2<Float>(
+            joystickInput.x * cos(azimuth) - joystickInput.y * sin(azimuth),
+            joystickInput.x * sin(azimuth) + joystickInput.y * cos(azimuth)
+        )
+        let octant = (Int((atan2(worldInput.y, worldInput.x) / (.pi / 4)).rounded()) + 8) % 8
+
+        if let joystickRequest {
+            guard joystickRequest.time.duration(to: now) >= .milliseconds(200) else {
+                return
+            }
+
+            // Ask again when the direction changes, or when the path is almost done.
+            let isTurning = octant != joystickRequest.octant
+            let remainingDuration = player.movement?.remainingDuration(at: now) ?? .zero
+            let isRunningOut = remainingDuration < .milliseconds(player.speed * 3)
+            guard isTurning || isRunningOut else {
+                return
+            }
+        } else {
+            arrivalTask?.cancel()
+            arrivalTask = nil
+            pendingArrivalAction = nil
+            tileSelector = nil
         }
+
+        // The server only changes its path when it gets to the next cell, so start looking from that cell.
+        let origin = player.nextPosition(at: now) ?? player.gridPosition
+        let target = joystickTarget(from: origin, toward: octant)
+        if let target, target != joystickRequest?.target {
+            requestMove(to: target)
+        }
+        joystickRequest = (target ?? origin, octant, now)
+    }
+
+    /// Finds the farthest cell, up to 6 cells away in one of the 8 directions,
+    /// that the player can walk to in a straight line and that the server accepts.
+    /// If the way is blocked, it tries the two directions next to it, so the player slides along walls.
+    private func joystickTarget(from origin: SIMD2<Int>, toward octant: Int) -> SIMD2<Int>? {
+        for octantOffset in [0, 1, -1] {
+            let angle = Float(octant + octantOffset) * .pi / 4
+            let step = SIMD2<Int>(Int(cos(angle).rounded()), Int(sin(angle).rounded()))
+            for distance in stride(from: 6, through: 1, by: -1) {
+                let target = origin &+ step &* distance
+                if pathFinder.canMoveStraight(from: origin, to: target) && pathFinder.canRequestMove(from: origin, to: target) {
+                    return target
+                }
+            }
+        }
+        return nil
+    }
+
+    private func requestMove(to position: SIMD2<Int>) {
+        joystickStopPosition = nil
+        gameSession?.requestMove(to: position)
     }
 
     func handleInteraction(_ result: HitTestResult) {
@@ -205,7 +246,7 @@ public final class MapScene {
                 } else {
                     tileSelector = nil
                 }
-                gameSession?.requestMove(to: position)
+                requestMove(to: position)
             }
         case .mapObject(let objectID):
             if let target = objects[objectID], !target.isDead {
@@ -281,7 +322,7 @@ public final class MapScene {
             pendingArrivalAction = { [weak self] in
                 self?.attackMonster(targetID: targetID)
             }
-            gameSession?.requestMove(to: destination)
+            requestMove(to: destination)
         case .noPath:
             break
         }
@@ -322,7 +363,7 @@ public final class MapScene {
         case .moveTo(let destination):
             arrivalTask?.cancel()
             pendingArrivalAction = onArrival
-            gameSession?.requestMove(to: destination)
+            requestMove(to: destination)
         case .noPath:
             break
         }
@@ -363,6 +404,8 @@ public final class MapScene {
 
 extension MapScene {
     func update(at now: ContinuousClock.Instant) {
+        updateJoystickMovement(at: now)
+
         let vanishedObjectIDs = objects.compactMap { objectID, object in
             object.death?.isVanished(at: now) == true ? objectID : nil
         }

@@ -233,6 +233,19 @@ final class MapSceneMapObject {
         movement = nil
     }
 
+    func endMovement(at position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
+        guard var movement = movement?.truncated(at: position, after: time) else {
+            return
+        }
+
+        movement.update(atTime: time)
+        self.movement = movement
+        perform(.walk, completion: .after(movement.remainingDuration(at: time), nextActionType: .idle), at: time)
+        if let finalDirection = movement.finalDirection {
+            setDirection(finalDirection)
+        }
+    }
+
     func stopMovement(at position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
         movement = movement?.stopped(at: position, speed: speed, at: time)
         movement?.update(atTime: time)

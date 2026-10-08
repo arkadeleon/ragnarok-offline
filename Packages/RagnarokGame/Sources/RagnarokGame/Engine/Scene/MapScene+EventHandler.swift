@@ -70,13 +70,22 @@ extension MapScene {
     }
 
     public func onPlayerMoved(startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        let movement = moveObject(
+        moveObject(
             objectID: player.objectID,
             startTime: startTime,
             startPosition: startPosition,
             endPosition: endPosition
         )
-        let remainingDuration = movement?.remainingDuration(at: .now) ?? .zero
+
+        if let joystickStopPosition {
+            if endPosition == joystickStopPosition {
+                self.joystickStopPosition = nil
+            } else {
+                player.endMovement(at: joystickStopPosition)
+            }
+        }
+
+        let remainingDuration = player.movement?.remainingDuration(at: .now) ?? .zero
 
         if pendingArrivalAction != nil {
             arrivalTask?.cancel()
@@ -173,7 +182,7 @@ extension MapScene {
             objects[object.objectID]?.speed = object.speed
         }
 
-        _ = moveObject(
+        moveObject(
             objectID: object.objectID,
             startTime: startTime,
             startPosition: startPosition,
@@ -548,9 +557,9 @@ extension MapScene {
         }
     }
 
-    func moveObject(objectID: GameObjectID, startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) -> MapObjectMovement? {
+    func moveObject(objectID: GameObjectID, startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         guard let object = objects[objectID] else {
-            return nil
+            return
         }
 
         let now = ContinuousClock.now
@@ -570,9 +579,9 @@ extension MapScene {
             completion: .after(remainingDuration, nextActionType: .idle),
             at: now
         )
-        object.setDirection(movement.finalDirection)
-
-        return movement
+        if let finalDirection = movement.finalDirection {
+            object.setDirection(finalDirection)
+        }
     }
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
