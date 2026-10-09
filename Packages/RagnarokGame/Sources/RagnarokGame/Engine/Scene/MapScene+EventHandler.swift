@@ -77,11 +77,11 @@ extension MapScene {
             endPosition: endPosition
         )
 
-        if let joystickStopPosition {
-            if endPosition == joystickStopPosition {
-                self.joystickStopPosition = nil
+        if let thumbstickStopPosition {
+            if endPosition == thumbstickStopPosition {
+                self.thumbstickStopPosition = nil
             } else {
-                player.endMovement(at: joystickStopPosition)
+                player.endMovement(at: thumbstickStopPosition)
             }
         }
 

@@ -7,7 +7,6 @@
 
 import Combine
 import SwiftUI
-import ThumbstickView
 
 struct MapSceneView: View {
     var runtime: MapSceneRuntime
@@ -23,7 +22,6 @@ struct MapSceneView: View {
     @State private var screenWidth: CGFloat = 320
     @State private var chatBoxOffsetY: CGFloat = 0
     @State private var presentedMenuItem: MenuItem?
-    @State private var joystickValue: CGPoint = .zero
 
     var body: some View {
         ZStack {
@@ -39,19 +37,14 @@ struct MapSceneView: View {
                         await dismissImmersiveSpace()
                     }
                 }
+            #elseif os(iOS)
+            MapView(runtime: runtime, isWidescreen: isWidescreen)
             #else
             MapView(runtime: runtime)
             #endif
         }
         .overlay(alignment: .bottomLeading) {
-            #if os(iOS)
-            ThumbstickView(value: $joystickValue)
-                .padding(.leading, 16)
-                .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
-                .onChange(of: joystickValue) { _, newValue in
-                    runtime.scene.joystickValue = newValue
-                }
-            #elseif os(macOS)
+            #if os(macOS)
             ChatBoxView()
                 .frame(width: 440)
             #endif
@@ -94,7 +87,7 @@ struct MapSceneView: View {
                 .padding(.top, 16)
                 .padding(.trailing, 16)
         }
-        .overlay(alignment: .bottom) {
+        .overlay(alignment: isWidescreen ? .bottomLeading : .bottom) {
             #if os(iOS)
             ChatBoxView()
                 .frame(width: chatBoxWidth)

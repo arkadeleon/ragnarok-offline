@@ -54,12 +54,12 @@ public final class MapScene {
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
 
-    var joystickValue: CGPoint = .zero
-    private var joystickRequest: (target: SIMD2<Int>, octant: Int, time: ContinuousClock.Instant)?
+    var thumbstickValue: CGPoint = .zero
+    private var thumbstickRequest: (target: SIMD2<Int>, octant: Int, time: ContinuousClock.Instant)?
 
-    /// The cell where the player stops after the joystick is let go. It is kept until the server agrees.
+    /// The cell where the player stops after the thumbstick is let go. It is kept until the server agrees.
     /// Until then, a late reply to an earlier request must not walk past this cell.
-    var joystickStopPosition: SIMD2<Int>?
+    var thumbstickStopPosition: SIMD2<Int>?
 
     init(
         mapName: String,
@@ -150,13 +150,13 @@ public final class MapScene {
         pendingArrivalAction = nil
     }
 
-    /// Walks in the joystick direction, like holding the mouse button in the official client.
-    /// It keeps asking for a cell a few steps ahead. When the joystick is let go, it stops at the next cell.
-    private func updateJoystickMovement(at now: ContinuousClock.Instant) {
-        let joystickInput = SIMD2<Float>(Float(joystickValue.x), Float(-joystickValue.y))
-        guard simd_length(joystickInput) > 15 else {
-            if joystickRequest != nil {
-                joystickRequest = nil
+    /// Walks in the thumbstick direction, like holding the mouse button in the official client.
+    /// It keeps asking for a cell a few steps ahead. When the thumbstick is let go, it stops at the next cell.
+    private func updateThumbstickMovement(at now: ContinuousClock.Instant) {
+        let thumbstickInput = SIMD2<Float>(Float(thumbstickValue.x), Float(-thumbstickValue.y))
+        guard simd_length(thumbstickInput) > 15 else {
+            if thumbstickRequest != nil {
+                thumbstickRequest = nil
 
                 // Stop one cell after the next cell, so the server tells other players.
                 // Stop now, because the server stops a little late.
@@ -164,7 +164,7 @@ public final class MapScene {
                 if let stopPosition = upcomingPositions.dropFirst().first ?? upcomingPositions.first {
                     player.endMovement(at: stopPosition, at: now)
                     gameSession?.requestMove(to: stopPosition)
-                    joystickStopPosition = stopPosition
+                    thumbstickStopPosition = stopPosition
                 }
             }
             return
@@ -176,18 +176,18 @@ public final class MapScene {
 
         let azimuth = -camera.azimuth
         let worldInput = SIMD2<Float>(
-            joystickInput.x * cos(azimuth) - joystickInput.y * sin(azimuth),
-            joystickInput.x * sin(azimuth) + joystickInput.y * cos(azimuth)
+            thumbstickInput.x * cos(azimuth) - thumbstickInput.y * sin(azimuth),
+            thumbstickInput.x * sin(azimuth) + thumbstickInput.y * cos(azimuth)
         )
         let octant = (Int((atan2(worldInput.y, worldInput.x) / (.pi / 4)).rounded()) + 8) % 8
 
-        if let joystickRequest {
-            guard joystickRequest.time.duration(to: now) >= .milliseconds(200) else {
+        if let thumbstickRequest {
+            guard thumbstickRequest.time.duration(to: now) >= .milliseconds(200) else {
                 return
             }
 
             // Ask again when the direction changes, or when the path is almost done.
-            let isTurning = octant != joystickRequest.octant
+            let isTurning = octant != thumbstickRequest.octant
             let remainingDuration = player.movement?.remainingDuration(at: now) ?? .zero
             let isRunningOut = remainingDuration < .milliseconds(player.speed * 3)
             guard isTurning || isRunningOut else {
@@ -202,17 +202,17 @@ public final class MapScene {
 
         // The server only changes its path when it gets to the next cell, so start looking from that cell.
         let origin = player.nextPosition(at: now) ?? player.gridPosition
-        let target = joystickTarget(from: origin, toward: octant)
-        if let target, target != joystickRequest?.target {
+        let target = thumbstickTarget(from: origin, toward: octant)
+        if let target, target != thumbstickRequest?.target {
             requestMove(to: target)
         }
-        joystickRequest = (target ?? origin, octant, now)
+        thumbstickRequest = (target ?? origin, octant, now)
     }
 
     /// Finds the farthest cell, up to 6 cells away in one of the 8 directions,
     /// that the player can walk to in a straight line and that the server accepts.
     /// If the way is blocked, it tries the two directions next to it, so the player slides along walls.
-    private func joystickTarget(from origin: SIMD2<Int>, toward octant: Int) -> SIMD2<Int>? {
+    private func thumbstickTarget(from origin: SIMD2<Int>, toward octant: Int) -> SIMD2<Int>? {
         for octantOffset in [0, 1, -1] {
             let angle = Float(octant + octantOffset) * .pi / 4
             let step = SIMD2<Int>(Int(cos(angle).rounded()), Int(sin(angle).rounded()))
@@ -227,7 +227,7 @@ public final class MapScene {
     }
 
     private func requestMove(to position: SIMD2<Int>) {
-        joystickStopPosition = nil
+        thumbstickStopPosition = nil
         gameSession?.requestMove(to: position)
     }
 
@@ -404,7 +404,7 @@ public final class MapScene {
 
 extension MapScene {
     func update(at now: ContinuousClock.Instant) {
-        updateJoystickMovement(at: now)
+        updateThumbstickMovement(at: now)
 
         let vanishedObjectIDs = objects.compactMap { objectID, object in
             object.death?.isVanished(at: now) == true ? objectID : nil

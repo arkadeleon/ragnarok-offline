@@ -13,21 +13,34 @@ import SwiftUI
 
 struct MapView: UIViewControllerRepresentable {
     var runtime: MapSceneRuntime
+    var isWidescreen: Bool
 
     func makeUIViewController(context: Context) -> MapViewController {
-        MapViewController(runtime: runtime)
+        let viewController = MapViewController(runtime: runtime)
+        viewController.isWidescreen = isWidescreen
+        return viewController
     }
 
     func updateUIViewController(_ viewController: MapViewController, context: Context) {
         viewController.update(runtime: runtime)
+        viewController.isWidescreen = isWidescreen
     }
 }
 
-final class MapViewController: UIViewController, MTKViewDelegate {
+final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecognizerDelegate {
     private weak var runtime: MapSceneRuntime?
     private let commandQueue: any MTLCommandQueue
     private let renderer: MapSceneRenderer
     private var mtkView: MTKView!
+
+    /// The thumbstick uses the left half of the map on a wide screen, and the bottom half otherwise.
+    /// The camera uses the other half.
+    var isWidescreen = true
+
+    private let thumbstickView = ThumbstickView()
+    private var thumbstickPanGestureRecognizer: UIPanGestureRecognizer!
+    private var cameraPanGestureRecognizer: UIPanGestureRecognizer!
+    private var twoFingerGestureRecognizers: [UIGestureRecognizer] = []
 
     private var baseAzimuth: Float = 0
     private var baseElevation: Float = 0
@@ -67,23 +80,36 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         view.addSubview(mtkView)
+        view.addSubview(thumbstickView)
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tapGestureRecognizer.delegate = self
         mtkView.addGestureRecognizer(tapGestureRecognizer)
+
+        thumbstickPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleThumbstickPan(_:)))
+        thumbstickPanGestureRecognizer.maximumNumberOfTouches = 1
+        thumbstickPanGestureRecognizer.delegate = self
+        mtkView.addGestureRecognizer(thumbstickPanGestureRecognizer)
+
+        cameraPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleCameraPan(_:)))
+        cameraPanGestureRecognizer.delegate = self
+        mtkView.addGestureRecognizer(cameraPanGestureRecognizer)
 
         let twoFingerTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTwoFingerTap(_:)))
         twoFingerTapGestureRecognizer.numberOfTouchesRequired = 2
+        twoFingerTapGestureRecognizer.delegate = self
         mtkView.addGestureRecognizer(twoFingerTapGestureRecognizer)
-
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        mtkView.addGestureRecognizer(panGestureRecognizer)
 
         let twoFingerPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleTwoFingerPan(_:)))
         twoFingerPanGestureRecognizer.minimumNumberOfTouches = 2
+        twoFingerPanGestureRecognizer.delegate = self
         mtkView.addGestureRecognizer(twoFingerPanGestureRecognizer)
 
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        pinchGestureRecognizer.delegate = self
         mtkView.addGestureRecognizer(pinchGestureRecognizer)
+
+        twoFingerGestureRecognizers = [twoFingerTapGestureRecognizer, twoFingerPanGestureRecognizer, pinchGestureRecognizer]
     }
 
     func update(runtime: MapSceneRuntime) {
@@ -141,17 +167,34 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         }
     }
 
-    @objc func handleTwoFingerTap(_ gestureRecognizer: UITapGestureRecognizer) {
-        guard let scene = runtime?.scene else {
-            return
-        }
+    @objc func handleThumbstickPan(_ gestureRecognizer: UIPanGestureRecognizer) {
+        let translation = gestureRecognizer.translation(in: mtkView)
 
-        scene.resetCamera()
-        baseAzimuth = scene.camera.azimuth
-        baseElevation = scene.camera.elevation
+        switch gestureRecognizer.state {
+        case .began, .changed:
+            if gestureRecognizer.state == .began {
+                let location = gestureRecognizer.location(in: mtkView)
+                let radius = ThumbstickView.radius
+                let bounds = mtkView.bounds
+                let touchDownPoint = CGPoint(
+                    x: min(max(location.x - translation.x, bounds.minX + radius), bounds.maxX - radius),
+                    y: min(max(location.y - translation.y, bounds.minY + radius), bounds.maxY - radius)
+                )
+                thumbstickView.show(at: touchDownPoint)
+            }
+
+            let distance = hypot(translation.x, translation.y)
+            let scale = min(ThumbstickView.knobTravel / max(distance, .leastNonzeroMagnitude), 1)
+            let offset = CGPoint(x: translation.x * scale, y: translation.y * scale)
+            thumbstickView.moveKnob(by: offset)
+            runtime?.scene.thumbstickValue = offset
+        default:
+            thumbstickView.isHidden = true
+            runtime?.scene.thumbstickValue = .zero
+        }
     }
 
-    @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
+    @objc func handleCameraPan(_ gestureRecognizer: UIPanGestureRecognizer) {
         guard let scene = runtime?.scene else {
             return
         }
@@ -165,6 +208,16 @@ final class MapViewController: UIViewController, MTKViewDelegate {
         default:
             break
         }
+    }
+
+    @objc func handleTwoFingerTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard let scene = runtime?.scene else {
+            return
+        }
+
+        scene.resetCamera()
+        baseAzimuth = scene.camera.azimuth
+        baseElevation = scene.camera.elevation
     }
 
     @objc func handleTwoFingerPan(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -200,6 +253,41 @@ final class MapViewController: UIViewController, MTKViewDelegate {
             scene.camera.distance = distance
         default:
             break
+        }
+    }
+
+    // MARK: - UIGestureRecognizerDelegate
+
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        // Two fingers on the map mean the player is zooming or tilting the camera, not moving.
+        if gestureRecognizer === thumbstickPanGestureRecognizer {
+            return twoFingerGestureRecognizers.allSatisfy { $0.numberOfTouches < 2 }
+        }
+
+        guard twoFingerGestureRecognizers.contains(where: { $0 === gestureRecognizer }) else {
+            return true
+        }
+
+        // Don't zoom or tilt the camera with a finger that is moving the player.
+        let thumbstickState = thumbstickPanGestureRecognizer.state
+        return thumbstickState != .began && thumbstickState != .changed
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        let isThumbstickInvolved = gestureRecognizer === thumbstickPanGestureRecognizer || otherGestureRecognizer === thumbstickPanGestureRecognizer
+        let isTwoFingerInvolved = twoFingerGestureRecognizers.contains { $0 === gestureRecognizer || $0 === otherGestureRecognizer }
+        return isThumbstickInvolved && !isTwoFingerInvolved
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let location = touch.location(in: mtkView)
+        let isOnThumbstickHalf = isWidescreen ? location.x < mtkView.bounds.midX : location.y >= mtkView.bounds.midY
+        if gestureRecognizer === thumbstickPanGestureRecognizer {
+            return isOnThumbstickHalf
+        } else if gestureRecognizer === cameraPanGestureRecognizer {
+            return !isOnThumbstickHalf
+        } else {
+            return true
         }
     }
 }

@@ -32,7 +32,6 @@ let package = Package(
         .package(path: "../RagnarokScript"),
         .package(path: "../RagnarokShaders"),
         .package(path: "../RagnarokSprite"),
-        .package(path: "../ThumbstickView"),
     ],
     targets: [
         .target(
@@ -52,7 +51,6 @@ let package = Package(
                 "RagnarokScript",
                 "RagnarokShaders",
                 "RagnarokSprite",
-                "ThumbstickView",
             ]
         ),
         .testTarget(
