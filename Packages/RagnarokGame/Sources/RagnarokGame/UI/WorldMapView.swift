@@ -472,9 +472,9 @@ private struct MapStackThumbnails: View {
                         MapPreviewImage(map: map, thumbnailPixelSize: CGSize(width: 30, height: 30))
                             .frame(width: 30, height: 30)
                             .background(Color(#colorLiteral(red: 0.06666666667, green: 0.06666666667, blue: 0.06666666667, alpha: 1)))
-                            .clipShape(RoundedRectangle(cornerRadius: 2))
+                            .clipShape(RoundedRectangle(cornerRadius: 2, style: .circular))
                             .overlay {
-                                RoundedRectangle(cornerRadius: 2)
+                                RoundedRectangle(cornerRadius: 2, style: .circular)
                                     .strokeBorder(map == selectedMap ? Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)))
                             }
                     }

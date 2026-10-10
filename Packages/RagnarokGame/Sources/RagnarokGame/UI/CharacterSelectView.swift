@@ -292,7 +292,7 @@ private struct CharacterSlotSelectionFrame: View {
             Rectangle()
                 .strokeBorder(Color(#colorLiteral(red: 0.4823529412, green: 0.5686274510, blue: 0.7725490196, alpha: 1)), lineWidth: 4)
 
-            UnevenRoundedRectangle(bottomTrailingRadius: 5)
+            UnevenRoundedRectangle(bottomTrailingRadius: 5, style: .circular)
                 .fill(Color(#colorLiteral(red: 0.4823529412, green: 0.5686274510, blue: 0.7725490196, alpha: 1)))
                 .offset(x: 4, y: 4)
                 .frame(width: 67, height: 18)

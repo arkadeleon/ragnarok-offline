@@ -38,6 +38,6 @@ struct GameContextMenuButton<Label>: View where Label: View {
         }
     }
     .frame(width: 120)
-    .background(RoundedRectangle(cornerRadius: 5).fill(Material.bar))
+    .background(RoundedRectangle(cornerRadius: 5, style: .circular).fill(Material.bar))
     .padding()
 }

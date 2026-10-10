@@ -275,9 +275,9 @@ private struct SkillPreview: View {
         }
         .padding(5)
         .frame(width: 280)
-        .background(RoundedRectangle(cornerRadius: 5).fill(Material.bar))
+        .background(RoundedRectangle(cornerRadius: 5, style: .circular).fill(Material.bar))
         .overlay {
-            RoundedRectangle(cornerRadius: 3)
+            RoundedRectangle(cornerRadius: 3, style: .circular)
                 .stroke(Color.gameBoxBorder, lineWidth: 1)
                 .padding(2)
         }
@@ -310,9 +310,9 @@ private struct SkillActions: View {
             }
         }
         .frame(width: 120)
-        .background(RoundedRectangle(cornerRadius: 5).fill(Material.bar))
+        .background(RoundedRectangle(cornerRadius: 5, style: .circular).fill(Material.bar))
         .overlay {
-            RoundedRectangle(cornerRadius: 3)
+            RoundedRectangle(cornerRadius: 3, style: .circular)
                 .stroke(Color.gameBoxBorder, lineWidth: 1)
                 .padding(2)
         }

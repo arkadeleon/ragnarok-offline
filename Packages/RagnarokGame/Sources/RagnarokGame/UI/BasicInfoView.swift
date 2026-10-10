@@ -117,9 +117,9 @@ private struct BasicInfoHPSPBar: View {
                     )
                     .frame(width: fraction)
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 4))
+                .clipShape(RoundedRectangle(cornerRadius: 4, style: .circular))
                 .overlay {
-                    RoundedRectangle(cornerRadius: 4)
+                    RoundedRectangle(cornerRadius: 4, style: .circular)
                         .strokeBorder(Color(#colorLiteral(red: 0.3686274510, green: 0.3725490196, blue: 0.3803921569, alpha: 1)))
                 }
                 .overlay {
@@ -153,7 +153,7 @@ private struct BasicInfoExpView: View {
             )
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(RoundedRectangle(cornerRadius: 3).fill(Color(#colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9176470588, alpha: 1))))
+        .background(RoundedRectangle(cornerRadius: 3, style: .circular).fill(Color(#colorLiteral(red: 0.8980392157, green: 0.9058823529, blue: 0.9176470588, alpha: 1))))
         .padding(.horizontal, 6)
         .padding(.vertical, 4)
     }

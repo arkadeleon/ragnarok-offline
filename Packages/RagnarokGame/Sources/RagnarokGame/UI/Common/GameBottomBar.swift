@@ -23,9 +23,9 @@ struct GameBottomBar<Actions>: View where Actions: View {
         .background {
             GameStripeView()
         }
-        .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3))
+        .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3, style: .circular))
         .overlay {
-            UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3)
+            UnevenRoundedRectangle(bottomLeadingRadius: 3, bottomTrailingRadius: 3, style: .circular)
                 .strokeBorder(Color.gameBoxBorder)
         }
     }

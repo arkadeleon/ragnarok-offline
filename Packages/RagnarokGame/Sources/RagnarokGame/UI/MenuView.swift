@@ -103,7 +103,7 @@ struct MenuView: View {
                 }
                 .padding(10)
                 .background(.black.opacity(0.5))
-                .clipShape(RoundedRectangle(cornerRadius: 3))
+                .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
             }
         }
     }
@@ -119,10 +119,10 @@ private struct MenuExpandButton: View {
 
     var body: some View {
         Button(action: action) {
-            RoundedRectangle(cornerRadius: 3)
+            RoundedRectangle(cornerRadius: 3, style: .circular)
                 .fill(.white)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 2)
+                    RoundedRectangle(cornerRadius: 2, style: .circular)
                         .fill(
                             LinearGradient(
                                 colors: [
@@ -154,4 +154,5 @@ private struct MenuExpandButton: View {
         // Perform action.
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .environment(GameContext.testing)
 }

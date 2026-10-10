@@ -70,7 +70,7 @@ struct ChatBoxView: View {
                     .padding(.horizontal, 6)
                     .frame(height: ChatBoxView.chatInputHeight)
                     .background(Color.white.opacity(0.8))
-                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
                     .focused($isFocused)
                     .onSubmit {
                         send(message)
@@ -114,7 +114,7 @@ struct ChatBoxView: View {
                 }
             }
             .background(Color.black.opacity(0.4))
-            .clipShape(RoundedRectangle(cornerRadius: 3))
+            .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
             .environment(\.colorScheme, .dark)
         }
         .geometryGroup()
@@ -231,7 +231,7 @@ private struct AtCommandShortcutListView: View {
                                         .frame(maxWidth: .infinity)
                                         .frame(height: 22)
                                         .background(Color.white.opacity(0.12))
-                                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                                        .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
                                         .contentShape(Rectangle())
                                 }
                                 .buttonStyle(.plain)

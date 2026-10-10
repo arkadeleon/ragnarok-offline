@@ -56,18 +56,18 @@ private struct BarView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             // Border
-            RoundedRectangle(cornerRadius: 1)
+            RoundedRectangle(cornerRadius: 1, style: .circular)
                 .fill(Color(#colorLiteral(red: 0.06274509804, green: 0.09411764706, blue: 0.6117647059, alpha: 1)))
                 .frame(width: barWidth, height: barHeight)
 
             // Background
-            RoundedRectangle(cornerRadius: 1)
+            RoundedRectangle(cornerRadius: 1, style: .circular)
                 .fill(Color(#colorLiteral(red: 0.2588235294, green: 0.2588235294, blue: 0.2588235294, alpha: 1)))
                 .frame(width: barWidth - 2, height: barHeight - 2)
                 .offset(x: 1)
 
             // Fill
-            RoundedRectangle(cornerRadius: 1)
+            RoundedRectangle(cornerRadius: 1, style: .circular)
                 .fill(fillColor)
                 .frame(width: max(0, (barWidth - 2) * percentage), height: barHeight - 2)
                 .offset(x: 1)
@@ -77,5 +77,5 @@ private struct BarView: View {
 
 #Preview {
     HPSPBarView(hp: 75, maxHp: 100, sp: 50, maxSp: 100, objectType: .pc)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
 }
