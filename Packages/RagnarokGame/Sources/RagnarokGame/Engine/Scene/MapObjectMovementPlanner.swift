@@ -24,9 +24,14 @@ struct MapObjectMovementPlanner {
 
         var origin = MapObjectMovement.Location(position: currentPosition, point: SIMD2<Float>(currentPosition))
         var animationElapsedOffset = Duration.zero
-        if let existingMovement, let location = existingMovement.location(at: now) {
-            origin = location
-            animationElapsedOffset = existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
+        if let existingMovement {
+            if let location = existingMovement.location(at: now) {
+                origin = location
+                animationElapsedOffset = existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
+            } else {
+                let endPosition = existingMovement.endPosition
+                origin = MapObjectMovement.Location(position: endPosition, point: SIMD2<Float>(endPosition))
+            }
         }
 
         var waypoints = incomingPath
