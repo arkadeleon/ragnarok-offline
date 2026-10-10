@@ -38,6 +38,8 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
     var isWidescreen = true
 
     private let thumbstickView = ThumbstickView()
+    private let thumbstickFeedbackGenerator = UISelectionFeedbackGenerator()
+    private var thumbstickOctant: Int?
     private var thumbstickPanGestureRecognizer: UIPanGestureRecognizer!
     private var cameraPanGestureRecognizer: UIPanGestureRecognizer!
     private var twoFingerGestureRecognizers: [UIGestureRecognizer] = []
@@ -181,15 +183,37 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
                     y: min(max(location.y - translation.y, bounds.minY + radius), bounds.maxY - radius)
                 )
                 thumbstickView.show(at: touchDownPoint)
+                thumbstickFeedbackGenerator.prepare()
             }
 
             let distance = hypot(translation.x, translation.y)
             let scale = min(ThumbstickView.knobTravel / max(distance, .leastNonzeroMagnitude), 1)
             let offset = CGPoint(x: translation.x * scale, y: translation.y * scale)
-            thumbstickView.moveKnob(by: offset)
             runtime?.scene.thumbstickValue = offset
+
+            let octant = runtime?.scene.thumbstickOctant
+            if let octant, octant != thumbstickOctant {
+                thumbstickFeedbackGenerator.selectionChanged()
+            }
+            thumbstickOctant = octant
+
+            guard let octant else {
+                thumbstickView.moveKnob(by: offset)
+                break
+            }
+
+            let snapAngle: CGFloat = .pi / 18
+            let boundaryAngle: CGFloat = .pi / 8
+            let azimuth = CGFloat(runtime?.scene.camera.azimuth ?? 0)
+            let octantAngle = CGFloat(octant) * .pi / 4 + azimuth
+            let angleFromOctant = remainder(atan2(-offset.y, offset.x) - octantAngle, .pi * 2)
+            let knobAngleFromOctant = min(max(abs(angleFromOctant) - snapAngle, 0) / (boundaryAngle - snapAngle) * boundaryAngle, abs(angleFromOctant))
+            let knobAngle = octantAngle + (angleFromOctant < 0 ? -knobAngleFromOctant : knobAngleFromOctant)
+            let knobDistance = hypot(offset.x, offset.y)
+            thumbstickView.moveKnob(by: CGPoint(x: cos(knobAngle) * knobDistance, y: -sin(knobAngle) * knobDistance))
         default:
             thumbstickView.isHidden = true
+            thumbstickOctant = nil
             runtime?.scene.thumbstickValue = .zero
         }
     }

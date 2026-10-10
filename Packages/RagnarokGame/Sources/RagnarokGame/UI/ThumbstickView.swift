@@ -56,4 +56,20 @@ final class ThumbstickView: UIView {
     }
 }
 
+#Preview {
+    let thumbstickView = ThumbstickView()
+    thumbstickView.isHidden = false
+    thumbstickView.translatesAutoresizingMaskIntoConstraints = false
+
+    let containerView = UIView()
+    containerView.addSubview(thumbstickView)
+    NSLayoutConstraint.activate([
+        thumbstickView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+        thumbstickView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+        thumbstickView.widthAnchor.constraint(equalToConstant: ThumbstickView.radius * 2),
+        thumbstickView.heightAnchor.constraint(equalToConstant: ThumbstickView.radius * 2),
+    ])
+    return containerView
+}
+
 #endif

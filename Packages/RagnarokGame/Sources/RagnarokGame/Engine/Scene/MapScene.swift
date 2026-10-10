@@ -54,7 +54,16 @@ public final class MapScene {
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
 
-    var thumbstickValue: CGPoint = .zero
+    var thumbstickValue: CGPoint = .zero {
+        didSet {
+            updateThumbstickOctant()
+        }
+    }
+
+    /// One of the 8 directions of the map grid that the thumbstick points to, or nil when the thumbstick is near the center.
+    /// It changes only when the thumbstick turns 10 degrees past the boundary, so it does not flicker near the boundary.
+    private(set) var thumbstickOctant: Int?
+
     private var thumbstickRequest: (target: SIMD2<Int>, octant: Int, time: ContinuousClock.Instant)?
 
     /// The cell where the player stops after the thumbstick is let go. It is kept until the server agrees.
@@ -150,11 +159,36 @@ public final class MapScene {
         pendingArrivalAction = nil
     }
 
+    private func updateThumbstickOctant() {
+        let thumbstickInput = SIMD2<Float>(Float(thumbstickValue.x), Float(-thumbstickValue.y))
+        guard simd_length(thumbstickInput) > 15 else {
+            thumbstickOctant = nil
+            return
+        }
+
+        let azimuth = -camera.azimuth
+        let worldInput = SIMD2<Float>(
+            thumbstickInput.x * cos(azimuth) - thumbstickInput.y * sin(azimuth),
+            thumbstickInput.x * sin(azimuth) + thumbstickInput.y * cos(azimuth)
+        )
+        let angle = atan2(worldInput.y, worldInput.x)
+
+        if let thumbstickOctant {
+            let angleFromOctant = remainder(angle - Float(thumbstickOctant) * .pi / 4, .pi * 2)
+            guard abs(angleFromOctant) >= .pi / 8 + .pi / 18 else {
+                return
+            }
+        }
+
+        thumbstickOctant = (Int((angle / (.pi / 4)).rounded()) + 8) % 8
+    }
+
     /// Walks in the thumbstick direction, like holding the mouse button in the official client.
     /// It keeps asking for a cell a few steps ahead. When the thumbstick is let go, it stops at the next cell.
     private func updateThumbstickMovement(at now: ContinuousClock.Instant) {
-        let thumbstickInput = SIMD2<Float>(Float(thumbstickValue.x), Float(-thumbstickValue.y))
-        guard simd_length(thumbstickInput) > 15 else {
+        updateThumbstickOctant()
+
+        guard let octant = thumbstickOctant else {
             if thumbstickRequest != nil {
                 thumbstickRequest = nil
 
@@ -173,13 +207,6 @@ public final class MapScene {
         guard player.action.actionType != .sit else {
             return
         }
-
-        let azimuth = -camera.azimuth
-        let worldInput = SIMD2<Float>(
-            thumbstickInput.x * cos(azimuth) - thumbstickInput.y * sin(azimuth),
-            thumbstickInput.x * sin(azimuth) + thumbstickInput.y * cos(azimuth)
-        )
-        let octant = (Int((atan2(worldInput.y, worldInput.x) / (.pi / 4)).rounded()) + 8) % 8
 
         if let thumbstickRequest {
             guard thumbstickRequest.time.duration(to: now) >= .milliseconds(200) else {
