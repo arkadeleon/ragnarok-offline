@@ -81,7 +81,7 @@ extension MapScene {
             if endPosition == thumbstickStopPosition {
                 self.thumbstickStopPosition = nil
             } else {
-                player.endMovement(at: thumbstickStopPosition)
+                player.truncateMovement(to: thumbstickStopPosition)
             }
         }
 
@@ -225,7 +225,7 @@ extension MapScene {
             startTime: .now,
             fadeDuration: object.type == .pc ? nil : .seconds(5)
         )
-        object.stopMovement()
+        object.movement = nil
         object.perform(.die, completion: .indefinite)
         cancelCast(for: object)
 
@@ -586,7 +586,7 @@ extension MapScene {
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
         if let object = objects[objectID] {
-            object.stopMovement(at: position)
+            object.stopMovement(on: position)
             object.perform(.idle, completion: .indefinite)
         }
     }

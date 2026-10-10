@@ -229,12 +229,8 @@ final class MapSceneMapObject {
         return planned
     }
 
-    func stopMovement() {
-        movement = nil
-    }
-
-    func endMovement(at position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
-        guard var movement = movement?.truncated(at: position, after: time) else {
+    func truncateMovement(to position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
+        guard var movement = movement?.truncated(to: position, at: time) else {
             return
         }
 
@@ -246,8 +242,8 @@ final class MapSceneMapObject {
         }
     }
 
-    func stopMovement(at position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
-        movement = movement?.stopped(at: position, speed: speed, at: time)
+    func stopMovement(on position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
+        movement = movement?.stopped(on: position, speed: speed, at: time)
         movement?.update(at: time)
         gridPosition = movement?.currentPosition ?? position
     }

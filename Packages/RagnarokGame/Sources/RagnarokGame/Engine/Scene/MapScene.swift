@@ -138,7 +138,7 @@ public final class MapScene {
         combatTexts.removeAll()
         tileSelector = nil
 
-        player.stopMovement()
+        player.movement = nil
         player.cast = nil
         player.gridPosition = position
         player.perform(.idle, completion: .indefinite)
@@ -162,7 +162,7 @@ public final class MapScene {
                 // Stop now, because the server stops a little late.
                 let upcomingPositions = player.movement?.upcomingPositions(at: now) ?? []
                 if let stopPosition = upcomingPositions.dropFirst().first ?? upcomingPositions.first {
-                    player.endMovement(at: stopPosition, at: now)
+                    player.truncateMovement(to: stopPosition, at: now)
                     gameSession?.requestMove(to: stopPosition)
                     thumbstickStopPosition = stopPosition
                 }
