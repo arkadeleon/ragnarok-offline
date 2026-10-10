@@ -20,9 +20,20 @@ final class PathFinder {
     }
 
     func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>) -> [SIMD2<Int>] {
+        guard isPassable(end.x, end.y) else {
+            return []
+        }
+
+        return searchPath(from: start, to: end, range: 0)
+    }
+
+    func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>, within range: Int) -> [SIMD2<Int>] {
+        searchPath(from: start, to: end, range: max(range, 0))
+    }
+
+    private func searchPath(from start: SIMD2<Int>, to end: SIMD2<Int>, range: Int) -> [SIMD2<Int>] {
         guard (0..<mapGrid.width).contains(start.x),
-              (0..<mapGrid.height).contains(start.y),
-              isPassable(end.x, end.y) else {
+              (0..<mapGrid.height).contains(start.y) else {
             return []
         }
 
@@ -50,7 +61,7 @@ final class PathFinder {
             let y = search.nodes[current].y
             let gCost = search.nodes[current].gCost
 
-            if x == end.x && y == end.y {
+            if isWithinRange(SIMD2(x, y), of: end, range: range) {
                 return reconstructPath(search: search, endIndex: current)
             }
 
@@ -84,22 +95,6 @@ final class PathFinder {
                 }
             }
         }
-    }
-
-    /// Finds a path toward `end` and cuts it at the first position within `range` tiles (Chebyshev distance) of `end`.
-    func findPath(from start: SIMD2<Int>, to end: SIMD2<Int>, within range: Int) -> [SIMD2<Int>] {
-        let range = max(range, 0)
-
-        if isWithinRange(start, of: end, range: range) {
-            return [start]
-        }
-
-        let path = findPath(from: start, to: end)
-        guard let index = path.firstIndex(where: { isWithinRange($0, of: end, range: range) }) else {
-            return []
-        }
-
-        return Array(path.prefix(through: index))
     }
 
     func canRequestMove(from start: SIMD2<Int>, to end: SIMD2<Int>) -> Bool {
