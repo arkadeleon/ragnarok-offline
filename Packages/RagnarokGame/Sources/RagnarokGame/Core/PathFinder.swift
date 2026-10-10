@@ -152,7 +152,7 @@ final class PathFinder {
     }
 
     private func isPassable(_ x: Int, _ y: Int) -> Bool {
-        guard x >= 0 && x < mapGrid.width - 1 && y >= 0 && y < mapGrid.height - 1 else {
+        guard x >= 0 && x < mapGrid.width && y >= 0 && y < mapGrid.height else {
             return false
         }
 
