@@ -572,7 +572,7 @@ extension MapScene {
             at: now
         )
 
-        object.gridPosition = movement.currentPosition
+        object.gridPosition = movement.currentLocation.position
         let remainingDuration = movement.remainingDuration(at: now)
         object.perform(
             .walk,

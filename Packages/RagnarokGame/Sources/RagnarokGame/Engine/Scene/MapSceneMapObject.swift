@@ -245,7 +245,7 @@ final class MapSceneMapObject {
     func stopMovement(on position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
         movement = movement?.stopped(on: position, speed: speed, at: time)
         movement?.update(at: time)
-        gridPosition = movement?.currentPosition ?? position
+        gridPosition = movement?.currentLocation.position ?? position
     }
 
     func update(at time: ContinuousClock.Instant) {

@@ -25,13 +25,13 @@ func stepDuration(from sourcePoint: SIMD2<Float>, to targetPosition: SIMD2<Int>,
     return .milliseconds(Double(distance) * Double(speed))
 }
 
-public struct MapObjectMovement: Sendable {
-    public struct Location: Sendable {
+struct MapObjectMovement: Sendable {
+    struct Location: Sendable {
         /// The cell the object is leaving. Like on the server, the object is not in the next cell until it gets there.
-        public let position: SIMD2<Int>
+        let position: SIMD2<Int>
 
         /// The exact position on the grid. It can be between two cells.
-        public let point: SIMD2<Float>
+        let point: SIMD2<Float>
     }
 
     private struct Step {
@@ -44,25 +44,24 @@ public struct MapObjectMovement: Sendable {
         let fraction: Float
     }
 
-    public let origin: MapObjectMovement.Location
-    public let waypoints: [SIMD2<Int>]
+    let origin: MapObjectMovement.Location
+    let waypoints: [SIMD2<Int>]
 
-    public let stepDurations: [Duration]
-    public let startTime: ContinuousClock.Instant
-    public let duration: Duration
-    public let animationElapsedOffset: Duration
+    let stepDurations: [Duration]
+    let startTime: ContinuousClock.Instant
+    let animationElapsedOffset: Duration
 
-    public private(set) var currentLocation: MapObjectMovement.Location
-    public private(set) var direction: SpriteDirection?
-    public private(set) var animationElapsedTime: Duration = .zero
-    public private(set) var isMoving = false
+    private(set) var currentLocation: MapObjectMovement.Location
+    private(set) var direction: SpriteDirection?
+    private(set) var animationElapsedTime: Duration = .zero
+    private(set) var isMoving = false
 
-    public var currentPosition: SIMD2<Int> {
-        currentLocation.position
+    var endPosition: SIMD2<Int> {
+        waypoints.last ?? origin.position
     }
 
-    public var endPosition: SIMD2<Int> {
-        waypoints.last ?? origin.position
+    var duration: Duration {
+        stepDurations.reduce(.zero, +)
     }
 
     var finalDirection: SpriteDirection? {
@@ -74,7 +73,7 @@ public struct MapObjectMovement: Sendable {
         return SpriteDirection(sourcePosition: sourcePoint, targetPosition: SIMD2<Float>(targetPosition))
     }
 
-    public init(
+    init(
         origin: MapObjectMovement.Location,
         waypoints: [SIMD2<Int>],
         stepDurations: [Duration],
@@ -85,7 +84,6 @@ public struct MapObjectMovement: Sendable {
         self.waypoints = waypoints
         self.stepDurations = stepDurations
         self.startTime = startTime
-        self.duration = stepDurations.reduce(.zero, +)
         self.animationElapsedOffset = animationElapsedOffset
         self.currentLocation = origin
     }

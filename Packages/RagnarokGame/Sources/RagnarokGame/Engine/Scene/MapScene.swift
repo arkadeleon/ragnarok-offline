@@ -420,7 +420,7 @@ extension MapScene {
         for object in objects.values {
             object.update(at: now)
             if let movement = object.movement {
-                object.gridPosition = movement.currentPosition
+                object.gridPosition = movement.currentLocation.position
             }
         }
 
