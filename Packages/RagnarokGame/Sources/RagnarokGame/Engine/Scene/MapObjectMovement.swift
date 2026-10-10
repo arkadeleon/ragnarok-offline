@@ -88,20 +88,6 @@ struct MapObjectMovement: Sendable {
         self.currentLocation = origin
     }
 
-    func remainingDuration(at now: ContinuousClock.Instant) -> Duration {
-        let elapsed = max(startTime.duration(to: now), .zero)
-        return max(duration - elapsed, .zero)
-    }
-
-    func location(at time: ContinuousClock.Instant) -> MapObjectMovement.Location? {
-        guard let step = step(at: time) else {
-            return nil
-        }
-
-        let point = mix(step.source.point, SIMD2<Float>(step.targetPosition), t: step.fraction)
-        return MapObjectMovement.Location(position: step.source.position, point: point)
-    }
-
     /// Returns this walk, but ending at `position`. The timing of each step stays the same.
     /// Returns `nil` if the object does not walk into `position` after `time`.
     func truncated(to position: SIMD2<Int>, at time: ContinuousClock.Instant) -> MapObjectMovement? {
@@ -118,19 +104,6 @@ struct MapObjectMovement: Sendable {
         )
     }
 
-    /// The cells the object has not reached yet, starting with the cell it is walking to.
-    func upcomingPositions(at time: ContinuousClock.Instant) -> ArraySlice<SIMD2<Int>> {
-        guard let step = step(at: time) else {
-            return []
-        }
-
-        return waypoints[step.index...]
-    }
-
-    func nextPosition(at time: ContinuousClock.Instant) -> SIMD2<Int>? {
-        step(at: time)?.targetPosition
-    }
-
     mutating func update(at time: ContinuousClock.Instant) {
         if let step = step(at: time) {
             let point = mix(step.source.point, SIMD2<Float>(step.targetPosition), t: step.fraction)
@@ -144,6 +117,29 @@ struct MapObjectMovement: Sendable {
             animationElapsedTime = .zero
             isMoving = false
         }
+    }
+
+    func location(at time: ContinuousClock.Instant) -> MapObjectMovement.Location? {
+        guard let step = step(at: time) else {
+            return nil
+        }
+
+        let point = mix(step.source.point, SIMD2<Float>(step.targetPosition), t: step.fraction)
+        return MapObjectMovement.Location(position: step.source.position, point: point)
+    }
+
+    /// The cells the object has not reached yet, starting with the cell it is walking to.
+    func upcomingPositions(at time: ContinuousClock.Instant) -> ArraySlice<SIMD2<Int>> {
+        guard let step = step(at: time) else {
+            return []
+        }
+
+        return waypoints[step.index...]
+    }
+
+    func remainingDuration(at time: ContinuousClock.Instant) -> Duration {
+        let elapsed = max(startTime.duration(to: time), .zero)
+        return max(duration - elapsed, .zero)
     }
 
     private func step(at time: ContinuousClock.Instant) -> MapObjectMovement.Step? {

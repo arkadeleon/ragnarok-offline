@@ -273,6 +273,6 @@ final class MapSceneMapObject {
     }
 
     func nextPosition(at time: ContinuousClock.Instant) -> SIMD2<Int>? {
-        movement?.nextPosition(at: time)
+        movement?.upcomingPositions(at: time).first
     }
 }
