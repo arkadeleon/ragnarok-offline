@@ -102,27 +102,6 @@ struct MapObjectMovement: Sendable {
         return MapObjectMovement.Location(position: step.source.position, point: point)
     }
 
-    /// Returns a short walk from where the object is at `time` to `position`, the cell where the server stopped it.
-    /// Returns `nil` if the walk is over, or if `position` is where the object already is or more than 1 cell away.
-    func stopped(on position: SIMD2<Int>, speed: Int, at time: ContinuousClock.Instant) -> MapObjectMovement? {
-        guard let origin = location(at: time) else {
-            return nil
-        }
-
-        let delta = abs(SIMD2<Float>(position) - origin.point)
-        guard delta != .zero && max(delta.x, delta.y) <= 1 else {
-            return nil
-        }
-
-        return MapObjectMovement(
-            origin: origin,
-            waypoints: [position],
-            stepDurations: [stepDuration(from: origin.point, to: position, speed: speed)],
-            startTime: time,
-            animationElapsedOffset: animationElapsedOffset + startTime.duration(to: time)
-        )
-    }
-
     /// Returns this walk, but ending at `position`. The timing of each step stays the same.
     /// Returns `nil` if the object does not walk into `position` after `time`.
     func truncated(to position: SIMD2<Int>, at time: ContinuousClock.Instant) -> MapObjectMovement? {

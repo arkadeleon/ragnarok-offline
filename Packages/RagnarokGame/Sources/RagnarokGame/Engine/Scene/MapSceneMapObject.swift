@@ -214,7 +214,7 @@ final class MapSceneMapObject {
         pathFinder: PathFinder,
         at time: ContinuousClock.Instant = .now
     ) -> MapObjectMovement {
-        let planner = MapObjectMovementPlanner(pathFinder: pathFinder)
+        let planner = MapObjectMovementPlanner()
         var planned = planner.replan(
             existingMovement: movement,
             currentPosition: gridPosition,
@@ -222,6 +222,7 @@ final class MapSceneMapObject {
             incomingStartPosition: startPosition,
             incomingEndPosition: endPosition,
             speed: speed,
+            pathFinder: pathFinder,
             at: time
         )
         planned.update(at: time)
@@ -243,7 +244,8 @@ final class MapSceneMapObject {
     }
 
     func stopMovement(on position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
-        movement = movement?.stopped(on: position, speed: speed, at: time)
+        let planner = MapObjectMovementPlanner()
+        movement = planner.stop(existingMovement: movement, on: position, speed: speed, at: time)
         movement?.update(at: time)
         gridPosition = movement?.currentLocation.position ?? position
     }

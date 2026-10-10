@@ -8,18 +8,6 @@
 import simd
 
 struct MapObjectMovementPlanner {
-    private let findPath: (SIMD2<Int>, SIMD2<Int>) -> [SIMD2<Int>]
-
-    init(pathFinder: PathFinder) {
-        self.init { startPosition, endPosition in
-            pathFinder.findPath(from: startPosition, to: endPosition)
-        }
-    }
-
-    init(findPath: @escaping (SIMD2<Int>, SIMD2<Int>) -> [SIMD2<Int>]) {
-        self.findPath = findPath
-    }
-
     func replan(
         existingMovement: MapObjectMovement?,
         currentPosition: SIMD2<Int>,
@@ -27,9 +15,10 @@ struct MapObjectMovementPlanner {
         incomingStartPosition: SIMD2<Int>,
         incomingEndPosition: SIMD2<Int>,
         speed: Int,
+        pathFinder: PathFinder,
         at now: ContinuousClock.Instant
     ) -> MapObjectMovement {
-        let incomingPath = movementPath(from: incomingStartPosition, to: incomingEndPosition)
+        let incomingPath = movementPath(from: incomingStartPosition, to: incomingEndPosition, pathFinder: pathFinder)
         let incomingDuration = movementDuration(path: incomingPath, speed: speed)
         let arrivalTime = startTime(incomingStartTime, duration: incomingDuration, at: now) + incomingDuration
 
@@ -46,7 +35,7 @@ struct MapObjectMovementPlanner {
             let nearestPosition = SIMD2<Int>(origin.point.rounded(.toNearestOrAwayFromZero))
             let nearestOffset = incomingStartPosition &- nearestPosition
             let isNearStart = max(abs(nearestOffset.x), abs(nearestOffset.y)) <= 16
-            let nearestPath = isNearStart ? findPath(nearestPosition, incomingEndPosition) : []
+            let nearestPath = isNearStart ? pathFinder.findPath(from: nearestPosition, to: incomingEndPosition) : []
             if nearestPath.isEmpty {
                 origin = MapObjectMovement.Location(position: incomingStartPosition, point: SIMD2<Float>(incomingStartPosition))
             } else {
@@ -82,6 +71,32 @@ struct MapObjectMovementPlanner {
             stepDurations: stepDurations,
             startTime: now,
             animationElapsedOffset: animationElapsedOffset
+        )
+    }
+
+    /// Returns a short walk from where the object is at `time` to `position`, the cell where the server stopped it.
+    /// Returns `nil` if there is no walk or it is over, or if `position` is where the object already is or more than 1 cell away.
+    func stop(
+        existingMovement: MapObjectMovement?,
+        on position: SIMD2<Int>,
+        speed: Int,
+        at time: ContinuousClock.Instant
+    ) -> MapObjectMovement? {
+        guard let existingMovement, let origin = existingMovement.location(at: time) else {
+            return nil
+        }
+
+        let delta = abs(SIMD2<Float>(position) - origin.point)
+        guard delta != .zero && max(delta.x, delta.y) <= 1 else {
+            return nil
+        }
+
+        return MapObjectMovement(
+            origin: origin,
+            waypoints: [position],
+            stepDurations: [stepDuration(from: origin.point, to: position, speed: speed)],
+            startTime: time,
+            animationElapsedOffset: existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: time)
         )
     }
 
@@ -138,8 +153,8 @@ struct MapObjectMovementPlanner {
         }
     }
 
-    private func movementPath(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>) -> [SIMD2<Int>] {
-        let path = findPath(startPosition, endPosition)
+    private func movementPath(from startPosition: SIMD2<Int>, to endPosition: SIMD2<Int>, pathFinder: PathFinder) -> [SIMD2<Int>] {
+        let path = pathFinder.findPath(from: startPosition, to: endPosition)
         if !path.isEmpty {
             return path
         }
