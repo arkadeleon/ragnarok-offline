@@ -224,7 +224,7 @@ final class MapSceneMapObject {
             speed: speed,
             at: time
         )
-        planned.update(atTime: time)
+        planned.update(at: time)
         movement = planned
         return planned
     }
@@ -238,7 +238,7 @@ final class MapSceneMapObject {
             return
         }
 
-        movement.update(atTime: time)
+        movement.update(at: time)
         self.movement = movement
         perform(.walk, completion: .after(movement.remainingDuration(at: time), nextActionType: .idle), at: time)
         if let finalDirection = movement.finalDirection {
@@ -248,7 +248,7 @@ final class MapSceneMapObject {
 
     func stopMovement(at position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
         movement = movement?.stopped(at: position, speed: speed, at: time)
-        movement?.update(atTime: time)
+        movement?.update(at: time)
         gridPosition = movement?.currentPosition ?? position
     }
 
@@ -266,7 +266,7 @@ final class MapSceneMapObject {
         }
 
         action.update(atTime: time, onceDuration: onceDuration)
-        movement?.update(atTime: time)
+        movement?.update(at: time)
         death?.update(at: time)
 
         if cast?.isFinished(at: time) == true {

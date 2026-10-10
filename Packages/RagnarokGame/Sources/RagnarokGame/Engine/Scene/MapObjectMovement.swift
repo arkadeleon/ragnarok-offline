@@ -154,19 +154,19 @@ public struct MapObjectMovement: Sendable {
         step(at: time)?.targetPosition
     }
 
-    mutating func update(atTime time: ContinuousClock.Instant) {
-        guard let step = step(at: time), let location = location(at: time) else {
+    mutating func update(at time: ContinuousClock.Instant) {
+        if let step = step(at: time) {
+            let point = mix(step.source.point, SIMD2<Float>(step.targetPosition), t: step.fraction)
+            currentLocation = MapObjectMovement.Location(position: step.source.position, point: point)
+            direction = SpriteDirection(sourcePosition: step.source.point, targetPosition: SIMD2<Float>(step.targetPosition))
+            animationElapsedTime = max(startTime.duration(to: time), .zero) + animationElapsedOffset
+            isMoving = true
+        } else {
             currentLocation = MapObjectMovement.Location(position: endPosition, point: SIMD2<Float>(endPosition))
             direction = nil
             animationElapsedTime = .zero
             isMoving = false
-            return
         }
-
-        currentLocation = location
-        direction = SpriteDirection(sourcePosition: step.source.point, targetPosition: SIMD2<Float>(step.targetPosition))
-        animationElapsedTime = max(startTime.duration(to: time), .zero) + animationElapsedOffset
-        isMoving = true
     }
 
     private func step(at time: ContinuousClock.Instant) -> MapObjectMovement.Step? {
