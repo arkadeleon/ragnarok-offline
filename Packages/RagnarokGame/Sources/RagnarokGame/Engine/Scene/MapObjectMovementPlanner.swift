@@ -92,7 +92,7 @@ struct MapObjectMovementPlanner {
         }
 
         return MapObjectMovement(
-            origin: origin,
+            origin: MapObjectMovement.Location(position: position, point: origin.point),
             waypoints: [position],
             stepDurations: [stepDuration(from: origin.point, to: position, speed: speed)],
             startTime: time,

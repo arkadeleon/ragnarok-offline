@@ -247,7 +247,7 @@ final class MapSceneMapObject {
         let planner = MapObjectMovementPlanner()
         movement = planner.stop(existingMovement: movement, on: position, speed: speed, at: time)
         movement?.update(at: time)
-        gridPosition = movement?.currentLocation.position ?? position
+        gridPosition = position
     }
 
     func update(at time: ContinuousClock.Instant) {
