@@ -8,11 +8,13 @@
 #if os(macOS)
 
 import RagnarokGame
+import StoreKit
 import SwiftUI
 
 @main
 struct macOSApp: App {
     @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.requestReview) private var requestReview
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     @State private var appModel = AppModel()
@@ -44,6 +46,7 @@ struct macOSApp: App {
                 }
                 .onExitGame {
                     dismissWindow(id: GameSession.windowID)
+                    requestReview()
                 }
         }
         .windowStyle(.hiddenTitleBar)

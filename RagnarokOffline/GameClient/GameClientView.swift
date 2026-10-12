@@ -7,9 +7,11 @@
 
 import Network
 import RagnarokGame
+import StoreKit
 import SwiftUI
 
 struct GameClientView: View {
+    @Environment(\.requestReview) private var requestReview
     @Environment(GameSession.self) private var gameSession
     @Environment(SettingsModel.self) private var settings
 
@@ -161,6 +163,7 @@ struct GameClientView: View {
                 .onExitGame {
                     isGameViewPresented = false
                     gameSession.stop()
+                    requestReview()
                 }
         }
         #endif
