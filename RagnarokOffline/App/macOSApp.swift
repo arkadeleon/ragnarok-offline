@@ -47,6 +47,7 @@ struct macOSApp: App {
                 }
         }
         .windowStyle(.hiddenTitleBar)
+        .restorationBehavior(.disabled)
     }
 
     init() {
