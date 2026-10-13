@@ -63,4 +63,5 @@ struct GameSwordIcon: View {
 #Preview {
     GameSwordIcon()
         .frame(width: 40, height: 40)
+        .padding()
 }
