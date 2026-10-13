@@ -31,6 +31,7 @@ final class MapSceneRenderer {
     private let barRenderer: BarRenderer
     private let effectRenderer: EffectRenderer
     private let tileSelectorRenderer: TileSelectorRenderer
+    private let targetSelectorRenderer: TargetSelectorRenderer
 
     init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
@@ -42,6 +43,7 @@ final class MapSceneRenderer {
         barRenderer = try BarRenderer(device: device, configuration: configuration)
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
         tileSelectorRenderer = try TileSelectorRenderer(device: device, configuration: configuration)
+        targetSelectorRenderer = try TargetSelectorRenderer(device: device, configuration: configuration)
     }
 
     /// Where a game world position sits in the space the map is drawn in.
@@ -166,6 +168,15 @@ final class MapSceneRenderer {
             tileSelectorRenderer.render(
                 tileSelector: tileSelector,
                 fog: snapshot.fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        }
+
+        if let targetSelector = snapshot.targetSelector {
+            targetSelectorRenderer.render(
+                targetSelector: targetSelector,
                 modelMatrix: modelMatrix,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
