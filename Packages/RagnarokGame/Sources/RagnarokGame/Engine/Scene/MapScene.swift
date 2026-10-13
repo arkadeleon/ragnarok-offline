@@ -50,6 +50,8 @@ public final class MapScene {
     var effects: [UUID : MapSceneEffect] = [:]
     var combatTexts: [CombatText] = []
     var tileSelector: TileSelector?
+    var selectedTargetID: GameObjectID?
+    var targetSelector: TargetSelector?
 
     var pendingArrivalAction: (@MainActor () -> Void)?
     var arrivalTask: Task<Void, any Error>?
@@ -132,6 +134,7 @@ public final class MapScene {
         effects.removeAll()
         combatTexts.removeAll()
         tileSelector = nil
+        selectTarget(nil)
 
         arrivalTask?.cancel()
         arrivalTask = nil
@@ -146,6 +149,7 @@ public final class MapScene {
         effects.removeAll()
         combatTexts.removeAll()
         tileSelector = nil
+        selectTarget(nil)
 
         player.movement = nil
         player.cast = nil
@@ -278,10 +282,9 @@ public final class MapScene {
         case .mapObject(let objectID):
             if let target = objects[objectID], !target.isDead {
                 switch target.type {
-                case .monster:
-                    attackMonster(targetID: target.objectID)
-                case .npc:
-                    gameSession?.talkToNPC(npcID: target.objectID)
+                case .monster, .npc:
+                    selectTarget(target)
+                    performActionOnSelectedTarget()
                 default:
                     break
                 }
@@ -293,13 +296,80 @@ public final class MapScene {
         }
     }
 
-    func attackNearestMonster() {
-        if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
-            attackMonster(targetID: target.objectID)
+    /// Attacks or talks to the selected target. Without one, it selects the nearest monster and attacks it.
+    func performTargetAction() {
+        if let selectedTargetID, let target = objects[selectedTargetID], !target.isDead {
+            performActionOnSelectedTarget()
+        } else if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
+            selectTarget(target)
+            performActionOnSelectedTarget()
         }
     }
 
-    func useSkillOnNearestMonster(_ skill: SkillInfo, level: Int) {
+    /// Selects the next monster or NPC, nearest first, and wraps around after the farthest one.
+    /// Warps (job 45) and hidden NPCs (jobs 111 and 139) are skipped, since nothing is drawn for them.
+    func selectNextTarget() {
+        let candidates = objects.values
+            .filter { object in
+                guard !object.isDead, object.effectState != .cloak, object.effectState != .invisible else {
+                    return false
+                }
+
+                switch object.type {
+                case .monster:
+                    return true
+                case .npc:
+                    return ![45, 111, 139].contains(object.job)
+                default:
+                    return false
+                }
+            }
+            .sorted {
+                let distance0 = distanceSquared($0.gridPosition, to: player.gridPosition)
+                let distance1 = distanceSquared($1.gridPosition, to: player.gridPosition)
+                return distance0 != distance1 ? distance0 < distance1 : $0.objectID < $1.objectID
+            }
+        guard !candidates.isEmpty else {
+            return
+        }
+
+        let currentIndex = candidates.firstIndex { $0.objectID == selectedTargetID }
+        let nextIndex = currentIndex.map { ($0 + 1) % candidates.count } ?? 0
+        let target = candidates[nextIndex]
+
+        selectTarget(target)
+        targetSelector = TargetSelector(objectID: target.objectID, showTime: .now)
+    }
+
+    func selectTarget(_ target: MapSceneMapObject?) {
+        selectedTargetID = target?.objectID
+        targetSelector = nil
+
+        if state.selectedTargetObjectType != target?.type {
+            state.selectedTargetObjectType = target?.type
+        }
+    }
+
+    private func performActionOnSelectedTarget() {
+        guard let selectedTargetID, let target = objects[selectedTargetID], !target.isDead else {
+            return
+        }
+
+        targetSelector = nil
+
+        switch target.type {
+        case .monster:
+            attackMonster(targetID: target.objectID)
+        case .npc:
+            gameSession?.talkToNPC(npcID: target.objectID)
+        default:
+            break
+        }
+    }
+
+    /// Uses a skill on the selected monster. Without one, it selects the nearest monster and uses the skill on it.
+    /// Self-only and support skills always go to the player.
+    func useSkill(_ skill: SkillInfo, level: Int) {
         guard skill.level > 0, level > 0 else {
             return
         }
@@ -313,7 +383,13 @@ public final class MapScene {
             return
         }
 
-        if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
+        if let selectedTargetID,
+           let target = objects[selectedTargetID],
+           target.type == .monster,
+           !target.isDead {
+            useSkill(skill, level: level, on: target)
+        } else if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
+            selectTarget(target)
             useSkill(skill, level: level, on: target)
         }
     }
@@ -356,6 +432,10 @@ public final class MapScene {
     }
 
     private func useSkill(_ skill: SkillInfo, level: Int, on target: MapSceneMapObject) {
+        if targetSelector?.objectID == target.objectID {
+            targetSelector = nil
+        }
+
         let targetPosition = target.gridPosition
         let skillRange = max(skill.attackRange, 1)
 

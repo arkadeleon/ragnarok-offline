@@ -6,6 +6,7 @@
 //
 
 import Observation
+import RagnarokModels
 import RagnarokSprite
 
 @MainActor
@@ -14,6 +15,8 @@ final class MapSceneState {
     var playerPosition: SIMD2<Int>
     var playerDirection: SpriteDirection
     var isPlayerDead = false
+
+    var selectedTargetObjectType: MapObjectType?
 
     init(playerPosition: SIMD2<Int>, playerDirection: SpriteDirection) {
         self.playerPosition = playerPosition

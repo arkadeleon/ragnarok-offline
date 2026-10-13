@@ -125,6 +125,23 @@ final class MapSceneRuntime {
             )
         }
 
+        if let targetSelector = scene.targetSelector,
+           let object = scene.objects[targetSelector.objectID],
+           object.effectState != .cloak,
+           let drawable = renderResources.spriteDrawables.first(where: { $0.objectID == targetSelector.objectID }) {
+            let spriteTop = drawable.layers
+                .flatMap(\.vertices)
+                .map(\.position.y)
+                .max() ?? 0
+            // The ring's lowest point sits 6 pixels above the sprite, and the gem rests 11 pixels above the ring.
+            let ringCenterHeight = spriteTop + 6 + 10
+            snapshot.targetSelector = MapSceneRenderSnapshot.TargetSelector(
+                worldPosition: drawable.worldPosition,
+                ringCenterHeight: ringCenterHeight,
+                gemTopHeight: ringCenterHeight + 10 + 11 + 10 - targetSelector.gemDrop(at: now)
+            )
+        }
+
         snapshot.effects = scene.effects.values
             .compactMap { effect in
                 guard let resourceGroup = renderResources.effectResource(for: effect.id) else {

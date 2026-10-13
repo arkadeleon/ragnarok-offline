@@ -773,7 +773,7 @@ final public class GameSession {
             skill.level = Int(packet.skill_lv)
             skill.spCost = Int(packet.skill_sp)
             skill.attackRange = Int(packet.skill_range)
-            mapScene?.useSkillOnNearestMonster(skill, level: skill.level)
+            mapScene?.useSkill(skill, level: skill.level)
         case let packet as PACKET_ZC_DISPEL:
             mapScene?.onMapObjectSkillCastCancelled(sourceObjectID: packet.gid)
         case let packet as PACKET_ZC_ACK_TOUSESKILL:
@@ -1379,7 +1379,7 @@ final public class GameSession {
             }
         case .skill(let skillID, let level):
             if let skill = context.skillList.skills[skillID] {
-                mapScene?.useSkillOnNearestMonster(skill, level: level)
+                mapScene?.useSkill(skill, level: level)
             }
         }
     }
