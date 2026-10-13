@@ -17,7 +17,9 @@ private let supplementaryRingWidth: CGFloat = 28
 private let shortcutsPerRow = 8
 
 struct ActionControlPadView: View {
-    var onAttack: () -> Void
+    var selectedTargetObjectType: MapObjectType?
+    var onTargetAction: () -> Void
+    var onSelectNextTarget: () -> Void
     var onPickup: () -> Void
     var onSit: () -> Void
     var onShortcut: (Shortcut) -> Void
@@ -59,10 +61,15 @@ struct ActionControlPadView: View {
             RoundActionButton(
                 color: .red.opacity(0.55),
                 diameter: (ringInnerRadius - sectorGap) * 2,
-                action: onAttack
+                action: onTargetAction
             ) {
-                GameSwordIcon()
-                    .frame(width: 40, height: 40)
+                if selectedTargetObjectType == .npc {
+                    GameTalkIcon()
+                        .frame(width: 34, height: 34)
+                } else {
+                    GameSwordIcon()
+                        .frame(width: 40, height: 40)
+                }
             }
 
             RingSectorActionButton(
@@ -103,8 +110,11 @@ struct ActionControlPadView: View {
                 innerRadius: ringOuterRadius + sectorGap,
                 outerRadius: ringOuterRadius + sectorGap + supplementaryRingWidth,
                 color: Color(#colorLiteral(red: 0.6283159216, green: 0.2047865098, blue: 0.1977276863, alpha: 0.55)),
-                action: {}
+                action: onSelectNextTarget
             ) {
+                Image(systemName: "scope")
+                    .font(.game(size: 12, weight: .bold))
+                    .foregroundStyle(.white)
             }
         }
         .frame(width: ringOuterRadius * 2, height: ringOuterRadius * 2)
@@ -257,7 +267,7 @@ private struct RingSectorActionButton<Content>: View where Content: View {
         return gameContext
     }()
 
-    ActionControlPadView(onAttack: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
+    ActionControlPadView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .background(Color.black)
         .environment(gameContext)

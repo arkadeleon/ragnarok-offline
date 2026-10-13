@@ -38,7 +38,6 @@ struct SidebarView: View {
     var selection: Binding<SidebarItem?>?
 
     @Environment(AppModel.self) private var appModel
-    @Environment(\.requestReview) private var requestReview
 
     @AppStorage("clientSectionExpanded") private var isClientSectionExpanded = true
     @AppStorage("serverSectionExpanded") private var isServerSectionExpanded = true
@@ -115,7 +114,6 @@ struct SidebarView: View {
                     Button {
                         Task {
                             try await appModel.serverManager.startAllServers()
-                            requestReview()
                         }
                     } label: {
                         #if os(macOS)

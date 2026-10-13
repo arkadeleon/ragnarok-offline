@@ -30,6 +30,12 @@ struct MapSceneRenderSnapshot {
         let cell: MapGrid.Cell
     }
 
+    struct TargetSelector {
+        let worldPosition: SIMD3<Float>
+        let ringCenterHeight: Float
+        let gemTopHeight: Float
+    }
+
     struct CombatText {
         let vertices: [SpriteVertex]
         let worldPosition: SIMD3<Float>
@@ -38,6 +44,7 @@ struct MapSceneRenderSnapshot {
     var fog: Fog
     var world: WorldRenderResource?
     var tileSelector: TileSelector?
+    var targetSelector: TargetSelector?
     var spriteDrawables: [SpriteDrawable] = []
     var effects: [Effect] = []
     var bars: [Bar] = []

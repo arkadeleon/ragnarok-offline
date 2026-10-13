@@ -1,6 +1,7 @@
 # RagnarokGame 对齐 roBrowserLegacy 补齐清单
 
 - 生成日期：2026-09-30
+- 优先级调整：2026-10-13，按单机场景（App 内置 rAthena）重排
 - 对比基准：
   - ragnarok-offline `dc364b87`：`Packages/RagnarokGame`，以及它依赖的 `RagnarokNetwork`、`RagnarokPackets`、`RagnarokModels`、`RagnarokEffects`、`RagnarokRendering`、`RagnarokRenderAssets`、`RagnarokSprite`、`RagnarokResources`、`RagnarokLocalization`
   - roBrowserLegacy `58759ab2`：`src/`
@@ -9,10 +10,12 @@
 ## 约定
 
 - 优先级
-  - **P0**：核心玩法闭环里缺的东西。不补，基本玩法就明显残缺，或者画面、信息缺得厉害。
-  - **P1**：常规 RO 体验必需，比如组队、交易、摆摊、状态图标、公告。
-  - **P2**：进阶系统或职业专属系统，比如公会、生命体、邮件、精炼。
-  - **P3**：边缘功能、运营类功能、GM 功能、画质增强，或只在多版本兼容时才需要的功能。
+  - 优先级按单机玩家排：一个人在内置服务器上打怪、练级、转职、搜集装备。
+  - **P0**：单机战斗和成长闭环里缺的东西。不补就没法正常打怪，或者看不懂战斗状态。上线前必须完成。
+  - **P1**：单机玩家常规会碰到的体验，比如战斗手感、技能特效、手推车、宠物、任务、NPC 立绘、设置。上线前应当完成大部分。
+  - **P2**：进阶系统、职业专属系统，或者转职后才会碰到的功能，比如生命体、精炼窗口、导航、天气。
+  - **P3**：边缘功能、GM 功能、画质增强，或只在多版本兼容时才需要的功能。
+  - **P3·联机**：只有多人联机才用得上，比如组队、好友、公会、私聊、交易、摆摊、聊天室、地图服切换。如果以后支持连接外部服务器，这一类需要重新评估。
 - 包名统一用 rAthena 命名（`ZC_*`、`CZ_*`、`HC_*`、`CH_*`、`AC_*`、`CA_*`）。`(1–5)` 表示同一语义有多个版本。当前 `PACKET_VERSION = 20211103` 是编译期常量，每项只需实现这个版本对应的那一个包。
 - `RagnarokPackets` 已从 rAthena 生成了 715 个包结构，所以大多数条目的工作量在这几处：`PacketFactory` 构造、`GameSession` 分发、`RagnarokModels` 模型、`MapScene` 表现和 SwiftUI 窗口。
 - 每一条都注明了 roBrowserLegacy 的参考实现路径（相对 `roBrowserLegacy/src/`）。
@@ -72,7 +75,7 @@
   - 现状：`MapScene.useSkillOnNearestMonster` 总是打最近的怪物；辅助技能只能对自己放，无法治疗或加持他人。
   - 需要：改成与 roBrowser 一致的目标选择流程，见 §8.1。
   - 参考：`UI/Components/SkillTargetSelection/SkillTargetSelection.js`
-- [ ] **P1** 自动施放（`ZC_AUTORUN_SKILL`，用于卷轴、随机魔法）
+- [ ] **P2** 自动施放（`ZC_AUTORUN_SKILL`，用于卷轴、随机魔法）
   - 现状：直接打最近的怪物。
   - 需要：roBrowser 会进入目标选择状态，这里应当一致。
   - 参考：`Engine/MapEngine/Skill.js#onAutoCastSkill`
@@ -86,10 +89,10 @@
   - 点击 PC、宠物、生命体、佣兵时没有反应（缺上下文菜单，见 §15.7）。
   - 和 NPC 对话时角色应当转向 NPC（发送 `CZ_CHANGE_DIRECTION`）。可以复用 `GameSession.changeDirection`。
   - 参考：`Controls/EntityControl.js`
-- [ ] **P1** 删除角色
+- [ ] **P2** 删除角色
   - 现状：`CH_DELETE_CHAR3` 固定发送空的生日。
   - 需要：让用户输入生日或邮箱，处理预约删除的剩余时间和取消删除，见 §3。
-- [ ] **P1** 聊天颜色
+- [ ] **P2** 聊天颜色
   - 现状：`ChatMessage.color` 和 `MessageCenter.MessageType` 在 UI 里一律渲染成白色。
   - 需要：按消息类型着色，并支持 NPC 自定义颜色和 `ZC_MSG_COLOR`。
 - [x] **P1** 时间同步
@@ -97,7 +100,7 @@
   - `CZ_REQUEST_TIME` 改为发送毫秒。进图后每秒发一次、连发 5 次，之后每 10 秒一次。地图加载期间服务端会丢掉这个包，所以每次加载完地图都重新开始。
   - 移动包的 `moveStartTime` 换算成本地时间，用来对齐起步和到达时间。动作时间还没有用服务器 tick 校准。
   - 参考：`Engine/MapEngine.js#onPong`
-- [ ] **P1** 地图加载完成后的收尾，对齐 roBrowser `onMapChange`
+- [ ] **P2** 地图加载完成后的收尾，对齐 roBrowser `onMapChange`
   - `PACKETVER >= 20130320` 时需要发送 `CZ_BLOCKING_PLAY_CANCEL`。
   - 显示地图名提示（`MapName`）。
   - 用 `Announce` 显示倍率信息。
@@ -106,7 +109,7 @@
   - 现状：一直处于禁用状态。
   - 需要：背包里有齐格弗里德之证时启用，发送 `CZ_STANDING_RESURRECTION`。
   - 参考：`Engine/MapEngine.js#onResurectionRequest`、`Entity.js#haveSiegfriedItem`
-- [ ] **P2** 受击动作
+- [ ] **P1** 受击动作
   - 现状：`onMapObjectActionPerformed` 和 `onMapObjectSkillPerformed` 只驱动攻击方，被攻击方不会播放 hurt 动作。
   - 现状：收到 `ZC_NOTIFY_VANISH`（dead）就立刻播放 die，这时致死那一下还没命中，伤害数字在死亡之后才出现。
   - 现状：`MapScene.resolveAction` 在对象移动时强制显示 walk，就算有 hurt 也会被盖掉。
@@ -122,7 +125,7 @@
   - 现状：攻击方的动作只按职业和武器类型选择。
   - 需要：`ZC_NOTIFY_ACT` 带左手伤害（`damage2`）时播放 attack3；影忍者（`KAGEROU`、`OBORO`）例外，不用 attack3。
   - 参考：`Engine/MapEngine/Entity.js#onEntityAction`
-- [ ] **P3** 弓箭攻击的命中时机
+- [ ] **P2** 弓箭攻击的命中时机
   - 现状：伤害数字、命中特效和受击动作都在 `srcSpeed` 之后出现，弓箭攻击也一样。
   - 需要：玩家用弓攻击时，命中时刻按攻击动作帧数和箭矢飞行时间往后推（`(m_attackMotion + 8 / motionSpeed) × motionSpeed × 24` 毫秒）。
   - 参考：`Engine/MapEngine/Entity.js#onEntityAction`、`DB.getPCAttackMotion`
@@ -139,23 +142,23 @@
 
 ## 3. 登录服与角色服
 
-- [ ] **P1** PIN 码
+- [ ] **P3·联机** PIN 码
   - 服务端开启 PIN 后会发 `HC_SECOND_PASSWD_LOGIN`，当前是空处理，界面会卡住。
   - 需要：`CH_PINCODE_CHECK`、`CH_PINCODE_FIRST_PIN`、`CH_PINCODE_CHANGE`、`CH_PINCODE_REQUEST`。
   - 需要：PIN 输入窗口。数字键盘用服务端下发的 seed 打乱顺序。
   - 需要：分别处理 `HC_SECOND_PASSWD_LOGIN` 的各个 state，包括首次设置、校验、修改、失败次数。
   - 参考：`Engine/CharEngine.js`、`UI/Components/PincodeWindow/`
-- [ ] **P1** 删除角色的完整流程
+- [ ] **P2** 删除角色的完整流程
   - `HC_DELETE_CHAR3_RESERVED` 回包后，显示预约删除时间和剩余倒计时。
   - 到期后再确认删除，并输入生日或邮箱。
   - 支持取消删除：`CH_DELETE_CHAR3_CANCEL` / `HC_DELETE_CHAR3_CANCEL`。
   - 处理旧版的 `HC_ACCEPT_DELETECHAR` / `HC_REFUSE_DELETECHAR` 结果提示。
   - 参考：`CharEngine.js#onDeleteRequest/onCancelDeleteRequest/onDeleteReqDelay`
-- [ ] **P2** 角色列表分页和分块下发
+- [ ] **P3·联机** 角色列表分页和分块下发
   - 需要：`HC_ACCEPT_ENTER_NEO_UNION_LIST(2)`、`HC_ACCEPT_ENTER_NEO_UNION_HEADER`、`HC_CHARLIST_NOTIFY`、`CH_CHARLIST_REQ`、`HC_BLOCK_CHARACTER`（角色被封禁时标记出来）。
   - 参考：`CharEngine.js#onCharacterListChunk`
-- [ ] **P2** 选角被拒：处理 `HC_REFUSE_SELECTCHAR`，显示提示。
-- [ ] **P2** 地图不可进入
+- [ ] **P3** 选角被拒：处理 `HC_REFUSE_SELECTCHAR`，显示提示。
+- [ ] **P3** 地图不可进入
   - 现状：收到 `HC_NOTIFY_ACCESSIBLE_MAPNAME` 时只显示错误。
   - 需要：让用户从可用地图里选一个，发送 `CH_SELECT_ACCESSIBLE_MAPNAME`。
   - 参考：`CharEngine.js#onMapUnavailable`
@@ -169,15 +172,15 @@
 
 ## 4. 网络与协议层
 
-- [ ] **P1** 切换地图服务器
+- [ ] **P3·联机** 切换地图服务器
   - 需要：处理 `ZC_NPCACK_SERVERMOVE(2)`。流程是断开当前地图服 → 连接新的 ip:port → 发 `CZ_ENTER` → 加载地图。
   - 多地图服部署时这是必需的。当前没有处理，跨服传送会卡住。
   - 参考：`Engine/MapEngine.js#onServerChange`
-- [ ] **P1** 服务端配置
+- [ ] **P2** 服务端配置
   - 处理 `ZC_CONFIG`、`ZC_CONFIG_NOTIFY(1–4)`，发送 `CZ_CONFIG`。
   - 涉及的开关：公开装备、宠物自动喂食、生命体自动喂食、允许被召集（`/call`）。
   - 参考：`Engine/MapEngine.js#onConfig/onConfigNotify/onConfigUpdate`
-- [ ] **P2** 运行时选择 PACKETVER
+- [ ] **P3** 运行时选择 PACKETVER
   - 当前 `PACKET_VERSION` 是编译期常量。
   - roBrowser 支持 2003–2025 共 23 组包长表，并能按客户端 exe 日期自动识别版本。
   - 要做到这一点，需要把 `RagnarokPackets` 的版本分支改成运行时判断。
@@ -192,17 +195,17 @@
 
 ## 5. 地图会话与地图状态
 
-- [ ] **P1** 地图属性
+- [ ] **P3·联机** 地图属性
   - 需要：`ZC_MAPPROPERTY`、`ZC_MAPPROPERTY_R2`、`ZC_NOTIFY_MAPPROPERTY(2)`。
   - 用途：标记 PvP / GvG / 攻城战地图，控制 PvP 计数和计时 UI 的显隐，以及是否显示伤害。
   - 参考：`Engine/MapEngine/MapState.js`、`DB/Map/MapState.js`
-- [ ] **P1** mapflag 天气和环境效果：雪、雨、雾、樱花、落叶、烟花、云、夜晚。
+- [ ] **P2** mapflag 天气和环境效果：雪、雨、雾、樱花、落叶、烟花、云、夜晚。
   - 参考：`Renderer/ScreenEffectManager.js#startMapflagEffect/setNight`、`DB/Effects/WeatherEffect.js`
 - [ ] **P2** 地图格子类型变更
   - 需要：处理 `ZC_UPDATE_MAPINFO`，同步更新 `MapGrid` 和 `PathFinder`。
   - 参考：`Engine/MapEngine/Main.js#onUpdateMapInfo`
 - [ ] **P2** 地图信息提示 `ZC_NOTIFY_MAPINFO`，比如“该地图禁止记录传送点”。
-- [ ] **P2** PvP 排名 `ZC_NOTIFY_RANKING`，以及 PvP 计数和计时窗口。
+- [ ] **P3·联机** PvP 排名 `ZC_NOTIFY_RANKING`，以及 PvP 计数和计时窗口。
   - 参考：`UI/Components/PvPCount/`、`PvPTimer/`
 - [ ] **P3** 倍率和个人加成信息：`ZC_PERSONAL_INFORMATION(2)`。
   - 参考：`Main.js#onRatesInfo`
@@ -218,15 +221,16 @@
   - 要显示的内容：玩家名、组队名、公会名、职位、称号，以及怪物名和 NPC 名。
   - 显示规则：常驻显示，鼠标悬停时高亮，受 `/showname` 偏好控制。
   - 组队成员的名字要用 `partyColors` 着色。
+  - 单机先做怪物名和 NPC 名，组队名、公会名、称号可以后补。
   - 参考：`Engine/MapEngine/Entity.js#onEntityIdentity`、`Renderer/Entity/EntityDisplay.js`
-- [ ] **P2** 按 GID 查角色名
+- [ ] **P3·联机** 按 GID 查角色名
   - 需要：`CZ_REQNAME_BYGID(2)` / `ZC_ACK_REQNAME_BYGID(2)`。
   - 用途：邮件、组队、公会里只有 CID 的场景。
   - 参考：`DB/DBManager.js`
-- [ ] **P1** 怪物血条
+- [ ] **P0** 怪物血条
   - 需要：`ZC_HP_INFO_TINY`（百分比血条），并在怪物受到伤害时自动显示血条。
   - 参考：`Entity.js#onEntityLifeUpdate/onEntityLifeUpdateTiny`、`Renderer/Entity/EntityLife.js`
-- [ ] **P2** 称号：`CZ_REQ_CHANGE_TITLE` / `ZC_ACK_CHANGE_TITLE`，显示在名字旁边。
+- [ ] **P3** 称号：`CZ_REQ_CHANGE_TITLE` / `ZC_ACK_CHANGE_TITLE`，显示在名字旁边。
 - [ ] **P2** NPC 外观变更：`ZC_NPCSPRITE_CHANGE`。
 - [ ] **P2** 补齐 Look 变更
   - 现状：`onMapObjectSpriteChanged` 只处理了一部分。
@@ -235,12 +239,12 @@
 
 ### 6.2 状态外观（`StatusChangeOption*`）
 
-- [ ] **P1** bodyState（opt1）
+- [ ] **P0** bodyState（opt1）
   - 包括：石化（两个阶段）、冰冻、昏迷、睡眠、灼烧、禁锢。
   - 表现：精灵着色（灰、蓝等）、动作冻结、附加特效。
   - 现状：只存了值，没有用在渲染上。
   - 参考：`Renderer/Entity/EntityState.js#updateBodyState`
-- [ ] **P1** healthState（opt2）
+- [ ] **P0** healthState（opt2）
   - 包括：中毒、诅咒、沉默、混乱、黑暗、出血。
   - 表现：着色和头顶特效；中毒和黑暗还要叠加屏幕效果。
   - 参考：`EntityState.js#updateHealthState`、`Renderer/Effects/PoisonEffect.js`、`Renderer/Effects/Shaders/Blind.js`
@@ -265,15 +269,15 @@
 - [ ] **P1** 猎鹰和狼
   - 需要：作为独立实体跟随主人，进图时根据 effectState 重建。
   - 参考：`Engine/MapEngine.js#onMapChange`（`_FALCON` / `_WUG`）
-- [ ] **P1** 气功球 `ZC_SPIRITS(2)`、千年盾 `ZC_MILLENNIUMSHIELD`、Warlock 元素球。
+- [ ] **P2** 气功球 `ZC_SPIRITS(2)`、千年盾 `ZC_MILLENNIUMSHIELD`、Warlock 元素球。
   - 参考：`Renderer/Effects/SpiritSphere.js`、`WarlockSphere.js`、`Entity.js#updateWarlockSpheres`
 - [ ] **P2** 99 级 / 175 级光环，受 `/aura` 和 `/aura2` 控制。
   - 参考：`Renderer/Entity/EntityAura.js`、`Effects/Level99Bubble.js`
 - [ ] **P2** 头饰特效 `ZC_HAT_EFFECT`，以及装备附带的持续特效。
   - 参考：`DB/Items/HatTable.js`、`ItemEffect.js`、`Entity.js#onHatEffects`
-- [ ] **P2** 武器挥动拖尾。
+- [ ] **P3** 武器挥动拖尾。
   - 参考：`DB/Items/WeaponTrailTable.js`、`Renderer/Effects/Trail.js`
-- [ ] **P2** 公会徽章显示在名字旁边。
+- [ ] **P3·联机** 公会徽章显示在名字旁边。
   - 相关包：`ZC_GUILD_EMBLEM_IMG`、`CZ_REQ_GUILD_EMBLEM_IMG`。
   - 参考：`Renderer/Entity/EntityEmblem.js`
 - [ ] **P3** GR2（Granny）3D 怪物模型（`data/model/3dmob/`），缺模型时回退为波利。
@@ -281,18 +285,18 @@
 
 ### 6.4 头顶 UI
 
-- [ ] **P0** 头顶聊天气泡
+- [ ] **P2** 头顶聊天气泡
   - 现状：`ZC_NOTIFY_CHAT` 只进聊天框。
   - 参考：`Renderer/Entity/EntityDialog.js`、`Entity.js#onEntityTalk/onEntityTalkColor`
-- [ ] **P1** 表情
+- [ ] **P2** 表情
   - 需要：处理 `ZC_EMOTION`，发送 `CZ_REQ_EMOTION`。
   - 入口：表情窗口（Alt+L）、`/表情` 命令、Ctrl+数字的表情快捷键（`EXECUTE_FLAG_*`，可自定义）。
   - 参考：`Entity.js#onEntityEmotion`、`DB/Emotions.js`、`UI/Components/Emoticons/`、`UI/Components/ShortCuts/ShortCuts.js#executeFlag`
-- [ ] **P1** 聊天室、摊位和收购店的招牌
+- [ ] **P3·联机** 聊天室、摊位和收购店的招牌
   - 相关包：`ZC_ROOM_NEWENTRY`、`ZC_DESTROY_ROOM`、`ZC_STORE_ENTRY`、`ZC_DISAPPEAR_ENTRY`、`ZC_BUYING_STORE_ENTRY`、`ZC_DISAPPEAR_BUYING_STORE_ENTRY`、`ZC_STORE_ASSISTANT_ENTRY(_V2)` / `DISAPPEAR`。
   - 点击招牌后分别进入聊天室、摊位或收购店。
   - 参考：`Renderer/Entity/EntityRoom.js`、`UI/Components/EntityRoom/`、`EntitySignboard/`
-- [ ] **P2** 任务 NPC 头顶图标：`ZC_QUEST_NOTIFY_EFFECT`。
+- [ ] **P1** 任务 NPC 头顶图标：`ZC_QUEST_NOTIFY_EFFECT`。
   - 参考：`Entity.js#onEntityQuestNotifyEffect`
 - [ ] **P2** 头顶脚本文字：`ZC_SHOWSCRIPT`。
 - [ ] **P2** 城镇招牌
@@ -312,17 +316,17 @@
 
 - [ ] **P1** 击退滑动 `ZC_FASTMOVE`，跳跃 `ZC_HIGHJUMP`（跆拳道高跳、Snap 等）。
   - 参考：`Entity.js#onEntityFastMove/onEntityJump`
-- [ ] **P1** 带位移的攻击和技能：`ZC_NOTIFY_ACT_POSITION`、`ZC_NOTIFY_SKILL_POSITION`（冲锋攻击等）。
+- [ ] **P2** 带位移的攻击和技能：`ZC_NOTIFY_ACT_POSITION`、`ZC_NOTIFY_SKILL_POSITION`（冲锋攻击等）。
 - [ ] **P2** `ZC_NOTIFY_ACTENTRY`：进入视野的同时带动作。
-- [ ] **P2** 真剑白刃取 `ZC_BLADESTOP` 的表现。
+- [ ] **P3** 真剑白刃取 `ZC_BLADESTOP` 的表现。
 - [x] **P1** 坐下和站起
   - 动作盘外圈加了坐下按钮，按当前动作发送 `CZ_REQUEST_ACT`（type 2/3）。
   - 坐着时点地面改为原地转向，发送 `CZ_CHANGE_DIRECTION`。
   - 进入视野时按 `packet_idle_unit.state`（`dead_sit`）显示坐下或倒地。
   - `/sit`、`/stand` 见 §25，Insert 键见 §24。
-- [ ] **P2** 转身和转头
+- [ ] **P3** 转身和转头
   - 需要：`/doridori`（`CZ_DORIDORI`）、`/bangbang`、`/bingbing`；Shift + 右键原地转向；发送 `CZ_CHANGE_DIRECTION`。
-- [ ] **P2** 物品掉落
+- [ ] **P1** 物品掉落
   - 需要：`ZC_ITEM_FALL_ENTRY` 的 subX/subY 偏移和掉落弹跳动画。
   - 需要：按物品等级显示掉落光柱（`showdropeffect` / `dropeffectmode`）。
   - 参考：`Renderer/ItemObject.js`、`Renderer/Entity/EntityDropEffect.js`
@@ -345,8 +349,8 @@
   - 其他：自己受到的伤害用单独颜色（`ENEMY`）；SP 伤害和治疗的区分。
   - 现状：`CombatText.Kind` 只有 damage、miss、combo、recovery。
   - 参考：`Renderer/Effects/Damage.js`
-- [ ] **P2** 伤害皮肤 `damageSkin` 和伤害动效 `damageMotion`（图形设置项）。
-- [ ] **P1** 攻击失败
+- [ ] **P3** 伤害皮肤 `damageSkin` 和伤害动效 `damageMotion`（图形设置项）。
+- [ ] **P0** 攻击失败
   - `ZC_ATTACK_FAILURE_FOR_DISTANCE`：距离不够时自动靠近目标。
   - `ZC_ACTION_FAILURE`：显示提示。
   - 参考：`Main.js#onPlayerTooFarToAttack/onActionFailure`
@@ -354,7 +358,7 @@
   - 需要：`/noctrl`（单击后持续攻击）、`/noshift`、`attackTargetMode`，以及锁定目标的准星。
   - 需要：`CZ_CANCEL_LOCKON`。
   - 参考：`Controls/MapControl.js`、`Renderer/Effects/LockOnTarget.js`、`Preferences/Controls.js`
-- [ ] **P2** 自动跟随：移动到目标附近的空格子。
+- [ ] **P3** 自动跟随：移动到目标附近的空格子。
   - 参考：`MapControl.js#onAutoFollow`
 - [ ] **P2** 怪物普攻特效。
   - 参考：`DB/Monsters/AttackEffectTable.js`
@@ -378,7 +382,7 @@
   - 施放时可以用滚轮或手势选择技能等级；右键或返回键取消。
   - 移动端需要一套等价的交互。
   - 参考：`UI/Components/SkillTargetSelection/`、`Renderer/Effects/MagicTarget.js`、`MapControl.js`
-- [ ] **P1** 技能冷却和公共延迟
+- [ ] **P0** 技能冷却和公共延迟
   - 需要：`ZC_SKILL_POSTDELAY`，在快捷栏和技能列表上显示冷却遮罩。
   - 参考：`Skill.js#onSetSkillDelay`
 - [ ] **P1** 技能树
@@ -392,7 +396,7 @@
 
 ### 8.2 技能地面单元
 
-- [ ] **P1** 技能单元
+- [ ] **P0** 技能单元
   - 需要：`ZC_SKILL_ENTRY(1–5)` 和 `ZC_SKILL_DISAPPEAR`。
   - 包括：火墙、安全之墙、Pneuma、暴风雪、陷阱类、传送之阵门、Land Protector、诗人和舞娘的合奏、冰墙（RSM）、Quagmire、蜘蛛网等。
   - 需要：按 unit_id 映射到特效，处理可见性（陷阱对敌方隐藏）。
@@ -400,7 +404,7 @@
 
 ### 8.3 状态图标
 
-- [ ] **P1** 状态图标栏
+- [ ] **P0** 状态图标栏
   - 需要：`ZC_MSG_STATE_CHANGE(1–5)`。显示 EFST 图标、剩余时间，悬停或长按显示状态说明。
   - 状态同时要驱动实体特效（`addStateEffect`）和屏幕效果（中毒、黑暗、幻觉）。
   - `RagnarokLocalization.StatusInfoTable` 已存在但还没用上。
@@ -411,7 +415,7 @@
 - [ ] **P2** 自动咏唱（Hindsight）选择：`ZC_AUTOSPELLLIST(2)` / `CZ_SELECTAUTOSPELL`。
 - [ ] **P2** 抄袭 / 影子自动施法选择：`ZC_SKILL_SELECT_REQUEST` / `CZ_SKILL_SELECT_RESPONSE`。
 - [ ] **P2** 圣骑士奉献的连线显示：`ZC_DEVOTIONLIST`。
-- [ ] **P2** 记录传送点
+- [ ] **P1** 记录传送点
   - 需要：`/memo`，发送 `CZ_REMEMBER_WARPPOINT`，处理 `ZC_ACK_REMEMBER_WARPPOINT`。
   - 现状：传送之阵的地点列表已经有了。
 - [ ] **P2** 制作箭矢：`ZC_MAKINGARROW_LIST` / `CZ_REQ_MAKINGARROW`。
@@ -419,7 +423,7 @@
 - [ ] **P2** 修理武器：`ZC_REPAIRITEMLIST(2)` / `CZ_REQ_ITEMREPAIR`。
 - [ ] **P2** 铁匠精炼武器：`ZC_NOTIFY_WEAPONITEMLIST` / `CZ_REQ_WEAPONREFINE`。
   - 参考：`UI/Components/RefineWeaponSelection/`
-- [ ] **P2** 鉴定（放大镜）：`ZC_ITEMIDENTIFY_LIST` / `CZ_REQ_ITEMIDENTIFY` / `ZC_ACK_ITEMIDENTIFY`。
+- [ ] **P1** 鉴定（放大镜）：`ZC_ITEMIDENTIFY_LIST` / `CZ_REQ_ITEMIDENTIFY` / `ZC_ACK_ITEMIDENTIFY`。
 - [ ] **P2** 锻造和制药
   - 需要：`ZC_MAKABLEITEMLIST` / `CZ_REQMAKINGITEM`，以及 `ZC_MAKINGITEM_LIST` / `CZ_REQ_MAKINGITEM`。
   - 参考：`UI/Components/MakeItemSelection/`
@@ -490,7 +494,7 @@
   - 参考：`UI/CursorManager.js`、`EntityControl.js#onFocus`
 - [ ] **P3** 后处理：Bloom、FXAA、CAS 锐化、卡通描边、Vibrance、高斯模糊。
   - 参考：`Renderer/Effects/PostProcess.js`、`Effects/Shaders/*`
-- [ ] **P3** 画质选项
+- [ ] **P2** 画质选项
   - 包括：`pixelPerfectSprites`、`viewArea`（可视范围）、`fpslimit`、`performanceMode`、`/lightmap`、`/fog`、`/smoothlight`（光照贴图色阶）。
   - 参考：`Preferences/Graphics.js`、`Preferences/Map.js`、`UI/Components/GraphicsOption/`
 - [ ] **P3** 截图：Print Screen 保存截图，并叠加时间和地图信息。
@@ -513,7 +517,7 @@
 
 ## 12. 音频
 
-- [ ] **P1** 音量和开关
+- [ ] **P0** 音量和开关
   - 需要：BGM 和音效各自可以开关、调音量，并持久化；支持 `/bgm` 和 `/sound`。
   - 现状：选项菜单里的“Sound”按钮是禁用的。
   - 参考：`Preferences/Audio.js`、`UI/Components/SoundOption/`、`Audio/BGM.js`、`Audio/SoundManager.js`
@@ -524,7 +528,7 @@
 
 ## 13. 物品、背包与装备
 
-- [ ] **P1** 查看他人装备
+- [ ] **P3·联机** 查看他人装备
   - 需要：`CZ_EQUIPWIN_MICROSCOPE` 和 `ZC_EQUIPWIN_MICROSCOPE(_V2–V7)`。
   - 需要：通过 `CZ_CONFIG` 设置是否公开自己的装备。
   - 参考：`UI/Components/PlayerViewEquip/`
@@ -535,18 +539,18 @@
   - 未鉴定物品的显示。
   - 物品对比和头饰预览。
   - 参考：`UI/Components/ItemInfo/`、`ItemCompare/`、`CardIllustration/`、`ItemPreview/`
-- [ ] **P1** 插卡
+- [ ] **P0** 插卡
   - 需要：`CZ_REQ_ITEMCOMPOSITION_LIST` → `ZC_ITEMCOMPOSITION_LIST` → `CZ_REQ_ITEMCOMPOSITION` → `ZC_ACK_ITEMCOMPOSITION`。
   - 参考：`Item.js#onUseCard/onItemCompositionList`
 - [ ] **P1** 装备窗口页签
   - 需要：时装页、影子装备页，每个格子显示精炼值；装备窗口里的属性总览。
   - 参考：`UI/Components/Equipment/`
-- [ ] **P1** 背包容量
+- [ ] **P2** 背包容量
   - 现状：`ZC_EXTEND_BODYITEM_SIZE` 是空处理。
   - 需要：处理背包扩展，包括 `CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE`、`ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE`、`CZ_REQ_EXTEND_BODYITEM_SIZE`、`ZC_ACK_EXTEND_BODYITEM_SIZE`、`CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE`。
   - 参考：`UI/Components/Inventory/InventoryCommon.js`
 - [ ] **P2** 背包收藏页签：`ZC_ITEM_FAVORITE` / `CZ_INVENTORY_TAB`。
-- [ ] **P2** 负重惩罚：`ZC_RECOVER_PENALTY_OVERWEIGHT`，显示 50% 和 90% 负重状态。
+- [ ] **P1** 负重惩罚：`ZC_RECOVER_PENALTY_OVERWEIGHT`，显示 50% 和 90% 负重状态。
 - [ ] **P2** 装备切换
   - 需要：`ZC_SEND_SWAP_EQUIPITEM_INFO`、`CZ_REQ_WEAR_SWITCHEQUIP_ADD/REMOVE`、`ZC_REQ_WEAR_SWITCHEQUIP_ADD/REMOVE_RESULT`、`CZ_REQ_FULLSWITCH`。
   - 参考：`UI/Components/SwitchEquip/`
@@ -568,7 +572,7 @@
   - 需要：`CZ_MOVE_ITEM_FROM_BODY_TO_CART`、`CZ_MOVE_ITEM_FROM_CART_TO_BODY`、`CZ_MOVE_ITEM_FROM_CART_TO_STORE`、`CZ_MOVE_ITEM_FROM_STORE_TO_CART`。
   - 需要：手推车窗口、更换手推车样式、手推车装饰。
   - 参考：`Item.js#onCartSetList/onCartSetInfo/...`、`UI/Components/CartItems/`、`ChangeCart/`、`CartDecoration/`
-- [ ] **P1** 公会仓库
+- [ ] **P3·联机** 公会仓库
   - 现状：`invType = 3` 被忽略。它和个人仓库复用同一套 store 包，但窗口需要标题区分。
 - [ ] **P3** 旧版仓库列表包（`ZC_STORE_NORMAL/EQUIPMENT_ITEMLIST(1–5)`），只在运行时多版本时才需要。
 
@@ -578,21 +582,21 @@
 
 ### 15.1 聊天框
 
-- [ ] **P0** 发送组队、公会、氏族消息
+- [ ] **P3·联机** 发送组队、公会、氏族消息
   - 需要：`CZ_REQUEST_CHAT_PARTY`、`CZ_GUILD_CHAT`、`CZ_CLAN_CHAT`。
   - 现状：`GameSession.sendMessage` 里这几个分支被注释掉了。
   - 输入方式：前缀 `%`、`$`、`/cl`，以及 Ctrl / Alt 切换频道。
   - 参考：`Engine/MapEngine.js#onRequestTalk`
-- [ ] **P0** 私聊
+- [ ] **P3·联机** 私聊
   - 需要：发送 `CZ_WHISPER`，处理 `ZC_ACK_WHISPER(2)`（对方不在线、被屏蔽等）。
   - 需要：私聊对象输入栏、最近私聊对象列表、独立的私聊窗口。
   - 参考：`Engine/MapEngine/PrivateMessage.js`、`UI/Components/WhisperBox/`
-- [ ] **P1** 聊天框能力
+- [ ] **P2** 聊天框能力
   - 消息类型着色：SELF、PUBLIC、PRIVATE、PARTY、GUILD、ANNOUNCE、ERROR、INFO、BLUE、ADMIN、MAIL、CLAN。
   - 22 类过滤（物品、装备、状态、战斗、经验、任务、战场等）。
   - 多页签和页签设置、输入历史、字体缩放、战斗模式开关。
   - 参考：`UI/Components/ChatBox/`、`ChatBoxSettings/`
-- [ ] **P1** 公告
+- [ ] **P2** 公告
   - 需要：`ZC_BROADCAST` / `ZC_BROADCAST2`（当前为空处理），显示在顶部公告栏并写入聊天框。
   - 参考：`Main.js#onGlobalAnnounce`、`UI/Components/Announce/`
 - [ ] **P1** 系统消息：`ZC_MSG`（按 msgstringtable 编号）、`ZC_MSG_COLOR`。
@@ -600,7 +604,7 @@
 
 ### 15.2 组队
 
-- [ ] **P1** 组队系统
+- [ ] **P3·联机** 组队系统
   - 创建：`CZ_MAKE_GROUP(2)` → `ZC_ACK_MAKE_GROUP`，也可以用 `/organize`。
   - 邀请：新版按名字发 `CZ_PARTY_JOIN_REQ`，结果为 `ZC_PARTY_JOIN_REQ_ACK`；旧版按 AID 发 `CZ_REQ_JOIN_GROUP`，结果为 `ZC_ACK_REQ_JOIN_GROUP`。也可以用 `/invite`。
   - 收到邀请：`ZC_PARTY_JOIN_REQ` → 回复 `CZ_PARTY_JOIN_REQ_ACK`。
@@ -615,7 +619,7 @@
 
 ### 15.3 好友
 
-- [ ] **P1** 好友系统
+- [ ] **P3·联机** 好友系统
   - 列表：`ZC_FRIENDS_LIST`（当前为空处理）、`ZC_FRIENDS_STATE`（上下线）。
   - 添加：`CZ_ADD_FRIENDS` → `ZC_REQ_ADD_FRIENDS` → `CZ_ACK_REQ_ADD_FRIENDS` → `ZC_ADD_FRIENDS_LIST`。
   - 删除：`CZ_DELETE_FRIENDS` / `ZC_DELETE_FRIENDS`。
@@ -624,7 +628,7 @@
 
 ### 15.4 公会
 
-- [ ] **P2** 公会系统
+- [ ] **P3·联机** 公会系统
   - 创建和解散
     - 创建：`CZ_REQ_MAKE_GUILD` → `ZC_RESULT_MAKE_GUILD`，也可以用 `/guild`，需要华丽金属。
     - 解散：`CZ_REQ_DISORGANIZE_GUILD` → `ZC_ACK_DISORGANIZE_GUILD_RESULT`，也可以用 `/breakguild`。
@@ -654,13 +658,13 @@
 
 ### 15.5 氏族
 
-- [ ] **P2** 氏族信息
+- [ ] **P3·联机** 氏族信息
   - 需要：`ZC_CLANINFO`、`ZC_NOTIFY_CLAN_CONNECTINFO`、`ZC_ACK_CLAN_LEAVE`，以及氏族窗口。
   - 参考：`Engine/MapEngine/Clan.js`、`UI/Components/Clan/`
 
 ### 15.6 聊天室
 
-- [ ] **P1** 聊天室
+- [ ] **P3·联机** 聊天室
   - 创建：`CZ_CREATE_CHATROOM` → `ZC_ACK_CREATE_CHATROOM`，也可以用 `/chat`。
   - 进入：`CZ_REQ_ENTER_ROOM` → `ZC_ENTER_ROOM` / `ZC_REFUSE_ENTER_ROOM`，带密码。
   - 成员：`ZC_MEMBER_NEWENTRY`、`ZC_MEMBER_EXIT`。
@@ -673,7 +677,7 @@
 
 ### 15.7 玩家上下文菜单
 
-- [ ] **P1** 在其他玩家上右键或长按弹出菜单
+- [ ] **P3·联机** 在其他玩家上右键或长按弹出菜单
   - 查看装备、交易、邀请入队、邀请入公会、结盟、敌对、1:1 私聊、加好友。
   - 参考：`Controls/EntityControl.js`（`TYPE_PC` 分支）、`UI/Components/ContextMenu/`
 
@@ -696,7 +700,7 @@
   - 参考：`Engine/MapEngine/Store.js`、`UI/Components/NpcStore/`
 - [ ] **P2** 以物易物
   - 需要：`ZC_NPC_BARTER_MARKET_ITEMINFO`、`ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO`，以及对应的 `CZ_*_PURCHASE` 和 `CZ_*_CLOSE`。
-- [ ] **P2** 点数商店
+- [ ] **P3** 点数商店
   - 需要：`CZ_PC_CASH_POINT_ITEMLIST` → `ZC_PC_CASH_POINT_ITEMLIST`、`CZ_PC_BUY_CASH_POINT_ITEM`、`ZC_PC_CASH_POINT_UPDATE`。
 - [ ] **P3** 动态 NPC：`CZ_DYNAMICNPC_CREATE_REQUEST` / `ZC_DYNAMICNPC_CREATE_RESULT`。
 
@@ -704,31 +708,31 @@
 
 ## 17. 交易、摆摊与收购
 
-- [ ] **P1** 玩家交易
+- [ ] **P3·联机** 玩家交易
   - 发起：`CZ_REQ_EXCHANGE_ITEM` → `ZC_REQ_EXCHANGE_ITEM(2)` → `CZ_ACK_EXCHANGE_ITEM` → `ZC_ACK_EXCHANGE_ITEM(2)`。
   - 加入物品和 Zeny：`CZ_ADD_EXCHANGE_ITEM` → `ZC_ACK_ADD_EXCHANGE_ITEM`，对方加入时收到 `ZC_ADD_EXCHANGE_ITEM(1–5)`。
   - 锁定：`CZ_CONCLUDE_EXCHANGE_ITEM` / `ZC_CONCLUDE_EXCHANGE_ITEM`。
   - 确认：`CZ_EXEC_EXCHANGE_ITEM` / `ZC_EXEC_EXCHANGE_ITEM`。
   - 取消：`CZ_CANCEL_EXCHANGE_ITEM` / `ZC_CANCEL_EXCHANGE_ITEM`。
   - 参考：`Engine/MapEngine/Trade.js`、`UI/Components/Trade/`
-- [ ] **P1** 摆摊：开店
+- [ ] **P3·联机** 摆摊：开店
   - 需要：`ZC_OPENSTORE`（技能触发）→ `CZ_REQ_OPENSTORE2` → `ZC_ACK_OPENSTORE2`。
   - 自己摊位的物品列表：`ZC_PC_PURCHASE_MYITEMLIST(2)`。
   - 售出通知：`ZC_DELETEITEM_FROM_MCSTORE(2)`。
   - 收摊：`CZ_REQ_CLOSESTORE`。
   - 窗口：摆摊窗口、销售报告。
   - 参考：`Engine/MapEngine/Store.js`、`UI/Components/Vending/`、`VendingReport/`
-- [ ] **P1** 摆摊：购买
+- [ ] **P3·联机** 摆摊：购买
   - 需要：`CZ_REQ_BUY_FROMMC` → `ZC_PC_PURCHASE_ITEMLIST_FROMMC(1–3)` → `CZ_PC_PURCHASE_ITEMLIST_FROMMC(2)` → `ZC_PC_PURCHASE_RESULT_FROMMC`。
   - 参考：`UI/Components/VendingShop/`
-- [ ] **P2** 收购店
+- [ ] **P3·联机** 收购店
   - 需要：`ZC_OPEN_BUYING_STORE`、`CZ_REQ_OPEN_BUYING_STORE`、`ZC_MYITEMLIST_BUYING_STORE`、`CZ_REQ_CLICK_TO_BUYING_STORE`、`ZC_ACK_ITEMLIST_BUYING_STORE`、`CZ_REQ_TRADE_BUYING_STORE`、`ZC_FAILED_OPEN_BUYING_STORE_TO_BUYER`、`ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER`、`CZ_REQ_CLOSE_BUYING_STORE`。
 
 ---
 
 ## 18. 宠物、生命体与佣兵
 
-- [ ] **P2** 宠物
+- [ ] **P1** 宠物
   - 捕捉：`ZC_START_CAPTURE` → `CZ_TRYCAPTURE_MONSTER` → `ZC_TRYCAPTURE_MONSTER`，捕捉时显示老虎机动画。
   - 孵化：`ZC_PETEGG_LIST` → `CZ_SELECT_PETEGG`。
   - 属性和状态：`ZC_PROPERTY_PET`、`ZC_CHANGESTATE_PET`。
@@ -751,7 +755,7 @@
 - [ ] **P2** 佣兵
   - 需要：`ZC_MER_INIT`、`ZC_MER_PROPERTY`、`ZC_MER_PAR_CHANGE`、`ZC_MER_SKILLINFO_LIST/UPDATE`、`CZ_MER_COMMAND`，以及佣兵信息窗口。
   - 参考：`Engine/MapEngine/Mercenary.js`、`UI/Components/MercenaryInformations/`
-- [ ] **P3** 生命体和佣兵的 Lua AI
+- [ ] **P2** 生命体和佣兵的 Lua AI
   - 需要：`/hoai`、`/merai` 切换默认和自定义 AI；在客户端运行 `AI.lua` 并驱动上面的移动和攻击包。
   - roBrowser 用 Wasmoon 实现。本仓库的 `RagnarokScript` 已有 Lua 加载能力，可以复用。
   - 参考：`Core/AIDriver.js`
@@ -771,7 +775,7 @@
 - [ ] **P3** 声望：`ZC_REPUTE_INFO`（当前为空处理）和声望窗口。
 - [ ] **P3** 签到：`CZ_REQ_CHECK_ATTENDANCE`；打开 UI：`ZC_UI_OPEN(_V3)` / `CZ_UI_OPEN`。
   - 参考：`UI/Components/CheckAttendance/`、`Engine/MapEngine/UIOpen.js`
-- [ ] **P3** 排行榜
+- [ ] **P3·联机** 排行榜
   - 通用排行：`CZ_RANKING` / `ZC_ACK_RANKING(2)`。
   - 职业排行：`/alchemist`、`/blacksmith`、`/taekwon`，对应 `CZ_*_RANK` 和 `ZC_*_RANK`。
   - PK 排行：`ZC_KILLER_RANK`。
@@ -780,7 +784,7 @@
 
 ## 20. 邮件
 
-- [ ] **P2** RODEX 邮件（当前版本 20211103 使用这一套）
+- [ ] **P3·联机** RODEX 邮件（当前版本 20211103 使用这一套）
   - 未读图标：`ZC_RODEX_ICON`。
   - 打开和关闭邮箱：`CZ_OPEN_RODEXBOX` / `CZ_CLOSE_RODEXBOX`。
   - 邮件列表：`ZC_ACK_RODEX_LIST(1–4)`、`CZ_REQ_NEXT_RODEX`、`CZ_REQ_REFRESH_RODEX`。
@@ -821,10 +825,10 @@
 
 ## 22. 其他系统
 
-- [ ] **P2** 银行
+- [ ] **P3** 银行
   - 需要：`CZ_REQ_BANK_OPEN` / `ZC_ACK_OPEN_BANKING`、`CZ_REQ_BANKING_CHECK` / `ZC_BANKING_CHECK`、`CZ_REQ_BANKING_DEPOSIT` / `ZC_ACK_BANKING_DEPOSIT`、`CZ_REQ_BANKING_WITHDRAW` / `ZC_ACK_BANKING_WITHDRAW`、`CZ_REQ_BANK_CLOSE` / `ZC_ACK_CLOSE_BANKING`。
   - 参考：`Engine/MapEngine/Bank.js`、`UI/Components/Bank/`
-- [ ] **P2** 防外挂验证（玩家作答部分）
+- [ ] **P3** 防外挂验证（玩家作答部分）
   - 需要：`ZC_APPLY_MACRO_DETECTOR(_CAPTCHA)`、`ZC_REQ_ANSWER_MACRO_DETECTOR`、`CZ_ACK_ANSWER_MACRO_DETECTOR`、`ZC_CLOSE_MACRO_DETECTOR`。
   - 服务端开启这一功能时，不作答会被判定为外挂。
   - 参考：`Engine/MapEngine/Captcha.js`、`UI/Components/Captcha/CaptchaAnswer.js`
@@ -837,7 +841,7 @@
 - [ ] **P3** 轮盘
   - 需要：`CZ_REQ_OPEN_ROULETTE` / `ZC_ACK_OPEN_ROULETTE`、`CZ_REQ_ROULETTE_INFO` / `ZC_ACK_ROULETTE_INFO`、`CZ_REQ_GENERATE_ROULETTE` / `ZC_ACK_GENERATE_ROULETTE`、`CZ_RECV_ROULETTE_ITEM` / `ZC_RECV_ROULETTE_ITEM`、`CZ_REQ_CLOSE_ROULETTE` / `ZC_ACK_CLOSE_ROULETTE`。
 - [ ] **P3** 网咖金币计时：`ZC_GOLDPCCAFE_POINT`。
-- [ ] **P3** 在线人数：`/who`，发送 `CZ_REQ_USER_COUNT`，处理 `ZC_USER_COUNT`。
+- [ ] **P3·联机** 在线人数：`/who`，发送 `CZ_REQ_USER_COUNT`，处理 `ZC_USER_COUNT`。
 - [x] **P3** 站立复活：`CZ_STANDING_RESURRECTION`，见 §2。
 
 ---
@@ -871,12 +875,12 @@
   - 参考：`Preferences/ShortCutControls.js`、`Controls/KeyEventHandler.js`、`UI/Components/ShortCutOption/`
 - [ ] **P2** 战斗模式：聊天框切到战斗模式后，字母键直接触发快捷栏。
   - 参考：`Controls/BattleMode.js`、`ChatBox.processBattleMode`
-- [ ] **P2** 鼠标操作（macOS）
+- [ ] **P1** 鼠标操作（macOS）
   - 按住左键持续朝鼠标方向移动（`walkIntervalProcess`）。
   - 右键拖动旋转镜头，滚轮缩放。
   - Shift + 右键原地转向。
   - 参考：`Controls/MapControl.js`、`Engine/MapEngine.js#onRequestWalk`
-- [ ] **P2** 自动吸附：`/snap`（光标吸附目标）、`/itemsnap`（光标吸附物品）、`/window`（窗口互相吸附）。
+- [ ] **P3** 自动吸附：`/snap`（光标吸附目标）、`/itemsnap`（光标吸附物品）、`/window`（窗口互相吸附）。
 - [ ] **P2** 游戏手柄
   - 使用 GameController 框架，对齐 roBrowser 基于 Gamepad API 的 JoystickUI。
   - 包括：摇杆移动、按键映射到快捷栏、目标切换、虚拟光标。
@@ -888,7 +892,7 @@
 
 参考：`Controls/ProcessCommand.js`。当前 `ChatBoxView` 会把输入原样发送。需要先建立命令分发器（带别名），再逐个实现。
 
-- [ ] **P1** 基础命令
+- [ ] **P2** 基础命令
   - `/sit`（别名 `/stand`）
   - `/where`
   - `/who`（别名 `/w`）
@@ -896,19 +900,19 @@
   - `/commands`（别名 `/cmd`、`/h`、`/help`）
   - 属性加点 `/str+ n` 等（包括第四转的 `/pow+` 等）
   - 表情命令：`Emotions.commands`，共 64 种表情，每种有多个别名（含韩文键位别名），比如 `/!`、`/?`、`/ho`、`/lv`、`/swt`、`/$`
-- [ ] **P1** 社交命令
+- [ ] **P3·联机** 社交命令
   - `/organize`、`/invite`、`/leave`
   - `/guild`、`/guildinvite`、`/breakguild`
   - `/chat`、`/q`
   - `/hi`
   - `/cl`（氏族聊天）
   - `/call`
-- [ ] **P2** 表现开关
+- [ ] **P3** 表现开关
   - `/effect`、`/mineffect`、`/miss`、`/aura`、`/aura2`、`/showname`
   - `/camera`、`/fog`、`/lightmap`、`/smoothlight`
   - `/bgm`、`/sound`
   - `/noctrl`（`/nc`）、`/noshift`（`/ns`）、`/snap`、`/itemsnap`、`/window`（`/wi`）
-- [ ] **P2** 其他
+- [ ] **P3** 其他
   - `/doridori`、`/bangbang`、`/bingbing`
   - `/navi`
   - `/alchemist`、`/blacksmith`、`/taekwon`
@@ -953,14 +957,14 @@
 
 | 菜单按钮 / 组件 | 对应章节 | 优先级 |
 | --- | --- | --- |
-| 组队（bt_party）+ 好友（PartyFriends） | §15.2、§15.3 | P1 |
-| 公会（bt_guild） | §15.4 | P2 |
+| 组队（bt_party）+ 好友（PartyFriends） | §15.2、§15.3 | P3·联机 |
+| 公会（bt_guild） | §15.4 | P3·联机 |
 | 战场（bt_battle） | 战场地图标记与战场计数（roBrowser 在 `MapState.js` 里处理）；战场聊天 roBrowser 未实现 | P3 |
 | 任务（bt_quest） | §19 | P1 |
 | 导航（bt_navigation） | §23 | P2 |
-| 银行（bt_bank） | §22 | P2 |
+| 银行（bt_bank） | §22 | P3 |
 | 录像（bt_rec） | 附录 C（Replay） | P3 |
-| 邮件（bt_mail） | §20 | P2 |
+| 邮件（bt_mail） | §20 | P3·联机 |
 | 成就（bt_achievement） | §19 | P2 |
 | 提示（bt_tip） | 小贴士窗口 | P3 |
 | 快捷键（bt_keyboard） | §24 | P2 |
@@ -968,9 +972,9 @@
 | 冒险者中介所（bt_adventureragency） | 组队招募（roBrowser 未实现） | P3 |
 | 声望（bt_repute） | §19 | P3 |
 | 状态窗口 4 转属性（POW/STA/WIS/SPL/CON/CRT） | `WinStats` 的 Trait 页签；加点接口已有，UI 未显示 | P2 |
-| 状态图标栏 | §8.3 | P1 |
-| 表情窗口（Emoticons） | §6.4 | P1 |
-| 公告栏（Announce） | §15.1 | P1 |
+| 状态图标栏 | §8.3 | P0 |
+| 表情窗口（Emoticons） | §6.4 | P2 |
+| 公告栏（Announce） | §15.1 | P2 |
 
 ---
 
@@ -1111,19 +1115,29 @@ roBrowser 发送、RagnarokGame 未发送的包，按功能分组：
 
 ## 附录 D：建议实施顺序
 
-1. **P0 可玩性闭环**
-   - 技能目标选择（§8.1）。
-   - 实体名字和头顶聊天气泡（§6.1、§6.4）。
-   - 组队、公会、氏族消息和私聊的发送（§15.1）。
-   - 修正项中的 P0 / P1 部分（§2）。
-2. **P1 表现层**
-   - 状态外观和状态图标（§6.2、§8.3）。
-   - 技能单元（§8.2）。
-   - 按 SkillEffect / EffectTable 批量移植特效（§9）。
-   - 伤害数字补齐和受击动作（§7）。
-   - 表情（§6.4）。
-3. **P1 社交与经济**：组队、好友、交易、摆摊、聊天室、玩家上下文菜单、手推车、公会仓库（§14、§15、§17）。
-4. **P1 会话健壮性**：切换地图服、地图属性和 mapflag、服务端配置、退出流程、时间同步、PIN 码、删除角色流程（§3、§4、§5）。
-5. **P1 设置与输入**：偏好持久化、音频设置、键盘快捷键、斜杠命令分发器（§12、§24、§25、§26）。
-6. **P2 系统**：任务、公会、宠物 / 生命体 / 佣兵、RODEX、查看装备和插卡、技能树、导航、精炼、附魔、银行（§13、§18–§23）。
-7. **P3**：运行时 PACKETVER、包混淆、GM 命令、后处理、商城、轮盘、录像回放。
+1. **P0 单机战斗闭环**
+   - 技能：目标选择（§2、§8.1）、冷却遮罩（§8.1）、技能地面单元（§8.2）。
+   - 状态：状态图标栏（§8.3）、bodyState 和 healthState 外观（§6.2）。
+   - 目标信息：怪物名和 NPC 名（§6.1）、怪物血条（§6.1）。
+   - 攻击距离不够时自动靠近（§7）。
+   - 插卡（§13）。
+   - 音量和开关（§12）。
+2. **P1 战斗手感与表现**
+   - 受击动作和死亡同步（§2）、伤害数字补齐（§7）、攻击模式（§7）。
+   - 特效：`SkillEffectTable` 和 `EffectTable` 先移植 1 转、2 转的常用技能，再逐步补齐；使用物品的特效；缺的特效类型和触发点（§9）。
+   - 击退和跳跃（§6.5）、物品掉落动画和光柱（§6.5）。
+3. **P1 职业与成长**
+   - 手推车（§6.3、§14）、坐骑、猎鹰和狼（§6.3），effectState 和 virtue 外观（§6.2）。
+   - 技能树、按技能选择施放动作（§8.1）。
+   - 记录传送点、鉴定（§8.4）。
+   - 宠物（§18）、任务和任务 NPC 图标（§19、§6.4）。
+   - 物品信息窗口、装备页签、负重提示（§13）。
+4. **P1 NPC 与地图 UI**
+   - NPC 立绘、`ZC_COMPASS`、进度条、对话框标签、`ZC_CLOSE_SCRIPT`（§16）。
+   - 小地图标记（§23）、系统消息 `ZC_MSG`（§15.1）。
+5. **P1 设置与输入**
+   - 偏好持久化和选项菜单入口（§26）。
+   - 键盘快捷键和 macOS 鼠标操作（§24）。
+   - 退出流程、点击实体的分发（§2）。
+6. **P2**：生命体和 Lua AI、佣兵、职业专属窗口、精炼和附魔、导航、天气和屏幕效果、聊天框过滤、公告、表情、城镇招牌、画质选项。
+7. **P3 和 P3·联机**：组队、好友、公会、私聊、交易、摆摊、聊天室、邮件、地图服切换、PIN 码、运行时 PACKETVER、GM 命令、后处理、商城、轮盘、录像回放。

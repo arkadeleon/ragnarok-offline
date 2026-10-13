@@ -14,5 +14,6 @@
 #include "../Ground/GroundShaderTypes.h"
 #include "../Model/ModelShaderTypes.h"
 #include "../Sprite/SpriteShaderTypes.h"
+#include "../TargetSelector/TargetSelectorShaderTypes.h"
 #include "../Tile/TileShaderTypes.h"
 #include "../Water/WaterShaderTypes.h"

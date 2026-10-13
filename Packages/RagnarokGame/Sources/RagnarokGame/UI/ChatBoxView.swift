@@ -6,7 +6,6 @@
 //
 
 import RagnarokModels
-import RagnarokPackets
 import SwiftUI
 
 struct ChatBoxView: View {
@@ -17,13 +16,11 @@ struct ChatBoxView: View {
 
     enum MessageGroup {
         case chat
-        case packet
         case command
 
         var title: String {
             switch self {
             case .chat: "Chat"
-            case .packet: "Packet"
             case .command: "Command"
             }
         }
@@ -81,7 +78,6 @@ struct ChatBoxView: View {
                 if viewStyle == .full {
                     HStack(spacing: 0) {
                         MessageGroupButton(group: .chat, selection: $messageGroup)
-                        MessageGroupButton(group: .packet, selection: $messageGroup)
                         MessageGroupButton(group: .command, selection: $messageGroup)
                     }
                     .frame(height: ChatBoxView.messageHeaderHeight)
@@ -95,8 +91,6 @@ struct ChatBoxView: View {
                     switch messageGroup {
                     case .chat:
                         ChatMessageListView(messages: gameContext.messageCenter.messages)
-                    case .packet:
-                        PacketMessageListView(messages: gameSession.packetMessages)
                     case .command:
                         AtCommandShortcutListView(groups: AtCommandShortcutGroup.allGroups) { shortcut in
                             send(shortcut.command)
@@ -169,38 +163,6 @@ private struct ChatMessageListView: View {
         .scrollPosition(id: $scrollPosition, anchor: .bottom)
         .onChange(of: messages.count) {
             scrollPosition = messages.last?.id
-        }
-    }
-}
-
-private struct PacketMessageListView: View {
-    var messages: [PacketMessage]
-
-    @State private var scrollPosition: UUID?
-
-    var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading) {
-                ForEach(messages) { message in
-                    Text(content(of: message))
-                        .id(message.id)
-                        .font(.game())
-                        .foregroundStyle(Color.white)
-                }
-            }
-        }
-        .scrollPosition(id: $scrollPosition, anchor: .bottom)
-        .onChange(of: messages.count) {
-            scrollPosition = messages.last?.id
-        }
-    }
-
-    private func content(of message: PacketMessage) -> String {
-        switch message.direction {
-        case .outgoing:
-            "[Send] " + String(describing: type(of: message.packet))
-        case .incoming:
-            "[Recv] " + String(describing: type(of: message.packet))
         }
     }
 }

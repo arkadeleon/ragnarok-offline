@@ -51,8 +51,12 @@ struct MapSceneView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             ActionControlPadView(
-                onAttack: {
-                    runtime.scene.attackNearestMonster()
+                selectedTargetObjectType: runtime.scene.state.selectedTargetObjectType,
+                onTargetAction: {
+                    runtime.scene.performTargetAction()
+                },
+                onSelectNextTarget: {
+                    runtime.scene.selectNextTarget()
                 },
                 onPickup: {
                     runtime.scene.pickUpNearestItem()

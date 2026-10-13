@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/12/16.
 //
 
+import RagnarokCore
 import RagnarokModels
 import SwiftUI
 
@@ -110,9 +111,8 @@ private struct NPCDialogMessageBox: View {
 
     var body: some View {
         ScrollView {
-            Text(message)
+            Text(AttributedString(description: message, defaultColor: .gameLabel))
                 .font(.game())
-                .foregroundStyle(Color.gameLabel)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(5)
         }
@@ -130,9 +130,8 @@ private struct NPCDialogMenuBox: View {
         ScrollView {
             VStack(spacing: 0) {
                 ForEach(0..<menu.count, id: \.self) { index in
-                    Text(menu[index])
+                    Text(AttributedString(description: menu[index], defaultColor: .gameLabel))
                         .font(.game())
-                        .foregroundStyle(Color.gameLabel)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 3)

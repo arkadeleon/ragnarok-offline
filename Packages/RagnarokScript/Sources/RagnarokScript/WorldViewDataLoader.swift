@@ -112,6 +112,6 @@ struct WorldViewDataLoader {
     }
 
     private func name(from value: LuaValue) -> String {
-        value.string(using: .koreanEUC) ?? value.stringValue ?? ""
+        value.string(using: .dosKorean) ?? value.stringValue ?? ""
     }
 }

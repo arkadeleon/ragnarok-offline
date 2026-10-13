@@ -81,7 +81,6 @@ final public class GameSession {
     var selectedCharacterSlot: Int = 0
     private(set) var maxCharacterSlots: Int = 9
 
-    var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
     var dealSelectionNPCID: UInt32?
     var npcShop: NPCShop?
@@ -201,7 +200,6 @@ final public class GameSession {
         npcShop = nil
         storage = nil
         warpList = nil
-        packetMessages = []
 
         context.inventory = Inventory()
         context.skillList = SkillList()
@@ -630,18 +628,7 @@ final public class GameSession {
         // Handle packet stream
         Task {
             for await packet in client.packetStream {
-                let packetMessage = PacketMessage(packet: packet, direction: .incoming)
-                packetMessages.append(packetMessage)
-
                 handleMapPacket(packet)
-            }
-        }
-
-        // Handle sent packet stream
-        Task {
-            for await packet in client.sentPacketStream {
-                let message = PacketMessage(packet: packet, direction: .outgoing)
-                packetMessages.append(message)
             }
         }
 
@@ -786,7 +773,7 @@ final public class GameSession {
             skill.level = Int(packet.skill_lv)
             skill.spCost = Int(packet.skill_sp)
             skill.attackRange = Int(packet.skill_range)
-            mapScene?.useSkillOnNearestMonster(skill, level: skill.level)
+            mapScene?.useSkill(skill, level: skill.level)
         case let packet as PACKET_ZC_DISPEL:
             mapScene?.onMapObjectSkillCastCancelled(sourceObjectID: packet.gid)
         case let packet as PACKET_ZC_ACK_TOUSESKILL:
@@ -1392,7 +1379,7 @@ final public class GameSession {
             }
         case .skill(let skillID, let level):
             if let skill = context.skillList.skills[skillID] {
-                mapScene?.useSkillOnNearestMonster(skill, level: level)
+                mapScene?.useSkill(skill, level: level)
             }
         }
     }
