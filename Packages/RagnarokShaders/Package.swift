@@ -23,6 +23,7 @@ let package = Package(
                 .process("Ground/GroundShaders.metal"),
                 .process("Model/ModelShaders.metal"),
                 .process("Sprite/SpriteShaders.metal"),
+                .process("TargetSelector/TargetSelectorShaders.metal"),
                 .process("Tile/TileShaders.metal"),
                 .process("Water/WaterShaders.metal"),
             ]
