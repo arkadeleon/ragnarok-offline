@@ -81,7 +81,6 @@ final public class GameSession {
     var selectedCharacterSlot: Int = 0
     private(set) var maxCharacterSlots: Int = 9
 
-    var packetMessages: [PacketMessage] = []
     var dialog: NPCDialog?
     var dealSelectionNPCID: UInt32?
     var npcShop: NPCShop?
@@ -201,7 +200,6 @@ final public class GameSession {
         npcShop = nil
         storage = nil
         warpList = nil
-        packetMessages = []
 
         context.inventory = Inventory()
         context.skillList = SkillList()
@@ -630,18 +628,7 @@ final public class GameSession {
         // Handle packet stream
         Task {
             for await packet in client.packetStream {
-                let packetMessage = PacketMessage(packet: packet, direction: .incoming)
-                packetMessages.append(packetMessage)
-
                 handleMapPacket(packet)
-            }
-        }
-
-        // Handle sent packet stream
-        Task {
-            for await packet in client.sentPacketStream {
-                let message = PacketMessage(packet: packet, direction: .outgoing)
-                packetMessages.append(message)
             }
         }
 
