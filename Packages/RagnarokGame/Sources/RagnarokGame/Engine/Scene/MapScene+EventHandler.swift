@@ -678,7 +678,7 @@ extension MapScene {
             gridPosition: targetObject.gridPosition,
             targetObjectID: targetObject.objectID,
             ownerObjectID: nil,
-            delay: .milliseconds(objectAction.sourceSpeed)
+            delay: TimeInterval(objectAction.sourceSpeed) / 1000
         )
         effects[effect.id] = effect
     }
@@ -706,7 +706,7 @@ extension MapScene {
             sourceWorldPosition: worldPosition(for: sourceObject),
             targetObjectID: targetObject.objectID,
             ownerObjectID: nil,
-            delay: .milliseconds(objectAction.sourceSpeed)
+            delay: TimeInterval(objectAction.sourceSpeed) / 1000
         )
         effects[effect.id] = effect
     }
@@ -780,7 +780,7 @@ extension MapScene {
                 sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil,
-                delay: .milliseconds(objectSkill.attackDelay)
+                delay: TimeInterval(objectSkill.attackDelay) / 1000
             )
             effects[effect.id] = effect
         }
