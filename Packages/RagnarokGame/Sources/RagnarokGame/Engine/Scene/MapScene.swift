@@ -44,8 +44,17 @@ public final class MapScene {
     var effects: [UUID : MapSceneEffect] = [:]
     var combatTexts: [CombatText] = []
     var tileSelector: TileSelector?
-    var selectedTargetID: GameObjectID?
     var targetSelector: TargetSelector?
+
+    var selectedTargetID: GameObjectID?
+
+    var selectedTarget: MapSceneMapObject? {
+        if let selectedTargetID, let selectedTarget = objects[selectedTargetID], !selectedTarget.isDead {
+            selectedTarget
+        } else {
+            nil
+        }
+    }
 
     private var pendingArrivalAction: (@MainActor () -> Void)?
     private var arrivalTask: Task<Void, any Error>?
@@ -457,7 +466,7 @@ extension MapScene {
 
     /// Attacks or talks to the selected target. Without one, it selects the nearest monster and attacks it.
     func performTargetAction() {
-        if let selectedTargetID, let target = objects[selectedTargetID], !target.isDead {
+        if selectedTarget != nil {
             performActionOnSelectedTarget()
         } else if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
             selectTarget(target)
@@ -466,8 +475,8 @@ extension MapScene {
     }
 
     func selectTarget(_ target: MapSceneMapObject?) {
-        selectedTargetID = target?.objectID
         targetSelector = nil
+        selectedTargetID = target?.objectID
 
         if state.selectedTargetObjectType != target?.type {
             state.selectedTargetObjectType = target?.type
@@ -475,17 +484,17 @@ extension MapScene {
     }
 
     private func performActionOnSelectedTarget() {
-        guard let selectedTargetID, let target = objects[selectedTargetID], !target.isDead else {
+        guard let selectedTarget else {
             return
         }
 
         targetSelector = nil
 
-        switch target.type {
+        switch selectedTarget.type {
         case .monster:
-            attackMonster(targetID: target.objectID)
+            attackMonster(targetID: selectedTarget.objectID)
         case .npc:
-            gameSession?.talkToNPC(npcID: target.objectID)
+            gameSession?.talkToNPC(npcID: selectedTarget.objectID)
         default:
             break
         }
@@ -701,7 +710,7 @@ extension MapScene {
             return
         }
 
-        let selectedTarget = selectedTargetID.flatMap { objects[$0] }.flatMap { $0.isDead ? nil : $0 }
+        let selectedTarget = selectedTarget
 
         if skill.isSelfOnlySkill {
             gameSession?.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
