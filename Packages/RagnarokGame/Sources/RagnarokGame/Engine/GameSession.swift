@@ -203,6 +203,7 @@ final public class GameSession {
 
         context.inventory = Inventory()
         context.skillList = SkillList()
+        context.skillCooldowns = [:]
         context.shortcutList = ShortcutList()
         context.messageCenter.messages = []
     }
@@ -759,6 +760,9 @@ final public class GameSession {
             context.skillList.add(from: packet)
         case let packet as PACKET_ZC_SKILLINFO_DELETE:
             context.skillList.delete(from: packet)
+        case let packet as PACKET_ZC_SKILL_POSTDELAY:
+            let cooldown = SkillCooldown(from: packet, startTime: .now)
+            context.setSkillCooldown(cooldown)
         case let packet as PACKET_ZC_USESKILL_ACK:
             if let skillID = SkillID(rawValue: Int(packet.skillId)),
                let element = Element(rawValue: Int(packet.element)) {

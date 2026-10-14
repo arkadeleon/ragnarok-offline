@@ -23,6 +23,7 @@ final class GameContext {
     var playerStatus: CharacterStatus
     var inventory: Inventory
     var skillList: SkillList
+    var skillCooldowns: [Int : SkillCooldown]
     var shortcutList: ShortcutList
     let messageCenter: MessageCenter
 
@@ -37,11 +38,20 @@ final class GameContext {
         self.playerStatus = CharacterStatus()
         self.inventory = Inventory()
         self.skillList = SkillList()
+        self.skillCooldowns = [:]
         self.shortcutList = ShortcutList()
         self.messageCenter = MessageCenter(
             itemInfoTable: itemInfoTable,
             messageStringTable: messageStringTable
         )
+    }
+
+    /// Keeps the current cooldown when it would end later than the new one.
+    func setSkillCooldown(_ cooldown: SkillCooldown) {
+        if let current = skillCooldowns[cooldown.skillID], current.endTime >= cooldown.endTime {
+            return
+        }
+        skillCooldowns[cooldown.skillID] = cooldown
     }
 }
 

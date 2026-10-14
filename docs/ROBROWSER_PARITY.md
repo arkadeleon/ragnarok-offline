@@ -56,7 +56,7 @@
   - 背包（3 个页签）：使用、装备、卸下、按数量丢弃。
   - 地面物品：拾取。
   - 箭矢装备、装备窗口、物品描述和卡片显示。
-- 技能：技能列表、升级、使用（自动选最近的怪物）、地面技能、传送之阵的地点列表、自动施放。
+- 技能：技能列表、升级、使用（打选中的怪物，没有选中就打最近的怪物）、地面技能（落点是目标怪物所在的格子）、传送之阵的地点列表、自动施放。
 - 快捷栏：与服务端同步、拖拽、切换行。
 - NPC：对话、菜单、数字 / 文本输入、选择买或卖、买卖、仓库。
 - 聊天
@@ -72,7 +72,11 @@
 ## 2. 修正项：已有实现与 roBrowser 行为不一致
 
 - [ ] **P0** 技能目标选择
-  - 现状：`MapScene.useSkillOnNearestMonster` 总是打最近的怪物；辅助技能只能对自己放，无法治疗或加持他人。
+  - 现状：`MapScene.useSkill(_:level:)` 按下就施放，没有选择目标的步骤。
+    - 攻击技能打选中的怪物，没有选中就自动选最近的怪物。
+    - 辅助技能只能对自己放，无法治疗或加持他人。点击其他玩家也不会选中。
+    - 地面技能的落点是目标怪物所在的格子，不能自己选位置。
+    - 施放时不能改等级，也不能取消。
   - 需要：改成与 roBrowser 一致的目标选择流程，见 §8.1。
   - 参考：`UI/Components/SkillTargetSelection/SkillTargetSelection.js`
 - [ ] **P2** 自动施放（`ZC_AUTORUN_SKILL`，用于卷轴、随机魔法）
@@ -383,8 +387,11 @@
   - 移动端需要一套等价的交互。
   - 参考：`UI/Components/SkillTargetSelection/`、`Renderer/Effects/MagicTarget.js`、`MapControl.js`
 - [ ] **P0** 技能冷却和公共延迟
-  - 需要：`ZC_SKILL_POSTDELAY`，在快捷栏和技能列表上显示冷却遮罩。
-  - 参考：`Skill.js#onSetSkillDelay`
+  - 现状：`ZC_SKILL_POSTDELAY` 的包结构已生成，但 `GameSession` 没有处理。
+  - 需要：处理 `ZC_SKILL_POSTDELAY`，在快捷栏上这个技能的格子里显示冷却遮罩。新的冷却比现有的先结束时，保留现有的。
+  - 公共延迟：`ZC_MSG_STATE_CHANGE` 收到自己的 `EFST_POSTDELAY` 或 `EFST_GROUNDMAGIC` 时，快捷栏上所有技能都显示冷却。依赖 §8.3。
+  - roBrowser 只在快捷栏上显示冷却，技能列表上不显示。
+  - 参考：`Skill.js#onSetSkillDelay`、`UI/Components/ShortCut/ShortCut.js#setSkillDelay/setGlobalSkillDelay`、`Entity.js#onEntityStatusChange`
 - [ ] **P1** 技能树
   - 需要：按职业布局的技能树（取代当前的平铺列表）、前置技能需求提示、独立的技能描述窗口。
   - 参考：`DB/Skills/SkillTreeView.js`、`UI/Components/SkillList/SkillRequirements.js`、`SkillDescription/`
