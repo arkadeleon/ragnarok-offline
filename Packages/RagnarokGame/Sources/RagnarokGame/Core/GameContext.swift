@@ -77,6 +77,15 @@ extension GameContext {
             "\(level)"
         }
     }
+
+    func skillCooldown(for shortcut: Shortcut) -> SkillCooldown? {
+        switch shortcut {
+        case .empty, .item:
+            nil
+        case .skill(let skillID, _):
+            skillCooldowns[skillID]
+        }
+    }
 }
 
 extension GameContext {

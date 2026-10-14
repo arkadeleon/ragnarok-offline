@@ -149,6 +149,11 @@ private struct ActionSlotButton: View {
                 ShortcutIconView(shortcut: shortcut)
                     .frame(width: 24, height: 24)
                     .opacity(gameContext.isShortcutAvailable(shortcut) ? 1 : 0.4)
+                    .overlay {
+                        if let cooldown = gameContext.skillCooldown(for: shortcut) {
+                            SkillCooldownView(cooldown: cooldown)
+                        }
+                    }
 
                 if let label = gameContext.shortcutLabel(shortcut) {
                     Text(verbatim: label)

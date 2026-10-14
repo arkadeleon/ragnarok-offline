@@ -16,6 +16,12 @@ public struct SkillCooldown: Sendable {
         startTime + duration
     }
 
+    public init(skillID: Int, startTime: ContinuousClock.Instant, duration: Duration) {
+        self.skillID = skillID
+        self.startTime = startTime
+        self.duration = duration
+    }
+
     public init(from packet: PACKET_ZC_SKILL_POSTDELAY, startTime: ContinuousClock.Instant) {
         self.skillID = Int(packet.SKID)
         self.startTime = startTime
