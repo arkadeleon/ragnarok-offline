@@ -77,7 +77,7 @@
     - 辅助技能只能对自己放，无法治疗或加持他人。点击其他玩家也不会选中。
     - 地面技能的落点是目标怪物所在的格子，不能自己选位置。
     - 施放时不能改等级，也不能取消。
-  - 需要：改成与 roBrowser 一致的目标选择流程，见 §8.1。
+  - 需要：按 §8.1 的方案改。
   - 参考：`UI/Components/SkillTargetSelection/SkillTargetSelection.js`
 - [ ] **P2** 自动施放（`ZC_AUTORUN_SKILL`，用于卷轴、随机魔法）
   - 现状：直接打最近的怪物。
@@ -381,15 +381,28 @@
 ### 8.1 使用与交互
 
 - [ ] **P0** 技能目标选择
-  - 单体技能：点击选中敌方或友方目标，可以对自己、队友和怪物施放。
-  - 地面技能：显示地面光标（`MagicTarget`）。
-  - 施放时可以用滚轮或手势选择技能等级；右键或返回键取消。
-  - 移动端需要一套等价的交互。
-  - 参考：`UI/Components/SkillTargetSelection/`、`Renderer/Effects/MagicTarget.js`、`MapControl.js`
+  - 方案：技能不进入单独的选择状态，一律对当前选中的目标施放。
+    - 攻击技能：选中的是活着的怪物就打它，否则自动选最近的怪物。
+    - 辅助技能：对选中的目标施放，玩家和怪物都可以。没有选中目标，或者选中的是 NPC，就对自己施放。
+    - 地面技能：落点是选中目标所在的格子，没有目标就是玩家所在的格子。
+    - 自身技能：对自己施放。
+    - 技能等级在配置快捷方式时设置，施放时不能改。
+  - 点击模式：操作栏上有一个开关，在两种模式之间切换。默认是模式 1。
+    - 模式 1（直接交互）：点击怪物会选中并攻击，点击 NPC 会选中并对话，点击玩家只选中。
+    - 模式 2（只选中）：点击怪物、NPC 和玩家都只选中。再点一次已选中的目标，才会攻击或对话。
+    - 两种模式下，点击地面都是移动，点击物品都是拾取。
+  - 取消选中：操作栏上有一个按钮。
+  - 「下一个目标」只在怪物和 NPC 之间轮换，不包括玩家。
+  - 和 roBrowser 的差异
+    - roBrowser 按下技能后会进入选择状态，用鼠标点目标或格子施放；按滚轮选等级，按 Esc 取消。
+    - roBrowser 的辅助技能点到怪物时，要按住 Shift 才会施放。
+    - roBrowser 没有自动选最近的怪物。
+    - 模式 2 接近 roBrowser 移动端打开 `TouchTargeting` 时的行为。
+  - 参考：`UI/Components/SkillTargetSelection/`、`Renderer/Effects/MagicTarget.js`、`MapControl.js`、`UI/Components/MobileUI/MobileUI.js#toggleTouchTargeting`
 - [ ] **P0** 技能冷却和公共延迟
-  - 现状：`ZC_SKILL_POSTDELAY` 的包结构已生成，但 `GameSession` 没有处理。
-  - 需要：处理 `ZC_SKILL_POSTDELAY`，在快捷栏上这个技能的格子里显示冷却遮罩。新的冷却比现有的先结束时，保留现有的。
-  - 公共延迟：`ZC_MSG_STATE_CHANGE` 收到自己的 `EFST_POSTDELAY` 或 `EFST_GROUNDMAGIC` 时，快捷栏上所有技能都显示冷却。依赖 §8.3。
+  - 现状：已处理 `ZC_SKILL_POSTDELAY`，操作栏上会显示单个技能的冷却遮罩。公共延迟还没有做。
+  - 需要：处理 `ZC_SKILL_POSTDELAY`，在操作栏上这个技能的格子里显示冷却遮罩。新的冷却比现有的先结束时，保留现有的。
+  - 公共延迟：`ZC_MSG_STATE_CHANGE` 收到自己的 `EFST_POSTDELAY` 或 `EFST_GROUNDMAGIC` 时，操作栏上所有技能都显示冷却。依赖 §8.3。
   - roBrowser 只在快捷栏上显示冷却，技能列表上不显示。
   - 参考：`Skill.js#onSetSkillDelay`、`UI/Components/ShortCut/ShortCut.js#setSkillDelay/setGlobalSkillDelay`、`Entity.js#onEntityStatusChange`
 - [ ] **P1** 技能树
