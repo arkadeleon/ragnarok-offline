@@ -47,8 +47,8 @@ public final class MapScene {
     var selectedTargetID: GameObjectID?
     var targetSelector: TargetSelector?
 
-    var pendingArrivalAction: (@MainActor () -> Void)?
-    var arrivalTask: Task<Void, any Error>?
+    private var pendingArrivalAction: (@MainActor () -> Void)?
+    private var arrivalTask: Task<Void, any Error>?
 
     var thumbstickValue: CGPoint = .zero {
         didSet {
@@ -64,7 +64,7 @@ public final class MapScene {
 
     /// The cell where the player stops after the thumbstick is let go. It is kept until the server agrees.
     /// Until then, a late reply to an earlier request must not walk past this cell.
-    var thumbstickStopPosition: SIMD2<Int>?
+    private var thumbstickStopPosition: SIMD2<Int>?
 
     init(
         mapName: String,
@@ -501,6 +501,37 @@ extension MapScene {
         case noPath
     }
 
+    func scheduleArrivalAction() {
+        guard pendingArrivalAction != nil else {
+            return
+        }
+
+        let remainingDuration = player.movement?.remainingDuration(at: .now) ?? .zero
+
+        arrivalTask?.cancel()
+        arrivalTask = Task { @MainActor [weak self] in
+            try await Task.sleep(for: remainingDuration + .milliseconds(50))
+            guard let self else {
+                return
+            }
+            if let action = pendingArrivalAction {
+                pendingArrivalAction = nil
+                action()
+            }
+        }
+    }
+
+    func performArrivalAction() {
+        guard let action = pendingArrivalAction else {
+            return
+        }
+
+        arrivalTask?.cancel()
+        arrivalTask = nil
+        pendingArrivalAction = nil
+        action()
+    }
+
     private func requestMove(to position: SIMD2<Int>) {
         thumbstickStopPosition = nil
         gameSession?.requestMove(to: position)
@@ -528,6 +559,18 @@ extension MapScene {
             return .alreadyInRange
         } else {
             return .moveTo(path.last ?? targetPosition)
+        }
+    }
+
+    func applyThumbstickStopPosition(toMovementEndingAt endPosition: SIMD2<Int>) {
+        guard let thumbstickStopPosition else {
+            return
+        }
+
+        if endPosition == thumbstickStopPosition {
+            self.thumbstickStopPosition = nil
+        } else {
+            player.truncateMovement(to: thumbstickStopPosition)
         }
     }
 

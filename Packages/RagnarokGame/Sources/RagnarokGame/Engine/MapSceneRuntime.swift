@@ -56,8 +56,8 @@ final class MapSceneRuntime {
         lastCamera = nil
     }
 
-    func update(at now: ContinuousClock.Instant, renderTime: TimeInterval) {
-        scene.update(at: now)
+    func update(at time: ContinuousClock.Instant, renderTime: TimeInterval) {
+        scene.update(at: time)
 
         for effectID in renderResources.expiredEffectIDs(atTime: renderTime) {
             scene.removeEffect(objectID: effectID)

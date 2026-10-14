@@ -77,27 +77,8 @@ extension MapScene {
             endPosition: endPosition
         )
 
-        if let thumbstickStopPosition {
-            if endPosition == thumbstickStopPosition {
-                self.thumbstickStopPosition = nil
-            } else {
-                player.truncateMovement(to: thumbstickStopPosition)
-            }
-        }
-
-        let remainingDuration = player.movement?.remainingDuration(at: .now) ?? .zero
-
-        if pendingArrivalAction != nil {
-            arrivalTask?.cancel()
-            arrivalTask = Task { @MainActor [weak self] in
-                try await Task.sleep(for: remainingDuration + .milliseconds(50))
-                guard let self else { return }
-                if let action = pendingArrivalAction {
-                    pendingArrivalAction = nil
-                    action()
-                }
-            }
-        }
+        applyThumbstickStopPosition(toMovementEndingAt: endPosition)
+        scheduleArrivalAction()
     }
 
     // MARK: - Map Object
@@ -195,11 +176,8 @@ extension MapScene {
             stopObject(objectID: objectID, at: position)
         }
 
-        if objectID == player.objectID, let action = pendingArrivalAction {
-            arrivalTask?.cancel()
-            arrivalTask = nil
-            pendingArrivalAction = nil
-            action()
+        if objectID == player.objectID {
+            performArrivalAction()
         }
     }
 
