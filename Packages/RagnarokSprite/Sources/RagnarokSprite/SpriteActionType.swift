@@ -73,6 +73,11 @@ extension SpriteActionType {
             return [.idle]
         }
     }
+
+    public static func afterAttackActionType(forJobID jobID: Int) -> SpriteActionType {
+        let availableActionTypes = availableActionTypes(forJobID: jobID)
+        return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
+    }
 }
 
 extension SpriteActionType {

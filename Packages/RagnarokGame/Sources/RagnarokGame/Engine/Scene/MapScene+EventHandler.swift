@@ -336,7 +336,7 @@ extension MapScene {
         case .freeze, .freeze2, .die:
             .after(.milliseconds(objectAction.sourceSpeed), nextActionType: presentationActionType)
         case .attack1, .attack2, .attack3, .skill:
-            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: afterAttackAction(for: sourceObject))
+            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: sourceObject.map { SpriteActionType.afterAttackActionType(forJobID: $0.job) } ?? .idle)
         case .idle, .walk, .readyToAttack, .hurt:
             .after(.milliseconds(objectAction.sourceSpeed), nextActionType: .idle)
         }
@@ -426,7 +426,7 @@ extension MapScene {
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
             let duration = Duration.milliseconds(objectSkill.attackDelay)
-            let nextActionType: SpriteActionType = availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
+            let nextActionType = SpriteActionType.afterAttackActionType(forJobID: sourceObject.job)
 
             sourceObject.attackDelay = duration
             sourceObject.perform(action, completion: .after(duration, nextActionType: nextActionType))
@@ -532,93 +532,6 @@ extension MapScene {
                 ownerObjectID: nil
             )
             effects[effect.id] = effect
-        }
-    }
-}
-
-// MARK: - Map Object
-
-extension MapScene {
-    func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        guard let object = objects[objectID] else {
-            return
-        }
-        object.gridPosition = gridPosition
-        object.perform(.idle, completion: .indefinite)
-        object.turn(direction: direction, headDirection: headDirection)
-    }
-
-    func removeObject(objectID: GameObjectID) {
-        objects.removeValue(forKey: objectID)
-        hpspBarObjectIDs.remove(objectID)
-        if selectedTargetID == objectID {
-            selectTarget(nil)
-        }
-
-        let ownedEffectObjectIDs = effects.compactMap { effectID, effect in
-            effect.ownerObjectID == objectID ? effectID : nil
-        }
-        for effectObjectID in ownedEffectObjectIDs {
-            removeEffect(objectID: effectObjectID)
-        }
-    }
-
-    func moveObject(objectID: GameObjectID, startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        guard let object = objects[objectID] else {
-            return
-        }
-
-        let now = ContinuousClock.now
-        let movement = object.replanMovement(
-            startTime: startTime,
-            startPosition: startPosition,
-            endPosition: endPosition,
-            speed: object.speed,
-            pathFinder: pathFinder,
-            at: now
-        )
-
-        object.gridPosition = movement.currentLocation.position
-        let remainingDuration = movement.remainingDuration(at: now)
-        object.perform(
-            .walk,
-            completion: .after(remainingDuration, nextActionType: .idle),
-            at: now
-        )
-        if let finalDirection = movement.finalDirection {
-            object.setDirection(finalDirection)
-        }
-    }
-
-    func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
-        if let object = objects[objectID] {
-            object.stopMovement(on: position)
-            object.perform(.idle, completion: .indefinite)
-        }
-    }
-
-    private func cancelCast(for object: MapSceneMapObject) {
-        if let spellEffectObjectID = object.cast?.spellEffectObjectID {
-            removeEffect(objectID: spellEffectObjectID)
-        }
-        object.cast = nil
-    }
-
-    private func afterAttackAction(for object: MapSceneMapObject?) -> SpriteActionType {
-        guard let object else {
-            return .idle
-        }
-
-        let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: object.job)
-        return availableActionTypes.contains(.readyToAttack) ? .readyToAttack : .idle
-    }
-
-    private func isMonster(objectID: GameObjectID) -> Bool {
-        switch objects[objectID]?.type {
-        case .monster, .abr, .bionic:
-            true
-        default:
-            false
         }
     }
 }
@@ -812,10 +725,6 @@ extension MapScene {
             )
             effects[effect.id] = effect
         }
-    }
-
-    func removeEffect(objectID: UUID) {
-        effects.removeValue(forKey: objectID)
     }
 }
 
