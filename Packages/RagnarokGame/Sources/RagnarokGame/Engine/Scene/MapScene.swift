@@ -308,10 +308,14 @@ public final class MapScene {
 
     /// Selects the next monster or NPC, nearest first, and wraps around after the farthest one.
     /// Warps (job 45) and hidden NPCs (jobs 111 and 139) are skipped, since nothing is drawn for them.
-    func selectNextTarget() {
+    func selectNextTarget(where isInViewport: (MapSceneMapObject) -> Bool) {
         let candidates = objects.values
             .filter { object in
                 guard !object.isDead, object.effectState != .cloak, object.effectState != .invisible else {
+                    return false
+                }
+
+                guard isInViewport(object) else {
                     return false
                 }
 

@@ -16,6 +16,24 @@ public enum HitTestResult: Sendable {
 }
 
 extension MapSceneRuntime {
+    /// Selects the next target among the objects drawn inside the viewport.
+    func selectNextTarget() {
+        guard let lastCamera else {
+            return
+        }
+
+        let viewProjectionMatrix = lastCamera.projectionMatrix * lastCamera.viewMatrix
+        scene.selectNextTarget { object in
+            let renderPosition = MapSceneRenderer.renderPosition(for: scene.worldPosition(for: object))
+            let clipPosition = viewProjectionMatrix * SIMD4<Float>(renderPosition, 1)
+            guard clipPosition.w > 0 else {
+                return false
+            }
+
+            return abs(clipPosition.x) <= clipPosition.w && abs(clipPosition.y) <= clipPosition.w
+        }
+    }
+
     /// Searches for objects along a ray through the world.
     func hitTest(_ ray: Ray) -> HitTestResult? {
         let objectIDs = spriteHits(ray)
