@@ -78,7 +78,7 @@ private struct ShortcutSlotView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 3, style: .circular)
+            Rectangle()
                 .fill(isTargeted ? Color(#colorLiteral(red: 0.7098039216, green: 1, blue: 0.7098039216, alpha: 1)) : Color.white)
 
             ShortcutIconView(shortcut: shortcut)

@@ -50,26 +50,19 @@ struct MapSceneView: View {
             #endif
         }
         .overlay(alignment: .bottomTrailing) {
-            ActionControlPadView(
-                selectedTargetObjectType: runtime.scene.state.selectedTargetObjectType,
-                onTargetAction: {
-                    runtime.scene.performTargetAction()
-                },
-                onSelectNextTarget: {
-                    runtime.scene.selectNextTarget()
-                },
-                onPickup: {
-                    runtime.scene.pickUpNearestItem()
-                },
-                onSit: {
-                    runtime.scene.toggleSit()
-                },
-                onShortcut: { shortcut in
-                    gameSession.useShortcut(shortcut)
-                }
-            )
-            .padding(.trailing, 16)
-            .padding(.bottom, isWidescreen ? 16 : ChatBoxView.contentHeight(for: .compact) + 16)
+            if isWidescreen {
+                actionBar
+                    .padding(.trailing, 16)
+                    .padding(.bottom, 16)
+            }
+        }
+        .overlay(alignment: .bottom) {
+            if !isWidescreen {
+                actionBar
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, ChatBoxView.contentHeight(for: .compact) + 16)
+            }
         }
         .overlay(alignment: .topLeading) {
             if let character = gameSession.character {
@@ -182,6 +175,27 @@ struct MapSceneView: View {
         } action: { containerWidth in
             self.screenWidth = containerWidth
         }
+    }
+
+    private var actionBar: some View {
+        ActionBarView(
+            selectedTargetObjectType: runtime.scene.state.selectedTargetObjectType,
+            onTargetAction: {
+                runtime.scene.performTargetAction()
+            },
+            onSelectNextTarget: {
+                runtime.scene.selectNextTarget()
+            },
+            onPickup: {
+                runtime.scene.pickUpNearestItem()
+            },
+            onSit: {
+                runtime.scene.toggleSit()
+            },
+            onShortcut: { shortcut in
+                gameSession.useShortcut(shortcut)
+            }
+        )
     }
 
     private var isUltraWidescreen: Bool {
