@@ -694,27 +694,31 @@ extension MapScene {
         }
     }
 
-    /// Uses a skill on the selected monster. Without one, it selects the nearest monster and uses the skill on it.
-    /// Self-only and support skills always go to the player.
+    /// Uses a skill on the selected target. When the skill can't go to it,
+    /// support and ground skills fall back to the player, and attack skills to the nearest monster.
     func useSkill(_ skill: SkillInfo, level: Int) {
         guard skill.level > 0, level > 0 else {
             return
         }
 
-        if skill.isSelfOnlySkill || skill.isSupportSkill {
-            gameSession?.useSkill(
-                skillID: skill.skillID,
-                level: level,
-                onTarget: player.objectID
-            )
-            return
-        }
+        let selectedTarget = selectedTargetID.flatMap { objects[$0] }.flatMap { $0.isDead ? nil : $0 }
 
-        if let selectedTargetID,
-           let target = objects[selectedTargetID],
-           target.type == .monster,
-           !target.isDead {
-            useSkill(skill, level: level, on: target)
+        if skill.isSelfOnlySkill {
+            gameSession?.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
+        } else if skill.isGroundTargetedSkill {
+            if let selectedTarget {
+                useSkill(skill, level: level, on: selectedTarget)
+            } else {
+                gameSession?.useSkill(skillID: skill.skillID, level: level, toGround: player.gridPosition)
+            }
+        } else if skill.isSupportSkill {
+            if let selectedTarget, selectedTarget.type == .pc || selectedTarget.type == .monster {
+                useSkill(skill, level: level, on: selectedTarget)
+            } else {
+                gameSession?.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
+            }
+        } else if let selectedTarget, selectedTarget.type == .monster {
+            useSkill(skill, level: level, on: selectedTarget)
         } else if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
             selectTarget(target)
             useSkill(skill, level: level, on: target)
