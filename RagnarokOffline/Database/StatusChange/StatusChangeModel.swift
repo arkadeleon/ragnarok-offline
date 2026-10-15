@@ -11,7 +11,6 @@ import Observation
 import RagnarokConstants
 import RagnarokDatabase
 import RagnarokResources
-import RagnarokScript
 
 @Observable
 @dynamicMemberLookup
@@ -55,10 +54,7 @@ final class StatusChangeModel {
     @MainActor
     func fetchIconImage() async {
         if iconImage == nil {
-            let scriptContext = await resourceManager.scriptContext()
-            if let statusIconName = scriptContext.statusIconName(forStatusID: statusChange.icon.rawValue) {
-                iconImage = try? await resourceManager.statusIconImage(forStatusIconName: statusIconName)
-            }
+            iconImage = try? await resourceManager.statusIconImage(forStatusID: statusChange.icon.rawValue)
         }
     }
 

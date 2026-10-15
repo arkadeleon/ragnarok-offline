@@ -37,11 +37,6 @@ final public class ScriptContext: Resource {
         return result
     }
 
-    public func statusIconName(forStatusID statusID: Int) -> String? {
-        let result = call("statusIconName", with: [.number(Double(statusID))]).stringValue
-        return result
-    }
-
     public func weaponName(forWeaponID weaponID: Int) -> String? {
         // The script answers with an empty string for a weapon it has no name for.
         let result = call("ReqWeaponName", with: [.number(Double(weaponID))]).stringValue

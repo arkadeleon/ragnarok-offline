@@ -45,4 +45,9 @@ extension ResourcePath {
     public static func generateMapImagePath(mapName: String) -> ResourcePath {
         ResourcePath.userInterfaceDirectory.appending(["map", "\(mapName).bmp"])
     }
+
+    /// - Parameter statusIconName: The original Korean status icon name.
+    public static func generateStatusIconImagePath(statusIconName: String) -> ResourcePath {
+        ResourcePath.effectDirectory.appending(K2L(statusIconName))
+    }
 }

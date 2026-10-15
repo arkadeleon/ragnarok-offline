@@ -64,9 +64,6 @@ actor ContextLoader {
         async let jobinheritlist = resourceManager.script(at: ["skillinfoz", "jobinheritlist"])
         async let skillid = resourceManager.script(at: ["skillinfoz", "skillid"])
 
-        async let efstids = resourceManager.script(at: ["stateicon", "efstids"])
-        async let stateiconimginfo = resourceManager.script(at: ["stateicon", "stateiconimginfo"])
-
         async let smalllayerdir_female = resourceManager.script(at: ["spreditinfo", "smalllayerdir_female"])
         async let smalllayerdir_male = resourceManager.script(at: ["spreditinfo", "smalllayerdir_male"])
         async let biglayerdir_female = resourceManager.script(at: ["spreditinfo", "biglayerdir_female"])
@@ -103,9 +100,6 @@ actor ContextLoader {
         await loadScript(jobinheritlist, in: context)
         await loadScript(skillid, in: context)
 
-        await loadScript(efstids, in: context)
-        await loadScript(stateiconimginfo, in: context)
-
         await loadScript(smalllayerdir_female, in: context)
         await loadScript(smalllayerdir_male, in: context)
         await loadScript(biglayerdir_female, in: context)
@@ -127,36 +121,6 @@ actor ContextLoader {
             end
             function GetSkillDescript(skillID)
                 return SKILL_DESCRIPT[skillID]
-            end
-            """)
-        } catch {
-            logger.warning("\(error)")
-        }
-
-        do {
-            try context.evaluate("""
-            function statusIconName(statusID)
-                local gold = StateIconImgList[PRIORITY_GOLD][statusID]
-                local red = StateIconImgList[PRIORITY_RED][statusID]
-                local blue = StateIconImgList[PRIORITY_BLUE][statusID]
-                local green = StateIconImgList[PRIORITY_GREEN][statusID]
-                local white = StateIconImgList[PRIORITY_WHITE][statusID]
-                if gold ~= nil then
-                    return gold
-                elseif red ~= nil then
-                    return red
-                elseif blue ~= nil then
-                    return blue
-                elseif green ~= nil then
-                    return green
-                elseif white ~= nil then
-                    return white
-                else
-                    return nil
-                end
-            end
-            function statusDescription(statusID)
-                return StateIconList[statusID]["descript"][1][1]
             end
             """)
         } catch {

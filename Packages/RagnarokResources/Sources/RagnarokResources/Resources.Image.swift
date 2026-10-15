@@ -74,8 +74,12 @@ extension ResourceManager {
         return image
     }
 
-    public func statusIconImage(forStatusIconName statusIconName: String) async throws -> Resources.Image {
-        let path = ResourcePath.effectDirectory.appending(statusIconName)
+    public func statusIconImage(forStatusID statusID: Int) async throws -> Resources.Image {
+        let statusIconTable = await statusIconTable()
+        guard let statusIconName = statusIconTable.statusIconName(forStatusID: statusID) else {
+            throw ResourceError.scriptContextIncomplete("statusIconName")
+        }
+        let path = ResourcePath.generateStatusIconImagePath(statusIconName: statusIconName)
         let image = try await image(at: path)
         return image
     }

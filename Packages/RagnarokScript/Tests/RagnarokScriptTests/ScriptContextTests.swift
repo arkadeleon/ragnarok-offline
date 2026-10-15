@@ -49,9 +49,4 @@ final class ScriptContextTests: XCTestCase {
         let mainGauche = await scriptContext.realWeaponID(forWeaponID: 31)
         XCTAssertEqual(mainGauche, 1)
     }
-
-    func testStatusIconName() async throws {
-        let swordclan = await scriptContext.statusIconName(forStatusID: 762)
-        XCTAssertEqual(swordclan, "SWORDCLAN.TGA")
-    }
 }
