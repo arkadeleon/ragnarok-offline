@@ -116,6 +116,16 @@ final class MessageCenter {
         }
     }
 
+    func addMessage(for packet: PACKET_ZC_ACTION_FAILURE) {
+        guard let attackFailedMessage = AttackFailedMessage(from: packet) else {
+            return
+        }
+
+        let messageString = messageStringTable.localizedMessageString(forID: attackFailedMessage.messageID)
+        let message = MessageCenter.Message(content: messageString, type: packet.type == 3 ? .system : .error, category: .item)
+        messages.append(message)
+    }
+
     // MARK: - Skill
 
     func addMessage(for packet: PACKET_ZC_ACK_TOUSESKILL) {

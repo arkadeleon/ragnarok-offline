@@ -355,9 +355,11 @@
   - 现状：`CombatText.Kind` 只有 damage、miss、combo、recovery。
   - 参考：`Renderer/Effects/Damage.js`
 - [ ] **P3** 伤害皮肤 `damageSkin` 和伤害动效 `damageMotion`（图形设置项）。
-- [ ] **P0** 攻击失败
-  - `ZC_ATTACK_FAILURE_FOR_DISTANCE`：距离不够时自动靠近目标。
-  - `ZC_ACTION_FAILURE`：显示提示。
+- [x] **P0** 攻击失败
+  - `ZC_ATTACK_FAILURE_FOR_DISTANCE`：距离不够时自动靠近目标，到了再攻击（`MapScene.onPlayerTooFarToAttack` → `attackMonster`）。
+    - 客户端认为已在范围内、服务器认为不在时，会反复请求攻击。roBrowser 也一样。
+  - `ZC_ACTION_FAILURE`：在聊天框显示 msgstringtable 242–245（`AttackFailedMessage`）。
+    - rAthena 只在缺箭（0）和装上箭（3）时发送；超重的 1、2 不会收到。
   - 参考：`Main.js#onPlayerTooFarToAttack/onActionFailure`
 - [ ] **P1** 攻击模式
   - 需要：`/noctrl`（单击后持续攻击）、`/noshift`、`attackTargetMode`，以及锁定目标的准星。
@@ -1141,7 +1143,6 @@ roBrowser 发送、RagnarokGame 未发送的包，按功能分组：
 1. **P0 单机战斗闭环**
    - 技能：公共延迟（§8.1）、技能地面单元（§8.2）。
    - 状态：状态图标栏（§8.3）、bodyState 和 healthState 外观（§6.2）。
-   - 攻击距离不够时自动靠近（§7）。
    - 插卡（§13）。
    - 音量和开关（§12）。
 2. **P1 战斗手感与表现**
