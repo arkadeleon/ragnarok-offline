@@ -226,8 +226,10 @@
   - 需要：`CZ_REQNAME_BYGID(2)` / `ZC_ACK_REQNAME_BYGID(2)`。
   - 用途：邮件、组队、公会里只有 CID 的场景。
   - 参考：`DB/DBManager.js`
-- [ ] **P0** 怪物血条
-  - 需要：`ZC_HP_INFO_TINY`（百分比血条），并在怪物受到伤害时自动显示血条。
+- [x] **P0** 怪物血条
+  - 处理 `ZC_HP_INFO`（0x977，roBrowser 里叫 `NOTIFY_MONSTER_HP`）。怪物收到这个包后显示血条（`MapScene.onMapObjectHealthUpdated`），颜色和 roBrowser 一致。
+  - rAthena 会在 3 种情况下发这个包，只发给打过这只怪的玩家：怪物受到伤害、怪物回血、怪物重新进入视野。
+  - `ZC_HP_INFO_TINY`（百分比血条）不用处理，rAthena 不会发这个包。
   - 参考：`Entity.js#onEntityLifeUpdate/onEntityLifeUpdateTiny`、`Renderer/Entity/EntityLife.js`
 - [ ] **P3** 称号：`CZ_REQ_CHANGE_TITLE` / `ZC_ACK_CHANGE_TITLE`，显示在名字旁边。
 - [ ] **P2** NPC 外观变更：`ZC_NPCSPRITE_CHANGE`。
@@ -1006,7 +1008,7 @@
 - **MapState**：`ZC_MAPPROPERTY(_R2)`、`ZC_NOTIFY_MAPPROPERTY(2)`、`ZC_NOTIFY_RANKING`
 - **Entity**
   - 名字和称号：`ZC_ACK_REQNAME`、`ZC_ACK_REQNAMEALL(1–3)`、`ZC_ACK_CHANGE_TITLE`
-  - 头顶表现：`ZC_EMOTION`、`ZC_SHOWSCRIPT`、`ZC_QUEST_NOTIFY_EFFECT`、`ZC_HAT_EFFECT`、`ZC_HP_INFO_TINY`
+  - 头顶表现：`ZC_EMOTION`、`ZC_SHOWSCRIPT`、`ZC_QUEST_NOTIFY_EFFECT`、`ZC_HAT_EFFECT`、`ZC_HP_INFO_TINY`（rAthena 不发送）
   - 状态：`ZC_MSG_STATE_CHANGE(1–5)`
   - 移动和动作：`ZC_FASTMOVE`、`ZC_HIGHJUMP`、`ZC_NOTIFY_ACT_POSITION`、`ZC_NOTIFY_ACTENTRY`、`ZC_NOTIFY_SKILL_POSITION`、`ZC_BLADESTOP`
   - 技能单元：`ZC_SKILL_ENTRY(1–5)`、`ZC_SKILL_DISAPPEAR`
@@ -1135,7 +1137,7 @@ roBrowser 发送、RagnarokGame 未发送的包，按功能分组：
 1. **P0 单机战斗闭环**
    - 技能：目标选择（§2、§8.1）、冷却遮罩（§8.1）、技能地面单元（§8.2）。
    - 状态：状态图标栏（§8.3）、bodyState 和 healthState 外观（§6.2）。
-   - 目标信息：怪物名和 NPC 名（§6.1）、怪物血条（§6.1）。
+   - 目标信息：怪物名和 NPC 名（§6.1）。
    - 攻击距离不够时自动靠近（§7）。
    - 插卡（§13）。
    - 音量和开关（§12）。

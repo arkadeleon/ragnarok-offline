@@ -30,8 +30,11 @@ final class MapSceneRenderResources {
     private var effectResources: [UUID : EffectRenderResourceGroup] = [:]
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
 
+    let textTextureCache: TextTextureCache
+
     init(device: any MTLDevice) {
         self.device = device
+        self.textTextureCache = TextTextureCache(device: device)
     }
 
     func loadWorld(_ asset: WorldAsset) {
@@ -178,6 +181,8 @@ final class MapSceneRenderResources {
         effectAssetLoader = nil
         effectObjectIDs.removeAll()
         effectResources.removeAll()
+
+        textTextureCache.removeAll()
 
         world = nil
     }
