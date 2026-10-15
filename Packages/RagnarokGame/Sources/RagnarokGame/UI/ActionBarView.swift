@@ -9,7 +9,7 @@ import RagnarokModels
 import SwiftUI
 
 struct ActionBarView: View {
-    var selectedTargetObjectType: MapObjectType?
+    var selectedTargetType: MapObjectType?
     var onTargetAction: () -> Void
     var onSelectNextTarget: () -> Void
     var onDeselectTarget: () -> Void
@@ -25,7 +25,7 @@ struct ActionBarView: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 6) {
             HStack(spacing: 6) {
-                if selectedTargetObjectType != nil {
+                if selectedTargetType != nil {
                     ActionRoundButton(
                         color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)),
                         action: onDeselectTarget
@@ -80,14 +80,21 @@ struct ActionBarView: View {
                     color: Color(#colorLiteral(red: 0.6283159216, green: 0.2047865098, blue: 0.1977276863, alpha: 0.55)),
                     action: onTargetAction
                 ) {
-                    if selectedTargetObjectType == .npc {
+                    switch selectedTargetType {
+                    case .npc:
                         GameTalkIcon()
                             .frame(width: 24, height: 24)
-                    } else {
+                    case .pc:
+                        Image(systemName: "person.fill")
+                            .font(.game(size: 16, weight: .bold))
+                            .foregroundStyle(.white)
+                    default:
                         GameSwordIcon()
                             .frame(width: 24, height: 24)
                     }
                 }
+                .disabled(selectedTargetType == .pc)
+                .opacity(selectedTargetType == .pc ? 0.5 : 1)
             }
 
             HStack(spacing: 0) {
@@ -221,7 +228,7 @@ private struct ActionSlotButton: View {
         return gameSession
     }()
 
-    ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
+    ActionBarView(selectedTargetType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .frame(width: 480, height: 360, alignment: .bottomTrailing)
         .environment(gameSession)
@@ -242,7 +249,7 @@ private struct ActionSlotButton: View {
         return gameSession
     }()
 
-    ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
+    ActionBarView(selectedTargetType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 16)
         .padding(.vertical)

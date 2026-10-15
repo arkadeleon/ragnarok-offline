@@ -488,8 +488,8 @@ extension MapScene {
         targetSelector = nil
         selectedTargetID = target?.objectID
 
-        if state.selectedTargetObjectType != target?.type {
-            state.selectedTargetObjectType = target?.type
+        if state.selectedTargetType != target?.type {
+            state.selectedTargetType = target?.type
         }
     }
 

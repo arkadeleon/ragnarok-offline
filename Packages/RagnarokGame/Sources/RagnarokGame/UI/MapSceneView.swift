@@ -179,7 +179,7 @@ struct MapSceneView: View {
 
     private var actionBar: some View {
         ActionBarView(
-            selectedTargetObjectType: runtime.scene.state.selectedTargetObjectType,
+            selectedTargetType: runtime.scene.state.selectedTargetType,
             onTargetAction: {
                 runtime.scene.performTargetAction()
             },

@@ -16,7 +16,7 @@ final class MapSceneState {
     var playerDirection: SpriteDirection
     var isPlayerDead = false
 
-    var selectedTargetObjectType: MapObjectType?
+    var selectedTargetType: MapObjectType?
 
     init(playerPosition: SIMD2<Int>, playerDirection: SpriteDirection) {
         self.playerPosition = playerPosition

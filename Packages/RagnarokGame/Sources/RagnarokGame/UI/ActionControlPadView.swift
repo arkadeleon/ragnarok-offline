@@ -17,7 +17,7 @@ private let supplementaryRingWidth: CGFloat = 28
 private let shortcutsPerRow = 8
 
 struct ActionControlPadView: View {
-    var selectedTargetObjectType: MapObjectType?
+    var selectedTargetType: MapObjectType?
     var onTargetAction: () -> Void
     var onSelectNextTarget: () -> Void
     var onPickup: () -> Void
@@ -63,7 +63,7 @@ struct ActionControlPadView: View {
                 diameter: (ringInnerRadius - sectorGap) * 2,
                 action: onTargetAction
             ) {
-                if selectedTargetObjectType == .npc {
+                if selectedTargetType == .npc {
                     GameTalkIcon()
                         .frame(width: 34, height: 34)
                 } else {
@@ -267,7 +267,7 @@ private struct RingSectorActionButton<Content>: View where Content: View {
         return gameContext
     }()
 
-    ActionControlPadView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
+    ActionControlPadView(selectedTargetType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .background(Color.black)
         .environment(gameContext)
