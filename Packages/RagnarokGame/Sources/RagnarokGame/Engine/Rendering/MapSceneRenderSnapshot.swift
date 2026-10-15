@@ -36,6 +36,12 @@ struct MapSceneRenderSnapshot {
         let gemTopHeight: Float
     }
 
+    struct Text {
+        let vertices: [SpriteVertex]
+        let worldPosition: SIMD3<Float>
+        let texture: any MTLTexture
+    }
+
     struct CombatText {
         let vertices: [SpriteVertex]
         let worldPosition: SIMD3<Float>
@@ -48,6 +54,7 @@ struct MapSceneRenderSnapshot {
     var spriteDrawables: [SpriteDrawable] = []
     var effects: [Effect] = []
     var bars: [Bar] = []
+    var texts: [Text] = []
     var combatTexts: [CombatText] = []
     var combatTextTexture: (any MTLTexture)?
 }

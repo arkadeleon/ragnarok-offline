@@ -27,6 +27,7 @@ final class MapSceneRenderer {
 
     private let worldRenderer: WorldRenderer
     private let spriteRenderer: SpriteRenderer
+    private let textRenderer: TextRenderer
     private let combatTextRenderer: CombatTextRenderer
     private let barRenderer: BarRenderer
     private let effectRenderer: EffectRenderer
@@ -39,6 +40,7 @@ final class MapSceneRenderer {
 
         worldRenderer = try WorldRenderer(device: device, configuration: configuration)
         spriteRenderer = try SpriteRenderer(device: device, configuration: configuration)
+        textRenderer = try TextRenderer(device: device, configuration: configuration)
         combatTextRenderer = try CombatTextRenderer(device: device, configuration: configuration)
         barRenderer = try BarRenderer(device: device, configuration: configuration)
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
@@ -185,6 +187,13 @@ final class MapSceneRenderer {
 
         barRenderer.render(
             bars: snapshot.bars,
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
+        )
+
+        textRenderer.render(
+            texts: snapshot.texts,
             modelMatrix: modelMatrix,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
