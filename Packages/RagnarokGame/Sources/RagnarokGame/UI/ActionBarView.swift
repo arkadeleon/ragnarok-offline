@@ -16,19 +16,33 @@ struct ActionBarView: View {
     var onSit: () -> Void
     var onShortcut: (Shortcut) -> Void
 
+    @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
 
     @State private var currentRow = 0
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 6) {
-            ActionRoundButton(
-                color: Color(#colorLiteral(red: 0.8877201569, green: 0.7630142746, blue: 0.3606613333, alpha: 0.55)),
-                action: onSelectNextTarget
-            ) {
-                Image(systemName: "scope")
-                    .font(.game(size: 16, weight: .bold))
-                    .foregroundStyle(.white)
+            HStack(spacing: 6) {
+                ActionRoundButton(
+                    color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)),
+                    action: {
+                        gameSession.interactionMode = gameSession.interactionMode == .direct ? .select : .direct
+                    }
+                ) {
+                    Image(systemName: gameSession.interactionMode == .direct ? "hand.tap" : "hand.point.up.left")
+                        .font(.game(size: 16, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+
+                ActionRoundButton(
+                    color: Color(#colorLiteral(red: 0.8877201569, green: 0.7630142746, blue: 0.3606613333, alpha: 0.55)),
+                    action: onSelectNextTarget
+                ) {
+                    Image(systemName: "scope")
+                        .font(.game(size: 16, weight: .bold))
+                        .foregroundStyle(.white)
+                }
             }
 
             HStack(spacing: 6) {
@@ -173,8 +187,9 @@ private struct ActionSlotButton: View {
 }
 
 #Preview("Regular") {
-    let gameContext = {
-        let gameContext = GameContext(resourceManager: .testing)
+    let gameSession = {
+        let gameSession = GameSession(resourceManager: .testing)
+        let gameContext = gameSession.context
 
         var redPotion = InventoryItem()
         redPotion.index = 0
@@ -191,18 +206,20 @@ private struct ActionSlotButton: View {
         shortcutList.setShortcut(.skill(skillID: 28, level: 10), atRow: 2, column: 0)
         gameContext.shortcutList = shortcutList
 
-        return gameContext
+        return gameSession
     }()
 
     ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .frame(width: 480, height: 360, alignment: .bottomTrailing)
-        .environment(gameContext)
+        .environment(gameSession)
+        .environment(gameSession.context)
 }
 
 #Preview("Minimal") {
-    let gameContext = {
-        let gameContext = GameContext(resourceManager: .testing)
+    let gameSession = {
+        let gameSession = GameSession(resourceManager: .testing)
+        let gameContext = gameSession.context
 
         var shortcutList = ShortcutList()
         for (column, skillID) in [5, 7, 10, 16, 17, 18, 19].enumerated() {
@@ -210,7 +227,7 @@ private struct ActionSlotButton: View {
         }
         gameContext.shortcutList = shortcutList
 
-        return gameContext
+        return gameSession
     }()
 
     ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
@@ -218,5 +235,6 @@ private struct ActionSlotButton: View {
         .padding(.horizontal, 16)
         .padding(.vertical)
         .frame(width: 360)
-        .environment(gameContext)
+        .environment(gameSession)
+        .environment(gameSession.context)
 }

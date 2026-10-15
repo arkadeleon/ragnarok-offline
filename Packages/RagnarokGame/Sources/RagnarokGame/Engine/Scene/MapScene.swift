@@ -409,14 +409,24 @@ extension MapScene {
                 requestMove(to: position)
             }
         case .mapObject(let objectID):
-            if let target = objects[objectID], !target.isDead {
-                switch target.type {
-                case .monster, .npc:
+            guard objectID != player.objectID, let target = objects[objectID], !target.isDead else {
+                return
+            }
+
+            switch target.type {
+            case .pc:
+                selectTarget(target)
+                targetSelector = TargetSelector(objectID: target.objectID, showTime: .now)
+            case .monster, .npc:
+                if gameSession?.interactionMode != .select || selectedTargetID == objectID {
                     selectTarget(target)
                     performActionOnSelectedTarget()
-                default:
-                    break
+                } else {
+                    selectTarget(target)
+                    targetSelector = TargetSelector(objectID: target.objectID, showTime: .now)
                 }
+            default:
+                break
             }
         case .mapItem(let objectID):
             if let item = items[objectID] {

@@ -81,6 +81,8 @@ final public class GameSession {
     var selectedCharacterSlot: Int = 0
     private(set) var maxCharacterSlots: Int = 9
 
+    var interactionMode: GameInteractionMode = .direct
+
     var dialog: NPCDialog?
     var dealSelectionNPCID: UInt32?
     var npcShop: NPCShop?
