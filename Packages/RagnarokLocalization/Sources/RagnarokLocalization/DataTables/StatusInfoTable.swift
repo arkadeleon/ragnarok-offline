@@ -8,7 +8,23 @@
 import Foundation
 
 struct StatusInfo: Decodable {
-    var statusDescription: String
+    var statusDescription: StatusDescription
+}
+
+public struct StatusDescription: Decodable {
+    public struct Line: Decodable {
+        public var text: String
+
+        /// A color in `#RRGGBB` format.
+        public var color: String?
+    }
+
+    public var lines: [StatusDescription.Line]
+
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        lines = try container.decode([StatusDescription.Line].self)
+    }
 }
 
 final public class StatusInfoTable {
@@ -29,7 +45,8 @@ final public class StatusInfoTable {
         }
     }
 
-    public func localizedStatusDescription(forStatusID statusID: Int) -> String? {
+    /// The first line is the title, and a line of `%s` is where the remaining time goes.
+    public func localizedStatusDescription(forStatusID statusID: Int) -> StatusDescription? {
         statusInfosByID[statusID]?.statusDescription
     }
 }

@@ -526,7 +526,11 @@ final class DatabaseModel {
             }
 
             self.statusChanges = statusChanges.map { statusChange in
-                let localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)
+                let localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)?
+                    .lines
+                    .filter({ $0.text != "%s" })
+                    .map(\.text)
+                    .joined(separator: "\n")
                 let model = StatusChangeModel(mode: mode, statusChange: statusChange, localizedDescription: localizedDescription, resourceManager: resourceManager)
                 return model
             }

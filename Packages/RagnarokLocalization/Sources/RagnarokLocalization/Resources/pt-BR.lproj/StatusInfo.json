@@ -1,1592 +1,8761 @@
 {
   "0000" : {
-    "statusDescription" : "Provocar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Provocar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF reduzida"
+      },
+      {
+        "text" : "ATQ aumentado"
+      }
+    ]
   },
   "0001" : {
-    "statusDescription" : "Vigor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vigor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEFM aumentada"
+      },
+      {
+        "text" : "Evita reagir a ataques"
+      }
+    ]
   },
   "0002" : {
-    "statusDescription" : "Rapidez com Duas Mãos"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Rapidez com Duas Mãos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Vel.Atq"
+      }
+    ]
   },
   "0003" : {
-    "statusDescription" : "Concentrar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Concentrar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DES aumentada"
+      },
+      {
+        "text" : "AGI aumentada"
+      }
+    ]
   },
   "0004" : {
-    "statusDescription" : "Esconderijo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Esconderijo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Personagem invisível"
+      },
+      {
+        "text" : "Pode ser revelado"
+      }
+    ]
   },
   "0005" : {
-    "statusDescription" : "Furtividade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Furtividade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Personagem invisível"
+      }
+    ]
   },
   "0006" : {
-    "statusDescription" : "Envenenar Arma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Envenenar Arma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma de prop. Veneno"
+      }
+    ]
   },
   "0007" : {
-    "statusDescription" : "Refletir Veneno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Refletir Veneno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de autoconjurar"
+      },
+      {
+        "text" : "Envenenar no alvo"
+      },
+      {
+        "text" : "ao receber danos físicos"
+      }
+    ]
   },
   "0008" : {
-    "statusDescription" : "Pântano dos Mortos"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Pântano dos Mortos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "AGI e DES reduzidas"
+      },
+      {
+        "text" : "Movimento reduzido"
+      }
+    ]
   },
   "0009" : {
-    "statusDescription" : "Angelus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Angelus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de DEF e HP"
+      }
+    ]
   },
   "0010" : {
-    "statusDescription" : "Bênção"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bênção"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "FOR, INT, DES e"
+      },
+      {
+        "text" : "Precisão melhorados"
+      }
+    ]
   },
   "0011" : {
-    "statusDescription" : "Signum Crucis"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Signum Crucis"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF reduzida"
+      }
+    ]
   },
   "0012" : {
-    "statusDescription" : "Aumentar Agilidade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aumentar Agilidade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de AGI e Vel.Atq"
+      },
+      {
+        "text" : "Movimento acelerado"
+      }
+    ]
   },
   "0013" : {
-    "statusDescription" : "Diminuir Agilidade"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Diminuir Agilidade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "AGI reduzida"
+      },
+      {
+        "text" : "Movimento reduzido"
+      }
+    ]
   },
   "0014" : {
-    "statusDescription" : "Retardar Veneno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Retardar Veneno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede a perda de HP ao sofrer Envenenamento"
+      }
+    ]
   },
   "0015" : {
-    "statusDescription" : "Impositio Manus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Impositio Manus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ e ATQM"
+      }
+    ]
   },
   "0016" : {
-    "statusDescription" : "Suffragium"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Suffragium"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz Conj. var."
+      }
+    ]
   },
   "0017" : {
-    "statusDescription" : "Aspersio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aspersio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma de prop. Sagrado"
+      }
+    ]
   },
   "0018" : {
-    "statusDescription" : "Armadura Abençoada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Armadura Abençoada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Armadura de prop. Sagrado"
+      }
+    ]
   },
   "0019" : {
-    "statusDescription" : "Kyrie Eleison"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kyrie Eleison"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Proteção contra ataques"
+      }
+    ]
   },
   "0020" : {
-    "statusDescription" : "Magnificat"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Magnificat"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera a regen."
+      },
+      {
+        "text" : "natural de SP"
+      }
+    ]
   },
   "0021" : {
-    "statusDescription" : "Glória"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Glória"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SOR aumentada"
+      }
+    ]
   },
   "0022" : {
-    "statusDescription" : "Lex Aeterna"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Lex Aeterna"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe o dobro de dano"
+      }
+    ]
   },
   "0023" : {
-    "statusDescription" : "Adrenalina Pura"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Adrenalina Pura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Vel.Atq"
+      },
+      {
+        "text" : "e de Precisão"
+      }
+    ]
   },
   "0024" : {
-    "statusDescription" : "Manejo Perfeito"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manejo Perfeito"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Anula a penalidade"
+      },
+      {
+        "text" : "de tamanho da arma"
+      }
+    ]
   },
   "0025" : {
-    "statusDescription" : "Força Violenta"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Força Violenta"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ."
+      }
+    ]
   },
   "0026" : {
-    "statusDescription" : "Amplificar Poder"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Amplificar Poder"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Causa o máx de dano físico"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0027" : {
-    "statusDescription" : "Montaria"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Montaria"
+      }
+    ]
   },
   "0028" : {
-    "statusDescription" : "Ave de Rapina"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Ave de Rapina"
+      },
+      {
+        "text" : "Ave domesticada"
+      }
+    ]
   },
   "0029" : {
-    "statusDescription" : "Fingir de morto"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Fingir de morto"
+      },
+      {
+        "text" : "Imune a ataques"
+      }
+    ]
   },
   "0030" : {
-    "statusDescription" : "Grito de Guerra"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Grito de Guerra"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de FOR e ATQ"
+      }
+    ]
   },
   "0031" : {
-    "statusDescription" : "Proteção Arcana"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Proteção Arcana"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz o dano dos monstros"
+      },
+      {
+        "text" : "em proporção ao SP atual"
+      }
+    ]
   },
   "0032" : {
-    "statusDescription" : "Armadura quebrada"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Armadura quebrada"
+      }
+    ]
   },
   "0033" : {
-    "statusDescription" : "Arma quebrada"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Arma quebrada"
+      }
+    ]
   },
   "0034" : {
-    "statusDescription" : "Alucinação"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Alucinação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Visão alterada"
+      },
+      {
+        "text" : "Recebe danos aleatórios"
+      },
+      {
+        "text" : "que não são verdadeiros"
+      }
+    ]
   },
   "0035" : {
-    "statusDescription" : "50% acima do peso"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "50% acima do peso"
+      },
+      {
+        "text" : "Desativa a regen. natural de HP e SP"
+      }
+    ]
   },
   "0036" : {
-    "statusDescription" : "90% acima do peso"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "90% acima do peso"
+      },
+      {
+        "text" : "Não pode atacar ou usar habilidades"
+      },
+      {
+        "text" : "Desativa a regen. natural de HP e SP"
+      }
+    ]
   },
   "0037" : {
-    "statusDescription" : "Poção da Concentração"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção da Concentração"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0038" : {
-    "statusDescription" : "Poção do Despertar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção do Despertar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0039" : {
-    "statusDescription" : "Em Fúria!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Em Fúria!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0041" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento acelerado"
+      }
+    ]
   },
   "0042" : {
-    "statusDescription" : "Movimento acelerado"
+    "statusDescription" : [
+      {
+        "text" : "Movimento acelerado"
+      }
+    ]
   },
   "0050" : {
-    "statusDescription" : "Remover Arma"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Remover Arma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma removida e não pode ser reequipada"
+      }
+    ]
   },
   "0051" : {
-    "statusDescription" : "Remover Escudo"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Remover Escudo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Escudo removido e não pode ser reequipado"
+      }
+    ]
   },
   "0052" : {
-    "statusDescription" : "Remover Armadura"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Remover Armadura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Armadura removida e não pode ser reequipada"
+      }
+    ]
   },
   "0053" : {
-    "statusDescription" : "Remover Capacete"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Remover Capacete"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Elmo removido e não pode ser reequipado"
+      }
+    ]
   },
   "0054" : {
-    "statusDescription" : "Revestir Arma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Revestir Arma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede a arma de ser removida ou destruída"
+      }
+    ]
   },
   "0055" : {
-    "statusDescription" : "Revestir Escudo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Revestir Escudo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede o escudo de ser removido ou destruído"
+      }
+    ]
   },
   "0056" : {
-    "statusDescription" : "Revestir Armadura"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Revestir Armadura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede a armadura de ser removida ou destruída"
+      }
+    ]
   },
   "0057" : {
-    "statusDescription" : "Revestir Capacete"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Revestir Capacete"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede o Capacete de ser removido ou destruído"
+      }
+    ]
   },
   "0058" : {
-    "statusDescription" : "Bloqueio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bloqueio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de bloquear ataque físico"
+      }
+    ]
   },
   "0059" : {
-    "statusDescription" : "Escudo Refletor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Escudo Refletor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reflete parte dos danos físicos"
+      },
+      {
+        "text" : "de volta ao atacante."
+      }
+    ]
   },
   "0061" : {
-    "statusDescription" : "Divina Providência"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Divina Providência"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência a raça Demônio"
+      },
+      {
+        "text" : "e propriedade Sagrado"
+      }
+    ]
   },
   "0062" : {
-    "statusDescription" : "Aura Sagrada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aura Sagrada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência a dano físico a distância"
+      },
+      {
+        "text" : "Velocidade de movimento e de ataque reduzidos"
+      }
+    ]
   },
   "0064" : {
-    "statusDescription" : "Aspersio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aspersio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma de prop. Sagrado"
+      }
+    ]
   },
   "0065" : {
-    "statusDescription" : "Desejo Arcano"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Desejo Arcano"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de autoconjurar a"
+      },
+      {
+        "text" : "magia selecionada ao"
+      },
+      {
+        "text" : "realizar ataques físicos."
+      },
+      {
+        "text" : "Consome mais SP"
+      }
+    ]
   },
   "0068" : {
-    "statusDescription" : "Rapidez com Lança"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Rapidez com Lança"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "CRIT aumentado"
+      },
+      {
+        "text" : "Esquiva aumentada"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0070" : {
-    "statusDescription" : "Assovio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Assovio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Esquiva"
+      },
+      {
+        "text" : "e Esquiva Perfeita"
+      }
+    ]
   },
   "0071" : {
-    "statusDescription" : "Crepúsculo Sangrento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Crepúsculo Sangrento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Vel.Atq"
+      }
+    ]
   },
   "0072" : {
-    "statusDescription" : "Poema de Bragi"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poema de Bragi"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz a Pos-conj."
+      },
+      {
+        "text" : "e Conj. Variável."
+      }
+    ]
   },
   "0073" : {
-    "statusDescription" : "Maçãs de Idun"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Maçãs de Idun"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de HP max."
+      },
+      {
+        "text" : "e Cura Recebida"
+      }
+    ]
   },
   "0074" : {
-    "statusDescription" : "Sibilo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sibilo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Precisão"
+      }
+    ]
   },
   "0075" : {
-    "statusDescription" : "Não me Abandones"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Não me Abandones"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento e"
+      },
+      {
+        "text" : "Vel.Atq reduzidos."
+      }
+    ]
   },
   "0076" : {
-    "statusDescription" : "Beijo da Sorte"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Beijo da Sorte"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de CRIT"
+      },
+      {
+        "text" : "e dano crítico"
+      }
+    ]
   },
   "0077" : {
-    "statusDescription" : "Dança Cigana"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Dança Cigana"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de SP max."
+      },
+      {
+        "text" : "Menor custo de SP"
+      }
+    ]
   },
   "0078" : {
-    "statusDescription" : "Banquete de Njord"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Banquete de Njord"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de EXP"
+      }
+    ]
   },
   "0079" : {
-    "statusDescription" : "Ritmo Caótico"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Ritmo Caótico"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF zero."
+      }
+    ]
   },
   "0080" : {
-    "statusDescription" : "Rufar dos Tambores"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Rufar dos Tambores"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ e DEF"
+      }
+    ]
   },
   "0081" : {
-    "statusDescription" : "Anel dos Nibelungos"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Anel dos Nibelungos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Sob efeito de"
+      },
+      {
+        "text" : "bônus aleatório"
+      }
+    ]
   },
   "0082" : {
-    "statusDescription" : "Lamento de Loki"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Lamento de Loki"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode usar"
+      },
+      {
+        "text" : "habilidades."
+      }
+    ]
   },
   "0083" : {
-    "statusDescription" : "Canção Preciosa"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Canção Preciosa"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Anula o custo"
+      },
+      {
+        "text" : "de gemas"
+      }
+    ]
   },
   "0084" : {
-    "statusDescription" : "Ode a Siegfried"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ode a Siegfried"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Tolerância e"
+      },
+      {
+        "text" : "Resistência"
+      },
+      {
+        "text" : "aumentadas"
+      }
+    ]
   },
   "0087" : {
-    "statusDescription" : "Corpo Fechado"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Corpo Fechado"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz o dano recebido"
+      },
+      {
+        "text" : "Impede o uso de habilidades"
+      },
+      {
+        "text" : "Vel.Atq e movimento reduzidas"
+      }
+    ]
   },
   "0088" : {
-    "statusDescription" : "Punho Supremo de Asura"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Punho Supremo de Asura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede a recuperação de SP"
+      }
+    ]
   },
   "0090" : {
-    "statusDescription" : "Chamas"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chamas"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma de prop. Fogo"
+      }
+    ]
   },
   "0091" : {
-    "statusDescription" : "Geada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Geada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma de prop. Água"
+      }
+    ]
   },
   "0092" : {
-    "statusDescription" : "Ventania"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ventania"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma de prop. Vento"
+      }
+    ]
   },
   "0093" : {
-    "statusDescription" : "Terremoto"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Terremoto"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma de prop. Terra"
+      }
+    ]
   },
   "0097" : {
-    "statusDescription" : "Zumbificação"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Zumbificação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Armadura de prop. Maldito"
+      }
+    ]
   },
   "0103" : {
-    "statusDescription" : "Lâmina de Aura"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lâmina de Aura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      }
+    ]
   },
   "0104" : {
-    "statusDescription" : "Aparar Golpe"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aparar Golpe"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de bloquear ataque"
+      }
+    ]
   },
   "0105" : {
-    "statusDescription" : "Dedicação"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Dedicação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      },
+      {
+        "text" : "Reduz a DEF"
+      }
+    ]
   },
   "0106" : {
-    "statusDescription" : "Relaxar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Relaxar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera a regeneração de HP"
+      }
+    ]
   },
   "0110" : {
-    "statusDescription" : "Assumptio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Assumptio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cura recebida e"
+      },
+      {
+        "text" : "DEF aumentadas"
+      }
+    ]
   },
   "0112" : {
-    "statusDescription" : "Terreno Encantado"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Terreno Encantado"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe bônus especiais do terreno"
+      }
+    ]
   },
   "0113" : {
-    "statusDescription" : "Amplificação Mística"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Amplificação Mística"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQM"
+      }
+    ]
   },
   "0114" : {
-    "statusDescription" : "Encantar com Veneno Mortal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Encantar com Veneno Mortal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico aumentado"
+      },
+      {
+        "text" : "Chance de infligir"
+      },
+      {
+        "text" : "Envenenamento Mortal"
+      }
+    ]
   },
   "0115" : {
-    "statusDescription" : "Visão Real"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Visão Real"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Todos os atributos aumentados"
+      },
+      {
+        "text" : "ATQ, CRIT e Precisão melhorados"
+      }
+    ]
   },
   "0116" : {
-    "statusDescription" : "Caminho do Vento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Caminho do Vento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva e movimento aumentados"
+      }
+    ]
   },
   "0117" : {
-    "statusDescription" : "Golpe Estilhaçante"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Golpe Estilhaçante"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de destruir a arma ou"
+      },
+      {
+        "text" : "a armadura dos personagens."
+      },
+      {
+        "text" : "Chance de reduzir o ATQ"
+      },
+      {
+        "text" : "ou a DEF dos monstros"
+      }
+    ]
   },
   "0118" : {
-    "statusDescription" : "Impulso do Carrinho"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Impulso do Carrinho"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento acelerado"
+      }
+    ]
   },
   "0120" : {
-    "statusDescription" : "Instinto de Defesa"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Instinto de Defesa"
+      },
+      {
+        "text" : "Chance de refletir ataques."
+      },
+      {
+        "text" : "Reduz pela metade os ataques"
+      },
+      {
+        "text" : "de monstros ou realizados"
+      },
+      {
+        "text" : "com espadas e adagas"
+      }
+    ]
   },
   "0121" : {
-    "statusDescription" : "Controle de Marionete"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Controle de Marionete"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Transfere metade dos atributos base"
+      },
+      {
+        "text" : "para o personagem selecionado"
+      }
+    ]
   },
   "0122" : {
-    "statusDescription" : "Controle de Marionete"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Controle de Marionete"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe metade dos atributos base"
+      },
+      {
+        "text" : "do personagem controlador"
+      }
+    ]
   },
   "0124" : {
-    "statusDescription" : "Sangramento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sangramento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena HP a cada 10 segundos"
+      },
+      {
+        "text" : "Impede a regen. natural de HP e SP"
+      }
+    ]
   },
   "0125" : {
-    "statusDescription" : "Ataque Vital"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ataque Vital"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Efeito anormal provocado"
+      },
+      {
+        "text" : "pelo acerto de um ponto vital"
+      }
+    ]
   },
   "0130" : {
-    "statusDescription" : "Mãe, Pai, amo vocês!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mãe, Pai, amo vocês!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Anula a penalidade de EXP ao morrer"
+      }
+    ]
   },
   "0132" : {
-    "statusDescription" : "Instinto de Sobrevivência"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Instinto de Sobrevivência"
+      },
+      {
+        "text" : "Ativa Provocar se o"
+      },
+      {
+        "text" : "HP for menor que 25%"
+      }
+    ]
   },
   "0135" : {
-    "statusDescription" : "Postura do Tornado"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura do Tornado"
+      },
+      {
+        "text" : "Chance de ativar a Postura"
+      },
+      {
+        "text" : "ao realizar ataques físicos"
+      }
+    ]
   },
   "0137" : {
-    "statusDescription" : "Postura da Patada Voadora"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura da Patada Voadora"
+      },
+      {
+        "text" : "Chance de ativar a Postura"
+      },
+      {
+        "text" : "ao realizar ataques físicos"
+      }
+    ]
   },
   "0139" : {
-    "statusDescription" : "Postura da Rasteira"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura da Rasteira"
+      },
+      {
+        "text" : "Chance de ativar a Postura"
+      },
+      {
+        "text" : "ao realizar ataques físicos"
+      }
+    ]
   },
   "0141" : {
-    "statusDescription" : "Postura do Contrachute"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura do Contrachute"
+      },
+      {
+        "text" : "Chance de ativar a Postura"
+      },
+      {
+        "text" : "ao realizar ataques físicos"
+      }
+    ]
   },
   "0143" : {
-    "statusDescription" : "Cambalhota"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cambalhota"
+      },
+      {
+        "text" : "Chance de bloquear danos"
+      },
+      {
+        "text" : "mágicos ou físicos a distância."
+      },
+      {
+        "text" : "Também bloqueia ataques"
+      },
+      {
+        "text" : "físicos de curta distância"
+      },
+      {
+        "text" : "se Cólera estiver ativada"
+      }
+    ]
   },
   "0145" : {
-    "statusDescription" : "Cólera"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cólera"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "FOR aumentada"
+      },
+      {
+        "text" : "Melhora o dano das"
+      },
+      {
+        "text" : "habilidades de chute"
+      }
+    ]
   },
   "0146" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ataque de propriedade Sombrio"
+      }
+    ]
   },
   "0147" : {
-    "statusDescription" : "Adrenalina Concentrada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Adrenalina Concentrada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0148" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ataque de propriedade Fantasma"
+      }
+    ]
   },
   "0149" : {
-    "statusDescription" : "Espírito"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Espírito"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Sob efeito de"
+      },
+      {
+        "text" : "um Espírito."
+      }
+    ]
   },
   "0150" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ aumentado"
+      }
+    ]
   },
   "0151" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQM aumentado"
+      }
+    ]
   },
   "0156" : {
-    "statusDescription" : "Kaizel"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kaizel"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Revive ao morrer"
+      },
+      {
+        "text" : "Kyrie Eleison por 3 seg."
+      }
+    ]
   },
   "0157" : {
-    "statusDescription" : "Kaahi"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kaahi"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena SP para recuperar HP"
+      },
+      {
+        "text" : "quando sofrer danos físicos"
+      }
+    ]
   },
   "0158" : {
-    "statusDescription" : "Kaupe"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kaupe"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de bloquear um ataque"
+      }
+    ]
   },
   "0161" : {
-    "statusDescription" : "Rapidez com Uma Mão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Rapidez com Uma Mão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0169" : {
-    "statusDescription" : "Proteção Solar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Proteção Solar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF melhorada"
+      }
+    ]
   },
   "0170" : {
-    "statusDescription" : "Proteção Lunar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Proteção Lunar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva melhorada"
+      }
+    ]
   },
   "0171" : {
-    "statusDescription" : "Proteção Estelar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Proteção Estelar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq melhorada"
+      }
+    ]
   },
   "0181" : {
-    "statusDescription" : "Preservar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Preservar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede cópia de Plágio"
+      }
+    ]
   },
   "0182" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "FOR aumentada"
+      }
+    ]
   },
   "0186" : {
-    "statusDescription" : "Lanças Duplas"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lanças Duplas"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de repetir Relâmpago,"
+      },
+      {
+        "text" : "Lanças de Fogo e Lanças de Gelo"
+      }
+    ]
   },
   "0188" : {
-    "statusDescription" : "Força Violentíssima"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Força Violentíssima"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      }
+    ]
   },
   "0191" : {
-    "statusDescription" : "Destino nas Cartas"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Destino nas Cartas"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Efeito de uma Carta"
+      }
+    ]
   },
   "0197" : {
-    "statusDescription" : "Submissão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Submissão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ao bloquear com sucesso"
+      },
+      {
+        "text" : "chance de Atordoamento"
+      }
+    ]
   },
   "0198" : {
-    "statusDescription" : "Explosão Protetora"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Explosão Protetora"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Causa dano mágico e"
+      },
+      {
+        "text" : "empurra oponentes"
+      }
+    ]
   },
   "0200" : {
-    "statusDescription" : "Confinamento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Confinamento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva aumentada"
+      },
+      {
+        "text" : "Imóvel"
+      }
+    ]
   },
   "0201" : {
-    "statusDescription" : "Confinamento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Confinamento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impossibilidade"
+      },
+      {
+        "text" : "de se locomover"
+      },
+      {
+        "text" : "temporariamente"
+      }
+    ]
   },
   "0203" : {
-    "statusDescription" : "Resistência Final"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resistência Final"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel"
+      },
+      {
+        "text" : "ATQ aumentado"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0204" : {
-    "statusDescription" : "Ataque Gatling"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ataque Gatling"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ aumentado"
+      },
+      {
+        "text" : "Esquiva e movimento reduzidos"
+      }
+    ]
   },
   "0205" : {
-    "statusDescription" : "Pausa Feliz"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pausa Feliz"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de não consumir"
+      },
+      {
+        "text" : "um Pergaminho de"
+      },
+      {
+        "text" : "Coluna de Pedra"
+      }
+    ]
   },
   "0206" : {
-    "statusDescription" : "Troca de Pele"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Troca de Pele"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bloqueia ataque físico"
+      },
+      {
+        "text" : "se afastando do alvo"
+      }
+    ]
   },
   "0207" : {
-    "statusDescription" : "Imagem Falsa"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Imagem Falsa"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bloqueia alguns"
+      },
+      {
+        "text" : "ataques físicos"
+      }
+    ]
   },
   "0208" : {
-    "statusDescription" : "Aura ninja"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aura ninja"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "FOR e INT aumentados"
+      }
+    ]
   },
   "0209" : {
-    "statusDescription" : "Pânico do Justiceiro"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pânico do Justiceiro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva aumentada"
+      },
+      {
+        "text" : "Precisão reduzida"
+      },
+      {
+        "text" : "Resist. a dano físico a distância"
+      }
+    ]
   },
   "0210" : {
-    "statusDescription" : "Aumentar Precisão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aumentar Precisão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "AGI e DES aumentadas"
+      },
+      {
+        "text" : "Precisão aumentada"
+      }
+    ]
   },
   "0217" : {
-    "statusDescription" : "Montar Grifo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Montar Grifo"
+      }
+    ]
   },
   "0241" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de FOR"
+      }
+    ]
   },
   "0242" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de AGI"
+      }
+    ]
   },
   "0243" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de VIT"
+      }
+    ]
   },
   "0244" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de DES"
+      }
+    ]
   },
   "0245" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de INT"
+      }
+    ]
   },
   "0246" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de SOR"
+      }
+    ]
   },
   "0247" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Esquiva"
+      }
+    ]
   },
   "0248" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Precisão"
+      }
+    ]
   },
   "0249" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de CRIT"
+      }
+    ]
   },
   "0250" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de EXP"
+      }
+    ]
   },
   "0251" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Anula a perda de"
+      },
+      {
+        "text" : "EXP ao morrer"
+      }
+    ]
   },
   "0252" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a chance de um"
+      },
+      {
+        "text" : "monstro derrubar itens"
+      }
+    ]
   },
   "0271" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta FOR"
+      }
+    ]
   },
   "0272" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta AGI"
+      }
+    ]
   },
   "0273" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta VIT"
+      }
+    ]
   },
   "0274" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta DES"
+      }
+    ]
   },
   "0275" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta INT"
+      }
+    ]
   },
   "0276" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta SOR"
+      }
+    ]
   },
   "0282" : {
-    "statusDescription" : "Conjuração Lenta"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Conjuração Lenta"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a conjuração variável"
+      }
+    ]
   },
   "0286" : {
-    "statusDescription" : "Ferimento Crítico"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Ferimento Crítico"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz a efetividade de cura de itens e habilidades"
+      }
+    ]
   },
   "0289" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento acelerado"
+      }
+    ]
   },
   "0290" : {
-    "statusDescription" : "Poção de DEF"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção de DEF"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta resistência a todas as propriedades"
+      }
+    ]
   },
   "0291" : {
-    "statusDescription" : "Poção de DEFM"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção de DEFM"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta resistência a todas as propriedades"
+      }
+    ]
   },
   "0292" : {
-    "statusDescription" : "Poção da Regeneração"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção da Regeneração"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a efetividade de cura"
+      },
+      {
+        "text" : "de itens e habilidades"
+      }
+    ]
   },
   "0293" : {
-    "statusDescription" : "Poção Menor de Vida"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Menor de Vida"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera HP continuamente"
+      },
+      {
+        "text" : "Não funciona com Frenesi"
+      }
+    ]
   },
   "0294" : {
-    "statusDescription" : "Poção Média de Vida"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Média de Vida"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera HP continuamente"
+      },
+      {
+        "text" : "Não funciona com Frenesi"
+      }
+    ]
   },
   "0295" : {
-    "statusDescription" : "Abrasivo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Abrasivo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "CRIT aumentado"
+      }
+    ]
   },
   "0296" : {
-    "statusDescription" : "Cálice da Ilusão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cálice da Ilusão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva Perfeita aumentada"
+      }
+    ]
   },
   "0297" : {
-    "statusDescription" : "Pílula de HP"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pílula de HP"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP máx. aumentado"
+      },
+      {
+        "text" : "regen. natural de HP aumentada"
+      }
+    ]
   },
   "0298" : {
-    "statusDescription" : "Poção Mental"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Mental"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SP máx. aumentado"
+      },
+      {
+        "text" : "Custo de SP reduzido"
+      }
+    ]
   },
   "0299" : {
-    "statusDescription" : "Pílula de SP"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pílula de SP"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SP máx. aumentado"
+      },
+      {
+        "text" : "regen. natural de SP aumentada"
+      }
+    ]
   },
   "0300" : {
-    "statusDescription" : "Suco de Gato"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Suco de Gato"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz o custo de SP"
+      }
+    ]
   },
   "0301" : {
-    "statusDescription" : "Mega Resistência"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mega Resistência"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a tolerância aos efeitos negativos"
+      },
+      {
+        "text" : "Atordoamento, Congelamento, Petrificação, Sono, Silêncio"
+      },
+      {
+        "text" : "Cegueira, Maldição, Envenenamento, Sangramento e Caos"
+      }
+    ]
   },
   "0302" : {
-    "statusDescription" : "Propriedade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Propriedade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Armadura com Elemento"
+      }
+    ]
   },
   "0304" : {
-    "statusDescription" : "Poder Infernal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poder Infernal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impossível reviver com"
+      },
+      {
+        "text" : "Ressuscitar, Martírio"
+      },
+      {
+        "text" : "e Amuleto de Siegfried"
+      }
+    ]
   },
   "0312" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de EXP de Classe"
+      }
+    ]
   },
   "0313" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva aumentada"
+      }
+    ]
   },
   "0314" : {
-    "statusDescription" : "Muito obrigado!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Muito obrigado!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera a regeneração de HP e SP"
+      }
+    ]
   },
   "0316" : {
-    "statusDescription" : "Encantar Lâmina"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Encantar Lâmina"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Adiciona dano mágico nos ataques físicos de curta distância"
+      }
+    ]
   },
   "0318" : {
-    "statusDescription" : "Purificação"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Purificação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imunidade"
+      },
+      {
+        "text" : "a diversos"
+      },
+      {
+        "text" : "efeitos negativos"
+      }
+    ]
   },
   "0319" : {
-    "statusDescription" : "Força Titânica"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Força Titânica"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de FOR"
+      },
+      {
+        "text" : "Ao atacar, chance de"
+      },
+      {
+        "text" : "causar um dano maior."
+      },
+      {
+        "text" : "Mais dano corpo a corpo"
+      }
+    ]
   },
   "0320" : {
-    "statusDescription" : "Escamas Rochosas"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Escamas Rochosas"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF e DEFM aumentados"
+      },
+      {
+        "text" : "Ao receber dano, chance"
+      },
+      {
+        "text" : "de quebrar a arma do oponente"
+      },
+      {
+        "text" : "ou de reduzir o ATQ dos monstros"
+      }
+    ]
   },
   "0321" : {
-    "statusDescription" : "Vitalidade Rúnica"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vitalidade Rúnica"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Maior cura recebida."
+      },
+      {
+        "text" : "Reduz danos refletidos."
+      }
+    ]
   },
   "0322" : {
-    "statusDescription" : "Aura de Combate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aura de Combate"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      },
+      {
+        "text" : "e de Vel.Atq."
+      }
+    ]
   },
   "0323" : {
-    "statusDescription" : "Regeneração Espiritual"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Regeneração Espiritual"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera 60 de SP a cada 10 segundos"
+      }
+    ]
   },
   "0331" : {
-    "statusDescription" : "Lauda Agnus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lauda Agnus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de HP."
+      }
+    ]
   },
   "0332" : {
-    "statusDescription" : "Lauda Ramus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lauda Ramus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Dano Crítico."
+      }
+    ]
   },
   "0333" : {
-    "statusDescription" : "Ocultação"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ocultação"
+      },
+      {
+        "text" : "Personagem invisível."
+      },
+      {
+        "text" : "Movimento acelerado."
+      },
+      {
+        "text" : "Indetectável por Inseto e Demônios"
+      }
+    ]
   },
   "0334" : {
-    "statusDescription" : "Passos da Ilusão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Passos da Ilusão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva aumentada"
+      },
+      {
+        "text" : "Chance de bloquear magia"
+      }
+    ]
   },
   "0336" : {
-    "statusDescription" : "Renovatio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Renovatio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Regenera o HP máx."
+      },
+      {
+        "text" : "a cada 5 segundos."
+      }
+    ]
   },
   "0337" : {
-    "statusDescription" : "Reflexo de Combate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Reflexo de Combate"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de bloquear ataque físico"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0340" : {
-    "statusDescription" : "Expiatio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Expiatio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ignora DEF e DEFM"
+      }
+    ]
   },
   "0341" : {
-    "statusDescription" : "Aplicar Toxina"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aplicar Toxina"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus da Toxina"
+      },
+      {
+        "text" : "Ao atacar, chance de"
+      },
+      {
+        "text" : "aplicar a Toxina ativa."
+      },
+      {
+        "text" : "Mais dano corpo a corpo"
+      }
+    ]
   },
   "0342" : {
-    "statusDescription" : "Cicuta"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cicuta"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena SP continuamente."
+      },
+      {
+        "text" : "Cancela suas conjurações"
+      },
+      {
+        "text" : "ignorando itens como a Carta Fen"
+      }
+    ]
   },
   "0343" : {
-    "statusDescription" : "Curare"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Curare"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq e Esquiva reduzidas"
+      },
+      {
+        "text" : "Movimento reduzido"
+      }
+    ]
   },
   "0344" : {
-    "statusDescription" : "Beladona"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Beladona"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz o HP máx."
+      }
+    ]
   },
   "0345" : {
-    "statusDescription" : "Waraitake"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Waraitake"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena HP continuamente"
+      },
+      {
+        "text" : "Força a conjuração de"
+      },
+      {
+        "text" : "habilidades aleatórias"
+      }
+    ]
   },
   "0346" : {
-    "statusDescription" : "Squamata"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Squamata"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz a efetividade de cura"
+      }
+    ]
   },
   "0347" : {
-    "statusDescription" : "Pirexia"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pirexia"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cegueira."
+      },
+      {
+        "text" : "Dano contínuo."
+      }
+    ]
   },
   "0348" : {
-    "statusDescription" : "Oblivium"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Oblivium"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede o uso de habilidades"
+      }
+    ]
   },
   "0349" : {
-    "statusDescription" : "Vípera"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vípera"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena HP continuamente"
+      }
+    ]
   },
   "0351" : {
-    "statusDescription" : "Hipotermia"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Hipotermia"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Conjuração fixa aumentada"
+      },
+      {
+        "text" : "DEF, Vel.Atq e de movimento reduzidas"
+      }
+    ]
   },
   "0352" : {
-    "statusDescription" : "Disparo Selvagem"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Disparo Selvagem"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de ativar"
+      },
+      {
+        "text" : "disparos adicionais"
+      }
+    ]
   },
   "0354" : {
-    "statusDescription" : "Pântano de Niflheim"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Pântano de Niflheim"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "AGI, DES, DEF e DEFM reduzidas"
+      },
+      {
+        "text" : "Movimento e esquiva reduzidas"
+      }
+    ]
   },
   "0355" : {
-    "statusDescription" : "Maestria Arcana"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Maestria Arcana"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Causa o máximo de dano mágico"
+      },
+      {
+        "text" : "Custo de SP aumentado"
+      }
+    ]
   },
   "0356" : {
-    "statusDescription" : "Distorção Arcana"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Distorção Arcana"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode usar certas habilidades"
+      }
+    ]
   },
   "0357" : {
-    "statusDescription" : "Montaria em Worg"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Montaria em Worg"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento acelerado"
+      },
+      {
+        "text" : "Ataques apenas com"
+      },
+      {
+        "text" : "habilidades de Worg"
+      }
+    ]
   },
   "0361" : {
-    "statusDescription" : "Aceleração"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aceleração"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento acelerado"
+      }
+    ]
   },
   "0362" : {
-    "statusDescription" : "Planar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Planar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Evita armadilhas e magias de solo"
+      }
+    ]
   },
   "0368" : {
-    "statusDescription" : "Pergaminho Tao Gunka"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pergaminho Tao Gunka"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP máx. aumentado"
+      },
+      {
+        "text" : "DEF e DEFM reduzida"
+      }
+    ]
   },
   "0369" : {
-    "statusDescription" : "Pergaminho Abelha Rainha"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pergaminho Abelha Rainha"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Anula o consumo de gemas"
+      },
+      {
+        "text" : "Custo de SP aumentado"
+      }
+    ]
   },
   "0370" : {
-    "statusDescription" : "Pergaminhp Orc Herói"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pergaminhp Orc Herói"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imune a Atordoamento"
+      }
+    ]
   },
   "0371" : {
-    "statusDescription" : "Pergaminho Senhor dos Orcs"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pergaminho Senhor dos Orcs"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reflete danos físicos recebidos"
+      }
+    ]
   },
   "0373" : {
-    "statusDescription" : "Superaquecimento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Superaquecimento"
+      },
+      {
+        "text" : "Drena HP continuamente"
+      },
+      {
+        "text" : "Resfrie seu M.E.C.H.A"
+      }
+    ]
   },
   "0374" : {
-    "statusDescription" : "Reconfigurar Elemento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Reconfigurar Elemento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Armadura com Elemento"
+      }
+    ]
   },
   "0375" : {
-    "statusDescription" : "Sensor Infravermelho"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sensor Infravermelho"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Detectado."
+      },
+      {
+        "text" : "Esquiva reduzida."
+      }
+    ]
   },
   "0376" : {
-    "statusDescription" : "Campo Magnético"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Campo Magnético"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0377" : {
-    "statusDescription" : "Campo Protetor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Campo Protetor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF e DEFM aumentada"
+      },
+      {
+        "text" : "Bloqueia danos físicos a distância"
+      }
+    ]
   },
   "0379" : {
-    "statusDescription" : "Campo de Invisibilidade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Campo de Invisibilidade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Invisível"
+      },
+      {
+        "text" : "Movimento reduzido"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0381" : {
-    "statusDescription" : "Oportunidade de Manuk"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Oportunidade de Manuk"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico aumentado contra"
+      },
+      {
+        "text" : "monstros do campo em Manuka"
+      }
+    ]
   },
   "0382" : {
-    "statusDescription" : "Coragem de Manuk"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Coragem de Manuk"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência aos monstros"
+      },
+      {
+        "text" : "dos campos em Manuka"
+      }
+    ]
   },
   "0383" : {
-    "statusDescription" : "Geleia de Frutas de Pinguicula"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Geleia de Frutas de Pinguicula"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico contra monstros"
+      },
+      {
+        "text" : "nos campos de Esplendor"
+      }
+    ]
   },
   "0384" : {
-    "statusDescription" : "Geleia de Mel de Vagalume"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Geleia de Mel de Vagalume"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência aos monstros"
+      },
+      {
+        "text" : "nos campos de Esplendor"
+      }
+    ]
   },
   "0385" : {
-    "statusDescription" : "Mimetismo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mimetismo"
+      },
+      {
+        "text" : "Copia uma habilidade"
+      },
+      {
+        "text" : "da qual seja alvo"
+      }
+    ]
   },
   "0386" : {
-    "statusDescription" : "Fé de Manuk"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fé de Manuk"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano mágico aumentado"
+      },
+      {
+        "text" : "contra os monstros em Manuka"
+      }
+    ]
   },
   "0387" : {
-    "statusDescription" : "Lágrima de Cornus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lágrima de Cornus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico aumentado"
+      },
+      {
+        "text" : "contra monstros em Esplendor"
+      }
+    ]
   },
   "0388" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta FOR"
+      }
+    ]
   },
   "0389" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta INT"
+      }
+    ]
   },
   "0390" : {
-    "statusDescription" : "Reflexão Amplificada"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Reflexão Amplificada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de refletir parte do dano físico"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0391" : {
-    "statusDescription" : "Proteção da Vanguarda"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Proteção da Vanguarda"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF e HP máx. aumentados"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      },
+      {
+        "text" : "Chance de receber Pontos de Fúria"
+      }
+    ]
   },
   "0393" : {
-    "statusDescription" : "Desejo das Sombras"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Desejo das Sombras"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de autoconjurar magias"
+      },
+      {
+        "text" : "ao realizar ataques físicos"
+      }
+    ]
   },
   "0394" : {
-    "statusDescription" : "Vínculo Sombrio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vínculo Sombrio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Direciona ataques recebidos para o alvo"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0396" : {
-    "statusDescription" : "Aegis Domini"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aegis Domini"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Magia ativada pela DEF do escudo."
+      }
+    ]
   },
   "0397" : {
-    "statusDescription" : "Aegis Domini"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aegis Domini"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Magia ativada pela DEFM do escudo"
+      }
+    ]
   },
   "0398" : {
-    "statusDescription" : "Aegis Domini"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aegis Domini"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Magia ativada pelo Refino do escudo"
+      }
+    ]
   },
   "0399" : {
-    "statusDescription" : "Borrifar Tinta"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Borrifar Tinta"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Exibe invisíveis"
+      },
+      {
+        "text" : "Chance de Cegueira"
+      },
+      {
+        "text" : "e de reduzir Vel.Atq"
+      }
+    ]
   },
   "0400" : {
-    "statusDescription" : "Exceder Limite"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Exceder Limite"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Causa maior dano no próximo ataque físico"
+      }
+    ]
   },
   "0401" : {
-    "statusDescription" : "Adoramus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Adoramus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "AGI e movimento reduzidos"
+      }
+    ]
   },
   "0402" : {
-    "statusDescription" : "Prestigio Divino"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Prestigio Divino"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF aumentada"
+      },
+      {
+        "text" : "Chance de bloquear ataques mágicos de alvo único"
+      }
+    ]
   },
   "0403" : {
-    "statusDescription" : "Forma Etérea"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Forma Etérea"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Invisível"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      },
+      {
+        "text" : "Ataques de propriedade Fantasma"
+      },
+      {
+        "text" : "Não pode usar itens e habilidades"
+      }
+    ]
   },
   "0404" : {
-    "statusDescription" : "Pestilência"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pestilência"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de infligir o"
+      },
+      {
+        "text" : "efeito negativo atual"
+      },
+      {
+        "text" : "ao atacar ou receber dano"
+      }
+    ]
   },
   "0405" : {
-    "statusDescription" : "Formação Real"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Formação Real"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e DEF aumentados"
+      }
+    ]
   },
   "0407" : {
-    "statusDescription" : "Consagração"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Consagração"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Precisão aumentada"
+      },
+      {
+        "text" : "ATQ e HP máx. aumentados"
+      },
+      {
+        "text" : "Todos os atributos aumentados"
+      },
+      {
+        "text" : "Imune a efeitos negativos"
+      },
+      {
+        "text" : "Drena HP e SP continuamente"
+      }
+    ]
   },
   "0408" : {
-    "statusDescription" : "Máscara da Fraqueza"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Máscara da Fraqueza"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ reduzido"
+      },
+      {
+        "text" : "Esferas Espirituais removidas"
+      }
+    ]
   },
   "0409" : {
-    "statusDescription" : "Máscara da Melancolia"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Máscara da Melancolia"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Precisão reduzida"
+      },
+      {
+        "text" : "Vel.Atq reduzida"
+      },
+      {
+        "text" : "Montaria, Ave, Homunculus e Mascotes retirados"
+      }
+    ]
   },
   "0410" : {
-    "statusDescription" : "Dragão Ascendente"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Dragão Ascendente"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Estado de Fúria"
+      },
+      {
+        "text" : "HP e SP máx. aumentado"
+      },
+      {
+        "text" : "Num. de Esferas aumentadas"
+      },
+      {
+        "text" : "Drena HP continuamente"
+      }
+    ]
   },
   "0411" : {
-    "statusDescription" : "Máscara da Tolice"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Máscara da Tolice"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dreno de SP"
+      },
+      {
+        "text" : "Impede o uso de habilidades"
+      }
+    ]
   },
   "0412" : {
-    "statusDescription" : "Máscara da Ociosidade"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Máscara da Ociosidade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva reduzida"
+      },
+      {
+        "text" : "Custo de SP aumentado"
+      },
+      {
+        "text" : "Conjuração variável aumentada"
+      }
+    ]
   },
   "0413" : {
-    "statusDescription" : "Salto Relâmpago"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Salto Relâmpago"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de anular danos"
+      },
+      {
+        "text" : "físicos a distância"
+      },
+      {
+        "text" : "se aproximando do alvo"
+      }
+    ]
   },
   "0414" : {
-    "statusDescription" : "Acarajé"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Acarajé"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Precisão aumentada"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0415" : {
-    "statusDescription" : "Máscara do Infortúnio"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Máscara do Infortúnio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "CRIT reduzido"
+      },
+      {
+        "text" : "Esquiva Perfeita reduzida"
+      },
+      {
+        "text" : "Recebe um efeito negativo"
+      },
+      {
+        "text" : "Gasta zeny ao usar habilidades"
+      }
+    ]
   },
   "0417" : {
-    "statusDescription" : "Campo Amaldiçoado"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Campo Amaldiçoado"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode andar, atacar e usar habilidades"
+      }
+    ]
   },
   "0418" : {
-    "statusDescription" : "Máscara da Vulnerabilidade"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Máscara da Vulnerabilidade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP máx. reduzido."
+      },
+      {
+        "text" : "Arma e Escudo removidos"
+      },
+      {
+        "text" : "e não podem ser reequipados"
+      }
+    ]
   },
   "0419" : {
-    "statusDescription" : "Cotovelada Ascendente"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cotovelada Ascendente"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de refletir dano físico"
+      },
+      {
+        "text" : "Empurra o atacante para trás"
+      }
+    ]
   },
   "0421" : {
-    "statusDescription" : "Remover Acessório"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Remover Acessório"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acessório removido e não pode ser reequipado"
+      }
+    ]
   },
   "0423" : {
-    "statusDescription" : "Biscoito da Papisa"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Biscoito da Papisa"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico e mágico aumentado"
+      },
+      {
+        "text" : "Resistência a todas as propriedades"
+      }
+    ]
   },
   "0425" : {
-    "statusDescription" : "Chakra da Energia"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chakra da Energia"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ao atacar, chance de"
+      },
+      {
+        "text" : "ganhar Esfera Espiritual."
+      },
+      {
+        "text" : "Dano de Último Dragão,"
+      },
+      {
+        "text" : "Combo Esmagador"
+      },
+      {
+        "text" : "e Punho do Tigre +50%."
+      }
+    ]
   },
   "0426" : {
-    "statusDescription" : "Chakra da Fúria"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chakra da Fúria"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ e Vel.Atq"
+      },
+      {
+        "text" : "Dano de Pancada Corporal"
+      },
+      {
+        "text" : "e Explosão Espiritual"
+      }
+    ]
   },
   "0427" : {
-    "statusDescription" : "Chakra do Vigor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chakra do Vigor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de HP e DEF"
+      },
+      {
+        "text" : "Dano de Garra de Tigre"
+      },
+      {
+        "text" : "e Portões do Inferno"
+      }
+    ]
   },
   "0429" : {
-    "statusDescription" : "Ritmo Contagiante"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ritmo Contagiante"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta Vel.Atq e"
+      },
+      {
+        "text" : "movimento. Reduz"
+      },
+      {
+        "text" : "a conjuração fixa"
+      }
+    ]
   },
   "0430" : {
-    "statusDescription" : "Balada Sinfônica"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Balada Sinfônica"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEFM aumentada"
+      }
+    ]
   },
   "0435" : {
-    "statusDescription" : "Sono Profundo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sono Profundo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe mais dano"
+      },
+      {
+        "text" : "Impossível conversar"
+      }
+    ]
   },
   "0436" : {
-    "statusDescription" : "Sibilo de Eir"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sibilo de Eir"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera a regen."
+      },
+      {
+        "text" : "natural de HP"
+      }
+    ]
   },
   "0437" : {
-    "statusDescription" : "Cristalização"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Cristalização"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena HP e SP continuamente"
+      },
+      {
+        "text" : "Não pode andar, atacar e usar itens"
+      }
+    ]
   },
   "0438" : {
-    "statusDescription" : "Ode a Hela"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ode a Hela"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta Custo de SP"
+      },
+      {
+        "text" : "e a Conjuração Fixa."
+      },
+      {
+        "text" : "Reduz Esquiva e a"
+      },
+      {
+        "text" : "Velocidade de ataque."
+      }
+    ]
   },
   "0439" : {
-    "statusDescription" : "Canção de Alfheim"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Canção de Alfheim"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera a regen."
+      },
+      {
+        "text" : "natural de SP"
+      }
+    ]
   },
   "0441" : {
-    "statusDescription" : "Dança com Lobos"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Dança com Lobos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz Conj. fixa e"
+      },
+      {
+        "text" : "aumenta o dano"
+      },
+      {
+        "text" : "físico a distância"
+      }
+    ]
   },
   "0442" : {
-    "statusDescription" : "Sinfonia dos Ventos"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sinfonia dos Ventos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o ATQ"
+      },
+      {
+        "text" : "e o movimento"
+      }
+    ]
   },
   "0443" : {
-    "statusDescription" : "Canção de Balder"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Canção de Balder"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF aumentada"
+      }
+    ]
   },
   "0444" : {
-    "statusDescription" : "Harmonizar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Harmonizar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de atributos alterados"
+      }
+    ]
   },
   "0445" : {
-    "statusDescription" : "Encanto de Órion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Encanto de Órion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "CRIT e ATQ aumentados"
+      }
+    ]
   },
   "0446" : {
-    "statusDescription" : "Aquecer Terreno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aquecer Terreno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impede congelamento"
+      },
+      {
+        "text" : "Cancela efeitos de frio"
+      },
+      {
+        "text" : "Recupera HP a cada 3 seg."
+      }
+    ]
   },
   "0447" : {
-    "statusDescription" : "Serenata ao Luar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Serenata ao Luar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQM aumentado"
+      }
+    ]
   },
   "0448" : {
-    "statusDescription" : "Loucura"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Loucura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode usar itens"
+      },
+      {
+        "text" : "Reduz Esquiva e Precisão"
+      },
+      {
+        "text" : "Drena 1% de HP e SP por seg."
+      }
+    ]
   },
   "0450" : {
-    "statusDescription" : "Analisar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Analisar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF e DEFM reduzida"
+      }
+    ]
   },
   "0451" : {
-    "statusDescription" : "Orvalho de Idun"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Orvalho de Idun"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP máx. aumentado"
+      }
+    ]
   },
   "0452" : {
-    "statusDescription" : "Cântico da Iluminação"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cântico da Iluminação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz INT e drena"
+      },
+      {
+        "text" : "SP continuamente"
+      }
+    ]
   },
   "0453" : {
-    "statusDescription" : "Clamor de Batalha"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Clamor de Batalha"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP e FOR reduzidos"
+      }
+    ]
   },
   "0454" : {
-    "statusDescription" : "Murmúrio Perene"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Murmúrio Perene"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano mágico"
+      },
+      {
+        "text" : "de todas as propriedades"
+      }
+    ]
   },
   "0461" : {
-    "statusDescription" : "Propulsão do Carrinho"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Propulsão do Carrinho"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento acelerado"
+      }
+    ]
   },
   "0463" : {
-    "statusDescription" : "Armadilha de Espinhos"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Armadilha de Espinhos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imobiliza e causa dano contínuo"
+      }
+    ]
   },
   "0470" : {
-    "statusDescription" : "Grito da Mandrágora"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Grito da Mandrágora"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "INT reduzida"
+      },
+      {
+        "text" : "Conjuração fixa aumentada"
+      }
+    ]
   },
   "0472" : {
-    "statusDescription" : "Sacramentum"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sacramentum"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Conjuração fixa reduzida"
+      }
+    ]
   },
   "0473" : {
-    "statusDescription" : "Assumptio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Assumptio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cura recebida e"
+      },
+      {
+        "text" : "DEF aumentadas"
+      }
+    ]
   },
   "0476" : {
-    "statusDescription" : "Dor de Barriga"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Dor de Barriga"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Todos os atributos reduzidos"
+      },
+      {
+        "text" : "Movimento reduzido"
+      },
+      {
+        "text" : "Força a sentar a cada 10 segundos"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0480" : {
-    "statusDescription" : "Poção de HP"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção de HP"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP máx. aumentado"
+      }
+    ]
   },
   "0481" : {
-    "statusDescription" : "Poção de SP"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção de SP"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SP máx. aumentado"
+      }
+    ]
   },
   "0482" : {
-    "statusDescription" : "Poção Branca Especial"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Branca Especial"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera a regen. natural de HP"
+      }
+    ]
   },
   "0483" : {
-    "statusDescription" : "Poção Vitata 500"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Vitata 500"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SP máx. aumentado"
+      },
+      {
+        "text" : "Acelera a regen. natural de SP"
+      }
+    ]
   },
   "0484" : {
-    "statusDescription" : "Suco Celular Enriquecido"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Suco Celular Enriquecido"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0490" : {
-    "statusDescription" : "Tornado"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Tornado"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel"
+      },
+      {
+        "text" : "Puxa alvos para a área"
+      }
+    ]
   },
   "0491" : {
-    "statusDescription" : "Churrasco de Selvagem"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Churrasco de Selvagem"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta FOR"
+      }
+    ]
   },
   "0492" : {
-    "statusDescription" : "Coquetel Uivante"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Coquetel Uivante"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta INT"
+      }
+    ]
   },
   "0493" : {
-    "statusDescription" : "Carne ao Vinho"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carne ao Vinho"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta VIT"
+      }
+    ]
   },
   "0494" : {
-    "statusDescription" : "Chá Gelado de Siroma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chá Gelado de Siroma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta DES"
+      }
+    ]
   },
   "0495" : {
-    "statusDescription" : "Cozido de Drosera"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cozido de Drosera"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta AGI"
+      }
+    ]
   },
   "0496" : {
-    "statusDescription" : "Macarrão com Petite"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Macarrão com Petite"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta SOR"
+      }
+    ]
   },
   "0534" : {
-    "statusDescription" : "Elemental: Modo de espera"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Elemental: Modo de espera"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : ""
+      }
+    ]
   },
   "0535" : {
-    "statusDescription" : "Elemental: modo passivo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Elemental: modo passivo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : ""
+      }
+    ]
   },
   "0536" : {
-    "statusDescription" : "Elemental: modo defensivo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Elemental: modo defensivo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : ""
+      }
+    ]
   },
   "0537" : {
-    "statusDescription" : "Elemental: modo ofensivo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Elemental: modo ofensivo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : ""
+      }
+    ]
   },
   "0573" : {
-    "statusDescription" : "Fruto de Mora"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fruto de Mora"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência ao monstros"
+      },
+      {
+        "text" : "dos campos de Mora"
+      }
+    ]
   },
   "0577" : {
-    "statusDescription" : "Analgésico"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Analgésico"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Evita reagir a ataques"
+      },
+      {
+        "text" : "Resistência a danos"
+      },
+      {
+        "text" : "Vel.Atq reduzida"
+      }
+    ]
   },
   "0578" : {
-    "statusDescription" : "Poção Maior de Vida"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Maior de Vida"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera HP continuamente"
+      },
+      {
+        "text" : "Não funciona com Frenesi"
+      }
+    ]
   },
   "0579" : {
-    "statusDescription" : "Poção Energizante"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Energizante"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico e mágico aumentados"
+      },
+      {
+        "text" : "Efetividade de cura aumentada"
+      }
+    ]
   },
   "0580" : {
-    "statusDescription" : "Luz da Criação"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Luz da Criação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Sacrifica a lealdade"
+      },
+      {
+        "text" : "para ressuscitar"
+      }
+    ]
   },
   "0581" : {
-    "statusDescription" : "Esquiva Especial"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Esquiva Especial"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva aumentada"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0583" : {
-    "statusDescription" : "Poder de Odin"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poder de Odin"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e ATQM aumentados"
+      },
+      {
+        "text" : "DEF e DEFM reduzidos"
+      }
+    ]
   },
   "0584" : {
-    "statusDescription" : "Modo Lutador"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Modo Lutador"
+      },
+      {
+        "text" : "Modo de luta de Eleanor"
+      }
+    ]
   },
   "0605" : {
-    "statusDescription" : "Fluxo de Magma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fluxo de Magma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de espalhar magma"
+      },
+      {
+        "text" : "ao receber dano"
+      }
+    ]
   },
   "0606" : {
-    "statusDescription" : "Armadura de Granito"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Armadura de Granito"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência a danos"
+      },
+      {
+        "text" : "Drena HP após o término"
+      }
+    ]
   },
   "0607" : {
-    "statusDescription" : "Tremor de Fogo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Tremor de Fogo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ aumentado"
+      },
+      {
+        "text" : "Arma encantada com propriedade Fogo"
+      },
+      {
+        "text" : "Chance de autoconjurar Martelo de Thor"
+      }
+    ]
   },
   "0608" : {
-    "statusDescription" : "Cinzas Vulcânicas"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Cinzas Vulcânicas"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Precisão reduzida"
+      },
+      {
+        "text" : "Chance da conjuração falhar"
+      },
+      {
+        "text" : "Reduz resistência a propriedade Fogo"
+      }
+    ]
   },
   "0611" : {
-    "statusDescription" : "Doce Mágico"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Doce Mágico"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQM aumentado"
+      },
+      {
+        "text" : "Conjuração fixa reduzida"
+      },
+      {
+        "text" : "Conjuração não pode ser interrompida"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0613" : {
-    "statusDescription" : "Montaria"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Montaria"
+      }
+    ]
   },
   "0615" : {
-    "statusDescription" : "Utilizando Macro"
+    "statusDescription" : [
+      {
+        "text" : "Utilizando Macro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Utilizando Macro"
+      }
+    ]
   },
   "0616" : {
-    "statusDescription" : "Tempo de espera de uso de Macro"
+    "statusDescription" : [
+      {
+        "text" : "Tempo de espera de uso de Macro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Impossibilitado de usar Macro"
+      }
+    ]
   },
   "0618" : {
-    "statusDescription" : "Comida de Gato"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Comida de Gato"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a EXP de Base e Classe"
+      },
+      {
+        "text" : "Aumenta a chance de derrubar itens"
+      },
+      {
+        "text" : "Acumula com outros itens semelhantes"
+      }
+    ]
   },
   "0620" : {
-    "statusDescription" : "Golpe Titânico"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Golpe Titânico"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Causa maior dano no próximo ataque físico"
+      }
+    ]
   },
   "0621" : {
-    "statusDescription" : "Disface"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Disface"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Forma alterada para um monstro"
+      }
+    ]
   },
   "0622" : {
-    "statusDescription" : "Sentar"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Sentar"
+      }
+    ]
   },
   "0632" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Conjuração variável reduzida"
+      }
+    ]
   },
   "0633" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Vel.Atq"
+      }
+    ]
   },
   "0634" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      }
+    ]
   },
   "0635" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQM"
+      }
+    ]
   },
   "0636" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de EXP de Classe"
+      }
+    ]
   },
   "0637" : {
-    "statusDescription" : "Irrecuperável"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Irrecuperável"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode recuperar HP e SP"
+      }
+    ]
   },
   "0638" : {
-    "statusDescription" : "DEF zero"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "DEF zero"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF reduzida a 1"
+      }
+    ]
   },
   "0639" : {
-    "statusDescription" : "DEFM zero"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "DEFM zero"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEFM reduzida a 1"
+      }
+    ]
   },
   "0640" : {
-    "statusDescription" : "DEF zero"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "DEF zero"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF reduzida"
+      }
+    ]
   },
   "0641" : {
-    "statusDescription" : "DEFM zero"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "DEFM zero"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEFM reduzida"
+      }
+    ]
   },
   "0646" : {
-    "statusDescription" : "Purificação da Alma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Purificação da Alma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel"
+      },
+      {
+        "text" : "Recupera HP"
+      },
+      {
+        "text" : "Recupera SP"
+      },
+      {
+        "text" : "Chance de não receber dano"
+      }
+    ]
   },
   "0647" : {
-    "statusDescription" : "Poção de Ouro"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção de Ouro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      }
+    ]
   },
   "0650" : {
-    "statusDescription" : "Fogo de Artifício"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fogo de Artifício"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Todos atributos +3"
+      },
+      {
+        "text" : "ATQ, ATQM + 5%"
+      }
+    ]
   },
   "0652" : {
-    "statusDescription" : "Inspiração"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Inspiração"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQM aumentado"
+      },
+      {
+        "text" : "Conjuração fixa removida"
+      },
+      {
+        "text" : "Conjuração variável reduzida"
+      },
+      {
+        "text" : "Drena SP continuamente"
+      }
+    ]
   },
   "0654" : {
-    "statusDescription" : "Esmagamento Sombrio"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Esmagamento Sombrio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel"
+      },
+      {
+        "text" : "Invisibilidade cancelada"
+      },
+      {
+        "text" : "Não pode usar habilidades"
+      }
+    ]
   },
   "0655" : {
-    "statusDescription" : "Vazio das Sombras"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Vazio das Sombras"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Anula efeitos de"
+      },
+      {
+        "text" : "reflexão de dano"
+      }
+    ]
   },
   "0656" : {
-    "statusDescription" : "Contrato das Sombras"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Contrato das Sombras"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ativa Ataque Duplo."
+      },
+      {
+        "text" : "Drena SP por seg."
+      },
+      {
+        "text" : "Bônus de dano em"
+      },
+      {
+        "text" : "certas habilidades."
+      }
+    ]
   },
   "0657" : {
-    "statusDescription" : "Distorção Crescente"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Distorção Crescente"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e ATQM alterado"
+      }
+    ]
   },
   "0658" : {
-    "statusDescription" : "Amuleto do Espírito"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Amuleto do Espírito"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico e mágico"
+      },
+      {
+        "text" : "contra a raça Demônio"
+      }
+    ]
   },
   "0659" : {
-    "statusDescription" : "Ilusão do Luar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ilusão do Luar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP e SP alterados"
+      },
+      {
+        "text" : "Danos mágicos serão"
+      },
+      {
+        "text" : "refletidos em área"
+      }
+    ]
   },
   "0660" : {
-    "statusDescription" : "Luar Sinistro"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Luar Sinistro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe dano ao recuperar HP por habilidades"
+      }
+    ]
   },
   "0662" : {
-    "statusDescription" : "Pílula de Combate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pílula de Combate"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e ATQM aumentados"
+      },
+      {
+        "text" : "HP e SP máx. reduzidos"
+      }
+    ]
   },
   "0663" : {
-    "statusDescription" : "Grande Pílula de Combate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Grande Pílula de Combate"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ, ATQM aumentados"
+      },
+      {
+        "text" : "HP e SP máx. reduzidos"
+      }
+    ]
   },
   "0664" : {
-    "statusDescription" : "Elixir Rubro"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Elixir Rubro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e ATQM aumentado"
+      },
+      {
+        "text" : "Vel.Atq aumentada"
+      },
+      {
+        "text" : "Conjuração variável reduzida"
+      },
+      {
+        "text" : "Autoconjura 'Concentração'"
+      },
+      {
+        "text" : "ao realizar ataques físicos"
+      }
+    ]
   },
   "0666" : {
-    "statusDescription" : "Pó Místico"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pó Místico"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva e SOR aumentadas"
+      }
+    ]
   },
   "0670" : {
-    "statusDescription" : "Água Milagrosa"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Água Milagrosa"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera HP continuamente"
+      }
+    ]
   },
   "0675" : {
-    "statusDescription" : "Ç³¼ºÇÑ ²É°¡Áö"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ç³¼ºÇÑ ²É°¡Áö"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Flee Áõ°¡"
+      },
+      {
+        "text" : "¿ÏÀüÈ¸ÇÇ Áõ°¡"
+      }
+    ]
   },
   "0676" : {
-    "statusDescription" : "Luz Protetora"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Luz Protetora"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a"
+      },
+      {
+        "text" : "certos efeitos negativos"
+      }
+    ]
   },
   "0677" : {
-    "statusDescription" : "Ataque Temporal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ataque Temporal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano físico e mágico contra os servos de Himelmez"
+      }
+    ]
   },
   "0678" : {
-    "statusDescription" : "Defesa Temporal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Defesa Temporal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência contra os servos de Himelmez"
+      }
+    ]
   },
   "0679" : {
-    "statusDescription" : "Cura Temporal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cura Temporal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a efetividade de cura e"
+      },
+      {
+        "text" : "a recuperação de HP por itens"
+      }
+    ]
   },
   "0680" : {
-    "statusDescription" : "Escudo Temporal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Escudo Temporal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência contra os escudos de Amdarais"
+      }
+    ]
   },
   "0681" : {
-    "statusDescription" : "Estado Temporal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Estado Temporal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Todos os atributos +20"
+      }
+    ]
   },
   "0682" : {
-    "statusDescription" : "Poder Temporal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poder Temporal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a DEF e DEFM"
+      }
+    ]
   },
   "0683" : {
-    "statusDescription" : "Energia Temporal"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Energia Temporal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o HP e SP"
+      }
+    ]
   },
   "0685" : {
-    "statusDescription" : "Bolinho Divino"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bolinho Divino"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Atributos, ATQ e ATQM aumentados"
+      }
+    ]
   },
   "0686" : {
-    "statusDescription" : "Sangue de Gigante"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sangue de Gigante"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano físico e mágico contra personagens"
+      }
+    ]
   },
   "0687" : {
-    "statusDescription" : "Núcleo Golem"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Núcleo Golem"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a personagens"
+      }
+    ]
   },
   "0688" : {
-    "statusDescription" : "Fada da Estrela"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fada da Estrela"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a Atordoamento"
+      }
+    ]
   },
   "0689" : {
-    "statusDescription" : "Fada da Pedra"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fada da Pedra"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a Petrificação"
+      }
+    ]
   },
   "0690" : {
-    "statusDescription" : "Fada do Gelo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fada do Gelo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a Congelamento"
+      }
+    ]
   },
   "0691" : {
-    "statusDescription" : "Fada do Sonho"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fada do Sonho"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a Sono"
+      }
+    ]
   },
   "0692" : {
-    "statusDescription" : "Fada da Sorte"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fada da Sorte"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a Maldição"
+      }
+    ]
   },
   "0693" : {
-    "statusDescription" : "Fada da Música"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fada da Música"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a Silêncio"
+      }
+    ]
   },
   "0694" : {
-    "statusDescription" : "Fada da Luz"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fada da Luz"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Garante imunidade a Cegueira"
+      }
+    ]
   },
   "0697" : {
-    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â"
+    "statusDescription" : [
+      {
+        "text" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â"
+      },
+      {
+        "text" : "¹°¸®µ¥¹ÌÁö Ãß°¡"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0698" : {
-    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â"
+    "statusDescription" : [
+      {
+        "text" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â"
+      },
+      {
+        "text" : "¸¶¹ýµ¥¹ÌÁö Ãß°¡"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0699" : {
-    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­"
+    "statusDescription" : [
+      {
+        "text" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­"
+      },
+      {
+        "text" : "¹Þ´Â µ¥¹ÌÁö °¨¼Ò"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0700" : {
-    "statusDescription" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­"
+    "statusDescription" : [
+      {
+        "text" : "¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­"
+      },
+      {
+        "text" : "¾ò´Â °æÇèÄ¡ Áõ°¡"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0702" : {
-    "statusDescription" : "Bênção da Lydia"
+    "statusDescription" : [
+      {
+        "text" : "Bênção da Lydia"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano físico contra Humanoides"
+      }
+    ]
   },
   "0703" : {
-    "statusDescription" : "Bênção da Fenrir"
+    "statusDescription" : [
+      {
+        "text" : "Bênção da Fenrir"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano mágico contra Humanoides"
+      }
+    ]
   },
   "0704" : {
-    "statusDescription" : "Bênção de Chaos"
+    "statusDescription" : [
+      {
+        "text" : "Bênção de Chaos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência contra Humanoides"
+      }
+    ]
   },
   "0705" : {
-    "statusDescription" : "Bênção de Reno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bênção de Reno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e ATQM aumentados"
+      }
+    ]
   },
   "0706" : {
-    "statusDescription" : "Bênção de Reno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bênção de Reno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e ATQM aumentados"
+      }
+    ]
   },
   "0707" : {
-    "statusDescription" : "Bênção de Reno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bênção de Reno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e ATQM aumentados"
+      }
+    ]
   },
   "0711" : {
-    "statusDescription" : "Poder da Fenrir"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poder da Fenrir"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQM aumentado"
+      },
+      {
+        "text" : "Conjuração fixa reduzida"
+      }
+    ]
   },
   "0715" : {
-    "statusDescription" : "Canção de Frigga"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Canção de Frigga"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP máx. aumentado"
+      },
+      {
+        "text" : "Recupera HP continuamente"
+      }
+    ]
   },
   "0716" : {
-    "statusDescription" : "Offertorium"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Offertorium"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Custo de SP aumentado"
+      },
+      {
+        "text" : "Aumenta a efetividade de cura"
+      }
+    ]
   },
   "0717" : {
-    "statusDescription" : "Telecinesia"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Telecinesia"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Custo de SP reduzido"
+      },
+      {
+        "text" : "Dano mágico fantasma aumentado"
+      },
+      {
+        "text" : "Conjuração variável reduzida"
+      }
+    ]
   },
   "0720" : {
-    "statusDescription" : "Poder Máximo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poder Máximo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento acelerado"
+      },
+      {
+        "text" : "Todos os atributos aumentados"
+      }
+    ]
   },
   "0721" : {
-    "statusDescription" : "Fadiga"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Fadiga"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento reduzido"
+      },
+      {
+        "text" : "Desabilita a regen. natural de HP e SP"
+      }
+    ]
   },
   "0722" : {
-    "statusDescription" : "Ilimitar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ilimitar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF e DEFM reduzidas"
+      },
+      {
+        "text" : "Aumenta o dano físico a distância"
+      }
+    ]
   },
   "0723" : {
-    "statusDescription" : "Graça Real"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Graça Real"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel"
+      },
+      {
+        "text" : "Imune a ataques"
+      },
+      {
+        "text" : "Imune a efeitos negativos"
+      }
+    ]
   },
   "0730" : {
-    "statusDescription" : "Garra Sombria"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Garra Sombria"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Desativa os efeitos"
+      },
+      {
+        "text" : "de reflexão física"
+      },
+      {
+        "text" : "Mais dano corpo a corpo"
+      }
+    ]
   },
   "0736" : {
-    "statusDescription" : "Frio"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Frio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imune a Queimadura"
+      }
+    ]
   },
   "0737" : {
-    "statusDescription" : "Queimadura"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Queimadura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência a propriedade Fogo"
+      },
+      {
+        "text" : "Resistência a monstros de Fogo"
+      },
+      {
+        "text" : "Recebe dano físico de"
+      },
+      {
+        "text" : "propriedade fogo"
+      }
+    ]
   },
   "0752" : {
-    "statusDescription" : "Armadilha Aderente"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Armadilha Aderente"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movimento reduzido"
+      }
+    ]
   },
   "0753" : {
-    "statusDescription" : "Reação Ilimitada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Reação Ilimitada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de ativar Reação em Cadeia"
+      }
+    ]
   },
   "0755" : {
-    "statusDescription" : "Marcação"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Marcação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva reduzida"
+      }
+    ]
   },
   "0756" : {
-    "statusDescription" : "Granada"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Granada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Artefato explosivo"
+      }
+    ]
   },
   "0758" : {
-    "statusDescription" : "Proteção Platina"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Proteção Platina"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ aumentado"
+      }
+    ]
   },
   "0759" : {
-    "statusDescription" : "Furor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Furor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ e velocidade"
+      },
+      {
+        "text" : "de ataque aumentados"
+      },
+      {
+        "text" : "Precisão e Conjuração"
+      },
+      {
+        "text" : "Fixa reduzidas"
+      }
+    ]
   },
   "0760" : {
-    "statusDescription" : "Anti-matéria"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Anti-matéria"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz resistência a raça Humanoide"
+      }
+    ]
   },
   "0762" : {
-    "statusDescription" : "Espada Escarlate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Espada Escarlate"
+      },
+      {
+        "text" : "FOR +1, VIT +1"
+      },
+      {
+        "text" : "HP +30, SP +10"
+      }
+    ]
   },
   "0763" : {
-    "statusDescription" : "Cajado Celeste"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cajado Celeste"
+      },
+      {
+        "text" : "INT +1, DES +1"
+      },
+      {
+        "text" : "HP +30, SP +10"
+      }
+    ]
   },
   "0764" : {
-    "statusDescription" : "Maça Dourada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Maça Dourada"
+      },
+      {
+        "text" : "SOR +1, INT +1"
+      },
+      {
+        "text" : "HP +30, SP +10"
+      }
+    ]
   },
   "0765" : {
-    "statusDescription" : "Balestra Esmeralda"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Balestra Esmeralda"
+      },
+      {
+        "text" : "DES +1, AGI +1"
+      },
+      {
+        "text" : "HP +30, SP +10"
+      }
+    ]
   },
   "0766" : {
-    "statusDescription" : "Carta para KDY"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para KDY"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ +33"
+      }
+    ]
   },
   "0767" : {
-    "statusDescription" : "Carta para KJH"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para KJH"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQM +33"
+      }
+    ]
   },
   "0768" : {
-    "statusDescription" : "Carta para LMH"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para LMH"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP máx. +3%"
+      }
+    ]
   },
   "0769" : {
-    "statusDescription" : "Carta para LMS"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para LMS"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SP máx. +3%"
+      }
+    ]
   },
   "0770" : {
-    "statusDescription" : "Carta para CHJ"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para CHJ"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva +33"
+      }
+    ]
   },
   "0771" : {
-    "statusDescription" : "Carta para KJK"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para KJK"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq +3"
+      }
+    ]
   },
   "0772" : {
-    "statusDescription" : "Carta para MISA"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para MISA"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF +33"
+      }
+    ]
   },
   "0773" : {
-    "statusDescription" : "Carta para YAOB"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para YAOB"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEFM +33"
+      }
+    ]
   },
   "0774" : {
-    "statusDescription" : "Carta para LEONA"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para LEONA"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "CRIT +33"
+      }
+    ]
   },
   "0775" : {
-    "statusDescription" : "Carta para BIBIC"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Carta para BIBIC"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Precisão +33"
+      }
+    ]
   },
   "0776" : {
-    "statusDescription" : "Morto-Vivo!"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Morto-Vivo!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SP máx. -50%"
+      },
+      {
+        "text" : "Propriedade Maldito"
+      }
+    ]
   },
   "0778" : {
-    "statusDescription" : "Efeito negativo"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Efeito negativo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode usar item"
+      },
+      {
+        "text" : "Não pode usar habilidade"
+      },
+      {
+        "text" : "Não pode atacar"
+      }
+    ]
   },
   "0783" : {
-    "statusDescription" : "Costelinha Grelhada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Costelinha Grelhada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz conj. var."
+      },
+      {
+        "text" : "e Custo de SP."
+      }
+    ]
   },
   "0784" : {
-    "statusDescription" : "Costela Refogada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Costela Refogada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Vel.Atq."
+      },
+      {
+        "text" : "Reduz Custo de SP."
+      }
+    ]
   },
   "0867" : {
-    "statusDescription" : "Poção Ilimitada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Ilimitada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ e ATQM."
+      },
+      {
+        "text" : "Precisão e Esquiva."
+      },
+      {
+        "text" : "Vel.Atq."
+      },
+      {
+        "text" : "Custo de SP reduzido."
+      },
+      {
+        "text" : "Conjuração fixa menor."
+      }
+    ]
   },
   "0873" : {
-    "statusDescription" : "Poção Sagrada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Sagrada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistência a imortais +10%"
+      }
+    ]
   },
   "0875" : {
-    "statusDescription" : "Petrificação"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Petrificação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena HP continuamente"
+      },
+      {
+        "text" : "Não pode andar, atacar e usar habilidades"
+      }
+    ]
   },
   "0876" : {
-    "statusDescription" : "Congelamento"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Congelamento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF e DEFM reduzidas"
+      },
+      {
+        "text" : "Não pode andar, atacar e usar habilidades"
+      }
+    ]
   },
   "0877" : {
-    "statusDescription" : "Atordoamento"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Atordoamento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode andar, atacar e usar habilidades"
+      }
+    ]
   },
   "0878" : {
-    "statusDescription" : "Sono"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Sono"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance de receber danos críticos"
+      },
+      {
+        "text" : "Não pode andar, atacar e usar habilidades"
+      }
+    ]
   },
   "0880" : {
-    "statusDescription" : "Petrificação"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Petrificação"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0881" : {
-    "statusDescription" : "Incêndio"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Incêndio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEFM reduzida"
+      },
+      {
+        "text" : "Recebe dano continuamente"
+      }
+    ]
   },
   "0882" : {
-    "statusDescription" : "Exílio"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Exílio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode andar, atacar e usar habilidades"
+      }
+    ]
   },
   "0883" : {
-    "statusDescription" : "Envenenamento"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Envenenamento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Visão ruim"
+      },
+      {
+        "text" : "DEF reduzida"
+      },
+      {
+        "text" : "Drena HP continuamente"
+      }
+    ]
   },
   "0884" : {
-    "statusDescription" : "Maldição"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Maldição"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "SOR reduzida"
+      },
+      {
+        "text" : "Movimento reduzido."
+      }
+    ]
   },
   "0885" : {
-    "statusDescription" : "Silêncio"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Silêncio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode usar habilidades"
+      }
+    ]
   },
   "0886" : {
-    "statusDescription" : "Caos"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Caos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Anda em direções aleatórias"
+      }
+    ]
   },
   "0890" : {
-    "statusDescription" : "Envenenamento Mortal"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Envenenamento Mortal"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena HP continuamente"
+      }
+    ]
   },
   "0891" : {
-    "statusDescription" : "Medo"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Medo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel"
+      },
+      {
+        "text" : "Esquiva e Precisão reduzidas"
+      }
+    ]
   },
   "0893" : {
-    "statusDescription" : "Quatro Patas"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Quatro Patas"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz o dano recebido."
+      }
+    ]
   },
   "0894" : {
-    "statusDescription" : "Pulverizar"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Pulverizar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Desacelera."
+      },
+      {
+        "text" : "Reduz ATQ e ATQM."
+      },
+      {
+        "text" : "Aumenta regen. de HP e SP."
+      }
+    ]
   },
   "0896" : {
-    "statusDescription" : "Hera Venenosa"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Hera Venenosa"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Imóvel."
+      },
+      {
+        "text" : "Recebe 100 de dano"
+      },
+      {
+        "text" : "fixo a cada segundo."
+      }
+    ]
   },
   "0897" : {
-    "statusDescription" : "Neutro"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Neutro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Neutro"
+      }
+    ]
   },
   "0898" : {
-    "statusDescription" : "Água"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Água"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Água"
+      }
+    ]
   },
   "0899" : {
-    "statusDescription" : "Terra"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Terra"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Terra"
+      }
+    ]
   },
   "0900" : {
-    "statusDescription" : "Fogo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fogo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Fogo"
+      }
+    ]
   },
   "0901" : {
-    "statusDescription" : "Vento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Vento"
+      }
+    ]
   },
   "0902" : {
-    "statusDescription" : "Veneno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Veneno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Veneno"
+      }
+    ]
   },
   "0903" : {
-    "statusDescription" : "Sagrado"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sagrado"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Sagrado"
+      }
+    ]
   },
   "0904" : {
-    "statusDescription" : "Sombrio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sombrio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Sombrio"
+      }
+    ]
   },
   "0905" : {
-    "statusDescription" : "Fantasma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fantasma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Fantasma"
+      }
+    ]
   },
   "0906" : {
-    "statusDescription" : "Maldito"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Maldito"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Arma encantada com propriedade Maldito"
+      }
+    ]
   },
   "0907" : {
-    "statusDescription" : "Neutro"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Neutro"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Neutro"
+      }
+    ]
   },
   "0908" : {
-    "statusDescription" : "Água"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Água"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Água"
+      }
+    ]
   },
   "0909" : {
-    "statusDescription" : "Terra"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Terra"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Terra"
+      }
+    ]
   },
   "0910" : {
-    "statusDescription" : "Fogo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fogo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Fogo"
+      }
+    ]
   },
   "0911" : {
-    "statusDescription" : "Vento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Vento"
+      }
+    ]
   },
   "0912" : {
-    "statusDescription" : "Veneno"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Veneno"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Veneno"
+      }
+    ]
   },
   "0913" : {
-    "statusDescription" : "Sagrado"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sagrado"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Sagrado"
+      }
+    ]
   },
   "0914" : {
-    "statusDescription" : "Sombrio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sombrio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Sombrio"
+      }
+    ]
   },
   "0915" : {
-    "statusDescription" : "Fantasma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fantasma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Fantasma"
+      }
+    ]
   },
   "0916" : {
-    "statusDescription" : "Maldito"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Maldito"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a resistência a Maldito"
+      }
+    ]
   },
   "0917" : {
-    "statusDescription" : "Leptospirose"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Leptospirose"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena o HP a"
+      },
+      {
+        "text" : "cada segundo."
+      }
+    ]
   },
   "0918" : {
-    "statusDescription" : "Impulso de Arclouse"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Impulso de Arclouse"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera."
+      },
+      {
+        "text" : "Bônus de AGI."
+      }
+    ]
   },
   "0919" : {
-    "statusDescription" : "Proteção da Orla"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Proteção da Orla"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bloqueia ataques."
+      }
+    ]
   },
   "0920" : {
-    "statusDescription" : "Chuva de Mariscos"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chuva de Mariscos"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ e ATQM."
+      }
+    ]
   },
   "0921" : {
-    "statusDescription" : "Camarão Fresquinho"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Camarão Fresquinho"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera HP"
+      },
+      {
+        "text" : "continuamente."
+      }
+    ]
   },
   "0926" : {
-    "statusDescription" : "Runa Berkana"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Runa Berkana"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduz metade dos seus ataques"
+      },
+      {
+        "text" : "Chance de autocojurar 'Escudos Milenares' ao receber dano físico"
+      }
+    ]
   },
   "0927" : {
-    "statusDescription" : "Runa Raido"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Runa Raido"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode ser empurrado"
+      }
+    ]
   },
   "0928" : {
-    "statusDescription" : "Runa Turizas"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Runa Turizas"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "FOR aumentada"
+      },
+      {
+        "text" : "INT reduzida"
+      }
+    ]
   },
   "0929" : {
-    "statusDescription" : "Runa Hagalaz"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Runa Hagalaz"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reflete parte do dano físico recebido"
+      }
+    ]
   },
   "0930" : {
-    "statusDescription" : "Runa Isa"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Runa Isa"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera HP continuamente"
+      }
+    ]
   },
   "0931" : {
-    "statusDescription" : "Runa Othila"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Runa Othila"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ataque e Vel.Atq aumentadas"
+      }
+    ]
   },
   "0932" : {
-    "statusDescription" : "Runa Uruz"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Runa Uruz"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera SP continuamente"
+      }
+    ]
   },
   "0933" : {
-    "statusDescription" : "Escondido"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Escondido"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ninguém te vê!"
+      }
+    ]
   },
   "0935" : {
-    "statusDescription" : "Leite de Kaluna"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Leite de Kaluna"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera 10 de HP"
+      },
+      {
+        "text" : "a cada 10 segundos"
+      }
+    ]
   },
   "0936" : {
-    "statusDescription" : "Manjericão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manjericão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera 5 de SP"
+      },
+      {
+        "text" : "a cada 10 segundos"
+      }
+    ]
   },
   "0937" : {
-    "statusDescription" : "Invocação"
+    "statusDescription" : [
+      {
+        "text" : "Invocação"
+      }
+    ]
   },
   "0942" : {
-    "statusDescription" : "Manual de Mascar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manual de Mascar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Armazém expandido"
+      }
+    ]
   },
   "0950" : {
-    "statusDescription" : "Riscar Fósforo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Riscar Fósforo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera."
+      },
+      {
+        "text" : "Esquiva perfeita +50."
+      }
+    ]
   },
   "0952" : {
-    "statusDescription" : "Mato de Gato"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mato de Gato"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF e DEFM zerada"
+      }
+    ]
   },
   "0953" : {
-    "statusDescription" : "Despertar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Despertar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Acelera."
+      },
+      {
+        "text" : "Bônus de ATQ ATQM."
+      }
+    ]
   },
   "0961" : {
-    "statusDescription" : "Lambida"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lambida"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Esquiva +100."
+      }
+    ]
   },
   "0962" : {
-    "statusDescription" : "Festa do Camarão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Festa do Camarão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a"
+      },
+      {
+        "text" : "regen. de SP."
+      }
+    ]
   },
   "0963" : {
-    "statusDescription" : "Poção SS"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção SS"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq +10."
+      }
+    ]
   },
   "0964" : {
-    "statusDescription" : "Poção SC"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção SC"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "CRIT +30"
+      }
+    ]
   },
   "0965" : {
-    "statusDescription" : "Poção AC"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção AC"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Conjuração variável -80%"
+      }
+    ]
   },
   "0966" : {
-    "statusDescription" : "Bala Mágica"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bala Mágica"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Adiciona ATQM"
+      },
+      {
+        "text" : "no ataque básico"
+      }
+    ]
   },
   "0983" : {
-    "statusDescription" : "Manual de Mascar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manual de Mascar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DROP aumentado"
+      }
+    ]
   },
   "0984" : {
-    "statusDescription" : "Manual de Mascar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manual de Mascar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "EXP aumentada"
+      }
+    ]
   },
   "0990" : {
-    "statusDescription" : "Poção Fantástica"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Fantástica"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Pós-conjuração -15%"
+      }
+    ]
   },
   "0992" : {
-    "statusDescription" : "Animação!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Animação!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Atributos +3."
+      }
+    ]
   },
   "0995" : {
-    "statusDescription" : "Poção Menor de Mana"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção Menor de Mana"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recupera SP a cada 5 segundo."
+      },
+      {
+        "text" : "Não funciona com Frenesi."
+      }
+    ]
   },
   "0996" : {
-    "statusDescription" : "Escrituras"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Escrituras"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de DEF e DEFM"
+      }
+    ]
   },
   "1001" : {
-    "statusDescription" : "RT-017"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "RT-017"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano contra Seyren,"
+      },
+      {
+        "text" : "Eremes, Randel e Gertie"
+      },
+      {
+        "text" : "Resistência a Flamel,"
+      },
+      {
+        "text" : "Chen, Kathryne e Howard."
+      }
+    ]
   },
   "1002" : {
-    "statusDescription" : "RT-017"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "RT-017"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano contra Celia,"
+      },
+      {
+        "text" : "Flamel, Kathryne e Howard."
+      },
+      {
+        "text" : "Resistência a Margaretha,"
+      },
+      {
+        "text" : "Chen, Cecil, Alphoccio e Trentini"
+      }
+    ]
   },
   "1003" : {
-    "statusDescription" : "RT-017"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "RT-017"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano contra Margaretha,"
+      },
+      {
+        "text" : "Chen, Cecil, Alphoccio e Trentini"
+      },
+      {
+        "text" : "Resistência a Seyren,"
+      },
+      {
+        "text" : "Randel, Eremes e Gertie."
+      }
+    ]
   },
   "1004" : {
-    "statusDescription" : "RT-017"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "RT-017"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta o dano e a resistência"
+      },
+      {
+        "text" : "aos MVPs da Tumba da Honra."
+      }
+    ]
   },
   "1013" : {
-    "statusDescription" : "Perda Total"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Perda Total"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Todos atributos reduzidos"
+      }
+    ]
   },
   "1014" : {
-    "statusDescription" : "Gravidade Gradual"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Gravidade Gradual"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Drena HP por segundo"
+      }
+    ]
   },
   "1031" : {
-    "statusDescription" : "Saboroso!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Saboroso!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ da arma +10%.."
+      }
+    ]
   },
   "1032" : {
-    "statusDescription" : "Delicioso!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Delicioso!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano mágico +10%."
+      }
+    ]
   },
   "1033" : {
-    "statusDescription" : "Gostoso!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gostoso!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.atq. +10%."
+      }
+    ]
   },
   "1035" : {
-    "statusDescription" : "Luz Lunar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Luz Lunar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano aumentado"
+      },
+      {
+        "text" : "de Chute Lunar"
+      }
+    ]
   },
   "1036" : {
-    "statusDescription" : "Luz Solar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Luz Solar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano aumentado"
+      },
+      {
+        "text" : "de Explosão Solar"
+      }
+    ]
   },
   "1037" : {
-    "statusDescription" : "Luz Estelar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Luz Estelar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano aumentado"
+      },
+      {
+        "text" : "de Chuva Estelar"
+      }
+    ]
   },
   "1038" : {
-    "statusDescription" : "Postura Lunar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura Lunar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de HP"
+      },
+      {
+        "text" : "Poderes Lunares"
+      }
+    ]
   },
   "1039" : {
-    "statusDescription" : "Postura do Universo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura do Universo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de Atributos"
+      },
+      {
+        "text" : "Permite usar poderes"
+      },
+      {
+        "text" : "Solar, Lunar, Estelar,"
+      },
+      {
+        "text" : "e Universo"
+      }
+    ]
   },
   "1040" : {
-    "statusDescription" : "Postura Solar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura Solar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      },
+      {
+        "text" : "Poderes Solares"
+      }
+    ]
   },
   "1041" : {
-    "statusDescription" : "Chute Estelar"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Chute Estelar"
+      }
+    ]
   },
   "1042" : {
-    "statusDescription" : "Penumbra"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Penumbra"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Invisível"
+      },
+      {
+        "text" : "Pode usar Chute Lunar"
+      }
+    ]
   },
   "1043" : {
-    "statusDescription" : "Postura Estelar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Postura Estelar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Vel.Atq"
+      },
+      {
+        "text" : "Poderes Estelares"
+      }
+    ]
   },
   "1044" : {
-    "statusDescription" : "Livro das Dimensões"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Livro das Dimensões"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Efeitos especiais"
+      },
+      {
+        "text" : "em Hipernova e"
+      },
+      {
+        "text" : "Advento Imperial"
+      }
+    ]
   },
   "1047" : {
-    "statusDescription" : "Livro da Criação"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Livro da Criação"
+      },
+      {
+        "text" : "Movimento reduzido"
+      }
+    ]
   },
   "1048" : {
-    "statusDescription" : "Chuva Estelar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chuva Estelar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ao realizar ataques,"
+      },
+      {
+        "text" : "chance de autoconjurar"
+      },
+      {
+        "text" : "uma Estrela Cadente"
+      }
+    ]
   },
   "1050" : {
-    "statusDescription" : "Controle Gravitacional"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Controle Gravitacional"
+      },
+      {
+        "text" : "Impossível atacar"
+      },
+      {
+        "text" : "ou se mover"
+      }
+    ]
   },
   "1053" : {
-    "statusDescription" : "Coletar Alma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Coletar Alma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Atraindo Almas"
+      }
+    ]
   },
   "1054" : {
-    "statusDescription" : "Ceifar Alma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ceifar Alma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Ao realizar ataques,"
+      },
+      {
+        "text" : "chance de conseguir"
+      },
+      {
+        "text" : "ceifar uma Alma"
+      }
+    ]
   },
   "1055" : {
-    "statusDescription" : "União Espiritual"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "União Espiritual"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "A cada 3 segundos,"
+      },
+      {
+        "text" : "regeneração de HP"
+      }
+    ]
   },
   "1056" : {
-    "statusDescription" : "Espírito das Sombras"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Espírito das Sombras"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de CRIT e"
+      },
+      {
+        "text" : "Vel.Atq"
+      }
+    ]
   },
   "1057" : {
-    "statusDescription" : "Espírito da Fada"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Espírito da Fada"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQM"
+      },
+      {
+        "text" : "Conjuração variável"
+      },
+      {
+        "text" : "reduzida"
+      }
+    ]
   },
   "1058" : {
-    "statusDescription" : "Espírito do Falcão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Espírito do Falcão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      },
+      {
+        "text" : "e de Precisão"
+      }
+    ]
   },
   "1059" : {
-    "statusDescription" : "Espírito do Golem"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Espírito do Golem"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a"
+      },
+      {
+        "text" : "DEF e DEFM"
+      }
+    ]
   },
   "1060" : {
-    "statusDescription" : "Divisão de Alma"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Divisão de Alma"
+      },
+      {
+        "text" : "Pós-conjuração"
+      },
+      {
+        "text" : "foi aumentada"
+      }
+    ]
   },
   "1065" : {
-    "statusDescription" : "Poção do Infinito"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poção do Infinito"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de HP e SP."
+      },
+      {
+        "text" : "Dano crítico e distância."
+      },
+      {
+        "text" : "Dano mágico elemental."
+      },
+      {
+        "text" : "Conjuração initerruptível."
+      }
+    ]
   },
   "1083" : {
-    "statusDescription" : "Caçada Real"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Caçada Real"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta a regeneração"
+      },
+      {
+        "text" : "da Carne e Batata Doce"
+      }
+    ]
   },
   "1088" : {
-    "statusDescription" : "Cansaço"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Cansaço"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Não pode usar"
+      },
+      {
+        "text" : "habilidades"
+      },
+      {
+        "text" : "Vel.Atq -30%."
+      }
+    ]
   },
   "1089" : {
-    "statusDescription" : "Aquecimento"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aquecimento"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Custo de SP"
+      },
+      {
+        "text" : "reduzido em 20%"
+      }
+    ]
   },
   "1095" : {
-    "statusDescription" : "Ancilla"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ancilla"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Efetiv. cura +15%."
+      },
+      {
+        "text" : "Regen. SP +30%."
+      }
+    ]
   },
   "1107" : {
-    "statusDescription" : "Reflexo"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Reflexo"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Permite usar"
+      },
+      {
+        "text" : "Retaliação"
+      }
+    ]
   },
   "1121" : {
-    "statusDescription" : "Assumptio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Assumptio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cura recebida e"
+      },
+      {
+        "text" : "DEF aumentadas"
+      }
+    ]
   },
   "1122" : {
-    "statusDescription" : "Basílica"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Basílica"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano mágico Sagrado"
+      },
+      {
+        "text" : "Dano físico contra"
+      },
+      {
+        "text" : "Sombrios e Malditos"
+      }
+    ]
   },
   "1125" : {
-    "statusDescription" : "Assombração"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Assombração"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe mais dano de"
+      },
+      {
+        "text" : "propriedade Sombrio"
+      }
+    ]
   },
   "1126" : {
-    "statusDescription" : "Prelúdio do Ragnarök"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Prelúdio do Ragnarök"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe 2x mais dano"
+      }
+    ]
   },
   "1130" : {
-    "statusDescription" : "Sob Proteção"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sob Proteção"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cura 1.000 de HP e"
+      },
+      {
+        "text" : "350 de SP por seg."
+      }
+    ]
   },
   "1132" : {
-    "statusDescription" : "Festividade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Festividade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ da arma +7%"
+      }
+    ]
   },
   "1133" : {
-    "statusDescription" : "Solenidade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Solenidade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano mágico +7%"
+      }
+    ]
   },
   "1135" : {
-    "statusDescription" : "Festival"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Festival"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ESQV e E. Perfeita"
+      },
+      {
+        "text" : "Reduz Conj. Var."
+      },
+      {
+        "text" : "Bônus de Vel.Atq"
+      }
+    ]
   },
   "1136" : {
-    "statusDescription" : "Raminho de Flores"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Raminho de Flores"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP e SP máx. +3%."
+      }
+    ]
   },
   "1137" : {
-    "statusDescription" : "Bolinho de Cerejeira"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bolinho de Cerejeira"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano físico e mágico contra"
+      },
+      {
+        "text" : "Tamanhos + 5%."
+      }
+    ]
   },
   "1141" : {
-    "statusDescription" : "Calafrio"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Calafrio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe mais dano"
+      },
+      {
+        "text" : "de Esquife de Gelo"
+      }
+    ]
   },
   "1142" : {
-    "statusDescription" : "Vício Mágico"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Vício Mágico"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recebe 50% mais dano"
+      },
+      {
+        "text" : "de todas as propriedades"
+      }
+    ]
   },
   "1154" : {
-    "statusDescription" : "Luz da Alma"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Luz da Alma"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de dano crítico,"
+      },
+      {
+        "text" : "tamanho, distância e"
+      },
+      {
+        "text" : "corpo a corpo. Ao atacar,"
+      },
+      {
+        "text" : "chance de autoconjurar"
+      },
+      {
+        "text" : "Explosão Rúnica nv. 1."
+      }
+    ]
   },
   "1396" : {
-    "statusDescription" : "Farfalle"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Farfalle"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bônus de ATQ"
+      },
+      {
+        "text" : "distante e corpo"
+      }
+    ]
   },
   "1397" : {
-    "statusDescription" : "Festival do Macarrão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Festival do Macarrão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dano mágico de"
+      },
+      {
+        "text" : "todos os elementos"
+      }
+    ]
   },
   "1398" : {
-    "statusDescription" : "Festival do Macarrão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Festival do Macarrão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aumenta Vel.Atq."
+      },
+      {
+        "text" : "Reduz conj. var e pós."
+      }
+    ]
   },
   "1399" : {
-    "statusDescription" : "Festival do Macarrão"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Festival do Macarrão"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATQ da arma +7% "
+      },
+      {
+        "text" : "Dano mágico +7% "
+      }
+    ]
   }
 }

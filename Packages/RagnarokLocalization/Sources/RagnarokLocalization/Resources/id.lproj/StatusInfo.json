@@ -1,1304 +1,7034 @@
 {
   "0000" : {
-    "statusDescription" : "Provoke"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Provoke"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Mengurangi DEF"
+      },
+      {
+        "text" : "Meningkatkan ATK"
+      }
+    ]
   },
   "0001" : {
-    "statusDescription" : "Endure"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Endure"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dapat bergerak ketika menerima serangan"
+      },
+      {
+        "text" : "Menghilang setelah beberapa kali terkena hit"
+      }
+    ]
   },
   "0002" : {
-    "statusDescription" : "Two Hand Quicken"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Two Hand Quicken"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan ASPD"
+      },
+      {
+        "text" : "Ketika menggunakan Two handed sword"
+      }
+    ]
   },
   "0003" : {
-    "statusDescription" : "Improve Concentration"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Improve Concentration"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan DEX, AGI"
+      },
+      {
+        "text" : "Dapat melihat musuh yang menghilang"
+      }
+    ]
   },
   "0004" : {
-    "statusDescription" : "Hiding"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Hiding"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Hide under the ground to avoid enemy attack"
+      },
+      {
+        "text" : "Can be detected enemy's detecting skill"
+      }
+    ]
   },
   "0005" : {
-    "statusDescription" : "Cloaking"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cloaking"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Can't be seen by others"
+      }
+    ]
   },
   "0006" : {
-    "statusDescription" : "Enchant Poison"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enchant Poison"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Enchant Poison property on the equipped weapon"
+      }
+    ]
   },
   "0007" : {
-    "statusDescription" : "Poison React"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poison React"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Automatically cast Poisonous attack to the enemy"
+      },
+      {
+        "text" : "Cast Envenom skill to the enemy"
+      },
+      {
+        "text" : "when the caster is damaged by normal attack"
+      }
+    ]
   },
   "0008" : {
-    "statusDescription" : "Quagmire"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Quagmire"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease Movement Speed"
+      },
+      {
+        "text" : "Decrease AGI, DEX"
+      }
+    ]
   },
   "0009" : {
-    "statusDescription" : "Angelus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Angelus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEF"
+      }
+    ]
   },
   "0010" : {
-    "statusDescription" : "Blessing"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Blessing"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEX, INT, STR"
+      },
+      {
+        "text" : "Recover Curse, Stone Curse status instantly"
+      }
+    ]
   },
   "0011" : {
-    "statusDescription" : "Signum Crucis"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Signum Crucis"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease DEF of Undead and Ghost monsters"
+      }
+    ]
   },
   "0012" : {
-    "statusDescription" : "Increase AGI"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Increase AGI"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Movement Speed"
+      },
+      {
+        "text" : "Increase ASPD"
+      }
+    ]
   },
   "0013" : {
-    "statusDescription" : "Decrease AGI"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Decrease AGI"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease movement speed"
+      },
+      {
+        "text" : "Decrease ASPD"
+      }
+    ]
   },
   "0014" : {
-    "statusDescription" : "Slow Poison"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Slow Poison"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Temporarily stop the poison spread"
+      }
+    ]
   },
   "0015" : {
-    "statusDescription" : "Impositio Manus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Impositio Manus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan ATK dari sebuah senjata"
+      }
+    ]
   },
   "0016" : {
-    "statusDescription" : "Suffragium"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Suffragium"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease casting speed"
+      }
+    ]
   },
   "0017" : {
-    "statusDescription" : "Aspersio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aspersio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give Holy property to the weapon"
+      }
+    ]
   },
   "0018" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give Holy property to Armor"
+      }
+    ]
   },
   "0019" : {
-    "statusDescription" : "Kyrie Eleison"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kyrie Eleison"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "The barrier defends the caster from attacking for certain times"
+      }
+    ]
   },
   "0020" : {
-    "statusDescription" : "Magnificat"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Magnificat"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase SP recovery speed"
+      }
+    ]
   },
   "0021" : {
-    "statusDescription" : "Gloria"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gloria"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase LUK"
+      }
+    ]
   },
   "0022" : {
-    "statusDescription" : "Lex Aeterna"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Lex Aeterna"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "The enemy receives the damage twice"
+      }
+    ]
   },
   "0023" : {
-    "statusDescription" : "Adrenaline Rush"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Adrenaline Rush"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD of"
+      },
+      {
+        "text" : "Axe and Blunt class weapon"
+      }
+    ]
   },
   "0024" : {
-    "statusDescription" : "Weapon Perfection"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Weapon Perfection"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give 100% damage to"
+      },
+      {
+        "text" : "small, medium, large monsters "
+      }
+    ]
   },
   "0025" : {
-    "statusDescription" : "Power Thrust"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Power Thrust"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase weapon ATK"
+      },
+      {
+        "text" : "Increase the possibility for the weapon to be destroyed"
+      }
+    ]
   },
   "0026" : {
-    "statusDescription" : "Maximize Power"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Maximize Power"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Maximize the power of the weapon"
+      },
+      {
+        "text" : "Consume SP continuously"
+      }
+    ]
   },
   "0027" : {
-    "statusDescription" : "Riding Vehicle"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Riding Vehicle"
+      }
+    ]
   },
   "0028" : {
-    "statusDescription" : "Falconry Mastery"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Falconry Mastery"
+      },
+      {
+        "text" : "Renting Falcon"
+      }
+    ]
   },
   "0029" : {
-    "statusDescription" : "Play Dead"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Play Dead"
+      },
+      {
+        "text" : "Playing dead"
+      }
+    ]
   },
   "0030" : {
-    "statusDescription" : "Shout"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shout"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      }
+    ]
   },
   "0031" : {
-    "statusDescription" : "Energy Coat"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Energy Coat"
+      },
+      {
+        "text" : "Mengurangi serangan yang diterima"
+      },
+      {
+        "text" : "berdasarkan jumlah SP yang tersisa"
+      }
+    ]
   },
   "0032" : {
-    "statusDescription" : "Broken Armor"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Broken Armor"
+      }
+    ]
   },
   "0033" : {
-    "statusDescription" : "Broken Weapon"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Broken Weapon"
+      }
+    ]
   },
   "0034" : {
-    "statusDescription" : "Dark Illusion"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Dark Illusion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Sight distorted"
+      },
+      {
+        "text" : "Error in damage sign"
+      },
+      {
+        "text" : "Casting pause"
+      }
+    ]
   },
   "0035" : {
-    "statusDescription" : "Weight over 70%"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Weight over 70%"
+      },
+      {
+        "text" : "Cannot recover HP, SP automatically"
+      }
+    ]
   },
   "0036" : {
-    "statusDescription" : "Weight Over 90%"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Weight Over 90%"
+      },
+      {
+        "text" : "Cannot recover HP, SP automatically"
+      },
+      {
+        "text" : "Cannot attack and use skills"
+      }
+    ]
   },
   "0037" : {
-    "statusDescription" : "Concentration Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Concentration Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD"
+      }
+    ]
   },
   "0038" : {
-    "statusDescription" : "Awakening Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Awakening Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD"
+      }
+    ]
   },
   "0039" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD"
+      }
+    ]
   },
   "0041" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Movement Speed"
+      }
+    ]
   },
   "0042" : {
-    "statusDescription" : "Increase Movement Speed"
+    "statusDescription" : [
+      {
+        "text" : "Increase Movement Speed"
+      }
+    ]
   },
   "0050" : {
-    "statusDescription" : "Divest Weapon"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Divest Weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Can't equip weapon"
+      }
+    ]
   },
   "0051" : {
-    "statusDescription" : "Divest Shield"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Divest Shield"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot equip shield"
+      }
+    ]
   },
   "0052" : {
-    "statusDescription" : "Divest Armor"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Divest Armor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot equip armor"
+      }
+    ]
   },
   "0053" : {
-    "statusDescription" : "Divest Helm"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Divest Helm"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot equip Helm"
+      }
+    ]
   },
   "0054" : {
-    "statusDescription" : "Alchemical Weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Alchemical Weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Protect a weapon from being destroyed"
+      }
+    ]
   },
   "0055" : {
-    "statusDescription" : "Chemical Shield"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chemical Shield"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Protect a shield from being destroyed"
+      }
+    ]
   },
   "0056" : {
-    "statusDescription" : "Chemical Armor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Chemical Armor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Protect armor from being destroyed"
+      }
+    ]
   },
   "0057" : {
-    "statusDescription" : "Biochemical Helm"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Biochemical Helm"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Protect helm from being destroyed"
+      }
+    ]
   },
   "0058" : {
-    "statusDescription" : "Guard"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Guard"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Mempunyai kesempatan untuk memblok serangan jarak dekat dan jarak jauh."
+      }
+    ]
   },
   "0059" : {
-    "statusDescription" : "Shield Reflect"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shield Reflect"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reflect certain amount of damage to the enemy"
+      },
+      {
+        "text" : "which the caster got from the melee-physical attack"
+      }
+    ]
   },
   "0061" : {
-    "statusDescription" : "Resistant Souls"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resistant Souls"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase resistance against"
+      },
+      {
+        "text" : "Demon and Holy property monsters"
+      }
+    ]
   },
   "0062" : {
-    "statusDescription" : "Defending Aura"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Defending Aura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease long-distance physical damage"
+      },
+      {
+        "text" : "Decrease Movement Speed, ASPD"
+      }
+    ]
   },
   "0064" : {
-    "statusDescription" : "Aspersio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Aspersio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give Holy property to the weapon"
+      }
+    ]
   },
   "0065" : {
-    "statusDescription" : "Hindsight"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Hindsight"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Have chance to auto-cast"
+      },
+      {
+        "text" : "the selected skill when attacking"
+      },
+      {
+        "text" : "SP consumption is 2\/3 of normal comsumption"
+      },
+      {
+        "text" : "Can't activate skill when SP is short"
+      }
+    ]
   },
   "0068" : {
-    "statusDescription" : "Spear Quicken"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Spear Quicken"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "When using Spear,"
+      },
+      {
+        "text" : "Increase ASPD"
+      },
+      {
+        "text" : "Increase Critical rate"
+      },
+      {
+        "text" : "Increase Flee"
+      }
+    ]
   },
   "0087" : {
-    "statusDescription" : "Undestructable "
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Undestructable "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF, MDEF Fixed at high levels"
+      },
+      {
+        "text" : "Decrease movement and attack speed"
+      },
+      {
+        "text" : "Unable to use skill"
+      }
+    ]
   },
   "0088" : {
-    "statusDescription" : "Guillotine Fist"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Guillotine Fist"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Unable to recover SP Status"
+      }
+    ]
   },
   "0090" : {
-    "statusDescription" : "Flame Launcher"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Flame Launcher"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give fire property to the weapon"
+      }
+    ]
   },
   "0091" : {
-    "statusDescription" : "Give Tsunami"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Tsunami"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give Water property to the weapons"
+      }
+    ]
   },
   "0092" : {
-    "statusDescription" : "Lightning Loader"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lightning Loader"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give Wind property to the weapon"
+      }
+    ]
   },
   "0093" : {
-    "statusDescription" : "Give Quake"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Quake"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Enchant Earth property to the weapon"
+      }
+    ]
   },
   "0097" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Apply Undead Attributes"
+      }
+    ]
   },
   "0104" : {
-    "statusDescription" : "Parry"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Parry"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Have chance to defend enemy's attack by a sword"
+      }
+    ]
   },
   "0106" : {
-    "statusDescription" : "Relax"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Relax"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan tingkat penyembuhan HP"
+      }
+    ]
   },
   "0110" : {
-    "statusDescription" : "Assumptio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Assumptio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEF"
+      }
+    ]
   },
   "0112" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Apply the ground magic effects"
+      }
+    ]
   },
   "0114" : {
-    "statusDescription" : "Enchant Deadly Poison"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enchant Deadly Poison"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Have chance to poison the enemy deadly"
+      },
+      {
+        "text" : "Additional damage is not available to Boss monster"
+      }
+    ]
   },
   "0115" : {
-    "statusDescription" : "True Sight"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "True Sight"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan semua Status"
+      },
+      {
+        "text" : "Meningkatkan Akurasi, Serangan, Kritikal rate"
+      }
+    ]
   },
   "0116" : {
-    "statusDescription" : "Wind Walker"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Wind Walker"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase movement speed, Flee"
+      }
+    ]
   },
   "0117" : {
-    "statusDescription" : "Shattering Strike"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shattering Strike"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "The chance of destroying"
+      },
+      {
+        "text" : "an equipped weapon or armor of other players."
+      },
+      {
+        "text" : "Decrease ATK power or Defense"
+      },
+      {
+        "text" : "when used on monsters"
+      }
+    ]
   },
   "0118" : {
-    "statusDescription" : "Cart Boost"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cart Boost"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase movement speed when using a cart"
+      }
+    ]
   },
   "0120" : {
-    "statusDescription" : "Counter_Instinct"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Counter_Instinct"
+      },
+      {
+        "text" : "Reduce damage from Swords by half"
+      },
+      {
+        "text" : "(all kind of monster attack by half)"
+      },
+      {
+        "text" : "in a certain rate."
+      },
+      {
+        "text" : "Deflect other half damage to the enemy"
+      }
+    ]
   },
   "0121" : {
-    "statusDescription" : "Marionette Control"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Marionette Control"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Pass the status to"
+      },
+      {
+        "text" : "the targeted player"
+      }
+    ]
   },
   "0122" : {
-    "statusDescription" : "Marionette Control"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Marionette Control"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Received a bonus Stats"
+      },
+      {
+        "text" : "from the caster"
+      }
+    ]
   },
   "0124" : {
-    "statusDescription" : "Bleeding"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bleeding"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot recover HP, SP"
+      },
+      {
+        "text" : "Lose certain amount of HP in every 10 sec"
+      }
+    ]
   },
   "0125" : {
-    "statusDescription" : "Vital Strike"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vital Strike"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give enemy abnormal status"
+      },
+      {
+        "text" : "by beating the joints"
+      }
+    ]
   },
   "0130" : {
-    "statusDescription" : "Mom, Dad, I love you!"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mom, Dad, I love you!"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Never lose EXP when the caster is dead"
+      }
+    ]
   },
   "0132" : {
-    "statusDescription" : "Berserk"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Berserk"
+      },
+      {
+        "text" : "Menjadi emosi ketika HP yang tersisa kurang dari 25% MHP"
+      }
+    ]
   },
   "0135" : {
-    "statusDescription" : "Tornado Kick"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Tornado Kick"
+      },
+      {
+        "text" : "When hit the target"
+      },
+      {
+        "text" : "have chance to be in Tornado Stance"
+      }
+    ]
   },
   "0137" : {
-    "statusDescription" : "Heel Drop Stance"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Heel Drop Stance"
+      },
+      {
+        "text" : "Have chance of entering"
+      },
+      {
+        "text" : "Heel Drop Stance when the caster successfully hits a target"
+      }
+    ]
   },
   "0139" : {
-    "statusDescription" : "Roundhouse Stance"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Roundhouse Stance"
+      },
+      {
+        "text" : "Have chance of automatically entering"
+      },
+      {
+        "text" : "Roundhouse Stance when the caster successfully hits a target"
+      }
+    ]
   },
   "0141" : {
-    "statusDescription" : "Counter Kick Stance"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Counter Kick Stance"
+      },
+      {
+        "text" : "When the caster successfully hits a target"
+      },
+      {
+        "text" : "have chance of entering Counter Kick Stance"
+      }
+    ]
   },
   "0143" : {
-    "statusDescription" : "Tumbling"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Tumbling"
+      },
+      {
+        "text" : "Ready Stance for Flying Kick"
+      },
+      {
+        "text" : "Have chance to block long ranged"
+      },
+      {
+        "text" : "physical attacks or magical attacks"
+      },
+      {
+        "text" : "When caster is in Spurt"
+      },
+      {
+        "text" : "also can block melee-attacks"
+      }
+    ]
   },
   "0145" : {
-    "statusDescription" : "Sprint"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sprint"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      },
+      {
+        "text" : "When not equipped any weapon"
+      },
+      {
+        "text" : "increase ATK according to Sprint level"
+      }
+    ]
   },
   "0146" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give dark property to the target"
+      }
+    ]
   },
   "0147" : {
-    "statusDescription" : "Advanced Adrenaline Rush"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Advanced Adrenaline Rush"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD of all weapons except bow"
+      }
+    ]
   },
   "0148" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Inflict Ghost property to the enemy"
+      }
+    ]
   },
   "0150" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Raise ATK"
+      }
+    ]
   },
   "0151" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Raise MATK"
+      }
+    ]
   },
   "0156" : {
-    "statusDescription" : "Kaizel"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kaizel"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEX doesn't affect player's casting time"
+      },
+      {
+        "text" : "Instantly revive a dead character that will be in Kyrie Eleison status for 2 seconds"
+      }
+    ]
   },
   "0157" : {
-    "statusDescription" : "Kaahi"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kaahi"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover HP by consuming SP when receiving attacks"
+      },
+      {
+        "text" : "excluding skill attacksSP"
+      }
+    ]
   },
   "0158" : {
-    "statusDescription" : "Kaupe"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kaupe"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Have chance to avoid enemy's attack"
+      }
+    ]
   },
   "0161" : {
-    "statusDescription" : "One Hand Quicken"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "One Hand Quicken"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD when using one hand sword"
+      }
+    ]
   },
   "0169" : {
-    "statusDescription" : "Solar Protection"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Solar Protection"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan DEF"
+      }
+    ]
   },
   "0170" : {
-    "statusDescription" : "Lunar Protection"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lunar Protection"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Flee"
+      }
+    ]
   },
   "0171" : {
-    "statusDescription" : "Star Comfort"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Star Comfort"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD"
+      }
+    ]
   },
   "0181" : {
-    "statusDescription" : "Preserve"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Preserve"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot plagiarize the skill"
+      }
+    ]
   },
   "0182" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      }
+    ]
   },
   "0186" : {
-    "statusDescription" : "Double Bolt"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Double Bolt"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance to repeat any Bolt skill"
+      },
+      {
+        "text" : "that is already casted"
+      }
+    ]
   },
   "0188" : {
-    "statusDescription" : "Maximum Power Thrust"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Maximum Power Thrust"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase weapon ATK"
+      },
+      {
+        "text" : "Increase the possibility for the weapon to be destroyed"
+      }
+    ]
   },
   "0191" : {
-    "statusDescription" : "Tarot Card of Fate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Tarot Card of Fate"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Randomly chosen effect from one out of 14 tarot cards"
+      }
+    ]
   },
   "0197" : {
-    "statusDescription" : "Shrink"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shrink"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Memiliki kesempatan untuk mendorong musuh"
+      },
+      {
+        "text" : "ketika menggunakan skill Guard"
+      }
+    ]
   },
   "0198" : {
-    "statusDescription" : "Sight Blaster"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sight Blaster"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Push away the enemy giving the damage"
+      },
+      {
+        "text" : "equal to the caster's MATK"
+      }
+    ]
   },
   "0200" : {
-    "statusDescription" : "Close Confine"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Close Confine"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Membuat Musuh dan pengguna tidak dapat bergerak"
+      },
+      {
+        "text" : "Meningkatkan Hindaran"
+      },
+      {
+        "text" : "Tidak dapat digunakan pada MVP"
+      }
+    ]
   },
   "0201" : {
-    "statusDescription" : "Close Confine"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Close Confine"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Membuat musuh dan pengguna tidak dapat bergerak"
+      },
+      {
+        "text" : "Meningkatkan Hindaran"
+      },
+      {
+        "text" : "Tidak dapat digunakan pada MVP"
+      }
+    ]
   },
   "0203" : {
-    "statusDescription" : "Last Stand"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Last Stand"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK"
+      },
+      {
+        "text" : "Increase ASPD"
+      },
+      {
+        "text" : "Immobilized"
+      }
+    ]
   },
   "0204" : {
-    "statusDescription" : "Gatling Fever"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gatling Fever"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD, Damage"
+      },
+      {
+        "text" : "Decrease Flee, Movement Speed"
+      }
+    ]
   },
   "0205" : {
-    "statusDescription" : "Happy Break"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Happy Break"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "When using Earth Spike spell scroll"
+      },
+      {
+        "text" : "Consume certain amount of SP"
+      },
+      {
+        "text" : "Have low chance of consume spell scroll"
+      }
+    ]
   },
   "0206" : {
-    "statusDescription" : "Cicada Skin Shed"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cicada Skin Shed"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Avoid enemy attacks for certain times"
+      },
+      {
+        "text" : "Move to the opposite side of attacker"
+      }
+    ]
   },
   "0207" : {
-    "statusDescription" : "Mirror Image"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mirror Image"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Avoid long and short range physical attacks"
+      },
+      {
+        "text" : "Impossible to defend MATK"
+      }
+    ]
   },
   "0208" : {
-    "statusDescription" : "Ninja Aura"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ninja Aura"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase INT, STR"
+      }
+    ]
   },
   "0209" : {
-    "statusDescription" : "Gunslinger's_Panic"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gunslinger's_Panic"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease Acuuracy"
+      },
+      {
+        "text" : "Increase Flee"
+      },
+      {
+        "text" : "Decrease damage from long-distance physical attack"
+      }
+    ]
   },
   "0210" : {
-    "statusDescription" : "Increase Accuracy"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Increase Accuracy"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Accuracy"
+      },
+      {
+        "text" : "Increase DEX"
+      },
+      {
+        "text" : "Increase AGI"
+      }
+    ]
   },
   "0217" : {
-    "statusDescription" : "Riding Gryphon"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Riding Gryphon"
+      }
+    ]
   },
   "0241" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      }
+    ]
   },
   "0242" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase AGI"
+      }
+    ]
   },
   "0243" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase VIT"
+      }
+    ]
   },
   "0244" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEX"
+      }
+    ]
   },
   "0245" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase INT"
+      }
+    ]
   },
   "0246" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase LUK"
+      }
+    ]
   },
   "0247" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Flee"
+      }
+    ]
   },
   "0248" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Accuracy"
+      }
+    ]
   },
   "0249" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Critical rate"
+      }
+    ]
   },
   "0250" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan EXP yang didapat."
+      }
+    ]
   },
   "0251" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Don't lose EXP when the caster is dead"
+      }
+    ]
   },
   "0252" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan Drop Rate item"
+      },
+      {
+        "text" : "dari monster."
+      }
+    ]
   },
   "0271" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      }
+    ]
   },
   "0272" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase AGI"
+      }
+    ]
   },
   "0273" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase VIT"
+      }
+    ]
   },
   "0274" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEX"
+      }
+    ]
   },
   "0275" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase INT"
+      }
+    ]
   },
   "0276" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase LUK"
+      }
+    ]
   },
   "0282" : {
-    "statusDescription" : "Slow Cast"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Slow Cast"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase the casting time"
+      }
+    ]
   },
   "0286" : {
-    "statusDescription" : "Critical Wound"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Critical Wound"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease the effect of healing skills"
+      }
+    ]
   },
   "0289" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD"
+      }
+    ]
   },
   "0290" : {
-    "statusDescription" : "Physical Defense Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Physical Defense Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase resistance against physical ATK"
+      }
+    ]
   },
   "0291" : {
-    "statusDescription" : "MDEF Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "MDEF Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase resistance against MATK"
+      }
+    ]
   },
   "0292" : {
-    "statusDescription" : "Regeneration Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Regeneration Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase the effect of"
+      },
+      {
+        "text" : "healing skills and some healing items"
+      }
+    ]
   },
   "0293" : {
-    "statusDescription" : "Small Life Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Small Life Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover certain amount of HP in every 5 sec"
+      },
+      {
+        "text" : "Doesn't have effect in Berserk condition"
+      }
+    ]
   },
   "0294" : {
-    "statusDescription" : "Medium Life Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Medium Life Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover certain amount of HP in every 4 sec"
+      },
+      {
+        "text" : "No effect when Berserk status"
+      }
+    ]
   },
   "0295" : {
-    "statusDescription" : "Abrasive"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Abrasive"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Critical chance"
+      }
+    ]
   },
   "0296" : {
-    "statusDescription" : "Welcome Glass"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Welcome Glass"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Full Flee"
+      }
+    ]
   },
   "0297" : {
-    "statusDescription" : "Super Medicine"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Super Medicine"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "MHP Increase"
+      },
+      {
+        "text" : "HP Recovery Increase"
+      }
+    ]
   },
   "0298" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MSP, Decrease SP consumption"
+      }
+    ]
   },
   "0299" : {
-    "statusDescription" : "Revive Medicine"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Revive Medicine"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "MSP Increase"
+      },
+      {
+        "text" : "SP Recovery Increase"
+      }
+    ]
   },
   "0300" : {
-    "statusDescription" : "SP Consumption Decrease Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "SP Consumption Decrease Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease SP consumption when using skills"
+      }
+    ]
   },
   "0301" : {
-    "statusDescription" : "Abnormal Status Resistance Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Abnormal Status Resistance Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase resistance against the status below"
+      },
+      {
+        "text" : "Stun, Freezing, Stone Curse, Sleep, Silence "
+      },
+      {
+        "text" : "Darkness, Curse, Poison, Bleeding, Confusion "
+      }
+    ]
   },
   "0302" : {
-    "statusDescription" : "Change Property Scroll"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Change Property Scroll"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Change Property"
+      }
+    ]
   },
   "0304" : {
-    "statusDescription" : "Hell Power"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Hell Power"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot revive"
+      },
+      {
+        "text" : "Cannot use Sacrifice"
+      },
+      {
+        "text" : "Cannot use Token of Siegfried"
+      }
+    ]
   },
   "0312" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan Job EXP yang didapat"
+      },
+      {
+        "text" : "ketika mengalahkan monster."
+      }
+    ]
   },
   "0313" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Flee"
+      }
+    ]
   },
   "0314" : {
-    "statusDescription" : "Thank You So Much"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Thank You So Much"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase HP, SP recovery speed"
+      }
+    ]
   },
   "0316" : {
-    "statusDescription" : "Enchant Blade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enchant Blade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Add MATK to melee physical ATK"
+      }
+    ]
   },
   "0318" : {
-    "statusDescription" : "Refresh"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Refresh"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover all kinds of abnormal status and debuffs"
+      },
+      {
+        "text" : "Never get abnormal status and debuffs"
+      },
+      {
+        "text" : "Recover certain amount of HP"
+      }
+    ]
   },
   "0319" : {
-    "statusDescription" : "Giant Cross"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Giant Cross"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      },
+      {
+        "text" : "When melee attacking"
+      },
+      {
+        "text" : "have chance to give gigantic damage"
+      },
+      {
+        "text" : "have chance to destroy the caster's weapon"
+      }
+    ]
   },
   "0320" : {
-    "statusDescription" : "Stonehard Skin"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Stonehard Skin"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Create defense barrier after consuming certain amount of HP"
+      },
+      {
+        "text" : "When other player melee physical attacks to the caster"
+      },
+      {
+        "text" : "have chance to destroy the enemy's weapon"
+      },
+      {
+        "text" : "have chance to decrease ATK of the monster"
+      }
+    ]
   },
   "0321" : {
-    "statusDescription" : "Vitality Activation"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vitality Activation"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase the effect of"
+      },
+      {
+        "text" : "HP recovery skill and healing item"
+      },
+      {
+        "text" : "Cannot auto-recover SP"
+      },
+      {
+        "text" : "Decrease the effect of SP recovery potion"
+      }
+    ]
   },
   "0322" : {
-    "statusDescription" : "Fighting Spirit"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fighting Spirit"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK"
+      },
+      {
+        "text" : "Increase ASPD of caster"
+      }
+    ]
   },
   "0323" : {
-    "statusDescription" : "Abundance"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Abundance"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover certain amount of SP in every 10 sec"
+      }
+    ]
   },
   "0333" : {
-    "statusDescription" : "Cloaking Exceed"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cloaking Exceed"
+      },
+      {
+        "text" : "Can't be detected by Insect and Demon monsters"
+      },
+      {
+        "text" : "Not released till hit by certain numbers of damage"
+      },
+      {
+        "text" : "Increase Movement Speed"
+      }
+    ]
   },
   "0334" : {
-    "statusDescription" : "Hallucination Walk"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Hallucination Walk"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Flee"
+      },
+      {
+        "text" : "Have chance to avoid MATK"
+      }
+    ]
   },
   "0336" : {
-    "statusDescription" : "Renovatio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Renovatio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover certain amount of HP in every 5 sec"
+      },
+      {
+        "text" : "Give certain damage to Undead monsters"
+      },
+      {
+        "text" : "according to the level of caster"
+      }
+    ]
   },
   "0337" : {
-    "statusDescription" : "Weapon Blocking"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Weapon Blocking"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Have chance to fully avoid damage"
+      },
+      {
+        "text" : "of melee physical attack"
+      }
+    ]
   },
   "0340" : {
-    "statusDescription" : "Expiatio "
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Expiatio "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Chance to ignore the target's defense rate"
+      }
+    ]
   },
   "0341" : {
-    "statusDescription" : "Poisonous Weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Poisonous Weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Make the enemy poisoned by poisonous weapon"
+      }
+    ]
   },
   "0342" : {
-    "statusDescription" : "Toxin"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Toxin"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bothers casting and skill motion for 10 sec"
+      },
+      {
+        "text" : "Ignore Phen Card options"
+      },
+      {
+        "text" : "Lose certain amount of SP in every 10 sec"
+      }
+    ]
   },
   "0343" : {
-    "statusDescription" : "Paralyze"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Paralyze"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease ASPD"
+      },
+      {
+        "text" : "Decrease Flee"
+      },
+      {
+        "text" : "Decrease Movement Speed"
+      }
+    ]
   },
   "0344" : {
-    "statusDescription" : "Venom Bleed"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Venom Bleed"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease MHP"
+      }
+    ]
   },
   "0345" : {
-    "statusDescription" : "Magic Mushroom"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Magic Mushroom"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Smile emoticon"
+      },
+      {
+        "text" : "Cast random skill in every 4 sec"
+      },
+      {
+        "text" : "Lose certain amount of HP in every 4 sec"
+      }
+    ]
   },
   "0346" : {
-    "statusDescription" : "Death Wound"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Death Wound"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease the effect when receiving Heal skills"
+      }
+    ]
   },
   "0347" : {
-    "statusDescription" : "Pyrexia"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pyrexia"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Darkness, Confusion status"
+      }
+    ]
   },
   "0348" : {
-    "statusDescription" : "Oblivious Curse"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Oblivious Curse"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Oblivion status"
+      }
+    ]
   },
   "0349" : {
-    "statusDescription" : "Sticking Leech"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sticking Leech"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Menggunakan HP setiap detiknya"
+      }
+    ]
   },
   "0351" : {
-    "statusDescription" : "Frost Musty"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Frost Musty"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease DEF, Movement Speed, ASPD"
+      },
+      {
+        "text" : "Increase fixed casting time"
+      }
+    ]
   },
   "0352" : {
-    "statusDescription" : "Fear Breeze"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fear Breeze"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Have chance to attack once more"
+      },
+      {
+        "text" : "When attacking with a bow"
+      }
+    ]
   },
   "0354" : {
-    "statusDescription" : "Marsh Of Abyss"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Marsh Of Abyss"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease Movement Speed"
+      },
+      {
+        "text" : "Decrease DEF, Flee"
+      }
+    ]
   },
   "0355" : {
-    "statusDescription" : "Recognized Spell"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Recognized Spell"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Attack with the maximum MATK"
+      },
+      {
+        "text" : "Increase SP consumption"
+      }
+    ]
   },
   "0356" : {
-    "statusDescription" : "Stasis "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Stasis "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "All targets within range cannot use Magic, Song and Chorus skill"
+      }
+    ]
   },
   "0357" : {
-    "statusDescription" : "Warg Rider"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Warg Rider"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Can't use a bow"
+      },
+      {
+        "text" : "Can use only Warg skills"
+      }
+    ]
   },
   "0361" : {
-    "statusDescription" : "Acceleration"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Acceleration"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Movement Speed of Madogear "
+      }
+    ]
   },
   "0362" : {
-    "statusDescription" : "Hover"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Hover"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistant against trap and other specific land-magics"
+      }
+    ]
   },
   "0368" : {
-    "statusDescription" : "Tao Gunka Scroll"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Tao Gunka Scroll"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "MHP Increase"
+      },
+      {
+        "text" : "DEF\/MDEF Decrease"
+      }
+    ]
   },
   "0369" : {
-    "statusDescription" : "Mistress Scroll"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mistress Scroll"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Able to use magic without gemstones"
+      },
+      {
+        "text" : "SP Consumption Increase"
+      }
+    ]
   },
   "0370" : {
-    "statusDescription" : "Orc Hero Scroll"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Orc Hero Scroll"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot get stunned"
+      }
+    ]
   },
   "0371" : {
-    "statusDescription" : "Orc Lord Scroll"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Orc Lord Scroll"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reflect back some physical melee attack"
+      }
+    ]
   },
   "0373" : {
-    "statusDescription" : "Over Heat"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Over Heat"
+      },
+      {
+        "text" : "Over heated status of Madogear"
+      },
+      {
+        "text" : "Decrease certain HP in every sec"
+      }
+    ]
   },
   "0374" : {
-    "statusDescription" : "Shift Shape"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shift Shape"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Change the property of Madogear's fuselage"
+      }
+    ]
   },
   "0375" : {
-    "statusDescription" : "Infra Red Scan"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Infra Red Scan"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Find out the hidden enemy"
+      },
+      {
+        "text" : "Have chance to lower Flee of all the targets within the range"
+      }
+    ]
   },
   "0376" : {
-    "statusDescription" : "Magnetic Field "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Magnetic Field "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Immobilize all enemies within the area"
+      },
+      {
+        "text" : "Decrease SP"
+      }
+    ]
   },
   "0377" : {
-    "statusDescription" : "Neutral Barrier"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Neutral Barrier"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase physical, magical DEF"
+      },
+      {
+        "text" : "Cancel long-distance attack"
+      }
+    ]
   },
   "0379" : {
-    "statusDescription" : "Stealth Field"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Stealth Field"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Make all the targets around as cloaking state"
+      },
+      {
+        "text" : "Consume SP continuously"
+      },
+      {
+        "text" : "Decrease Movement Speed"
+      }
+    ]
   },
   "0381" : {
-    "statusDescription" : "Manuk's Golden Chance"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manuk's Golden Chance"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase physical ATK"
+      },
+      {
+        "text" : "to the monsters in Manuk fields"
+      }
+    ]
   },
   "0382" : {
-    "statusDescription" : "Manuk's Will"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manuk's Will"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease physical\/magical damage"
+      },
+      {
+        "text" : "from the monsters in Manuk field"
+      }
+    ]
   },
   "0383" : {
-    "statusDescription" : "Pinguicula's Pickled Fruit"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pinguicula's Pickled Fruit"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase physical ATK"
+      },
+      {
+        "text" : "to the monsters in Splendid fields"
+      }
+    ]
   },
   "0384" : {
-    "statusDescription" : "Honey Jam"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Honey Jam"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease Physical, Magical damage"
+      },
+      {
+        "text" : "from the monsters in Splendid field"
+      }
+    ]
   },
   "0385" : {
-    "statusDescription" : "Reproduce"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Reproduce"
+      },
+      {
+        "text" : "Learn the skill which is targeted to the caster"
+      },
+      {
+        "text" : "Can learn only 1 skill"
+      }
+    ]
   },
   "0386" : {
-    "statusDescription" : "Manuk's Faith"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Manuk's Faith"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MATK to"
+      },
+      {
+        "text" : "the monsters in Manuk Field"
+      }
+    ]
   },
   "0387" : {
-    "statusDescription" : "Cornus's Tear"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cornus's Tear"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MATK"
+      },
+      {
+        "text" : "to the monsters in Splendide fields"
+      }
+    ]
   },
   "0388" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      }
+    ]
   },
   "0389" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase INT"
+      }
+    ]
   },
   "0390" : {
-    "statusDescription" : "Reflect Damage"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Reflect Damage"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reflect some part of physical\/magical damage to enemy"
+      },
+      {
+        "text" : "Consume certain amount of SP in every sec"
+      }
+    ]
   },
   "0391" : {
-    "statusDescription" : "Vanguard Force"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vanguard Force"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MHP, DEF"
+      },
+      {
+        "text" : "Accumulate Rage rate whenever receiving damage"
+      },
+      {
+        "text" : "Consume SP continuously"
+      }
+    ]
   },
   "0393" : {
-    "statusDescription" : "Shadow Spell"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shadow Spell"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Enable the magical skills"
+      },
+      {
+        "text" : "learned by Plagiarize and Reproduce"
+      }
+    ]
   },
   "0394" : {
-    "statusDescription" : "Shadow Formation"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shadow Formation"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Dump the caster's damage"
+      },
+      {
+        "text" : "according to caster's skill level"
+      }
+    ]
   },
   "0396" : {
-    "statusDescription" : "Shield Spell"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shield Spell"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Activate magic depending on shield defense rate"
+      }
+    ]
   },
   "0397" : {
-    "statusDescription" : "Shield Spell"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shield Spell"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Activate certain magic depening on shield MDEF"
+      }
+    ]
   },
   "0398" : {
-    "statusDescription" : "Shield Spell"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shield Spell"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Activate certain magic depening on shield refine level"
+      }
+    ]
   },
   "0399" : {
-    "statusDescription" : "Body Painting"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Body Painting"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Release cloaking state"
+      },
+      {
+        "text" : "Have chance to create Darkness curse"
+      },
+      {
+        "text" : "Have chance to decrease ASPD"
+      }
+    ]
   },
   "0400" : {
-    "statusDescription" : "Exceed Break"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Exceed Break"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase damage on next attack"
+      }
+    ]
   },
   "0401" : {
-    "statusDescription" : "Adoramus"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Adoramus"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease AGI and in Darkness state"
+      }
+    ]
   },
   "0402" : {
-    "statusDescription" : "Prestige"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Prestige"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Apply the magical flee rate according to caster's stats"
+      },
+      {
+        "text" : "Increase DEF"
+      }
+    ]
   },
   "0403" : {
-    "statusDescription" : "Invisibility"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Invisibility"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Able to attack in invisible status"
+      },
+      {
+        "text" : "Change ATK property into Ghost property lv.1"
+      },
+      {
+        "text" : "Continuously consume SP"
+      },
+      {
+        "text" : "Unable to use skills and items"
+      }
+    ]
   },
   "0404" : {
-    "statusDescription" : "Deadly Infection"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Deadly Infection"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Infect all kinds of curse state"
+      },
+      {
+        "text" : "to monsters that you attack"
+      },
+      {
+        "text" : "and to monsters that attack you"
+      }
+    ]
   },
   "0405" : {
-    "statusDescription" : "Banding"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Banding"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "If in range of Royal Guard with Banding"
+      },
+      {
+        "text" : "Increase ATK and DEF and share HP"
+      }
+    ]
   },
   "0407" : {
-    "statusDescription" : "Inspiration"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Inspiration"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Accuracy, Stats, ATK, MHP"
+      },
+      {
+        "text" : "Cancel certain buffs and abnormal status"
+      },
+      {
+        "text" : "Decrease HP, SP continuously"
+      },
+      {
+        "text" : "Cancel all kinds of buffs and abnormal status"
+      },
+      {
+        "text" : "Lose certain amount of EXP"
+      }
+    ]
   },
   "0408" : {
-    "statusDescription" : "Masquerade : Enervation"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Masquerade : Enervation"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease ATK"
+      },
+      {
+        "text" : "All the Spirit Sphere are destroyed"
+      }
+    ]
   },
   "0409" : {
-    "statusDescription" : "Masquerade: Gloomy (Mask: Depression)"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Masquerade: Gloomy (Mask: Depression)"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Attack Speed, Accuracy Decrease"
+      },
+      {
+        "text" : "When avoided, familiar is clear"
+      },
+      {
+        "text" : "Unable to use Familiar"
+      }
+    ]
   },
   "0410" : {
-    "statusDescription" : "Rising Dragon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Rising Dragon"
+      },
+      {
+        "text" : "Increase the maximum number of Spirit Sphere"
+      },
+      {
+        "text" : "Increase the maximum HP and SP"
+      },
+      {
+        "text" : "Increase ASPD"
+      },
+      {
+        "text" : "Keeps Fury status"
+      },
+      {
+        "text" : "Consume certain amount of HP in every sec"
+      }
+    ]
   },
   "0411" : {
-    "statusDescription" : "Masquerade: Ignorance (Mask : Ignorance)"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Masquerade: Ignorance (Mask : Ignorance)"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "When avoided, loss of certain amount of SP"
+      },
+      {
+        "text" : "Unable to use Skill, Magic"
+      }
+    ]
   },
   "0412" : {
-    "statusDescription" : "Masquerade: Laziness (Mask: Laziness)"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Masquerade: Laziness (Mask: Laziness)"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movement Speed, Dodge Reduced"
+      },
+      {
+        "text" : "Increase Casting Time"
+      },
+      {
+        "text" : "When using skill, Certain SP amount added in consumption"
+      }
+    ]
   },
   "0413" : {
-    "statusDescription" : "Lightning Walk"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lightning Walk"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Have chance to avoid long distance"
+      },
+      {
+        "text" : "physical, magical attack"
+      },
+      {
+        "text" : "and move right before the enemy"
+      }
+    ]
   },
   "0415" : {
-    "statusDescription" : "Masquerade : Unlucky (Mask : Unlucky)"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Masquerade : Unlucky (Mask : Unlucky)"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Critical chance Decrease"
+      },
+      {
+        "text" : "Complete Evasion chance Decrease"
+      },
+      {
+        "text" : "When using Skill, a certain Amount of zeny is consumed"
+      },
+      {
+        "text" : "When evaded, certain status occuers"
+      }
+    ]
   },
   "0417" : {
-    "statusDescription" : "CURSED CIRCLE"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "CURSED CIRCLE"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot Move nor Attack within the area"
+      },
+      {
+        "text" : "Silence"
+      }
+    ]
   },
   "0418" : {
-    "statusDescription" : "Masquerade : Weakness (Mask : Weakness)"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Masquerade : Weakness (Mask : Weakness)"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Certain Amount of MHP Decrease"
+      },
+      {
+        "text" : "When evaded, weapon, shield is taken off"
+      },
+      {
+        "text" : "Unable to wear Weapon, Shield"
+      }
+    ]
   },
   "0419" : {
-    "statusDescription" : "Crescent Elbow"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Crescent Elbow"
+      },
+      {
+        "text" : "Give damage to enemy by knocking it down"
+      },
+      {
+        "text" : "Receive some part of damage of it to the caster"
+      }
+    ]
   },
   "0421" : {
-    "statusDescription" : "Divest Accessory"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Divest Accessory"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot wear accessory"
+      }
+    ]
   },
   "0423" : {
-    "statusDescription" : "Pope Cookie"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pope Cookie"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "text" : "Increase all kinds of property resistances"
+      }
+    ]
   },
   "0425" : {
-    "statusDescription" : "Gentle Touch - Silence"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gentle Touch - Silence"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "When melee attacking or being attacked"
+      },
+      {
+        "text" : "Create 1 Spirit Sphere"
+      }
+    ]
   },
   "0426" : {
-    "statusDescription" : "Gentle Touch - Opposite"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gentle Touch - Opposite"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease VIT, MDEF"
+      },
+      {
+        "text" : "Increase ATK, ASPD"
+      }
+    ]
   },
   "0427" : {
-    "statusDescription" : "Gentle Touch - Alive"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gentle Touch - Alive"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase VIT, MHP"
+      },
+      {
+        "text" : "Increase physical DEF"
+      },
+      {
+        "text" : "Increase HP auto recovery speed"
+      },
+      {
+        "text" : "Recovery HP while moving and attacking"
+      }
+    ]
   },
   "0429" : {
-    "statusDescription" : "Swing Dance"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Swing Dance"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Movement Speed"
+      },
+      {
+        "text" : "Increase ASPD"
+      }
+    ]
   },
   "0430" : {
-    "statusDescription" : "Lover Symphony"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lover Symphony"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MDEF"
+      }
+    ]
   },
   "0435" : {
-    "statusDescription" : "Deep Sleep"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Deep Sleep"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Get 1.5x damage"
+      },
+      {
+        "text" : "Recover certain amount of HP\/SP in every 2 sec"
+      }
+    ]
   },
   "0436" : {
-    "statusDescription" : "Circling Nature"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Circling Nature"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Use certain amount of SP every second and recover HP"
+      }
+    ]
   },
   "0437" : {
-    "statusDescription" : "Cold Slower"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Cold Slower"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ÊÃéÒ§¤ÇÒÁàÊÕÂËÒÂà»ç¹ water property "
+      },
+      {
+        "text" : "·ÓãËéµÔ´Ê¶Ò¹Ð freezing "
+      },
+      {
+        "text" : "à¾ÔèÁ¤ÇÒÁàÊÕÂËÒÂàÁ×èÍãªéÍÒÇØ¸»ÃÐàÀ· Mace, Axe, Two-Handed Axe "
+      },
+      {
+        "text" : "à¾ÔèÁ¤ÇÒÁàÊÕÂËÒÂâ´Â¡ÒÃâ¨ÁµÕ´éÇÂàÇ·Âì¸ÒµØÅÁ "
+      },
+      {
+        "text" : "Å´¤ÇÒÁàÊÕÂËÒÂàÁ×èÍãªéÍÒÇØ¸»ÃÐàÀ· Dagger, Sword, Two-Handed sword, Arrow "
+      }
+    ]
   },
   "0438" : {
-    "statusDescription" : "Gloomy Shyness"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Gloomy Shyness"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase damage of certain skills"
+      },
+      {
+        "text" : "Decrease Flee and ASPD"
+      }
+    ]
   },
   "0439" : {
-    "statusDescription" : "Song Of Mana"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Song Of Mana"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recovery certain amount of SP in every 5 sec"
+      }
+    ]
   },
   "0441" : {
-    "statusDescription" : "Dance With Wug"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Dance With Wug"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ASPD"
+      },
+      {
+        "text" : "Decrease fixed casting time"
+      }
+    ]
   },
   "0442" : {
-    "statusDescription" : "Rush To Windmill"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Rush To Windmill"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK"
+      }
+    ]
   },
   "0443" : {
-    "statusDescription" : "Echo_Song"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Echo_Song"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEF"
+      }
+    ]
   },
   "0444" : {
-    "statusDescription" : "Harmonize"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Harmonize"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Adjust additional Status"
+      }
+    ]
   },
   "0445" : {
-    "statusDescription" : "Strike"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Strike"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase weapon ATK, critical rate"
+      }
+    ]
   },
   "0446" : {
-    "statusDescription" : "Warmer"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Warmer"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cancels all Freeze status"
+      },
+      {
+        "text" : "Cannot be frozen"
+      },
+      {
+        "text" : "Recover HP every 3 seconds"
+      }
+    ]
   },
   "0447" : {
-    "statusDescription" : "Moonlight Serenade"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Moonlight Serenade"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MATK"
+      }
+    ]
   },
   "0448" : {
-    "statusDescription" : "Madness"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Madness"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Lose HP, SP in every 3 sec"
+      },
+      {
+        "text" : "Increase ATK, Decrease DEF and Flee"
+      },
+      {
+        "text" : "Cannot use skill and item"
+      }
+    ]
   },
   "0450" : {
-    "statusDescription" : "Analyze"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Analyze"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease physical, magical DEF"
+      }
+    ]
   },
   "0451" : {
-    "statusDescription" : "Lerad's Dew"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lerad's Dew"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MHP"
+      }
+    ]
   },
   "0452" : {
-    "statusDescription" : "Sinking Melody"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sinking Melody"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MATK"
+      },
+      {
+        "text" : "Decrease physical ATK"
+      }
+    ]
   },
   "0453" : {
-    "statusDescription" : "Beyond Cry"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Beyond Cry"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase physical ATK"
+      },
+      {
+        "text" : "Decrease MATK"
+      }
+    ]
   },
   "0454" : {
-    "statusDescription" : "Infinite Humming"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Infinite Humming"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Skill and magic casting is never get disconnected"
+      },
+      {
+        "text" : "Increase SP consumption when using skills"
+      }
+    ]
   },
   "0461" : {
-    "statusDescription" : "Cart Boost"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cart Boost"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase speed when equipped a cart"
+      }
+    ]
   },
   "0463" : {
-    "statusDescription" : "Thorns Trap"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Thorns Trap"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Get damage little by little"
+      }
+    ]
   },
   "0470" : {
-    "statusDescription" : "Howling of Mandragora "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Howling of Mandragora "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "INT, SP Reduced"
+      },
+      {
+        "text" : "Increase skill fixed cast time"
+      }
+    ]
   },
   "0472" : {
-    "statusDescription" : "Sacrament"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sacrament"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease the casting time"
+      }
+    ]
   },
   "0473" : {
-    "statusDescription" : "Assumptio"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Assumptio"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEF"
+      }
+    ]
   },
   "0476" : {
-    "statusDescription" : "Stomachache"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Stomachache"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduce all additional status"
+      },
+      {
+        "text" : "Decrease Movement Speed"
+      },
+      {
+        "text" : "Forced to sit down once in every 10 sec"
+      },
+      {
+        "text" : "Consume certain amount of SP for 10 sec"
+      }
+    ]
   },
   "0480" : {
-    "statusDescription" : "HP Increase Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "HP Increase Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MHP"
+      }
+    ]
   },
   "0481" : {
-    "statusDescription" : "SP Increase Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "SP Increase Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MSP"
+      }
+    ]
   },
   "0482" : {
-    "statusDescription" : "Enriched White PotionZ"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enriched White PotionZ"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increases natural HP recovery speed"
+      }
+    ]
   },
   "0483" : {
-    "statusDescription" : "Vitata 500"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vitata 500"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increases natural SP recovery speed"
+      },
+      {
+        "text" : "Increase MSP"
+      }
+    ]
   },
   "0484" : {
-    "statusDescription" : "Enrich Celermine Juice"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enrich Celermine Juice"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase attack speed"
+      }
+    ]
   },
   "0490" : {
-    "statusDescription" : "Extreme Vacuum"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Extreme Vacuum"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Pull every target within the area"
+      },
+      {
+        "text" : "Immobilization"
+      }
+    ]
   },
   "0491" : {
-    "statusDescription" : "Savage BBQ"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Savage BBQ"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase STR"
+      }
+    ]
   },
   "0492" : {
-    "statusDescription" : "Warg Blood Cocktail"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Warg Blood Cocktail"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase INT"
+      }
+    ]
   },
   "0493" : {
-    "statusDescription" : "Minor Brisket"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Minor Brisket"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase VIT"
+      }
+    ]
   },
   "0494" : {
-    "statusDescription" : "Siroma Icetea"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Siroma Icetea"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase DEX"
+      }
+    ]
   },
   "0495" : {
-    "statusDescription" : "Drocera Herb Stew"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Drocera Herb Stew"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase AGI"
+      }
+    ]
   },
   "0496" : {
-    "statusDescription" : "Petit Tail Noodle"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Petit Tail Noodle"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase LUK"
+      }
+    ]
   },
   "0573" : {
-    "statusDescription" : "Mora Berry"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mora Berry"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase resistance against"
+      },
+      {
+        "text" : "the monsters in the fields nearby Mora village"
+      }
+    ]
   },
   "0578" : {
-    "statusDescription" : "Life Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Life Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover certain amount of HP every 3 seconds"
+      },
+      {
+        "text" : "Not activated in Berserk condition"
+      }
+    ]
   },
   "0579" : {
-    "statusDescription" : "Vitalize Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Vitalize Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "text" : "Increase effects of heal and healing items"
+      }
+    ]
   },
   "0580" : {
-    "statusDescription" : "Playful Light"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Playful Light"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "When owner dies"
+      },
+      {
+        "text" : "When Aira dies, the ower will revive"
+      }
+    ]
   },
   "0581" : {
-    "statusDescription" : "Obud Boost"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Obud Boost"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Aira and owner's"
+      },
+      {
+        "text" : "increase of attack and evasion speed"
+      }
+    ]
   },
   "0583" : {
-    "statusDescription" : "Odin's Power"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Odin's Power"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "text" : "Decrease DEF, MDEF"
+      }
+    ]
   },
   "0584" : {
-    "statusDescription" : "Fighter Mode"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Fighter Mode"
+      },
+      {
+        "text" : "Ernoa's fighter mode"
+      }
+    ]
   },
   "0605" : {
-    "statusDescription" : "Magma Floor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Magma Floor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "When recieiving damange"
+      },
+      {
+        "text" : "Chance for Magma to Erupt from the body"
+      }
+    ]
   },
   "0606" : {
-    "statusDescription" : "Granatic Armor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Granatic Armor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduction of damage for deeter and owner"
+      },
+      {
+        "text" : "HP Consumed at end of duration"
+      }
+    ]
   },
   "0607" : {
-    "statusDescription" : "Pyroclastic"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Pyroclastic"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Weapon of Deeter and Owner"
+      },
+      {
+        "text" : "Change to Fire Property"
+      },
+      {
+        "text" : "Raise Weapon's Damange"
+      }
+    ]
   },
   "0608" : {
-    "statusDescription" : "Ash"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Ash"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Accuracy Drops"
+      },
+      {
+        "text" : "Skill, Magic Failes on fixed chance"
+      },
+      {
+        "text" : "Receiving Fire Property Damage Increase"
+      }
+    ]
   },
   "0611" : {
-    "statusDescription" : "Magic Candy"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Magic Candy"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Raise MATK"
+      },
+      {
+        "text" : "Fixed Casting Time Reduce"
+      },
+      {
+        "text" : "Casting cannot be interrupted"
+      },
+      {
+        "text" : "A Certain amount of SP reduced every 10 seconds"
+      }
+    ]
   },
   "0613" : {
-    "statusDescription" : "Board\/Embark Status"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Board\/Embark Status"
+      }
+    ]
   },
   "0616" : {
-    "statusDescription" : "After Macro Delay"
+    "statusDescription" : [
+      {
+        "color" : "#FFFF00",
+        "text" : "After Macro Delay"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot use macro"
+      }
+    ]
   },
   "0618" : {
-    "statusDescription" : "Malang Island Cat Can"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Malang Island Cat Can"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "When hunting monsters"
+      },
+      {
+        "text" : "Exp, JOB exp Increase"
+      },
+      {
+        "text" : "Item Drop Increase"
+      }
+    ]
   },
   "0620" : {
-    "statusDescription" : "Crush Strike "
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Crush Strike "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase short distance physical attack damage"
+      }
+    ]
   },
   "0621" : {
-    "statusDescription" : "Monster Transformation"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Monster Transformation"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Transforms into a monster"
+      }
+    ]
   },
   "0622" : {
-    "statusDescription" : "Sitting"
+    "statusDescription" : [
+      {
+        "color" : "#BEBEFA",
+        "text" : "Sitting"
+      }
+    ]
   },
   "0632" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease Variable Casting Time"
+      }
+    ]
   },
   "0633" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATK Speed Increase"
+      }
+    ]
   },
   "0634" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATK Increase"
+      }
+    ]
   },
   "0635" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "MATK Increase"
+      }
+    ]
   },
   "0636" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Gain extra JOB Exp"
+      }
+    ]
   },
   "0637" : {
-    "statusDescription" : "Unable to recover status"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Unable to recover status"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Unable to recover HP, SPstatus"
+      }
+    ]
   },
   "0638" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF amount is set"
+      }
+    ]
   },
   "0639" : {
-    "statusDescription" : "%s"
+    "statusDescription" : [
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "MDEF amount is set"
+      }
+    ]
   },
   "0640" : {
-    "statusDescription" : "DEF amount is fixed at certain percentage"
+    "statusDescription" : [
+      {
+        "text" : "DEF amount is fixed at certain percentage"
+      }
+    ]
   },
   "0641" : {
-    "statusDescription" : "MDEF amount is fixed at certain percentage"
+    "statusDescription" : [
+      {
+        "text" : "MDEF amount is fixed at certain percentage"
+      }
+    ]
   },
   "0646" : {
-    "statusDescription" : "Sealed Mirror"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sealed Mirror"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Certain amount of HP recovered"
+      },
+      {
+        "text" : "Certain Amount of SP recovered"
+      },
+      {
+        "text" : "Cannot Move"
+      },
+      {
+        "text" : "Chance to not receive damange"
+      },
+      {
+        "text" : "When using Skill, will get Randomly Debuffed"
+      },
+      {
+        "text" : "When receiving damange, effect is lifted"
+      }
+    ]
   },
   "0647" : {
-    "statusDescription" : "ASPD Reinforce Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "ASPD Reinforce Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Attack Speed"
+      }
+    ]
   },
   "0650" : {
-    "statusDescription" : "Firecracker"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Firecracker"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increases all stats by 3"
+      },
+      {
+        "text" : "Increase Atk, Matk"
+      }
+    ]
   },
   "0652" : {
-    "statusDescription" : "The 16th Night"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "The 16th Night"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Remove fixed casting"
+      },
+      {
+        "text" : "Reduce Variable Casting"
+      },
+      {
+        "text" : "Increase MATK Item"
+      },
+      {
+        "text" : "Consume SP of certain amount per second"
+      }
+    ]
   },
   "0654" : {
-    "statusDescription" : "Step on Shadow"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Step on Shadow"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Unable to Move"
+      },
+      {
+        "text" : "Release Special Skill"
+      },
+      {
+        "text" : "Unable to use Stealth or Teleport Skill or Item"
+      },
+      {
+        "text" : "Emergency Call Skills cannot be used"
+      }
+    ]
   },
   "0655" : {
-    "statusDescription" : "Futile Shadows"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Futile Shadows"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Null the relfection effect of Physical or magic attack "
+      },
+      {
+        "text" : "Chance to fail skill use"
+      }
+    ]
   },
   "0656" : {
-    "statusDescription" : "Shadow Warrior"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shadow Warrior"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give Double Attack Effect"
+      },
+      {
+        "text" : "Consumption of certain amount of SP per second"
+      },
+      {
+        "text" : "After getting attacked after certain number of times, the status clears"
+      }
+    ]
   },
   "0657" : {
-    "statusDescription" : "Distorted Crescent"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Distorted Crescent"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Effects granted on base level"
+      }
+    ]
   },
   "0658" : {
-    "statusDescription" : "Ancient Spirit of Daebujeok"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ancient Spirit of Daebujeok"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Give Demon type Monster"
+      },
+      {
+        "text" : "Physical, Magic damage is increased"
+      }
+    ]
   },
   "0659" : {
-    "statusDescription" : "Illusion of Dim Moonlight"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Illusion of Dim Moonlight"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP and SP randomly increase and decrease"
+      },
+      {
+        "text" : "When receiving magic attack,"
+      },
+      {
+        "text" : "Half the Damage will be on another target"
+      }
+    ]
   },
   "0660" : {
-    "statusDescription" : "Omnius Red Moon"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Omnius Red Moon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Specific HP Recovery Skill"
+      },
+      {
+        "text" : "Instead of Recovery, receive damage"
+      },
+      {
+        "text" : "Receive 1\/2 damage of recovery"
+      }
+    ]
   },
   "0662" : {
-    "statusDescription" : "Battle Pill"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Battle Pill"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATK, MATK à¾ÔèÁ¢Öé¹ "
+      },
+      {
+        "text" : "MHP, MSP Å´Å§ "
+      }
+    ]
   },
   "0664" : {
-    "statusDescription" : "Red Booster"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Red Booster"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "text" : "Incrase ASPD"
+      },
+      {
+        "text" : "Variable Cast Time Reduced"
+      },
+      {
+        "text" : "Physical\/Magical Attack has chance"
+      },
+      {
+        "text" : "to Autocast Improve Concentration"
+      }
+    ]
   },
   "0666" : {
-    "statusDescription" : "Mystic Powder"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mystic Powder"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase FLEE, LUK"
+      }
+    ]
   },
   "0670" : {
-    "statusDescription" : "Mysterious Water"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Mysterious Water"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover Certain Amount of HP in every 3 seconds"
+      },
+      {
+        "text" : "Doesn't have effect in Berserk condition"
+      }
+    ]
   },
   "0675" : {
-    "statusDescription" : "Full Spray of Flowers"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Full Spray of Flowers"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan Flee "
+      },
+      {
+        "text" : "Meningkatkan Perfect Dodge "
+      }
+    ]
   },
   "0681" : {
-    "statusDescription" : "Semua statistik"
+    "statusDescription" : [
+      {
+        "text" : "Semua statistik"
+      },
+      {
+        "text" : "meningkat dengan cepat."
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0685" : {
-    "statusDescription" : "Almighty"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Almighty"
+      },
+      {
+        "text" : "Increase in ATK, MATK"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0702" : {
-    "statusDescription" : "Meningkatkan serangan fisik"
+    "statusDescription" : [
+      {
+        "text" : "Meningkatkan serangan fisik"
+      },
+      {
+        "text" : "terhadap monster Demi-Human"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0703" : {
-    "statusDescription" : "Meningkatkan serangan magic"
+    "statusDescription" : [
+      {
+        "text" : "Meningkatkan serangan magic"
+      },
+      {
+        "text" : "terhadap monster Demi-Human"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0704" : {
-    "statusDescription" : "Mengurangi serangan dari"
+    "statusDescription" : [
+      {
+        "text" : "Mengurangi serangan dari"
+      },
+      {
+        "text" : "monster Demi-Human"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0705" : {
-    "statusDescription" : "Accumulating Energy"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Accumulating Energy"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0706" : {
-    "statusDescription" : "Accumulating Energy"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Accumulating Energy"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0707" : {
-    "statusDescription" : "Accumulating Energy"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Accumulating Energy"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0711" : {
-    "statusDescription" : "Power of Fenrir"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Power of Fenrir"
+      },
+      {
+        "text" : "MATK+"
+      },
+      {
+        "text" : "Mengurangi Fixed Casting"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0715" : {
-    "statusDescription" : "Frigg's Song"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Frigg's Song"
+      },
+      {
+        "text" : "MHP increase"
+      },
+      {
+        "text" : "recover certain HP in every 1 sec"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0716" : {
-    "statusDescription" : "Offertorium"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Offertorium"
+      },
+      {
+        "text" : "Heal amount you use will increase"
+      },
+      {
+        "text" : "Sp consumed amount for all skills will increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0717" : {
-    "statusDescription" : "Intense Telekinesis"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Intense Telekinesis"
+      },
+      {
+        "text" : "Telekinesis magic attack rate will increase"
+      },
+      {
+        "text" : "Decrease consume SP for Telekinesis Magic"
+      },
+      {
+        "text" : "Decrease floating casting"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0720" : {
-    "statusDescription" : "Full Throttle"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Full Throttle"
+      },
+      {
+        "text" : "Movement speed increase"
+      },
+      {
+        "text" : "All State increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0721" : {
-    "statusDescription" : "Rebound"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Rebound"
+      },
+      {
+        "text" : "Decrease Movement speed"
+      },
+      {
+        "text" : "HP, SP not naturally recover"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0722" : {
-    "statusDescription" : "UNLIMIT"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "UNLIMIT"
+      },
+      {
+        "text" : "Increase long distance P. Atk rate"
+      },
+      {
+        "text" : "DEF, MDEF Massively decrease"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0723" : {
-    "statusDescription" : "King's Grace"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "King's Grace"
+      },
+      {
+        "text" : "Unbeatable"
+      },
+      {
+        "text" : "Cannot use item"
+      },
+      {
+        "text" : "Cannot move nor attack"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0730" : {
-    "statusDescription" : "DARK CROW"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "DARK CROW"
+      },
+      {
+        "text" : "Expand short distance P.damage"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0736" : {
-    "statusDescription" : "Chill"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Chill"
+      },
+      {
+        "text" : "Do not get the burning effect"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0737" : {
-    "statusDescription" : "Burn"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Burn"
+      },
+      {
+        "text" : "Reduce the damage"
+      },
+      {
+        "text" : "from Fire monsters"
+      },
+      {
+        "text" : "Reduce the Fire tolerance"
+      },
+      {
+        "text" : "Constant Fire damage"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0752" : {
-    "statusDescription" : "Binding Trap"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Binding Trap"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Decrease moving speed"
+      }
+    ]
   },
   "0753" : {
-    "statusDescription" : "Eternal Chain"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Eternal Chain"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Activate Chain action for random chance"
+      }
+    ]
   },
   "0755" : {
-    "statusDescription" : "Crimson Marker"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Crimson Marker"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "FLEE decrease"
+      }
+    ]
   },
   "0756" : {
-    "statusDescription" : "Howling Mine"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Howling Mine"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Howling Mine Status"
+      }
+    ]
   },
   "0758" : {
-    "statusDescription" : "Platinum Altar"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Platinum Altar"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATK increase"
+      }
+    ]
   },
   "0759" : {
-    "statusDescription" : "Heat Barrel"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Heat Barrel"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATK increase"
+      },
+      {
+        "text" : "HIT decrease"
+      },
+      {
+        "text" : "ASPD increase"
+      },
+      {
+        "text" : "Fixed Casting Time decrease"
+      }
+    ]
   },
   "0760" : {
-    "statusDescription" : "Anti Material Blast"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Anti Material Blast"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Resistance decrease to none attribute attack"
+      }
+    ]
   },
   "0762" : {
-    "statusDescription" : "Sword clan"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sword clan"
+      },
+      {
+        "text" : "STR + 1, VIT + 1"
+      },
+      {
+        "text" : "MHP + 30, MSP + 10"
+      }
+    ]
   },
   "0763" : {
-    "statusDescription" : "Arcwand Clan"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Arcwand Clan"
+      },
+      {
+        "text" : "INT + 1, DEX + 1"
+      },
+      {
+        "text" : "MHP + 30, MSP + 10"
+      }
+    ]
   },
   "0764" : {
-    "statusDescription" : "Goldenmace Clan"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Goldenmace Clan"
+      },
+      {
+        "text" : "LUK + 1, INT + 1"
+      },
+      {
+        "text" : "MHP + 30, MSP + 10"
+      }
+    ]
   },
   "0765" : {
-    "statusDescription" : "Crossbow Clan"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Crossbow Clan"
+      },
+      {
+        "text" : "DEX + 1, AGI + 1"
+      },
+      {
+        "text" : "MHP + 30, MSP + 10"
+      }
+    ]
   },
   "0766" : {
-    "statusDescription" : "Curse of Water"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Curse of Water"
+      },
+      {
+        "text" : "Meningkatkan Regen HP"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0767" : {
-    "statusDescription" : "Curse of Fire"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Curse of Fire"
+      },
+      {
+        "text" : "Meningkatkan Regen HP"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0768" : {
-    "statusDescription" : "Healthy 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Healthy 30 seconds"
+      },
+      {
+        "text" : "MHP Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0769" : {
-    "statusDescription" : "Magical 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Magical 30 seconds"
+      },
+      {
+        "text" : "MSP Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0770" : {
-    "statusDescription" : "Lighter 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lighter 30 seconds"
+      },
+      {
+        "text" : "FLEE Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0771" : {
-    "statusDescription" : "Fast 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fast 30 seconds"
+      },
+      {
+        "text" : "ASPD Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0772" : {
-    "statusDescription" : "Defensive 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Defensive 30 seconds"
+      },
+      {
+        "text" : "DEF Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0773" : {
-    "statusDescription" : "Safer 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Safer 30 seconds"
+      },
+      {
+        "text" : "MDEF Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0774" : {
-    "statusDescription" : "Lucky 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Lucky 30 seconds"
+      },
+      {
+        "text" : "CRI Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0775" : {
-    "statusDescription" : "Accurate 30 seconds"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Accurate 30 seconds"
+      },
+      {
+        "text" : "HIT Increase"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0776" : {
-    "statusDescription" : "³ à¢µá´¹ÃÐËÇèÒ§¤¹à»ç¹áÅÐ¤¹µÒÂ!"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "³ à¢µá´¹ÃÐËÇèÒ§¤¹à»ç¹áÅÐ¤¹µÒÂ!"
+      },
+      {
+        "text" : "¡ÓÅÑ§ã¨µèÍÊÙéÅ´Å§ 50%"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0778" : {
-    "statusDescription" : "After Effect"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "After Effect"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot use item"
+      },
+      {
+        "text" : "Cannot use skill"
+      },
+      {
+        "text" : "Cannot attack"
+      }
+    ]
   },
   "0783" : {
-    "statusDescription" : "Braised Short Ribs"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Braised Short Ribs"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Å´ÃÐÂÐàÇÅÒÃèÒÂáººá»Ã¼Ñ¹ "
+      },
+      {
+        "text" : "Å´»ÃÔÁÒ³¡ÒÃãªé SP "
+      }
+    ]
   },
   "0784" : {
-    "statusDescription" : "Braised Spareribs"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Braised Spareribs"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "à¾ÔèÁ¤ÇÒÁàÃçÇã¹¡ÒÃâ¨ÁµÕ "
+      },
+      {
+        "text" : "Å´»ÃÔÁÒ³¡ÒÃãªé SP "
+      }
+    ]
   },
   "0786" : {
-    "statusDescription" : "Enhance property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enhance property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Additional damage to Ground property monsters."
+      },
+      {
+        "text" : "Increase resistance from Fire property."
+      }
+    ]
   },
   "0790" : {
-    "statusDescription" : "Enhance property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enhance property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Additional damage to Neutral property monsters.."
+      },
+      {
+        "text" : "Increase resistance from Neutral property."
+      }
+    ]
   },
   "0867" : {
-    "statusDescription" : "Limit Power Booster"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Limit Power Booster"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "text" : "Increase HIT, FLEE"
+      },
+      {
+        "text" : "Increase ASPD"
+      },
+      {
+        "text" : "SP Consumption Reduced"
+      },
+      {
+        "text" : "Fixed Cast Reduced"
+      }
+    ]
   },
   "0873" : {
-    "statusDescription" : "Shining Holly Water"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shining Holly Water"
+      },
+      {
+        "text" : "10% Damage reduce from Ritual Room, Prontera Invasion dungeons"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0875" : {
-    "statusDescription" : "Petrification"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Petrification"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot move nor dodge"
+      },
+      {
+        "text" : "Decrease MHP"
+      }
+    ]
   },
   "0876" : {
-    "statusDescription" : "Frost"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Frost"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot move nor dodge"
+      },
+      {
+        "text" : "Physical, Magical Defense reduced"
+      }
+    ]
   },
   "0877" : {
-    "statusDescription" : "Stun "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Stun "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot move nor dodge"
+      }
+    ]
   },
   "0878" : {
-    "statusDescription" : "Sleep"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Sleep"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot move nor dodge"
+      },
+      {
+        "text" : "Critical damage rate increased"
+      }
+    ]
   },
   "0880" : {
-    "statusDescription" : "Petrification"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Petrification"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0881" : {
-    "statusDescription" : "Burning "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Burning "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Damaging every 3 seconds"
+      },
+      {
+        "text" : "Magic Defense reduced"
+      }
+    ]
   },
   "0882" : {
-    "statusDescription" : "Isolation"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Isolation"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot Move, Attack, Skill nor Use Item"
+      }
+    ]
   },
   "0883" : {
-    "statusDescription" : "Poison "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Poison "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Loss of Sight"
+      },
+      {
+        "text" : "Physical Defense reduced"
+      },
+      {
+        "text" : "Reducing MHP every 3 seconds"
+      }
+    ]
   },
   "0884" : {
-    "statusDescription" : "Curse "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Curse "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Movement Speed and Physical attack reduced"
+      },
+      {
+        "text" : "LUK became 0 "
+      }
+    ]
   },
   "0885" : {
-    "statusDescription" : "Silence "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Silence "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Cannot use Skill"
+      }
+    ]
   },
   "0886" : {
-    "statusDescription" : "Confusion "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Confusion "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Move in random"
+      }
+    ]
   },
   "0890" : {
-    "statusDescription" : "Fatal Poison"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Fatal Poison"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "HP loss every second "
+      }
+    ]
   },
   "0891" : {
-    "statusDescription" : "Fear "
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Fear "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Immobilized for 2 seconds"
+      },
+      {
+        "text" : "Hit Rate and Dodge rate reduced"
+      }
+    ]
   },
   "0893" : {
-    "statusDescription" : "Stoop"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Stoop"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Damage Reduce"
+      }
+    ]
   },
   "0894" : {
-    "statusDescription" : "CN Powdering"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "CN Powdering"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Reduce ATK, MATK"
+      },
+      {
+        "text" : "Decrease Movement Speed"
+      },
+      {
+        "text" : "Increase HP, SP recovery"
+      }
+    ]
   },
   "0896" : {
-    "statusDescription" : "SV Root Twist"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "SV Root Twist"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Immobilized"
+      },
+      {
+        "text" : "100 Poison Damage per second"
+      }
+    ]
   },
   "0897" : {
-    "statusDescription" : "Give Neutral property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Neutral property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0898" : {
-    "statusDescription" : "Give Water property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Water property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0899" : {
-    "statusDescription" : "Give Earth property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Earth property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0900" : {
-    "statusDescription" : "Give Fire property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Fire property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0901" : {
-    "statusDescription" : "Give Wind property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Wind property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0902" : {
-    "statusDescription" : "Give Poison property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Poison property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0903" : {
-    "statusDescription" : "Give Holy property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Holy property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0904" : {
-    "statusDescription" : "Give Shadow property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Shadow property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0905" : {
-    "statusDescription" : "Give Ghost property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Ghost property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0906" : {
-    "statusDescription" : "Give Undead property to the weapon"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Give Undead property to the weapon"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0907" : {
-    "statusDescription" : "Resist to Neutral property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Neutral property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0908" : {
-    "statusDescription" : "Resist to Water property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Water property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0909" : {
-    "statusDescription" : "Resist to Earth property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Earth property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0910" : {
-    "statusDescription" : "Resist to Fire property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Fire property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0911" : {
-    "statusDescription" : "Resist to Wind property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Wind property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0912" : {
-    "statusDescription" : "Resist to Poison property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Poison property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0913" : {
-    "statusDescription" : "Resist to Holy property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Holy property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0914" : {
-    "statusDescription" : "Resist to Shadow property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Shadow property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0915" : {
-    "statusDescription" : "Resist to Ghost property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Ghost property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0916" : {
-    "statusDescription" : "Resist to Undead property"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Resist to Undead property"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0917" : {
-    "statusDescription" : "Scar of Tarou"
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "Scar of Tarou"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Stun for 2 seconds"
+      },
+      {
+        "text" : "Drain MHP every second."
+      }
+    ]
   },
   "0918" : {
-    "statusDescription" : "Arclouse Dash"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Arclouse Dash"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Movement Speed"
+      },
+      {
+        "text" : "Increase AGI"
+      }
+    ]
   },
   "0919" : {
-    "statusDescription" : "Tuna Party"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Tuna Party"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Defense damage"
+      }
+    ]
   },
   "0920" : {
-    "statusDescription" : "Bunch of Shrimp"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bunch of Shrimp"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATK, MATK + 10%"
+      }
+    ]
   },
   "0921" : {
-    "statusDescription" : "Fresh Shrimp"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Fresh Shrimp"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover small HP"
+      }
+    ]
   },
   "0933" : {
-    "statusDescription" : "Hide"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Hide"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "0935" : {
-    "statusDescription" : "Kahluna Milk"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Kahluna Milk"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recovers 10 MHP every 10 sec for 3 minutes"
+      }
+    ]
   },
   "0936" : {
-    "statusDescription" : "Basil"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Basil"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recovers 5 MSP every 10 sec for 3 minutes"
+      }
+    ]
   },
   "0937" : {
-    "statusDescription" : "Sprite Mable"
+    "statusDescription" : [
+      {
+        "text" : "Sprite Mable"
+      }
+    ]
   },
   "0938" : {
-    "statusDescription" : "Increase Drop Rate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Increase Drop Rate"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan Drop Rate item +30%."
+      }
+    ]
   },
   "0939" : {
-    "statusDescription" : "EXP up"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "EXP up"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan EXP +30% yang diterima dari monster."
+      }
+    ]
   },
   "0940" : {
-    "statusDescription" : "Job EXP up"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Job EXP up"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan Job EXP yang diterima dari monster."
+      }
+    ]
   },
   "0941" : {
-    "statusDescription" : "Decrease Death Penalty"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Decrease Death Penalty"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Menurunkan Death Penalty -50%."
+      }
+    ]
   },
   "0942" : {
-    "statusDescription" : "Expand Storage"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Expand Storage"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Memperbanyak Storage sebanyak 300 slot item."
+      }
+    ]
   },
   "0966" : {
-    "statusDescription" : "Magical Bullet"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Magical Bullet"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase in magic damage"
+      }
+    ]
   },
   "0983" : {
-    "statusDescription" : "Increase Drop Rate"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Increase Drop Rate"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan Drop Rate item +20%."
+      }
+    ]
   },
   "0984" : {
-    "statusDescription" : "EXP Up"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "EXP Up"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan EXP +20% yang diterima dari monster."
+      }
+    ]
   },
   "0985" : {
-    "statusDescription" : "Job EXP up"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Job EXP up"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Meningkatkan Job EXP yang diterima dari monster."
+      }
+    ]
   },
   "0995" : {
-    "statusDescription" : "Small Mana Potion"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Small Mana Potion"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Recover SP for every 5 seconds"
+      },
+      {
+        "text" : "No effect during Berserk status"
+      }
+    ]
   },
   "0996" : {
-    "statusDescription" : "Shining Defense Scroll"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Shining Defense Scroll"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase Defense & Magic Defense"
+      }
+    ]
   },
   "1001" : {
-    "statusDescription" : "Bed of Honor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bed of Honor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase in damage to some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Swordman, Thief class Bed of Honor monsters."
+      },
+      {
+        "text" : "Receive less damage from some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Acolyte, Merchant class Bed of Honor monsters."
+      },
+      {
+        "text" : "Exclude MVP Monsters."
+      }
+    ]
   },
   "1002" : {
-    "statusDescription" : "Bed of Honor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bed of Honor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase in damage to some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Acolyte, Merchant class Bed of Honor monsters."
+      },
+      {
+        "text" : "Receive less damage from some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Mage, Archer class Bed of Honor monsters."
+      },
+      {
+        "text" : "Exclude MVP Monsters."
+      }
+    ]
   },
   "1003" : {
-    "statusDescription" : "Bed of Honor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bed of Honor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase in damage to some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Mage, Archer class Bed of Honor monsters."
+      },
+      {
+        "text" : "Receive less damage from some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Swordman, Thief class Bed of Honor monsters."
+      },
+      {
+        "text" : "Exclude MVP Monsters."
+      }
+    ]
   },
   "1004" : {
-    "statusDescription" : "Bed of Honor"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Bed of Honor"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase in damage to some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Bed of Honor MVP Monsters."
+      },
+      {
+        "text" : "Receive less damage from some monsters of Bed of Honor."
+      },
+      {
+        "text" : "List : Bed of Honor MVP Monsters."
+      }
+    ]
   },
   "1027" : {
-    "statusDescription" : "Criatura Cookie"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Criatura Cookie"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "à¾ÔèÁ¤ÇÒÁàÃçÇã¹¡ÒÃâ¨ÁµÕ "
+      },
+      {
+        "text" : "Å´ÃÐÂÐàÇÅÒ¢Í§ Variable Cast Time "
+      }
+    ]
   },
   "1031" : {
-    "statusDescription" : "Enhance attack"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enhance attack"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "ATK + 3%."
+      }
+    ]
   },
   "1032" : {
-    "statusDescription" : "Enhance magic attack"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enhance magic attack"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "MATK + 3%."
+      }
+    ]
   },
   "1033" : {
-    "statusDescription" : "Enhance attack speed"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Enhance attack speed"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Delay after attacks - 10%."
+      }
+    ]
   },
   "1034" : {
-    "statusDescription" : "Ultimate Cook"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Ultimate Cook"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase ATK, MATK"
+      },
+      {
+        "text" : "Increase All State"
+      }
+    ]
   },
   "1065" : {
-    "statusDescription" : "Infinity Drink"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Infinity Drink"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Increase MaxHP, MaxSP"
+      },
+      {
+        "text" : "Increase Critical Damage, Long Range Damage,"
+      },
+      {
+        "text" : "All Property Magic"
+      },
+      {
+        "text" : "Casting Doesn't Break"
+      }
+    ]
   },
   "1107" : {
-    "statusDescription" : "Counter State Aktif"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Counter State Aktif"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "Bisa digunakan"
+      },
+      {
+        "text" : "Counter Slash"
+      }
+    ]
   },
   "1137" : {
-    "statusDescription" : "Cherry Blossom Cake"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Cherry Blossom Cake"
+      },
+      {
+        "text" : "Meningkatkan Damage "
+      },
+      {
+        "text" : "Terhadap monster sedang "
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "1511" : {
-    "statusDescription" : "Sturdy Feather"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Sturdy Feather"
+      },
+      {
+        "text" : "MHP + 5%"
+      },
+      {
+        "text" : "MSP + 5%"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "1512" : {
-    "statusDescription" : "Swift Feather"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Swift Feather"
+      },
+      {
+        "text" : "FLEE + 25"
+      },
+      {
+        "text" : "HIT + 25"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "1513" : {
-    "statusDescription" : "Brilliant Feather"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Brilliant Feather"
+      },
+      {
+        "text" : "CRI + 10"
+      },
+      {
+        "text" : "ASPD + 1"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   },
   "1514" : {
-    "statusDescription" : "Heavy Feather"
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "Heavy Feather"
+      },
+      {
+        "text" : "ATK + 7%"
+      },
+      {
+        "text" : "MATK + 7%"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
   }
 }

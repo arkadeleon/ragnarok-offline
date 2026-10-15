@@ -13,6 +13,7 @@ final class StatusInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .korean)
         let statusInfoTable = StatusInfoTable(locale: locale)
         let provoke = statusInfoTable.localizedStatusDescription(forStatusID: 0)
-        XCTAssertEqual(provoke, "프로보크(Provoke)")
+        XCTAssertEqual(provoke?.lines.first?.text, "프로보크(Provoke)")
+        XCTAssertEqual(provoke?.lines.first?.color, "#9BCA9B")
     }
 }
