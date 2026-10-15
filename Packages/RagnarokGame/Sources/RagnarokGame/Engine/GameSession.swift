@@ -820,6 +820,8 @@ final public class GameSession {
             }
         case let packet as PACKET_ZC_ATTACK_RANGE:
             context.playerStatus.update(from: packet)
+        case let packet as PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE:
+            mapScene?.onPlayerTooFarToAttack(targetID: packet.targetAID)
         case let packet as PACKET_ZC_RECOVERY:
             if let statusProperty = StatusProperty(rawValue: Int(packet.type)) {
                 switch statusProperty {

@@ -81,6 +81,10 @@ extension MapScene {
         scheduleArrivalAction()
     }
 
+    public func onPlayerTooFarToAttack(targetID: GameObjectID) {
+        attackMonster(targetID: targetID)
+    }
+
     // MARK: - Map Object
 
     public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {

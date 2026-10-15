@@ -692,7 +692,7 @@ extension MapScene {
 // MARK: - Player Actions
 
 extension MapScene {
-    private func attackMonster(targetID: GameObjectID) {
+    func attackMonster(targetID: GameObjectID) {
         guard let target = objects[targetID], !target.isDead else {
             return
         }
