@@ -186,6 +186,9 @@ struct MapSceneView: View {
             onSelectNextTarget: {
                 runtime.selectNextTarget()
             },
+            onDeselectTarget: {
+                runtime.scene.selectTarget(nil)
+            },
             onPickup: {
                 runtime.scene.pickUpNearestItem()
             },

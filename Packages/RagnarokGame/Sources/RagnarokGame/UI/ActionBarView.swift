@@ -12,6 +12,7 @@ struct ActionBarView: View {
     var selectedTargetObjectType: MapObjectType?
     var onTargetAction: () -> Void
     var onSelectNextTarget: () -> Void
+    var onDeselectTarget: () -> Void
     var onPickup: () -> Void
     var onSit: () -> Void
     var onShortcut: (Shortcut) -> Void
@@ -24,6 +25,17 @@ struct ActionBarView: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 6) {
             HStack(spacing: 6) {
+                if selectedTargetObjectType != nil {
+                    ActionRoundButton(
+                        color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)),
+                        action: onDeselectTarget
+                    ) {
+                        Image(systemName: "xmark")
+                            .font(.game(size: 16, weight: .bold))
+                            .foregroundStyle(.white)
+                    }
+                }
+
                 ActionRoundButton(
                     color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)),
                     action: {
@@ -209,7 +221,7 @@ private struct ActionSlotButton: View {
         return gameSession
     }()
 
-    ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
+    ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .frame(width: 480, height: 360, alignment: .bottomTrailing)
         .environment(gameSession)
@@ -230,7 +242,7 @@ private struct ActionSlotButton: View {
         return gameSession
     }()
 
-    ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
+    ActionBarView(selectedTargetObjectType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 16)
         .padding(.vertical)
