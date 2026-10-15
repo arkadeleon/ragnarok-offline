@@ -37,10 +37,13 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
     /// The camera uses the other half.
     var isWidescreen = true
 
+    #if os(iOS)
     private let thumbstickView = ThumbstickView()
     private let thumbstickFeedbackGenerator = UISelectionFeedbackGenerator()
     private var thumbstickOctant: Int?
     private var thumbstickPanGestureRecognizer: UIPanGestureRecognizer!
+    #endif
+
     private var cameraPanGestureRecognizer: UIPanGestureRecognizer!
     private var twoFingerGestureRecognizers: [UIGestureRecognizer] = []
 
@@ -82,16 +85,21 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
         mtkView.depthStencilPixelFormat = renderer.configuration.depthStencilPixelFormat
         mtkView.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 1)
         view.addSubview(mtkView)
+
+        #if os(iOS)
         view.addSubview(thumbstickView)
+        #endif
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tapGestureRecognizer.delegate = self
         mtkView.addGestureRecognizer(tapGestureRecognizer)
 
+        #if os(iOS)
         thumbstickPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleThumbstickPan(_:)))
         thumbstickPanGestureRecognizer.maximumNumberOfTouches = 1
         thumbstickPanGestureRecognizer.delegate = self
         mtkView.addGestureRecognizer(thumbstickPanGestureRecognizer)
+        #endif
 
         cameraPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleCameraPan(_:)))
         cameraPanGestureRecognizer.delegate = self
@@ -169,6 +177,7 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
         }
     }
 
+    #if os(iOS)
     @objc func handleThumbstickPan(_ gestureRecognizer: UIPanGestureRecognizer) {
         let translation = gestureRecognizer.translation(in: mtkView)
 
@@ -217,6 +226,7 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
             runtime?.scene.thumbstickValue = .zero
         }
     }
+    #endif
 
     @objc func handleCameraPan(_ gestureRecognizer: UIPanGestureRecognizer) {
         guard let scene = runtime?.scene else {
@@ -282,6 +292,7 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
 
     // MARK: - UIGestureRecognizerDelegate
 
+    #if os(iOS)
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         // Two fingers on the map mean the player is zooming or tilting the camera, not moving.
         if gestureRecognizer === thumbstickPanGestureRecognizer {
@@ -314,6 +325,7 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
             return true
         }
     }
+    #endif
 }
 
 #elseif canImport(AppKit)
