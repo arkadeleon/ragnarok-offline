@@ -139,9 +139,7 @@ public final class MapScene {
         tileSelector = nil
         selectTarget(nil)
 
-        arrivalTask?.cancel()
-        arrivalTask = nil
-        pendingArrivalAction = nil
+        cancelArrivalAction()
     }
 
     func jump(toPosition position: SIMD2<Int>) {
@@ -161,9 +159,7 @@ public final class MapScene {
         objects[player.objectID] = player
         hpspBarObjectIDs.insert(player.objectID)
 
-        arrivalTask?.cancel()
-        arrivalTask = nil
-        pendingArrivalAction = nil
+        cancelArrivalAction()
     }
 }
 
@@ -406,6 +402,7 @@ extension MapScene {
                 } else {
                     tileSelector = nil
                 }
+                cancelArrivalAction()
                 requestMove(to: position)
             }
         case .mapObject(let objectID):
@@ -551,6 +548,12 @@ extension MapScene {
         action()
     }
 
+    private func cancelArrivalAction() {
+        arrivalTask?.cancel()
+        arrivalTask = nil
+        pendingArrivalAction = nil
+    }
+
     private func requestMove(to position: SIMD2<Int>) {
         thumbstickStopPosition = nil
         gameSession?.requestMove(to: position)
@@ -631,9 +634,7 @@ extension MapScene {
                 return
             }
         } else {
-            arrivalTask?.cancel()
-            arrivalTask = nil
-            pendingArrivalAction = nil
+            cancelArrivalAction()
             tileSelector = nil
         }
 
@@ -782,6 +783,7 @@ extension MapScene {
     }
 
     func toggleSit() {
+        cancelArrivalAction()
         gameSession?.requestAction(player.action.actionType == .sit ? .stand_up : .sit_down)
     }
 }
