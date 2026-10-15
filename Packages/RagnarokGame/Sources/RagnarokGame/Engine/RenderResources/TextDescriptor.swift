@@ -31,9 +31,9 @@ struct TextDescriptor: Hashable {
         ]
     }
 
-    /// Draws the text at 2 pixels per point.
+    /// Draws the text at 4 pixels per point, so it stays sharp when the camera zooms in.
     func makeImage() -> CGImage? {
-        let scale: CGFloat = 2
+        let scale: CGFloat = 4
         let imageSize = CGSize(width: CGFloat(size.x) * scale, height: CGFloat(size.y) * scale)
         let renderer = CGImageRenderer(size: imageSize, flipped: true)
         return renderer.image(for: text, scale: scale)
@@ -66,6 +66,10 @@ extension CGImageRenderer {
                 CGPoint(x: 0, y: 1),
                 CGPoint(x: -1, y: 0),
                 CGPoint(x: 1, y: 0),
+                CGPoint(x: -1, y: -1),
+                CGPoint(x: 1, y: -1),
+                CGPoint(x: -1, y: 1),
+                CGPoint(x: 1, y: 1),
             ]
             for offset in offsets {
                 outlineString.draw(at: CGPoint(x: 1 + offset.x, y: 1 + offset.y))

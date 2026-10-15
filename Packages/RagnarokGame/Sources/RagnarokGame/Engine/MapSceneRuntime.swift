@@ -108,41 +108,56 @@ final class MapSceneRuntime {
         )
     }
 
-    func makeRenderSnapshot(at now: ContinuousClock.Instant) -> MapSceneRenderSnapshot {
+    func makeRenderSnapshot(at time: ContinuousClock.Instant) -> MapSceneRenderSnapshot {
         let worldPositions = makeWorldPositions()
 
         var snapshot = MapSceneRenderSnapshot(fog: scene.fog)
-
         snapshot.world = renderResources.world
+        snapshot.tileSelector = makeTileSelector(at: time)
+        snapshot.targetSelector = makeTargetSelector(at: time)
         snapshot.spriteDrawables = renderResources.spriteDrawables
+        snapshot.effects = makeEffects(worldPositions: worldPositions)
+        snapshot.bars = makeBars(at: time, worldPositions: worldPositions)
+        snapshot.texts = makeTexts(worldPositions: worldPositions)
+        snapshot.combatTexts = makeCombatTexts(at: time, worldPositions: worldPositions)
+        snapshot.combatTextTexture = renderResources.combatTextTexture
+        return snapshot
+    }
 
-        if let tileSelector = scene.tileSelector,
-           !tileSelector.isExpired(at: now),
-           scene.mapGrid.contains(tileSelector.position) {
-            snapshot.tileSelector = MapSceneRenderSnapshot.TileSelector(
-                position: tileSelector.position,
-                cell: scene.mapGrid[tileSelector.position]
-            )
+    private func makeTileSelector(at time: ContinuousClock.Instant) -> MapSceneRenderSnapshot.TileSelector? {
+        guard let tileSelector = scene.tileSelector,
+              !tileSelector.isExpired(at: time),
+              scene.mapGrid.contains(tileSelector.position) else {
+            return nil
         }
+        return MapSceneRenderSnapshot.TileSelector(
+            position: tileSelector.position,
+            cell: scene.mapGrid[tileSelector.position]
+        )
+    }
 
-        if let targetSelector = scene.targetSelector,
-           let object = scene.objects[targetSelector.objectID],
-           object.effectState != .cloak,
-           let drawable = renderResources.spriteDrawables.first(where: { $0.objectID == targetSelector.objectID }) {
-            let spriteTop = drawable.layers
-                .flatMap(\.vertices)
-                .map(\.position.y)
-                .max() ?? 0
-            // The ring's lowest point sits 6 pixels above the sprite, and the gem rests 11 pixels above the ring.
-            let ringCenterHeight = spriteTop + 6 + 10
-            snapshot.targetSelector = MapSceneRenderSnapshot.TargetSelector(
-                worldPosition: drawable.worldPosition,
-                ringCenterHeight: ringCenterHeight,
-                gemTopHeight: ringCenterHeight + 10 + 11 + 10 - targetSelector.gemDrop(at: now)
-            )
+    private func makeTargetSelector(at time: ContinuousClock.Instant) -> MapSceneRenderSnapshot.TargetSelector? {
+        guard let targetSelector = scene.targetSelector,
+              let object = scene.objects[targetSelector.objectID],
+              object.effectState != .cloak,
+              let drawable = renderResources.spriteDrawables.first(where: { $0.objectID == targetSelector.objectID }) else {
+            return nil
         }
+        let spriteTop = drawable.layers
+            .flatMap(\.vertices)
+            .map(\.position.y)
+            .max() ?? 0
+        // The ring's lowest point sits 6 pixels above the sprite, and the gem rests 11 pixels above the ring.
+        let ringCenterHeight = spriteTop + 6 + 10
+        return MapSceneRenderSnapshot.TargetSelector(
+            worldPosition: drawable.worldPosition,
+            ringCenterHeight: ringCenterHeight,
+            gemTopHeight: ringCenterHeight + 10 + 11 + 10 - targetSelector.gemDrop(at: time)
+        )
+    }
 
-        snapshot.effects = scene.effects.values
+    private func makeEffects(worldPositions: [GameObjectID : SIMD3<Float>]) -> [MapSceneRenderSnapshot.Effect] {
+        scene.effects.values
             .compactMap { effect in
                 guard let resourceGroup = renderResources.effectResource(for: effect.id) else {
                     return nil
@@ -155,8 +170,13 @@ final class MapSceneRuntime {
             .sorted {
                 $0.resourceGroup.creationTime < $1.resourceGroup.creationTime
             }
+    }
 
-        snapshot.bars = scene.hpspBarObjectIDs.compactMap { objectID in
+    private func makeBars(
+        at time: ContinuousClock.Instant,
+        worldPositions: [GameObjectID : SIMD3<Float>]
+    ) -> [MapSceneRenderSnapshot.Bar] {
+        let hpspBars = scene.hpspBarObjectIDs.compactMap { objectID -> MapSceneRenderSnapshot.Bar? in
             guard let object = scene.objects[objectID],
                   object.effectState != .cloak,
                   let worldPosition = worldPositions[objectID] else {
@@ -178,30 +198,83 @@ final class MapSceneRuntime {
             )
         }
 
-        snapshot.bars += scene.objects.values.compactMap { object in
+        let castBars = scene.objects.values.compactMap { object -> MapSceneRenderSnapshot.Bar? in
             guard let cast = object.cast,
                   object.effectState != .cloak,
                   let worldPosition = worldPositions[object.objectID] else {
                 return nil
             }
-            let mesh = BarMesh.mesh(cast: cast, time: now)
+            let mesh = BarMesh.mesh(cast: cast, time: time)
             return MapSceneRenderSnapshot.Bar(
                 vertices: mesh.vertices,
                 worldPosition: worldPosition
             )
         }
 
+        return hpspBars + castBars
+    }
+
+    /// The target selector's object shows its name 2 points under its HP bar.
+    /// Without a bar, the name is centered where the bar would be.
+    private func makeTexts(worldPositions: [GameObjectID : SIMD3<Float>]) -> [MapSceneRenderSnapshot.Text] {
+        guard let targetSelector = scene.targetSelector,
+              let target = scene.objects[targetSelector.objectID],
+              let targetPosition = worldPositions[target.objectID],
+              target.effectState != .cloak else {
+            return []
+        }
+
+        let targetNameText = TextDescriptor(name: target.name, objectType: target.type)
+        let textTextures = renderResources.textTextureCache.synchronize(texts: [targetNameText])
+        guard let textTexture = textTextures[targetNameText] else {
+            return []
+        }
+
+        var barBottom: Float? = nil
+        if scene.hpspBarObjectIDs.contains(target.objectID) {
+            let barMesh = BarMesh.mesh(
+                hp: target.hp,
+                maxHp: target.maxHp,
+                sp: target.sp,
+                maxSp: target.maxSp,
+                objectType: target.type
+            )
+            barBottom = barMesh.vertices.map(\.position.y).min()
+        }
+
+        let textTop = if let barBottom {
+            barBottom - 2
+        } else {
+            targetNameText.size.y / 2
+        }
+        let textMesh = TextMesh(size: targetNameText.size, top: textTop)
+        let text = MapSceneRenderSnapshot.Text(
+            vertices: textMesh.vertices,
+            worldPosition: targetPosition + [0, 0, -0.8],
+            texture: textTexture
+        )
+        return [text]
+    }
+
+    private func makeCombatTexts(
+        at time: ContinuousClock.Instant,
+        worldPositions: [GameObjectID : SIMD3<Float>]
+    ) -> [MapSceneRenderSnapshot.CombatText] {
+        guard let combatTextGlyphSet = renderResources.combatTextGlyphSet else {
+            return []
+        }
+
         // A target shows one combo text at a time: the newest one that has started
         // hides the ones before it.
         let comboTexts = scene.combatTexts
-            .filter { $0.kind.isCombo && $0.startTime <= now }
+            .filter { $0.kind.isCombo && $0.startTime <= time }
             .map { ($0.target.objectID, $0) }
         let latestComboTexts = Dictionary(
             comboTexts,
             uniquingKeysWith: { $0.startTime > $1.startTime ? $0 : $1 }
         )
 
-        snapshot.combatTexts = scene.combatTexts
+        return scene.combatTexts
             .filter { combatText in
                 if combatText.kind.isCombo, let latestComboText = latestComboTexts[combatText.target.objectID] {
                     combatText === latestComboText
@@ -210,13 +283,9 @@ final class MapSceneRuntime {
                 }
             }
             .compactMap { combatText in
-                guard let combatTextGlyphSet = renderResources.combatTextGlyphSet else {
-                    return nil
-                }
-
                 let anchor = worldPositions[combatText.target.objectID] ?? combatText.target.initialWorldPosition
                 guard let animation = combatText.animation(
-                    at: now,
+                    at: time,
                     anchor: anchor,
                     cameraAzimuth: scene.camera.azimuth
                 ) else {
@@ -238,10 +307,6 @@ final class MapSceneRuntime {
                     worldPosition: animation.worldPosition
                 )
             }
-
-        snapshot.combatTextTexture = renderResources.combatTextTexture
-
-        return snapshot
     }
 
     private func makeWorldPositions() -> [GameObjectID : SIMD3<Float>] {

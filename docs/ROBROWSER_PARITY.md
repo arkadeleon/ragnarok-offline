@@ -215,12 +215,16 @@
 
 ### 6.1 实体信息
 
-- [ ] **P0** 实体名字
-  - 需要：发送 `CZ_REQNAME(2)`，处理 `ZC_ACK_REQNAME`、`ZC_ACK_REQNAMEALL(1–3)`。
-  - 要显示的内容：玩家名、组队名、公会名、职位、称号，以及怪物名和 NPC 名。
-  - 显示规则：常驻显示，鼠标悬停时高亮，受 `/showname` 偏好控制。
-  - 组队成员的名字要用 `partyColors` 着色。
-  - 单机先做怪物名和 NPC 名，组队名、公会名、称号可以后补。
+- [x] **P0** 实体名字
+  - 现状：`TargetSelector` 指向的实体会在血条下方显示名字（`MapSceneRuntime.makeTexts`）。
+    - 名字来自出生包，rAthena 已经填好，不需要 `CZ_REQNAME`。
+    - `#` 及后面的部分不显示。颜色和 roBrowser 一致：怪物 `#ffc6c6`，NPC `#94bdf7`，其他白色。
+    - 文字用 `TextDescriptor` 描述，`TextTextureCache` 生成贴图，`TextRenderer` 绘制。12 点 Arial，带 1 点黑色描边，跟着镜头缩放。
+  - 和 roBrowser 的差异
+    - roBrowser 在鼠标悬停和锁定目标时显示名字。这里只显示 `TargetSelector` 指向的实体，没有悬停显示；开始攻击、对话或施放技能后，`TargetSelector` 隐藏，名字也一起隐藏。
+    - roBrowser 的名字是固定大小的屏幕叠加层，这里跟着镜头缩放。
+    - `/showname` 只影响粗体和公会职位、称号的显示，不是显示开关。
+  - 联机才需要（P3·联机）：发送 `CZ_REQNAME(2)`，处理 `ZC_ACK_REQNAME`、`ZC_ACK_REQNAMEALL(1–3)`，显示组队名、公会名、职位、称号，组队成员的名字用 `partyColors` 着色。
   - 参考：`Engine/MapEngine/Entity.js#onEntityIdentity`、`Renderer/Entity/EntityDisplay.js`
 - [ ] **P3·联机** 按 GID 查角色名
   - 需要：`CZ_REQNAME_BYGID(2)` / `ZC_ACK_REQNAME_BYGID(2)`。
@@ -309,7 +313,7 @@
   - 方案：用 `ragnarok-data-converter` 转换成 JSON。坐标、类型、图标以韩服为准；type 3 的文字按“地图名 + 坐标”匹配各地区客户端的翻译，匹配不到用韩文。
   - 和 rAthena 的对应：约 62% 的招牌和 rAthena 的 NPC 在同一格，城镇商店基本都能对上；约 15% 所在的地图 rAthena 没有 NPC（如 `rag_fes_a`、`prt_mk`），约 19% 离最近的 NPC 超过 5 格（主要是 `tra_fild01`–`03`）。全部显示会有不少招牌悬在空格子上，可以只在附近 1–2 格内有 NPC 时才显示。
   - 需要：进入地图时取出这张地图的招牌，在对应格子上方显示始终面向屏幕的图标，切换地图时清除。不需要服务端的包。
-  - type 3 的文字需要先有世界坐标的文字渲染，和实体名字（§6.1）共用。
+  - type 3 的文字可以用 `TextDescriptor` 和 `TextRenderer` 绘制，和实体名字（§6.1）共用。
   - roBrowser 运行时直接读客户端文件，按类型用固定的屏幕偏移，没有使用高度和颜色；文字翻译读 `SystemEN/Sign_Data.lub`，按韩文原文查英文。
   - 参考：`Renderer/SignboardManager.js`、`UI/Components/EntitySignboard/`、`DB/DBManager.js#loadSignBoardList/loadSignBoardData`、`Engine/MapEngine.js#onMapChange`
 
@@ -1135,9 +1139,8 @@ roBrowser 发送、RagnarokGame 未发送的包，按功能分组：
 ## 附录 D：建议实施顺序
 
 1. **P0 单机战斗闭环**
-   - 技能：目标选择（§2、§8.1）、冷却遮罩（§8.1）、技能地面单元（§8.2）。
+   - 技能：公共延迟（§8.1）、技能地面单元（§8.2）。
    - 状态：状态图标栏（§8.3）、bodyState 和 healthState 外观（§6.2）。
-   - 目标信息：怪物名和 NPC 名（§6.1）。
    - 攻击距离不够时自动靠近（§7）。
    - 插卡（§13）。
    - 音量和开关（§12）。
