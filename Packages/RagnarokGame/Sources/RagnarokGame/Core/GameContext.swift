@@ -24,6 +24,7 @@ final class GameContext {
     var inventory: Inventory
     var skillList: SkillList
     var skillCooldowns: [Int : SkillCooldown]
+    var statusChanges: [StatusChange]
     var shortcutList: ShortcutList
     let messageCenter: MessageCenter
 
@@ -39,6 +40,7 @@ final class GameContext {
         self.inventory = Inventory()
         self.skillList = SkillList()
         self.skillCooldowns = [:]
+        self.statusChanges = []
         self.shortcutList = ShortcutList()
         self.messageCenter = MessageCenter(
             itemInfoTable: itemInfoTable,
@@ -52,6 +54,19 @@ final class GameContext {
             return
         }
         skillCooldowns[cooldown.skillID] = cooldown
+    }
+
+    /// A status which is already active keeps its place in the list.
+    func setStatusChange(_ statusChange: StatusChange) {
+        if let index = statusChanges.firstIndex(where: { $0.statusID == statusChange.statusID }) {
+            statusChanges[index] = statusChange
+        } else {
+            statusChanges.append(statusChange)
+        }
+    }
+
+    func removeStatusChange(statusID: Int) {
+        statusChanges.removeAll(where: { $0.statusID == statusID })
     }
 }
 

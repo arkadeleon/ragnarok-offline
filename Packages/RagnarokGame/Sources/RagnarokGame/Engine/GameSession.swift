@@ -206,6 +206,7 @@ final public class GameSession {
         context.inventory = Inventory()
         context.skillList = SkillList()
         context.skillCooldowns = [:]
+        context.statusChanges = []
         context.shortcutList = ShortcutList()
         context.messageCenter.messages = []
     }
@@ -960,6 +961,20 @@ final public class GameSession {
             context.messageCenter.addMessage(for: objectAction, account: account)
         case let packet as PACKET_ZC_HP_INFO:
             mapScene?.onMapObjectHealthUpdated(objectID: packet.GID, hp: Int(packet.HP), maxHp: Int(packet.maxHP))
+        case let packet as PACKET_ZC_MSG_STATE_CHANGE:
+            if packet.AID == account?.accountID {
+                if packet.state != 0 {
+                    let statusChange = StatusChange(statusID: Int(packet.index), startTime: .now, duration: nil)
+                    context.setStatusChange(statusChange)
+                } else {
+                    context.removeStatusChange(statusID: Int(packet.index))
+                }
+            }
+        case let packet as PACKET_ZC_MSG_STATE_CHANGE3:
+            if packet.AID == account?.accountID, packet.state != 0 {
+                let statusChange = StatusChange(from: packet, startTime: .now)
+                context.setStatusChange(statusChange)
+            }
         case let packet as PACKET_ZC_NOTIFY_EFFECT:
             if let effect = NotifyEffect(rawValue: Int(packet.effectId)) {
                 mapScene?.onSpecialEffectSpawned(effect: effect, objectID: packet.aid)
