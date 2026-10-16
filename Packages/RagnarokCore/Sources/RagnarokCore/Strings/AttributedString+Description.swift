@@ -48,7 +48,7 @@ extension AttributedString {
 }
 
 extension Color {
-    init(hex: Int) {
+    public init(hex: Int) {
         let red = Double((hex >> 16) & 0xFF) / 255.0
         let green = Double((hex >> 8) & 0xFF) / 255.0
         let blue = Double(hex & 0xFF) / 255.0

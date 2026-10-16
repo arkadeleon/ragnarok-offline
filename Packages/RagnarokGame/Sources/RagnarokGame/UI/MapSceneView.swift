@@ -80,9 +80,12 @@ struct MapSceneView: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            MinimapView(scene: runtime.scene)
-                .padding(.top, 16)
-                .padding(.trailing, 16)
+            VStack(alignment: .trailing, spacing: 16) {
+                MinimapView(scene: runtime.scene)
+
+                StatusIconBarView(statusChanges: gameContext.statusChanges)
+            }
+            .padding(16)
         }
         .overlay(alignment: isWidescreen ? .bottomLeading : .bottom) {
             #if os(iOS)

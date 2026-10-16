@@ -19,6 +19,7 @@ final class GameContext {
     let mapInfoTable: MapInfoTable
     let messageStringTable: MessageStringTable
     let skillInfoTable: SkillInfoTable
+    let statusInfoTable: StatusInfoTable
 
     var playerStatus: CharacterStatus
     var inventory: Inventory
@@ -35,6 +36,7 @@ final class GameContext {
         self.mapInfoTable = MapInfoTable()
         self.messageStringTable = MessageStringTable()
         self.skillInfoTable = SkillInfoTable()
+        self.statusInfoTable = StatusInfoTable()
 
         self.playerStatus = CharacterStatus()
         self.inventory = Inventory()
