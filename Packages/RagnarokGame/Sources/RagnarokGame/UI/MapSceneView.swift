@@ -21,6 +21,7 @@ struct MapSceneView: View {
 
     @State private var screenWidth: CGFloat = 320
     @State private var chatBoxOffsetY: CGFloat = 0
+    @State private var actionBarHeight: CGFloat = 0
     @State private var presentedMenuItem: MenuItem?
 
     var body: some View {
@@ -61,7 +62,7 @@ struct MapSceneView: View {
                 actionBar
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 16)
-                    .padding(.bottom, ChatBoxView.contentHeight(for: .compact) + 16)
+                    .padding(.bottom, ChatBoxView.contentHeight(for: .compact) + 8)
             }
         }
         .overlay(alignment: .topLeading) {
@@ -80,12 +81,15 @@ struct MapSceneView: View {
             }
         }
         .overlay(alignment: .topTrailing) {
-            VStack(alignment: .trailing, spacing: 16) {
+            VStack(alignment: .trailing, spacing: 8) {
                 MinimapView(scene: runtime.scene)
 
                 StatusIconBarView(statusChanges: gameContext.statusChanges)
             }
-            .padding(16)
+            .frame(maxHeight: .infinity, alignment: .top)
+            .padding(.top, 16)
+            .padding(.trailing, 16)
+            .padding(.bottom, statusIconBarBottomPadding)
         }
         .overlay(alignment: isWidescreen ? .bottomLeading : .bottom) {
             #if os(iOS)
@@ -202,6 +206,11 @@ struct MapSceneView: View {
                 gameSession.useShortcut(shortcut)
             }
         )
+        .onGeometryChange(for: CGFloat.self) { geometryProxy in
+            geometryProxy.size.height
+        } action: { height in
+            actionBarHeight = height
+        }
     }
 
     private var isUltraWidescreen: Bool {
@@ -219,6 +228,14 @@ struct MapSceneView: View {
             280
         } else {
             screenWidth - 16 * 2
+        }
+    }
+
+    private var statusIconBarBottomPadding: CGFloat {
+        if isWidescreen {
+            16 + actionBarHeight + 8
+        } else {
+            ChatBoxView.contentHeight(for: .compact) + 8 + actionBarHeight + 8
         }
     }
 }

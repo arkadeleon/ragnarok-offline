@@ -429,11 +429,20 @@
 
 ### 8.3 状态图标
 
-- [ ] **P0** 状态图标栏
-  - 需要：`ZC_MSG_STATE_CHANGE(1–5)`。显示 EFST 图标、剩余时间，悬停或长按显示状态说明。
-  - 状态同时要驱动实体特效（`addStateEffect`）和屏幕效果（中毒、黑暗、幻觉）。
-  - `RagnarokLocalization.StatusInfoTable` 已存在但还没用上。
+- [x] **P0** 状态图标栏
+  - 现状：处理自己的 `ZC_MSG_STATE_CHANGE3`（开始，带时间）和 `ZC_MSG_STATE_CHANGE`（结束），这是当前版本服务端发的两个包。
+    - 小地图下方显示 EFST 图标，没有图标的状态不显示。图标从上往下排，一列排满后在左边另起一列，不会排到操作栏上。
+    - 扇形倒计时：最后 1 分钟是橙色，之前是白色。到期后服务端还没移除时，不画扇形。9999 表示没有时间限制，不画扇形。
+    - 点击图标在左侧显示状态说明（`StatusInfoTable`），剩余时间每秒更新。点击说明可以关闭。
+  - 和 roBrowser 的差异
+    - 最多显示 3 列。放不下时，第 3 列最后一格显示 `+n`，点击后显示全部，再点 `chevron.right` 收起。roBrowser 没有折叠。
+    - macOS 上也要点击才显示说明，roBrowser 是鼠标悬停时显示。
+    - roBrowser 移动端可以用按钮隐藏整个状态图标栏（`MobileUI.js#toggleStatus`），我们没有。
   - 参考：`UI/Components/StatusIcons/`、`DB/Status/StatusInfo.js`、`StatusConst.js`、`Entity.js#onEntityStatusChange`
+- [ ] **P1** 状态驱动的屏幕效果
+  - 需要：状态图标加上或移除时，同时加上或移除对应的屏幕效果，比如幻觉的画面翻转。
+  - 中毒和黑暗的屏幕效果见 §6.2 healthState；Sight、Ruwach 的特效见 §6.2 effectState。
+  - 参考：`Renderer/ScreenEffectManager.js#parseStatus/cleanStatusEffect`（由 `StatusIcons.js#update` 调用）、`Renderer/Effects/Shaders/VerticalFlip.js`
 
 ### 8.4 职业专属交互窗口
 
@@ -997,7 +1006,6 @@
 | 冒险者中介所（bt_adventureragency） | 组队招募（roBrowser 未实现） | P3 |
 | 声望（bt_repute） | §19 | P3 |
 | 状态窗口 4 转属性（POW/STA/WIS/SPL/CON/CRT） | `WinStats` 的 Trait 页签；加点接口已有，UI 未显示 | P2 |
-| 状态图标栏 | §8.3 | P0 |
 | 表情窗口（Emoticons） | §6.4 | P2 |
 | 公告栏（Announce） | §15.1 | P2 |
 
@@ -1142,13 +1150,14 @@ roBrowser 发送、RagnarokGame 未发送的包，按功能分组：
 
 1. **P0 单机战斗闭环**
    - 技能：公共延迟（§8.1）、技能地面单元（§8.2）。
-   - 状态：状态图标栏（§8.3）、bodyState 和 healthState 外观（§6.2）。
+   - 状态：bodyState 和 healthState 外观（§6.2）。
    - 插卡（§13）。
    - 音量和开关（§12）。
 2. **P1 战斗手感与表现**
    - 受击动作和死亡同步（§2）、伤害数字补齐（§7）、攻击模式（§7）。
    - 特效：`SkillEffectTable` 和 `EffectTable` 先移植 1 转、2 转的常用技能，再逐步补齐；使用物品的特效；缺的特效类型和触发点（§9）。
    - 击退和跳跃（§6.5）、物品掉落动画和光柱（§6.5）。
+   - 状态驱动的屏幕效果（§8.3）。
 3. **P1 职业与成长**
    - 手推车（§6.3、§14）、坐骑、猎鹰和狼（§6.3），effectState 和 virtue 外观（§6.2）。
    - 技能树、按技能选择施放动作（§8.1）。

@@ -257,7 +257,7 @@ private struct WorldMapOverlayView: View {
             let maps = world.maps.map({ ($0.rect, entrancesByGroupIndex[$0.groupIndex] != nil) })
 
             for (rect, isDungeonEntrance) in entrances + maps {
-                let path = Path(roundedRect: rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
+                let path = Path(roundedRect: rect.scaled(by: fittedScale), cornerRadius: cornerRadius, style: .circular)
 
                 guard isDungeonEntrance else {
                     context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: strokeWidth)
@@ -312,13 +312,13 @@ private struct WorldMapOverlayView: View {
             }
 
             if let currentMap = world.maps.first(where: { $0.mapName.mapNameStem == currentMapName.mapNameStem }) {
-                let path = Path(roundedRect: currentMap.rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
+                let path = Path(roundedRect: currentMap.rect.scaled(by: fittedScale), cornerRadius: cornerRadius, style: .circular)
                 context.fill(path, with: .color(Color(#colorLiteral(red: 1, green: 0.5019607843, blue: 0, alpha: 0.5))))
                 context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: strokeWidth)
             }
 
             if let selectedMap {
-                let path = Path(roundedRect: selectedMap.rect.scaled(by: fittedScale), cornerRadius: cornerRadius)
+                let path = Path(roundedRect: selectedMap.rect.scaled(by: fittedScale), cornerRadius: cornerRadius, style: .circular)
                 context.fill(path, with: .color(Color(#colorLiteral(red: 0, green: 0.5019607843, blue: 1, alpha: 0.5))))
                 context.stroke(path, with: .color(Color(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 0.4784313725))), lineWidth: strokeWidth)
             }
