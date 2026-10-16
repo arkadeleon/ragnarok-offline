@@ -39,7 +39,7 @@ struct StatusChangeDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(statusChange.fail) { statusChange in
                             NavigationLink(value: statusChange) {
-                                Text(statusChange.displayName)
+                                StatusChangeCell(statusChange: statusChange)
                             }
                         }
                     }
@@ -53,7 +53,7 @@ struct StatusChangeDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(statusChange.endOnStart) { statusChange in
                             NavigationLink(value: statusChange) {
-                                Text(statusChange.displayName)
+                                StatusChangeCell(statusChange: statusChange)
                             }
                         }
                     }
@@ -67,7 +67,7 @@ struct StatusChangeDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(statusChange.endReturn) { statusChange in
                             NavigationLink(value: statusChange) {
-                                Text(statusChange.displayName)
+                                StatusChangeCell(statusChange: statusChange)
                             }
                         }
                     }
@@ -81,7 +81,7 @@ struct StatusChangeDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(statusChange.endOnEnd) { statusChange in
                             NavigationLink(value: statusChange) {
-                                Text(statusChange.displayName)
+                                StatusChangeCell(statusChange: statusChange)
                             }
                         }
                     }
