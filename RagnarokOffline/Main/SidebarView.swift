@@ -154,11 +154,9 @@ struct SidebarView: View {
                     SidebarRow("Skill Database", iconName: "arrow.up.heart.fill", iconColor: .purple)
                 }
 
-                #if DEBUG
                 NavigationLink(value: SidebarItem.statusChangeDatabase) {
                     SidebarRow("Status Change Database", iconName: "moon.zzz.fill", iconColor: .indigo)
                 }
-                #endif
             } header: {
                 SectionHeaderView("Database")
             }
