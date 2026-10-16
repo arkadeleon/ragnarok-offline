@@ -971,9 +971,20 @@ final public class GameSession {
                 }
             }
         case let packet as PACKET_ZC_MSG_STATE_CHANGE3:
-            if packet.AID == account?.accountID, packet.state != 0 {
-                let statusChange = StatusChange(from: packet, startTime: .now)
-                context.setStatusChange(statusChange)
+            if packet.AID == account?.accountID {
+                switch OfficialStatusChangeID(rawValue: Int(packet.index)) {
+                case .efst_postdelay, .efst_groundmagic:
+                    if packet.remain > 0 {
+                        context.setGlobalSkillCooldown(startTime: .now, duration: .milliseconds(packet.remain))
+                    }
+                default:
+                    break
+                }
+
+                if packet.state != 0 {
+                    let statusChange = StatusChange(from: packet, startTime: .now)
+                    context.setStatusChange(statusChange)
+                }
             }
         case let packet as PACKET_ZC_NOTIFY_EFFECT:
             if let effect = NotifyEffect(rawValue: Int(packet.effectId)) {

@@ -404,10 +404,10 @@
     - roBrowser 没有自动选最近的怪物。
     - 只选中模式接近 roBrowser 移动端打开 `TouchTargeting` 时的行为。
   - 参考：`UI/Components/SkillTargetSelection/`、`Renderer/Effects/MagicTarget.js`、`MapControl.js`、`UI/Components/MobileUI/MobileUI.js#toggleTouchTargeting`
-- [ ] **P0** 技能冷却和公共延迟
-  - 现状：已处理 `ZC_SKILL_POSTDELAY`，操作栏上会显示单个技能的冷却遮罩。公共延迟还没有做。
-  - 需要：处理 `ZC_SKILL_POSTDELAY`，在操作栏上这个技能的格子里显示冷却遮罩。新的冷却比现有的先结束时，保留现有的。
-  - 公共延迟：`ZC_MSG_STATE_CHANGE` 收到自己的 `EFST_POSTDELAY` 或 `EFST_GROUNDMAGIC` 时，操作栏上所有技能都显示冷却。依赖 §8.3。
+- [x] **P0** 技能冷却和公共延迟
+  - 单个技能：处理 `ZC_SKILL_POSTDELAY`，在操作栏上这个技能的格子里显示冷却遮罩。新的冷却比现有的先结束时，保留现有的。
+  - 公共延迟：`ZC_MSG_STATE_CHANGE3` 收到自己的 `EFST_POSTDELAY` 或 `EFST_GROUNDMAGIC`，且剩余时间大于 0 时，快捷栏里所有技能都显示冷却，同样保留更晚结束的冷却。
+  - 冷却按技能记录，roBrowser 按快捷栏格子记录。所以冷却期间才放进快捷栏的技能，我们会显示冷却，roBrowser 不显示。
   - roBrowser 只在快捷栏上显示冷却，技能列表上不显示。
   - 参考：`Skill.js#onSetSkillDelay`、`UI/Components/ShortCut/ShortCut.js#setSkillDelay/setGlobalSkillDelay`、`Entity.js#onEntityStatusChange`
 - [ ] **P1** 技能树
@@ -1149,7 +1149,7 @@ roBrowser 发送、RagnarokGame 未发送的包，按功能分组：
 ## 附录 D：建议实施顺序
 
 1. **P0 单机战斗闭环**
-   - 技能：公共延迟（§8.1）、技能地面单元（§8.2）。
+   - 技能：技能地面单元（§8.2）。
    - 状态：bodyState 和 healthState 外观（§6.2）。
    - 插卡（§13）。
    - 音量和开关（§12）。

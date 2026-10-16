@@ -58,6 +58,16 @@ final class GameContext {
         skillCooldowns[cooldown.skillID] = cooldown
     }
 
+    /// Puts every skill in the shortcut list on cooldown, such as after a skill with a cast delay.
+    func setGlobalSkillCooldown(startTime: ContinuousClock.Instant, duration: Duration) {
+        for shortcut in shortcutList.rows.joined() {
+            if case .skill(let skillID, _) = shortcut {
+                let cooldown = SkillCooldown(skillID: skillID, startTime: startTime, duration: duration)
+                setSkillCooldown(cooldown)
+            }
+        }
+    }
+
     /// A status which is already active keeps its place in the list.
     func setStatusChange(_ statusChange: StatusChange) {
         if let index = statusChanges.firstIndex(where: { $0.statusID == statusChange.statusID }) {
