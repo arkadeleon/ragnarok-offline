@@ -526,12 +526,20 @@ final class DatabaseModel {
             }
 
             self.statusChanges = statusChanges.map { statusChange in
-                let localizedDescription = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)?
-                    .lines
+                let lines = statusInfoTable.localizedStatusDescription(forStatusID: statusChange.icon.rawValue)?.lines ?? []
+                let hasName = lines.first.map({ $0.text != "%s" }) ?? false
+                let localizedName = hasName ? lines.first?.text : nil
+                let localizedDescription = lines.dropFirst(hasName ? 1 : 0)
                     .filter({ $0.text != "%s" })
                     .map(\.text)
                     .joined(separator: "\n")
-                let model = StatusChangeModel(mode: mode, statusChange: statusChange, localizedDescription: localizedDescription, resourceManager: resourceManager)
+                let model = StatusChangeModel(
+                    mode: mode,
+                    statusChange: statusChange,
+                    localizedName: localizedName,
+                    localizedDescription: localizedDescription.isEmpty ? nil : localizedDescription,
+                    resourceManager: resourceManager
+                )
                 return model
             }
 

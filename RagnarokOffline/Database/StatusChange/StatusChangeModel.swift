@@ -19,6 +19,7 @@ final class StatusChangeModel {
     private let statusChange: StatusChange
     private let resourceManager: ResourceManager
 
+    let localizedName: String?
     let localizedDescription: String?
 
     var iconImage: Resources.Image?
@@ -28,7 +29,7 @@ final class StatusChangeModel {
     var endOnEnd: [StatusChangeModel] = []
 
     var displayName: String {
-        statusChange.status.stringValue
+        localizedName ?? statusChange.status.stringValue
     }
 
     var attributes: [DatabaseRecordAttribute] {
@@ -40,9 +41,10 @@ final class StatusChangeModel {
         return attributes
     }
 
-    init(mode: DatabaseMode, statusChange: StatusChange, localizedDescription: String?, resourceManager: ResourceManager) {
+    init(mode: DatabaseMode, statusChange: StatusChange, localizedName: String?, localizedDescription: String?, resourceManager: ResourceManager) {
         self.mode = mode
         self.statusChange = statusChange
+        self.localizedName = localizedName
         self.localizedDescription = localizedDescription
         self.resourceManager = resourceManager
     }

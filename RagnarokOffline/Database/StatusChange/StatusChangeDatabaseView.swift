@@ -58,7 +58,7 @@ struct StatusChangeDatabaseView: View {
         }
 
         let filteredStatusChanges = statusChanges.filter { statusChange in
-            statusChange.displayName.localizedStandardContains(searchText)
+            statusChange.displayName.localizedStandardContains(searchText) || statusChange.status.stringValue.localizedStandardContains(searchText)
         }
         return filteredStatusChanges
     }
