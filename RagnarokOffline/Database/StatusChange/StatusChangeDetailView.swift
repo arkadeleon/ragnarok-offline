@@ -18,6 +18,22 @@ struct StatusChangeDetailView: View {
                 Text("Info", tableName: "Database")
             }
 
+            if let skill = statusChange.durationLookupSkill {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        NavigationLink(value: skill) {
+                            SkillCell(skill: skill)
+                        }
+                    }
+                } header: {
+                    Text("Duration Lookup", tableName: "Database")
+                }
+            } else if let durationLookup = statusChange.durationLookup {
+                DatabaseRecordSectionView(text: durationLookup) {
+                    Text("Duration Lookup", tableName: "Database")
+                }
+            }
+
             if !statusChange.fail.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {

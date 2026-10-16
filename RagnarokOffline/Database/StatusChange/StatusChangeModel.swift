@@ -23,6 +23,7 @@ final class StatusChangeModel {
     let localizedDescription: String?
 
     var iconImage: Resources.Image?
+    var durationLookupSkill: SkillModel?
     var fail: [StatusChangeModel] = []
     var endOnStart: [StatusChangeModel] = []
     var endReturn: [StatusChangeModel] = []
@@ -37,6 +38,8 @@ final class StatusChangeModel {
 
         attributes.append(.init(name: LocalizedStringResource("Status", table: "Database"), value: statusChange.status.stringValue))
         attributes.append(.init(name: LocalizedStringResource("Icon", table: "Database"), value: statusChange.icon.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Minimum Rate", table: "Database"), value: (Double(statusChange.minRate) / 10000).formatted(.percent)))
+        attributes.append(.init(name: LocalizedStringResource("Minimum Duration", table: "Database"), value: Duration.milliseconds(statusChange.minDuration).formatted(.units(allowed: [.hours, .minutes, .seconds, .milliseconds], width: .abbreviated))))
 
         return attributes
     }
@@ -62,6 +65,10 @@ final class StatusChangeModel {
 
     @MainActor
     func fetchDetail(database: DatabaseModel) async {
+        if let durationLookup = statusChange.durationLookup {
+            durationLookupSkill = await database.skill(forAegisName: durationLookup)
+        }
+
         if let fail = statusChange.fail {
             self.fail = await database.statusChanges(for: Array(fail))
         }
