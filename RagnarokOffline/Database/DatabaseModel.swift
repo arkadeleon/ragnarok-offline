@@ -50,6 +50,20 @@ struct SpawningMonster: Identifiable {
     }
 }
 
+struct SellingShop: Identifiable {
+    var shopNPC: ShopNPC
+    var map: MapModel
+    var price: Int
+
+    var id: String {
+        shopNPC.npcName
+    }
+
+    var npcDisplayName: String {
+        String(shopNPC.npcName.prefix { $0 != "#" && $0 != ":" })
+    }
+}
+
 @MainActor
 @Observable
 final class DatabaseModel {
@@ -272,24 +286,6 @@ final class DatabaseModel {
         return mapsByName[name]
     }
 
-    func spawnMaps(for monster: (id: Int, aegisName: String)) async -> [SpawnMap] {
-        await fetchScriptCommands()
-
-        var spawnMaps: [SpawnMap] = []
-
-        let monsterSpawns = scriptCommands.monsterSpawns(for: monster)
-        for monsterSpawn in monsterSpawns {
-            if let map = await map(forName: monsterSpawn.mapName) {
-                if !spawnMaps.contains(where: { $0.map.name == map.name }) {
-                    let spawnMap = SpawnMap(map: map, monsterSpawn: monsterSpawn)
-                    spawnMaps.append(spawnMap)
-                }
-            }
-        }
-
-        return spawnMaps
-    }
-
     // MARK: - Monster Database
 
     func fetchMonsters() async {
@@ -362,38 +358,6 @@ final class DatabaseModel {
         }
 
         return droppingMonsters.sorted(using: KeyPathComparator(\.drop.rate, order: .reverse))
-    }
-
-    func spawningMonsters(forMapName mapName: String) async -> [SpawningMonster] {
-        await fetchScriptCommands()
-
-        var spawningMonsters: [SpawningMonster] = []
-        var monsters: [MonsterModel] = []
-
-        let monsterSpawns = scriptCommands.monsterSpawns(forMapName: mapName)
-        for monsterSpawn in monsterSpawns {
-            if let monsterID = monsterSpawn.monsterID {
-                if let monster = await monster(forID: monsterID) {
-                    if !monsters.contains(monster) {
-                        monsters.append(monster)
-
-                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
-                        spawningMonsters.append(spawningMonster)
-                    }
-                }
-            } else if let monsterAegisName = monsterSpawn.monsterAegisName {
-                if let monster = await monster(forAegisName: monsterAegisName) {
-                    if !monsters.contains(monster) {
-                        monsters.append(monster)
-
-                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
-                        spawningMonsters.append(spawningMonster)
-                    }
-                }
-            }
-        }
-
-        return spawningMonsters
     }
 
     // MARK: - Monster Summon Database
@@ -630,5 +594,75 @@ final class DatabaseModel {
         self.npcDatabaseTask = npcDatabaseTask
 
         return await npcDatabaseTask.value
+    }
+
+    func spawnMaps(for monster: (id: Int, aegisName: String)) async -> [SpawnMap] {
+        await fetchScriptCommands()
+
+        var spawnMaps: [SpawnMap] = []
+
+        let monsterSpawns = scriptCommands.monsterSpawns(for: monster)
+        for monsterSpawn in monsterSpawns {
+            if let map = await map(forName: monsterSpawn.mapName) {
+                if !spawnMaps.contains(where: { $0.map.name == map.name }) {
+                    let spawnMap = SpawnMap(map: map, monsterSpawn: monsterSpawn)
+                    spawnMaps.append(spawnMap)
+                }
+            }
+        }
+
+        return spawnMaps
+    }
+
+    func spawningMonsters(forMapName mapName: String) async -> [SpawningMonster] {
+        await fetchScriptCommands()
+
+        var spawningMonsters: [SpawningMonster] = []
+        var monsters: [MonsterModel] = []
+
+        let monsterSpawns = scriptCommands.monsterSpawns(forMapName: mapName)
+        for monsterSpawn in monsterSpawns {
+            if let monsterID = monsterSpawn.monsterID {
+                if let monster = await monster(forID: monsterID) {
+                    if !monsters.contains(monster) {
+                        monsters.append(monster)
+
+                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
+                        spawningMonsters.append(spawningMonster)
+                    }
+                }
+            } else if let monsterAegisName = monsterSpawn.monsterAegisName {
+                if let monster = await monster(forAegisName: monsterAegisName) {
+                    if !monsters.contains(monster) {
+                        monsters.append(monster)
+
+                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
+                        spawningMonsters.append(spawningMonster)
+                    }
+                }
+            }
+        }
+
+        return spawningMonsters
+    }
+
+    func sellingShops(for item: ItemModel) async -> [SellingShop] {
+        await fetchScriptCommands()
+
+        var sellingShops: [SellingShop] = []
+
+        for shopNPC in scriptCommands.shopNPCs(forItemID: item.id) {
+            guard let mapName = shopNPC.mapName,
+                  let map = await map(forName: mapName),
+                  let shopItem = shopNPC.items.first(where: { $0.itemID == item.id }) else {
+                continue
+            }
+
+            let price = shopItem.price == -1 ? item.buy : shopItem.price
+            let sellingShop = SellingShop(shopNPC: shopNPC, map: map, price: price)
+            sellingShops.append(sellingShop)
+        }
+
+        return sellingShops
     }
 }

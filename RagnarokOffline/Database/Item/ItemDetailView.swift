@@ -15,6 +15,7 @@ struct ItemDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var droppingMonsters: [DroppingMonster] = []
+    @State private var sellingShops: [SellingShop] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -93,6 +94,20 @@ struct ItemDetailView: View {
                     Text("Dropped By", tableName: "Database")
                 }
             }
+
+            if !sellingShops.isEmpty {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(sellingShops) { sellingShop in
+                            NavigationLink(value: sellingShop.map) {
+                                MapCell(map: sellingShop.map, secondaryText: sellingShop.npcDisplayName + " (" + sellingShop.price.formatted() + "z)")
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Sold By", tableName: "Database")
+                }
+            }
         }
         .navigationTitle(item.displayName)
         .task {
@@ -100,6 +115,9 @@ struct ItemDetailView: View {
         }
         .task {
             droppingMonsters = await database.droppingMonsters(forItemAegisName: item.aegisName)
+        }
+        .task {
+            sellingShops = await database.sellingShops(for: item)
         }
     }
 }

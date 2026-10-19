@@ -39,6 +39,13 @@ public struct ScriptCommands: Sendable {
         return monsterSpawns
     }
 
+    public func shopNPCs(forItemID itemID: Int) -> [ShopNPC] {
+        let shopNPCs = shopNPCs.filter { shopNPC in
+            shopNPC.items.contains { $0.itemID == itemID }
+        }
+        return shopNPCs
+    }
+
     mutating func merge(_ other: ScriptCommands) {
         mapFlags += other.mapFlags
         monsterSpawns += other.monsterSpawns
