@@ -740,6 +740,22 @@ final class DatabaseModel {
         return await npcDatabaseTask.value
     }
 
+    func mapFlags(forMapName mapName: String) async -> [MapFlag] {
+        await fetchScriptCommands()
+
+        var mapFlags: [MapFlag] = []
+
+        for mapFlag in scriptCommands.mapFlags where mapFlag.mapName == mapName {
+            if mapFlag.value?.lowercased() == "off" {
+                mapFlags.removeAll(where: { $0.flag == mapFlag.flag })
+            } else if !mapFlags.contains(where: { $0.flag == mapFlag.flag && $0.value == mapFlag.value }) {
+                mapFlags.append(mapFlag)
+            }
+        }
+
+        return mapFlags
+    }
+
     func spawnMaps(for monster: (id: Int, aegisName: String)) async -> [SpawnMap] {
         await fetchScriptCommands()
 

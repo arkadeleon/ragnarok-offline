@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/3/4.
 //
 
+import RagnarokDatabase
 import SwiftUI
 
 struct MapDetailView: View {
@@ -13,6 +14,7 @@ struct MapDetailView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(DatabaseModel.self) private var database
 
+    @State private var mapFlags: [MapFlag] = []
     @State private var spawningMonsters: [SpawningMonster] = []
     @State private var warpMaps: [MapModel] = []
 
@@ -31,6 +33,24 @@ struct MapDetailView: View {
             }
             .frame(height: 200)
             .stretchy()
+
+            if !mapFlags.isEmpty {
+                DatabaseRecordSectionView {
+                    Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 10) {
+                        ForEach(mapFlags.indices, id: \.self) { index in
+                            GridRow {
+                                Text(mapFlags[index].flag)
+                                Text(mapFlags[index].value ?? "")
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    }
+                    .monospaced()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                } header: {
+                    Text("Map Flags", tableName: "Database")
+                }
+            }
 
             if !spawningMonsters.isEmpty {
                 DatabaseRecordSectionView {
@@ -69,6 +89,9 @@ struct MapDetailView: View {
         .navigationTitle(map.displayName)
         .task {
             await map.fetchOriginalImage()
+        }
+        .task {
+            mapFlags = await database.mapFlags(forMapName: map.name)
         }
         .task {
             spawningMonsters = await database.spawningMonsters(forMapName: map.name)
