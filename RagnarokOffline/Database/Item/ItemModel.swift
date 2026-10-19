@@ -126,19 +126,19 @@ final class ItemModel {
     var jobs: [String] {
         item.jobs
             .sorted(using: KeyPathComparator(\.intValue))
-            .map(\.stringValue)
+            .map { $0.localizedName.map { String(localized: $0) } ?? $0.stringValue }
     }
 
     var classes: [String] {
         OptionSetSequence(item.classes)
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map(\.stringValue)
+            .map { String(localized: $0.localizedName) }
     }
 
     var displayLocations: [String] {
         OptionSetSequence(item.locations)
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map(\.stringValue)
+            .map { String(localized: $0.localizedName) }
     }
 
     init(mode: DatabaseMode, item: Item, localizedName: String?, localizedDescription: String?, resourceManager: ResourceManager) {

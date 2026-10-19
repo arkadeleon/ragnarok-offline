@@ -81,7 +81,7 @@ struct ItemDatabaseFilterView: View {
                     Section {
                         LazyVGrid(columns: [gridItem], alignment: .leading) {
                             ForEach(filter.availableLocations, id: \.rawValue) { location in
-                                SelectableButton(location.stringValue, isSelected: filter.locations.contains(location)) {
+                                SelectableButton(location.localizedName, isSelected: filter.locations.contains(location)) {
                                     if filter.locations.contains(location) {
                                         filter.locations.remove(location)
                                     } else {

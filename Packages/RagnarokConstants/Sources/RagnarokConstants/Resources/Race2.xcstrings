@@ -1,0 +1,132 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Battlefield" : {
+      "comment" : "Monster race group: battleground monsters"
+    },
+    "Bio Lab" : {
+      "comment" : "Monster race group: monsters in the Biological Laboratory"
+    },
+    "Bio Lab 5 (Acolyte/Merchant)" : {
+      "comment" : "Monster race group: Biological Laboratory 5 acolyte and merchant monsters"
+    },
+    "Bio Lab 5 (MVP)" : {
+      "comment" : "Monster race group: Biological Laboratory 5 MVPs"
+    },
+    "Bio Lab 5 (Mage/Archer)" : {
+      "comment" : "Monster race group: Biological Laboratory 5 mage and archer monsters"
+    },
+    "Bio Lab 5 (Swordman/Thief)" : {
+      "comment" : "Monster race group: Biological Laboratory 5 swordman and thief monsters"
+    },
+    "Clock Tower" : {
+      "comment" : "Monster race group: monsters in the Clock Tower"
+    },
+    "Destroyed Valkyrie Realm" : {
+      "comment" : "Monster race group: monsters in the Destroyed Valkyrie Realm"
+    },
+    "Edda Arunafeltz" : {
+      "comment" : "Monster race group: monsters in the Edda Arunafeltz dungeon"
+    },
+    "Encroached Gephenia" : {
+      "comment" : "Monster race group: monsters in the Encroached Gephenia"
+    },
+    "Episode 16 Defense" : {
+      "comment" : "Monster race group: episode 16 defense monsters"
+    },
+    "Episode 17.2 Alpha" : {
+      "comment" : "Monster race group: episode 17.2 alpha monsters"
+    },
+    "Episode 17.2 Bath" : {
+      "comment" : "Monster race group: episode 17.2 bath monsters"
+    },
+    "Episode 17.2 Beta" : {
+      "comment" : "Monster race group: episode 17.2 beta monsters"
+    },
+    "Faceworm" : {
+      "comment" : "Monster race group: faceworms"
+    },
+    "Glast Heim Abyss" : {
+      "comment" : "Monster race group: monsters in the Glast Heim Abyss"
+    },
+    "Goblin" : {
+      "comment" : "Monster race group: goblins"
+    },
+    "Golem" : {
+      "comment" : "Monster race group: golems"
+    },
+    "Guardian" : {
+      "comment" : "Monster race group: guild castle guardians"
+    },
+    "GvG" : {
+      "comment" : "Monster race group: monsters in guild versus guild"
+    },
+    "Heart Hunter" : {
+      "comment" : "Monster race group: Heart Hunter monsters"
+    },
+    "Illusion of Frozen" : {
+      "comment" : "Monster race group: monsters in the Illusion of Frozen dungeon"
+    },
+    "Illusion of Luanda" : {
+      "comment" : "Monster race group: monsters in the Illusion of Luanda dungeon"
+    },
+    "Illusion of Moonlight" : {
+      "comment" : "Monster race group: monsters in the Illusion of Moonlight dungeon"
+    },
+    "Illusion of Turtle" : {
+      "comment" : "Monster race group: monsters in the Illusion of Turtle dungeon"
+    },
+    "Illusion of Vampire" : {
+      "comment" : "Monster race group: monsters in the Illusion of Vampire dungeon"
+    },
+    "Kobold" : {
+      "comment" : "Monster race group: kobolds"
+    },
+    "Lasagna" : {
+      "comment" : "Monster race group: monsters in Lasagna"
+    },
+    "Malangdo" : {
+      "comment" : "Monster race group: monsters on Malangdo"
+    },
+    "Manuk" : {
+      "comment" : "Monster race group: monsters in Manuk"
+    },
+    "Ninja" : {
+      "comment" : "Monster race group: ninjas"
+    },
+    "Old Glast Heim (Attack/Defense)" : {
+      "comment" : "Monster race group: Old Glast Heim attack and defense monsters"
+    },
+    "Old Glast Heim (Hidden)" : {
+      "comment" : "Monster race group: Old Glast Heim hidden monsters"
+    },
+    "Orc" : {
+      "comment" : "Monster race group: orcs"
+    },
+    "Rachel Sanctuary" : {
+      "comment" : "Monster race group: monsters in the Rachel Sanctuary"
+    },
+    "Rock Ridge" : {
+      "comment" : "Monster race group: monsters in Rock Ridge"
+    },
+    "Scaraba" : {
+      "comment" : "Monster race group: scaraba monsters"
+    },
+    "Splendide" : {
+      "comment" : "Monster race group: monsters in Splendide"
+    },
+    "Temple Demon" : {
+      "comment" : "Monster race group: demons in the temple"
+    },
+    "Thanatos Tower" : {
+      "comment" : "Monster race group: monsters in Thanatos Tower"
+    },
+    "Treasure Chest" : {
+      "comment" : "Monster race group: guild castle treasure chests"
+    },
+    "Werner Laboratory" : {
+      "comment" : "Monster race group: monsters in the Werner Laboratory"
+    }
+  },
+  "version" : "1.1"
+}

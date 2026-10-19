@@ -1,0 +1,84 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Aggressive" : {
+      "comment" : "Monster mode: the monster attacks players on sight"
+    },
+    "Angry" : {
+      "comment" : "Monster mode: the monster has the angry behavior"
+    },
+    "Assist" : {
+      "comment" : "Monster mode: the monster helps monsters of the same kind"
+    },
+    "Can Attack" : {
+      "comment" : "Monster mode: the monster can attack"
+    },
+    "Can Move" : {
+      "comment" : "Monster mode: the monster can move"
+    },
+    "Cast Sensor (Chase)" : {
+      "comment" : "Monster mode: the monster reacts to casting while chasing"
+    },
+    "Cast Sensor (Idle)" : {
+      "comment" : "Monster mode: the monster reacts to casting while idle"
+    },
+    "Change Chase" : {
+      "comment" : "Monster mode: the monster switches to a closer target while chasing"
+    },
+    "Change Target (Chase)" : {
+      "comment" : "Monster mode: the monster switches target when hit while chasing"
+    },
+    "Change Target (Melee)" : {
+      "comment" : "Monster mode: the monster switches target when hit by melee"
+    },
+    "Detector" : {
+      "comment" : "Monster mode: the monster can see hidden players"
+    },
+    "Fixed Item Drop" : {
+      "comment" : "Monster mode: drop rates are not affected by rate modifiers"
+    },
+    "Ignore Magic" : {
+      "comment" : "Monster mode: the monster takes 1 damage from magic attacks"
+    },
+    "Ignore Melee" : {
+      "comment" : "Monster mode: the monster takes 1 damage from melee attacks"
+    },
+    "Ignore Misc" : {
+      "comment" : "Monster mode: the monster takes 1 damage from miscellaneous attacks"
+    },
+    "Ignore Ranged" : {
+      "comment" : "Monster mode: the monster takes 1 damage from ranged attacks"
+    },
+    "Knockback Immune" : {
+      "comment" : "Monster mode: the monster cannot be knocked back"
+    },
+    "Looter" : {
+      "comment" : "Monster mode: the monster picks up items"
+    },
+    "MVP" : {
+      "comment" : "Monster mode: the monster is an MVP"
+    },
+    "No Cast" : {
+      "comment" : "Monster mode: the monster does not use skills"
+    },
+    "No Random Walk" : {
+      "comment" : "Monster mode: the monster does not wander"
+    },
+    "Random Target" : {
+      "comment" : "Monster mode: the monster picks a random target"
+    },
+    "Skill Immune" : {
+      "comment" : "Monster mode: the monster is immune to skills"
+    },
+    "Status Immune" : {
+      "comment" : "Monster mode: the monster is immune to status effects"
+    },
+    "Target Weak" : {
+      "comment" : "Monster mode: the monster attacks only weaker players"
+    },
+    "Teleport Block" : {
+      "comment" : "Monster mode: the monster cannot be teleported"
+    }
+  },
+  "version" : "1.1"
+}

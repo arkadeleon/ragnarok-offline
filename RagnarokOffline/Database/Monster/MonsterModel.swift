@@ -92,13 +92,13 @@ final class MonsterModel {
     var raceGroups: [String]? {
         monster.raceGroups?
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map(\.stringValue)
+            .map { String(localized: $0.localizedName) }
     }
 
     var modes: [String]? {
         monster.modes?
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map(\.stringValue)
+            .map { String(localized: $0.localizedName) }
     }
 
     init(mode: DatabaseMode, monster: Monster, localizedName: String?, resourceManager: ResourceManager) {
