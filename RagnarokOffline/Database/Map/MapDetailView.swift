@@ -17,6 +17,7 @@ struct MapDetailView: View {
     @State private var mapFlags: [MapFlag] = []
     @State private var spawningMonsters: [SpawningMonster] = []
     @State private var warpMaps: [MapModel] = []
+    @State private var npcs: [MapNPC] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -85,6 +86,26 @@ struct MapDetailView: View {
                     Text("Warps", tableName: "Database")
                 }
             }
+
+            if !npcs.isEmpty {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(npcs) { npc in
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(npc.displayName)
+                                    .lineLimit(1)
+
+                                Text(verbatim: "\(npc.x), \(npc.y)")
+                                    .foregroundStyle(Color.secondary)
+                                    .lineLimit(1)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                } header: {
+                    Text("NPCs", tableName: "Database")
+                }
+            }
         }
         .navigationTitle(map.displayName)
         .task {
@@ -98,6 +119,9 @@ struct MapDetailView: View {
         }
         .task {
             warpMaps = await database.warpMaps(forMapName: map.name)
+        }
+        .task {
+            npcs = await database.npcs(forMapName: map.name)
         }
     }
 }

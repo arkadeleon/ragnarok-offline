@@ -98,6 +98,21 @@ struct SpawningMonster: Identifiable {
     }
 }
 
+struct MapNPC: Identifiable {
+    var npcName: String
+    var x: Int
+    var y: Int
+    var sprite: String
+
+    var id: String {
+        "\(npcName),\(x),\(y)"
+    }
+
+    var displayName: String {
+        String(npcName.prefix(while: { $0 != "#" && $0 != ":" }))
+    }
+}
+
 struct SellingShop: Identifiable {
     var shopNPC: ShopNPC
     var map: MapModel
@@ -818,6 +833,43 @@ final class DatabaseModel {
         }
 
         return maps
+    }
+
+    func npcs(forMapName mapName: String) async -> [MapNPC] {
+        await fetchScriptCommands()
+
+        var npcs: [MapNPC] = []
+
+        for npc in scriptCommands.npcs where npc.mapName == mapName {
+            if let x = npc.x, let y = npc.y {
+                let npc = MapNPC(npcName: npc.npcName, x: x, y: y, sprite: npc.sprite)
+                npcs.append(npc)
+            }
+        }
+
+        for duplicate in scriptCommands.duplicates where duplicate.mapName == mapName {
+            if let x = duplicate.x, let y = duplicate.y, let sprite = duplicate.sprite {
+                let npc = MapNPC(npcName: duplicate.npcName, x: x, y: y, sprite: sprite)
+                npcs.append(npc)
+            }
+        }
+
+        for shopNPC in scriptCommands.shopNPCs where shopNPC.mapName == mapName {
+            if let x = shopNPC.x, let y = shopNPC.y {
+                let npc = MapNPC(npcName: shopNPC.npcName, x: x, y: y, sprite: shopNPC.sprite)
+                npcs.append(npc)
+            }
+        }
+
+        let hiddenSprites: Set<String> = ["-1", "111", "139", "722", "FAKE_NPC", "HIDDEN_NPC", "HIDDEN_WARP_NPC", "GUILD_FLAG"]
+
+        return npcs
+            .filter {
+                !hiddenSprites.contains($0.sprite) && !$0.displayName.isEmpty
+            }
+            .sorted {
+                $0.displayName.localizedStandardCompare($1.displayName) == .orderedAscending
+            }
     }
 
     func sellingShops(for item: ItemModel) async -> [SellingShop] {
