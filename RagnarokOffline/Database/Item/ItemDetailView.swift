@@ -81,7 +81,7 @@ struct ItemDetailView: View {
                             NavigationLink(value: droppingMonster.monster) {
                                 ImageGridCell(
                                     title: droppingMonster.monster.displayName,
-                                    subtitle: "(" + (Double(droppingMonster.drop.rate) / 100).formatted() + "%)"
+                                    subtitle: "(\((Double(droppingMonster.drop.rate) / 100).formatted())%)" + (droppingMonster.isMVPDrop ? "(MVP)" : "")
                                 ) {
                                     MonsterImageView(monster: droppingMonster.monster)
                                 }

@@ -25,9 +25,10 @@ struct DropItem: Identifiable {
 struct DroppingMonster: Identifiable {
     var monster: MonsterModel
     var drop: Monster.Drop
+    var isMVPDrop: Bool
 
-    var id: Int {
-        monster.id
+    var id: String {
+        isMVPDrop ? "\(monster.id)-mvp" : "\(monster.id)"
     }
 }
 
@@ -349,17 +350,18 @@ final class DatabaseModel {
         await fetchMonsters()
 
         for monster in monsters {
-            let drops = (monster.mvpDrops ?? []) + (monster.drops ?? [])
-            for drop in drops {
-                if drop.item == itemAegisName {
-                    let droppingMonster = DroppingMonster(monster: monster, drop: drop)
-                    droppingMonsters.append(droppingMonster)
-                    break
-                }
+            if let drop = monster.mvpDrops?.first(where: { $0.item == itemAegisName }) {
+                let droppingMonster = DroppingMonster(monster: monster, drop: drop, isMVPDrop: true)
+                droppingMonsters.append(droppingMonster)
+            }
+
+            if let drop = monster.drops?.first(where: { $0.item == itemAegisName }) {
+                let droppingMonster = DroppingMonster(monster: monster, drop: drop, isMVPDrop: false)
+                droppingMonsters.append(droppingMonster)
             }
         }
 
-        return droppingMonsters
+        return droppingMonsters.sorted(using: KeyPathComparator(\.drop.rate, order: .reverse))
     }
 
     func spawningMonsters(forMapName mapName: String) async -> [SpawningMonster] {
@@ -530,6 +532,8 @@ final class DatabaseModel {
     }
 
     func skills(for jobID: JobID) async -> [SkillModel] {
+        await fetchJobs()
+
         guard let tree = jobs.first(where: { $0.id == jobID })?.skillTree?.tree else {
             return []
         }

@@ -15,15 +15,24 @@
 
 ## P0
 
-### 1. 统一搜索规则
+### 1. 统一搜索规则（已完成）
 
-- 现状：
-  - 只有物品、怪物、技能能用 `#ID` 搜索。地图、职业、状态不行。
+- 原来的问题：
+  - 只有物品、怪物、技能能用 `#ID` 搜索，而且这个功能是在各自的视图里分别实现的。
   - 大多只匹配 `displayName`。地图在宽屏布局里显示了内部名（比如 `prt_fild08`），但用内部名搜不到。
-  - 各列表的过滤写在 `.task(id: filter.identifier)` 里。每按一次键，都在 MainActor 上把整个数组过滤一遍，没有 debounce。物品有上万条，每条都要调用 `localizedStandardContains`，所以打字时会卡。
-- 目标：
-  - 所有库都能用 `#ID`、本地化名、原名、Aegis 名搜索。地图还要能用内部名搜索。
-  - 搜索输入加 debounce，过滤移到 MainActor 之外执行。
+  - 每按一次键，都要在 MainActor 上把整个数组过滤一遍，没有 debounce。
+- 最终方案：
+  - 每个库在 `DatabaseModel` 里建一个 `DatabaseSearchIndex`。关键字在建索引时就折叠好（忽略大小写、变音符号和全角半角），匹配在 MainActor 之外进行。
+  - 搜索输入有 200ms 的 debounce。
+  - 各库的匹配范围：
+    - 物品、怪物、技能：ID、本地化名、原名、Aegis 名。
+    - 职业：本地化名、职业标识名。
+    - 宠物：本地化名、怪物原名、Aegis 名。
+    - 状态：本地化名、`SC_` 标识名。
+    - 地图：本地化名、内部名。
+    - 召唤组：组名。
+  - 只有物品、怪物、技能支持 ID 搜索。搜索词必须是纯数字，`#1002` 这种写法不算 ID 搜索。精确匹配到 ID 的记录排在结果最前面，其他按关键字匹配到的结果照常显示在后面。
+  - `ItemDatabaseFilter` 和 `MonsterDatabaseFilter` 改成了 `Equatable` struct，只保存结构化的筛选条件。`searchText` 移到了视图里。
 
 ### 2. 补全详情数据
 
@@ -32,7 +41,7 @@
 - 技能：
   - 增加每个等级的数据表：SP、施法时间、延迟、射程。
   - 列出哪些职业能学这个技能。
-  - 修正 `DatabaseModel.skills(for:)`：它读取 `jobs` 之前没有先调用 `fetchJobs()`。
+  - 修正 `DatabaseModel.skills(for:)`：它读取 `jobs` 之前没有先调用 `fetchJobs()`。（已完成）
 - 怪物：怪物技能（mob_skill_db）、属性伤害倍率表。
 - 物品：
   - "Dropped By" 按掉率从高到低排序。
