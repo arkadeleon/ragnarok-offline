@@ -56,19 +56,31 @@ struct MapDatabaseView: View {
         }
         .task(id: "\(searchText)") {
             await database.fetchMaps()
-            filteredMaps = await maps(matching: searchText, in: database.maps)
+
+            if !searchText.isEmpty {
+                do {
+                    try await Task.sleep(for: .milliseconds(200))
+                } catch {
+                    return
+                }
+            }
+
+            let filteredMaps = await maps(matching: searchText)
+            if !Task.isCancelled {
+                self.filteredMaps = filteredMaps
+            }
         }
     }
 
-    private func maps(matching searchText: String, in maps: [MapModel]) async -> [MapModel] {
+    private func maps(matching searchText: String) async -> [MapModel] {
+        let maps = database.maps
+
         if searchText.isEmpty {
             return maps
         }
 
-        let filteredMaps = maps.filter { map in
-            map.displayName.localizedStandardContains(searchText)
-        }
-        return filteredMaps
+        let indices = await database.mapSearchIndex.indices(matching: searchText)
+        return indices.map { maps[$0] }
     }
 }
 

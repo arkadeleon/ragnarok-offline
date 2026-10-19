@@ -5,13 +5,9 @@
 //  Created by Leon Li on 2025/12/24.
 //
 
-import Observation
 import RagnarokConstants
 
-@Observable
-class MonsterDatabaseFilter {
-    var searchText = ""
-
+struct MonsterDatabaseFilter: Equatable {
     var size: Size?
 
     var availableSizes: [Size] {
@@ -30,16 +26,7 @@ class MonsterDatabaseFilter {
         [.neutral, .water, .earth, .fire, .wind, .poison, .holy, .dark, .ghost, .undead]
     }
 
-    var identifier: String {
-        let size = size?.stringValue ?? "all"
-        let race = race?.stringValue ?? "all"
-        let element = element?.stringValue ?? "all"
-
-        return "\(searchText)+\(size)+\(race)+\(element)"
-    }
-
     var isEmpty: Bool {
-        searchText.isEmpty &&
         size == nil &&
         race == nil &&
         element == nil
@@ -58,14 +45,10 @@ class MonsterDatabaseFilter {
             return false
         }
 
-        if searchText.isEmpty {
-            return true
-        } else {
-            return monster.displayName.localizedStandardContains(searchText)
-        }
+        return true
     }
 
-    func reset() {
+    mutating func reset() {
         size = nil
         race = nil
         element = nil

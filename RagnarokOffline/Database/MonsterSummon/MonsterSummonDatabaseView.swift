@@ -56,19 +56,31 @@ struct MonsterSummonDatabaseView: View {
         }
         .task(id: "\(searchText)") {
             await database.fetchMonsterSummons()
-            filteredMonsterSummons = await monsterSummons(matching: searchText, in: database.monsterSummons)
+
+            if !searchText.isEmpty {
+                do {
+                    try await Task.sleep(for: .milliseconds(200))
+                } catch {
+                    return
+                }
+            }
+
+            let filteredMonsterSummons = await monsterSummons(matching: searchText)
+            if !Task.isCancelled {
+                self.filteredMonsterSummons = filteredMonsterSummons
+            }
         }
     }
 
-    private func monsterSummons(matching searchText: String, in monsterSummons: [MonsterSummonModel]) async -> [MonsterSummonModel] {
+    private func monsterSummons(matching searchText: String) async -> [MonsterSummonModel] {
+        let monsterSummons = database.monsterSummons
+
         if searchText.isEmpty {
             return monsterSummons
         }
 
-        let filteredMonsterSummons = monsterSummons.filter { monsterSummon in
-            monsterSummon.displayName.localizedStandardContains(searchText)
-        }
-        return filteredMonsterSummons
+        let indices = await database.monsterSummonSearchIndex.indices(matching: searchText)
+        return indices.map { monsterSummons[$0] }
     }
 }
 

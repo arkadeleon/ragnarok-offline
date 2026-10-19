@@ -48,19 +48,31 @@ struct StatusChangeDatabaseView: View {
         }
         .task(id: "\(searchText)") {
             await database.fetchStatusChanges()
-            filteredStatusChanges = await statusChanges(matching: searchText, in: database.statusChanges)
+
+            if !searchText.isEmpty {
+                do {
+                    try await Task.sleep(for: .milliseconds(200))
+                } catch {
+                    return
+                }
+            }
+
+            let filteredStatusChanges = await statusChanges(matching: searchText)
+            if !Task.isCancelled {
+                self.filteredStatusChanges = filteredStatusChanges
+            }
         }
     }
 
-    private func statusChanges(matching searchText: String, in statusChanges: [StatusChangeModel]) async -> [StatusChangeModel] {
+    private func statusChanges(matching searchText: String) async -> [StatusChangeModel] {
+        let statusChanges = database.statusChanges
+
         if searchText.isEmpty {
             return statusChanges
         }
 
-        let filteredStatusChanges = statusChanges.filter { statusChange in
-            statusChange.displayName.localizedStandardContains(searchText) || statusChange.status.stringValue.localizedStandardContains(searchText)
-        }
-        return filteredStatusChanges
+        let indices = await database.statusChangeSearchIndex.indices(matching: searchText)
+        return indices.map { statusChanges[$0] }
     }
 }
 

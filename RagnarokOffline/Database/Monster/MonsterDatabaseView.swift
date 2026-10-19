@@ -13,6 +13,7 @@ struct MonsterDatabaseView: View {
 
     @Namespace private var filterNamespace
 
+    @State private var searchText = ""
     @State private var filter = MonsterDatabaseFilter()
     @State private var filteredMonsters: [MonsterModel] = []
     @State private var isFilterPresented = false
@@ -27,7 +28,7 @@ struct MonsterDatabaseView: View {
         }
         .background(.background)
         .navigationTitle(Text("Monster Database", tableName: "Database"))
-        .adaptiveSearch(text: $filter.searchText)
+        .adaptiveSearch(text: $searchText)
         .toolbar {
             ToolbarItem {
                 Button {
@@ -45,7 +46,7 @@ struct MonsterDatabaseView: View {
         .overlay {
             if database.monsters.isEmpty {
                 ProgressView()
-            } else if !filter.isEmpty && filteredMonsters.isEmpty {
+            } else if (!searchText.isEmpty || !filter.isEmpty) && filteredMonsters.isEmpty {
                 ContentUnavailableView {
                     Label {
                         Text("No Results", tableName: "Database")
@@ -57,19 +58,42 @@ struct MonsterDatabaseView: View {
         }
         .sheet(isPresented: $isFilterPresented) {
             NavigationStack {
-                MonsterDatabaseFilterView(filter: filter)
+                MonsterDatabaseFilterView(filter: $filter)
             }
             .adaptiveNavigationTransition(sourceID: "filter", in: filterNamespace)
         }
-        .task(id: filter.identifier) {
+        .task(id: query) {
             await database.fetchMonsters()
-            filteredMonsters = await monsters(matching: filter, in: database.monsters)
+
+            if !searchText.isEmpty {
+                do {
+                    try await Task.sleep(for: .milliseconds(200))
+                } catch {
+                    return
+                }
+            }
+
+            let filteredMonsters = await monsters(matching: searchText, filter: filter)
+            if !Task.isCancelled {
+                self.filteredMonsters = filteredMonsters
+            }
         }
     }
 
-    private func monsters(matching filter: MonsterDatabaseFilter, in monsters: [MonsterModel]) async -> [MonsterModel] {
-        if filter.searchText.hasPrefix("#") {
-            if let monsterID = Int(filter.searchText.dropFirst()),
+    private struct Query: Equatable {
+        var searchText: String
+        var filter: MonsterDatabaseFilter
+    }
+
+    private var query: Query {
+        Query(searchText: searchText, filter: filter)
+    }
+
+    private func monsters(matching searchText: String, filter: MonsterDatabaseFilter) async -> [MonsterModel] {
+        let monsters = database.monsters
+
+        if searchText.hasPrefix("#") {
+            if let monsterID = Int(searchText.dropFirst()),
                let monster = monsters.first(where: { $0.id == monsterID }) {
                 return [monster]
             } else {
@@ -77,8 +101,12 @@ struct MonsterDatabaseView: View {
             }
         }
 
-        let filteredMonsters = monsters.filter(filter.isIncluded)
-        return filteredMonsters
+        if searchText.isEmpty {
+            return monsters.filter(filter.isIncluded)
+        }
+
+        let indices = await database.monsterSearchIndex.indices(matching: searchText)
+        return indices.map({ monsters[$0] }).filter(filter.isIncluded)
     }
 }
 

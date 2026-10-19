@@ -38,19 +38,31 @@ struct JobDatabaseView: View {
         }
         .task(id: "\(searchText)") {
             await database.fetchJobs()
-            filteredJobs = await jobs(matching: searchText, in: database.jobs)
+
+            if !searchText.isEmpty {
+                do {
+                    try await Task.sleep(for: .milliseconds(200))
+                } catch {
+                    return
+                }
+            }
+
+            let filteredJobs = await jobs(matching: searchText)
+            if !Task.isCancelled {
+                self.filteredJobs = filteredJobs
+            }
         }
     }
 
-    private func jobs(matching searchText: String, in jobs: [JobModel]) async -> [JobModel] {
+    private func jobs(matching searchText: String) async -> [JobModel] {
+        let jobs = database.jobs
+
         if searchText.isEmpty {
             return jobs
         }
 
-        let filteredJobs = jobs.filter { job in
-            job.displayName.localizedStandardContains(searchText)
-        }
-        return filteredJobs
+        let indices = await database.jobSearchIndex.indices(matching: searchText)
+        return indices.map { jobs[$0] }
     }
 }
 

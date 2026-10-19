@@ -42,19 +42,31 @@ struct PetDatabaseView: View {
         }
         .task(id: "\(searchText)") {
             await database.fetchPets()
-            filteredPets = await pets(matching: searchText, in: database.pets)
+
+            if !searchText.isEmpty {
+                do {
+                    try await Task.sleep(for: .milliseconds(200))
+                } catch {
+                    return
+                }
+            }
+
+            let filteredPets = await pets(matching: searchText)
+            if !Task.isCancelled {
+                self.filteredPets = filteredPets
+            }
         }
     }
 
-    private func pets(matching searchText: String, in pets: [PetModel]) async -> [PetModel] {
+    private func pets(matching searchText: String) async -> [PetModel] {
+        let pets = database.pets
+
         if searchText.isEmpty {
             return pets
         }
 
-        let filteredPets = pets.filter { pet in
-            pet.displayName.localizedStandardContains(searchText)
-        }
-        return filteredPets
+        let indices = await database.petSearchIndex.indices(matching: searchText)
+        return indices.map { pets[$0] }
     }
 }
 

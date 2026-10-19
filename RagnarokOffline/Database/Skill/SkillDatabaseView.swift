@@ -59,11 +59,25 @@ struct SkillDatabaseView: View {
         }
         .task(id: "\(searchText)") {
             await database.fetchSkills()
-            filteredSkills = await skills(matching: searchText, in: database.skills)
+
+            if !searchText.isEmpty {
+                do {
+                    try await Task.sleep(for: .milliseconds(200))
+                } catch {
+                    return
+                }
+            }
+
+            let filteredSkills = await skills(matching: searchText)
+            if !Task.isCancelled {
+                self.filteredSkills = filteredSkills
+            }
         }
     }
 
-    private func skills(matching searchText: String, in skills: [SkillModel]) async -> [SkillModel] {
+    private func skills(matching searchText: String) async -> [SkillModel] {
+        let skills = database.skills
+
         if searchText.isEmpty {
             return skills
         }
@@ -77,10 +91,8 @@ struct SkillDatabaseView: View {
             }
         }
 
-        let filteredSkills = skills.filter { skill in
-            skill.displayName.localizedStandardContains(searchText)
-        }
-        return filteredSkills
+        let indices = await database.skillSearchIndex.indices(matching: searchText)
+        return indices.map { skills[$0] }
     }
 }
 

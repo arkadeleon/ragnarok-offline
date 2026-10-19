@@ -5,13 +5,9 @@
 //  Created by Leon Li on 2025/12/18.
 //
 
-import Observation
 import RagnarokConstants
 
-@Observable
-class ItemDatabaseFilter {
-    var searchText = ""
-
+struct ItemDatabaseFilter: Equatable {
     var itemType: ItemType? {
         didSet {
             weaponType = nil
@@ -74,18 +70,7 @@ class ItemDatabaseFilter {
         }
     }
 
-    var identifier: String {
-        let itemType = itemType?.stringValue ?? "all"
-        let weaponType = weaponType?.stringValue ?? "all"
-        let ammoType = ammoType?.stringValue ?? "all"
-        let cardType = cardType?.stringValue ?? "all"
-        let locations = locations.rawValue
-
-        return "\(searchText)+\(itemType)+\(weaponType)+\(ammoType)+\(cardType)+\(locations)"
-    }
-
     var isEmpty: Bool {
-        searchText.isEmpty &&
         itemType == nil &&
         weaponType == nil &&
         ammoType == nil &&
@@ -114,14 +99,10 @@ class ItemDatabaseFilter {
             return false
         }
 
-        if searchText.isEmpty {
-            return true
-        } else {
-            return item.displayName.localizedStandardContains(searchText)
-        }
+        return true
     }
 
-    func reset() {
+    mutating func reset() {
         itemType = nil
         weaponType = nil
         ammoType = nil

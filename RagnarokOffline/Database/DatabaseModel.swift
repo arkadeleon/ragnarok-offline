@@ -58,27 +58,35 @@ final class DatabaseModel {
     var items: [ItemModel] = []
     var itemsByID: [Int : ItemModel] = [:]
     var itemsByAegisName: [String : ItemModel] = [:]
+    var itemSearchIndex = DatabaseSearchIndex()
 
     var jobs: [JobModel] = []
+    var jobSearchIndex = DatabaseSearchIndex()
 
     var maps: [MapModel] = []
     var mapsByName: [String: MapModel] = [:]
+    var mapSearchIndex = DatabaseSearchIndex()
 
     var monsters: [MonsterModel] = []
     var monstersByID: [Int: MonsterModel] = [:]
     var monstersByAegisName: [String: MonsterModel] = [:]
+    var monsterSearchIndex = DatabaseSearchIndex()
 
     var monsterSummons: [MonsterSummonModel] = []
     var monsterSummonsByGroup: [String: MonsterSummonModel] = [:]
+    var monsterSummonSearchIndex = DatabaseSearchIndex()
 
     var pets: [PetModel] = []
+    var petSearchIndex = DatabaseSearchIndex()
 
     var skills: [SkillModel] = []
     var skillsByID: [Int: SkillModel] = [:]
     var skillsByAegisName: [String: SkillModel] = [:]
+    var skillSearchIndex = DatabaseSearchIndex()
 
     var statusChanges: [StatusChangeModel] = []
     var statusChangesByID: [StatusChangeID: StatusChangeModel] = [:]
+    var statusChangeSearchIndex = DatabaseSearchIndex()
 
     var scriptCommands = ScriptCommands()
 
@@ -145,6 +153,10 @@ final class DatabaseModel {
                 self.items.map({ ($0.aegisName, $0) }),
                 uniquingKeysWith: { (first, _) in first }
             )
+
+            self.itemSearchIndex = DatabaseSearchIndex(self.items) {
+                [$0.displayName]
+            }
         }
 
         self.itemDatabaseTask = itemDatabaseTask
@@ -204,6 +216,10 @@ final class DatabaseModel {
                 let model = JobModel(mode: mode, job: job, localizedName: localizedName, skillTree: skillTree, resourceManager: resourceManager)
                 return model
             }
+
+            self.jobSearchIndex = DatabaseSearchIndex(self.jobs) {
+                [$0.displayName]
+            }
         }
 
         self.jobDatabaseTask = jobDatabaseTask
@@ -239,6 +255,10 @@ final class DatabaseModel {
                 self.maps.map({ ($0.name, $0) }),
                 uniquingKeysWith: { (first, _) in first }
             )
+
+            self.mapSearchIndex = DatabaseSearchIndex(self.maps) {
+                [$0.displayName]
+            }
         }
 
         self.mapDatabaseTask = mapDatabaseTask
@@ -302,6 +322,10 @@ final class DatabaseModel {
                 self.monsters.map({ ($0.aegisName, $0) }),
                 uniquingKeysWith: { (first, _) in first }
             )
+
+            self.monsterSearchIndex = DatabaseSearchIndex(self.monsters) {
+                [$0.displayName]
+            }
         }
 
         self.monsterDatabaseTask = monsterDatabaseTask
@@ -396,6 +420,10 @@ final class DatabaseModel {
                 self.monsterSummons.map({ ($0.group, $0) }),
                 uniquingKeysWith: { (first, _) in first }
             )
+
+            self.monsterSummonSearchIndex = DatabaseSearchIndex(self.monsterSummons) {
+                [$0.displayName]
+            }
         }
 
         self.monsterSummonDatabaseTask = monsterSummonDatabaseTask
@@ -434,6 +462,10 @@ final class DatabaseModel {
 
             for pet in self.pets {
                 pet.monster = await monster(forAegisName: pet.aegisName)
+            }
+
+            self.petSearchIndex = DatabaseSearchIndex(self.pets) {
+                [$0.displayName]
             }
         }
 
@@ -476,6 +508,10 @@ final class DatabaseModel {
                 self.skills.map({ ($0.aegisName, $0) }),
                 uniquingKeysWith: { (first, _) in first }
             )
+
+            self.skillSearchIndex = DatabaseSearchIndex(self.skills) {
+                [$0.displayName]
+            }
         }
 
         self.skillDatabaseTask = skillDatabaseTask
@@ -547,6 +583,10 @@ final class DatabaseModel {
                 self.statusChanges.map({ ($0.id, $0) }),
                 uniquingKeysWith: { (first, _) in first }
             )
+
+            self.statusChangeSearchIndex = DatabaseSearchIndex(self.statusChanges) {
+                [$0.displayName, $0.status.stringValue]
+            }
         }
 
         self.statusChangeDatabaseTask = statusChangeDatabaseTask

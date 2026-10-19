@@ -9,7 +9,7 @@ import RagnarokConstants
 import SwiftUI
 
 struct ItemDatabaseFilterView: View {
-    var filter: ItemDatabaseFilter
+    @Binding var filter: ItemDatabaseFilter
 
     @Environment(\.dismiss) private var dismiss
 
@@ -18,8 +18,6 @@ struct ItemDatabaseFilterView: View {
     }
 
     var body: some View {
-        @Bindable var filter = filter
-
         ScrollView() {
             LazyVStack(alignment: .leading) {
                 Section {
@@ -112,7 +110,9 @@ struct ItemDatabaseFilterView: View {
 }
 
 #Preview {
+    @Previewable @State var filter = ItemDatabaseFilter()
+
     NavigationStack {
-        ItemDatabaseFilterView(filter: ItemDatabaseFilter())
+        ItemDatabaseFilterView(filter: $filter)
     }
 }
