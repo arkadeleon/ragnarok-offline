@@ -89,18 +89,16 @@ final class MonsterModel {
         return attributes
     }
 
-    var raceGroups: String? {
+    var raceGroups: [String]? {
         monster.raceGroups?
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map { "- " + $0.stringValue }
-            .joined(separator: "\n")
+            .map(\.stringValue)
     }
 
-    var modes: String? {
+    var modes: [String]? {
         monster.modes?
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map { "- " + $0.stringValue }
-            .joined(separator: "\n")
+            .map(\.stringValue)
     }
 
     init(mode: DatabaseMode, monster: Monster, localizedName: String?, resourceManager: ResourceManager) {

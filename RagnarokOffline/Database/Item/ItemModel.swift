@@ -123,25 +123,22 @@ final class ItemModel {
         return attributes
     }
 
-    var jobs: String {
+    var jobs: [String] {
         item.jobs
             .sorted(using: KeyPathComparator(\.intValue))
-            .map { "- \($0.stringValue)" }
-            .joined(separator: "\n")
+            .map(\.stringValue)
     }
 
-    var classes: String {
+    var classes: [String] {
         OptionSetSequence(item.classes)
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map { "- \($0.stringValue)" }
-            .joined(separator: "\n")
+            .map(\.stringValue)
     }
 
-    var displayLocations: String {
+    var displayLocations: [String] {
         OptionSetSequence(item.locations)
             .sorted(using: KeyPathComparator(\.rawValue))
-            .map { "- \($0.stringValue)" }
-            .joined(separator: "\n")
+            .map(\.stringValue)
     }
 
     init(mode: DatabaseMode, item: Item, localizedName: String?, localizedDescription: String?, resourceManager: ResourceManager) {

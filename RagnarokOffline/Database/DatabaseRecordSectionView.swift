@@ -44,6 +44,11 @@ struct DatabaseRecordSectionView<Content, Header>: View where Content: View, Hea
         self.content = DatabaseRecordSectionAttributesContent(attributes: attributes)
         self.header = header()
     }
+
+    init(tags: [String], @ViewBuilder header: () -> Header) where Content == DatabaseRecordSectionTagsContent {
+        self.content = DatabaseRecordSectionTagsContent(tags: tags)
+        self.header = header()
+    }
 }
 
 struct DatabaseRecordSectionTextContent: View {
@@ -79,6 +84,23 @@ struct DatabaseRecordSectionAttributesContent: View {
                 }
             }
         }
+    }
+}
+
+struct DatabaseRecordSectionTagsContent: View {
+    var tags: [String]
+
+    var body: some View {
+        FlowLayout {
+            ForEach(tags, id: \.self) { tag in
+                Text(tag)
+                    .font(.subheadline)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(.quaternary, in: .capsule)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
