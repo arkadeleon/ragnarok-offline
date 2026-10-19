@@ -91,3 +91,77 @@ extension SkillModel: Identifiable {
         skill.id
     }
 }
+
+extension SkillModel {
+    struct SkillLevel: Identifiable {
+        var level: Int
+        var spCost: Int
+        var castTime: Int
+        var fixedCastTime: Int
+        var afterCastActDelay: Int
+        var cooldown: Int
+        var range: Int
+
+        var id: Int {
+            level
+        }
+    }
+
+    var levels: [SkillLevel] {
+        (1...max(skill.maxLevel, 1)).map { level in
+            SkillLevel(
+                level: level,
+                spCost: skill.requires?.spCost.value(forLevel: level) ?? 0,
+                castTime: skill.castTime.value(forLevel: level),
+                fixedCastTime: skill.fixedCastTime.value(forLevel: level),
+                afterCastActDelay: skill.afterCastActDelay.value(forLevel: level),
+                cooldown: skill.cooldown.value(forLevel: level),
+                range: abs(skill.range.value(forLevel: level))
+            )
+        }
+    }
+
+    var showsSPCost: Bool {
+        skill.requires?.spCost.containsNonZeroValue ?? false
+    }
+
+    var showsCastTime: Bool {
+        skill.castTime.containsNonZeroValue
+    }
+
+    var showsFixedCastTime: Bool {
+        skill.fixedCastTime.containsNonZeroValue
+    }
+
+    var showsAfterCastActDelay: Bool {
+        skill.afterCastActDelay.containsNonZeroValue
+    }
+
+    var showsCooldown: Bool {
+        skill.cooldown.containsNonZeroValue
+    }
+
+    var showsRange: Bool {
+        skill.range.containsNonZeroValue
+    }
+}
+
+extension EitherNode<Int, [Int]> {
+    fileprivate var containsNonZeroValue: Bool {
+        switch self {
+        case .left(let value):
+            value != 0
+        case .right(let values):
+            values.contains(where: { $0 != 0 })
+        }
+    }
+
+    fileprivate func value(forLevel level: Int) -> Int {
+        switch self {
+        case .left(let value):
+            value
+        case .right(let values):
+            level <= values.count ? values[level - 1] : values.last ?? 0
+        }
+    }
+}
