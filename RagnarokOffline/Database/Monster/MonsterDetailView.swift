@@ -12,6 +12,7 @@ struct MonsterDetailView: View {
 
     @Environment(DatabaseModel.self) private var database
 
+    @State private var elementalDamages: [ElementalDamage] = []
     @State private var mvpDropItems: [DropItem] = []
     @State private var dropItems: [DropItem] = []
     @State private var spawnMaps: [SpawnMap] = []
@@ -32,6 +33,12 @@ struct MonsterDetailView: View {
 
             DatabaseRecordSectionView(attributes: monster.attributes) {
                 Text("Info", tableName: "Database")
+            }
+
+            if !elementalDamages.isEmpty {
+                DatabaseRecordSectionView(attributes: elementalDamageAttributes) {
+                    Text("Elemental Damage", tableName: "Database")
+                }
             }
 
             if let raceGroups = monster.raceGroups {
@@ -93,6 +100,9 @@ struct MonsterDetailView: View {
             await monster.fetchAnimatedImage()
         }
         .task {
+            elementalDamages = await database.elementalDamages(for: monster)
+        }
+        .task {
             if let mvpDrops = monster.mvpDrops {
                 mvpDropItems = await database.dropItems(for: mvpDrops)
             }
@@ -105,6 +115,12 @@ struct MonsterDetailView: View {
         .task {
             let monster = (monster.id, monster.aegisName)
             spawnMaps = await database.spawnMaps(for: monster)
+        }
+    }
+
+    private var elementalDamageAttributes: [DatabaseRecordAttribute] {
+        elementalDamages.map { elementalDamage in
+            DatabaseRecordAttribute(name: elementalDamage.attackElement.localizedName, value: "\(elementalDamage.rate)%")
         }
     }
 }

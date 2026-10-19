@@ -48,6 +48,15 @@ struct PetUsage: Identifiable {
     }
 }
 
+struct ElementalDamage: Identifiable {
+    var attackElement: Element
+    var rate: Int
+
+    var id: Element {
+        attackElement
+    }
+}
+
 struct SpawnMap: Identifiable {
     var map: MapModel
     var monsterSpawn: MonsterSpawn
@@ -119,6 +128,8 @@ final class DatabaseModel {
     var statusChangesByID: [StatusChangeID: StatusChangeModel] = [:]
     var statusChangeSearchIndex = DatabaseSearchIndex()
 
+    var elementalAttributeDamageAdjustments: [ElementalAttributeDamageAdjustment] = []
+
     var scriptCommands = ScriptCommands()
 
     private let itemInfoTable: ItemInfoTable
@@ -136,6 +147,7 @@ final class DatabaseModel {
     @ObservationIgnored private var petDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var skillDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var statusChangeDatabaseTask: Task<Void, Never>?
+    @ObservationIgnored private var elementalAttributeDamageAdjustmentDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var npcDatabaseTask: Task<Void, Never>?
 
     init(mode: DatabaseMode, resourceManager: ResourceManager) {
@@ -602,6 +614,42 @@ final class DatabaseModel {
         await fetchStatusChanges()
         return statusChangeIDs.compactMap {
             statusChangesByID[$0]
+        }
+    }
+
+    // MARK: - Elemental Attribute Damage Adjustment Database
+
+    func fetchElementalAttributeDamageAdjustments() async {
+        if let elementalAttributeDamageAdjustmentDatabaseTask {
+            return await elementalAttributeDamageAdjustmentDatabaseTask.value
+        }
+
+        let elementalAttributeDamageAdjustmentDatabaseTask = Task {
+            let elementalAttributeDamageAdjustmentDatabase = ElementalAttributeDamageAdjustmentDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            do {
+                elementalAttributeDamageAdjustments = try await elementalAttributeDamageAdjustmentDatabase.elementalAttributeDamageAdjustments()
+            } catch {
+                logger.warning("Elemental attribute damage adjustment database task failed: \(error)")
+            }
+        }
+
+        self.elementalAttributeDamageAdjustmentDatabaseTask = elementalAttributeDamageAdjustmentDatabaseTask
+
+        return await elementalAttributeDamageAdjustmentDatabaseTask.value
+    }
+
+    func elementalDamages(for monster: MonsterModel) async -> [ElementalDamage] {
+        await fetchElementalAttributeDamageAdjustments()
+
+        guard let adjustment = elementalAttributeDamageAdjustments.first(where: { $0.level == monster.elementLevel }) else {
+            return []
+        }
+
+        let attackElements: [Element] = [.neutral, .water, .earth, .fire, .wind, .poison, .holy, .dark, .ghost, .undead]
+        return attackElements.map { attackElement in
+            let rate = adjustment.rate(attackElement: attackElement, defenseElement: monster.element)
+            return ElementalDamage(attackElement: attackElement, rate: rate)
         }
     }
 
