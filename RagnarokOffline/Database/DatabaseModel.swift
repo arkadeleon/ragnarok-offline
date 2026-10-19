@@ -32,6 +32,22 @@ struct DroppingMonster: Identifiable {
     }
 }
 
+struct PetUsage: Identifiable {
+    enum Kind {
+        case tame
+        case egg
+        case equip
+        case food
+    }
+
+    var pet: PetModel
+    var kind: PetUsage.Kind
+
+    var id: String {
+        "\(pet.id)-\(kind)"
+    }
+}
+
 struct SpawnMap: Identifiable {
     var map: MapModel
     var monsterSpawn: MonsterSpawn
@@ -438,6 +454,21 @@ final class DatabaseModel {
         self.petDatabaseTask = petDatabaseTask
 
         return await petDatabaseTask.value
+    }
+
+    func petUsages(forItemNamed itemAegisName: String) async -> [PetUsage] {
+        await fetchPets()
+
+        var petUsages: [PetUsage] = []
+
+        for pet in pets where pet.monster != nil {
+            for kind in pet.usages(ofItemNamed: itemAegisName) {
+                let petUsage = PetUsage(pet: pet, kind: kind)
+                petUsages.append(petUsage)
+            }
+        }
+
+        return petUsages
     }
 
     // MARK: - Skill Database

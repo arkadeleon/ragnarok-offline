@@ -77,6 +77,23 @@ final class PetModel {
             self.foodItem = await database.item(forAegisName: foodItem)
         }
     }
+
+    func usages(ofItemNamed itemAegisName: String) -> [PetUsage.Kind] {
+        var usages: [PetUsage.Kind] = []
+        if pet.tameItem == itemAegisName {
+            usages.append(.tame)
+        }
+        if pet.eggItem == itemAegisName {
+            usages.append(.egg)
+        }
+        if pet.equipItem == itemAegisName {
+            usages.append(.equip)
+        }
+        if pet.foodItem == itemAegisName {
+            usages.append(.food)
+        }
+        return usages
+    }
 }
 
 extension PetModel: Equatable {

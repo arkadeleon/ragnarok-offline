@@ -16,6 +16,7 @@ struct ItemDetailView: View {
 
     @State private var droppingMonsters: [DroppingMonster] = []
     @State private var sellingShops: [SellingShop] = []
+    @State private var petUsages: [PetUsage] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -108,6 +109,25 @@ struct ItemDetailView: View {
                     Text("Sold By", tableName: "Database")
                 }
             }
+
+            if !petUsages.isEmpty {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                        ForEach(petUsages) { petUsage in
+                            if let monster = petUsage.pet.monster {
+                                NavigationLink(value: petUsage.pet) {
+                                    ImageGridCell(title: monster.displayName, subtitle: petUsageText(petUsage.kind)) {
+                                        MonsterImageView(monster: monster)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding(.vertical, vSpacing(sizeClass))
+                } header: {
+                    Text("Pets", tableName: "Database")
+                }
+            }
         }
         .navigationTitle(item.displayName)
         .task {
@@ -118,6 +138,22 @@ struct ItemDetailView: View {
         }
         .task {
             sellingShops = await database.sellingShops(for: item)
+        }
+        .task {
+            petUsages = await database.petUsages(forItemNamed: item.aegisName)
+        }
+    }
+
+    private func petUsageText(_ kind: PetUsage.Kind) -> String {
+        switch kind {
+        case .tame:
+            String(localized: LocalizedStringResource("(Tame Item)", table: "Database"))
+        case .egg:
+            String(localized: LocalizedStringResource("(Egg Item)", table: "Database"))
+        case .equip:
+            String(localized: LocalizedStringResource("(Equip Item)", table: "Database"))
+        case .food:
+            String(localized: LocalizedStringResource("(Food Item)", table: "Database"))
         }
     }
 }
