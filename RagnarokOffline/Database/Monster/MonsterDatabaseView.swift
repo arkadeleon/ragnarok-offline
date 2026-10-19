@@ -92,15 +92,6 @@ struct MonsterDatabaseView: View {
     private func monsters(matching searchText: String, filter: MonsterDatabaseFilter) async -> [MonsterModel] {
         let monsters = database.monsters
 
-        if searchText.hasPrefix("#") {
-            if let monsterID = Int(searchText.dropFirst()),
-               let monster = monsters.first(where: { $0.id == monsterID }) {
-                return [monster]
-            } else {
-                return []
-            }
-        }
-
         if searchText.isEmpty {
             return monsters.filter(filter.isIncluded)
         }

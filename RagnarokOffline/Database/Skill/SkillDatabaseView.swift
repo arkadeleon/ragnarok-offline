@@ -82,15 +82,6 @@ struct SkillDatabaseView: View {
             return skills
         }
 
-        if searchText.hasPrefix("#") {
-            if let skillID = Int(searchText.dropFirst()),
-               let skill = skills.first(where: { $0.id == skillID }) {
-                return [skill]
-            } else {
-                return []
-            }
-        }
-
         let indices = await database.skillSearchIndex.indices(matching: searchText)
         return indices.map { skills[$0] }
     }

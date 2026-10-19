@@ -118,15 +118,6 @@ struct ItemDatabaseView: View {
     private func items(matching searchText: String, filter: ItemDatabaseFilter) async -> [ItemModel] {
         let items = database.items
 
-        if searchText.hasPrefix("#") {
-            if let itemID = Int(searchText.dropFirst()),
-               let item = items.first(where: { $0.id == itemID }) {
-                return [item]
-            } else {
-                return []
-            }
-        }
-
         if searchText.isEmpty {
             return items.filter(filter.isIncluded)
         }
