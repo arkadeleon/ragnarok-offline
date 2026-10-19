@@ -47,8 +47,8 @@ final class SkillModel {
         attributes.append(.init(name: LocalizedStringResource("Aegis Name", table: "Database"), value: skill.aegisName))
         attributes.append(.init(name: LocalizedStringResource("Name", table: "Database"), value: skill.name))
         attributes.append(.init(name: LocalizedStringResource("Maximum Level", table: "Database"), value: skill.maxLevel))
-        attributes.append(.init(name: LocalizedStringResource("Type", table: "Database"), value: skill.type.stringValue))
-        attributes.append(.init(name: LocalizedStringResource("Target Type", table: "Database"), value: skill.targetType.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Type", table: "Database"), value: skill.type.localizedName))
+        attributes.append(.init(name: LocalizedStringResource("Target Type", table: "Database"), value: skill.targetType.localizedName))
 
         return attributes
     }

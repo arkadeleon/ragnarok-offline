@@ -71,9 +71,9 @@ final class ItemModel {
         case .weapon(let weaponType):
             attributes.append(.init(name: LocalizedStringResource("Weapon Type", table: "Database"), value: weaponType.localizedName))
         case .ammo(let ammoType):
-            attributes.append(.init(name: LocalizedStringResource("Ammo Type", table: "Database"), value: ammoType.stringValue))
+            attributes.append(.init(name: LocalizedStringResource("Ammo Type", table: "Database"), value: ammoType.localizedName))
         case .card(let cardType):
-            attributes.append(.init(name: LocalizedStringResource("Card Type", table: "Database"), value: cardType.stringValue))
+            attributes.append(.init(name: LocalizedStringResource("Card Type", table: "Database"), value: cardType.localizedName))
         }
 
         attributes.append(.init(name: LocalizedStringResource("Buy", table: "Database"), value: item.buy.formatted() + "z"))

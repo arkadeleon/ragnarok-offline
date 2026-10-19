@@ -70,10 +70,10 @@ final class MonsterModel {
         attributes.append(.init(name: LocalizedStringResource("Skill Range", table: "Database"), value: monster.skillRange))
         attributes.append(.init(name: LocalizedStringResource("Chase Range", table: "Database"), value: monster.chaseRange))
 
-        attributes.append(.init(name: LocalizedStringResource("Size", table: "Database"), value: monster.size.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Size", table: "Database"), value: monster.size.localizedName))
         attributes.append(.init(name: LocalizedStringResource("Race", table: "Database"), value: monster.race.localizedName))
 
-        attributes.append(.init(name: LocalizedStringResource("Element", table: "Database"), value: monster.element.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Element", table: "Database"), value: monster.element.localizedName))
         attributes.append(.init(name: LocalizedStringResource("Element Level", table: "Database"), value: monster.elementLevel))
 
         attributes.append(.init(name: LocalizedStringResource("Walk Speed", table: "Database"), value: monster.walkSpeed.rawValue))
@@ -84,7 +84,7 @@ final class MonsterModel {
         attributes.append(.init(name: LocalizedStringResource("Damage Taken", table: "Database"), value: monster.damageTaken))
 
         attributes.append(.init(name: LocalizedStringResource("AI", table: "Database"), value: monster.ai.stringValue))
-        attributes.append(.init(name: LocalizedStringResource("Class", table: "Database"), value: monster.class.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Class", table: "Database"), value: monster.class.localizedName))
 
         return attributes
     }
