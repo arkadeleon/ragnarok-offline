@@ -790,6 +790,20 @@ final class DatabaseModel {
         return spawningMonsters
     }
 
+    func warpMaps(forMapName mapName: String) async -> [MapModel] {
+        await fetchScriptCommands()
+
+        var maps: [MapModel] = []
+
+        for warpPoint in scriptCommands.warpPoints where warpPoint.fromMapName == mapName && warpPoint.toMapName != mapName {
+            if !maps.contains(where: { $0.name == warpPoint.toMapName }), let map = await map(forName: warpPoint.toMapName) {
+                maps.append(map)
+            }
+        }
+
+        return maps
+    }
+
     func sellingShops(for item: ItemModel) async -> [SellingShop] {
         await fetchScriptCommands()
 

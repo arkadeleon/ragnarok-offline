@@ -14,6 +14,7 @@ struct MapDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var spawningMonsters: [SpawningMonster] = []
+    @State private var warpMaps: [MapModel] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -50,6 +51,20 @@ struct MapDetailView: View {
                     Text("Monsters", tableName: "Database")
                 }
             }
+
+            if !warpMaps.isEmpty {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(warpMaps) { warpMap in
+                            NavigationLink(value: warpMap) {
+                                MapCell(map: warpMap)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Warps", tableName: "Database")
+                }
+            }
         }
         .navigationTitle(map.displayName)
         .task {
@@ -57,6 +72,9 @@ struct MapDetailView: View {
         }
         .task {
             spawningMonsters = await database.spawningMonsters(forMapName: map.name)
+        }
+        .task {
+            warpMaps = await database.warpMaps(forMapName: map.name)
         }
     }
 }
