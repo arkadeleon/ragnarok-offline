@@ -98,21 +98,6 @@ struct SpawningMonster: Identifiable {
     }
 }
 
-struct MapNPC: Identifiable {
-    var npcName: String
-    var x: Int
-    var y: Int
-    var sprite: String
-
-    var id: String {
-        "\(npcName),\(x),\(y)"
-    }
-
-    var displayName: String {
-        String(npcName.prefix(while: { $0 != "#" && $0 != ":" }))
-    }
-}
-
 struct SellingShop: Identifiable {
     var shopNPC: ShopNPC
     var map: MapModel
@@ -835,41 +820,66 @@ final class DatabaseModel {
         return maps
     }
 
-    func npcs(forMapName mapName: String) async -> [MapNPC] {
+    func npcs(forMapName mapName: String) async -> [NPCModel] {
         await fetchScriptCommands()
 
-        var npcs: [MapNPC] = []
+        var npcs: [NPCModel] = []
 
         for npc in scriptCommands.npcs where npc.mapName == mapName {
             if let x = npc.x, let y = npc.y {
-                let npc = MapNPC(npcName: npc.npcName, x: x, y: y, sprite: npc.sprite)
+                let jobID = await jobID(forSprite: npc.sprite)
+                let npc = NPCModel(npcName: npc.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
                 npcs.append(npc)
             }
         }
 
         for duplicate in scriptCommands.duplicates where duplicate.mapName == mapName {
             if let x = duplicate.x, let y = duplicate.y, let sprite = duplicate.sprite {
-                let npc = MapNPC(npcName: duplicate.npcName, x: x, y: y, sprite: sprite)
+                let jobID = await jobID(forSprite: sprite)
+                let npc = NPCModel(npcName: duplicate.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
                 npcs.append(npc)
             }
         }
 
         for shopNPC in scriptCommands.shopNPCs where shopNPC.mapName == mapName {
             if let x = shopNPC.x, let y = shopNPC.y {
-                let npc = MapNPC(npcName: shopNPC.npcName, x: x, y: y, sprite: shopNPC.sprite)
+                let jobID = await jobID(forSprite: shopNPC.sprite)
+                let npc = NPCModel(npcName: shopNPC.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
                 npcs.append(npc)
             }
         }
 
-        let hiddenSprites: Set<String> = ["-1", "111", "139", "722", "FAKE_NPC", "HIDDEN_NPC", "HIDDEN_WARP_NPC", "GUILD_FLAG"]
+        let hiddenJobIDs: Set<Int> = [
+            NPCJobID.jt_fakenpc.rawValue,
+            NPCJobID.jt_hidden_npc.rawValue,
+            NPCJobID.jt_hidden_warp_npc.rawValue,
+            NPCJobID.jt_guild_flag.rawValue,
+            NPCJobID.jt_invisible.rawValue,
+        ]
 
         return npcs
             .filter {
-                !hiddenSprites.contains($0.sprite) && !$0.displayName.isEmpty
+                !hiddenJobIDs.contains($0.jobID) && !$0.displayName.isEmpty
             }
             .sorted {
                 $0.displayName.localizedStandardCompare($1.displayName) == .orderedAscending
             }
+    }
+
+    private func jobID(forSprite sprite: String) async -> Int {
+        if let jobID = Int(sprite) {
+            return jobID
+        }
+
+        if let jobID = NPCJobID(stringValue: sprite) {
+            return jobID.rawValue
+        }
+
+        if let monster = await monster(forAegisName: sprite) {
+            return monster.id
+        }
+
+        return NPCJobID.jt_invisible.rawValue
     }
 
     func sellingShops(for item: ItemModel) async -> [SellingShop] {

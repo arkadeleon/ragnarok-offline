@@ -267,6 +267,23 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "MonsterClass",
         extensions: [.decodable]
     ),
+    // MARK: - map/npc.hpp
+    .cEnum(
+        source: "map/npc.hpp",
+        type: "e_job_types",
+        prefix: "JT_",
+        exclude: [
+            "NPC_RANGE1_START",
+            "NPC_RANGE1_END",
+            "NPC_RANGE2_START",
+            "NPC_RANGE2_END",
+            "NPC_RANGE3_START",
+            "NPC_RANGE3_END",
+        ],
+        outputType: "NPCJobID",
+        outputPrefix: "jt_",
+        extensions: [.decodable]
+    ),
     // MARK: - map/path.hpp
     .cEnum(
         source: "map/path.hpp",
