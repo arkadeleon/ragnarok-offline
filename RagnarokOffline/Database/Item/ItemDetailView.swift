@@ -116,7 +116,7 @@ struct ItemDetailView: View {
                         ForEach(petUsages) { petUsage in
                             if let monster = petUsage.pet.monster {
                                 NavigationLink(value: petUsage.pet) {
-                                    ImageGridCell(title: monster.displayName, subtitle: petUsageText(petUsage.kind)) {
+                                    ImageGridCell(title: monster.displayName, subtitle: String(localized: petUsage.kind.localizedName)) {
                                         MonsterImageView(monster: monster)
                                     }
                                 }
@@ -141,19 +141,6 @@ struct ItemDetailView: View {
         }
         .task {
             petUsages = await database.petUsages(forItemNamed: item.aegisName)
-        }
-    }
-
-    private func petUsageText(_ kind: PetUsage.Kind) -> String {
-        switch kind {
-        case .tame:
-            String(localized: LocalizedStringResource("(Tame Item)", table: "Database"))
-        case .egg:
-            String(localized: LocalizedStringResource("(Egg Item)", table: "Database"))
-        case .equip:
-            String(localized: LocalizedStringResource("(Equip Item)", table: "Database"))
-        case .food:
-            String(localized: LocalizedStringResource("(Food Item)", table: "Database"))
         }
     }
 }

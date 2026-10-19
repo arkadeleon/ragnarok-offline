@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SkillCell: View {
     var skill: SkillModel
+    var secondaryText: String?
 
     var body: some View {
         HStack {
@@ -19,7 +20,7 @@ struct SkillCell: View {
                     .foregroundStyle(Color.primary)
                     .lineLimit(1)
 
-                Text(skill.aegisName)
+                Text(secondaryText ?? skill.aegisName)
                     .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }

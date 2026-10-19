@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/1/3.
 //
 
+import RagnarokDatabase
 import SwiftUI
 
 struct MonsterDetailView: View {
@@ -15,6 +16,7 @@ struct MonsterDetailView: View {
     @State private var elementalDamages: [ElementalDamage] = []
     @State private var mvpDropItems: [DropItem] = []
     @State private var dropItems: [DropItem] = []
+    @State private var castSkills: [MonsterCastSkill] = []
     @State private var spawnMaps: [SpawnMap] = []
 
     var body: some View {
@@ -81,6 +83,20 @@ struct MonsterDetailView: View {
                 }
             }
 
+            if !castSkills.isEmpty {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(castSkills) { castSkill in
+                            NavigationLink(value: castSkill.skill) {
+                                SkillCell(skill: castSkill.skill, secondaryText: castSkillText(castSkill.monsterSkill))
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Skills", tableName: "Database")
+                }
+            }
+
             if !spawnMaps.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
@@ -113,6 +129,9 @@ struct MonsterDetailView: View {
             }
         }
         .task {
+            castSkills = await database.monsterCastSkills(for: monster)
+        }
+        .task {
             let monster = (monster.id, monster.aegisName)
             spawnMaps = await database.spawnMaps(for: monster)
         }
@@ -122,5 +141,12 @@ struct MonsterDetailView: View {
         elementalDamages.map { elementalDamage in
             DatabaseRecordAttribute(name: elementalDamage.attackElement.localizedName, value: "\(elementalDamage.rate)%")
         }
+    }
+
+    private func castSkillText(_ monsterSkill: MonsterSkill) -> String {
+        let level = "Lv. \(monsterSkill.skillLevel)"
+        let state = String(localized: monsterSkill.state.localizedName)
+        let rate = (Double(monsterSkill.rate) / 100).formatted() + "%"
+        return "(\(level))(\(state))(\(rate))"
     }
 }

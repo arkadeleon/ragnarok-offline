@@ -32,12 +32,35 @@ struct DroppingMonster: Identifiable {
     }
 }
 
+struct MonsterCastSkill: Identifiable {
+    var index: Int
+    var monsterSkill: MonsterSkill
+    var skill: SkillModel
+
+    var id: Int {
+        index
+    }
+}
+
 struct PetUsage: Identifiable {
     enum Kind {
         case tame
         case egg
         case equip
         case food
+
+        var localizedName: LocalizedStringResource {
+            switch self {
+            case .tame:
+                LocalizedStringResource("(Tame Item)", table: "Database")
+            case .egg:
+                LocalizedStringResource("(Egg Item)", table: "Database")
+            case .equip:
+                LocalizedStringResource("(Equip Item)", table: "Database")
+            case .food:
+                LocalizedStringResource("(Food Item)", table: "Database")
+            }
+        }
     }
 
     var pet: PetModel
@@ -112,6 +135,8 @@ final class DatabaseModel {
     var monstersByAegisName: [String: MonsterModel] = [:]
     var monsterSearchIndex = DatabaseSearchIndex()
 
+    var monsterSkillsByMonsterID: [Int : [MonsterSkill]] = [:]
+
     var monsterSummons: [MonsterSummonModel] = []
     var monsterSummonsByGroup: [String: MonsterSummonModel] = [:]
     var monsterSummonSearchIndex = DatabaseSearchIndex()
@@ -143,6 +168,7 @@ final class DatabaseModel {
     @ObservationIgnored private var jobDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var mapDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var monsterDatabaseTask: Task<Void, Never>?
+    @ObservationIgnored private var monsterSkillDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var monsterSummonDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var petDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var skillDatabaseTask: Task<Void, Never>?
@@ -386,6 +412,45 @@ final class DatabaseModel {
         }
 
         return droppingMonsters.sorted(using: KeyPathComparator(\.drop.rate, order: .reverse))
+    }
+
+    // MARK: - Monster Skill Database
+
+    func fetchMonsterSkills() async {
+        if let monsterSkillDatabaseTask {
+            return await monsterSkillDatabaseTask.value
+        }
+
+        let monsterSkillDatabaseTask = Task {
+            let monsterSkillDatabase = MonsterSkillDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            do {
+                let monsterSkills = try await monsterSkillDatabase.monsterSkills()
+                monsterSkillsByMonsterID = Dictionary(grouping: monsterSkills, by: \.monsterID)
+            } catch {
+                logger.warning("Monster skill database task failed: \(error)")
+            }
+        }
+
+        self.monsterSkillDatabaseTask = monsterSkillDatabaseTask
+
+        return await monsterSkillDatabaseTask.value
+    }
+
+    func monsterCastSkills(for monster: MonsterModel) async -> [MonsterCastSkill] {
+        await fetchMonsterSkills()
+        await fetchSkills()
+
+        let monsterSkills = monsterSkillsByMonsterID[monster.id] ?? []
+
+        var castSkills: [MonsterCastSkill] = []
+        for (index, monsterSkill) in monsterSkills.enumerated() {
+            if let skill = skillsByID[monsterSkill.skillID] {
+                let castSkill = MonsterCastSkill(index: index, monsterSkill: monsterSkill, skill: skill)
+                castSkills.append(castSkill)
+            }
+        }
+        return castSkills
     }
 
     // MARK: - Monster Summon Database
