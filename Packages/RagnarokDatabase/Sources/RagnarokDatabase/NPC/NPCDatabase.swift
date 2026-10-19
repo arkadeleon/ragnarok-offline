@@ -43,6 +43,8 @@ final public class NPCDatabase: Sendable {
                 reader.close()
             }
 
+            var taskCount = 0
+
             while let line = reader.readLine() {
                 let line = line.trimmingCharacters(in: .whitespaces)
                 if line.isEmpty || line.starts(with: "//") {
@@ -60,22 +62,29 @@ final public class NPCDatabase: Sendable {
 
                 switch w1 {
                 case "npc":
-                    taskGroup.addTask {
-                        try await self.loadScript(at: url)
+                    taskGroup.addTask { [taskCount] in
+                        (taskCount, try await self.loadScript(at: url))
                     }
+                    taskCount += 1
                 case "delnpc":
                     try unloadScript(at: url)
                 case "import":
-                    taskGroup.addTask {
-                        try await self.importScript(at: url)
+                    taskGroup.addTask { [taskCount] in
+                        (taskCount, try await self.importScript(at: url))
                     }
+                    taskCount += 1
                 default:
                     break
                 }
             }
 
+            var commandsByTask = [ScriptCommands?](repeating: nil, count: taskCount)
+            for try await (taskIndex, commands) in taskGroup {
+                commandsByTask[taskIndex] = commands
+            }
+
             var mergedCommands = ScriptCommands()
-            for try await commands in taskGroup {
+            for commands in commandsByTask.compactMap({ $0 }) {
                 mergedCommands.merge(commands)
             }
             return mergedCommands
