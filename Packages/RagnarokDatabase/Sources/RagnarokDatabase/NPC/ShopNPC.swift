@@ -32,7 +32,9 @@ public struct ShopNPC: Sendable {
     public struct Item: Sendable {
         public var itemID: Int
 
-        /// The price in zeny, or `-1` to use the buy price of the item.
+        /// The price in zeny for a shop or marketshop, in cash points for a cashshop, in the cost item
+        /// for an itemshop, and in the cost variable for a pointshop. A negative price means the buy
+        /// price of the item in a shop or marketshop, and 0 in other shops.
         public var price: Int
 
         /// The stock of a marketshop item. `nil` for other shop types.

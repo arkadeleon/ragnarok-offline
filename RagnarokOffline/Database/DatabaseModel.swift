@@ -112,6 +112,17 @@ struct SellingShop: Identifiable {
     }
 }
 
+struct ShopItem: Identifiable {
+    var index: Int
+    var item: ItemModel
+    var price: Int
+    var stock: Int?
+
+    var id: Int {
+        index
+    }
+}
+
 @MainActor
 @Observable
 final class DatabaseModel {
@@ -903,11 +914,41 @@ final class DatabaseModel {
                 continue
             }
 
-            let price = shopItem.price == -1 ? item.buy : shopItem.price
+            let price = price(of: shopItem, item: item, shopType: shopNPC.shopType)
             let sellingShop = SellingShop(shopNPC: shopNPC, map: map, price: price)
             sellingShops.append(sellingShop)
         }
 
         return sellingShops
+    }
+
+    func shopItems(for shopNPC: ShopNPC) async -> [ShopItem] {
+        await fetchItems()
+
+        var shopItems: [ShopItem] = []
+
+        for (index, shopNPCItem) in shopNPC.items.enumerated() {
+            if let item = itemsByID[shopNPCItem.itemID] {
+                let price = price(of: shopNPCItem, item: item, shopType: shopNPC.shopType)
+                let shopItem = ShopItem(index: index, item: item, price: price, stock: shopNPCItem.stock)
+                shopItems.append(shopItem)
+            }
+        }
+
+        return shopItems
+    }
+
+    /// A negative price means the buy price of the item in a shop or marketshop, and 0 in other shops.
+    private func price(of shopNPCItem: ShopNPC.Item, item: ItemModel, shopType: ShopNPC.ShopType) -> Int {
+        guard shopNPCItem.price < 0 else {
+            return shopNPCItem.price
+        }
+
+        switch shopType {
+        case .shop, .marketshop:
+            return item.buy
+        case .cashshop, .itemshop, .pointshop:
+            return 0
+        }
     }
 }
