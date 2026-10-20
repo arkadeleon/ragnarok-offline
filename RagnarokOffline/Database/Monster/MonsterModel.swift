@@ -36,12 +36,28 @@ final class MonsterModel {
         attributes.append(.init(name: LocalizedStringResource("Name", table: "Database"), value: monster.name))
 
         attributes.append(.init(name: LocalizedStringResource("Level", table: "Database"), value: monster.level))
-        attributes.append(.init(name: LocalizedStringResource("HP", table: "Database"), value: monster.hp))
-        attributes.append(.init(name: LocalizedStringResource("SP", table: "Database"), value: monster.sp))
 
         attributes.append(.init(name: LocalizedStringResource("Base Exp", table: "Database"), value: monster.baseExp))
         attributes.append(.init(name: LocalizedStringResource("Job Exp", table: "Database"), value: monster.jobExp))
         attributes.append(.init(name: LocalizedStringResource("MVP Exp", table: "Database"), value: monster.mvpExp))
+
+        attributes.append(.init(name: LocalizedStringResource("Size", table: "Database"), value: monster.size.localizedName))
+        attributes.append(.init(name: LocalizedStringResource("Race", table: "Database"), value: monster.race.localizedName))
+
+        attributes.append(.init(name: LocalizedStringResource("Element", table: "Database"), value: monster.element.localizedName))
+        attributes.append(.init(name: LocalizedStringResource("Element Level", table: "Database"), value: monster.elementLevel))
+
+        attributes.append(.init(name: LocalizedStringResource("AI", table: "Database"), value: monster.ai.stringValue))
+        attributes.append(.init(name: LocalizedStringResource("Class", table: "Database"), value: monster.class.localizedName))
+
+        return attributes
+    }
+
+    var statAttributes: [DatabaseRecordAttribute] {
+        var attributes: [DatabaseRecordAttribute] = []
+
+        attributes.append(.init(name: LocalizedStringResource("HP", table: "Database"), value: monster.hp))
+        attributes.append(.init(name: LocalizedStringResource("SP", table: "Database"), value: monster.sp))
 
         if mode == .prerenewal {
             attributes.append(.init(name: LocalizedStringResource("Minimum Attack", table: "Database"), value: monster.attack))
@@ -66,25 +82,23 @@ final class MonsterModel {
         attributes.append(.init(name: LocalizedStringResource("Dex", table: "Database"), value: monster.dex))
         attributes.append(.init(name: LocalizedStringResource("Luk", table: "Database"), value: monster.luk))
 
+        attributes.append(.init(name: LocalizedStringResource("Damage Taken", table: "Database"), value: monster.damageTaken))
+
+        return attributes
+    }
+
+    var actionAttributes: [DatabaseRecordAttribute] {
+        var attributes: [DatabaseRecordAttribute] = []
+
         attributes.append(.init(name: LocalizedStringResource("Attack Range", table: "Database"), value: monster.attackRange))
         attributes.append(.init(name: LocalizedStringResource("Skill Range", table: "Database"), value: monster.skillRange))
         attributes.append(.init(name: LocalizedStringResource("Chase Range", table: "Database"), value: monster.chaseRange))
-
-        attributes.append(.init(name: LocalizedStringResource("Size", table: "Database"), value: monster.size.localizedName))
-        attributes.append(.init(name: LocalizedStringResource("Race", table: "Database"), value: monster.race.localizedName))
-
-        attributes.append(.init(name: LocalizedStringResource("Element", table: "Database"), value: monster.element.localizedName))
-        attributes.append(.init(name: LocalizedStringResource("Element Level", table: "Database"), value: monster.elementLevel))
 
         attributes.append(.init(name: LocalizedStringResource("Walk Speed", table: "Database"), value: monster.walkSpeed.rawValue))
         attributes.append(.init(name: LocalizedStringResource("Attack Delay", table: "Database"), value: monster.attackDelay))
         attributes.append(.init(name: LocalizedStringResource("Attack Motion", table: "Database"), value: monster.attackMotion))
         attributes.append(.init(name: LocalizedStringResource("Client Attack Motion", table: "Database"), value: monster.clientAttackMotion))
         attributes.append(.init(name: LocalizedStringResource("Damage Motion", table: "Database"), value: monster.damageMotion))
-        attributes.append(.init(name: LocalizedStringResource("Damage Taken", table: "Database"), value: monster.damageTaken))
-
-        attributes.append(.init(name: LocalizedStringResource("AI", table: "Database"), value: monster.ai.stringValue))
-        attributes.append(.init(name: LocalizedStringResource("Class", table: "Database"), value: monster.class.localizedName))
 
         return attributes
     }

@@ -37,6 +37,14 @@ struct MonsterDetailView: View {
                 Text("Info", tableName: "Database")
             }
 
+            DatabaseRecordSectionView(attributes: monster.statAttributes) {
+                Text("Stats", tableName: "Database")
+            }
+
+            DatabaseRecordSectionView(attributes: monster.actionAttributes) {
+                Text("Actions", tableName: "Database")
+            }
+
             if !elementalDamages.isEmpty {
                 DatabaseRecordSectionView(attributes: elementalDamageAttributes) {
                     Text("Elemental Damage", tableName: "Database")
