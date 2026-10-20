@@ -11,8 +11,12 @@ import SwiftUI
 struct SkillDatabaseView: View {
     @Environment(DatabaseModel.self) private var database
 
+    @Namespace private var filterNamespace
+
     @State private var searchText = ""
+    @State private var filter = SkillDatabaseFilter()
     @State private var filteredSkills: [SkillModel] = []
+    @State private var isFilterPresented = false
 
     var body: some View {
         SizeClassAdaptiveView {
@@ -44,20 +48,59 @@ struct SkillDatabaseView: View {
         .background(.background)
         .navigationTitle(Text("Skill Database", tableName: "Database"))
         .adaptiveSearch(text: $searchText)
+        .toolbar {
+            ToolbarItem {
+                // The button looks selected while the filter is active, and a click opens the filter.
+                let isFilterOn = Binding(get: { !filter.isEmpty }, set: { _ in isFilterPresented.toggle() })
+                Toggle(isOn: isFilterOn) {
+                    Label {
+                        Text("Filter", tableName: "Database")
+                    } icon: {
+                        Image(systemName: "line.3.horizontal.decrease")
+                    }
+                }
+                .toggleStyle(.button)
+                .matchedTransitionSource(id: "filter", in: filterNamespace)
+            }
+        }
         .overlay {
             if database.skills.isEmpty {
                 ProgressView()
-            } else if !searchText.isEmpty && filteredSkills.isEmpty {
+            } else if (!searchText.isEmpty || !filter.isEmpty) && filteredSkills.isEmpty {
                 ContentUnavailableView {
                     Label {
                         Text("No Results", tableName: "Database")
                     } icon: {
                         Image(systemName: "arrow.up.heart.fill")
                     }
+                } description: {
+                    Text("Try adjusting your search or filters", tableName: "Database")
+                } actions: {
+                    if !filter.isEmpty {
+                        Button {
+                            filter.reset()
+                        } label: {
+                            Label {
+                                Text("Reset Filters", tableName: "Database")
+                            } icon: {
+                                Image(systemName: "arrow.counterclockwise")
+                            }
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .padding(.horizontal)
+                        }
+                        .adaptiveProminentButtonStyle()
+                    }
                 }
             }
         }
-        .task(id: "\(searchText)") {
+        .sheet(isPresented: $isFilterPresented) {
+            NavigationStack {
+                SkillDatabaseFilterView(filter: $filter)
+            }
+            .adaptiveNavigationTransition(sourceID: "filter", in: filterNamespace)
+        }
+        .task(id: query) {
             await database.fetchSkills()
 
             if !searchText.isEmpty {
@@ -68,22 +111,31 @@ struct SkillDatabaseView: View {
                 }
             }
 
-            let filteredSkills = await skills(matching: searchText)
+            let filteredSkills = await skills(matching: searchText, filter: filter)
             if !Task.isCancelled {
                 self.filteredSkills = filteredSkills
             }
         }
     }
 
-    private func skills(matching searchText: String) async -> [SkillModel] {
+    private struct Query: Equatable {
+        var searchText: String
+        var filter: SkillDatabaseFilter
+    }
+
+    private var query: Query {
+        Query(searchText: searchText, filter: filter)
+    }
+
+    private func skills(matching searchText: String, filter: SkillDatabaseFilter) async -> [SkillModel] {
         let skills = database.skills
 
         if searchText.isEmpty {
-            return skills
+            return skills.filter(filter.isIncluded)
         }
 
         let indices = await database.skillSearchIndex.indices(matching: searchText)
-        return indices.map { skills[$0] }
+        return indices.map({ skills[$0] }).filter(filter.isIncluded)
     }
 }
 
