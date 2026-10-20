@@ -59,7 +59,7 @@ struct MapDetailView: View {
                         ForEach(spawningMonsters) { spawningMonster in
                             NavigationLink(value: spawningMonster.monster) {
                                 ImageGridCell(title: spawningMonster.monster.displayName) {
-                                    AmountBadge(amount: spawningMonster.spawn.amount)
+                                    SpawnBadge(spawn: spawningMonster.spawn)
                                 } image: {
                                     MonsterImageView(monster: spawningMonster.monster)
                                 }

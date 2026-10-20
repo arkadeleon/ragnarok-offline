@@ -112,7 +112,7 @@ struct MonsterDetailView: View {
                         ForEach(spawnMaps) { spawnMap in
                             NavigationLink(value: spawnMap.map) {
                                 MapCell(map: spawnMap.map) {
-                                    AmountBadge(amount: spawnMap.monsterSpawn.amount)
+                                    SpawnBadge(spawn: spawnMap.monsterSpawn)
                                 }
                             }
                         }

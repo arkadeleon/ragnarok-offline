@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/10/20.
 //
 
+import RagnarokDatabase
 import SwiftUI
 
 struct RateBadge: View {
@@ -29,11 +30,26 @@ struct MVPBadge: View {
     }
 }
 
-struct AmountBadge: View {
-    var amount: Int
+struct SpawnBadge: View {
+    var spawn: MonsterSpawn
 
     var body: some View {
-        Badge(text: "×" + amount.formatted(), color: .teal)
+        Badge(text: spawn.amount.formatted() + "× / " + respawnTimeText, color: .teal)
+    }
+
+    /// The respawn time is `delay1` plus a random time up to `delay2`, and at least 1 second.
+    private var respawnTimeText: String {
+        let minimumTime = max(spawn.delay1 ?? 0, 1000)
+        let maximumTime = max((spawn.delay1 ?? 0) + (spawn.delay2 ?? 0), 1000)
+        if minimumTime == maximumTime {
+            return formatTime(minimumTime)
+        } else {
+            return formatTime(minimumTime) + "–" + formatTime(maximumTime)
+        }
+    }
+
+    private func formatTime(_ milliseconds: Int) -> String {
+        Duration.milliseconds(milliseconds).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
     }
 }
 
