@@ -45,7 +45,7 @@ final class MonsterModel {
         attributes.append(.init(name: LocalizedStringResource("Race", table: "Database"), value: monster.race.localizedName))
 
         let element = String(localized: monster.element.localizedName) + " " + monster.elementLevel.formatted()
-        attributes.append(.init(name: LocalizedStringResource("Element", table: "Database"), value: element, valueColor: monster.element.color))
+        attributes.append(.init(name: LocalizedStringResource("Element", table: "Database"), value: element))
 
         attributes.append(.init(name: LocalizedStringResource("AI", table: "Database"), value: monster.ai.stringValue))
         attributes.append(.init(name: LocalizedStringResource("Class", table: "Database"), value: monster.class.localizedName))

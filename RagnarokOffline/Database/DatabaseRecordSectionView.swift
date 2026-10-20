@@ -80,7 +80,6 @@ struct DatabaseRecordSectionAttributesContent: View {
                             .foregroundStyle(Color.secondary)
                         Spacer()
                         Text(attribute.value)
-                            .foregroundStyle(attribute.valueColor ?? Color.primary)
                     }
                 }
             }

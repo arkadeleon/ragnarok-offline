@@ -5,21 +5,19 @@
 //  Created by Leon Li on 2024/5/11.
 //
 
-import SwiftUI
+import Foundation
 
 struct DatabaseRecordAttribute: Identifiable {
     var name: LocalizedStringResource
     var value: String
-    var valueColor: Color?
 
     var id: String {
         name.key
     }
 
-    init(name: LocalizedStringResource, value: String, valueColor: Color? = nil) {
+    init(name: LocalizedStringResource, value: String) {
         self.name = name
         self.value = value
-        self.valueColor = valueColor
     }
 
     init(name: LocalizedStringResource, value: Bool) {

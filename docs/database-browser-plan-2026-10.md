@@ -114,7 +114,7 @@
   - `formatRate`：百分比，`base` 表示 100%。
   - `formatZeny`、`formatWeight`。
 - 数字一律不用等宽，只有脚本相关（Script、Map Flags）用等宽字体。
-- 怪物的 Element 和 Element Level 合并成一行，比如 "Fire 2"，并用元素的颜色显示。Class 不上色。
+- 怪物的 Element 和 Element Level 合并成一行，比如 "Fire 2"。元素颜色和 Class 都不上色。
 - 属性网格的列宽保持 `adaptive(minimum: 280)`。
 
 ### 8. 列表副标题和网格标记
