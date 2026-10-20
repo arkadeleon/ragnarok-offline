@@ -105,18 +105,17 @@
   - 单选项（类型、体型、种族、属性）再点一次可以取消，筛选条件上加了 `toggleXXX` 方法。
   - "No Results" 页面在有筛选生效时显示 Reset Filters 按钮。
 
-### 7. 信息分组和语义色
+### 7. 信息分组和语义色（已完成）
 
-- 现状：
-  - 每个 section 都是 `title3` 标题加一条 `Divider`，看起来分量都一样。
-  - 怪物大约有 40 个属性，全挤在一个两列网格里。
-  - 网格最小列宽是 280，宽屏上标签和数值之间隔得太远。
-  - 数字没有用等宽数字，整页只有一种颜色。
-- 目标：
-  - 属性分组显示。比如怪物分成基础、六维、战斗、速度与动作四组。
-  - 限制列宽，或者改成标签在上、数值在下的紧凑布局。
-  - 数字使用 `.monospacedDigit()`。
-  - 属性元素、MVP/Boss、物品类型用颜色或 badge 区分。
+- 怪物属性分成 Info、Stats、Actions 三组。物品不分组。
+- 属性值加上单位，格式统一放在 `DatabaseFormatting.swift`：
+  - `formatTime`：毫秒，h/m/s/ms，narrow。怪物 Actions 组只用毫秒。
+  - `formatCells`：`^[%lld cell](inflect: true)`。
+  - `formatRate`：百分比，`base` 表示 100%。
+  - `formatZeny`、`formatWeight`。
+- 数字一律不用等宽，只有脚本相关（Script、Map Flags）用等宽字体。
+- 怪物的 Element 和 Element Level 合并成一行，比如 "Fire 2"，并用元素的颜色显示。Class 不上色。
+- 属性网格的列宽保持 `adaptive(minimum: 280)`。
 
 ### 8. 列表副标题和网格标记
 

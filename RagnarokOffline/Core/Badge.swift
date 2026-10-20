@@ -14,7 +14,6 @@ struct Badge: View {
     var body: some View {
         Text(text)
             .font(.caption)
-            .monospacedDigit()
             .foregroundStyle(color)
             .lineLimit(1)
             .padding(.horizontal, 6)
