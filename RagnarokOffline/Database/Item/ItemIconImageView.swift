@@ -15,6 +15,7 @@ struct ItemIconImageView: View {
             if let itemIconImage = item.iconImage {
                 Image(decorative: itemIconImage.cgImage, scale: 1)
                     .resizable()
+                    .interpolation(.none)
                     .aspectRatio(contentMode: .fit)
             } else {
                 Image(systemName: "leaf")

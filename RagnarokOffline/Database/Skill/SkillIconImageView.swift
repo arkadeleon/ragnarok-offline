@@ -15,6 +15,7 @@ struct SkillIconImageView: View {
             if let skillIconImage = skill.iconImage {
                 Image(decorative: skillIconImage.cgImage, scale: 1)
                     .resizable()
+                    .interpolation(.none)
                     .aspectRatio(contentMode: .fit)
             } else {
                 Image(systemName: "arrow.up.heart")

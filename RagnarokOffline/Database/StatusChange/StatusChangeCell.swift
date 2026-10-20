@@ -16,6 +16,7 @@ struct StatusChangeCell: View {
                 if let iconImage = statusChange.iconImage {
                     Image(decorative: iconImage.cgImage, scale: 1)
                         .resizable()
+                        .interpolation(.none)
                         .aspectRatio(contentMode: .fit)
                 } else {
                     Image(systemName: "moon.zzz")

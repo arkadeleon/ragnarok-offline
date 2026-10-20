@@ -24,6 +24,7 @@ struct ItemDetailView: View {
                 if let itemPreviewImage = item.previewImage {
                     Image(decorative: itemPreviewImage.cgImage, scale: 1)
                         .resizable()
+                        .interpolation(.none)
                         .aspectRatio(contentMode: .fit)
                 } else {
                     Image(systemName: "leaf")
