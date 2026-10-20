@@ -38,8 +38,8 @@ final class StatusChangeModel {
 
         attributes.append(.init(name: LocalizedStringResource("Status", table: "Database"), value: statusChange.status.stringValue))
         attributes.append(.init(name: LocalizedStringResource("Icon", table: "Database"), value: statusChange.icon.stringValue))
-        attributes.append(.init(name: LocalizedStringResource("Minimum Rate", table: "Database"), value: (Double(statusChange.minRate) / 10000).formatted(.percent)))
-        attributes.append(.init(name: LocalizedStringResource("Minimum Duration", table: "Database"), value: Duration.milliseconds(statusChange.minDuration).formatted(.units(allowed: [.hours, .minutes, .seconds, .milliseconds], width: .abbreviated))))
+        attributes.append(.init(name: LocalizedStringResource("Minimum Rate", table: "Database"), value: formatRate(statusChange.minRate, base: 10000)))
+        attributes.append(.init(name: LocalizedStringResource("Minimum Duration", table: "Database"), value: formatTime(statusChange.minDuration)))
 
         return attributes
     }

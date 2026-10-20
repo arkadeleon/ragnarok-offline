@@ -12,7 +12,7 @@ struct RateBadge: View {
     var rate: Int
 
     var body: some View {
-        Badge(text: (Double(rate) / 100).formatted() + "%", color: .blue)
+        Badge(text: formatRate(rate, base: 10000), color: .blue)
     }
 }
 
@@ -20,7 +20,7 @@ struct SummonRateBadge: View {
     var rate: Int
 
     var body: some View {
-        Badge(text: (Double(rate) / 10000).formatted() + "%", color: .blue)
+        Badge(text: formatRate(rate, base: 1000000), color: .blue)
     }
 }
 
@@ -47,10 +47,6 @@ struct SpawnBadge: View {
             return formatTime(minimumTime) + "–" + formatTime(maximumTime)
         }
     }
-
-    private func formatTime(_ milliseconds: Int) -> String {
-        Duration.milliseconds(milliseconds).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
-    }
 }
 
 struct PriceBadge: View {
@@ -64,7 +60,7 @@ struct PriceBadge: View {
     private var text: String {
         switch shopType {
         case .shop, .marketshop:
-            price.formatted() + "z"
+            formatZeny(price)
         case .cashshop:
             price.formatted() + " Cash"
         case .itemshop, .pointshop:

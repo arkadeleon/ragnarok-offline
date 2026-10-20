@@ -33,7 +33,7 @@ final class PetModel {
         var attributes: [DatabaseRecordAttribute] = []
 
         attributes.append(.init(name: LocalizedStringResource("Fullness", table: "Database"), value: pet.fullness))
-        attributes.append(.init(name: LocalizedStringResource("Hungry Delay", table: "Database"), value: pet.hungryDelay))
+        attributes.append(.init(name: LocalizedStringResource("Hungry Delay", table: "Database"), value: formatTime(pet.hungryDelay * 1000)))
         attributes.append(.init(name: LocalizedStringResource("Hunger Increase", table: "Database"), value: pet.hungerIncrease))
 
         attributes.append(.init(name: LocalizedStringResource("Intimacy Start", table: "Database"), value: pet.intimacyStart))
@@ -42,11 +42,11 @@ final class PetModel {
         attributes.append(.init(name: LocalizedStringResource("Intimacy Hungry", table: "Database"), value: pet.intimacyHungry))
         attributes.append(.init(name: LocalizedStringResource("Intimacy OwnerDie", table: "Database"), value: pet.intimacyOwnerDie))
 
-        attributes.append(.init(name: LocalizedStringResource("Capture Rate", table: "Database"), value: pet.captureRate))
+        attributes.append(.init(name: LocalizedStringResource("Capture Rate", table: "Database"), value: formatRate(pet.captureRate, base: 10000)))
         attributes.append(.init(name: LocalizedStringResource("Special Performance", table: "Database"), value: pet.specialPerformance))
-        attributes.append(.init(name: LocalizedStringResource("Attack Rate", table: "Database"), value: pet.attackRate))
-        attributes.append(.init(name: LocalizedStringResource("Retaliate Rate", table: "Database"), value: pet.retaliateRate))
-        attributes.append(.init(name: LocalizedStringResource("Change Target Rate", table: "Database"), value: pet.changeTargetRate))
+        attributes.append(.init(name: LocalizedStringResource("Attack Rate", table: "Database"), value: formatRate(pet.attackRate, base: 10000)))
+        attributes.append(.init(name: LocalizedStringResource("Retaliate Rate", table: "Database"), value: formatRate(pet.retaliateRate, base: 10000)))
+        attributes.append(.init(name: LocalizedStringResource("Change Target Rate", table: "Database"), value: formatRate(pet.changeTargetRate, base: 10000)))
         attributes.append(.init(name: LocalizedStringResource("Allow Auto Feed", table: "Database"), value: pet.allowAutoFeed))
 
         return attributes

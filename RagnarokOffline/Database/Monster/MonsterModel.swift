@@ -82,7 +82,7 @@ final class MonsterModel {
         attributes.append(.init(name: LocalizedStringResource("Dex", table: "Database"), value: monster.dex))
         attributes.append(.init(name: LocalizedStringResource("Luk", table: "Database"), value: monster.luk))
 
-        attributes.append(.init(name: LocalizedStringResource("Damage Taken", table: "Database"), value: monster.damageTaken))
+        attributes.append(.init(name: LocalizedStringResource("Damage Taken", table: "Database"), value: formatRate(monster.damageTaken, base: 100)))
 
         return attributes
     }
@@ -90,15 +90,15 @@ final class MonsterModel {
     var actionAttributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: LocalizedStringResource("Attack Range", table: "Database"), value: monster.attackRange))
-        attributes.append(.init(name: LocalizedStringResource("Skill Range", table: "Database"), value: monster.skillRange))
-        attributes.append(.init(name: LocalizedStringResource("Chase Range", table: "Database"), value: monster.chaseRange))
+        attributes.append(.init(name: LocalizedStringResource("Attack Range", table: "Database"), value: formatCells(monster.attackRange)))
+        attributes.append(.init(name: LocalizedStringResource("Skill Range", table: "Database"), value: formatCells(monster.skillRange)))
+        attributes.append(.init(name: LocalizedStringResource("Chase Range", table: "Database"), value: formatCells(monster.chaseRange)))
 
-        attributes.append(.init(name: LocalizedStringResource("Walk Speed", table: "Database"), value: monster.walkSpeed.rawValue))
-        attributes.append(.init(name: LocalizedStringResource("Attack Delay", table: "Database"), value: monster.attackDelay))
-        attributes.append(.init(name: LocalizedStringResource("Attack Motion", table: "Database"), value: monster.attackMotion))
-        attributes.append(.init(name: LocalizedStringResource("Client Attack Motion", table: "Database"), value: monster.clientAttackMotion))
-        attributes.append(.init(name: LocalizedStringResource("Damage Motion", table: "Database"), value: monster.damageMotion))
+        attributes.append(.init(name: LocalizedStringResource("Walk Speed", table: "Database"), value: formatTime(monster.walkSpeed.rawValue, allowedUnits: [.milliseconds])))
+        attributes.append(.init(name: LocalizedStringResource("Attack Delay", table: "Database"), value: formatTime(monster.attackDelay, allowedUnits: [.milliseconds])))
+        attributes.append(.init(name: LocalizedStringResource("Attack Motion", table: "Database"), value: formatTime(monster.attackMotion, allowedUnits: [.milliseconds])))
+        attributes.append(.init(name: LocalizedStringResource("Client Attack Motion", table: "Database"), value: formatTime(monster.clientAttackMotion, allowedUnits: [.milliseconds])))
+        attributes.append(.init(name: LocalizedStringResource("Damage Motion", table: "Database"), value: formatTime(monster.damageMotion, allowedUnits: [.milliseconds])))
 
         return attributes
     }

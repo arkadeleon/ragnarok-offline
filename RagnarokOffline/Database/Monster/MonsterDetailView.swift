@@ -158,7 +158,7 @@ struct MonsterDetailView: View {
 
     private var elementalDamageAttributes: [DatabaseRecordAttribute] {
         elementalDamages.map { elementalDamage in
-            DatabaseRecordAttribute(name: elementalDamage.attackElement.localizedName, value: "\(elementalDamage.rate)%")
+            DatabaseRecordAttribute(name: elementalDamage.attackElement.localizedName, value: formatRate(elementalDamage.rate, base: 100))
         }
     }
 }

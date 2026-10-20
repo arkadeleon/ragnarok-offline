@@ -76,15 +76,15 @@ final class ItemModel {
             attributes.append(.init(name: LocalizedStringResource("Card Type", table: "Database"), value: cardType.localizedName))
         }
 
-        attributes.append(.init(name: LocalizedStringResource("Buy", table: "Database"), value: item.buy.formatted() + "z"))
-        attributes.append(.init(name: LocalizedStringResource("Sell", table: "Database"), value: item.sell.formatted() + "z"))
-        attributes.append(.init(name: LocalizedStringResource("Weight", table: "Database"), value: Double(item.weight) / 10))
+        attributes.append(.init(name: LocalizedStringResource("Buy", table: "Database"), value: formatZeny(item.buy)))
+        attributes.append(.init(name: LocalizedStringResource("Sell", table: "Database"), value: formatZeny(item.sell)))
+        attributes.append(.init(name: LocalizedStringResource("Weight", table: "Database"), value: formatWeight(item.weight)))
 
         switch item.type {
         case .weapon:
             attributes.append(.init(name: LocalizedStringResource("Attack", table: "Database"), value: item.attack))
             attributes.append(.init(name: LocalizedStringResource("Magic Attack", table: "Database"), value: item.magicAttack))
-            attributes.append(.init(name: LocalizedStringResource("Attack Range", table: "Database"), value: item.range))
+            attributes.append(.init(name: LocalizedStringResource("Attack Range", table: "Database"), value: formatCells(item.range)))
             attributes.append(.init(name: LocalizedStringResource("Slots", table: "Database"), value: item.slots))
         case .armor:
             attributes.append(.init(name: LocalizedStringResource("Defense", table: "Database"), value: item.defense))

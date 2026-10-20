@@ -62,7 +62,7 @@ struct SkillDetailView: View {
                                     Text(formatTime(level.cooldown))
                                 }
                                 if skill.showsRange {
-                                    Text(level.range.formatted())
+                                    Text(formatCells(level.range))
                                 }
                             }
                         }
@@ -80,10 +80,5 @@ struct SkillDetailView: View {
             }
         }
         .navigationTitle(skill.displayName)
-    }
-
-    private func formatTime(_ milliseconds: Int) -> String {
-        let measurement = Measurement(value: Double(milliseconds) / 1000, unit: UnitDuration.seconds)
-        return measurement.formatted(.measurement(width: .narrow))
     }
 }

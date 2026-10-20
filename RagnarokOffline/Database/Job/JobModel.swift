@@ -53,7 +53,7 @@ final class JobModel {
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: LocalizedStringResource("Max Weight", table: "Database"), value: job.maxWeight))
+        attributes.append(.init(name: LocalizedStringResource("Max Weight", table: "Database"), value: formatWeight(job.maxWeight)))
         attributes.append(.init(name: LocalizedStringResource("HP Factor", table: "Database"), value: job.hpFactor))
         attributes.append(.init(name: LocalizedStringResource("HP Increase", table: "Database"), value: job.hpIncrease))
         attributes.append(.init(name: LocalizedStringResource("SP Factor", table: "Database"), value: job.spFactor))
