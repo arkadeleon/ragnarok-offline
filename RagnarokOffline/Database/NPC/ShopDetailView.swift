@@ -29,13 +29,18 @@ struct ShopDetailView: View {
             .stretchy()
 
             DatabaseRecordSectionView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                    NavigationLink(value: shop.map) {
-                        MapCell(map: shop.map) {
+                NavigationLink(value: shop.map) {
+                    VStack(spacing: 8) {
+                        MapLocationView(map: shop.map, locations: [MapLocation(x: shop.npc.x, y: shop.npc.y)])
+
+                        VStack(spacing: 4) {
+                            Text(shop.map.displayName)
+                                .foregroundStyle(Color.primary)
                             PositionBadge(x: shop.npc.x, y: shop.npc.y)
                         }
                     }
                 }
+                .frame(maxWidth: .infinity)
             } header: {
                 Text("Map", tableName: "Database")
             }
