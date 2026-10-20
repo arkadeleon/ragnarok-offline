@@ -98,20 +98,6 @@ struct SpawningMonster: Identifiable {
     }
 }
 
-struct SellingShop: Identifiable {
-    var shopNPC: ShopNPC
-    var map: MapModel
-    var price: Int
-
-    var id: String {
-        shopNPC.npcName
-    }
-
-    var npcDisplayName: String {
-        String(shopNPC.npcName.prefix { $0 != "#" && $0 != ":" })
-    }
-}
-
 struct ShopItem: Identifiable {
     var index: Int
     var item: ItemModel
@@ -902,21 +888,21 @@ final class DatabaseModel {
         return NPCJobID.jt_invisible.rawValue
     }
 
-    func sellingShops(for item: ItemModel) async -> [SellingShop] {
+    func sellingShops(for item: ItemModel) async -> [ShopModel] {
         await fetchScriptCommands()
 
-        var sellingShops: [SellingShop] = []
+        var sellingShops: [ShopModel] = []
 
         for shopNPC in scriptCommands.shopNPCs(forItemID: item.id) {
-            guard let mapName = shopNPC.mapName,
-                  let map = await map(forName: mapName),
-                  let shopItem = shopNPC.items.first(where: { $0.itemID == item.id }) else {
+            guard let mapName = shopNPC.mapName, let x = shopNPC.x, let y = shopNPC.y,
+                  let map = await map(forName: mapName) else {
                 continue
             }
 
-            let price = price(of: shopItem, item: item, shopType: shopNPC.shopType)
-            let sellingShop = SellingShop(shopNPC: shopNPC, map: map, price: price)
-            sellingShops.append(sellingShop)
+            let jobID = await jobID(forSprite: shopNPC.sprite)
+            let npc = NPCModel(npcName: shopNPC.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
+            let shop = ShopModel(shopNPC: shopNPC, npc: npc, map: map)
+            sellingShops.append(shop)
         }
 
         return sellingShops

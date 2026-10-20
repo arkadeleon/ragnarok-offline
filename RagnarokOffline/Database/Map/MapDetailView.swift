@@ -90,7 +90,9 @@ struct MapDetailView: View {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(npcs) { npc in
-                            NPCGridCell(npc: npc)
+                            NPCGridCell(npc: npc) {
+                                PositionBadge(x: npc.x, y: npc.y)
+                            }
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))

@@ -55,9 +55,29 @@ struct SpawnBadge: View {
 
 struct PriceBadge: View {
     var price: Int
+    var shopType: ShopNPC.ShopType
 
     var body: some View {
-        Badge(text: price.formatted() + "z", color: .orange)
+        Badge(text: text, color: .orange)
+    }
+
+    private var text: String {
+        switch shopType {
+        case .shop, .marketshop:
+            price.formatted() + "z"
+        case .cashshop:
+            price.formatted() + " Cash"
+        case .itemshop, .pointshop:
+            price.formatted()
+        }
+    }
+}
+
+struct MapBadge: View {
+    var map: MapModel
+
+    var body: some View {
+        Badge(text: map.displayName, color: .mint)
     }
 }
 

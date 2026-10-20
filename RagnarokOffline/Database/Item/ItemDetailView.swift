@@ -15,7 +15,7 @@ struct ItemDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var droppingMonsters: [DroppingMonster] = []
-    @State private var sellingShops: [SellingShop] = []
+    @State private var sellingShops: [ShopModel] = []
     @State private var petUsages: [PetUsage] = []
 
     var body: some View {
@@ -103,18 +103,16 @@ struct ItemDetailView: View {
 
             if !sellingShops.isEmpty {
                 DatabaseRecordSectionView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(sellingShops) { sellingShop in
-                            NavigationLink(value: sellingShop.map) {
-                                MapCell(map: sellingShop.map) {
-                                    HStack(spacing: 4) {
-                                        Text(sellingShop.npcDisplayName)
-                                        PriceBadge(price: sellingShop.price)
-                                    }
+                    LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
+                        ForEach(sellingShops) { shop in
+                            NavigationLink(value: shop) {
+                                NPCGridCell(npc: shop.npc) {
+                                    MapBadge(map: shop.map)
                                 }
                             }
                         }
                     }
+                    .padding(.vertical, vSpacing(sizeClass))
                 } header: {
                     Text("Sold By", tableName: "Database")
                 }

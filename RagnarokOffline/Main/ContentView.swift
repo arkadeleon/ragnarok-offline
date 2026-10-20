@@ -156,6 +156,10 @@ extension View {
                 PetDetailView(pet: pet)
                     .environment(appModel.database)
             }
+            .navigationDestination(for: ShopModel.self) { shop in
+                ShopDetailView(shop: shop)
+                    .environment(appModel.database)
+            }
             .navigationDestination(for: SkillModel.self) { skill in
                 SkillDetailView(skill: skill)
                     .environment(appModel.database)
