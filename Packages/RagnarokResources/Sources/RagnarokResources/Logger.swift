@@ -7,4 +7,4 @@
 
 import OSLog
 
-let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "RagnarokResources")
+let logger = Logger(subsystem: "RagnarokResources", category: "RagnarokResources")

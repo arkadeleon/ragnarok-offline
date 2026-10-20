@@ -8,5 +8,5 @@
 import OSLog
 import RagnarokCore
 
-let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "RagnarokFileFormats")
+let logger = Logger(subsystem: "RagnarokFileFormats", category: "RagnarokFileFormats")
 let metric = PerformanceMetric(logger: logger)

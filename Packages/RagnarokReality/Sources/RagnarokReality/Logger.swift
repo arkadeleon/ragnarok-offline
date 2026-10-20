@@ -8,5 +8,5 @@
 import OSLog
 import RagnarokCore
 
-let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "RagnarokReality")
+let logger = Logger(subsystem: "RagnarokReality", category: "RagnarokReality")
 let metric = PerformanceMetric(logger: logger)
