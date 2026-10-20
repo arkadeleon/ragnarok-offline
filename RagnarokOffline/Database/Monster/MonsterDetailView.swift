@@ -95,7 +95,6 @@ struct MonsterDetailView: View {
                                 SkillCell(skill: castSkill.skill) {
                                     HStack(spacing: 4) {
                                         SkillLevelBadge(level: castSkill.monsterSkill.skillLevel)
-                                        MonsterSkillStateBadge(state: castSkill.monsterSkill.state)
                                         RateBadge(rate: castSkill.monsterSkill.rate)
                                     }
                                 }

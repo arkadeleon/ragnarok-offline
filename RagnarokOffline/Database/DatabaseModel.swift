@@ -445,6 +445,15 @@ final class DatabaseModel {
 
         var castSkills: [MonsterCastSkill] = []
         for (index, monsterSkill) in monsterSkills.enumerated() {
+            let isDuplicate = castSkills.contains { castSkill in
+                castSkill.monsterSkill.skillID == monsterSkill.skillID &&
+                castSkill.monsterSkill.skillLevel == monsterSkill.skillLevel &&
+                castSkill.monsterSkill.rate == monsterSkill.rate
+            }
+            if isDuplicate {
+                continue
+            }
+
             if let skill = skillsByID[monsterSkill.skillID] {
                 let castSkill = MonsterCastSkill(index: index, monsterSkill: monsterSkill, skill: skill)
                 castSkills.append(castSkill)

@@ -11,7 +11,9 @@ struct NPCGridCell: View {
     var npc: NPCModel
 
     var body: some View {
-        ImageGridCell(title: npc.displayName, subtitle: "\(npc.x), \(npc.y)") {
+        ImageGridCell(title: npc.displayName) {
+            PositionBadge(x: npc.x, y: npc.y)
+        } image: {
             ZStack {
                 if let animatedImage = npc.animatedImage, let firstFrame = animatedImage.firstFrame {
                     Image(firstFrame, scale: animatedImage.scale, label: Text(npc.displayName))

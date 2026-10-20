@@ -35,10 +35,9 @@ struct MonsterSummonDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(summonMonsters) { summonMonster in
                             NavigationLink(value: summonMonster.monster) {
-                                ImageGridCell(
-                                    title: summonMonster.monster.displayName,
-                                    subtitle: summonMonster.rate.formatted()
-                                ) {
+                                ImageGridCell(title: summonMonster.monster.displayName) {
+                                    SummonRateBadge(rate: summonMonster.rate)
+                                } image: {
                                     MonsterImageView(monster: summonMonster.monster)
                                 }
                             }
