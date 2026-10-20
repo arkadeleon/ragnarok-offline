@@ -14,6 +14,9 @@ struct ItemDatabaseFilter: Equatable {
             ammoType = nil
             cardType = nil
             locations = EquipPositions(rawValue: 0)
+            slots = nil
+            job = nil
+            baseLevel = nil
         }
     }
 
@@ -70,12 +73,36 @@ struct ItemDatabaseFilter: Equatable {
         }
     }
 
+    var slots: Int?
+
+    var availableSlots: [Int] {
+        [0, 1, 2, 3, 4]
+    }
+
+    var job: EAJobID?
+
+    var availableJobs: [EAJobID] {
+        [
+            .novice, .swordman, .mage, .archer, .acolyte, .merchant, .thief,
+            .taekwon, .gunslinger, .ninja, .summoner,
+            .super_novice, .knight, .wizard, .hunter, .priest, .blacksmith, .assassin,
+            .star_gladiator, .rebellion, .kagerouoboro, .spirit_handler,
+            .crusader, .sage, .barddancer, .monk, .alchemist, .rogue, .soul_linker,
+        ]
+    }
+
+    /// Includes only the items that a character at this base level can equip.
+    var baseLevel: Int?
+
     var isEmpty: Bool {
         itemType == nil &&
         weaponType == nil &&
         ammoType == nil &&
         cardType == nil &&
-        locations.rawValue == 0
+        locations.rawValue == 0 &&
+        slots == nil &&
+        job == nil &&
+        baseLevel == nil
     }
 
     func isIncluded(_ item: ItemModel) -> Bool {
@@ -96,6 +123,19 @@ struct ItemDatabaseFilter: Equatable {
         }
 
         if item.type == .armor || item.type == .card || item.type == .shadowgear, !item.locations.contains(locations) {
+            return false
+        }
+
+        if let slots, item.slots != slots {
+            return false
+        }
+
+        if let job, !item.jobs.contains(job) {
+            return false
+        }
+
+        // An equipLevelMax of 0 means no maximum level.
+        if let baseLevel, baseLevel < item.equipLevelMin || (item.equipLevelMax > 0 && baseLevel > item.equipLevelMax) {
             return false
         }
 
@@ -126,11 +166,22 @@ struct ItemDatabaseFilter: Equatable {
         }
     }
 
+    mutating func toggleSlots(_ slots: Int) {
+        self.slots = self.slots == slots ? nil : slots
+    }
+
+    mutating func toggleJob(_ job: EAJobID) {
+        self.job = self.job == job ? nil : job
+    }
+
     mutating func reset() {
         itemType = nil
         weaponType = nil
         ammoType = nil
         cardType = nil
         locations = EquipPositions(rawValue: 0)
+        slots = nil
+        job = nil
+        baseLevel = nil
     }
 }

@@ -40,15 +40,15 @@ struct ItemDetailView: View {
             }
 
             if item.type == .weapon || item.type == .armor {
-                DatabaseRecordSectionView(tags: item.jobs) {
+                DatabaseRecordSectionView(tags: item.localizedJobs) {
                     Text("Jobs", tableName: "Database")
                 }
 
-                DatabaseRecordSectionView(tags: item.classes) {
+                DatabaseRecordSectionView(tags: item.localizedClasses) {
                     Text("Classes", tableName: "Database")
                 }
 
-                DatabaseRecordSectionView(tags: item.displayLocations) {
+                DatabaseRecordSectionView(tags: item.localizedLocations) {
                     Text("Locations", tableName: "Database")
                 }
             }

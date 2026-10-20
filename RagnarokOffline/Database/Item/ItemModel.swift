@@ -123,19 +123,19 @@ final class ItemModel {
         return attributes
     }
 
-    var jobs: [String] {
+    var localizedJobs: [String] {
         item.jobs
             .sorted(using: KeyPathComparator(\.intValue))
             .map { $0.localizedName.map { String(localized: $0) } ?? $0.stringValue }
     }
 
-    var classes: [String] {
+    var localizedClasses: [String] {
         OptionSetSequence(item.classes)
             .sorted(using: KeyPathComparator(\.rawValue))
             .map { String(localized: $0.localizedName) }
     }
 
-    var displayLocations: [String] {
+    var localizedLocations: [String] {
         OptionSetSequence(item.locations)
             .sorted(using: KeyPathComparator(\.rawValue))
             .map { String(localized: $0.localizedName) }

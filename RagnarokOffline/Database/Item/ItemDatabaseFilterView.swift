@@ -91,6 +91,45 @@ struct ItemDatabaseFilterView: View {
                             .padding(.top)
                     }
                 }
+
+                if filter.itemType == .weapon || filter.itemType == .armor || filter.itemType == .shadowgear {
+                    Section {
+                        LazyVGrid(columns: [gridItem], alignment: .leading) {
+                            ForEach(filter.availableSlots, id: \.self) { slots in
+                                SelectableButton(slots.formatted(), isSelected: filter.slots == slots) {
+                                    filter.toggleSlots(slots)
+                                }
+                            }
+                        }
+                    } header: {
+                        SectionHeaderView(LocalizedStringResource("Slots", table: "Database"))
+                            .padding(.top)
+                    }
+
+                    Section {
+                        LazyVGrid(columns: [gridItem], alignment: .leading) {
+                            ForEach(filter.availableJobs, id: \.rawValue) { job in
+                                SelectableButton(job.localizedName.map { String(localized: $0) } ?? job.stringValue, isSelected: filter.job == job) {
+                                    filter.toggleJob(job)
+                                }
+                            }
+                        }
+                    } header: {
+                        SectionHeaderView(LocalizedStringResource("Jobs", table: "Database"))
+                            .padding(.top)
+                    }
+
+                    Section {
+                        TextField(value: $filter.baseLevel, format: .number) {
+                            Text("Base Level", tableName: "Database")
+                        }
+                        .textFieldStyle(.roundedBorder)
+                        .frame(maxWidth: 140)
+                    } header: {
+                        SectionHeaderView(LocalizedStringResource("Equip Level", table: "Database"))
+                            .padding(.top)
+                    }
+                }
             }
             .padding()
         }
