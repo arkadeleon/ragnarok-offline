@@ -117,7 +117,7 @@
 - 怪物的 Element 和 Element Level 合并成一行，比如 "Fire 2"。元素颜色和 Class 都不上色。
 - 属性网格的列宽保持 `adaptive(minimum: 280)`。
 
-### 8. 列表副标题和网格标记
+### 8. 列表副标题和网格标记（暂缓）
 
 - 现状：
   - compact 布局的副标题显示的是 `aegisName`（`ItemCell`、`SkillCell`）。
@@ -129,7 +129,7 @@
 
 ## P2
 
-### 9. 统一详情页头
+### 9. 统一详情页头（暂缓）
 
 - 现状：
   - 技能和状态的详情页没有 hero 区。
@@ -141,12 +141,12 @@
   - 加载中显示占位，和"没有图片"区分开。
   - 在精灵下面加一层淡渐变底或地面阴影。
 
-### 10. 职业等级表
+### 10. 职业等级表（已完成）
 
-- 现状：
-  - 用 `HStack` 把四列等分，其中一列用空的 `Text(verbatim: "")` 占位。
-  - 175 行全部展开，往下滚就看不到表头了。
-- 目标：改用 `Grid` 或 `Table`，表头固定，加斑马纹，去掉空列。
+- 原来的问题：用 `HStack` 把四列等分，其中一列用空的 `Text(verbatim: "")` 占位；175 行全部展开在职业详情页里，往下滚就看不到表头了。
+- 最终方案：
+  - 完整的表格移到两个单独的页面：`BaseLevelTableView`（Base Level、Base Exp、Base HP、Base SP）和 `JobLevelTableView`（Job Level、Job Exp、Bonus Stats）。表头用 `LazyVStack(pinnedViews: [.sectionHeaders])` 吸顶，行有斑马纹，去掉了空列。没有改用 `Grid`，因为 `Grid` 不是 lazy 的，而等分的列本来就对齐。
+  - 职业详情页在 Skills 之前放 "Base Levels ›" 和 "Job Levels ›" 两个 section，标题是进入完整表格的链接，内容是前 10 级的预览，显示成 "Level 1　Exp 100"，没有表头和斑马纹。
 
 ### 11. 交互反馈
 

@@ -36,6 +36,58 @@ struct JobDetailView: View {
                 Text("Base ASPD", tableName: "Database")
             }
 
+            DatabaseRecordSectionView {
+                LazyVStack(spacing: 10) {
+                    ForEach(job.baseLevels.prefix(10)) { levelStats in
+                        HStack {
+                            Text("Level \(levelStats.level)", tableName: "Database")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                            Text("Exp \(levelStats.baseExp.formatted())", tableName: "Database")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(Color.secondary)
+                        }
+                    }
+                }
+            } header: {
+                NavigationLink {
+                    BaseLevelTableView(job: job)
+                } label: {
+                    HStack {
+                        Text("Base Levels", tableName: "Database")
+                            .foregroundStyle(Color.primary)
+                        Image(systemName: "chevron.right")
+                            .foregroundStyle(Color.secondary)
+                    }
+                }
+            }
+
+            DatabaseRecordSectionView {
+                LazyVStack(spacing: 10) {
+                    ForEach(job.jobLevels.prefix(10)) { levelStats in
+                        HStack {
+                            Text("Level \(levelStats.level)", tableName: "Database")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                            Text("Exp \(levelStats.jobExp.formatted())", tableName: "Database")
+                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                .foregroundStyle(Color.secondary)
+                        }
+                    }
+                }
+            } header: {
+                NavigationLink {
+                    JobLevelTableView(job: job)
+                } label: {
+                    HStack {
+                        Text("Job Levels", tableName: "Database")
+                            .foregroundStyle(Color.primary)
+                        Image(systemName: "chevron.right")
+                            .foregroundStyle(Color.secondary)
+                    }
+                }
+            }
+
             if !skills.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
@@ -47,80 +99,6 @@ struct JobDetailView: View {
                     }
                 } header: {
                     Text("Skills", tableName: "Database")
-                }
-            }
-
-            DatabaseRecordSectionView {
-                LazyVStack(spacing: 10) {
-                    ForEach(job.baseLevels) { levelStats in
-                        HStack {
-                            Text((levelStats.level).formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                            Text(levelStats.baseExp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(levelStats.baseHp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(levelStats.baseSp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-                        }
-                    }
-                }
-            } header: {
-                HStack {
-                    Text("Base Level", tableName: "Database")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base Exp", tableName: "Database")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base HP", tableName: "Database")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Base SP", tableName: "Database")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                }
-            }
-
-            DatabaseRecordSectionView {
-                LazyVStack(spacing: 10) {
-                    ForEach(job.jobLevels) { levelStats in
-                        HStack {
-                            Text((levelStats.level).formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                            Text(levelStats.jobExp.formatted())
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(levelStats.bonusStats)
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-
-                            Text(verbatim: "")
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .foregroundStyle(Color.secondary)
-                        }
-                    }
-                }
-            } header: {
-                HStack {
-                    Text("Job Level", tableName: "Database")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Job Exp", tableName: "Database")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text("Bonus Stats", tableName: "Database")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-
-                    Text(verbatim: "")
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                 }
             }
         }
