@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct MapCell: View {
+struct MapCell<SecondaryLabel>: View where SecondaryLabel: View {
     var map: MapModel
-    var secondaryText: String?
+    var secondaryLabel: SecondaryLabel
 
     var body: some View {
         HStack {
@@ -20,11 +20,21 @@ struct MapCell: View {
                     .foregroundStyle(Color.primary)
                     .lineLimit(1)
 
-                Text(secondaryText ?? map.name)
+                secondaryLabel
                     .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    init(map: MapModel, secondaryText: String? = nil) where SecondaryLabel == Text {
+        self.map = map
+        self.secondaryLabel = Text(secondaryText ?? map.name)
+    }
+
+    init(map: MapModel, @ViewBuilder secondaryLabel: () -> SecondaryLabel) {
+        self.map = map
+        self.secondaryLabel = secondaryLabel()
     }
 }

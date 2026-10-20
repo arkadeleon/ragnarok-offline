@@ -52,13 +52,13 @@ struct PetUsage: Identifiable {
         var localizedName: LocalizedStringResource {
             switch self {
             case .tame:
-                LocalizedStringResource("(Tame Item)", table: "Database")
+                LocalizedStringResource("Tame Item", table: "Database")
             case .egg:
-                LocalizedStringResource("(Egg Item)", table: "Database")
+                LocalizedStringResource("Egg Item", table: "Database")
             case .equip:
-                LocalizedStringResource("(Equip Item)", table: "Database")
+                LocalizedStringResource("Equip Item", table: "Database")
             case .food:
-                LocalizedStringResource("(Food Item)", table: "Database")
+                LocalizedStringResource("Food Item", table: "Database")
             }
         }
     }

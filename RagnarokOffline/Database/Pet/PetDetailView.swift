@@ -34,22 +34,30 @@ struct PetDetailView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                     if let tameItem = pet.tameItem {
                         NavigationLink(value: tameItem) {
-                            ItemCell(item: tameItem, secondaryText: String(localized: LocalizedStringResource("(Tame Item)", table: "Database")))
+                            ItemCell(item: tameItem) {
+                                PetUsageBadge(kind: .tame)
+                            }
                         }
                     }
                     if let eggItem = pet.eggItem {
                         NavigationLink(value: eggItem) {
-                            ItemCell(item: eggItem, secondaryText: String(localized: LocalizedStringResource("(Egg Item)", table: "Database")))
+                            ItemCell(item: eggItem) {
+                                PetUsageBadge(kind: .egg)
+                            }
                         }
                     }
                     if let equipItem = pet.equipItem {
                         NavigationLink(value: equipItem) {
-                            ItemCell(item: equipItem, secondaryText: String(localized: LocalizedStringResource("(Equip Item)", table: "Database")))
+                            ItemCell(item: equipItem) {
+                                PetUsageBadge(kind: .equip)
+                            }
                         }
                     }
                     if let foodItem = pet.foodItem {
                         NavigationLink(value: foodItem) {
-                            ItemCell(item: foodItem, secondaryText: String(localized: LocalizedStringResource("(Food Item)", table: "Database")))
+                            ItemCell(item: foodItem) {
+                                PetUsageBadge(kind: .food)
+                            }
                         }
                     }
                 }

@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ItemCell: View {
+struct ItemCell<SecondaryLabel>: View where SecondaryLabel: View {
     var item: ItemModel
-    var secondaryText: String?
+    var secondaryLabel: SecondaryLabel
 
     var body: some View {
         HStack {
@@ -20,11 +20,21 @@ struct ItemCell: View {
                     .foregroundStyle(Color.primary)
                     .lineLimit(1)
 
-                Text(secondaryText ?? item.aegisName)
+                secondaryLabel
                     .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    init(item: ItemModel, secondaryText: String? = nil) where SecondaryLabel == Text {
+        self.item = item
+        self.secondaryLabel = Text(secondaryText ?? item.aegisName)
+    }
+
+    init(item: ItemModel, @ViewBuilder secondaryLabel: () -> SecondaryLabel) {
+        self.item = item
+        self.secondaryLabel = secondaryLabel()
     }
 }

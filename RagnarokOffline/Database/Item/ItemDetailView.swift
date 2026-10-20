@@ -81,10 +81,14 @@ struct ItemDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(droppingMonsters) { droppingMonster in
                             NavigationLink(value: droppingMonster.monster) {
-                                ImageGridCell(
-                                    title: droppingMonster.monster.displayName,
-                                    subtitle: "(\((Double(droppingMonster.drop.rate) / 100).formatted())%)" + (droppingMonster.isMVPDrop ? "(MVP)" : "")
-                                ) {
+                                ImageGridCell(title: droppingMonster.monster.displayName) {
+                                    HStack(spacing: 4) {
+                                        RateBadge(rate: droppingMonster.drop.rate)
+                                        if droppingMonster.isMVPDrop {
+                                            MVPBadge()
+                                        }
+                                    }
+                                } image: {
                                     MonsterImageView(monster: droppingMonster.monster)
                                 }
                             }
@@ -101,7 +105,12 @@ struct ItemDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(sellingShops) { sellingShop in
                             NavigationLink(value: sellingShop.map) {
-                                MapCell(map: sellingShop.map, secondaryText: sellingShop.npcDisplayName + " (" + sellingShop.price.formatted() + "z)")
+                                MapCell(map: sellingShop.map) {
+                                    HStack(spacing: 4) {
+                                        Text(sellingShop.npcDisplayName)
+                                        PriceBadge(price: sellingShop.price)
+                                    }
+                                }
                             }
                         }
                     }
@@ -116,7 +125,9 @@ struct ItemDetailView: View {
                         ForEach(petUsages) { petUsage in
                             if let monster = petUsage.pet.monster {
                                 NavigationLink(value: petUsage.pet) {
-                                    ImageGridCell(title: monster.displayName, subtitle: String(localized: petUsage.kind.localizedName)) {
+                                    ImageGridCell(title: monster.displayName) {
+                                        PetUsageBadge(kind: petUsage.kind)
+                                    } image: {
                                         MonsterImageView(monster: monster)
                                     }
                                 }

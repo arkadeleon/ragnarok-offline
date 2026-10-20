@@ -60,7 +60,9 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(mvpDropItems) { dropItem in
                             NavigationLink(value: dropItem.item) {
-                                ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
+                                ItemCell(item: dropItem.item) {
+                                    RateBadge(rate: dropItem.drop.rate)
+                                }
                             }
                         }
                     }
@@ -74,7 +76,9 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(dropItems) { dropItem in
                             NavigationLink(value: dropItem.item) {
-                                ItemCell(item: dropItem.item, secondaryText: "(" + (Double(dropItem.drop.rate) / 100).formatted() + "%)")
+                                ItemCell(item: dropItem.item) {
+                                    RateBadge(rate: dropItem.drop.rate)
+                                }
                             }
                         }
                     }
@@ -88,7 +92,13 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(castSkills) { castSkill in
                             NavigationLink(value: castSkill.skill) {
-                                SkillCell(skill: castSkill.skill, secondaryText: castSkillText(castSkill.monsterSkill))
+                                SkillCell(skill: castSkill.skill) {
+                                    HStack(spacing: 4) {
+                                        SkillLevelBadge(level: castSkill.monsterSkill.skillLevel)
+                                        MonsterSkillStateBadge(state: castSkill.monsterSkill.state)
+                                        RateBadge(rate: castSkill.monsterSkill.rate)
+                                    }
+                                }
                             }
                         }
                     }
@@ -102,7 +112,9 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(spawnMaps) { spawnMap in
                             NavigationLink(value: spawnMap.map) {
-                                MapCell(map: spawnMap.map, secondaryText: "(\(spawnMap.monsterSpawn.amount)x)")
+                                MapCell(map: spawnMap.map) {
+                                    AmountBadge(amount: spawnMap.monsterSpawn.amount)
+                                }
                             }
                         }
                     }
@@ -141,12 +153,5 @@ struct MonsterDetailView: View {
         elementalDamages.map { elementalDamage in
             DatabaseRecordAttribute(name: elementalDamage.attackElement.localizedName, value: "\(elementalDamage.rate)%")
         }
-    }
-
-    private func castSkillText(_ monsterSkill: MonsterSkill) -> String {
-        let level = "Lv. \(monsterSkill.skillLevel)"
-        let state = String(localized: monsterSkill.state.localizedName)
-        let rate = (Double(monsterSkill.rate) / 100).formatted() + "%"
-        return "(\(level))(\(state))(\(rate))"
     }
 }
