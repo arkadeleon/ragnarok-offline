@@ -148,12 +148,10 @@
   - 完整的表格移到两个单独的页面：`BaseLevelTableView`（Base Level、Base Exp、Base HP、Base SP）和 `JobLevelTableView`（Job Level、Job Exp、Bonus Stats）。表头用 `LazyVStack(pinnedViews: [.sectionHeaders])` 吸顶，行有斑马纹，去掉了空列。没有改用 `Grid`，因为 `Grid` 不是 lazy 的，而等分的列本来就对齐。
   - 职业详情页在 Skills 之前放 "Base Levels ›" 和 "Job Levels ›" 两个 section，标题是进入完整表格的链接，内容是前 10 级的预览，显示成 "Level 1　Exp 100"，没有表头和斑马纹。
 
-### 11. 交互反馈
+### 11. 交互反馈（已完成）
 
-- 现状：网格 cell 用的是 `.borderless` 按钮样式，没有 `hoverEffect`。在 iPad 指针、macOS 鼠标、visionOS 注视下几乎没有反馈。
-- 目标：
-  - 网格 cell 加上 hover 和按下效果。
-  - 筛选按钮的选中状态更明显，比如用 `.borderedProminent` 或加勾选图标。
+- 筛选页的 `SelectableButton`：选中时用 `.borderedProminent`，没选中时用 `.bordered` 加次要色。
+- 网格 cell 的 hover 和按下效果：不做。
 
 ### 12. Pre-renewal 模式
 

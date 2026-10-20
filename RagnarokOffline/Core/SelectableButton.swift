@@ -13,12 +13,20 @@ struct SelectableButton<Label>: View where Label: View {
     var label: Label
 
     var body: some View {
-        Button(action: action) {
-            label
-                .frame(maxWidth: .infinity)
+        if isSelected {
+            Button(action: action) {
+                label
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+        } else {
+            Button(action: action) {
+                label
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .tint(Color.secondary)
         }
-        .buttonStyle(.bordered)
-        .tint(isSelected ? Color.accentColor : Color.secondary)
     }
 
     init(isSelected: Bool, action: @escaping () -> Void, @ViewBuilder label: () -> Label) {
