@@ -87,13 +87,12 @@
 
 ## P1
 
-### 5. 宽屏列表改用 `Table`
+### 5. 宽屏列表的表头和排序（暂缓）
 
 - 现状：物品、技能、地图在 regular 布局下用 `HStack` 固定列宽，没有表头，也不能排序。
-- 目标：iPad 和 macOS 上改用 SwiftUI `Table` + `sortOrder`。各库的列如下：
-  - 物品：名称、类型、买价、卖价、重量。
-  - 怪物：名称、等级、HP、Base Exp、Job Exp、种族、属性、体型。
-  - 技能：名称、最大等级、SP 消耗。
+- 不用 `Table`：`Table` 的单元格里不能可靠地使用 `NavigationLink`，要改成绑定 `NavigationStack` 的 path、用 `primaryAction` 推入页面，改动太大。
+- 备选方案：继续用 `List`，表头和行共用一个行布局；工具栏加排序菜单。要注意 iOS 上 `NavigationLink` 右边的箭头会让行比表头窄。
+- 暂时不做。
 
 ### 6. 补充筛选项
 

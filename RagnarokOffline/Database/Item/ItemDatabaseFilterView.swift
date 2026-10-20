@@ -24,7 +24,7 @@ struct ItemDatabaseFilterView: View {
                     LazyVGrid(columns: [gridItem], alignment: .leading) {
                         ForEach(filter.availableItemTypes, id: \.rawValue) { itemType in
                             SelectableButton(itemType.localizedName, isSelected: filter.itemType == itemType) {
-                                filter.itemType = itemType
+                                filter.toggleItemType(itemType)
                             }
                         }
                     }
@@ -37,7 +37,7 @@ struct ItemDatabaseFilterView: View {
                         LazyVGrid(columns: [gridItem], alignment: .leading) {
                             ForEach(filter.availableWeaponTypes, id: \.rawValue) { weaponType in
                                 SelectableButton(weaponType.localizedName, isSelected: filter.weaponType == weaponType) {
-                                    filter.weaponType = weaponType
+                                    filter.toggleWeaponType(weaponType)
                                 }
                             }
                         }
@@ -52,7 +52,7 @@ struct ItemDatabaseFilterView: View {
                         LazyVGrid(columns: [gridItem], alignment: .leading) {
                             ForEach(filter.availableAmmoTypes, id: \.rawValue) { ammoType in
                                 SelectableButton(ammoType.localizedName, isSelected: filter.ammoType == ammoType) {
-                                    filter.ammoType = ammoType
+                                    filter.toggleAmmoType(ammoType)
                                 }
                             }
                         }
@@ -67,7 +67,7 @@ struct ItemDatabaseFilterView: View {
                         LazyVGrid(columns: [gridItem], alignment: .leading) {
                             ForEach(filter.availableCardTypes, id: \.rawValue) { cardType in
                                 SelectableButton(cardType.localizedName, isSelected: filter.cardType == cardType) {
-                                    filter.cardType = cardType
+                                    filter.toggleCardType(cardType)
                                 }
                             }
                         }
@@ -82,11 +82,7 @@ struct ItemDatabaseFilterView: View {
                         LazyVGrid(columns: [gridItem], alignment: .leading) {
                             ForEach(filter.availableLocations, id: \.rawValue) { location in
                                 SelectableButton(location.localizedName, isSelected: filter.locations.contains(location)) {
-                                    if filter.locations.contains(location) {
-                                        filter.locations.remove(location)
-                                    } else {
-                                        filter.locations.insert(location)
-                                    }
+                                    filter.toggleLocation(location)
                                 }
                             }
                         }

@@ -24,7 +24,7 @@ struct MonsterDatabaseFilterView: View {
                     LazyVGrid(columns: [gridItem], alignment: .leading) {
                         ForEach(filter.availableSizes, id: \.rawValue) { size in
                             SelectableButton(size.localizedName, isSelected: filter.size == size) {
-                                filter.size = size
+                                filter.toggleSize(size)
                             }
                         }
                     }
@@ -36,7 +36,7 @@ struct MonsterDatabaseFilterView: View {
                     LazyVGrid(columns: [gridItem], alignment: .leading) {
                         ForEach(filter.availableRaces, id: \.rawValue) { race in
                             SelectableButton(race.localizedName, isSelected: filter.race == race) {
-                                filter.race = race
+                                filter.toggleRace(race)
                             }
                         }
                     }
@@ -49,7 +49,7 @@ struct MonsterDatabaseFilterView: View {
                     LazyVGrid(columns: [gridItem], alignment: .leading) {
                         ForEach(filter.availableElements, id: \.rawValue) { element in
                             SelectableButton(element.localizedName, isSelected: filter.element == element) {
-                                filter.element = element
+                                filter.toggleElement(element)
                             }
                         }
                     }

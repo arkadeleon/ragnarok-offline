@@ -48,6 +48,18 @@ struct MonsterDatabaseFilter: Equatable {
         return true
     }
 
+    mutating func toggleSize(_ size: Size) {
+        self.size = self.size == size ? nil : size
+    }
+
+    mutating func toggleRace(_ race: Race) {
+        self.race = self.race == race ? nil : race
+    }
+
+    mutating func toggleElement(_ element: Element) {
+        self.element = self.element == element ? nil : element
+    }
+
     mutating func reset() {
         size = nil
         race = nil

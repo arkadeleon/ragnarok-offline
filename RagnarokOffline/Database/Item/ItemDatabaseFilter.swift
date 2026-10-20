@@ -102,6 +102,30 @@ struct ItemDatabaseFilter: Equatable {
         return true
     }
 
+    mutating func toggleItemType(_ itemType: ItemType) {
+        self.itemType = self.itemType == itemType ? nil : itemType
+    }
+
+    mutating func toggleWeaponType(_ weaponType: WeaponType) {
+        self.weaponType = self.weaponType == weaponType ? nil : weaponType
+    }
+
+    mutating func toggleAmmoType(_ ammoType: AmmoType) {
+        self.ammoType = self.ammoType == ammoType ? nil : ammoType
+    }
+
+    mutating func toggleCardType(_ cardType: CardType) {
+        self.cardType = self.cardType == cardType ? nil : cardType
+    }
+
+    mutating func toggleLocation(_ location: EquipPositions) {
+        if locations.contains(location) {
+            locations.remove(location)
+        } else {
+            locations.insert(location)
+        }
+    }
+
     mutating func reset() {
         itemType = nil
         weaponType = nil

@@ -57,15 +57,16 @@ struct ItemDatabaseView: View {
         .adaptiveSearch(text: $searchText)
         .toolbar {
             ToolbarItem {
-                Button {
-                    isFilterPresented.toggle()
-                } label: {
+                // The button looks selected while the filter is active, and a click opens the filter.
+                let isFilterOn = Binding(get: { !filter.isEmpty }, set: { _ in isFilterPresented.toggle() })
+                Toggle(isOn: isFilterOn) {
                     Label {
                         Text("Filter", tableName: "Database")
                     } icon: {
                         Image(systemName: "line.3.horizontal.decrease")
                     }
                 }
+                .toggleStyle(.button)
                 .matchedTransitionSource(id: "filter", in: filterNamespace)
             }
         }
