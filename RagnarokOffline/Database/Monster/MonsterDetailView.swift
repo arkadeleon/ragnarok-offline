@@ -43,13 +43,13 @@ struct MonsterDetailView: View {
                 }
             }
 
-            if let raceGroups = monster.raceGroups {
+            if let raceGroups = monster.localizedRaceGroups {
                 DatabaseRecordSectionView(tags: raceGroups) {
                     Text("Race Groups", tableName: "Database")
                 }
             }
 
-            if let modes = monster.modes {
+            if let modes = monster.localizedModes {
                 DatabaseRecordSectionView(tags: modes) {
                     Text("Modes", tableName: "Database")
                 }

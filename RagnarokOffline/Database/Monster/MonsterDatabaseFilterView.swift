@@ -21,6 +21,22 @@ struct MonsterDatabaseFilterView: View {
         ScrollView() {
             LazyVStack(alignment: .leading) {
                 Section {
+                    HStack {
+                        TextField(value: $filter.minimumLevel, format: .number) {
+                            Text("Min", tableName: "Database")
+                        }
+                        Text(verbatim: "–")
+                        TextField(value: $filter.maximumLevel, format: .number) {
+                            Text("Max", tableName: "Database")
+                        }
+                    }
+                    .textFieldStyle(.roundedBorder)
+                    .frame(maxWidth: 280)
+                } header: {
+                    SectionHeaderView(LocalizedStringResource("Level", table: "Database"))
+                }
+
+                Section {
                     LazyVGrid(columns: [gridItem], alignment: .leading) {
                         ForEach(filter.availableSizes, id: \.rawValue) { size in
                             SelectableButton(size.localizedName, isSelected: filter.size == size) {
@@ -30,6 +46,7 @@ struct MonsterDatabaseFilterView: View {
                     }
                 } header: {
                     SectionHeaderView(LocalizedStringResource("Size", table: "Database"))
+                        .padding(.top)
                 }
 
                 Section {
@@ -55,6 +72,30 @@ struct MonsterDatabaseFilterView: View {
                     }
                 } header: {
                     SectionHeaderView(LocalizedStringResource("Element", table: "Database"))
+                        .padding(.top)
+                }
+
+                Section {
+                    LazyVGrid(columns: [gridItem], alignment: .leading) {
+                        ForEach(filter.availableMonsterClasses, id: \.rawValue) { monsterClass in
+                            SelectableButton(monsterClass.localizedName, isSelected: filter.monsterClass == monsterClass) {
+                                filter.toggleMonsterClass(monsterClass)
+                            }
+                        }
+                    }
+                } header: {
+                    SectionHeaderView(LocalizedStringResource("Class", table: "Database"))
+                        .padding(.top)
+                }
+
+                Section {
+                    LazyVGrid(columns: [gridItem], alignment: .leading) {
+                        SelectableButton(MonsterMode.mvp.localizedName, isSelected: filter.isMVPOnly) {
+                            filter.isMVPOnly.toggle()
+                        }
+                    }
+                } header: {
+                    SectionHeaderView(LocalizedStringResource("Modes", table: "Database"))
                         .padding(.top)
                 }
             }

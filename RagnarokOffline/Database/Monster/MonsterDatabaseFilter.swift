@@ -8,6 +8,10 @@
 import RagnarokConstants
 
 struct MonsterDatabaseFilter: Equatable {
+    var minimumLevel: Int?
+
+    var maximumLevel: Int?
+
     var size: Size?
 
     var availableSizes: [Size] {
@@ -26,13 +30,33 @@ struct MonsterDatabaseFilter: Equatable {
         [.neutral, .water, .earth, .fire, .wind, .poison, .holy, .dark, .ghost, .undead]
     }
 
+    var monsterClass: MonsterClass?
+
+    var availableMonsterClasses: [MonsterClass] {
+        MonsterClass.allCases
+    }
+
+    var isMVPOnly = false
+
     var isEmpty: Bool {
+        minimumLevel == nil &&
+        maximumLevel == nil &&
         size == nil &&
         race == nil &&
-        element == nil
+        element == nil &&
+        monsterClass == nil &&
+        !isMVPOnly
     }
 
     func isIncluded(_ monster: MonsterModel) -> Bool {
+        if let minimumLevel, monster.level < minimumLevel {
+            return false
+        }
+
+        if let maximumLevel, monster.level > maximumLevel {
+            return false
+        }
+
         if let size, monster.size != size {
             return false
         }
@@ -42,6 +66,14 @@ struct MonsterDatabaseFilter: Equatable {
         }
 
         if let element, monster.element != element {
+            return false
+        }
+
+        if let monsterClass, monster.class != monsterClass {
+            return false
+        }
+
+        if isMVPOnly, monster.modes?.contains(.mvp) != true {
             return false
         }
 
@@ -60,9 +92,17 @@ struct MonsterDatabaseFilter: Equatable {
         self.element = self.element == element ? nil : element
     }
 
+    mutating func toggleMonsterClass(_ monsterClass: MonsterClass) {
+        self.monsterClass = self.monsterClass == monsterClass ? nil : monsterClass
+    }
+
     mutating func reset() {
+        minimumLevel = nil
+        maximumLevel = nil
         size = nil
         race = nil
         element = nil
+        monsterClass = nil
+        isMVPOnly = false
     }
 }

@@ -89,13 +89,13 @@ final class MonsterModel {
         return attributes
     }
 
-    var raceGroups: [String]? {
+    var localizedRaceGroups: [String]? {
         monster.raceGroups?
             .sorted(using: KeyPathComparator(\.rawValue))
             .map { String(localized: $0.localizedName) }
     }
 
-    var modes: [String]? {
+    var localizedModes: [String]? {
         monster.modes?
             .sorted(using: KeyPathComparator(\.rawValue))
             .map { String(localized: $0.localizedName) }
