@@ -80,6 +80,24 @@ struct ItemDatabaseView: View {
                     } icon: {
                         Image(systemName: "leaf.fill")
                     }
+                } description: {
+                    Text("Try adjusting your search or filters", tableName: "Database")
+                } actions: {
+                    if !filter.isEmpty {
+                        Button {
+                            filter.reset()
+                        } label: {
+                            Label {
+                                Text("Reset Filters", tableName: "Database")
+                            } icon: {
+                                Image(systemName: "arrow.counterclockwise")
+                            }
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .padding(.horizontal)
+                        }
+                        .adaptiveProminentButtonStyle()
+                    }
                 }
             }
         }
