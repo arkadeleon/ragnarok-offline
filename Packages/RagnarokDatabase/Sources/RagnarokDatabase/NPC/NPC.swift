@@ -21,6 +21,9 @@ public struct NPC: Sendable {
 
     public var facing: Int?
 
+    /// The initial state, e.g. `CLOAKED`, `DISABLED` or `HIDDEN`. `nil` if not specified.
+    public var state: String?
+
     public var npcName: String
 
     /// A sprite ID, e.g. `105`, or a sprite constant, e.g. `4_M_TELEPORTER`.
@@ -32,6 +35,10 @@ public struct NPC: Sendable {
         x = column1.count > 1 ? Int(column1[1]) : nil
         y = column1.count > 2 ? Int(column1[2]) : nil
         facing = column1.count > 3 ? Int(column1[3]) : nil
+
+        if let stateStart = w2.firstIndex(of: "("), let stateEnd = w2.lastIndex(of: ")"), stateStart < stateEnd {
+            state = String(w2[w2.index(after: stateStart)..<stateEnd])
+        }
 
         npcName = w3
 

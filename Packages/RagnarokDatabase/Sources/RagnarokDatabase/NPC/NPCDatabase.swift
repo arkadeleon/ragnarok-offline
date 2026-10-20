@@ -92,83 +92,61 @@ final public class NPCDatabase: Sendable {
     }
 
     private func loadScript(at url: URL) async throws -> ScriptCommands {
-        guard let stream = FileStream(forReadingFrom: url) else {
+        guard let data = try? Data(contentsOf: url) else {
             throw NPCDatabaseError.invalidFile(url)
         }
 
-        let reader = StreamReader(stream: stream)
-        defer {
-            reader.close()
-        }
-
+        let buffer = [UInt8](data)
         var commands = ScriptCommands()
 
-        while let line = reader.readLine() {
-            let line = line.trimmingCharacters(in: .whitespaces)
-            if line.isEmpty || line.starts(with: "//") {
+        var p = skipSpace(in: buffer, from: 0)
+        while p < buffer.count {
+            var lineEnd = buffer[p...].firstIndex(of: UInt8(ascii: "\n")) ?? buffer.count
+            if lineEnd > p && buffer[lineEnd - 1] == UInt8(ascii: "\r") {
+                lineEnd -= 1
+            }
+
+            let fieldRanges = buffer[p..<lineEnd]
+                .split(separator: UInt8(ascii: "\t"))
+                .prefix(4)
+                .map(\.indices)
+            let fields = fieldRanges.map { string(from: buffer[$0]) }
+
+            guard fields.count >= 3 else {
+                p = skipSpace(in: buffer, from: lineEnd)
                 continue
             }
 
-            // `/*` and `*/` is on the same line.
-            if line.hasPrefix("/*") && line.hasSuffix("*/") {
-                continue
-            }
+            let w1 = fields[0]
+            let w2 = fields[1]
+            let w3 = fields[2]
+            var w4 = fields.count >= 4 ? fields[3] : ""
 
-            // `/*` and `*/` is not on the same line.
-            if line.hasPrefix("/*") {
-                while let line = reader.readLine() {
-                    if line.hasSuffix("*/") {
-                        break
-                    }
-                }
-                continue
-            }
+            let type = w2.lowercased()
+            var next = lineEnd
 
-            let words = line.split(separator: "\t")
-            guard words.count >= 3 else {
-                continue
-            }
-
-            let w1 = words[0].trimmingCharacters(in: .whitespaces)
-            let w2 = words[1].trimmingCharacters(in: .whitespaces)
-            let w3 = words[2].trimmingCharacters(in: .whitespaces)
-
-            var w4 = ""
-            if words.count >= 4 {
-                w4 = words[3].trimmingCharacters(in: .whitespaces)
-            }
-
-            if w1 != "-" && w1.lowercased() != "function" {
-                // <map name>,<x>,<y>,<facing>
-            }
-
-            switch w2.lowercased() {
-            case "warp", "warp2":
-                guard words.count >= 4 else {
-                    break
-                }
+            switch type {
+            case _ where type.hasPrefix("warp") && fields.count >= 4:
                 let warpPoint = WarpPoint(w1, w2, w3, w4)
                 commands.warpPoints.append(warpPoint)
             case "shop", "cashshop", "itemshop", "pointshop", "marketshop":
-                guard words.count >= 4 else {
+                guard fields.count >= 4 else {
                     break
                 }
                 let shopNPC = ShopNPC(w1, w2, w3, w4)
                 commands.shopNPCs.append(shopNPC)
-            case "script":
-                guard words.count >= 4 else {
-                    break
+            case _ where type.hasPrefix("script") && fields.count >= 4:
+                guard let scriptEnd = skipScript(in: buffer, from: p) else {
+                    return commands
                 }
-                while let line = reader.readLine() {
-                    w4.append("\n")
-                    w4.append(line)
-                    if line == "}" {
-                        break
+                w4 = string(from: buffer[fieldRanges[3].lowerBound..<scriptEnd])
+                next = scriptEnd
+
+                if w1.lowercased() == "function" {
+                    if type == "script" {
+                        let function = Function(w1, w2, w3, w4)
+                        commands.functions.append(function)
                     }
-                }
-                if w1 == "function" {
-                    let function = Function(w1, w2, w3, w4)
-                    commands.functions.append(function)
                 } else if w1 == "-" {
                     let floatingNPC = FloatingNPC(w1, w2, w3, w4)
                     commands.floatingNPCs.append(floatingNPC)
@@ -176,14 +154,11 @@ final public class NPCDatabase: Sendable {
                     let npc = NPC(w1, w2, w3, w4)
                     commands.npcs.append(npc)
                 }
-            case let w2 where w2.starts(with: "duplicate"):
-                guard words.count >= 4 else {
-                    break
-                }
+            case _ where type.hasPrefix("duplicate(") && fields.count >= 4:
                 let duplicate = Duplicate(w1, w2, w3, w4)
                 commands.duplicates.append(duplicate)
             case "monster", "boss_monster":
-                guard words.count >= 4 else {
+                guard fields.count >= 4 else {
                     break
                 }
                 let monsterSpawn = MonsterSpawn(w1, w2, w3, w4)
@@ -194,9 +169,76 @@ final public class NPCDatabase: Sendable {
             default:
                 break
             }
+
+            p = skipSpace(in: buffer, from: next)
         }
 
         return commands
+    }
+
+    private func string(from bytes: ArraySlice<UInt8>) -> String {
+        String(bytes: bytes, encoding: .isoLatin1)!.trimmingCharacters(in: .whitespaces)
+    }
+
+    // Skips whitespaces and comments, like `skip_space` in the official server.
+    private func skipSpace(in buffer: [UInt8], from start: Int) -> Int {
+        var p = start
+        while p < buffer.count {
+            if buffer[p] == UInt8(ascii: " ") || (UInt8(ascii: "\t")...UInt8(ascii: "\r")).contains(buffer[p]) {
+                p += 1
+            } else if buffer[p] == UInt8(ascii: "/") && p + 1 < buffer.count && buffer[p + 1] == UInt8(ascii: "/") {
+                p = buffer[p...].firstIndex(of: UInt8(ascii: "\n")) ?? buffer.count
+            } else if buffer[p] == UInt8(ascii: "/") && p + 1 < buffer.count && buffer[p + 1] == UInt8(ascii: "*") {
+                p += 2
+                while p < buffer.count && !(buffer[p] == UInt8(ascii: "*") && p + 1 < buffer.count && buffer[p + 1] == UInt8(ascii: "/")) {
+                    p += 1
+                }
+                p = min(p + 2, buffer.count)
+            } else {
+                break
+            }
+        }
+        return p
+    }
+
+    // Returns the index after the closing curly of the script that starts at the first `{` after `start`,
+    // like `npc_skip_script` in the official server.
+    private func skipScript(in buffer: [UInt8], from start: Int) -> Int? {
+        guard var p = buffer[start...].firstIndex(of: UInt8(ascii: "{")) else {
+            return nil
+        }
+
+        var curlyCount = 1
+        while curlyCount > 0 {
+            p = skipSpace(in: buffer, from: p + 1)
+            guard p < buffer.count else {
+                return nil
+            }
+
+            switch buffer[p] {
+            case UInt8(ascii: "}"):
+                curlyCount -= 1
+            case UInt8(ascii: "{"):
+                curlyCount += 1
+            case UInt8(ascii: "\""):
+                p += 1
+                while p < buffer.count && buffer[p] != UInt8(ascii: "\"") {
+                    if buffer[p] == UInt8(ascii: "\\") {
+                        p += 1
+                    } else if buffer[p] == UInt8(ascii: "\n") {
+                        return nil
+                    }
+                    p += 1
+                }
+                guard p < buffer.count else {
+                    return nil
+                }
+            default:
+                break
+            }
+        }
+
+        return p + 1
     }
 
     private func unloadScript(at url: URL) throws {

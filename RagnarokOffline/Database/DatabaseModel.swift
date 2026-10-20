@@ -831,7 +831,7 @@ final class DatabaseModel {
 
         var npcs: [NPCModel] = []
 
-        for npc in scriptCommands.npcs where npc.mapName == mapName {
+        for npc in scriptCommands.npcs where npc.mapName == mapName && npc.state == nil {
             if let x = npc.x, let y = npc.y {
                 let jobID = await jobID(forSprite: npc.sprite)
                 let npc = NPCModel(npcName: npc.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
