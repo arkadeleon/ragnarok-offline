@@ -43,7 +43,7 @@ final class SkillModel {
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: LocalizedStringResource("ID", table: "Database"), value: "#\(skill.id)"))
+        attributes.append(.init(name: LocalizedStringResource("ID", table: "Database"), value: String(skill.id)))
         attributes.append(.init(name: LocalizedStringResource("Aegis Name", table: "Database"), value: skill.aegisName))
         attributes.append(.init(name: LocalizedStringResource("Name", table: "Database"), value: skill.name))
         attributes.append(.init(name: LocalizedStringResource("Maximum Level", table: "Database"), value: skill.maxLevel))

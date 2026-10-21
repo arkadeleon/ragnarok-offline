@@ -60,7 +60,7 @@ final class ItemModel {
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: LocalizedStringResource("ID", table: "Database"), value: "#\(item.id)"))
+        attributes.append(.init(name: LocalizedStringResource("ID", table: "Database"), value: String(item.id)))
         attributes.append(.init(name: LocalizedStringResource("Aegis Name", table: "Database"), value: item.aegisName))
         attributes.append(.init(name: LocalizedStringResource("Name", table: "Database"), value: item.name))
         attributes.append(.init(name: LocalizedStringResource("Type", table: "Database"), value: item.type.localizedName))

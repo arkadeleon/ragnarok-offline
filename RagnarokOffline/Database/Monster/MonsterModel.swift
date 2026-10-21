@@ -31,7 +31,7 @@ final class MonsterModel {
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
 
-        attributes.append(.init(name: LocalizedStringResource("ID", table: "Database"), value: "#\(monster.id)"))
+        attributes.append(.init(name: LocalizedStringResource("ID", table: "Database"), value: String(monster.id)))
         attributes.append(.init(name: LocalizedStringResource("Aegis Name", table: "Database"), value: monster.aegisName))
         attributes.append(.init(name: LocalizedStringResource("Name", table: "Database"), value: monster.name))
 

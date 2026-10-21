@@ -80,6 +80,7 @@ struct DatabaseRecordSectionAttributesContent: View {
                             .foregroundStyle(Color.secondary)
                         Spacer()
                         Text(attribute.value)
+                            .textSelection(.enabled)
                     }
                 }
             }
@@ -108,7 +109,7 @@ struct DatabaseRecordSectionTagsContent: View {
     DatabaseRecordSectionView {
         Grid {
             GridRow {
-                LabeledContent("ID", value: "#1002")
+                LabeledContent("ID", value: "1002")
                 LabeledContent("Name", value: "Poring")
             }
             GridRow {
@@ -124,7 +125,7 @@ struct DatabaseRecordSectionTagsContent: View {
 
 #Preview {
     DatabaseRecordSectionView(attributes: [
-        DatabaseRecordAttribute(name: "ID", value: "#1002"),
+        DatabaseRecordAttribute(name: "ID", value: "1002"),
         DatabaseRecordAttribute(name: "Name", value: "Poring"),
         DatabaseRecordAttribute(name: "Level", value: 1),
         DatabaseRecordAttribute(name: "HP", value: 55),
