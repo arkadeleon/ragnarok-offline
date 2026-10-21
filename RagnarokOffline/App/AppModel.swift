@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import RagnarokDatabase
 import RagnarokGame
 import RagnarokResources
 
@@ -28,7 +29,7 @@ final class AppModel {
     let serverDirectory = File(node: .directory(serverWorkingDirectoryURL), location: .server)
     let serverManager = ServerManager()
 
-    let database: DatabaseModel
+    private(set) var database: DatabaseModel
 
     let characterSimulator: CharacterSimulator
     let skillSimulator: SkillSimulator
@@ -45,12 +46,13 @@ final class AppModel {
             serverPort: settings.serverPort
         )
 
-        database = DatabaseModel(mode: .renewal, resourceManager: resourceManager)
+        database = DatabaseModel(mode: settings.databaseMode, resourceManager: resourceManager)
 
         characterSimulator = CharacterSimulator(resourceManager: resourceManager)
         skillSimulator = SkillSimulator()
 
         observeRemoteClientSubscription()
+        observeDatabaseMode()
 
         setupHelpFile()
     }
@@ -68,6 +70,22 @@ final class AppModel {
 
                 await self.resourceProvider.remoteProvider.setEnabled(self.settings.isRemoteClientEnabled)
                 await self.resourceManager.clearCaches()
+            }
+        }
+    }
+
+    private func observeDatabaseMode() {
+        withObservationTracking {
+            _ = settings.databaseMode
+        } onChange: { [weak self] in
+            Task { @MainActor in
+                guard let self else {
+                    return
+                }
+
+                self.observeDatabaseMode()
+
+                self.database = DatabaseModel(mode: self.settings.databaseMode, resourceManager: self.resourceManager)
             }
         }
     }

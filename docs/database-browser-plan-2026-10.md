@@ -34,7 +34,7 @@
   - 只有物品、怪物、技能支持 ID 搜索。搜索词必须是纯数字，`#1002` 这种写法不算 ID 搜索。精确匹配到 ID 的记录排在结果最前面，其他按关键字匹配到的结果照常显示在后面。
   - `ItemDatabaseFilter` 和 `MonsterDatabaseFilter` 改成了 `Equatable` struct，只保存结构化的筛选条件。`searchText` 移到了视图里。
 
-### 2. 补全详情数据
+### 2. 补全详情数据（已完成）
 
 用户打开数据库主要就是为了查这些信息。按库拆成几次来改。
 
@@ -65,7 +65,7 @@
   - 组名按大写匹配，因为 pre-renewal 的组名是大小写混写的。
   - 怪物详情不加"可由哪些道具召唤"的反向链接：Dead Branch 几乎包含所有普通怪物，意义不大。
 
-### 3. 数值和标签的显示
+### 3. 数值和标签的显示（已完成）
 
 - 现状：
   - 同一页里，有的字段用 `localizedName`（类型、种族），有的用 `stringValue`（体型、属性、弹药类型、卡片类型、技能类型）。结果是中文和英文枚举名混在一起。
@@ -99,7 +99,7 @@
 - 备选方案：继续用 `List`，表头和行共用一个行布局；工具栏加排序菜单。要注意 iOS 上 `NavigationLink` 右边的箭头会让行比表头窄。
 - 暂时不做。
 
-### 6. 补充筛选项
+### 6. 补充筛选项（已完成）
 
 - 新增筛选维度：（已完成）
   - 怪物：等级范围（最小、最大输入框）、Class 单选、MVP 开关。
@@ -158,16 +158,21 @@
 - 筛选页的 `SelectableButton`：选中时用 `.borderedProminent`，没选中时用 `.bordered` 加次要色。
 - 网格 cell 的 hover 和按下效果：不做。
 
-### 12. Pre-renewal 模式
+### 12. Pre-renewal 模式（已完成）
 
-- 现状：`App/AppModel.swift:48` 写死了 `DatabaseModel(mode: .renewal, ...)`。`MonsterModel` 等模型已经实现了 pre-renewal 分支，比如最小和最大攻击，但现在用不到。
-- 目标：提供模式切换（放在设置里，或放在数据库工具栏上），切换后重新加载数据库。
+- 原来的问题：`AppModel` 写死了 `DatabaseModel(mode: .renewal, ...)`。`MonsterModel` 等模型已经实现了 pre-renewal 分支，比如最小和最大攻击，但用不到。
+- 最终方案：
+  - 设置页加了 "Database" section，里面是 "Mode" 选择器（Renewal、Pre-Renewal）。模式保存在 `SettingsModel.databaseMode`，默认 renewal。
+  - 模式变化时，`AppModel` 用新模式新建一个 `DatabaseModel`。一种配置对应一个数据库实例，旧实例的缓存随之丢弃。
+  - `ContentView` 用 `ObjectIdentifier(appModel.database)` 作为右侧 `NavigationStack` 的 `.id`，换了实例就回到根页面，已打开的详情页不会留着旧模式的数据。
+  - 以后如果有别的因素也决定加载哪份数据，同样在 `AppModel` 里重建实例，`ContentView` 不用改。
 
 ## P3
 
-### 13. 复制 ID 和 Aegis 名
+### 13. 复制 ID 和 Aegis 名（已完成）
 
-- 属性值支持选中复制，或者通过右键菜单复制 ID 和 Aegis 名。
+- 属性值支持选中复制（`.textSelection(.enabled)`）。没有做右键菜单。
+- ID 的值不再带 `#`，选中复制得到的就是纯数字。
 
 ## 收尾
 

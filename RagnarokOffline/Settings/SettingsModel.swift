@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import RagnarokDatabase
 import StoreKit
 
 let remoteClientSubscriptionGroupID = "22133104"
@@ -16,6 +17,7 @@ private enum SettingsKey {
     static let serverAddress = "client.server_address"
     static let serverPort = "client.server_port"
     static let automaticallyResumesServers = "server.automatically_resumes_servers"
+    static let databaseMode = "database.mode"
 }
 
 @MainActor
@@ -56,6 +58,12 @@ final class SettingsModel {
         }
     }
 
+    var databaseMode: DatabaseMode {
+        didSet {
+            defaults.set(databaseMode.rawValue, forKey: SettingsKey.databaseMode)
+        }
+    }
+
     @ObservationIgnored private var subscriptionStatusTask: Task<Void, Never>?
 
     init(defaults: UserDefaults = .standard) {
@@ -64,6 +72,7 @@ final class SettingsModel {
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
         automaticallyResumesServers = defaults.bool(forKey: SettingsKey.automaticallyResumesServers)
+        databaseMode = defaults.string(forKey: SettingsKey.databaseMode).flatMap(DatabaseMode.init) ?? .renewal
 
         #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
         subscriptionStatusTask = Task { [weak self] in

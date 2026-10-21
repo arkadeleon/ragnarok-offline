@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/2/26.
 //
 
+import RagnarokDatabase
 import SwiftUI
 
 struct SettingsView: View {
@@ -41,6 +42,17 @@ struct SettingsView: View {
                 Text("Server")
             } footer: {
                 Text("When enabled, servers that were running before the app entered the background automatically resume when the app returns to the foreground.")
+            }
+
+            Section {
+                Picker("Mode", selection: $settings.databaseMode) {
+                    Text("Pre-Renewal")
+                        .tag(DatabaseMode.prerenewal)
+                    Text("Renewal")
+                        .tag(DatabaseMode.renewal)
+                }
+            } header: {
+                Text("Database")
             }
         }
         .formStyle(.grouped)

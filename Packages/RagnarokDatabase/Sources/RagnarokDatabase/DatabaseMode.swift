@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2024/4/8.
 //
 
-public enum DatabaseMode: Sendable {
+public enum DatabaseMode: String, Sendable {
     case prerenewal
     case renewal
 

@@ -25,6 +25,8 @@ struct ContentView: View {
                         .toolbarTitleDisplayMode(.inline)
                         .navigationDestinations(appModel: appModel)
                 }
+                // Switching the database mode creates a new database, so the pages built from the old one start over.
+                .id(ObjectIdentifier(appModel.database))
             }
         }
         .sheet(item: $incomingFile) { file in
