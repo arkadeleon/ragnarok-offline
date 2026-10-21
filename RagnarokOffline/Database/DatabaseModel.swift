@@ -133,10 +133,7 @@ final class DatabaseModel {
     var monsterSearchIndex = DatabaseSearchIndex()
 
     var monsterSkillsByMonsterID: [Int : [MonsterSkill]] = [:]
-
-    var monsterSummons: [MonsterSummonModel] = []
     var monsterSummonsByGroup: [String: MonsterSummonModel] = [:]
-    var monsterSummonSearchIndex = DatabaseSearchIndex()
 
     var pets: [PetModel] = []
     var petSearchIndex = DatabaseSearchIndex()
@@ -477,18 +474,10 @@ final class DatabaseModel {
                 return
             }
 
-            self.monsterSummons = monsterSummons.map { summon in
-                MonsterSummonModel(mode: mode, monsterSummon: summon)
-            }
-
             self.monsterSummonsByGroup = Dictionary(
-                self.monsterSummons.map({ ($0.group, $0) }),
+                monsterSummons.map({ ($0.group.uppercased(), MonsterSummonModel(mode: mode, monsterSummon: $0)) }),
                 uniquingKeysWith: { (first, _) in first }
             )
-
-            self.monsterSummonSearchIndex = DatabaseSearchIndex(self.monsterSummons) {
-                [$0.displayName]
-            }
         }
 
         self.monsterSummonDatabaseTask = monsterSummonDatabaseTask
@@ -498,7 +487,26 @@ final class DatabaseModel {
 
     func monsterSummon(forGroup group: String) async -> MonsterSummonModel? {
         await fetchMonsterSummons()
-        return monsterSummonsByGroup[group]
+
+        return monsterSummonsByGroup[group.uppercased()]
+    }
+
+    func monsterSummon(for item: ItemModel) async -> MonsterSummonModel? {
+        guard let match = item.script?.firstMatch(of: /MOBG_([A-Z_]+)/) else {
+            return nil
+        }
+        return await monsterSummon(forGroup: String(match.1))
+    }
+
+    func monsterSummon(for skill: SkillModel) async -> MonsterSummonModel? {
+        switch skill.aegisName {
+        case "SA_CLASSCHANGE":
+            await monsterSummon(forGroup: "CLASSCHANGE")
+        case "TK_MISSION":
+            await monsterSummon(forGroup: "TAEKWON_MISSION")
+        default:
+            nil
+        }
     }
 
     // MARK: - Pet Database

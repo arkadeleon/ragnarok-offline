@@ -1,7 +1,7 @@
 # 数据库浏览器改进计划
 
 - 生成日期：2026-10-19
-- 范围：`RagnarokOffline/Database/` 下的 8 个数据库（物品、职业、地图、怪物、召唤组、宠物、技能、状态），以及它们共用的组件：`ImageGrid`、`ImageGridCell`、`SectionHeaderView`、`SelectableButton`、`Stretchy`。
+- 范围：`RagnarokOffline/Database/` 下的 7 个数据库（物品、职业、地图、怪物、宠物、技能、状态。召唤组原来是单独的数据库，已合并到物品和技能详情，见第 2 条），以及它们共用的组件：`ImageGrid`、`ImageGridCell`、`SectionHeaderView`、`SelectableButton`、`Stretchy`。
 
 ## 约定
 
@@ -30,7 +30,7 @@
     - 宠物：本地化名、怪物原名、Aegis 名。
     - 状态：本地化名、`SC_` 标识名。
     - 地图：本地化名、内部名。
-    - 召唤组：组名。
+    - 召唤组：组名。召唤组数据库后来删除了，这一项不再适用。
   - 只有物品、怪物、技能支持 ID 搜索。搜索词必须是纯数字，`#1002` 这种写法不算 ID 搜索。精确匹配到 ID 的记录排在结果最前面，其他按关键字匹配到的结果照常显示在后面。
   - `ItemDatabaseFilter` 和 `MonsterDatabaseFilter` 改成了 `Equatable` struct，只保存结构化的筛选条件。`searchText` 移到了视图里。
 
@@ -59,6 +59,11 @@
   - 传送点：列出能传送到的地图，按目标地图去重，不含同一张地图内部的传送点。（已完成）
   - mapflag：原样显示 flag 名和值，本地化留到第 3 条。按脚本顺序合并，`off` 会移除这个 flag 之前的全部条目。（已完成）
   - NPC：显示精灵、名字和坐标。隐藏规则和 rAthena 生成导航数据时一致。精灵的解析顺序和 rAthena 一致：数字 ID、`NPCJobID` 常量、怪物 AegisName，都不是时视为 `INVISIBLE`。（已完成）
+- 召唤组：合并到物品和技能详情，删除了侧边栏的召唤组数据库。（已完成）
+  - 物品脚本里有 `MOBG_<组名>` 的，物品详情显示"召唤 ›"。技能 SA_CLASSCHANGE 和 TK_MISSION 写死对应 CLASSCHANGE 和 TAEKWON_MISSION，和 rAthena 一致。
+  - 详情里只预览前几只怪物，标题链接进入完整列表。完整列表不再单独显示默认怪物，而是把它排在第一位，加 Default badge。
+  - 组名按大写匹配，因为 pre-renewal 的组名是大小写混写的。
+  - 怪物详情不加"可由哪些道具召唤"的反向链接：Dead Branch 几乎包含所有普通怪物，意义不大。
 
 ### 3. 数值和标签的显示
 

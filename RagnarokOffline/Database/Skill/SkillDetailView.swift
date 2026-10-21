@@ -11,6 +11,10 @@ import SwiftUI
 struct SkillDetailView: View {
     var skill: SkillModel
 
+    @Environment(DatabaseModel.self) private var database
+
+    @State private var monsterSummon: MonsterSummonModel?
+
     var body: some View {
         DatabaseRecordDetailView {
             DatabaseRecordSectionView(attributes: skill.attributes) {
@@ -78,7 +82,14 @@ struct SkillDetailView: View {
                     Text("Description", tableName: "Database")
                 }
             }
+
+            if let monsterSummon {
+                MonsterSummonSectionView(monsterSummon: monsterSummon)
+            }
         }
         .navigationTitle(skill.displayName)
+        .task {
+            monsterSummon = await database.monsterSummon(for: skill)
+        }
     }
 }

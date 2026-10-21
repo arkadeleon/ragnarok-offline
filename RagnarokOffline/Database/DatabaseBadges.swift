@@ -24,6 +24,12 @@ struct SummonRateBadge: View {
     }
 }
 
+struct DefaultBadge: View {
+    var body: some View {
+        Badge(text: String(localized: LocalizedStringResource("Default", table: "Database")), color: .gray)
+    }
+}
+
 struct MVPBadge: View {
     var body: some View {
         Badge(text: "MVP", color: .red)

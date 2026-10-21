@@ -17,6 +17,7 @@ struct ItemDetailView: View {
     @State private var droppingMonsters: [DroppingMonster] = []
     @State private var sellingShops: [ShopModel] = []
     @State private var petUsages: [PetUsage] = []
+    @State private var monsterSummon: MonsterSummonModel?
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -138,6 +139,10 @@ struct ItemDetailView: View {
                     Text("Pets", tableName: "Database")
                 }
             }
+
+            if let monsterSummon {
+                MonsterSummonSectionView(monsterSummon: monsterSummon)
+            }
         }
         .navigationTitle(item.displayName)
         .task {
@@ -151,6 +156,9 @@ struct ItemDetailView: View {
         }
         .task {
             petUsages = await database.petUsages(forItemNamed: item.aegisName)
+        }
+        .task {
+            monsterSummon = await database.monsterSummon(for: item)
         }
     }
 }
