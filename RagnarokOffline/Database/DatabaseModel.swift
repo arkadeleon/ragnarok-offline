@@ -124,27 +124,27 @@ final class DatabaseModel {
     var jobSearchIndex = DatabaseSearchIndex()
 
     var maps: [MapModel] = []
-    var mapsByName: [String: MapModel] = [:]
+    var mapsByName: [String : MapModel] = [:]
     var mapSearchIndex = DatabaseSearchIndex()
 
     var monsters: [MonsterModel] = []
-    var monstersByID: [Int: MonsterModel] = [:]
-    var monstersByAegisName: [String: MonsterModel] = [:]
+    var monstersByID: [Int : MonsterModel] = [:]
+    var monstersByAegisName: [String : MonsterModel] = [:]
     var monsterSearchIndex = DatabaseSearchIndex()
 
     var monsterSkillsByMonsterID: [Int : [MonsterSkill]] = [:]
-    var monsterSummonsByGroup: [String: MonsterSummonModel] = [:]
+    var monsterSummonsByGroup: [String : MonsterSummonModel] = [:]
 
     var pets: [PetModel] = []
     var petSearchIndex = DatabaseSearchIndex()
 
     var skills: [SkillModel] = []
-    var skillsByID: [Int: SkillModel] = [:]
-    var skillsByAegisName: [String: SkillModel] = [:]
+    var skillsByID: [Int : SkillModel] = [:]
+    var skillsByAegisName: [String : SkillModel] = [:]
     var skillSearchIndex = DatabaseSearchIndex()
 
     var statusChanges: [StatusChangeModel] = []
-    var statusChangesByID: [StatusChangeID: StatusChangeModel] = [:]
+    var statusChangesByID: [StatusChangeID : StatusChangeModel] = [:]
     var statusChangeSearchIndex = DatabaseSearchIndex()
 
     var elementalAttributeDamageAdjustments: [ElementalAttributeDamageAdjustment] = []
@@ -229,18 +229,20 @@ final class DatabaseModel {
 
     func item(forID id: Int) async -> ItemModel? {
         await fetchItems()
+
         return itemsByID[id]
     }
 
     func item(forAegisName aegisName: String) async -> ItemModel? {
         await fetchItems()
+
         return itemsByAegisName[aegisName]
     }
 
     func dropItems(for drops: [Monster.Drop]) async -> [DropItem] {
-        var dropItems: [DropItem] = []
-
         await fetchItems()
+
+        var dropItems: [DropItem] = []
 
         for (index, drop) in drops.enumerated() {
             if let item = await item(forAegisName: drop.item) {
@@ -331,6 +333,7 @@ final class DatabaseModel {
 
     func map(forName name: String) async -> MapModel? {
         await fetchMaps()
+
         return mapsByName[name]
     }
 
@@ -380,18 +383,20 @@ final class DatabaseModel {
 
     func monster(forID id: Int) async -> MonsterModel? {
         await fetchMonsters()
+
         return monstersByID[id]
     }
 
     func monster(forAegisName aegisName: String) async -> MonsterModel? {
         await fetchMonsters()
+
         return monstersByAegisName[aegisName]
     }
 
     func droppingMonsters(forItemAegisName itemAegisName: String) async -> [DroppingMonster] {
-        var droppingMonsters: [DroppingMonster] = []
-
         await fetchMonsters()
+
+        var droppingMonsters: [DroppingMonster] = []
 
         for monster in monsters {
             if let drop = monster.mvpDrops?.first(where: { $0.item == itemAegisName }) {
@@ -435,9 +440,9 @@ final class DatabaseModel {
         await fetchMonsterSkills()
         await fetchSkills()
 
-        let monsterSkills = monsterSkillsByMonsterID[monster.id] ?? []
-
         var castSkills: [MonsterCastSkill] = []
+
+        let monsterSkills = monsterSkillsByMonsterID[monster.id, default: []]
         for (index, monsterSkill) in monsterSkills.enumerated() {
             let isDuplicate = castSkills.contains { castSkill in
                 castSkill.monsterSkill.skillID == monsterSkill.skillID &&
@@ -453,6 +458,7 @@ final class DatabaseModel {
                 castSkills.append(castSkill)
             }
         }
+
         return castSkills
     }
 
@@ -495,6 +501,7 @@ final class DatabaseModel {
         guard let match = item.script?.firstMatch(of: /MOBG_([A-Z_]+)/) else {
             return nil
         }
+
         return await monsterSummon(forGroup: String(match.1))
     }
 
@@ -609,11 +616,13 @@ final class DatabaseModel {
 
     func skill(forID id: Int) async -> SkillModel? {
         await fetchSkills()
+
         return skillsByID[id]
     }
 
     func skill(forAegisName aegisName: String) async -> SkillModel? {
         await fetchSkills()
+
         return skillsByAegisName[aegisName]
     }
 
@@ -625,11 +634,13 @@ final class DatabaseModel {
         }
 
         var skills: [SkillModel] = []
+
         for skillInTree in tree {
             if let skill = await skill(forAegisName: skillInTree.name) {
                 skills.append(skill)
             }
         }
+
         return skills
     }
 
@@ -686,11 +697,13 @@ final class DatabaseModel {
 
     func statusChange(for statusChangeID: StatusChangeID) async -> StatusChangeModel? {
         await fetchStatusChanges()
+
         return statusChangesByID[statusChangeID]
     }
 
     func statusChanges(for statusChangeIDs: [StatusChangeID]) async -> [StatusChangeModel] {
         await fetchStatusChanges()
+
         return statusChangeIDs.compactMap {
             statusChangesByID[$0]
         }
