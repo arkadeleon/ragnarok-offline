@@ -28,12 +28,12 @@ struct ChatBoxView: View {
 
     static let perMessageHeight: CGFloat = 14
     static let messageHeaderHeight: CGFloat = 22
-    static let chatInputHeight: CGFloat = 36
+    static let chatInputHeight: CGFloat = 28
 
     static func contentHeight(for viewStyle: ViewStyle) -> CGFloat {
         switch viewStyle {
-        case .compact: perMessageHeight * CGFloat(messageCount(for: viewStyle))
-        case .full: perMessageHeight * CGFloat(messageCount(for: viewStyle)) + messageHeaderHeight
+        case .compact: perMessageHeight * CGFloat(messageCount(for: viewStyle)) + 1 + chatInputHeight
+        case .full: messageHeaderHeight + 1 + perMessageHeight * CGFloat(messageCount(for: viewStyle)) + 1 + chatInputHeight
         }
     }
 
@@ -54,63 +54,62 @@ struct ChatBoxView: View {
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        VStack(spacing: 3) {
+        VStack(spacing: 0) {
             if viewStyle == .full {
-                TextField(String(), text: $message)
-                    .textFieldStyle(.plain)
-                    #if !os(macOS)
-                    .textInputAutocapitalization(.never)
-                    #endif
-                    .disableAutocorrection(true)
-                    .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .padding(.horizontal, 6)
-                    .frame(height: ChatBoxView.chatInputHeight)
-                    .background(Color.white.opacity(0.8))
-                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
-                    .focused($isFocused)
-                    .onSubmit {
-                        send(message)
-                    }
+                HStack(spacing: 0) {
+                    MessageGroupButton(group: .chat, selection: $messageGroup)
+                    MessageGroupButton(group: .command, selection: $messageGroup)
+                }
+                .frame(height: ChatBoxView.messageHeaderHeight)
+
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(height: 1)
             }
 
-            VStack(spacing: 0) {
-                if viewStyle == .full {
-                    HStack(spacing: 0) {
-                        MessageGroupButton(group: .chat, selection: $messageGroup)
-                        MessageGroupButton(group: .command, selection: $messageGroup)
-                    }
-                    .frame(height: ChatBoxView.messageHeaderHeight)
-
-                    Rectangle()
-                        .fill(Color.white)
-                        .frame(height: 1)
-                }
-
-                Group {
-                    switch messageGroup {
-                    case .chat:
-                        ChatMessageListView(messages: gameContext.messageCenter.messages)
-                    case .command:
-                        AtCommandShortcutListView(groups: AtCommandShortcutGroup.allGroups) { shortcut in
-                            send(shortcut.command)
-                        }
-                    }
-                }
-                .frame(height: ChatBoxView.perMessageHeight * CGFloat(ChatBoxView.messageCount(for: viewStyle)))
-                .onTapGesture {
-                    switch viewStyle {
-                    case .compact:
-                        self.viewStyle = .full
-                    case .full:
-                        self.viewStyle = .compact
+            Group {
+                switch messageGroup {
+                case .chat:
+                    ChatMessageListView(messages: gameContext.messageCenter.messages)
+                case .command:
+                    AtCommandShortcutListView(groups: AtCommandShortcutGroup.allGroups) { shortcut in
+                        send(shortcut.command)
                     }
                 }
             }
-            .background(Color.black.opacity(0.4))
-            .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
-            .environment(\.colorScheme, .dark)
+            .frame(height: ChatBoxView.perMessageHeight * CGFloat(ChatBoxView.messageCount(for: viewStyle)))
+            .onTapGesture {
+                switch viewStyle {
+                case .compact:
+                    self.viewStyle = .full
+                case .full:
+                    self.viewStyle = .compact
+                }
+            }
+
+            Rectangle()
+                .fill(Color.white.opacity(0.3))
+                .frame(height: 1)
+
+            TextField(String(), text: $message)
+                .textFieldStyle(.plain)
+                #if !os(macOS)
+                .textInputAutocapitalization(.never)
+                #endif
+                .disableAutocorrection(true)
+                .font(.game())
+                .foregroundStyle(Color.white)
+                .tint(Color.white)
+                .padding(.horizontal, 6)
+                .frame(height: ChatBoxView.chatInputHeight)
+                .focused($isFocused)
+                .onSubmit {
+                    send(message)
+                }
         }
+        .background(Color.black.opacity(0.4))
+        .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
+        .environment(\.colorScheme, .dark)
         .geometryGroup()
         .animation(.spring(duration: 0.25), value: viewStyle)
     }
