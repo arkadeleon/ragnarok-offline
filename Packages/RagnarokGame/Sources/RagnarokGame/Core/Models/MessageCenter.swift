@@ -49,6 +49,7 @@ final class MessageCenter {
     let messageStringTable: MessageStringTable
 
     var messages: [MessageCenter.Message] = []
+    var inputHistory = ChatInputHistory()
 
     init(itemInfoTable: ItemInfoTable, messageStringTable: MessageStringTable) {
         self.itemInfoTable = itemInfoTable

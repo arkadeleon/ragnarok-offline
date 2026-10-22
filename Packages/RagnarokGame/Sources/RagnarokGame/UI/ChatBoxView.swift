@@ -91,21 +91,46 @@ struct ChatBoxView: View {
                 .fill(Color.white.opacity(0.3))
                 .frame(height: 1)
 
-            TextField(String(), text: $message)
-                .textFieldStyle(.plain)
-                #if !os(macOS)
-                .textInputAutocapitalization(.never)
-                #endif
-                .disableAutocorrection(true)
-                .font(.game())
-                .foregroundStyle(Color.white)
-                .tint(Color.white)
-                .padding(.horizontal, 6)
-                .frame(height: ChatBoxView.chatInputHeight)
-                .focused($isFocused)
-                .onSubmit {
-                    send(message)
+            HStack(spacing: 0) {
+                Button {
+                } label: {
+                    Color.clear
+                        .frame(width: 60)
+                        .contentShape(.rect)
                 }
+                .buttonStyle(.plain)
+
+                Rectangle()
+                    .fill(Color.white.opacity(0.3))
+                    .frame(width: 1)
+
+                TextField(String(), text: $message)
+                    .textFieldStyle(.plain)
+                    #if !os(macOS)
+                    .textInputAutocapitalization(.never)
+                    #endif
+                    .disableAutocorrection(true)
+                    .font(.game())
+                    .foregroundStyle(Color.white)
+                    .tint(Color.white)
+                    .padding(.horizontal, 3)
+                    .frame(height: ChatBoxView.chatInputHeight)
+                    .focused($isFocused)
+                    .onSubmit {
+                        send(message)
+                    }
+
+                ChatInputHistoryButton(systemImage: "arrow.up") {
+                    message = gameContext.messageCenter.inputHistory.previous()
+                }
+                .disabled(!gameContext.messageCenter.inputHistory.hasPrevious)
+
+                ChatInputHistoryButton(systemImage: "arrow.down") {
+                    message = gameContext.messageCenter.inputHistory.next()
+                }
+                .disabled(!gameContext.messageCenter.inputHistory.hasNext)
+            }
+            .frame(height: ChatBoxView.chatInputHeight)
         }
         .background(Color.black.opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
@@ -120,6 +145,7 @@ struct ChatBoxView: View {
         }
 
         gameSession.sendMessage(message)
+        gameContext.messageCenter.inputHistory.push(message)
         self.message = ""
     }
 }
@@ -158,8 +184,10 @@ private struct ChatMessageListView: View {
                         .foregroundStyle(Color.white)
                 }
             }
+            .padding(.horizontal, 3)
         }
         .scrollPosition(id: $scrollPosition, anchor: .bottom)
+        .clipped()
         .onChange(of: messages.count) {
             scrollPosition = messages.last?.id
         }
@@ -204,6 +232,25 @@ private struct AtCommandShortcutListView: View {
             .padding(8)
         }
         .scrollIndicators(.hidden)
+        .clipped()
+    }
+}
+
+private struct ChatInputHistoryButton: View {
+    var systemImage: String
+    var action: () -> Void
+
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(.game(size: 10, weight: .bold))
+                .foregroundStyle(Color.white.opacity(isEnabled ? 1 : 0.3))
+                .frame(width: ChatBoxView.chatInputHeight, height: ChatBoxView.chatInputHeight)
+                .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -225,8 +272,7 @@ private struct AtCommandShortcutListView: View {
         Spacer()
         ChatBoxView()
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color.gray.opacity(0.5))
+    .ignoresSafeArea()
     .environment(gameSession)
     .environment(gameSession.context)
 }
