@@ -10,7 +10,8 @@ import SwiftUI
 struct ConsoleView: View {
     var messages: [AttributedString]
 
-    @State private var position = ScrollPosition(idType: Int.self)
+    @State private var scrollPosition = ScrollPosition(edge: .bottom)
+    @State private var isAtBottom = true
 
     var body: some View {
         ScrollView {
@@ -23,13 +24,19 @@ struct ConsoleView: View {
             }
             .padding(.horizontal)
         }
-        .scrollPosition($position)
-        .onAppear {
-            position.scrollTo(id: messages.count - 1)
+        .scrollPosition($scrollPosition)
+        .onScrollGeometryChange(for: ScrollGeometry.self) { geometry in
+            geometry
+        } action: { oldGeometry, newGeometry in
+            if oldGeometry.containerSize != newGeometry.containerSize && isAtBottom {
+                scrollPosition.scrollTo(edge: .bottom)
+            } else {
+                isAtBottom = newGeometry.visibleRect.maxY >= newGeometry.contentSize.height + newGeometry.contentInsets.bottom - 1
+            }
         }
-        .onChange(of: messages.count) {
-            if !position.isPositionedByUser {
-                position.scrollTo(id: messages.count - 1)
+        .onChange(of: messages) {
+            if isAtBottom {
+                scrollPosition.scrollTo(edge: .bottom)
             }
         }
     }

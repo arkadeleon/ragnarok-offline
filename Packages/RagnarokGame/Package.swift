@@ -7,8 +7,8 @@ let package = Package(
     name: "RagnarokGame",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v14),
-        .iOS(.v17),
+        .macOS(.v15),
+        .iOS(.v18),
         .visionOS(.v2),
     ],
     products: [

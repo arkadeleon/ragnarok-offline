@@ -172,7 +172,8 @@ private struct MessageGroupButton: View {
 private struct ChatMessageListView: View {
     var messages: [MessageCenter.Message]
 
-    @State private var scrollPosition: UUID?
+    @State private var scrollPosition = ScrollPosition(edge: .bottom)
+    @State private var isAtBottom = true
 
     var body: some View {
         ScrollView {
@@ -186,10 +187,21 @@ private struct ChatMessageListView: View {
             }
             .padding(.horizontal, 3)
         }
-        .scrollPosition(id: $scrollPosition, anchor: .bottom)
+        .scrollPosition($scrollPosition)
         .clipped()
-        .onChange(of: messages.count) {
-            scrollPosition = messages.last?.id
+        .onScrollGeometryChange(for: ScrollGeometry.self) { geometry in
+            geometry
+        } action: { oldGeometry, newGeometry in
+            if oldGeometry.containerSize != newGeometry.containerSize && isAtBottom {
+                scrollPosition.scrollTo(edge: .bottom)
+            } else {
+                isAtBottom = newGeometry.visibleRect.maxY >= newGeometry.contentSize.height + newGeometry.contentInsets.bottom - 1
+            }
+        }
+        .onChange(of: messages.last?.id) {
+            if isAtBottom {
+                scrollPosition.scrollTo(edge: .bottom)
+            }
         }
     }
 }

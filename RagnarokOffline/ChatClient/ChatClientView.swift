@@ -10,7 +10,8 @@ import SwiftUI
 struct ChatClientView: View {
     @Environment(ChatSession.self) private var chatSession
 
-    @State private var position = ScrollPosition(idType: UUID.self)
+    @State private var scrollPosition = ScrollPosition(edge: .bottom)
+    @State private var isAtBottom = true
 
     @State private var pendingMessageContent: String = ""
     @State private var pendingCommand: CommandMessage.Command?
@@ -28,16 +29,20 @@ struct ChatClientView: View {
             }
             .padding()
         }
-        .scrollPosition($position)
-        .onAppear {
-            if let id = chatSession.messages.last?.id {
-                position.scrollTo(id: id)
+        .scrollPosition($scrollPosition)
+        .onScrollGeometryChange(for: ScrollGeometry.self) { geometry in
+            geometry
+        } action: { oldGeometry, newGeometry in
+            if oldGeometry.containerSize != newGeometry.containerSize && isAtBottom {
+                scrollPosition.scrollTo(edge: .bottom)
+            } else {
+                isAtBottom = newGeometry.visibleRect.maxY >= newGeometry.contentSize.height + newGeometry.contentInsets.bottom - 1
             }
         }
-        .onChange(of: chatSession.messages.count) {
-            if let id = chatSession.messages.last?.id {
+        .onChange(of: chatSession.messages.last?.id) {
+            if isAtBottom {
                 withAnimation {
-                    position.scrollTo(id: id)
+                    scrollPosition.scrollTo(edge: .bottom)
                 }
             }
         }
