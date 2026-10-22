@@ -39,7 +39,7 @@ struct ChatBoxView: View {
 
     static func messageCount(for viewStyle: ViewStyle) -> Int {
         switch viewStyle {
-        case .compact: 6
+        case .compact: 5
         case .full: 15
         }
     }
