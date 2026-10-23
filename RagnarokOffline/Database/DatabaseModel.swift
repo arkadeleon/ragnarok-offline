@@ -120,6 +120,8 @@ final class DatabaseModel {
     var itemsByAegisName: [String : ItemModel] = [:]
     var itemSearchIndex = DatabaseSearchIndex()
 
+    var itemGroupsByGroupName: [String : ItemGroup] = [:]
+
     var jobs: [JobModel] = []
     var jobSearchIndex = DatabaseSearchIndex()
 
@@ -159,6 +161,7 @@ final class DatabaseModel {
     private let statusInfoTable: StatusInfoTable
 
     @ObservationIgnored private var itemDatabaseTask: Task<Void, Never>?
+    @ObservationIgnored private var itemGroupDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var jobDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var mapDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var monsterDatabaseTask: Task<Void, Never>?
@@ -252,6 +255,57 @@ final class DatabaseModel {
         }
 
         return dropItems
+    }
+
+    // MARK: - Item Group Database
+
+    func fetchItemGroups() async {
+        if let itemGroupDatabaseTask {
+            return await itemGroupDatabaseTask.value
+        }
+
+        let itemGroupDatabaseTask = Task {
+            let itemGroupDatabase = ItemGroupDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let itemGroups: [ItemGroup]
+            do {
+                itemGroups = try await itemGroupDatabase.itemGroups()
+            } catch {
+                logger.warning("Item group database task failed: \(error)")
+                return
+            }
+
+            self.itemGroupsByGroupName = Dictionary(
+                itemGroups.map({ ($0.group.uppercased(), $0) }),
+                uniquingKeysWith: { (first, _) in first }
+            )
+        }
+
+        self.itemGroupDatabaseTask = itemGroupDatabaseTask
+
+        return await itemGroupDatabaseTask.value
+    }
+
+    func itemGroup(forGroupName groupName: String) async -> ItemGroup? {
+        await fetchItemGroups()
+
+        return itemGroupsByGroupName[groupName.uppercased()]
+    }
+
+    func itemGroups(for item: ItemModel) async -> [ItemGroup] {
+        guard let script = item.script else {
+            return []
+        }
+
+        var itemGroups: [ItemGroup] = []
+
+        for match in script.matches(of: /getgroupitem\(IG_([A-Za-z0-9_]+)/) {
+            if let itemGroup = await itemGroup(forGroupName: String(match.1)), !itemGroups.contains(itemGroup) {
+                itemGroups.append(itemGroup)
+            }
+        }
+
+        return itemGroups
     }
 
     // MARK: - Job Database
