@@ -131,6 +131,10 @@ extension View {
             .navigationDestination(for: FileGroup.self) { fileGroup in
                 FileGroupView(group: fileGroup)
             }
+            .navigationDestination(for: MonstersDroppingItem.self) { monstersDroppingItem in
+                MonstersDroppingItemView(monstersDroppingItem: monstersDroppingItem)
+                    .environment(appModel.database)
+            }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
                     .environment(appModel.database)

@@ -83,24 +83,26 @@ struct ItemDetailView: View {
             if !dropSources.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(dropSources) { dropSource in
+                        ForEach(previewDropSources) { dropSource in
                             NavigationLink(value: dropSource.monster) {
-                                ImageGridCell(title: dropSource.monster.displayName) {
-                                    HStack(spacing: 4) {
-                                        RateBadge(rate: dropSource.drop.rate)
-                                        if dropSource.isMVPDrop {
-                                            MVPBadge()
-                                        }
-                                    }
-                                } image: {
-                                    MonsterImageView(monster: dropSource.monster)
-                                }
+                                DropSourceGridCell(dropSource: dropSource)
                             }
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
                 } header: {
-                    Text("Dropped By", tableName: "Database")
+                    if hasMoreDropSources {
+                        NavigationLink(value: MonstersDroppingItem(item: item)) {
+                            HStack {
+                                Text("Dropped By", tableName: "Database")
+                                    .foregroundStyle(Color.primary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    } else {
+                        Text("Dropped By", tableName: "Database")
+                    }
                 }
             }
 
@@ -193,5 +195,13 @@ struct ItemDetailView: View {
         .task {
             monsterSummon = await database.monsterSummon(for: item)
         }
+    }
+
+    private var hasMoreDropSources: Bool {
+        dropSources.count > 9
+    }
+
+    private var previewDropSources: some RandomAccessCollection<DropSource> {
+        dropSources.prefix(9)
     }
 }
