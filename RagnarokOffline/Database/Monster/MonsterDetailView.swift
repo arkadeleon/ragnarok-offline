@@ -68,9 +68,7 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(mvpDropItems) { dropItem in
                             NavigationLink(value: dropItem.item) {
-                                ItemCell(item: dropItem.item) {
-                                    RateBadge(rate: dropItem.drop.rate)
-                                }
+                                ItemCell(item: dropItem.item, badges: dropItem.badges)
                             }
                         }
                     }
@@ -84,9 +82,7 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(dropItems) { dropItem in
                             NavigationLink(value: dropItem.item) {
-                                ItemCell(item: dropItem.item) {
-                                    RateBadge(rate: dropItem.drop.rate)
-                                }
+                                ItemCell(item: dropItem.item, badges: dropItem.badges)
                             }
                         }
                     }
@@ -100,12 +96,7 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(castSkills) { castSkill in
                             NavigationLink(value: castSkill.skill) {
-                                SkillCell(skill: castSkill.skill) {
-                                    HStack(spacing: 4) {
-                                        SkillLevelBadge(level: castSkill.monsterSkill.skillLevel)
-                                        RateBadge(rate: castSkill.monsterSkill.rate)
-                                    }
-                                }
+                                SkillCell(skill: castSkill.skill, badges: castSkill.badges)
                             }
                         }
                     }
@@ -119,9 +110,7 @@ struct MonsterDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(spawnMaps) { spawnMap in
                             NavigationLink(value: spawnMap.map) {
-                                MapCell(map: spawnMap.map) {
-                                    SpawnBadge(spawn: spawnMap.monsterSpawn)
-                                }
+                                MapCell(map: spawnMap.map, badges: spawnMap.badges)
                             }
                         }
                     }

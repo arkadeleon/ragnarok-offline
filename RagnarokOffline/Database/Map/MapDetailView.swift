@@ -58,9 +58,7 @@ struct MapDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(spawnMonsters) { spawnMonster in
                             NavigationLink(value: spawnMonster.monster) {
-                                ImageGridCell(title: spawnMonster.monster.displayName) {
-                                    SpawnBadge(spawn: spawnMonster.spawn)
-                                } image: {
+                                ImageGridCell(title: spawnMonster.monster.displayName, badges: spawnMonster.badges) {
                                     MonsterImageView(monster: spawnMonster.monster)
                                 }
                             }
@@ -90,9 +88,7 @@ struct MapDetailView: View {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(npcs) { npc in
-                            NPCGridCell(npc: npc) {
-                                PositionBadge(x: npc.x, y: npc.y)
-                            }
+                            NPCGridCell(npc: npc, badges: [.position(x: npc.x, y: npc.y)])
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))

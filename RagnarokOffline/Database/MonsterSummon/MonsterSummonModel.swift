@@ -19,6 +19,20 @@ final class MonsterSummonModel {
         var id: Int {
             monster.id
         }
+
+        var badges: [DatabaseBadge] {
+            var badges: [DatabaseBadge] = []
+
+            if isDefault {
+                badges.append(.default)
+            }
+
+            if let rate {
+                badges.append(.rate(rate, base: 1000000))
+            }
+
+            return badges
+        }
     }
 
     private let mode: DatabaseMode

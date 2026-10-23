@@ -33,8 +33,8 @@ struct ItemCell<SecondaryLabel>: View where SecondaryLabel: View {
         self.secondaryLabel = Text(secondaryText ?? item.aegisName)
     }
 
-    init(item: ItemModel, @ViewBuilder secondaryLabel: () -> SecondaryLabel) {
+    init(item: ItemModel, badges: [DatabaseBadge]) where SecondaryLabel == DatabaseBadgeStackView {
         self.item = item
-        self.secondaryLabel = secondaryLabel()
+        self.secondaryLabel = DatabaseBadgeStackView(badges: badges)
     }
 }

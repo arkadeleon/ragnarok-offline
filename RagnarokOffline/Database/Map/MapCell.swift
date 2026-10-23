@@ -33,8 +33,8 @@ struct MapCell<SecondaryLabel>: View where SecondaryLabel: View {
         self.secondaryLabel = Text(secondaryText ?? map.name)
     }
 
-    init(map: MapModel, @ViewBuilder secondaryLabel: () -> SecondaryLabel) {
+    init(map: MapModel, badges: [DatabaseBadge]) where SecondaryLabel == DatabaseBadgeStackView {
         self.map = map
-        self.secondaryLabel = secondaryLabel()
+        self.secondaryLabel = DatabaseBadgeStackView(badges: badges)
     }
 }

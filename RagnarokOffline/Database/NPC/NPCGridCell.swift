@@ -7,14 +7,12 @@
 
 import SwiftUI
 
-struct NPCGridCell<Subtitle>: View where Subtitle: View {
+struct NPCGridCell: View {
     var npc: NPCModel
-    @ViewBuilder var subtitle: Subtitle
+    var badges: [DatabaseBadge]
 
     var body: some View {
-        ImageGridCell(title: npc.displayName) {
-            subtitle
-        } image: {
+        ImageGridCell(title: npc.displayName, badges: badges) {
             ZStack {
                 if let animatedImage = npc.animatedImage, let firstFrame = animatedImage.firstFrame {
                     Image(firstFrame, scale: animatedImage.scale, label: Text(npc.displayName))

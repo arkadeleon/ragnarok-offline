@@ -19,7 +19,7 @@ struct ItemGroupDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach((itemGroup.obtainableItems ?? []).filter({ $0.subGroupListItemChance.subGroup.subGroup == subGroup.subGroup })) { obtainableItem in
                             NavigationLink(value: obtainableItem.item) {
-                                ItemGroupObtainableItemCell(obtainableItem: obtainableItem)
+                                ItemCell(item: obtainableItem.item, badges: obtainableItem.badges)
                             }
                         }
                     }

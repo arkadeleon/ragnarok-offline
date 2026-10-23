@@ -85,7 +85,9 @@ struct ItemDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(previewDropSources) { dropSource in
                             NavigationLink(value: dropSource.monster) {
-                                DropSourceGridCell(dropSource: dropSource)
+                                ImageGridCell(title: dropSource.monster.displayName, badges: dropSource.badges) {
+                                    MonsterImageView(monster: dropSource.monster)
+                                }
                             }
                         }
                     }
@@ -111,9 +113,7 @@ struct ItemDetailView: View {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(shops) { shop in
                             NavigationLink(value: shop) {
-                                NPCGridCell(npc: shop.npc) {
-                                    MapBadge(map: shop.map)
-                                }
+                                NPCGridCell(npc: shop.npc, badges: [.map(shop.map)])
                             }
                         }
                     }
@@ -128,7 +128,7 @@ struct ItemDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(previewItemGroupSources) { itemGroupSource in
                             NavigationLink(value: itemGroupSource.item) {
-                                ItemGroupSourceCell(itemGroupSource: itemGroupSource)
+                                ItemCell(item: itemGroupSource.item, badges: itemGroupSource.badges)
                             }
                         }
                     }
@@ -150,9 +150,7 @@ struct ItemDetailView: View {
                         ForEach(petUsages) { petUsage in
                             if let monster = petUsage.pet.monster {
                                 NavigationLink(value: petUsage.pet) {
-                                    ImageGridCell(title: monster.displayName) {
-                                        PetUsageBadge(kind: petUsage.kind)
-                                    } image: {
+                                    ImageGridCell(title: monster.displayName, badges: petUsage.badges) {
                                         MonsterImageView(monster: monster)
                                     }
                                 }

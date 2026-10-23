@@ -9,8 +9,9 @@
 - 一次只改一个点，改完停下来等 review。条目太大时拆成几次改。
 - rAthena 的 YAML 按文档逐字段解析，字段注释照抄文档原文。枚举值用 RagnarokOfflineGenerator 从 rAthena 源码转换，不手写。
 - 导航一律按值推送（`NavigationLink(value:)`），destination 注册在 `ContentView.navigationDestinations`。只有不再往下跳的末端页面才能按 view 推送。
-- 关联列表的 section 只预览前 9 个（`previewXXX`），超过 9 个才在标题显示箭头、链接到完整列表（`hasMoreXXX`）。
-- 反向查询不要在打开详情页时扫描全部数据，要在加载数据时一起算好。
+- 关联列表的 section 只预览前 9 个（`previewXXX`），标题带箭头链接到完整列表。"Obtains"、"Summon"、"Obtained From" 总是显示箭头，"Dropped By" 超过 9 个才显示（`hasMoreDropSources`）。
+- 反向查询不要在打开详情页时扫描全部数据，要在加载数据时一起算好。需要同时用到两份数据的纯计算放进 `RagnarokDatabase`，在后台跑，比如 `ItemGroupDatabase.sourceItemIDs(in:)`。
+- Badge 是数据：`DatabaseBadge` 只有 `text` 和 `semantic`，颜色由 `DatabaseBadgeView` 按 `semantic` 决定。关联类型自己提供 `badges`，cell 统一接收 `badges:`（`ItemCell`、`SkillCell`、`MapCell`、`NPCGridCell`、`ImageGridCell`），不再为了 badge 单独写 cell。新的 badge 加一个 `Semantic` 和一个工厂方法，都按字母顺序排。
 
 ## 1. 技能的物品消耗（暂缓）
 
@@ -24,13 +25,14 @@
 - 关联：物品脚本里的 `getgroupitem(IG_<组名>)`，脚本里没有其他调用方式。renewal 有 2 个组在数据里不存在（`FPR_RESET_STONE_BOX`、`R_EP1921_BOSS`），对不上。
 - 已实现：
   - 解析：`RagnarokDatabase` 的 `ItemGroup` / `ItemGroupDatabase`。生成的枚举有 `ItemGroupAlgorithm`、`ItemBound`、`EnchantGrade`。
-  - 模型：`ItemGroupModel` 加载时就记下调用这个组的物品（`sourceItems`）。
+  - 模型：`ItemGroupModel` 加载时就记下调用这个组的物品（`sourceItems`，由后台的 `ItemGroupDatabase.sourceItemIDs(in:)` 算出）。每条记录和它的概率是 `ItemGroupModel.SubGroupListItemChance`，`ObtainableItem` 和 `ItemGroupSource` 都包含它。
   - 物品详情 "Obtains" section：预览能开出的物品，概率是 rate 除以同一个 SubGroup 的 rate 总和，`All` 的物品显示 100%，数量大于 1 时显示数量。完整列表页 `ItemGroupDetailView` 按 SubGroup 分段，标题带规则名，比如 "SubGroup 0 (All)"。
-  - 物品详情 "Obtained From" section：列出能开出这个物品的箱子（`ItemGroupSource`）。同一个箱子的多个 SubGroup 里都有时，只显示概率最高的一次。
+  - 物品详情 "Obtained From" section：预览能开出这个物品的箱子（`ItemGroupSource`），同一个箱子的多个 SubGroup 里都有时只显示概率最高的一次。完整列表页 `ItemGroupsContainingItemView` 先按物品组分段（标题链接到组的详情），再按 SubGroup 分段。
 - 顺带完成：
   - "Dropped By" 改成预览加完整列表页 `MonstersDroppingItemView`。
   - Summon 改成按值推送。
   - 关联类型改名：`DropSource`、`SpawnMonster`，以及 `shops(for:)`、`petUsages(forItemAegisName:)`。
+  - 所有 badge 改成 `DatabaseBadge` 数据，删掉了 `XxxBadge` view 和只为 badge 存在的 cell（`DropSourceGridCell`、`MonsterSummonGridCell`、`ItemGroupObtainableItemCell`、`ItemGroupSourceCell`）。
 
 ## 3. 套装（`item_combos.yml`）
 

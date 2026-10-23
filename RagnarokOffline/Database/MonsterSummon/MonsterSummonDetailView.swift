@@ -15,7 +15,9 @@ struct MonsterSummonDetailView: View {
     var body: some View {
         ImageGrid(monsterSummon.summonMonsters ?? []) { summonMonster in
             NavigationLink(value: summonMonster.monster) {
-                MonsterSummonGridCell(summonMonster: summonMonster)
+                ImageGridCell(title: summonMonster.monster.displayName, badges: summonMonster.badges) {
+                    MonsterImageView(monster: summonMonster.monster)
+                }
             }
         }
         .background(.background)

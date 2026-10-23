@@ -20,6 +20,10 @@ struct DropItem: Identifiable {
     var id: Int {
         index
     }
+
+    var badges: [DatabaseBadge] {
+        [.rate(drop.rate, base: 10000)]
+    }
 }
 
 struct DropSource: Identifiable {
@@ -29,6 +33,16 @@ struct DropSource: Identifiable {
 
     var id: String {
         isMVPDrop ? "\(monster.id)-mvp" : "\(monster.id)"
+    }
+
+    var badges: [DatabaseBadge] {
+        var badges: [DatabaseBadge] = [.rate(drop.rate, base: 10000)]
+
+        if isMVPDrop {
+            badges.append(.mvp)
+        }
+
+        return badges
     }
 }
 
@@ -40,6 +54,18 @@ struct ItemGroupSource: Identifiable {
     var id: String {
         "\(item.id)-\(itemGroup.displayName)"
     }
+
+    var badges: [DatabaseBadge] {
+        var badges: [DatabaseBadge] = []
+
+        if subGroupListItemChance.listItem.amount > 1 {
+            badges.append(.amount(subGroupListItemChance.listItem.amount))
+        }
+
+        badges.append(.probability(subGroupListItemChance.probability))
+
+        return badges
+    }
 }
 
 struct MonsterCastSkill: Identifiable {
@@ -49,6 +75,10 @@ struct MonsterCastSkill: Identifiable {
 
     var id: Int {
         index
+    }
+
+    var badges: [DatabaseBadge] {
+        [.skillLevel(monsterSkill.skillLevel), .rate(monsterSkill.rate, base: 10000)]
     }
 }
 
@@ -79,6 +109,10 @@ struct PetUsage: Identifiable {
     var id: String {
         "\(pet.id)-\(kind)"
     }
+
+    var badges: [DatabaseBadge] {
+        [.petUsage(kind)]
+    }
 }
 
 struct ElementalDamage: Identifiable {
@@ -97,6 +131,10 @@ struct SpawnMap: Identifiable {
     var id: String {
         map.name
     }
+
+    var badges: [DatabaseBadge] {
+        [.spawn(monsterSpawn)]
+    }
 }
 
 struct SpawnMonster: Identifiable {
@@ -106,6 +144,10 @@ struct SpawnMonster: Identifiable {
     var id: Int {
         monster.id
     }
+
+    var badges: [DatabaseBadge] {
+        [.spawn(spawn)]
+    }
 }
 
 struct ShopItem: Identifiable {
@@ -113,9 +155,14 @@ struct ShopItem: Identifiable {
     var item: ItemModel
     var price: Int
     var stock: Int?
+    var shopType: ShopNPC.ShopType
 
     var id: Int {
         index
+    }
+
+    var badges: [DatabaseBadge] {
+        [.price(price, shopType: shopType)]
     }
 }
 
@@ -1029,7 +1076,7 @@ final class DatabaseModel {
         for (index, shopNPCItem) in shopNPC.items.enumerated() {
             if let item = itemsByID[shopNPCItem.itemID] {
                 let price = price(of: shopNPCItem, item: item, shopType: shopNPC.shopType)
-                let shopItem = ShopItem(index: index, item: item, price: price, stock: shopNPCItem.stock)
+                let shopItem = ShopItem(index: index, item: item, price: price, stock: shopNPCItem.stock, shopType: shopNPC.shopType)
                 shopItems.append(shopItem)
             }
         }

@@ -21,7 +21,9 @@ struct MonstersDroppingItemView: View {
     var body: some View {
         ImageGrid(dropSources) { dropSource in
             NavigationLink(value: dropSource.monster) {
-                DropSourceGridCell(dropSource: dropSource)
+                ImageGridCell(title: dropSource.monster.displayName, badges: dropSource.badges) {
+                    MonsterImageView(monster: dropSource.monster)
+                }
             }
         }
         .background(.background)

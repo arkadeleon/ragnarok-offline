@@ -36,7 +36,7 @@ struct ShopDetailView: View {
                         VStack(spacing: 4) {
                             Text(shop.map.displayName)
                                 .foregroundStyle(Color.primary)
-                            PositionBadge(x: shop.npc.x, y: shop.npc.y)
+                            DatabaseBadgeView(badge: .position(x: shop.npc.x, y: shop.npc.y))
                         }
                     }
                 }
@@ -50,9 +50,7 @@ struct ShopDetailView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                         ForEach(shopItems) { shopItem in
                             NavigationLink(value: shopItem.item) {
-                                ItemCell(item: shopItem.item) {
-                                    PriceBadge(price: shopItem.price, shopType: shop.shopNPC.shopType)
-                                }
+                                ItemCell(item: shopItem.item, badges: shopItem.badges)
                             }
                         }
                     }

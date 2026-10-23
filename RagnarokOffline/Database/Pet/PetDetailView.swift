@@ -34,30 +34,22 @@ struct PetDetailView: View {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                     if let tameItem = pet.tameItem {
                         NavigationLink(value: tameItem) {
-                            ItemCell(item: tameItem) {
-                                PetUsageBadge(kind: .tame)
-                            }
+                            ItemCell(item: tameItem, badges: [.petUsage(.tame)])
                         }
                     }
                     if let eggItem = pet.eggItem {
                         NavigationLink(value: eggItem) {
-                            ItemCell(item: eggItem) {
-                                PetUsageBadge(kind: .egg)
-                            }
+                            ItemCell(item: eggItem, badges: [.petUsage(.egg)])
                         }
                     }
                     if let equipItem = pet.equipItem {
                         NavigationLink(value: equipItem) {
-                            ItemCell(item: equipItem) {
-                                PetUsageBadge(kind: .equip)
-                            }
+                            ItemCell(item: equipItem, badges: [.petUsage(.equip)])
                         }
                     }
                     if let foodItem = pet.foodItem {
                         NavigationLink(value: foodItem) {
-                            ItemCell(item: foodItem) {
-                                PetUsageBadge(kind: .food)
-                            }
+                            ItemCell(item: foodItem, badges: [.petUsage(.food)])
                         }
                     }
                 }

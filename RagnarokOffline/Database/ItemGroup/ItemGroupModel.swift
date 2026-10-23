@@ -19,6 +19,18 @@ final class ItemGroupModel {
         var id: String {
             subGroupListItemChance.id
         }
+
+        var badges: [DatabaseBadge] {
+            var badges: [DatabaseBadge] = []
+
+            if subGroupListItemChance.listItem.amount > 1 {
+                badges.append(.amount(subGroupListItemChance.listItem.amount))
+            }
+
+            badges.append(.probability(subGroupListItemChance.probability))
+
+            return badges
+        }
     }
 
     /// A chance to get an item from one list item of a SubGroup.

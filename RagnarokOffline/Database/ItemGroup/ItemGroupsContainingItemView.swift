@@ -33,7 +33,7 @@ struct ItemGroupsContainingItemView: View {
                                     ForEach(sourceItems(of: itemGroup)) { item in
                                         NavigationLink(value: item) {
                                             let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItemChance: subGroupListItemChance)
-                                            ItemGroupSourceCell(itemGroupSource: itemGroupSource)
+                                            ItemCell(item: itemGroupSource.item, badges: itemGroupSource.badges)
                                         }
                                     }
                                 }

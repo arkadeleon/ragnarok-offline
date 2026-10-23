@@ -17,7 +17,7 @@ struct ItemGroupSectionView: View {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                 ForEach(previewObtainableItems) { obtainableItem in
                     NavigationLink(value: obtainableItem.item) {
-                        ItemGroupObtainableItemCell(obtainableItem: obtainableItem)
+                        ItemCell(item: obtainableItem.item, badges: obtainableItem.badges)
                     }
                 }
             }
