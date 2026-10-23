@@ -16,7 +16,7 @@ struct MonsterSummonSectionView: View {
     var body: some View {
         DatabaseRecordSectionView {
             LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                ForEach((monsterSummon.summonMonsters ?? []).prefix(9)) { summonMonster in
+                ForEach(previewSummonMonsters) { summonMonster in
                     NavigationLink(value: summonMonster.monster) {
                         MonsterSummonGridCell(summonMonster: summonMonster)
                     }
@@ -24,10 +24,7 @@ struct MonsterSummonSectionView: View {
             }
             .padding(.vertical, vSpacing(sizeClass))
         } header: {
-            NavigationLink {
-                MonsterSummonDetailView(monsterSummon: monsterSummon)
-                    .environment(database)
-            } label: {
+            NavigationLink(value: monsterSummon) {
                 HStack {
                     Text("Summon", tableName: "Database")
                         .foregroundStyle(Color.primary)
@@ -39,5 +36,9 @@ struct MonsterSummonSectionView: View {
         .task {
             await monsterSummon.fetchDetail(database: database)
         }
+    }
+
+    private var previewSummonMonsters: some RandomAccessCollection<MonsterSummonModel.Summon> {
+        (monsterSummon.summonMonsters ?? []).prefix(9)
     }
 }

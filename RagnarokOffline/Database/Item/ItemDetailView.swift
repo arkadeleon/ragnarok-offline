@@ -17,6 +17,7 @@ struct ItemDetailView: View {
     @State private var droppingMonsters: [DroppingMonster] = []
     @State private var sellingShops: [ShopModel] = []
     @State private var petUsages: [PetUsage] = []
+    @State private var itemGroups: [ItemGroupModel] = []
     @State private var monsterSummon: MonsterSummonModel?
 
     var body: some View {
@@ -140,6 +141,10 @@ struct ItemDetailView: View {
                 }
             }
 
+            ForEach(itemGroups, id: \.displayName) { itemGroup in
+                ItemGroupSectionView(itemGroup: itemGroup)
+            }
+
             if let monsterSummon {
                 MonsterSummonSectionView(monsterSummon: monsterSummon)
             }
@@ -156,6 +161,9 @@ struct ItemDetailView: View {
         }
         .task {
             petUsages = await database.petUsages(forItemNamed: item.aegisName)
+        }
+        .task {
+            itemGroups = await database.itemGroups(for: item)
         }
         .task {
             monsterSummon = await database.monsterSummon(for: item)

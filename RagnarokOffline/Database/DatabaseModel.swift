@@ -120,7 +120,7 @@ final class DatabaseModel {
     var itemsByAegisName: [String : ItemModel] = [:]
     var itemSearchIndex = DatabaseSearchIndex()
 
-    var itemGroupsByGroupName: [String : ItemGroup] = [:]
+    var itemGroupsByGroupName: [String : ItemGroupModel] = [:]
 
     var jobs: [JobModel] = []
     var jobSearchIndex = DatabaseSearchIndex()
@@ -276,7 +276,7 @@ final class DatabaseModel {
             }
 
             self.itemGroupsByGroupName = Dictionary(
-                itemGroups.map({ ($0.group.uppercased(), $0) }),
+                itemGroups.map({ ($0.group.uppercased(), ItemGroupModel(mode: mode, itemGroup: $0)) }),
                 uniquingKeysWith: { (first, _) in first }
             )
         }
@@ -286,18 +286,18 @@ final class DatabaseModel {
         return await itemGroupDatabaseTask.value
     }
 
-    func itemGroup(forGroupName groupName: String) async -> ItemGroup? {
+    func itemGroup(forGroupName groupName: String) async -> ItemGroupModel? {
         await fetchItemGroups()
 
         return itemGroupsByGroupName[groupName.uppercased()]
     }
 
-    func itemGroups(for item: ItemModel) async -> [ItemGroup] {
+    func itemGroups(for item: ItemModel) async -> [ItemGroupModel] {
         guard let script = item.script else {
             return []
         }
 
-        var itemGroups: [ItemGroup] = []
+        var itemGroups: [ItemGroupModel] = []
 
         for match in script.matches(of: /getgroupitem\(IG_([A-Za-z0-9_]+)/) {
             if let itemGroup = await itemGroup(forGroupName: String(match.1)), !itemGroups.contains(itemGroup) {

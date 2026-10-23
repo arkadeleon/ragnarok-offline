@@ -24,6 +24,22 @@ struct SummonRateBadge: View {
     }
 }
 
+struct ItemGroupRateBadge: View {
+    var probability: Double
+
+    var body: some View {
+        Badge(text: probability.formatted(.percent.precision(.significantDigits(1...3))), color: .blue)
+    }
+}
+
+struct AmountBadge: View {
+    var amount: Int
+
+    var body: some View {
+        Badge(text: amount.formatted() + "×", color: .teal)
+    }
+}
+
 struct DefaultBadge: View {
     var body: some View {
         Badge(text: String(localized: LocalizedStringResource("Default", table: "Database")), color: .gray)

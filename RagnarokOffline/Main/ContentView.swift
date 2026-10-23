@@ -135,6 +135,10 @@ extension View {
                 ItemDetailView(item: item)
                     .environment(appModel.database)
             }
+            .navigationDestination(for: ItemGroupModel.self) { itemGroup in
+                ItemGroupDetailView(itemGroup: itemGroup)
+                    .environment(appModel.database)
+            }
             .navigationDestination(for: JobModel.self) { job in
                 JobDetailView(job: job)
                     .environment(appModel.database)
@@ -145,6 +149,10 @@ extension View {
             }
             .navigationDestination(for: MonsterModel.self) { monster in
                 MonsterDetailView(monster: monster)
+                    .environment(appModel.database)
+            }
+            .navigationDestination(for: MonsterSummonModel.self) { monsterSummon in
+                MonsterSummonDetailView(monsterSummon: monsterSummon)
                     .environment(appModel.database)
             }
             .navigationDestination(for: PetModel.self) { pet in

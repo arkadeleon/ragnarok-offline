@@ -63,3 +63,15 @@ final class MonsterSummonModel {
         self.summonMonsters = summonMonsters
     }
 }
+
+extension MonsterSummonModel: Equatable {
+    static func == (lhs: MonsterSummonModel, rhs: MonsterSummonModel) -> Bool {
+        lhs.monsterSummon.group == rhs.monsterSummon.group
+    }
+}
+
+extension MonsterSummonModel: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(monsterSummon.group)
+    }
+}
