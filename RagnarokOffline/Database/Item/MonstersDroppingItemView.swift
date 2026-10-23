@@ -16,7 +16,7 @@ struct MonstersDroppingItemView: View {
 
     @Environment(DatabaseModel.self) private var database
 
-    @State private var dropSources: [DropSource] = []
+    @State private var dropSources: [ItemModel.DropSource] = []
 
     var body: some View {
         ImageGrid(dropSources) { dropSource in

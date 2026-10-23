@@ -12,7 +12,7 @@ struct ShopDetailView: View {
 
     @Environment(DatabaseModel.self) private var database
 
-    @State private var shopItems: [ShopItem] = []
+    @State private var shopItems: [ShopModel.ShopItem] = []
 
     var body: some View {
         DatabaseRecordDetailView {

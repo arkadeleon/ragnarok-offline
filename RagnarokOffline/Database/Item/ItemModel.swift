@@ -15,6 +15,81 @@ import RagnarokResources
 @Observable
 @dynamicMemberLookup
 final class ItemModel {
+    struct DropSource: Identifiable {
+        var monster: MonsterModel
+        var drop: Monster.Drop
+        var isMVPDrop: Bool
+
+        var id: String {
+            isMVPDrop ? "\(monster.id)-mvp" : "\(monster.id)"
+        }
+
+        var badges: [DatabaseBadge] {
+            var badges: [DatabaseBadge] = [.rate(drop.rate, base: 10000)]
+
+            if isMVPDrop {
+                badges.append(.mvp)
+            }
+
+            return badges
+        }
+    }
+
+    struct ObtainSource: Identifiable {
+        var item: ItemModel
+        var itemGroup: ItemGroupModel
+        var subGroupListItemChance: ItemGroupModel.SubGroupListItemChance
+
+        var id: String {
+            "\(item.id)-\(itemGroup.displayName)"
+        }
+
+        var badges: [DatabaseBadge] {
+            var badges: [DatabaseBadge] = []
+
+            if subGroupListItemChance.listItem.amount > 1 {
+                badges.append(.amount(subGroupListItemChance.listItem.amount))
+            }
+
+            badges.append(.probability(subGroupListItemChance.probability))
+
+            return badges
+        }
+    }
+
+    struct PetUsage: Identifiable {
+        enum Kind {
+            case tame
+            case egg
+            case equip
+            case food
+
+            var localizedName: LocalizedStringResource {
+                switch self {
+                case .tame:
+                    LocalizedStringResource("Tame Item", table: "Database")
+                case .egg:
+                    LocalizedStringResource("Egg Item", table: "Database")
+                case .equip:
+                    LocalizedStringResource("Equip Item", table: "Database")
+                case .food:
+                    LocalizedStringResource("Food Item", table: "Database")
+                }
+            }
+        }
+
+        var pet: PetModel
+        var kind: ItemModel.PetUsage.Kind
+
+        var id: String {
+            "\(pet.id)-\(kind)"
+        }
+
+        var badges: [DatabaseBadge] {
+            [.petUsage(kind)]
+        }
+    }
+
     private let mode: DatabaseMode
     private let item: Item
     private let resourceManager: ResourceManager

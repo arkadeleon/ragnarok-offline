@@ -78,8 +78,8 @@ final class PetModel {
         }
     }
 
-    func usages(ofItemNamed itemAegisName: String) -> [PetUsage.Kind] {
-        var usages: [PetUsage.Kind] = []
+    func usages(ofItemNamed itemAegisName: String) -> [ItemModel.PetUsage.Kind] {
+        var usages: [ItemModel.PetUsage.Kind] = []
         if pet.tameItem == itemAegisName {
             usages.append(.tame)
         }

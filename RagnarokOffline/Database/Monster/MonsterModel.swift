@@ -16,6 +16,56 @@ import RagnarokSprite
 @Observable
 @dynamicMemberLookup
 final class MonsterModel {
+    struct DropItem: Identifiable {
+        var index: Int
+        var drop: Monster.Drop
+        var item: ItemModel
+
+        var id: Int {
+            index
+        }
+
+        var badges: [DatabaseBadge] {
+            [.rate(drop.rate, base: 10000)]
+        }
+    }
+
+    struct CastSkill: Identifiable {
+        var index: Int
+        var monsterSkill: MonsterSkill
+        var skill: SkillModel
+
+        var id: Int {
+            index
+        }
+
+        var badges: [DatabaseBadge] {
+            [.skillLevel(monsterSkill.skillLevel), .rate(monsterSkill.rate, base: 10000)]
+        }
+    }
+
+    struct ElementalDamage: Identifiable {
+        var attackElement: Element
+        var rate: Int
+
+        var id: Element {
+            attackElement
+        }
+    }
+
+    struct SpawnMap: Identifiable {
+        var map: MapModel
+        var monsterSpawn: MonsterSpawn
+
+        var id: String {
+            map.name
+        }
+
+        var badges: [DatabaseBadge] {
+            [.spawn(monsterSpawn)]
+        }
+    }
+
     private let mode: DatabaseMode
     private let monster: Monster
     private let resourceManager: ResourceManager

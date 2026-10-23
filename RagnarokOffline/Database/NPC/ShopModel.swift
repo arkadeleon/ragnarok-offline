@@ -8,6 +8,22 @@
 import RagnarokDatabase
 
 final class ShopModel {
+    struct ShopItem: Identifiable {
+        var index: Int
+        var item: ItemModel
+        var price: Int
+        var stock: Int?
+        var shopType: ShopNPC.ShopType
+
+        var id: Int {
+            index
+        }
+
+        var badges: [DatabaseBadge] {
+            [.price(price, shopType: shopType)]
+        }
+    }
+
     let shopNPC: ShopNPC
     let npc: NPCModel
     let map: MapModel

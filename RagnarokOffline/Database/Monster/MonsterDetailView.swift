@@ -13,11 +13,11 @@ struct MonsterDetailView: View {
 
     @Environment(DatabaseModel.self) private var database
 
-    @State private var elementalDamages: [ElementalDamage] = []
-    @State private var mvpDropItems: [DropItem] = []
-    @State private var dropItems: [DropItem] = []
-    @State private var castSkills: [MonsterCastSkill] = []
-    @State private var spawnMaps: [SpawnMap] = []
+    @State private var elementalDamages: [MonsterModel.ElementalDamage] = []
+    @State private var mvpDropItems: [MonsterModel.DropItem] = []
+    @State private var dropItems: [MonsterModel.DropItem] = []
+    @State private var castSkills: [MonsterModel.CastSkill] = []
+    @State private var spawnMaps: [MonsterModel.SpawnMap] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -115,7 +115,7 @@ struct MonsterDetailView: View {
                         }
                     }
                 } header: {
-                    Text("Maps", tableName: "Database")
+                    Text("Spawn Maps", tableName: "Database")
                 }
             }
         }
@@ -137,7 +137,7 @@ struct MonsterDetailView: View {
             }
         }
         .task {
-            castSkills = await database.monsterCastSkills(for: monster)
+            castSkills = await database.castSkills(for: monster)
         }
         .task {
             let monster = (monster.id, monster.aegisName)

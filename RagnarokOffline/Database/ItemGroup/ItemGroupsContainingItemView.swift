@@ -16,7 +16,7 @@ struct ItemGroupsContainingItemView: View {
 
     @Environment(DatabaseModel.self) private var database
 
-    @State private var itemGroupSources: [ItemGroupSource] = []
+    @State private var obtainSources: [ItemModel.ObtainSource] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -32,8 +32,8 @@ struct ItemGroupsContainingItemView: View {
                                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                                     ForEach(sourceItems(of: itemGroup)) { item in
                                         NavigationLink(value: item) {
-                                            let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItemChance: subGroupListItemChance)
-                                            ItemCell(item: itemGroupSource.item, badges: itemGroupSource.badges)
+                                            let obtainSource = ItemModel.ObtainSource(item: item, itemGroup: itemGroup, subGroupListItemChance: subGroupListItemChance)
+                                            ItemCell(item: obtainSource.item, badges: obtainSource.badges)
                                         }
                                     }
                                 }
@@ -54,7 +54,7 @@ struct ItemGroupsContainingItemView: View {
         }
         .navigationTitle(Text("Obtained From", tableName: "Database"))
         .task {
-            itemGroupSources = await database.itemGroupSources(forItemAegisName: itemAegisName)
+            obtainSources = await database.obtainSources(forItemAegisName: itemAegisName)
         }
     }
 
@@ -63,14 +63,14 @@ struct ItemGroupsContainingItemView: View {
     }
 
     private func sourceItems(of itemGroup: ItemGroupModel) -> [ItemModel] {
-        itemGroupSources.filter({ $0.itemGroup == itemGroup }).map(\.item)
+        obtainSources.filter({ $0.itemGroup == itemGroup }).map(\.item)
     }
 
-    /// The item groups of `itemGroupSources`, in the order they first appear.
+    /// The item groups of `obtainSources`, in the order they first appear.
     private var itemGroups: [ItemGroupModel] {
         var itemGroups: [ItemGroupModel] = []
-        for itemGroupSource in itemGroupSources where !itemGroups.contains(itemGroupSource.itemGroup) {
-            itemGroups.append(itemGroupSource.itemGroup)
+        for obtainSource in obtainSources where !itemGroups.contains(obtainSource.itemGroup) {
+            itemGroups.append(obtainSource.itemGroup)
         }
         return itemGroups
     }

@@ -14,10 +14,10 @@ struct ItemDetailView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(DatabaseModel.self) private var database
 
-    @State private var dropSources: [DropSource] = []
+    @State private var dropSources: [ItemModel.DropSource] = []
     @State private var shops: [ShopModel] = []
-    @State private var itemGroupSources: [ItemGroupSource] = []
-    @State private var petUsages: [PetUsage] = []
+    @State private var obtainSources: [ItemModel.ObtainSource] = []
+    @State private var petUsages: [ItemModel.PetUsage] = []
     @State private var itemGroups: [ItemGroupModel] = []
     @State private var monsterSummon: MonsterSummonModel?
 
@@ -123,12 +123,12 @@ struct ItemDetailView: View {
                 }
             }
 
-            if !itemGroupSources.isEmpty {
+            if !obtainSources.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(previewItemGroupSources) { itemGroupSource in
-                            NavigationLink(value: itemGroupSource.item) {
-                                ItemCell(item: itemGroupSource.item, badges: itemGroupSource.badges)
+                        ForEach(previewObtainSources) { obtainSource in
+                            NavigationLink(value: obtainSource.item) {
+                                ItemCell(item: obtainSource.item, badges: obtainSource.badges)
                             }
                         }
                     }
@@ -182,7 +182,7 @@ struct ItemDetailView: View {
             shops = await database.shops(for: item)
         }
         .task {
-            itemGroupSources = await database.itemGroupSources(forItemAegisName: item.aegisName)
+            obtainSources = await database.obtainSources(forItemAegisName: item.aegisName)
         }
         .task {
             petUsages = await database.petUsages(forItemAegisName: item.aegisName)
@@ -199,11 +199,11 @@ struct ItemDetailView: View {
         dropSources.count > 9
     }
 
-    private var previewDropSources: some RandomAccessCollection<DropSource> {
+    private var previewDropSources: some RandomAccessCollection<ItemModel.DropSource> {
         dropSources.prefix(9)
     }
 
-    private var previewItemGroupSources: some RandomAccessCollection<ItemGroupSource> {
-        itemGroupSources.prefix(9)
+    private var previewObtainSources: some RandomAccessCollection<ItemModel.ObtainSource> {
+        obtainSources.prefix(9)
     }
 }

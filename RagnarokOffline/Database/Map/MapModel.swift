@@ -13,6 +13,19 @@ import RagnarokResources
 @Observable
 @dynamicMemberLookup
 final class MapModel {
+    struct SpawnMonster: Identifiable {
+        var monster: MonsterModel
+        var spawn: MonsterSpawn
+
+        var id: Int {
+            monster.id
+        }
+
+        var badges: [DatabaseBadge] {
+            [.spawn(spawn)]
+        }
+    }
+
     private let mode: DatabaseMode
     private let map: Map
     private let resourceManager: ResourceManager

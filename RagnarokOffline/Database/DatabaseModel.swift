@@ -12,160 +12,6 @@ import RagnarokLocalization
 import RagnarokResources
 import rAthenaResources
 
-struct DropItem: Identifiable {
-    var index: Int
-    var drop: Monster.Drop
-    var item: ItemModel
-
-    var id: Int {
-        index
-    }
-
-    var badges: [DatabaseBadge] {
-        [.rate(drop.rate, base: 10000)]
-    }
-}
-
-struct DropSource: Identifiable {
-    var monster: MonsterModel
-    var drop: Monster.Drop
-    var isMVPDrop: Bool
-
-    var id: String {
-        isMVPDrop ? "\(monster.id)-mvp" : "\(monster.id)"
-    }
-
-    var badges: [DatabaseBadge] {
-        var badges: [DatabaseBadge] = [.rate(drop.rate, base: 10000)]
-
-        if isMVPDrop {
-            badges.append(.mvp)
-        }
-
-        return badges
-    }
-}
-
-struct ItemGroupSource: Identifiable {
-    var item: ItemModel
-    var itemGroup: ItemGroupModel
-    var subGroupListItemChance: ItemGroupModel.SubGroupListItemChance
-
-    var id: String {
-        "\(item.id)-\(itemGroup.displayName)"
-    }
-
-    var badges: [DatabaseBadge] {
-        var badges: [DatabaseBadge] = []
-
-        if subGroupListItemChance.listItem.amount > 1 {
-            badges.append(.amount(subGroupListItemChance.listItem.amount))
-        }
-
-        badges.append(.probability(subGroupListItemChance.probability))
-
-        return badges
-    }
-}
-
-struct MonsterCastSkill: Identifiable {
-    var index: Int
-    var monsterSkill: MonsterSkill
-    var skill: SkillModel
-
-    var id: Int {
-        index
-    }
-
-    var badges: [DatabaseBadge] {
-        [.skillLevel(monsterSkill.skillLevel), .rate(monsterSkill.rate, base: 10000)]
-    }
-}
-
-struct PetUsage: Identifiable {
-    enum Kind {
-        case tame
-        case egg
-        case equip
-        case food
-
-        var localizedName: LocalizedStringResource {
-            switch self {
-            case .tame:
-                LocalizedStringResource("Tame Item", table: "Database")
-            case .egg:
-                LocalizedStringResource("Egg Item", table: "Database")
-            case .equip:
-                LocalizedStringResource("Equip Item", table: "Database")
-            case .food:
-                LocalizedStringResource("Food Item", table: "Database")
-            }
-        }
-    }
-
-    var pet: PetModel
-    var kind: PetUsage.Kind
-
-    var id: String {
-        "\(pet.id)-\(kind)"
-    }
-
-    var badges: [DatabaseBadge] {
-        [.petUsage(kind)]
-    }
-}
-
-struct ElementalDamage: Identifiable {
-    var attackElement: Element
-    var rate: Int
-
-    var id: Element {
-        attackElement
-    }
-}
-
-struct SpawnMap: Identifiable {
-    var map: MapModel
-    var monsterSpawn: MonsterSpawn
-
-    var id: String {
-        map.name
-    }
-
-    var badges: [DatabaseBadge] {
-        [.spawn(monsterSpawn)]
-    }
-}
-
-struct SpawnMonster: Identifiable {
-    var monster: MonsterModel
-    var spawn: MonsterSpawn
-
-    var id: Int {
-        monster.id
-    }
-
-    var badges: [DatabaseBadge] {
-        [.spawn(spawn)]
-    }
-}
-
-struct ShopItem: Identifiable {
-    var index: Int
-    var item: ItemModel
-    var price: Int
-    var stock: Int?
-    var shopType: ShopNPC.ShopType
-
-    var id: Int {
-        index
-    }
-
-    var badges: [DatabaseBadge] {
-        [.price(price, shopType: shopType)]
-    }
-}
-
 @MainActor
 @Observable
 final class DatabaseModel {
@@ -299,14 +145,14 @@ final class DatabaseModel {
         return itemsByAegisName[aegisName]
     }
 
-    func dropItems(for drops: [Monster.Drop]) async -> [DropItem] {
+    func dropItems(for drops: [Monster.Drop]) async -> [MonsterModel.DropItem] {
         await fetchItems()
 
-        var dropItems: [DropItem] = []
+        var dropItems: [MonsterModel.DropItem] = []
 
         for (index, drop) in drops.enumerated() {
             if let item = await item(forAegisName: drop.item) {
-                let dropItem = DropItem(index: index, drop: drop, item: item)
+                let dropItem = MonsterModel.DropItem(index: index, drop: drop, item: item)
                 dropItems.append(dropItem)
             }
         }
@@ -375,22 +221,22 @@ final class DatabaseModel {
         return itemGroups
     }
 
-    func itemGroupSources(forItemAegisName itemAegisName: String) async -> [ItemGroupSource] {
+    func obtainSources(forItemAegisName itemAegisName: String) async -> [ItemModel.ObtainSource] {
         await fetchItemGroups()
 
-        var itemGroupSources: [ItemGroupSource] = []
+        var obtainSources: [ItemModel.ObtainSource] = []
 
         for itemGroup in itemGroupsByGroupName.values {
             guard let subGroupListItemChance = itemGroup.highestSubGroupListItemChance(forItemAegisName: itemAegisName) else {
                 continue
             }
             for item in itemGroup.sourceItems {
-                let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItemChance: subGroupListItemChance)
-                itemGroupSources.append(itemGroupSource)
+                let obtainSource = ItemModel.ObtainSource(item: item, itemGroup: itemGroup, subGroupListItemChance: subGroupListItemChance)
+                obtainSources.append(obtainSource)
             }
         }
 
-        return itemGroupSources.sorted(using: [KeyPathComparator(\.subGroupListItemChance.probability, order: .reverse), KeyPathComparator(\.item.id)])
+        return obtainSources.sorted(using: [KeyPathComparator(\.subGroupListItemChance.probability, order: .reverse), KeyPathComparator(\.item.id)])
     }
 
     // MARK: - Job Database
@@ -532,19 +378,19 @@ final class DatabaseModel {
         return monstersByAegisName[aegisName]
     }
 
-    func dropSources(forItemAegisName itemAegisName: String) async -> [DropSource] {
+    func dropSources(forItemAegisName itemAegisName: String) async -> [ItemModel.DropSource] {
         await fetchMonsters()
 
-        var dropSources: [DropSource] = []
+        var dropSources: [ItemModel.DropSource] = []
 
         for monster in monsters {
             if let drop = monster.mvpDrops?.first(where: { $0.item == itemAegisName }) {
-                let dropSource = DropSource(monster: monster, drop: drop, isMVPDrop: true)
+                let dropSource = ItemModel.DropSource(monster: monster, drop: drop, isMVPDrop: true)
                 dropSources.append(dropSource)
             }
 
             if let drop = monster.drops?.first(where: { $0.item == itemAegisName }) {
-                let dropSource = DropSource(monster: monster, drop: drop, isMVPDrop: false)
+                let dropSource = ItemModel.DropSource(monster: monster, drop: drop, isMVPDrop: false)
                 dropSources.append(dropSource)
             }
         }
@@ -575,11 +421,11 @@ final class DatabaseModel {
         return await monsterSkillDatabaseTask.value
     }
 
-    func monsterCastSkills(for monster: MonsterModel) async -> [MonsterCastSkill] {
+    func castSkills(for monster: MonsterModel) async -> [MonsterModel.CastSkill] {
         await fetchMonsterSkills()
         await fetchSkills()
 
-        var castSkills: [MonsterCastSkill] = []
+        var castSkills: [MonsterModel.CastSkill] = []
 
         let monsterSkills = monsterSkillsByMonsterID[monster.id, default: []]
         for (index, monsterSkill) in monsterSkills.enumerated() {
@@ -593,7 +439,7 @@ final class DatabaseModel {
             }
 
             if let skill = skillsByID[monsterSkill.skillID] {
-                let castSkill = MonsterCastSkill(index: index, monsterSkill: monsterSkill, skill: skill)
+                let castSkill = MonsterModel.CastSkill(index: index, monsterSkill: monsterSkill, skill: skill)
                 castSkills.append(castSkill)
             }
         }
@@ -693,14 +539,14 @@ final class DatabaseModel {
         return await petDatabaseTask.value
     }
 
-    func petUsages(forItemAegisName itemAegisName: String) async -> [PetUsage] {
+    func petUsages(forItemAegisName itemAegisName: String) async -> [ItemModel.PetUsage] {
         await fetchPets()
 
-        var petUsages: [PetUsage] = []
+        var petUsages: [ItemModel.PetUsage] = []
 
         for pet in pets where pet.monster != nil {
             for kind in pet.usages(ofItemNamed: itemAegisName) {
-                let petUsage = PetUsage(pet: pet, kind: kind)
+                let petUsage = ItemModel.PetUsage(pet: pet, kind: kind)
                 petUsages.append(petUsage)
             }
         }
@@ -870,7 +716,7 @@ final class DatabaseModel {
         return await elementalAttributeDamageAdjustmentDatabaseTask.value
     }
 
-    func elementalDamages(for monster: MonsterModel) async -> [ElementalDamage] {
+    func elementalDamages(for monster: MonsterModel) async -> [MonsterModel.ElementalDamage] {
         await fetchElementalAttributeDamageAdjustments()
 
         guard let adjustment = elementalAttributeDamageAdjustments.first(where: { $0.level == monster.elementLevel }) else {
@@ -880,7 +726,7 @@ final class DatabaseModel {
         let attackElements: [Element] = [.neutral, .water, .earth, .fire, .wind, .poison, .holy, .dark, .ghost, .undead]
         return attackElements.map { attackElement in
             let rate = adjustment.rate(attackElement: attackElement, defenseElement: monster.element)
-            return ElementalDamage(attackElement: attackElement, rate: rate)
+            return MonsterModel.ElementalDamage(attackElement: attackElement, rate: rate)
         }
     }
 
@@ -922,16 +768,16 @@ final class DatabaseModel {
         return mapFlags
     }
 
-    func spawnMaps(for monster: (id: Int, aegisName: String)) async -> [SpawnMap] {
+    func spawnMaps(for monster: (id: Int, aegisName: String)) async -> [MonsterModel.SpawnMap] {
         await fetchScriptCommands()
 
-        var spawnMaps: [SpawnMap] = []
+        var spawnMaps: [MonsterModel.SpawnMap] = []
 
         let monsterSpawns = scriptCommands.monsterSpawns(for: monster)
         for monsterSpawn in monsterSpawns {
             if let map = await map(forName: monsterSpawn.mapName) {
                 if !spawnMaps.contains(where: { $0.map.name == map.name }) {
-                    let spawnMap = SpawnMap(map: map, monsterSpawn: monsterSpawn)
+                    let spawnMap = MonsterModel.SpawnMap(map: map, monsterSpawn: monsterSpawn)
                     spawnMaps.append(spawnMap)
                 }
             }
@@ -940,10 +786,10 @@ final class DatabaseModel {
         return spawnMaps
     }
 
-    func spawnMonsters(forMapName mapName: String) async -> [SpawnMonster] {
+    func spawnMonsters(forMapName mapName: String) async -> [MapModel.SpawnMonster] {
         await fetchScriptCommands()
 
-        var spawnMonsters: [SpawnMonster] = []
+        var spawnMonsters: [MapModel.SpawnMonster] = []
         var monsters: [MonsterModel] = []
 
         let monsterSpawns = scriptCommands.monsterSpawns(forMapName: mapName)
@@ -953,7 +799,7 @@ final class DatabaseModel {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawnMonster = SpawnMonster(monster: monster, spawn: monsterSpawn)
+                        let spawnMonster = MapModel.SpawnMonster(monster: monster, spawn: monsterSpawn)
                         spawnMonsters.append(spawnMonster)
                     }
                 }
@@ -962,7 +808,7 @@ final class DatabaseModel {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawnMonster = SpawnMonster(monster: monster, spawn: monsterSpawn)
+                        let spawnMonster = MapModel.SpawnMonster(monster: monster, spawn: monsterSpawn)
                         spawnMonsters.append(spawnMonster)
                     }
                 }
@@ -1068,15 +914,15 @@ final class DatabaseModel {
         return shops
     }
 
-    func shopItems(for shopNPC: ShopNPC) async -> [ShopItem] {
+    func shopItems(for shopNPC: ShopNPC) async -> [ShopModel.ShopItem] {
         await fetchItems()
 
-        var shopItems: [ShopItem] = []
+        var shopItems: [ShopModel.ShopItem] = []
 
         for (index, shopNPCItem) in shopNPC.items.enumerated() {
             if let item = itemsByID[shopNPCItem.itemID] {
                 let price = price(of: shopNPCItem, item: item, shopType: shopNPC.shopType)
-                let shopItem = ShopItem(index: index, item: item, price: price, stock: shopNPCItem.stock, shopType: shopNPC.shopType)
+                let shopItem = ShopModel.ShopItem(index: index, item: item, price: price, stock: shopNPCItem.stock, shopType: shopNPC.shopType)
                 shopItems.append(shopItem)
             }
         }

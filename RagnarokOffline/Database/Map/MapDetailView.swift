@@ -15,7 +15,7 @@ struct MapDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var mapFlags: [MapFlag] = []
-    @State private var spawnMonsters: [SpawnMonster] = []
+    @State private var spawnMonsters: [MapModel.SpawnMonster] = []
     @State private var warpMaps: [MapModel] = []
     @State private var npcs: [NPCModel] = []
 
@@ -66,7 +66,7 @@ struct MapDetailView: View {
                     }
                     .padding(.vertical, vSpacing(sizeClass))
                 } header: {
-                    Text("Monsters", tableName: "Database")
+                    Text("Spawn Monsters", tableName: "Database")
                 }
             }
 

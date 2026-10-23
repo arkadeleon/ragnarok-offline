@@ -25,13 +25,13 @@
 - 关联：物品脚本里的 `getgroupitem(IG_<组名>)`，脚本里没有其他调用方式。renewal 有 2 个组在数据里不存在（`FPR_RESET_STONE_BOX`、`R_EP1921_BOSS`），对不上。
 - 已实现：
   - 解析：`RagnarokDatabase` 的 `ItemGroup` / `ItemGroupDatabase`。生成的枚举有 `ItemGroupAlgorithm`、`ItemBound`、`EnchantGrade`。
-  - 模型：`ItemGroupModel` 加载时就记下调用这个组的物品（`sourceItems`，由后台的 `ItemGroupDatabase.sourceItemIDs(in:)` 算出）。每条记录和它的概率是 `ItemGroupModel.SubGroupListItemChance`，`ObtainableItem` 和 `ItemGroupSource` 都包含它。
+  - 模型：`ItemGroupModel` 加载时就记下调用这个组的物品（`sourceItems`，由后台的 `ItemGroupDatabase.sourceItemIDs(in:)` 算出）。每条记录和它的概率是 `ItemGroupModel.SubGroupListItemChance`，`ObtainableItem` 和 `ItemModel.ObtainSource` 都包含它。
   - 物品详情 "Obtains" section：预览能开出的物品，概率是 rate 除以同一个 SubGroup 的 rate 总和，`All` 的物品显示 100%，数量大于 1 时显示数量。完整列表页 `ItemGroupDetailView` 按 SubGroup 分段，标题带规则名，比如 "SubGroup 0 (All)"。
-  - 物品详情 "Obtained From" section：预览能开出这个物品的箱子（`ItemGroupSource`），同一个箱子的多个 SubGroup 里都有时只显示概率最高的一次。完整列表页 `ItemGroupsContainingItemView` 先按物品组分段（标题链接到组的详情），再按 SubGroup 分段。
+  - 物品详情 "Obtained From" section：预览能开出这个物品的箱子（`ItemModel.ObtainSource`），同一个箱子的多个 SubGroup 里都有时只显示概率最高的一次。完整列表页 `ItemGroupsContainingItemView` 先按物品组分段（标题链接到组的详情），再按 SubGroup 分段。
 - 顺带完成：
   - "Dropped By" 改成预览加完整列表页 `MonstersDroppingItemView`。
   - Summon 改成按值推送。
-  - 关联类型改名：`DropSource`、`SpawnMonster`，以及 `shops(for:)`、`petUsages(forItemAegisName:)`。
+  - 关联类型改名：`DropSource`、`SpawnMonster`、`CastSkill`、`ObtainSource`，以及 `shops(for:)`、`petUsages(forItemAegisName:)`、`castSkills(for:)`、`obtainSources(forItemAegisName:)`。关联类型都嵌套进了它显示的那一侧的模型，比如 `ItemModel.DropSource`、`MonsterModel.SpawnMap`。
   - 所有 badge 改成 `DatabaseBadge` 数据，删掉了 `XxxBadge` view 和只为 badge 存在的 cell（`DropSourceGridCell`、`MonsterSummonGridCell`、`ItemGroupObtainableItemCell`、`ItemGroupSourceCell`）。
 
 ## 3. 套装（`item_combos.yml`）
