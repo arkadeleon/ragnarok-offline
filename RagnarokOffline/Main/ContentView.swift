@@ -163,12 +163,12 @@ extension View {
                 MonsterSummonDetailView(monsterSummon: monsterSummon)
                     .environment(appModel.database)
             }
-            .navigationDestination(for: PetModel.self) { pet in
-                PetDetailView(pet: pet)
+            .navigationDestination(for: NPCModel.self) { npc in
+                NPCDetailView(npc: npc)
                     .environment(appModel.database)
             }
-            .navigationDestination(for: ShopModel.self) { shop in
-                ShopDetailView(shop: shop)
+            .navigationDestination(for: PetModel.self) { pet in
+                PetDetailView(pet: pet)
                     .environment(appModel.database)
             }
             .navigationDestination(for: SkillModel.self) { skill in

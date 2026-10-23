@@ -29,6 +29,8 @@ public struct NPC: Sendable {
     /// A sprite ID, e.g. `105`, or a sprite constant, e.g. `4_M_TELEPORTER`.
     public var sprite: String
 
+    public var code: String
+
     init(_ w1: String, _ w2: String, _ w3: String, _ w4: String) {
         let column1 = w1.split(separator: ",")
         mapName = String(column1[0])
@@ -43,5 +45,7 @@ public struct NPC: Sendable {
         npcName = w3
 
         sprite = String(w4.prefix(while: { $0 != "," && !$0.isWhitespace }))
+
+        code = w4.firstIndex(of: "{").map({ String(w4[$0...]) }) ?? ""
     }
 }

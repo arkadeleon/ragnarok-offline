@@ -15,7 +15,7 @@ struct ItemDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var dropSources: [ItemModel.DropSource] = []
-    @State private var shops: [ShopModel] = []
+    @State private var shopNPCs: [NPCModel] = []
     @State private var obtainSources: [ItemModel.ObtainSource] = []
     @State private var petUsages: [ItemModel.PetUsage] = []
     @State private var itemGroups: [ItemGroupModel] = []
@@ -108,12 +108,12 @@ struct ItemDetailView: View {
                 }
             }
 
-            if !shops.isEmpty {
+            if !shopNPCs.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(shops) { shop in
-                            NavigationLink(value: shop) {
-                                NPCGridCell(npc: shop.npc, badges: [.map(shop.map)])
+                        ForEach(shopNPCs) { shopNPC in
+                            NavigationLink(value: shopNPC) {
+                                NPCGridCell(npc: shopNPC, badges: [.map(shopNPC.map)])
                             }
                         }
                     }
@@ -179,7 +179,7 @@ struct ItemDetailView: View {
             dropSources = await database.dropSources(forItemAegisName: item.aegisName)
         }
         .task {
-            shops = await database.shops(for: item)
+            shopNPCs = await database.shopNPCs(for: item)
         }
         .task {
             obtainSources = await database.obtainSources(forItemAegisName: item.aegisName)

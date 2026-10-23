@@ -1,5 +1,5 @@
 //
-//  ShopDetailView.swift
+//  NPCDetailView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2026/10/20.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct ShopDetailView: View {
-    var shop: ShopModel
+struct NPCDetailView: View {
+    var npc: NPCModel
 
     @Environment(DatabaseModel.self) private var database
 
-    @State private var shopItems: [ShopModel.ShopItem] = []
+    @State private var shopItems: [NPCModel.ShopItem] = []
 
     var body: some View {
         DatabaseRecordDetailView {
             ZStack {
-                if let animatedImage = shop.npc.animatedImage {
+                if let animatedImage = npc.animatedImage {
                     AnimatedImageView(animatedImage: animatedImage)
                 } else {
                     Image(systemName: "person")
@@ -29,20 +29,20 @@ struct ShopDetailView: View {
             .stretchy()
 
             DatabaseRecordSectionView {
-                NavigationLink(value: shop.map) {
+                NavigationLink(value: npc.map) {
                     VStack(spacing: 8) {
-                        MapLocationView(map: shop.map, locations: [MapLocation(x: shop.npc.x, y: shop.npc.y)])
+                        MapLocationView(map: npc.map, locations: [MapLocation(x: npc.x, y: npc.y)])
 
                         VStack(spacing: 4) {
-                            Text(shop.map.displayName)
+                            Text(npc.map.displayName)
                                 .foregroundStyle(Color.primary)
-                            DatabaseBadgeView(badge: .position(x: shop.npc.x, y: shop.npc.y))
+                            DatabaseBadgeView(badge: .position(x: npc.x, y: npc.y))
                         }
                     }
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .leading)
             } header: {
-                Text("Map", tableName: "Database")
+                Text("Map Location", tableName: "Database")
             }
 
             if !shopItems.isEmpty {
@@ -55,16 +55,24 @@ struct ShopDetailView: View {
                         }
                     }
                 } header: {
-                    Text("Items", tableName: "Database")
+                    Text("Shop Items", tableName: "Database")
+                }
+            }
+
+            if let code = npc.code?.trimmingCharacters(in: .whitespacesAndNewlines), !code.isEmpty {
+                DatabaseRecordSectionView(text: code, monospaced: true) {
+                    Text("Code", tableName: "Database")
                 }
             }
         }
-        .navigationTitle(shop.npc.displayName)
+        .navigationTitle(npc.displayName)
         .task {
-            await shop.npc.fetchAnimatedImage()
+            await npc.fetchAnimatedImage()
         }
         .task {
-            shopItems = await database.shopItems(for: shop.shopNPC)
+            if let shopNPC = npc.shopNPC {
+                shopItems = await database.shopItems(for: shopNPC)
+            }
         }
     }
 }

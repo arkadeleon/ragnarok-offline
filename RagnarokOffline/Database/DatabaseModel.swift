@@ -55,6 +55,8 @@ final class DatabaseModel {
     var elementalAttributeDamageAdjustments: [ElementalAttributeDamageAdjustment] = []
 
     var scriptCommands = ScriptCommands()
+    var shopNPCsByUniqueName: [String : ShopNPC] = [:]
+    var npcCodesByUniqueName: [String : String] = [:]
 
     private let itemInfoTable: ItemInfoTable
     private let mapInfoTable: MapInfoTable
@@ -744,7 +746,22 @@ final class DatabaseModel {
                 scriptCommands = try await npcDatabase.scriptCommands()
             } catch {
                 logger.warning("NPC database task failed: \(error)")
+                return
             }
+
+            let uniqueName = { (npcName: String) in
+                npcName.range(of: "::").map({ String(npcName[$0.upperBound...]) }) ?? npcName
+            }
+
+            shopNPCsByUniqueName = Dictionary(
+                scriptCommands.shopNPCs.map({ (uniqueName($0.npcName), $0) }),
+                uniquingKeysWith: { (first, _) in first }
+            )
+
+            npcCodesByUniqueName = Dictionary(
+                scriptCommands.npcs.map({ (uniqueName($0.npcName), $0.code) }) + scriptCommands.floatingNPCs.map({ (uniqueName($0.npcName), $0.code) }),
+                uniquingKeysWith: { (first, _) in first }
+            )
         }
 
         self.npcDatabaseTask = npcDatabaseTask
@@ -832,31 +849,25 @@ final class DatabaseModel {
         return maps
     }
 
-    func npcs(forMapName mapName: String) async -> [NPCModel] {
+    func npcs(for map: MapModel) async -> [NPCModel] {
         await fetchScriptCommands()
 
         var npcs: [NPCModel] = []
 
-        for npc in scriptCommands.npcs where npc.mapName == mapName && npc.state == nil {
-            if let x = npc.x, let y = npc.y {
-                let jobID = await jobID(forSprite: npc.sprite)
-                let npc = NPCModel(npcName: npc.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
+        for npc in scriptCommands.npcs where npc.mapName == map.name && npc.state == nil {
+            if let npc = await npcModel(for: npc, map: map) {
                 npcs.append(npc)
             }
         }
 
-        for duplicate in scriptCommands.duplicates where duplicate.mapName == mapName {
-            if let x = duplicate.x, let y = duplicate.y, let sprite = duplicate.sprite {
-                let jobID = await jobID(forSprite: sprite)
-                let npc = NPCModel(npcName: duplicate.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
+        for duplicate in scriptCommands.duplicates where duplicate.mapName == map.name {
+            if let npc = await npcModel(for: duplicate, map: map) {
                 npcs.append(npc)
             }
         }
 
-        for shopNPC in scriptCommands.shopNPCs where shopNPC.mapName == mapName {
-            if let x = shopNPC.x, let y = shopNPC.y {
-                let jobID = await jobID(forSprite: shopNPC.sprite)
-                let npc = NPCModel(npcName: shopNPC.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
+        for shopNPC in scriptCommands.shopNPCs where shopNPC.mapName == map.name {
+            if let npc = await npcModel(for: shopNPC, map: map) {
                 npcs.append(npc)
             }
         }
@@ -878,6 +889,38 @@ final class DatabaseModel {
             }
     }
 
+    private func npcModel(for npc: NPC, map: MapModel) async -> NPCModel? {
+        guard let x = npc.x, let y = npc.y else {
+            return nil
+        }
+
+        let jobID = await jobID(forSprite: npc.sprite)
+        let npcModel = NPCModel(npcName: npc.npcName, map: map, x: x, y: y, jobID: jobID, code: npc.code, resourceManager: resourceManager)
+        return npcModel
+    }
+
+    private func npcModel(for duplicate: Duplicate, map: MapModel) async -> NPCModel? {
+        guard let x = duplicate.x, let y = duplicate.y, let sprite = duplicate.sprite else {
+            return nil
+        }
+
+        let jobID = await jobID(forSprite: sprite)
+        let code = npcCodesByUniqueName[duplicate.label]
+        let shopNPC = shopNPCsByUniqueName[duplicate.label]
+        let npcModel = NPCModel(npcName: duplicate.npcName, map: map, x: x, y: y, jobID: jobID, code: code, shopNPC: shopNPC, resourceManager: resourceManager)
+        return npcModel
+    }
+
+    private func npcModel(for shopNPC: ShopNPC, map: MapModel) async -> NPCModel? {
+        guard let x = shopNPC.x, let y = shopNPC.y else {
+            return nil
+        }
+
+        let jobID = await jobID(forSprite: shopNPC.sprite)
+        let npcModel = NPCModel(npcName: shopNPC.npcName, map: map, x: x, y: y, jobID: jobID, shopNPC: shopNPC, resourceManager: resourceManager)
+        return npcModel
+    }
+
     private func jobID(forSprite sprite: String) async -> Int {
         if let jobID = Int(sprite) {
             return jobID
@@ -894,35 +937,38 @@ final class DatabaseModel {
         return NPCJobID.jt_invisible.rawValue
     }
 
-    func shops(for item: ItemModel) async -> [ShopModel] {
+    func shopNPCs(for item: ItemModel) async -> [NPCModel] {
         await fetchScriptCommands()
 
-        var shops: [ShopModel] = []
+        var shopNPCs: [NPCModel] = []
 
         for shopNPC in scriptCommands.shopNPCs(forItemID: item.id) {
-            guard let mapName = shopNPC.mapName, let x = shopNPC.x, let y = shopNPC.y,
-                  let map = await map(forName: mapName) else {
-                continue
+            if let mapName = shopNPC.mapName, let map = await map(forName: mapName), let shopNPCModel = await npcModel(for: shopNPC, map: map) {
+                shopNPCs.append(shopNPCModel)
             }
-
-            let jobID = await jobID(forSprite: shopNPC.sprite)
-            let npc = NPCModel(npcName: shopNPC.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
-            let shop = ShopModel(shopNPC: shopNPC, npc: npc, map: map)
-            shops.append(shop)
         }
 
-        return shops
+        for duplicate in scriptCommands.duplicates {
+            guard let shopNPC = shopNPCsByUniqueName[duplicate.label], shopNPC.items.contains(where: { $0.itemID == item.id }) else {
+                continue
+            }
+            if let mapName = duplicate.mapName, let map = await map(forName: mapName), let shopNPCModel = await npcModel(for: duplicate, map: map) {
+                shopNPCs.append(shopNPCModel)
+            }
+        }
+
+        return shopNPCs
     }
 
-    func shopItems(for shopNPC: ShopNPC) async -> [ShopModel.ShopItem] {
+    func shopItems(for shopNPC: ShopNPC) async -> [NPCModel.ShopItem] {
         await fetchItems()
 
-        var shopItems: [ShopModel.ShopItem] = []
+        var shopItems: [NPCModel.ShopItem] = []
 
         for (index, shopNPCItem) in shopNPC.items.enumerated() {
             if let item = itemsByID[shopNPCItem.itemID] {
                 let price = price(of: shopNPCItem, item: item, shopType: shopNPC.shopType)
-                let shopItem = ShopModel.ShopItem(index: index, item: item, price: price, stock: shopNPCItem.stock, shopType: shopNPC.shopType)
+                let shopItem = NPCModel.ShopItem(index: index, item: item, price: price, stock: shopNPCItem.stock, shopType: shopNPC.shopType)
                 shopItems.append(shopItem)
             }
         }

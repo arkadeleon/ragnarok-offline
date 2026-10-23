@@ -88,7 +88,9 @@ struct MapDetailView: View {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(npcs) { npc in
-                            NPCGridCell(npc: npc, badges: [.position(x: npc.x, y: npc.y)])
+                            NavigationLink(value: npc) {
+                                NPCGridCell(npc: npc, badges: [.position(x: npc.x, y: npc.y)])
+                            }
                         }
                     }
                     .padding(.vertical, vSpacing(sizeClass))
@@ -111,7 +113,7 @@ struct MapDetailView: View {
             warpMaps = await database.warpMaps(forMapName: map.name)
         }
         .task {
-            npcs = await database.npcs(forMapName: map.name)
+            npcs = await database.npcs(for: map)
         }
     }
 }
