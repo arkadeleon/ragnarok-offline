@@ -293,15 +293,10 @@ final class DatabaseModel {
                 uniquingKeysWith: { (first, _) in first }
             )
 
-            for item in items {
-                guard let script = item.script, script.contains("getgroupitem(IG_") else {
-                    continue
-                }
-                for match in script.matches(of: /getgroupitem\(IG_([A-Za-z0-9_]+)/) {
-                    if let itemGroup = itemGroupsByGroupName[String(match.1).uppercased()], !itemGroup.sourceItems.contains(item) {
-                        itemGroup.sourceItems.append(item)
-                    }
-                }
+            let items = items.map({ $0[dynamicMember: \.self] })
+            let sourceItemIDs = await itemGroupDatabase.sourceItemIDs(in: items)
+            for (groupName, itemIDs) in sourceItemIDs {
+                itemGroupsByGroupName[groupName]?.sourceItems = itemIDs.compactMap({ itemsByID[$0] })
             }
 
             self.itemGroupsByGroupName = itemGroupsByGroupName

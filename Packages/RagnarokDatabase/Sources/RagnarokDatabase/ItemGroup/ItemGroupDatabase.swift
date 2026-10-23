@@ -30,4 +30,28 @@ final public class ItemGroupDatabase: Sendable {
 
         return itemGroups
     }
+
+    /// The IDs of the items in `items` whose scripts call `getgroupitem(IG_<name>)`, keyed by the uppercased
+    /// group name. For example, `getgroupitem(IG_BlueBox);` adds the item to `BLUEBOX`.
+    public func sourceItemIDs(in items: [Item]) async -> [String : [Item.ID]] {
+        metric.beginMeasuring("Find item group source items")
+
+        var sourceItemIDs: [String : [Item.ID]] = [:]
+
+        for item in items {
+            guard let script = item.script, script.contains("getgroupitem(IG_") else {
+                continue
+            }
+            for match in script.matches(of: /getgroupitem\(IG_([A-Za-z0-9_]+)/) {
+                let groupName = String(match.1).uppercased()
+                if sourceItemIDs[groupName]?.last != item.id {
+                    sourceItemIDs[groupName, default: []].append(item.id)
+                }
+            }
+        }
+
+        metric.endMeasuring("Find item group source items")
+
+        return sourceItemIDs
+    }
 }

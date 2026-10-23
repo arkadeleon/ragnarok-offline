@@ -22,6 +22,12 @@ final class ItemGroupDatabaseTests: XCTestCase {
         XCTAssertEqual(blueBox.subGroups[0].list[0].item, "Red_Potion")
         XCTAssertEqual(blueBox.subGroups[0].list[0].rate, 12)
         XCTAssertEqual(blueBox.subGroups[0].list[0].amount, 1)
+
+        let itemDatabase = ItemDatabase(baseURL: serverResourceBaseURL, mode: .prerenewal)
+        let items = try await itemDatabase.items()
+
+        let sourceItemIDs = await database.sourceItemIDs(in: items)
+        XCTAssertEqual(sourceItemIDs["BLUEBOX"], [603])
     }
 
     func testRenewal() async throws {
@@ -41,5 +47,11 @@ final class ItemGroupDatabaseTests: XCTestCase {
         XCTAssertEqual(acidBombBox.subGroups[0].list[0].stacked, true)
         XCTAssertEqual(acidBombBox.subGroups[0].list[0].bound, .none)
         XCTAssertEqual(acidBombBox.subGroups[0].list[1].item, "Acid_Bottle")
+
+        let itemDatabase = ItemDatabase(baseURL: serverResourceBaseURL, mode: .renewal)
+        let items = try await itemDatabase.items()
+
+        let sourceItemIDs = await database.sourceItemIDs(in: items)
+        XCTAssertEqual(sourceItemIDs["BLUEBOX"], [603])
     }
 }
