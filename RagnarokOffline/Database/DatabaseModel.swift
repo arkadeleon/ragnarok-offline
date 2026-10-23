@@ -22,7 +22,7 @@ struct DropItem: Identifiable {
     }
 }
 
-struct DroppingMonster: Identifiable {
+struct DropSource: Identifiable {
     var monster: MonsterModel
     var drop: Monster.Drop
     var isMVPDrop: Bool
@@ -100,7 +100,7 @@ struct SpawnMap: Identifiable {
     }
 }
 
-struct SpawningMonster: Identifiable {
+struct SpawnMonster: Identifiable {
     var monster: MonsterModel
     var spawn: MonsterSpawn
 
@@ -485,24 +485,24 @@ final class DatabaseModel {
         return monstersByAegisName[aegisName]
     }
 
-    func droppingMonsters(forItemAegisName itemAegisName: String) async -> [DroppingMonster] {
+    func dropSources(forItemAegisName itemAegisName: String) async -> [DropSource] {
         await fetchMonsters()
 
-        var droppingMonsters: [DroppingMonster] = []
+        var dropSources: [DropSource] = []
 
         for monster in monsters {
             if let drop = monster.mvpDrops?.first(where: { $0.item == itemAegisName }) {
-                let droppingMonster = DroppingMonster(monster: monster, drop: drop, isMVPDrop: true)
-                droppingMonsters.append(droppingMonster)
+                let dropSource = DropSource(monster: monster, drop: drop, isMVPDrop: true)
+                dropSources.append(dropSource)
             }
 
             if let drop = monster.drops?.first(where: { $0.item == itemAegisName }) {
-                let droppingMonster = DroppingMonster(monster: monster, drop: drop, isMVPDrop: false)
-                droppingMonsters.append(droppingMonster)
+                let dropSource = DropSource(monster: monster, drop: drop, isMVPDrop: false)
+                dropSources.append(dropSource)
             }
         }
 
-        return droppingMonsters.sorted(using: KeyPathComparator(\.drop.rate, order: .reverse))
+        return dropSources.sorted(using: KeyPathComparator(\.drop.rate, order: .reverse))
     }
 
     // MARK: - Monster Skill Database
@@ -646,7 +646,7 @@ final class DatabaseModel {
         return await petDatabaseTask.value
     }
 
-    func petUsages(forItemNamed itemAegisName: String) async -> [PetUsage] {
+    func petUsages(forItemAegisName itemAegisName: String) async -> [PetUsage] {
         await fetchPets()
 
         var petUsages: [PetUsage] = []
@@ -893,10 +893,10 @@ final class DatabaseModel {
         return spawnMaps
     }
 
-    func spawningMonsters(forMapName mapName: String) async -> [SpawningMonster] {
+    func spawnMonsters(forMapName mapName: String) async -> [SpawnMonster] {
         await fetchScriptCommands()
 
-        var spawningMonsters: [SpawningMonster] = []
+        var spawnMonsters: [SpawnMonster] = []
         var monsters: [MonsterModel] = []
 
         let monsterSpawns = scriptCommands.monsterSpawns(forMapName: mapName)
@@ -906,8 +906,8 @@ final class DatabaseModel {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
-                        spawningMonsters.append(spawningMonster)
+                        let spawnMonster = SpawnMonster(monster: monster, spawn: monsterSpawn)
+                        spawnMonsters.append(spawnMonster)
                     }
                 }
             } else if let monsterAegisName = monsterSpawn.monsterAegisName {
@@ -915,14 +915,14 @@ final class DatabaseModel {
                     if !monsters.contains(monster) {
                         monsters.append(monster)
 
-                        let spawningMonster = SpawningMonster(monster: monster, spawn: monsterSpawn)
-                        spawningMonsters.append(spawningMonster)
+                        let spawnMonster = SpawnMonster(monster: monster, spawn: monsterSpawn)
+                        spawnMonsters.append(spawnMonster)
                     }
                 }
             }
         }
 
-        return spawningMonsters
+        return spawnMonsters
     }
 
     func warpMaps(forMapName mapName: String) async -> [MapModel] {
@@ -1001,10 +1001,10 @@ final class DatabaseModel {
         return NPCJobID.jt_invisible.rawValue
     }
 
-    func sellingShops(for item: ItemModel) async -> [ShopModel] {
+    func shops(for item: ItemModel) async -> [ShopModel] {
         await fetchScriptCommands()
 
-        var sellingShops: [ShopModel] = []
+        var shops: [ShopModel] = []
 
         for shopNPC in scriptCommands.shopNPCs(forItemID: item.id) {
             guard let mapName = shopNPC.mapName, let x = shopNPC.x, let y = shopNPC.y,
@@ -1015,10 +1015,10 @@ final class DatabaseModel {
             let jobID = await jobID(forSprite: shopNPC.sprite)
             let npc = NPCModel(npcName: shopNPC.npcName, x: x, y: y, jobID: jobID, resourceManager: resourceManager)
             let shop = ShopModel(shopNPC: shopNPC, npc: npc, map: map)
-            sellingShops.append(shop)
+            shops.append(shop)
         }
 
-        return sellingShops
+        return shops
     }
 
     func shopItems(for shopNPC: ShopNPC) async -> [ShopItem] {

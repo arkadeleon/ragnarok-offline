@@ -15,7 +15,7 @@ struct MapDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var mapFlags: [MapFlag] = []
-    @State private var spawningMonsters: [SpawningMonster] = []
+    @State private var spawnMonsters: [SpawnMonster] = []
     @State private var warpMaps: [MapModel] = []
     @State private var npcs: [NPCModel] = []
 
@@ -53,15 +53,15 @@ struct MapDetailView: View {
                 }
             }
 
-            if !spawningMonsters.isEmpty {
+            if !spawnMonsters.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(spawningMonsters) { spawningMonster in
-                            NavigationLink(value: spawningMonster.monster) {
-                                ImageGridCell(title: spawningMonster.monster.displayName) {
-                                    SpawnBadge(spawn: spawningMonster.spawn)
+                        ForEach(spawnMonsters) { spawnMonster in
+                            NavigationLink(value: spawnMonster.monster) {
+                                ImageGridCell(title: spawnMonster.monster.displayName) {
+                                    SpawnBadge(spawn: spawnMonster.spawn)
                                 } image: {
-                                    MonsterImageView(monster: spawningMonster.monster)
+                                    MonsterImageView(monster: spawnMonster.monster)
                                 }
                             }
                         }
@@ -109,7 +109,7 @@ struct MapDetailView: View {
             mapFlags = await database.mapFlags(forMapName: map.name)
         }
         .task {
-            spawningMonsters = await database.spawningMonsters(forMapName: map.name)
+            spawnMonsters = await database.spawnMonsters(forMapName: map.name)
         }
         .task {
             warpMaps = await database.warpMaps(forMapName: map.name)

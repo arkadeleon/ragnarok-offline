@@ -14,8 +14,8 @@ struct ItemDetailView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(DatabaseModel.self) private var database
 
-    @State private var droppingMonsters: [DroppingMonster] = []
-    @State private var sellingShops: [ShopModel] = []
+    @State private var dropSources: [DropSource] = []
+    @State private var shops: [ShopModel] = []
     @State private var itemGroupSources: [ItemGroupSource] = []
     @State private var petUsages: [PetUsage] = []
     @State private var itemGroups: [ItemGroupModel] = []
@@ -80,20 +80,20 @@ struct ItemDetailView: View {
                 }
             }
 
-            if !droppingMonsters.isEmpty {
+            if !dropSources.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(droppingMonsters) { droppingMonster in
-                            NavigationLink(value: droppingMonster.monster) {
-                                ImageGridCell(title: droppingMonster.monster.displayName) {
+                        ForEach(dropSources) { dropSource in
+                            NavigationLink(value: dropSource.monster) {
+                                ImageGridCell(title: dropSource.monster.displayName) {
                                     HStack(spacing: 4) {
-                                        RateBadge(rate: droppingMonster.drop.rate)
-                                        if droppingMonster.isMVPDrop {
+                                        RateBadge(rate: dropSource.drop.rate)
+                                        if dropSource.isMVPDrop {
                                             MVPBadge()
                                         }
                                     }
                                 } image: {
-                                    MonsterImageView(monster: droppingMonster.monster)
+                                    MonsterImageView(monster: dropSource.monster)
                                 }
                             }
                         }
@@ -104,10 +104,10 @@ struct ItemDetailView: View {
                 }
             }
 
-            if !sellingShops.isEmpty {
+            if !shops.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(sellingShops) { shop in
+                        ForEach(shops) { shop in
                             NavigationLink(value: shop) {
                                 NPCGridCell(npc: shop.npc) {
                                     MapBadge(map: shop.map)
@@ -176,16 +176,16 @@ struct ItemDetailView: View {
             await item.fetchPreviewImage()
         }
         .task {
-            droppingMonsters = await database.droppingMonsters(forItemAegisName: item.aegisName)
+            dropSources = await database.dropSources(forItemAegisName: item.aegisName)
         }
         .task {
-            sellingShops = await database.sellingShops(for: item)
+            shops = await database.shops(for: item)
         }
         .task {
             itemGroupSources = await database.itemGroupSources(forItemAegisName: item.aegisName)
         }
         .task {
-            petUsages = await database.petUsages(forItemNamed: item.aegisName)
+            petUsages = await database.petUsages(forItemAegisName: item.aegisName)
         }
         .task {
             itemGroups = await database.itemGroups(for: item)
