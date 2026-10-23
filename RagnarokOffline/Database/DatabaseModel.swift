@@ -276,6 +276,8 @@ final class DatabaseModel {
         }
 
         let itemGroupDatabaseTask = Task {
+            await fetchItems()
+
             let itemGroupDatabase = ItemGroupDatabase(baseURL: serverResourceBaseURL, mode: mode)
 
             let itemGroups: [ItemGroup]
@@ -286,10 +288,23 @@ final class DatabaseModel {
                 return
             }
 
-            self.itemGroupsByGroupName = Dictionary(
+            let itemGroupsByGroupName = Dictionary(
                 itemGroups.map({ ($0.group.uppercased(), ItemGroupModel(mode: mode, itemGroup: $0)) }),
                 uniquingKeysWith: { (first, _) in first }
             )
+
+            for item in items {
+                guard let script = item.script, script.contains("getgroupitem(IG_") else {
+                    continue
+                }
+                for match in script.matches(of: /getgroupitem\(IG_([A-Za-z0-9_]+)/) {
+                    if let itemGroup = itemGroupsByGroupName[String(match.1).uppercased()], !itemGroup.sourceItems.contains(item) {
+                        itemGroup.sourceItems.append(item)
+                    }
+                }
+            }
+
+            self.itemGroupsByGroupName = itemGroupsByGroupName
         }
 
         self.itemGroupDatabaseTask = itemGroupDatabaseTask
@@ -320,30 +335,21 @@ final class DatabaseModel {
     }
 
     func itemGroupSources(forItemAegisName itemAegisName: String) async -> [ItemGroupSource] {
-        await fetchItems()
         await fetchItemGroups()
-
-        let containingItemGroups = itemGroupsByGroupName.values.filter { itemGroup in
-            itemGroup.subGroups.contains { subGroup in
-                subGroup.list.contains(where: { $0.item == itemAegisName })
-            }
-        }
-        if containingItemGroups.isEmpty {
-            return []
-        }
 
         var itemGroupSources: [ItemGroupSource] = []
 
-        for item in items where item.script?.contains("getgroupitem(IG_") == true {
-            for itemGroup in await itemGroups(for: item) where containingItemGroups.contains(itemGroup) {
-                if let (listItem, probability) = itemGroup.highestRateSubGroupListItem(forItemAegisName: itemAegisName) {
-                    let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItem: listItem, probability: probability)
-                    itemGroupSources.append(itemGroupSource)
-                }
+        for itemGroup in itemGroupsByGroupName.values {
+            guard let (listItem, probability) = itemGroup.highestRateSubGroupListItem(forItemAegisName: itemAegisName) else {
+                continue
+            }
+            for item in itemGroup.sourceItems {
+                let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItem: listItem, probability: probability)
+                itemGroupSources.append(itemGroupSource)
             }
         }
 
-        return itemGroupSources.sorted(using: KeyPathComparator(\.probability, order: .reverse))
+        return itemGroupSources.sorted(using: [KeyPathComparator(\.probability, order: .reverse), KeyPathComparator(\.item.id)])
     }
 
     // MARK: - Job Database

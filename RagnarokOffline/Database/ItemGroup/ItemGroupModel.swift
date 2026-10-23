@@ -30,6 +30,9 @@ final class ItemGroupModel {
 
     var obtainableItems: [ObtainableItem]?
 
+    /// The items whose scripts call `getgroupitem` with this group.
+    var sourceItems: [ItemModel] = []
+
     var displayName: String {
         itemGroup.group
     }
