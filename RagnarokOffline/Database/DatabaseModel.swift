@@ -32,6 +32,17 @@ struct DroppingMonster: Identifiable {
     }
 }
 
+struct ItemGroupSource: Identifiable {
+    var item: ItemModel
+    var itemGroup: ItemGroupModel
+    var subGroupListItem: ItemGroup.SubGroup.ListItem
+    var probability: Double
+
+    var id: String {
+        "\(item.id)-\(itemGroup.displayName)"
+    }
+}
+
 struct MonsterCastSkill: Identifiable {
     var index: Int
     var monsterSkill: MonsterSkill
@@ -306,6 +317,33 @@ final class DatabaseModel {
         }
 
         return itemGroups
+    }
+
+    func itemGroupSources(forItemAegisName itemAegisName: String) async -> [ItemGroupSource] {
+        await fetchItems()
+        await fetchItemGroups()
+
+        let containingItemGroups = itemGroupsByGroupName.values.filter { itemGroup in
+            itemGroup.subGroups.contains { subGroup in
+                subGroup.list.contains(where: { $0.item == itemAegisName })
+            }
+        }
+        if containingItemGroups.isEmpty {
+            return []
+        }
+
+        var itemGroupSources: [ItemGroupSource] = []
+
+        for item in items where item.script?.contains("getgroupitem(IG_") == true {
+            for itemGroup in await itemGroups(for: item) where containingItemGroups.contains(itemGroup) {
+                if let (listItem, probability) = itemGroup.highestRateSubGroupListItem(forItemAegisName: itemAegisName) {
+                    let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItem: listItem, probability: probability)
+                    itemGroupSources.append(itemGroupSource)
+                }
+            }
+        }
+
+        return itemGroupSources.sorted(using: KeyPathComparator(\.probability, order: .reverse))
     }
 
     // MARK: - Job Database

@@ -65,6 +65,22 @@ final class ItemGroupModel {
 
         self.obtainableItems = obtainableItems
     }
+
+    func highestRateSubGroupListItem(forItemAegisName itemAegisName: String) -> (listItem: ItemGroup.SubGroup.ListItem, probability: Double)? {
+        var highest: (listItem: ItemGroup.SubGroup.ListItem, probability: Double)?
+
+        for subGroup in itemGroup.subGroups {
+            let totalRate = subGroup.list.reduce(0) { $0 + $1.rate }
+            for listItem in subGroup.list where listItem.item == itemAegisName {
+                let probability = subGroup.algorithm == .all ? 1 : Double(listItem.rate) / Double(max(totalRate, 1))
+                if probability > highest?.probability ?? -1 {
+                    highest = (listItem, probability)
+                }
+            }
+        }
+
+        return highest
+    }
 }
 
 extension ItemGroupModel: Equatable {

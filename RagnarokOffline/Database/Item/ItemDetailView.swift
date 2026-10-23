@@ -16,6 +16,7 @@ struct ItemDetailView: View {
 
     @State private var droppingMonsters: [DroppingMonster] = []
     @State private var sellingShops: [ShopModel] = []
+    @State private var itemGroupSources: [ItemGroupSource] = []
     @State private var petUsages: [PetUsage] = []
     @State private var itemGroups: [ItemGroupModel] = []
     @State private var monsterSummon: MonsterSummonModel?
@@ -120,6 +121,27 @@ struct ItemDetailView: View {
                 }
             }
 
+            if !itemGroupSources.isEmpty {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(itemGroupSources) { itemGroupSource in
+                            NavigationLink(value: itemGroupSource.item) {
+                                ItemCell(item: itemGroupSource.item) {
+                                    HStack(spacing: 4) {
+                                        if itemGroupSource.subGroupListItem.amount > 1 {
+                                            AmountBadge(amount: itemGroupSource.subGroupListItem.amount)
+                                        }
+                                        ItemGroupRateBadge(probability: itemGroupSource.probability)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Obtained From", tableName: "Database")
+                }
+            }
+
             if !petUsages.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
@@ -158,6 +180,9 @@ struct ItemDetailView: View {
         }
         .task {
             sellingShops = await database.sellingShops(for: item)
+        }
+        .task {
+            itemGroupSources = await database.itemGroupSources(forItemAegisName: item.aegisName)
         }
         .task {
             petUsages = await database.petUsages(forItemNamed: item.aegisName)
