@@ -126,21 +126,21 @@ struct ItemDetailView: View {
             if !itemGroupSources.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(itemGroupSources) { itemGroupSource in
+                        ForEach(previewItemGroupSources) { itemGroupSource in
                             NavigationLink(value: itemGroupSource.item) {
-                                ItemCell(item: itemGroupSource.item) {
-                                    HStack(spacing: 4) {
-                                        if itemGroupSource.subGroupListItem.amount > 1 {
-                                            AmountBadge(amount: itemGroupSource.subGroupListItem.amount)
-                                        }
-                                        ItemGroupRateBadge(probability: itemGroupSource.probability)
-                                    }
-                                }
+                                ItemGroupSourceCell(itemGroupSource: itemGroupSource)
                             }
                         }
                     }
                 } header: {
-                    Text("Obtained From", tableName: "Database")
+                    NavigationLink(value: ItemGroupsContainingItem(item: item)) {
+                        HStack {
+                            Text("Obtained From", tableName: "Database")
+                                .foregroundStyle(Color.primary)
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(Color.secondary)
+                        }
+                    }
                 }
             }
 
@@ -203,5 +203,9 @@ struct ItemDetailView: View {
 
     private var previewDropSources: some RandomAccessCollection<DropSource> {
         dropSources.prefix(9)
+    }
+
+    private var previewItemGroupSources: some RandomAccessCollection<ItemGroupSource> {
+        itemGroupSources.prefix(9)
     }
 }

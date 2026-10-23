@@ -35,8 +35,7 @@ struct DropSource: Identifiable {
 struct ItemGroupSource: Identifiable {
     var item: ItemModel
     var itemGroup: ItemGroupModel
-    var subGroupListItem: ItemGroup.SubGroup.ListItem
-    var probability: Double
+    var subGroupListItemChance: ItemGroupModel.SubGroupListItemChance
 
     var id: String {
         "\(item.id)-\(itemGroup.displayName)"
@@ -335,16 +334,16 @@ final class DatabaseModel {
         var itemGroupSources: [ItemGroupSource] = []
 
         for itemGroup in itemGroupsByGroupName.values {
-            guard let (listItem, probability) = itemGroup.highestRateSubGroupListItem(forItemAegisName: itemAegisName) else {
+            guard let subGroupListItemChance = itemGroup.highestSubGroupListItemChance(forItemAegisName: itemAegisName) else {
                 continue
             }
             for item in itemGroup.sourceItems {
-                let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItem: listItem, probability: probability)
+                let itemGroupSource = ItemGroupSource(item: item, itemGroup: itemGroup, subGroupListItemChance: subGroupListItemChance)
                 itemGroupSources.append(itemGroupSource)
             }
         }
 
-        return itemGroupSources.sorted(using: [KeyPathComparator(\.probability, order: .reverse), KeyPathComparator(\.item.id)])
+        return itemGroupSources.sorted(using: [KeyPathComparator(\.subGroupListItemChance.probability, order: .reverse), KeyPathComparator(\.item.id)])
     }
 
     // MARK: - Job Database

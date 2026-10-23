@@ -24,26 +24,18 @@ struct MonsterSummonSectionView: View {
             }
             .padding(.vertical, vSpacing(sizeClass))
         } header: {
-            if hasMoreSummonMonsters {
-                NavigationLink(value: monsterSummon) {
-                    HStack {
-                        Text("Summon", tableName: "Database")
-                            .foregroundStyle(Color.primary)
-                        Image(systemName: "chevron.right")
-                            .foregroundStyle(Color.secondary)
-                    }
+            NavigationLink(value: monsterSummon) {
+                HStack {
+                    Text("Summon", tableName: "Database")
+                        .foregroundStyle(Color.primary)
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(Color.secondary)
                 }
-            } else {
-                Text("Summon", tableName: "Database")
             }
         }
         .task {
             await monsterSummon.fetchDetail(database: database)
         }
-    }
-
-    private var hasMoreSummonMonsters: Bool {
-        (monsterSummon.summonMonsters?.count ?? 0) > 9
     }
 
     private var previewSummonMonsters: some RandomAccessCollection<MonsterSummonModel.Summon> {

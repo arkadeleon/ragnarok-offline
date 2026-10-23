@@ -13,10 +13,10 @@ struct ItemGroupObtainableItemCell: View {
     var body: some View {
         ItemCell(item: obtainableItem.item) {
             HStack(spacing: 4) {
-                if obtainableItem.subGroupListItem.amount > 1 {
-                    AmountBadge(amount: obtainableItem.subGroupListItem.amount)
+                if obtainableItem.subGroupListItemChance.listItem.amount > 1 {
+                    AmountBadge(amount: obtainableItem.subGroupListItemChance.listItem.amount)
                 }
-                ItemGroupRateBadge(probability: obtainableItem.probability)
+                ItemGroupRateBadge(probability: obtainableItem.subGroupListItemChance.probability)
             }
         }
     }

@@ -17,7 +17,7 @@ struct ItemGroupDetailView: View {
             ForEach(itemGroup.subGroups.sorted(by: { $0.subGroup < $1.subGroup }), id: \.subGroup) { subGroup in
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach((itemGroup.obtainableItems ?? []).filter({ $0.subGroupNumber == subGroup.subGroup })) { obtainableItem in
+                        ForEach((itemGroup.obtainableItems ?? []).filter({ $0.subGroupListItemChance.subGroup.subGroup == subGroup.subGroup })) { obtainableItem in
                             NavigationLink(value: obtainableItem.item) {
                                 ItemGroupObtainableItemCell(obtainableItem: obtainableItem)
                             }

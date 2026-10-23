@@ -13,15 +13,24 @@ import RagnarokDatabase
 @dynamicMemberLookup
 final class ItemGroupModel {
     struct ObtainableItem: Identifiable {
-        var subGroupNumber: Int
-        var subGroupListItem: ItemGroup.SubGroup.ListItem
+        var subGroupListItemChance: SubGroupListItemChance
         var item: ItemModel
 
-        /// The chance to get this item from its SubGroup, from 0 to 1. Every item of an `All` SubGroup is 1.
+        var id: String {
+            subGroupListItemChance.id
+        }
+    }
+
+    /// A chance to get an item from one list item of a SubGroup.
+    struct SubGroupListItemChance: Identifiable {
+        var subGroup: ItemGroup.SubGroup
+        var listItem: ItemGroup.SubGroup.ListItem
+
+        /// The chance to get the item, from 0 to 1. Every item of an `All` SubGroup is 1.
         var probability: Double
 
         var id: String {
-            "\(subGroupNumber)-\(subGroupListItem.index)"
+            "\(subGroup.subGroup)-\(listItem.index)"
         }
     }
 
@@ -55,12 +64,8 @@ final class ItemGroupModel {
             for listItem in subGroup.list {
                 if let item = await database.item(forAegisName: listItem.item) {
                     let probability = subGroup.algorithm == .all ? 1 : Double(listItem.rate) / Double(max(totalRate, 1))
-                    let obtainableItem = ObtainableItem(
-                        subGroupNumber: subGroup.subGroup,
-                        subGroupListItem: listItem,
-                        item: item,
-                        probability: probability
-                    )
+                    let subGroupListItemChance = SubGroupListItemChance(subGroup: subGroup, listItem: listItem, probability: probability)
+                    let obtainableItem = ObtainableItem(subGroupListItemChance: subGroupListItemChance, item: item)
                     obtainableItems.append(obtainableItem)
                 }
             }
@@ -69,20 +74,24 @@ final class ItemGroupModel {
         self.obtainableItems = obtainableItems
     }
 
-    func highestRateSubGroupListItem(forItemAegisName itemAegisName: String) -> (listItem: ItemGroup.SubGroup.ListItem, probability: Double)? {
-        var highest: (listItem: ItemGroup.SubGroup.ListItem, probability: Double)?
+    func highestSubGroupListItemChance(forItemAegisName itemAegisName: String) -> SubGroupListItemChance? {
+        subGroupListItemChances(forItemAegisName: itemAegisName)
+            .max(by: { $0.probability < $1.probability })
+    }
 
-        for subGroup in itemGroup.subGroups {
+    func subGroupListItemChances(forItemAegisName itemAegisName: String) -> [SubGroupListItemChance] {
+        var subGroupListItemChances: [SubGroupListItemChance] = []
+
+        for subGroup in itemGroup.subGroups.sorted(by: { $0.subGroup < $1.subGroup }) {
             let totalRate = subGroup.list.reduce(0) { $0 + $1.rate }
             for listItem in subGroup.list where listItem.item == itemAegisName {
                 let probability = subGroup.algorithm == .all ? 1 : Double(listItem.rate) / Double(max(totalRate, 1))
-                if probability > highest?.probability ?? -1 {
-                    highest = (listItem, probability)
-                }
+                let chance = SubGroupListItemChance(subGroup: subGroup, listItem: listItem, probability: probability)
+                subGroupListItemChances.append(chance)
             }
         }
 
-        return highest
+        return subGroupListItemChances
     }
 }
 

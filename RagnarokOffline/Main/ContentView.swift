@@ -139,6 +139,10 @@ extension View {
                 ItemDetailView(item: item)
                     .environment(appModel.database)
             }
+            .navigationDestination(for: ItemGroupsContainingItem.self) { itemGroupsContainingItem in
+                ItemGroupsContainingItemView(itemGroupsContainingItem: itemGroupsContainingItem)
+                    .environment(appModel.database)
+            }
             .navigationDestination(for: ItemGroupModel.self) { itemGroup in
                 ItemGroupDetailView(itemGroup: itemGroup)
                     .environment(appModel.database)
