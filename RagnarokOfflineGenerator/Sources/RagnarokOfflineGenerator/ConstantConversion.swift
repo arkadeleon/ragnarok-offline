@@ -9,6 +9,13 @@ let allConstantConversions: [ConstantConversion] = [
     // MARK: - common/mmo.hpp
     .cEnum(
         source: "common/mmo.hpp",
+        type: "e_enchantgrade",
+        prefix: "ENCHANTGRADE_",
+        outputType: "EnchantGrade",
+        extensions: [.decodable]
+    ),
+    .cEnum(
+        source: "common/mmo.hpp",
         type: "item_types",
         prefix: "IT_",
         exclude: [
@@ -88,6 +95,18 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "Gender",
         extensions: [.decodable]
     ),
+    .cEnum(
+        source: "common/mmo.hpp",
+        type: "bound_type",
+        prefix: "BOUND_",
+        exclude: [
+            "BOUND_MAX",
+            "BOUND_ONEQUIP",
+            "BOUND_DISPYELLOW",
+        ],
+        outputType: "ItemBound",
+        extensions: [.decodable]
+    ),
     // MARK: - map/battle.hpp
     .cEnum(
         source: "map/battle.hpp",
@@ -146,6 +165,17 @@ let allConstantConversions: [ConstantConversion] = [
             "ITEMJ_MAX",
         ],
         outputType: "ItemClasses",
+        extensions: [.decodable]
+    ),
+    .cEnum(
+        source: "map/itemdb.hpp",
+        type: "e_group_algorithm_type",
+        prefix: "GROUP_ALGORITHM_",
+        exclude: [
+            "GROUP_ALGORITHM_USEDB",
+            "GROUP_ALGORITHM_DROP",
+        ],
+        outputType: "ItemGroupAlgorithm",
         extensions: [.decodable]
     ),
     // MARK: - map/map.hpp

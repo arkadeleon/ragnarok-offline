@@ -796,7 +796,6 @@ public enum StatusChangeID: Int, CaseIterable, Sendable {
     case religio = 805
     case benedictum = 806
     case axe_stomp = 807
-    case a_machine = 808
     case d_machine = 809
     case abr_battle_warior = 810
     case abr_dual_cannon = 811
@@ -1825,7 +1824,6 @@ extension StatusChangeID: CodingKey {
         case .religio: "RELIGIO"
         case .benedictum: "BENEDICTUM"
         case .axe_stomp: "AXE_STOMP"
-        case .a_machine: "A_MACHINE"
         case .d_machine: "D_MACHINE"
         case .abr_battle_warior: "ABR_BATTLE_WARIOR"
         case .abr_dual_cannon: "ABR_DUAL_CANNON"
@@ -2854,7 +2852,6 @@ extension StatusChangeID: CodingKey {
         case "RELIGIO": self = .religio
         case "BENEDICTUM": self = .benedictum
         case "AXE_STOMP": self = .axe_stomp
-        case "A_MACHINE": self = .a_machine
         case "D_MACHINE": self = .d_machine
         case "ABR_BATTLE_WARIOR": self = .abr_battle_warior
         case "ABR_DUAL_CANNON": self = .abr_dual_cannon
