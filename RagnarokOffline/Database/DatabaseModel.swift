@@ -27,6 +27,8 @@ final class DatabaseModel {
     var itemGroupsByGroupName: [String : ItemGroupModel] = [:]
     var recipesByProductID: [Int : [ItemModel.Recipe]] = [:]
     var recipesByMaterialID: [Int : [ItemModel.Recipe]] = [:]
+    var arrowCraftingsBySourceID: [Int : ItemModel.ArrowCrafting] = [:]
+    var arrowCraftingsByArrowID: [Int : [ItemModel.ArrowCrafting]] = [:]
 
     var jobs: [JobModel] = []
     var jobSearchIndex = DatabaseSearchIndex()
@@ -72,6 +74,7 @@ final class DatabaseModel {
     @ObservationIgnored private var itemComboDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var itemGroupDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var itemProduceDatabaseTask: Task<Void, Never>?
+    @ObservationIgnored private var arrowCraftingDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var jobDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var mapDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var monsterDatabaseTask: Task<Void, Never>?
@@ -352,10 +355,68 @@ final class DatabaseModel {
         return recipesByProductID[item.id] ?? []
     }
 
-    func recipes(using item: ItemModel) async -> [ItemModel.Recipe] {
+    func recipes(consuming item: ItemModel) async -> [ItemModel.Recipe] {
         await fetchItemProduces()
 
         return recipesByMaterialID[item.id] ?? []
+    }
+
+    // MARK: - Arrow Crafting Database
+
+    func fetchArrowCraftings() async {
+        if let arrowCraftingDatabaseTask {
+            return await arrowCraftingDatabaseTask.value
+        }
+
+        let arrowCraftingDatabaseTask = Task {
+            await fetchItems()
+
+            let arrowCraftingDatabase = ArrowCraftingDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let arrowCraftings: [ArrowCrafting]
+            do {
+                arrowCraftings = try await arrowCraftingDatabase.arrowCraftings()
+            } catch {
+                logger.warning("Arrow crafting database task failed: \(error)")
+                return
+            }
+
+            var arrowCraftingsBySourceID: [Int : ItemModel.ArrowCrafting] = [:]
+            var arrowCraftingsByArrowID: [Int : [ItemModel.ArrowCrafting]] = [:]
+
+            for arrowCrafting in arrowCraftings {
+                guard let source = itemsByAegisName[arrowCrafting.source] else {
+                    continue
+                }
+                let products = arrowCrafting.make.compactMap { make in
+                    itemsByAegisName[make.item].map({ ItemModel.ArrowCrafting.Product(item: $0, amount: make.amount) })
+                }
+                let arrowCrafting = ItemModel.ArrowCrafting(source: source, products: products)
+                arrowCraftingsBySourceID[source.id] = arrowCrafting
+                for product in products {
+                    arrowCraftingsByArrowID[product.item.id, default: []].append(arrowCrafting)
+                }
+            }
+
+            self.arrowCraftingsBySourceID = arrowCraftingsBySourceID
+            self.arrowCraftingsByArrowID = arrowCraftingsByArrowID
+        }
+
+        self.arrowCraftingDatabaseTask = arrowCraftingDatabaseTask
+
+        return await arrowCraftingDatabaseTask.value
+    }
+
+    func arrowCraftings(producing item: ItemModel) async -> [ItemModel.ArrowCrafting] {
+        await fetchArrowCraftings()
+
+        return arrowCraftingsByArrowID[item.id] ?? []
+    }
+
+    func arrowCrafting(consuming item: ItemModel) async -> ItemModel.ArrowCrafting? {
+        await fetchArrowCraftings()
+
+        return arrowCraftingsBySourceID[item.id]
     }
 
     // MARK: - Job Database

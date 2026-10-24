@@ -148,8 +148,12 @@ extension View {
                 ItemGroupDetailView(itemGroup: itemGroup)
                     .environment(appModel.database)
             }
-            .navigationDestination(for: RecipesUsingItem.self) { recipesUsingItem in
-                RecipesUsingItemView(recipesUsingItem: recipesUsingItem)
+            .navigationDestination(for: ArrowCraftingsProducingItem.self) { arrowCraftingsProducingItem in
+                ArrowCraftingsProducingItemView(arrowCraftingsProducingItem: arrowCraftingsProducingItem)
+                    .environment(appModel.database)
+            }
+            .navigationDestination(for: RecipesConsumingItem.self) { recipesConsumingItem in
+                RecipesConsumingItemView(recipesConsumingItem: recipesConsumingItem)
                     .environment(appModel.database)
             }
             .navigationDestination(for: JobModel.self) { job in

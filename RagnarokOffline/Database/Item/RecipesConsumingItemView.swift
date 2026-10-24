@@ -1,5 +1,5 @@
 //
-//  RecipesUsingItemView.swift
+//  RecipesConsumingItemView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2026/10/25.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct RecipesUsingItem: Hashable {
+struct RecipesConsumingItem: Hashable {
     var item: ItemModel
 }
 
-struct RecipesUsingItemView: View {
-    var recipesUsingItem: RecipesUsingItem
+struct RecipesConsumingItemView: View {
+    var recipesConsumingItem: RecipesConsumingItem
 
     @Environment(DatabaseModel.self) private var database
 
@@ -30,7 +30,7 @@ struct RecipesUsingItemView: View {
         }
         .navigationTitle(Text("Used In", tableName: "Database"))
         .task {
-            recipes = await database.recipes(using: recipesUsingItem.item)
+            recipes = await database.recipes(consuming: recipesConsumingItem.item)
         }
     }
 }

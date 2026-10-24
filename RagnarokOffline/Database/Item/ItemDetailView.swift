@@ -16,7 +16,9 @@ struct ItemDetailView: View {
 
     @State private var itemCombos: [ItemModel.ItemCombo] = []
     @State private var recipesProducingItem: [ItemModel.Recipe] = []
-    @State private var recipesUsingItem: [ItemModel.Recipe] = []
+    @State private var recipesConsumingItem: [ItemModel.Recipe] = []
+    @State private var arrowCraftingsProducingItem: [ItemModel.ArrowCrafting] = []
+    @State private var arrowCraftingConsumingItem: ItemModel.ArrowCrafting?
     @State private var dropSources: [ItemModel.DropSource] = []
     @State private var shopNPCs: [NPCModel] = []
     @State private var obtainSources: [ItemModel.ObtainSource] = []
@@ -114,12 +116,31 @@ struct ItemDetailView: View {
                 }
             }
 
-            if let recipeUsingItem = recipesUsingItem.first {
+            if let arrowCraftingProducingItem = arrowCraftingsProducingItem.first {
                 DatabaseRecordSectionView {
-                    RecipeView(recipe: recipeUsingItem, showsProduct: true)
+                    ArrowCraftingView(arrowCrafting: arrowCraftingProducingItem, showsSource: true)
                 } header: {
-                    if recipesUsingItem.count > 1 {
-                        NavigationLink(value: RecipesUsingItem(item: item)) {
+                    if arrowCraftingsProducingItem.count > 1 {
+                        NavigationLink(value: ArrowCraftingsProducingItem(item: item)) {
+                            HStack {
+                                Text("Crafted From", tableName: "Database")
+                                    .foregroundStyle(Color.primary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    } else {
+                        Text("Crafted From", tableName: "Database")
+                    }
+                }
+            }
+
+            if let recipeConsumingItem = recipesConsumingItem.first {
+                DatabaseRecordSectionView {
+                    RecipeView(recipe: recipeConsumingItem, showsProduct: true)
+                } header: {
+                    if recipesConsumingItem.count > 1 {
+                        NavigationLink(value: RecipesConsumingItem(item: item)) {
                             HStack {
                                 Text("Used In", tableName: "Database")
                                     .foregroundStyle(Color.primary)
@@ -130,6 +151,14 @@ struct ItemDetailView: View {
                     } else {
                         Text("Used In", tableName: "Database")
                     }
+                }
+            }
+
+            if let arrowCraftingConsumingItem {
+                DatabaseRecordSectionView {
+                    ArrowCraftingView(arrowCrafting: arrowCraftingConsumingItem, showsSource: false)
+                } header: {
+                    Text("Crafts", tableName: "Database")
                 }
             }
 
@@ -233,7 +262,13 @@ struct ItemDetailView: View {
             recipesProducingItem = await database.recipes(producing: item)
         }
         .task {
-            recipesUsingItem = await database.recipes(using: item)
+            recipesConsumingItem = await database.recipes(consuming: item)
+        }
+        .task {
+            arrowCraftingsProducingItem = await database.arrowCraftings(producing: item)
+        }
+        .task {
+            arrowCraftingConsumingItem = await database.arrowCrafting(consuming: item)
         }
         .task {
             dropSources = await database.dropSources(forItemAegisName: item.aegisName)

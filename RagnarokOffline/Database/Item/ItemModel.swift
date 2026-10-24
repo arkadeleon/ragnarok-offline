@@ -42,6 +42,28 @@ final class ItemModel {
         var materials: [ItemModel.Recipe.Material]
     }
 
+    struct ArrowCrafting: Identifiable {
+        struct Product: Identifiable {
+            var item: ItemModel
+            var amount: Int
+
+            var id: Int {
+                item.id
+            }
+
+            var badges: [DatabaseBadge] {
+                [.amount(amount)]
+            }
+        }
+
+        var source: ItemModel
+        var products: [ItemModel.ArrowCrafting.Product]
+
+        var id: Int {
+            source.id
+        }
+    }
+
     struct DropSource: Identifiable {
         var monster: MonsterModel
         var drop: Monster.Drop
