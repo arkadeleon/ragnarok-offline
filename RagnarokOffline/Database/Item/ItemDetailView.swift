@@ -15,7 +15,8 @@ struct ItemDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var itemCombos: [ItemModel.ItemCombo] = []
-    @State private var recipes: [ItemModel.Recipe] = []
+    @State private var recipesProducingItem: [ItemModel.Recipe] = []
+    @State private var recipesUsingItem: [ItemModel.Recipe] = []
     @State private var dropSources: [ItemModel.DropSource] = []
     @State private var shopNPCs: [NPCModel] = []
     @State private var obtainSources: [ItemModel.ObtainSource] = []
@@ -86,49 +87,48 @@ struct ItemDetailView: View {
                 DatabaseRecordSectionView {
                     ItemComboView(itemCombo: itemCombo)
                 } header: {
-                    NavigationLink(value: ItemCombosContainingItem(item: item)) {
-                        HStack {
-                            Text("Combos", tableName: "Database")
-                                .foregroundStyle(Color.primary)
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(Color.secondary)
+                    if itemCombos.count > 1 {
+                        NavigationLink(value: ItemCombosContainingItem(item: item)) {
+                            HStack {
+                                Text("Combos", tableName: "Database")
+                                    .foregroundStyle(Color.primary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.secondary)
+                            }
                         }
+                    } else {
+                        Text("Combos", tableName: "Database")
                     }
                 }
             }
 
-            ForEach(Array(recipes.enumerated()), id: \.element.id) { (index, recipe) in
+            ForEach(Array(recipesProducingItem.enumerated()), id: \.element.id) { (index, recipe) in
                 DatabaseRecordSectionView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        if let skill = recipe.skill {
-                            DatabaseRecordSubsectionView {
-                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                                    NavigationLink(value: skill) {
-                                        SkillCell(skill: skill, badges: [.skillLevel(recipe.skillLevel)])
-                                    }
-                                }
-                            } header: {
-                                Text("Skill", tableName: "Database")
-                            }
-                        }
-
-                        DatabaseRecordSubsectionView {
-                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                                ForEach(recipe.materials) { material in
-                                    NavigationLink(value: material.item) {
-                                        ItemCell(item: material.item, badges: material.badges)
-                                    }
-                                }
-                            }
-                        } header: {
-                            Text("Materials", tableName: "Database")
-                        }
-                    }
+                    RecipeView(recipe: recipe, showsProduct: false)
                 } header: {
-                    if recipes.count > 1 {
+                    if recipesProducingItem.count > 1 {
                         Text("Recipe \(index + 1)", tableName: "Database")
                     } else {
                         Text("Recipe", tableName: "Database")
+                    }
+                }
+            }
+
+            if let recipeUsingItem = recipesUsingItem.first {
+                DatabaseRecordSectionView {
+                    RecipeView(recipe: recipeUsingItem, showsProduct: true)
+                } header: {
+                    if recipesUsingItem.count > 1 {
+                        NavigationLink(value: RecipesUsingItem(item: item)) {
+                            HStack {
+                                Text("Used In", tableName: "Database")
+                                    .foregroundStyle(Color.primary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    } else {
+                        Text("Used In", tableName: "Database")
                     }
                 }
             }
@@ -230,7 +230,10 @@ struct ItemDetailView: View {
             itemCombos = await database.itemCombos(forItemAegisName: item.aegisName)
         }
         .task {
-            recipes = await database.recipes(for: item)
+            recipesProducingItem = await database.recipes(producing: item)
+        }
+        .task {
+            recipesUsingItem = await database.recipes(using: item)
         }
         .task {
             dropSources = await database.dropSources(forItemAegisName: item.aegisName)

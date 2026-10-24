@@ -36,6 +36,7 @@ final class ItemModel {
         }
 
         var id: Int
+        var product: ItemModel
         var skill: SkillModel?
         var skillLevel: Int
         var materials: [ItemModel.Recipe.Material]

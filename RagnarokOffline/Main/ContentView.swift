@@ -148,6 +148,10 @@ extension View {
                 ItemGroupDetailView(itemGroup: itemGroup)
                     .environment(appModel.database)
             }
+            .navigationDestination(for: RecipesUsingItem.self) { recipesUsingItem in
+                RecipesUsingItemView(recipesUsingItem: recipesUsingItem)
+                    .environment(appModel.database)
+            }
             .navigationDestination(for: JobModel.self) { job in
                 JobDetailView(job: job)
                     .environment(appModel.database)

@@ -9,7 +9,7 @@
 - 一次只改一个点，改完停下来等 review。条目太大时拆成几次改。
 - rAthena 的 YAML 按文档逐字段解析，字段注释照抄文档原文。枚举值用 RagnarokOfflineGenerator 从 rAthena 源码转换，不手写。
 - 导航一律按值推送（`NavigationLink(value:)`），destination 注册在 `ContentView.navigationDestinations`。只有不再往下跳的末端页面才能按 view 推送。
-- 关联列表的 section 只预览前 9 个（`previewXXX`），标题带箭头链接到完整列表。"Obtains"、"Summon"、"Obtained From"、"Combos" 总是显示箭头，"Dropped By" 超过 9 个才显示（`hasMoreDropSources`）。
+- 关联列表的 section 只预览前 9 个（`previewXXX`），标题带箭头链接到完整列表。"Obtains"、"Summon"、"Obtained From" 总是显示箭头，"Dropped By" 超过 9 个才显示（`hasMoreDropSources`）。"Combos"、"Used In" 只预览 1 条，多于 1 条才显示。
 - 反向查询不要在打开详情页时扫描全部数据，要在加载数据时一起算好。需要同时用到两份数据的纯计算放进 `RagnarokDatabase`，在后台跑，比如 `ItemGroupDatabase.sourceItemIDs(in:)`。
 - Badge 是数据：`DatabaseBadge` 只有 `text` 和 `semantic`，颜色由 `DatabaseBadgeView` 按 `semantic` 决定。关联类型自己提供 `badges`，cell 统一接收 `badges:`（`ItemCell`、`SkillCell`、`MapCell`、`NPCGridCell`、`ImageGridCell`），不再为了 badge 单独写 cell。新的 badge 加一个 `Semantic` 和一个工厂方法，都按字母顺序排。
 
@@ -40,7 +40,7 @@
 - 已实现：
   - 解析：`RagnarokDatabase` 的 `ItemCombo` / `ItemComboDatabase`。
   - 模型：`ItemModel.ItemCombo` 是一个 Combo（物品和所在条目的脚本），id 是它在所有 Combo 里的序号。`DatabaseModel.fetchItemCombos()` 加载时就建好按物品 AegisName 的反向索引 `itemCombosByItemAegisName`。
-  - 物品详情 "Combos" section：标题总是显示箭头，只预览第 1 个 Combo，列出它的全部物品（包括当前物品），脚本放在 "Script" subsection。内容由 `ItemComboView` 显示。
+  - 物品详情 "Combos" section：只预览第 1 个 Combo，多于 1 个才显示箭头，列出它的全部物品（包括当前物品），脚本放在 "Script" subsection。内容由 `ItemComboView` 显示。
   - 完整列表页 `ItemCombosContainingItemView`：每个 Combo 一个 section，标题是 "Combo 1"、"Combo 2"……，内容和预览一样。
 
 ## 4. 物品制作（`produce_db.txt`、`create_arrow_db.yml`）
@@ -50,11 +50,12 @@
   - `create_arrow_db.yml`：在 `db/` 根目录，两种模式共用。136 种原料，每种做成最多 3 种箭，共 21 种箭，固定由 `AC_MAKINGARROW` 制作。
 - 已实现：
   - 解析：`RagnarokDatabase` 的 `ItemProduce` / `ItemProduceDatabase`、`ArrowCrafting` / `ArrowCraftingDatabase`。
-  - 模型：`ItemModel.Recipe` 是一条配方（技能、等级和 `ItemModel.Recipe.Material`），`DatabaseModel.fetchItemProduces()` 加载时就建好按产物 ID 的索引 `recipesByItemID`。
+  - 模型：`ItemModel.Recipe` 是一条配方（产物、技能、等级和 `ItemModel.Recipe.Material`），`DatabaseModel.fetchItemProduces()` 加载时就建好按产物和按材料的索引 `recipesByProductID`、`recipesByMaterialID`。配方内容由 `RecipeView` 显示，"Product" subsection 只在 "Used In" 里显示。
   - 物品详情 "Recipe" section，放在 "Combos" 后面。数量为 0 的材料用 `DatabaseBadge.notConsumed`。
+  - 物品详情 "Used In" section：放在 "Recipe" 后面，只预览第 1 条配方的完整内容，多于 1 条时显示箭头，完整列表页 `RecipesUsingItemView` 每条配方一个 section（"Recipe 1"、"Recipe 2"……）。
 - 展示（箭和配方分开做，不加技能详情的 section，不显示 `ItemLV`）：
   - 产物："Recipe" section，有 2 条配方时是 "Recipe 1"、"Recipe 2"。"Skill" subsection 显示技能和等级（没有技能时不显示），"Materials" subsection 显示材料和数量，数量为 0 的标 "Not Consumed"。
-  - 材料："Used In" section，用到它的产物和需要的数量，预览 9 个，超过 9 个才显示箭头，进入完整列表页。
+  - 材料："Used In" section，只预览第 1 条配方（产物、技能、材料），多于 1 条才显示箭头，进入完整列表页。
   - 箭："Crafted From" section，能做出这种箭的原料和一次做出的支数，预览 9 个，超过 9 个才显示箭头。
   - 箭的原料："Crafts" section，能做出的箭和支数。
 - 分步：解析 `produce_db.txt`；解析 `create_arrow_db.yml`；加载和 "Recipe"；"Used In" 和完整列表页；箭的两个 section。

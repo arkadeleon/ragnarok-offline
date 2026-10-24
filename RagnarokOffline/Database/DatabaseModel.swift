@@ -25,7 +25,8 @@ final class DatabaseModel {
 
     var itemCombosByItemAegisName: [String : [ItemModel.ItemCombo]] = [:]
     var itemGroupsByGroupName: [String : ItemGroupModel] = [:]
-    var recipesByItemID: [Int : [ItemModel.Recipe]] = [:]
+    var recipesByProductID: [Int : [ItemModel.Recipe]] = [:]
+    var recipesByMaterialID: [Int : [ItemModel.Recipe]] = [:]
 
     var jobs: [JobModel] = []
     var jobSearchIndex = DatabaseSearchIndex()
@@ -313,22 +314,31 @@ final class DatabaseModel {
                 return
             }
 
-            var recipesByItemID: [Int : [ItemModel.Recipe]] = [:]
+            var recipesByProductID: [Int : [ItemModel.Recipe]] = [:]
+            var recipesByMaterialID: [Int : [ItemModel.Recipe]] = [:]
 
             for itemProduce in itemProduces {
+                guard let product = itemsByID[itemProduce.productID] else {
+                    continue
+                }
                 let materials = itemProduce.materials.compactMap { material in
                     itemsByID[material.itemID].map({ ItemModel.Recipe.Material(item: $0, amount: material.amount) })
                 }
                 let recipe = ItemModel.Recipe(
                     id: itemProduce.id,
+                    product: product,
                     skill: skillsByID[itemProduce.skillID],
                     skillLevel: itemProduce.skillLevel,
                     materials: materials
                 )
-                recipesByItemID[itemProduce.productID, default: []].append(recipe)
+                recipesByProductID[product.id, default: []].append(recipe)
+                for material in materials {
+                    recipesByMaterialID[material.item.id, default: []].append(recipe)
+                }
             }
 
-            self.recipesByItemID = recipesByItemID
+            self.recipesByProductID = recipesByProductID
+            self.recipesByMaterialID = recipesByMaterialID
         }
 
         self.itemProduceDatabaseTask = itemProduceDatabaseTask
@@ -336,10 +346,16 @@ final class DatabaseModel {
         return await itemProduceDatabaseTask.value
     }
 
-    func recipes(for item: ItemModel) async -> [ItemModel.Recipe] {
+    func recipes(producing item: ItemModel) async -> [ItemModel.Recipe] {
         await fetchItemProduces()
 
-        return recipesByItemID[item.id] ?? []
+        return recipesByProductID[item.id] ?? []
+    }
+
+    func recipes(using item: ItemModel) async -> [ItemModel.Recipe] {
+        await fetchItemProduces()
+
+        return recipesByMaterialID[item.id] ?? []
     }
 
     // MARK: - Job Database
