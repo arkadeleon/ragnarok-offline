@@ -36,8 +36,13 @@
 
 ## 3. 套装（`item_combos.yml`）
 
-- 数据：5115 组套装，每组列出组成的物品（AegisName）和套装效果脚本。
-- 展示：物品详情加 "Combos" section，每个套装列出同套的其他物品（点击进入物品详情）和效果脚本（等宽字体，和 Script 一致）。
+- 数据：renewal 5114 个条目、8618 个 Combo，pre-renewal 105 个条目、156 个 Combo。一个 Combo 就是一个套装，要同时穿齐。一个条目里的几个 Combo 共用同一段 Script，各自独立生效，展示时以 Combo 为单位，不管条目。
+- 已实现：
+  - 解析：`RagnarokDatabase` 的 `ItemCombo` / `ItemComboDatabase`。
+- 展示：
+  - 反向索引在加载时算好，按物品的 AegisName 找到包含它的 Combo。
+  - 物品详情加 "Combos" section，标题总是显示箭头，只预览第 1 个 Combo，不分 subsection：列出这个 Combo 的全部物品，包括当前物品（点击进入物品详情），下面是效果脚本（等宽字体，和 Script 一致）。
+  - 完整列表页每个 Combo 一个 section，标题是 "Combo 1"、"Combo 2"……，内容和预览一样。
 
 ## 4. 物品制作（`produce_db.txt`、`create_arrow_db.yml`）
 
