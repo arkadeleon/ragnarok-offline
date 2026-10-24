@@ -23,6 +23,7 @@ final class DatabaseModel {
     var itemsByAegisName: [String : ItemModel] = [:]
     var itemSearchIndex = DatabaseSearchIndex()
 
+    var itemCombosByItemAegisName: [String : [ItemModel.ItemCombo]] = [:]
     var itemGroupsByGroupName: [String : ItemGroupModel] = [:]
 
     var jobs: [JobModel] = []
@@ -66,6 +67,7 @@ final class DatabaseModel {
     private let statusInfoTable: StatusInfoTable
 
     @ObservationIgnored private var itemDatabaseTask: Task<Void, Never>?
+    @ObservationIgnored private var itemComboDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var itemGroupDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var jobDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var mapDatabaseTask: Task<Void, Never>?
@@ -160,6 +162,53 @@ final class DatabaseModel {
         }
 
         return dropItems
+    }
+
+    // MARK: - Item Combo Database
+
+    func fetchItemCombos() async {
+        if let itemComboDatabaseTask {
+            return await itemComboDatabaseTask.value
+        }
+
+        let itemComboDatabaseTask = Task {
+            await fetchItems()
+
+            let itemComboDatabase = ItemComboDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let itemCombos: [ItemCombo]
+            do {
+                itemCombos = try await itemComboDatabase.itemCombos()
+            } catch {
+                logger.warning("Item combo database task failed: \(error)")
+                return
+            }
+
+            var itemCombosByItemAegisName: [String : [ItemModel.ItemCombo]] = [:]
+
+            let combos = itemCombos.flatMap { itemCombo in
+                itemCombo.combos.map({ ($0, itemCombo.script) })
+            }
+            for (index, (combo, script)) in combos.enumerated() {
+                let items = combo.combo.compactMap({ itemsByAegisName[$0] })
+                let itemCombo = ItemModel.ItemCombo(id: index, items: items, script: script)
+                for item in items {
+                    itemCombosByItemAegisName[item.aegisName, default: []].append(itemCombo)
+                }
+            }
+
+            self.itemCombosByItemAegisName = itemCombosByItemAegisName
+        }
+
+        self.itemComboDatabaseTask = itemComboDatabaseTask
+
+        return await itemComboDatabaseTask.value
+    }
+
+    func itemCombos(forItemAegisName itemAegisName: String) async -> [ItemModel.ItemCombo] {
+        await fetchItemCombos()
+
+        return itemCombosByItemAegisName[itemAegisName] ?? []
     }
 
     // MARK: - Item Group Database

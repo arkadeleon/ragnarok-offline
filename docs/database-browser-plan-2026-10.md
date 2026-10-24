@@ -39,8 +39,9 @@
 - 数据：renewal 5114 个条目、8618 个 Combo，pre-renewal 105 个条目、156 个 Combo。一个 Combo 就是一个套装，要同时穿齐。一个条目里的几个 Combo 共用同一段 Script，各自独立生效，展示时以 Combo 为单位，不管条目。
 - 已实现：
   - 解析：`RagnarokDatabase` 的 `ItemCombo` / `ItemComboDatabase`。
+  - 模型：`ItemModel.ItemCombo` 是一个 Combo（物品和所在条目的脚本），id 是它在所有 Combo 里的序号。`DatabaseModel.fetchItemCombos()` 加载时就建好按物品 AegisName 的反向索引 `itemCombosByItemAegisName`。
+  - 物品详情 "Combos" section，标题还没有箭头。
 - 展示：
-  - 反向索引在加载时算好，按物品的 AegisName 找到包含它的 Combo。
   - 物品详情加 "Combos" section，标题总是显示箭头，只预览第 1 个 Combo，不分 subsection：列出这个 Combo 的全部物品，包括当前物品（点击进入物品详情），下面是效果脚本（等宽字体，和 Script 一致）。
   - 完整列表页每个 Combo 一个 section，标题是 "Combo 1"、"Combo 2"……，内容和预览一样。
 

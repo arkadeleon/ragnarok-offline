@@ -14,6 +14,7 @@ struct ItemDetailView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(DatabaseModel.self) private var database
 
+    @State private var itemCombos: [ItemModel.ItemCombo] = []
     @State private var dropSources: [ItemModel.DropSource] = []
     @State private var shopNPCs: [NPCModel] = []
     @State private var obtainSources: [ItemModel.ObtainSource] = []
@@ -77,6 +78,28 @@ struct ItemDetailView: View {
             if let unEquipScript = item.unEquipScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
                 DatabaseRecordSectionView(text: unEquipScript, monospaced: true) {
                     Text("Unequip Script", tableName: "Database")
+                }
+            }
+
+            if let itemCombo = itemCombos.first {
+                DatabaseRecordSectionView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                            ForEach(itemCombo.items) { item in
+                                NavigationLink(value: item) {
+                                    ItemCell(item: item)
+                                }
+                            }
+                        }
+
+                        if let script = itemCombo.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                            DatabaseRecordSubsectionView(text: script, monospaced: true) {
+                                Text("Script", tableName: "Database")
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Combos", tableName: "Database")
                 }
             }
 
@@ -172,6 +195,9 @@ struct ItemDetailView: View {
         .navigationTitle(item.displayName)
         .task {
             await item.fetchPreviewImage()
+        }
+        .task {
+            itemCombos = await database.itemCombos(forItemAegisName: item.aegisName)
         }
         .task {
             dropSources = await database.dropSources(forItemAegisName: item.aegisName)

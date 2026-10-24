@@ -15,6 +15,12 @@ import RagnarokResources
 @Observable
 @dynamicMemberLookup
 final class ItemModel {
+    struct ItemCombo: Identifiable {
+        var id: Int
+        var items: [ItemModel]
+        var script: String?
+    }
+
     struct DropSource: Identifiable {
         var monster: MonsterModel
         var drop: Monster.Drop
