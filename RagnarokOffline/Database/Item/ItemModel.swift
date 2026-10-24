@@ -58,35 +58,15 @@ final class ItemModel {
     }
 
     struct PetUsage: Identifiable {
-        enum Kind {
-            case tame
-            case egg
-            case equip
-            case food
-
-            var localizedName: LocalizedStringResource {
-                switch self {
-                case .tame:
-                    LocalizedStringResource("Tame Item", table: "Database")
-                case .egg:
-                    LocalizedStringResource("Egg Item", table: "Database")
-                case .equip:
-                    LocalizedStringResource("Equip Item", table: "Database")
-                case .food:
-                    LocalizedStringResource("Food Item", table: "Database")
-                }
-            }
-        }
-
-        var pet: PetModel
-        var kind: ItemModel.PetUsage.Kind
+        var monster: MonsterModel
+        var kind: MonsterModel.PetItem.Kind
 
         var id: String {
-            "\(pet.id)-\(kind)"
+            "\(monster.id)-\(kind)"
         }
 
         var badges: [DatabaseBadge] {
-            [.petUsage(kind)]
+            [.petItem(kind)]
         }
     }
 

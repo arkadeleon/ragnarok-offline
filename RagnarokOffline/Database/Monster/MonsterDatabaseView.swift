@@ -109,14 +109,19 @@ struct MonsterDatabaseView: View {
     }
 
     private func monsters(matching searchText: String, filter: MonsterDatabaseFilter) async -> [MonsterModel] {
+        if filter.isPetOnly {
+            await database.fetchPets()
+        }
+
         let monsters = database.monsters
+        let pets = database.petsByMonsterAegisName
 
         if searchText.isEmpty {
-            return monsters.filter(filter.isIncluded)
+            return monsters.filter({ filter.isIncluded($0, isPet: pets[$0.aegisName] != nil) })
         }
 
         let indices = await database.monsterSearchIndex.indices(matching: searchText)
-        return indices.map({ monsters[$0] }).filter(filter.isIncluded)
+        return indices.map({ monsters[$0] }).filter({ filter.isIncluded($0, isPet: pets[$0.aegisName] != nil) })
     }
 }
 

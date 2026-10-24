@@ -7905,82 +7905,6 @@
         }
       }
     },
-    "Monster" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Monster"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Monstruo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Monstre"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Monster"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "モンスター"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "몬스터"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Monstro"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Монстр"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "มอนสเตอร์"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Canavar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "魔物"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "魔物"
-          }
-        }
-      }
-    },
     "Monster Database" : {
       "localizations" : {
         "de" : {
@@ -8665,78 +8589,78 @@
         }
       }
     },
-    "Pet Database" : {
+    "Pet" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet-Datenbank"
+            "value" : "Haustier"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de datos de pets"
+            "value" : "Mascota"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de données des familiers"
+            "value" : "Familier"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Pet"
+            "value" : "Pet"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ペットデータベース"
+            "value" : "ペット"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "펫 데이터베이스"
+            "value" : "펫"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Banco de dados de pets"
+            "value" : "Mascote"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База питомцев"
+            "value" : "Питомец"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ฐานข้อมูลสัตว์เลี้ยง"
+            "value" : "สัตว์เลี้ยง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet veritabanı"
+            "value" : "Evcil Hayvan"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "宠物数据库"
+            "value" : "宠物"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "寵物資料庫"
+            "value" : "寵物"
           }
         }
       }
@@ -10409,6 +10333,82 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "出現魔物"
+          }
+        }
+      }
+    },
+    "Special" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besonders"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Especial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spécial"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Khusus"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特殊"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "특수"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Especial"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Особые"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พิเศษ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特殊"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特殊"
           }
         }
       }

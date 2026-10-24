@@ -87,9 +87,6 @@ struct ContentView: View {
         case .monsterDatabase:
             MonsterDatabaseView()
                 .environment(appModel.database)
-        case .petDatabase:
-            PetDatabaseView()
-                .environment(appModel.database)
         case .skillDatabase:
             SkillDatabaseView()
                 .environment(appModel.database)
@@ -165,10 +162,6 @@ extension View {
             }
             .navigationDestination(for: NPCModel.self) { npc in
                 NPCDetailView(npc: npc)
-                    .environment(appModel.database)
-            }
-            .navigationDestination(for: PetModel.self) { pet in
-                PetDetailView(pet: pet)
                     .environment(appModel.database)
             }
             .navigationDestination(for: SkillModel.self) { skill in

@@ -16,8 +16,10 @@ struct MonsterDetailView: View {
     @State private var elementalDamages: [MonsterModel.ElementalDamage] = []
     @State private var mvpDropItems: [MonsterModel.DropItem] = []
     @State private var dropItems: [MonsterModel.DropItem] = []
-    @State private var castSkills: [MonsterModel.CastSkill] = []
     @State private var spawnMaps: [MonsterModel.SpawnMap] = []
+    @State private var pet: PetModel?
+    @State private var petItems: [MonsterModel.PetItem] = []
+    @State private var castSkills: [MonsterModel.CastSkill] = []
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -91,20 +93,6 @@ struct MonsterDetailView: View {
                 }
             }
 
-            if !castSkills.isEmpty {
-                DatabaseRecordSectionView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                        ForEach(castSkills) { castSkill in
-                            NavigationLink(value: castSkill.skill) {
-                                SkillCell(skill: castSkill.skill, badges: castSkill.badges)
-                            }
-                        }
-                    }
-                } header: {
-                    Text("Skills", tableName: "Database")
-                }
-            }
-
             if !spawnMaps.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
@@ -116,6 +104,58 @@ struct MonsterDetailView: View {
                     }
                 } header: {
                     Text("Spawn Maps", tableName: "Database")
+                }
+            }
+
+            if let pet {
+                DatabaseRecordSectionView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        if !petItems.isEmpty {
+                            DatabaseRecordSubsectionView {
+                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                                    ForEach(petItems) { petItem in
+                                        NavigationLink(value: petItem.item) {
+                                            ItemCell(item: petItem.item, badges: petItem.badges)
+                                        }
+                                    }
+                                }
+                            } header: {
+                                Text("Items", tableName: "Database")
+                            }
+                        }
+
+                        DatabaseRecordSubsectionView(attributes: pet.attributes) {
+                            Text("Info", tableName: "Database")
+                        }
+
+                        if let script = pet.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                            DatabaseRecordSubsectionView(text: script, monospaced: true) {
+                                Text("Script", tableName: "Database")
+                            }
+                        }
+
+                        if let supportScript = pet.supportScript?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                            DatabaseRecordSubsectionView(text: supportScript, monospaced: true) {
+                                Text("Support Script", tableName: "Database")
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Pet", tableName: "Database")
+                }
+            }
+
+            if !castSkills.isEmpty {
+                DatabaseRecordSectionView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                        ForEach(castSkills) { castSkill in
+                            NavigationLink(value: castSkill.skill) {
+                                SkillCell(skill: castSkill.skill, badges: castSkill.badges)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Skills", tableName: "Database")
                 }
             }
         }
@@ -137,11 +177,17 @@ struct MonsterDetailView: View {
             }
         }
         .task {
-            castSkills = await database.castSkills(for: monster)
-        }
-        .task {
             let monster = (monster.id, monster.aegisName)
             spawnMaps = await database.spawnMaps(for: monster)
+        }
+        .task {
+            pet = await database.pet(for: monster)
+            if let pet {
+                petItems = await database.petItems(for: pet)
+            }
+        }
+        .task {
+            castSkills = await database.castSkills(for: monster)
         }
     }
 

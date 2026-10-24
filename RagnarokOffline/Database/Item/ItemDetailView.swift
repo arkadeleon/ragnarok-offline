@@ -148,11 +148,9 @@ struct ItemDetailView: View {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
                         ForEach(petUsages) { petUsage in
-                            if let monster = petUsage.pet.monster {
-                                NavigationLink(value: petUsage.pet) {
-                                    ImageGridCell(title: monster.displayName, badges: petUsage.badges) {
-                                        MonsterImageView(monster: monster)
-                                    }
+                            NavigationLink(value: petUsage.monster) {
+                                ImageGridCell(title: petUsage.monster.displayName, badges: petUsage.badges) {
+                                    MonsterImageView(monster: petUsage.monster)
                                 }
                             }
                         }

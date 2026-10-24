@@ -66,6 +66,39 @@ final class MonsterModel {
         }
     }
 
+    struct PetItem: Identifiable {
+        enum Kind {
+            case tame
+            case egg
+            case equip
+            case food
+
+            var localizedName: LocalizedStringResource {
+                switch self {
+                case .tame:
+                    LocalizedStringResource("Tame Item", table: "Database")
+                case .egg:
+                    LocalizedStringResource("Egg Item", table: "Database")
+                case .equip:
+                    LocalizedStringResource("Equip Item", table: "Database")
+                case .food:
+                    LocalizedStringResource("Food Item", table: "Database")
+                }
+            }
+        }
+
+        var kind: MonsterModel.PetItem.Kind
+        var item: ItemModel
+
+        var id: MonsterModel.PetItem.Kind {
+            kind
+        }
+
+        var badges: [DatabaseBadge] {
+            [.petItem(kind)]
+        }
+    }
+
     private let mode: DatabaseMode
     private let monster: Monster
     private let resourceManager: ResourceManager

@@ -6,28 +6,11 @@
 //
 
 import Foundation
-import Observation
 import RagnarokDatabase
 
-@Observable
 @dynamicMemberLookup
 final class PetModel {
-    private let mode: DatabaseMode
     private let pet: Pet
-
-    var monster: MonsterModel?
-    var tameItem: ItemModel?
-    var eggItem: ItemModel?
-    var equipItem: ItemModel?
-    var foodItem: ItemModel?
-
-    var aegisName: String {
-        pet.monster
-    }
-
-    var displayName: String {
-        monster?.displayName ?? pet.monster
-    }
 
     var attributes: [DatabaseRecordAttribute] {
         var attributes: [DatabaseRecordAttribute] = []
@@ -52,8 +35,7 @@ final class PetModel {
         return attributes
     }
 
-    init(mode: DatabaseMode, pet: Pet) {
-        self.mode = mode
+    init(pet: Pet) {
         self.pet = pet
     }
 
@@ -61,25 +43,8 @@ final class PetModel {
         pet[keyPath: keyPath]
     }
 
-    @MainActor
-    func fetchDetail(database: DatabaseModel) async {
-        if let tameItem = pet.tameItem {
-            self.tameItem = await database.item(forAegisName: tameItem)
-        }
-
-        eggItem = await database.item(forAegisName: pet.eggItem)
-
-        if let equipItem = pet.equipItem {
-            self.equipItem = await database.item(forAegisName: equipItem)
-        }
-
-        if let foodItem = pet.foodItem {
-            self.foodItem = await database.item(forAegisName: foodItem)
-        }
-    }
-
-    func usages(ofItemNamed itemAegisName: String) -> [ItemModel.PetUsage.Kind] {
-        var usages: [ItemModel.PetUsage.Kind] = []
+    func usages(ofItemNamed itemAegisName: String) -> [MonsterModel.PetItem.Kind] {
+        var usages: [MonsterModel.PetItem.Kind] = []
         if pet.tameItem == itemAegisName {
             usages.append(.tame)
         }
@@ -93,23 +58,5 @@ final class PetModel {
             usages.append(.food)
         }
         return usages
-    }
-}
-
-extension PetModel: Equatable {
-    static func == (lhs: PetModel, rhs: PetModel) -> Bool {
-        lhs.pet.monster == rhs.pet.monster
-    }
-}
-
-extension PetModel: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(pet.monster)
-    }
-}
-
-extension PetModel: Identifiable {
-    var id: String {
-        pet.monster
     }
 }

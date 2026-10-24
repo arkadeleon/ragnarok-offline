@@ -41,7 +41,7 @@ final class DatabaseModel {
     var monsterSummonsByGroup: [String : MonsterSummonModel] = [:]
 
     var pets: [PetModel] = []
-    var petSearchIndex = DatabaseSearchIndex()
+    var petsByMonsterAegisName: [String : PetModel] = [:]
 
     var skills: [SkillModel] = []
     var skillsByID: [Int : SkillModel] = [:]
@@ -511,8 +511,6 @@ final class DatabaseModel {
         }
 
         let petDatabaseTask = Task {
-            await fetchMonsters()
-
             let petDatabase = PetDatabase(baseURL: serverResourceBaseURL, mode: mode)
 
             let pets: [Pet]
@@ -524,16 +522,13 @@ final class DatabaseModel {
             }
 
             self.pets = pets.map { pet in
-                PetModel(mode: mode, pet: pet)
+                PetModel(pet: pet)
             }
 
-            for pet in self.pets {
-                pet.monster = await monster(forAegisName: pet.aegisName)
-            }
-
-            self.petSearchIndex = DatabaseSearchIndex(self.pets) {
-                [$0.aegisName, $0.monster?.name, $0.monster?.localizedName].compactMap({ $0 })
-            }
+            self.petsByMonsterAegisName = Dictionary(
+                self.pets.map({ ($0.monster, $0) }),
+                uniquingKeysWith: { (first, _) in first }
+            )
         }
 
         self.petDatabaseTask = petDatabaseTask
@@ -541,19 +536,44 @@ final class DatabaseModel {
         return await petDatabaseTask.value
     }
 
+    func pet(for monster: MonsterModel) async -> PetModel? {
+        await fetchPets()
+
+        return petsByMonsterAegisName[monster.aegisName]
+    }
+
     func petUsages(forItemAegisName itemAegisName: String) async -> [ItemModel.PetUsage] {
         await fetchPets()
 
         var petUsages: [ItemModel.PetUsage] = []
 
-        for pet in pets where pet.monster != nil {
-            for kind in pet.usages(ofItemNamed: itemAegisName) {
-                let petUsage = ItemModel.PetUsage(pet: pet, kind: kind)
-                petUsages.append(petUsage)
+        for pet in pets {
+            let kinds = pet.usages(ofItemNamed: itemAegisName)
+            if !kinds.isEmpty, let monster = await monster(forAegisName: pet.monster) {
+                for kind in kinds {
+                    let petUsage = ItemModel.PetUsage(monster: monster, kind: kind)
+                    petUsages.append(petUsage)
+                }
             }
         }
 
         return petUsages
+    }
+
+    func petItems(for pet: PetModel) async -> [MonsterModel.PetItem] {
+        await fetchItems()
+
+        var petItems: [MonsterModel.PetItem] = []
+
+        let itemAegisNames: [(MonsterModel.PetItem.Kind, String?)] = [(.tame, pet.tameItem), (.egg, pet.eggItem), (.equip, pet.equipItem), (.food, pet.foodItem)]
+        for (kind, itemAegisName) in itemAegisNames {
+            if let itemAegisName, let item = itemsByAegisName[itemAegisName] {
+                let petItem = MonsterModel.PetItem(kind: kind, item: item)
+                petItems.append(petItem)
+            }
+        }
+
+        return petItems
     }
 
     // MARK: - Skill Database

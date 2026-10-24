@@ -24,11 +24,7 @@ struct ItemGroupsContainingItemView: View {
                 DatabaseRecordSectionView {
                     VStack(alignment: .leading, spacing: 20) {
                         ForEach(itemGroup.subGroupListItemChances(forItemAegisName: itemAegisName)) { subGroupListItemChance in
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text("SubGroup \(subGroupListItemChance.subGroup.subGroup) (\(String(localized: subGroupListItemChance.subGroup.algorithm.localizedName)))", tableName: "Database")
-                                    .font(.subheadline)
-                                    .foregroundStyle(Color.secondary)
-
+                            DatabaseRecordSubsectionView {
                                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
                                     ForEach(sourceItems(of: itemGroup)) { item in
                                         NavigationLink(value: item) {
@@ -37,6 +33,8 @@ struct ItemGroupsContainingItemView: View {
                                         }
                                     }
                                 }
+                            } header: {
+                                Text("SubGroup \(subGroupListItemChance.subGroup.subGroup) (\(String(localized: subGroupListItemChance.subGroup.algorithm.localizedName)))", tableName: "Database")
                             }
                         }
                     }

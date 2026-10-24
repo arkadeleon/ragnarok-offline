@@ -23,7 +23,6 @@ enum SidebarItem: Hashable {
     case jobDatabase
     case mapDatabase
     case monsterDatabase
-    case petDatabase
     case skillDatabase
     case statusChangeDatabase
 
@@ -139,10 +138,6 @@ struct SidebarView: View {
 
                 NavigationLink(value: SidebarItem.monsterDatabase) {
                     SidebarRow("Monster Database", iconName: "pawprint.fill", iconColor: .red)
-                }
-
-                NavigationLink(value: SidebarItem.petDatabase) {
-                    SidebarRow("Pet Database", iconName: "pawprint.fill", iconColor: .pink)
                 }
 
                 NavigationLink(value: SidebarItem.skillDatabase) {

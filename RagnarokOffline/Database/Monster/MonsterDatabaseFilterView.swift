@@ -93,9 +93,12 @@ struct MonsterDatabaseFilterView: View {
                         SelectableButton(MonsterMode.mvp.localizedName, isSelected: filter.isMVPOnly) {
                             filter.isMVPOnly.toggle()
                         }
+                        SelectableButton(LocalizedStringResource("Pet", table: "Database"), isSelected: filter.isPetOnly) {
+                            filter.isPetOnly.toggle()
+                        }
                     }
                 } header: {
-                    SectionHeaderView(LocalizedStringResource("Modes", table: "Database"))
+                    SectionHeaderView(LocalizedStringResource("Special", table: "Database"))
                         .padding(.top)
                 }
             }

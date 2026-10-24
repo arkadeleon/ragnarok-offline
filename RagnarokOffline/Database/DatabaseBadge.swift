@@ -14,7 +14,7 @@ struct DatabaseBadge {
         case `default`
         case map
         case mvp
-        case petUsage(ItemModel.PetUsage.Kind)
+        case petItem(MonsterModel.PetItem.Kind)
         case position
         case price
         case rate
@@ -43,8 +43,8 @@ extension DatabaseBadge {
         DatabaseBadge(text: "MVP", semantic: .mvp)
     }
 
-    static func petUsage(_ kind: ItemModel.PetUsage.Kind) -> DatabaseBadge {
-        DatabaseBadge(text: String(localized: kind.localizedName), semantic: .petUsage(kind))
+    static func petItem(_ kind: MonsterModel.PetItem.Kind) -> DatabaseBadge {
+        DatabaseBadge(text: String(localized: kind.localizedName), semantic: .petItem(kind))
     }
 
     static func position(x: Int, y: Int) -> DatabaseBadge {

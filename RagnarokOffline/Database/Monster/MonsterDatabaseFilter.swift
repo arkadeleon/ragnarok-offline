@@ -38,6 +38,8 @@ struct MonsterDatabaseFilter: Equatable {
 
     var isMVPOnly = false
 
+    var isPetOnly = false
+
     var isEmpty: Bool {
         minimumLevel == nil &&
         maximumLevel == nil &&
@@ -45,10 +47,11 @@ struct MonsterDatabaseFilter: Equatable {
         race == nil &&
         element == nil &&
         monsterClass == nil &&
-        !isMVPOnly
+        !isMVPOnly &&
+        !isPetOnly
     }
 
-    func isIncluded(_ monster: MonsterModel) -> Bool {
+    func isIncluded(_ monster: MonsterModel, isPet: Bool) -> Bool {
         if let minimumLevel, monster.level < minimumLevel {
             return false
         }
@@ -74,6 +77,10 @@ struct MonsterDatabaseFilter: Equatable {
         }
 
         if isMVPOnly, monster.modes?.contains(.mvp) != true {
+            return false
+        }
+
+        if isPetOnly, !isPet {
             return false
         }
 
@@ -104,5 +111,6 @@ struct MonsterDatabaseFilter: Equatable {
         element = nil
         monsterClass = nil
         isMVPOnly = false
+        isPetOnly = false
     }
 }
