@@ -136,6 +136,10 @@ extension View {
                 ItemDetailView(item: item)
                     .environment(appModel.database)
             }
+            .navigationDestination(for: ItemCombosContainingItem.self) { itemCombosContainingItem in
+                ItemCombosContainingItemView(itemCombosContainingItem: itemCombosContainingItem)
+                    .environment(appModel.database)
+            }
             .navigationDestination(for: ItemGroupsContainingItem.self) { itemGroupsContainingItem in
                 ItemGroupsContainingItemView(itemGroupsContainingItem: itemGroupsContainingItem)
                     .environment(appModel.database)

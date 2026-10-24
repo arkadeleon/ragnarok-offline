@@ -83,23 +83,16 @@ struct ItemDetailView: View {
 
             if let itemCombo = itemCombos.first {
                 DatabaseRecordSectionView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
-                            ForEach(itemCombo.items) { item in
-                                NavigationLink(value: item) {
-                                    ItemCell(item: item)
-                                }
-                            }
-                        }
-
-                        if let script = itemCombo.script?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                            DatabaseRecordSubsectionView(text: script, monospaced: true) {
-                                Text("Script", tableName: "Database")
-                            }
+                    ItemComboView(itemCombo: itemCombo)
+                } header: {
+                    NavigationLink(value: ItemCombosContainingItem(item: item)) {
+                        HStack {
+                            Text("Combos", tableName: "Database")
+                                .foregroundStyle(Color.primary)
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(Color.secondary)
                         }
                     }
-                } header: {
-                    Text("Combos", tableName: "Database")
                 }
             }
 
