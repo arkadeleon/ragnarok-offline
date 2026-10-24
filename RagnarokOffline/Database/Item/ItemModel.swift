@@ -21,6 +21,26 @@ final class ItemModel {
         var script: String?
     }
 
+    struct Recipe: Identifiable {
+        struct Material: Identifiable {
+            var item: ItemModel
+            var amount: Int
+
+            var id: Int {
+                item.id
+            }
+
+            var badges: [DatabaseBadge] {
+                amount > 0 ? [.amount(amount)] : [.notConsumed]
+            }
+        }
+
+        var id: Int
+        var skill: SkillModel?
+        var skillLevel: Int
+        var materials: [ItemModel.Recipe.Material]
+    }
+
     struct DropSource: Identifiable {
         var monster: MonsterModel
         var drop: Monster.Drop

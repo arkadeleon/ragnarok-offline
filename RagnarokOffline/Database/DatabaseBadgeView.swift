@@ -26,6 +26,7 @@ struct DatabaseBadgeView: View {
         case .default: .gray
         case .map: .mint
         case .mvp: .red
+        case .notConsumed: .yellow
         case .petItem(.tame): .pink
         case .petItem(.egg): .brown
         case .petItem(.equip): .purple

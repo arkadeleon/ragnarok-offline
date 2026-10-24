@@ -25,6 +25,7 @@ final class DatabaseModel {
 
     var itemCombosByItemAegisName: [String : [ItemModel.ItemCombo]] = [:]
     var itemGroupsByGroupName: [String : ItemGroupModel] = [:]
+    var recipesByItemID: [Int : [ItemModel.Recipe]] = [:]
 
     var jobs: [JobModel] = []
     var jobSearchIndex = DatabaseSearchIndex()
@@ -69,6 +70,7 @@ final class DatabaseModel {
     @ObservationIgnored private var itemDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var itemComboDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var itemGroupDatabaseTask: Task<Void, Never>?
+    @ObservationIgnored private var itemProduceDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var jobDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var mapDatabaseTask: Task<Void, Never>?
     @ObservationIgnored private var monsterDatabaseTask: Task<Void, Never>?
@@ -288,6 +290,56 @@ final class DatabaseModel {
         }
 
         return obtainSources.sorted(using: [KeyPathComparator(\.subGroupListItemChance.probability, order: .reverse), KeyPathComparator(\.item.id)])
+    }
+
+    // MARK: - Item Produce Database
+
+    func fetchItemProduces() async {
+        if let itemProduceDatabaseTask {
+            return await itemProduceDatabaseTask.value
+        }
+
+        let itemProduceDatabaseTask = Task {
+            await fetchItems()
+            await fetchSkills()
+
+            let itemProduceDatabase = ItemProduceDatabase(baseURL: serverResourceBaseURL, mode: mode)
+
+            let itemProduces: [ItemProduce]
+            do {
+                itemProduces = try await itemProduceDatabase.itemProduces()
+            } catch {
+                logger.warning("Item produce database task failed: \(error)")
+                return
+            }
+
+            var recipesByItemID: [Int : [ItemModel.Recipe]] = [:]
+
+            for itemProduce in itemProduces {
+                let materials = itemProduce.materials.compactMap { material in
+                    itemsByID[material.itemID].map({ ItemModel.Recipe.Material(item: $0, amount: material.amount) })
+                }
+                let recipe = ItemModel.Recipe(
+                    id: itemProduce.id,
+                    skill: skillsByID[itemProduce.skillID],
+                    skillLevel: itemProduce.skillLevel,
+                    materials: materials
+                )
+                recipesByItemID[itemProduce.productID, default: []].append(recipe)
+            }
+
+            self.recipesByItemID = recipesByItemID
+        }
+
+        self.itemProduceDatabaseTask = itemProduceDatabaseTask
+
+        return await itemProduceDatabaseTask.value
+    }
+
+    func recipes(for item: ItemModel) async -> [ItemModel.Recipe] {
+        await fetchItemProduces()
+
+        return recipesByItemID[item.id] ?? []
     }
 
     // MARK: - Job Database

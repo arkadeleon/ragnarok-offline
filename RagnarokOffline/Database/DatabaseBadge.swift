@@ -14,6 +14,7 @@ struct DatabaseBadge {
         case `default`
         case map
         case mvp
+        case notConsumed
         case petItem(MonsterModel.PetItem.Kind)
         case position
         case price
@@ -41,6 +42,10 @@ extension DatabaseBadge {
 
     static var mvp: DatabaseBadge {
         DatabaseBadge(text: "MVP", semantic: .mvp)
+    }
+
+    static var notConsumed: DatabaseBadge {
+        DatabaseBadge(text: String(localized: LocalizedStringResource("Not Consumed", table: "Database")), semantic: .notConsumed)
     }
 
     static func petItem(_ kind: MonsterModel.PetItem.Kind) -> DatabaseBadge {

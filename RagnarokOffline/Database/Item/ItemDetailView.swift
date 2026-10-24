@@ -15,6 +15,7 @@ struct ItemDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var itemCombos: [ItemModel.ItemCombo] = []
+    @State private var recipes: [ItemModel.Recipe] = []
     @State private var dropSources: [ItemModel.DropSource] = []
     @State private var shopNPCs: [NPCModel] = []
     @State private var obtainSources: [ItemModel.ObtainSource] = []
@@ -92,6 +93,42 @@ struct ItemDetailView: View {
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(Color.secondary)
                         }
+                    }
+                }
+            }
+
+            ForEach(Array(recipes.enumerated()), id: \.element.id) { (index, recipe) in
+                DatabaseRecordSectionView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        if let skill = recipe.skill {
+                            DatabaseRecordSubsectionView {
+                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                                    NavigationLink(value: skill) {
+                                        SkillCell(skill: skill, badges: [.skillLevel(recipe.skillLevel)])
+                                    }
+                                }
+                            } header: {
+                                Text("Skill", tableName: "Database")
+                            }
+                        }
+
+                        DatabaseRecordSubsectionView {
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 280), spacing: 20)], alignment: .leading, spacing: 20) {
+                                ForEach(recipe.materials) { material in
+                                    NavigationLink(value: material.item) {
+                                        ItemCell(item: material.item, badges: material.badges)
+                                    }
+                                }
+                            }
+                        } header: {
+                            Text("Materials", tableName: "Database")
+                        }
+                    }
+                } header: {
+                    if recipes.count > 1 {
+                        Text("Recipe \(index + 1)", tableName: "Database")
+                    } else {
+                        Text("Recipe", tableName: "Database")
                     }
                 }
             }
@@ -191,6 +228,9 @@ struct ItemDetailView: View {
         }
         .task {
             itemCombos = await database.itemCombos(forItemAegisName: item.aegisName)
+        }
+        .task {
+            recipes = await database.recipes(for: item)
         }
         .task {
             dropSources = await database.dropSources(forItemAegisName: item.aegisName)
