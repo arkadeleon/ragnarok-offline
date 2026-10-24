@@ -46,11 +46,16 @@
 ## 4. 物品制作（`produce_db.txt`、`create_arrow_db.yml`）
 
 - 数据：
-  - `produce_db.txt`：锻造、制药、烹饪等配方，每条有产物、需要的技能和等级、材料和数量。数量为 0 表示只需要带在身上，比如制作指南。
-  - `create_arrow_db.yml`：制箭，用一个物品做成若干支箭。
-- 展示：
-  - 物品详情显示"制作方法"：需要的技能（点击进入技能详情）和材料。
-  - 物品详情反向显示"可用于制作"：用这个物品当材料的产物。
+  - `produce_db.txt`：TXT，renewal 293 条、pre-renewal 258 条配方，每条有产物、类别（`ItemLV`）、需要的技能和等级、最多 9 种材料和数量，都是数字 ID。数量为 0 表示只需要带在身上，比如料理书。料理（`ItemLV` 11～20）和新手合成书（renewal 的 30）没有技能。只有 4 个产物有 2 条配方。
+  - `create_arrow_db.yml`：在 `db/` 根目录，两种模式共用。136 种原料，每种做成最多 3 种箭，共 21 种箭，固定由 `AC_MAKINGARROW` 制作。
+- 已实现：
+  - 解析：`RagnarokDatabase` 的 `ItemProduce` / `ItemProduceDatabase`。
+- 展示（箭和配方分开做，不加技能详情的 section，不显示 `ItemLV`）：
+  - 产物："Recipe" section，有 2 条配方时是 "Recipe 1"、"Recipe 2"。"Skill" subsection 显示技能和等级（没有技能时不显示），"Materials" subsection 显示材料和数量，数量为 0 的标 "Not Consumed"。
+  - 材料："Used In" section，用到它的产物和需要的数量，预览 9 个，超过 9 个才显示箭头，进入完整列表页。
+  - 箭："Crafted From" section，能做出这种箭的原料和一次做出的支数，预览 9 个，超过 9 个才显示箭头。
+  - 箭的原料："Crafts" section，能做出的箭和支数。
+- 分步：解析 `produce_db.txt`；解析 `create_arrow_db.yml`；加载和 "Recipe"；"Used In" 和完整列表页；箭的两个 section。
 
 ## 5. 任务（`quest_db.yml`）
 
