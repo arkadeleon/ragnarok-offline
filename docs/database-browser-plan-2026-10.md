@@ -49,7 +49,7 @@
   - `produce_db.txt`：TXT，renewal 293 条、pre-renewal 258 条配方，每条有产物、类别（`ItemLV`）、需要的技能和等级、最多 9 种材料和数量，都是数字 ID。数量为 0 表示只需要带在身上，比如料理书。料理（`ItemLV` 11～20）和新手合成书（renewal 的 30）没有技能。只有 4 个产物有 2 条配方。
   - `create_arrow_db.yml`：在 `db/` 根目录，两种模式共用。136 种原料，每种做成最多 3 种箭，共 21 种箭，固定由 `AC_MAKINGARROW` 制作。
 - 已实现：
-  - 解析：`RagnarokDatabase` 的 `ItemProduce` / `ItemProduceDatabase`。
+  - 解析：`RagnarokDatabase` 的 `ItemProduce` / `ItemProduceDatabase`、`ArrowCrafting` / `ArrowCraftingDatabase`。
 - 展示（箭和配方分开做，不加技能详情的 section，不显示 `ItemLV`）：
   - 产物："Recipe" section，有 2 条配方时是 "Recipe 1"、"Recipe 2"。"Skill" subsection 显示技能和等级（没有技能时不显示），"Materials" subsection 显示材料和数量，数量为 0 的标 "Not Consumed"。
   - 材料："Used In" section，用到它的产物和需要的数量，预览 9 个，超过 9 个才显示箭头，进入完整列表页。
