@@ -18,6 +18,16 @@ struct SettingsView: View {
         Form {
             Section {
                 NavigationLink {
+                    AboutView()
+                } label: {
+                    Text("About")
+                }
+            } header: {
+                Text("General")
+            }
+
+            Section {
+                NavigationLink {
                     RemoteClientSettingsView()
                 } label: {
                     LabeledContent {

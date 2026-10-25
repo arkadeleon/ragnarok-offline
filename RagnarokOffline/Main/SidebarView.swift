@@ -191,6 +191,9 @@ struct SidebarView: View {
             NavigationStack {
                 SettingsView()
             }
+            #if os(macOS)
+            .frame(width: 480, height: 560)
+            #endif
             .adaptiveNavigationTransition(sourceID: "settings", in: settingsNamespace)
             .environment(appModel.settings)
         }

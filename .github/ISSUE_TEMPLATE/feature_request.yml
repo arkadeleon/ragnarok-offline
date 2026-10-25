@@ -1,0 +1,26 @@
+name: Feature Request
+description: Suggest an idea for Ragnarok Offline.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What would you like to see?
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What problem would this solve, or how would you use it?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives
+      description: Any workarounds or other approaches you have considered.
+  - type: input
+    id: app-version
+    attributes:
+      label: App Version
+      placeholder: 2.1.1 (1)
