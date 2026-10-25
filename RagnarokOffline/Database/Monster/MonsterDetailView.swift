@@ -47,12 +47,6 @@ struct MonsterDetailView: View {
                 Text("Actions", tableName: "Database")
             }
 
-            if !elementalDamages.isEmpty {
-                DatabaseRecordSectionView(attributes: elementalDamageAttributes) {
-                    Text("Elemental Damage", tableName: "Database")
-                }
-            }
-
             if let raceGroups = monster.localizedRaceGroups {
                 DatabaseRecordSectionView(tags: raceGroups) {
                     Text("Race Groups", tableName: "Database")
@@ -62,6 +56,12 @@ struct MonsterDetailView: View {
             if let modes = monster.localizedModes {
                 DatabaseRecordSectionView(tags: modes) {
                     Text("Modes", tableName: "Database")
+                }
+            }
+
+            if !elementalDamages.isEmpty {
+                DatabaseRecordSectionView(attributes: elementalDamageAttributes) {
+                    Text("Elemental Damage", tableName: "Database")
                 }
             }
 

@@ -15,16 +15,16 @@ struct ItemDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var itemCombos: [ItemModel.ItemCombo] = []
-    @State private var recipeSources: [ItemModel.Recipe] = []
-    @State private var recipeProducts: [ItemModel.Recipe] = []
-    @State private var craftSources: [ItemModel.ArrowCrafting] = []
-    @State private var craftProduct: ItemModel.ArrowCrafting?
+    @State private var itemGroups: [ItemGroupModel] = []
+    @State private var monsterSummon: MonsterSummonModel?
     @State private var dropSources: [ItemModel.DropSource] = []
     @State private var shopNPCs: [NPCModel] = []
     @State private var obtainSources: [ItemModel.ObtainSource] = []
+    @State private var recipeSources: [ItemModel.Recipe] = []
+    @State private var craftSources: [ItemModel.ArrowCrafting] = []
+    @State private var recipeProducts: [ItemModel.Recipe] = []
+    @State private var craftProduct: ItemModel.ArrowCrafting?
     @State private var petUsages: [ItemModel.PetUsage] = []
-    @State private var itemGroups: [ItemGroupModel] = []
-    @State private var monsterSummon: MonsterSummonModel?
 
     var body: some View {
         DatabaseRecordDetailView {
@@ -104,62 +104,12 @@ struct ItemDetailView: View {
                 }
             }
 
-            ForEach(Array(recipeSources.enumerated()), id: \.element.id) { (index, recipe) in
-                DatabaseRecordSectionView {
-                    RecipeView(recipe: recipe, showsProduct: false)
-                } header: {
-                    if recipeSources.count > 1 {
-                        Text("Recipe \(index + 1)", tableName: "Database")
-                    } else {
-                        Text("Recipe", tableName: "Database")
-                    }
-                }
+            ForEach(itemGroups, id: \.displayName) { itemGroup in
+                ItemGroupSectionView(itemGroup: itemGroup)
             }
 
-            if let craftSource = craftSources.first {
-                DatabaseRecordSectionView {
-                    ArrowCraftingView(arrowCrafting: craftSource, showsSource: true)
-                } header: {
-                    if craftSources.count > 1 {
-                        NavigationLink(value: ItemModel.CraftSourceList(item: item)) {
-                            HStack {
-                                Text("Arrow Crafting", tableName: "Database")
-                                    .foregroundStyle(Color.primary)
-                                Image(systemName: "chevron.right")
-                                    .foregroundStyle(Color.secondary)
-                            }
-                        }
-                    } else {
-                        Text("Arrow Crafting", tableName: "Database")
-                    }
-                }
-            }
-
-            if let recipeProduct = recipeProducts.first {
-                DatabaseRecordSectionView {
-                    RecipeView(recipe: recipeProduct, showsProduct: true)
-                } header: {
-                    if recipeProducts.count > 1 {
-                        NavigationLink(value: ItemModel.RecipeProductList(item: item)) {
-                            HStack {
-                                Text("Material For", tableName: "Database")
-                                    .foregroundStyle(Color.primary)
-                                Image(systemName: "chevron.right")
-                                    .foregroundStyle(Color.secondary)
-                            }
-                        }
-                    } else {
-                        Text("Material For", tableName: "Database")
-                    }
-                }
-            }
-
-            if let craftProduct {
-                DatabaseRecordSectionView {
-                    ArrowCraftingView(arrowCrafting: craftProduct, showsSource: false)
-                } header: {
-                    Text("Arrow Crafting", tableName: "Database")
-                }
+            if let monsterSummon {
+                MonsterSummonSectionView(monsterSummon: monsterSummon)
             }
 
             if !dropSources.isEmpty {
@@ -226,6 +176,64 @@ struct ItemDetailView: View {
                 }
             }
 
+            ForEach(Array(recipeSources.enumerated()), id: \.element.id) { (index, recipe) in
+                DatabaseRecordSectionView {
+                    RecipeView(recipe: recipe, showsProduct: false)
+                } header: {
+                    if recipeSources.count > 1 {
+                        Text("Recipe \(index + 1)", tableName: "Database")
+                    } else {
+                        Text("Recipe", tableName: "Database")
+                    }
+                }
+            }
+
+            if let craftSource = craftSources.first {
+                DatabaseRecordSectionView {
+                    ArrowCraftingView(arrowCrafting: craftSource, showsSource: true)
+                } header: {
+                    if craftSources.count > 1 {
+                        NavigationLink(value: ItemModel.CraftSourceList(item: item)) {
+                            HStack {
+                                Text("Arrow Crafting", tableName: "Database")
+                                    .foregroundStyle(Color.primary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    } else {
+                        Text("Arrow Crafting", tableName: "Database")
+                    }
+                }
+            }
+
+            if let recipeProduct = recipeProducts.first {
+                DatabaseRecordSectionView {
+                    RecipeView(recipe: recipeProduct, showsProduct: true)
+                } header: {
+                    if recipeProducts.count > 1 {
+                        NavigationLink(value: ItemModel.RecipeProductList(item: item)) {
+                            HStack {
+                                Text("Material For", tableName: "Database")
+                                    .foregroundStyle(Color.primary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    } else {
+                        Text("Material For", tableName: "Database")
+                    }
+                }
+            }
+
+            if let craftProduct {
+                DatabaseRecordSectionView {
+                    ArrowCraftingView(arrowCrafting: craftProduct, showsSource: false)
+                } header: {
+                    Text("Arrow Crafting", tableName: "Database")
+                }
+            }
+
             if !petUsages.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
@@ -242,14 +250,6 @@ struct ItemDetailView: View {
                     Text("Pets", tableName: "Database")
                 }
             }
-
-            ForEach(itemGroups, id: \.displayName) { itemGroup in
-                ItemGroupSectionView(itemGroup: itemGroup)
-            }
-
-            if let monsterSummon {
-                MonsterSummonSectionView(monsterSummon: monsterSummon)
-            }
         }
         .navigationTitle(item.displayName)
         .task {
@@ -259,16 +259,10 @@ struct ItemDetailView: View {
             itemCombos = await database.itemCombos(forItemAegisName: item.aegisName)
         }
         .task {
-            recipeSources = await database.recipeSources(for: item)
+            itemGroups = await database.itemGroups(for: item)
         }
         .task {
-            recipeProducts = await database.recipeProducts(for: item)
-        }
-        .task {
-            craftSources = await database.craftSources(for: item)
-        }
-        .task {
-            craftProduct = await database.craftProduct(for: item)
+            monsterSummon = await database.monsterSummon(for: item)
         }
         .task {
             dropSources = await database.dropSources(forItemAegisName: item.aegisName)
@@ -280,13 +274,19 @@ struct ItemDetailView: View {
             obtainSources = await database.obtainSources(forItemAegisName: item.aegisName)
         }
         .task {
+            recipeSources = await database.recipeSources(for: item)
+        }
+        .task {
+            craftSources = await database.craftSources(for: item)
+        }
+        .task {
+            recipeProducts = await database.recipeProducts(for: item)
+        }
+        .task {
+            craftProduct = await database.craftProduct(for: item)
+        }
+        .task {
             petUsages = await database.petUsages(forItemAegisName: item.aegisName)
-        }
-        .task {
-            itemGroups = await database.itemGroups(for: item)
-        }
-        .task {
-            monsterSummon = await database.monsterSummon(for: item)
         }
     }
 
