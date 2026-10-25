@@ -349,13 +349,13 @@ final class DatabaseModel {
         return await itemProduceDatabaseTask.value
     }
 
-    func recipes(producing item: ItemModel) async -> [ItemModel.Recipe] {
+    func recipeSources(for item: ItemModel) async -> [ItemModel.Recipe] {
         await fetchItemProduces()
 
         return recipesByProductID[item.id] ?? []
     }
 
-    func recipes(consuming item: ItemModel) async -> [ItemModel.Recipe] {
+    func recipeProducts(for item: ItemModel) async -> [ItemModel.Recipe] {
         await fetchItemProduces()
 
         return recipesByMaterialID[item.id] ?? []
@@ -407,13 +407,13 @@ final class DatabaseModel {
         return await arrowCraftingDatabaseTask.value
     }
 
-    func arrowCraftings(producing item: ItemModel) async -> [ItemModel.ArrowCrafting] {
+    func craftSources(for item: ItemModel) async -> [ItemModel.ArrowCrafting] {
         await fetchArrowCraftings()
 
         return arrowCraftingsByArrowID[item.id] ?? []
     }
 
-    func arrowCrafting(consuming item: ItemModel) async -> ItemModel.ArrowCrafting? {
+    func craftProduct(for item: ItemModel) async -> ItemModel.ArrowCrafting? {
         await fetchArrowCraftings()
 
         return arrowCraftingsBySourceID[item.id]

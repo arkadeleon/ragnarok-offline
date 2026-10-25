@@ -1,5 +1,5 @@
 //
-//  MonstersDroppingItemView.swift
+//  DropSourceListView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2026/10/23.
@@ -7,12 +7,8 @@
 
 import SwiftUI
 
-struct MonstersDroppingItem: Hashable {
-    var item: ItemModel
-}
-
-struct MonstersDroppingItemView: View {
-    var monstersDroppingItem: MonstersDroppingItem
+struct DropSourceListView: View {
+    var dropSourceList: ItemModel.DropSourceList
 
     @Environment(DatabaseModel.self) private var database
 
@@ -29,7 +25,7 @@ struct MonstersDroppingItemView: View {
         .background(.background)
         .navigationTitle(Text("Dropped By", tableName: "Database"))
         .task {
-            dropSources = await database.dropSources(forItemAegisName: monstersDroppingItem.item.aegisName)
+            dropSources = await database.dropSources(forItemAegisName: dropSourceList.item.aegisName)
         }
     }
 }

@@ -9,6 +9,7 @@
 - 一次只改一个点，改完停下来等 review。条目太大时拆成几次改。
 - rAthena 的 YAML 按文档逐字段解析，字段注释照抄文档原文。枚举值用 RagnarokOfflineGenerator 从 rAthena 源码转换，不手写。
 - 导航一律按值推送（`NavigationLink(value:)`），destination 注册在 `ContentView.navigationDestinations`。只有不再往下跳的末端页面才能按 view 推送。
+- 关联的命名从当前记录的角度出发：`Source` 是产出当前物品的（`DropSource`、`ObtainSource`、`recipeSources`、`craftSources`），`Product` 是消耗当前物品做出的（`recipeProducts`、`craftProduct`）。完整列表页的值类型嵌套在模型里，叫 `XxxList`（比如 `ItemModel.DropSourceList`），view 叫 `XxxListView`。
 - 关联列表的 section 只预览前 9 个（`previewXXX`），标题带箭头链接到完整列表。"Obtains"、"Summon"、"Obtained From" 总是显示箭头，"Dropped By" 超过 9 个才显示（`hasMoreDropSources`）。"Combos"、"Used In"、"Crafted From" 只预览 1 条，多于 1 条才显示。
 - 反向查询不要在打开详情页时扫描全部数据，要在加载数据时一起算好。需要同时用到两份数据的纯计算放进 `RagnarokDatabase`，在后台跑，比如 `ItemGroupDatabase.sourceItemIDs(in:)`。
 - Badge 是数据：`DatabaseBadge` 只有 `text` 和 `semantic`，颜色由 `DatabaseBadgeView` 按 `semantic` 决定。关联类型自己提供 `badges`，cell 统一接收 `badges:`（`ItemCell`、`SkillCell`、`MapCell`、`NPCGridCell`、`ImageGridCell`），不再为了 badge 单独写 cell。新的 badge 加一个 `Semantic` 和一个工厂方法，都按字母顺序排。
@@ -27,9 +28,9 @@
   - 解析：`RagnarokDatabase` 的 `ItemGroup` / `ItemGroupDatabase`。生成的枚举有 `ItemGroupAlgorithm`、`ItemBound`、`EnchantGrade`。
   - 模型：`ItemGroupModel` 加载时就记下调用这个组的物品（`sourceItems`，由后台的 `ItemGroupDatabase.sourceItemIDs(in:)` 算出）。每条记录和它的概率是 `ItemGroupModel.SubGroupListItemChance`，`ObtainableItem` 和 `ItemModel.ObtainSource` 都包含它。
   - 物品详情 "Obtains" section：预览能开出的物品，概率是 rate 除以同一个 SubGroup 的 rate 总和，`All` 的物品显示 100%，数量大于 1 时显示数量。完整列表页 `ItemGroupDetailView` 按 SubGroup 分段，标题带规则名，比如 "SubGroup 0 (All)"。
-  - 物品详情 "Obtained From" section：预览能开出这个物品的箱子（`ItemModel.ObtainSource`），同一个箱子的多个 SubGroup 里都有时只显示概率最高的一次。完整列表页 `ItemGroupsContainingItemView` 先按物品组分段（标题链接到组的详情），再按 SubGroup 分段。
+  - 物品详情 "Obtained From" section：预览能开出这个物品的箱子（`ItemModel.ObtainSource`），同一个箱子的多个 SubGroup 里都有时只显示概率最高的一次。完整列表页 `ItemModel.ObtainSourceList` / `ObtainSourceListView` 先按物品组分段（标题链接到组的详情），再按 SubGroup 分段。
 - 顺带完成：
-  - "Dropped By" 改成预览加完整列表页 `MonstersDroppingItemView`。
+  - "Dropped By" 改成预览加完整列表页 `ItemModel.DropSourceList` / `DropSourceListView`。
   - Summon 改成按值推送。
   - 关联类型改名：`DropSource`、`SpawnMonster`、`CastSkill`、`ObtainSource`，以及 `shops(for:)`、`petUsages(forItemAegisName:)`、`castSkills(for:)`、`obtainSources(forItemAegisName:)`。关联类型都嵌套进了它显示的那一侧的模型，比如 `ItemModel.DropSource`、`MonsterModel.SpawnMap`。
   - 所有 badge 改成 `DatabaseBadge` 数据，删掉了 `XxxBadge` view 和只为 badge 存在的 cell（`DropSourceGridCell`、`MonsterSummonGridCell`、`ItemGroupObtainableItemCell`、`ItemGroupSourceCell`）。
@@ -41,7 +42,7 @@
   - 解析：`RagnarokDatabase` 的 `ItemCombo` / `ItemComboDatabase`。
   - 模型：`ItemModel.ItemCombo` 是一个 Combo（物品和所在条目的脚本），id 是它在所有 Combo 里的序号。`DatabaseModel.fetchItemCombos()` 加载时就建好按物品 AegisName 的反向索引 `itemCombosByItemAegisName`。
   - 物品详情 "Combos" section：只预览第 1 个 Combo，多于 1 个才显示箭头，列出它的全部物品（包括当前物品），脚本放在 "Script" subsection。内容由 `ItemComboView` 显示。
-  - 完整列表页 `ItemCombosContainingItemView`：每个 Combo 一个 section，标题是 "Combo 1"、"Combo 2"……，内容和预览一样。
+  - 完整列表页 `ItemModel.ItemComboList` / `ItemComboListView`：每个 Combo 一个 section，标题是 "Combo 1"、"Combo 2"……，内容和预览一样。
 
 ## 4. 物品制作（`produce_db.txt`、`create_arrow_db.yml`）（完成）
 
@@ -52,8 +53,8 @@
   - 解析：`RagnarokDatabase` 的 `ItemProduce` / `ItemProduceDatabase`、`ArrowCrafting` / `ArrowCraftingDatabase`。
   - 模型：`ItemModel.Recipe` 是一条配方（产物、技能、等级和 `ItemModel.Recipe.Material`），`DatabaseModel.fetchItemProduces()` 加载时就建好按产物和按材料的索引 `recipesByProductID`、`recipesByMaterialID`。配方内容由 `RecipeView` 显示，"Product" subsection 只在 "Used In" 里显示。
   - 物品详情 "Recipe" section，放在 "Combos" 后面。数量为 0 的材料用 `DatabaseBadge.notConsumed`。
-  - 物品详情 "Used In" section：放在 "Recipe" 后面，只预览第 1 条配方的完整内容，多于 1 条时显示箭头，完整列表页 `RecipesConsumingItemView` 每条配方一个 section（"Recipe 1"、"Recipe 2"……）。
-  - 箭：`ItemModel.ArrowCrafting` 是一次制箭（原料和 `ItemModel.ArrowCrafting.Product`），消耗 1 个原料，一次给出所有产物。`DatabaseModel.fetchArrowCraftings()` 加载时就建好按原料（每个原料一条）和按箭的索引 `arrowCraftingsBySourceID`、`arrowCraftingsByArrowID`。内容由 `ArrowCraftingView` 显示（"Source"、"Products" subsection）。箭的物品详情 "Crafted From" section 放在 "Recipe" 后面，只预览第 1 条，多于 1 条才显示箭头，完整列表页 `ArrowCraftingsProducingItemView` 每条一个 section（"Crafting 1"、"Crafting 2"……）。原料的物品详情 "Crafts" section 放在 "Used In" 后面，只显示 "Products"，原料固定消耗 1 个（`skill_arrow_create`）。
+  - 物品详情 "Used In" section：放在 "Recipe" 后面，只预览第 1 条配方的完整内容，多于 1 条时显示箭头，完整列表页 `ItemModel.RecipeProductList` / `RecipeProductListView` 每条配方一个 section（"Recipe 1"、"Recipe 2"……）。
+  - 箭：`ItemModel.ArrowCrafting` 是一次制箭（原料和 `ItemModel.ArrowCrafting.Product`），消耗 1 个原料，一次给出所有产物。`DatabaseModel.fetchArrowCraftings()` 加载时就建好按原料（每个原料一条）和按箭的索引 `arrowCraftingsBySourceID`、`arrowCraftingsByArrowID`。内容由 `ArrowCraftingView` 显示（"Source"、"Products" subsection）。箭的物品详情 "Crafted From" section 放在 "Recipe" 后面，只预览第 1 条，多于 1 条才显示箭头，完整列表页 `ItemModel.CraftSourceList` / `CraftSourceListView` 每条一个 section（"Crafting 1"、"Crafting 2"……）。原料的物品详情 "Crafts" section 放在 "Used In" 后面，只显示 "Products"，原料固定消耗 1 个（`skill_arrow_create`）。
 - 展示（箭和配方分开做，不加技能详情的 section，不显示 `ItemLV`）：
   - 产物："Recipe" section，有 2 条配方时是 "Recipe 1"、"Recipe 2"。"Skill" subsection 显示技能和等级（没有技能时不显示），"Materials" subsection 显示材料和数量，数量为 0 的标 "Not Consumed"。
   - 材料："Used In" section，只预览第 1 条配方（产物、技能、材料），多于 1 条才显示箭头，进入完整列表页。

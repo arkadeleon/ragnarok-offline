@@ -1,5 +1,5 @@
 //
-//  ItemGroupsContainingItemView.swift
+//  ObtainSourceListView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2026/10/23.
@@ -7,12 +7,8 @@
 
 import SwiftUI
 
-struct ItemGroupsContainingItem: Hashable {
-    var item: ItemModel
-}
-
-struct ItemGroupsContainingItemView: View {
-    var itemGroupsContainingItem: ItemGroupsContainingItem
+struct ObtainSourceListView: View {
+    var obtainSourceList: ItemModel.ObtainSourceList
 
     @Environment(DatabaseModel.self) private var database
 
@@ -57,7 +53,7 @@ struct ItemGroupsContainingItemView: View {
     }
 
     private var itemAegisName: String {
-        itemGroupsContainingItem.item.aegisName
+        obtainSourceList.item.aegisName
     }
 
     private func sourceItems(of itemGroup: ItemGroupModel) -> [ItemModel] {

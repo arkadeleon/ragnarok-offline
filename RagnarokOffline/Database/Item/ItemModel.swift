@@ -21,6 +21,10 @@ final class ItemModel {
         var script: String?
     }
 
+    struct ItemComboList: Hashable {
+        var item: ItemModel
+    }
+
     struct Recipe: Identifiable {
         struct Material: Identifiable {
             var item: ItemModel
@@ -40,6 +44,10 @@ final class ItemModel {
         var skill: SkillModel?
         var skillLevel: Int
         var materials: [ItemModel.Recipe.Material]
+    }
+
+    struct RecipeProductList: Hashable {
+        var item: ItemModel
     }
 
     struct ArrowCrafting: Identifiable {
@@ -64,6 +72,10 @@ final class ItemModel {
         }
     }
 
+    struct CraftSourceList: Hashable {
+        var item: ItemModel
+    }
+
     struct DropSource: Identifiable {
         var monster: MonsterModel
         var drop: Monster.Drop
@@ -82,6 +94,10 @@ final class ItemModel {
 
             return badges
         }
+    }
+
+    struct DropSourceList: Hashable {
+        var item: ItemModel
     }
 
     struct ObtainSource: Identifiable {
@@ -104,6 +120,10 @@ final class ItemModel {
 
             return badges
         }
+    }
+
+    struct ObtainSourceList: Hashable {
+        var item: ItemModel
     }
 
     struct PetUsage: Identifiable {

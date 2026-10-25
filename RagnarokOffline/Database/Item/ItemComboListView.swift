@@ -1,5 +1,5 @@
 //
-//  ItemCombosContainingItemView.swift
+//  ItemComboListView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2026/10/24.
@@ -7,12 +7,8 @@
 
 import SwiftUI
 
-struct ItemCombosContainingItem: Hashable {
-    var item: ItemModel
-}
-
-struct ItemCombosContainingItemView: View {
-    var itemCombosContainingItem: ItemCombosContainingItem
+struct ItemComboListView: View {
+    var itemComboList: ItemModel.ItemComboList
 
     @Environment(DatabaseModel.self) private var database
 
@@ -30,7 +26,7 @@ struct ItemCombosContainingItemView: View {
         }
         .navigationTitle(Text("Combos", tableName: "Database"))
         .task {
-            itemCombos = await database.itemCombos(forItemAegisName: itemCombosContainingItem.item.aegisName)
+            itemCombos = await database.itemCombos(forItemAegisName: itemComboList.item.aegisName)
         }
     }
 }

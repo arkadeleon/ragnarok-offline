@@ -15,10 +15,10 @@ struct ItemDetailView: View {
     @Environment(DatabaseModel.self) private var database
 
     @State private var itemCombos: [ItemModel.ItemCombo] = []
-    @State private var recipesProducingItem: [ItemModel.Recipe] = []
-    @State private var recipesConsumingItem: [ItemModel.Recipe] = []
-    @State private var arrowCraftingsProducingItem: [ItemModel.ArrowCrafting] = []
-    @State private var arrowCraftingConsumingItem: ItemModel.ArrowCrafting?
+    @State private var recipeSources: [ItemModel.Recipe] = []
+    @State private var recipeProducts: [ItemModel.Recipe] = []
+    @State private var craftSources: [ItemModel.ArrowCrafting] = []
+    @State private var craftProduct: ItemModel.ArrowCrafting?
     @State private var dropSources: [ItemModel.DropSource] = []
     @State private var shopNPCs: [NPCModel] = []
     @State private var obtainSources: [ItemModel.ObtainSource] = []
@@ -90,7 +90,7 @@ struct ItemDetailView: View {
                     ItemComboView(itemCombo: itemCombo)
                 } header: {
                     if itemCombos.count > 1 {
-                        NavigationLink(value: ItemCombosContainingItem(item: item)) {
+                        NavigationLink(value: ItemModel.ItemComboList(item: item)) {
                             HStack {
                                 Text("Combos", tableName: "Database")
                                     .foregroundStyle(Color.primary)
@@ -104,11 +104,11 @@ struct ItemDetailView: View {
                 }
             }
 
-            ForEach(Array(recipesProducingItem.enumerated()), id: \.element.id) { (index, recipe) in
+            ForEach(Array(recipeSources.enumerated()), id: \.element.id) { (index, recipe) in
                 DatabaseRecordSectionView {
                     RecipeView(recipe: recipe, showsProduct: false)
                 } header: {
-                    if recipesProducingItem.count > 1 {
+                    if recipeSources.count > 1 {
                         Text("Recipe \(index + 1)", tableName: "Database")
                     } else {
                         Text("Recipe", tableName: "Database")
@@ -116,12 +116,12 @@ struct ItemDetailView: View {
                 }
             }
 
-            if let arrowCraftingProducingItem = arrowCraftingsProducingItem.first {
+            if let craftSource = craftSources.first {
                 DatabaseRecordSectionView {
-                    ArrowCraftingView(arrowCrafting: arrowCraftingProducingItem, showsSource: true)
+                    ArrowCraftingView(arrowCrafting: craftSource, showsSource: true)
                 } header: {
-                    if arrowCraftingsProducingItem.count > 1 {
-                        NavigationLink(value: ArrowCraftingsProducingItem(item: item)) {
+                    if craftSources.count > 1 {
+                        NavigationLink(value: ItemModel.CraftSourceList(item: item)) {
                             HStack {
                                 Text("Crafted From", tableName: "Database")
                                     .foregroundStyle(Color.primary)
@@ -135,12 +135,12 @@ struct ItemDetailView: View {
                 }
             }
 
-            if let recipeConsumingItem = recipesConsumingItem.first {
+            if let recipeProduct = recipeProducts.first {
                 DatabaseRecordSectionView {
-                    RecipeView(recipe: recipeConsumingItem, showsProduct: true)
+                    RecipeView(recipe: recipeProduct, showsProduct: true)
                 } header: {
-                    if recipesConsumingItem.count > 1 {
-                        NavigationLink(value: RecipesConsumingItem(item: item)) {
+                    if recipeProducts.count > 1 {
+                        NavigationLink(value: ItemModel.RecipeProductList(item: item)) {
                             HStack {
                                 Text("Used In", tableName: "Database")
                                     .foregroundStyle(Color.primary)
@@ -154,9 +154,9 @@ struct ItemDetailView: View {
                 }
             }
 
-            if let arrowCraftingConsumingItem {
+            if let craftProduct {
                 DatabaseRecordSectionView {
-                    ArrowCraftingView(arrowCrafting: arrowCraftingConsumingItem, showsSource: false)
+                    ArrowCraftingView(arrowCrafting: craftProduct, showsSource: false)
                 } header: {
                     Text("Crafts", tableName: "Database")
                 }
@@ -176,7 +176,7 @@ struct ItemDetailView: View {
                     .padding(.vertical, vSpacing(sizeClass))
                 } header: {
                     if hasMoreDropSources {
-                        NavigationLink(value: MonstersDroppingItem(item: item)) {
+                        NavigationLink(value: ItemModel.DropSourceList(item: item)) {
                             HStack {
                                 Text("Dropped By", tableName: "Database")
                                     .foregroundStyle(Color.primary)
@@ -215,7 +215,7 @@ struct ItemDetailView: View {
                         }
                     }
                 } header: {
-                    NavigationLink(value: ItemGroupsContainingItem(item: item)) {
+                    NavigationLink(value: ItemModel.ObtainSourceList(item: item)) {
                         HStack {
                             Text("Obtained From", tableName: "Database")
                                 .foregroundStyle(Color.primary)
@@ -259,16 +259,16 @@ struct ItemDetailView: View {
             itemCombos = await database.itemCombos(forItemAegisName: item.aegisName)
         }
         .task {
-            recipesProducingItem = await database.recipes(producing: item)
+            recipeSources = await database.recipeSources(for: item)
         }
         .task {
-            recipesConsumingItem = await database.recipes(consuming: item)
+            recipeProducts = await database.recipeProducts(for: item)
         }
         .task {
-            arrowCraftingsProducingItem = await database.arrowCraftings(producing: item)
+            craftSources = await database.craftSources(for: item)
         }
         .task {
-            arrowCraftingConsumingItem = await database.arrowCrafting(consuming: item)
+            craftProduct = await database.craftProduct(for: item)
         }
         .task {
             dropSources = await database.dropSources(forItemAegisName: item.aegisName)

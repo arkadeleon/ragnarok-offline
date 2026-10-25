@@ -128,32 +128,32 @@ extension View {
             .navigationDestination(for: FileGroup.self) { fileGroup in
                 FileGroupView(group: fileGroup)
             }
-            .navigationDestination(for: MonstersDroppingItem.self) { monstersDroppingItem in
-                MonstersDroppingItemView(monstersDroppingItem: monstersDroppingItem)
-                    .environment(appModel.database)
-            }
             .navigationDestination(for: ItemModel.self) { item in
                 ItemDetailView(item: item)
                     .environment(appModel.database)
             }
-            .navigationDestination(for: ItemCombosContainingItem.self) { itemCombosContainingItem in
-                ItemCombosContainingItemView(itemCombosContainingItem: itemCombosContainingItem)
+            .navigationDestination(for: ItemModel.CraftSourceList.self) { craftSourceList in
+                CraftSourceListView(craftSourceList: craftSourceList)
                     .environment(appModel.database)
             }
-            .navigationDestination(for: ItemGroupsContainingItem.self) { itemGroupsContainingItem in
-                ItemGroupsContainingItemView(itemGroupsContainingItem: itemGroupsContainingItem)
+            .navigationDestination(for: ItemModel.DropSourceList.self) { dropSourceList in
+                DropSourceListView(dropSourceList: dropSourceList)
+                    .environment(appModel.database)
+            }
+            .navigationDestination(for: ItemModel.ItemComboList.self) { itemComboList in
+                ItemComboListView(itemComboList: itemComboList)
+                    .environment(appModel.database)
+            }
+            .navigationDestination(for: ItemModel.ObtainSourceList.self) { obtainSourceList in
+                ObtainSourceListView(obtainSourceList: obtainSourceList)
+                    .environment(appModel.database)
+            }
+            .navigationDestination(for: ItemModel.RecipeProductList.self) { recipeProductList in
+                RecipeProductListView(recipeProductList: recipeProductList)
                     .environment(appModel.database)
             }
             .navigationDestination(for: ItemGroupModel.self) { itemGroup in
                 ItemGroupDetailView(itemGroup: itemGroup)
-                    .environment(appModel.database)
-            }
-            .navigationDestination(for: ArrowCraftingsProducingItem.self) { arrowCraftingsProducingItem in
-                ArrowCraftingsProducingItemView(arrowCraftingsProducingItem: arrowCraftingsProducingItem)
-                    .environment(appModel.database)
-            }
-            .navigationDestination(for: RecipesConsumingItem.self) { recipesConsumingItem in
-                RecipesConsumingItemView(recipesConsumingItem: recipesConsumingItem)
                     .environment(appModel.database)
             }
             .navigationDestination(for: JobModel.self) { job in

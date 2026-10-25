@@ -1,5 +1,5 @@
 //
-//  ArrowCraftingsProducingItemView.swift
+//  CraftSourceListView.swift
 //  RagnarokOffline
 //
 //  Created by Leon Li on 2026/10/25.
@@ -7,20 +7,16 @@
 
 import SwiftUI
 
-struct ArrowCraftingsProducingItem: Hashable {
-    var item: ItemModel
-}
-
-struct ArrowCraftingsProducingItemView: View {
-    var arrowCraftingsProducingItem: ArrowCraftingsProducingItem
+struct CraftSourceListView: View {
+    var craftSourceList: ItemModel.CraftSourceList
 
     @Environment(DatabaseModel.self) private var database
 
-    @State private var arrowCraftings: [ItemModel.ArrowCrafting] = []
+    @State private var craftSources: [ItemModel.ArrowCrafting] = []
 
     var body: some View {
         DatabaseRecordDetailView {
-            ForEach(Array(arrowCraftings.enumerated()), id: \.element.id) { (index, arrowCrafting) in
+            ForEach(Array(craftSources.enumerated()), id: \.element.id) { (index, arrowCrafting) in
                 DatabaseRecordSectionView {
                     ArrowCraftingView(arrowCrafting: arrowCrafting, showsSource: true)
                 } header: {
@@ -30,7 +26,7 @@ struct ArrowCraftingsProducingItemView: View {
         }
         .navigationTitle(Text("Crafted From", tableName: "Database"))
         .task {
-            arrowCraftings = await database.arrowCraftings(producing: arrowCraftingsProducingItem.item)
+            craftSources = await database.craftSources(for: craftSourceList.item)
         }
     }
 }
