@@ -123,14 +123,14 @@ struct ItemDetailView: View {
                     if craftSources.count > 1 {
                         NavigationLink(value: ItemModel.CraftSourceList(item: item)) {
                             HStack {
-                                Text("Crafted From", tableName: "Database")
+                                Text("Arrow Crafting", tableName: "Database")
                                     .foregroundStyle(Color.primary)
                                 Image(systemName: "chevron.right")
                                     .foregroundStyle(Color.secondary)
                             }
                         }
                     } else {
-                        Text("Crafted From", tableName: "Database")
+                        Text("Arrow Crafting", tableName: "Database")
                     }
                 }
             }
@@ -142,14 +142,14 @@ struct ItemDetailView: View {
                     if recipeProducts.count > 1 {
                         NavigationLink(value: ItemModel.RecipeProductList(item: item)) {
                             HStack {
-                                Text("Used In", tableName: "Database")
+                                Text("Material For", tableName: "Database")
                                     .foregroundStyle(Color.primary)
                                 Image(systemName: "chevron.right")
                                     .foregroundStyle(Color.secondary)
                             }
                         }
                     } else {
-                        Text("Used In", tableName: "Database")
+                        Text("Material For", tableName: "Database")
                     }
                 }
             }
@@ -158,7 +158,7 @@ struct ItemDetailView: View {
                 DatabaseRecordSectionView {
                     ArrowCraftingView(arrowCrafting: craftProduct, showsSource: false)
                 } header: {
-                    Text("Crafts", tableName: "Database")
+                    Text("Arrow Crafting", tableName: "Database")
                 }
             }
 

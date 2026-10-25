@@ -24,7 +24,7 @@ struct RecipeProductListView: View {
                 }
             }
         }
-        .navigationTitle(Text("Used In", tableName: "Database"))
+        .navigationTitle(Text("Material For", tableName: "Database"))
         .task {
             recipeProducts = await database.recipeProducts(for: recipeProductList.item)
         }

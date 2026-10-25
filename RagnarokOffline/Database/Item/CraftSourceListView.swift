@@ -20,11 +20,11 @@ struct CraftSourceListView: View {
                 DatabaseRecordSectionView {
                     ArrowCraftingView(arrowCrafting: arrowCrafting, showsSource: true)
                 } header: {
-                    Text("Crafting \(index + 1)", tableName: "Database")
+                    Text("Arrow Crafting \(index + 1)", tableName: "Database")
                 }
             }
         }
-        .navigationTitle(Text("Crafted From", tableName: "Database"))
+        .navigationTitle(Text("Arrow Crafting", tableName: "Database"))
         .task {
             craftSources = await database.craftSources(for: craftSourceList.item)
         }
