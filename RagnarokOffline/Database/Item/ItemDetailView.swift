@@ -143,7 +143,7 @@ struct ItemDetailView: View {
             if !shopNPCs.isEmpty {
                 DatabaseRecordSectionView {
                     LazyVGrid(columns: [imageGridItem(sizeClass)], alignment: .leading, spacing: vSpacing(sizeClass)) {
-                        ForEach(shopNPCs) { shopNPC in
+                        ForEach(previewShopNPCs) { shopNPC in
                             NavigationLink(value: shopNPC) {
                                 NPCGridCell(npc: shopNPC, badges: [.map(shopNPC.map)])
                             }
@@ -151,7 +151,18 @@ struct ItemDetailView: View {
                     }
                     .padding(.vertical, vSpacing(sizeClass))
                 } header: {
-                    Text("Sold By", tableName: "Database")
+                    if hasMoreShopNPCs {
+                        NavigationLink(value: ItemModel.ShopNPCList(item: item)) {
+                            HStack {
+                                Text("Sold By", tableName: "Database")
+                                    .foregroundStyle(Color.primary)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    } else {
+                        Text("Sold By", tableName: "Database")
+                    }
                 }
             }
 
@@ -296,6 +307,14 @@ struct ItemDetailView: View {
 
     private var previewDropSources: some RandomAccessCollection<ItemModel.DropSource> {
         dropSources.prefix(9)
+    }
+
+    private var hasMoreShopNPCs: Bool {
+        shopNPCs.count > 9
+    }
+
+    private var previewShopNPCs: some RandomAccessCollection<NPCModel> {
+        shopNPCs.prefix(9)
     }
 
     private var previewObtainSources: some RandomAccessCollection<ItemModel.ObtainSource> {

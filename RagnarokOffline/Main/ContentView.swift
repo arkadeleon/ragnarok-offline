@@ -152,6 +152,10 @@ extension View {
                 RecipeProductListView(recipeProductList: recipeProductList)
                     .environment(appModel.database)
             }
+            .navigationDestination(for: ItemModel.ShopNPCList.self) { shopNPCList in
+                ShopNPCListView(shopNPCList: shopNPCList)
+                    .environment(appModel.database)
+            }
             .navigationDestination(for: ItemGroupModel.self) { itemGroup in
                 ItemGroupDetailView(itemGroup: itemGroup)
                     .environment(appModel.database)

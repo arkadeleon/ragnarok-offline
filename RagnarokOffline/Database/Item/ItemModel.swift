@@ -126,6 +126,10 @@ final class ItemModel {
         var item: ItemModel
     }
 
+    struct ShopNPCList: Hashable {
+        var item: ItemModel
+    }
+
     struct PetUsage: Identifiable {
         var monster: MonsterModel
         var kind: MonsterModel.PetItem.Kind
