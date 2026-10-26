@@ -55,7 +55,7 @@ struct SettingsView: View {
             }
 
             Section {
-                Picker("Mode", selection: $settings.databaseMode) {
+                Picker("Database Mode", selection: $settings.databaseMode) {
                     Text("Pre-Renewal")
                         .tag(DatabaseMode.prerenewal)
                     Text("Renewal")

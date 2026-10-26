@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2024/5/9.
 //
 
+import Foundation
 import Observation
 import RagnarokDatabase
 
@@ -13,7 +14,7 @@ import RagnarokDatabase
 final class MonsterSummonModel {
     struct Summon: Identifiable {
         var monster: MonsterModel
-        var rate: Int?
+        var probability: Double
         var isDefault: Bool
 
         var id: Int {
@@ -27,9 +28,7 @@ final class MonsterSummonModel {
                 badges.append(.default)
             }
 
-            if let rate {
-                badges.append(.rate(rate, base: 1000000))
-            }
+            badges.append(.probability(probability))
 
             return badges
         }
@@ -58,7 +57,7 @@ final class MonsterSummonModel {
         var summonMonsters: [Summon] = []
         for summon in monsterSummon.summon {
             if let monster = await database.monster(forAegisName: summon.monster) {
-                let summon = Summon(monster: monster, rate: summon.rate, isDefault: false)
+                let summon = Summon(monster: monster, probability: probability(forMonsterAegisName: summon.monster), isDefault: false)
                 summonMonsters.append(summon)
             }
         }
@@ -69,12 +68,41 @@ final class MonsterSummonModel {
                 summon.isDefault = true
                 summonMonsters.insert(summon, at: 0)
             } else {
-                let summon = Summon(monster: defaultMonster, rate: nil, isDefault: true)
+                let summon = Summon(monster: defaultMonster, probability: probability(forMonsterAegisName: monsterSummon.default), isDefault: true)
                 summonMonsters.insert(summon, at: 0)
             }
         }
 
         self.summonMonsters = summonMonsters
+    }
+
+    /// The chance from 0 to 1 that 1 summon from this group gives the monster, including the fallback to the default monster.
+    ///
+    /// Each attempt picks an entry at random and keeps it with a chance of `Rate / 1000000`.
+    /// After 3 attempts per entry without a hit, the summon gives the default monster.
+    /// The Taekwon Mission skill keeps every pick, so its rates do not matter.
+    func probability(forMonsterAegisName monsterAegisName: String) -> Double {
+        let summons = monsterSummon.summon
+        guard !summons.isEmpty else {
+            return 0
+        }
+
+        let usesRate = monsterSummon.group.uppercased() != "TAEKWON_MISSION"
+        let keepChances = summons.map { usesRate ? min(Double($0.rate) / 1000000, 1) : 1 }
+        let count = Double(summons.count)
+        let attemptChance = keepChances.reduce(0, +) / count
+        let fallbackChance = pow(1 - attemptChance, 3 * count)
+
+        var probability = 0.0
+        if attemptChance > 0 {
+            for (summon, keepChance) in zip(summons, keepChances) where summon.monster == monsterAegisName {
+                probability += keepChance / count * (1 - fallbackChance) / attemptChance
+            }
+        }
+        if monsterSummon.default == monsterAegisName {
+            probability += fallbackChance
+        }
+        return probability
     }
 }
 

@@ -11857,24 +11857,24 @@
         }
       }
     },
-    "Summon" : {
+    "Summons" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beschwörung"
+            "value" : "Beschwörungen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invocación"
+            "value" : "Invocaciones"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invocation"
+            "value" : "Invocations"
           }
         },
         "id" : {
@@ -11898,13 +11898,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invocação"
+            "value" : "Invocações"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Призыв"
+            "value" : "Призывы"
           }
         },
         "th" : {
@@ -11916,7 +11916,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Çağırma"
+            "value" : "Çağırmalar"
           }
         },
         "zh-Hans" : {

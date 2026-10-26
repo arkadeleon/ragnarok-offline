@@ -28,7 +28,7 @@ struct MonsterSummonSectionView: View {
         } header: {
             NavigationLink(value: monsterSummon) {
                 HStack {
-                    Text("Summon", tableName: "Database")
+                    Text("Summons", tableName: "Database")
                         .foregroundStyle(Color.primary)
                     Image(systemName: "chevron.right")
                         .foregroundStyle(Color.secondary)
