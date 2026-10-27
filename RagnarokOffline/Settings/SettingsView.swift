@@ -22,6 +22,12 @@ struct SettingsView: View {
                 } label: {
                     Text("About", tableName: "Settings")
                 }
+
+                NavigationLink {
+                    StorageView()
+                } label: {
+                    Text("Storage", tableName: "Settings")
+                }
             } header: {
                 Text("General", tableName: "Settings")
             }
