@@ -48,7 +48,17 @@ final class MessageCenter {
     let itemInfoTable: ItemInfoTable
     let messageStringTable: MessageStringTable
 
-    var messages: [MessageCenter.Message] = []
+    private let messageCapacity = 400
+
+    var messages: [MessageCenter.Message] = [] {
+        didSet {
+            if messages.count > messageCapacity {
+                messages.removeFirst(messages.count - messageCapacity)
+            }
+        }
+    }
+
+    var inputHistory = ChatInputHistory()
 
     init(itemInfoTable: ItemInfoTable, messageStringTable: MessageStringTable) {
         self.itemInfoTable = itemInfoTable

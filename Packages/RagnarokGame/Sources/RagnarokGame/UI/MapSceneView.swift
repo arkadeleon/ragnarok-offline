@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
-import Combine
 import SwiftUI
 
 struct MapSceneView: View {
@@ -20,7 +19,6 @@ struct MapSceneView: View {
     @Environment(GameContext.self) private var gameContext
 
     @State private var screenWidth: CGFloat = 320
-    @State private var chatBoxOffsetY: CGFloat = 0
     @State private var actionBarHeight: CGFloat = 0
     @State private var presentedMenuItem: MenuItem?
 
@@ -91,30 +89,12 @@ struct MapSceneView: View {
             .padding(.trailing, 16)
             .padding(.bottom, statusIconBarBottomPadding)
         }
-        .overlay(alignment: isWidescreen ? .bottomLeading : .bottom) {
+        .ignoresSafeArea()
+        .overlay {
             #if os(iOS)
             ChatBoxView()
                 .frame(width: chatBoxWidth)
-                .offset(y: chatBoxOffsetY)
-                .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { notification in
-                    let frameEnd = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-                    let animationDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
-                    let animationCurve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt
-
-                    guard let frameEnd, let animationDuration, let animationCurve else {
-                        return
-                    }
-
-                    let screenHeight = UIScreen.main.bounds.height
-                    withAnimation(.keyboard(curve: animationCurve, duration: animationDuration)) {
-                        if frameEnd.minY < screenHeight {
-                            let keyboardHeight = screenHeight - frameEnd.minY
-                            chatBoxOffsetY = ChatBoxView.contentHeight(for: .full) - keyboardHeight
-                        } else {
-                            chatBoxOffsetY = 0
-                        }
-                    }
-                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: isWidescreen ? .bottomLeading : .bottom)
             #endif
         }
         .overlay(alignment: .center) {
@@ -176,7 +156,7 @@ struct MapSceneView: View {
                 presentedMenuItem = nil
             }
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(.container)
         .onGeometryChange(for: CGFloat.self) { geometryProxy in
             geometryProxy.size.width + geometryProxy.safeAreaInsets.leading + geometryProxy.safeAreaInsets.trailing
         } action: { containerWidth in

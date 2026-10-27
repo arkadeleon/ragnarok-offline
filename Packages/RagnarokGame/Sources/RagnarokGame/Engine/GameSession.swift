@@ -1295,9 +1295,31 @@ final public class GameSession {
 //            PACKET_CZ_GUILD_CHAT
         } else if message.hasPrefix("/cl") {
 //            PACKET_CZ_CLAN_CHAT
+        } else if message.hasPrefix("/") {
+            performSlashCommand(message)
         } else {
             let packet = PacketFactory.CZ_REQUEST_CHAT(message: "\(character.name) : \(message)")
             mapClient.sendPacket(packet)
+        }
+    }
+
+    private func performSlashCommand(_ message: String) {
+        guard let slashCommand = SlashCommand(message: message) else {
+            context.messageCenter.addUnknownSlashCommandMessage()
+            return
+        }
+
+        switch slashCommand {
+        case .where:
+            if let mapScene {
+                let mapName = mapScene.mapName.replacingOccurrences(of: ".rsw", with: "")
+                let localizedMapName = context.mapInfoTable.localizedMapName(forMapName: mapName) ?? mapName
+                context.messageCenter.addLocationMessage(mapName: mapName, localizedMapName: localizedMapName, position: mapScene.player.gridPosition)
+            }
+        case .sit, .stand:
+            mapScene?.toggleSit()
+        case .help:
+            context.messageCenter.addSlashCommandHelpMessages()
         }
     }
 

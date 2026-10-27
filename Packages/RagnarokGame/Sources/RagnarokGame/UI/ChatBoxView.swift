@@ -28,18 +28,18 @@ struct ChatBoxView: View {
 
     static let perMessageHeight: CGFloat = 14
     static let messageHeaderHeight: CGFloat = 22
-    static let chatInputHeight: CGFloat = 36
+    static let chatInputHeight: CGFloat = 28
 
     static func contentHeight(for viewStyle: ViewStyle) -> CGFloat {
         switch viewStyle {
-        case .compact: perMessageHeight * CGFloat(messageCount(for: viewStyle))
-        case .full: perMessageHeight * CGFloat(messageCount(for: viewStyle)) + messageHeaderHeight
+        case .compact: perMessageHeight * CGFloat(messageCount(for: viewStyle)) + 1 + chatInputHeight
+        case .full: messageHeaderHeight + 1 + perMessageHeight * CGFloat(messageCount(for: viewStyle)) + 1 + chatInputHeight
         }
     }
 
     static func messageCount(for viewStyle: ViewStyle) -> Int {
         switch viewStyle {
-        case .compact: 6
+        case .compact: 5
         case .full: 15
         }
     }
@@ -54,8 +54,56 @@ struct ChatBoxView: View {
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        VStack(spacing: 3) {
+        VStack(spacing: 0) {
             if viewStyle == .full {
+                HStack(spacing: 0) {
+                    MessageGroupButton(group: .chat, selection: $messageGroup)
+                    MessageGroupButton(group: .command, selection: $messageGroup)
+                }
+                .frame(height: ChatBoxView.messageHeaderHeight)
+
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(height: 1)
+            }
+
+            Group {
+                switch messageGroup {
+                case .chat:
+                    ChatMessageListView(messages: gameContext.messageCenter.messages)
+                case .command:
+                    AtCommandShortcutListView(groups: AtCommandShortcutGroup.allGroups) { shortcut in
+                        send(shortcut.command)
+                    }
+                }
+            }
+            .frame(height: ChatBoxView.perMessageHeight * CGFloat(ChatBoxView.messageCount(for: viewStyle)))
+            .onTapGesture {
+                switch viewStyle {
+                case .compact:
+                    self.viewStyle = .full
+                case .full:
+                    self.viewStyle = .compact
+                }
+            }
+
+            Rectangle()
+                .fill(Color.white.opacity(0.3))
+                .frame(height: 1)
+
+            HStack(spacing: 0) {
+                Button {
+                } label: {
+                    Color.clear
+                        .frame(width: 60)
+                        .contentShape(.rect)
+                }
+                .buttonStyle(.plain)
+
+                Rectangle()
+                    .fill(Color.white.opacity(0.3))
+                    .frame(width: 1)
+
                 TextField(String(), text: $message)
                     .textFieldStyle(.plain)
                     #if !os(macOS)
@@ -63,54 +111,30 @@ struct ChatBoxView: View {
                     #endif
                     .disableAutocorrection(true)
                     .font(.game())
-                    .foregroundStyle(Color.gameLabel)
-                    .padding(.horizontal, 6)
+                    .foregroundStyle(Color.white)
+                    .tint(Color.white)
+                    .padding(.horizontal, 3)
                     .frame(height: ChatBoxView.chatInputHeight)
-                    .background(Color.white.opacity(0.8))
-                    .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
                     .focused($isFocused)
                     .onSubmit {
                         send(message)
                     }
+
+                ChatInputHistoryButton(systemImage: "arrow.up") {
+                    message = gameContext.messageCenter.inputHistory.previous()
+                }
+                .disabled(!gameContext.messageCenter.inputHistory.hasPrevious)
+
+                ChatInputHistoryButton(systemImage: "arrow.down") {
+                    message = gameContext.messageCenter.inputHistory.next()
+                }
+                .disabled(!gameContext.messageCenter.inputHistory.hasNext)
             }
-
-            VStack(spacing: 0) {
-                if viewStyle == .full {
-                    HStack(spacing: 0) {
-                        MessageGroupButton(group: .chat, selection: $messageGroup)
-                        MessageGroupButton(group: .command, selection: $messageGroup)
-                    }
-                    .frame(height: ChatBoxView.messageHeaderHeight)
-
-                    Rectangle()
-                        .fill(Color.white)
-                        .frame(height: 1)
-                }
-
-                Group {
-                    switch messageGroup {
-                    case .chat:
-                        ChatMessageListView(messages: gameContext.messageCenter.messages)
-                    case .command:
-                        AtCommandShortcutListView(groups: AtCommandShortcutGroup.allGroups) { shortcut in
-                            send(shortcut.command)
-                        }
-                    }
-                }
-                .frame(height: ChatBoxView.perMessageHeight * CGFloat(ChatBoxView.messageCount(for: viewStyle)))
-                .onTapGesture {
-                    switch viewStyle {
-                    case .compact:
-                        self.viewStyle = .full
-                    case .full:
-                        self.viewStyle = .compact
-                    }
-                }
-            }
-            .background(Color.black.opacity(0.4))
-            .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
-            .environment(\.colorScheme, .dark)
+            .frame(height: ChatBoxView.chatInputHeight)
         }
+        .background(Color.black.opacity(0.4))
+        .clipShape(RoundedRectangle(cornerRadius: 3, style: .circular))
+        .environment(\.colorScheme, .dark)
         .geometryGroup()
         .animation(.spring(duration: 0.25), value: viewStyle)
     }
@@ -121,6 +145,7 @@ struct ChatBoxView: View {
         }
 
         gameSession.sendMessage(message)
+        gameContext.messageCenter.inputHistory.push(message)
         self.message = ""
     }
 }
@@ -147,7 +172,8 @@ private struct MessageGroupButton: View {
 private struct ChatMessageListView: View {
     var messages: [MessageCenter.Message]
 
-    @State private var scrollPosition: UUID?
+    @State private var scrollPosition = ScrollPosition(edge: .bottom)
+    @State private var isAtBottom = true
 
     var body: some View {
         ScrollView {
@@ -159,10 +185,23 @@ private struct ChatMessageListView: View {
                         .foregroundStyle(Color.white)
                 }
             }
+            .padding(.horizontal, 3)
         }
-        .scrollPosition(id: $scrollPosition, anchor: .bottom)
-        .onChange(of: messages.count) {
-            scrollPosition = messages.last?.id
+        .scrollPosition($scrollPosition)
+        .clipped()
+        .onScrollGeometryChange(for: ScrollGeometry.self) { geometry in
+            geometry
+        } action: { oldGeometry, newGeometry in
+            if oldGeometry.containerSize != newGeometry.containerSize && isAtBottom {
+                scrollPosition.scrollTo(edge: .bottom)
+            } else {
+                isAtBottom = newGeometry.visibleRect.maxY >= newGeometry.contentSize.height + newGeometry.contentInsets.bottom - 1
+            }
+        }
+        .onChange(of: messages.last?.id) {
+            if isAtBottom {
+                scrollPosition.scrollTo(edge: .bottom)
+            }
         }
     }
 }
@@ -205,6 +244,25 @@ private struct AtCommandShortcutListView: View {
             .padding(8)
         }
         .scrollIndicators(.hidden)
+        .clipped()
+    }
+}
+
+private struct ChatInputHistoryButton: View {
+    var systemImage: String
+    var action: () -> Void
+
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+                .font(.game(size: 10, weight: .bold))
+                .foregroundStyle(Color.white.opacity(isEnabled ? 1 : 0.3))
+                .frame(width: ChatBoxView.chatInputHeight, height: ChatBoxView.chatInputHeight)
+                .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -226,8 +284,7 @@ private struct AtCommandShortcutListView: View {
         Spacer()
         ChatBoxView()
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color.gray.opacity(0.5))
+    .ignoresSafeArea()
     .environment(gameSession)
     .environment(gameSession.context)
 }
