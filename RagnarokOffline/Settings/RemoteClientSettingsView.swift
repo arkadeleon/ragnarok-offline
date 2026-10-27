@@ -33,7 +33,7 @@ struct RemoteClientSettingsView: View {
                         Text("Hosting and delivering these files requires ongoing expenses for server storage, bandwidth, and maintenance. Contributions from **Remote Client** users help cover these costs and keep core features free for everyone.", tableName: "Settings")
                         Text("When **Remote Client** is active, resources are downloaded from the remote server and cached locally in **Remote Client Files**. If you already have client files such as data.grf, you can use the local client instead.", tableName: "Settings")
                         #else
-                        Text("Game resources are required for item and skill icons, character and monster sprites, and the beta Game Client. Turn on **Use Remote Client** to download resources from the remote server and cache them locally in **Remote Client Files**. If you already have local client files such as data.grf, you can keep **Use Remote Client** turned off and use those files instead.", tableName: "Settings")
+                        Text("The beta Game Client, database icons and sprites, and tools all need game resources. Turn on **Use Remote Client** to download them from the remote server and cache them in **Remote Client Files**. If you already have local client files such as data.grf, leave it off and use those files instead.", tableName: "Settings")
                         Text("**Remote Client** will require a subscription in a future update to help cover server costs. Local client files will continue to work without a subscription.", tableName: "Settings")
                             .foregroundStyle(.orange)
                         #endif

@@ -534,82 +534,6 @@
         }
       }
     },
-    "Game resources are required for item and skill icons, character and monster sprites, and the beta Game Client. Turn on **Use Remote Client** to download resources from the remote server and cache them locally in **Remote Client Files**. If you already have local client files such as data.grf, you can keep **Use Remote Client** turned off and use those files instead." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Spielressourcen werden für Gegenstands- und Fertigkeitssymbole, Charakter- und Monstersprites sowie den Beta-Spiel-Client benötigt. Aktiviere **Remote-Client verwenden**, um Ressourcen vom Remote-Server herunterzuladen und lokal in **Remote-Client-Dateien** zwischenzuspeichern. Wenn du bereits lokale Client-Dateien wie data.grf hast, kannst du **Remote-Client verwenden** deaktiviert lassen und stattdessen diese Dateien nutzen."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Los recursos del juego son necesarios para los iconos de objetos y habilidades, los sprites de personajes y monstruos, y el Cliente de juego beta. Activa **Usar Cliente remoto** para descargar recursos del servidor remoto y almacenarlos localmente en **Archivos de Cliente remoto**. Si ya tienes archivos del cliente local, como data.grf, puedes mantener **Usar Cliente remoto** desactivado y utilizar esos archivos en su lugar."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Les ressources de jeu sont nécessaires pour les icônes d'objets et de compétences, les sprites de personnages et de monstres, ainsi que pour le Client de jeu bêta. Activez **Utiliser Client distant** pour télécharger les ressources depuis le serveur distant et les mettre en cache localement dans **Fichiers de Client distant**. Si vous disposez déjà de fichiers de client local comme data.grf, vous pouvez laisser **Utiliser Client distant** désactivé et utiliser ces fichiers à la place."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Resource game diperlukan untuk ikon item dan skill, sprite karakter dan monster, serta Klien game beta. Aktifkan **Gunakan Klien jarak jauh** untuk mengunduh resource dari server remote dan menyimpannya secara lokal di **File Klien Jarak Jauh**. Jika Anda sudah memiliki file klien lokal seperti data.grf, Anda dapat tetap menonaktifkan **Gunakan Klien jarak jauh** dan menggunakan file tersebut sebagai gantinya."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "アイテムやスキルのアイコン、キャラクターやモンスターのスプライト、ベータ版ゲームクライアントには、ゲームリソースが必要です。**リモートクライアントを使用**をオンにすると、リモートサーバーからリソースがダウンロードされ、**リモートクライアントファイル**にローカルでキャッシュされます。data.grf などのローカルクライアントファイルを既に持っている場合は、**リモートクライアントを使用**をオフのままにして、代わりにそれらのファイルを使用できます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "아이템 및 스킬 아이콘, 캐릭터 및 몬스터 스프라이트, 베타 게임 클라이언트에는 게임 리소스가 필요합니다. **원격 클라이언트 사용**을 켜면 원격 서버에서 리소스를 다운로드하여 **원격 클라이언트 파일**에 로컬로 캐시합니다. data.grf 같은 로컬 클라이언트 파일이 이미 있다면 **원격 클라이언트 사용**을 끈 상태로 유지하고 해당 파일을 대신 사용할 수 있습니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Os recursos do jogo são necessários para ícones de itens e habilidades, sprites de personagens e monstros e o Cliente de jogo beta. Ative **Usar Cliente remoto** para baixar recursos do servidor remoto e armazená-los localmente em **Arquivos do Cliente remoto**. Se você já tem arquivos do cliente local, como data.grf, pode manter **Usar Cliente remoto** desativado e usar esses arquivos."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Игровые ресурсы необходимы для значков предметов и умений, спрайтов персонажей и монстров, а также для бета-версии Игрового клиента. Включите **Использовать удалённый клиент**, чтобы загружать ресурсы с удалённого сервера и кэшировать их локально в **Файлах удалённого клиента**. Если у вас уже есть файлы локального клиента, например data.grf, можно оставить **Использовать удалённый клиент** выключенным и пользоваться этими файлами."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ทรัพยากรเกมจำเป็นสำหรับไอคอนไอเท็มและสกิล สไปรต์ตัวละครและมอนสเตอร์ รวมถึงไคลเอนต์เกมรุ่นเบต้า เปิด **ใช้ไคลเอนต์ระยะไกล** เพื่อดาวน์โหลดทรัพยากรจากเซิร์ฟเวอร์ระยะไกลและแคชไว้ในเครื่องที่ **ไฟล์ไคลเอนต์ระยะไกล** หากคุณมีไฟล์ไคลเอนต์ในเครื่องอยู่แล้ว เช่น data.grf คุณสามารถปิด **ใช้ไคลเอนต์ระยะไกล** ไว้และใช้ไฟล์เหล่านั้นแทนได้"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eşya ve beceri simgeleri, karakter ve canavar sprite'ları ve beta Oyun İstemcisi için oyun kaynakları gereklidir. Kaynakları uzak sunucudan indirmek ve yerel olarak **Uzak İstemci Dosyaları** içinde önbelleğe almak için **Uzak İstemci'yi Kullan** seçeneğini açın. data.grf gibi yerel istemci dosyalarınız zaten varsa **Uzak İstemci'yi Kullan** seçeneğini kapalı tutup bu dosyaları kullanabilirsiniz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "物品和技能图标、角色和怪物精灵图以及测试版游戏客户端都需要游戏资源。开启**使用远程客户端**可从远程服务器下载资源，并将其缓存到本地的**远程客户端文件**中。如果你已有 data.grf 等本地客户端文件，可以让**使用远程客户端**保持关闭，并改用这些文件。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "物品和技能圖示、角色和魔物精靈圖以及測試版遊戲用戶端都需要遊戲資源。開啟**使用遠端用戶端**可從遠端伺服器下載資源，並將其快取至本機的**遠端用戶端檔案**中。如果你已有 data.grf 等本機用戶端檔案，可以讓**使用遠端用戶端**保持關閉，並改用這些檔案。"
-          }
-        }
-      }
-    },
     "General" : {
       "localizations" : {
         "de" : {
@@ -1899,6 +1823,82 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "訂閱"
+          }
+        }
+      }
+    },
+    "The beta Game Client, database icons and sprites, and tools all need game resources. Turn on **Use Remote Client** to download them from the remote server and cache them in **Remote Client Files**. If you already have local client files such as data.grf, leave it off and use those files instead." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Beta-Spiel-Client, Datenbanksymbole und -sprites sowie die Tools benötigen Spielressourcen. Aktiviere **Remote-Client verwenden**, um sie vom Remote-Server herunterzuladen und in **Remote-Client-Dateien** zwischenzuspeichern. Wenn du bereits lokale Client-Dateien wie data.grf hast, lass die Option deaktiviert und nutze stattdessen diese Dateien."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El Cliente de juego beta, los iconos y sprites de la base de datos y las herramientas necesitan recursos del juego. Activa **Usar Cliente remoto** para descargarlos del servidor remoto y almacenarlos en **Archivos de Cliente remoto**. Si ya tienes archivos del cliente local, como data.grf, déjalo desactivado y usa esos archivos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le Client de jeu bêta, les icônes et sprites de la base de données ainsi que les outils nécessitent des ressources de jeu. Activez **Utiliser Client distant** pour les télécharger depuis le serveur distant et les mettre en cache dans **Fichiers de Client distant**. Si vous disposez déjà de fichiers de client local comme data.grf, laissez l'option désactivée et utilisez ces fichiers."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klien game beta, ikon dan sprite database, serta alat memerlukan resource game. Aktifkan **Gunakan Klien jarak jauh** untuk mengunduhnya dari server remote dan menyimpannya di **File Klien Jarak Jauh**. Jika Anda sudah memiliki file klien lokal seperti data.grf, biarkan nonaktif dan gunakan file tersebut."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベータ版ゲームクライアント、データベースのアイコンとスプライト、ツールにはゲームリソースが必要です。**リモートクライアントを使用**をオンにすると、リモートサーバーからダウンロードして**リモートクライアントファイル**にキャッシュします。data.grf などのローカルクライアントファイルがある場合は、オフのままでそれらのファイルを使用できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "베타 게임 클라이언트, 데이터베이스 아이콘 및 스프라이트, 도구에는 게임 리소스가 필요합니다. **원격 클라이언트 사용**을 켜면 원격 서버에서 다운로드하여 **원격 클라이언트 파일**에 캐시합니다. data.grf 같은 로컬 클라이언트 파일이 이미 있다면 끈 상태로 두고 해당 파일을 사용하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Cliente de jogo beta, os ícones e sprites do banco de dados e as ferramentas precisam de recursos do jogo. Ative **Usar Cliente remoto** para baixá-los do servidor remoto e armazená-los em **Arquivos do Cliente remoto**. Se você já tem arquivos do cliente local, como data.grf, deixe desativado e use esses arquivos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бета-версии Игрового клиента, значкам и спрайтам базы данных, а также инструментам нужны игровые ресурсы. Включите **Использовать удалённый клиент**, чтобы загружать их с удалённого сервера и кэшировать в **Файлах удалённого клиента**. Если у вас уже есть файлы локального клиента, например data.grf, оставьте параметр выключенным и используйте эти файлы."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไคลเอนต์เกมรุ่นเบต้า ไอคอนและสไปรต์ในฐานข้อมูล รวมถึงเครื่องมือต่าง ๆ ต้องใช้ทรัพยากรเกม เปิด **ใช้ไคลเอนต์ระยะไกล** เพื่อดาวน์โหลดจากเซิร์ฟเวอร์ระยะไกลและแคชไว้ใน **ไฟล์ไคลเอนต์ระยะไกล** หากคุณมีไฟล์ไคลเอนต์ในเครื่องอยู่แล้ว เช่น data.grf ให้ปิดไว้และใช้ไฟล์เหล่านั้นแทน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beta Oyun İstemcisi, veritabanı simgeleri ve sprite'ları ile araçlar oyun kaynaklarına ihtiyaç duyar. Bunları uzak sunucudan indirip **Uzak İstemci Dosyaları** içinde önbelleğe almak için **Uzak İstemci'yi Kullan** seçeneğini açın. data.grf gibi yerel istemci dosyalarınız zaten varsa seçeneği kapalı bırakıp bu dosyaları kullanın."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "测试版游戏客户端、数据库中的图标和精灵图以及各类工具都需要游戏资源。开启**使用远程客户端**可从远程服务器下载资源，并缓存到**远程客户端文件**中。如果你已有 data.grf 等本地客户端文件，保持关闭并使用这些文件即可。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "測試版遊戲用戶端、資料庫中的圖示和精靈圖以及各類工具都需要遊戲資源。開啟**使用遠端用戶端**可從遠端伺服器下載資源，並快取至**遠端用戶端檔案**中。如果你已有 data.grf 等本機用戶端檔案，保持關閉並使用這些檔案即可。"
           }
         }
       }
