@@ -33,17 +33,10 @@ struct ChatClientView: View {
         .onScrollGeometryChange(for: ScrollGeometry.self) { geometry in
             geometry
         } action: { oldGeometry, newGeometry in
-            if oldGeometry.containerSize != newGeometry.containerSize && isAtBottom {
+            if isAtBottom && (oldGeometry.containerSize != newGeometry.containerSize || oldGeometry.contentSize != newGeometry.contentSize) {
                 scrollPosition.scrollTo(edge: .bottom)
             } else {
                 isAtBottom = newGeometry.visibleRect.maxY >= newGeometry.contentSize.height + newGeometry.contentInsets.bottom - 1
-            }
-        }
-        .onChange(of: chatSession.messages.last?.id) {
-            if isAtBottom {
-                withAnimation {
-                    scrollPosition.scrollTo(edge: .bottom)
-                }
             }
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
