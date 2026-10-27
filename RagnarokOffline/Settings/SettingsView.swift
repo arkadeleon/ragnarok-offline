@@ -47,11 +47,12 @@ struct SettingsView: View {
                     Text("Server Configuration")
                 }
 
-                Toggle("Resume Servers Automatically", isOn: $settings.automaticallyResumesServers)
+                Toggle(isOn: $settings.automaticallyRestartsServers) {
+                    Text("Restart Servers Automatically")
+                    Text("Restart previously running servers when returning to the foreground")
+                }
             } header: {
                 Text("Server")
-            } footer: {
-                Text("When enabled, servers that were running before the app entered the background automatically resume when the app returns to the foreground.")
             }
 
             Section {

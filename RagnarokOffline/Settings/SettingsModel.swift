@@ -16,7 +16,7 @@ private enum SettingsKey {
     static let usesRemoteClient = "client.uses_remote_client"
     static let serverAddress = "client.server_address"
     static let serverPort = "client.server_port"
-    static let automaticallyResumesServers = "server.automatically_resumes_servers"
+    static let automaticallyRestartsServers = "server.automatically_restarts_servers"
     static let databaseMode = "database.mode"
 }
 
@@ -52,9 +52,9 @@ final class SettingsModel {
         }
     }
 
-    var automaticallyResumesServers: Bool {
+    var automaticallyRestartsServers: Bool {
         didSet {
-            defaults.set(automaticallyResumesServers, forKey: SettingsKey.automaticallyResumesServers)
+            defaults.set(automaticallyRestartsServers, forKey: SettingsKey.automaticallyRestartsServers)
         }
     }
 
@@ -71,7 +71,7 @@ final class SettingsModel {
         usesRemoteClient = defaults.object(forKey: SettingsKey.usesRemoteClient) as? Bool ?? true
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
-        automaticallyResumesServers = defaults.bool(forKey: SettingsKey.automaticallyResumesServers)
+        automaticallyRestartsServers = defaults.bool(forKey: SettingsKey.automaticallyRestartsServers)
         databaseMode = defaults.string(forKey: SettingsKey.databaseMode).flatMap(DatabaseMode.init) ?? .renewal
 
         #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
