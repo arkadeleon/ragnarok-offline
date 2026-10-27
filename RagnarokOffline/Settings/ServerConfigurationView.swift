@@ -23,7 +23,7 @@ struct ServerConfigurationView: View {
                 }
             }
         }
-        .navigationTitle("Server Configuration")
+        .navigationTitle(Text("Server Configuration", tableName: "Settings"))
         .toolbarTitleDisplayMode(.inline)
     }
 

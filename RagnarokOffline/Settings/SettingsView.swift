@@ -20,10 +20,10 @@ struct SettingsView: View {
                 NavigationLink {
                     AboutView()
                 } label: {
-                    Text("About")
+                    Text("About", tableName: "Settings")
                 }
             } header: {
-                Text("General")
+                Text("General", tableName: "Settings")
             }
 
             Section {
@@ -31,43 +31,49 @@ struct SettingsView: View {
                     RemoteClientSettingsView()
                 } label: {
                     LabeledContent {
-                        Text(settings.isRemoteClientEnabled ? "On" : "Off")
+                        if settings.isRemoteClientEnabled {
+                            Text("On", tableName: "Settings")
+                        } else {
+                            Text("Off", tableName: "Settings")
+                        }
                     } label: {
-                        Text("Remote Client")
+                        Text("Remote Client", tableName: "Settings")
                     }
                 }
             } header: {
-                Text("Client")
+                Text("Client", tableName: "Settings")
             }
 
             Section {
                 NavigationLink {
                     ServerConfigurationView(serverConfiguration: serverConfiguration)
                 } label: {
-                    Text("Server Configuration")
+                    Text("Server Configuration", tableName: "Settings")
                 }
 
                 Toggle(isOn: $settings.automaticallyRestartsServers) {
-                    Text("Restart Servers Automatically")
-                    Text("Restart previously running servers when returning to the foreground")
+                    Text("Restart Servers Automatically", tableName: "Settings")
+                    Text("Restart previously running servers when returning to the foreground", tableName: "Settings")
                 }
             } header: {
-                Text("Server")
+                Text("Server", tableName: "Settings")
             }
 
             Section {
-                Picker("Database Mode", selection: $settings.databaseMode) {
-                    Text("Pre-Renewal")
+                Picker(selection: $settings.databaseMode) {
+                    Text("Pre-Renewal", tableName: "Settings")
                         .tag(DatabaseMode.prerenewal)
-                    Text("Renewal")
+                    Text("Renewal", tableName: "Settings")
                         .tag(DatabaseMode.renewal)
+                } label: {
+                    Text("Database Mode", tableName: "Settings")
                 }
             } header: {
-                Text("Database")
+                Text("Database", tableName: "Settings")
             }
         }
         .formStyle(.grouped)
-        .navigationTitle("Settings")
+        .navigationTitle(Text("Settings", tableName: "Settings"))
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarDoneButton {

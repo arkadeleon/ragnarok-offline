@@ -13,26 +13,36 @@ struct AboutView: View {
     var body: some View {
         Form {
             Section {
-                LabeledContent("Version", value: appVersion)
+                LabeledContent {
+                    Text(appVersion)
+                } label: {
+                    Text("Version", tableName: "Settings")
+                }
             }
 
             Section {
-                Link("GitHub Repository", destination: repositoryURL)
+                Link(destination: repositoryURL) {
+                    Text("GitHub Repository", tableName: "Settings")
+                }
 
-                Link("Report a Bug", destination: newIssueURL(template: "bug_report.yml", fields: [
+                Link(destination: newIssueURL(template: "bug_report.yml", fields: [
                     "app-version": appVersion,
                     "os-version": systemVersion,
                     "device-model": deviceModel,
                     "remote-client": settings.isRemoteClientEnabled ? "On" : "Off",
-                ]))
+                ])) {
+                    Text("Report a Bug", tableName: "Settings")
+                }
 
-                Link("Request a Feature", destination: newIssueURL(template: "feature_request.yml", fields: [
+                Link(destination: newIssueURL(template: "feature_request.yml", fields: [
                     "app-version": appVersion,
-                ]))
+                ])) {
+                    Text("Request a Feature", tableName: "Settings")
+                }
             }
         }
         .formStyle(.grouped)
-        .navigationTitle("About")
+        .navigationTitle(Text("About", tableName: "Settings"))
         .toolbarTitleDisplayMode(.inline)
     }
 

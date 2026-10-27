@@ -23,18 +23,18 @@ struct RemoteClientSettingsView: View {
                         .frame(width: 72, height: 72)
                         .background(.blue.gradient, in: RoundedRectangle(cornerRadius: 16))
 
-                    Text("Remote Client")
+                    Text("Remote Client", tableName: "Settings")
                         .font(.title)
                         .bold()
 
                     Group {
                         #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
-                        Text("**Remote Client** is a paid option that provides game resources such as textures, sprites, and models without requiring you to keep a full local client archive on this device.")
-                        Text("Hosting and delivering these files requires ongoing expenses for server storage, bandwidth, and maintenance. Contributions from **Remote Client** users help cover these costs and keep core features free for everyone.")
-                        Text("When **Remote Client** is active, resources are downloaded from the remote server and cached locally in **Remote Client Files**. If you already have client files such as data.grf, you can use the local client instead.")
+                        Text("**Remote Client** is a paid option that provides game resources such as textures, sprites, and models without requiring you to keep a full local client archive on this device.", tableName: "Settings")
+                        Text("Hosting and delivering these files requires ongoing expenses for server storage, bandwidth, and maintenance. Contributions from **Remote Client** users help cover these costs and keep core features free for everyone.", tableName: "Settings")
+                        Text("When **Remote Client** is active, resources are downloaded from the remote server and cached locally in **Remote Client Files**. If you already have client files such as data.grf, you can use the local client instead.", tableName: "Settings")
                         #else
-                        Text("Game resources are required for item and skill icons, character and monster sprites, and the beta Game Client. Turn on **Use Remote Client** to download resources from the remote server and cache them locally in **Remote Client Files**. If you already have local client files such as data.grf, you can keep **Use Remote Client** turned off and use those files instead.")
-                        Text("**Remote Client** will require a subscription in a future update to help cover server costs. Local client files will continue to work without a subscription.")
+                        Text("Game resources are required for item and skill icons, character and monster sprites, and the beta Game Client. Turn on **Use Remote Client** to download resources from the remote server and cache them locally in **Remote Client Files**. If you already have local client files such as data.grf, you can keep **Use Remote Client** turned off and use those files instead.", tableName: "Settings")
+                        Text("**Remote Client** will require a subscription in a future update to help cover server costs. Local client files will continue to work without a subscription.", tableName: "Settings")
                             .foregroundStyle(.orange)
                         #endif
                     }
@@ -49,22 +49,30 @@ struct RemoteClientSettingsView: View {
                         .storeButton(.visible, for: .restorePurchases)
                 } label: {
                     LabeledContent {
-                        Text(settings.hasActiveRemoteClientSubscription ? "Active" : "Inactive")
+                        if settings.hasActiveRemoteClientSubscription {
+                            Text("Active", tableName: "Settings")
+                        } else {
+                            Text("Inactive", tableName: "Settings")
+                        }
                     } label: {
-                        Text("Subscription")
+                        Text("Subscription", tableName: "Settings")
                     }
                 }
 
                 if settings.hasActiveRemoteClientSubscription {
-                    Toggle("Use Remote Client", isOn: $settings.usesRemoteClient)
+                    Toggle(isOn: $settings.usesRemoteClient) {
+                        Text("Use Remote Client", tableName: "Settings")
+                    }
                 }
                 #else
-                Toggle("Use Remote Client", isOn: $settings.usesRemoteClient)
+                Toggle(isOn: $settings.usesRemoteClient) {
+                    Text("Use Remote Client", tableName: "Settings")
+                }
                 #endif
             }
         }
         .formStyle(.grouped)
-        .navigationTitle("Remote Client")
+        .navigationTitle(Text("Remote Client", tableName: "Settings"))
         .toolbarTitleDisplayMode(.inline)
     }
 }
