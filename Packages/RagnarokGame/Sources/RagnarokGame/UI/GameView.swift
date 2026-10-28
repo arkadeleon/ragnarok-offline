@@ -18,15 +18,34 @@ public struct GameView: View {
             switch gameSession.stage {
             case .login(let loginPhase):
                 LoginStageView(loginPhase: loginPhase)
-            case .map(let mapPhase):
-                switch mapPhase {
-                case .loading(let progress):
-                    MapLoadingView(progress: progress)
-                case .loaded(let runtime):
-                    MapSceneView(runtime: runtime)
-                        .environment(runtime.scene.playSession)
+            case .play(let playSession):
+                Group {
+                    switch playSession.mapPhase {
+                    case .connecting, .loading:
+                        MapLoadingView(progress: loadingProgress(for: playSession.mapPhase))
+                    case .loaded(let runtime):
+                        MapSceneView(runtime: runtime)
+                    }
+                }
+                .environment(playSession)
+            }
+        }
+        .overlay(alignment: .center) {
+            ZStack {
+                ForEach(gameSession.errorMessages.reversed()) { errorMessage in
+                    MessageBoxView(errorMessage.content) {
+                        // btn_ok.bmp
+                        Button {
+                            errorMessage.performAction(in: gameSession)
+                        } label: {
+                            Text("OK", bundle: #bundle)
+                        }
+                        .buttonStyle(.game)
+                        .frame(width: 42, height: 20)
+                    }
                 }
             }
+            .offset(y: -120)
         }
         .overlay(alignment: .center) {
             if gameSession.isDisconnected {
@@ -65,6 +84,14 @@ public struct GameView: View {
 
     public init(gameSession: GameSession) {
         self.gameSession = gameSession
+    }
+
+    private func loadingProgress(for mapPhase: PlaySession.MapPhase) -> Progress {
+        if case .loading(let progress) = mapPhase {
+            progress
+        } else {
+            Progress()
+        }
     }
 }
 

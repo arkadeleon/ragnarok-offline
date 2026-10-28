@@ -10,6 +10,8 @@ import SwiftUI
 struct MapLoadingView: View {
     var progress: Progress
 
+    @State private var imageName = String(format: "loading%02d.jpg", Int.random(in: 1...10))
+
     var body: some View {
         ZStack {
             GameImage(imageName) { image in
@@ -21,12 +23,6 @@ struct MapLoadingView: View {
 
             GameProgressBar(progress: progress)
         }
-    }
-
-    private var imageName: String {
-        let i = Int.random(in: 1...10)
-        let imageName = String(format: "loading%02d.jpg", i)
-        return imageName
     }
 }
 

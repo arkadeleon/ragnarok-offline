@@ -15,6 +15,14 @@ import RagnarokPackets
 @MainActor
 @Observable
 final class PlaySession {
+    enum MapPhase {
+        case connecting
+        case loading(_ progress: Progress)
+        case loaded(_ runtime: MapSceneRuntime)
+    }
+
+    var mapPhase: MapPhase = .connecting
+
     var account: AccountInfo
     let character: CharacterInfo
 
@@ -39,6 +47,14 @@ final class PlaySession {
 
     @ObservationIgnored var serverClock = ServerClock()
     @ObservationIgnored var serverTimeRequestTime: ContinuousClock.Instant?
+
+    var mapRuntime: MapSceneRuntime? {
+        if case .loaded(let runtime) = mapPhase {
+            runtime
+        } else {
+            nil
+        }
+    }
 
     init(context: GameContext, account: AccountInfo, character: CharacterInfo, mapClient: NetworkClient? = nil) {
         self.account = account

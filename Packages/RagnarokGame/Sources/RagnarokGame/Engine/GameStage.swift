@@ -10,7 +10,7 @@ import RagnarokModels
 
 enum GameStage {
     case login(LoginStage.Phase)
-    case map(MapStage.Phase)
+    case play(PlaySession)
 }
 
 enum LoginStage {
@@ -22,12 +22,5 @@ enum LoginStage {
         case characterSelect(_ characters: [CharacterInfo])
         case characterMake(_ slot: Int)
         case waitingForMapServer(_ slot: Int)
-    }
-}
-
-enum MapStage {
-    enum Phase {
-        case loading(_ progress: Progress)
-        case loaded(_ runtime: MapSceneRuntime)
     }
 }

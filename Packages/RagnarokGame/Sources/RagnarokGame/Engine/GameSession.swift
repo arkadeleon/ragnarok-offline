@@ -80,25 +80,26 @@ final public class GameSession {
     var selectedCharacterSlot: Int = 0
     private(set) var maxCharacterSlots: Int = 9
 
-    private(set) var playSession: PlaySession?
-
     @ObservationIgnored var loginClient: NetworkClient?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
 
     @ObservationIgnored var charClient: NetworkClient?
     @ObservationIgnored var charKeepaliveTask: Task<Void, Never>?
 
+    var playSession: PlaySession? {
+        if case .play(let playSession) = stage {
+            playSession
+        } else {
+            nil
+        }
+    }
 
     public var mapScene: MapScene? {
         mapRuntime?.scene
     }
 
     var mapRuntime: MapSceneRuntime? {
-        if case .map(let mapPhase) = stage, case .loaded(let runtime) = mapPhase {
-            runtime
-        } else {
-            nil
-        }
+        playSession?.mapRuntime
     }
 
     public init(resourceManager: ResourceManager) {
@@ -129,7 +130,6 @@ final public class GameSession {
         mapRuntime?.unload()
 
         stopAllClients()
-        playSession = nil
         resetLoginPhase()
 
         isDisconnected = false
@@ -156,17 +156,12 @@ final public class GameSession {
         case .login(.characterMake):
             stage = .login(.characterSelect(characters))
         case .login(.waitingForMapServer):
-            playSession?.stop()
             stopCharClient()
-            playSession = nil
             resetLoginPhase()
-        case .map:
-            mapRuntime?.unload()
-            if let playSession {
-                account = playSession.account
-            }
-            playSession?.stop()
-            playSession = nil
+        case .play(let playSession):
+            playSession.mapRuntime?.unload()
+            account = playSession.account
+            playSession.stop()
             if let charServer {
                 stage = .login(.connectingCharServer(charServer))
                 startCharClient(charServer)
@@ -192,28 +187,36 @@ final public class GameSession {
         case .network, .disconnected:
             switch stage {
             case .login:
-                guard client === loginClient || client === charClient || client === playSession?.mapClient else {
+                guard client === loginClient || client === charClient else {
                     break
                 }
 
-                stopAllClients()
-
-                let localizedMessage = context.messageStringTable.localizedMessageString(forID: 1)
-                let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
-                    gameSession.removeErrorMessage(errorMessage)
-                    gameSession.resetLoginPhase()
-                }
-                errorMessages.append(errorMessage)
-            case .map:
-                guard client === playSession?.mapClient else {
+                showConnectionError()
+            case .play(let playSession):
+                guard client === playSession.mapClient else {
                     break
                 }
 
-                isDisconnected = true
+                if case .connecting = playSession.mapPhase {
+                    showConnectionError()
+                } else {
+                    isDisconnected = true
+                }
             }
         case .decoding, .encoding:
             break
         }
+    }
+
+    private func showConnectionError() {
+        stopAllClients()
+
+        let localizedMessage = context.messageStringTable.localizedMessageString(forID: 1)
+        let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
+            gameSession.removeErrorMessage(errorMessage)
+            gameSession.resetLoginPhase()
+        }
+        errorMessages.append(errorMessage)
     }
 
     // MARK: - Login Client
@@ -612,7 +615,7 @@ final public class GameSession {
             character: character,
             mapClient: client
         )
-        self.playSession = playSession
+        stage = .play(playSession)
         playSession.start()
     }
 
@@ -657,7 +660,7 @@ final public class GameSession {
             mapRuntime?.unload()
 
             let progress = Progress()
-            stage = .map(.loading(progress))
+            playSession.mapPhase = .loading(progress)
 
             Task {
                 guard let device = MTLCreateSystemDefaultDevice() else {
@@ -689,7 +692,7 @@ final public class GameSession {
 
                     playSession.notifyMapLoaded()
 
-                    stage = .map(.loaded(runtime))
+                    playSession.mapPhase = .loaded(runtime)
                 } catch {
                     logger.warning("Map scene failed to load: \(error)")
                 }
