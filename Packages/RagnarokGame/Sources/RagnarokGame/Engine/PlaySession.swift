@@ -19,6 +19,12 @@ final class PlaySession {
     var shortcutList: ShortcutList
     let messageCenter: MessageCenter
 
+    var dialog: NPCDialog?
+    var dealSelectionNPCID: UInt32?
+    var npcShop: NPCShop?
+    var storage: Storage?
+    var warpList: WarpList?
+
     init(context: GameContext, playerStatus: CharacterStatus = CharacterStatus()) {
         self.playerStatus = playerStatus
         self.inventory = Inventory()

@@ -83,12 +83,6 @@ final public class GameSession {
 
     var interactionMode: GameInteractionMode = .direct
 
-    var dialog: NPCDialog?
-    var dealSelectionNPCID: UInt32?
-    var npcShop: NPCShop?
-    var storage: Storage?
-    var warpList: WarpList?
-
     private(set) var playSession: PlaySession?
 
     @ObservationIgnored var loginClient: NetworkClient?
@@ -143,7 +137,7 @@ final public class GameSession {
         mapRuntime?.unload()
 
         stopAllClients()
-        resetMapPhase()
+        playSession = nil
         resetLoginPhase()
 
         isDisconnected = false
@@ -172,11 +166,12 @@ final public class GameSession {
         case .login(.waitingForMapServer):
             stopMapClient()
             stopCharClient()
+            playSession = nil
             resetLoginPhase()
         case .map:
             mapRuntime?.unload()
             stopMapClient()
-            resetMapPhase()
+            playSession = nil
             if let charServer {
                 stage = .login(.connectingCharServer(charServer))
                 startCharClient(charServer)
@@ -196,16 +191,6 @@ final public class GameSession {
         maxCharacterSlots = 9
 
         stage = .login(.login)
-    }
-
-    private func resetMapPhase() {
-        dialog = nil
-        dealSelectionNPCID = nil
-        npcShop = nil
-        storage = nil
-        warpList = nil
-
-        playSession = nil
     }
 
     private func handleClientError(_ error: NetworkClientError, from client: NetworkClient) {
@@ -773,7 +758,7 @@ final public class GameSession {
                 mapScene?.onMapObjectSkillCast(skillID: skillID, sourceObjectID: packet.srcId, element: element, castTime: .milliseconds(packet.delayTime))
             }
         case let packet as PACKET_ZC_WARPLIST:
-            warpList = WarpList(from: packet)
+            playSession.warpList = WarpList(from: packet)
         case let packet as PACKET_ZC_AUTORUN_SKILL:
             var skill = SkillInfo()
             skill.skillID = Int(packet.skill_id)
@@ -849,7 +834,7 @@ final public class GameSession {
             // invType: 0 = inventory, 1 = cart, 2 = storage, 3 = guild storage
             switch packet.invType {
             case 2:
-                storage = Storage(name: packet.name)
+                playSession.storage = Storage(name: packet.name)
             default:
                 break
             }
@@ -861,7 +846,7 @@ final public class GameSession {
             case 0:
                 playSession.inventory.update(from: packet)
             case 2:
-                storage?.update(from: packet)
+                playSession.storage?.update(from: packet)
             default:
                 break
             }
@@ -871,7 +856,7 @@ final public class GameSession {
             case 0:
                 playSession.inventory.update(from: packet)
             case 2:
-                storage?.update(from: packet)
+                playSession.storage?.update(from: packet)
             default:
                 break
             }
@@ -996,49 +981,49 @@ final public class GameSession {
                 mapScene?.onEffectSpawned(effectID: effectID, objectID: packet.AID)
             }
         case let packet as PACKET_ZC_SAY_DIALOG:
-            if dialog?.npcID == packet.NpcID {
-                dialog?.update(from: packet)
+            if playSession.dialog?.npcID == packet.NpcID {
+                playSession.dialog?.update(from: packet)
             } else {
-                dialog = NPCDialog(from: packet)
+                playSession.dialog = NPCDialog(from: packet)
             }
         case let packet as PACKET_ZC_WAIT_DIALOG:
-            dialog?.update(from: packet)
+            playSession.dialog?.update(from: packet)
         case let packet as PACKET_ZC_CLOSE_DIALOG:
-            dialog?.update(from: packet)
+            playSession.dialog?.update(from: packet)
         case let packet as PACKET_ZC_CLEAR_DIALOG:
-            if dialog?.npcID == packet.GID {
-                dialog = nil
+            if playSession.dialog?.npcID == packet.GID {
+                playSession.dialog = nil
             }
         case let packet as PACKET_ZC_MENU_LIST:
-            dialog?.update(from: packet)
+            playSession.dialog?.update(from: packet)
         case let packet as PACKET_ZC_OPEN_EDITDLG:
-            dialog?.update(from: packet)
+            playSession.dialog?.update(from: packet)
         case let packet as PACKET_ZC_OPEN_EDITDLGSTR:
-            dialog?.update(from: packet)
+            playSession.dialog?.update(from: packet)
         case _ as PACKET_ZC_SHOW_IMAGE:
             break
         case _ as PACKET_ZC_COMPASS:
             break
         case let packet as PACKET_ZC_SELECT_DEALTYPE:
-            dealSelectionNPCID = packet.npcId
+            playSession.dealSelectionNPCID = packet.npcId
         case let packet as PACKET_ZC_PC_PURCHASE_ITEMLIST:
-            npcShop = NPCShop(from: packet)
+            playSession.npcShop = NPCShop(from: packet)
         case let packet as PACKET_ZC_PC_SELL_ITEMLIST:
-            npcShop = NPCShop(from: packet)
+            playSession.npcShop = NPCShop(from: packet)
         case let packet as PACKET_ZC_PC_PURCHASE_RESULT:
-            npcShop = nil
+            playSession.npcShop = nil
             playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_PC_SELL_RESULT:
-            npcShop = nil
+            playSession.npcShop = nil
             playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO:
-            storage?.update(from: packet)
+            playSession.storage?.update(from: packet)
         case let packet as PACKET_ZC_ADD_ITEM_TO_STORE:
-            storage?.update(from: packet)
+            playSession.storage?.update(from: packet)
         case let packet as PACKET_ZC_DELETE_ITEM_FROM_STORE:
-            storage?.update(from: packet)
+            playSession.storage?.update(from: packet)
         case _ as PACKET_ZC_CLOSE_STORE:
-            storage = nil
+            playSession.storage = nil
         case let packet as PACKET_ZC_NOTIFY_CHAT:
             let message = ChatMessage(from: packet)
             playSession.messageCenter.add(message)
@@ -1269,14 +1254,14 @@ final public class GameSession {
     }
 
     func selectWarpPoint(mapName: String) {
-        guard let mapClient, let warpList else {
+        guard let mapClient, let playSession, let warpList = playSession.warpList else {
             return
         }
 
         let packet = PacketFactory.CZ_SELECT_WARPPOINT(skillID: warpList.skillID, mapName: mapName)
         mapClient.sendPacket(packet)
 
-        self.warpList = nil
+        playSession.warpList = nil
     }
 
     func cancelWarpPoint() {
@@ -1459,87 +1444,87 @@ final public class GameSession {
     }
 
     func requestNextMessage() {
-        guard let mapClient, let npcID = dialog?.npcID else {
+        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
             return
         }
 
         let packet = PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: npcID)
         mapClient.sendPacket(packet)
 
-        dialog?.setNeedsClearMessage()
-        dialog?.clearAction()
+        playSession?.dialog?.setNeedsClearMessage()
+        playSession?.dialog?.clearAction()
     }
 
     func closeDialog() {
-        guard let mapClient, let npcID = dialog?.npcID else {
+        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
             return
         }
 
-        dialog = nil
+        playSession?.dialog = nil
 
         let packet = PacketFactory.CZ_CLOSE_DIALOG(npcID: npcID)
         mapClient.sendPacket(packet)
     }
 
     func selectMenu(_ select: UInt8) {
-        guard let mapClient, let npcID = dialog?.npcID else {
+        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
             return
         }
 
-        dialog?.clearMenu()
+        playSession?.dialog?.clearMenu()
 
         let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: npcID, select: select)
         mapClient.sendPacket(packet)
     }
 
     func cancelMenu() {
-        guard let mapClient, let npcID = dialog?.npcID else {
+        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
             return
         }
 
-        dialog = nil
+        playSession?.dialog = nil
 
         let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: npcID, select: 255)
         mapClient.sendPacket(packet)
     }
 
     func confirmInput(_ value: Int32) {
-        guard let mapClient, let npcID = dialog?.npcID else {
+        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
             return
         }
 
         let packet = PacketFactory.CZ_INPUT_EDITDLG(npcID: npcID, value: value)
         mapClient.sendPacket(packet)
 
-        dialog?.clearInput()
+        playSession?.dialog?.clearInput()
     }
 
     func confirmInput(_ value: String) {
-        guard let mapClient, let npcID = dialog?.npcID else {
+        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
             return
         }
 
         let packet = PacketFactory.CZ_INPUT_EDITDLGSTR(npcID: npcID, value: value)
         mapClient.sendPacket(packet)
 
-        dialog?.clearInput()
+        playSession?.dialog?.clearInput()
     }
 
     // MARK: - NPC Shop
 
     func selectDealType(_ dealType: NPCShopDealType) {
-        guard let mapClient, let npcID = dealSelectionNPCID else {
+        guard let mapClient, let npcID = playSession?.dealSelectionNPCID else {
             return
         }
 
-        dealSelectionNPCID = nil
+        playSession?.dealSelectionNPCID = nil
 
         let packet = PacketFactory.CZ_ACK_SELECT_DEALTYPE(npcID: npcID, dealType: dealType)
         mapClient.sendPacket(packet)
     }
 
     func cancelDealSelection() {
-        dealSelectionNPCID = nil
+        playSession?.dealSelectionNPCID = nil
     }
 
     func purchaseItems(_ purchases: [NPCShopPurchase]) {
@@ -1565,7 +1550,7 @@ final public class GameSession {
             return
         }
 
-        npcShop = nil
+        playSession?.npcShop = nil
 
         let packet = PacketFactory.CZ_NPC_TRADE_QUIT()
         mapClient.sendPacket(packet)
@@ -1574,7 +1559,7 @@ final public class GameSession {
     // MARK: - Storage
 
     func moveItemToStorage(index: Int, amount: Int) {
-        guard let mapClient, storage != nil else {
+        guard let mapClient, playSession?.storage != nil else {
             return
         }
 
@@ -1583,7 +1568,7 @@ final public class GameSession {
     }
 
     func moveItemFromStorage(index: Int, amount: Int) {
-        guard let mapClient, storage != nil else {
+        guard let mapClient, playSession?.storage != nil else {
             return
         }
 
@@ -1596,7 +1581,7 @@ final public class GameSession {
             return
         }
 
-        storage = nil
+        playSession?.storage = nil
 
         let packet = PacketFactory.CZ_CLOSE_STORE()
         mapClient.sendPacket(packet)

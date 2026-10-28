@@ -128,19 +128,19 @@ struct MapSceneView: View {
             }
         }
         .overlay(alignment: .center) {
-            if let dialog = gameSession.dialog {
+            if let dialog = playSession.dialog {
                 NPCDialogView(dialog: dialog)
             }
-            if let warpList = gameSession.warpList {
+            if let warpList = playSession.warpList {
                 WarpListView(warpList: warpList)
             }
-            if let npcShop = gameSession.npcShop {
+            if let npcShop = playSession.npcShop {
                 NPCShopView(shop: npcShop)
             }
-            if gameSession.dealSelectionNPCID != nil {
+            if playSession.dealSelectionNPCID != nil {
                 NPCShopDealTypeView()
             }
-            if let storage = gameSession.storage {
+            if let storage = playSession.storage {
                 StorageView(storage: storage)
             }
         }
@@ -151,7 +151,7 @@ struct MapSceneView: View {
                 presentedMenuItem = nil
             }
         }
-        .onChange(of: gameSession.storage != nil) { _, isStorageOpen in
+        .onChange(of: playSession.storage != nil) { _, isStorageOpen in
             if isStorageOpen {
                 presentedMenuItem = nil
             }
