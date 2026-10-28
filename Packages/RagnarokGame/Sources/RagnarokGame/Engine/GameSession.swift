@@ -81,8 +81,6 @@ final public class GameSession {
     var selectedCharacterSlot: Int = 0
     private(set) var maxCharacterSlots: Int = 9
 
-    var interactionMode: GameInteractionMode = .direct
-
     private(set) var playSession: PlaySession?
 
     @ObservationIgnored var loginClient: NetworkClient?

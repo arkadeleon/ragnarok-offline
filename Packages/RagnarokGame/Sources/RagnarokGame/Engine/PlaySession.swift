@@ -25,6 +25,8 @@ final class PlaySession {
     var storage: Storage?
     var warpList: WarpList?
 
+    var interactionMode: GameInteractionMode = .direct
+
     init(context: GameContext, playerStatus: CharacterStatus = CharacterStatus()) {
         self.playerStatus = playerStatus
         self.inventory = Inventory()

@@ -17,7 +17,6 @@ struct ActionBarView: View {
     var onSit: () -> Void
     var onShortcut: (Shortcut) -> Void
 
-    @Environment(GameSession.self) private var gameSession
     @Environment(PlaySession.self) private var playSession
 
     @State private var currentRow = 0
@@ -39,10 +38,10 @@ struct ActionBarView: View {
                 ActionRoundButton(
                     color: Color(#colorLiteral(red: 0.7568627451, green: 0.7568627451, blue: 0.7568627451, alpha: 0.3296931004)),
                     action: {
-                        gameSession.interactionMode = gameSession.interactionMode == .direct ? .select : .direct
+                        playSession.interactionMode = playSession.interactionMode == .direct ? .select : .direct
                     }
                 ) {
-                    Image(systemName: gameSession.interactionMode == .direct ? "hand.tap" : "hand.point.up.left")
+                    Image(systemName: playSession.interactionMode == .direct ? "hand.tap" : "hand.point.up.left")
                         .font(.game(size: 16, weight: .bold))
                         .foregroundStyle(.white)
                 }

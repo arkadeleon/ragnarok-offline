@@ -418,7 +418,7 @@ extension MapScene {
                 selectTarget(target)
                 targetSelector = TargetSelector(objectID: target.objectID, showTime: .now)
             case .monster, .npc:
-                if gameSession?.interactionMode != .select || selectedTargetID == objectID {
+                if playSession.interactionMode != .select || selectedTargetID == objectID {
                     selectTarget(target)
                     performActionOnSelectedTarget()
                 } else {
