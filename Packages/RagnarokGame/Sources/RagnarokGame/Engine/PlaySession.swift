@@ -168,6 +168,8 @@ final class PlaySession {
     }
 
     func stop() {
+        mapRuntime?.unload()
+
         keepaliveTask?.cancel()
         keepaliveTask = nil
 

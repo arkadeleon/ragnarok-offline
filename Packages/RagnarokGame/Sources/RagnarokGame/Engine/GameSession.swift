@@ -123,8 +123,6 @@ final public class GameSession {
     }
 
     func exitSession() {
-        mapRuntime?.unload()
-
         stopAllClients()
         resetLoginPhase()
 
@@ -155,7 +153,6 @@ final public class GameSession {
             stopCharClient()
             resetLoginPhase()
         case .play(let playSession):
-            playSession.mapRuntime?.unload()
             account = playSession.account
             playSession.stop()
             if let charServer {
