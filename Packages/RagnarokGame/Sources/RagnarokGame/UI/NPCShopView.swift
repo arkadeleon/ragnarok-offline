@@ -13,7 +13,6 @@ import SwiftUI
 struct NPCShopView: View {
     var shop: NPCShop
 
-    @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
     @Environment(PlaySession.self) private var playSession
 
@@ -63,7 +62,7 @@ struct NPCShopView: View {
 
                 // btn_cancel.bmp
                 Button {
-                    gameSession.closeNPCShop()
+                    playSession.closeNPCShop()
                 } label: {
                     Text("cancel", bundle: #bundle)
                 }
@@ -73,7 +72,7 @@ struct NPCShopView: View {
         }
         .gameWindowTitle(title)
         .gameWindowCloseAction {
-            gameSession.closeNPCShop()
+            playSession.closeNPCShop()
         }
         .frame(width: 320)
         .onChange(of: shop) {
@@ -141,7 +140,7 @@ struct NPCShopView: View {
             }
             return NPCShopPurchase(itemID: entry.key, amount: amount)
         }
-        gameSession.purchaseItems(purchases)
+        playSession.purchaseItems(purchases)
     }
 
     private func sell() {
@@ -151,7 +150,7 @@ struct NPCShopView: View {
             }
             return NPCShopSale(index: entry.key, amount: amount)
         }
-        gameSession.sellItems(sales)
+        playSession.sellItems(sales)
     }
 }
 

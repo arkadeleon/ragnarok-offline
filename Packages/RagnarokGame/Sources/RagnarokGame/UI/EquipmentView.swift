@@ -16,6 +16,7 @@ struct EquipmentView: View {
 
     @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var characterAnimation: SpriteAnimation?
 
@@ -57,9 +58,7 @@ struct EquipmentView: View {
         .gameWindowCloseAction(onClose)
         .frame(width: 320)
         .task {
-            if let character = gameSession.character {
-                characterAnimation = await gameSession.characterAnimation(for: character)
-            }
+            characterAnimation = await gameSession.characterAnimation(for: playSession.character)
         }
     }
 }

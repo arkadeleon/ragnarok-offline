@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct NPCShopDealTypeView: View {
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
     @Environment(GameContext.self) private var gameContext
 
     var body: some View {
         MessageBoxView(gameContext.messageStringTable.localizedMessageString(forID: 92)) {
             // btn_buy.bmp
             Button {
-                gameSession.selectDealType(.buy)
+                playSession.selectDealType(.buy)
             } label: {
                 Text("buy", bundle: #bundle)
             }
@@ -24,7 +24,7 @@ struct NPCShopDealTypeView: View {
 
             // btn_sell.bmp
             Button {
-                gameSession.selectDealType(.sell)
+                playSession.selectDealType(.sell)
             } label: {
                 Text("sell", bundle: #bundle)
             }
@@ -33,7 +33,7 @@ struct NPCShopDealTypeView: View {
 
             // btn_cancel.bmp
             Button {
-                gameSession.cancelDealSelection()
+                playSession.cancelDealSelection()
             } label: {
                 Text("cancel", bundle: #bundle)
             }
@@ -48,4 +48,5 @@ struct NPCShopDealTypeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
         .environment(GameContext.testing)
+        .environment(PlaySession.testing)
 }

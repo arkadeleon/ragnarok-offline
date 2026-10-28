@@ -76,7 +76,6 @@ final public class GameSession {
     private(set) var charServers: [CharServerInfo] = []
     private(set) var charServer: CharServerInfo?
     private(set) var characters: [CharacterInfo] = []
-    private(set) var character: CharacterInfo?
 
     var selectedCharacterSlot: Int = 0
     private(set) var maxCharacterSlots: Int = 9
@@ -89,11 +88,6 @@ final public class GameSession {
     @ObservationIgnored var charClient: NetworkClient?
     @ObservationIgnored var charKeepaliveTask: Task<Void, Never>?
 
-    @ObservationIgnored var mapClient: NetworkClient?
-    @ObservationIgnored var mapKeepaliveTask: Task<Void, Never>?
-
-    @ObservationIgnored private var serverClock = ServerClock()
-    @ObservationIgnored private var serverTimeRequestTime: ContinuousClock.Instant?
 
     public var mapScene: MapScene? {
         mapRuntime?.scene
@@ -143,7 +137,7 @@ final public class GameSession {
     }
 
     func stopAllClients() {
-        stopMapClient()
+        playSession?.stop()
         stopCharClient()
         stopLoginClient()
     }
@@ -162,13 +156,16 @@ final public class GameSession {
         case .login(.characterMake):
             stage = .login(.characterSelect(characters))
         case .login(.waitingForMapServer):
-            stopMapClient()
+            playSession?.stop()
             stopCharClient()
             playSession = nil
             resetLoginPhase()
         case .map:
             mapRuntime?.unload()
-            stopMapClient()
+            if let playSession {
+                account = playSession.account
+            }
+            playSession?.stop()
             playSession = nil
             if let charServer {
                 stage = .login(.connectingCharServer(charServer))
@@ -184,7 +181,6 @@ final public class GameSession {
         charServers = []
         charServer = nil
         characters = []
-        character = nil
         selectedCharacterSlot = 0
         maxCharacterSlots = 9
 
@@ -196,7 +192,7 @@ final public class GameSession {
         case .network, .disconnected:
             switch stage {
             case .login:
-                guard client === loginClient || client === charClient || client === mapClient else {
+                guard client === loginClient || client === charClient || client === playSession?.mapClient else {
                     break
                 }
 
@@ -209,7 +205,7 @@ final public class GameSession {
                 }
                 errorMessages.append(errorMessage)
             case .map:
-                guard client === mapClient else {
+                guard client === playSession?.mapClient else {
                     break
                 }
 
@@ -488,7 +484,6 @@ final public class GameSession {
             }
         case let packet as PACKET_HC_NOTIFY_ZONESVR:
             if let character = characters.first(where: { $0.charID == packet.CID }) {
-                self.character = character
                 let mapServer = MapServerInfo(from: packet)
 
                 stopCharClient()
@@ -590,11 +585,6 @@ final public class GameSession {
             preconditionFailure("startMapClient called before account was set")
         }
 
-        playSession = PlaySession(context: context, playerStatus: CharacterStatus(from: character))
-
-        serverClock = ServerClock()
-        serverTimeRequestTime = nil
-
         let client = NetworkClient(
             name: "Map",
             address: mapServer.ip,
@@ -616,33 +606,14 @@ final public class GameSession {
             }
         }
 
-        client.connect()
-
-        self.mapClient = client
-
-        let packet = PacketFactory.CZ_ENTER(account: account, charID: character.charID)
-        client.sendPacket(packet)
-
-        if PACKET_VERSION < 20070521 {
-            client.receiveDataAndPacket(count: 4) { [weak self] data in
-                let accountID = data.withUnsafeBytes({ $0.load(as: UInt32.self) })
-                Task { @MainActor in
-                    self?.account?.update(accountID: accountID)
-                }
-            }
-        } else {
-            client.receivePacket()
-        }
-
-        startMapKeepalive()
-    }
-
-    private func stopMapClient() {
-        mapKeepaliveTask?.cancel()
-        mapKeepaliveTask = nil
-
-        mapClient?.disconnect()
-        mapClient = nil
+        let playSession = PlaySession(
+            context: context,
+            account: account,
+            character: character,
+            mapClient: client
+        )
+        self.playSession = playSession
+        playSession.start()
     }
 
     private func handleMapPacket(_ packet: any DecodablePacket) {
@@ -652,9 +623,9 @@ final public class GameSession {
 
         switch packet {
         case let packet as PACKET_ZC_ACCEPT_ENTER:
-            serverClock.synchronize(serverTick: packet.startTime, receiveTime: .now)
+            playSession.serverClock.synchronize(serverTick: packet.startTime, receiveTime: .now)
         case _ as PACKET_ZC_REFUSE_ENTER:
-            stopMapClient()
+            playSession.stop()
 
             let localizedMessage = context.messageStringTable.localizedMessageString(forID: 9)
             let errorMessage = GameSession.ErrorMessage(content: localizedMessage) { gameSession, errorMessage in
@@ -669,17 +640,17 @@ final public class GameSession {
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
             playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_AID:
-            account?.update(accountID: packet.accountID)
+            playSession.account.update(accountID: packet.accountID)
         case _ as PACKET_ZC_PING_LIVE:
             let packet = PacketFactory.CZ_PING_LIVE()
-            mapClient?.sendPacket(packet)
+            playSession.mapClient?.sendPacket(packet)
         case let packet as PACKET_ZC_NPCACK_MAPMOVE:
             let mapName = packet.mapName.replacingOccurrences(of: ".gat", with: ".rsw")
             let position = SIMD2(x: Int(packet.xPos), y: Int(packet.yPos))
 
             if let mapScene, mapScene.mapName == mapName {
                 mapScene.jump(toPosition: position)
-                notifyMapLoaded()
+                playSession.notifyMapLoaded()
                 break
             }
 
@@ -689,10 +660,6 @@ final public class GameSession {
             stage = .map(.loading(progress))
 
             Task {
-                guard let account, let character else {
-                    return
-                }
-
                 guard let device = MTLCreateSystemDefaultDevice() else {
                     fatalError("GameSession: Metal is not available on this device")
                 }
@@ -703,13 +670,12 @@ final public class GameSession {
                 let scene = MapScene(
                     mapName: mapName,
                     mapGrid: mapGrid,
-                    account: account,
-                    character: character,
+                    account: playSession.account,
+                    character: playSession.character,
                     playerPosition: position,
                     resourceManager: context.resourceManager,
                     audioPlayer: audioPlayer,
-                    playSession: playSession,
-                    gameSession: self
+                    playSession: playSession
                 )
                 let renderResources = MapSceneRenderResources(device: device)
                 let runtime = MapSceneRuntime(
@@ -721,7 +687,7 @@ final public class GameSession {
                 do {
                     try await runtime.load(progress: progress)
 
-                    notifyMapLoaded()
+                    playSession.notifyMapLoaded()
 
                     stage = .map(.loaded(runtime))
                 } catch {
@@ -731,7 +697,7 @@ final public class GameSession {
         case let packet as PACKET_ZC_NOTIFY_PLAYERMOVE:
             let moveData = MoveData(from: packet.moveData)
             mapScene?.onPlayerMoved(
-                startTime: serverClock.time(forServerTick: packet.moveStartTime),
+                startTime: playSession.serverClock.time(forServerTick: packet.moveStartTime),
                 startPosition: moveData.startPosition,
                 endPosition: moveData.endPosition
             )
@@ -910,7 +876,7 @@ final public class GameSession {
             logger.info("Object \(object.objectID) moved from \(moveData.startPosition) to \(moveData.endPosition)")
             mapScene?.onMapObjectMoved(
                 object: object,
-                startTime: serverClock.time(forServerTick: packet.moveStartTime),
+                startTime: playSession.serverClock.time(forServerTick: packet.moveStartTime),
                 startPosition: moveData.startPosition,
                 endPosition: moveData.endPosition
             )
@@ -943,11 +909,11 @@ final public class GameSession {
         case let packet as PACKET_ZC_NOTIFY_ACT:
             let objectAction = MapObjectAction(from: packet)
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
-            playSession.messageCenter.addMessage(for: objectAction, account: account)
+            playSession.messageCenter.addMessage(for: objectAction, account: playSession.account)
         case let packet as PACKET_ZC_HP_INFO:
             mapScene?.onMapObjectHealthUpdated(objectID: packet.GID, hp: Int(packet.HP), maxHp: Int(packet.maxHP))
         case let packet as PACKET_ZC_MSG_STATE_CHANGE:
-            if packet.AID == account?.accountID {
+            if packet.AID == playSession.account.accountID {
                 if packet.state != 0 {
                     let statusChange = StatusChange(statusID: Int(packet.index), startTime: .now, duration: nil)
                     playSession.setStatusChange(statusChange)
@@ -956,7 +922,7 @@ final public class GameSession {
                 }
             }
         case let packet as PACKET_ZC_MSG_STATE_CHANGE3:
-            if packet.AID == account?.accountID {
+            if packet.AID == playSession.account.accountID {
                 switch OfficialStatusChangeID(rawValue: Int(packet.index)) {
                 case .efst_postdelay, .efst_groundmagic:
                     if packet.remain > 0 {
@@ -1049,10 +1015,10 @@ final public class GameSession {
         case _ as PACKET_ZC_ACH_UPDATE:
             break
         case let packet as PACKET_ZC_NOTIFY_TIME:
-            if let requestTime = serverTimeRequestTime {
+            if let requestTime = playSession.serverTimeRequestTime {
                 let now = ContinuousClock.now
-                serverClock.synchronize(serverTick: packet.time, receiveTime: now, roundTripTime: requestTime.duration(to: now))
-                serverTimeRequestTime = nil
+                playSession.serverClock.synchronize(serverTick: packet.time, receiveTime: now, roundTripTime: requestTime.duration(to: now))
+                playSession.serverTimeRequestTime = nil
             }
         case let packet as PACKET_SC_NOTIFY_BAN:
             let message = BannedMessage(from: packet)
@@ -1080,197 +1046,10 @@ final public class GameSession {
         }
     }
 
-    /// Keep alive and synchronize the server clock.
-    ///
-    /// Send ``PACKET_CZ_REQUEST_TIME`` every second for the first 5 seconds, then every 10 seconds.
-    /// The map server drops it until the map is loaded, so it restarts after each map load.
-    private func startMapKeepalive() {
-        guard let mapClient else {
-            return
-        }
-
-        let startTime = ContinuousClock.now
-
-        mapKeepaliveTask?.cancel()
-        mapKeepaliveTask = Task {
-            var requestCount = 0
-            while !Task.isCancelled {
-                let now = ContinuousClock.now
-                let clientTime = Int(startTime.duration(to: now).timeInterval * 1000)
-                serverTimeRequestTime = now
-
-                let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(truncatingIfNeeded: clientTime))
-                mapClient.sendPacket(packet)
-
-                try? await Task.sleep(for: requestCount < 5 ? .seconds(1) : .seconds(10))
-                requestCount += 1
-            }
-        }
-    }
-
-    // MARK: - Map Operations
-
-    func notifyMapLoaded() {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_NOTIFY_ACTORINIT()
-        mapClient.sendPacket(packet)
-
-        startMapKeepalive()
-    }
-
-    func resurrectInPlace() {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_STANDING_RESURRECTION()
-        mapClient.sendPacket(packet)
-    }
-
-    func returnToLastSavePoint() {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_RESTART(type: 0)
-        mapClient.sendPacket(packet)
-    }
-
-    func returnToCharacterSelect() {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_RESTART(type: 1)
-        mapClient.sendPacket(packet)
-    }
-
-    func requestExit() {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_REQUEST_QUIT()
-        mapClient.sendPacket(packet)
-    }
-
-    // MARK: - Player
-
-    /// Request move to position.
-    ///
-    /// Send ``PACKET_CZ_REQUEST_MOVE``
-    func requestMove(to position: SIMD2<Int>) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_REQUEST_MOVE(position: position)
-        mapClient.sendPacket(packet)
-    }
-
-    /// Request action on target.
-    ///
-    /// Send ``PACKET_CZ_REQUEST_ACT``
-    func requestAction(_ actionType: DamageType, onTarget targetID: GameObjectID = 0) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_REQUEST_ACT(targetID: targetID, actionType: actionType)
-        mapClient.sendPacket(packet)
-    }
-
-    /// Change direction.
-    ///
-    /// Send ``PACKET_CZ_CHANGE_DIRECTION``
-    ///
-    /// Receive ``PACKET_ZC_CHANGE_DIRECTION``
-    func changeDirection(direction: Direction, headDirection: HeadDirection) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_CHANGE_DIRECTION(
-            headDirection: UInt16(headDirection.rawValue),
-            direction: UInt8(direction.rawValue)
-        )
-        mapClient.sendPacket(packet)
-    }
-
-    func incrementStatusProperty(_ sp: StatusProperty, by amount: Int) {
-        guard let mapClient else {
-            return
-        }
-
-        switch sp {
-        case .str, .agi, .vit, .int, .dex, .luk:
-            let packet = PacketFactory.CZ_STATUS_CHANGE(property: sp, amount: amount)
-            mapClient.sendPacket(packet)
-        case .pow, .sta, .wis, .spl, .con, .crt:
-            let packet = PacketFactory.CZ_ADVANCED_STATUS_CHANGE(property: sp, amount: amount)
-            mapClient.sendPacket(packet)
-        default:
-            break
-        }
-    }
-
-    func upgradeSkillLevel(skillID: Int) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_UPGRADE_SKILLLEVEL(skillID: skillID)
-        mapClient.sendPacket(packet)
-    }
-
-    func useSkill(skillID: Int, level: Int, onTarget targetID: GameObjectID) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_USE_SKILL(
-            skillID: skillID,
-            selectedLevel: max(level, 1),
-            targetID: targetID
-        )
-        mapClient.sendPacket(packet)
-    }
-
-    func useSkill(skillID: Int, level: Int, toGround position: SIMD2<Int>) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_USE_SKILL_TOGROUND(
-            skillID: skillID,
-            selectedLevel: max(level, 1),
-            position: position
-        )
-        mapClient.sendPacket(packet)
-    }
-
-    func selectWarpPoint(mapName: String) {
-        guard let mapClient, let playSession, let warpList = playSession.warpList else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_SELECT_WARPPOINT(skillID: warpList.skillID, mapName: mapName)
-        mapClient.sendPacket(packet)
-
-        playSession.warpList = nil
-    }
-
-    func cancelWarpPoint() {
-        selectWarpPoint(mapName: "cancel")
-    }
-
     // MARK: - Chat
 
     func sendMessage(_ message: String) {
-        guard let mapClient, let character else {
+        guard let playSession, let mapClient = playSession.mapClient else {
             return
         }
 
@@ -1283,7 +1062,7 @@ final public class GameSession {
         } else if message.hasPrefix("/") {
             performSlashCommand(message)
         } else {
-            let packet = PacketFactory.CZ_REQUEST_CHAT(message: "\(character.name) : \(message)")
+            let packet = PacketFactory.CZ_REQUEST_CHAT(message: "\(playSession.character.name) : \(message)")
             mapClient.sendPacket(packet)
         }
     }
@@ -1308,109 +1087,7 @@ final public class GameSession {
         }
     }
 
-    // MARK: - Item
-
-    func pickUpItem(objectID: GameObjectID) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_ITEM_PICKUP(objectID: objectID)
-        mapClient.sendPacket(packet)
-    }
-
-    func useItem(at index: Int) {
-        guard let mapClient, let accountID = account?.accountID else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_USE_ITEM(index: index, accountID: accountID)
-        mapClient.sendPacket(packet)
-    }
-
-    func equipItem(at index: Int, location: EquipPositions) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_REQ_WEAR_EQUIP(index: index, location: location)
-        mapClient.sendPacket(packet)
-    }
-
-    func unequipItem(at index: Int) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_REQ_TAKEOFF_EQUIP(index: index)
-        mapClient.sendPacket(packet)
-    }
-
-    func throwItem(at index: Int, amount: Int) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_ITEM_THROW(index: index, amount: amount)
-        mapClient.sendPacket(packet)
-    }
-
     // MARK: - Shortcut
-
-    func setShortcut(_ shortcut: Shortcut, atRow row: Int, column: Int) {
-        guard let mapClient, let playSession else {
-            return
-        }
-
-        var shortcutList = playSession.shortcutList
-        shortcutList.setShortcut(shortcut, atRow: row, column: column)
-
-        for change in shortcutList.changes(from: playSession.shortcutList) {
-            let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
-            mapClient.sendPacket(packet)
-        }
-
-        playSession.shortcutList = shortcutList
-    }
-
-    func removeShortcut(atRow row: Int, column: Int) {
-        setShortcut(.empty, atRow: row, column: column)
-    }
-
-    func moveShortcut(
-        _ shortcut: Shortcut,
-        fromRow sourceRow: Int,
-        column sourceColumn: Int,
-        toRow targetRow: Int,
-        column targetColumn: Int
-    ) {
-        guard let mapClient, let playSession,
-              playSession.shortcutList.rows[sourceRow][sourceColumn] == shortcut else {
-            return
-        }
-
-        var shortcutList = playSession.shortcutList
-        shortcutList.setShortcut(.empty, atRow: sourceRow, column: sourceColumn)
-        shortcutList.setShortcut(shortcut, atRow: targetRow, column: targetColumn)
-
-        for change in shortcutList.changes(from: playSession.shortcutList) {
-            let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
-            mapClient.sendPacket(packet)
-        }
-
-        playSession.shortcutList = shortcutList
-    }
-
-    func setShortcutRowShift(_ rowShift: Int) {
-        guard let mapClient, let playSession else {
-            return
-        }
-
-        playSession.shortcutList.rowShift = rowShift
-
-        let packet = PacketFactory.CZ_SHORTCUTKEYBAR_ROTATE2(rowShift: rowShift)
-        mapClient.sendPacket(packet)
-    }
 
     func useShortcut(_ shortcut: Shortcut) {
         guard let playSession else {
@@ -1422,168 +1099,13 @@ final public class GameSession {
             break
         case .item(let itemID):
             if let item = playSession.inventory.items.values.first(where: { $0.itemID == itemID }) {
-                useItem(at: item.index)
+                playSession.useItem(at: item.index)
             }
         case .skill(let skillID, let level):
             if let skill = playSession.skillList.skills[skillID] {
                 mapScene?.useSkill(skill, level: level)
             }
         }
-    }
-
-    // MARK: - NPC Dialog
-
-    func talkToNPC(npcID: GameObjectID) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_CONTACTNPC(npcID: npcID)
-        mapClient.sendPacket(packet)
-    }
-
-    func requestNextMessage() {
-        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_REQ_NEXT_SCRIPT(npcID: npcID)
-        mapClient.sendPacket(packet)
-
-        playSession?.dialog?.setNeedsClearMessage()
-        playSession?.dialog?.clearAction()
-    }
-
-    func closeDialog() {
-        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
-            return
-        }
-
-        playSession?.dialog = nil
-
-        let packet = PacketFactory.CZ_CLOSE_DIALOG(npcID: npcID)
-        mapClient.sendPacket(packet)
-    }
-
-    func selectMenu(_ select: UInt8) {
-        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
-            return
-        }
-
-        playSession?.dialog?.clearMenu()
-
-        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: npcID, select: select)
-        mapClient.sendPacket(packet)
-    }
-
-    func cancelMenu() {
-        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
-            return
-        }
-
-        playSession?.dialog = nil
-
-        let packet = PacketFactory.CZ_CHOOSE_MENU(npcID: npcID, select: 255)
-        mapClient.sendPacket(packet)
-    }
-
-    func confirmInput(_ value: Int32) {
-        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_INPUT_EDITDLG(npcID: npcID, value: value)
-        mapClient.sendPacket(packet)
-
-        playSession?.dialog?.clearInput()
-    }
-
-    func confirmInput(_ value: String) {
-        guard let mapClient, let npcID = playSession?.dialog?.npcID else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_INPUT_EDITDLGSTR(npcID: npcID, value: value)
-        mapClient.sendPacket(packet)
-
-        playSession?.dialog?.clearInput()
-    }
-
-    // MARK: - NPC Shop
-
-    func selectDealType(_ dealType: NPCShopDealType) {
-        guard let mapClient, let npcID = playSession?.dealSelectionNPCID else {
-            return
-        }
-
-        playSession?.dealSelectionNPCID = nil
-
-        let packet = PacketFactory.CZ_ACK_SELECT_DEALTYPE(npcID: npcID, dealType: dealType)
-        mapClient.sendPacket(packet)
-    }
-
-    func cancelDealSelection() {
-        playSession?.dealSelectionNPCID = nil
-    }
-
-    func purchaseItems(_ purchases: [NPCShopPurchase]) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_PC_PURCHASE_ITEMLIST(purchases: purchases)
-        mapClient.sendPacket(packet)
-    }
-
-    func sellItems(_ sales: [NPCShopSale]) {
-        guard let mapClient else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_PC_SELL_ITEMLIST(sales: sales)
-        mapClient.sendPacket(packet)
-    }
-
-    func closeNPCShop() {
-        guard let mapClient else {
-            return
-        }
-
-        playSession?.npcShop = nil
-
-        let packet = PacketFactory.CZ_NPC_TRADE_QUIT()
-        mapClient.sendPacket(packet)
-    }
-
-    // MARK: - Storage
-
-    func moveItemToStorage(index: Int, amount: Int) {
-        guard let mapClient, playSession?.storage != nil else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_MOVE_ITEM_FROM_BODY_TO_STORE(index: index, amount: amount)
-        mapClient.sendPacket(packet)
-    }
-
-    func moveItemFromStorage(index: Int, amount: Int) {
-        guard let mapClient, playSession?.storage != nil else {
-            return
-        }
-
-        let packet = PacketFactory.CZ_MOVE_ITEM_FROM_STORE_TO_BODY(index: index, amount: amount)
-        mapClient.sendPacket(packet)
-    }
-
-    func closeStorage() {
-        guard let mapClient else {
-            return
-        }
-
-        playSession?.storage = nil
-
-        let packet = PacketFactory.CZ_CLOSE_STORE()
-        mapClient.sendPacket(packet)
     }
 }
 

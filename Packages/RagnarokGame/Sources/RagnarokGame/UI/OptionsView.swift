@@ -22,7 +22,7 @@ struct OptionsView: View {
                 if isPlayerDead {
                     // esc_05a.bmp
                     Button {
-                        gameSession.resurrectInPlace()
+                        playSession.resurrectInPlace()
                     } label: {
                         Text("Resurrection", bundle: #bundle)
                     }
@@ -32,7 +32,7 @@ struct OptionsView: View {
 
                     // esc_04a.bmp
                     Button {
-                        gameSession.returnToLastSavePoint()
+                        playSession.returnToLastSavePoint()
                     } label: {
                         Text("Return to last save point", bundle: #bundle)
                     }
@@ -41,7 +41,7 @@ struct OptionsView: View {
                 } else {
                     // esc_01a.bmp
                     Button {
-                        gameSession.returnToCharacterSelect()
+                        playSession.returnToCharacterSelect()
                     } label: {
                         Text("Character Select", bundle: #bundle)
                     }
@@ -77,7 +77,7 @@ struct OptionsView: View {
 
                     // esc_03a.bmp
                     Button {
-                        gameSession.requestExit()
+                        playSession.requestExit()
                         gameSession.exitSession()
                         exitGame()
                     } label: {

@@ -11,7 +11,7 @@ import SwiftUI
 struct WarpListView: View {
     var warpList: WarpList
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
     @Environment(GameContext.self) private var gameContext
 
     @State private var selectedIndex = 0
@@ -34,7 +34,7 @@ struct WarpListView: View {
                 // btn_ok.bmp
                 Button {
                     let mapName = warpList.mapNames[selectedIndex]
-                    gameSession.selectWarpPoint(mapName: mapName)
+                    playSession.selectWarpPoint(mapName: mapName)
                 } label: {
                     Text("OK", bundle: #bundle)
                 }
@@ -43,7 +43,7 @@ struct WarpListView: View {
 
                 // btn_cancel.bmp
                 Button {
-                    gameSession.cancelWarpPoint()
+                    playSession.cancelWarpPoint()
                 } label: {
                     Text("cancel", bundle: #bundle)
                 }
@@ -52,7 +52,7 @@ struct WarpListView: View {
             }
         }
         .gameWindowCloseAction {
-            gameSession.cancelWarpPoint()
+            playSession.cancelWarpPoint()
         }
         .frame(width: 280)
         .onChange(of: warpList.mapNames) {
@@ -108,4 +108,5 @@ private struct WarpListBox: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
         .environment(GameContext.testing)
+        .environment(PlaySession.testing)
 }

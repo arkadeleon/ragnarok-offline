@@ -18,7 +18,7 @@ struct InventoryView: View {
     var inventory: Inventory
     var onClose: () -> Void = {}
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
     @Environment(GameContext.self) private var gameContext
 
     @State private var tab: InventoryTab = .item
@@ -136,7 +136,7 @@ struct InventoryView: View {
                 gameContext.itemInfoTable.localizedIdentifiedItemName(forItemID: item.itemID) ?? "\(item.itemID)",
                 bounds: 1...item.amount
             ) { amount in
-                gameSession.throwItem(at: item.index, amount: amount)
+                playSession.throwItem(at: item.index, amount: amount)
                 throwingItem = nil
             } onClose: {
                 throwingItem = nil
@@ -165,13 +165,13 @@ private struct InventoryItemActions: View {
     @Binding var throwingItem: InventoryItem?
     var dismiss: () -> Void
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if item.isUsable {
                 GameContextMenuButton {
-                    gameSession.useItem(at: item.index)
+                    playSession.useItem(at: item.index)
                     dismiss()
                 } label: {
                     Text("Use", bundle: #bundle)
@@ -181,14 +181,14 @@ private struct InventoryItemActions: View {
             if item.isEquippable {
                 if item.isEquipped {
                     GameContextMenuButton {
-                        gameSession.unequipItem(at: item.index)
+                        playSession.unequipItem(at: item.index)
                         dismiss()
                     } label: {
                         Text("Unequip", bundle: #bundle)
                     }
                 } else {
                     GameContextMenuButton {
-                        gameSession.equipItem(at: item.index, location: item.location)
+                        playSession.equipItem(at: item.index, location: item.location)
                         dismiss()
                     } label: {
                         Text("Equip", bundle: #bundle)
@@ -202,7 +202,7 @@ private struct InventoryItemActions: View {
                     if item.amount > 1 {
                         throwingItem = item
                     } else {
-                        gameSession.throwItem(at: item.index, amount: 1)
+                        playSession.throwItem(at: item.index, amount: 1)
                     }
                 } label: {
                     Text("Throw", bundle: #bundle)

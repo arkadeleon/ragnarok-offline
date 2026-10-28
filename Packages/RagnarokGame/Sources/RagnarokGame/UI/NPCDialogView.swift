@@ -12,7 +12,7 @@ import SwiftUI
 struct NPCDialogView: View {
     var dialog: NPCDialog
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
 
     @State private var selectedMenuIndex = 0
     @State private var inputValue = ""
@@ -45,7 +45,7 @@ struct NPCDialogView: View {
                 } else if dialog.menu != nil {
                     // btn_ok.bmp
                     Button {
-                        gameSession.selectMenu(UInt8(selectedMenuIndex + 1))
+                        playSession.selectMenu(UInt8(selectedMenuIndex + 1))
                     } label: {
                         Text("OK", bundle: #bundle)
                     }
@@ -54,7 +54,7 @@ struct NPCDialogView: View {
 
                     // btn_cancel.bmp
                     Button {
-                        gameSession.cancelMenu()
+                        playSession.cancelMenu()
                     } label: {
                         Text("cancel", bundle: #bundle)
                     }
@@ -65,7 +65,7 @@ struct NPCDialogView: View {
                     case .next:
                         // btn_next.bmp
                         Button {
-                            gameSession.requestNextMessage()
+                            playSession.requestNextMessage()
                         } label: {
                             Text("next", bundle: #bundle)
                         }
@@ -74,7 +74,7 @@ struct NPCDialogView: View {
                     case .close:
                         // btn_close.bmp
                         Button {
-                            gameSession.closeDialog()
+                            playSession.closeDialog()
                         } label: {
                             Text("close", bundle: #bundle)
                         }
@@ -98,9 +98,9 @@ struct NPCDialogView: View {
     private func confirmInput(_ input: NPCDialogInput) {
         switch input {
         case .number:
-            gameSession.confirmInput(Int32(inputValue) ?? 0)
+            playSession.confirmInput(Int32(inputValue) ?? 0)
         case .text:
-            gameSession.confirmInput(inputValue)
+            playSession.confirmInput(inputValue)
         }
         inputValue = ""
     }
@@ -196,4 +196,5 @@ private struct NPCDialogInputBox: View {
     NPCDialogView(dialog: dialog)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environment(GameSession.testing)
+        .environment(PlaySession.testing)
 }

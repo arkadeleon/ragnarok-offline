@@ -64,16 +64,14 @@ struct MapSceneView: View {
             }
         }
         .overlay(alignment: .topLeading) {
-            if let character = gameSession.character {
-                VStack(alignment: .leading, spacing: 0) {
-                    BasicInfoView(character: character, status: playSession.playerStatus)
+            VStack(alignment: .leading, spacing: 0) {
+                BasicInfoView(character: playSession.character, status: playSession.playerStatus)
 
-                    MenuView { item in
-                        if item == presentedMenuItem {
-                            presentedMenuItem = nil
-                        } else {
-                            presentedMenuItem = item
-                        }
+                MenuView { item in
+                    if item == presentedMenuItem {
+                        presentedMenuItem = nil
+                    } else {
+                        presentedMenuItem = item
                     }
                 }
             }

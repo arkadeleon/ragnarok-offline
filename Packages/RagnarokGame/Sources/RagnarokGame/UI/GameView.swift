@@ -24,6 +24,7 @@ public struct GameView: View {
                     MapLoadingView(progress: progress)
                 case .loaded(let runtime):
                     MapSceneView(runtime: runtime)
+                        .environment(runtime.scene.playSession)
                 }
             }
         }
@@ -44,12 +45,11 @@ public struct GameView: View {
         }
         .environment(gameSession)
         .environment(gameSession.context)
-        .environment(gameSession.playSession)
         .onIncrementStatusProperty { sp, amount in
-            gameSession.incrementStatusProperty(sp, by: amount)
+            gameSession.playSession?.incrementStatusProperty(sp, by: amount)
         }
         .onUpgradeSkillLevel { skillID in
-            gameSession.upgradeSkillLevel(skillID: skillID)
+            gameSession.playSession?.upgradeSkillLevel(skillID: skillID)
         }
         .persistentSystemOverlays(.hidden)
         #if os(iOS)

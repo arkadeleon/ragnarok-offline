@@ -45,7 +45,6 @@ private enum StorageSelectedItem: Equatable {
 struct StorageView: View {
     var storage: Storage
 
-    @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
     @Environment(PlaySession.self) private var playSession
 
@@ -81,7 +80,7 @@ struct StorageView: View {
         }
         .gameWindowTitle(Text(verbatim: storage.name))
         .gameWindowCloseAction {
-            gameSession.closeStorage()
+            playSession.closeStorage()
         }
         .geometryGroup()
         .blur(radius: selectedItem == nil && movingItem == nil ? 0 : 5)
@@ -194,14 +193,14 @@ struct StorageView: View {
         switch movingItem {
         case .storage(let item):
             GameNumberInputBox(itemName(for: item), bounds: 1...item.amount) { amount in
-                gameSession.moveItemFromStorage(index: item.index, amount: amount)
+                playSession.moveItemFromStorage(index: item.index, amount: amount)
                 movingItem = nil
             } onClose: {
                 movingItem = nil
             }
         case .inventory(let item):
             GameNumberInputBox(itemName(for: item), bounds: 1...item.amount) { amount in
-                gameSession.moveItemToStorage(index: item.index, amount: amount)
+                playSession.moveItemToStorage(index: item.index, amount: amount)
                 movingItem = nil
             } onClose: {
                 movingItem = nil
@@ -337,7 +336,7 @@ private struct StorageItemActions: View {
     @Binding var movingItem: StorageSelectedItem?
     var dismiss: () -> Void
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -346,9 +345,9 @@ private struct StorageItemActions: View {
                 if item.amount > 1 {
                     movingItem = isInStorage ? .storage(item) : .inventory(item)
                 } else if isInStorage {
-                    gameSession.moveItemFromStorage(index: item.index, amount: 1)
+                    playSession.moveItemFromStorage(index: item.index, amount: 1)
                 } else {
-                    gameSession.moveItemToStorage(index: item.index, amount: 1)
+                    playSession.moveItemToStorage(index: item.index, amount: 1)
                 }
             } label: {
                 if isInStorage {

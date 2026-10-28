@@ -28,7 +28,6 @@ public final class MapScene {
     let spriteLoader: SpriteLoader
     let audioPlayer: GameAudioPlayer
     let playSession: PlaySession
-    weak var gameSession: GameSession?
 
     let state: MapSceneState
 
@@ -84,8 +83,7 @@ public final class MapScene {
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
         audioPlayer: GameAudioPlayer,
-        playSession: PlaySession,
-        gameSession: GameSession
+        playSession: PlaySession
     ) {
         self.mapName = mapName
         self.mapGrid = mapGrid
@@ -95,7 +93,6 @@ public final class MapScene {
         self.spriteLoader = SpriteLoader(resourceManager: resourceManager)
         self.audioPlayer = audioPlayer
         self.playSession = playSession
-        self.gameSession = gameSession
 
         self.state = MapSceneState(
             playerPosition: playerPosition,
@@ -395,7 +392,7 @@ extension MapScene {
         case .ground(let position):
             if player.action.actionType == .sit {
                 player.look(at: position)
-                gameSession?.changeDirection(
+                playSession.changeDirection(
                     direction: Direction(spriteDirection: player.action.direction),
                     headDirection: HeadDirection(spriteHeadDirection: player.action.headDirection)
                 )
@@ -504,7 +501,7 @@ extension MapScene {
         case .monster:
             attackMonster(targetID: selectedTarget.objectID)
         case .npc:
-            gameSession?.talkToNPC(npcID: selectedTarget.objectID)
+            playSession.talkToNPC(npcID: selectedTarget.objectID)
         default:
             break
         }
@@ -559,7 +556,7 @@ extension MapScene {
 
     private func requestMove(to position: SIMD2<Int>) {
         thumbstickStopPosition = nil
-        gameSession?.requestMove(to: position)
+        playSession.requestMove(to: position)
     }
 
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
@@ -613,7 +610,7 @@ extension MapScene {
                 let upcomingPositions = player.movement?.upcomingPositions(at: time) ?? []
                 if let stopPosition = upcomingPositions.dropFirst().first ?? upcomingPositions.first {
                     player.truncateMovement(to: stopPosition, at: time)
-                    gameSession?.requestMove(to: stopPosition)
+                    playSession.requestMove(to: stopPosition)
                     thumbstickStopPosition = stopPosition
                 }
             }
@@ -705,7 +702,7 @@ extension MapScene {
 
         switch decideMovement(from: startPosition, toward: target.gridPosition, within: attackRange) {
         case .alreadyInRange:
-            gameSession?.requestAction(._repeat, onTarget: targetID)
+            playSession.requestAction(._repeat, onTarget: targetID)
         case .moveTo(let destination):
             arrivalTask?.cancel()
             pendingArrivalAction = { [weak self] in
@@ -727,18 +724,18 @@ extension MapScene {
         let selectedTarget = selectedTarget
 
         if skill.isSelfOnlySkill {
-            gameSession?.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
+            playSession.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
         } else if skill.isGroundTargetedSkill {
             if let selectedTarget {
                 useSkill(skill, level: level, on: selectedTarget)
             } else {
-                gameSession?.useSkill(skillID: skill.skillID, level: level, toGround: player.gridPosition)
+                playSession.useSkill(skillID: skill.skillID, level: level, toGround: player.gridPosition)
             }
         } else if skill.isSupportSkill {
             if let selectedTarget, selectedTarget.type == .pc || selectedTarget.type == .monster {
                 useSkill(skill, level: level, on: selectedTarget)
             } else {
-                gameSession?.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
+                playSession.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
             }
         } else if let selectedTarget, selectedTarget.type == .monster {
             useSkill(skill, level: level, on: selectedTarget)
@@ -758,13 +755,13 @@ extension MapScene {
 
         movePlayerToward(targetPosition: targetPosition, within: skillRange) {
             if skill.isGroundTargetedSkill {
-                self.gameSession?.useSkill(
+                self.playSession.useSkill(
                     skillID: skill.skillID,
                     level: level,
                     toGround: targetPosition
                 )
             } else {
-                self.gameSession?.useSkill(
+                self.playSession.useSkill(
                     skillID: skill.skillID,
                     level: level,
                     onTarget: target.objectID
@@ -781,13 +778,13 @@ extension MapScene {
 
     private func pickUpItem(_ target: MapSceneDroppedItem) {
         movePlayerToward(targetPosition: target.gridPosition, within: 1) {
-            self.gameSession?.pickUpItem(objectID: target.objectID)
+            self.playSession.pickUpItem(objectID: target.objectID)
         }
     }
 
     func toggleSit() {
         cancelArrivalAction()
-        gameSession?.requestAction(player.action.actionType == .sit ? .stand_up : .sit_down)
+        playSession.requestAction(player.action.actionType == .sit ? .stand_up : .sit_down)
     }
 }
 

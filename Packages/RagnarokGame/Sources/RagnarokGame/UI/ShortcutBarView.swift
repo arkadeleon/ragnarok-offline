@@ -15,7 +15,6 @@ private let slotSize: CGFloat = 32
 private let iconSize: CGFloat = 24
 
 struct ShortcutBarView: View {
-    @Environment(GameSession.self) private var gameSession
     @Environment(PlaySession.self) private var playSession
 
     var body: some View {
@@ -34,7 +33,7 @@ struct ShortcutBarView: View {
             }
 
             Button {
-                gameSession.setShortcutRowShift((row + 1) % playSession.shortcutList.rows.count)
+                playSession.setShortcutRowShift((row + 1) % playSession.shortcutList.rows.count)
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .font(.game(size: 11, weight: .bold))

@@ -268,7 +268,7 @@ extension View {
 }
 
 private struct ShortcutDragContainer: ViewModifier {
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
 
     /// One container owns one drag state shared by all of its sources and targets.
     @State private var dragState = ShortcutDragState()
@@ -309,13 +309,13 @@ private struct ShortcutDragContainer: ViewModifier {
             break
         case (let sourceSlot?, nil):
             // Dragging an existing shortcut outside the bar removes it.
-            gameSession.removeShortcut(atRow: sourceSlot.row, column: sourceSlot.column)
+            playSession.removeShortcut(atRow: sourceSlot.row, column: sourceSlot.column)
         case (nil, let targetSlot?):
             // A new inventory item or skill is assigned to the destination.
-            gameSession.setShortcut(drop.shortcut, atRow: targetSlot.row, column: targetSlot.column)
+            playSession.setShortcut(drop.shortcut, atRow: targetSlot.row, column: targetSlot.column)
         case (let sourceSlot?, let targetSlot?):
-            // A bar-to-bar move is committed atomically by GameSession.
-            gameSession.moveShortcut(
+            // A bar-to-bar move is committed atomically by PlaySession.
+            playSession.moveShortcut(
                 drop.shortcut,
                 fromRow: sourceSlot.row,
                 column: sourceSlot.column,
