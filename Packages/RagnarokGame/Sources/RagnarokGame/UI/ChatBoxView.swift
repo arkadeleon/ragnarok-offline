@@ -44,7 +44,6 @@ struct ChatBoxView: View {
         }
     }
 
-    @Environment(GameSession.self) private var gameSession
     @Environment(PlaySession.self) private var playSession
 
     @State private var viewStyle: ViewStyle = .compact
@@ -144,7 +143,7 @@ struct ChatBoxView: View {
             return
         }
 
-        gameSession.sendMessage(message)
+        playSession.sendMessage(message)
         playSession.messageCenter.inputHistory.push(message)
         self.message = ""
     }
@@ -262,9 +261,8 @@ private struct ChatInputHistoryButton: View {
 }
 
 #Preview {
-    let gameSession = GameSession.testing
     let playSession = {
-        let playSession = PlaySession(context: gameSession.context)
+        let playSession = PlaySession(context: .testing)
         playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Apple (1)."))
         playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Banana (1)."))
         playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Grape (1)."))
@@ -281,7 +279,6 @@ private struct ChatInputHistoryButton: View {
         ChatBoxView()
     }
     .ignoresSafeArea()
-    .environment(gameSession)
-    .environment(gameSession.context)
+    .environment(GameContext.testing)
     .environment(playSession)
 }

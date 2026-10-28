@@ -581,68 +581,6 @@ final public class GameSession {
         stage = .play(playSession)
         playSession.start(mapServer: mapServer)
     }
-
-    // MARK: - Chat
-
-    func sendMessage(_ message: String) {
-        guard let playSession, let mapClient = playSession.mapClient else {
-            return
-        }
-
-        if message.hasPrefix("%") {
-//            PACKET_CZ_REQUEST_CHAT_PARTY
-        } else if message.hasPrefix("$") {
-//            PACKET_CZ_GUILD_CHAT
-        } else if message.hasPrefix("/cl") {
-//            PACKET_CZ_CLAN_CHAT
-        } else if message.hasPrefix("/") {
-            performSlashCommand(message)
-        } else {
-            let packet = PacketFactory.CZ_REQUEST_CHAT(message: "\(playSession.character.name) : \(message)")
-            mapClient.sendPacket(packet)
-        }
-    }
-
-    private func performSlashCommand(_ message: String) {
-        guard let slashCommand = SlashCommand(message: message) else {
-            playSession?.messageCenter.addUnknownSlashCommandMessage()
-            return
-        }
-
-        switch slashCommand {
-        case .where:
-            if let mapScene {
-                let mapName = mapScene.mapName.replacingOccurrences(of: ".rsw", with: "")
-                let localizedMapName = context.mapInfoTable.localizedMapName(forMapName: mapName) ?? mapName
-                playSession?.messageCenter.addLocationMessage(mapName: mapName, localizedMapName: localizedMapName, position: mapScene.player.gridPosition)
-            }
-        case .sit, .stand:
-            mapScene?.toggleSit()
-        case .help:
-            playSession?.messageCenter.addSlashCommandHelpMessages()
-        }
-    }
-
-    // MARK: - Shortcut
-
-    func useShortcut(_ shortcut: Shortcut) {
-        guard let playSession else {
-            return
-        }
-
-        switch shortcut {
-        case .empty:
-            break
-        case .item(let itemID):
-            if let item = playSession.inventory.items.values.first(where: { $0.itemID == itemID }) {
-                playSession.useItem(at: item.index)
-            }
-        case .skill(let skillID, let level):
-            if let skill = playSession.skillList.skills[skillID] {
-                mapScene?.useSkill(skill, level: level)
-            }
-        }
-    }
 }
 
 // MARK: - Character Sprite

@@ -299,12 +299,12 @@ private struct SkillActions: View {
     var skill: SkillInfo
     var dismiss: () -> Void
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             GameContextMenuButton {
-                gameSession.useShortcut(.skill(skillID: skill.skillID, level: skill.level))
+                playSession.useShortcut(.skill(skillID: skill.skillID, level: skill.level))
                 dismiss()
             } label: {
                 Text("Use", bundle: #bundle)
@@ -361,7 +361,6 @@ private struct SkillActions: View {
 
     SkillListView(skillList: playSession.skillList)
         .padding()
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(playSession)
 }

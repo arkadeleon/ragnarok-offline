@@ -34,7 +34,7 @@ struct WorldMapView: View {
     var currentMapName: String
     var onClose: () -> Void = {}
 
-    @Environment(GameSession.self) private var gameSession
+    @Environment(PlaySession.self) private var playSession
     @Environment(GameContext.self) private var gameContext
 
     @State private var worlds: [WorldViewData.World] = []
@@ -81,7 +81,7 @@ struct WorldMapView: View {
         }
         .overlay(alignment: .bottomLeading) {
             WorldMapInfoView(maps: selectableMaps, selectedMap: $selectedMap) { map in
-                gameSession.sendMessage("@warp \(map.mapName.mapNameStem)")
+                playSession.sendMessage("@warp \(map.mapName.mapNameStem)")
                 onClose()
             }
             .padding(16)
@@ -531,9 +531,7 @@ extension WorldViewData.Rect {
 }
 
 #Preview {
-    let gameSession = GameSession.testing
-
     WorldMapView(currentMapName: "prontera.gat")
-        .environment(gameSession)
-        .environment(gameSession.context)
+        .environment(GameContext.testing)
+        .environment(PlaySession.testing)
 }

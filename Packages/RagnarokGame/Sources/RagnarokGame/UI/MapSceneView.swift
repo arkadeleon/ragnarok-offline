@@ -15,7 +15,6 @@ struct MapSceneView: View {
     @Environment(\.dismissImmersiveSpace) private var dismissImmersiveSpace
     #endif
 
-    @Environment(GameSession.self) private var gameSession
     @Environment(PlaySession.self) private var playSession
 
     @State private var screenWidth: CGFloat = 320
@@ -181,7 +180,7 @@ struct MapSceneView: View {
                 runtime.scene.toggleSit()
             },
             onShortcut: { shortcut in
-                gameSession.useShortcut(shortcut)
+                playSession.useShortcut(shortcut)
             }
         )
         .onGeometryChange(for: CGFloat.self) { geometryProxy in

@@ -56,7 +56,7 @@ final class PlaySession {
     @ObservationIgnored private let context: GameContext
     @ObservationIgnored private let audioPlayer: GameAudioPlayer
 
-    @ObservationIgnored private(set) var mapClient: NetworkClient?
+    @ObservationIgnored private var mapClient: NetworkClient?
     @ObservationIgnored private var keepaliveTask: Task<Void, Never>?
 
     @ObservationIgnored private var serverClock = ServerClock()
@@ -848,6 +848,21 @@ final class PlaySession {
 
     // MARK: - Shortcut
 
+    func useShortcut(_ shortcut: Shortcut) {
+        switch shortcut {
+        case .empty:
+            break
+        case .item(let itemID):
+            if let item = inventory.items.values.first(where: { $0.itemID == itemID }) {
+                useItem(at: item.index)
+            }
+        case .skill(let skillID, let level):
+            if let skill = skillList.skills[skillID] {
+                mapScene?.useSkill(skill, level: level)
+            }
+        }
+    }
+
     func setShortcut(_ shortcut: Shortcut, atRow row: Int, column: Int) {
         guard let mapClient else {
             return
@@ -901,6 +916,47 @@ final class PlaySession {
 
         let packet = PacketFactory.CZ_SHORTCUTKEYBAR_ROTATE2(rowShift: rowShift)
         mapClient.sendPacket(packet)
+    }
+
+    // MARK: - Chat
+
+    func sendMessage(_ message: String) {
+        guard let mapClient else {
+            return
+        }
+
+        if message.hasPrefix("%") {
+//            PACKET_CZ_REQUEST_CHAT_PARTY
+        } else if message.hasPrefix("$") {
+//            PACKET_CZ_GUILD_CHAT
+        } else if message.hasPrefix("/cl") {
+//            PACKET_CZ_CLAN_CHAT
+        } else if message.hasPrefix("/") {
+            performSlashCommand(message)
+        } else {
+            let packet = PacketFactory.CZ_REQUEST_CHAT(message: "\(character.name) : \(message)")
+            mapClient.sendPacket(packet)
+        }
+    }
+
+    private func performSlashCommand(_ message: String) {
+        guard let slashCommand = SlashCommand(message: message) else {
+            messageCenter.addUnknownSlashCommandMessage()
+            return
+        }
+
+        switch slashCommand {
+        case .where:
+            if let mapScene {
+                let mapName = mapScene.mapName.replacingOccurrences(of: ".rsw", with: "")
+                let localizedMapName = context.mapInfoTable.localizedMapName(forMapName: mapName) ?? mapName
+                messageCenter.addLocationMessage(mapName: mapName, localizedMapName: localizedMapName, position: mapScene.player.gridPosition)
+            }
+        case .sit, .stand:
+            mapScene?.toggleSit()
+        case .help:
+            messageCenter.addSlashCommandHelpMessages()
+        }
     }
 
     // MARK: - NPC Dialog
