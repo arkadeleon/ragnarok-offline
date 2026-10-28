@@ -27,6 +27,7 @@ public final class MapScene {
     let resourceManager: ResourceManager
     let spriteLoader: SpriteLoader
     let audioPlayer: GameAudioPlayer
+    let playSession: PlaySession
     weak var gameSession: GameSession?
 
     let state: MapSceneState
@@ -83,6 +84,7 @@ public final class MapScene {
         playerPosition: SIMD2<Int>,
         resourceManager: ResourceManager,
         audioPlayer: GameAudioPlayer,
+        playSession: PlaySession,
         gameSession: GameSession
     ) {
         self.mapName = mapName
@@ -92,6 +94,7 @@ public final class MapScene {
         self.resourceManager = resourceManager
         self.spriteLoader = SpriteLoader(resourceManager: resourceManager)
         self.audioPlayer = audioPlayer
+        self.playSession = playSession
         self.gameSession = gameSession
 
         self.state = MapSceneState(
@@ -698,7 +701,7 @@ extension MapScene {
         }
 
         let startPosition = player.gridPosition
-        let attackRange = gameSession?.playSession?.playerStatus.attackRange ?? 1
+        let attackRange = playSession.playerStatus.attackRange
 
         switch decideMovement(from: startPosition, toward: target.gridPosition, within: attackRange) {
         case .alreadyInRange:

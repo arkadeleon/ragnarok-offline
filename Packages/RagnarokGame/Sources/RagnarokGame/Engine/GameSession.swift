@@ -710,6 +710,7 @@ final public class GameSession {
                     playerPosition: position,
                     resourceManager: context.resourceManager,
                     audioPlayer: audioPlayer,
+                    playSession: playSession,
                     gameSession: self
                 )
                 let renderResources = MapSceneRenderResources(device: device)
