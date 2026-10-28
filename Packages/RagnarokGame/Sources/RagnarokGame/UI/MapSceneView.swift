@@ -16,7 +16,7 @@ struct MapSceneView: View {
     #endif
 
     @Environment(GameSession.self) private var gameSession
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var screenWidth: CGFloat = 320
     @State private var actionBarHeight: CGFloat = 0
@@ -66,7 +66,7 @@ struct MapSceneView: View {
         .overlay(alignment: .topLeading) {
             if let character = gameSession.character {
                 VStack(alignment: .leading, spacing: 0) {
-                    BasicInfoView(character: character, status: gameContext.playerStatus)
+                    BasicInfoView(character: character, status: playSession.playerStatus)
 
                     MenuView { item in
                         if item == presentedMenuItem {
@@ -82,7 +82,7 @@ struct MapSceneView: View {
             VStack(alignment: .trailing, spacing: 8) {
                 MinimapView(scene: runtime.scene)
 
-                StatusIconBarView(statusChanges: gameContext.statusChanges)
+                StatusIconBarView(statusChanges: playSession.statusChanges)
             }
             .frame(maxHeight: .infinity, alignment: .top)
             .padding(.top, 16)
@@ -101,7 +101,7 @@ struct MapSceneView: View {
             if let item = presentedMenuItem {
                 switch item {
                 case .status:
-                    StatusView(status: gameContext.playerStatus) {
+                    StatusView(status: playSession.playerStatus) {
                         presentedMenuItem = nil
                     }
                 case .equipment:
@@ -109,11 +109,11 @@ struct MapSceneView: View {
                         presentedMenuItem = nil
                     }
                 case .inventory:
-                    InventoryView(inventory: gameContext.inventory) {
+                    InventoryView(inventory: playSession.inventory) {
                         presentedMenuItem = nil
                     }
                 case .skill:
-                    SkillListView(skillList: gameContext.skillList) {
+                    SkillListView(skillList: playSession.skillList) {
                         presentedMenuItem = nil
                     }
                 case .worldMap:

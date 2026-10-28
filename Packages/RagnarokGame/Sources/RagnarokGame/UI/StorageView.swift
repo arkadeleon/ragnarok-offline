@@ -47,6 +47,7 @@ struct StorageView: View {
 
     @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var storageTab: StorageTab = .item
     @State private var inventoryTab: InventoryTab = .item
@@ -219,11 +220,11 @@ struct StorageView: View {
     private var inventoryItems: [InventoryItem] {
         switch inventoryTab {
         case .item:
-            gameContext.inventory.usableItems
+            playSession.inventory.usableItems
         case .equip:
-            gameContext.inventory.equipItems
+            playSession.inventory.equipItems
         case .etc:
-            gameContext.inventory.etcItems
+            playSession.inventory.etcItems
         }
     }
 
@@ -368,7 +369,7 @@ private struct StorageItemActions: View {
 }
 
 #Preview {
-    let context = GameContext.testing
+    let playSession = PlaySession(context: .testing)
 
     let storage = {
         var storage = Storage(name: "Storage")
@@ -393,11 +394,12 @@ private struct StorageItemActions: View {
         item.itemID = itemID
         item.type = .usable
         item.amount = 5
-        context.inventory.append(item: item)
+        playSession.inventory.append(item: item)
     }
 
     return StorageView(storage: storage)
         .padding()
         .environment(GameSession.testing)
-        .environment(context)
+        .environment(GameContext.testing)
+        .environment(playSession)
 }

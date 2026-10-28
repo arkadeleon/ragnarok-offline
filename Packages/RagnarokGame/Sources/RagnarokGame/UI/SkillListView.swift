@@ -15,7 +15,7 @@ struct SkillListView: View {
     var skillList: SkillList
     var onClose: () -> Void = {}
 
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var selectedSkillID: Int?
 
@@ -37,7 +37,7 @@ struct SkillListView: View {
             } bottomBar: {
                 GameBottomBar()
                     .overlay(alignment: .leading) {
-                        Text(verbatim: "Skill Points: \(gameContext.playerStatus.skillPoint)")
+                        Text(verbatim: "Skill Points: \(playSession.playerStatus.skillPoint)")
                             .font(.game())
                             .foregroundStyle(Color.gameProminentLabel)
                             .padding(.leading, 10)
@@ -103,6 +103,7 @@ private struct SkillListRow: View {
     var isSelected: Bool
 
     @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
     @Environment(\.upgradeSkillLevel) private var upgradeSkillLevel
 
     @State private var iconImage: Resources.Image?
@@ -112,7 +113,7 @@ private struct SkillListRow: View {
     }
 
     private var isUpgradable: Bool {
-        skill.isUpgradable && gameContext.playerStatus.skillPoint > 0
+        skill.isUpgradable && playSession.playerStatus.skillPoint > 0
     }
 
     private var skillName: String {
@@ -320,10 +321,10 @@ private struct SkillActions: View {
 }
 
 #Preview {
-    let gameContext = {
-        let gameContext = GameContext.testing
+    let playSession = {
+        let playSession = PlaySession(context: .testing)
 
-        gameContext.playerStatus.skillPoint = 1
+        playSession.playerStatus.skillPoint = 1
 
         var bash = SkillInfo()
         bash.skillID = 5
@@ -333,7 +334,7 @@ private struct SkillActions: View {
         bash.attackRange = 1
         bash.isUpgradable = true
         bash.maxLevel = 10
-        gameContext.skillList.skills[5] = bash
+        playSession.skillList.skills[5] = bash
 
         var heal = SkillInfo()
         heal.skillID = 28
@@ -343,7 +344,7 @@ private struct SkillActions: View {
         heal.attackRange = 9
         heal.isUpgradable = false
         heal.maxLevel = 10
-        gameContext.skillList.skills[28] = heal
+        playSession.skillList.skills[28] = heal
 
         var swordMastery = SkillInfo()
         swordMastery.skillID = 2
@@ -353,13 +354,14 @@ private struct SkillActions: View {
         swordMastery.attackRange = 0
         swordMastery.isUpgradable = false
         swordMastery.maxLevel = 10
-        gameContext.skillList.skills[2] = swordMastery
+        playSession.skillList.skills[2] = swordMastery
 
-        return gameContext
+        return playSession
     }()
 
-    SkillListView(skillList: gameContext.skillList)
+    SkillListView(skillList: playSession.skillList)
         .padding()
         .environment(GameSession.testing)
-        .environment(gameContext)
+        .environment(GameContext.testing)
+        .environment(playSession)
 }

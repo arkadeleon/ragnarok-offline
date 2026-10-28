@@ -15,6 +15,7 @@ struct NPCShopView: View {
 
     @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     /// Selected amount per entry key.
     @State private var amounts: [Int : Int] = [:]
@@ -98,7 +99,7 @@ struct NPCShopView: View {
         case .sell(let items):
             // Skip entries whose inventory slot is unknown.
             items.compactMap { item in
-                guard let inventoryItem = gameContext.inventory.items[item.index] else {
+                guard let inventoryItem = playSession.inventory.items[item.index] else {
                     return nil
                 }
                 return NPCShopEntry(key: item.index, itemID: inventoryItem.itemID, unitPrice: item.unitPrice, availableAmount: inventoryItem.amount)
@@ -122,10 +123,10 @@ struct NPCShopView: View {
 
             if case .buy = shop {
                 let otherTotal = total - (amounts[entry.key] ?? 0) * entry.unitPrice
-                let affordableAmount = entry.unitPrice > 0 ? (gameContext.playerStatus.zeny - otherTotal) / entry.unitPrice : amount
+                let affordableAmount = entry.unitPrice > 0 ? (playSession.playerStatus.zeny - otherTotal) / entry.unitPrice : amount
                 if amount > affordableAmount {
                     amount = max(affordableAmount, 0)
-                    gameContext.messageCenter.addInsufficientZenyMessage()
+                    playSession.messageCenter.addInsufficientZenyMessage()
                 }
             }
 
@@ -224,10 +225,11 @@ private struct NPCShopItemRow: View {
         .padding()
         .environment(GameSession.testing)
         .environment(GameContext.testing)
+        .environment(PlaySession.testing)
 }
 
 #Preview("Sell") {
-    let context = GameContext.testing
+    let playSession = PlaySession(context: .testing)
 
     let shop: NPCShop = {
         var potion = InventoryItem()
@@ -235,14 +237,14 @@ private struct NPCShopItemRow: View {
         potion.itemID = 501
         potion.type = .healing
         potion.amount = 12
-        context.inventory.append(item: potion)
+        playSession.inventory.append(item: potion)
 
         var sword = InventoryItem()
         sword.index = 3
         sword.itemID = 1101
         sword.type = .weapon
         sword.amount = 1
-        context.inventory.append(item: sword)
+        playSession.inventory.append(item: sword)
 
         return .sell([
             NPCShopSellItem(index: 2, price: 25, overcharge: 30),
@@ -254,5 +256,6 @@ private struct NPCShopItemRow: View {
     NPCShopView(shop: shop)
         .padding()
         .environment(GameSession.testing)
-        .environment(context)
+        .environment(GameContext.testing)
+        .environment(playSession)
 }

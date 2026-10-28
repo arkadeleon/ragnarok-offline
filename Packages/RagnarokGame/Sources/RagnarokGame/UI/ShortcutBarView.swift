@@ -16,7 +16,7 @@ private let iconSize: CGFloat = 24
 
 struct ShortcutBarView: View {
     @Environment(GameSession.self) private var gameSession
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     var body: some View {
         // basic_interface/shortitem_bg.bmp
@@ -29,12 +29,12 @@ struct ShortcutBarView: View {
             HStack(spacing: 4) {
                 ForEach(0..<columnCount, id: \.self) { column in
                     let slot = ShortcutSlot(row: row, column: column)
-                    ShortcutSlotView(slot: slot, shortcut: gameContext.shortcutList.rows[row][column])
+                    ShortcutSlotView(slot: slot, shortcut: playSession.shortcutList.rows[row][column])
                 }
             }
 
             Button {
-                gameSession.setShortcutRowShift((row + 1) % gameContext.shortcutList.rows.count)
+                gameSession.setShortcutRowShift((row + 1) % playSession.shortcutList.rows.count)
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .font(.game(size: 11, weight: .bold))
@@ -57,8 +57,8 @@ struct ShortcutBarView: View {
     }
 
     private var row: Int {
-        let rows = gameContext.shortcutList.rows
-        var row = gameContext.shortcutList.rowShift
+        let rows = playSession.shortcutList.rows
+        var row = playSession.shortcutList.rowShift
         row = max(row, 0)
         row = min(row, rows.count - 1)
         return row
@@ -73,7 +73,7 @@ private struct ShortcutSlotView: View {
     var slot: ShortcutSlot
     var shortcut: Shortcut
 
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
     @Environment(ShortcutDragState.self) private var dragState
 
     var body: some View {
@@ -83,9 +83,9 @@ private struct ShortcutSlotView: View {
 
             ShortcutIconView(shortcut: shortcut)
                 .frame(width: iconSize, height: iconSize)
-                .opacity(gameContext.isShortcutAvailable(shortcut) ? 1 : 0.4)
+                .opacity(playSession.isShortcutAvailable(shortcut) ? 1 : 0.4)
 
-            if let label = gameContext.shortcutLabel(shortcut) {
+            if let label = playSession.shortcutLabel(shortcut) {
                 Text(verbatim: label)
                     .font(.game(size: 11))
                     .foregroundStyle(Color.gameLabel)
@@ -139,28 +139,29 @@ struct ShortcutIconView: View {
 }
 
 #Preview {
-    let gameContext = {
-        let gameContext = GameContext.testing
+    let playSession = {
+        let playSession = PlaySession(context: .testing)
 
         var redPotion = InventoryItem()
         redPotion.index = 0
         redPotion.itemID = 501
         redPotion.type = .healing
         redPotion.amount = 12
-        gameContext.inventory.append(item: redPotion)
+        playSession.inventory.append(item: redPotion)
 
         var shortcutList = ShortcutList()
         shortcutList.setShortcut(.skill(skillID: 5, level: 5), atRow: 0, column: 0)
         shortcutList.setShortcut(.item(itemID: 501), atRow: 0, column: 1)
         shortcutList.setShortcut(.item(itemID: 502), atRow: 0, column: 2)
-        gameContext.shortcutList = shortcutList
+        playSession.shortcutList = shortcutList
 
-        return gameContext
+        return playSession
     }()
 
     ShortcutBarView()
         .shortcutDragContainer()
         .padding()
         .environment(GameSession.testing)
-        .environment(gameContext)
+        .environment(GameContext.testing)
+        .environment(playSession)
 }

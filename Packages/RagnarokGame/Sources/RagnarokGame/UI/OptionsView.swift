@@ -13,6 +13,7 @@ struct OptionsView: View {
 
     @Environment(GameSession.self) private var gameSession
     @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
     @Environment(\.exitGame) private var exitGame
 
     var body: some View {
@@ -27,7 +28,7 @@ struct OptionsView: View {
                     }
                     .buttonStyle(.game)
                     .frame(width: 220, height: 20)
-                    .disabled(!gameContext.inventory.hasTokenOfSiegfried)
+                    .disabled(!playSession.inventory.hasTokenOfSiegfried)
 
                     // esc_04a.bmp
                     Button {
@@ -99,4 +100,5 @@ struct OptionsView: View {
         .padding()
         .environment(GameSession.testing)
         .environment(GameContext.testing)
+        .environment(PlaySession.testing)
 }

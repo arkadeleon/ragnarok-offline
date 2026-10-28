@@ -89,6 +89,8 @@ final public class GameSession {
     var storage: Storage?
     var warpList: WarpList?
 
+    private(set) var playSession: PlaySession?
+
     @ObservationIgnored var loginClient: NetworkClient?
     @ObservationIgnored var loginKeepaliveTask: Task<Void, Never>?
 
@@ -203,12 +205,7 @@ final public class GameSession {
         storage = nil
         warpList = nil
 
-        context.inventory = Inventory()
-        context.skillList = SkillList()
-        context.skillCooldowns = [:]
-        context.statusChanges = []
-        context.shortcutList = ShortcutList()
-        context.messageCenter.messages = []
+        playSession = nil
     }
 
     private func handleClientError(_ error: NetworkClientError, from client: NetworkClient) {
@@ -610,7 +607,7 @@ final public class GameSession {
             preconditionFailure("startMapClient called before account was set")
         }
 
-        context.playerStatus = CharacterStatus(from: character)
+        playSession = PlaySession(context: context, playerStatus: CharacterStatus(from: character))
 
         serverClock = ServerClock()
         serverTimeRequestTime = nil
@@ -666,6 +663,10 @@ final public class GameSession {
     }
 
     private func handleMapPacket(_ packet: any DecodablePacket) {
+        guard let playSession else {
+            return
+        }
+
         switch packet {
         case let packet as PACKET_ZC_ACCEPT_ENTER:
             serverClock.synchronize(serverTick: packet.startTime, receiveTime: .now)
@@ -683,7 +684,7 @@ final public class GameSession {
                 exitCurrentPhase()
             }
         case let packet as PACKET_ZC_ACK_REQ_DISCONNECT:
-            context.messageCenter.addMessage(for: packet)
+            playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_AID:
             account?.update(accountID: packet.accountID)
         case _ as PACKET_ZC_PING_LIVE:
@@ -752,20 +753,20 @@ final public class GameSession {
             )
         case let packet as PACKET_ZC_STATUS:
             let basicStatus = CharacterBasicStatus(from: packet)
-            context.playerStatus.update(from: basicStatus)
+            playSession.playerStatus.update(from: basicStatus)
         case let packet as PACKET_ZC_SKILLINFO_LIST:
-            context.skillList.replace(from: packet)
+            playSession.skillList.replace(from: packet)
         case let packet as PACKET_ZC_SKILLINFO_UPDATE:
-            context.skillList.update(from: packet)
+            playSession.skillList.update(from: packet)
         case let packet as PACKET_ZC_SKILLINFO_UPDATE2:
-            context.skillList.update(from: packet)
+            playSession.skillList.update(from: packet)
         case let packet as PACKET_ZC_ADD_SKILL:
-            context.skillList.add(from: packet)
+            playSession.skillList.add(from: packet)
         case let packet as PACKET_ZC_SKILLINFO_DELETE:
-            context.skillList.delete(from: packet)
+            playSession.skillList.delete(from: packet)
         case let packet as PACKET_ZC_SKILL_POSTDELAY:
             let cooldown = SkillCooldown(from: packet, startTime: .now)
-            context.setSkillCooldown(cooldown)
+            playSession.setSkillCooldown(cooldown)
         case let packet as PACKET_ZC_USESKILL_ACK:
             if let skillID = SkillID(rawValue: Int(packet.skillId)),
                let element = Element(rawValue: Int(packet.element)) {
@@ -784,7 +785,7 @@ final public class GameSession {
         case let packet as PACKET_ZC_DISPEL:
             mapScene?.onMapObjectSkillCastCancelled(sourceObjectID: packet.gid)
         case let packet as PACKET_ZC_ACK_TOUSESKILL:
-            context.messageCenter.addMessage(for: packet)
+            playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_USE_SKILL:
             let objectSkill = MapObjectSkill(from: packet)
             mapScene?.onMapObjectSkillPerformed(objectSkill: objectSkill)
@@ -797,53 +798,53 @@ final public class GameSession {
                 mapScene?.onGroundSkillCast(skillID: skillID, sourceObjectID: packet.AID, position: position)
             }
         case let packet as PACKET_ZC_SHORTCUT_KEY_LIST:
-            context.shortcutList.update(from: packet)
+            playSession.shortcutList.update(from: packet)
         case let packet as PACKET_ZC_PAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                context.playerStatus.update(property: sp, value: Int(packet.count))
+                playSession.playerStatus.update(property: sp, value: Int(packet.count))
                 mapScene?.onPlayerStatusChanged(property: sp, value: Int(packet.count))
             }
         case let packet as PACKET_ZC_LONGPAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                context.playerStatus.update(property: sp, value: Int(packet.amount))
+                playSession.playerStatus.update(property: sp, value: Int(packet.amount))
             }
         case let packet as PACKET_ZC_LONGLONGPAR_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.varID)) {
-                context.playerStatus.update(property: sp, value: Int(packet.amount))
+                playSession.playerStatus.update(property: sp, value: Int(packet.amount))
             }
         case let packet as PACKET_ZC_STATUS_CHANGE:
             if let sp = StatusProperty(rawValue: Int(packet.statusID)) {
-                context.playerStatus.update(property: sp, value: Int(packet.value))
+                playSession.playerStatus.update(property: sp, value: Int(packet.value))
             }
         case let packet as PACKET_ZC_COUPLESTATUS:
             if let sp = StatusProperty(rawValue: Int(packet.statusType)) {
-                context.playerStatus.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
+                playSession.playerStatus.update(property: sp, value: Int(packet.defaultStatus), value2: Int(packet.plusStatus))
             }
         case let packet as PACKET_ZC_ATTACK_RANGE:
-            context.playerStatus.update(from: packet)
+            playSession.playerStatus.update(from: packet)
         case let packet as PACKET_ZC_ATTACK_FAILURE_FOR_DISTANCE:
             mapScene?.onPlayerTooFarToAttack(targetID: packet.targetAID)
         case let packet as PACKET_ZC_ACTION_FAILURE:
-            context.messageCenter.addMessage(for: packet)
+            playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_RECOVERY:
             if let statusProperty = StatusProperty(rawValue: Int(packet.type)) {
                 switch statusProperty {
                 case .hp:
                     let amount = Int(packet.amount)
-                    let hp = min(context.playerStatus.hp + amount, context.playerStatus.maxHp)
-                    context.playerStatus.hp = hp
+                    let hp = min(playSession.playerStatus.hp + amount, playSession.playerStatus.maxHp)
+                    playSession.playerStatus.hp = hp
                     mapScene?.onPlayerHealthPointsRecovered(recovered: amount, current: hp)
                 case .sp:
                     let amount = Int(packet.amount)
-                    let sp = min(context.playerStatus.sp + amount, context.playerStatus.maxSp)
-                    context.playerStatus.sp = sp
+                    let sp = min(playSession.playerStatus.sp + amount, playSession.playerStatus.maxSp)
+                    playSession.playerStatus.sp = sp
                     mapScene?.onPlayerSpellPointsRecovered(recovered: amount, current: sp)
                 default:
                     break
                 }
             }
         case let packet as PACKET_ZC_NOTIFY_EXP:
-            context.messageCenter.addMessage(for: packet)
+            playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_INVENTORY_START:
             // invType: 0 = inventory, 1 = cart, 2 = storage, 3 = guild storage
             switch packet.invType {
@@ -858,7 +859,7 @@ final public class GameSession {
             // invType: 0 = inventory, 1 = cart, 2 = storage, 3 = guild storage
             switch packet.invType {
             case 0:
-                context.inventory.update(from: packet)
+                playSession.inventory.update(from: packet)
             case 2:
                 storage?.update(from: packet)
             default:
@@ -868,7 +869,7 @@ final public class GameSession {
             // invType: 0 = inventory, 1 = cart, 2 = storage, 3 = guild storage
             switch packet.invType {
             case 0:
-                context.inventory.update(from: packet)
+                playSession.inventory.update(from: packet)
             case 2:
                 storage?.update(from: packet)
             default:
@@ -885,26 +886,26 @@ final public class GameSession {
         case let packet as PACKET_ZC_ITEM_DISAPPEAR:
             mapScene?.onItemVanished(objectID: packet.itemAid)
         case let packet as PACKET_ZC_ITEM_PICKUP_ACK:
-            context.inventory.update(from: packet)
-            context.messageCenter.addMessage(for: packet)
+            playSession.inventory.update(from: packet)
+            playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_USE_ITEM_ACK:
-            context.inventory.update(from: packet)
+            playSession.inventory.update(from: packet)
         case let packet as PACKET_ZC_REQ_WEAR_EQUIP_ACK:
-            context.inventory.update(from: packet)
-            if let item = context.inventory.items[Int(packet.index)] {
-                context.messageCenter.addMessage(for: packet, itemID: item.itemID)
+            playSession.inventory.update(from: packet)
+            if let item = playSession.inventory.items[Int(packet.index)] {
+                playSession.messageCenter.addMessage(for: packet, itemID: item.itemID)
             }
         case let packet as PACKET_ZC_REQ_TAKEOFF_EQUIP_ACK:
-            context.inventory.update(from: packet)
-            if let item = context.inventory.items[Int(packet.index)] {
-                context.messageCenter.addMessage(for: packet, itemID: item.itemID)
+            playSession.inventory.update(from: packet)
+            if let item = playSession.inventory.items[Int(packet.index)] {
+                playSession.messageCenter.addMessage(for: packet, itemID: item.itemID)
             }
         case let packet as PACKET_ZC_ITEM_THROW_ACK:
-            context.inventory.update(from: packet)
+            playSession.inventory.update(from: packet)
         case let packet as PACKET_ZC_EQUIP_ARROW:
-            context.inventory.update(from: packet)
+            playSession.inventory.update(from: packet)
         case let packet as PACKET_ZC_DELETE_ITEM_FROM_BODY:
-            context.inventory.update(from: packet)
+            playSession.inventory.update(from: packet)
         case let packet as packet_spawn_unit:
             let object = MapObject(from: packet)
             let posDir = PosDir(from: packet.PosDir)
@@ -958,16 +959,16 @@ final public class GameSession {
         case let packet as PACKET_ZC_NOTIFY_ACT:
             let objectAction = MapObjectAction(from: packet)
             mapScene?.onMapObjectActionPerformed(objectAction: objectAction)
-            context.messageCenter.addMessage(for: objectAction, account: account)
+            playSession.messageCenter.addMessage(for: objectAction, account: account)
         case let packet as PACKET_ZC_HP_INFO:
             mapScene?.onMapObjectHealthUpdated(objectID: packet.GID, hp: Int(packet.HP), maxHp: Int(packet.maxHP))
         case let packet as PACKET_ZC_MSG_STATE_CHANGE:
             if packet.AID == account?.accountID {
                 if packet.state != 0 {
                     let statusChange = StatusChange(statusID: Int(packet.index), startTime: .now, duration: nil)
-                    context.setStatusChange(statusChange)
+                    playSession.setStatusChange(statusChange)
                 } else {
-                    context.removeStatusChange(statusID: Int(packet.index))
+                    playSession.removeStatusChange(statusID: Int(packet.index))
                 }
             }
         case let packet as PACKET_ZC_MSG_STATE_CHANGE3:
@@ -975,7 +976,7 @@ final public class GameSession {
                 switch OfficialStatusChangeID(rawValue: Int(packet.index)) {
                 case .efst_postdelay, .efst_groundmagic:
                     if packet.remain > 0 {
-                        context.setGlobalSkillCooldown(startTime: .now, duration: .milliseconds(packet.remain))
+                        playSession.setGlobalSkillCooldown(startTime: .now, duration: .milliseconds(packet.remain))
                     }
                 default:
                     break
@@ -983,7 +984,7 @@ final public class GameSession {
 
                 if packet.state != 0 {
                     let statusChange = StatusChange(from: packet, startTime: .now)
-                    context.setStatusChange(statusChange)
+                    playSession.setStatusChange(statusChange)
                 }
             }
         case let packet as PACKET_ZC_NOTIFY_EFFECT:
@@ -1026,10 +1027,10 @@ final public class GameSession {
             npcShop = NPCShop(from: packet)
         case let packet as PACKET_ZC_PC_PURCHASE_RESULT:
             npcShop = nil
-            context.messageCenter.addMessage(for: packet)
+            playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_PC_SELL_RESULT:
             npcShop = nil
-            context.messageCenter.addMessage(for: packet)
+            playSession.messageCenter.addMessage(for: packet)
         case let packet as PACKET_ZC_NOTIFY_STOREITEM_COUNTINFO:
             storage?.update(from: packet)
         case let packet as PACKET_ZC_ADD_ITEM_TO_STORE:
@@ -1040,25 +1041,25 @@ final public class GameSession {
             storage = nil
         case let packet as PACKET_ZC_NOTIFY_CHAT:
             let message = ChatMessage(from: packet)
-            context.messageCenter.add(message)
+            playSession.messageCenter.add(message)
         case let packet as PACKET_ZC_WHISPER:
             let message = ChatMessage(from: packet)
-            context.messageCenter.add(message)
+            playSession.messageCenter.add(message)
         case let packet as PACKET_ZC_NOTIFY_PLAYERCHAT:
             let message = ChatMessage(from: packet)
-            context.messageCenter.add(message)
+            playSession.messageCenter.add(message)
         case let packet as PACKET_ZC_NPC_CHAT:
             let message = ChatMessage(from: packet)
-            context.messageCenter.add(message)
+            playSession.messageCenter.add(message)
         case let packet as PACKET_ZC_NOTIFY_CHAT_PARTY:
             let message = ChatMessage(from: packet)
-            context.messageCenter.add(message)
+            playSession.messageCenter.add(message)
         case let packet as PACKET_ZC_GUILD_CHAT:
             let message = ChatMessage(from: packet)
-            context.messageCenter.add(message)
+            playSession.messageCenter.add(message)
         case let packet as PACKET_ZC_NOTIFY_CLAN_CHAT:
             let message = ChatMessage(from: packet)
-            context.messageCenter.add(message)
+            playSession.messageCenter.add(message)
         case _ as PACKET_ZC_ALL_ACH_LIST:
             break
         case _ as PACKET_ZC_ACH_UPDATE:
@@ -1305,7 +1306,7 @@ final public class GameSession {
 
     private func performSlashCommand(_ message: String) {
         guard let slashCommand = SlashCommand(message: message) else {
-            context.messageCenter.addUnknownSlashCommandMessage()
+            playSession?.messageCenter.addUnknownSlashCommandMessage()
             return
         }
 
@@ -1314,12 +1315,12 @@ final public class GameSession {
             if let mapScene {
                 let mapName = mapScene.mapName.replacingOccurrences(of: ".rsw", with: "")
                 let localizedMapName = context.mapInfoTable.localizedMapName(forMapName: mapName) ?? mapName
-                context.messageCenter.addLocationMessage(mapName: mapName, localizedMapName: localizedMapName, position: mapScene.player.gridPosition)
+                playSession?.messageCenter.addLocationMessage(mapName: mapName, localizedMapName: localizedMapName, position: mapScene.player.gridPosition)
             }
         case .sit, .stand:
             mapScene?.toggleSit()
         case .help:
-            context.messageCenter.addSlashCommandHelpMessages()
+            playSession?.messageCenter.addSlashCommandHelpMessages()
         }
     }
 
@@ -1373,19 +1374,19 @@ final public class GameSession {
     // MARK: - Shortcut
 
     func setShortcut(_ shortcut: Shortcut, atRow row: Int, column: Int) {
-        guard let mapClient else {
+        guard let mapClient, let playSession else {
             return
         }
 
-        var shortcutList = context.shortcutList
+        var shortcutList = playSession.shortcutList
         shortcutList.setShortcut(shortcut, atRow: row, column: column)
 
-        for change in shortcutList.changes(from: context.shortcutList) {
+        for change in shortcutList.changes(from: playSession.shortcutList) {
             let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
             mapClient.sendPacket(packet)
         }
 
-        context.shortcutList = shortcutList
+        playSession.shortcutList = shortcutList
     }
 
     func removeShortcut(atRow row: Int, column: Int) {
@@ -1399,44 +1400,48 @@ final public class GameSession {
         toRow targetRow: Int,
         column targetColumn: Int
     ) {
-        guard let mapClient,
-              context.shortcutList.rows[sourceRow][sourceColumn] == shortcut else {
+        guard let mapClient, let playSession,
+              playSession.shortcutList.rows[sourceRow][sourceColumn] == shortcut else {
             return
         }
 
-        var shortcutList = context.shortcutList
+        var shortcutList = playSession.shortcutList
         shortcutList.setShortcut(.empty, atRow: sourceRow, column: sourceColumn)
         shortcutList.setShortcut(shortcut, atRow: targetRow, column: targetColumn)
 
-        for change in shortcutList.changes(from: context.shortcutList) {
+        for change in shortcutList.changes(from: playSession.shortcutList) {
             let packet = PacketFactory.CZ_SHORTCUT_KEY_CHANGE2(change: change)
             mapClient.sendPacket(packet)
         }
 
-        context.shortcutList = shortcutList
+        playSession.shortcutList = shortcutList
     }
 
     func setShortcutRowShift(_ rowShift: Int) {
-        guard let mapClient else {
+        guard let mapClient, let playSession else {
             return
         }
 
-        context.shortcutList.rowShift = rowShift
+        playSession.shortcutList.rowShift = rowShift
 
         let packet = PacketFactory.CZ_SHORTCUTKEYBAR_ROTATE2(rowShift: rowShift)
         mapClient.sendPacket(packet)
     }
 
     func useShortcut(_ shortcut: Shortcut) {
+        guard let playSession else {
+            return
+        }
+
         switch shortcut {
         case .empty:
             break
         case .item(let itemID):
-            if let item = context.inventory.items.values.first(where: { $0.itemID == itemID }) {
+            if let item = playSession.inventory.items.values.first(where: { $0.itemID == itemID }) {
                 useItem(at: item.index)
             }
         case .skill(let skillID, let level):
-            if let skill = context.skillList.skills[skillID] {
+            if let skill = playSession.skillList.skills[skillID] {
                 mapScene?.useSkill(skill, level: level)
             }
         }

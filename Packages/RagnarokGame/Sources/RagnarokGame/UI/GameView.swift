@@ -44,6 +44,7 @@ public struct GameView: View {
         }
         .environment(gameSession)
         .environment(gameSession.context)
+        .environment(gameSession.playSession)
         .onIncrementStatusProperty { sp, amount in
             gameSession.incrementStatusProperty(sp, by: amount)
         }

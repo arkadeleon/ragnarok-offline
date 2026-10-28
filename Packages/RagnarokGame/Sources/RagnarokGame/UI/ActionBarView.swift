@@ -18,7 +18,7 @@ struct ActionBarView: View {
     var onShortcut: (Shortcut) -> Void
 
     @Environment(GameSession.self) private var gameSession
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var currentRow = 0
 
@@ -115,7 +115,7 @@ struct ActionBarView: View {
 
                 HStack(spacing: 4) {
                     ForEach(0..<8, id: \.self) { column in
-                        let shortcut = gameContext.shortcutList.rows[row][column]
+                        let shortcut = playSession.shortcutList.rows[row][column]
 
                         ActionSlotButton(shortcut: shortcut) {
                             onShortcut(shortcut)
@@ -130,7 +130,7 @@ struct ActionBarView: View {
     }
 
     private var row: Int {
-        let nonEmptyRows = gameContext.shortcutList.nonEmptyRows
+        let nonEmptyRows = playSession.shortcutList.nonEmptyRows
         if nonEmptyRows.contains(currentRow) {
             return currentRow
         }
@@ -138,7 +138,7 @@ struct ActionBarView: View {
     }
 
     private func turnRow() {
-        let nonEmptyRows = gameContext.shortcutList.nonEmptyRows
+        let nonEmptyRows = playSession.shortcutList.nonEmptyRows
         guard nonEmptyRows.count > 1 else {
             return
         }
@@ -171,7 +171,7 @@ private struct ActionSlotButton: View {
     var shortcut: Shortcut
     var action: () -> Void
 
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     var body: some View {
         Button(action: action) {
@@ -181,14 +181,14 @@ private struct ActionSlotButton: View {
 
                 ShortcutIconView(shortcut: shortcut)
                     .frame(width: 24, height: 24)
-                    .opacity(gameContext.isShortcutAvailable(shortcut) ? 1 : 0.4)
+                    .opacity(playSession.isShortcutAvailable(shortcut) ? 1 : 0.4)
                     .overlay {
-                        if let cooldown = gameContext.skillCooldown(for: shortcut) {
+                        if let cooldown = playSession.skillCooldown(for: shortcut) {
                             SkillCooldownView(cooldown: cooldown)
                         }
                     }
 
-                if let label = gameContext.shortcutLabel(shortcut) {
+                if let label = playSession.shortcutLabel(shortcut) {
                     Text(verbatim: label)
                         .font(.game(size: 11))
                         .foregroundStyle(Color.white)
@@ -206,16 +206,16 @@ private struct ActionSlotButton: View {
 }
 
 #Preview("Regular") {
-    let gameSession = {
-        let gameSession = GameSession(resourceManager: .testing)
-        let gameContext = gameSession.context
+    let gameSession = GameSession(resourceManager: .testing)
+    let playSession = {
+        let playSession = PlaySession(context: gameSession.context)
 
         var redPotion = InventoryItem()
         redPotion.index = 0
         redPotion.itemID = 501
         redPotion.type = .healing
         redPotion.amount = 12
-        gameContext.inventory.append(item: redPotion)
+        playSession.inventory.append(item: redPotion)
 
         var shortcutList = ShortcutList()
         for (column, skillID) in [5, 7, 10, 16, 17, 18, 19].enumerated() {
@@ -223,9 +223,9 @@ private struct ActionSlotButton: View {
         }
         shortcutList.setShortcut(.item(itemID: 501), atRow: 0, column: 7)
         shortcutList.setShortcut(.skill(skillID: 28, level: 10), atRow: 2, column: 0)
-        gameContext.shortcutList = shortcutList
+        playSession.shortcutList = shortcutList
 
-        return gameSession
+        return playSession
     }()
 
     ActionBarView(selectedTargetType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
@@ -233,20 +233,21 @@ private struct ActionSlotButton: View {
         .frame(width: 480, height: 360, alignment: .bottomTrailing)
         .environment(gameSession)
         .environment(gameSession.context)
+        .environment(playSession)
 }
 
 #Preview("Minimal") {
-    let gameSession = {
-        let gameSession = GameSession(resourceManager: .testing)
-        let gameContext = gameSession.context
+    let gameSession = GameSession(resourceManager: .testing)
+    let playSession = {
+        let playSession = PlaySession(context: gameSession.context)
 
         var shortcutList = ShortcutList()
         for (column, skillID) in [5, 7, 10, 16, 17, 18, 19].enumerated() {
             shortcutList.setShortcut(.skill(skillID: skillID, level: 1), atRow: 0, column: column)
         }
-        gameContext.shortcutList = shortcutList
+        playSession.shortcutList = shortcutList
 
-        return gameSession
+        return playSession
     }()
 
     ActionBarView(selectedTargetType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
@@ -256,4 +257,5 @@ private struct ActionSlotButton: View {
         .frame(width: 360)
         .environment(gameSession)
         .environment(gameSession.context)
+        .environment(playSession)
 }

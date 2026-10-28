@@ -45,7 +45,7 @@ struct ChatBoxView: View {
     }
 
     @Environment(GameSession.self) private var gameSession
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var viewStyle: ViewStyle = .compact
     @State private var messageGroup: MessageGroup = .chat
@@ -70,7 +70,7 @@ struct ChatBoxView: View {
             Group {
                 switch messageGroup {
                 case .chat:
-                    ChatMessageListView(messages: gameContext.messageCenter.messages)
+                    ChatMessageListView(messages: playSession.messageCenter.messages)
                 case .command:
                     AtCommandShortcutListView(groups: AtCommandShortcutGroup.allGroups) { shortcut in
                         send(shortcut.command)
@@ -121,14 +121,14 @@ struct ChatBoxView: View {
                     }
 
                 ChatInputHistoryButton(systemImage: "arrow.up") {
-                    message = gameContext.messageCenter.inputHistory.previous()
+                    message = playSession.messageCenter.inputHistory.previous()
                 }
-                .disabled(!gameContext.messageCenter.inputHistory.hasPrevious)
+                .disabled(!playSession.messageCenter.inputHistory.hasPrevious)
 
                 ChatInputHistoryButton(systemImage: "arrow.down") {
-                    message = gameContext.messageCenter.inputHistory.next()
+                    message = playSession.messageCenter.inputHistory.next()
                 }
-                .disabled(!gameContext.messageCenter.inputHistory.hasNext)
+                .disabled(!playSession.messageCenter.inputHistory.hasNext)
             }
             .frame(height: ChatBoxView.chatInputHeight)
         }
@@ -145,7 +145,7 @@ struct ChatBoxView: View {
         }
 
         gameSession.sendMessage(message)
-        gameContext.messageCenter.inputHistory.push(message)
+        playSession.messageCenter.inputHistory.push(message)
         self.message = ""
     }
 }
@@ -262,17 +262,18 @@ private struct ChatInputHistoryButton: View {
 }
 
 #Preview {
-    let gameSession = {
-        let gameSession = GameSession.testing
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Apple (1)."))
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Banana (1)."))
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Grape (1)."))
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Carrot (1)."))
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Potato (1)."))
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Meat (1)."))
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Honey (1)."))
-        gameSession.context.messageCenter.add(ChatMessage(type: .public, content: "You got Milk (1)."))
-        return gameSession
+    let gameSession = GameSession.testing
+    let playSession = {
+        let playSession = PlaySession(context: gameSession.context)
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Apple (1)."))
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Banana (1)."))
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Grape (1)."))
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Carrot (1)."))
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Potato (1)."))
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Meat (1)."))
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Honey (1)."))
+        playSession.messageCenter.add(ChatMessage(type: .public, content: "You got Milk (1)."))
+        return playSession
     }()
 
     VStack {
@@ -282,4 +283,5 @@ private struct ChatInputHistoryButton: View {
     .ignoresSafeArea()
     .environment(gameSession)
     .environment(gameSession.context)
+    .environment(playSession)
 }

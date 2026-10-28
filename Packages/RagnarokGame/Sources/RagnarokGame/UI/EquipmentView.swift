@@ -116,9 +116,10 @@ private struct EquipmentSlotLabel: View {
     var alignment: HorizontalAlignment
 
     @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     private var itemName: String? {
-        guard let item = gameContext.inventory.item(equippedAt: location) else {
+        guard let item = playSession.inventory.item(equippedAt: location) else {
             return nil
         }
         return gameContext.itemInfoTable.localizedIdentifiedItemName(forItemID: item.itemID)
@@ -147,11 +148,12 @@ private struct EquipmentSlotImage: View {
     var location: EquipPositions
 
     @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var iconImage: Resources.Image?
 
     private var equippedItem: InventoryItem? {
-        gameContext.inventory.item(equippedAt: location)
+        playSession.inventory.item(equippedAt: location)
     }
 
     var body: some View {
@@ -188,4 +190,5 @@ private struct EquipmentSlotDivider: View {
         .padding()
         .environment(GameSession.testing)
         .environment(GameContext.testing)
+        .environment(PlaySession.testing)
 }

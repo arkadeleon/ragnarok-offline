@@ -698,7 +698,7 @@ extension MapScene {
         }
 
         let startPosition = player.gridPosition
-        let attackRange = gameSession?.context.playerStatus.attackRange ?? 1
+        let attackRange = gameSession?.playSession?.playerStatus.attackRange ?? 1
 
         switch decideMovement(from: startPosition, toward: target.gridPosition, within: attackRange) {
         case .alreadyInRange:

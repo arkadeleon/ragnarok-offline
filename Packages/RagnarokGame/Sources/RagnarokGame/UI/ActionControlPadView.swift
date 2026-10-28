@@ -24,7 +24,7 @@ struct ActionControlPadView: View {
     var onSit: () -> Void
     var onShortcut: (Shortcut) -> Void
 
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     @State private var currentRow = 0
     @State private var dialAngle: Angle = .zero
@@ -33,7 +33,7 @@ struct ActionControlPadView: View {
         ZStack {
             ZStack {
                 ForEach(0..<shortcutsPerRow, id: \.self) { column in
-                    let shortcut = gameContext.shortcutList.rows[row][column]
+                    let shortcut = playSession.shortcutList.rows[row][column]
 
                     ShortcutActionButton(centerAngle: .degrees(45 + 40 * Double(column + 1)), shortcut: shortcut) {
                         onShortcut(shortcut)
@@ -122,7 +122,7 @@ struct ActionControlPadView: View {
     }
 
     private var row: Int {
-        let nonEmptyRows = gameContext.shortcutList.nonEmptyRows
+        let nonEmptyRows = playSession.shortcutList.nonEmptyRows
         if nonEmptyRows.contains(currentRow) {
             return currentRow
         }
@@ -130,7 +130,7 @@ struct ActionControlPadView: View {
     }
 
     private func turnDial() {
-        let nonEmptyRows = gameContext.shortcutList.nonEmptyRows
+        let nonEmptyRows = playSession.shortcutList.nonEmptyRows
         guard nonEmptyRows.count > 1 else {
             return
         }
@@ -176,7 +176,7 @@ private struct ShortcutActionButton: View {
     var shortcut: Shortcut
     var action: () -> Void
 
-    @Environment(GameContext.self) private var gameContext
+    @Environment(PlaySession.self) private var playSession
 
     var body: some View {
         RingSectorActionButton(
@@ -188,11 +188,11 @@ private struct ShortcutActionButton: View {
         ) {
             ZStack {
                 ShortcutIconView(shortcut: shortcut)
-                    .opacity(gameContext.isShortcutAvailable(shortcut) ? 1 : 0.4)
+                    .opacity(playSession.isShortcutAvailable(shortcut) ? 1 : 0.4)
                     .id(shortcut)
                     .transition(.opacity)
 
-                if let label = gameContext.shortcutLabel(shortcut) {
+                if let label = playSession.shortcutLabel(shortcut) {
                     Text(verbatim: label)
                         .font(.game(size: 11))
                         .foregroundStyle(Color.white)
@@ -246,15 +246,16 @@ private struct RingSectorActionButton<Content>: View where Content: View {
 }
 
 #Preview {
-    let gameContext = {
-        let gameContext = GameContext(resourceManager: .testing)
+    let gameContext = GameContext(resourceManager: .testing)
+    let playSession = {
+        let playSession = PlaySession(context: gameContext)
 
         var redPotion = InventoryItem()
         redPotion.index = 0
         redPotion.itemID = 501
         redPotion.type = .healing
         redPotion.amount = 12
-        gameContext.inventory.append(item: redPotion)
+        playSession.inventory.append(item: redPotion)
 
         var shortcutList = ShortcutList()
         for (column, skillID) in [5, 7, 10, 16, 17, 18, 19].enumerated() {
@@ -262,13 +263,14 @@ private struct RingSectorActionButton<Content>: View where Content: View {
         }
         shortcutList.setShortcut(.item(itemID: 501), atRow: 0, column: 7)
         shortcutList.setShortcut(.skill(skillID: 28, level: 10), atRow: 2, column: 0)
-        gameContext.shortcutList = shortcutList
+        playSession.shortcutList = shortcutList
 
-        return gameContext
+        return playSession
     }()
 
     ActionControlPadView(selectedTargetType: nil, onTargetAction: {}, onSelectNextTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .background(Color.black)
         .environment(gameContext)
+        .environment(playSession)
 }
