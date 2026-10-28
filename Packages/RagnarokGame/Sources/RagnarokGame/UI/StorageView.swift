@@ -398,7 +398,6 @@ private struct StorageItemActions: View {
 
     return StorageView(storage: storage)
         .padding()
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(playSession)
 }

@@ -205,9 +205,8 @@ private struct ActionSlotButton: View {
 }
 
 #Preview("Regular") {
-    let gameSession = GameSession(resourceManager: .testing)
     let playSession = {
-        let playSession = PlaySession(context: gameSession.context)
+        let playSession = PlaySession(context: .testing)
 
         var redPotion = InventoryItem()
         redPotion.index = 0
@@ -230,15 +229,13 @@ private struct ActionSlotButton: View {
     ActionBarView(selectedTargetType: nil, onTargetAction: {}, onSelectNextTarget: {}, onDeselectTarget: {}, onPickup: {}, onSit: {}, onShortcut: { _ in })
         .padding()
         .frame(width: 480, height: 360, alignment: .bottomTrailing)
-        .environment(gameSession)
-        .environment(gameSession.context)
+        .environment(GameContext.testing)
         .environment(playSession)
 }
 
 #Preview("Minimal") {
-    let gameSession = GameSession(resourceManager: .testing)
     let playSession = {
-        let playSession = PlaySession(context: gameSession.context)
+        let playSession = PlaySession(context: .testing)
 
         var shortcutList = ShortcutList()
         for (column, skillID) in [5, 7, 10, 16, 17, 18, 19].enumerated() {
@@ -254,7 +251,6 @@ private struct ActionSlotButton: View {
         .padding(.horizontal, 16)
         .padding(.vertical)
         .frame(width: 360)
-        .environment(gameSession)
-        .environment(gameSession.context)
+        .environment(GameContext.testing)
         .environment(playSession)
 }

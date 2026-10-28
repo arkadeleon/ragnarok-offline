@@ -46,7 +46,6 @@ struct NPCShopDealTypeView: View {
 #Preview {
     NPCShopDealTypeView()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(PlaySession.testing)
 }

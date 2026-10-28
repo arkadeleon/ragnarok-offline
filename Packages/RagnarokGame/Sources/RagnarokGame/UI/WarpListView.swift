@@ -106,7 +106,6 @@ private struct WarpListBox: View {
 
     WarpListView(warpList: warpList)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(PlaySession.testing)
 }

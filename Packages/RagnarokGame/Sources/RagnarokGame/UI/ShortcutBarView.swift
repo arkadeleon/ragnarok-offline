@@ -160,7 +160,6 @@ struct ShortcutIconView: View {
     ShortcutBarView()
         .shortcutDragContainer()
         .padding()
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(playSession)
 }

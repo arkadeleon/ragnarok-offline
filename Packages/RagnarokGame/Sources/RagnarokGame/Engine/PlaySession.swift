@@ -175,6 +175,9 @@ final class PlaySession {
 
         mapClient?.disconnect()
         mapClient = nil
+
+        // The scene holds this session, so keeping the runtime would leak both.
+        mapPhase = .connecting
     }
 
     private func handleClientError(_ error: NetworkClientError, from client: NetworkClient) {

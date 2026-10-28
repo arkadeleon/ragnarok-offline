@@ -195,6 +195,5 @@ private struct NPCDialogInputBox: View {
 
     NPCDialogView(dialog: dialog)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .environment(GameSession.testing)
         .environment(PlaySession.testing)
 }

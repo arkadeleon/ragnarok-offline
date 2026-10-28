@@ -222,7 +222,6 @@ private struct NPCShopItemRow: View {
 
     NPCShopView(shop: shop)
         .padding()
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(PlaySession.testing)
 }
@@ -254,7 +253,6 @@ private struct NPCShopItemRow: View {
 
     NPCShopView(shop: shop)
         .padding()
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(playSession)
 }

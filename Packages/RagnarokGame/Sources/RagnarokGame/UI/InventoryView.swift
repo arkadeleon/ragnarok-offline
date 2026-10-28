@@ -256,7 +256,6 @@ private struct InventoryItemActions: View {
 
     InventoryView(inventory: inventory)
         .padding()
-        .environment(GameSession.testing)
         .environment(GameContext.testing)
         .environment(PlaySession.testing)
 }
