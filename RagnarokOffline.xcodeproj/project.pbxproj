@@ -32,6 +32,14 @@
 		3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 3558A3E12DFC28960038DFC3 /* rAthenaCommon */; };
 		356B59FB302F010200D3FE6A /* RagnarokReality in Frameworks */ = {isa = PBXBuildFile; productRef = 356B59FA302F010200D3FE6A /* RagnarokReality */; };
 		357396A3305BC94400B317C9 /* RagnarokGRF in Frameworks */ = {isa = PBXBuildFile; productRef = 357396A2305BC94400B317C9 /* RagnarokGRF */; };
+		357A5DF130908867009089BD /* rAthenaCharPre in Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF030908867009089BD /* rAthenaCharPre */; };
+		357A5DF230908867009089BD /* rAthenaCharPre in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF030908867009089BD /* rAthenaCharPre */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		357A5DF430908867009089BD /* rAthenaLoginPre in Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF330908867009089BD /* rAthenaLoginPre */; };
+		357A5DF530908868009089BD /* rAthenaLoginPre in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF330908867009089BD /* rAthenaLoginPre */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		357A5DF730908868009089BD /* rAthenaMapPre in Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF630908868009089BD /* rAthenaMapPre */; };
+		357A5DF830908868009089BD /* rAthenaMapPre in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF630908868009089BD /* rAthenaMapPre */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		357A5DFA30908868009089BD /* rAthenaWebPre in Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF930908868009089BD /* rAthenaWebPre */; };
+		357A5DFB30908868009089BD /* rAthenaWebPre in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 357A5DF930908868009089BD /* rAthenaWebPre */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		359915452E0EA35500D94655 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359915442E0EA35500D94655 /* QuickLookThumbnailing.framework */; };
 		3599154C2E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 359915432E0EA35500D94655 /* RagnarokOfflineThumbnailExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		35A5F9142FD2627A00669A12 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A5F9132FD2627A00669A12 /* StoreKit.framework */; };
@@ -90,10 +98,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				357A5DF530908868009089BD /* rAthenaLoginPre in Embed Frameworks */,
 				3558A3B92DFC22EA0038DFC3 /* rAthenaMap in Embed Frameworks */,
 				3558A3B62DFC22EA0038DFC3 /* rAthenaLogin in Embed Frameworks */,
 				3558A3B32DFC22EA0038DFC3 /* rAthenaChar in Embed Frameworks */,
+				357A5DF230908867009089BD /* rAthenaCharPre in Embed Frameworks */,
+				357A5DFB30908868009089BD /* rAthenaWebPre in Embed Frameworks */,
 				3558A3BC2DFC22EA0038DFC3 /* rAthenaWeb in Embed Frameworks */,
+				357A5DF830908868009089BD /* rAthenaMapPre in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,11 +174,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3558A3B52DFC22EA0038DFC3 /* rAthenaLogin in Frameworks */,
+				357A5DF730908868009089BD /* rAthenaMapPre in Frameworks */,
+				357A5DF430908867009089BD /* rAthenaLoginPre in Frameworks */,
 				35C00B80305BEDC400E58975 /* DataCompression in Frameworks */,
+				357A5DFA30908868009089BD /* rAthenaWebPre in Frameworks */,
 				354FCEA42F14B9FA00995F35 /* JSONViewer in Frameworks */,
 				356B59FB302F010200D3FE6A /* RagnarokReality in Frameworks */,
 				3558A3E22DFC28960038DFC3 /* rAthenaCommon in Frameworks */,
 				35A5F9142FD2627A00669A12 /* StoreKit.framework in Frameworks */,
+				357A5DF130908867009089BD /* rAthenaCharPre in Frameworks */,
 				3558A3B22DFC22EA0038DFC3 /* rAthenaChar in Frameworks */,
 				35B2C16F2EAF5AC400A4FD11 /* RagnarokGame in Frameworks */,
 				3558A3B82DFC22EA0038DFC3 /* rAthenaMap in Frameworks */,
@@ -304,6 +320,10 @@
 				356B59FA302F010200D3FE6A /* RagnarokReality */,
 				357396A2305BC94400B317C9 /* RagnarokGRF */,
 				35C00B7F305BEDC400E58975 /* DataCompression */,
+				357A5DF030908867009089BD /* rAthenaCharPre */,
+				357A5DF330908867009089BD /* rAthenaLoginPre */,
+				357A5DF630908868009089BD /* rAthenaMapPre */,
+				357A5DF930908868009089BD /* rAthenaWebPre */,
 			);
 			productName = RagnarokOffline;
 			productReference = 35B3B8D42A08BEA600B4540B /* RagnarokOffline.app */;
@@ -925,6 +945,26 @@
 		357396A2305BC94400B317C9 /* RagnarokGRF */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RagnarokGRF;
+		};
+		357A5DF030908867009089BD /* rAthenaCharPre */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaCharPre;
+		};
+		357A5DF330908867009089BD /* rAthenaLoginPre */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaLoginPre;
+		};
+		357A5DF630908868009089BD /* rAthenaMapPre */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaMapPre;
+		};
+		357A5DF930908868009089BD /* rAthenaWebPre */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3558A3AA2DFBECDB0038DFC3 /* XCLocalSwiftPackageReference "swift-rathena" */;
+			productName = rAthenaWebPre;
 		};
 		35B2C16E2EAF5AC400A4FD11 /* RagnarokGame */ = {
 			isa = XCSwiftPackageProductDependency;

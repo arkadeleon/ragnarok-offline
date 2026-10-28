@@ -10,6 +10,7 @@ import Observation
 import RagnarokDatabase
 import RagnarokGame
 import RagnarokResources
+import rAthenaCommon
 
 @MainActor
 @Observable
@@ -27,7 +28,7 @@ final class AppModel {
     let chatSession: ChatSession
 
     let serverDirectory = File(node: .directory(serverWorkingDirectoryURL), location: .server)
-    let serverManager = ServerManager()
+    let serverManager: ServerManager
 
     private(set) var database: DatabaseModel
 
@@ -46,12 +47,15 @@ final class AppModel {
             serverPort: settings.serverPort
         )
 
+        serverManager = ServerManager(mode: settings.serverMode)
+
         database = DatabaseModel(mode: settings.databaseMode, resourceManager: resourceManager)
 
         characterSimulator = CharacterSimulator(resourceManager: resourceManager)
         skillSimulator = SkillSimulator()
 
         observeRemoteClientSubscription()
+        observeServerMode()
         observeDatabaseMode()
 
         setupHelpFile()
@@ -70,6 +74,22 @@ final class AppModel {
 
                 await self.resourceProvider.remoteProvider.setEnabled(self.settings.isRemoteClientEnabled)
                 await self.resourceManager.clearCaches()
+            }
+        }
+    }
+
+    private func observeServerMode() {
+        withObservationTracking {
+            _ = settings.serverMode
+        } onChange: { [weak self] in
+            Task { @MainActor in
+                guard let self else {
+                    return
+                }
+
+                self.observeServerMode()
+
+                await self.serverManager.setMode(self.settings.serverMode)
             }
         }
     }

@@ -8,10 +8,15 @@
 import Foundation
 import Observation
 import rAthenaChar
+import rAthenaCharPre
+import rAthenaCommon
 import rAthenaLogin
+import rAthenaLoginPre
 import rAthenaMap
+import rAthenaMapPre
 import rAthenaResources
 import rAthenaWeb
+import rAthenaWebPre
 
 let serverWorkingDirectoryURL = URL.libraryDirectory.appending(path: "rathena", directoryHint: .isDirectory)
 
@@ -72,12 +77,50 @@ let serverConfiguration = ServerConfiguration(
 @MainActor
 @Observable
 final class ServerManager {
-    let loginServer = ServerModel(server: LoginServer.shared)
-    let charServer = ServerModel(server: CharServer.shared)
-    let mapServer = ServerModel(server: MapServer.shared)
-    let webServer = ServerModel(server: WebServer.shared)
+    private(set) var mode: ServerMode
 
-    private let allServers: [ServerModel]
+    var loginServer: ServerModel {
+        switch mode {
+        case .prerenewal: prerenewalLoginServer
+        case .renewal: renewalLoginServer
+        }
+    }
+
+    var charServer: ServerModel {
+        switch mode {
+        case .prerenewal: prerenewalCharServer
+        case .renewal: renewalCharServer
+        }
+    }
+
+    var mapServer: ServerModel {
+        switch mode {
+        case .prerenewal: prerenewalMapServer
+        case .renewal: renewalMapServer
+        }
+    }
+
+    var webServer: ServerModel {
+        switch mode {
+        case .prerenewal: prerenewalWebServer
+        case .renewal: renewalWebServer
+        }
+    }
+
+    private let renewalLoginServer = ServerModel(server: LoginServer.shared)
+    private let renewalCharServer = ServerModel(server: CharServer.shared)
+    private let renewalMapServer = ServerModel(server: MapServer.shared)
+    private let renewalWebServer = ServerModel(server: WebServer.shared)
+
+    private let prerenewalLoginServer = ServerModel(server: LoginServerPre.shared)
+    private let prerenewalCharServer = ServerModel(server: CharServerPre.shared)
+    private let prerenewalMapServer = ServerModel(server: MapServerPre.shared)
+    private let prerenewalWebServer = ServerModel(server: WebServerPre.shared)
+
+    private var allServers: [ServerModel] {
+        [loginServer, charServer, mapServer, webServer]
+    }
+
     private let serverResourceManager = ServerResourceManager()
 
     @ObservationIgnored private var serversToResume: [ServerModel] = []
@@ -86,17 +129,27 @@ final class ServerManager {
         allServers.allSatisfy({ $0.status == .running })
     }
 
-    init() {
-        allServers = [loginServer, charServer, mapServer, webServer]
+    init(mode: ServerMode) {
+        self.mode = mode
+    }
+
+    func setMode(_ mode: ServerMode) async {
+        guard mode != self.mode else {
+            return
+        }
+
+        await stopAllServers()
+
+        self.mode = mode
     }
 
     func startServer(_ server: ServerModel) async throws {
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, mode: mode, configuration: serverConfiguration)
         _ = await server.start()
     }
 
     func startAllServers() async throws {
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, mode: mode, configuration: serverConfiguration)
         await startServers(allServers)
     }
 
@@ -118,7 +171,7 @@ final class ServerManager {
         let servers = serversToResume
         serversToResume.removeAll()
 
-        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, configuration: serverConfiguration)
+        try await serverResourceManager.prepareWorkingDirectory(at: serverWorkingDirectoryURL, mode: mode, configuration: serverConfiguration)
         await startServers(servers)
     }
 

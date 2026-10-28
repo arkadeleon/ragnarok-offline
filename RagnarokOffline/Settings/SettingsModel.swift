@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 import RagnarokDatabase
+import rAthenaCommon
 import StoreKit
 
 let remoteClientSubscriptionGroupID = "22133104"
@@ -16,7 +17,10 @@ private enum SettingsKey {
     static let usesRemoteClient = "client.uses_remote_client"
     static let serverAddress = "client.server_address"
     static let serverPort = "client.server_port"
+
+    static let serverMode = "server.mode"
     static let automaticallyRestartsServers = "server.automatically_restarts_servers"
+
     static let databaseMode = "database.mode"
 }
 
@@ -52,6 +56,12 @@ final class SettingsModel {
         }
     }
 
+    var serverMode: ServerMode {
+        didSet {
+            defaults.set(serverMode.rawValue, forKey: SettingsKey.serverMode)
+        }
+    }
+
     var automaticallyRestartsServers: Bool {
         didSet {
             defaults.set(automaticallyRestartsServers, forKey: SettingsKey.automaticallyRestartsServers)
@@ -68,10 +78,14 @@ final class SettingsModel {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+
         usesRemoteClient = defaults.object(forKey: SettingsKey.usesRemoteClient) as? Bool ?? true
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
+
+        serverMode = (defaults.object(forKey: SettingsKey.serverMode) as? Int).flatMap(ServerMode.init) ?? .renewal
         automaticallyRestartsServers = defaults.bool(forKey: SettingsKey.automaticallyRestartsServers)
+
         databaseMode = defaults.string(forKey: SettingsKey.databaseMode).flatMap(DatabaseMode.init) ?? .renewal
 
         #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE

@@ -6,6 +6,7 @@
 //
 
 import RagnarokDatabase
+import rAthenaCommon
 import SwiftUI
 
 struct SettingsView: View {
@@ -51,6 +52,17 @@ struct SettingsView: View {
             }
 
             Section {
+                #if DEBUG
+                Picker(selection: $settings.serverMode) {
+                    Text("Pre-Renewal", tableName: "Settings")
+                        .tag(ServerMode.prerenewal)
+                    Text("Renewal", tableName: "Settings")
+                        .tag(ServerMode.renewal)
+                } label: {
+                    Text("Server Mode", tableName: "Settings")
+                }
+                #endif
+
                 NavigationLink {
                     ServerConfigurationView(serverConfiguration: serverConfiguration)
                 } label: {

@@ -7,9 +7,13 @@
 
 import Combine
 import rAthenaChar
+import rAthenaCharPre
 import rAthenaLogin
+import rAthenaLoginPre
 import rAthenaMap
+import rAthenaMapPre
 import rAthenaWeb
+import rAthenaWebPre
 
 @MainActor
 @Observable
@@ -100,13 +104,13 @@ final class ServerModel {
 extension ServerModel {
     var nameResource: LocalizedStringResource {
         switch server {
-        case is LoginServer:
+        case is LoginServer, is LoginServerPre:
             LocalizedStringResource("Login Server", table: "Server")
-        case is CharServer:
+        case is CharServer, is CharServerPre:
             LocalizedStringResource("Char Server", table: "Server")
-        case is MapServer:
+        case is MapServer, is MapServerPre:
             LocalizedStringResource("Map Server", table: "Server")
-        case is WebServer:
+        case is WebServer, is WebServerPre:
             LocalizedStringResource("Web Server", table: "Server")
         default:
             LocalizedStringResource("Server", table: "Server")

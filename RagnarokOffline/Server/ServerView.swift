@@ -100,7 +100,7 @@ struct ServerView: View {
 }
 
 #Preview {
-    let serverManager = ServerManager()
+    let serverManager = ServerManager(mode: .renewal)
 
     ServerView(server: serverManager.loginServer, serverManager: serverManager)
 }
