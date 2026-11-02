@@ -9,12 +9,9 @@ import Foundation
 import Observation
 import RagnarokDatabase
 import rAthenaCommon
-import StoreKit
-
-let remoteClientSubscriptionGroupID = "22133104"
 
 private enum SettingsKey {
-    static let usesRemoteClient = "client.uses_remote_client"
+    static let isRemoteClientEnabled = "client.is_remote_client_enabled"
     static let serverAddress = "client.server_address"
     static let serverPort = "client.server_port"
 
@@ -29,19 +26,10 @@ private enum SettingsKey {
 final class SettingsModel {
     @ObservationIgnored private let defaults: UserDefaults
 
-    private(set) var hasActiveRemoteClientSubscription = false
-    var usesRemoteClient: Bool {
-        didSet {
-            defaults.set(usesRemoteClient, forKey: SettingsKey.usesRemoteClient)
-        }
-    }
-
     var isRemoteClientEnabled: Bool {
-        #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
-        hasActiveRemoteClientSubscription && usesRemoteClient
-        #else
-        usesRemoteClient
-        #endif
+        didSet {
+            defaults.set(isRemoteClientEnabled, forKey: SettingsKey.isRemoteClientEnabled)
+        }
     }
 
     var serverAddress: String {
@@ -74,12 +62,10 @@ final class SettingsModel {
         }
     }
 
-    @ObservationIgnored private var subscriptionStatusTask: Task<Void, Never>?
-
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
 
-        usesRemoteClient = defaults.object(forKey: SettingsKey.usesRemoteClient) as? Bool ?? true
+        isRemoteClientEnabled = defaults.object(forKey: SettingsKey.isRemoteClientEnabled) as? Bool ?? false
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
 
@@ -87,23 +73,5 @@ final class SettingsModel {
         automaticallyRestartsServers = defaults.bool(forKey: SettingsKey.automaticallyRestartsServers)
 
         databaseMode = defaults.string(forKey: SettingsKey.databaseMode).flatMap(DatabaseMode.init) ?? .renewal
-
-        #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
-        subscriptionStatusTask = Task { [weak self] in
-            if let status = try? await Product.SubscriptionInfo.status(for: remoteClientSubscriptionGroupID) {
-                self?.hasActiveRemoteClientSubscription = status.contains(where: { $0.state != .revoked && $0.state != .expired })
-            }
-
-            for await (groupID, status) in Product.SubscriptionInfo.Status.all where groupID == remoteClientSubscriptionGroupID {
-                self?.hasActiveRemoteClientSubscription = status.contains(where: { $0.state != .revoked && $0.state != .expired })
-            }
-        }
-        #endif
-    }
-
-    deinit {
-        #if REMOTE_CLIENT_SUBSCRIPTION_FEATURE
-        subscriptionStatusTask?.cancel()
-        #endif
     }
 }

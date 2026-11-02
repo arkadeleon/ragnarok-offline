@@ -54,14 +54,14 @@ final class AppModel {
         characterSimulator = CharacterSimulator(resourceManager: resourceManager)
         skillSimulator = SkillSimulator()
 
-        observeRemoteClientSubscription()
+        observeRemoteClientSettings()
         observeServerMode()
         observeDatabaseMode()
 
         setupHelpFile()
     }
 
-    private func observeRemoteClientSubscription() {
+    private func observeRemoteClientSettings() {
         withObservationTracking {
             _ = settings.isRemoteClientEnabled
         } onChange: { [weak self] in
@@ -70,7 +70,7 @@ final class AppModel {
                     return
                 }
 
-                self.observeRemoteClientSubscription()
+                self.observeRemoteClientSettings()
 
                 await self.resourceProvider.remoteProvider.setEnabled(self.settings.isRemoteClientEnabled)
                 await self.resourceManager.clearCaches()
