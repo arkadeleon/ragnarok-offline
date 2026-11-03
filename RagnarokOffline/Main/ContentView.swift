@@ -14,7 +14,10 @@ struct ContentView: View {
 
     @AppStorage("hasCompletedWelcome") private var hasCompletedWelcome = false
 
+    @Namespace private var settingsNamespace
+
     @State private var selectedItem: SidebarItem?
+    @State private var isSettingsPresented = false
     @State private var isWelcomePresented = false
     @State private var incomingFile: File?
 
@@ -37,6 +40,15 @@ struct ContentView: View {
                     }
                     #endif
                     #endif
+
+                    ToolbarItem {
+                        Button {
+                            isSettingsPresented.toggle()
+                        } label: {
+                            Image(systemName: "gearshape")
+                        }
+                        .matchedTransitionSource(id: "settings", in: settingsNamespace)
+                    }
                 }
         } detail: {
             if let item = selectedItem {
@@ -48,6 +60,16 @@ struct ContentView: View {
                 // Switching the database mode creates a new database, so the pages built from the old one start over.
                 .id(ObjectIdentifier(appModel.database))
             }
+        }
+        .sheet(isPresented: $isSettingsPresented) {
+            NavigationStack {
+                SettingsView()
+            }
+            #if os(macOS)
+            .frame(width: 480, height: 560)
+            #endif
+            .adaptiveNavigationTransition(sourceID: "settings", in: settingsNamespace)
+            .environment(appModel.settings)
         }
         .sheet(isPresented: $isWelcomePresented) {
             WelcomeView {

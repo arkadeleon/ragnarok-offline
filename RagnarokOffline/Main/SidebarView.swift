@@ -42,10 +42,6 @@ struct SidebarView: View {
     @AppStorage("databaseSectionExpanded") private var isDatabaseSectionExpanded = true
     @AppStorage("toolsSectionExpanded") private var isToolsSectionExpanded = true
 
-    @Namespace private var settingsNamespace
-
-    @State private var isSettingsPresented = false
-
     var body: some View {
         List(selection: selection) {
             Section(isExpanded: $isClientSectionExpanded) {
@@ -179,24 +175,6 @@ struct SidebarView: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isDatabaseSectionExpanded)
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isToolsSectionExpanded)
         .navigationTitle(String("Ragnarok Offline"))
-        .toolbar {
-            Button {
-                isSettingsPresented.toggle()
-            } label: {
-                Image(systemName: "gearshape")
-            }
-            .matchedTransitionSource(id: "settings", in: settingsNamespace)
-        }
-        .sheet(isPresented: $isSettingsPresented) {
-            NavigationStack {
-                SettingsView()
-            }
-            #if os(macOS)
-            .frame(width: 480, height: 560)
-            #endif
-            .adaptiveNavigationTransition(sourceID: "settings", in: settingsNamespace)
-            .environment(appModel.settings)
-        }
     }
 }
 
