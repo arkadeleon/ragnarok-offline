@@ -23,7 +23,7 @@ Tekan **Win + R**, ketik `cmd`, tekan Enter, lalu ketik `ipconfig`. Catat **Alam
 
 **Langkah 4 — Salin file Anda**
 
-Salin item berikut ke folder **Ragnarok Offline** di bagian **Di iPhone/iPad Saya** (tekan dan tahan setiap item → **Salin**, buka lokasi tujuan → **Tempel**):
+Salin item berikut ke folder **RagOff** di bagian **Di iPhone/iPad Saya** (tekan dan tahan setiap item → **Salin**, buka lokasi tujuan → **Tempel**):
 
 - **data.grf**
 - Folder **BGM**
@@ -32,6 +32,6 @@ Salin item berikut ke folder **Ragnarok Offline** di bagian **Di iPhone/iPad Say
 
 ## Metode 2: Kabel USB
 
-**Mac:** Hubungkan perangkat Anda → buka **Finder** → pilih iPhone/iPad Anda → tab **File** → perluas **Ragnarok Offline** → seret file Anda.
+**Mac:** Hubungkan perangkat Anda → buka **Finder** → pilih iPhone/iPad Anda → tab **File** → perluas **RagOff** → seret file Anda.
 
-**Windows:** Hubungkan perangkat Anda → buka **iTunes** → pilih perangkat Anda → **Berbagi File** → pilih **Ragnarok Offline** → seret file Anda.
+**Windows:** Hubungkan perangkat Anda → buka **iTunes** → pilih perangkat Anda → **Berbagi File** → pilih **RagOff** → seret file Anda.

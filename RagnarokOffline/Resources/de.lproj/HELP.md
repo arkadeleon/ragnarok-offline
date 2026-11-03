@@ -23,7 +23,7 @@
 
 **Schritt 4 — Dateien kopieren**
 
-Die folgenden Elemente in **Auf meinem iPhone/iPad → Ragnarok Offline** kopieren (lange drücken → **Kopieren**, zum Ziel navigieren → **Einsetzen**):
+Die folgenden Elemente in **Auf meinem iPhone/iPad → RagOff** kopieren (lange drücken → **Kopieren**, zum Ziel navigieren → **Einsetzen**):
 
 - **data.grf**
 - **BGM**-Ordner
@@ -32,6 +32,6 @@ Die folgenden Elemente in **Auf meinem iPhone/iPad → Ragnarok Offline** kopier
 
 ## Methode 2: USB-Kabel
 
-**Mac:** Gerät verbinden → **Finder** öffnen → iPhone/iPad auswählen → Reiter **Dateien** → **Ragnarok Offline** aufklappen → Dateien hineinziehen.
+**Mac:** Gerät verbinden → **Finder** öffnen → iPhone/iPad auswählen → Reiter **Dateien** → **RagOff** aufklappen → Dateien hineinziehen.
 
-**Windows:** Gerät verbinden → **iTunes** öffnen → Gerät auswählen → **Dateifreigabe** → **Ragnarok Offline** auswählen → Dateien hineinziehen.
+**Windows:** Gerät verbinden → **iTunes** öffnen → Gerät auswählen → **Dateifreigabe** → **RagOff** auswählen → Dateien hineinziehen.

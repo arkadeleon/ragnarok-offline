@@ -18,7 +18,7 @@ struct WelcomeView: View {
                         .font(.system(size: 56))
                         .foregroundStyle(.tint)
 
-                    Text("Welcome to Ragnarok Offline")
+                    Text("Welcome to RagOff")
                         .font(.largeTitle)
                         .bold()
                         .multilineTextAlignment(.center)

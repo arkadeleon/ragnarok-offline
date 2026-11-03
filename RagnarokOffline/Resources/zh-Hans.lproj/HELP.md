@@ -23,7 +23,7 @@
 
 **第四步 — 复制文件**
 
-将以下内容复制到**我的 iPhone/iPad → Ragnarok Offline**（长按每个项目 → **拷贝**，导航到目标位置 → **粘贴**）：
+将以下内容复制到**我的 iPhone/iPad → RagOff**（长按每个项目 → **拷贝**，导航到目标位置 → **粘贴**）：
 
 - **data.grf**
 - **BGM** 文件夹
@@ -32,6 +32,6 @@
 
 ## 方法二：USB 数据线
 
-**Mac：** 连接设备 → 打开 **Finder** → 选择 iPhone/iPad → **文件**选项卡 → 展开 **Ragnarok Offline** → 拖入文件。
+**Mac：** 连接设备 → 打开 **Finder** → 选择 iPhone/iPad → **文件**选项卡 → 展开 **RagOff** → 拖入文件。
 
-**Windows：** 连接设备 → 打开 **iTunes** → 选择设备 → **文件共享** → 选择 **Ragnarok Offline** → 拖入文件。
+**Windows：** 连接设备 → 打开 **iTunes** → 选择设备 → **文件共享** → 选择 **RagOff** → 拖入文件。

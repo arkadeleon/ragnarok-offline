@@ -23,7 +23,7 @@
 
 **Adım 4 — Dosyaları kopyala**
 
-Aşağıdaki öğeleri **iPhone/iPad'imde → Ragnarok Offline**'a kopyala (her öğeye uzun bas → **Kopyala**, hedefe git → **Yapıştır**):
+Aşağıdaki öğeleri **iPhone/iPad'imde → RagOff**'a kopyala (her öğeye uzun bas → **Kopyala**, hedefe git → **Yapıştır**):
 
 - **data.grf**
 - **BGM** klasörü
@@ -32,6 +32,6 @@ Aşağıdaki öğeleri **iPhone/iPad'imde → Ragnarok Offline**'a kopyala (her 
 
 ## Yöntem 2: USB Kablosu
 
-**Mac:** Cihazını bağla → **Finder**'ı aç → iPhone/iPad'ini seç → **Dosyalar** sekmesi → **Ragnarok Offline**'ı genişlet → dosyalarını sürükle.
+**Mac:** Cihazını bağla → **Finder**'ı aç → iPhone/iPad'ini seç → **Dosyalar** sekmesi → **RagOff**'ı genişlet → dosyalarını sürükle.
 
-**Windows:** Cihazını bağla → **iTunes**'u aç → cihazını seç → **Dosya Paylaşımı** → **Ragnarok Offline**'ı seç → dosyalarını sürükle.
+**Windows:** Cihazını bağla → **iTunes**'u aç → cihazını seç → **Dosya Paylaşımı** → **RagOff**'ı seç → dosyalarını sürükle.

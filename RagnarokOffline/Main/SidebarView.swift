@@ -174,7 +174,7 @@ struct SidebarView: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isServerSectionExpanded)
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isDatabaseSectionExpanded)
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isToolsSectionExpanded)
-        .navigationTitle(String("Ragnarok Offline"))
+        .toolbarTitleDisplayMode(.inline)
     }
 }
 

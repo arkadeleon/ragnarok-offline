@@ -23,7 +23,7 @@ Pressione **Win + R**, digite `cmd`, pressione Enter, depois digite `ipconfig`. 
 
 **Passo 4 — Copiar os arquivos**
 
-Copie os seguintes itens para **No meu iPhone/iPad → Ragnarok Offline** (pressione longamente cada item → **Copiar**, navegue até o destino → **Colar**):
+Copie os seguintes itens para **No meu iPhone/iPad → RagOff** (pressione longamente cada item → **Copiar**, navegue até o destino → **Colar**):
 
 - **data.grf**
 - Pasta **BGM**
@@ -32,6 +32,6 @@ Copie os seguintes itens para **No meu iPhone/iPad → Ragnarok Offline** (press
 
 ## Método 2: Cabo USB
 
-**Mac:** Conecte seu dispositivo → abra o **Finder** → selecione seu iPhone/iPad → aba **Arquivos** → expanda **Ragnarok Offline** → arraste seus arquivos.
+**Mac:** Conecte seu dispositivo → abra o **Finder** → selecione seu iPhone/iPad → aba **Arquivos** → expanda **RagOff** → arraste seus arquivos.
 
-**Windows:** Conecte seu dispositivo → abra o **iTunes** → selecione seu dispositivo → **Compartilhamento de Arquivos** → selecione **Ragnarok Offline** → arraste seus arquivos.
+**Windows:** Conecte seu dispositivo → abra o **iTunes** → selecione seu dispositivo → **Compartilhamento de Arquivos** → selecione **RagOff** → arraste seus arquivos.

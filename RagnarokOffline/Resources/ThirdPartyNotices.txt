@@ -1,4 +1,4 @@
-Ragnarok Offline
+RagOff
 Source code: https://github.com/arkadeleon/ragnarok-offline
 GNU General Public License, version 3.
 This program is free software, distributed without any warranty. See the full license below.

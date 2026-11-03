@@ -2889,82 +2889,6 @@
         }
       }
     },
-    "Ragnarok Offline" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ragnarok Offline"
-          }
-        }
-      }
-    },
     "References" : {
       "localizations" : {
         "de" : {
@@ -4789,78 +4713,78 @@
         }
       }
     },
-    "Welcome to Ragnarok Offline" : {
+    "Welcome to RagOff" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Willkommen bei Ragnarok Offline"
+            "value" : "Willkommen bei RagOff"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Te damos la bienvenida a Ragnarok Offline"
+            "value" : "Te damos la bienvenida a RagOff"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bienvenue dans Ragnarok Offline"
+            "value" : "Bienvenue dans RagOff"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selamat datang di Ragnarok Offline"
+            "value" : "Selamat datang di RagOff"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ragnarok Offline へようこそ"
+            "value" : "RagOff へようこそ"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ragnarok Offline에 오신 것을 환영합니다"
+            "value" : "RagOff에 오신 것을 환영합니다"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Boas-vindas ao Ragnarok Offline"
+            "value" : "Boas-vindas ao RagOff"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добро пожаловать в Ragnarok Offline"
+            "value" : "Добро пожаловать в RagOff"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ยินดีต้อนรับสู่ Ragnarok Offline"
+            "value" : "ยินดีต้อนรับสู่ RagOff"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ragnarok Offline’a hoş geldiniz"
+            "value" : "RagOff’a hoş geldiniz"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "欢迎使用 Ragnarok Offline"
+            "value" : "欢迎使用 RagOff"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "歡迎使用 Ragnarok Offline"
+            "value" : "歡迎使用 RagOff"
           }
         }
       }
