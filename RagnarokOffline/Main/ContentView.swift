@@ -65,6 +65,7 @@ struct ContentView: View {
             NavigationStack {
                 SettingsView()
             }
+            .interactiveDismissDisabled()
             #if os(macOS)
             .frame(width: 480, height: 560)
             #endif

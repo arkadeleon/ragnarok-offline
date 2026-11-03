@@ -18,6 +18,12 @@ struct AboutView: View {
                 } label: {
                     Text("Version", tableName: "Settings")
                 }
+
+                NavigationLink {
+                    LicensesView()
+                } label: {
+                    Text("Licenses", tableName: "Settings")
+                }
             }
 
             Section {
