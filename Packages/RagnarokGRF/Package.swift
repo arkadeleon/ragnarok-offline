@@ -29,14 +29,7 @@ let package = Package(
         ),
         .testTarget(
             name: "RagnarokGRFTests",
-            dependencies: ["RagnarokGRF"],
-            resources: [
-                .copy("Resources/data"),
-                .copy("Resources/test102.grf"),
-                .copy("Resources/test103.grf"),
-                .copy("Resources/test200.grf"),
-                .copy("Resources/test300.grf"),
-            ]
+            dependencies: ["RagnarokGRF"]
         ),
     ]
 )
