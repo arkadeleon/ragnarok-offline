@@ -6,25 +6,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Remote-Client** lädt Spielressourcen bei Bedarf herunter, sodass du nicht den vollständigen Client auf deinem Gerät speichern musst. [Richte deinen eigenen Remote-Client ein](https://github.com/arkadeleon/ragnarok-remote-client) und gib unten seine URL ein. Heruntergeladene Ressourcen werden in **Remote-Client-Dateien** zwischengespeichert. Der Speicherbedarf wächst daher mit der Nutzung der App.\nWenn du die App lieber vollständig offline nutzen möchtest, lass **Remote-Client verwenden** deaktiviert und füge deine lokalen Client-Dateien hinzu, einschließlich data.grf und des BGM-Ordners.\nDu musst über die erforderlichen Rechte oder eine Genehmigung zur Nutzung dieser Dateien verfügen."
+            "value" : "**Remote-Client** lädt Spielressourcen nur bei Bedarf herunter. So musst du nicht den gesamten Client auf deinem Gerät speichern. [Erstelle deinen eigenen Remote-Client](https://github.com/arkadeleon/ragnarok-remote-client) und gib unten seine URL ein. Heruntergeladene Ressourcen werden in **Remote-Client-Dateien** gespeichert, sodass der belegte Speicherplatz mit der Nutzung der App zunimmt.\nWenn du die App vollständig offline nutzen möchtest, deaktiviere **Remote-Client verwenden** und füge deine lokalen Client-Dateien hinzu, darunter data.grf und den BGM-Ordner.\nDu musst zur Nutzung dieser Dateien berechtigt sein."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Cliente remoto** descarga los recursos del juego según se necesitan, por lo que no tienes que guardar el cliente completo en tu dispositivo. Para empezar, [configura tu propio cliente remoto](https://github.com/arkadeleon/ragnarok-remote-client) e introduce su URL a continuación. Los recursos descargados se almacenan en caché en **Archivos de Cliente remoto**, por lo que el espacio ocupado aumenta a medida que usas la app.\nSi prefieres usar la app sin conexión, deja **Usar Cliente remoto** desactivado y añade tus archivos del cliente local, incluidos data.grf y la carpeta BGM.\nDebes tener los derechos o el permiso necesarios para usar estos archivos."
+            "value" : "**El cliente remoto** descarga los recursos del juego solo cuando hacen falta, así que no necesitas guardar el cliente completo en el dispositivo. Para empezar, [crea y configura tu propio cliente remoto](https://github.com/arkadeleon/ragnarok-remote-client) e introduce su URL a continuación. Los recursos descargados se guardan en caché en **Archivos del cliente remoto**, por lo que el espacio ocupado aumenta a medida que usas la app.\nSi prefieres usar la app completamente sin conexión, desactiva **Usar cliente remoto** y añade tus archivos del cliente local, incluidos data.grf y la carpeta BGM.\nDebes tener autorización para usar estos archivos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Client distant** télécharge les ressources du jeu à la demande. Vous n’avez donc pas besoin de stocker le client complet sur votre appareil. Pour commencer, [configurez votre propre client distant](https://github.com/arkadeleon/ragnarok-remote-client) et saisissez son URL ci-dessous. Les ressources téléchargées sont mises en cache dans **Fichiers de Client distant** ; l’espace occupé augmente donc à mesure que vous utilisez l’app.\nSi vous préférez utiliser l’app entièrement hors ligne, laissez **Utiliser Client distant** désactivé et ajoutez vos fichiers de client local, y compris data.grf et le dossier BGM.\nVous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
+            "value" : "**Le client distant** télécharge les ressources du jeu uniquement lorsque nécessaire ; vous n’avez donc pas besoin de stocker le client complet sur votre appareil. Pour commencer, [créez votre propre client distant](https://github.com/arkadeleon/ragnarok-remote-client), puis saisissez son URL ci-dessous. Les ressources téléchargées sont mises en cache dans **Fichiers du client distant** ; l’espace occupé augmente donc au fil de l’utilisation de l’app.\nPour utiliser l’app entièrement hors ligne, désactivez **Utiliser le client distant** et ajoutez vos fichiers de client local, notamment data.grf et le dossier BGM.\nVous devez être autorisé à utiliser ces fichiers."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Klien jarak jauh** mengunduh sumber daya game sesuai kebutuhan, sehingga Anda tidak perlu menyimpan seluruh klien di perangkat. Untuk memulai, [siapkan klien jarak jauh Anda sendiri](https://github.com/arkadeleon/ragnarok-remote-client) dan masukkan URL-nya di bawah ini. Sumber daya yang diunduh disimpan dalam cache di **File Klien Jarak Jauh**, sehingga penggunaan ruang penyimpanan bertambah seiring penggunaan app.\nJika Anda lebih suka menggunakan app sepenuhnya secara offline, biarkan **Gunakan Klien jarak jauh** nonaktif dan tambahkan file klien lokal Anda, termasuk data.grf dan folder BGM.\nAnda harus memiliki hak atau izin untuk menggunakan file-file ini."
+            "value" : "**Klien jarak jauh** mengunduh sumber daya game hanya saat diperlukan, jadi Anda tidak perlu menyimpan seluruh klien di perangkat. Untuk memulai, [bangun klien jarak jauh Anda sendiri](https://github.com/arkadeleon/ragnarok-remote-client), lalu masukkan URL-nya di bawah. Sumber daya yang diunduh disimpan di **File klien jarak jauh** sehingga ruang penyimpanan yang digunakan bertambah seiring pemakaian aplikasi.\nJika ingin menggunakan aplikasi sepenuhnya secara offline, nonaktifkan **Gunakan klien jarak jauh** dan tambahkan file klien lokal, termasuk data.grf dan folder BGM.\nAnda harus memiliki hak atau izin untuk menggunakan file-file tersebut."
           }
         },
         "ja" : {
@@ -42,37 +42,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Cliente remoto** baixa os recursos do jogo conforme necessário, para que você não precise armazenar o cliente completo no dispositivo. Para começar, [configure seu próprio cliente remoto](https://github.com/arkadeleon/ragnarok-remote-client) e insira a URL abaixo. Os recursos baixados são armazenados em cache em **Arquivos do Cliente remoto**, portanto o espaço ocupado aumenta conforme você usa o app.\nSe preferir usar o app totalmente offline, deixe **Usar Cliente remoto** desativado e adicione seus arquivos do cliente local, incluindo data.grf e a pasta BGM.\nVocê deve ter os direitos ou a permissão necessários para usar esses arquivos."
+            "value" : "O **cliente remoto** baixa os recursos do jogo somente quando necessário, para que você não precise armazenar o cliente completo no dispositivo. Para começar, [crie seu próprio cliente remoto](https://github.com/arkadeleon/ragnarok-remote-client) e informe a URL abaixo. Os recursos baixados ficam em cache em **Arquivos do cliente remoto**, então o espaço ocupado aumenta conforme você usa o app.\nSe preferir usar o app totalmente offline, desative **Usar cliente remoto** e adicione os arquivos do cliente local, incluindo data.grf e a pasta BGM.\nVocê precisa ter autorização para usar esses arquivos."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Удалённый клиент** загружает игровые ресурсы по мере необходимости, поэтому вам не нужно хранить полный клиент на устройстве. Для начала [настройте собственный удалённый клиент](https://github.com/arkadeleon/ragnarok-remote-client) и введите его URL ниже. Загруженные ресурсы кэшируются в разделе **Файлы удалённого клиента**, поэтому по мере использования приложения объём занятого места увеличивается.\nЕсли вы предпочитаете использовать приложение полностью без подключения к сети, оставьте **Использовать удалённый клиент** выключенным и добавьте локальные файлы клиента, включая data.grf и папку BGM.\nУ вас должны быть права или разрешение на использование этих файлов."
+            "value" : "**Удалённый клиент** загружает игровые ресурсы только по мере необходимости, поэтому хранить полный клиент на устройстве не нужно. Для начала [соберите собственный удалённый клиент](https://github.com/arkadeleon/ragnarok-remote-client) и введите его URL ниже. Загруженные ресурсы сохраняются в разделе **Файлы удалённого клиента**, поэтому по мере использования приложения занимаемое место увеличивается.\nЧтобы пользоваться приложением полностью офлайн, отключите **Использовать удалённый клиент** и добавьте локальные файлы клиента, включая data.grf и папку BGM.\nИспользовать эти файлы можно только при наличии соответствующих прав или разрешения."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**ไคลเอนต์ระยะไกล** จะดาวน์โหลดทรัพยากรเกมตามที่ต้องใช้ คุณจึงไม่จำเป็นต้องเก็บไคลเอนต์ทั้งหมดไว้บนอุปกรณ์ เริ่มต้นด้วยการ[ตั้งค่าไคลเอนต์ระยะไกลของคุณเอง](https://github.com/arkadeleon/ragnarok-remote-client) แล้วป้อน URL ด้านล่าง ทรัพยากรที่ดาวน์โหลดจะถูกแคชไว้ใน **ไฟล์ไคลเอนต์ระยะไกล** ดังนั้นพื้นที่จัดเก็บที่ใช้จะเพิ่มขึ้นตามการใช้งานแอป\nหากต้องการใช้แอปแบบออฟไลน์ทั้งหมด ให้ปิด **ใช้ไคลเอนต์ระยะไกล** ไว้ แล้วเพิ่มไฟล์ไคลเอนต์ในเครื่องของคุณ รวมถึง data.grf และโฟลเดอร์ BGM\nคุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
+            "value" : "**ไคลเอนต์ระยะไกล** จะดาวน์โหลดทรัพยากรเกมตามที่ต้องใช้ คุณจึงไม่จำเป็นต้องเก็บไคลเอนต์ทั้งหมดไว้บนอุปกรณ์ เริ่มต้นด้วยการ[สร้างไคลเอนต์ระยะไกลของคุณเอง](https://github.com/arkadeleon/ragnarok-remote-client) แล้วป้อน URL ด้านล่าง ทรัพยากรที่ดาวน์โหลดจะถูกแคชไว้ใน **ไฟล์ไคลเอนต์ระยะไกล** ดังนั้นพื้นที่จัดเก็บที่ใช้จะเพิ่มขึ้นตามการใช้งานแอป\nหากต้องการใช้แอปแบบออฟไลน์ทั้งหมด ให้ปิด **ใช้ไคลเอนต์ระยะไกล** ไว้ แล้วเพิ่มไฟล์ไคลเอนต์ในเครื่องของคุณ รวมถึง data.grf และโฟลเดอร์ BGM\nคุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Uzak İstemci**, oyun kaynaklarını gerektiğinde indirir; böylece istemcinin tamamını aygıtınızda saklamanız gerekmez. Başlamak için [kendi uzak istemcinizi kurun](https://github.com/arkadeleon/ragnarok-remote-client) ve URL’sini aşağıya girin. İndirilen kaynaklar **Uzak İstemci Dosyaları** içinde önbelleğe alınır; dolayısıyla uygulamayı kullandıkça disk kullanımı artar.\nUygulamayı tamamen çevrimdışı kullanmayı tercih ediyorsanız **Uzak İstemci'yi Kullan** seçeneğini kapalı bırakın ve data.grf ile BGM klasörü dahil yerel istemci dosyalarınızı ekleyin.\nBu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
+            "value" : "**Uzak İstemci**, oyun kaynaklarını gerektiğinde indirir; böylece istemcinin tamamını aygıtınızda saklamanız gerekmez. Başlamak için [kendi uzak istemcinizi kurun](https://github.com/arkadeleon/ragnarok-remote-client) ve URL’sini aşağıya girin. İndirilen kaynaklar **Uzak istemci dosyaları** içinde önbelleğe alınır; dolayısıyla uygulamayı kullandıkça disk kullanımı artar.\nUygulamayı tamamen çevrimdışı kullanmayı tercih ediyorsanız **Uzak istemciyi kullan** seçeneğini kapalı bırakın ve data.grf ile BGM klasörü dahil yerel istemci dosyalarınızı ekleyin.\nBu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**远程客户端**按需下载游戏资源，无需在设备上存储完整客户端。开始前，请先[搭建自己的远程客户端](https://github.com/arkadeleon/ragnarok-remote-client)，然后在下方输入其 URL。下载的资源会缓存在**远程客户端文件**中，因此磁盘占用会随着使用而增加。\n如果你更喜欢完全离线使用 App，请关闭**使用远程客户端**，并添加 data.grf 和 BGM 文件夹等本地客户端文件。\n你必须拥有使用这些文件的合法权利或已获得授权。"
+            "value" : "**远程客户端**仅在需要时下载游戏资源，因此无需在设备上存储完整客户端。开始前，请先[搭建自己的远程客户端](https://github.com/arkadeleon/ragnarok-remote-client)，并在下方输入其 URL。下载的资源会缓存在**远程客户端文件**中，因此使用 App 时占用的存储空间会逐渐增加。\n如需完全离线使用，请关闭**使用远程客户端**，并添加本地客户端文件，包括 data.grf 和 BGM 文件夹。\n使用这些文件前，请确认你拥有相应权利或已获得许可。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**遠端用戶端**按需下載遊戲資源，無需在裝置上儲存完整用戶端。開始前，請先[架設自己的遠端用戶端](https://github.com/arkadeleon/ragnarok-remote-client)，然後在下方輸入其 URL。下載的資源會快取在**遠端用戶端檔案**中，因此磁碟佔用會隨著使用而增加。\n如果你更喜歡完全離線使用 App，請關閉**使用遠端用戶端**，並加入 data.grf 和 BGM 資料夾等本機用戶端檔案。\n你必須擁有使用這些檔案的合法權利或已獲得授權。"
+            "value" : "**遠端用戶端**僅在需要時下載遊戲資源，因此無需在裝置上儲存完整用戶端。開始前，請先[架設自己的遠端用戶端](https://github.com/arkadeleon/ragnarok-remote-client)，並在下方輸入其 URL。下載的資源會快取在**遠端用戶端檔案**中，因此使用 App 時佔用的儲存空間會逐漸增加。\n如需完全離線使用，請關閉**使用遠端用戶端**，並加入本機用戶端檔案，包括 data.grf 和 BGM 資料夾。\n使用這些檔案前，請確認你擁有相關權利或已取得許可。"
           }
         }
       }
@@ -106,7 +106,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "情報"
+            "value" : "このアプリについて"
           }
         },
         "ko" : {
@@ -252,7 +252,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database"
+            "value" : "Basis data"
           }
         },
         "ja" : {
@@ -328,7 +328,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mode Database"
+            "value" : "Mode Basis Data"
           }
         },
         "ja" : {
@@ -364,7 +364,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veritabanı Modu"
+            "value" : "Veritabanı modu"
           }
         },
         "zh-Hans" : {
@@ -510,7 +510,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "รีโพสิทอรี GitHub"
+            "value" : "ที่เก็บซอร์สโค้ด GitHub"
           }
         },
         "tr" : {
@@ -592,7 +592,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yerel İstemci"
+            "value" : "Yerel istemci"
           }
         },
         "zh-Hans" : {
@@ -750,7 +750,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "打开"
+            "value" : "开启"
           }
         },
         "zh-Hant" : {
@@ -896,7 +896,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci"
+            "value" : "Uzak istemci"
           }
         },
         "zh-Hans" : {
@@ -924,19 +924,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Caché de Cliente remoto"
+            "value" : "Caché del cliente remoto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cache de Client distant"
+            "value" : "Cache du client distant"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cache Klien jarak jauh"
+            "value" : "Cache klien jarak jauh"
           }
         },
         "ja" : {
@@ -954,7 +954,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cache do Cliente remoto"
+            "value" : "Cache do cliente remoto"
           }
         },
         "ru" : {
@@ -972,7 +972,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci Önbelleği"
+            "value" : "Uzak istemci önbelleği"
           }
         },
         "zh-Hans" : {
@@ -1000,19 +1000,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL del Cliente remoto"
+            "value" : "URL del cliente remoto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL du Client distant"
+            "value" : "URL du client distant"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL Klien jarak jauh"
+            "value" : "URL klien jarak jauh"
           }
         },
         "ja" : {
@@ -1030,7 +1030,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL do Cliente remoto"
+            "value" : "URL do cliente remoto"
           }
         },
         "ru" : {
@@ -1048,7 +1048,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci URL’si"
+            "value" : "Uzak istemci URL’si"
           }
         },
         "zh-Hans" : {
@@ -1164,7 +1164,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laporkan Bug"
+            "value" : "Laporkan bug"
           }
         },
         "ja" : {
@@ -1182,7 +1182,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Relatar um Bug"
+            "value" : "Relatar um erro"
           }
         },
         "ru" : {
@@ -1194,13 +1194,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "รายงานข้อบกพร่อง"
+            "value" : "รายงานปัญหา"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hata Bildir"
+            "value" : "Hata bildir"
           }
         },
         "zh-Hans" : {
@@ -1240,25 +1240,25 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minta Fitur"
+            "value" : "Minta fitur"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "機能をリクエスト"
+            "value" : "機能を提案"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "기능 요청"
+            "value" : "기능 제안"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solicitar um Recurso"
+            "value" : "Sugerir um recurso"
           }
         },
         "ru" : {
@@ -1270,13 +1270,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ขอฟีเจอร์"
+            "value" : "เสนอฟีเจอร์"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Özellik İste"
+            "value" : "Özellik iste"
           }
         },
         "zh-Hans" : {
@@ -1298,25 +1298,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zuvor laufende Server bei der Rückkehr in den Vordergrund neu starten"
+            "value" : "Zuvor laufende Server beim Zurückkehren in den Vordergrund neu starten"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reiniciar los servidores que estaban en ejecución al volver al primer plano"
+            "value" : "Reiniciar los servidores que estaban en ejecución al volver a la app"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Redémarrer les serveurs précédemment en cours d'exécution au retour au premier plan"
+            "value" : "Redémarrer les serveurs qui étaient actifs lors du retour au premier plan"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mulai ulang server yang sebelumnya berjalan saat kembali ke latar depan"
+            "value" : "Mulai ulang server yang sebelumnya berjalan saat aplikasi kembali aktif"
           }
         },
         "ja" : {
@@ -1334,37 +1334,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reiniciar os servidores que estavam em execução ao voltar ao primeiro plano"
+            "value" : "Reiniciar os servidores que estavam em execução ao voltar ao app"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перезапускать ранее работавшие серверы при возврате на передний план"
+            "value" : "Перезапускать серверы, работавшие до возвращения приложения на передний план"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "รีสตาร์ทเซิร์ฟเวอร์ที่ทำงานอยู่ก่อนหน้าเมื่อกลับสู่เบื้องหน้า"
+            "value" : "เมื่อกลับมาใช้งานแอป ให้รีสตาร์ทเซิร์ฟเวอร์ที่เคยทำงานอยู่ก่อนหน้านี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ön plana dönüldüğünde önceden çalışan sunucuları yeniden başlat"
+            "value" : "Uygulama yeniden ön plana geldiğinde daha önce çalışan sunucuları yeniden başlat"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "回到前台时重启之前正在运行的服务器"
+            "value" : "返回应用时，重新启动此前正在运行的服务器"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "回到前景時重啟先前正在執行的伺服器"
+            "value" : "返回 App 時，重新啟動先前正在執行的伺服器"
           }
         }
       }
@@ -1428,7 +1428,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sunucuları otomatik olarak yeniden başlat"
+            "value" : "Sunucuları otomatik yeniden başlat"
           }
         },
         "zh-Hans" : {
@@ -1440,7 +1440,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動重啟伺服器"
+            "value" : "自動重新啟動伺服器"
           }
         }
       }
@@ -1544,7 +1544,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konfigurasi server"
+            "value" : "Konfigurasi Server"
           }
         },
         "ja" : {
@@ -1586,7 +1586,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务器配置"
+            "value" : "服务器设置"
           }
         },
         "zh-Hant" : {
@@ -1621,7 +1621,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mode Server"
+            "value" : "Mode server"
           }
         },
         "ja" : {
@@ -1657,7 +1657,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sunucu Modu"
+            "value" : "Sunucu modu"
           }
         },
         "zh-Hans" : {
@@ -1815,7 +1815,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "存储空间"
+            "value" : "存储"
           }
         },
         "zh-Hant" : {
@@ -1837,19 +1837,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usar Cliente remoto"
+            "value" : "Usar cliente remoto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utiliser Client distant"
+            "value" : "Utiliser le client distant"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gunakan Klien jarak jauh"
+            "value" : "Gunakan klien jarak jauh"
           }
         },
         "ja" : {
@@ -1867,7 +1867,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usar Cliente remoto"
+            "value" : "Usar cliente remoto"
           }
         },
         "ru" : {
@@ -1885,7 +1885,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci'yi Kullan"
+            "value" : "Uzak istemciyi kullan"
           }
         },
         "zh-Hans" : {

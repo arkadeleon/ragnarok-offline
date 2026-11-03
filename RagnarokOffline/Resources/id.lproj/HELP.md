@@ -4,26 +4,26 @@
 
 **Langkah 1 — Bagikan folder di Windows**
 
-1. Klik kanan folder klien kRO dan pilih **Properties**
-2. Buka tab **Sharing** dan klik **Advanced Sharing**
-3. Centang **Share this folder** dan klik **OK**
-4. Buka **Settings** → **Network & Internet** dan pastikan profil jaringan diatur ke **Private**
-5. Di **Control Panel** → **Network and Sharing Center** → **Change advanced sharing settings**, aktifkan **Network discovery** dan **File and printer sharing**
+1. Klik kanan folder klien kRO dan pilih **Properti**
+2. Buka tab **Berbagi** dan klik **Berbagi Lanjutan**
+3. Centang **Bagikan folder ini** dan klik **OK**
+4. Buka **Pengaturan** → **Jaringan & Internet** dan pastikan profil jaringan diatur ke **Privat**
+5. Di **Panel Kontrol** → **Pusat Jaringan dan Berbagi** → **Ubah pengaturan berbagi lanjutan**, aktifkan **Penemuan jaringan** dan **Berbagi file dan printer**
 
 **Langkah 2 — Temukan alamat IP PC Anda**
 
-Tekan **Win + R**, ketik `cmd`, tekan Enter, lalu ketik `ipconfig`. Catat **IPv4 Address** (mis. `192.168.1.10`).
+Tekan **Win + R**, ketik `cmd`, tekan Enter, lalu ketik `ipconfig`. Catat **Alamat IPv4** (mis. `192.168.1.10`).
 
 **Langkah 3 — Hubungkan dari iOS**
 
-1. Buka aplikasi **Files**
-2. Ketuk **···** di sudut kanan atas dan pilih **Connect to Server**
+1. Buka aplikasi **File**
+2. Ketuk **···** di sudut kanan atas dan pilih **Hubungkan ke Server**
 3. Masukkan `smb://192.168.1.10` (gunakan IP PC Anda)
-4. Masukkan nama pengguna dan kata sandi Windows Anda, lalu ketuk **Connect**
+4. Masukkan nama pengguna dan kata sandi Windows Anda, lalu ketuk **Hubungkan**
 
 **Langkah 4 — Salin file Anda**
 
-Salin item berikut ke **On My iPhone/iPad → Ragnarok Offline** (tekan lama setiap item → **Copy**, navigasi ke tujuan → **Paste**):
+Salin item berikut ke folder **Ragnarok Offline** di bagian **Di iPhone/iPad Saya** (tekan dan tahan setiap item → **Salin**, buka lokasi tujuan → **Tempel**):
 
 - **data.grf**
 - Folder **BGM**
@@ -32,6 +32,6 @@ Salin item berikut ke **On My iPhone/iPad → Ragnarok Offline** (tekan lama set
 
 ## Metode 2: Kabel USB
 
-**Mac:** Hubungkan perangkat Anda → buka **Finder** → pilih iPhone/iPad Anda → tab **Files** → perluas **Ragnarok Offline** → seret file Anda.
+**Mac:** Hubungkan perangkat Anda → buka **Finder** → pilih iPhone/iPad Anda → tab **File** → perluas **Ragnarok Offline** → seret file Anda.
 
-**Windows:** Hubungkan perangkat Anda → buka **iTunes** → pilih perangkat Anda → **File Sharing** → pilih **Ragnarok Offline** → seret file Anda.
+**Windows:** Hubungkan perangkat Anda → buka **iTunes** → pilih perangkat Anda → **Berbagi File** → pilih **Ragnarok Offline** → seret file Anda.

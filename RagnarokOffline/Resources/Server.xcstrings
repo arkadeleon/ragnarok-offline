@@ -6,7 +6,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Charakter-Server"
+            "value" : "Charakterserver"
           }
         },
         "es" : {
@@ -82,7 +82,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Login-Server"
+            "value" : "Loginserver"
           }
         },
         "es" : {
@@ -124,7 +124,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Логин-сервер"
+            "value" : "Сервер входа"
           }
         },
         "th" : {
@@ -176,7 +176,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Server Map"
+            "value" : "Server Peta"
           }
         },
         "ja" : {
@@ -240,7 +240,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NO INICIADO"
+            "value" : "SIN INICIAR"
           }
         },
         "fr" : {
@@ -264,7 +264,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "시작 안 됨"
+            "value" : "시작되지 않음"
           }
         },
         "pt-BR" : {
@@ -294,13 +294,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未启动"
+            "value" : "尚未启动"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未啟動"
+            "value" : "尚未啟動"
           }
         }
       }
@@ -322,7 +322,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EN COURS D'EXÉCUTION"
+            "value" : "EN COURS D’EXÉCUTION"
           }
         },
         "id" : {
@@ -376,7 +376,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "運行中"
+            "value" : "執行中"
           }
         }
       }
@@ -468,13 +468,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Servidor no iniciado"
+            "value" : "El servidor no se ha iniciado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Serveur non démarré"
+            "value" : "Le serveur n’a pas démarré"
           }
         },
         "id" : {
@@ -492,13 +492,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "서버가 시작되지 않음"
+            "value" : "서버가 시작되지 않았습니다"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Servidor não iniciado"
+            "value" : "O servidor não foi iniciado"
           }
         },
         "ru" : {
@@ -510,25 +510,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เซิร์ฟเวอร์ยังไม่เริ่ม"
+            "value" : "เซิร์ฟเวอร์ยังไม่ทำงาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sunucu Başlatılmadı"
+            "value" : "Sunucu başlatılmadı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务器未启动"
+            "value" : "服务器尚未启动"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "伺服器未啟動"
+            "value" : "伺服器尚未啟動"
           }
         }
       }
@@ -544,7 +544,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Iniciar Servidor"
+            "value" : "Iniciar servidor"
           }
         },
         "fr" : {
@@ -556,7 +556,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mulai Server"
+            "value" : "Mulai server"
           }
         },
         "ja" : {
@@ -574,7 +574,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Iniciar Servidor"
+            "value" : "Iniciar servidor"
           }
         },
         "ru" : {
@@ -592,7 +592,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sunucuyu Başlat"
+            "value" : "Sunucuyu başlat"
           }
         },
         "zh-Hans" : {
@@ -626,13 +626,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EN COURS DE DÉMARRAGE"
+            "value" : "DÉMARRAGE EN COURS"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEMULAI"
+            "value" : "SEDANG DIMULAI"
           }
         },
         "ja" : {
@@ -662,7 +662,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "กำลังเริ่ม"
+            "value" : "กำลังเริ่มทำงาน"
           }
         },
         "tr" : {
@@ -674,13 +674,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启动中"
+            "value" : "正在启动"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "啟動中"
+            "value" : "正在啟動"
           }
         }
       }
@@ -708,13 +708,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DIHENTIKAN"
+            "value" : "BERHENTI"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "停止済み"
+            "value" : "停止"
           }
         },
         "ko" : {
@@ -726,7 +726,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ENCERRADO"
+            "value" : "PARADO"
           }
         },
         "ru" : {
@@ -738,7 +738,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "หยุดแล้ว"
+            "value" : "หยุดทำงานแล้ว"
           }
         },
         "tr" : {
@@ -778,13 +778,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EN COURS D'ARRÊT"
+            "value" : "ARRÊT EN COURS"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MENGHENTIKAN"
+            "value" : "SEDANG DIHENTIKAN"
           }
         },
         "ja" : {
@@ -814,7 +814,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "กำลังหยุด"
+            "value" : "กำลังหยุดทำงาน"
           }
         },
         "tr" : {
@@ -826,13 +826,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "停止中"
+            "value" : "正在停止"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "停止中"
+            "value" : "正在停止"
           }
         }
       }
@@ -842,73 +842,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tippe auf Start, um den Server zu starten"
+            "value" : "Tippe auf „Server starten“, um ihn zu starten."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toca Iniciar para ejecutar el servidor"
+            "value" : "Pulsa «Iniciar servidor» para arrancarlo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appuyez sur Démarrer pour lancer le serveur"
+            "value" : "Touchez « Démarrer le serveur » pour le lancer."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ketuk Mulai untuk menjalankan server"
+            "value" : "Ketuk “Mulai server” untuk menjalankannya."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スタートをタップしてサーバーを起動します"
+            "value" : "「サーバーを起動」をタップしてください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "시작을 탭하여 서버를 실행하세요"
+            "value" : "“서버 시작”을 탭하세요."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toque em Iniciar para executar o servidor"
+            "value" : "Toque em “Iniciar servidor” para executá-lo."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нажмите «Пуск», чтобы запустить сервер"
+            "value" : "Нажмите «Запустить сервер»."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "แตะเริ่มเพื่อรันเซิร์ฟเวอร์"
+            "value" : "แตะ “เริ่มเซิร์ฟเวอร์” เพื่อเริ่มทำงาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sunucuyu çalıştırmak için Başlat'a dokunun"
+            "value" : "Sunucuyu çalıştırmak için “Sunucuyu başlat” düğmesine dokunun."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点击启动以运行服务器"
+            "value" : "轻点“启动服务器”即可。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "點擊啟動以執行伺服器"
+            "value" : "點一下「啟動伺服器」即可。"
           }
         }
       }

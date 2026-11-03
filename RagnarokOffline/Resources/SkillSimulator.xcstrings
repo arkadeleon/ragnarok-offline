@@ -6,7 +6,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "Klassenstufe von %1$@: %2$lld"
           }
         },
         "en" : {
@@ -18,67 +18,67 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "Nivel de clase de %1$@: %2$lld"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "Niveau de classe de %1$@ : %2$lld"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "Level profesi %1$@: %2$lld"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "%1$@のジョブレベル：%2$lld"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "%1$@ 직업 레벨: %2$lld"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "Nível de classe de %1$@: %2$lld"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "Уровень профессии %1$@: %2$lld"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "%1$@ เลเวลอาชีพ: %2$lld"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "%1$@ meslek seviyesi: %2$lld"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "%1$@ 的职业等级：%2$lld"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv: %2$lld"
+            "value" : "%1$@ 的職業等級：%2$lld"
           }
         }
       }
@@ -88,7 +88,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@, Stufe %2$lld"
           }
         },
         "en" : {
@@ -100,67 +100,67 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@, nivel %2$lld"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@, niveau %2$lld"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@ level %2$lld"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@ レベル%2$lld"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@ 레벨 %2$lld"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@, nível %2$lld"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@, уровень %2$lld"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@ เลเวล %2$lld"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@ seviye %2$lld"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@ 等级 %2$lld"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Lv %2$lld"
+            "value" : "%1$@ 等級 %2$lld"
           }
         }
       }
@@ -170,7 +170,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Punkte"
+            "value" : "Punkte für %1$@"
           }
         },
         "en" : {
@@ -224,13 +224,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "แต้ม %1$@"
+            "value" : "แต้มของ %1$@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Puanları"
+            "value" : "%1$@ puanları"
           }
         },
         "zh-Hans" : {
@@ -252,7 +252,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@-Fertigkeiten"
+            "value" : "Fertigkeiten von %1$@"
           }
         },
         "en" : {
@@ -276,7 +276,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill %1$@"
+            "value" : "Skill untuk %1$@"
           }
         },
         "ja" : {
@@ -306,13 +306,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "สกิล %1$@"
+            "value" : "สกิลของ %1$@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Yetenekleri"
+            "value" : "%1$@ yetenekleri"
           }
         },
         "zh-Hans" : {
@@ -334,7 +334,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "Basisstufe: %1$lld"
           }
         },
         "en" : {
@@ -346,67 +346,67 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "Nivel base: %1$lld"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "Niveau de base : %1$lld"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "Level dasar: %1$lld"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "基本レベル：%1$lld"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "기본 레벨: %1$lld"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "Nível base: %1$lld"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "Базовый уровень: %1$lld"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "เลเวลพื้นฐาน: %1$lld"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "Temel seviye: %1$lld"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "基础等级：%1$lld"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv: %1$lld"
+            "value" : "基礎等級：%1$lld"
           }
         }
       }
@@ -416,7 +416,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Fertigkeit kann nicht verringert werden. Benötigt von %1$@."
+            "value" : "Diese Fertigkeit kann nicht gesenkt werden, da %1$@ sie benötigt."
           }
         },
         "en" : {
@@ -428,19 +428,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No se puede reducir esta habilidad. La requiere %1$@."
+            "value" : "No se puede bajar el nivel de esta habilidad porque %1$@ la necesita."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Impossible de réduire cette compétence. Requise par %1$@."
+            "value" : "Impossible de baisser le niveau de cette compétence, car %1$@ en a besoin."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill ini tidak bisa diturunkan. Dibutuhkan oleh %1$@."
+            "value" : "Level skill ini tidak dapat diturunkan karena dibutuhkan oleh %1$@."
           }
         },
         "ja" : {
@@ -458,13 +458,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não é possível reduzir esta habilidade. Ela é exigida por %1$@."
+            "value" : "Não é possível reduzir o nível desta habilidade porque %1$@ precisa dela."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нельзя понизить этот навык. Он требуется для %1$@."
+            "value" : "Нельзя понизить уровень этого навыка: он нужен для %1$@."
           }
         },
         "th" : {
@@ -476,7 +476,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu yetenek düşürülemez. %1$@ tarafından gerektiriliyor."
+            "value" : "%1$@ bu yeteneğe ihtiyaç duyduğu için seviye düşürülemez."
           }
         },
         "zh-Hans" : {
@@ -498,7 +498,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beruf"
+            "value" : "Klasse"
           }
         },
         "en" : {
@@ -510,19 +510,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Profesión"
+            "value" : "Clase"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Profession"
+            "value" : "Classe"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job"
+            "value" : "Profesi"
           }
         },
         "ja" : {
@@ -592,7 +592,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Faltan requisitos previos: %1$@."
+            "value" : "Faltan estos requisitos previos: %1$@."
           }
         },
         "fr" : {
@@ -604,7 +604,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prasyarat belum terpenuhi: %1$@."
+            "value" : "Prasyarat berikut belum terpenuhi: %1$@."
           }
         },
         "ja" : {
@@ -616,25 +616,25 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "선행 조건이 부족합니다: %1$@."
+            "value" : "선행 조건을 충족하지 않았습니다: %1$@."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pré-requisitos ausentes: %1$@."
+            "value" : "Faltam estes pré-requisitos: %1$@."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не хватает требований: %1$@."
+            "value" : "Не выполнены следующие требования: %1$@."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ขาดเงื่อนไขก่อนหน้า: %1$@"
+            "value" : "ยังไม่ผ่านเงื่อนไขต่อไปนี้: %1$@"
           }
         },
         "tr" : {
@@ -646,13 +646,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "缺少前置条件：%1$@。"
+            "value" : "尚未满足以下前置条件：%1$@。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "缺少前置條件：%1$@。"
+            "value" : "尚未滿足以下前置條件：%1$@。"
           }
         }
       }
@@ -662,7 +662,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keine %1$@-Skillpunkte mehr übrig."
+            "value" : "Keine Fertigkeitspunkte für %1$@ mehr übrig."
           }
         },
         "en" : {
@@ -680,13 +680,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il ne reste plus de points de compétence %1$@."
+            "value" : "Il ne reste plus de points de compétence pour %1$@."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poin skill %1$@ tidak tersisa."
+            "value" : "Poin skill untuk %1$@ sudah habis."
           }
         },
         "ja" : {
@@ -704,25 +704,25 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Não há pontos de habilidade de %1$@ restantes."
+            "value" : "Não restam pontos de habilidade para %1$@."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не осталось очков навыков %1$@."
+            "value" : "Закончились очки навыков для %1$@."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "แต้มสกิลของ %1$@ ไม่เพียงพอ"
+            "value" : "แต้มสกิลของ %1$@ หมดแล้ว"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ için kalan yetenek puanı yok."
+            "value" : "%1$@ için yetenek puanı kalmadı."
           }
         },
         "zh-Hans" : {
@@ -744,7 +744,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erfordert %1$@ Job Lv %2$lld."
+            "value" : "Für %1$@ ist Klassenstufe %2$lld erforderlich."
           }
         },
         "en" : {
@@ -756,67 +756,67 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Requiere %1$@ Job Lv %2$lld."
+            "value" : "Requiere nivel de clase %2$lld de %1$@."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nécessite %1$@ Job Lv %2$lld."
+            "value" : "Nécessite le niveau de classe %2$lld de %1$@."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Membutuhkan %1$@ Job Lv %2$lld."
+            "value" : "%1$@ membutuhkan level profesi %2$lld."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ のJob Lv %2$lldが必要です。"
+            "value" : "%1$@にはジョブレベル%2$lldが必要です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv %2$lld이(가) 필요합니다."
+            "value" : "%1$@에 직업 레벨 %2$lld이(가) 필요합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Requer %1$@ Job Lv %2$lld."
+            "value" : "Requer nível de classe %2$lld para %1$@."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Требуется %1$@ Job Lv %2$lld."
+            "value" : "Для %1$@ требуется уровень профессии %2$lld."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ต้องการ %1$@ Job Lv %2$lld"
+            "value" : "%1$@ ต้องมีเลเวลอาชีพ %2$lld"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ Job Lv %2$lld gerekir."
+            "value" : "%1$@ için meslek seviyesi %2$lld gerekir."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "需要 %1$@ Job Lv %2$lld。"
+            "value" : "%1$@ 需要达到职业等级 %2$lld。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "需要 %1$@ Job Lv %2$lld。"
+            "value" : "%1$@ 需要達到職業等級 %2$lld。"
           }
         }
       }
@@ -908,7 +908,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erfordert Base Lv %1$lld."
+            "value" : "Basisstufe %1$lld erforderlich."
           }
         },
         "en" : {
@@ -920,67 +920,67 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Requiere Base Lv %1$lld."
+            "value" : "Requiere nivel base %1$lld."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nécessite Base Lv %1$lld."
+            "value" : "Nécessite le niveau de base %1$lld."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Membutuhkan Base Lv %1$lld."
+            "value" : "Membutuhkan level dasar %1$lld."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv %1$lld が必要です。"
+            "value" : "基本レベル%1$lldが必要です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv %1$lld이(가) 필요합니다."
+            "value" : "기본 레벨 %1$lld이(가) 필요합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Requer Base Lv %1$lld."
+            "value" : "Requer nível base %1$lld."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Требуется Base Lv %1$lld."
+            "value" : "Требуется базовый уровень %1$lld."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ต้องการ Base Lv %1$lld"
+            "value" : "ต้องมีเลเวลพื้นฐาน %1$lld"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv %1$lld gerekir."
+            "value" : "Temel seviye %1$lld gerekir."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "需要 Base Lv %1$lld。"
+            "value" : "需要达到基础等级 %1$lld。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "需要 Base Lv %1$lld。"
+            "value" : "需要達到基礎等級 %1$lld。"
           }
         }
       }
@@ -1014,7 +1014,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset"
+            "value" : "Atur ulang"
           }
         },
         "ja" : {
@@ -1038,7 +1038,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сброс"
+            "value" : "Сбросить"
           }
         },
         "th" : {
@@ -1120,7 +1120,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Навык уже имеет уровень 0."
+            "value" : "Навык уже на 0-м уровне."
           }
         },
         "th" : {
@@ -1132,7 +1132,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yetenek zaten seviye 0'da."
+            "value" : "Yetenek zaten 0. seviyede."
           }
         },
         "zh-Hans" : {
@@ -1154,7 +1154,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Fertigkeit ist bereits auf Maximalstufe."
+            "value" : "Die Fertigkeit hat bereits die Höchststufe erreicht."
           }
         },
         "en" : {
@@ -1166,19 +1166,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La habilidad ya está al nivel máximo."
+            "value" : "La habilidad ya está en el nivel máximo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La compétence est déjà au niveau maximal."
+            "value" : "La compétence a déjà atteint le niveau maximal."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill sudah berada di level maksimum."
+            "value" : "Skill sudah mencapai level maksimum."
           }
         },
         "ja" : {
@@ -1202,7 +1202,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Навык уже имеет максимальный уровень."
+            "value" : "Навык уже достиг максимального уровня."
           }
         },
         "th" : {
@@ -1214,7 +1214,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yetenek zaten maksimum seviyede."
+            "value" : "Yetenek zaten en yüksek seviyede."
           }
         },
         "zh-Hans" : {
@@ -1236,7 +1236,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Fertigkeit ist in diesem Skillbaum nicht verfügbar."
+            "value" : "Diese Fertigkeit ist in diesem Fertigkeitenbaum nicht verfügbar."
           }
         },
         "en" : {
@@ -1266,13 +1266,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このスキルは現在のツリーでは使用できません。"
+            "value" : "このスキルは現在のスキルツリーでは使用できません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 스킬은 현재 트리에서 사용할 수 없습니다."
+            "value" : "이 스킬은 현재 스킬 트리에서 사용할 수 없습니다."
           }
         },
         "pt-BR" : {
@@ -1296,7 +1296,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu yetenek bu ağaçta kullanılamıyor."
+            "value" : "Bu yetenek bu ağaçta kullanılamaz."
           }
         },
         "zh-Hans" : {
@@ -1318,7 +1318,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill-Simulator"
+            "value" : "Fertigkeitssimulator"
           }
         },
         "en" : {
@@ -1342,7 +1342,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulasi Skill"
+            "value" : "Simulator skill"
           }
         },
         "ja" : {
@@ -1372,13 +1372,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ตัวจำลองสกิล"
+            "value" : "โปรแกรมจำลองสกิล"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yetenek Simülatörü"
+            "value" : "Yetenek simülatörü"
           }
         },
         "zh-Hans" : {
@@ -1424,7 +1424,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Total Poin"
+            "value" : "Jumlah Poin"
           }
         },
         "ja" : {
@@ -1460,7 +1460,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toplam Puan"
+            "value" : "Toplam puan"
           }
         },
         "zh-Hans" : {

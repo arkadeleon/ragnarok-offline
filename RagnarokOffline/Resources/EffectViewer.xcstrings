@@ -82,49 +82,49 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wähle einen Effekt zum Anzeigen"
+            "value" : "Wähle einen Effekt aus, um ihn anzuzeigen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elige un efecto para ver"
+            "value" : "Elige un efecto para verlo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choisissez un effet à afficher"
+            "value" : "Choisissez un effet à afficher."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pilih efek untuk ditampilkan"
+            "value" : "Pilih efek untuk ditampilkan."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "表示するエフェクトを選択してください"
+            "value" : "表示するエフェクトを選択してください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "볼 이펙트를 선택하세요"
+            "value" : "표시할 이펙트를 선택하세요."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escolha um efeito para visualizar"
+            "value" : "Escolha um efeito para visualizar."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выберите эффект для просмотра"
+            "value" : "Выберите эффект для просмотра."
           }
         },
         "th" : {
@@ -136,19 +136,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Görüntülemek için bir efekt seçin"
+            "value" : "Görüntülemek için bir efekt seçin."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择一个特效查看"
+            "value" : "选择要查看的特效。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "選擇一個特效查看"
+            "value" : "選擇要查看的特效。"
           }
         }
       }
@@ -240,25 +240,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visor de Efectos"
+            "value" : "Visor de efectos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visionneuse d'Effets"
+            "value" : "Visionneuse d’effets"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penampil Efek"
+            "value" : "Penampil efek"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "エフェクトビューアー"
+            "value" : "エフェクトビューア"
           }
         },
         "ko" : {
@@ -270,7 +270,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visualizador de Efeitos"
+            "value" : "Visualizador de efeitos"
           }
         },
         "ru" : {
@@ -282,13 +282,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ดูเอฟเฟกต์"
+            "value" : "โปรแกรมดูเอฟเฟกต์"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Efekt Görüntüleyici"
+            "value" : "Efekt görüntüleyici"
           }
         },
         "zh-Hans" : {
@@ -316,19 +316,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ningún Efecto Seleccionado"
+            "value" : "No se ha seleccionado ningún efecto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aucun Effet Sélectionné"
+            "value" : "Aucun effet sélectionné"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak Ada Efek Dipilih"
+            "value" : "Belum ada efek yang dipilih"
           }
         },
         "ja" : {
@@ -346,7 +346,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nenhum Efeito Selecionado"
+            "value" : "Nenhum efeito selecionado"
           }
         },
         "ru" : {
@@ -358,25 +358,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไม่ได้เลือกเอฟเฟกต์"
+            "value" : "ยังไม่ได้เลือกเอฟเฟกต์"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Efekt Seçilmedi"
+            "value" : "Henüz efekt seçilmedi"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未选择特效"
+            "value" : "尚未选择特效"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未選擇特效"
+            "value" : "尚未選擇特效"
           }
         }
       }
@@ -386,7 +386,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wiederholen"
+            "value" : "Erneut abspielen"
           }
         },
         "es" : {
@@ -404,13 +404,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Putar Ulang"
+            "value" : "Putar ulang"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再生"
+            "value" : "もう一度再生"
           }
         },
         "ko" : {
@@ -422,37 +422,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Repetir"
+            "value" : "Reproduzir novamente"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Воспроизвести снова"
+            "value" : "Повторить"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เล่นซ้ำ"
+            "value" : "เล่นอีกครั้ง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tekrar Oynat"
+            "value" : "Yeniden oynat"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重播"
+            "value" : "重新播放"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重播"
+            "value" : "重新播放"
           }
         }
       }

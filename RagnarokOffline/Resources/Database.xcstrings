@@ -30,7 +30,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld マス"
+            "value" : "%lldマス"
           }
         },
         "ko" : {
@@ -60,7 +60,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld hücre"
+            "value" : "%lld kare"
           }
         },
         "zh-Hans" : {
@@ -100,13 +100,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aksi"
+            "value" : "Tindakan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アクション"
+            "value" : "行動"
           }
         },
         "ko" : {
@@ -142,13 +142,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "行动"
+            "value" : "行为"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "行動"
+            "value" : "行為"
           }
         }
       }
@@ -404,13 +404,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Izinkan Auto Feed"
+            "value" : "Izinkan pemberian makan otomatis"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動餌やり許可"
+            "value" : "自動給餌を許可"
           }
         },
         "ko" : {
@@ -446,7 +446,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "允许自动喂食"
+            "value" : "允许自动喂养"
           }
         },
         "zh-Hant" : {
@@ -480,13 +480,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jenis Ammo"
+            "value" : "Jenis amunisi"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "矢弾タイプ"
+            "value" : "弾薬タイプ"
           }
         },
         "ko" : {
@@ -516,7 +516,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cephane türü"
+            "value" : "Mühimmat türü"
           }
         },
         "zh-Hans" : {
@@ -708,7 +708,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level Armor"
+            "value" : "Level zirah"
           }
         },
         "ja" : {
@@ -738,7 +738,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลเวลชุดเกราะ"
+            "value" : "ระดับชุดเกราะ"
           }
         },
         "tr" : {
@@ -1012,19 +1012,19 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delay Serangan"
+            "value" : "Jeda serangan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻撃ディレイ"
+            "value" : "攻撃間隔"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "공격 딜레이"
+            "value" : "공격 간격"
           }
         },
         "pt-BR" : {
@@ -1042,13 +1042,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ดีเลย์โจมตี"
+            "value" : "ช่วงห่างระหว่างการโจมตี"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saldırı gecikmesi"
+            "value" : "Saldırı aralığı"
           }
         },
         "zh-Hans" : {
@@ -1088,7 +1088,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motion Serangan"
+            "value" : "Animasi serangan"
           }
         },
         "ja" : {
@@ -1164,7 +1164,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jarak Serangan"
+            "value" : "Jangkauan serangan"
           }
         },
         "ja" : {
@@ -1176,7 +1176,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "공격 범위"
+            "value" : "공격 사거리"
           }
         },
         "pt-BR" : {
@@ -1206,13 +1206,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻击距离"
+            "value" : "攻击射程"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻擊距離"
+            "value" : "攻擊射程"
           }
         }
       }
@@ -1222,31 +1222,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Angriffsrate"
+            "value" : "Angriffswahrscheinlichkeit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasa de ataque"
+            "value" : "Probabilidad de ataque"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taux d’attaque"
+            "value" : "Probabilité d’attaque"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rate Serangan"
+            "value" : "Peluang menyerang"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻撃率"
+            "value" : "攻撃確率"
           }
         },
         "ko" : {
@@ -1258,37 +1258,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taxa de ataque"
+            "value" : "Probabilidade de ataque"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Частота атаки"
+            "value" : "Вероятность атаки"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "อัตราโจมตี"
+            "value" : "โอกาสโจมตี"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saldırı oranı"
+            "value" : "Saldırı olasılığı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻击率"
+            "value" : "攻击概率"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "攻擊率"
+            "value" : "攻擊機率"
           }
         }
       }
@@ -1298,73 +1298,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "Basis-ASPD"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "ASPD base"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "ASPD de base"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "ASPD dasar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "基本ASPD"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "기본 ASPD"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "ASPD base"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "Базовая ASPD"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "ASPD พื้นฐาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "Temel ASPD"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "基础 ASPD"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ASPD"
+            "value" : "基礎 ASPD"
           }
         }
       }
@@ -1392,7 +1392,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ATK"
+            "value" : "ATK dasar"
           }
         },
         "ja" : {
@@ -1422,7 +1422,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base ATK"
+            "value" : "ATK พื้นฐาน"
           }
         },
         "tr" : {
@@ -1450,7 +1450,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base EXP"
+            "value" : "Basis-EXP"
           }
         },
         "es" : {
@@ -1468,55 +1468,55 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base EXP"
+            "value" : "EXP dasar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base EXP"
+            "value" : "基本EXP"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base EXP"
+            "value" : "기본 EXP"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EXP de base"
+            "value" : "EXP base"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base EXP"
+            "value" : "Базовый опыт"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base EXP"
+            "value" : "EXP พื้นฐาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base EXP"
+            "value" : "Temel EXP"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base 经验值"
+            "value" : "基础经验值"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base 經驗值"
+            "value" : "基礎經驗值"
           }
         }
       }
@@ -1526,73 +1526,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "Basis-HP"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "HP base"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "HP de base"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "HP dasar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "基本HP"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "기본 HP"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "HP base"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "Базовый HP"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "HP พื้นฐาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "Temel HP"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "基础 HP"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base HP"
+            "value" : "基礎 HP"
           }
         }
       }
@@ -1602,7 +1602,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base-Level"
+            "value" : "Basis-Level"
           }
         },
         "es" : {
@@ -1620,19 +1620,19 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Level"
+            "value" : "Level dasar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv"
+            "value" : "ベースレベル"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv"
+            "value" : "베이스 레벨"
           }
         },
         "pt-BR" : {
@@ -1644,31 +1644,31 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv"
+            "value" : "Базовый уровень"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv"
+            "value" : "เลเวลพื้นฐาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base Lv"
+            "value" : "Temel seviye"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base 等级"
+            "value" : "基础等级"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base 等級"
+            "value" : "基礎等級"
           }
         }
       }
@@ -1696,7 +1696,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level Dasar"
+            "value" : "Level dasar"
           }
         },
         "ja" : {
@@ -1726,7 +1726,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลเวลเบส"
+            "value" : "เลเวลพื้นฐาน"
           }
         },
         "tr" : {
@@ -1772,7 +1772,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base MATK"
+            "value" : "MATK dasar"
           }
         },
         "ja" : {
@@ -1802,7 +1802,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base MATK"
+            "value" : "MATK พื้นฐาน"
           }
         },
         "tr" : {
@@ -1830,73 +1830,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "Basis-SP"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "SP base"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "SP de base"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "SP dasar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "基本SP"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "기본 SP"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "SP base"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "Базовый SP"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "SP พื้นฐาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "Temel SP"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "基础 SP"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base SP"
+            "value" : "基礎 SP"
           }
         }
       }
@@ -1912,19 +1912,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stats de bonificación"
+            "value" : "Bonificaciones de atributos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stats bonus"
+            "value" : "Bonus de caractéristiques"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bonus Stat"
+            "value" : "Bonus atribut"
           }
         },
         "ja" : {
@@ -1936,7 +1936,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "보너스 스탯"
+            "value" : "보너스 능력치"
           }
         },
         "pt-BR" : {
@@ -1954,25 +1954,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ค่าสเตตัสโบนัส"
+            "value" : "ค่าสถานะโบนัส"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bonus statlar"
+            "value" : "Bonus nitelikler"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "属性奖励"
+            "value" : "属性加成"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "屬性獎勵"
+            "value" : "能力值加成"
           }
         }
       }
@@ -1988,19 +1988,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compra"
+            "value" : "Precio de compra"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Achat"
+            "value" : "Prix d’achat"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beli"
+            "value" : "Harga beli"
           }
         },
         "ja" : {
@@ -2018,13 +2018,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Compra"
+            "value" : "Preço de compra"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Покупка"
+            "value" : "Цена покупки"
           }
         },
         "th" : {
@@ -2036,19 +2036,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alış"
+            "value" : "Alış fiyatı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "买价"
+            "value" : "购买价格"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "買價"
+            "value" : "購買價格"
           }
         }
       }
@@ -2058,31 +2058,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fangrate"
+            "value" : "Fangwahrscheinlichkeit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasa de captura"
+            "value" : "Probabilidad de captura"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taux de capture"
+            "value" : "Probabilité de capture"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rate Tangkap"
+            "value" : "Peluang menangkap"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捕獲率"
+            "value" : "捕獲成功率"
           }
         },
         "ko" : {
@@ -2094,37 +2094,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taxa de captura"
+            "value" : "Probabilidade de captura"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Шанс поимки"
+            "value" : "Вероятность поимки"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "อัตราจับ"
+            "value" : "โอกาสจับ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakalama oranı"
+            "value" : "Yakalama olasılığı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捕捉率"
+            "value" : "捕捉概率"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捕捉率"
+            "value" : "捕捉機率"
           }
         }
       }
@@ -2152,7 +2152,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jenis Kartu"
+            "value" : "Jenis kartu"
           }
         },
         "ja" : {
@@ -2228,7 +2228,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Waktu Cast"
+            "value" : "Waktu perapalan"
           }
         },
         "ja" : {
@@ -2252,7 +2252,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Время каста"
+            "value" : "Время произнесения заклинания"
           }
         },
         "th" : {
@@ -2264,7 +2264,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Büyü süresi"
+            "value" : "Büyü yapma süresi"
           }
         },
         "zh-Hans" : {
@@ -2286,73 +2286,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zielwechselrate"
+            "value" : "Wahrscheinlichkeit des Zielwechsels"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasa de cambio de objetivo"
+            "value" : "Probabilidad de cambiar de objetivo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taux de changement de cible"
+            "value" : "Probabilité de changement de cible"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rate Ganti Target"
+            "value" : "Peluang mengganti target"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ターゲット変更率"
+            "value" : "ターゲット変更確率"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "타겟 변경 확률"
+            "value" : "대상 변경 확률"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taxa de troca de alvo"
+            "value" : "Probabilidade de trocar de alvo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Шанс смены цели"
+            "value" : "Вероятность смены цели"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "อัตราเปลี่ยนเป้าหมาย"
+            "value" : "โอกาสเปลี่ยนเป้าหมาย"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hedef değiştirme oranı"
+            "value" : "Hedef değiştirme olasılığı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "换目标率"
+            "value" : "切换目标概率"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "換目標率"
+            "value" : "切換目標機率"
           }
         }
       }
@@ -2380,7 +2380,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jarak Kejar"
+            "value" : "Jarak pengejaran"
           }
         },
         "ja" : {
@@ -2392,7 +2392,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "추적 범위"
+            "value" : "추적 거리"
           }
         },
         "pt-BR" : {
@@ -2410,7 +2410,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ระยะไล่ตาม"
+            "value" : "ระยะไล่ล่า"
           }
         },
         "tr" : {
@@ -2422,13 +2422,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "追击距离"
+            "value" : "追击范围"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "追擊距離"
+            "value" : "追擊範圍"
           }
         }
       }
@@ -2456,19 +2456,19 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Class"
+            "value" : "Kelas"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "クラス"
+            "value" : "分類"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "클래스"
+            "value" : "분류"
           }
         },
         "pt-BR" : {
@@ -2486,7 +2486,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลาส"
+            "value" : "ประเภท"
           }
         },
         "tr" : {
@@ -2514,13 +2514,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jobklassen"
+            "value" : "Klassen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clases"
+            "value" : "Clases de profesión"
           }
         },
         "fr" : {
@@ -2532,13 +2532,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Class"
+            "value" : "Kelas"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "職業系統"
+            "value" : "職業"
           }
         },
         "ko" : {
@@ -2550,13 +2550,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Classes"
+            "value" : "Classes de personagem"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Профессии"
+            "value" : "Классы персонажей"
           }
         },
         "th" : {
@@ -2568,19 +2568,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Meslekler"
+            "value" : "Sınıflar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "职业类型"
+            "value" : "职业"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "職業類型"
+            "value" : "職業"
           }
         }
       }
@@ -2608,7 +2608,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motion Serangan Client"
+            "value" : "Animasi serangan klien"
           }
         },
         "ja" : {
@@ -2638,7 +2638,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ท่าโจมตีฝั่งไคลเอนต์"
+            "value" : "แอนิเมชันการโจมตีฝั่งไคลเอนต์"
           }
         },
         "tr" : {
@@ -2742,73 +2742,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Set %lld"
+            "value" : "Set-Effekt %lld"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combo %lld"
+            "value" : "Efecto de conjunto %lld"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combo %lld"
+            "value" : "Bonus de set %lld"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kombo %lld"
+            "value" : "Efek set %lld"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "セット %lld"
+            "value" : "セット効果 %lld"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "세트 %lld"
+            "value" : "세트 효과 %lld"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combo %lld"
+            "value" : "Bônus de conjunto %lld"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Комплект %lld"
+            "value" : "Бонус комплекта %lld"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เซ็ต %lld"
+            "value" : "เอฟเฟกต์เซต %lld"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Set %lld"
+            "value" : "Set bonusu %lld"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "套装 %lld"
+            "value" : "套装效果 %lld"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "套裝 %lld"
+            "value" : "套裝效果 %lld"
           }
         }
       }
@@ -2818,25 +2818,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sets"
+            "value" : "Set-Effekte"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combos"
+            "value" : "Efectos de conjunto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combos"
+            "value" : "Bonus de set"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kombo"
+            "value" : "Efek set"
           }
         },
         "ja" : {
@@ -2854,37 +2854,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combos"
+            "value" : "Bônus de conjunto"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Комплекты"
+            "value" : "Бонусы комплектов"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เซ็ต"
+            "value" : "เอฟเฟกต์เซต"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setler"
+            "value" : "Set bonusları"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "套装"
+            "value" : "套装效果"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "套裝"
+            "value" : "套裝效果"
           }
         }
       }
@@ -2912,7 +2912,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cooldown"
+            "value" : "Waktu jeda"
           }
         },
         "ja" : {
@@ -2988,7 +2988,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Motion Damage"
+            "value" : "Animasi saat terkena serangan"
           }
         },
         "ja" : {
@@ -3012,19 +3012,19 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Анимация урона"
+            "value" : "Анимация получения урона"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ท่ารับดาเมจ"
+            "value" : "แอนิเมชันเมื่อได้รับความเสียหาย"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hasar animasyonu"
+            "value" : "Hasar alma animasyonu"
           }
         },
         "zh-Hans" : {
@@ -3064,7 +3064,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Damage Diterima"
+            "value" : "Kerusakan yang diterima"
           }
         },
         "ja" : {
@@ -3094,7 +3094,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ดาเมจที่ได้รับ"
+            "value" : "ความเสียหายที่ได้รับ"
           }
         },
         "tr" : {
@@ -3106,13 +3106,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "承受伤害"
+            "value" : "受到的伤害"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "承受傷害"
+            "value" : "受到的傷害"
           }
         }
       }
@@ -3134,13 +3134,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Défaut"
+            "value" : "Par défaut"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Default"
+            "value" : "Bawaan"
           }
         },
         "ja" : {
@@ -3292,7 +3292,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delay"
+            "value" : "Jeda"
           }
         },
         "ja" : {
@@ -3502,7 +3502,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gedroppt von"
+            "value" : "Wird fallengelassen von"
           }
         },
         "es" : {
@@ -3514,61 +3514,61 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drop par"
+            "value" : "Lâché par"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drop dari"
+            "value" : "Dijatuhkan oleh"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ドロップ元"
+            "value" : "ドロップするモンスター"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "드롭 몬스터"
+            "value" : "드롭하는 몬스터"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Derrubado por"
+            "value" : "Obtido de"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Падает с"
+            "value" : "Выпадает из"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ดรอปจาก"
+            "value" : "ดรอปโดย"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Düşüren"
+            "value" : "Düşüren canavar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "掉落来源"
+            "value" : "掉落怪物"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "掉落來源"
+            "value" : "掉落魔物"
           }
         }
       }
@@ -3578,37 +3578,37 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drops"
+            "value" : "Beute"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drops"
+            "value" : "Objetos que suelta"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drops"
+            "value" : "Objets lâchés"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drop"
+            "value" : "Item yang dijatuhkan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ドロップ"
+            "value" : "ドロップアイテム"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "드롭"
+            "value" : "드롭 아이템"
           }
         },
         "pt-BR" : {
@@ -3620,31 +3620,31 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Дроп"
+            "value" : "Выпадающие предметы"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ดรอป"
+            "value" : "ไอเทมที่ดรอป"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Droplar"
+            "value" : "Düşürdüğü eşyalar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "掉落"
+            "value" : "掉落物品"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "掉落"
+            "value" : "掉落物品"
           }
         }
       }
@@ -3654,73 +3654,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dauer-Referenz"
+            "value" : "Quelle für die Standarddauer"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Referencia de duración"
+            "value" : "Fuente de la duración predeterminada"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Référence de durée"
+            "value" : "Source de la durée par défaut"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acuan Durasi"
+            "value" : "Sumber durasi bawaan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "持続時間の参照"
+            "value" : "標準持続時間の参照元"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "지속 시간 참조"
+            "value" : "기본 지속 시간의 기준"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Referência de duração"
+            "value" : "Fonte da duração padrão"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Источник длительности"
+            "value" : "Источник длительности по умолчанию"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "อ้างอิงระยะเวลา"
+            "value" : "แหล่งที่มาของระยะเวลาเริ่มต้น"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Süre Referansı"
+            "value" : "Varsayılan süre kaynağı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "持续时间参照"
+            "value" : "默认持续时间来源"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "持續時間參照"
+            "value" : "預設持續時間來源"
           }
         }
       }
@@ -3730,43 +3730,43 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet-Ei-Item"
+            "value" : "Ei für Haustiere"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objeto huevo de pet"
+            "value" : "Huevo de mascota"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objet œuf de familier"
+            "value" : "Œuf de familier"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item Telur Pet"
+            "value" : "Telur hewan peliharaan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ペット卵アイテム"
+            "value" : "ペットの卵"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "펫 알 아이템"
+            "value" : "펫 알"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item ovo de pet"
+            "value" : "Ovo de mascote"
           }
         },
         "ru" : {
@@ -3784,7 +3784,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet yumurtası eşyası"
+            "value" : "Evcil hayvan yumurtası"
           }
         },
         "zh-Hans" : {
@@ -3900,7 +3900,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Damage Elemen"
+            "value" : "Kerusakan elemen"
           }
         },
         "ja" : {
@@ -3912,7 +3912,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "속성 데미지"
+            "value" : "속성 피해"
           }
         },
         "pt-BR" : {
@@ -3936,7 +3936,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Element Hasarı"
+            "value" : "Element hasarı"
           }
         },
         "zh-Hans" : {
@@ -3958,73 +3958,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ende bei Ende"
+            "value" : "Bei Ende dieses Effekts beendete Status"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Termina al terminar"
+            "value" : "Estados que terminan cuando este efecto finaliza"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fin à la fin"
+            "value" : "Effets de statut annulés à la fin de cet effet"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "End saat End"
+            "value" : "Status yang berakhir saat efek ini berakhir"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "終了時解除"
+            "value" : "この効果の終了時に解除される状態"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "종료 시 해제"
+            "value" : "이 효과가 끝날 때 종료되는 상태"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Termina ao terminar"
+            "value" : "Estados encerrados quando este efeito termina"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Завершать при окончании"
+            "value" : "Состояния, завершающиеся при окончании этого эффекта"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "สิ้นสุดเมื่อจบ"
+            "value" : "สถานะที่สิ้นสุดเมื่อเอฟเฟกต์นี้สิ้นสุด"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bitişte sona erer"
+            "value" : "Bu etki sona erdiğinde sona eren durumlar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "结束时解除"
+            "value" : "此效果结束时一并结束的状态"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "結束時解除"
+            "value" : "此效果結束時一併結束的狀態"
           }
         }
       }
@@ -4034,73 +4034,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ende beim Start"
+            "value" : "Bei Aktivierung beendete Status"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Termina al iniciar"
+            "value" : "Estados que terminan al activar este efecto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fin au début"
+            "value" : "Effets de statut annulés à l’activation de cet effet"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "End saat Start"
+            "value" : "Status yang berakhir saat efek ini aktif"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開始時解除"
+            "value" : "発動時に解除される状態"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "시작 시 해제"
+            "value" : "이 효과가 발동할 때 종료되는 상태"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Termina ao iniciar"
+            "value" : "Estados encerrados quando este efeito é ativado"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Завершать при начале"
+            "value" : "Состояния, завершающиеся при активации этого эффекта"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "สิ้นสุดเมื่อเริ่ม"
+            "value" : "สถานะที่สิ้นสุดเมื่อเอฟเฟกต์นี้เริ่มทำงาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Başlangıçta sona erer"
+            "value" : "Bu etki etkinleştiğinde sona eren durumlar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开始时解除"
+            "value" : "此效果生效时结束的状态"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開始時解除"
+            "value" : "此效果生效時結束的狀態"
           }
         }
       }
@@ -4110,73 +4110,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rückkehr beim Ende"
+            "value" : "Status, die die Anwendung dieses Effekts verhindern"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Retorno al terminar"
+            "value" : "Estados cuya eliminación impide aplicar este efecto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Retour à la fin"
+            "value" : "Effets de statut dont la suppression empêche l’application de cet effet"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Return saat End"
+            "value" : "Status yang dihapus tanpa menerapkan efek ini"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "終了時復帰"
+            "value" : "解除されるとこの効果が適用されない状態"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "종료 시 반환"
+            "value" : "제거 시 이 효과가 적용되지 않는 상태"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Retorno ao terminar"
+            "value" : "Estados cuja remoção impede a aplicação deste efeito"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Возврат при окончании"
+            "value" : "Состояния, удаление которых отменяет применение эффекта"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คืนค่าเมื่อสิ้นสุด"
+            "value" : "สถานะที่เมื่อลบออกแล้วจะไม่ใช้เอฟเฟกต์นี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bitişte geri dön"
+            "value" : "Kaldırıldığında bu etkinin uygulanmasını engelleyen durumlar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "结束返回"
+            "value" : "移除后会阻止此效果生效的状态"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "結束返回"
+            "value" : "移除後會阻止此效果生效的狀態"
           }
         }
       }
@@ -4186,7 +4186,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ausrüstungsitem"
+            "value" : "Ausrüstungsgegenstand"
           }
         },
         "es" : {
@@ -4204,7 +4204,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item Equip"
+            "value" : "Item perlengkapan"
           }
         },
         "ja" : {
@@ -4234,7 +4234,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไอเทมอุปกรณ์"
+            "value" : "ไอเทมสวมใส่"
           }
         },
         "tr" : {
@@ -4262,73 +4262,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ausrüstungsstufe"
+            "value" : "Benötigte Stufe"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nivel de equipo"
+            "value" : "Nivel requerido"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Niveau d'équipement"
+            "value" : "Niveau requis"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level Equip"
+            "value" : "Level yang diperlukan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "装備レベル"
+            "value" : "装備に必要なレベル"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "장착 레벨"
+            "value" : "착용 필요 레벨"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nível de equipamento"
+            "value" : "Nível necessário"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Уровень экипировки"
+            "value" : "Требуемый уровень"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลเวลสวมใส่"
+            "value" : "เลเวลที่ต้องใช้สวมใส่"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kuşanma seviyesi"
+            "value" : "Giyme için gereken seviye"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "装备等级"
+            "value" : "装备需求等级"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "裝備等級"
+            "value" : "裝備需求等級"
           }
         }
       }
@@ -4356,7 +4356,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Script Equip"
+            "value" : "Skrip saat dipasang"
           }
         },
         "ja" : {
@@ -4420,19 +4420,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exp %@"
+            "value" : "EXP %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exp %@"
+            "value" : "EXP %@"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exp %@"
+            "value" : "EXP %@"
           }
         },
         "ja" : {
@@ -4450,7 +4450,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exp %@"
+            "value" : "EXP %@"
           }
         },
         "ru" : {
@@ -4462,25 +4462,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exp %@"
+            "value" : "EXP %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Exp %@"
+            "value" : "EXP %@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "经验 %@"
+            "value" : "经验值 %@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "經驗 %@"
+            "value" : "經驗值 %@"
           }
         }
       }
@@ -4490,73 +4490,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fehlschlag"
+            "value" : "Status, die die Aktivierung verhindern"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fallo"
+            "value" : "Estados que impiden la activación"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Échec"
+            "value" : "États qui empêchent l’activation"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gagal"
+            "value" : "Status yang menghalangi aktivasi"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "失敗"
+            "value" : "発動を妨げる状態"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "실패"
+            "value" : "발동을 방해하는 상태"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Falha"
+            "value" : "Estados que impedem a ativação"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сбой"
+            "value" : "Состояния, препятствующие активации"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ล้มเหลว"
+            "value" : "สถานะที่ทำให้เอฟเฟกต์นี้ไม่ทำงาน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Başarısız"
+            "value" : "Etkinleşmeyi engelleyen durumlar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "失败"
+            "value" : "阻止此效果生效的状态"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "失敗"
+            "value" : "阻止此效果生效的狀態"
           }
         }
       }
@@ -4584,7 +4584,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter"
+            "value" : "Penyaring"
           }
         },
         "ja" : {
@@ -4626,13 +4626,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "筛选"
+            "value" : "筛选条件"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "篩選"
+            "value" : "篩選條件"
           }
         }
       }
@@ -4660,7 +4660,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Waktu Cast Tetap"
+            "value" : "Waktu perapalan tetap"
           }
         },
         "ja" : {
@@ -4684,7 +4684,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Фиксированное время каста"
+            "value" : "Фиксированное время произнесения заклинания"
           }
         },
         "th" : {
@@ -4696,7 +4696,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sabit büyü süresi"
+            "value" : "Sabit büyü yapma süresi"
           }
         },
         "zh-Hans" : {
@@ -4718,25 +4718,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet-Futter"
+            "value" : "Futter für Haustiere"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Comida de pet"
+            "value" : "Alimento para mascotas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nourriture de familier"
+            "value" : "Nourriture pour familier"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Makanan Pet"
+            "value" : "Pakan hewan peliharaan"
           }
         },
         "ja" : {
@@ -4754,7 +4754,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Comida de pet"
+            "value" : "Comida para mascote"
           }
         },
         "ru" : {
@@ -4772,7 +4772,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet yemi"
+            "value" : "Evcil hayvan yemi"
           }
         },
         "zh-Hans" : {
@@ -4888,7 +4888,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gender"
+            "value" : "Jenis kelamin"
           }
         },
         "ja" : {
@@ -4946,31 +4946,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gradierbar"
+            "value" : "Graderhöhung möglich"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Con grado"
+            "value" : "Se puede mejorar de grado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Améliorable par grade"
+            "value" : "Peut recevoir un grade"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bisa Grade"
+            "value" : "Dapat diberi grade"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "グレード可能"
+            "value" : "グレードアップ可能"
           }
         },
         "ko" : {
@@ -4982,25 +4982,25 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Com grade"
+            "value" : "Pode ter o grau aprimorado"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Можно повышать грейд"
+            "value" : "Можно повысить грейд"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เพิ่มเกรดได้"
+            "value" : "สามารถเพิ่มเกรดได้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grade yapılabilir"
+            "value" : "Derecesi yükseltilebilir"
           }
         },
         "zh-Hans" : {
@@ -5256,25 +5256,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aumento de hambre"
+            "value" : "Aumento del hambre"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gain de faim"
+            "value" : "Augmentation de la faim"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kenaikan Lapar"
+            "value" : "Peningkatan rasa lapar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "空腹増加量"
+            "value" : "空腹度の増加量"
           }
         },
         "ko" : {
@@ -5286,13 +5286,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aumento de fome"
+            "value" : "Aumento da fome"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Рост голода"
+            "value" : "Увеличение уровня голода"
           }
         },
         "th" : {
@@ -5326,73 +5326,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hungerintervall"
+            "value" : "Intervall der Hungerabnahme"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intervalo de hambre"
+            "value" : "Intervalo de reducción del hambre"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intervalle de faim"
+            "value" : "Intervalle de diminution de la faim"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delay Lapar"
+            "value" : "Interval penurunan rasa lapar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "空腹間隔"
+            "value" : "空腹度減少間隔"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "배고픔 간격"
+            "value" : "배고픔 감소 간격"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intervalo de fome"
+            "value" : "Intervalo de redução da fome"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Интервал голода"
+            "value" : "Интервал снижения голода"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ช่วงเวลาหิว"
+            "value" : "ช่วงเวลาที่ค่าความหิวลดลง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Açlık aralığı"
+            "value" : "Açlığın azalma aralığı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "饥饿间隔"
+            "value" : "饥饿值减少间隔"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "飢餓間隔"
+            "value" : "飢餓值減少間隔"
           }
         }
       }
@@ -5554,7 +5554,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Info"
+            "value" : "Informationen"
           }
         },
         "es" : {
@@ -5566,13 +5566,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Infos"
+            "value" : "Informations"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Info"
+            "value" : "Informasi"
           }
         },
         "ja" : {
@@ -5706,43 +5706,43 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zuneigung beim Füttern"
+            "value" : "Zuneigung nach dem Füttern"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidad al alimentar"
+            "value" : "Afinidad al alimentar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimité nourri"
+            "value" : "Affection après nourrissage"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimacy Saat Diberi Makan"
+            "value" : "Keakraban saat diberi makan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "給餌時親密度"
+            "value" : "餌やり時の親密度"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "먹이 친밀도"
+            "value" : "먹이를 줬을 때의 친밀도"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidade ao alimentar"
+            "value" : "Afinidade ao alimentar"
           }
         },
         "ru" : {
@@ -5754,13 +5754,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ความสนิทเมื่อให้อาหาร"
+            "value" : "ค่าความสนิทเมื่อให้อาหาร"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beslenince yakınlık"
+            "value" : "Beslenme sonrası yakınlık"
           }
         },
         "zh-Hans" : {
@@ -5788,37 +5788,37 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidad con hambre"
+            "value" : "Afinidad cuando tiene hambre"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimité affamé"
+            "value" : "Affection quand le familier a faim"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimacy Saat Lapar"
+            "value" : "Keakraban saat lapar"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "空腹時親密度"
+            "value" : "空腹時の親密度"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "배고픔 친밀도"
+            "value" : "배고플 때의 친밀도"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidade com fome"
+            "value" : "Afinidade quando está com fome"
           }
         },
         "ru" : {
@@ -5830,13 +5830,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ความสนิทเมื่อหิว"
+            "value" : "ค่าความสนิทเมื่อหิว"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Açken yakınlık"
+            "value" : "Açlık durumundaki yakınlık"
           }
         },
         "zh-Hans" : {
@@ -5864,37 +5864,37 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidad por sobrealimentación"
+            "value" : "Afinidad por sobrealimentación"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimité trop nourri"
+            "value" : "Affection en cas de suralimentation"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimacy Saat Terlalu Kenyang"
+            "value" : "Keakraban saat terlalu kenyang"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "過給餌時親密度"
+            "value" : "食べ過ぎ時の親密度"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "과식 친밀도"
+            "value" : "과식했을 때의 친밀도"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidade por excesso de comida"
+            "value" : "Afinidade ao alimentar em excesso"
           }
         },
         "ru" : {
@@ -5906,13 +5906,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ความสนิทเมื่อให้อาหารเกิน"
+            "value" : "ค่าความสนิทเมื่อให้อาหารมากเกินไป"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fazla beslenince yakınlık"
+            "value" : "Fazla beslendiğindeki yakınlık"
           }
         },
         "zh-Hans" : {
@@ -5934,43 +5934,43 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zuneigung bei Tod des Besitzers"
+            "value" : "Zuneigung beim Tod des Besitzers"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidad al morir el dueño"
+            "value" : "Afinidad al morir el dueño"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimité à la mort du maître"
+            "value" : "Affection à la mort du maître"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimacy Saat Pemilik Mati"
+            "value" : "Keakraban saat pemilik mati"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "飼い主死亡時親密度"
+            "value" : "飼い主死亡時の親密度"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "주인 사망 친밀도"
+            "value" : "주인이 사망했을 때의 친밀도"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidade ao morrer o dono"
+            "value" : "Afinidade quando o dono morre"
           }
         },
         "ru" : {
@@ -5982,25 +5982,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ความสนิทเมื่อเจ้าของตาย"
+            "value" : "ค่าความสนิทเมื่อเจ้าของเสียชีวิต"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sahibi ölünce yakınlık"
+            "value" : "Sahibi öldüğündeki yakınlık"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "主人死亡亲密度"
+            "value" : "主人死亡时的亲密度"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "主人死亡親密度"
+            "value" : "主人死亡時的親密度"
           }
         }
       }
@@ -6010,25 +6010,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Startzuneigung"
+            "value" : "Anfangszuneigung"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidad inicial"
+            "value" : "Afinidad inicial"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimité initiale"
+            "value" : "Affection initiale"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimacy Awal"
+            "value" : "Keakraban awal"
           }
         },
         "ja" : {
@@ -6046,7 +6046,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Intimidade inicial"
+            "value" : "Afinidade inicial"
           }
         },
         "ru" : {
@@ -6064,7 +6064,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Başlangıç yakınlığı"
+            "value" : "Başlangıç yakınlık değeri"
           }
         },
         "zh-Hans" : {
@@ -6086,7 +6086,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item-Datenbank"
+            "value" : "Gegenstandsdatenbank"
           }
         },
         "es" : {
@@ -6104,7 +6104,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Item"
+            "value" : "Basis data item"
           }
         },
         "ja" : {
@@ -6128,7 +6128,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База предметов"
+            "value" : "База данных предметов"
           }
         },
         "th" : {
@@ -6162,7 +6162,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Items"
+            "value" : "Gegenstände"
           }
         },
         "es" : {
@@ -6238,25 +6238,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job-Datenbank"
+            "value" : "Klassendatenbank"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de datos de jobs"
+            "value" : "Base de datos de clases"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de données des jobs"
+            "value" : "Base de données des classes"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Job"
+            "value" : "Basis data profesi"
           }
         },
         "ja" : {
@@ -6280,7 +6280,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База профессий"
+            "value" : "База данных профессий"
           }
         },
         "th" : {
@@ -6314,37 +6314,37 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job EXP"
+            "value" : "Klassen-EP"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EXP de job"
+            "value" : "EXP de clase"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EXP de job"
+            "value" : "EXP de classe"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job EXP"
+            "value" : "EXP profesi"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job EXP"
+            "value" : "ジョブ経験値"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job EXP"
+            "value" : "직업 경험치"
           }
         },
         "pt-BR" : {
@@ -6356,31 +6356,31 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job EXP"
+            "value" : "Опыт профессии"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job EXP"
+            "value" : "EXP อาชีพ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job EXP"
+            "value" : "Meslek EXP"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job 经验值"
+            "value" : "职业经验值"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job 經驗值"
+            "value" : "職業經驗值"
           }
         }
       }
@@ -6390,101 +6390,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job-Level"
+            "value" : "Klassenstufe"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nivel de job"
+            "value" : "Nivel de clase"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Niveau de job"
+            "value" : "Niveau de classe"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job Level"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job Lv"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job Lv"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nível de classe"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job Lv"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job Lv"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job Lv"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job 等级"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Job 等級"
-          }
-        }
-      }
-    },
-    "Job Levels" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jobstufen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Niveles de oficio"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Niveaux de métier"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Level Job"
+            "value" : "Level profesi"
           }
         },
         "ja" : {
@@ -6496,7 +6420,83 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "잡 레벨"
+            "value" : "직업 레벨"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nível de classe"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уровень профессии"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลเวลอาชีพ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meslek seviyesi"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "职业等级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "職業等級"
+          }
+        }
+      }
+    },
+    "Job Levels" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klassenstufen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niveles de oficio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niveaux de classe"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Level profesi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ジョブレベル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직업 레벨"
           }
         },
         "pt-BR" : {
@@ -6514,7 +6514,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลเวลจ๊อบ"
+            "value" : "เลเวลอาชีพ"
           }
         },
         "tr" : {
@@ -6542,25 +6542,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jobs"
+            "value" : "Klassen"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jobs"
+            "value" : "Clases"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jobs"
+            "value" : "Classes"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job"
+            "value" : "Profesi"
           }
         },
         "ja" : {
@@ -6618,7 +6618,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level"
+            "value" : "Stufe"
           }
         },
         "es" : {
@@ -6666,7 +6666,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลเวล"
+            "value" : "ระดับ"
           }
         },
         "tr" : {
@@ -6818,7 +6818,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลเวล"
+            "value" : "ระดับ"
           }
         },
         "tr" : {
@@ -6846,13 +6846,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ausrüstungspositionen"
+            "value" : "Ausrüstungsplätze"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Posiciones de equipo"
+            "value" : "Ranuras de equipo"
           }
         },
         "fr" : {
@@ -6864,55 +6864,55 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lokasi Equip"
+            "value" : "Slot perlengkapan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "装備位置"
+            "value" : "装備スロット"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "장착 위치"
+            "value" : "장비 부위"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Posições de equipamento"
+            "value" : "Espaços de equipamento"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Слоты экипировки"
+            "value" : "Ячейки экипировки"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ตำแหน่งสวมใส่"
+            "value" : "ช่องสวมใส่"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ekipman konumları"
+            "value" : "Ekipman yuvaları"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "装备位置"
+            "value" : "装备部位"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "裝備位置"
+            "value" : "裝備部位"
           }
         }
       }
@@ -7244,7 +7244,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Map"
+            "value" : "Basis data peta"
           }
         },
         "ja" : {
@@ -7268,7 +7268,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База карт"
+            "value" : "База данных карт"
           }
         },
         "th" : {
@@ -7308,7 +7308,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Propiedades del mapa"
+            "value" : "Características del mapa"
           }
         },
         "fr" : {
@@ -7320,7 +7320,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Properti Peta"
+            "value" : "Atribut peta"
           }
         },
         "ja" : {
@@ -7356,7 +7356,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Harita Özellikleri"
+            "value" : "Harita özellikleri"
           }
         },
         "zh-Hans" : {
@@ -7396,7 +7396,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lokasi Peta"
+            "value" : "Lokasi peta"
           }
         },
         "ja" : {
@@ -7432,7 +7432,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Harita Konumu"
+            "value" : "Harita konumu"
           }
         },
         "zh-Hans" : {
@@ -7472,7 +7472,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bahan Untuk"
+            "value" : "Bahan untuk"
           }
         },
         "ja" : {
@@ -7508,7 +7508,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Malzeme Olarak"
+            "value" : "Şunun için malzeme"
           }
         },
         "zh-Hans" : {
@@ -7666,13 +7666,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最大"
+            "value" : "最大值"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最大"
+            "value" : "最大值"
           }
         }
       }
@@ -7700,7 +7700,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Berat Maksimum"
+            "value" : "Berat maksimum"
           }
         },
         "ja" : {
@@ -7736,7 +7736,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maksimum ağırlık"
+            "value" : "Maksimum taşıma ağırlığı"
           }
         },
         "zh-Hans" : {
@@ -7758,7 +7758,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Max. ATK"
+            "value" : "Maximaler ATK"
           }
         },
         "es" : {
@@ -7770,13 +7770,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATK max."
+            "value" : "ATK maximal"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATK Maksimum"
+            "value" : "ATK maksimum"
           }
         },
         "ja" : {
@@ -7800,7 +7800,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Макс. ATK"
+            "value" : "Максимальный ATK"
           }
         },
         "th" : {
@@ -7812,7 +7812,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maks. ATK"
+            "value" : "En yüksek ATK"
           }
         },
         "zh-Hans" : {
@@ -7834,7 +7834,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maximallevel"
+            "value" : "Maximalstufe"
           }
         },
         "es" : {
@@ -7852,7 +7852,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level Maksimum"
+            "value" : "Level maksimum"
           }
         },
         "ja" : {
@@ -7876,7 +7876,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Макс. уровень"
+            "value" : "Максимальный уровень"
           }
         },
         "th" : {
@@ -7888,7 +7888,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Maksimum seviye"
+            "value" : "En yüksek seviye"
           }
         },
         "zh-Hans" : {
@@ -7928,7 +7928,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Min"
+            "value" : "Min."
           }
         },
         "ja" : {
@@ -7970,13 +7970,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最小"
+            "value" : "最小值"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最小"
+            "value" : "最小值"
           }
         }
       }
@@ -7986,7 +7986,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Min. ATK"
+            "value" : "Minimaler ATK"
           }
         },
         "es" : {
@@ -7998,13 +7998,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATK min."
+            "value" : "ATK minimal"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATK Minimum"
+            "value" : "ATK minimum"
           }
         },
         "ja" : {
@@ -8028,7 +8028,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мин. ATK"
+            "value" : "Минимальный ATK"
           }
         },
         "th" : {
@@ -8040,7 +8040,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Min. ATK"
+            "value" : "En düşük ATK"
           }
         },
         "zh-Hans" : {
@@ -8080,7 +8080,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Durasi Minimum"
+            "value" : "Durasi minimum"
           }
         },
         "ja" : {
@@ -8138,7 +8138,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mindestlevel"
+            "value" : "Mindeststufe"
           }
         },
         "es" : {
@@ -8156,7 +8156,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level Minimum"
+            "value" : "Level minimum"
           }
         },
         "ja" : {
@@ -8180,7 +8180,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мин. уровень"
+            "value" : "Минимальный уровень"
           }
         },
         "th" : {
@@ -8192,7 +8192,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minimum seviye"
+            "value" : "En düşük seviye"
           }
         },
         "zh-Hans" : {
@@ -8214,25 +8214,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mindestrate"
+            "value" : "Mindestwahrscheinlichkeit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasa mínima"
+            "value" : "Probabilidad mínima"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taux minimal"
+            "value" : "Probabilité minimale"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tingkat Minimum"
+            "value" : "Peluang minimal"
           }
         },
         "ja" : {
@@ -8250,31 +8250,31 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taxa mínima"
+            "value" : "Probabilidade mínima"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мин. шанс"
+            "value" : "Минимальная вероятность"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "อัตราขั้นต่ำ"
+            "value" : "โอกาสขั้นต่ำ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minimum oran"
+            "value" : "En düşük olasılık"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最低几率"
+            "value" : "最低概率"
           }
         },
         "zh-Hant" : {
@@ -8384,7 +8384,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Monster"
+            "value" : "Basis data monster"
           }
         },
         "ja" : {
@@ -8408,7 +8408,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База монстров"
+            "value" : "База данных монстров"
           }
         },
         "th" : {
@@ -8448,13 +8448,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drops MVP"
+            "value" : "Botín MVP"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drops MVP"
+            "value" : "Butin MVP"
           }
         },
         "id" : {
@@ -8478,7 +8478,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Drops MVP"
+            "value" : "Drops de MVP"
           }
         },
         "ru" : {
@@ -8496,7 +8496,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MVP dropları"
+            "value" : "MVP ganimetleri"
           }
         },
         "zh-Hans" : {
@@ -8518,7 +8518,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MVP EXP"
+            "value" : "MVP-EXP"
           }
         },
         "es" : {
@@ -8536,19 +8536,19 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MVP EXP"
+            "value" : "EXP MVP"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MVP EXP"
+            "value" : "MVP経験値"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MVP EXP"
+            "value" : "MVP 경험치"
           }
         },
         "pt-BR" : {
@@ -8560,13 +8560,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MVP EXP"
+            "value" : "Опыт MVP"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MVP EXP"
+            "value" : "EXP MVP"
           }
         },
         "tr" : {
@@ -8764,13 +8764,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak Ada Hasil"
+            "value" : "Tidak ada hasil"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "結果なし"
+            "value" : "結果がありません"
           }
         },
         "ko" : {
@@ -8782,7 +8782,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sem resultados"
+            "value" : "Nenhum resultado"
           }
         },
         "ru" : {
@@ -8840,7 +8840,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak Habis"
+            "value" : "Tidak dikonsumsi"
           }
         },
         "ja" : {
@@ -8870,7 +8870,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไม่สิ้นเปลือง"
+            "value" : "ไม่ถูกใช้ไป"
           }
         },
         "tr" : {
@@ -8974,31 +8974,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erhalten aus"
+            "value" : "Erhältlich bei"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se obtiene de"
+            "value" : "Dónde conseguirlo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obtenu de"
+            "value" : "Sources d’obtention"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Didapat Dari"
+            "value" : "Sumber perolehan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "入手元"
+            "value" : "入手先"
           }
         },
         "ko" : {
@@ -9010,37 +9010,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obtido de"
+            "value" : "Onde obter"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Можно получить из"
+            "value" : "Источники получения"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ได้รับจาก"
+            "value" : "แหล่งที่หาได้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elde Edildiği Yer"
+            "value" : "Elde etme kaynakları"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "获得来源"
+            "value" : "获取途径"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "獲得來源"
+            "value" : "取得途徑"
           }
         }
       }
@@ -9050,73 +9050,73 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erhält"
+            "value" : "Erhältliche Gegenstände"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obtiene"
+            "value" : "Objetos que se pueden obtener"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obtient"
+            "value" : "Objets à obtenir"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mendapatkan"
+            "value" : "Item yang bisa diperoleh"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "入手アイテム"
+            "value" : "入手できるアイテム"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "획득 아이템"
+            "value" : "획득 가능한 아이템"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Obtém"
+            "value" : "Itens que podem ser obtidos"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Получаемое"
+            "value" : "Доступные предметы"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ได้รับ"
+            "value" : "ไอเทมที่หาได้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elde Edilenler"
+            "value" : "Elde edilebilen eşyalar"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "获得物品"
+            "value" : "可获取物品"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "獲得物品"
+            "value" : "可取得物品"
           }
         }
       }
@@ -9144,7 +9144,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet"
+            "value" : "Peliharaan"
           }
         },
         "ja" : {
@@ -9180,7 +9180,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evcil Hayvan"
+            "value" : "Evcil hayvan"
           }
         },
         "zh-Hans" : {
@@ -9220,7 +9220,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet"
+            "value" : "Peliharaan"
           }
         },
         "ja" : {
@@ -9256,7 +9256,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evcil Hayvanlar"
+            "value" : "Evcil hayvanlar"
           }
         },
         "zh-Hans" : {
@@ -9296,7 +9296,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hasil"
+            "value" : "Produk"
           }
         },
         "ja" : {
@@ -9372,7 +9372,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hasil"
+            "value" : "Produk"
           }
         },
         "ja" : {
@@ -9448,7 +9448,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Race"
+            "value" : "Ras"
           }
         },
         "ja" : {
@@ -9518,13 +9518,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Groupes de race"
+            "value" : "Groupes de races"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grup Race"
+            "value" : "Kelompok ras"
           }
         },
         "ja" : {
@@ -9542,7 +9542,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grupos de raça"
+            "value" : "Grupos raciais"
           }
         },
         "ru" : {
@@ -9566,13 +9566,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "种族组"
+            "value" : "种族分类"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "種族組"
+            "value" : "種族分類"
           }
         }
       }
@@ -9688,7 +9688,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "제조법"
+            "value" : "레시피"
           }
         },
         "pt-BR" : {
@@ -9706,7 +9706,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "สูตร"
+            "value" : "สูตรคราฟต์"
           }
         },
         "tr" : {
@@ -9764,7 +9764,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "제조법 %lld"
+            "value" : "레시피 %lld"
           }
         },
         "pt-BR" : {
@@ -9782,7 +9782,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "สูตร %lld"
+            "value" : "สูตรคราฟต์ %lld"
           }
         },
         "tr" : {
@@ -9816,19 +9816,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Refinable"
+            "value" : "Se puede refinar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Raffinable"
+            "value" : "Peut être raffiné"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bisa Refine"
+            "value" : "Dapat diperkuat"
           }
         },
         "ja" : {
@@ -9846,13 +9846,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Refinável"
+            "value" : "Pode ser refinado"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Можно точить"
+            "value" : "Можно заточить"
           }
         },
         "th" : {
@@ -9864,7 +9864,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Refine edilebilir"
+            "value" : "Rafine edilebilir"
           }
         },
         "zh-Hans" : {
@@ -9904,7 +9904,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Atur Ulang Filter"
+            "value" : "Atur ulang filter"
           }
         },
         "ja" : {
@@ -10038,31 +10038,31 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gegenangriffsrate"
+            "value" : "Gegenangriffswahrscheinlichkeit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasa de contraataque"
+            "value" : "Probabilidad de contraataque"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taux de riposte"
+            "value" : "Probabilité de riposte"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rate Balasan"
+            "value" : "Peluang melakukan serangan balasan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反撃率"
+            "value" : "反撃確率"
           }
         },
         "ko" : {
@@ -10074,37 +10074,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taxa de contra-ataque"
+            "value" : "Probabilidade de contra-ataque"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Шанс ответной атаки"
+            "value" : "Вероятность ответной атаки"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "อัตราโต้กลับ"
+            "value" : "โอกาสโต้กลับ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Karşı saldırı oranı"
+            "value" : "Karşı saldırı olasılığı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反击率"
+            "value" : "反击概率"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反擊率"
+            "value" : "反擊機率"
           }
         }
       }
@@ -10132,7 +10132,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Script"
+            "value" : "Skrip"
           }
         },
         "ja" : {
@@ -10196,19 +10196,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Venta"
+            "value" : "Precio de venta"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vente"
+            "value" : "Prix de vente"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jual"
+            "value" : "Harga jual"
           }
         },
         "ja" : {
@@ -10226,13 +10226,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Venda"
+            "value" : "Preço de venda"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Продажа"
+            "value" : "Цена продажи"
           }
         },
         "th" : {
@@ -10244,19 +10244,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satış"
+            "value" : "Satış fiyatı"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "卖价"
+            "value" : "出售价格"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "賣價"
+            "value" : "販售價格"
           }
         }
       }
@@ -10266,25 +10266,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shop-Items"
+            "value" : "Shop-Angebote"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objetos de la tienda"
+            "value" : "Artículos de la tienda"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objets en boutique"
+            "value" : "Articles de la boutique"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item Toko"
+            "value" : "Item di toko"
           }
         },
         "ja" : {
@@ -10320,7 +10320,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mağaza Eşyaları"
+            "value" : "Mağaza eşyaları"
           }
         },
         "zh-Hans" : {
@@ -10360,7 +10360,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Size"
+            "value" : "Ukuran"
           }
         },
         "ja" : {
@@ -10436,7 +10436,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill"
+            "value" : "Keahlian"
           }
         },
         "ja" : {
@@ -10494,25 +10494,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill-Datenbank"
+            "value" : "Fertigkeitsdatenbank"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de datos de skills"
+            "value" : "Base de datos de habilidades"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de données des skills"
+            "value" : "Base de données des compétences"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Skill"
+            "value" : "Basis data skill"
           }
         },
         "ja" : {
@@ -10536,7 +10536,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База навыков"
+            "value" : "База данных навыков"
           }
         },
         "th" : {
@@ -10570,25 +10570,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill-Reichweite"
+            "value" : "Reichweite der Fertigkeit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alcance de skill"
+            "value" : "Alcance de la habilidad"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Portée de skill"
+            "value" : "Portée de compétence"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jarak Skill"
+            "value" : "Jarak skill"
           }
         },
         "ja" : {
@@ -10600,7 +10600,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스킬 범위"
+            "value" : "스킬 사거리"
           }
         },
         "pt-BR" : {
@@ -10618,7 +10618,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ระยะสกิล"
+            "value" : "ระยะของสกิล"
           }
         },
         "tr" : {
@@ -10630,13 +10630,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "技能范围"
+            "value" : "技能射程"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "技能範圍"
+            "value" : "技能射程"
           }
         }
       }
@@ -10646,19 +10646,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skills"
+            "value" : "Fertigkeiten"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skills"
+            "value" : "Habilidades"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skills"
+            "value" : "Compétences"
           }
         },
         "id" : {
@@ -10722,19 +10722,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slots"
+            "value" : "Sockel"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slots"
+            "value" : "Ranuras"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slots"
+            "value" : "Emplacements"
           }
         },
         "id" : {
@@ -10758,7 +10758,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slots"
+            "value" : "Encaixes"
           }
         },
         "ru" : {
@@ -10776,7 +10776,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Slotlar"
+            "value" : "Yuva"
           }
         },
         "zh-Hans" : {
@@ -10804,7 +10804,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lo vende"
+            "value" : "Vendido por"
           }
         },
         "fr" : {
@@ -10816,19 +10816,19 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dijual oleh"
+            "value" : "Dijual oleh NPC"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "販売NPC"
+            "value" : "販売元"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "판매 NPC"
+            "value" : "판매처"
           }
         },
         "pt-BR" : {
@@ -10846,25 +10846,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ขายโดย"
+            "value" : "จำหน่ายโดย"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Satan"
+            "value" : "Satan NPC"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "出售商店"
+            "value" : "出售 NPC"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "出售商店"
+            "value" : "販售 NPC"
           }
         }
       }
@@ -10874,55 +10874,55 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ausgangsmaterial"
+            "value" : "Quelle"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Material"
+            "value" : "Origen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Matériau"
+            "value" : "Source"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bahan"
+            "value" : "Sumber"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "素材"
+            "value" : "入手元"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "재료"
+            "value" : "출처"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Material"
+            "value" : "Origem"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Исходный материал"
+            "value" : "Источник"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "วัตถุดิบ"
+            "value" : "แหล่งที่มา"
           }
         },
         "tr" : {
@@ -10934,13 +10934,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "原料"
+            "value" : "来源"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "原料"
+            "value" : "來源"
           }
         }
       }
@@ -11178,7 +11178,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spawn-Karten"
+            "value" : "Karten, auf denen es vorkommt"
           }
         },
         "es" : {
@@ -11196,13 +11196,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Map Spawn"
+            "value" : "Peta kemunculan"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "出現マップ"
+            "value" : "出現するマップ"
           }
         },
         "ko" : {
@@ -11226,13 +11226,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "แผนที่ที่เกิด"
+            "value" : "แผนที่ที่มอนสเตอร์ปรากฏ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Doğma Haritaları"
+            "value" : "Göründüğü haritalar"
           }
         },
         "zh-Hans" : {
@@ -11254,7 +11254,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spawn-Monster"
+            "value" : "Monster, die dort vorkommen"
           }
         },
         "es" : {
@@ -11272,13 +11272,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Monster Spawn"
+            "value" : "Monster yang muncul"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "出現モンスター"
+            "value" : "出現するモンスター"
           }
         },
         "ko" : {
@@ -11302,13 +11302,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "มอนสเตอร์ที่เกิด"
+            "value" : "มอนสเตอร์ที่ปรากฏ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Doğan Canavarlar"
+            "value" : "Haritada görünen canavarlar"
           }
         },
         "zh-Hans" : {
@@ -11330,7 +11330,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Besonders"
+            "value" : "Spezial"
           }
         },
         "es" : {
@@ -11424,7 +11424,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animasi Spesial"
+            "value" : "Animasi khusus"
           }
         },
         "ja" : {
@@ -11536,7 +11536,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İstatistikler"
+            "value" : "Nitelikler"
           }
         },
         "zh-Hans" : {
@@ -11640,7 +11640,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de datos de estados"
+            "value" : "Base de datos de efectos de estado"
           }
         },
         "fr" : {
@@ -11652,19 +11652,19 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Status Effect"
+            "value" : "Basis data efek status"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "状態異常データベース"
+            "value" : "状態変化データベース"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상태이상 데이터베이스"
+            "value" : "상태 변화 데이터베이스"
           }
         },
         "pt-BR" : {
@@ -11688,7 +11688,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Durum efekti veritabanı"
+            "value" : "Durum etkisi veritabanı"
           }
         },
         "zh-Hans" : {
@@ -11880,7 +11880,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Summon"
+            "value" : "Monster yang dipanggil"
           }
         },
         "ja" : {
@@ -11904,31 +11904,31 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Призывы"
+            "value" : "Призываемые монстры"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เรียก"
+            "value" : "สิ่งที่อัญเชิญ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Çağırmalar"
+            "value" : "Çağırdıkları"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "召唤"
+            "value" : "召唤物"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "召喚"
+            "value" : "召喚物"
           }
         }
       }
@@ -11956,7 +11956,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Script Support"
+            "value" : "Skrip dukungan"
           }
         },
         "ja" : {
@@ -12014,13 +12014,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zähmitem"
+            "value" : "Zähmgegenstand"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Objeto de captura"
+            "value" : "Objeto para domesticar"
           }
         },
         "fr" : {
@@ -12032,55 +12032,55 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item Tame"
+            "value" : "Item penjinak"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "テイムアイテム"
+            "value" : "テイム用アイテム"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "테이밍 아이템"
+            "value" : "길들이기 아이템"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item de captura"
+            "value" : "Item para domar"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Предмет приручения"
+            "value" : "Предмет для приручения"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไอเทมจับสัตว์เลี้ยง"
+            "value" : "ไอเทมสำหรับทำให้เชื่อง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakalama eşyası"
+            "value" : "Evcilleştirme eşyası"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捕捉道具"
+            "value" : "驯服道具"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "捕捉道具"
+            "value" : "馴服道具"
           }
         }
       }
@@ -12108,7 +12108,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jenis Target"
+            "value" : "Jenis target"
           }
         },
         "ja" : {
@@ -12184,7 +12184,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Coba ubah pencarian atau filter Anda"
+            "value" : "Coba sesuaikan kata pencarian atau filter"
           }
         },
         "ja" : {
@@ -12336,7 +12336,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Script Unequip"
+            "value" : "Skrip saat dilepas"
           }
         },
         "ja" : {
@@ -12412,7 +12412,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ID Tampilan"
+            "value" : "ID tampilan"
           }
         },
         "ja" : {
@@ -12448,7 +12448,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Görünüm ID"
+            "value" : "Görünüm kimliği"
           }
         },
         "zh-Hans" : {
@@ -12564,7 +12564,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kecepatan Jalan"
+            "value" : "Kecepatan berjalan"
           }
         },
         "ja" : {
@@ -12594,7 +12594,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ความเร็วเคลื่อนที่"
+            "value" : "ความเร็วในการเดิน"
           }
         },
         "tr" : {
@@ -12622,25 +12622,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Portale"
+            "value" : "Warp-Punkte"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Portales"
+            "value" : "Puntos de teletransporte"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Portails"
+            "value" : "Points de téléportation"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Warp"
+            "value" : "Titik warp"
           }
         },
         "ja" : {
@@ -12658,37 +12658,37 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Portais"
+            "value" : "Pontos de teleporte"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Порталы"
+            "value" : "Точки перехода"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "วาร์ป"
+            "value" : "จุดวาร์ป"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Portallar"
+            "value" : "Warp noktaları"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "传送点"
+            "value" : "传送目的地"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "傳送點"
+            "value" : "傳送目的地"
           }
         }
       }
@@ -12716,7 +12716,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Level Senjata"
+            "value" : "Level senjata"
           }
         },
         "ja" : {
@@ -12746,7 +12746,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลเวลอาวุธ"
+            "value" : "ระดับอาวุธ"
           }
         },
         "tr" : {
@@ -12792,7 +12792,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jenis Senjata"
+            "value" : "Jenis senjata"
           }
         },
         "ja" : {

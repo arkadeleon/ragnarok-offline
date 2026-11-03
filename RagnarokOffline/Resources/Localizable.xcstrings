@@ -12,37 +12,37 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Antes de empezar, configura tus archivos del cliente local, incluidos data.grf y la carpeta BGM. Para usar **Cliente remoto** en su lugar, activa **Usar Cliente remoto** en **Configuración** e introduce tu propia URL. Debes tener los derechos o el permiso necesarios para usar estos archivos."
+            "value" : "* Antes de empezar, prepara los archivos del cliente local, incluidos data.grf y la carpeta BGM. Para usar el **cliente remoto** en su lugar, activa **Usar cliente remoto** en **Configuración** e introduce la URL de tu cliente. Debes tener los derechos o la autorización necesarios para usar estos archivos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Avant de commencer, configurez vos fichiers de client local, y compris data.grf et le dossier BGM. Pour utiliser **Client distant** à la place, activez **Utiliser Client distant** dans **Paramètres** et saisissez votre propre URL. Vous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
+            "value" : "* Avant de commencer, ajoutez les fichiers du client local, notamment data.grf et le dossier BGM. Pour utiliser un **client distant**, activez **Utiliser le client distant** dans les **Paramètres**, puis saisissez l’URL de votre client distant. Vous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, termasuk data.grf dan folder BGM. Untuk menggunakan **Klien jarak jauh** sebagai gantinya, aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** dan masukkan URL Anda sendiri. Anda harus memiliki hak atau izin untuk menggunakan file-file ini."
+            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, termasuk data.grf dan folder BGM. Untuk menggunakan **klien jarak jauh** sebagai gantinya, aktifkan **Gunakan klien jarak jauh** di **Pengaturan** dan masukkan URL klien Anda. Anda harus memiliki hak atau izin untuk menggunakan file-file ini."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 開始する前に、data.grfとBGMフォルダを含むローカルクライアントファイルを準備してください。代わりに**リモートクライアント**を使う場合は、**設定**で**リモートクライアントを使用**をオンにし、独自のURLを入力してください。 これらのファイルを使用するには、必要な権利または許可を得ている必要があります。"
+            "value" : "* 始める前に、data.grfとBGMフォルダを含むローカルクライアントファイルを用意してください。**リモートクライアント**を使う場合は、**設定**で**リモートクライアントを使用**をオンにし、独自のURLを入力してください。これらのファイルを使用する権利または許可が必要です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 시작하기 전에 data.grf와 BGM 폴더를 포함한 로컬 클라이언트 파일을 준비하세요. 대신 **원격 클라이언트**를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜고 직접 준비한 URL을 입력하세요. 이 파일을 사용할 권리가 있거나 사용 허가를 받아야 합니다."
+            "value" : "* 시작하기 전에 data.grf와 BGM 폴더를 포함한 로컬 클라이언트 파일을 준비하세요. 대신 **원격 클라이언트**를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜고 직접 운영하는 원격 클라이언트의 URL을 입력하세요. 이 파일을 사용할 권리가 있거나 사용 허가를 받아야 합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Antes de começar, configure seus arquivos do cliente local, incluindo data.grf e a pasta BGM. Para usar **Cliente remoto** no lugar deles, ative **Usar Cliente remoto** em **Configurações** e insira sua própria URL. Você deve ter os direitos ou a permissão necessários para usar esses arquivos."
+            "value" : "* Antes de começar, configure os arquivos do cliente local, incluindo data.grf e a pasta BGM. Para usar um cliente remoto, ative **Usar cliente remoto** em **Configurações** e informe sua própria URL. Você precisa ter os direitos ou a autorização necessários para usar esses arquivos."
           }
         },
         "ru" : {
@@ -60,19 +60,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Başlamadan önce data.grf ve BGM klasörü dahil yerel istemci dosyalarınızı hazırlayın. Bunun yerine **Uzak İstemci** kullanmak için **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın ve kendi URL’nizi girin. Bu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
+            "value" : "* Başlamadan önce data.grf ve BGM klasörünün de bulunduğu yerel istemci dosyalarınızı hazırlayın. Uzak istemci kullanmak için **Ayarlar** bölümünde **Uzak istemciyi kullan** seçeneğini açın ve istemcinizin URL’sini girin. Bu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 开始前，请先准备本地客户端文件，包括 data.grf 和 BGM 文件夹。如需改用**远程客户端**，请在**设置**中打开**使用远程客户端**并输入自己的 URL。 你必须拥有使用这些文件的合法权利或已获得授权。"
+            "value" : "* 开始前，请准备好本地客户端文件，包括 data.grf 和 BGM 文件夹。如需使用**远程客户端**，请在**设置**中开启**使用远程客户端**，并输入自己的 URL。使用这些文件前，必须确保拥有相应权利或已获得许可。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 開始前，請先準備本機用戶端檔案，包括 data.grf 和 BGM 資料夾。如需改用**遠端用戶端**，請在**設定**中開啟**使用遠端用戶端**並輸入自己的 URL。 你必須擁有使用這些檔案的合法權利或已獲得授權。"
+            "value" : "* 開始前，請準備好本機用戶端檔案，包括 data.grf 和 BGM 資料夾。如需使用**遠端用戶端**，請在**設定**中開啟**使用遠端用戶端**，並輸入自己的 URL。使用這些檔案前，請確認自己擁有相關權利或已取得許可。"
           }
         }
       }
@@ -94,13 +94,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Démarrez d'abord le **serveur de connexion**, le **serveur de personnages** et le **serveur de cartes**. Le **client de jeu** ne peut pas se connecter tant que ces serveurs ne sont pas en cours d'exécution."
+            "value" : "* Démarrez d’abord le **serveur de connexion**, le **serveur de personnages** et le **serveur de cartes**. Le **client de jeu** ne peut pas se connecter tant que ces serveurs ne sont pas démarrés."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Mulai **Server Login**, **Server Karakter**, dan **Server Map** terlebih dahulu. **Klien game** tidak dapat login sebelum server-server ini berjalan."
+            "value" : "* Jalankan **Server Login**, **Server Karakter**, dan **Server Map** terlebih dahulu. **Klien game** tidak dapat masuk sebelum semua server tersebut berjalan."
           }
         },
         "ja" : {
@@ -118,13 +118,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Inicie primeiro o **servidor de login**, o **servidor de personagens** e o **servidor de mapas**. O **cliente de jogo** não consegue fazer login antes que esses servidores estejam em execução."
+            "value" : "* Inicie primeiro o **servidor de login**, o **servidor de personagens** e o **servidor de mapas**. O **cliente de jogo** só poderá fazer login quando esses servidores estiverem em execução."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Сначала запустите **сервер входа**, **сервер персонажей** и **сервер карт**. **Игровой клиент** не сможет войти, пока эти серверы не будут запущены."
+            "value" : "* Сначала запустите **сервер входа**, **сервер персонажей** и **сервер карт**. **Игровой клиент** сможет войти только после запуска всех этих серверов."
           }
         },
         "th" : {
@@ -136,19 +136,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Önce **Giriş Sunucusu**, **Karakter Sunucusu** ve **Harita Sunucusu**'nu başlatın. Bu sunucular çalışmadan **Oyun istemcisi** oturum açamaz."
+            "value" : "* Önce **giriş sunucusunu**, **karakter sunucusunu** ve **harita sunucusunu** başlatın. Bu sunucular çalışmadan **oyun istemcisi** oturum açamaz."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 请先启动**登录服务器**、**角色服务器**和**地图服务器**。这些服务器运行前，**游戏客户端**无法登录。"
+            "value" : "* 请先启动**登录服务器**、**角色服务器**和**地图服务器**。这些服务器全部运行后，**游戏客户端**才能登录。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 請先啟動**登入伺服器**、**角色伺服器**和**地圖伺服器**。這些伺服器執行前，**遊戲客戶端**無法登入。"
+            "value" : "* 請先啟動**登入伺服器**、**角色伺服器**和**地圖伺服器**。這些伺服器全部執行後，**遊戲客戶端**才能登入。"
           }
         }
       }
@@ -176,7 +176,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* **Klien game** ini masih dalam beta. Beberapa jendela dan tombol mungkin belum berfungsi."
+            "value" : "* **Klien game** ini masih dalam tahap beta. Beberapa jendela dan tombol mungkin belum berfungsi."
           }
         },
         "ja" : {
@@ -212,19 +212,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Bu **Oyun istemcisi** hâlâ beta aşamasında. Bazı pencereler ve düğmeler henüz çalışmayabilir."
+            "value" : "* Bu **oyun istemcisi** hâlâ beta aşamasında. Bazı pencereler ve düğmeler henüz çalışmayabilir."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 此**游戏客户端**仍处于测试阶段。部分窗口和按钮可能尚无法正常工作。"
+            "value" : "* **游戏客户端**仍处于测试阶段，部分窗口和按钮可能尚无法使用。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 此**遊戲客戶端**仍處於測試階段。部分視窗和按鈕可能尚無法正常運作。"
+            "value" : "* **遊戲客戶端**仍處於測試階段，部分視窗和按鈕可能尚無法使用。"
           }
         }
       }
@@ -294,7 +294,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 要创建新账号，请在登录窗口输入以 **_M** 或 **_F** 结尾的用户名，例如 **ragnarok_M**。"
+            "value" : "* 创建新账号时，请在登录窗口输入以 **_M** 或 **_F** 结尾的用户名，例如 **ragnarok_M**。"
           }
         },
         "zh-Hant" : {
@@ -334,7 +334,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld 項目"
+            "value" : "%lld 個"
           }
         },
         "ko" : {
@@ -398,13 +398,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1. Utiliser un client local"
+            "value" : "1. Utiliser le client local"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1. Gunakan Klien Lokal"
+            "value" : "1. Gunakan klien lokal"
           }
         },
         "ja" : {
@@ -440,7 +440,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1. Yerel İstemciyi Kullan"
+            "value" : "1. Yerel istemciyi kullan"
           }
         },
         "zh-Hans" : {
@@ -468,19 +468,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2. Usar Cliente remoto"
+            "value" : "2. Usar cliente remoto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2. Utiliser Client distant"
+            "value" : "2. Utiliser le client distant"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2. Gunakan Klien jarak jauh"
+            "value" : "2. Gunakan klien jarak jauh"
           }
         },
         "ja" : {
@@ -498,7 +498,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2. Usar Cliente remoto"
+            "value" : "2. Usar cliente remoto"
           }
         },
         "ru" : {
@@ -516,7 +516,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "2. Uzak İstemci'yi Kullan"
+            "value" : "2. Uzak istemciyi kullan"
           }
         },
         "zh-Hans" : {
@@ -534,32 +534,105 @@
       }
     },
     "Actions" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktionen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actions"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tindakan"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクション"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "동작"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ações"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Действия"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แอ็กชัน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eylemler"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "动作"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動作"
+          }
+        }
+      }
     },
     "Add data.grf and the BGM folder to **Local Client Files** to use the app entirely offline." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Füge data.grf und den BGM-Ordner zu **Lokale Client-Dateien** hinzu, um die App vollständig offline zu nutzen."
+            "value" : "Füge data.grf und den BGM-Ordner zu den **lokalen Client-Dateien** hinzu, um die App vollständig offline zu nutzen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Añade data.grf y la carpeta BGM a **Archivos de cliente local** para usar la app completamente sin conexión."
+            "value" : "Añade data.grf y la carpeta BGM a la sección **Archivos del cliente local** para usar la app completamente sin conexión."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ajoutez data.grf et le dossier BGM à **Fichiers de client local** pour utiliser l’app entièrement hors ligne."
+            "value" : "Ajoutez data.grf et le dossier BGM aux **Fichiers du client local** pour utiliser l’app entièrement hors ligne."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tambahkan data.grf dan folder BGM ke **File Klien Lokal** untuk menggunakan aplikasi sepenuhnya secara offline."
+            "value" : "Tambahkan data.grf dan folder BGM ke **File klien lokal** untuk menggunakan aplikasi sepenuhnya secara offline."
           }
         },
         "ja" : {
@@ -577,7 +650,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adicione data.grf e a pasta BGM a **Arquivos do cliente local** para usar o app totalmente offline."
+            "value" : "Adicione data.grf e a pasta BGM à seção **Arquivos do cliente local** para usar o app totalmente offline."
           }
         },
         "ru" : {
@@ -595,25 +668,98 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uygulamayı tamamen çevrimdışı kullanmak için data.grf dosyasını ve BGM klasörünü **Yerel İstemci Dosyaları** bölümüne ekleyin."
+            "value" : "Uygulamayı tamamen çevrimdışı kullanmak için data.grf dosyasını ve BGM klasörünü **Yerel istemci dosyaları** bölümüne ekleyin."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "将 data.grf 和 BGM 文件夹添加到**本地客户端文件**，即可完全离线使用本应用。"
+            "value" : "将 data.grf 和 BGM 文件夹添加到**本地客户端文件**中，即可完全离线使用本应用。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "將 data.grf 和 BGM 檔案夾加入**本機用戶端檔案**，即可完全離線使用本 App。"
+            "value" : "將 data.grf 和 BGM 資料夾加入**本機用戶端檔案**中，即可完全離線使用本 App。"
           }
         }
       }
     },
     "Altitude" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Höhe"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altitud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altitude"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ketinggian"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高度"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "고도"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altitude"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Высота"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ระดับความสูง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rakım"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "海拔"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "海拔"
+          }
+        }
+      }
     },
     "Cancel" : {
       "localizations" : {
@@ -696,7 +842,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Charakter-Simulator"
+            "value" : "Charaktersimulator"
           }
         },
         "es" : {
@@ -714,7 +860,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulator Karakter"
+            "value" : "Simulator karakter"
           }
         },
         "ja" : {
@@ -744,13 +890,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ตัวจำลองตัวละคร"
+            "value" : "โปรแกรมจำลองตัวละคร"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Karakter Simülatörü"
+            "value" : "Karakter simülatörü"
           }
         },
         "zh-Hans" : {
@@ -866,13 +1012,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pilih salah satu dari dua cara untuk menyediakan sumber daya game: gunakan klien lokal atau klien jarak jauh. Klien Game, ikon dan sprite basis data, serta alat menggunakan sumber daya ini."
+            "value" : "Pilih salah satu dari dua cara untuk menyediakan sumber daya game: gunakan klien lokal atau klien jarak jauh. Klien game, ikon dan sprite basis data, serta berbagai alat menggunakan sumber daya ini."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームリソースの利用方法は、ローカルクライアントとリモートクライアントの2つから選べます。ゲームクライアント、データベースのアイコンやスプライト、各種ツールでこれらのリソースを使用します。"
+            "value" : "ゲームリソースの提供方法は、ローカルクライアントとリモートクライアントの2通りです。ゲームクライアント、データベースのアイコンやスプライト、各種ツールでこれらのリソースを使用します。"
           }
         },
         "ko" : {
@@ -902,19 +1048,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyun kaynaklarını sağlamak için iki yöntemden birini seçin: yerel istemci veya uzak istemci. Oyun İstemcisi, veritabanı simgeleri ve sprite’ları ile araçlar bu kaynakları kullanır."
+            "value" : "Oyun kaynaklarını sağlamak için iki yöntemden birini seçin: yerel istemci veya uzak istemci. Oyun istemcisi, veritabanı simgeleri ve sprite’ları ile araçlar bu kaynakları kullanır."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您可以选择以下两种方式之一来提供游戏资源：使用本地客户端，或使用远程客户端。游戏客户端、数据库图标和精灵以及各项工具都需要使用这些资源。"
+            "value" : "游戏资源有两种提供方式：使用本地客户端，或使用远程客户端。游戏客户端、数据库中的图标和精灵图，以及各项工具都会使用这些资源。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您可以選擇以下兩種方式之一來提供遊戲資源：使用本機用戶端，或使用遠端用戶端。遊戲用戶端、資料庫圖示與精靈，以及各項工具都需要使用這些資源。"
+            "value" : "遊戲資源有兩種提供方式：使用本機用戶端，或使用遠端用戶端。遊戲用戶端、資料庫中的圖示與精靈圖，以及各項工具都會使用這些資源。"
           }
         }
       }
@@ -1006,19 +1152,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configura tu propia URL de cliente remoto y activa **Usar Cliente remoto** en **Configuración** para explorar los archivos en caché"
+            "value" : "Configura la URL de tu cliente remoto y activa **Usar cliente remoto** en **Configuración** para explorar los archivos en caché."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configurez votre propre URL de client distant et activez **Utiliser Client distant** dans **Paramètres** pour parcourir les fichiers en cache"
+            "value" : "Configurez votre propre URL de client distant et activez **Utiliser le client distant** dans les **Paramètres** pour parcourir les fichiers en cache."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Atur URL klien jarak jauh Anda sendiri dan aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** untuk menelusuri file dalam cache"
+            "value" : "Atur URL klien jarak jauh Anda sendiri dan aktifkan **Gunakan klien jarak jauh** di **Pengaturan** untuk menelusuri file dalam cache"
           }
         },
         "ja" : {
@@ -1030,13 +1176,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "직접 준비한 원격 클라이언트 URL을 설정하고 **설정**에서 **원격 클라이언트 사용**을 켜면 캐시된 파일을 탐색할 수 있습니다"
+            "value" : "직접 구축한 원격 클라이언트의 URL을 설정하고 **설정**에서 **원격 클라이언트 사용**을 켜면 캐시된 파일을 탐색할 수 있습니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configure sua própria URL de cliente remoto e ative **Usar Cliente remoto** em **Configurações** para explorar os arquivos em cache"
+            "value" : "Configure a URL do seu próprio cliente remoto e ative **Usar cliente remoto** em **Configurações** para navegar pelos arquivos em cache."
           }
         },
         "ru" : {
@@ -1054,7 +1200,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Önbelleğe alınmış dosyalara göz atmak için kendi uzak istemci URL’nizi yapılandırın ve **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın"
+            "value" : "Önbelleğe alınmış dosyalara göz atmak için uzak istemcinizin URL’sini yapılandırın ve **Ayarlar** bölümünde **Uzak istemciyi kullan** seçeneğini açın."
           }
         },
         "zh-Hans" : {
@@ -1066,7 +1212,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在**設定**中配置自己的遠端用戶端 URL 並開啟**使用遠端用戶端**，即可瀏覽快取檔案"
+            "value" : "在**設定**中設定自己的遠端用戶端 URL，並開啟**使用遠端用戶端**，即可瀏覽快取檔案。"
           }
         }
       }
@@ -1170,7 +1316,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database"
+            "value" : "Basis data"
           }
         },
         "ja" : {
@@ -1452,7 +1598,80 @@
       }
     },
     "Effect" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effekt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efecto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effet"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efek"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エフェクト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이펙트"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efeito"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эффект"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เอฟเฟกต์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efekt"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特效"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特效"
+          }
+        }
+      }
     },
     "Extract" : {
       "localizations" : {
@@ -1553,7 +1772,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Game"
+            "value" : "Permainan"
           }
         },
         "ja" : {
@@ -1629,7 +1848,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beta Klien Game"
+            "value" : "Klien game versi beta"
           }
         },
         "ja" : {
@@ -1665,7 +1884,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyun istemcisi betası"
+            "value" : "Oyun istemcisi beta sürümü"
           }
         },
         "zh-Hans" : {
@@ -1683,14 +1902,87 @@
       }
     },
     "Ground" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suelo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sol"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permukaan tanah"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地面"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지면"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chão"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Земля"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "พื้นดิน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zemin"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地面"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地面"
+          }
+        }
+      }
     },
     "Item Database" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Item-Datenbank"
+            "value" : "Gegenstandsdatenbank"
           }
         },
         "es" : {
@@ -1708,7 +2000,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Item"
+            "value" : "Basis data item"
           }
         },
         "ja" : {
@@ -1720,7 +2012,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "아이템 데이터베ース"
+            "value" : "아이템 데이터베이스"
           }
         },
         "pt-BR" : {
@@ -1732,7 +2024,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База предметов"
+            "value" : "База данных предметов"
           }
         },
         "th" : {
@@ -1766,25 +2058,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job-Datenbank"
+            "value" : "Klassendatenbank"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de datos de jobs"
+            "value" : "Base de datos de clases"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de données des jobs"
+            "value" : "Base de données des classes"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Job"
+            "value" : "Basis data profesi"
           }
         },
         "ja" : {
@@ -1796,7 +2088,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "직업 데이터베ース"
+            "value" : "직업 데이터베이스"
           }
         },
         "pt-BR" : {
@@ -1808,7 +2100,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База профессий"
+            "value" : "База данных профессий"
           }
         },
         "th" : {
@@ -1848,19 +2140,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Archivos de cliente local"
+            "value" : "Archivos del cliente local"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fichiers de client local"
+            "value" : "Fichiers du client local"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "File Klien Lokal"
+            "value" : "File klien lokal"
           }
         },
         "ja" : {
@@ -1896,7 +2188,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yerel İstemci Dosyaları"
+            "value" : "Yerel istemci dosyaları"
           }
         },
         "zh-Hans" : {
@@ -2012,7 +2304,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Map"
+            "value" : "Basis data peta"
           }
         },
         "ja" : {
@@ -2036,7 +2328,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База карт"
+            "value" : "База данных карт"
           }
         },
         "th" : {
@@ -2070,7 +2362,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Karten-Viewer"
+            "value" : "Kartenansicht"
           }
         },
         "es" : {
@@ -2088,7 +2380,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penampil Peta"
+            "value" : "Penampil peta"
           }
         },
         "ja" : {
@@ -2112,19 +2404,19 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Просмотр карты"
+            "value" : "Просмотр карт"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ตัวดูแผนที่"
+            "value" : "โปรแกรมดูแผนที่"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Harita Görüntüleyici"
+            "value" : "Harita görüntüleyici"
           }
         },
         "zh-Hans" : {
@@ -2142,10 +2434,156 @@
       }
     },
     "Message" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nachricht"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensaje"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pesan"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メッセージ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메시지"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mensagem"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сообщение"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อความ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İleti"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "消息"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "訊息"
+          }
+        }
+      }
     },
     "Model" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèle"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モデル"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모델"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модель"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โมเดล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型"
+          }
+        }
+      }
     },
     "Monster Database" : {
       "localizations" : {
@@ -2170,7 +2608,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Monster"
+            "value" : "Basis data monster"
           }
         },
         "ja" : {
@@ -2194,7 +2632,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База монстров"
+            "value" : "База данных монстров"
           }
         },
         "th" : {
@@ -2300,16 +2738,308 @@
       }
     },
     "Off" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desactivado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactivé"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nonaktif"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "끔"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desativado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выкл."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapalı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關閉"
+          }
+        }
+      }
     },
     "On" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activé"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktif"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "켬"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ativado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вкл."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Açık"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開啟"
+          }
+        }
+      }
     },
     "Ragnarok Offline" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline"
+          }
+        }
+      }
     },
     "References" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referenzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referencias"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Références"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referensi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "参照"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "참조"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referências"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ссылки"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อมูลอ้างอิง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Referanslar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "引用文件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "引用檔案"
+          }
+        }
+      }
     },
     "Remote Client Files" : {
       "localizations" : {
@@ -2322,19 +3052,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Archivos de Cliente remoto"
+            "value" : "Archivos del cliente remoto"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fichiers de Client distant"
+            "value" : "Fichiers du client distant"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "File Klien Jarak Jauh"
+            "value" : "File klien jarak jauh"
           }
         },
         "ja" : {
@@ -2352,7 +3082,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Arquivos do Cliente remoto"
+            "value" : "Arquivos do cliente remoto"
           }
         },
         "ru" : {
@@ -2370,7 +3100,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci Dosyaları"
+            "value" : "Uzak istemci dosyaları"
           }
         },
         "zh-Hans" : {
@@ -2398,7 +3128,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cliente remoto no está en uso"
+            "value" : "El cliente remoto no está en uso"
           }
         },
         "fr" : {
@@ -2422,7 +3152,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "원격 클라이언트 사용 안 함"
+            "value" : "원격 클라이언트를 사용하지 않음"
           }
         },
         "pt-BR" : {
@@ -2446,7 +3176,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uzak İstemci Kullanılmıyor"
+            "value" : "Uzak istemci kullanılmıyor"
           }
         },
         "zh-Hans" : {
@@ -2486,7 +3216,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset"
+            "value" : "Atur ulang"
           }
         },
         "ja" : {
@@ -2540,7 +3270,80 @@
       }
     },
     "Send" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyer"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirim"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "送信"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보내기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่ง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gönder"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傳送"
+          }
+        }
+      }
     },
     "Server" : {
       "localizations" : {
@@ -2851,43 +3654,43 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Richte vor dem Spielstart lokale Client-Dateien mit data.grf und dem BGM-Ordner ein oder konfiguriere deine eigene Remote-Client-URL und aktiviere Remote-Client verwenden in den Einstellungen. Du musst über die erforderlichen Rechte oder eine Genehmigung zur Nutzung dieser Dateien verfügen."
+            "value" : "Richte vor dem Spielstart lokale Client-Dateien mit data.grf und dem BGM-Ordner ein oder konfiguriere die URL deines eigenen Remote-Clients und aktiviere **Remote-Client verwenden** in den **Einstellungen**. Du musst über die erforderlichen Rechte oder eine Genehmigung zur Nutzung dieser Dateien verfügen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes de iniciar el juego, configura los archivos del cliente local con data.grf y la carpeta BGM, o configura tu propia URL de cliente remoto y activa Usar Cliente remoto en Configuración. Debes tener los derechos o el permiso necesarios para usar estos archivos."
+            "value" : "Antes de iniciar el juego, añade data.grf y la carpeta BGM a los archivos del cliente local, o configura la URL de tu propio cliente remoto y activa **Usar cliente remoto** en **Configuración**. Debes tener los derechos o la autorización necesarios para usar estos archivos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avant de lancer le jeu, configurez les fichiers de client local avec data.grf et le dossier BGM, ou configurez votre propre URL de client distant et activez Utiliser Client distant dans Paramètres. Vous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
+            "value" : "Avant de lancer le jeu, ajoutez data.grf et le dossier BGM aux fichiers du client local, ou configurez l’URL de votre propre client distant et activez **Utiliser le client distant** dans les **Paramètres**. Vous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sebelum memulai game, siapkan file klien lokal dengan data.grf dan folder BGM, atau atur URL klien jarak jauh Anda sendiri dan aktifkan Gunakan Klien jarak jauh di Pengaturan. Anda harus memiliki hak atau izin untuk menggunakan file-file ini."
+            "value" : "Sebelum memulai game, tambahkan data.grf dan folder BGM ke file klien lokal, atau atur URL klien jarak jauh sendiri lalu aktifkan **Gunakan klien jarak jauh** di **Pengaturan**. Anda harus memiliki hak atau izin untuk menggunakan file-file tersebut."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームを開始する前に、data.grfとBGMフォルダを含むローカルクライアントファイルを準備するか、独自のリモートクライアントURLを設定し、「設定」で「リモートクライアントを使用」をオンにしてください。 これらのファイルを使用するには、必要な権利または許可を得ている必要があります。"
+            "value" : "ゲームを始める前に、data.grfとBGMフォルダをローカルクライアントファイルに追加してください。リモートクライアントを使う場合は、独自のURLを設定し、**設定**で**リモートクライアントを使用**をオンにします。これらのファイルを使用するには、必要な権利または許可が必要です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임을 시작하기 전에 data.grf와 BGM 폴더를 포함한 로컬 클라이언트 파일을 준비하거나, 직접 준비한 원격 클라이언트 URL을 설정하고 설정에서 원격 클라이언트 사용을 켜세요. 이 파일을 사용할 권리가 있거나 사용 허가를 받아야 합니다."
+            "value" : "게임을 시작하기 전에 data.grf와 BGM 폴더를 로컬 클라이언트 파일에 추가하세요. 직접 구축한 원격 클라이언트를 사용하려면 해당 URL을 설정하고 **설정**에서 **원격 클라이언트 사용**을 켜세요. 이 파일을 사용할 권리나 허가가 있어야 합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes de iniciar o jogo, configure os arquivos do cliente local com data.grf e a pasta BGM, ou configure sua própria URL de cliente remoto e ative Usar Cliente remoto em Configurações. Você deve ter os direitos ou a permissão necessários para usar esses arquivos."
+            "value" : "Antes de iniciar o jogo, adicione data.grf e a pasta BGM aos arquivos do cliente local ou configure a URL do seu próprio cliente remoto e ative **Usar cliente remoto** em **Configurações**. Você precisa ter os direitos ou a autorização necessários para usar esses arquivos."
           }
         },
         "ru" : {
@@ -2899,25 +3702,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ก่อนเริ่มเกม ให้เตรียมไฟล์ไคลเอนต์ในเครื่องที่มี data.grf และโฟลเดอร์ BGM หรือตั้งค่า URL ไคลเอนต์ระยะไกลของคุณเอง แล้วเปิด ใช้ไคลเอนต์ระยะไกล ในการตั้งค่า คุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
+            "value" : "ก่อนเริ่มเกม ให้เพิ่ม data.grf และโฟลเดอร์ BGM ในส่วนไฟล์ไคลเอนต์ในเครื่อง หรือกำหนด URL ไคลเอนต์ระยะไกลของคุณเองแล้วเปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** คุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyuna başlamadan önce data.grf ve BGM klasörünü içeren yerel istemci dosyalarınızı hazırlayın veya kendi uzak istemci URL’nizi yapılandırıp Ayarlar bölümünde Uzak İstemci'yi Kullan seçeneğini açın. Bu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
+            "value" : "Oyunu başlatmadan önce data.grf dosyasını ve BGM klasörünü yerel istemci dosyalarına ekleyin. Uzak istemci kullanacaksanız URL’sini yapılandırıp **Ayarlar** bölümünde **Uzak istemciyi kullan** seçeneğini açın. Bu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开始游戏前，请先准备包含 data.grf 和 BGM 文件夹的本地客户端文件，或配置自己的远程客户端 URL 并在设置中打开使用远程客户端。 你必须拥有使用这些文件的合法权利或已获得授权。"
+            "value" : "开始游戏前，请将 data.grf 和 BGM 文件夹添加到本地客户端文件中。若要使用远程客户端，请配置自己的 URL，并在**设置**中开启**使用远程客户端**。使用这些文件前，请确认你拥有相应权利或已获得许可。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開始遊戲前，請先準備包含 data.grf 和 BGM 資料夾的本機用戶端檔案，或配置自己的遠端用戶端 URL 並在設定中開啟使用遠端用戶端。 你必須擁有使用這些檔案的合法權利或已獲得授權。"
+            "value" : "開始遊戲前，請將 data.grf 和 BGM 資料夾加入本機用戶端檔案。若要使用遠端用戶端，請設定自己的 URL，並在**設定**中開啟**使用遠端用戶端**。使用這些檔案前，請確認你擁有相關權利或已取得許可。"
           }
         }
       }
@@ -3003,25 +3806,25 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Skill-Datenbank"
+            "value" : "Fertigkeitsdatenbank"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de datos de skills"
+            "value" : "Base de datos de habilidades"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de données des skills"
+            "value" : "Base de données des compétences"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Skill"
+            "value" : "Basis data skill"
           }
         },
         "ja" : {
@@ -3033,7 +3836,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "스킬 데이터베ース"
+            "value" : "스킬 데이터베이스"
           }
         },
         "pt-BR" : {
@@ -3045,7 +3848,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "База навыков"
+            "value" : "База данных навыков"
           }
         },
         "th" : {
@@ -3079,7 +3882,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fähigkeiten-Simulator"
+            "value" : "Fertigkeitssimulator"
           }
         },
         "es" : {
@@ -3097,7 +3900,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulator Skill"
+            "value" : "Simulator skill"
           }
         },
         "ja" : {
@@ -3127,13 +3930,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ตัวจำลองสกิล"
+            "value" : "โปรแกรมจำลองสกิล"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beceri Simülatörü"
+            "value" : "Yetenek simülatörü"
           }
         },
         "zh-Hans" : {
@@ -3151,7 +3954,80 @@
       }
     },
     "Sprites" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprites"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprites"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprites"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprite"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スプライト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프라이트"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprites"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спрайты"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สไปรต์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprite’lar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精灵图"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精靈圖"
+          }
+        }
+      }
     },
     "Start All Servers" : {
       "localizations" : {
@@ -3182,7 +4058,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "全サーバー開始"
+            "value" : "すべてのサーバーを起動"
           }
         },
         "ko" : {
@@ -3258,7 +4134,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲーム開始"
+            "value" : "ゲームを開始"
           }
         },
         "ko" : {
@@ -3316,7 +4192,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base de datos de estados"
+            "value" : "Base de datos de efectos de estado"
           }
         },
         "fr" : {
@@ -3328,19 +4204,19 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database Status Effect"
+            "value" : "Basis data efek status"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "状態異常データベース"
+            "value" : "状態変化データベース"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "상태이상 데이터베이스"
+            "value" : "상태 변화 데이터베이스"
           }
         },
         "pt-BR" : {
@@ -3364,7 +4240,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Durum efekti veritabanı"
+            "value" : "Durum etkisi veritabanı"
           }
         },
         "zh-Hans" : {
@@ -3410,7 +4286,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "全サーバー停止"
+            "value" : "すべてのサーバーを停止"
           }
         },
         "ko" : {
@@ -3486,7 +4362,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリが提供するホスト型リモートクライアントは終了しました。"
+            "value" : "アプリでは、ホスト型のリモートクライアントを提供しなくなりました。"
           }
         },
         "ko" : {
@@ -3544,67 +4420,67 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para usar **Cliente remoto**, activa **Usar Cliente remoto** en **Configuración** e introduce tu propia URL."
+            "value" : "Para usar el **cliente remoto**, activa **Usar cliente remoto** en **Configuración** e introduce la URL de tu cliente."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pour utiliser **Client distant**, activez **Utiliser Client distant** dans **Paramètres** et saisissez votre propre URL."
+            "value" : "Pour utiliser le **client distant**, activez **Utiliser le client distant** dans les **Paramètres**, puis saisissez l’URL de votre propre client distant."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Untuk menggunakan **Klien jarak jauh**, aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** dan masukkan URL Anda sendiri."
+            "value" : "Untuk menggunakan klien jarak jauh, aktifkan **Gunakan klien jarak jauh** di **Pengaturan** dan masukkan URL klien Anda."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**リモートクライアント**を利用するには、**設定**で**リモートクライアントを使用**をオンにして、ご自身の URL を入力してください。"
+            "value" : "**リモートクライアント**を利用するには、**設定**で**リモートクライアントを使用**をオンにして、ご自身のリモートクライアントのURLを入力してください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**원격 클라이언트**를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜고 직접 준비한 URL을 입력하세요."
+            "value" : "직접 구축한 원격 클라이언트를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜고 해당 URL을 입력하세요."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Para usar **Cliente remoto**, ative **Usar Cliente remoto** em **Configurações** e insira sua própria URL."
+            "value" : "Para usar o cliente remoto, ative **Usar cliente remoto** em **Configurações** e informe a URL do seu próprio cliente remoto."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Чтобы использовать **Удалённый клиент**, включите **Использовать удалённый клиент** в разделе **Настройки** и введите собственный URL."
+            "value" : "Чтобы использовать **Удалённый клиент**, включите **Использовать удалённый клиент** в разделе **Настройки** и введите URL собственного удалённого клиента."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "หากต้องการใช้ **ไคลเอนต์ระยะไกล** ให้เปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** แล้วป้อน URL ของคุณเอง"
+            "value" : "หากต้องการใช้ **ไคลเอนต์ระยะไกล** ให้เปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** แล้วป้อน URL ของไคลเอนต์ระยะไกลที่คุณสร้างเอง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Uzak İstemci** kullanmak için **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın ve kendi URL’nizi girin."
+            "value" : "Kendi uzak istemcinizi kullanmak için **Ayarlar** bölümünde **Uzak istemciyi kullan** seçeneğini açıp istemcinizin URL’sini girin."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如需使用**远程客户端**，请在**设置**中开启**使用远程客户端**，并输入您自己的 URL。"
+            "value" : "如需使用**远程客户端**，请在**设置**中开启**使用远程客户端**，然后输入自己搭建的远程客户端 URL。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "若要使用**遠端用戶端**，請在**設定**中開啟**使用遠端用戶端**，並輸入您自己的 URL。"
+            "value" : "若要使用**遠端用戶端**，請在**設定**中開啟**使用遠端用戶端**，再輸入自行架設的遠端用戶端 URL。"
           }
         }
       }
@@ -3614,7 +4490,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tools"
+            "value" : "Werkzeuge"
           }
         },
         "es" : {
@@ -3686,7 +4562,80 @@
       }
     },
     "Tree" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baum"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Árbol"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arbre"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pohon"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ツリー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "트리"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Árvore"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дерево"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้นไม้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ağaç"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "树"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "樹"
+          }
+        }
+      }
     },
     "Unsupported File" : {
       "localizations" : {
@@ -3753,19 +4702,92 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不支持的文件"
+            "value" : "不支持的文件类型"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不支援的檔案"
+            "value" : "不支援的檔案類型"
           }
         }
       }
     },
     "View Mode" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ansichtsmodus"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de visualización"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode d’affichage"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode tampilan"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "表示モード"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "보기 모드"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo de exibição"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Режим просмотра"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โหมดการแสดงผล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Görünüm modu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "视图模式"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "檢視模式"
+          }
+        }
+      }
     },
     "Welcome to Ragnarok Offline" : {
       "localizations" : {
@@ -3790,7 +4812,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selamat Datang di Ragnarok Offline"
+            "value" : "Selamat datang di Ragnarok Offline"
           }
         },
         "ja" : {
@@ -3826,7 +4848,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ragnarok Offline’a Hoş Geldiniz"
+            "value" : "Ragnarok Offline’a hoş geldiniz"
           }
         },
         "zh-Hans" : {
@@ -3844,20 +4866,93 @@
       }
     },
     "World" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welt"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mundo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monde"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dunia"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ワールド"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "월드"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mundo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мир"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "โลก"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dünya"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "世界"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "世界"
+          }
+        }
+      }
     },
     "You must have the rights or permission to use these files." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Du musst die Rechte oder die Erlaubnis haben, diese Dateien zu verwenden."
+            "value" : "Du musst berechtigt sein, diese Dateien zu verwenden."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Debes tener los derechos o el permiso para usar estos archivos."
+            "value" : "Debes tener derecho o autorización para usar estos archivos."
           }
         },
         "fr" : {
@@ -3875,19 +4970,19 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "これらのファイルを使用する権利または許可が必要です。"
+            "value" : "これらのファイルを使用する権利、または許可が必要です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "이 파일을 사용할 권한이나 허가가 있어야 합니다."
+            "value" : "이 파일을 사용할 권리나 허가가 있어야 합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Você deve ter os direitos ou a permissão para usar esses arquivos."
+            "value" : "Você precisa ter o direito ou a autorização necessária para usar esses arquivos."
           }
         },
         "ru" : {
@@ -3911,13 +5006,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您必须拥有使用这些文件的权利或许可。"
+            "value" : "使用这些文件前，请确认你拥有相应权利或已获得许可。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您必須擁有使用這些檔案的權利或許可。"
+            "value" : "使用這些檔案前，請確認你擁有相關權利或已取得許可。"
           }
         }
       }

@@ -88,19 +88,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulador de Personaje"
+            "value" : "Simulador de personaje"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulateur de Personnage"
+            "value" : "Simulateur de personnage"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulator Karakter"
+            "value" : "Simulator karakter"
           }
         },
         "ja" : {
@@ -118,25 +118,25 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Simulador de Personagem"
+            "value" : "Simulador de personagem"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Симулятор Персонажа"
+            "value" : "Симулятор персонажа"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "จำลองตัวละคร"
+            "value" : "โปรแกรมจำลองตัวละคร"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Karakter Simülatörü"
+            "value" : "Karakter simülatörü"
           }
         },
         "zh-Hans" : {
@@ -164,19 +164,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Color de Ropa"
+            "value" : "Color de la ropa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couleur de Vêtements"
+            "value" : "Couleur des vêtements"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Warna Pakaian"
+            "value" : "Warna pakaian"
           }
         },
         "ja" : {
@@ -194,13 +194,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cor da Roupa"
+            "value" : "Cor da roupa"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Цвет Одежды"
+            "value" : "Цвет одежды"
           }
         },
         "th" : {
@@ -212,7 +212,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kıyafet Rengi"
+            "value" : "Kıyafet rengi"
           }
         },
         "zh-Hans" : {
@@ -246,7 +246,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Défaut"
+            "value" : "Par défaut"
           }
         },
         "id" : {
@@ -310,19 +310,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gewand"
+            "value" : "Umhang"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Manto"
+            "value" : "Capa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Manteau"
+            "value" : "Cape"
           }
         },
         "id" : {
@@ -334,31 +334,31 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ガーメント"
+            "value" : "肩にかける装備"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "가먼트"
+            "value" : "걸칠 것"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Manto"
+            "value" : "Capa"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Плащ"
+            "value" : "Накидка"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เสื้อคลุม"
+            "value" : "ผ้าคลุม"
           }
         },
         "tr" : {
@@ -404,7 +404,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Jenis Kelamin"
+            "value" : "Jenis kelamin"
           }
         },
         "ja" : {
@@ -468,19 +468,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Color de Cabello"
+            "value" : "Color del cabello"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couleur de Cheveux"
+            "value" : "Couleur des cheveux"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Warna Rambut"
+            "value" : "Warna rambut"
           }
         },
         "ja" : {
@@ -498,13 +498,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cor do Cabelo"
+            "value" : "Cor do cabelo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Цвет Волос"
+            "value" : "Цвет волос"
           }
         },
         "th" : {
@@ -516,7 +516,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saç Rengi"
+            "value" : "Saç rengi"
           }
         },
         "zh-Hans" : {
@@ -544,7 +544,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estilo de Cabello"
+            "value" : "Estilo de cabello"
           }
         },
         "fr" : {
@@ -556,7 +556,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gaya Rambut"
+            "value" : "Gaya rambut"
           }
         },
         "ja" : {
@@ -568,19 +568,19 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "헤어 스타일"
+            "value" : "헤어스타일"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estilo de Cabelo"
+            "value" : "Estilo de cabelo"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Стиль Волос"
+            "value" : "Причёска"
           }
         },
         "th" : {
@@ -592,7 +592,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saç Stili"
+            "value" : "Saç modeli"
           }
         },
         "zh-Hans" : {
@@ -614,61 +614,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kopf Unten"
+            "value" : "Unterer Kopfschmuck"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cabeza Inferior"
+            "value" : "Accesorio para la cabeza (inferior)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tête Bas"
+            "value" : "Accessoire de tête (bas)"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kepala Bawah"
+            "value" : "Aksesori kepala bagian bawah"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "頭下段"
+            "value" : "下段頭装備"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "머리 하단"
+            "value" : "하단 머리 장식"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cabeça Inferior"
+            "value" : "Acessório para a cabeça (parte inferior)"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нижний Головной Убор"
+            "value" : "Нижний головной убор"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "หัวล่าง"
+            "value" : "เครื่องประดับศีรษะส่วนล่าง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alt Kafa"
+            "value" : "Alt başlık"
           }
         },
         "zh-Hans" : {
@@ -680,7 +680,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下部頭飾"
+            "value" : "下段頭飾"
           }
         }
       }
@@ -696,19 +696,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dirección de Cabeza"
+            "value" : "Orientación de la cabeza"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direction de la Tête"
+            "value" : "Orientation de la tête"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Arah Kepala"
+            "value" : "Arah kepala"
           }
         },
         "ja" : {
@@ -726,25 +726,25 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direção da Cabeça"
+            "value" : "Direção da cabeça"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Направление Головы"
+            "value" : "Направление головы"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ทิศทางหัว"
+            "value" : "ทิศทางศีรษะ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kafa Yönü"
+            "value" : "Yüz yönü"
           }
         },
         "zh-Hans" : {
@@ -766,61 +766,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kopf Mitte"
+            "value" : "Mittlerer Kopfschmuck"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cabeza Media"
+            "value" : "Accesorio para la cabeza (intermedio)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tête Milieu"
+            "value" : "Accessoire de tête (milieu)"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kepala Tengah"
+            "value" : "Aksesori kepala bagian tengah"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "頭中段"
+            "value" : "中段頭装備"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "머리 중단"
+            "value" : "중단 머리 장식"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cabeça Média"
+            "value" : "Acessório para a cabeça (parte intermediária)"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Средний Головной Убор"
+            "value" : "Средний головной убор"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "หัวกลาง"
+            "value" : "เครื่องประดับศีรษะส่วนกลาง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orta Kafa"
+            "value" : "Orta başlık"
           }
         },
         "zh-Hans" : {
@@ -832,7 +832,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "中部頭飾"
+            "value" : "中段頭飾"
           }
         }
       }
@@ -842,61 +842,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kopf Oben"
+            "value" : "Oberer Kopfschmuck"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cabeza Superior"
+            "value" : "Accesorio para la cabeza (superior)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tête Haut"
+            "value" : "Accessoire de tête (haut)"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kepala Atas"
+            "value" : "Aksesori kepala bagian atas"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "頭上段"
+            "value" : "上段頭装備"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "머리 상단"
+            "value" : "상단 머리 장식"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cabeça Superior"
+            "value" : "Acessório para a cabeça (parte superior)"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Верхний Головной Убор"
+            "value" : "Верхний головной убор"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "หัวบน"
+            "value" : "เครื่องประดับศีรษะส่วนบน"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Üst Kafa"
+            "value" : "Üst başlık"
           }
         },
         "zh-Hans" : {
@@ -908,7 +908,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "上部頭飾"
+            "value" : "上段頭飾"
           }
         }
       }
@@ -918,7 +918,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job"
+            "value" : "Klasse"
           }
         },
         "es" : {
@@ -936,13 +936,13 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Job"
+            "value" : "Kelas"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ジョブ"
+            "value" : "職業"
           }
         },
         "ko" : {
@@ -972,7 +972,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sınıf"
+            "value" : "Meslek"
           }
         },
         "zh-Hans" : {
@@ -994,7 +994,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kein"
+            "value" : "Keine"
           }
         },
         "es" : {

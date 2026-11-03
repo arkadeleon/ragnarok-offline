@@ -82,49 +82,49 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wähle eine Karte zum Anzeigen"
+            "value" : "Wähle eine Karte aus, um sie anzuzeigen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elige un mapa para ver"
+            "value" : "Elige un mapa para verlo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choisissez une carte à afficher"
+            "value" : "Choisissez une carte à afficher."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pilih peta untuk ditampilkan"
+            "value" : "Pilih peta untuk ditampilkan."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "表示するマップを選択してください"
+            "value" : "表示するマップを選択してください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "볼 맵을 선택하세요"
+            "value" : "표시할 맵을 선택하세요."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escolha um mapa para visualizar"
+            "value" : "Escolha um mapa para visualizar."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выберите карту для просмотра"
+            "value" : "Выберите карту для просмотра."
           }
         },
         "th" : {
@@ -136,19 +136,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Görüntülemek için bir harita seçin"
+            "value" : "Görüntülemek için bir harita seçin."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择一张地图查看"
+            "value" : "选择要查看的地图。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "選擇一張地圖查看"
+            "value" : "選擇要查看的地圖。"
           }
         }
       }
@@ -240,25 +240,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visor de Mapas"
+            "value" : "Visor de mapas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visionneuse de Cartes"
+            "value" : "Visionneuse de cartes"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Penampil Peta"
+            "value" : "Penampil peta"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "マップビューアー"
+            "value" : "マップビューア"
           }
         },
         "ko" : {
@@ -270,7 +270,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visualizador de Mapa"
+            "value" : "Visualizador de mapas"
           }
         },
         "ru" : {
@@ -282,13 +282,13 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ดูแผนที่"
+            "value" : "โปรแกรมดูแผนที่"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Harita Görüntüleyici"
+            "value" : "Harita görüntüleyici"
           }
         },
         "zh-Hans" : {
@@ -300,7 +300,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "地圖查看器"
+            "value" : "地圖檢視器"
           }
         }
       }
@@ -316,19 +316,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ningún Mapa Seleccionado"
+            "value" : "No se ha seleccionado ningún mapa"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aucune Carte Sélectionnée"
+            "value" : "Aucune carte sélectionnée"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak Ada Peta Dipilih"
+            "value" : "Belum ada peta yang dipilih"
           }
         },
         "ja" : {
@@ -346,7 +346,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nenhum Mapa Selecionado"
+            "value" : "Nenhum mapa selecionado"
           }
         },
         "ru" : {
@@ -358,25 +358,25 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ไม่ได้เลือกแผนที่"
+            "value" : "ยังไม่ได้เลือกแผนที่"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Harita Seçilmedi"
+            "value" : "Henüz harita seçilmedi"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未选择地图"
+            "value" : "尚未选择地图"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未選擇地圖"
+            "value" : "尚未選擇地圖"
           }
         }
       }
@@ -392,25 +392,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sin Resultados"
+            "value" : "Sin resultados"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aucun Résultat"
+            "value" : "Aucun résultat"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tidak Ada Hasil"
+            "value" : "Tidak ada hasil"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "結果なし"
+            "value" : "結果がありません"
           }
         },
         "ko" : {
@@ -422,13 +422,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sem Resultados"
+            "value" : "Nenhum resultado"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нет Результатов"
+            "value" : "Нет результатов"
           }
         },
         "th" : {
@@ -440,7 +440,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sonuç Yok"
+            "value" : "Sonuç yok"
           }
         },
         "zh-Hans" : {
