@@ -41,7 +41,7 @@ struct GameClientView: View {
         var failureMessage: String? {
             switch self {
             case .missingClientResources:
-                String(localized: "Set up local client files with data.grf, or activate Remote Client before starting the game.")
+                String(localized: "Set up local client files with data.grf and the BGM folder, or configure your own remote client URL and turn on Use Remote Client in Settings before starting the game. You must have the rights or permission to use these files.")
             case .serverConnectionUnavailable(let error):
                 error.localizedDescription
             default:
@@ -60,7 +60,7 @@ struct GameClientView: View {
                 VStack(spacing: 16) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("* This **Game Client** is still in beta. Some windows and buttons may not work yet.")
-                        Text("* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead by turning on **Use Remote Client** in **Settings**.")
+                        Text("* Before you start, set up your local client files, including data.grf and the BGM folder. To use **Remote Client** instead, turn on **Use Remote Client** in **Settings** and enter your own URL. You must have the rights or permission to use these files.")
                         Text("* Start the **Login Server**, **Char Server**, and **Map Server** first. The **Game Client** cannot log in before these servers are running.")
                         Text("* To create a new account, enter a username that ends with **_M** or **_F**, such as **ragnarok_M**, in the login window.")
                     }
@@ -199,7 +199,7 @@ struct GameClientView: View {
             return true
         }
 
-        if settings.isRemoteClientEnabled {
+        if settings.isRemoteClientEnabled && settings.remoteClientURL != nil {
             return true
         }
 

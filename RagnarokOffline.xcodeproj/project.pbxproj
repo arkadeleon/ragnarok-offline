@@ -730,6 +730,7 @@
 				INFOPLIST_FILE = RagnarokOffline/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your remote client to download game resources.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -781,6 +782,7 @@
 				INFOPLIST_FILE = RagnarokOffline/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Ragnarok Offline";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to your remote client to download game resources.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

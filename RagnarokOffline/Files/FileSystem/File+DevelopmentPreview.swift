@@ -11,9 +11,7 @@ import RagnarokGRF
 import RagnarokResources
 
 extension ResourceManager {
-    static let previewing = ResourceManager(
-        resourceProvider: ClientResourceProvider(isRemoteClientEnabled: true)
-    )
+    static let previewing = testing
 }
 
 extension LocalClientResourceProvider {

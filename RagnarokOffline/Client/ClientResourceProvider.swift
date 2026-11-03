@@ -10,15 +10,22 @@ import RagnarokGRF
 import RagnarokResources
 
 let localClientURL = URL.documentsDirectory
-let remoteClientURL = URL(string: "https://ragnarokoffline.online/client")!
-let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline-remote-client")
+let remoteClientCacheURL = URL.cachesDirectory.appending(path: "com.github.arkadeleon.ragnarok-offline.remote-client")
 
-final class ClientResourceProvider: ResourceProvider {
+actor ClientResourceProvider: ResourceProvider {
     let localProvider: LocalClientResourceProvider
-    let remoteProvider: RemoteClientResourceProvider
+    private(set) var remoteProvider: RemoteClientResourceProvider
 
-    init(isRemoteClientEnabled: Bool) {
+    init(remoteClientURL: URL?, isRemoteClientEnabled: Bool) {
         localProvider = LocalClientResourceProvider(url: localClientURL)
+        remoteProvider = RemoteClientResourceProvider(
+            url: remoteClientURL,
+            cacheURL: remoteClientCacheURL,
+            isEnabled: isRemoteClientEnabled
+        )
+    }
+
+    func configure(remoteClientURL: URL?, isRemoteClientEnabled: Bool) {
         remoteProvider = RemoteClientResourceProvider(
             url: remoteClientURL,
             cacheURL: remoteClientCacheURL,
@@ -83,23 +90,18 @@ final class LocalClientResourceProvider: ResourceProvider {
 }
 
 actor RemoteClientResourceProvider: ResourceProvider {
-    let url: URL
+    let url: URL?
     let cacheURL: URL?
+    let isEnabled: Bool
 
-    private var isEnabled: Bool
-
-    init(url: URL, cacheURL: URL? = nil, isEnabled: Bool) {
+    init(url: URL?, cacheURL: URL? = nil, isEnabled: Bool) {
         self.url = url
         self.cacheURL = cacheURL
         self.isEnabled = isEnabled
     }
 
-    func setEnabled(_ isEnabled: Bool) {
-        self.isEnabled = isEnabled
-    }
-
     func contentsOfResource(at path: ResourcePath) async throws -> Data {
-        guard isEnabled else {
+        guard let url, isEnabled else {
             throw ResourceError.resourceNotFound(path)
         }
 

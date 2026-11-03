@@ -38,7 +38,10 @@ final class AppModel {
     init() {
         settings = SettingsModel()
 
-        resourceProvider = ClientResourceProvider(isRemoteClientEnabled: settings.isRemoteClientEnabled)
+        resourceProvider = ClientResourceProvider(
+            remoteClientURL: settings.remoteClientURL,
+            isRemoteClientEnabled: settings.isRemoteClientEnabled
+        )
         resourceManager = ResourceManager(resourceProvider: resourceProvider)
 
         gameSession = GameSession(resourceManager: resourceManager)
@@ -64,6 +67,7 @@ final class AppModel {
     private func observeRemoteClientSettings() {
         withObservationTracking {
             _ = settings.isRemoteClientEnabled
+            _ = settings.remoteClientURL
         } onChange: { [weak self] in
             Task { @MainActor in
                 guard let self else {
@@ -72,7 +76,10 @@ final class AppModel {
 
                 self.observeRemoteClientSettings()
 
-                await self.resourceProvider.remoteProvider.setEnabled(self.settings.isRemoteClientEnabled)
+                await self.resourceProvider.configure(
+                    remoteClientURL: self.settings.remoteClientURL,
+                    isRemoteClientEnabled: self.settings.isRemoteClientEnabled
+                )
                 await self.resourceManager.clearCaches()
             }
         }

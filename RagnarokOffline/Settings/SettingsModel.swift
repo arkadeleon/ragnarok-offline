@@ -12,6 +12,7 @@ import rAthenaCommon
 
 private enum SettingsKey {
     static let isRemoteClientEnabled = "client.is_remote_client_enabled"
+    static let remoteClientURL = "client.remote_client_url"
     static let serverAddress = "client.server_address"
     static let serverPort = "client.server_port"
 
@@ -29,6 +30,12 @@ final class SettingsModel {
     var isRemoteClientEnabled: Bool {
         didSet {
             defaults.set(isRemoteClientEnabled, forKey: SettingsKey.isRemoteClientEnabled)
+        }
+    }
+
+    var remoteClientURL: URL? {
+        didSet {
+            defaults.set(remoteClientURL?.absoluteString, forKey: SettingsKey.remoteClientURL)
         }
     }
 
@@ -66,6 +73,7 @@ final class SettingsModel {
         self.defaults = defaults
 
         isRemoteClientEnabled = defaults.object(forKey: SettingsKey.isRemoteClientEnabled) as? Bool ?? false
+        remoteClientURL = defaults.string(forKey: SettingsKey.remoteClientURL).flatMap(URL.init(string:))
         serverAddress = defaults.string(forKey: SettingsKey.serverAddress) ?? "127.0.0.1"
         serverPort = defaults.string(forKey: SettingsKey.serverPort) ?? "6900"
 

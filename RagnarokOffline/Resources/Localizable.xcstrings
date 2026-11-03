@@ -1,78 +1,78 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "* Before you start, set up your local client files, such as data.grf. You can use **Remote Client** instead by turning on **Use Remote Client** in **Settings**." : {
+    "* Before you start, set up your local client files, including data.grf and the BGM folder. To use **Remote Client** instead, turn on **Use Remote Client** in **Settings** and enter your own URL. You must have the rights or permission to use these files." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Richte vor dem Start deine lokalen Client-Dateien ein, zum Beispiel data.grf. Du kannst stattdessen den **Remote-Client** verwenden, indem du **Remote-Client verwenden** in den **Einstellungen** aktivierst."
+            "value" : "* Richte vor dem Start deine lokalen Client-Dateien ein, einschließlich data.grf und des BGM-Ordners. Wenn du stattdessen **Remote-Client** verwenden möchtest, aktiviere **Remote-Client verwenden** in den **Einstellungen** und gib deine eigene URL ein. Du musst über die erforderlichen Rechte oder eine Genehmigung zur Nutzung dieser Dateien verfügen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Antes de empezar, configura tus archivos de cliente local, como data.grf. Puedes usar **Cliente remoto** en su lugar activando **Usar Cliente remoto** en **Configuración**."
+            "value" : "* Antes de empezar, configura tus archivos del cliente local, incluidos data.grf y la carpeta BGM. Para usar **Cliente remoto** en su lugar, activa **Usar Cliente remoto** en **Configuración** e introduce tu propia URL. Debes tener los derechos o el permiso necesarios para usar estos archivos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Avant de commencer, configurez vos fichiers de client local, comme data.grf. Vous pouvez utiliser **Client distant** à la place en activant **Utiliser Client distant** dans **Paramètres**."
+            "value" : "* Avant de commencer, configurez vos fichiers de client local, y compris data.grf et le dossier BGM. Pour utiliser **Client distant** à la place, activez **Utiliser Client distant** dans **Paramètres** et saisissez votre propre URL. Vous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, seperti data.grf. Anda dapat menggunakan **Klien jarak jauh** sebagai gantinya dengan mengaktifkan **Gunakan Klien jarak jauh** di **Pengaturan**."
+            "value" : "* Sebelum memulai, siapkan file klien lokal Anda, termasuk data.grf dan folder BGM. Untuk menggunakan **Klien jarak jauh** sebagai gantinya, aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** dan masukkan URL Anda sendiri. Anda harus memiliki hak atau izin untuk menggunakan file-file ini."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 開始する前に、data.grf などのローカルクライアントファイルを設定してください。代わりに**リモートクライアント**を使用するには、**設定**で**リモートクライアントを使用**をオンにします。"
+            "value" : "* 開始する前に、data.grfとBGMフォルダを含むローカルクライアントファイルを準備してください。代わりに**リモートクライアント**を使う場合は、**設定**で**リモートクライアントを使用**をオンにし、独自のURLを入力してください。 これらのファイルを使用するには、必要な権利または許可を得ている必要があります。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 시작하기 전에 data.grf 같은 로컬 클라이언트 파일을 설정하세요. 대신 **원격 클라이언트**를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜세요."
+            "value" : "* 시작하기 전에 data.grf와 BGM 폴더를 포함한 로컬 클라이언트 파일을 준비하세요. 대신 **원격 클라이언트**를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜고 직접 준비한 URL을 입력하세요. 이 파일을 사용할 권리가 있거나 사용 허가를 받아야 합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Antes de começar, configure seus arquivos do cliente local, como data.grf. Como alternativa, você pode usar o **Cliente remoto** ativando **Usar Cliente remoto** em **Configurações**."
+            "value" : "* Antes de começar, configure seus arquivos do cliente local, incluindo data.grf e a pasta BGM. Para usar **Cliente remoto** no lugar deles, ative **Usar Cliente remoto** em **Configurações** e insira sua própria URL. Você deve ter os direitos ou a permissão necessários para usar esses arquivos."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Перед началом настройте файлы локального клиента, например data.grf. Вместо них можно использовать **Удалённый клиент**, включив **Использовать удалённый клиент** в **Настройках**."
+            "value" : "* Перед началом подготовьте локальные файлы клиента, включая data.grf и папку BGM. Чтобы вместо них использовать **Удалённый клиент**, включите **Использовать удалённый клиент** в разделе **Настройки** и введите собственный URL. У вас должны быть права или разрешение на использование этих файлов."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* ก่อนเริ่มใช้งาน ให้ตั้งค่าไฟล์ไคลเอนต์ในเครื่อง เช่น data.grf คุณสามารถใช้ **ไคลเอนต์ระยะไกล** แทนได้โดยเปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า**"
+            "value" : "* ก่อนเริ่ม ให้เตรียมไฟล์ไคลเอนต์ในเครื่อง รวมถึง data.grf และโฟลเดอร์ BGM หากต้องการใช้ **ไคลเอนต์ระยะไกล** แทน ให้เปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** แล้วป้อน URL ของคุณเอง คุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* Başlamadan önce data.grf gibi yerel istemci dosyalarınızı ayarlayın. Bunun yerine **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açarak **Uzak İstemci**'yi kullanabilirsiniz."
+            "value" : "* Başlamadan önce data.grf ve BGM klasörü dahil yerel istemci dosyalarınızı hazırlayın. Bunun yerine **Uzak İstemci** kullanmak için **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın ve kendi URL’nizi girin. Bu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 开始前，请先设置本地客户端文件，例如 data.grf。你也可以在**设置**中开启**使用远程客户端**，改用**远程客户端**。"
+            "value" : "* 开始前，请先准备本地客户端文件，包括 data.grf 和 BGM 文件夹。如需改用**远程客户端**，请在**设置**中打开**使用远程客户端**并输入自己的 URL。 你必须拥有使用这些文件的合法权利或已获得授权。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "* 開始前，請先設定本機用戶端檔案，例如 data.grf。你也可以在**設定**中開啟**使用遠端用戶端**，改用**遠端用戶端**。"
+            "value" : "* 開始前，請先準備本機用戶端檔案，包括 data.grf 和 BGM 資料夾。如需改用**遠端用戶端**，請在**設定**中開啟**使用遠端用戶端**並輸入自己的 URL。 你必須擁有使用這些檔案的合法權利或已獲得授權。"
           }
         }
       }
@@ -687,6 +687,82 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "客戶端"
+          }
+        }
+      }
+    },
+    "Configure your own remote client URL and turn on **Use Remote Client** in **Settings** to browse cached files" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfiguriere deine eigene Remote-Client-URL und aktiviere **Remote-Client verwenden** in den **Einstellungen**, um zwischengespeicherte Dateien anzuzeigen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configura tu propia URL de cliente remoto y activa **Usar Cliente remoto** en **Configuración** para explorar los archivos en caché"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurez votre propre URL de client distant et activez **Utiliser Client distant** dans **Paramètres** pour parcourir les fichiers en cache"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atur URL klien jarak jauh Anda sendiri dan aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** untuk menelusuri file dalam cache"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "独自のリモートクライアントURLを設定し、**設定**で**リモートクライアントを使用**をオンにすると、キャッシュされたファイルを参照できます"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직접 준비한 원격 클라이언트 URL을 설정하고 **설정**에서 **원격 클라이언트 사용**을 켜면 캐시된 파일을 탐색할 수 있습니다"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configure sua própria URL de cliente remoto e ative **Usar Cliente remoto** em **Configurações** para explorar os arquivos em cache"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройте собственный URL удалённого клиента и включите **Использовать удалённый клиент** в разделе **Настройки**, чтобы просматривать кэшированные файлы"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตั้งค่า URL ไคลเอนต์ระยะไกลของคุณเอง แล้วเปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** เพื่อเรียกดูไฟล์ที่แคชไว้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önbelleğe alınmış dosyalara göz atmak için kendi uzak istemci URL’nizi yapılandırın ve **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在**设置**中配置自己的远程客户端 URL 并打开**使用远程客户端**，即可浏览缓存文件"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在**設定**中配置自己的遠端用戶端 URL 並開啟**使用遠端用戶端**，即可瀏覽快取檔案"
           }
         }
       }
@@ -2314,78 +2390,78 @@
         }
       }
     },
-    "Set up local client files with data.grf, or activate Remote Client before starting the game." : {
+    "Set up local client files with data.grf and the BGM folder, or configure your own remote client URL and turn on Use Remote Client in Settings before starting the game. You must have the rights or permission to use these files." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Richte vor dem Spielstart lokale Client-Dateien mit data.grf ein oder aktiviere den Remote-Client."
+            "value" : "Richte vor dem Spielstart lokale Client-Dateien mit data.grf und dem BGM-Ordner ein oder konfiguriere deine eigene Remote-Client-URL und aktiviere Remote-Client verwenden in den Einstellungen. Du musst über die erforderlichen Rechte oder eine Genehmigung zur Nutzung dieser Dateien verfügen."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes de iniciar el juego, configura archivos de cliente local con data.grf o activa Cliente remoto."
+            "value" : "Antes de iniciar el juego, configura los archivos del cliente local con data.grf y la carpeta BGM, o configura tu propia URL de cliente remoto y activa Usar Cliente remoto en Configuración. Debes tener los derechos o el permiso necesarios para usar estos archivos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avant de démarrer le jeu, configurez les fichiers du client local avec data.grf ou activez Client distant."
+            "value" : "Avant de lancer le jeu, configurez les fichiers de client local avec data.grf et le dossier BGM, ou configurez votre propre URL de client distant et activez Utiliser Client distant dans Paramètres. Vous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sebelum memulai game, siapkan file klien lokal dengan data.grf atau aktifkan Klien jarak jauh."
+            "value" : "Sebelum memulai game, siapkan file klien lokal dengan data.grf dan folder BGM, atau atur URL klien jarak jauh Anda sendiri dan aktifkan Gunakan Klien jarak jauh di Pengaturan. Anda harus memiliki hak atau izin untuk menggunakan file-file ini."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームを開始する前に、data.grf を含むローカルクライアントファイルを設定するか、リモートクライアントを有効にしてください。"
+            "value" : "ゲームを開始する前に、data.grfとBGMフォルダを含むローカルクライアントファイルを準備するか、独自のリモートクライアントURLを設定し、「設定」で「リモートクライアントを使用」をオンにしてください。 これらのファイルを使用するには、必要な権利または許可を得ている必要があります。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임을 시작하기 전에 data.grf가 포함된 로컬 클라이언트 파일을 설정하거나 원격 클라이언트를 활성화하세요."
+            "value" : "게임을 시작하기 전에 data.grf와 BGM 폴더를 포함한 로컬 클라이언트 파일을 준비하거나, 직접 준비한 원격 클라이언트 URL을 설정하고 설정에서 원격 클라이언트 사용을 켜세요. 이 파일을 사용할 권리가 있거나 사용 허가를 받아야 합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Antes de iniciar o jogo, configure os arquivos do cliente local com data.grf ou ative o Cliente remoto."
+            "value" : "Antes de iniciar o jogo, configure os arquivos do cliente local com data.grf e a pasta BGM, ou configure sua própria URL de cliente remoto e ative Usar Cliente remoto em Configurações. Você deve ter os direitos ou a permissão necessários para usar esses arquivos."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перед запуском игры настройте файлы локального клиента с data.grf или активируйте удалённый клиент."
+            "value" : "Перед запуском игры подготовьте локальные файлы клиента с data.grf и папкой BGM или настройте собственный URL удалённого клиента и включите «Использовать удалённый клиент» в настройках. У вас должны быть права или разрешение на использование этих файлов."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ก่อนเริ่มเกม ให้ตั้งค่าไฟล์ไคลเอนต์ในเครื่องที่มี data.grf หรือเปิดใช้งานไคลเอนต์ระยะไกล"
+            "value" : "ก่อนเริ่มเกม ให้เตรียมไฟล์ไคลเอนต์ในเครื่องที่มี data.grf และโฟลเดอร์ BGM หรือตั้งค่า URL ไคลเอนต์ระยะไกลของคุณเอง แล้วเปิด ใช้ไคลเอนต์ระยะไกล ในการตั้งค่า คุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyunu başlatmadan önce data.grf içeren yerel istemci dosyalarını ayarlayın veya Uzak İstemci'yi etkinleştirin."
+            "value" : "Oyuna başlamadan önce data.grf ve BGM klasörünü içeren yerel istemci dosyalarınızı hazırlayın veya kendi uzak istemci URL’nizi yapılandırıp Ayarlar bölümünde Uzak İstemci'yi Kullan seçeneğini açın. Bu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开始游戏前，请设置包含 data.grf 的本地客户端文件，或启用远程客户端。"
+            "value" : "开始游戏前，请先准备包含 data.grf 和 BGM 文件夹的本地客户端文件，或配置自己的远程客户端 URL 并在设置中打开使用远程客户端。 你必须拥有使用这些文件的合法权利或已获得授权。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "開始遊戲前，請設定包含 data.grf 的本機用戶端檔案，或啟用遠端用戶端。"
+            "value" : "開始遊戲前，請先準備包含 data.grf 和 BGM 資料夾的本機用戶端檔案，或配置自己的遠端用戶端 URL 並在設定中開啟使用遠端用戶端。 你必須擁有使用這些檔案的合法權利或已獲得授權。"
           }
         }
       }
@@ -3003,82 +3079,6 @@
     },
     "Tree" : {
 
-    },
-    "Turn on **Use Remote Client** in **Settings** to browse cached files" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktiviere **Remote-Client verwenden** in den **Einstellungen**, um zwischengespeicherte Dateien zu durchsuchen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activa **Usar Cliente remoto** en **Configuración** para explorar los archivos en caché"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Activez **Utiliser Client distant** dans **Paramètres** pour parcourir les fichiers mis en cache"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** untuk menelusuri file cache"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "キャッシュ済みファイルを参照するには、**設定**で**リモートクライアントを使用**をオンにします"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "캐시된 파일을 탐색하려면 **설정**에서 **원격 클라이언트 사용**을 켜세요"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ative **Usar Cliente remoto** em **Configurações** para procurar arquivos em cache"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Включите **Использовать удалённый клиент** в **Настройках**, чтобы просматривать кэшированные файлы"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "เปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** เพื่อเรียกดูไฟล์ที่แคชไว้"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Önbelleğe alınmış dosyalara göz atmak için **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在**设置**中开启**使用远程客户端**以浏览缓存文件"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在**設定**中開啟**使用遠端用戶端**以瀏覽快取檔案"
-          }
-        }
-      }
     },
     "Unsupported File" : {
       "localizations" : {

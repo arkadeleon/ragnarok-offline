@@ -19,7 +19,7 @@ struct RemoteClientFilesView: View {
             ContentUnavailableView {
                 Label("Remote Client Not in Use", systemImage: "folder.fill")
             } description: {
-                Text("Turn on **Use Remote Client** in **Settings** to browse cached files")
+                Text("Configure your own remote client URL and turn on **Use Remote Client** in **Settings** to browse cached files")
             }
             .navigationTitle("Remote Client Files")
         }

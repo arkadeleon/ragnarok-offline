@@ -1,6 +1,82 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "**Remote Client** downloads game resources as needed, so you don't have to store the full client on your device. To get started, [build your own remote client](https://github.com/arkadeleon/ragnarok-remote-client) and enter its URL below. Downloaded resources are cached in **Remote Client Files**, so disk usage grows as you use the app.\nIf you prefer to use the app entirely offline, leave **Use Remote Client** off and add your local client files, including data.grf and the BGM folder.\nYou must have the rights or permission to use these files." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Remote-Client** lädt Spielressourcen bei Bedarf herunter, sodass du nicht den vollständigen Client auf deinem Gerät speichern musst. [Richte deinen eigenen Remote-Client ein](https://github.com/arkadeleon/ragnarok-remote-client) und gib unten seine URL ein. Heruntergeladene Ressourcen werden in **Remote-Client-Dateien** zwischengespeichert. Der Speicherbedarf wächst daher mit der Nutzung der App.\nWenn du die App lieber vollständig offline nutzen möchtest, lass **Remote-Client verwenden** deaktiviert und füge deine lokalen Client-Dateien hinzu, einschließlich data.grf und des BGM-Ordners.\nDu musst über die erforderlichen Rechte oder eine Genehmigung zur Nutzung dieser Dateien verfügen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Cliente remoto** descarga los recursos del juego según se necesitan, por lo que no tienes que guardar el cliente completo en tu dispositivo. Para empezar, [configura tu propio cliente remoto](https://github.com/arkadeleon/ragnarok-remote-client) e introduce su URL a continuación. Los recursos descargados se almacenan en caché en **Archivos de Cliente remoto**, por lo que el espacio ocupado aumenta a medida que usas la app.\nSi prefieres usar la app sin conexión, deja **Usar Cliente remoto** desactivado y añade tus archivos del cliente local, incluidos data.grf y la carpeta BGM.\nDebes tener los derechos o el permiso necesarios para usar estos archivos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Client distant** télécharge les ressources du jeu à la demande. Vous n’avez donc pas besoin de stocker le client complet sur votre appareil. Pour commencer, [configurez votre propre client distant](https://github.com/arkadeleon/ragnarok-remote-client) et saisissez son URL ci-dessous. Les ressources téléchargées sont mises en cache dans **Fichiers de Client distant** ; l’espace occupé augmente donc à mesure que vous utilisez l’app.\nSi vous préférez utiliser l’app entièrement hors ligne, laissez **Utiliser Client distant** désactivé et ajoutez vos fichiers de client local, y compris data.grf et le dossier BGM.\nVous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Klien jarak jauh** mengunduh sumber daya game sesuai kebutuhan, sehingga Anda tidak perlu menyimpan seluruh klien di perangkat. Untuk memulai, [siapkan klien jarak jauh Anda sendiri](https://github.com/arkadeleon/ragnarok-remote-client) dan masukkan URL-nya di bawah ini. Sumber daya yang diunduh disimpan dalam cache di **File Klien Jarak Jauh**, sehingga penggunaan ruang penyimpanan bertambah seiring penggunaan app.\nJika Anda lebih suka menggunakan app sepenuhnya secara offline, biarkan **Gunakan Klien jarak jauh** nonaktif dan tambahkan file klien lokal Anda, termasuk data.grf dan folder BGM.\nAnda harus memiliki hak atau izin untuk menggunakan file-file ini."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**リモートクライアント**は必要に応じてゲームリソースをダウンロードするため、クライアント全体をデバイスに保存する必要がありません。まず[独自のリモートクライアントを構築](https://github.com/arkadeleon/ragnarok-remote-client)し、そのURLを下に入力してください。ダウンロードしたリソースは**リモートクライアントファイル**にキャッシュされるため、アプリを使うにつれてストレージ使用量が増えます。\nアプリを完全にオフラインで使いたい場合は、**リモートクライアントを使用**をオフにしたまま、data.grfとBGMフォルダを含むローカルクライアントファイルを追加してください。\nこれらのファイルを使用するには、必要な権利または許可を得ている必要があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**원격 클라이언트**는 필요할 때 게임 리소스를 다운로드하므로 기기에 전체 클라이언트를 저장할 필요가 없습니다. 먼저 [직접 원격 클라이언트를 구축](https://github.com/arkadeleon/ragnarok-remote-client)하고 아래에 URL을 입력하세요. 다운로드한 리소스는 **원격 클라이언트 파일**에 캐시되므로 앱을 사용할수록 저장 공간 사용량이 늘어납니다.\n앱을 완전히 오프라인으로 사용하려면 **원격 클라이언트 사용**을 끈 상태로 두고 data.grf와 BGM 폴더를 포함한 로컬 클라이언트 파일을 추가하세요.\n이 파일을 사용할 권리가 있거나 사용 허가를 받아야 합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Cliente remoto** baixa os recursos do jogo conforme necessário, para que você não precise armazenar o cliente completo no dispositivo. Para começar, [configure seu próprio cliente remoto](https://github.com/arkadeleon/ragnarok-remote-client) e insira a URL abaixo. Os recursos baixados são armazenados em cache em **Arquivos do Cliente remoto**, portanto o espaço ocupado aumenta conforme você usa o app.\nSe preferir usar o app totalmente offline, deixe **Usar Cliente remoto** desativado e adicione seus arquivos do cliente local, incluindo data.grf e a pasta BGM.\nVocê deve ter os direitos ou a permissão necessários para usar esses arquivos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Удалённый клиент** загружает игровые ресурсы по мере необходимости, поэтому вам не нужно хранить полный клиент на устройстве. Для начала [настройте собственный удалённый клиент](https://github.com/arkadeleon/ragnarok-remote-client) и введите его URL ниже. Загруженные ресурсы кэшируются в разделе **Файлы удалённого клиента**, поэтому по мере использования приложения объём занятого места увеличивается.\nЕсли вы предпочитаете использовать приложение полностью без подключения к сети, оставьте **Использовать удалённый клиент** выключенным и добавьте локальные файлы клиента, включая data.grf и папку BGM.\nУ вас должны быть права или разрешение на использование этих файлов."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ไคลเอนต์ระยะไกล** จะดาวน์โหลดทรัพยากรเกมตามที่ต้องใช้ คุณจึงไม่จำเป็นต้องเก็บไคลเอนต์ทั้งหมดไว้บนอุปกรณ์ เริ่มต้นด้วยการ[ตั้งค่าไคลเอนต์ระยะไกลของคุณเอง](https://github.com/arkadeleon/ragnarok-remote-client) แล้วป้อน URL ด้านล่าง ทรัพยากรที่ดาวน์โหลดจะถูกแคชไว้ใน **ไฟล์ไคลเอนต์ระยะไกล** ดังนั้นพื้นที่จัดเก็บที่ใช้จะเพิ่มขึ้นตามการใช้งานแอป\nหากต้องการใช้แอปแบบออฟไลน์ทั้งหมด ให้ปิด **ใช้ไคลเอนต์ระยะไกล** ไว้ แล้วเพิ่มไฟล์ไคลเอนต์ในเครื่องของคุณ รวมถึง data.grf และโฟลเดอร์ BGM\nคุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Uzak İstemci**, oyun kaynaklarını gerektiğinde indirir; böylece istemcinin tamamını aygıtınızda saklamanız gerekmez. Başlamak için [kendi uzak istemcinizi kurun](https://github.com/arkadeleon/ragnarok-remote-client) ve URL’sini aşağıya girin. İndirilen kaynaklar **Uzak İstemci Dosyaları** içinde önbelleğe alınır; dolayısıyla uygulamayı kullandıkça disk kullanımı artar.\nUygulamayı tamamen çevrimdışı kullanmayı tercih ediyorsanız **Uzak İstemci'yi Kullan** seçeneğini kapalı bırakın ve data.grf ile BGM klasörü dahil yerel istemci dosyalarınızı ekleyin.\nBu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**远程客户端**按需下载游戏资源，无需在设备上存储完整客户端。开始前，请先[搭建自己的远程客户端](https://github.com/arkadeleon/ragnarok-remote-client)，然后在下方输入其 URL。下载的资源会缓存在**远程客户端文件**中，因此磁盘占用会随着使用而增加。\n如果你更喜欢完全离线使用 App，请关闭**使用远程客户端**，并添加 data.grf 和 BGM 文件夹等本地客户端文件。\n你必须拥有使用这些文件的合法权利或已获得授权。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**遠端用戶端**按需下載遊戲資源，無需在裝置上儲存完整用戶端。開始前，請先[架設自己的遠端用戶端](https://github.com/arkadeleon/ragnarok-remote-client)，然後在下方輸入其 URL。下載的資源會快取在**遠端用戶端檔案**中，因此磁碟佔用會隨著使用而增加。\n如果你更喜歡完全離線使用 App，請關閉**使用遠端用戶端**，並加入 data.grf 和 BGM 資料夾等本機用戶端檔案。\n你必須擁有使用這些檔案的合法權利或已獲得授權。"
+          }
+        }
+      }
+    },
     "About" : {
       "localizations" : {
         "de" : {
@@ -913,6 +989,82 @@
         }
       }
     },
+    "Remote Client URL" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remote-Client-URL"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL del Cliente remoto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL du Client distant"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL Klien jarak jauh"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リモートクライアントのURL"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "원격 클라이언트 URL"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL do Cliente remoto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL удалённого клиента"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL ไคลเอนต์ระยะไกล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uzak İstemci URL’si"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "远程客户端 URL"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "遠端用戶端 URL"
+          }
+        }
+      }
+    },
     "Renewal" : {
       "localizations" : {
         "de" : {
@@ -1670,82 +1822,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "儲存空間"
-          }
-        }
-      }
-    },
-    "The beta Game Client, database icons and sprites, and tools all need game resources. Turn on **Use Remote Client** to download them from the remote server and cache them in **Remote Client Files**. If you already have local client files such as data.grf, leave it off and use those files instead." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Der Beta-Spiel-Client, Datenbanksymbole und -sprites sowie die Tools benötigen Spielressourcen. Aktiviere **Remote-Client verwenden**, um sie vom Remote-Server herunterzuladen und in **Remote-Client-Dateien** zwischenzuspeichern. Wenn du bereits lokale Client-Dateien wie data.grf hast, lass die Option deaktiviert und nutze stattdessen diese Dateien."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "El Cliente de juego beta, los iconos y sprites de la base de datos y las herramientas necesitan recursos del juego. Activa **Usar Cliente remoto** para descargarlos del servidor remoto y almacenarlos en **Archivos de Cliente remoto**. Si ya tienes archivos del cliente local, como data.grf, déjalo desactivado y usa esos archivos."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le Client de jeu bêta, les icônes et sprites de la base de données ainsi que les outils nécessitent des ressources de jeu. Activez **Utiliser Client distant** pour les télécharger depuis le serveur distant et les mettre en cache dans **Fichiers de Client distant**. Si vous disposez déjà de fichiers de client local comme data.grf, laissez l'option désactivée et utilisez ces fichiers."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Klien game beta, ikon dan sprite database, serta alat memerlukan resource game. Aktifkan **Gunakan Klien jarak jauh** untuk mengunduhnya dari server remote dan menyimpannya di **File Klien Jarak Jauh**. Jika Anda sudah memiliki file klien lokal seperti data.grf, biarkan nonaktif dan gunakan file tersebut."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ベータ版ゲームクライアント、データベースのアイコンとスプライト、ツールにはゲームリソースが必要です。**リモートクライアントを使用**をオンにすると、リモートサーバーからダウンロードして**リモートクライアントファイル**にキャッシュします。data.grf などのローカルクライアントファイルがある場合は、オフのままでそれらのファイルを使用できます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "베타 게임 클라이언트, 데이터베이스 아이콘 및 스프라이트, 도구에는 게임 리소스가 필요합니다. **원격 클라이언트 사용**을 켜면 원격 서버에서 다운로드하여 **원격 클라이언트 파일**에 캐시합니다. data.grf 같은 로컬 클라이언트 파일이 이미 있다면 끈 상태로 두고 해당 파일을 사용하세요."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Cliente de jogo beta, os ícones e sprites do banco de dados e as ferramentas precisam de recursos do jogo. Ative **Usar Cliente remoto** para baixá-los do servidor remoto e armazená-los em **Arquivos do Cliente remoto**. Se você já tem arquivos do cliente local, como data.grf, deixe desativado e use esses arquivos."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Бета-версии Игрового клиента, значкам и спрайтам базы данных, а также инструментам нужны игровые ресурсы. Включите **Использовать удалённый клиент**, чтобы загружать их с удалённого сервера и кэшировать в **Файлах удалённого клиента**. Если у вас уже есть файлы локального клиента, например data.grf, оставьте параметр выключенным и используйте эти файлы."
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ไคลเอนต์เกมรุ่นเบต้า ไอคอนและสไปรต์ในฐานข้อมูล รวมถึงเครื่องมือต่าง ๆ ต้องใช้ทรัพยากรเกม เปิด **ใช้ไคลเอนต์ระยะไกล** เพื่อดาวน์โหลดจากเซิร์ฟเวอร์ระยะไกลและแคชไว้ใน **ไฟล์ไคลเอนต์ระยะไกล** หากคุณมีไฟล์ไคลเอนต์ในเครื่องอยู่แล้ว เช่น data.grf ให้ปิดไว้และใช้ไฟล์เหล่านั้นแทน"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beta Oyun İstemcisi, veritabanı simgeleri ve sprite'ları ile araçlar oyun kaynaklarına ihtiyaç duyar. Bunları uzak sunucudan indirip **Uzak İstemci Dosyaları** içinde önbelleğe almak için **Uzak İstemci'yi Kullan** seçeneğini açın. data.grf gibi yerel istemci dosyalarınız zaten varsa seçeneği kapalı bırakıp bu dosyaları kullanın."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "测试版游戏客户端、数据库中的图标和精灵图以及各类工具都需要游戏资源。开启**使用远程客户端**可从远程服务器下载资源，并缓存到**远程客户端文件**中。如果你已有 data.grf 等本地客户端文件，保持关闭并使用这些文件即可。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "測試版遊戲用戶端、資料庫中的圖示和精靈圖以及各類工具都需要遊戲資源。開啟**使用遠端用戶端**可從遠端伺服器下載資源，並快取至**遠端用戶端檔案**中。如果你已有 data.grf 等本機用戶端檔案，保持關閉並使用這些檔案即可。"
           }
         }
       }
