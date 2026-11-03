@@ -12,12 +12,32 @@ struct ContentView: View {
     @Environment(AppModel.self) private var appModel
     @Environment(\.horizontalSizeClass) private var sizeClass
 
+    @AppStorage("hasCompletedWelcome") private var hasCompletedWelcome = false
+
     @State private var selectedItem: SidebarItem?
+    @State private var isWelcomePresented = false
     @State private var incomingFile: File?
 
     var body: some View {
         NavigationSplitView {
             SidebarView(selection: $selectedItem)
+                .toolbar {
+                    #if DEBUG
+                    ToolbarItem {
+                        Button {
+                            isWelcomePresented.toggle()
+                        } label: {
+                            Image(systemName: "questionmark")
+                        }
+                    }
+
+                    #if os(iOS) || os(macOS)
+                    if #available(iOS 26.0, macOS 26.0, *) {
+                        ToolbarSpacer()
+                    }
+                    #endif
+                    #endif
+                }
         } detail: {
             if let item = selectedItem {
                 NavigationStack {
@@ -28,6 +48,13 @@ struct ContentView: View {
                 // Switching the database mode creates a new database, so the pages built from the old one start over.
                 .id(ObjectIdentifier(appModel.database))
             }
+        }
+        .sheet(isPresented: $isWelcomePresented) {
+            WelcomeView {
+                hasCompletedWelcome = true
+                isWelcomePresented = false
+            }
+            .presentationSizing(.page)
         }
         .sheet(item: $incomingFile) { file in
             NavigationStack {
@@ -42,11 +69,20 @@ struct ContentView: View {
         }
         .onAppear {
             selectDefaultItemIfNeeded()
+
+            if !hasCompletedWelcome {
+                isWelcomePresented = true
+                incomingFile = nil
+            }
         }
         .onChange(of: sizeClass) {
             selectDefaultItemIfNeeded()
         }
         .onOpenURL { url in
+            guard hasCompletedWelcome, !isWelcomePresented else {
+                return
+            }
+
             incomingFile = File(node: .regularFile(url), location: .external)
         }
     }

@@ -381,8 +381,236 @@
         }
       }
     },
+    "1. Use Local Client" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Lokalen Client verwenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Usar cliente local"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Utiliser un client local"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Gunakan Klien Lokal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. ローカルクライアントを使用"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. 로컬 클라이언트 사용"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Usar cliente local"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Использовать локальный клиент"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. ใช้ไคลเอนต์ในเครื่อง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. Yerel İstemciyi Kullan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. 使用本地客户端"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1. 使用本機用戶端"
+          }
+        }
+      }
+    },
+    "2. Use Remote Client" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Remote-Client verwenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Usar Cliente remoto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Utiliser Client distant"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Gunakan Klien jarak jauh"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. リモートクライアントを使用"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. 원격 클라이언트 사용"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Usar Cliente remoto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Использовать удалённый клиент"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. ใช้ไคลเอนต์ระยะไกล"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. Uzak İstemci'yi Kullan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. 使用远程客户端"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2. 使用遠端用戶端"
+          }
+        }
+      }
+    },
     "Actions" : {
 
+    },
+    "Add data.grf and the BGM folder to **Local Client Files** to use the app entirely offline." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge data.grf und den BGM-Ordner zu **Lokale Client-Dateien** hinzu, um die App vollständig offline zu nutzen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añade data.grf y la carpeta BGM a **Archivos de cliente local** para usar la app completamente sin conexión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajoutez data.grf et le dossier BGM à **Fichiers de client local** pour utiliser l’app entièrement hors ligne."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambahkan data.grf dan folder BGM ke **File Klien Lokal** untuk menggunakan aplikasi sepenuhnya secara offline."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "data.grf と BGM フォルダを**ローカルクライアントファイル**に追加すると、アプリを完全にオフラインで使用できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "data.grf와 BGM 폴더를 **로컬 클라이언트 파일**에 추가하면 앱을 완전히 오프라인으로 사용할 수 있습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adicione data.grf e a pasta BGM a **Arquivos do cliente local** para usar o app totalmente offline."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавьте data.grf и папку BGM в **Файлы локального клиента**, чтобы использовать приложение полностью офлайн."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เพิ่ม data.grf และโฟลเดอร์ BGM ลงใน **ไฟล์ไคลเอนต์ในเครื่อง** เพื่อใช้แอปแบบออฟไลน์ได้ทั้งหมด"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulamayı tamamen çevrimdışı kullanmak için data.grf dosyasını ve BGM klasörünü **Yerel İstemci Dosyaları** bölümüne ekleyin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将 data.grf 和 BGM 文件夹添加到**本地客户端文件**，即可完全离线使用本应用。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "將 data.grf 和 BGM 檔案夾加入**本機用戶端檔案**，即可完全離線使用本 App。"
+          }
+        }
+      }
     },
     "Altitude" : {
 
@@ -615,6 +843,82 @@
         }
       }
     },
+    "Choose one of two ways to provide game resources: use a local client or a remote client. The Game Client, database icons and sprites, and tools all use these resources." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle eine von zwei Möglichkeiten, Spielressourcen bereitzustellen: einen lokalen Client oder einen Remote-Client. Der Spielclient, die Datenbanksymbole und Sprites sowie die Werkzeuge verwenden diese Ressourcen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige una de las dos formas de proporcionar recursos del juego: un cliente local o un cliente remoto. El cliente del juego, los iconos y sprites de la base de datos y las herramientas utilizan estos recursos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez l’une des deux façons de fournir les ressources de jeu : un client local ou un client distant. Le client de jeu, les icônes et les sprites de la base de données ainsi que les outils utilisent ces ressources."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih salah satu dari dua cara untuk menyediakan sumber daya game: gunakan klien lokal atau klien jarak jauh. Klien Game, ikon dan sprite basis data, serta alat menggunakan sumber daya ini."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゲームリソースの利用方法は、ローカルクライアントとリモートクライアントの2つから選べます。ゲームクライアント、データベースのアイコンやスプライト、各種ツールでこれらのリソースを使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임 리소스를 제공하는 두 가지 방법 중 하나를 선택하세요. 로컬 클라이언트 또는 원격 클라이언트를 사용할 수 있습니다. 게임 클라이언트, 데이터베이스 아이콘과 스프라이트, 도구에서 이 리소스를 사용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escolha uma das duas formas de fornecer recursos do jogo: um cliente local ou um cliente remoto. O cliente do jogo, os ícones e sprites do banco de dados e as ferramentas usam esses recursos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите один из двух способов предоставления игровых ресурсов: локальный клиент или удалённый клиент. Игровой клиент, значки и спрайты базы данных, а также инструменты используют эти ресурсы."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกหนึ่งในสองวิธีเพื่อจัดหาทรัพยากรเกม: ใช้ไคลเอนต์ในเครื่องหรือไคลเอนต์ระยะไกล ไคลเอนต์เกม ไอคอนและสไปรต์ในฐานข้อมูล รวมถึงเครื่องมือต่าง ๆ ล้วนใช้ทรัพยากรเหล่านี้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oyun kaynaklarını sağlamak için iki yöntemden birini seçin: yerel istemci veya uzak istemci. Oyun İstemcisi, veritabanı simgeleri ve sprite’ları ile araçlar bu kaynakları kullanır."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您可以选择以下两种方式之一来提供游戏资源：使用本地客户端，或使用远程客户端。游戏客户端、数据库图标和精灵以及各项工具都需要使用这些资源。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您可以選擇以下兩種方式之一來提供遊戲資源：使用本機用戶端，或使用遠端用戶端。遊戲用戶端、資料庫圖示與精靈，以及各項工具都需要使用這些資源。"
+          }
+        }
+      }
+    },
     "Client" : {
       "localizations" : {
         "de" : {
@@ -763,6 +1067,82 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在**設定**中配置自己的遠端用戶端 URL 並開啟**使用遠端用戶端**，即可瀏覽快取檔案"
+          }
+        }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weiter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuer"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lanjutkan"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "続ける"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계속"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดำเนินการต่อ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devam"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继续"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繼續"
           }
         }
       }
@@ -991,6 +1371,82 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完成"
+          }
+        }
+      }
+    },
+    "Download resources as needed instead of storing the full client." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lade Ressourcen nach Bedarf herunter, anstatt den vollständigen Client zu speichern."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descarga los recursos según los necesites en lugar de almacenar el cliente completo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargez les ressources à la demande au lieu de stocker le client complet."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unduh sumber daya sesuai kebutuhan tanpa menyimpan seluruh klien."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クライアント全体を保存せず、必要に応じてリソースをダウンロードします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전체 클라이언트를 저장하는 대신 필요할 때 리소스를 다운로드하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baixe os recursos conforme necessário em vez de armazenar o cliente completo."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загружайте ресурсы по мере необходимости вместо хранения полного клиента."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดาวน์โหลดทรัพยากรตามต้องการ แทนการเก็บไคลเอนต์ทั้งหมดไว้ในเครื่อง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İstemcinin tamamını depolamak yerine kaynakları gerektiğinde indirin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按需下载资源，无需存储完整客户端。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "視需要下載資源，無需儲存完整用戶端。"
           }
         }
       }
@@ -3001,6 +3457,158 @@
         }
       }
     },
+    "The app no longer provides a hosted remote client." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App stellt keinen gehosteten Remote-Client mehr bereit."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La app ya no ofrece un cliente remoto alojado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’app ne fournit plus de client distant hébergé."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplikasi ini tidak lagi menyediakan klien jarak jauh yang dihosting."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリが提供するホスト型リモートクライアントは終了しました。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱에서 호스팅하는 원격 클라이언트는 더 이상 제공되지 않습니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O app não fornece mais um cliente remoto hospedado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение больше не предоставляет размещённый удалённый клиент."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แอปไม่ได้ให้บริการโฮสต์ไคลเอนต์ระยะไกลอีกต่อไป"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulama artık barındırılan bir uzak istemci sunmuyor."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本应用不再提供托管的远程客户端。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本 App 不再提供託管的遠端用戶端。"
+          }
+        }
+      }
+    },
+    "To use **Remote Client**, turn on **Use Remote Client** in **Settings** and enter your own URL." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um den **Remote-Client** zu nutzen, aktiviere **Remote-Client verwenden** in den **Einstellungen** und gib deine eigene URL ein."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para usar **Cliente remoto**, activa **Usar Cliente remoto** en **Configuración** e introduce tu propia URL."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour utiliser **Client distant**, activez **Utiliser Client distant** dans **Paramètres** et saisissez votre propre URL."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Untuk menggunakan **Klien jarak jauh**, aktifkan **Gunakan Klien jarak jauh** di **Pengaturan** dan masukkan URL Anda sendiri."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**リモートクライアント**を利用するには、**設定**で**リモートクライアントを使用**をオンにして、ご自身の URL を入力してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**원격 클라이언트**를 사용하려면 **설정**에서 **원격 클라이언트 사용**을 켜고 직접 준비한 URL을 입력하세요."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para usar **Cliente remoto**, ative **Usar Cliente remoto** em **Configurações** e insira sua própria URL."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чтобы использовать **Удалённый клиент**, включите **Использовать удалённый клиент** в разделе **Настройки** и введите собственный URL."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หากต้องการใช้ **ไคลเอนต์ระยะไกล** ให้เปิด **ใช้ไคลเอนต์ระยะไกล** ใน **การตั้งค่า** แล้วป้อน URL ของคุณเอง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Uzak İstemci** kullanmak için **Ayarlar** bölümünde **Uzak İstemci'yi Kullan** seçeneğini açın ve kendi URL’nizi girin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如需使用**远程客户端**，请在**设置**中开启**使用远程客户端**，并输入您自己的 URL。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若要使用**遠端用戶端**，請在**設定**中開啟**使用遠端用戶端**，並輸入您自己的 URL。"
+          }
+        }
+      }
+    },
     "Tools" : {
       "localizations" : {
         "de" : {
@@ -3159,8 +3767,160 @@
     "View Mode" : {
 
     },
+    "Welcome to Ragnarok Offline" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen bei Ragnarok Offline"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te damos la bienvenida a Ragnarok Offline"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bienvenue dans Ragnarok Offline"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selamat Datang di Ragnarok Offline"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline へようこそ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline에 오신 것을 환영합니다"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boas-vindas ao Ragnarok Offline"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать в Ragnarok Offline"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยินดีต้อนรับสู่ Ragnarok Offline"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ragnarok Offline’a Hoş Geldiniz"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎使用 Ragnarok Offline"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "歡迎使用 Ragnarok Offline"
+          }
+        }
+      }
+    },
     "World" : {
 
+    },
+    "You must have the rights or permission to use these files." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du musst die Rechte oder die Erlaubnis haben, diese Dateien zu verwenden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debes tener los derechos o el permiso para usar estos archivos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous devez disposer des droits ou de l’autorisation nécessaires pour utiliser ces fichiers."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda harus memiliki hak atau izin untuk menggunakan file-file ini."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これらのファイルを使用する権利または許可が必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 파일을 사용할 권한이나 허가가 있어야 합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você deve ter os direitos ou a permissão para usar esses arquivos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "У вас должны быть права или разрешение на использование этих файлов."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณต้องมีสิทธิ์หรือได้รับอนุญาตให้ใช้ไฟล์เหล่านี้"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu dosyaları kullanma hakkına veya iznine sahip olmalısınız."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您必须拥有使用这些文件的权利或许可。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您必須擁有使用這些檔案的權利或許可。"
+          }
+        }
+      }
     }
   },
   "version" : "1.2"
