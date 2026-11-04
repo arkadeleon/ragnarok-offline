@@ -26,8 +26,7 @@ struct ImageFilePreviewView: View {
 
         switch file.utType {
         case .ebm:
-            let decompressor = GzipDecompressor()
-            let decompressedData = try await decompressor.unzip(data: data)
+            let decompressedData = try Data(Zlib.inflate(Array(data)).data)
             guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil),
                   let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
                 throw FileError.imageGenerationFailed

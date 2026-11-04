@@ -143,7 +143,7 @@ public actor GRFArchive {
             stream.close()
         }
 
-        let data = try entry.data(from: stream)
+        let data = try entry.data(from: stream, protectedKeys: grf?.table.protectedKeys ?? [:])
         return data
     }
 }

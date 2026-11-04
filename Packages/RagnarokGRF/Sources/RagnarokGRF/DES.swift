@@ -9,12 +9,12 @@ import Foundation
 
 // Data Encryption Standard
 // Reference: https://github.com/vthibault/roBrowser/blob/master/src/Loaders/GameFileDecrypt.js
-struct DES {
-    private let mask: [UInt8] = [
+enum DES {
+    private static let mask: [UInt8] = [
         0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01,
     ]
 
-    private let initialPermutationTable: [UInt8] = [
+    private static let initialPermutationTable: [UInt8] = [
         58, 50, 42, 34, 26, 18, 10,  2,
         60, 52, 44, 36, 28, 20, 12,  4,
         62, 54, 46, 38, 30, 22, 14,  6,
@@ -25,7 +25,7 @@ struct DES {
         63, 55, 47, 39, 31, 23, 15,  7,
     ]
 
-    private let finalPermutationTable: [UInt8] = [
+    private static let finalPermutationTable: [UInt8] = [
         40,  8, 48, 16, 56, 24, 64, 32,
         39,  7, 47, 15, 55, 23, 63, 31,
         38,  6, 46, 14, 54, 22, 62, 30,
@@ -36,7 +36,7 @@ struct DES {
         33,  1, 41,  9, 49, 17, 57, 25,
     ]
 
-    private let transpositionTable: [UInt8] = [
+    private static let transpositionTable: [UInt8] = [
         16,  7, 20, 21,
         29, 12, 28, 17,
          1, 15, 23, 26,
@@ -47,7 +47,7 @@ struct DES {
         22, 11,  4, 25,
     ]
 
-    private let substitutionBoxTable: [[UInt8]] = [
+    private static let substitutionBoxTable: [[UInt8]] = [
         [
             0xef, 0x03, 0x41, 0xfd, 0xd8, 0x74, 0x1e, 0x47,  0x26, 0xef, 0xfb, 0x22, 0xb3, 0xd8, 0x84, 0x1e,
             0x39, 0xac, 0xa7, 0x60, 0x62, 0xc1, 0xcd, 0xba,  0x5c, 0x96, 0x90, 0x59, 0x05, 0x3b, 0x7a, 0x85,
@@ -74,7 +74,7 @@ struct DES {
         ],
     ]
 
-    private let shuffleDecTable: [UInt8] = {
+    private static let shuffleDecTable: [UInt8] = {
         var out: [UInt8] = Array(repeating: 0, count: 256)
         var list: [UInt8] = [0x00, 0x2b, 0x6c, 0x80, 0x01, 0x68, 0x48, 0x77, 0x60, 0xff, 0xb9, 0xc0, 0xfe, 0xeb]
 
@@ -92,7 +92,7 @@ struct DES {
         return out
     }()
 
-    func decodeFull(buf: inout [UInt8], len: Int, entrylen: Int) {
+    static func decodeFull(buf: inout [UInt8], len: Int, entrylen: Int) {
         let nblocks = len >> 3
 
         // compute number of digits of the entry length
@@ -135,7 +135,7 @@ struct DES {
         }
     }
 
-    func decodeHeader(buf: inout [UInt8], len: Int) {
+    static func decodeHeader(buf: inout [UInt8], len: Int) {
         let nblocks = len >> 3
 
         var i = 0
@@ -149,7 +149,7 @@ struct DES {
         // the rest is plaintext, done.
     }
 
-    func decodeFileName(fileName: [UInt8]) -> [UInt8] {
+    static func decodeFileName(fileName: [UInt8]) -> [UInt8] {
         var fileName = fileName
 
         let nblocks = fileName.count >> 3
@@ -162,13 +162,13 @@ struct DES {
         return fileName
     }
 
-    private func decryptBlock(_ src: inout [UInt8], from index: Int = 0) {
+    private static func decryptBlock(_ src: inout [UInt8], from index: Int = 0) {
         initialPermutation(&src, from: index)
         roundFunction(&src, from: index)
         finalPermutation(&src, from: index)
     }
 
-    private func initialPermutation(_ src: inout [UInt8], from index: Int = 0) {
+    private static func initialPermutation(_ src: inout [UInt8], from index: Int = 0) {
         var tmp = [UInt8](repeating: 0, count: 8)
 
         for i in 0..<64 {
@@ -181,7 +181,7 @@ struct DES {
         src[index..<(index + 8)] = tmp[...]
     }
 
-    private func finalPermutation(_ src: inout [UInt8], from index: Int = 0) {
+    private static func finalPermutation(_ src: inout [UInt8], from index: Int = 0) {
         var tmp = [UInt8](repeating: 0, count: 8)
 
         for i in 0..<64 {
@@ -194,7 +194,7 @@ struct DES {
         src[index..<(index + 8)] = tmp[...]
     }
 
-    private func roundFunction(_ src: inout [UInt8], from index: Int = 0) {
+    private static func roundFunction(_ src: inout [UInt8], from index: Int = 0) {
         var tmp = [UInt8](repeating: 0, count: 8)
 
         for i in 0..<8 {
@@ -211,7 +211,7 @@ struct DES {
         src[index + 3] ^= tmp[7]
     }
 
-    private func expansion(_ src: inout [UInt8], from index: Int = 0) {
+    private static func expansion(_ src: inout [UInt8], from index: Int = 0) {
         var tmp = [UInt8](repeating: 0, count: 8)
 
         tmp[0] = ((src[index + 7] << 5) | (src[index + 4] >> 3)) & 0x3f // ..0 vutsr
@@ -226,7 +226,7 @@ struct DES {
         src[index..<(index + 8)] = tmp[...]
     }
 
-    private func substitutionBox(_ src: inout [UInt8], from index: Int = 0) {
+    private static func substitutionBox(_ src: inout [UInt8], from index: Int = 0) {
         var tmp = [UInt8](repeating: 0, count: 8)
 
         for i in 0..<4 {
@@ -238,7 +238,7 @@ struct DES {
         src[index..<(index + 8)] = tmp[...]
     }
 
-    private func transposition(_ src: inout [UInt8], from index: Int = 0) {
+    private static func transposition(_ src: inout [UInt8], from index: Int = 0) {
         var tmp = [UInt8](repeating: 0, count: 8)
 
         for i in 0..<32 {
@@ -251,7 +251,7 @@ struct DES {
         src[index..<(index + 8)] = tmp[...]
     }
 
-    private func shuffleDec(_ src: inout [UInt8], from index: Int = 0) {
+    private static func shuffleDec(_ src: inout [UInt8], from index: Int = 0) {
         var tmp = [UInt8](repeating: 0, count: 8)
 
         tmp[0] = src[index + 3]
@@ -266,7 +266,7 @@ struct DES {
         src[index..<(index + 8)] = tmp[...]
     }
 
-    private func nibbleSwap(_ src: inout [UInt8], from index: Int = 0) {
+    private static func nibbleSwap(_ src: inout [UInt8], from index: Int = 0) {
         src[index + 0] = (src[index + 0] << 4) | (src[index + 0] >> 4)
         src[index + 1] = (src[index + 1] << 4) | (src[index + 1] >> 4)
         src[index + 2] = (src[index + 2] << 4) | (src[index + 2] >> 4)

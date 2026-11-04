@@ -21,9 +21,14 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "CRagnarokGRF",
+            exclude: ["xxhash/LICENSE"]
+        ),
+        .target(
             name: "RagnarokGRF",
             dependencies: [
                 "BinaryIO",
+                "CRagnarokGRF",
                 "DataCompression",
             ]
         ),

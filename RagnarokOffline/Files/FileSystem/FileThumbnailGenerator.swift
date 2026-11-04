@@ -41,8 +41,7 @@ final class FileThumbnailGenerator: Sendable {
         case .ebm:
             let data = try await request.file.contents()
 
-            let decompressor = GzipDecompressor()
-            let decompressedData = try await decompressor.unzip(data: data)
+            let decompressedData = try Data(Zlib.inflate(Array(data)).data)
 
             guard let imageSource = CGImageSourceCreateWithData(decompressedData as CFData, nil) else {
                 throw FileThumbnailError.cannotCreateImageSource

@@ -17,6 +17,8 @@ public enum GRFError: Error {
     case invalidEntryPath(String)
     case dataCorrupted(Data)
     case lzmaCompressionIsNotSupported
+    case invalidProtectedData(String)
+    case missingProtectedKey(UInt32)
 }
 
 struct GRF {
@@ -59,23 +61,25 @@ extension GRF {
             magic = try decoder.decode([UInt8].self, count: 16)
             key = try decoder.decode([UInt8].self, count: 14)
 
-            if magic == masterOfMagic {
-                let fileTableOffset = try decoder.decode(UInt32.self)
-                self.fileTableOffset = UInt64(fileTableOffset)
-
-                let seed = try decoder.decode(UInt32.self)
-                let fileCount = try decoder.decode(UInt32.self)
-                self.fileCount = fileCount - seed - 7
-            } else if magic.dropLast(2) == eventHorizon {
-                let fileTableOffset = try decoder.decode(UInt64.self)
-                self.fileTableOffset = fileTableOffset + 4
-
-                fileCount = try decoder.decode(UInt32.self)
-            } else {
+            guard magic == masterOfMagic || magic.dropLast(2) == eventHorizon else {
                 throw GRFError.invalidHeader(magic)
             }
 
-            version = try decoder.decode(UInt32.self)
+            let data = try decoder.decode([UInt8].self, count: 16)
+
+            version = data.littleEndianUInt32(at: 12)
+
+            if version == 0x300 && data[5..<8].allSatisfy({ $0 == 0 }) {
+                fileTableOffset = data.littleEndianUInt64(at: 0)
+
+                fileCount = data.littleEndianUInt32(at: 8)
+            } else {
+                fileTableOffset = UInt64(data.littleEndianUInt32(at: 0))
+
+                let seed = data.littleEndianUInt32(at: 4)
+                let fileCount = data.littleEndianUInt32(at: 8)
+                self.fileCount = fileCount - seed - 7
+            }
         }
     }
 }
@@ -89,6 +93,8 @@ extension GRF {
 
         var entries: [GRF.Entry]
 
+        var protectedKeys: [UInt32 : [UInt8]] = [:]
+
         init(from decoder: BinaryDecoder, configuration header: GRF.Header) throws {
             switch header.version {
             case 0x102, 0x103:
@@ -99,38 +105,29 @@ extension GRF {
                 entries.reserveCapacity(Int(header.fileCount))
 
                 let data = try decoder.decode([UInt8].self, count: decoder.bytesRemaining)
-                let des = DES()
 
                 var position = 0
                 for _ in 0..<header.fileCount {
                     let nameLength = data[position] - 6
 
-                    let position2 = data.withUnsafeBytes {
-                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
-                    }
+                    let position2 = data.littleEndianUInt32(at: position)
                     position += 4
 
                     let encodedName = [UInt8](data[(position + 2)..<(position + 2 + Int(nameLength))])
-                    var decodedName = des.decodeFileName(fileName: encodedName)
+                    var decodedName = DES.decodeFileName(fileName: encodedName)
                     decodedName = decodedName.prefix(while: { $0 != 0 })
                     let name = String(data: Data(decodedName), encoding: .isoLatin1) ?? ""
                     let path = GRFPathReference(string: name)
 
                     position += Int(position2)
 
-                    let compressedSizeBase = data.withUnsafeBytes {
-                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
-                    }
+                    let compressedSizeBase = data.littleEndianUInt32(at: position)
                     position += 4
 
-                    let compressedSizeAligned = data.withUnsafeBytes {
-                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
-                    }
+                    let compressedSizeAligned = data.littleEndianUInt32(at: position)
                     position += 4
 
-                    let decompressedSize = data.withUnsafeBytes {
-                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
-                    }
+                    let decompressedSize = data.littleEndianUInt32(at: position)
                     position += 4
 
                     var types = GRF.EntryTypes(rawValue: data[position])
@@ -142,9 +139,7 @@ extension GRF {
                     }
                     position += 1
 
-                    let dataOffset = data.withUnsafeBytes {
-                        UInt64($0.loadUnaligned(fromByteOffset: position, as: UInt32.self))
-                    }
+                    let dataOffset = UInt64(data.littleEndianUInt32(at: position))
                     position += 4
 
                     if !types.contains(.file) {
@@ -162,6 +157,11 @@ extension GRF {
                     entries.append(entry)
                 }
             case 0x200, 0x300:
+                var keyBlockSize: UInt32 = 0
+                if header.version == 0x300 {
+                    keyBlockSize = try decoder.decode(UInt32.self)
+                }
+
                 tableSizeCompressed = try decoder.decode(UInt32.self)
                 tableSize = try decoder.decode(UInt32.self)
 
@@ -173,33 +173,33 @@ extension GRF {
                     throw GRFError.lzmaCompressionIsNotSupported
                 }
 
-                let decompressor = GzipDecompressor()
-                let data = try decompressor.unzip(data: Data(compressedData))
+                // The key block follows the compressed table. An invalid one does not prevent reading the archive.
+                if keyBlockSize > 0 && keyBlockSize <= 20 + 65535 * 64 && Int(keyBlockSize) <= decoder.bytesRemaining {
+                    let keyBlock = try decoder.decode([UInt8].self, count: Int(keyBlockSize))
+                    protectedKeys = (try? GRF.ProtectedDecoder.decodeArchiveKeys(keyBlock)) ?? [:]
+                }
+
+                let data = try Zlib.inflate(compressedData, capacity: Int(tableSize)).data
 
                 var position = 0
                 for _ in 0..<header.fileCount {
                     guard let index = data[position...].firstIndex(of: 0) else {
-                        throw GRFError.dataCorrupted(data)
+                        throw GRFError.dataCorrupted(Data(data))
                     }
 
-                    let name = String(data: data[position..<index], encoding: .isoLatin1) ?? ""
+                    let nameBytes = data[position..<index]
+                    let name = String(bytes: nameBytes, encoding: .isoLatin1) ?? ""
                     let path = GRFPathReference(string: name)
 
                     position = index + 1
 
-                    let sizeCompressed = data.withUnsafeBytes {
-                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
-                    }
+                    let sizeCompressed = data.littleEndianUInt32(at: position)
                     position += 4
 
-                    let sizeCompressedAligned = data.withUnsafeBytes {
-                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
-                    }
+                    let sizeCompressedAligned = data.littleEndianUInt32(at: position)
                     position += 4
 
-                    let size = data.withUnsafeBytes {
-                        $0.loadUnaligned(fromByteOffset: position, as: UInt32.self)
-                    }
+                    let size = data.littleEndianUInt32(at: position)
                     position += 4
 
                     let types = GRF.EntryTypes(rawValue: data[position])
@@ -207,18 +207,14 @@ extension GRF {
 
                     let offset: UInt64
                     if header.version == 0x200 {
-                        offset = data.withUnsafeBytes {
-                            UInt64($0.loadUnaligned(fromByteOffset: position, as: UInt32.self))
-                        }
+                        offset = UInt64(data.littleEndianUInt32(at: position))
                         position += 4
                     } else {
-                        offset = data.withUnsafeBytes {
-                            $0.loadUnaligned(fromByteOffset: position, as: UInt64.self)
-                        }
+                        offset = data.littleEndianUInt64(at: position)
                         position += 8
                     }
 
-                    if !types.contains(.file) {
+                    if !types.contains(.file) && !types.contains(.gravityEncrypted) {
                         continue
                     }
 
@@ -228,7 +224,8 @@ extension GRF {
                         sizeCompressedAligned: sizeCompressedAligned,
                         size: size,
                         types: types,
-                        offset: offset
+                        offset: offset,
+                        rawName: types.contains(.gravityEncrypted) ? Array(nameBytes) : nil
                     )
                     entries.append(entry)
                 }
@@ -241,9 +238,10 @@ extension GRF {
 
 extension GRF {
     struct EntryTypes: OptionSet {
-        static let file          = GRF.EntryTypes(rawValue: 0x01) // entry is a file
-        static let encryptMixed  = GRF.EntryTypes(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
-        static let encryptHeader = GRF.EntryTypes(rawValue: 0x04) // encryption mode 1 (header DES only)
+        static let file             = GRF.EntryTypes(rawValue: 0x01) // entry is a file
+        static let encryptMixed     = GRF.EntryTypes(rawValue: 0x02) // encryption mode 0 (header DES + periodic DES/shuffle)
+        static let encryptHeader    = GRF.EntryTypes(rawValue: 0x04) // encryption mode 1 (header DES only)
+        static let gravityEncrypted = GRF.EntryTypes(rawValue: 0x80) // Gravity protected content (version 0x300)
 
         let rawValue: UInt8
 
@@ -260,26 +258,51 @@ extension GRF {
         var types: GRF.EntryTypes
         var offset: UInt64
 
-        func data(from stream: any BinaryIO.Stream) throws -> Data {
+        // Original filename bytes of a protected entry, used to derive its decryption hash.
+        var rawName: [UInt8]? = nil
+
+        func data(from stream: any BinaryIO.Stream, protectedKeys: [UInt32 : [UInt8]] = [:]) throws -> Data {
+            if types.contains(.gravityEncrypted) {
+                let data = try protectedData(from: stream, protectedKeys: protectedKeys)
+                return Data(data)
+            }
+
             try stream.seek(GRF.Header.size + Int(offset), origin: .begin)
 
             let decoder = BinaryDecoder(stream: stream)
             var bytes = try decoder.decode([UInt8].self, count: Int(sizeCompressedAligned))
 
             if types.contains(.encryptMixed) {
-                let des = DES()
-                des.decodeFull(buf: &bytes, len: Int(sizeCompressedAligned), entrylen: Int(sizeCompressed))
+                DES.decodeFull(buf: &bytes, len: Int(sizeCompressedAligned), entrylen: Int(sizeCompressed))
             } else if types.contains(.encryptHeader) {
-                let des = DES()
-                des.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
+                DES.decodeHeader(buf: &bytes, len: Int(sizeCompressedAligned))
             }
 
             if bytes.first == 0 {
                 throw GRFError.lzmaCompressionIsNotSupported
             }
 
-            let decompressor = GzipDecompressor()
-            let data = try decompressor.unzip(data: Data(bytes))
+            let data = try Zlib.inflate(bytes, capacity: Int(size)).data
+            return Data(data)
+        }
+
+        private func protectedData(from stream: any BinaryIO.Stream, protectedKeys: [UInt32 : [UInt8]]) throws -> [UInt8] {
+            guard types == .gravityEncrypted,
+                  let rawName,
+                  sizeCompressed >= GRF.ProtectedDecoder.headerSize,
+                  sizeCompressedAligned >= sizeCompressed,
+                  sizeCompressedAligned <= GRF.ProtectedDecoder.maxPackedSize,
+                  size <= GRF.ProtectedDecoder.maxOutputSize,
+                  stream.length - GRF.Header.size >= Int(sizeCompressedAligned),
+                  offset <= UInt64(stream.length - GRF.Header.size - Int(sizeCompressedAligned)) else {
+                throw GRFError.invalidProtectedData("Invalid protected GRF entry metadata: \(path.string)")
+            }
+
+            try stream.seek(GRF.Header.size + Int(offset), origin: .begin)
+
+            let decoder = BinaryDecoder(stream: stream)
+            let payload = try decoder.decode([UInt8].self, count: Int(sizeCompressed))
+            let data = try GRF.ProtectedDecoder.decode(payload, rawName: rawName, expectedSize: Int(size), archiveKeys: protectedKeys)
             return data
         }
     }

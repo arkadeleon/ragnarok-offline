@@ -66,8 +66,7 @@ extension Map {
             self.xs = xs
             self.ys = ys
 
-            let decompressor = GzipDecompressor()
-            let decompressedData = try await decompressor.unzip(bytes: data)
+            let decompressedData = try Zlib.inflate(data, capacity: Int(xs) * Int(ys)).data
 
             guard decompressedData.count == Int(xs) * Int(ys) else {
                 throw MapGridError.dataCorrupted
