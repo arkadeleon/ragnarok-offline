@@ -9,7 +9,7 @@ import Foundation
 
 final class TestResourceProvider: ResourceProvider {
     func contentsOfResource(at path: ResourcePath) async throws -> Data {
-        let url = URL(string: "https://ragnarokoffline.online/client")!
+        let url = URL(string: "http://localhost:8080")!
         let resourceURL = url.appending(path: path)
         let request = URLRequest(url: resourceURL, cachePolicy: .reloadIgnoringLocalCacheData)
         let (data, _) = try await URLSession.shared.data(for: request)
