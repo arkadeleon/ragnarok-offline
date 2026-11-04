@@ -14,10 +14,10 @@ final class MessageStringTableTests: XCTestCase {
         let messageStringTable = MessageStringTable(locale: locale)
 
         let doYouAgree = messageStringTable.localizedMessageString(forID: 0)
-        XCTAssertEqual(doYouAgree, "请问是否同意?")
+        XCTAssertEqual(doYouAgree, "您同意吗?")
 
         let youGotApple = messageStringTable.localizedMessageString(forID: 153, arguments: "苹果", 1)
-        XCTAssertEqual(youGotApple, "取得 苹果 1 个")
+        XCTAssertEqual(youGotApple, "获得了 苹果 1 个")
     }
 
     func testChineseTraditional() async throws {
@@ -69,7 +69,7 @@ final class MessageStringTableTests: XCTestCase {
         let messageStringTable = MessageStringTable(locale: locale)
 
         let doYouAgree = messageStringTable.localizedMessageString(forID: 0)
-        XCTAssertEqual(doYouAgree, "Apa kamu ingin bermain ?")
+        XCTAssertEqual(doYouAgree, "Apa kamu Setuju?.")
 
         let youGotApple = messageStringTable.localizedMessageString(forID: 153, arguments: "Apple", 1)
         XCTAssertEqual(youGotApple, "Apple yang kamu dapat adalah 1  ")
@@ -102,7 +102,7 @@ final class MessageStringTableTests: XCTestCase {
         let messageStringTable = MessageStringTable(locale: locale)
 
         let doYouAgree = messageStringTable.localizedMessageString(forID: 0)
-        XCTAssertEqual(doYouAgree, "Você concorda?")
+        XCTAssertEqual(doYouAgree, "Você deseja assistir o Replay?")
 
         let youGotApple = messageStringTable.localizedMessageString(forID: 153, arguments: "Maçã", 1)
         XCTAssertEqual(youGotApple, "Você obteve Maçã (1).")
@@ -127,7 +127,7 @@ final class MessageStringTableTests: XCTestCase {
         XCTAssertEqual(doYouAgree, "¿Estás de acuerdo?")
 
         let youGotApple = messageStringTable.localizedMessageString(forID: 153, arguments: "Apple", 1)
-        XCTAssertEqual(youGotApple, "Tienes Apple (1).")
+        XCTAssertEqual(youGotApple, "Obtuviste Apple (1).")
     }
 
     func testThai() async throws {
@@ -138,7 +138,7 @@ final class MessageStringTableTests: XCTestCase {
         XCTAssertEqual(doYouAgree, "คุณตกลงหรือไม่?")
 
         let youGotApple = messageStringTable.localizedMessageString(forID: 153, arguments: "Apple", 1)
-        XCTAssertEqual(youGotApple, "คุณได้รับ Apple 1 ea")
+        XCTAssertEqual(youGotApple, "ได้รับ Apple 1 ชิ้น")
     }
 
     func testTurkish() async throws {

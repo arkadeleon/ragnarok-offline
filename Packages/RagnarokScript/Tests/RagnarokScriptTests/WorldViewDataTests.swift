@@ -20,15 +20,15 @@ final class WorldViewDataTests: XCTestCase {
 
     func testWorlds() async throws {
         let worlds = await worldViewData.worlds
-        XCTAssertEqual(worlds.count, 9)
+        XCTAssertEqual(worlds.count, 10)
 
         let midgard = try XCTUnwrap(worlds.first)
         XCTAssertEqual(midgard.name, "Midgard")
         XCTAssertEqual(midgard.imageName, "worldmap.jpg")
-        XCTAssertEqual(midgard.maps.count, 275)
-        XCTAssertEqual(midgard.dungeonEntrances.count, 34)
+        XCTAssertEqual(midgard.maps.count, 276)
+        XCTAssertEqual(midgard.dungeonEntrances.count, 35)
 
-        let isgard = try XCTUnwrap(worlds.last)
+        let isgard = try XCTUnwrap(worlds.first(where: { $0.name == "Isgard" }))
         XCTAssertEqual(isgard.name, "Isgard")
         XCTAssertEqual(isgard.imageName, "WorldMap_Isgard.jpg")
     }

@@ -83,7 +83,7 @@ final class SkillInfoTableTests: XCTestCase {
         let locale = Locale(languageCode: .spanish)
         let skillInfoTable = SkillInfoTable(locale: locale)
         let heal = skillInfoTable.localizedSkillName(forSkillID: 28)
-        XCTAssertEqual(heal, "Heal")
+        XCTAssertEqual(heal, "Curar")
     }
 
     func testThai() async throws {
