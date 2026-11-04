@@ -50,7 +50,7 @@ struct RemoteClientSettingsView: View {
                             .foregroundStyle(.secondary)
 
                         TextField(text: $remoteClientURLInput) {
-                            Text(verbatim: "https://example.com/client")
+                            Text(verbatim: "https://example.com")
                         }
                         .focused($isURLFocused)
                         .onSubmit(saveRemoteClientURL)
@@ -80,7 +80,10 @@ struct RemoteClientSettingsView: View {
     }
 
     private func remoteClientURL(from input: String) -> URL? {
-        let input = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        var input = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !input.contains("://") {
+            input = "https://" + input
+        }
 
         let regex = #/(?i)https?://(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*\.?|\[[0-9a-f:.]+\])(?::([0-9]{1,5}))?(?:/(?:[^\s?#%]|%[0-9a-f]{2})*)?/#
         guard let match = try? regex.wholeMatch(in: input) else {
@@ -109,6 +112,8 @@ struct RemoteClientSettingsView: View {
         if settings.remoteClientURL != url {
             settings.remoteClientURL = url
         }
+
+        remoteClientURLInput = url.absoluteString
     }
 }
 
