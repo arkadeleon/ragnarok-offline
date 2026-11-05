@@ -59,6 +59,10 @@
     "displayName" : "비공정",
     "signMainTitle" : "비공정"
   },
+  "1@alta" : {
+    "displayName" : "엉킨 마력의 샘",
+    "signMainTitle" : "엉킨 마력의 샘"
+  },
   "1@ba_go" : {
     "displayName" : "시간의 정원-생명의 전당",
     "signMainTitle" : "생명의 전당",
@@ -93,6 +97,15 @@
     "displayName" : "재현된 다크 위스퍼",
     "signMainTitle" : "재현된 다크 위스퍼",
     "signSubTitle" : "제 2 세계"
+  },
+  "1@ch2a" : {
+    "displayName" : "니르홀트",
+    "signMainTitle" : "니르홀트",
+    "signSubTitle" : "미지의 차원"
+  },
+  "1@ch2b" : {
+    "displayName" : "엉킨 마력의 교차점",
+    "signMainTitle" : "엉킨 마력의 교차점"
   },
   "1@ch_t" : {
     "displayName" : "성좌의 탑",
@@ -202,6 +215,11 @@
     "displayName" : "잔당들의 아지트",
     "signMainTitle" : "잔당들의 아지트"
   },
+  "1@gat" : {
+    "displayName" : "수상한 포탈 내부",
+    "signMainTitle" : "수상한 포탈 내부",
+    "signSubTitle" : "독수리오형제"
+  },
   "1@ge_sn" : {
     "displayName" : "게펜 야간 투기장",
     "signMainTitle" : "게펜 야간 투기장"
@@ -293,6 +311,10 @@
     "displayName" : "꿈과 그림자",
     "signMainTitle" : "꿈과 그림자"
   },
+  "1@krns" : {
+    "displayName" : "벨레도르-시험의 장",
+    "signMainTitle" : "벨레도르-시험의 장"
+  },
   "1@lab" : {
     "displayName" : "중앙 실험실",
     "signMainTitle" : "중앙 실험실"
@@ -380,6 +402,11 @@
   "1@oz" : {
     "displayName" : "오즈의 미로",
     "signMainTitle" : "오즈의 미로"
+  },
+  "1@pbs" : {
+    "displayName" : "아기상어의 놀이터",
+    "signMainTitle" : "아기상어의 놀이터",
+    "signSubTitle" : "핑크퐁 아기상어"
   },
   "1@pop1" : {
     "displayName" : "교황 집무실",
@@ -594,6 +621,26 @@
     "signMainTitle" : "Somatology Laboratory",
     "signSubTitle" : "Arena"
   },
+  "2026arena1" : {
+    "displayName" : "Arena Valkyrie Temple",
+    "signMainTitle" : "Valkyrie Temple",
+    "signSubTitle" : "Arena"
+  },
+  "2026arena2" : {
+    "displayName" : "Arena Nogg Road",
+    "signMainTitle" : "Nogg Road",
+    "signSubTitle" : "Arena"
+  },
+  "2026arena3" : {
+    "displayName" : "Arena Ice Cave",
+    "signMainTitle" : "Ice Cave",
+    "signSubTitle" : "Arena"
+  },
+  "2026arena4" : {
+    "displayName" : "Arena Sacred Sessrumnir",
+    "signMainTitle" : "Sacred Sessrumnir",
+    "signSubTitle" : "Arena"
+  },
   "25ros03_01" : {
     "displayName" : "Arena Nightmare Toy Factory",
     "signMainTitle" : "Nightmare Toy Factory",
@@ -688,6 +735,10 @@
     "signMainTitle" : "무지개 호수",
     "signSubTitle" : "환상총서-012"
   },
+  "4@ch_t" : {
+    "displayName" : "흑염룡의 옥좌",
+    "signMainTitle" : "흑염룡의 옥좌"
+  },
   "4@thts" : {
     "displayName" : "고뇌의 기억",
     "signMainTitle" : "고뇌의 기억",
@@ -697,6 +748,10 @@
     "displayName" : "엔들레스 타워 상층",
     "signMainTitle" : "엔들레스 타워 상층"
   },
+  "5@ch_t" : {
+    "displayName" : "흑염룡의 초대",
+    "signMainTitle" : "흑염룡의 초대"
+  },
   "5@thts" : {
     "displayName" : "슬픔의 기억",
     "signMainTitle" : "슬픔의 기억",
@@ -705,6 +760,10 @@
   "5@tower" : {
     "displayName" : "엔들레스 타워 최상층",
     "signMainTitle" : "엔들레스 타워 최상층"
+  },
+  "6@ch_t" : {
+    "displayName" : "흑염룡의 초대",
+    "signMainTitle" : "흑염룡의 초대"
   },
   "6@thts" : {
     "displayName" : "절망의 기억",
@@ -723,6 +782,56 @@
     "displayName" : "타나토스 타워",
     "signMainTitle" : "마검사 타나토스의 기억",
     "signSubTitle" : "타나토스의 기억"
+  },
+  "ab_death1" : {
+    "displayName" : "이차원 바이오스피어-죽음",
+    "signMainTitle" : "표본 환경 - 죽음",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_factory1" : {
+    "displayName" : "이차원 바이오스피어-공장",
+    "signMainTitle" : "표본 환경 - 공장",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_ground1" : {
+    "displayName" : "이차원 바이오스피어-대지",
+    "signMainTitle" : "표본 환경 - 대지",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_ice1" : {
+    "displayName" : "이차원 바이오스피어-혹한",
+    "signMainTitle" : "표본 환경 - 혹한",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_jungle1" : {
+    "displayName" : "이차원 바이오스피어-정글",
+    "signMainTitle" : "표본 환경 - 정글",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_lava1" : {
+    "displayName" : "이차원 바이오스피어-화산",
+    "signMainTitle" : "표본 환경 - 화산",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_soul1" : {
+    "displayName" : "이차원 바이오스피어-영혼",
+    "signMainTitle" : "표본 환경 - 영혼",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_temple1" : {
+    "displayName" : "이차원 바이오스피어-성전",
+    "signMainTitle" : "표본 환경 - 성전",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_valley1" : {
+    "displayName" : "이차원 바이오스피어-계곡",
+    "signMainTitle" : "표본 환경 - 계곡",
+    "signSubTitle" : "이차원 바이오스피어"
+  },
+  "ab_venom1" : {
+    "displayName" : "이차원 바이오스피어-맹독",
+    "signMainTitle" : "표본 환경 - 맹독",
+    "signSubTitle" : "이차원 바이오스피어"
   },
   "abbey01" : {
     "displayName" : "이름 없는 섬 수도원 1층",
@@ -1031,6 +1140,9 @@
     "displayName" : "제 2 마력발전소",
     "signMainTitle" : "제 2 마력발전소"
   },
+  "ba_void" : {
+    "displayName" : "바르문트 저택 내부 침식지"
+  },
   "bat_a01" : {
     "displayName" : "티에라 협곡",
     "signMainTitle" : "티에라 협곡",
@@ -1276,6 +1388,31 @@
     "signMainTitle" : "제로셀 섹터-아크",
     "signSubTitle" : "제 2 세계, 버려진 연구소"
   },
+  "ch2gms" : {
+    "displayName" : "쉘터 제미스",
+    "signMainTitle" : "쉘터 제미스"
+  },
+  "ch2safe1" : {
+    "displayName" : "안전한 장소",
+    "signMainTitle" : "안전한 장소"
+  },
+  "ch2safe2" : {
+    "displayName" : "안전한 장소",
+    "signMainTitle" : "안전한 장소"
+  },
+  "ch2safe3" : {
+    "displayName" : "안전한 장소",
+    "signMainTitle" : "안전한 장소"
+  },
+  "ch2safe4" : {
+    "displayName" : "안전한 장소",
+    "signMainTitle" : "안전한 장소"
+  },
+  "clb_kuma" : {
+    "displayName" : "구마모토 체험 농장",
+    "signMainTitle" : "구마모토 체험 농장",
+    "signSubTitle" : "구마몬"
+  },
   "clock_01" : {
     "displayName" : "시계탑 미지의 지하층",
     "signMainTitle" : "미지의 지하층",
@@ -1349,6 +1486,11 @@
   "dali02" : {
     "displayName" : "차원의 균열",
     "signMainTitle" : "차원의 균열"
+  },
+  "deadroot" : {
+    "displayName" : "죽음의 뿌리",
+    "signMainTitle" : "죽음의 뿌리",
+    "signSubTitle" : "무스펠헤임 침식지"
   },
   "dew_dun01" : {
     "displayName" : "크라카토 화산섬",
@@ -2640,6 +2782,15 @@
     "displayName" : "킬 하이르 별장",
     "signMainTitle" : "킬 하이르 별장"
   },
+  "kin_in01" : {
+    "displayName" : "용지락 내부",
+    "signMainTitle" : "용지락 내부"
+  },
+  "kindlbrk" : {
+    "displayName" : "용지락",
+    "signMainTitle" : "용지락",
+    "signSubTitle" : "무스펠헤임 하르반의 마을"
+  },
   "knight_1-1" : {
     "displayName" : "나이트 전직소"
   },
@@ -3157,9 +3308,29 @@
   "mosk_ship" : {
     "displayName" : "배"
   },
+  "mu_dun01" : {
+    "displayName" : "태초의 불꽃 1층",
+    "signMainTitle" : "태초의 불꽃 1층",
+    "signSubTitle" : "무스펠헤임"
+  },
+  "mu_dun02" : {
+    "displayName" : "태초의 불꽃 2층",
+    "signMainTitle" : "태초의 불꽃 2층",
+    "signSubTitle" : "무스펠헤임"
+  },
   "mu_fild01" : {
     "displayName" : "볼룬드 계곡 외곽",
     "signMainTitle" : "볼룬드 계곡 외곽",
+    "signSubTitle" : "무스펠헤임"
+  },
+  "mu_fild02" : {
+    "displayName" : "볼룬드 평야",
+    "signMainTitle" : "볼룬드 평야",
+    "signSubTitle" : "무스펠헤임"
+  },
+  "mu_fild03" : {
+    "displayName" : "볼룬드 숲",
+    "signMainTitle" : "볼룬드 숲",
     "signSubTitle" : "무스펠헤임"
   },
   "nameless_i" : {
@@ -3446,6 +3617,10 @@
     "signMainTitle" : "청림 호수",
     "signSubTitle" : "페이욘"
   },
+  "pay_mk" : {
+    "displayName" : "페이욘 시장 거리",
+    "signMainTitle" : "페이욘 시장 거리"
+  },
   "payg_cas01" : {
     "displayName" : "명정(明亭)",
     "signMainTitle" : "명정(明亭)",
@@ -3484,6 +3659,11 @@
   },
   "payon_in03" : {
     "displayName" : "페이욘 내부"
+  },
+  "pbse" : {
+    "displayName" : "아기상어의 놀이터",
+    "signMainTitle" : "아기상어의 놀이터",
+    "signSubTitle" : "핑크퐁 아기상어"
   },
   "poring_w01" : {
     "displayName" : "포링대전 대기실",
@@ -4272,9 +4452,19 @@
     "signMainTitle" : "RAG-FES 전시장",
     "signSubTitle" : "라그나로크 페스티벌"
   },
+  "ragsruth" : {
+    "displayName" : "라그스루트",
+    "signMainTitle" : "라그스루트",
+    "signSubTitle" : "미지의 차원"
+  },
   "rebel_in" : {
     "displayName" : "클라나 네미에리",
     "signMainTitle" : "클라나 네미에리"
+  },
+  "rgs_dun1" : {
+    "displayName" : "일그러진 라그스루트",
+    "signMainTitle" : "일그러진 라그스루트",
+    "signSubTitle" : "미지의 차원"
   },
   "rgsr_in" : {
     "displayName" : "레켄베르 부설 연구소",
@@ -4783,6 +4973,10 @@
     "signMainTitle" : "베인스",
     "signSubTitle" : "아루나펠츠 교국 협곡마을"
   },
+  "veledor" : {
+    "displayName" : "성소 벨레도르",
+    "signMainTitle" : "성소 벨레도르"
+  },
   "ver_eju" : {
     "displayName" : "유페로스 동쪽폐허",
     "signMainTitle" : "동쪽폐허",
@@ -4854,6 +5048,26 @@
     "signMainTitle" : "제네릭 연구소",
     "signSubTitle" : "환상총서-004"
   },
+  "vr_hero00" : {
+    "displayName" : "VR 유노-마왕성",
+    "signMainTitle" : "마왕성",
+    "signSubTitle" : "마왕성에서 살아남는 법"
+  },
+  "vr_hero01" : {
+    "displayName" : "VR 유노-마왕성 1층",
+    "signMainTitle" : "마왕성 1층",
+    "signSubTitle" : "마왕성에서 살아남는 법"
+  },
+  "vr_hero02" : {
+    "displayName" : "VR 유노-마왕성 2층",
+    "signMainTitle" : "마왕성 2층",
+    "signSubTitle" : "마왕성에서 살아남는 법"
+  },
+  "vr_hero03" : {
+    "displayName" : "VR 유노-마왕성 3층",
+    "signMainTitle" : "마왕성 3층",
+    "signSubTitle" : "마왕성에서 살아남는 법"
+  },
   "vr_po" : {
     "displayName" : "환상총서-포링테라",
     "signMainTitle" : "포링테라",
@@ -4873,6 +5087,35 @@
     "displayName" : "환상총서-무지개 호수",
     "signMainTitle" : "무지개 호수",
     "signSubTitle" : "환상총서-012"
+  },
+  "vr_prtd03" : {
+    "displayName" : "VR 유노-길드 지하 던전",
+    "signMainTitle" : "길드 지하 던전",
+    "signSubTitle" : "라즈리그스 모의 공성전"
+  },
+  "vr_prtg" : {
+    "displayName" : "VR 유노-발키리 렐름",
+    "signMainTitle" : "발키리 렐름",
+    "signSubTitle" : "라즈리그스 모의 공성전"
+  },
+  "vr_prtg03" : {
+    "displayName" : "VR 유노-라즈리그스",
+    "signMainTitle" : "라즈리그스",
+    "signSubTitle" : "라즈리그스 모의 공성전"
+  },
+  "vr_zrr01" : {
+    "displayName" : "VR 유노-이스가르드 제작 대회",
+    "signMainTitle" : "이스가르드 제작 대회"
+  },
+  "vr_zrr02" : {
+    "displayName" : "VR 유노-얼어붙은 식량 창고",
+    "signMainTitle" : "얼어붙은 식량 창고",
+    "signSubTitle" : "이스가르드 제작 대회"
+  },
+  "vr_zrr03" : {
+    "displayName" : "VR 유노-얼어붙은 보물 창고",
+    "signMainTitle" : "얼어붙은 보물 창고",
+    "signSubTitle" : "이스가르드 제작 대회"
   },
   "wizard_1-1" : {
     "displayName" : "위자드 전직소"
@@ -5017,6 +5260,10 @@
   "yuno_in05" : {
     "displayName" : "이미르의 심장 동력실",
     "signMainTitle" : "이미르의 심장 동력실"
+  },
+  "yuno_lib" : {
+    "displayName" : "유노 도서관 별관",
+    "signSubTitle" : "유노 도서관 별관"
   },
   "yuno_pre" : {
     "displayName" : "슈발츠발드 정부 청사",

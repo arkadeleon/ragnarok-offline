@@ -12203,7 +12203,7 @@
     "statusDescription" : [
       {
         "color" : "#9BCA9B",
-        "text" : "역린찹쌀떡"
+        "text" : "새해 기념"
       },
       {
         "color" : "#FFB062",
@@ -12970,6 +12970,42 @@
       }
     ]
   },
+  "1504" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "도서 : 이스가르드 제작 대회"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "이스가르드 제작 대회"
+      },
+      {
+        "text" : "도서 열람 시간"
+      }
+    ]
+  },
+  "1506" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "도서 : 마왕성에서 살아남는 법"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "마왕성에서 살아남는 법"
+      },
+      {
+        "text" : "도서 열람 시간"
+      }
+    ]
+  },
   "1509" : {
     "statusDescription" : [
       {
@@ -13010,7 +13046,7 @@
     "statusDescription" : [
       {
         "color" : "#9BCA9B",
-        "text" : "아무튼 행운 카드"
+        "text" : "튼튼한 깃털"
       },
       {
         "text" : "MHP + 5%"
@@ -13028,7 +13064,7 @@
     "statusDescription" : [
       {
         "color" : "#9BCA9B",
-        "text" : "초록빛 행운 카드"
+        "text" : "날렵한 깃털"
       },
       {
         "text" : "FLEE + 25"
@@ -13046,7 +13082,7 @@
     "statusDescription" : [
       {
         "color" : "#9BCA9B",
-        "text" : "핑크빛 행운 카드"
+        "text" : "화려한 깃털"
       },
       {
         "text" : "CRI + 10"
@@ -13064,7 +13100,7 @@
     "statusDescription" : [
       {
         "color" : "#9BCA9B",
-        "text" : "보랏빛 행운 카드"
+        "text" : "묵직한 깃털"
       },
       {
         "text" : "ATK + 7%"
@@ -13123,6 +13159,180 @@
       {
         "color" : "#FFB062",
         "text" : "%s"
+      }
+    ]
+  },
+  "1518" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "첫번째 성장의 축복"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "MHP, MSP 증가."
+      },
+      {
+        "text" : "ATK, MATK + 5%."
+      },
+      {
+        "text" : "ATK, MATK + 50."
+      }
+    ]
+  },
+  "1519" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "두번째 성장의 축복"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "공격 속도 증가(공격 후 딜레이 감소)."
+      },
+      {
+        "text" : "변동 캐스팅 감소."
+      },
+      {
+        "text" : "글로벌 쿨타임 감소."
+      }
+    ]
+  },
+  "1520" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "세번째 성장의 축복"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "모든 종족 몬스터에게 주는 물리\/마법 데미지 증가(플레이어 제외)."
+      },
+      {
+        "text" : "모든 속성 및 크기 적에게 주는 물리\/마법 데미지 증가."
+      }
+    ]
+  },
+  "1521" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "네번째 성장의 축복"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "근접 및 원거리 물리 데미지 증가."
+      },
+      {
+        "text" : "크리티컬 및 명중 물리 데미지 증가."
+      },
+      {
+        "text" : "모든 속성 마법 데미지 증가."
+      }
+    ]
+  },
+  "1522" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "다섯번째 성장의 축복"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "모든 특성 스테이터스 증가."
+      },
+      {
+        "text" : "P.ATK, S.MATK 증가."
+      },
+      {
+        "text" : "RES, MRES 증가."
+      }
+    ]
+  },
+  "1523" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "여섯번째 성장의 축복"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "일반형 적에게 주는 물리\/마법 데미지 증가."
+      },
+      {
+        "text" : "보스형 몬스터에게 주는 물리\/마법 데미지 증가."
+      }
+    ]
+  },
+  "1524" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "맛있는 버프"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "일반형 적에게 주는 물리\/마법 데미지 증가."
+      },
+      {
+        "text" : "보스형 몬스터에게 주는 물리\/마법 데미지 증가."
+      }
+    ]
+  },
+  "1525" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "신선한 버프"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "모든 종족 몬스터에게 주는 물리\/마법 데미지 증가."
+      },
+      {
+        "text" : "(플레이어 제외)"
+      }
+    ]
+  },
+  "1526" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "도서 : 라즈리그스 모의 공성전"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "라즈리그스 모의 공성전"
+      },
+      {
+        "text" : "도서 열람 시간"
       }
     ]
   },
@@ -13258,6 +13468,181 @@
       }
     ]
   },
+  "1674" : {
+    "statusDescription" : [
+      {
+        "color" : "#FA6464",
+        "text" : "슬로우 스킬"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "글로벌 쿨타임 증가"
+      }
+    ]
+  },
+  "1675" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "맹수 변신"
+      },
+      {
+        "text" : "MHP + 10%"
+      }
+    ]
+  },
+  "1676" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "격앙 : 맹수"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "맹수 스킬 데미지 증가"
+      },
+      {
+        "text" : "근접 물리 데미지 증가"
+      }
+    ]
+  },
+  "1678" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "피의 포효"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "STR 증가"
+      },
+      {
+        "text" : "LUK 증가"
+      },
+      {
+        "text" : "HIT 증가 "
+      }
+    ]
+  },
+  "1680" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "맹금 변신"
+      },
+      {
+        "text" : "이동속도 증가"
+      }
+    ]
+  },
+  "1681" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "격앙 : 맹금"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "맹금 스킬 데미지 증가"
+      },
+      {
+        "text" : "원거리 물리 데미지 증가"
+      }
+    ]
+  },
+  "1682" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "깃털 고르기"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEX 증가"
+      },
+      {
+        "text" : "AGI 증가"
+      },
+      {
+        "text" : "FLEE 증가 "
+      }
+    ]
+  },
+  "1684" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "얼음의 진리"
+      },
+      {
+        "text" : "수속성 마법 데미지 10% 증가."
+      },
+      {
+        "text" : "수속성 드루이드 스킬 데미지 증가."
+      }
+    ]
+  },
+  "1685" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "바람의 진리"
+      },
+      {
+        "text" : "풍속성 마법 데미지 10% 증가."
+      },
+      {
+        "text" : "풍속성 드루이드 스킬 데미지 증가."
+      }
+    ]
+  },
+  "1686" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "대지의 진리"
+      },
+      {
+        "text" : "지속성 마법 데미지 10% 증가."
+      },
+      {
+        "text" : "지속성 드루이드 스킬 데미지 증가."
+      }
+    ]
+  },
+  "1687" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "자연의 방패"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "DEF, MDEF 증가."
+      },
+      {
+        "text" : "INT, VIT 증가."
+      }
+    ]
+  },
   "1688" : {
     "statusDescription" : [
       {
@@ -13273,6 +13658,536 @@
       },
       {
         "text" : "몬스터로부터 획득하는 아이템 드랍률 0"
+      }
+    ]
+  },
+  "1691" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "변신 후유증"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "변신 불가."
+      }
+    ]
+  },
+  "1692" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "철의 포효"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "받는 모든 피해감소,"
+      }
+    ]
+  },
+  "1693" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "바람 장막"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "받는 모든 피해감소,"
+      },
+      {
+        "text" : "이동속도 증가."
+      }
+    ]
+  },
+  "1694" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "아이스 필라"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "아이스 토템, 아이스 클라우드, 아이스 필라, 아이스 스플래시"
+      },
+      {
+        "text" : "스킬의 데미지 15% 증가."
+      }
+    ]
+  },
+  "1695" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "축전"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "번개 축전."
+      }
+    ]
+  },
+  "1696" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "과충전"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "다음번 사용하는 풍속성 스킬 강화."
+      }
+    ]
+  },
+  "1697" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "성장"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "대지의 꽃망울이 자라나는 중"
+      }
+    ]
+  },
+  "1698" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "자연의 보호"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "받는 모든 피해감소"
+      },
+      {
+        "text" : "HP, SP 회복"
+      }
+    ]
+  },
+  "1702" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "광기 1단계"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
+  },
+  "1703" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "광기 2단계"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
+  },
+  "1704" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "광기 3단계"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
+  },
+  "1705" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "알파 페이즈"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "광기 3단계 적용"
+      }
+    ]
+  },
+  "1706" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "플립 플랩"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "원거리 물리 데미지 증가."
+      },
+      {
+        "text" : "CRI 증가."
+      }
+    ]
+  },
+  "1707" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "플립 플랩"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "원거리 물리 데미지 증가."
+      },
+      {
+        "text" : "CRI 증가."
+      }
+    ]
+  },
+  "1708" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "에이펙스 페이즈"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "피니언 샷 강화"
+      },
+      {
+        "text" : "퀼 스피어 강화"
+      },
+      {
+        "text" : "템페스트 플랩 강화"
+      }
+    ]
+  },
+  "1709" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "질풍 충전"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      }
+    ]
+  },
+  "1710" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "질풍 가속"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "근접 물리 데미지 증가."
+      },
+      {
+        "text" : "원거리 물리 데미지 증가."
+      },
+      {
+        "text" : "모든 속성 마법 데미지 증가."
+      }
+    ]
+  },
+  "1711" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "빙하 거석"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "글레이셜 모노리스의 냉기가 느껴집니다."
+      }
+    ]
+  },
+  "1712" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "솔리드 스톰프"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "받는 근접\/원거리 물리 데미지 감소."
+      },
+      {
+        "text" : "지속성 마법 데미지 증가."
+      }
+    ]
+  },
+  "1713" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "자연의 조화"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "수, 풍, 지 속성 마법 데미지 증가."
+      },
+      {
+        "text" : "수, 풍, 지 속성 저항감소."
+      }
+    ]
+  },
+  "1715" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "펄스 오브 매드니스"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "광기 획득 가능"
+      }
+    ]
+  },
+  "2159" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "축전"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "번개 축전."
+      }
+    ]
+  },
+  "2160" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "성장"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "대지의 꽃망울이 자라나는 중"
+      }
+    ]
+  },
+  "2161" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "서번트 웨폰"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "지속시간 동안 무기체 소환"
+      },
+      {
+        "text" : "일반 물리 공격 시, 무기체 사출"
+      }
+    ]
+  },
+  "2162" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "집중 조준 활성화"
+      },
+      {
+        "text" : "ATK 증가"
+      },
+      {
+        "text" : "HIT 증가"
+      },
+      {
+        "text" : "CRI 증가"
+      }
+    ]
+  },
+  "2163" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "베노미그니션"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "일정 시간동안 크리티컬이 발생하지 않는다."
+      },
+      {
+        "text" : "HIT 증가"
+      },
+      {
+        "text" : "명중 물리 데미지 증가"
+      }
+    ]
+  },
+  "2164" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "엘레멘탈 인테그레이션"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "일반 물리 공격 시, 일정 확률로 마법 발동."
+      }
+    ]
+  },
+  "2165" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "위성"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "위성이 빛을 모으는 중"
+      }
+    ]
+  },
+  "2166" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "별누리위성"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "모든 위성이 빛을 되찾은 상태"
+      }
+    ]
+  },
+  "2170" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "귀설 공명 - 철호"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "철호 기술의 데미지 증가"
+      }
+    ]
+  },
+  "2171" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "귀설 공명 - 현록"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "현록 기술의 데미지 증가"
+      }
+    ]
+  },
+  "2172" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "차오르기"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "명중 물리 데미지, 크리티컬 데미지 증가"
+      },
+      {
+        "text" : "근접, 원거리 물리 데미지 증가"
+      }
+    ]
+  },
+  "2173" : {
+    "statusDescription" : [
+      {
+        "color" : "#9BCA9B",
+        "text" : "프라임드 트랩"
+      },
+      {
+        "color" : "#FFB062",
+        "text" : "%s"
+      },
+      {
+        "text" : "트랩 사전 준비 상태"
       }
     ]
   }
