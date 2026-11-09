@@ -440,12 +440,19 @@ final class DatabaseModel {
                 return
             }
 
-            self.jobs = jobs.map { job in
-                let localizedName = job.id.localizedName.map { String(localized: $0) }
-                let skillTree = skillTrees.first(where: { $0.job == job.id })
-                let model = JobModel(mode: mode, job: job, localizedName: localizedName, skillTree: skillTree, resourceManager: resourceManager)
-                return model
-            }
+            let availableJobIDs = JobID.availableJobIDs(for: mode)
+            let jobsByID = Dictionary(uniqueKeysWithValues: jobs.map { ($0.id, $0) })
+
+            self.jobs = availableJobIDs
+                .compactMap {
+                    jobsByID[$0]
+                }
+                .map { job in
+                    let localizedName = job.id.localizedName.map(String.init(localized:))
+                    let skillTree = skillTrees.first(where: { $0.job == job.id })
+                    let model = JobModel(mode: mode, job: job, localizedName: localizedName, skillTree: skillTree, resourceManager: resourceManager)
+                    return model
+                }
 
             self.jobSearchIndex = DatabaseSearchIndex(self.jobs) {
                 [$0.id.stringValue, $0.localizedName].compactMap({ $0 })

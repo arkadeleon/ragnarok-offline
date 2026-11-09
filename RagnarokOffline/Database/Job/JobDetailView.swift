@@ -16,17 +16,9 @@ struct JobDetailView: View {
 
     var body: some View {
         DatabaseRecordDetailView {
-            ZStack {
-                if let animatedImage = job.animatedImage, let firstFrame = animatedImage.firstFrame {
-                    Image(firstFrame, scale: animatedImage.scale, label: Text(job.displayName))
-                } else {
-                    Image(systemName: "person")
-                        .font(.system(size: 100, weight: .thin))
-                        .foregroundStyle(Color.secondary)
-                }
-            }
-            .frame(height: 200)
-            .stretchy()
+            JobImageView(job: job)
+                .frame(height: 200)
+                .stretchy()
 
             DatabaseRecordSectionView(attributes: job.attributes) {
                 Text("Info", tableName: "Database")
@@ -103,9 +95,6 @@ struct JobDetailView: View {
             }
         }
         .navigationTitle(job.displayName)
-        .task {
-            await job.fetchAnimatedImage()
-        }
         .task {
             skills = await database.skills(for: job.id)
         }

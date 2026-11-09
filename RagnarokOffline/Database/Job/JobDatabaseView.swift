@@ -15,9 +15,13 @@ struct JobDatabaseView: View {
     @State private var filteredJobs: [JobModel] = []
 
     var body: some View {
-        ImageGrid(filteredJobs) { job in
+        ImageGrid(filteredJobs, itemWidth: 112) { job in
             NavigationLink(value: job) {
-                JobGridCell(job: job)
+                ImageGridCell(title: job.displayName) {
+                    JobImageView(job: job)
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .frame(width: 112, height: 140)
+                }
             }
         }
         .background(.background)
