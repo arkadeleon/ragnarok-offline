@@ -9,6 +9,7 @@ import RagnarokResources
 import SwiftUI
 
 struct CharacterSimulatorView: View {
+    @Environment(DatabaseModel.self) private var database
     @Environment(CharacterSimulator.self) private var characterSimulator
 
     var body: some View {
@@ -37,7 +38,14 @@ struct CharacterSimulatorView: View {
         }
         .navigationTitle(Text("Character Simulator", tableName: "CharacterSimulator"))
         .task {
-            await characterSimulator.renderSprite()
+            await database.fetchJobs()
+
+            if !database.jobs.contains(where: { $0.id == characterSimulator.configuration.jobID }),
+               let firstJob = database.jobs.first {
+                characterSimulator.configuration.jobID = firstJob.id
+            } else {
+                await characterSimulator.renderSprite()
+            }
         }
     }
 }
@@ -46,6 +54,6 @@ struct CharacterSimulatorView: View {
     NavigationStack {
         CharacterSimulatorView()
     }
-    .environment(CharacterSimulator(resourceManager: .previewing))
     .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
+    .environment(CharacterSimulator(resourceManager: .previewing))
 }

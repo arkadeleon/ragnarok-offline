@@ -12,8 +12,8 @@ struct CharacterEquipmentListView: View {
     var category: CharacterEquipmentCategory
     @Binding var selection: ItemModel?
 
-    @Environment(DatabaseModel.self) private var database
     @Environment(\.dismiss) private var dismiss
+    @Environment(DatabaseModel.self) private var database
 
     @State private var searchText = ""
     @State private var items: [ItemModel] = []

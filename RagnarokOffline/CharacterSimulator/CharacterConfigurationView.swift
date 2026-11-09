@@ -11,6 +11,7 @@ import RagnarokSprite
 import SwiftUI
 
 struct CharacterConfigurationView: View {
+    @Environment(DatabaseModel.self) private var database
     @Environment(CharacterSimulator.self) private var characterSimulator
 
     var body: some View {
@@ -19,12 +20,13 @@ struct CharacterConfigurationView: View {
         Form {
             Section {
                 Picker(selection: $characterSimulator.configuration.jobID) {
-                    ForEach(JobID.allCases, id: \.rawValue) { jobID in
-                        Text(jobID.stringValue).tag(jobID)
+                    ForEach(database.jobs) { job in
+                        Text(job.displayName).tag(job.id)
                     }
                 } label: {
                     Text("Job", tableName: "CharacterSimulator")
                 }
+                .disabled(database.jobs.isEmpty)
 
                 Picker(selection: $characterSimulator.configuration.gender) {
                     Text(Gender.female.localizedName).tag(Gender.female)
@@ -130,6 +132,6 @@ struct CharacterConfigurationView: View {
 
 #Preview {
     CharacterConfigurationView()
-        .environment(CharacterSimulator(resourceManager: .previewing))
         .environment(DatabaseModel(mode: .renewal, resourceManager: .previewing))
+        .environment(CharacterSimulator(resourceManager: .previewing))
 }
