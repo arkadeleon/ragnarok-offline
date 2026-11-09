@@ -530,27 +530,27 @@ extension MapScene {
             guard let self else {
                 return
             }
-            if let action = pendingArrivalAction {
-                pendingArrivalAction = nil
+            if let action = pendingArrivalAction.take() {
                 action()
             }
         }
     }
 
     func performArrivalAction() {
-        guard let action = pendingArrivalAction else {
+        guard let action = pendingArrivalAction.take() else {
             return
         }
 
         arrivalTask?.cancel()
         arrivalTask = nil
-        pendingArrivalAction = nil
+
         action()
     }
 
     private func cancelArrivalAction() {
         arrivalTask?.cancel()
         arrivalTask = nil
+
         pendingArrivalAction = nil
     }
 
