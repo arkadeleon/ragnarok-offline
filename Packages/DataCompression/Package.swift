@@ -16,15 +16,8 @@ let package = Package(
         ),
     ],
     targets: [
-        .systemLibrary(
-            name: "CZlib",
-            providers: [
-                .apt(["libz-dev"])
-            ]
-        ),
         .target(
-            name: "DataCompression",
-            dependencies: ["CZlib"]
+            name: "DataCompression"
         ),
         .testTarget(
             name: "DataCompressionTests",

@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2026/11/4.
 //
 
-import CZlib
+import zlib
 
 public enum Zlib {
     public struct Result: Sendable {
@@ -38,7 +38,7 @@ public enum Zlib {
                     stream.avail_in = UInt32(bytes.count)
                     stream.next_out = destination.bindMemory(to: UInt8.self).baseAddress
                     stream.avail_out = UInt32(capacity)
-                    return CZlib.inflate(&stream, Z_FINISH)
+                    return zlib.inflate(&stream, Z_FINISH)
                 }
             }
             if status == Z_STREAM_END {
