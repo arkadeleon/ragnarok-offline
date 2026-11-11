@@ -78,6 +78,7 @@ final class NetworkClientTests: XCTestCase {
     }
 
     func testNetworkClient() async throws {
+
         // MARK: - Start login client
 
         let loginClient = NetworkClient(name: "Login", address: "127.0.0.1", port: 6900)

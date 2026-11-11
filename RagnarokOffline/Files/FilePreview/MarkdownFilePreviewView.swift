@@ -49,12 +49,24 @@ struct MarkdownFilePreviewView: View {
                 closeLists()
                 blocks.append("<hr>")
             } else if let match = line.wholeMatch(of: /\d+\. (.+)/) {
-                if inUnorderedList { blocks.append("</ul>"); inUnorderedList = false }
-                if !inOrderedList { blocks.append("<ol>"); inOrderedList = true }
+                if inUnorderedList {
+                    blocks.append("</ul>")
+                    inUnorderedList = false
+                }
+                if !inOrderedList {
+                    blocks.append("<ol>")
+                    inOrderedList = true
+                }
                 blocks.append("<li>\(inlineHTML(String(match.output.1)))</li>")
             } else if let match = line.wholeMatch(of: /- (.+)/) {
-                if inOrderedList { blocks.append("</ol>"); inOrderedList = false }
-                if !inUnorderedList { blocks.append("<ul>"); inUnorderedList = true }
+                if inOrderedList {
+                    blocks.append("</ol>")
+                    inOrderedList = false
+                }
+                if !inUnorderedList {
+                    blocks.append("<ul>")
+                    inUnorderedList = true
+                }
                 blocks.append("<li>\(inlineHTML(String(match.output.1)))</li>")
             } else if line.isEmpty {
                 closeLists()

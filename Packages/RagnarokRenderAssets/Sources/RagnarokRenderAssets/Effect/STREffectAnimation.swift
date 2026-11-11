@@ -16,7 +16,7 @@ public struct STREffectAnimation: Sendable {
     public let textureImages: [String : CGImage]
 
     public var duration: TimeInterval {
-        return TimeInterval(frames.count) / TimeInterval(fps)
+        TimeInterval(frames.count) / TimeInterval(fps)
     }
 
     public init(str: STR, textureImages: [String : CGImage]) {

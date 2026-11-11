@@ -178,7 +178,7 @@ final class RSMModelTreeBuilder {
         for builder in builders where builder.parent == nil && builder !== rootBuilder {
             _ = materialize(builder)
         }
-        let nodes = nodesByIndex.compactMap { $0 }
+        let nodes = nodesByIndex.compactMap(\.self)
 
         return Result(
             rootNode: rootNode,

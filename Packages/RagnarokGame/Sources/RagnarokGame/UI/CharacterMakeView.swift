@@ -221,9 +221,11 @@ private struct StatHexagonPanel: View {
     @Binding var character: CharacterInfo
 
     private let statButtonRadius: CGFloat = 97
+
     private var statButtonDiagonalX: CGFloat {
         statButtonRadius * CGFloat(sin(Double.pi / 3))
     }
+
     private var statButtonDiagonalY: CGFloat {
         statButtonRadius * CGFloat(cos(Double.pi / 3))
     }
@@ -254,7 +256,9 @@ private struct StatHexagonPanel: View {
                 }
                 var hexPath = Path()
                 hexPath.move(to: vertices[0])
-                for v in vertices.dropFirst() { hexPath.addLine(to: v) }
+                for v in vertices.dropFirst() {
+                    hexPath.addLine(to: v)
+                }
                 hexPath.closeSubpath()
                 context.stroke(hexPath, with: .color(lineColor), lineWidth: 1)
             }

@@ -41,7 +41,6 @@ public func rotateQuat(_ mat: simd_float4x4, w: simd_float4) -> simd_float4x4 {
     let c = norm[2]
     let d = norm[3]
 
-
     let m = simd_float4x4(
         [1.0 - 2.0 * (b * b + c * c), 2.0 * (a * b + c * d),       2.0 * (a * c - b * d),       0.0],
         [2.0 * (a * b - c * d),       1.0 - 2.0 * (a * a + c * c), 2.0 * (c * b + a * d),       0.0],

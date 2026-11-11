@@ -41,7 +41,7 @@ extension BinaryDecodable {
         }
 
         let decoder = BinaryDecoder(stream: stream)
-        _ = try? Self.init(from: decoder)
+        _ = try? Self(from: decoder)
         let decodedLength = Int16(stream.position)
         return decodedLength
     }

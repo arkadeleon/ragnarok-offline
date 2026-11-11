@@ -1,5 +1,46 @@
 --swift-version 6.0
 --language-mode 6
 
+--exclude swift-rathena
+--exclude **/Generated/**
+
+--rules blankLineAfterImports
+--rules blankLinesAroundMark
+--rules blankLinesAtEndOfScope
+--rules blankLinesBetweenChainedFunctions
+--rules blankLinesBetweenScopes
+--rules braces
+--rules consecutiveBlankLines
+--rules duplicateImports
+--rules elseOnSameLine
+--rules linebreakAtEndOfFile
+--rules linebreaks
+--rules preferKeyPath
+--rules redundantGet
+--rules redundantInit
+--rules redundantOptionalBinding
+--rules redundantReturn
+--rules redundantVoidReturnType
+--rules semicolons
 --rules sortImports
+--rules spaceAroundBraces
+--rules spaceAroundBrackets
+--rules spaceAroundGenerics
+--rules spaceAroundParens
+--rules spaceInsideBraces
+--rules spaceInsideGenerics
+--rules trailingSpace
+--rules typeSugar
+--rules void
+--rules wrapDoBodies
+--rules wrapEnumCases
+--rules wrapFunctionBodies
+--rules wrapGuardStatementBodies
+--rules wrapIfExpressionBodies
+--rules wrapIfStatementBodies
+--rules wrapLoopBodies
+--rules wrapPropertyBodies
+
+--guard-else same-line
 --import-grouping testable-last
+--semicolons never

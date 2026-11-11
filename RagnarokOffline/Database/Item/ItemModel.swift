@@ -245,7 +245,7 @@ final class ItemModel {
             attributes.append(.init(name: LocalizedStringResource("Gradable", table: "Database"), value: item.gradable))
             attributes.append(.init(name: LocalizedStringResource("View", table: "Database"), value: item.view))
         default:
-            break;
+            break
         }
 
         return attributes

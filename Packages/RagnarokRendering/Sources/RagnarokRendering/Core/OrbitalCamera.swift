@@ -64,12 +64,16 @@ public class OrbitalCamera {
     }
 
     public func update(atTime time: TimeInterval) {
-        guard var animation = targetAnimation else { return }
+        guard var animation = targetAnimation else {
+            return
+        }
         if animation.startTime == nil {
             animation.startTime = time
             targetAnimation = animation
         }
-        guard let startTime = animation.startTime else { return }
+        guard let startTime = animation.startTime else {
+            return
+        }
         let progress = min(Float((time - startTime) / animation.duration), 1)
         let eased = 1 - pow(1 - progress, 3)
         target = animation.startTarget + (animation.endTarget - animation.startTarget) * eased
