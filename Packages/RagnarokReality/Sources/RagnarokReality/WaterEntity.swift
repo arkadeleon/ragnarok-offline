@@ -20,7 +20,7 @@ extension Entity {
 
         let mesh = try await {
             var descriptor = MeshDescriptor(name: "water-mesh")
-            descriptor.positions = MeshBuffer(asset.mesh.vertices.map({ $0.position }))
+            descriptor.positions = MeshBuffer(asset.mesh.vertices.map(\.position))
             descriptor.textureCoordinates = MeshBuffer(asset.mesh.vertices.map({
                 SIMD2(x: $0.textureCoordinate.x, y: $0.textureCoordinate.y)
             }))

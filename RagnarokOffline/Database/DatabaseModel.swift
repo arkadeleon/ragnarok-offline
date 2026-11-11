@@ -134,7 +134,7 @@ final class DatabaseModel {
             )
 
             self.itemSearchIndex = DatabaseSearchIndex(self.items) {
-                ["#\($0.id)", $0.aegisName, $0.name, $0.localizedName].compactMap({ $0 })
+                ["#\($0.id)", $0.aegisName, $0.name, $0.localizedName].compactMap(\.self)
             }
         }
 
@@ -455,7 +455,7 @@ final class DatabaseModel {
                 }
 
             self.jobSearchIndex = DatabaseSearchIndex(self.jobs) {
-                [$0.id.stringValue, $0.localizedName].compactMap({ $0 })
+                [$0.id.stringValue, $0.localizedName].compactMap(\.self)
             }
         }
 
@@ -494,7 +494,7 @@ final class DatabaseModel {
             )
 
             self.mapSearchIndex = DatabaseSearchIndex(self.maps) {
-                [$0.name, $0.localizedName].compactMap({ $0 })
+                [$0.name, $0.localizedName].compactMap(\.self)
             }
         }
 
@@ -544,7 +544,7 @@ final class DatabaseModel {
             )
 
             self.monsterSearchIndex = DatabaseSearchIndex(self.monsters) {
-                ["#\($0.id)", $0.aegisName, $0.name, $0.localizedName].compactMap({ $0 })
+                ["#\($0.id)", $0.aegisName, $0.name, $0.localizedName].compactMap(\.self)
             }
         }
 
@@ -797,7 +797,7 @@ final class DatabaseModel {
             )
 
             self.skillSearchIndex = DatabaseSearchIndex(self.skills) {
-                ["#\($0.id)", $0.aegisName, $0.name, $0.localizedName].compactMap({ $0 })
+                ["#\($0.id)", $0.aegisName, $0.name, $0.localizedName].compactMap(\.self)
             }
         }
 
@@ -878,7 +878,7 @@ final class DatabaseModel {
             )
 
             self.statusChangeSearchIndex = DatabaseSearchIndex(self.statusChanges) {
-                [$0.status.stringValue, $0.localizedName].compactMap({ $0 })
+                [$0.status.stringValue, $0.localizedName].compactMap(\.self)
             }
         }
 

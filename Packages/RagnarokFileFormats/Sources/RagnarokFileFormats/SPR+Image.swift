@@ -65,7 +65,7 @@ extension SPR {
                         return [color.red, color.green, color.blue, 255]
                     }
                 }
-                .flatMap({ $0 })
+                .flatMap(\.self)
             guard let provider = CGDataProvider(data: Data(bitmapData) as CFData) else {
                 return nil
             }

@@ -745,14 +745,14 @@ extension Skill {
                 .left(0)
             }
             self.state = try container.decodeIfPresent(SkillStateRequirement.self, forKey: .state) ?? .none
-            self.status = try container.decodeIfPresent([String : Bool].self, forKey: .status)?.keys.map({ $0 }) ?? []
+            self.status = try container.decodeIfPresent([String : Bool].self, forKey: .status)?.keys.map(\.self) ?? []
             self.spiritSphereCost = if let spiritSphereCost = try container.decodeIfPresent(EitherNode<Int, [Skill.Requires.LevelSpiritSphereCost]>.self, forKey: .spiritSphereCost) {
                 spiritSphereCost.map(right: { $0.map(\.spiritSphereCost) })
             } else {
                 .left(0)
             }
             self.itemCost = try container.decodeIfPresent([Skill.Requires.LevelItemCost].self, forKey: .itemCost) ?? []
-            self.equipment = try container.decodeIfPresent([String : Bool].self, forKey: .equipment)?.keys.map({ $0 }) ?? []
+            self.equipment = try container.decodeIfPresent([String : Bool].self, forKey: .equipment)?.keys.map(\.self) ?? []
         }
     }
 }

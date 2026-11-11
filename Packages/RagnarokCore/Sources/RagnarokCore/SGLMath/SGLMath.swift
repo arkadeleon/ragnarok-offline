@@ -8,11 +8,11 @@
 import simd
 
 public func radians<T: FloatingPoint>(_ degrees: T) -> T {
-    return degrees * .pi / 180
+    degrees * .pi / 180
 }
 
 public func degrees<T: FloatingPoint>(_ radians: T) -> T {
-    return radians * 180 / .pi
+    radians * 180 / .pi
 }
 
 public func matrix_translate(_ m: simd_float4x4, _ v: simd_float3) -> simd_float4x4 {
@@ -64,7 +64,7 @@ public func matrix_rotate(_ m: simd_float4x4, _ angle: Float, _ v: simd_float3) 
 }
 
 public func matrix_scale(_ m: simd_float4x4, _ v: simd_float3) -> simd_float4x4 {
-    return simd_float4x4(
+    simd_float4x4(
         m[0] * v[0],
         m[1] * v[1],
         m[2] * v[2],

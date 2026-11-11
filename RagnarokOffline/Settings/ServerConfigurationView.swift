@@ -5,8 +5,8 @@
 //  Created by Leon Li on 2026/8/29.
 //
 
-import SwiftUI
 import rAthenaResources
+import SwiftUI
 
 struct ServerConfigurationView: View {
     var serverConfiguration: ServerConfiguration

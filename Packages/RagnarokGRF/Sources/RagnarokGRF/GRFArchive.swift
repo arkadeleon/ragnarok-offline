@@ -47,7 +47,7 @@ public actor GRFArchive {
 
         let beginTime = CFAbsoluteTimeGetCurrent()
 
-        var directories = Set(grf.table.entries.map({ $0.path.parent }))
+        var directories = Set(grf.table.entries.map(\.path.parent))
         for directory in directories {
             var parent = directory
             repeat {

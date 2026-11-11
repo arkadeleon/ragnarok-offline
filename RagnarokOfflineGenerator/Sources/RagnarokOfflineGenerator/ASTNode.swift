@@ -67,8 +67,12 @@ struct ASTNode: Decodable {
 
     func findCallExprs(fn: String) -> [ASTNode] {
         findNodes { node in
-            guard node.kind == "CallExpr" else { return false }
-            guard let first = node.inner?.first else { return false }
+            guard node.kind == "CallExpr" else {
+                return false
+            }
+            guard let first = node.inner?.first else {
+                return false
+            }
 
             let declRefExpr = first.findNode { node in
                 node.kind == "DeclRefExpr" && node.referencedDecl?.name == fn

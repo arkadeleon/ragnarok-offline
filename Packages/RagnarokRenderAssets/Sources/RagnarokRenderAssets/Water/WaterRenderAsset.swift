@@ -69,8 +69,12 @@ public struct WaterRenderAsset {
                         let y0 = Float((y + 0) % 2) / 2
                         var x1 = Float((x + 1) % 2) / 2
                         var y1 = Float((y + 1) % 2) / 2
-                        if x1 == 0 { x1 = 1 }
-                        if y1 == 0 { y1 = 1 }
+                        if x1 == 0 {
+                            x1 = 1
+                        }
+                        if y1 == 0 {
+                            y1 = 1
+                        }
 
                         let v0 = WaterVertex(
                             position: [(Float(x) + 0) * 2, parameters.level / 5, (Float(y) + 0) * 2],

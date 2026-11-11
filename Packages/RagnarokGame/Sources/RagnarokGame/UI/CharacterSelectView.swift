@@ -114,7 +114,6 @@ struct CharacterSelectView: View {
                 }
                 .buttonStyle(.game)
                 .frame(width: 42, height: 20)
-
             }
         }
         .gameWindowTitle(Text("Character Select", bundle: #bundle))

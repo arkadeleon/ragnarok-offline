@@ -18,7 +18,7 @@ public struct SPREffectAnimation: Sendable {
         let action = act.action(at: actionIndex)
         let animation = action?.animation(using: spr.imagesBySpriteType())
 
-        frameImages = animation?.frames.compactMap { $0 } ?? []
+        frameImages = animation?.frames.compactMap(\.self) ?? []
         frameInterval = TimeInterval(animation?.frameInterval ?? 1 / 12)
         frameSize = [
             Float(animation?.frameWidth ?? 0),

@@ -84,7 +84,7 @@ final public class NPCDatabase: Sendable {
             }
 
             var mergedCommands = ScriptCommands()
-            for commands in commandsByTask.compactMap({ $0 }) {
+            for commands in commandsByTask.compactMap(\.self) {
                 mergedCommands.merge(commands)
             }
             return mergedCommands

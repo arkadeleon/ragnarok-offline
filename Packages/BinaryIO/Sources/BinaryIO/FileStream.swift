@@ -48,10 +48,10 @@ public class FileStream: Stream {
     }
 
     public func read(_ buffer: UnsafeMutableRawPointer, count: Int) throws -> Int {
-        return fread(buffer, 1, count, file)
+        fread(buffer, 1, count, file)
     }
 
     public func write(_ buffer: UnsafeRawPointer, count: Int) throws -> Int {
-        return fwrite(buffer, 1, count, file)
+        fwrite(buffer, 1, count, file)
     }
 }

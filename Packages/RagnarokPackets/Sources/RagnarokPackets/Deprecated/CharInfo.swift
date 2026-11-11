@@ -169,7 +169,7 @@ public struct _CharInfo: BinaryDecodable, Sendable {
         hairColor = try decoder.decode(UInt8.self)
         bIsChangedCharName = try decoder.decode(UInt16.self)
 
-        if (PACKET_VERSION >= 20100720 && PACKET_VERSION <= 20100727) || 
+        if (PACKET_VERSION >= 20100720 && PACKET_VERSION <= 20100727) ||
             PACKET_VERSION >= 20100803 {
             mapName = try decoder.decode(String.self, lengthOfBytes: 16, encoding: .utf8)
         } else {

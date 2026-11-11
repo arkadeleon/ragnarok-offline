@@ -120,30 +120,58 @@ struct JSONNode: Identifiable, Sendable {
 
 extension JSONNode {
     var isObject: Bool {
-        if case .object = payload { true } else { false }
+        if case .object = payload {
+            true
+        } else {
+            false
+        }
     }
 
     var isArray: Bool {
-        if case .array = payload { true } else { false }
+        if case .array = payload {
+            true
+        } else {
+            false
+        }
     }
 
     var isChunk: Bool {
-        if case .chunk = payload { true } else { false }
+        if case .chunk = payload {
+            true
+        } else {
+            false
+        }
     }
 
     var isString: Bool {
-        if case .string = payload { true } else { false }
+        if case .string = payload {
+            true
+        } else {
+            false
+        }
     }
 
     var isNumber: Bool {
-        if case .number = payload { true } else { false }
+        if case .number = payload {
+            true
+        } else {
+            false
+        }
     }
 
     var isBoolean: Bool {
-        if case .boolean = payload { true } else { false }
+        if case .boolean = payload {
+            true
+        } else {
+            false
+        }
     }
 
     var isNull: Bool {
-        if case .null = payload { true } else { false }
+        if case .null = payload {
+            true
+        } else {
+            false
+        }
     }
 }

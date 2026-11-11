@@ -74,7 +74,7 @@ extension _PACKET_AC_ACCEPT_LOGIN {
         public var userCount: UInt16
         public var state: UInt16
         public var property: UInt16
-        
+
         public init(from decoder: BinaryDecoder) throws {
             ip = try decoder.decode(UInt32.self)
             port = try decoder.decode(UInt16.self)
@@ -82,7 +82,7 @@ extension _PACKET_AC_ACCEPT_LOGIN {
             userCount = try decoder.decode(UInt16.self)
             state = try decoder.decode(UInt16.self)
             property = try decoder.decode(UInt16.self)
-            
+
             if PACKET_VERSION >= 20170315 {
                 _ = try decoder.decode([UInt8].self, count: 128)
             }

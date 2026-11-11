@@ -140,7 +140,7 @@ extension ComposedSprite {
                     )
                 }
 
-                for try await part in taskGroup.compactMap({ $0 }) {
+                for try await part in taskGroup.compactMap(\.self) {
                     parts.append(part)
                 }
 
@@ -189,7 +189,7 @@ extension ComposedSprite {
                     )
                 }
 
-                for try await part in taskGroup.compactMap({ $0 }) {
+                for try await part in taskGroup.compactMap(\.self) {
                     parts.append(part)
                 }
 
@@ -226,7 +226,6 @@ extension ComposedSprite.Part {
             if let spritePath = pathGenerator.generateAlternatePlayerBodySpritePath(job: job, gender: gender, costumeID: outfit, madoType: madoType) {
                 bodySprite = try await resourceManager.sprite(with: (spritePath, palettePath))
             }
-
 
         } else {
             var palettePath: ResourcePath?

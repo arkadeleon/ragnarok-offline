@@ -15,6 +15,7 @@ public class Camera {
             position = [0, 0, defaultDistance]
         }
     }
+
     public var minimumDistance: Float = 0
     public var maximumDistance: Float = 20
 

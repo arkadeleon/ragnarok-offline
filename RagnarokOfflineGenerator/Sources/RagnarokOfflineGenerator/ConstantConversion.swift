@@ -6,7 +6,9 @@
 //
 
 let allConstantConversions: [ConstantConversion] = [
+
     // MARK: - common/mmo.hpp
+
     .cEnum(
         source: "common/mmo.hpp",
         type: "e_enchantgrade",
@@ -107,7 +109,9 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "ItemBound",
         extensions: [.decodable]
     ),
+
     // MARK: - map/battle.hpp
+
     .cEnum(
         source: "map/battle.hpp",
         type: "e_battle_flag",
@@ -129,7 +133,9 @@ let allConstantConversions: [ConstantConversion] = [
         outputFormat: .hex,
         extensions: [.rawRepresentable, .decodable]
     ),
+
     // MARK: - map/clif.hpp
+
     .cEnum(
         source: "map/clif.hpp",
         type: "clr_type",
@@ -155,7 +161,9 @@ let allConstantConversions: [ConstantConversion] = [
         prefix: "NOTIFYEFFECT_",
         outputType: "NotifyEffect"
     ),
+
     // MARK: - map/itemdb.hpp
+
     .optionSet(
         source: "map/itemdb.hpp",
         type: "e_item_job",
@@ -178,7 +186,9 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "ItemGroupAlgorithm",
         extensions: [.decodable]
     ),
+
     // MARK: - map/map.hpp
+
     .cEnum(
         source: "map/map.hpp",
         type: "e_mapid",
@@ -262,7 +272,9 @@ let allConstantConversions: [ConstantConversion] = [
         ],
         outputType: "Look"
     ),
+
     // MARK: - map/mob.hpp
+
     .cEnum(
         source: "map/mob.hpp",
         type: "e_size",
@@ -297,7 +309,9 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "MonsterClass",
         extensions: [.decodable]
     ),
+
     // MARK: - map/npc.hpp
+
     .cEnum(
         source: "map/npc.hpp",
         type: "e_job_types",
@@ -314,7 +328,9 @@ let allConstantConversions: [ConstantConversion] = [
         outputPrefix: "jt_",
         extensions: [.decodable]
     ),
+
     // MARK: - map/path.hpp
+
     .cEnum(
         source: "map/path.hpp",
         type: "directions",
@@ -325,7 +341,9 @@ let allConstantConversions: [ConstantConversion] = [
         ],
         outputType: "Direction"
     ),
+
     // MARK: - map/pc.hpp
+
     .cEnum(
         source: "map/pc.hpp",
         type: "e_params",
@@ -384,7 +402,9 @@ let allConstantConversions: [ConstantConversion] = [
         ],
         outputType: "MadoType"
     ),
+
     // MARK: - map/script.hpp
+
     .cEnum(
         source: "map/script.hpp",
         type: "e_special_effects",
@@ -395,7 +415,9 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "EffectID",
         extensions: [.decodable]
     ),
+
     // MARK: - map/skill.hpp
+
     .cEnum(
         source: "map/skill.hpp",
         type: "e_skill_nk",
@@ -491,7 +513,9 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "SkillUnitID",
         extensions: [.rawRepresentable, .decodable]
     ),
+
     // MARK: - map/status.hpp
+
     .cEnum(
         source: "map/status.hpp",
         type: "sc_type",

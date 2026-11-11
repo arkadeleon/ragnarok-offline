@@ -54,7 +54,6 @@ struct GameRingSector: Shape {
                 gap: 4
             )
         }
-
     }
     .frame(width: 160, height: 160)
 }

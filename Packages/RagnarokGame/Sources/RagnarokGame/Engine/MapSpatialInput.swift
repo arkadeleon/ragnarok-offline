@@ -8,9 +8,9 @@
 #if os(visionOS)
 
 import RagnarokRendering
+import simd
 import Spatial
 import SwiftUI
-import simd
 
 /// Handles the pinches that the viewer makes in the immersive space.
 ///
