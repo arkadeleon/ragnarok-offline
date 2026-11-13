@@ -1,0 +1,148 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "ADA63821",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6473837561",
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_developerTeamID" : "GG76KD534U",
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 816240087.19161201,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+
+    ],
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "22564162",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "RagOff Patron",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "",
+          "displayName" : "RagOff 赞助者",
+          "locale" : "zh_Hans"
+        }
+      ],
+      "name" : "Patron",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "billingPlans" : [
+            {
+              "billingPlanType" : "BILLED_UPFRONT",
+              "commitmentDisplayPrice" : "0.99",
+              "displayPrice" : "0.99",
+              "internalID" : "6832916276_BILLED_UPFRONT",
+              "isEnabled" : true
+            }
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "6832916276",
+          "introductoryOffers" : [
+
+          ],
+          "localizations" : [
+            {
+              "description" : "Support development. Get early access to new features.",
+              "displayName" : "Patron Monthly",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "支持持续开发，提前体验新功能。",
+              "displayName" : "赞助者月度订阅",
+              "locale" : "zh_Hans"
+            }
+          ],
+          "productID" : "online.ragnarokoffline.patron.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Patron Monthly",
+          "subscriptionGroupID" : "22564162",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "billingPlans" : [
+            {
+              "billingPlanType" : "BILLED_UPFRONT",
+              "commitmentDisplayPrice" : "9.99",
+              "displayPrice" : "9.99",
+              "internalID" : "6832916667_BILLED_UPFRONT",
+              "isEnabled" : true
+            }
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "9.99",
+          "familyShareable" : true,
+          "groupNumber" : 1,
+          "internalID" : "6832916667",
+          "introductoryOffers" : [
+
+          ],
+          "localizations" : [
+            {
+              "description" : "Support development. Get early access to new features.",
+              "displayName" : "Patron Yearly",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "支持持续开发，提前体验新功能。",
+              "displayName" : "赞助者年度订阅",
+              "locale" : "zh_Hans"
+            }
+          ],
+          "productID" : "online.ragnarokoffline.patron.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Patron Yearly",
+          "subscriptionGroupID" : "22564162",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 5,
+    "minor" : 0
+  }
+}

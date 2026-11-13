@@ -9,8 +9,9 @@ import RagnarokGame
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(AppModel.self) private var appModel
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(AppModel.self) private var appModel
 
     @AppStorage("hasCompletedWelcome") private var hasCompletedWelcome = false
 
@@ -107,6 +108,11 @@ struct ContentView: View {
             }
 
             incomingFile = File(node: .regularFile(url), location: .external)
+        }
+        .task(id: scenePhase) {
+            if scenePhase == .active {
+                await appModel.settings.patron.refreshEntitlements()
+            }
         }
     }
 

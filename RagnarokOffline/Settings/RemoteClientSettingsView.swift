@@ -24,7 +24,7 @@ struct RemoteClientSettingsView: View {
                         .font(.largeTitle)
                         .foregroundStyle(.white)
                         .frame(width: 72, height: 72)
-                        .background(.blue.gradient, in: RoundedRectangle(cornerRadius: 16))
+                        .background(Color.accentColor.gradient, in: RoundedRectangle(cornerRadius: 16))
 
                     Text("Remote Client", tableName: "Settings")
                         .font(.title)

@@ -10,13 +10,28 @@ import rAthenaCommon
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(SettingsModel.self) private var settings
     @Environment(\.dismiss) private var dismiss
+    @Environment(SettingsModel.self) private var settings
 
     var body: some View {
         @Bindable var settings = settings
 
         Form {
+            Section {
+                NavigationLink {
+                    PatronView()
+                        .environment(settings.patron)
+                } label: {
+                    if settings.patron.hasActiveSubscription {
+                        Text("Patron", tableName: "Settings")
+                    } else {
+                        Text("Become a Patron", tableName: "Settings")
+                    }
+                }
+            } footer: {
+                Text("Support RagOff and get early access to new features.", tableName: "Settings")
+            }
+
             Section {
                 NavigationLink {
                     AboutView()
@@ -52,16 +67,21 @@ struct SettingsView: View {
             }
 
             Section {
-                #if DEBUG
                 Picker(selection: $settings.serverMode) {
                     Text("Pre-Renewal", tableName: "Settings")
                         .tag(ServerMode.prerenewal)
                     Text("Renewal", tableName: "Settings")
                         .tag(ServerMode.renewal)
                 } label: {
-                    Text("Server Mode", tableName: "Settings")
+                    HStack {
+                        Text("Server Mode", tableName: "Settings")
+
+                        if !settings.patron.hasActiveSubscription {
+                            PatronBadgeView()
+                        }
+                    }
                 }
-                #endif
+                .disabled(!settings.patron.hasActiveSubscription)
 
                 NavigationLink {
                     ServerConfigurationView(serverConfiguration: serverConfiguration)

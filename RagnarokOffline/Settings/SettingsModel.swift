@@ -25,6 +25,8 @@ private enum SettingsKey {
 @MainActor
 @Observable
 final class SettingsModel {
+    let patron: PatronModel
+
     @ObservationIgnored private let defaults: UserDefaults
 
     var isRemoteClientEnabled: Bool {
@@ -70,6 +72,8 @@ final class SettingsModel {
     }
 
     init(defaults: UserDefaults = .standard) {
+        self.patron = PatronModel()
+
         self.defaults = defaults
 
         isRemoteClientEnabled = defaults.object(forKey: SettingsKey.isRemoteClientEnabled) as? Bool ?? false
