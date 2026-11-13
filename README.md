@@ -1,6 +1,6 @@
 # Ragnarok Offline
 
-![](Screenshots/Simulator%20Screenshot%20-%20Apple%20Vision%20Pro.png)
+![Ragnarok Offline on iPhone Duo](Screenshots/Simulator%20Screenshot%20-%20iPhone%20Duo.png)
 
 ## Prerequisites
 Before installing Ragnarok Offline there are certain hardwares you will need.
