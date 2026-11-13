@@ -38,7 +38,7 @@ struct EffectViewerEffectListView: View {
         .navigationTitle(Text("Effect", tableName: "EffectViewer"))
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarDoneButton {
+            ToolbarCloseButton {
                 dismiss()
             }
         }

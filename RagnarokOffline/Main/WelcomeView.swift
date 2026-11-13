@@ -23,7 +23,7 @@ struct WelcomeView: View {
                         .bold()
                         .multilineTextAlignment(.center)
 
-                    Text("Choose one of two ways to provide game resources: use a local client or a remote client. The Game Client, database icons and sprites, and tools all use these resources.")
+                    Text("Choose one of two ways to provide game resources: use a local client or a remote client. These resources are used by the Game Client, database icons and sprites, and tools.")
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                 }

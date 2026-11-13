@@ -51,7 +51,7 @@ struct SkillDatabaseFilterView: View {
             ToolbarResetButton {
                 filter.reset()
             }
-            ToolbarDoneButton {
+            ToolbarConfirmButton {
                 dismiss()
             }
         }

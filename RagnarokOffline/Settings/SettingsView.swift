@@ -114,7 +114,7 @@ struct SettingsView: View {
         .navigationTitle(Text("Settings", tableName: "Settings"))
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarDoneButton {
+            ToolbarCloseButton {
                 dismiss()
             }
         }

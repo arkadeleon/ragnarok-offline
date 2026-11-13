@@ -989,78 +989,78 @@
         }
       }
     },
-    "Choose one of two ways to provide game resources: use a local client or a remote client. The Game Client, database icons and sprites, and tools all use these resources." : {
+    "Choose one of two ways to provide game resources: use a local client or a remote client. These resources are used by the Game Client, database icons and sprites, and tools." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wähle eine von zwei Möglichkeiten, Spielressourcen bereitzustellen: einen lokalen Client oder einen Remote-Client. Der Spielclient, die Datenbanksymbole und Sprites sowie die Werkzeuge verwenden diese Ressourcen."
+            "value" : "Wähle eine von zwei Möglichkeiten, Spielressourcen bereitzustellen: einen lokalen Client oder einen Remote-Client. Diese Ressourcen werden vom Spielclient, den Datenbanksymbolen und Sprites sowie den Werkzeugen verwendet."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Elige una de las dos formas de proporcionar recursos del juego: un cliente local o un cliente remoto. El cliente del juego, los iconos y sprites de la base de datos y las herramientas utilizan estos recursos."
+            "value" : "Elige una de las dos formas de proporcionar recursos del juego: un cliente local o un cliente remoto. Estos recursos se utilizan en el cliente del juego, los iconos y sprites de la base de datos y las herramientas."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choisissez l’une des deux façons de fournir les ressources de jeu : un client local ou un client distant. Le client de jeu, les icônes et les sprites de la base de données ainsi que les outils utilisent ces ressources."
+            "value" : "Choisissez l’une des deux façons de fournir les ressources de jeu : un client local ou un client distant. Ces ressources sont utilisées par le client de jeu, les icônes et sprites de la base de données ainsi que les outils."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pilih salah satu dari dua cara untuk menyediakan sumber daya game: gunakan klien lokal atau klien jarak jauh. Klien game, ikon dan sprite basis data, serta berbagai alat menggunakan sumber daya ini."
+            "value" : "Pilih salah satu dari dua cara untuk menyediakan sumber daya game: gunakan klien lokal atau klien jarak jauh. Sumber daya ini digunakan oleh klien game, ikon dan sprite basis data, serta berbagai alat."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゲームリソースの提供方法は、ローカルクライアントとリモートクライアントの2通りです。ゲームクライアント、データベースのアイコンやスプライト、各種ツールでこれらのリソースを使用します。"
+            "value" : "ゲームリソースの提供方法は、ローカルクライアントとリモートクライアントの2通りです。これらのリソースは、ゲームクライアント、データベースのアイコンやスプライト、各種ツールで使用されます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "게임 리소스를 제공하는 두 가지 방법 중 하나를 선택하세요. 로컬 클라이언트 또는 원격 클라이언트를 사용할 수 있습니다. 게임 클라이언트, 데이터베이스 아이콘과 스프라이트, 도구에서 이 리소스를 사용합니다."
+            "value" : "게임 리소스를 제공하는 두 가지 방법 중 하나를 선택하세요. 로컬 클라이언트 또는 원격 클라이언트를 사용할 수 있습니다. 이 리소스는 게임 클라이언트, 데이터베이스 아이콘과 스프라이트, 도구에 사용됩니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escolha uma das duas formas de fornecer recursos do jogo: um cliente local ou um cliente remoto. O cliente do jogo, os ícones e sprites do banco de dados e as ferramentas usam esses recursos."
+            "value" : "Escolha uma das duas formas de fornecer recursos do jogo: um cliente local ou um cliente remoto. Esses recursos são usados pelo cliente do jogo, pelos ícones e sprites do banco de dados e pelas ferramentas."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Выберите один из двух способов предоставления игровых ресурсов: локальный клиент или удалённый клиент. Игровой клиент, значки и спрайты базы данных, а также инструменты используют эти ресурсы."
+            "value" : "Выберите один из двух способов предоставления игровых ресурсов: локальный клиент или удалённый клиент. Эти ресурсы используются игровым клиентом, значками и спрайтами базы данных, а также инструментами."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "เลือกหนึ่งในสองวิธีเพื่อจัดหาทรัพยากรเกม: ใช้ไคลเอนต์ในเครื่องหรือไคลเอนต์ระยะไกล ไคลเอนต์เกม ไอคอนและสไปรต์ในฐานข้อมูล รวมถึงเครื่องมือต่าง ๆ ล้วนใช้ทรัพยากรเหล่านี้"
+            "value" : "เลือกหนึ่งในสองวิธีเพื่อจัดหาทรัพยากรเกม: ใช้ไคลเอนต์ในเครื่องหรือไคลเอนต์ระยะไกล ทรัพยากรเหล่านี้ใช้ในไคลเอนต์เกม ไอคอนและสไปรต์ในฐานข้อมูล รวมถึงเครื่องมือต่าง ๆ"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oyun kaynaklarını sağlamak için iki yöntemden birini seçin: yerel istemci veya uzak istemci. Oyun istemcisi, veritabanı simgeleri ve sprite’ları ile araçlar bu kaynakları kullanır."
+            "value" : "Oyun kaynaklarını sağlamak için iki yöntemden birini seçin: yerel istemci veya uzak istemci. Bu kaynaklar oyun istemcisi, veritabanı simgeleri ve sprite’ları ile araçlar tarafından kullanılır."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "游戏资源有两种提供方式：使用本地客户端，或使用远程客户端。游戏客户端、数据库中的图标和精灵图，以及各项工具都会使用这些资源。"
+            "value" : "游戏资源有两种提供方式：使用本地客户端，或使用远程客户端。这些资源供游戏客户端、数据库中的图标和精灵图，以及各项工具使用。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "遊戲資源有兩種提供方式：使用本機用戶端，或使用遠端用戶端。遊戲用戶端、資料庫中的圖示與精靈圖，以及各項工具都會使用這些資源。"
+            "value" : "遊戲資源有兩種提供方式：使用本機用戶端，或使用遠端用戶端。這些資源供遊戲用戶端、資料庫中的圖示與精靈圖，以及各項工具使用。"
           }
         }
       }

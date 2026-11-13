@@ -12,33 +12,41 @@ struct ToolbarCancelButton: ToolbarContent {
 
     var body: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
-            #if os(iOS)
-            if #available(iOS 26.0, *) {
-                Button("Cancel", systemImage: "xmark", action: action)
+            if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+                Button(role: .cancel, action: action)
             } else {
                 Button("Cancel", action: action)
             }
-            #else
-            Button("Cancel", action: action)
-            #endif
         }
     }
 }
 
-struct ToolbarDoneButton: ToolbarContent {
+struct ToolbarCloseButton: ToolbarContent {
+    var action: () -> Void
+
+    var body: some ToolbarContent {
+        if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(role: .close, action: action)
+            }
+        } else {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done", action: action)
+            }
+        }
+    }
+}
+
+struct ToolbarConfirmButton: ToolbarContent {
     var action: () -> Void
 
     var body: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            #if os(iOS)
-            if #available(iOS 26.0, *) {
-                Button("Done", systemImage: "checkmark", action: action)
+            if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
+                Button(role: .confirm, action: action)
             } else {
                 Button("Done", action: action)
             }
-            #else
-            Button("Done", action: action)
-            #endif
         }
     }
 }

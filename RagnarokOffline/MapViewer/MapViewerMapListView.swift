@@ -41,7 +41,7 @@ struct MapViewerMapListView: View {
         .navigationTitle(Text("Map", tableName: "MapViewer"))
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarDoneButton {
+            ToolbarCloseButton {
                 dismiss()
             }
         }

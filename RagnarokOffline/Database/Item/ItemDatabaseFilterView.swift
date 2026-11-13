@@ -137,7 +137,7 @@ struct ItemDatabaseFilterView: View {
             ToolbarResetButton {
                 filter.reset()
             }
-            ToolbarDoneButton {
+            ToolbarConfirmButton {
                 dismiss()
             }
         }

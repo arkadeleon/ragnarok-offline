@@ -84,7 +84,7 @@ struct ContentView: View {
             NavigationStack {
                 FilePreviewView(file: file, resourceManager: appModel.resourceManager)
                     .toolbar {
-                        ToolbarDoneButton {
+                        ToolbarCloseButton {
                             incomingFile = nil
                         }
                     }

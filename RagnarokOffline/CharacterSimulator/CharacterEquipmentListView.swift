@@ -62,7 +62,7 @@ struct CharacterEquipmentListView: View {
         .navigationTitle(category.nameResource)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarDoneButton {
+            ToolbarCloseButton {
                 dismiss()
             }
         }

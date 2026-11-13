@@ -108,7 +108,7 @@ struct MonsterDatabaseFilterView: View {
             ToolbarResetButton {
                 filter.reset()
             }
-            ToolbarDoneButton {
+            ToolbarConfirmButton {
                 dismiss()
             }
         }
