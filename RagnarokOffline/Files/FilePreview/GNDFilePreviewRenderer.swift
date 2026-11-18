@@ -58,13 +58,14 @@ class GNDFilePreviewRenderer: Renderer {
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
 
-        var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
-        modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
-
         guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
+
+        let modelMatrix = matrix_translate(
+            matrix_identity_float4x4,
+            [-Float(groundAsset.width / 2), 0, Float(groundAsset.height / 2)]
+        )
 
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)

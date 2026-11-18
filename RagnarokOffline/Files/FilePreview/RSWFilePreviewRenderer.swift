@@ -69,15 +69,20 @@ public class RSWFilePreviewRenderer: Renderer {
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
 
-        var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
-        modelMatrix = matrix_translate(modelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
-
         guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
 
         lastBounds = frame.bounds
+
+        let modelMatrix = matrix_translate(
+            matrix_identity_float4x4,
+            [-Float(groundAsset.width / 2), 0, Float(groundAsset.height / 2)]
+        )
+
+        var effectModelMatrix = matrix_identity_float4x4
+        effectModelMatrix = matrix_rotate(effectModelMatrix, radians(-180), [1, 0, 0])
+        effectModelMatrix = matrix_translate(effectModelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
 
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
@@ -98,7 +103,7 @@ public class RSWFilePreviewRenderer: Renderer {
                 resource: worldResource,
                 atTime: frame.time,
                 fog: fog,
-                modelMatrix: modelMatrix,
+                modelMatrix: effectModelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -133,7 +138,7 @@ extension RSWFilePreviewRenderer {
 
         let localHit = localOrigin + localDirection * distance
         let tileX = Int(floor(localHit.x / 2))
-        let tileY = Int(floor(localHit.z / 2))
+        let tileY = Int(floor(-localHit.z / 2))
 
         guard (0..<groundAsset.width).contains(tileX), (0..<groundAsset.height).contains(tileY) else {
             return nil
@@ -142,7 +147,7 @@ extension RSWFilePreviewRenderer {
         let localCenter = SIMD4<Float>(
             (Float(tileX) + 0.5) * 2,
             0,
-            (Float(tileY) + 0.5) * 2,
+            -(Float(tileY) + 0.5) * 2,
             1
         )
         let center = lastModelMatrix * localCenter

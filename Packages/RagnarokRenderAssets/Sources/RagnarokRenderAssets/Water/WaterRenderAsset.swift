@@ -77,27 +77,27 @@ public struct WaterRenderAsset {
                         }
 
                         let v0 = WaterVertex(
-                            position: [(Float(x) + 0) * 2, parameters.level / 5, (Float(y) + 0) * 2],
+                            position: [(Float(x) + 0) * 2, -parameters.level / 5, -(Float(y) + 0) * 2],
                             textureCoordinate: [x0, y0]
                         )
                         let v1 = WaterVertex(
-                            position: [(Float(x) + 1) * 2, parameters.level / 5, (Float(y) + 0) * 2],
+                            position: [(Float(x) + 1) * 2, -parameters.level / 5, -(Float(y) + 0) * 2],
                             textureCoordinate: [x1, y0]
                         )
                         let v2 = WaterVertex(
-                            position: [(Float(x) + 1) * 2, parameters.level / 5, (Float(y) + 1) * 2],
+                            position: [(Float(x) + 1) * 2, -parameters.level / 5, -(Float(y) + 1) * 2],
                             textureCoordinate: [x1, y1]
                         )
                         let v3 = WaterVertex(
-                            position: [(Float(x) + 1) * 2, parameters.level / 5, (Float(y) + 1) * 2],
+                            position: [(Float(x) + 1) * 2, -parameters.level / 5, -(Float(y) + 1) * 2],
                             textureCoordinate: [x1, y1]
                         )
                         let v4 = WaterVertex(
-                            position: [(Float(x) + 0) * 2, parameters.level / 5, (Float(y) + 1) * 2],
+                            position: [(Float(x) + 0) * 2, -parameters.level / 5, -(Float(y) + 1) * 2],
                             textureCoordinate: [x0, y1]
                         )
                         let v5 = WaterVertex(
-                            position: [(Float(x) + 0) * 2, parameters.level / 5, (Float(y) + 0) * 2],
+                            position: [(Float(x) + 0) * 2, -parameters.level / 5, -(Float(y) + 0) * 2],
                             textureCoordinate: [x0, y0]
                         )
 

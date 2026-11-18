@@ -63,9 +63,10 @@ public struct RSMModelInstance: Sendable {
     public var position: SIMD3<Float>
     public var rotation: SIMD3<Float>
     public var scale: SIMD3<Float>
+    public var worldTransform: simd_float4x4
 
     public var matrix: simd_float4x4 {
-        var matrix = matrix_identity_float4x4
+        var matrix = worldTransform
         matrix = matrix_translate(matrix, [position[0], position[1], position[2]])
         matrix = matrix_rotate(matrix, radians(rotation[2]), [0, 0, 1])
         matrix = matrix_rotate(matrix, radians(rotation[0]), [1, 0, 0])
@@ -74,9 +75,15 @@ public struct RSMModelInstance: Sendable {
         return matrix
     }
 
-    public init(position: SIMD3<Float>, rotation: SIMD3<Float>, scale: SIMD3<Float>) {
+    public init(
+        position: SIMD3<Float>,
+        rotation: SIMD3<Float>,
+        scale: SIMD3<Float>,
+        worldTransform: simd_float4x4 = matrix_identity_float4x4
+    ) {
         self.position = position
         self.rotation = rotation
         self.scale = scale
+        self.worldTransform = worldTransform
     }
 }

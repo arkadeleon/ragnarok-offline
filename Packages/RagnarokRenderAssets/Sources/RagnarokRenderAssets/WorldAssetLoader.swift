@@ -8,9 +8,11 @@
 import CoreGraphics
 import Foundation
 import RagnarokConstants
+import RagnarokCore
 import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokResources
+import simd
 
 public struct WorldAssetLoader: Sendable {
     public init() {}
@@ -86,6 +88,7 @@ public struct WorldAssetLoader: Sendable {
             )
         }
 
+        let worldTransform = matrix_rotate(matrix_identity_float4x4, radians(-180), [1, 0, 0])
         var modelNamesInWorldOrder: [String] = []
         var seenModelNames: Set<String> = []
         var modelInstancesByName: [String : [RSMModelInstance]] = [:]
@@ -101,7 +104,8 @@ public struct WorldAssetLoader: Sendable {
                     model.position.z + Float(gnd.height),
                 ],
                 rotation: model.rotation,
-                scale: model.scale
+                scale: model.scale,
+                worldTransform: worldTransform
             )
             modelInstancesByName[model.modelName, default: []].append(instance)
         }

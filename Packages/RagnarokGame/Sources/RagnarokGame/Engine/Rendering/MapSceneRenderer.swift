@@ -98,7 +98,7 @@ final class MapSceneRenderer {
                 resource: world,
                 atTime: time,
                 fog: snapshot.fog,
-                modelMatrix: modelMatrix,
+                modelMatrix: matrix_identity_float4x4,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -140,7 +140,7 @@ final class MapSceneRenderer {
                 resource: world,
                 atTime: time,
                 fog: snapshot.fog,
-                modelMatrix: modelMatrix,
+                modelMatrix: matrix_identity_float4x4,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )

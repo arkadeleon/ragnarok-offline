@@ -23,12 +23,12 @@ waterVertexShader(const device WaterVertex *vertices [[buffer(0)]],
 {
     WaterVertex in = vertices[vertexIndex];
     float x = fmod(in.position.x, 2.0);
-    float y = fmod(in.position.z, 2.0);
+    float y = fmod(abs(in.position.z), 2.0);
     float diff = x < 1.0 ? y < 1.0 ? 1.0 : -1.0 : 0.0;
     float pi = 3.14159265358979323846264;
-    float height = sin((pi / 180.0) * (uniforms.waterOffset + 0.5 * uniforms.wavePitch * (in.position.x + in.position.z + diff))) * uniforms.waveHeight;
+    float height = sin((pi / 180.0) * (uniforms.waterOffset + 0.5 * uniforms.wavePitch * (in.position.x - in.position.z + diff))) * uniforms.waveHeight;
 
-    float4 viewPosition = uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position.x, in.position.y + height, in.position.z, 1.0);
+    float4 viewPosition = uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position.x, in.position.y - height, in.position.z, 1.0);
 
     RasterizerData out;
     out.position = uniforms.projectionMatrix * viewPosition;
