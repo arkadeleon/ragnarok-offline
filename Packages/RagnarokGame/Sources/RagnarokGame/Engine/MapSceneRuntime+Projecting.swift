@@ -41,36 +41,13 @@ extension MapSceneRuntime {
         if let objectID = objectIDs.first(where: { scene.objects[$0]?.isDead == false }) {
             return .mapObject(objectID: objectID)
         }
+
         if let objectID = objectIDs.first(where: { scene.items[$0] != nil }) {
             return .mapItem(objectID: objectID)
         }
 
-        return groundHit(ray, mapGrid: scene.mapGrid)
-    }
-
-    private func groundHit(_ ray: Ray, mapGrid: MapGrid) -> HitTestResult? {
-        for i in 0..<200 {
-            let point = ray.point(atDistance: Float(i))
-
-            let x = point.x
-            let y = -point.z
-            let position = SIMD2<Int>(Int(x), Int(y))
-
-            guard mapGrid.contains(position) else {
-                continue
-            }
-
-            let cell = mapGrid[position]
-            let xr = x.truncatingRemainder(dividingBy: 1)
-            let yr = y.truncatingRemainder(dividingBy: 1)
-
-            let x1 = cell.bottomLeftAltitude + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * xr
-            let x2 = cell.topLeftAltitude + (cell.topRightAltitude - cell.topLeftAltitude) * xr
-            let altitude = x1 + (x2 - x1) * yr
-
-            if fabsf(altitude - point.y) < 0.5 {
-                return .ground(position: position)
-            }
+        if let position = scene.mapGrid.rayHit(ray) {
+            return .ground(position: position)
         }
 
         return nil
