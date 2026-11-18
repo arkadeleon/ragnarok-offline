@@ -310,8 +310,7 @@ extension MapScene {
 
 extension MapScene {
     func resetCamera() {
-        camera.azimuth = 0
-        camera.elevation = .pi / 4
+        camera.animate(azimuth: 0, elevation: .pi / 4)
     }
 
     func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
