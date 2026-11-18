@@ -17,16 +17,11 @@ typedef struct {
 } RasterizerData;
 
 float4x4 project(float4x4 matrix, float3 position) {
-    // position is (map x, map y, altitude); convert to render space.
-    float x = position.x;
-    float y = -position.z;
-    float z = position.y;
-
     // Matrix translation
-    matrix[3].x += matrix[0].x * x + matrix[1].x * y + matrix[2].x * z;
-    matrix[3].y += matrix[0].y * x + matrix[1].y * y + matrix[2].y * z;
-    matrix[3].z += matrix[0].z * x + matrix[1].z * y + matrix[2].z * z;
-    matrix[3].w += matrix[0].w * x + matrix[1].w * y + matrix[2].w * z;
+    matrix[3].x += matrix[0].x * position.x + matrix[1].x * position.y + matrix[2].x * position.z;
+    matrix[3].y += matrix[0].y * position.x + matrix[1].y * position.y + matrix[2].y * position.z;
+    matrix[3].z += matrix[0].z * position.x + matrix[1].z * position.y + matrix[2].z * position.z;
+    matrix[3].w += matrix[0].w * position.x + matrix[1].w * position.y + matrix[2].w * position.z;
 
     // Spherical billboard
     matrix[0].xyz = float3(1.0, 0.0, 0.0);

@@ -25,8 +25,7 @@ targetSelectorVertexShader(const device TargetSelectorVertex *vertices [[buffer(
     float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp    = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
 
-    float3 p = uniforms.worldPosition;
-    float3 anchor = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz;
+    float3 anchor = (uniforms.modelMatrix * float4(uniforms.worldPosition, 1.0)).xyz;
 
     // The marker always faces the camera, like a sprite.
     float2 position = (in.position + uniforms.offset) / 32.0;

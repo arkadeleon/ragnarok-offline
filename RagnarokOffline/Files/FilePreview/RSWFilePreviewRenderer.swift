@@ -80,10 +80,6 @@ public class RSWFilePreviewRenderer: Renderer {
             [-Float(groundAsset.width / 2), 0, Float(groundAsset.height / 2)]
         )
 
-        var effectModelMatrix = matrix_identity_float4x4
-        effectModelMatrix = matrix_rotate(effectModelMatrix, radians(-180), [1, 0, 0])
-        effectModelMatrix = matrix_translate(effectModelMatrix, [-Float(groundAsset.width / 2), 0, -Float(groundAsset.height / 2)])
-
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
@@ -103,7 +99,7 @@ public class RSWFilePreviewRenderer: Renderer {
                 resource: worldResource,
                 atTime: frame.time,
                 fog: fog,
-                modelMatrix: effectModelMatrix,
+                modelMatrix: modelMatrix,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder
             )

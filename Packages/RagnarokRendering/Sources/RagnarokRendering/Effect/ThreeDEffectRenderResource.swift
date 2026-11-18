@@ -154,7 +154,7 @@ public final class ThreeDEffectRenderResource {
         }
 
         return ThreeDEffectRenderResource.Sample(
-            worldPosition: worldPosition + mapOffset,
+            worldPosition: worldPosition + [mapOffset.x, mapOffset.z, -mapOffset.y],
             layers: layers
         )
     }
@@ -193,10 +193,18 @@ public final class ThreeDEffectRenderResource {
         var positionStart = instance.positionStart
         var positionEnd = instance.positionEnd
 
-        // Resolve both movement endpoints relative to the effect's target
-        // position. Use a deterministic fallback when no source is available.
-        let sourceWorldPosition = sourceWorldPosition ?? targetWorldPosition + [-5, 5, 0]
-        let sourceOffset = sourceWorldPosition - targetWorldPosition
+        // Resolve both movement endpoints in animation space (x, row, altitude)
+        // relative to the effect's target position. Use a deterministic fallback
+        // when no source is available.
+        let sourceOffset: SIMD3<Float> = if let sourceWorldPosition {
+            [
+                sourceWorldPosition.x - targetWorldPosition.x,
+                -(sourceWorldPosition.z - targetWorldPosition.z),
+                sourceWorldPosition.y - targetWorldPosition.y,
+            ]
+        } else {
+            [-5, 5, 0]
+        }
 
         if definition.movesFromSource {
             positionStart = sourceOffset + instance.movementPositionStart

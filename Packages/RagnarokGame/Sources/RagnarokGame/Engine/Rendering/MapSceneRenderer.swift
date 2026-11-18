@@ -18,10 +18,6 @@ import simd
 /// `MapSceneRenderSnapshot`, which is built once per frame so every view of a frame
 /// draws the same contents from its own camera.
 final class MapSceneRenderer {
-    /// The map's own transform. The game world stands the other way up from render space,
-    /// so the whole map turns over.
-    private static let worldModelMatrix = matrix_rotate(matrix_identity_float4x4, radians(-180), [1, 0, 0])
-
     let device: any MTLDevice
     let configuration: RenderConfiguration
 
@@ -46,15 +42,6 @@ final class MapSceneRenderer {
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
         tileSelectorRenderer = try TileSelectorRenderer(device: device, configuration: configuration)
         targetSelectorRenderer = try TargetSelectorRenderer(device: device, configuration: configuration)
-    }
-
-    /// Where a game world position sits in the space the map is drawn in.
-    static func renderPosition(for worldPosition: SIMD3<Float>) -> SIMD3<Float> {
-        [
-            worldPosition.x,
-            worldPosition.z,
-            -worldPosition.y,
-        ]
     }
 
     func render(frame: RenderFrame, snapshot: MapSceneRenderSnapshot) {
@@ -91,8 +78,6 @@ final class MapSceneRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let modelMatrix = Self.worldModelMatrix
-
         if let world = snapshot.world {
             worldRenderer.renderGroundAndModels(
                 resource: world,
@@ -108,7 +93,7 @@ final class MapSceneRenderer {
                 atTime: time,
                 beforeEntities: true,
                 fog: snapshot.fog,
-                modelMatrix: modelMatrix,
+                modelMatrix: matrix_identity_float4x4,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -119,7 +104,7 @@ final class MapSceneRenderer {
             beforeEntities: true,
             atTime: time,
             fog: snapshot.fog,
-            modelMatrix: modelMatrix,
+            modelMatrix: matrix_identity_float4x4,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -128,7 +113,7 @@ final class MapSceneRenderer {
             drawables: snapshot.spriteDrawables,
             viewport: viewport,
             fog: snapshot.fog,
-            modelMatrix: modelMatrix,
+            modelMatrix: matrix_identity_float4x4,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -150,7 +135,7 @@ final class MapSceneRenderer {
                 atTime: time,
                 beforeEntities: false,
                 fog: snapshot.fog,
-                modelMatrix: modelMatrix,
+                modelMatrix: matrix_identity_float4x4,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -161,7 +146,7 @@ final class MapSceneRenderer {
             beforeEntities: false,
             atTime: time,
             fog: snapshot.fog,
-            modelMatrix: modelMatrix,
+            modelMatrix: matrix_identity_float4x4,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -170,7 +155,7 @@ final class MapSceneRenderer {
             tileSelectorRenderer.render(
                 tileSelector: tileSelector,
                 fog: snapshot.fog,
-                modelMatrix: modelMatrix,
+                modelMatrix: matrix_identity_float4x4,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -179,7 +164,7 @@ final class MapSceneRenderer {
         if let targetSelector = snapshot.targetSelector {
             targetSelectorRenderer.render(
                 targetSelector: targetSelector,
-                modelMatrix: modelMatrix,
+                modelMatrix: matrix_identity_float4x4,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
@@ -187,14 +172,14 @@ final class MapSceneRenderer {
 
         barRenderer.render(
             bars: snapshot.bars,
-            modelMatrix: modelMatrix,
+            modelMatrix: matrix_identity_float4x4,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
 
         textRenderer.render(
             texts: snapshot.texts,
-            modelMatrix: modelMatrix,
+            modelMatrix: matrix_identity_float4x4,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -203,7 +188,7 @@ final class MapSceneRenderer {
         combatTextRenderer.render(
             combatTexts: snapshot.combatTexts,
             texture: snapshot.combatTextTexture,
-            modelMatrix: modelMatrix,
+            modelMatrix: matrix_identity_float4x4,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )

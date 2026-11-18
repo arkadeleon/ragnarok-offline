@@ -24,8 +24,8 @@ extension MapSceneRuntime {
 
         let viewProjectionMatrix = lastCamera.projectionMatrix * lastCamera.viewMatrix
         scene.selectNextTarget { object in
-            let renderPosition = MapSceneRenderer.renderPosition(for: scene.worldPosition(for: object))
-            let clipPosition = viewProjectionMatrix * SIMD4<Float>(renderPosition, 1)
+            let worldPosition = scene.worldPosition(for: object)
+            let clipPosition = viewProjectionMatrix * SIMD4<Float>(worldPosition, 1)
             guard clipPosition.w > 0 else {
                 return false
             }
@@ -92,7 +92,7 @@ extension MapSceneRuntime {
         }
 
         return SpriteBounds(
-            anchor: MapSceneRenderer.renderPosition(for: drawable.worldPosition),
+            anchor: drawable.worldPosition,
             minimum: minimum,
             maximum: maximum
         )

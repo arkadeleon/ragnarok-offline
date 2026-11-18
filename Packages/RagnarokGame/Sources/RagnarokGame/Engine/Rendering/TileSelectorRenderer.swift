@@ -139,8 +139,7 @@ final class TileSelectorRenderer {
     }
 
     /// Turns a point in tile space, where (0, 0) is the tile's bottom left and
-    /// (1, 1) its top right, into the space the model matrix expects. The altitude
-    /// follows the same two triangles the ground is built from, so the brackets stay
+    /// (1, 1) its top right, into Y-up world space. The altitude follows the same two triangles the ground is built from, so the brackets stay
     /// parallel to the surface on cells whose corners are not coplanar. The 0.1
     /// offset lifts them above it.
     private func makePosition(_ point: SIMD2<Float>, position: SIMD2<Int>, cell: MapGrid.Cell) -> SIMD3<Float> {
@@ -156,8 +155,8 @@ final class TileSelectorRenderer {
 
         return SIMD3<Float>(
             Float(position.x) + point.x,
-            -(altitude + 0.1),
-            Float(position.y) + point.y
+            altitude + 0.1,
+            -(Float(position.y) + point.y)
         )
     }
 }

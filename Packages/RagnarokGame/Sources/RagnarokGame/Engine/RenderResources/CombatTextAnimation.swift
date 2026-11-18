@@ -38,30 +38,30 @@ extension CombatText {
             scale = max((1 - t * 2) * 3, 0.8)
             worldPosition = [
                 anchor.x,
-                anchor.y,
-                anchor.z + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
+                anchor.y + 2 + (t < 0.4 ? 0 : (t - 0.4) * 5),
+                anchor.z,
             ]
         case .miss:
             scale = 0.5
             worldPosition = [
                 anchor.x,
-                anchor.y,
-                anchor.z + 3.5 + 7 * t,
+                anchor.y + 3.5 + 7 * t,
+                anchor.z,
             ]
         case .damage:
             scale = 4 * (1 - t)
             let drift = drift(azimuth: cameraAzimuth) * t
             worldPosition = [
                 anchor.x + drift.x,
-                anchor.y + drift.y,
-                anchor.z + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
+                anchor.y + 2 + sin(-.pi / 2 + (.pi * (0.5 + 1.5 * t))) * 5,
+                anchor.z + drift.z,
             ]
         case .combo, .finalCombo:
             scale = min(t, 0.05) * 70
             worldPosition = [
                 anchor.x,
-                anchor.y,
-                anchor.z + 7 + t,
+                anchor.y + 7 + t,
+                anchor.z,
             ]
         }
 
@@ -81,6 +81,6 @@ extension CombatText {
             localDrift.x * cosAngle - localDrift.y * sinAngle,
             localDrift.x * sinAngle + localDrift.y * cosAngle
         )
-        return SIMD3<Float>(worldDrift.x, -worldDrift.y, 0)
+        return SIMD3<Float>(worldDrift.x, 0, worldDrift.y)
     }
 }

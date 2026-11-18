@@ -19,15 +19,15 @@ enum GameAudio {
     static let soundEffectVolume: Float = 0.5
 
     /// Where a sound effect comes from, and how far it carries, in world units.
-    /// Only x and y count toward what the listener hears.
+    /// Only x and z count toward what the listener hears.
     struct Source {
         var position: SIMD3<Float>
         var range: Float
 
         func distance(toListenerAtPosition listenerPosition: SIMD3<Float>) -> Float {
             simd_distance(
-                SIMD2(position.x, position.y),
-                SIMD2(listenerPosition.x, listenerPosition.y)
+                SIMD2(position.x, position.z),
+                SIMD2(listenerPosition.x, listenerPosition.z)
             )
         }
 

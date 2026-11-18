@@ -57,8 +57,8 @@ struct MapGrid {
         let altitude = self[gridPosition].averageAltitude
         return [
             Float(gridPosition.x) + 0.5,
-            Float(gridPosition.y) + 0.5,
             altitude,
+            -(Float(gridPosition.y) + 0.5),
         ]
     }
 
@@ -75,8 +75,8 @@ struct MapGrid {
 
         return [
             point.x,
-            point.y,
             altitude,
+            -point.y,
         ]
     }
 

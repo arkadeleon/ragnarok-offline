@@ -151,7 +151,7 @@ public final class CylinderEffectRenderResource {
         )
     }
 
-    // The offset is (map x, map y, altitude); render space is (x, altitude, -y).
+    // The definition offset is (map x, map y, altitude); Y-up world space is (x, altitude, -y).
     private func positionOffset(cameraAzimuth: Float, cameraElevation: Float) -> SIMD3<Float> {
         let offset = definition.positionOffset
         let renderSpaceOffset = SIMD3<Float>(offset.x, offset.z, -offset.y)

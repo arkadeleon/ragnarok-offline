@@ -34,12 +34,8 @@ threeDEffectVertexShader(const device ThreeDEffectVertex *vertices [[buffer(0)]]
     float4 rotatedPosition = uniforms.rotationMatrix * float4(in.position * uniforms.size * spriteRatio, 0.0, 1.0);
     rotatedPosition.xy += uniforms.offset * spriteRatio;
 
-    // worldPosition is (map x, map y, altitude); the model matrix maps it to render space.
-    float3 p = uniforms.worldPosition;
-    float3 anchorPosition = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz;
-    float3 worldPosition = anchorPosition
-        + cameraRight * rotatedPosition.x
-        + cameraUp * rotatedPosition.y;
+    float3 anchorPosition = (uniforms.modelMatrix * float4(uniforms.worldPosition, 1.0)).xyz;
+    float3 worldPosition = anchorPosition + cameraRight * rotatedPosition.x + cameraUp * rotatedPosition.y;
 
     float4 clipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPosition, 1.0);
 

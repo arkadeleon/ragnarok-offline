@@ -33,12 +33,8 @@ sprEffectVertexShader(const device SPREffectVertex *vertices [[buffer(0)]],
     const float spriteRatio = 1.0 / 35.0;
     float2 scaledPosition = in.position * uniforms.size * spriteRatio;
 
-    // worldPosition is (map x, map y, altitude); the model matrix maps it to render space.
-    float3 p = uniforms.worldPosition;
-    float3 anchorPosition = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz;
-    float3 worldPosition = anchorPosition
-        + cameraRight * scaledPosition.x
-        + cameraUp * scaledPosition.y;
+    float3 anchorPosition = (uniforms.modelMatrix * float4(uniforms.worldPosition, 1.0)).xyz;
+    float3 worldPosition = anchorPosition + cameraRight * scaledPosition.x + cameraUp * scaledPosition.y;
 
     float4 clipPosition = uniforms.projectionMatrix * uniforms.viewMatrix * float4(worldPosition, 1.0);
 

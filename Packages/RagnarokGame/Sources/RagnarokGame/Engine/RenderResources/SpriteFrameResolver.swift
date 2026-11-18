@@ -133,7 +133,7 @@ struct SpriteFrameResolver {
 
         return SpriteDrawable(
             objectID: object.objectID,
-            worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+            worldPosition: worldPosition + [0, 0.2, 0], // Lifted slightly so uneven ground doesn't clip the sprite.
             shadow: shadow,
             isVisible: object.effectState != .cloak,
             layers: resolvedLayers.map {
@@ -189,7 +189,7 @@ struct SpriteFrameResolver {
 
         return SpriteDrawable(
             objectID: objectID,
-            worldPosition: worldPosition + [0, 0, 0.2], // Lifted slightly so uneven ground doesn't clip the sprite.
+            worldPosition: worldPosition + [0, 0.2, 0], // Lifted slightly so uneven ground doesn't clip the sprite.
             shadow: shadow,
             isVisible: true,
             layers: layers

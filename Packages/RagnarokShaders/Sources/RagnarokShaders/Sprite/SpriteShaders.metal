@@ -27,9 +27,8 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
     float3 cameraRight = float3(uniforms.viewMatrix[0][0], uniforms.viewMatrix[1][0], uniforms.viewMatrix[2][0]);
     float3 cameraUp    = float3(uniforms.viewMatrix[0][1], uniforms.viewMatrix[1][1], uniforms.viewMatrix[2][1]);
 
-    // spriteWorldPosition is (map x, map y, altitude); the model matrix places it.
-    float3 p = uniforms.spriteWorldPosition.xyz;
-    float3 basePos = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz;
+    // spriteWorldPosition is in Y-up world space (+X east, +Y up, -Z north).
+    float3 basePos = (uniforms.modelMatrix * float4(uniforms.spriteWorldPosition.xyz, 1.0)).xyz;
 
     // 1 world unit = 32 pixels.
     const float pixelRatio = 1.0 / 32.0;
@@ -94,13 +93,12 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
         float3 cameraForward = -cameraBack;
         float3 rayWorld = cameraRight * rayView.x + cameraUp * rayView.y + cameraBack * rayView.z;
 
-        float3 p = uniforms.spriteWorldPosition.xyz;
-        float3 anchor = (uniforms.modelMatrix * float4(p.x, -p.z, p.y, 1.0)).xyz;
+        float3 anchor = (uniforms.modelMatrix * float4(uniforms.spriteWorldPosition.xyz, 1.0)).xyz;
         float3 cameraPos = uniforms.cameraPosition.xyz;
 
         // The plane stands upright in the world, so drop the component of the view
         // direction along whichever way the model matrix points the world's up.
-        float3 worldUp = normalize((uniforms.modelMatrix * float4(0.0, -1.0, 0.0, 0.0)).xyz);
+        float3 worldUp = normalize((uniforms.modelMatrix * float4(0.0, 1.0, 0.0, 0.0)).xyz);
         float3 planeNormal = cameraForward - worldUp * dot(cameraForward, worldUp);
         if (length(planeNormal) < 0.000001) {
             planeNormal = cameraForward;

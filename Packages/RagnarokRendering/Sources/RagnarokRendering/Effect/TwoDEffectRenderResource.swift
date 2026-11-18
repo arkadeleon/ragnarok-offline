@@ -118,7 +118,7 @@ public final class TwoDEffectRenderResource {
         }
 
         return TwoDEffectRenderResource.Sample(
-            worldPosition: worldPosition + rotatedMapOffset,
+            worldPosition: worldPosition + [rotatedMapOffset.x, rotatedMapOffset.z, -rotatedMapOffset.y],
             size: size,
             offset: [screenOffset.x, -screenOffset.y],
             color: SIMD4<Float>(definition.color, min(max(alpha, 0), 1)),

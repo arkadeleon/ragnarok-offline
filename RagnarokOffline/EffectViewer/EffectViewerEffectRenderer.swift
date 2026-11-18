@@ -67,9 +67,6 @@ class EffectViewerEffectRenderer: Renderer {
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
 
-        var modelMatrix = matrix_identity_float4x4
-        modelMatrix = matrix_rotate(modelMatrix, radians(-180), [1, 0, 0])
-
         guard let renderCommandEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
             return
         }
@@ -81,7 +78,7 @@ class EffectViewerEffectRenderer: Renderer {
                 resourceGroup: effectResourceGroup,
                 atTime: frame.time,
                 fog: fog,
-                modelMatrix: modelMatrix,
+                modelMatrix: matrix_identity_float4x4,
                 camera: view.camera,
                 renderCommandEncoder: renderCommandEncoder
             )

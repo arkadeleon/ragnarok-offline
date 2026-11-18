@@ -56,7 +56,7 @@ final class SpriteAssetStore {
                 composedSprite: composedSprite,
                 partTextures: partTextures(for: composedSprite, in: &objectTextures, objectID: objectID),
                 worldPosition: worldPosition,
-                shadow: shadowmap.shadowFactor(x: worldPosition.x, y: worldPosition.y)
+                shadow: shadowmap.shadowFactor(x: worldPosition.x, y: -worldPosition.z)
             )
             guard let drawable else {
                 continue
@@ -75,7 +75,7 @@ final class SpriteAssetStore {
                 sprite: sprite,
                 partTextures: partTextures(for: sprite, in: &itemTextures, objectID: objectID),
                 worldPosition: worldPosition,
-                shadow: shadowmap.shadowFactor(x: worldPosition.x, y: worldPosition.y)
+                shadow: shadowmap.shadowFactor(x: worldPosition.x, y: -worldPosition.z)
             )
             guard let drawable else {
                 continue
@@ -84,10 +84,10 @@ final class SpriteAssetStore {
         }
 
         sprites.sort {
-            if $0.worldPosition.y == $1.worldPosition.y {
+            if $0.worldPosition.z == $1.worldPosition.z {
                 $0.objectID < $1.objectID
             } else {
-                $0.worldPosition.y > $1.worldPosition.y
+                $0.worldPosition.z < $1.worldPosition.z
             }
         }
 

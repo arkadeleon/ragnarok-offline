@@ -11,8 +11,7 @@ import RagnarokFileFormats
 final class MapSceneSound {
     let name: String
 
-    /// Where the sound sits, in world units. Only x and y count toward what the
-    /// listener hears.
+    /// Where the sound sits, in world units. Only x and z count toward what the listener hears.
     let position: SIMD3<Float>
 
     /// How far the sound carries, in cells.
@@ -29,8 +28,8 @@ final class MapSceneSound {
 
         position = [
             sound.position.x + Float(gnd.width),
-            sound.position.z + Float(gnd.height),
             -sound.position.y,
+            -(sound.position.z + Float(gnd.height)),
         ]
 
         range = sound.range / 5

@@ -87,7 +87,7 @@ final class MapSceneRuntime {
     func makeCamera(viewport: MTLViewport) -> RenderCamera {
         let camera = scene.camera
         let targetPosition = camera.target ?? scene.worldPosition(for: scene.player)
-        let worldTarget = MapSceneRenderer.renderPosition(for: targetPosition) + Self.cameraTargetOffset + camera.shakeOffset
+        let worldTarget = targetPosition + Self.cameraTargetOffset + camera.shakeOffset
 
         let cameraOrientation =
             simd_quatf(angle: -camera.azimuth, axis: [0, 1, 0]) *
@@ -205,7 +205,7 @@ final class MapSceneRuntime {
             }
             return MapSceneRenderSnapshot.Bar(
                 vertices: mesh.vertices,
-                worldPosition: worldPosition + [0, 0, -0.8]
+                worldPosition: worldPosition + [0, -0.8, 0]
             )
         }
 
@@ -261,7 +261,7 @@ final class MapSceneRuntime {
         let textMesh = TextMesh(size: targetNameText.size, top: textTop)
         let text = MapSceneRenderSnapshot.Text(
             vertices: textMesh.vertices,
-            worldPosition: targetPosition + [0, 0, -0.8],
+            worldPosition: targetPosition + [0, -0.8, 0],
             texture: textTexture
         )
         return [text]

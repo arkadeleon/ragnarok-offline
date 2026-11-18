@@ -16,6 +16,6 @@ typedef struct {
     matrix_float4x4 modelMatrix;
     matrix_float4x4 viewMatrix;
     matrix_float4x4 projectionMatrix;
-    vector_float3 worldPosition;        // (map x, map y, altitude) of the target's anchor
+    vector_float3 worldPosition;        // Y-up world position of the target's anchor
     vector_float2 offset;               // in pixels, added to every vertex
 } TargetSelectorVertexUniforms;

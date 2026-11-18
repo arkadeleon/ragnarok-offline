@@ -79,10 +79,10 @@ public final class SPREffectRenderResource {
     func adjustedWorldPosition(_ worldPosition: SIMD3<Float>) -> SIMD3<Float> {
         var basePosition = worldPosition
         if definition.rendersAtHead {
-            basePosition.z += 2.5
+            basePosition.y += 2.5
         }
 
-        return basePosition + [definition.spriteOffset.x / 35, 0, -definition.spriteOffset.y / 35]
+        return basePosition + [definition.spriteOffset.x / 35, -definition.spriteOffset.y / 35, 0]
     }
 
     func texture(elapsedTime: TimeInterval) -> (any MTLTexture)? {

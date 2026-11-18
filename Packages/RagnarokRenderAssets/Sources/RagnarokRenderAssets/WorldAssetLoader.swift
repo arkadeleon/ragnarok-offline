@@ -151,8 +151,8 @@ public struct WorldAssetLoader: Sendable {
 
             let position: SIMD3<Float> = [
                 effect.position.x + Float(gnd.width),
-                effect.position.z + Float(gnd.height),
                 -effect.position.y + 1,
+                -(effect.position.z + Float(gnd.height)),
             ]
 
             effects.append(
