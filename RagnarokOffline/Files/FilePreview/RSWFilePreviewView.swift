@@ -106,8 +106,8 @@ struct RSWFileWorldView: View {
 
         let worldEntity = try await Entity(from: worldAsset)
 
-        let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, -Float(gat.height / 2)])
-        let rotation = simd_float4x4(rotationX: radians(-90))
+        let translation = simd_float4x4(translation: [-Float(gat.width / 2), 0, Float(gat.height / 2)])
+        let rotation = simd_float4x4(rotationX: radians(90))
         let scaleFactor = 2 / Float(max(gat.width, gat.height)) / 5
         let scale = simd_float4x4(scale: [scaleFactor, scaleFactor, scaleFactor])
 

@@ -55,14 +55,7 @@ extension Entity {
 
             for instance in modelGroup.instances {
                 let clonedModelEntity = modelEntity.clone(recursive: true)
-
-                clonedModelEntity.position = instance.position
-                clonedModelEntity.orientation =
-                    simd_quatf(angle: radians(instance.rotation.z), axis: [0, 0, 1]) *
-                    simd_quatf(angle: radians(instance.rotation.x), axis: [1, 0, 0]) *
-                    simd_quatf(angle: radians(instance.rotation.y), axis: [0, 1, 0])
-                clonedModelEntity.scale = instance.scale
-
+                clonedModelEntity.transform = Transform(matrix: instance.matrix)
                 addChild(clonedModelEntity, preservingWorldTransform: true)
             }
         }
