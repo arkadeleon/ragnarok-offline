@@ -8,6 +8,69 @@
 import Foundation
 import simd
 
+/// Decaying back-and-forth world-space camera shake offset.
+struct CameraShake: Sendable {
+    private var amplitude: Float = 0
+    private var duration: TimeInterval = 0
+    private var frequency: Float = 35
+    private var elapsedTime: TimeInterval = 0
+
+    private(set) var offset: SIMD3<Float> = .zero
+
+    var isActive: Bool {
+        amplitude > 0 && duration > 0 && elapsedTime < duration
+    }
+
+    mutating func trigger(amplitude: Float, duration: TimeInterval, frequency: Float = 35) {
+        guard amplitude > 0, duration > 0 else {
+            return
+        }
+
+        let currentRemainingAmplitude: Float = if isActive {
+            self.amplitude * Float(1 - elapsedTime / self.duration)
+        } else {
+            0
+        }
+
+        guard amplitude >= currentRemainingAmplitude else {
+            return
+        }
+
+        self.amplitude = amplitude
+        self.duration = duration
+        self.frequency = frequency
+        self.elapsedTime = 0
+        self.offset = .zero
+    }
+
+    mutating func update(deltaTime: TimeInterval) {
+        guard isActive, deltaTime >= 0 else {
+            if offset != .zero || amplitude > 0 || duration > 0 {
+                reset()
+            }
+            return
+        }
+
+        elapsedTime += deltaTime
+        guard elapsedTime < duration else {
+            reset()
+            return
+        }
+
+        let progress = Float(elapsedTime / duration)
+        let decay = 1 - progress
+        let angle = Float(elapsedTime) * frequency
+        offset = SIMD3<Float>(sin(angle), cos(angle * 1.3), sin(angle * 0.7)) * (amplitude * decay)
+    }
+
+    mutating func reset() {
+        amplitude = 0
+        duration = 0
+        elapsedTime = 0
+        offset = .zero
+    }
+}
+
 /// The scene's camera settings and its smoothed focus in map world coordinates.
 struct MapSceneCamera: Sendable {
     struct State: Sendable {
@@ -74,6 +137,11 @@ struct MapSceneCamera: Sendable {
         currentState.target
     }
 
+    var shakeOffset: SIMD3<Float> {
+        cameraShake.offset
+    }
+
+    private var cameraShake = CameraShake()
     private var lastPlayerPosition: SIMD3<Float>?
     private var lastUpdateTime: ContinuousClock.Instant?
 
@@ -121,6 +189,7 @@ struct MapSceneCamera: Sendable {
             currentState.azimuth = desiredState.azimuth
             currentState.elevation = desiredState.elevation
             currentState.distance = desiredState.distance
+            cameraShake.reset()
             return
         }
 
@@ -133,6 +202,12 @@ struct MapSceneCamera: Sendable {
             currentState.elevation += (desiredState.elevation - currentState.elevation) * fraction
             currentState.distance += (desiredState.distance - currentState.distance) * fraction
         }
+
+        cameraShake.update(deltaTime: deltaTime)
+    }
+
+    mutating func shake(amplitude: Float, duration: TimeInterval, frequency: Float = 35) {
+        cameraShake.trigger(amplitude: amplitude, duration: duration, frequency: frequency)
     }
 
     mutating func animate(azimuth: Float? = nil, elevation: Float? = nil, distance: Float? = nil) {
@@ -153,6 +228,7 @@ struct MapSceneCamera: Sendable {
     mutating func reset() {
         desiredState.target = nil
         currentState.target = nil
+        cameraShake.reset()
         lastPlayerPosition = nil
         lastUpdateTime = nil
     }

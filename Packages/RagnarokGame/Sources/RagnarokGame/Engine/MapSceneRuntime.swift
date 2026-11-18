@@ -87,7 +87,7 @@ final class MapSceneRuntime {
     func makeCamera(viewport: MTLViewport) -> RenderCamera {
         let camera = scene.camera
         let targetPosition = camera.target ?? scene.worldPosition(for: scene.player)
-        let worldTarget = MapSceneRenderer.renderPosition(for: targetPosition) + Self.cameraTargetOffset
+        let worldTarget = MapSceneRenderer.renderPosition(for: targetPosition) + Self.cameraTargetOffset + camera.shakeOffset
 
         let cameraOrientation =
             simd_quatf(angle: -camera.azimuth, axis: [0, 1, 0]) *
