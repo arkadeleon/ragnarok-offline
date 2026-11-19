@@ -143,7 +143,7 @@ struct MapSceneCamera: Sendable {
 
     private var cameraShake = CameraShake()
     private var lastPlayerPosition: SIMD3<Float>?
-    private var lastUpdateTime: ContinuousClock.Instant?
+    private var lastUpdateTime: TimeInterval?
 
     init() {
         #if os(visionOS)
@@ -166,7 +166,7 @@ struct MapSceneCamera: Sendable {
         currentState = initialState
     }
 
-    mutating func update(playerPosition: SIMD3<Float>, at time: ContinuousClock.Instant) {
+    mutating func update(playerPosition: SIMD3<Float>, atTime time: TimeInterval) {
         defer {
             lastPlayerPosition = playerPosition
             lastUpdateTime = time
@@ -182,7 +182,7 @@ struct MapSceneCamera: Sendable {
             return
         }
 
-        let deltaTime = lastUpdateTime.duration(to: time).timeInterval
+        let deltaTime = time - lastUpdateTime
         guard deltaTime >= 0, deltaTime < 0.5,
               simd_distance(lastPlayerPosition, playerPosition) < 8 else {
             currentState.target = playerPosition

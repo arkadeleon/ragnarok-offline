@@ -8,19 +8,19 @@
 import Foundation
 
 struct MapObjectCast {
-    var startTime: ContinuousClock.Instant
-    var duration: Duration
+    var startTime: TimeInterval
+    var duration: TimeInterval
     var spellEffectObjectID: UUID?
 
-    func progress(at time: ContinuousClock.Instant) -> Float {
-        guard duration > .zero else {
+    func progress(atTime time: TimeInterval) -> Float {
+        guard duration > 0 else {
             return 1
         }
-        let progress = Float(startTime.duration(to: time) / duration)
+        let progress = Float((time - startTime) / duration)
         return min(max(progress, 0), 1)
     }
 
-    func isFinished(at time: ContinuousClock.Instant) -> Bool {
-        startTime.duration(to: time) >= duration
+    func isFinished(atTime time: TimeInterval) -> Bool {
+        time - startTime >= duration
     }
 }

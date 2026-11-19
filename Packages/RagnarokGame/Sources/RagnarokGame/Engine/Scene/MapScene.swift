@@ -166,28 +166,28 @@ public final class MapScene {
 // MARK: - Update
 
 extension MapScene {
-    func update(at time: ContinuousClock.Instant) {
+    func update(at time: ContinuousClock.Instant, currentTime: TimeInterval) {
         updateThumbstickMovement(at: time)
 
         let vanishedObjectIDs = objects.compactMap { objectID, object in
-            object.death?.isVanished(at: time) == true ? objectID : nil
+            object.death?.isVanished(atTime: currentTime) == true ? objectID : nil
         }
         for objectID in vanishedObjectIDs {
             removeObject(objectID: objectID)
         }
 
         combatTexts.removeAll { combatText in
-            combatText.isExpired(at: time)
+            combatText.isExpired(atTime: currentTime)
         }
 
         for object in objects.values {
-            object.update(at: time)
+            object.update(at: time, currentTime: currentTime)
             if let movement = object.movement {
                 object.gridPosition = movement.currentLocation.position
             }
         }
 
-        camera.update(playerPosition: worldPosition(for: player), at: time)
+        camera.update(playerPosition: worldPosition(for: player), atTime: currentTime)
 
         spriteLoader.load(objects: objects, items: items)
 
@@ -207,7 +207,7 @@ extension MapScene {
             state.playerDirection = playerDirection
         }
 
-        updateSounds(at: time)
+        updateSounds(atTime: currentTime)
     }
 
     private func resolveAction(for object: MapSceneMapObject) -> ResolvedSpriteAction? {
@@ -282,12 +282,12 @@ extension MapScene {
         audioPlayer.playSoundEffect(named: soundName, from: source)
     }
 
-    private func updateSounds(at time: ContinuousClock.Instant) {
+    private func updateSounds(atTime currentTime: TimeInterval) {
         let listenerPosition = worldPosition(for: player)
         audioPlayer.setListenerPosition(listenerPosition)
 
         for sound in sounds {
-            if let nextPlayTime = sound.nextPlayTime, time < nextPlayTime {
+            if let nextPlayTime = sound.nextPlayTime, currentTime < nextPlayTime {
                 continue
             }
 
@@ -301,7 +301,7 @@ extension MapScene {
                 from: source
             )
 
-            sound.nextPlayTime = time + sound.playInterval
+            sound.nextPlayTime = currentTime + sound.playInterval
         }
     }
 }
@@ -397,7 +397,7 @@ extension MapScene {
                 )
             } else {
                 if mapGrid.contains(position) {
-                    tileSelector = TileSelector(position: position, showTime: .now)
+                    tileSelector = TileSelector(position: position, showTime: CACurrentMediaTime())
                 } else {
                     tileSelector = nil
                 }
@@ -412,14 +412,14 @@ extension MapScene {
             switch target.type {
             case .pc:
                 selectTarget(target)
-                targetSelector = TargetSelector(objectID: target.objectID, showTime: .now)
+                targetSelector = TargetSelector(objectID: target.objectID, showTime: CACurrentMediaTime())
             case .monster, .npc:
                 if playSession.interactionMode != .select || selectedTargetID == objectID {
                     selectTarget(target)
                     performActionOnSelectedTarget()
                 } else {
                     selectTarget(target)
-                    targetSelector = TargetSelector(objectID: target.objectID, showTime: .now)
+                    targetSelector = TargetSelector(objectID: target.objectID, showTime: CACurrentMediaTime())
                 }
             default:
                 break
@@ -467,7 +467,7 @@ extension MapScene {
         let target = candidates[nextIndex]
 
         selectTarget(target)
-        targetSelector = TargetSelector(objectID: target.objectID, showTime: .now)
+        targetSelector = TargetSelector(objectID: target.objectID, showTime: CACurrentMediaTime())
     }
 
     /// Attacks or talks to the selected target. Without one, it selects the nearest monster and attacks it.

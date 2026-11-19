@@ -91,7 +91,7 @@ final class MapLayerRenderer {
         let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
         runtime.update(at: now, renderTime: currentTime)
-        let snapshot = runtime.makeRenderSnapshot(at: now)
+        let snapshot = runtime.makeRenderSnapshot(atTime: currentTime)
         frame.endUpdate()
 
         guard let timing = frame.predictTiming() else {

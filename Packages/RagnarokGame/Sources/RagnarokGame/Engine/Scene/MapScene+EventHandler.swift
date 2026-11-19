@@ -39,7 +39,7 @@ extension MapScene {
         player.hp = current
 
         let combatText = CombatText(
-            creationTime: .now,
+            creationTime: CACurrentMediaTime(),
             target: CombatText.Target(
                 objectID: player.objectID,
                 initialWorldPosition: worldPosition(for: player),
@@ -47,7 +47,7 @@ extension MapScene {
             ),
             amount: recovered,
             kind: .hpRecovery,
-            delay: .zero
+            delay: 0
         )
         combatTexts.append(combatText)
     }
@@ -56,7 +56,7 @@ extension MapScene {
         player.sp = current
 
         let combatText = CombatText(
-            creationTime: .now,
+            creationTime: CACurrentMediaTime(),
             target: CombatText.Target(
                 objectID: player.objectID,
                 initialWorldPosition: worldPosition(for: player),
@@ -64,7 +64,7 @@ extension MapScene {
             ),
             amount: recovered,
             kind: .spRecovery,
-            delay: .zero
+            delay: 0
         )
         combatTexts.append(combatText)
     }
@@ -123,8 +123,8 @@ extension MapScene {
             break
         case .dead:
             mapObject.death = MapObjectDeath(
-                startTime: .now,
-                fadeDuration: object.type == .pc ? nil : .seconds(5)
+                startTime: CACurrentMediaTime(),
+                fadeDuration: object.type == .pc ? nil : 5
             )
             mapObject.perform(.die, completion: .indefinite)
         case .sitting:
@@ -204,8 +204,8 @@ extension MapScene {
         }
 
         object.death = MapObjectDeath(
-            startTime: .now,
-            fadeDuration: object.type == .pc ? nil : .seconds(5)
+            startTime: CACurrentMediaTime(),
+            fadeDuration: object.type == .pc ? nil : 5
         )
         object.movement = nil
         object.perform(.die, completion: .indefinite)
@@ -284,7 +284,7 @@ extension MapScene {
     }
 
     public func onMapObjectActionPerformed(objectAction: MapObjectAction) {
-        let now = ContinuousClock.now
+        let currentTime = CACurrentMediaTime()
 
         let sourceID = objectAction.sourceObjectID
         let sourceObject = objects[sourceID]
@@ -336,7 +336,7 @@ extension MapScene {
 
         let hits = MapObjectHit.hits(for: objectAction)
 
-        addCombatTexts(for: hits, targetObjectID: objectAction.targetObjectID, hitSoundName: hitSoundName(for: objectAction), now: now)
+        addCombatTexts(for: hits, targetObjectID: objectAction.targetObjectID, hitSoundName: hitSoundName(for: objectAction), currentTime: currentTime)
 
         addHitEffect(for: objectAction)
         addArrowProjectileEffect(for: objectAction)
@@ -373,8 +373,8 @@ extension MapScene {
 
             cancelCast(for: sourceObject)
             sourceObject.cast = MapObjectCast(
-                startTime: .now,
-                duration: castTime,
+                startTime: currentTime,
+                duration: castTime.timeInterval,
                 spellEffectObjectID: spellEffect.id
             )
         }
@@ -398,7 +398,7 @@ extension MapScene {
     }
 
     public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
-        let now = ContinuousClock.now
+        let currentTime = CACurrentMediaTime()
 
         if let sourceObject = objects[objectSkill.sourceObjectID] {
             if let targetObject = objects[objectSkill.targetObjectID] {
@@ -416,7 +416,7 @@ extension MapScene {
 
         if objectSkill.isHealingSkill, let targetObject = objects[objectSkill.targetObjectID] {
             let combatText = CombatText(
-                creationTime: now,
+                creationTime: currentTime,
                 target: CombatText.Target(
                     objectID: objectSkill.targetObjectID,
                     initialWorldPosition: worldPosition(for: targetObject),
@@ -424,7 +424,7 @@ extension MapScene {
                 ),
                 amount: objectSkill.level,
                 kind: .hpRecovery,
-                delay: .zero
+                delay: 0
             )
             combatTexts.append(combatText)
 
@@ -433,7 +433,7 @@ extension MapScene {
 
         let hits = MapObjectHit.hits(for: objectSkill)
 
-        addCombatTexts(for: hits, targetObjectID: objectSkill.targetObjectID, now: now)
+        addCombatTexts(for: hits, targetObjectID: objectSkill.targetObjectID, currentTime: currentTime)
 
         addSkillBeforeHitEffects(for: objectSkill, hits: hits)
         addSkillHitEffects(for: objectSkill, hits: hits)
@@ -521,7 +521,7 @@ extension MapScene {
 // MARK: - Combat Text
 
 extension MapScene {
-    private func addCombatTexts(for hits: [MapObjectHit], targetObjectID: GameObjectID, hitSoundName: String? = nil, now: ContinuousClock.Instant) {
+    private func addCombatTexts(for hits: [MapObjectHit], targetObjectID: GameObjectID, hitSoundName: String? = nil, currentTime: TimeInterval) {
         guard !hits.isEmpty,
               let initialWorldPosition = worldPosition(forObjectID: targetObjectID) else {
             return
@@ -537,21 +537,21 @@ extension MapScene {
 
         for hit in hits {
             let combatText = CombatText(
-                creationTime: now,
+                creationTime: currentTime,
                 target: target,
                 amount: hit.damage,
-                delay: hit.delay
+                delay: hit.delay.timeInterval
             )
             combatTexts.append(combatText)
 
             // Monsters taking more than one hit show a combo text.
             if showsCombo, let combo = hit.combo {
                 let comboText = CombatText(
-                    creationTime: now,
+                    creationTime: currentTime,
                     target: target,
                     amount: combo.damage,
                     kind: combo.isFinal ? .finalCombo : .combo,
-                    delay: hit.delay
+                    delay: hit.delay.timeInterval
                 )
                 combatTexts.append(comboText)
             }

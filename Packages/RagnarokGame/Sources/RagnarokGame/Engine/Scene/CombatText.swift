@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/5/31.
 //
 
+import Foundation
 import simd
 
 final class CombatText: Sendable {
@@ -27,33 +28,33 @@ final class CombatText: Sendable {
         }
     }
 
-    let creationTime: ContinuousClock.Instant
+    let creationTime: TimeInterval
     let target: CombatText.Target
     let amount: Int
     let kind: CombatText.Kind
-    let delay: Duration
+    let delay: TimeInterval
 
-    var startTime: ContinuousClock.Instant {
+    var startTime: TimeInterval {
         creationTime + delay
     }
 
-    var duration: Duration {
+    var duration: TimeInterval {
         switch kind {
         case .hpRecovery, .spRecovery, .damage:
-            .milliseconds(1500)
+            1.5
         case .miss:
-            .milliseconds(800)
+            0.8
         case .combo, .finalCombo:
-            .milliseconds(3000)
+            3.0
         }
     }
 
     init(
-        creationTime: ContinuousClock.Instant,
+        creationTime: TimeInterval,
         target: CombatText.Target,
         amount: Int,
         kind: CombatText.Kind? = nil,
-        delay: Duration
+        delay: TimeInterval
     ) {
         self.creationTime = creationTime
         self.target = target
@@ -62,7 +63,7 @@ final class CombatText: Sendable {
         self.delay = delay
     }
 
-    func isExpired(at time: ContinuousClock.Instant) -> Bool {
-        time - startTime > duration + .seconds(1)
+    func isExpired(atTime time: TimeInterval) -> Bool {
+        time - startTime > duration + 1
     }
 }

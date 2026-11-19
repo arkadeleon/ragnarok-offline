@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/8/27.
 //
 
+import Foundation
 import RagnarokModels
 import RagnarokShaders
 import simd
@@ -58,7 +59,7 @@ struct BarMesh {
     }
 
     /// A caster's skill cast progress bar, sitting above its anchor.
-    static func mesh(cast: MapObjectCast, time: ContinuousClock.Instant) -> BarMesh {
+    static func mesh(cast: MapObjectCast, atTime time: TimeInterval) -> BarMesh {
         let barTop: Float = 90
         let barHeight: Float = 6
         let castColor = SIMD4<Float>(0, 1, 0, 1)
@@ -66,7 +67,7 @@ struct BarMesh {
         let vertices = makeBarVertices(
             top: barTop,
             height: barHeight,
-            percentage: cast.progress(at: time),
+            percentage: cast.progress(atTime: time),
             fillColor: castColor
         )
         return BarMesh(vertices: vertices)

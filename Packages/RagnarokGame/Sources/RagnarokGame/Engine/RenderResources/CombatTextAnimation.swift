@@ -17,7 +17,7 @@ struct CombatTextAnimation {
 
 extension CombatText {
     func animation(
-        at time: ContinuousClock.Instant,
+        atTime time: TimeInterval,
         anchor: SIMD3<Float>,
         cameraAzimuth: Float
     ) -> CombatTextAnimation? {

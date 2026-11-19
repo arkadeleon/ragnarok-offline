@@ -141,7 +141,7 @@ final class MapViewController: UIViewController, MTKViewDelegate, UIGestureRecog
         let currentTime = CACurrentMediaTime()
 
         runtime.update(at: now, renderTime: currentTime)
-        let snapshot = runtime.makeRenderSnapshot(at: now)
+        let snapshot = runtime.makeRenderSnapshot(atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
         let camera = runtime.makeCamera(viewport: viewport)
@@ -412,7 +412,7 @@ final class MapViewController: NSViewController, MTKViewDelegate {
         let currentTime = CACurrentMediaTime()
 
         runtime.update(at: now, renderTime: currentTime)
-        let snapshot = runtime.makeRenderSnapshot(at: now)
+        let snapshot = runtime.makeRenderSnapshot(atTime: currentTime)
 
         let viewport = MTLViewport(size: view.drawableSize)
         let camera = runtime.makeCamera(viewport: viewport)

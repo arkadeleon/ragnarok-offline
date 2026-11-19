@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
+import Foundation
 import RagnarokConstants
 import RagnarokModels
 import RagnarokSprite
@@ -250,7 +251,7 @@ final class MapSceneMapObject {
         gridPosition = position
     }
 
-    func update(at time: ContinuousClock.Instant) {
+    func update(at time: ContinuousClock.Instant, currentTime: TimeInterval) {
         let onceDuration: Duration?
         if case .once = action.completion {
             onceDuration = composedSprite?.duration(
@@ -265,9 +266,9 @@ final class MapSceneMapObject {
 
         action.update(atTime: time, onceDuration: onceDuration)
         movement?.update(at: time)
-        death?.update(at: time)
+        death?.update(atTime: currentTime)
 
-        if cast?.isFinished(at: time) == true {
+        if cast?.isFinished(atTime: currentTime) == true {
             cast = nil
         }
     }

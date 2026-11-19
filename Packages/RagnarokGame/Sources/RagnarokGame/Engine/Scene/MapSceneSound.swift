@@ -18,10 +18,10 @@ final class MapSceneSound {
     let range: Float
 
     /// How long to wait between two plays.
-    let playInterval: Duration
+    let playInterval: TimeInterval
 
     /// When the sound may play again. It plays as soon as the player walks into range.
-    var nextPlayTime: ContinuousClock.Instant?
+    var nextPlayTime: TimeInterval?
 
     init(sound: RSW.Objects.Sound, gnd: GND) {
         name = sound.waveName
@@ -35,6 +35,6 @@ final class MapSceneSound {
         range = sound.range / 5
 
         // RSW before 2.0 carries no cycle, and repeat every 7 seconds.
-        playInterval = .seconds(sound.cycle > 0 ? Double(sound.cycle) : 7)
+        playInterval = sound.cycle > 0 ? TimeInterval(sound.cycle) : 7
     }
 }

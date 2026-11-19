@@ -57,7 +57,7 @@ final class MapSceneRuntime {
     }
 
     func update(at time: ContinuousClock.Instant, renderTime: TimeInterval) {
-        scene.update(at: time)
+        scene.update(at: time, currentTime: renderTime)
 
         for effectID in renderResources.expiredEffectIDs(atTime: renderTime) {
             scene.removeEffect(objectID: effectID)
@@ -130,25 +130,25 @@ final class MapSceneRuntime {
         )
     }
 
-    func makeRenderSnapshot(at time: ContinuousClock.Instant) -> MapSceneRenderSnapshot {
+    func makeRenderSnapshot(atTime currentTime: TimeInterval) -> MapSceneRenderSnapshot {
         let worldPositions = makeWorldPositions()
 
         var snapshot = MapSceneRenderSnapshot(fog: scene.fog)
         snapshot.world = renderResources.world
-        snapshot.tileSelector = makeTileSelector(at: time)
-        snapshot.targetSelector = makeTargetSelector(at: time)
+        snapshot.tileSelector = makeTileSelector(atTime: currentTime)
+        snapshot.targetSelector = makeTargetSelector(atTime: currentTime)
         snapshot.spriteDrawables = renderResources.spriteDrawables
         snapshot.effects = makeEffects(worldPositions: worldPositions)
-        snapshot.bars = makeBars(at: time, worldPositions: worldPositions)
+        snapshot.bars = makeBars(atTime: currentTime, worldPositions: worldPositions)
         snapshot.texts = makeTexts(worldPositions: worldPositions)
-        snapshot.combatTexts = makeCombatTexts(at: time, worldPositions: worldPositions)
+        snapshot.combatTexts = makeCombatTexts(atTime: currentTime, worldPositions: worldPositions)
         snapshot.combatTextTexture = renderResources.combatTextTexture
         return snapshot
     }
 
-    private func makeTileSelector(at time: ContinuousClock.Instant) -> MapSceneRenderSnapshot.TileSelector? {
+    private func makeTileSelector(atTime currentTime: TimeInterval) -> MapSceneRenderSnapshot.TileSelector? {
         guard let tileSelector = scene.tileSelector,
-              !tileSelector.isExpired(at: time),
+              !tileSelector.isExpired(atTime: currentTime),
               scene.mapGrid.contains(tileSelector.position) else {
             return nil
         }
@@ -158,7 +158,7 @@ final class MapSceneRuntime {
         )
     }
 
-    private func makeTargetSelector(at time: ContinuousClock.Instant) -> MapSceneRenderSnapshot.TargetSelector? {
+    private func makeTargetSelector(atTime currentTime: TimeInterval) -> MapSceneRenderSnapshot.TargetSelector? {
         guard let targetSelector = scene.targetSelector,
               let object = scene.objects[targetSelector.objectID],
               object.effectState != .cloak,
@@ -174,7 +174,7 @@ final class MapSceneRuntime {
         return MapSceneRenderSnapshot.TargetSelector(
             worldPosition: drawable.worldPosition,
             ringCenterHeight: ringCenterHeight,
-            gemTopHeight: ringCenterHeight + 10 + 11 + 10 - targetSelector.gemDrop(at: time)
+            gemTopHeight: ringCenterHeight + 10 + 11 + 10 - targetSelector.gemDrop(atTime: currentTime)
         )
     }
 
@@ -195,7 +195,7 @@ final class MapSceneRuntime {
     }
 
     private func makeBars(
-        at time: ContinuousClock.Instant,
+        atTime currentTime: TimeInterval,
         worldPositions: [GameObjectID : SIMD3<Float>]
     ) -> [MapSceneRenderSnapshot.Bar] {
         let hpspBars = scene.hpspBarObjectIDs.compactMap { objectID -> MapSceneRenderSnapshot.Bar? in
@@ -226,7 +226,7 @@ final class MapSceneRuntime {
                   let worldPosition = worldPositions[object.objectID] else {
                 return nil
             }
-            let mesh = BarMesh.mesh(cast: cast, time: time)
+            let mesh = BarMesh.mesh(cast: cast, atTime: currentTime)
             return MapSceneRenderSnapshot.Bar(
                 vertices: mesh.vertices,
                 worldPosition: worldPosition
@@ -279,7 +279,7 @@ final class MapSceneRuntime {
     }
 
     private func makeCombatTexts(
-        at time: ContinuousClock.Instant,
+        atTime currentTime: TimeInterval,
         worldPositions: [GameObjectID : SIMD3<Float>]
     ) -> [MapSceneRenderSnapshot.CombatText] {
         guard let combatTextGlyphSet = renderResources.combatTextGlyphSet else {
@@ -289,7 +289,7 @@ final class MapSceneRuntime {
         // A target shows one combo text at a time: the newest one that has started
         // hides the ones before it.
         let comboTexts = scene.combatTexts
-            .filter { $0.kind.isCombo && $0.startTime <= time }
+            .filter { $0.kind.isCombo && $0.startTime <= currentTime }
             .map { ($0.target.objectID, $0) }
         let latestComboTexts = Dictionary(
             comboTexts,
@@ -307,7 +307,7 @@ final class MapSceneRuntime {
             .compactMap { combatText in
                 let anchor = worldPositions[combatText.target.objectID] ?? combatText.target.initialWorldPosition
                 guard let animation = combatText.animation(
-                    at: time,
+                    atTime: currentTime,
                     anchor: anchor,
                     cameraAzimuth: scene.camera.azimuth
                 ) else {
