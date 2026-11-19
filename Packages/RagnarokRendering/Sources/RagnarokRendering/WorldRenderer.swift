@@ -75,6 +75,7 @@ public final class WorldRenderer {
         if includeWater, resource.hasWater {
             queue.submit(
                 bucket: .translucent,
+                worldCenter: resource.waterResource.worldCenter,
                 modelMatrix: modelMatrix,
                 payload: transform(.water(resource: resource.waterResource, time: time, fog: fog, modelMatrix: modelMatrix))
             )
