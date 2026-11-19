@@ -7,6 +7,7 @@
 
 import AVFAudio
 import Foundation
+import QuartzCore
 import simd
 
 /// Plays decoded sound effects through a pool of player nodes.
@@ -24,7 +25,7 @@ final class GameAudioEngine {
 
     private var idleNodes: [AVAudioPlayerNode] = []
     private var playbacks: [UUID : GameAudioEngine.Playback] = [:]
-    private var lastPlayTimes: [String : ContinuousClock.Instant] = [:]
+    private var lastPlayTimes: [String : TimeInterval] = [:]
 
     private var listenerPosition: SIMD3<Float> = .zero
 
@@ -41,8 +42,9 @@ final class GameAudioEngine {
     }
 
     func play(_ soundEffect: GameSoundEffect, from source: GameAudio.Source? = nil) {
-        let now = ContinuousClock.now
-        if let lastPlayTime = lastPlayTimes[soundEffect.name], now - lastPlayTime < .milliseconds(100) {
+        let currentTime = CACurrentMediaTime()
+
+        if let lastPlayTime = lastPlayTimes[soundEffect.name], currentTime - lastPlayTime < 0.1 {
             return
         }
 
@@ -53,7 +55,7 @@ final class GameAudioEngine {
             return
         }
 
-        lastPlayTimes[soundEffect.name] = now
+        lastPlayTimes[soundEffect.name] = currentTime
 
         let playbackID = UUID()
         playbacks[playbackID] = GameAudioEngine.Playback(node: node, source: source)

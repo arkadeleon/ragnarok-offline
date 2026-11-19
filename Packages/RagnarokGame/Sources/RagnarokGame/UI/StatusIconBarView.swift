@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/10/16.
 //
 
+import QuartzCore
 import RagnarokCore
 import RagnarokLocalization
 import RagnarokModels
@@ -163,7 +164,8 @@ private struct StatusIconView: View {
 
             if let duration = statusChange.duration {
                 TimelineView(.animation(minimumInterval: 0.1)) { _ in
-                    let sector = sector(duration: duration, now: .now)
+                    let currentTime = CACurrentMediaTime()
+                    let sector = sector(duration: duration, currentTime: currentTime)
 
                     if sector.progress > 0, sector.progress < 1 {
                         GameClockSector(startFraction: 0, endFraction: sector.progress)
@@ -180,12 +182,12 @@ private struct StatusIconView: View {
     }
 
     /// The sector fills up over the last minute in orange, and over the time before it in white.
-    private func sector(duration: Duration, now: ContinuousClock.Instant) -> (color: Color, progress: Double) {
-        let remaining = max(now.duration(to: statusChange.startTime + duration), .zero)
-        if remaining < .seconds(60) {
-            return (Color(#colorLiteral(red: 1, green: 0.5882352941, blue: 0.1960784314, alpha: 0.65)), 1 - remaining / .seconds(60))
+    private func sector(duration: TimeInterval, currentTime: TimeInterval) -> (color: Color, progress: Double) {
+        let remainingTime = max((statusChange.startTime + duration) - currentTime, 0)
+        if remainingTime < 60 {
+            return (Color(#colorLiteral(red: 1, green: 0.5882352941, blue: 0.1960784314, alpha: 0.65)), 1 - remainingTime / 60)
         } else {
-            let progress = duration > .seconds(60) ? statusChange.startTime.duration(to: now) / (duration - .seconds(60)) : 0
+            let progress = duration > 60 ? (currentTime - statusChange.startTime) / (duration - 60) : 0
             return (Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.65)), progress)
         }
     }
@@ -193,7 +195,7 @@ private struct StatusIconView: View {
 
 private struct StatusDescriptionView: View {
     var description: StatusDescription
-    var endTime: ContinuousClock.Instant?
+    var endTime: TimeInterval?
 
     @Environment(GameContext.self) private var gameContext
 
@@ -229,12 +231,13 @@ private struct StatusDescriptionView: View {
             return ""
         }
 
-        let remaining = ContinuousClock.now.duration(to: endTime)
-        guard remaining > .zero else {
+        let currentTime = CACurrentMediaTime()
+        let remainingTime = endTime - currentTime
+        guard remainingTime > 0 else {
             return ""
         }
 
-        let seconds = Int(remaining.components.seconds)
+        let seconds = Int(remainingTime)
 
         let messageStringTable = gameContext.messageStringTable
         let secondsText = "\(seconds % 60) \(messageStringTable.localizedMessageString(forID: 1808))"
@@ -247,8 +250,9 @@ private struct StatusDescriptionView: View {
 }
 
 #Preview {
+    let currentTime = CACurrentMediaTime()
     let statusChanges = (1...20).map { statusID in
-        StatusChange(statusID: statusID, startTime: .now, duration: statusID.isMultiple(of: 3) ? nil : .seconds(statusID * 20))
+        StatusChange(statusID: statusID, startTime: currentTime, duration: statusID.isMultiple(of: 3) ? nil : TimeInterval(statusID * 20))
     }
 
     StatusIconBarView(statusChanges: statusChanges)

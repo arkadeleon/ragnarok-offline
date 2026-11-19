@@ -8,6 +8,7 @@
 import Foundation
 import Metal
 import Observation
+import QuartzCore
 import RagnarokConstants
 import RagnarokModels
 import RagnarokNetwork
@@ -101,7 +102,7 @@ final class PlaySession {
     }
 
     /// Puts every skill in the shortcut list on cooldown, such as after a skill with a cast delay.
-    func setGlobalSkillCooldown(startTime: ContinuousClock.Instant, duration: Duration) {
+    func setGlobalSkillCooldown(startTime: TimeInterval, duration: TimeInterval) {
         for shortcut in shortcutList.rows.joined() {
             if case .skill(let skillID, _) = shortcut {
                 let cooldown = SkillCooldown(skillID: skillID, startTime: startTime, duration: duration)
@@ -287,7 +288,8 @@ final class PlaySession {
         case let packet as PACKET_ZC_SKILLINFO_DELETE:
             skillList.delete(from: packet)
         case let packet as PACKET_ZC_SKILL_POSTDELAY:
-            let cooldown = SkillCooldown(from: packet, startTime: .now)
+            let currentTime = CACurrentMediaTime()
+            let cooldown = SkillCooldown(from: packet, startTime: currentTime)
             setSkillCooldown(cooldown)
         case let packet as PACKET_ZC_USESKILL_ACK:
             if let skillID = SkillID(rawValue: Int(packet.skillId)),
@@ -487,7 +489,8 @@ final class PlaySession {
         case let packet as PACKET_ZC_MSG_STATE_CHANGE:
             if packet.AID == account.accountID {
                 if packet.state != 0 {
-                    let statusChange = StatusChange(statusID: Int(packet.index), startTime: .now, duration: nil)
+                    let currentTime = CACurrentMediaTime()
+                    let statusChange = StatusChange(statusID: Int(packet.index), startTime: currentTime, duration: nil)
                     setStatusChange(statusChange)
                 } else {
                     removeStatusChange(statusID: Int(packet.index))
@@ -495,17 +498,18 @@ final class PlaySession {
             }
         case let packet as PACKET_ZC_MSG_STATE_CHANGE3:
             if packet.AID == account.accountID {
+                let currentTime = CACurrentMediaTime()
                 switch OfficialStatusChangeID(rawValue: Int(packet.index)) {
                 case .efst_postdelay, .efst_groundmagic:
                     if packet.remain > 0 {
-                        setGlobalSkillCooldown(startTime: .now, duration: .milliseconds(packet.remain))
+                        setGlobalSkillCooldown(startTime: currentTime, duration: TimeInterval(packet.remain) / 1000)
                     }
                 default:
                     break
                 }
 
                 if packet.state != 0 {
-                    let statusChange = StatusChange(from: packet, startTime: .now)
+                    let statusChange = StatusChange(from: packet, startTime: currentTime)
                     setStatusChange(statusChange)
                 }
             }
