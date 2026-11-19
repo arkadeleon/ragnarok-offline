@@ -69,7 +69,7 @@ extension MapScene {
         combatTexts.append(combatText)
     }
 
-    public func onPlayerMoved(startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+    public func onPlayerMoved(startTime: TimeInterval, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         moveObject(
             objectID: player.objectID,
             startTime: startTime,
@@ -143,7 +143,7 @@ extension MapScene {
         }
     }
 
-    public func onMapObjectMoved(object: MapObject, startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+    public func onMapObjectMoved(object: MapObject, startTime: TimeInterval, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         let isNew = objects[object.objectID] == nil
 
         if isNew {
@@ -316,16 +316,16 @@ extension MapScene {
         case .sit:
             .indefinite
         case .freeze, .freeze2, .die:
-            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: presentationActionType)
+            .after(TimeInterval(objectAction.sourceSpeed) / 1000, nextActionType: presentationActionType)
         case .attack1, .attack2, .attack3, .skill:
-            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: sourceObject.map { SpriteActionType.afterAttackActionType(forJobID: $0.job) } ?? .idle)
+            .after(TimeInterval(objectAction.sourceSpeed) / 1000, nextActionType: sourceObject.map { SpriteActionType.afterAttackActionType(forJobID: $0.job) } ?? .idle)
         case .idle, .walk, .readyToAttack, .hurt:
-            .after(.milliseconds(objectAction.sourceSpeed), nextActionType: .idle)
+            .after(TimeInterval(objectAction.sourceSpeed) / 1000, nextActionType: .idle)
         }
 
         if let sourceObject {
             if presentationActionType.isAttack {
-                sourceObject.attackDelay = .milliseconds(objectAction.sourceSpeed)
+                sourceObject.attackDelay = TimeInterval(objectAction.sourceSpeed) / 1000
                 if let targetObject = objects[objectAction.targetObjectID] {
                     sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
                 }
@@ -342,14 +342,14 @@ extension MapScene {
         addArrowProjectileEffect(for: objectAction)
     }
 
-    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, element: Element, castTime: Duration) {
+    public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, element: Element, castTime: TimeInterval) {
         guard let sourceObject = objects[sourceObjectID] else {
             return
         }
 
         let currentTime = CACurrentMediaTime()
 
-        if castTime > .zero {
+        if castTime > 0 {
             let effectID: EffectID = switch element {
             case .water: .ef_beginspell2
             case .earth: .ef_beginspell5
@@ -367,14 +367,14 @@ extension MapScene {
                 gridPosition: sourceObject.gridPosition,
                 targetObjectID: sourceObjectID,
                 ownerObjectID: sourceObjectID,
-                duration: castTime.timeInterval
+                duration: castTime
             )
             effects[spellEffect.id] = spellEffect
 
             cancelCast(for: sourceObject)
             sourceObject.cast = MapObjectCast(
                 startTime: currentTime,
-                duration: castTime.timeInterval,
+                duration: castTime,
                 spellEffectObjectID: spellEffect.id
             )
         }
@@ -407,7 +407,7 @@ extension MapScene {
 
             let availableActionTypes = SpriteActionType.availableActionTypes(forJobID: sourceObject.job)
             let action: SpriteActionType = availableActionTypes.contains(.skill) ? .skill : .attack1
-            let duration = Duration.milliseconds(objectSkill.attackDelay)
+            let duration = TimeInterval(objectSkill.attackDelay) / 1000
             let nextActionType = SpriteActionType.afterAttackActionType(forJobID: sourceObject.job)
 
             sourceObject.attackDelay = duration
@@ -540,7 +540,7 @@ extension MapScene {
                 creationTime: currentTime,
                 target: target,
                 amount: hit.damage,
-                delay: hit.delay.timeInterval
+                delay: hit.delay
             )
             combatTexts.append(combatText)
 
@@ -551,13 +551,13 @@ extension MapScene {
                     target: target,
                     amount: combo.damage,
                     kind: combo.isFinal ? .finalCombo : .combo,
-                    delay: hit.delay.timeInterval
+                    delay: hit.delay
                 )
                 combatTexts.append(comboText)
             }
 
             if let hitSoundName {
-                audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, after: hit.delay)
+                audioPlayer.playSoundEffect(named: hitSoundName, from: hitSoundSource, afterDelay: hit.delay)
             }
         }
     }
@@ -630,7 +630,7 @@ extension MapScene {
                     sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
-                    delay: (MapObjectHit.multiHitInterval * i).timeInterval
+                    delay: MapObjectHit.multiHitInterval * TimeInterval(i)
                 )
                 effects[effect.id] = effect
             }
@@ -655,7 +655,7 @@ extension MapScene {
                     sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
-                    delay: hit.delay.timeInterval
+                    delay: hit.delay
                 )
                 effects[effect.id] = effect
             }

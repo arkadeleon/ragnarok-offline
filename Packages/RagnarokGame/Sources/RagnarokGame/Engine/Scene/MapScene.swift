@@ -69,7 +69,7 @@ public final class MapScene {
     /// It changes only when the thumbstick turns 10 degrees past the boundary, so it does not flicker near the boundary.
     private(set) var thumbstickOctant: Int?
 
-    private var thumbstickRequest: (target: SIMD2<Int>, octant: Int, time: ContinuousClock.Instant)?
+    private var thumbstickRequest: (target: SIMD2<Int>, octant: Int, time: TimeInterval)?
 
     /// The cell where the player stops after the thumbstick is let go. It is kept until the server agrees.
     /// Until then, a late reply to an earlier request must not walk past this cell.
@@ -166,8 +166,10 @@ public final class MapScene {
 // MARK: - Update
 
 extension MapScene {
-    func update(at time: ContinuousClock.Instant, currentTime: TimeInterval) {
-        updateThumbstickMovement(at: time)
+    func update(atTime worldTime: MapWorldTime) {
+        let currentTime = worldTime.time
+
+        updateThumbstickMovement(atTime: currentTime)
 
         let vanishedObjectIDs = objects.compactMap { objectID, object in
             object.death?.isVanished(atTime: currentTime) == true ? objectID : nil
@@ -181,7 +183,7 @@ extension MapScene {
         }
 
         for object in objects.values {
-            object.update(at: time, currentTime: currentTime)
+            object.update(atTime: currentTime)
             if let movement = object.movement {
                 object.gridPosition = movement.currentLocation.position
             }
@@ -337,27 +339,27 @@ extension MapScene {
         }
     }
 
-    func moveObject(objectID: GameObjectID, startTime: ContinuousClock.Instant, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
+    func moveObject(objectID: GameObjectID, startTime: TimeInterval, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         guard let object = objects[objectID] else {
             return
         }
 
-        let now = ContinuousClock.now
+        let currentTime = CACurrentMediaTime()
         let movement = object.replanMovement(
             startTime: startTime,
             startPosition: startPosition,
             endPosition: endPosition,
             speed: object.speed,
             pathFinder: pathFinder,
-            at: now
+            atTime: currentTime
         )
 
         object.gridPosition = movement.currentLocation.position
-        let remainingDuration = movement.remainingDuration(at: now)
+        let remainingDuration = movement.remainingDuration(atTime: currentTime)
         object.perform(
             .walk,
             completion: .after(remainingDuration, nextActionType: .idle),
-            at: now
+            atTime: currentTime
         )
         if let finalDirection = movement.finalDirection {
             object.setDirection(finalDirection)
@@ -521,11 +523,11 @@ extension MapScene {
             return
         }
 
-        let remainingDuration = player.movement?.remainingDuration(at: .now) ?? .zero
+        let remainingDuration = player.movement?.remainingDuration(atTime: CACurrentMediaTime()) ?? 0
 
         arrivalTask?.cancel()
         arrivalTask = Task { @MainActor [weak self] in
-            try await Task.sleep(for: remainingDuration + .milliseconds(50))
+            try await Task.sleep(for: .seconds(remainingDuration + 0.05))
             guard let self else {
                 return
             }
@@ -597,7 +599,7 @@ extension MapScene {
 
     /// Walks in the thumbstick direction, like holding the mouse button in the official client.
     /// It keeps asking for a cell a few steps ahead. When the thumbstick is let go, it stops at the next cell.
-    private func updateThumbstickMovement(at time: ContinuousClock.Instant) {
+    private func updateThumbstickMovement(atTime currentTime: TimeInterval) {
         updateThumbstickOctant()
 
         guard let octant = thumbstickOctant else {
@@ -606,9 +608,9 @@ extension MapScene {
 
                 // Stop one cell after the next cell, so the server tells other players.
                 // Stop now, because the server stops a little late.
-                let upcomingPositions = player.movement?.upcomingPositions(at: time) ?? []
+                let upcomingPositions = player.movement?.upcomingPositions(atTime: currentTime) ?? []
                 if let stopPosition = upcomingPositions.dropFirst().first ?? upcomingPositions.first {
-                    player.truncateMovement(to: stopPosition, at: time)
+                    player.truncateMovement(to: stopPosition, atTime: currentTime)
                     playSession.requestMove(to: stopPosition)
                     thumbstickStopPosition = stopPosition
                 }
@@ -621,14 +623,14 @@ extension MapScene {
         }
 
         if let thumbstickRequest {
-            guard thumbstickRequest.time.duration(to: time) >= .milliseconds(200) else {
+            guard currentTime - thumbstickRequest.time >= 0.2 else {
                 return
             }
 
             // Ask again when the direction changes, or when the path is almost done.
             let isTurning = octant != thumbstickRequest.octant
-            let remainingDuration = player.movement?.remainingDuration(at: time) ?? .zero
-            let isRunningOut = remainingDuration < .milliseconds(player.speed * 3)
+            let remainingDuration = player.movement?.remainingDuration(atTime: currentTime) ?? 0
+            let isRunningOut = remainingDuration < TimeInterval(player.speed * 3) / 1000
             guard isTurning || isRunningOut else {
                 return
             }
@@ -638,12 +640,12 @@ extension MapScene {
         }
 
         // The server only changes its path when it gets to the next cell, so start looking from that cell.
-        let origin = player.nextPosition(at: time) ?? player.gridPosition
+        let origin = player.nextPosition(atTime: currentTime) ?? player.gridPosition
         let target = thumbstickTarget(from: origin, toward: octant)
         if let target, target != thumbstickRequest?.target {
             requestMove(to: target)
         }
-        thumbstickRequest = (target ?? origin, octant, time)
+        thumbstickRequest = (target ?? origin, octant, currentTime)
     }
 
     private func updateThumbstickOctant() {

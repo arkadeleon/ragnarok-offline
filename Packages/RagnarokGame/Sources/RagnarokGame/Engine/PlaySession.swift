@@ -61,7 +61,7 @@ final class PlaySession {
     @ObservationIgnored private var keepaliveTask: Task<Void, Never>?
 
     @ObservationIgnored private var serverClock = ServerClock()
-    @ObservationIgnored private var serverTimeRequestTime: ContinuousClock.Instant?
+    @ObservationIgnored private var serverTimeRequestTime: TimeInterval?
 
     var mapRuntime: MapSceneRuntime? {
         if case .loaded(let runtime) = mapPhase {
@@ -202,7 +202,8 @@ final class PlaySession {
     private func handlePacket(_ packet: any DecodablePacket) {
         switch packet {
         case let packet as PACKET_ZC_ACCEPT_ENTER:
-            serverClock.synchronize(serverTick: packet.startTime, receiveTime: .now)
+            let currentTime = CACurrentMediaTime()
+            serverClock.synchronize(serverTick: packet.startTime, receiveTime: currentTime)
         case _ as PACKET_ZC_REFUSE_ENTER:
             let localizedMessage = context.messageStringTable.localizedMessageString(forID: 9)
             delegate?.playSession(self, didFailToEnterWithErrorMessage: localizedMessage)
@@ -294,7 +295,7 @@ final class PlaySession {
         case let packet as PACKET_ZC_USESKILL_ACK:
             if let skillID = SkillID(rawValue: Int(packet.skillId)),
                let element = Element(rawValue: Int(packet.element)) {
-                mapScene?.onMapObjectSkillCast(skillID: skillID, sourceObjectID: packet.srcId, element: element, castTime: .milliseconds(packet.delayTime))
+                mapScene?.onMapObjectSkillCast(skillID: skillID, sourceObjectID: packet.srcId, element: element, castTime: TimeInterval(packet.delayTime) / 1000)
             }
         case let packet as PACKET_ZC_WARPLIST:
             warpList = WarpList(from: packet)
@@ -592,8 +593,8 @@ final class PlaySession {
             break
         case let packet as PACKET_ZC_NOTIFY_TIME:
             if let requestTime = serverTimeRequestTime {
-                let now = ContinuousClock.now
-                serverClock.synchronize(serverTick: packet.time, receiveTime: now, roundTripTime: requestTime.duration(to: now))
+                let currentTime = CACurrentMediaTime()
+                serverClock.synchronize(serverTick: packet.time, receiveTime: currentTime, roundTripTime: currentTime - requestTime)
                 serverTimeRequestTime = nil
             }
         case let packet as PACKET_SC_NOTIFY_BAN:
@@ -630,15 +631,15 @@ final class PlaySession {
             return
         }
 
-        let startTime = ContinuousClock.now
+        let startTime = CACurrentMediaTime()
 
         keepaliveTask?.cancel()
         keepaliveTask = Task {
             var requestCount = 0
             while !Task.isCancelled {
-                let now = ContinuousClock.now
-                let clientTime = Int(startTime.duration(to: now).timeInterval * 1000)
-                serverTimeRequestTime = now
+                let currentTime = CACurrentMediaTime()
+                let clientTime = Int((currentTime - startTime) * 1000)
+                serverTimeRequestTime = currentTime
 
                 let packet = PacketFactory.CZ_REQUEST_TIME(clientTime: UInt32(truncatingIfNeeded: clientTime))
                 mapClient.sendPacket(packet)

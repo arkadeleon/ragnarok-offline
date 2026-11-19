@@ -96,12 +96,12 @@ final class GameAudioPlayer {
         playSoundEffect(named: K2L("버튼소리.wav"))
     }
 
-    func playSoundEffect(named soundName: String, from source: GameAudio.Source? = nil, after delay: Duration = .zero) {
+    func playSoundEffect(named soundName: String, from source: GameAudio.Source? = nil, afterDelay delay: TimeInterval = 0) {
         let playbackID = UUID()
 
         soundEffectTasks[playbackID] = Task { [weak self] in
-            if delay > .zero {
-                try? await Task.sleep(for: delay)
+            if delay > 0 {
+                try? await Task.sleep(for: .seconds(delay))
             }
             guard let self else {
                 return

@@ -88,9 +88,8 @@ final class MapLayerRenderer {
         }
 
         frame.startUpdate()
-        let now = ContinuousClock.now
         let currentTime = CACurrentMediaTime()
-        runtime.update(at: now, renderTime: currentTime)
+        runtime.update(atTime: currentTime)
         let snapshot = runtime.makeRenderSnapshot(atTime: currentTime)
         frame.endUpdate()
 
@@ -110,7 +109,8 @@ final class MapLayerRenderer {
         }
 
         let anchorTime = LayerRenderer.Clock.Instant.epoch.duration(to: timing.trackableAnchorTime)
-        drawable.deviceAnchor = worldTracking.queryDeviceAnchor(atTimestamp: anchorTime.timeInterval)
+        let anchorTimestamp = TimeInterval(anchorTime.components.seconds) + TimeInterval(anchorTime.components.attoseconds) / 1_000_000_000_000_000_000
+        drawable.deviceAnchor = worldTracking.queryDeviceAnchor(atTimestamp: anchorTimestamp)
 
         // The eye cannot move, so the game camera places the map around the viewer.
         // RenderCamera and the compositor both use right-handed view space with visible

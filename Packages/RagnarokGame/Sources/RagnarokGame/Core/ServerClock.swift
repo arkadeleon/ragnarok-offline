@@ -5,15 +5,18 @@
 //  Created by Leon Li on 2026/10/7.
 //
 
+import Foundation
+import QuartzCore
+
 struct ServerClock {
     private var referenceTick: UInt32?
-    private var referenceTime: ContinuousClock.Instant = .now
-    private var bestRoundTripTime: Duration?
+    private var referenceTime: TimeInterval = CACurrentMediaTime()
+    private var bestRoundTripTime: TimeInterval?
 
     mutating func synchronize(
         serverTick: UInt32,
-        receiveTime: ContinuousClock.Instant,
-        roundTripTime: Duration? = nil
+        receiveTime: TimeInterval,
+        roundTripTime: TimeInterval? = nil
     ) {
         if let bestRoundTripTime {
             guard let roundTripTime, roundTripTime <= bestRoundTripTime else {
@@ -22,16 +25,16 @@ struct ServerClock {
         }
 
         referenceTick = serverTick
-        referenceTime = receiveTime - (roundTripTime ?? .zero) / 2
+        referenceTime = receiveTime - (roundTripTime ?? 0) / 2
         bestRoundTripTime = roundTripTime
     }
 
-    func time(forServerTick serverTick: UInt32) -> ContinuousClock.Instant {
+    func time(forServerTick serverTick: UInt32) -> TimeInterval {
         guard let referenceTick else {
-            return .now
+            return CACurrentMediaTime()
         }
 
         let elapsedMilliseconds = Int32(bitPattern: serverTick &- referenceTick)
-        return referenceTime + .milliseconds(Int(elapsedMilliseconds))
+        return referenceTime + TimeInterval(elapsedMilliseconds) / 1000
     }
 }

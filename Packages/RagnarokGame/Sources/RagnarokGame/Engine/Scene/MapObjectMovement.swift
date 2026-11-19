@@ -5,24 +5,25 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
+import Foundation
 import RagnarokSprite
 import simd
 
 /// The time the server takes to walk one cell. A diagonal step takes `speed * 14 / 10`, the same as on the server.
-func stepDuration(from sourcePosition: SIMD2<Int>, to targetPosition: SIMD2<Int>, speed: Int) -> Duration {
+func stepDuration(from sourcePosition: SIMD2<Int>, to targetPosition: SIMD2<Int>, speed: Int) -> TimeInterval {
     let direction = SpriteDirection(sourcePosition: sourcePosition, targetPosition: targetPosition)
-    return .milliseconds(direction.isDiagonal ? speed * 14 / 10 : speed)
+    return TimeInterval(direction.isDiagonal ? speed * 14 / 10 : speed) / 1000
 }
 
 /// The time it takes to walk from a point to a cell. The point can be between two cells.
-func stepDuration(from sourcePoint: SIMD2<Float>, to targetPosition: SIMD2<Int>, speed: Int) -> Duration {
+func stepDuration(from sourcePoint: SIMD2<Float>, to targetPosition: SIMD2<Int>, speed: Int) -> TimeInterval {
     let sourcePosition = SIMD2<Int>(sourcePoint)
     if SIMD2<Float>(sourcePosition) == sourcePoint {
         return stepDuration(from: sourcePosition, to: targetPosition, speed: speed)
     }
 
     let distance = simd_distance(sourcePoint, SIMD2<Float>(targetPosition))
-    return .milliseconds(Double(distance) * Double(speed))
+    return TimeInterval(distance) * TimeInterval(speed) / 1000
 }
 
 struct MapObjectMovement: Sendable {
@@ -47,21 +48,21 @@ struct MapObjectMovement: Sendable {
     let origin: MapObjectMovement.Location
     let waypoints: [SIMD2<Int>]
 
-    let stepDurations: [Duration]
-    let startTime: ContinuousClock.Instant
-    let animationElapsedOffset: Duration
+    let stepDurations: [TimeInterval]
+    let startTime: TimeInterval
+    let animationElapsedOffset: TimeInterval
 
     private(set) var currentLocation: MapObjectMovement.Location
     private(set) var direction: SpriteDirection?
-    private(set) var animationElapsedTime: Duration = .zero
+    private(set) var animationElapsedTime: TimeInterval = 0
     private(set) var isMoving = false
 
     var endPosition: SIMD2<Int> {
         waypoints.last ?? origin.position
     }
 
-    var duration: Duration {
-        stepDurations.reduce(.zero, +)
+    var duration: TimeInterval {
+        stepDurations.reduce(0, +)
     }
 
     var finalDirection: SpriteDirection? {
@@ -76,9 +77,9 @@ struct MapObjectMovement: Sendable {
     init(
         origin: MapObjectMovement.Location,
         waypoints: [SIMD2<Int>],
-        stepDurations: [Duration],
-        startTime: ContinuousClock.Instant,
-        animationElapsedOffset: Duration
+        stepDurations: [TimeInterval],
+        startTime: TimeInterval,
+        animationElapsedOffset: TimeInterval
     ) {
         self.origin = origin
         self.waypoints = waypoints
@@ -90,8 +91,8 @@ struct MapObjectMovement: Sendable {
 
     /// Returns this walk, but ending at `position`. The timing of each step stays the same.
     /// Returns `nil` if the object does not walk into `position` after `time`.
-    func truncated(to position: SIMD2<Int>, at time: ContinuousClock.Instant) -> MapObjectMovement? {
-        guard let step = step(at: time), let index = waypoints[step.index...].firstIndex(of: position) else {
+    func truncated(to position: SIMD2<Int>, atTime time: TimeInterval) -> MapObjectMovement? {
+        guard let step = step(atTime: time), let index = waypoints[step.index...].firstIndex(of: position) else {
             return nil
         }
 
@@ -104,23 +105,23 @@ struct MapObjectMovement: Sendable {
         )
     }
 
-    mutating func update(at time: ContinuousClock.Instant) {
-        if let step = step(at: time) {
+    mutating func update(atTime time: TimeInterval) {
+        if let step = step(atTime: time) {
             let point = mix(step.source.point, SIMD2<Float>(step.targetPosition), t: step.fraction)
             currentLocation = MapObjectMovement.Location(position: step.source.position, point: point)
             direction = SpriteDirection(sourcePosition: step.source.point, targetPosition: SIMD2<Float>(step.targetPosition))
-            animationElapsedTime = max(startTime.duration(to: time), .zero) + animationElapsedOffset
+            animationElapsedTime = max(time - startTime, 0) + animationElapsedOffset
             isMoving = true
         } else {
             currentLocation = MapObjectMovement.Location(position: endPosition, point: SIMD2<Float>(endPosition))
             direction = nil
-            animationElapsedTime = .zero
+            animationElapsedTime = 0
             isMoving = false
         }
     }
 
-    func location(at time: ContinuousClock.Instant) -> MapObjectMovement.Location? {
-        guard let step = step(at: time) else {
+    func location(atTime time: TimeInterval) -> MapObjectMovement.Location? {
+        guard let step = step(atTime: time) else {
             return nil
         }
 
@@ -129,37 +130,37 @@ struct MapObjectMovement: Sendable {
     }
 
     /// The cells the object has not reached yet, starting with the cell it is walking to.
-    func upcomingPositions(at time: ContinuousClock.Instant) -> ArraySlice<SIMD2<Int>> {
-        guard let step = step(at: time) else {
+    func upcomingPositions(atTime time: TimeInterval) -> ArraySlice<SIMD2<Int>> {
+        guard let step = step(atTime: time) else {
             return []
         }
 
         return waypoints[step.index...]
     }
 
-    func remainingDuration(at time: ContinuousClock.Instant) -> Duration {
-        let elapsed = max(startTime.duration(to: time), .zero)
-        return max(duration - elapsed, .zero)
+    func remainingDuration(atTime time: TimeInterval) -> TimeInterval {
+        let elapsedTime = max(time - startTime, 0)
+        return max(duration - elapsedTime, 0)
     }
 
-    private func step(at time: ContinuousClock.Instant) -> MapObjectMovement.Step? {
-        let elapsed = startTime.duration(to: time)
-        guard !waypoints.isEmpty, elapsed < duration else {
+    private func step(atTime time: TimeInterval) -> MapObjectMovement.Step? {
+        let elapsedTime = time - startTime
+        guard !waypoints.isEmpty, elapsedTime < duration else {
             return nil
         }
 
         var index = 0
         var fraction: Float = 0
-        if elapsed > .zero {
-            var accumulated: Duration = .zero
-            while index < stepDurations.count && elapsed >= accumulated + stepDurations[index] {
-                accumulated += stepDurations[index]
+        if elapsedTime > 0 {
+            var accumulatedTime: TimeInterval = 0
+            while index < stepDurations.count && elapsedTime >= accumulatedTime + stepDurations[index] {
+                accumulatedTime += stepDurations[index]
                 index += 1
             }
             guard index < stepDurations.count else {
                 return nil
             }
-            fraction = Float((elapsed - accumulated) / stepDurations[index])
+            fraction = Float((elapsedTime - accumulatedTime) / stepDurations[index])
         }
 
         let source = if index == 0 {

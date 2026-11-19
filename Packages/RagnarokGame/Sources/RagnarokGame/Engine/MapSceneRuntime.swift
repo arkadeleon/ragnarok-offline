@@ -22,6 +22,7 @@ final class MapSceneRuntime {
     let world: WorldResource
     let renderResources: MapSceneRenderResources
     var lastCamera: RenderCamera?
+    private var lastUpdateTime: TimeInterval?
 
     init(
         scene: MapScene,
@@ -54,12 +55,17 @@ final class MapSceneRuntime {
         scene.unload()
         renderResources.removeAll()
         lastCamera = nil
+        lastUpdateTime = nil
     }
 
-    func update(at time: ContinuousClock.Instant, renderTime: TimeInterval) {
-        scene.update(at: time, currentTime: renderTime)
+    func update(atTime currentTime: TimeInterval) {
+        let deltaTime = lastUpdateTime.map { min(max(currentTime - $0, 0), 0.1) } ?? 0
+        lastUpdateTime = currentTime
 
-        for effectID in renderResources.expiredEffectIDs(atTime: renderTime) {
+        let worldTime = MapWorldTime(time: currentTime, deltaTime: deltaTime)
+        scene.update(atTime: worldTime)
+
+        for effectID in renderResources.expiredEffectIDs(atTime: currentTime) {
             scene.removeEffect(objectID: effectID)
         }
 
@@ -76,7 +82,7 @@ final class MapSceneRuntime {
             scene.effects,
             worldPositions: effectWorldPositions
         ) { [audioPlayer = scene.audioPlayer] soundName, delay in
-            audioPlayer.playSoundEffect(named: soundName, after: .seconds(delay))
+            audioPlayer.playSoundEffect(named: soundName, afterDelay: delay)
         }
     }
 

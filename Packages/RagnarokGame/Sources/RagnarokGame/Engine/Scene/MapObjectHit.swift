@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/9/30.
 //
 
+import Foundation
 import RagnarokConstants
 import RagnarokModels
 
@@ -15,9 +16,9 @@ struct MapObjectHit {
     }
 
     /// Time between two hits of a multi-hit attack.
-    static let multiHitInterval: Duration = .milliseconds(200)
+    static let multiHitInterval: TimeInterval = 0.2
 
-    var delay: Duration
+    var delay: TimeInterval
     var damage: Int
 
     /// Damage accumulated up to this hit.
@@ -26,7 +27,7 @@ struct MapObjectHit {
 
 extension MapObjectHit {
     static func hits(for objectAction: MapObjectAction) -> [MapObjectHit] {
-        let attackDelay: Duration = .milliseconds(objectAction.sourceSpeed)
+        let attackDelay = TimeInterval(objectAction.sourceSpeed) / 1000
         let damage = objectAction.damage
         let damage2 = objectAction.damage2
         let multiHitInterval = MapObjectHit.multiHitInterval
@@ -99,7 +100,7 @@ extension MapObjectHit {
 
         let hits = (0..<count).map { i in
             MapObjectHit(
-                delay: .milliseconds(objectSkill.attackDelay) + MapObjectHit.multiHitInterval * i,
+                delay: TimeInterval(objectSkill.attackDelay) / 1000 + MapObjectHit.multiHitInterval * TimeInterval(i),
                 damage: damage / count,
                 combo: showsCombo ? MapObjectHit.Combo(damage: damage * (i + 1) / count, isFinal: i + 1 == count) : nil
             )

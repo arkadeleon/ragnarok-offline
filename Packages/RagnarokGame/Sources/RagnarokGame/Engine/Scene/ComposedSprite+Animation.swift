@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/9/4.
 //
 
+import Foundation
 import RagnarokFileFormats
 import RagnarokSprite
 
@@ -14,11 +15,11 @@ extension ComposedSprite {
         forActionType actionType: SpriteActionType,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection,
-        attackDelay: Duration
-    ) -> Duration? {
+        attackDelay: TimeInterval
+    ) -> TimeInterval? {
         let actionIndex = actionType.calculateActionIndex(forJobID: configuration.job.rawValue, direction: direction)
 
-        var duration: Duration?
+        var duration: TimeInterval?
         for part in parts {
             let partActionIndex = (part.semantic == .shadow ? 0 : actionIndex)
             guard let partAction = part.sprite.act.action(at: partActionIndex), !partAction.frames.isEmpty else {
@@ -40,7 +41,7 @@ extension ComposedSprite {
                 frameCount: frameRange.count,
                 attackDelay: attackDelay
             )
-            duration = max(duration ?? .zero, frameInterval * frameRange.count)
+            duration = max(duration ?? 0, frameInterval * TimeInterval(frameRange.count))
         }
 
         return duration
@@ -53,8 +54,8 @@ extension ComposedSprite {
         forActionType actionType: SpriteActionType,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection,
-        elapsedTime: Duration,
-        attackDelay: Duration
+        elapsedTime: TimeInterval,
+        attackDelay: TimeInterval
     ) -> Int? {
         let actionIndex = actionType.calculateActionIndex(forJobID: configuration.job.rawValue, direction: direction)
 
@@ -130,12 +131,12 @@ extension ComposedSprite.Part {
         action: ACT.Action,
         actionType: SpriteActionType,
         frameCount: Int,
-        attackDelay: Duration
-    ) -> Duration {
+        attackDelay: TimeInterval
+    ) -> TimeInterval {
         if actionType.isAttack {
-            attackDelay / frameCount
+            attackDelay / TimeInterval(frameCount)
         } else {
-            .seconds(Double(action.frameInterval))
+            TimeInterval(action.frameInterval)
         }
     }
 }

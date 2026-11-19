@@ -5,29 +5,30 @@
 //  Created by Leon Li on 2026/5/30.
 //
 
+import Foundation
 import simd
 
 struct MapObjectMovementPlanner {
     func replan(
         existingMovement: MapObjectMovement?,
         currentPosition: SIMD2<Int>,
-        incomingStartTime: ContinuousClock.Instant,
+        incomingStartTime: TimeInterval,
         incomingStartPosition: SIMD2<Int>,
         incomingEndPosition: SIMD2<Int>,
         speed: Int,
         pathFinder: PathFinder,
-        at now: ContinuousClock.Instant
+        atTime currentTime: TimeInterval
     ) -> MapObjectMovement {
         let incomingPath = movementPath(from: incomingStartPosition, to: incomingEndPosition, pathFinder: pathFinder)
         let incomingDuration = movementDuration(path: incomingPath, speed: speed)
-        let arrivalTime = startTime(incomingStartTime, duration: incomingDuration, at: now) + incomingDuration
+        let arrivalTime = startTime(incomingStartTime, duration: incomingDuration, atTime: currentTime) + incomingDuration
 
         var origin = MapObjectMovement.Location(position: currentPosition, point: SIMD2<Float>(currentPosition))
-        var animationElapsedOffset = Duration.zero
+        var animationElapsedOffset: TimeInterval = 0
         if let existingMovement {
-            if let location = existingMovement.location(at: now) {
+            if let location = existingMovement.location(atTime: currentTime) {
                 origin = location
-                animationElapsedOffset = existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: now)
+                animationElapsedOffset = existingMovement.animationElapsedOffset + (currentTime - existingMovement.startTime)
             } else {
                 let endPosition = existingMovement.endPosition
                 origin = MapObjectMovement.Location(position: endPosition, point: SIMD2<Float>(endPosition))
@@ -67,14 +68,14 @@ struct MapObjectMovementPlanner {
             waypoints: waypoints,
             speed: speed,
             arrivalTime: arrivalTime,
-            at: now
+            atTime: currentTime
         )
 
         return MapObjectMovement(
             origin: origin,
             waypoints: waypoints,
             stepDurations: stepDurations,
-            startTime: now,
+            startTime: currentTime,
             animationElapsedOffset: animationElapsedOffset
         )
     }
@@ -85,9 +86,9 @@ struct MapObjectMovementPlanner {
         existingMovement: MapObjectMovement?,
         on position: SIMD2<Int>,
         speed: Int,
-        at time: ContinuousClock.Instant
+        atTime time: TimeInterval
     ) -> MapObjectMovement? {
-        guard let existingMovement, let origin = existingMovement.location(at: time) else {
+        guard let existingMovement, let origin = existingMovement.location(atTime: time) else {
             return nil
         }
 
@@ -101,16 +102,16 @@ struct MapObjectMovementPlanner {
             waypoints: [position],
             stepDurations: [stepDuration(from: origin.point, to: position, speed: speed)],
             startTime: time,
-            animationElapsedOffset: existingMovement.animationElapsedOffset + existingMovement.startTime.duration(to: time)
+            animationElapsedOffset: existingMovement.animationElapsedOffset + (time - existingMovement.startTime)
         )
     }
 
-    func movementDuration(path: [SIMD2<Int>], speed: Int) -> Duration {
+    func movementDuration(path: [SIMD2<Int>], speed: Int) -> TimeInterval {
         guard path.count >= 2 else {
-            return .zero
+            return 0
         }
 
-        var total: Duration = .zero
+        var total: TimeInterval = 0
         for index in 1..<path.count {
             total += stepDuration(from: path[index - 1], to: path[index], speed: speed)
         }
@@ -118,25 +119,25 @@ struct MapObjectMovementPlanner {
     }
 
     private func startTime(
-        _ incomingStartTime: ContinuousClock.Instant,
-        duration: Duration,
-        at now: ContinuousClock.Instant
-    ) -> ContinuousClock.Instant {
-        let elapsed = incomingStartTime.duration(to: now)
-        guard elapsed > .zero && elapsed <= duration * 4 else {
-            return now
+        _ incomingStartTime: TimeInterval,
+        duration: TimeInterval,
+        atTime currentTime: TimeInterval
+    ) -> TimeInterval {
+        let elapsedTime = currentTime - incomingStartTime
+        guard elapsedTime > 0 && elapsedTime <= duration * 4 else {
+            return currentTime
         }
 
-        return now - min(elapsed, duration)
+        return currentTime - min(elapsedTime, duration)
     }
 
     private func fixedStepDurations(
         origin: MapObjectMovement.Location,
         waypoints: [SIMD2<Int>],
         speed: Int,
-        arrivalTime: ContinuousClock.Instant,
-        at now: ContinuousClock.Instant
-    ) -> [Duration] {
+        arrivalTime: TimeInterval,
+        atTime currentTime: TimeInterval
+    ) -> [TimeInterval] {
         guard !waypoints.isEmpty else {
             return []
         }
@@ -149,12 +150,12 @@ struct MapObjectMovementPlanner {
             }
         }
 
-        let totalDuration = stepDurations.reduce(.zero, +)
-        let difference = min(max(now.duration(to: arrivalTime) - totalDuration, .milliseconds(-2500)), .milliseconds(2500))
-        let adjustment = difference / stepDurations.count
+        let totalDuration = stepDurations.reduce(0, +)
+        let difference = min(max((arrivalTime - currentTime) - totalDuration, -2.5), 2.5)
+        let adjustment = difference / TimeInterval(stepDurations.count)
 
         return stepDurations.map { stepDuration in
-            max(stepDuration + adjustment, .milliseconds(10))
+            max(stepDuration + adjustment, 0.01)
         }
     }
 

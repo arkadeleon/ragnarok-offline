@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import QuartzCore
 import RagnarokConstants
 import RagnarokModels
 import RagnarokSprite
@@ -46,7 +47,7 @@ final class MapSceneMapObject {
     var cast: MapObjectCast?
 
     /// How long one attack takes.
-    var attackDelay: Duration = .milliseconds(300)
+    var attackDelay: TimeInterval = 0.3
 
     /// What the object is showing right now, rebuilt every update.
     var resolvedAction: ResolvedSpriteAction?
@@ -96,7 +97,7 @@ final class MapSceneMapObject {
             actionType: .idle,
             direction: direction,
             headDirection: headDirection,
-            startTime: .now,
+            startTime: CACurrentMediaTime(),
             completion: .indefinite
         )
     }
@@ -141,12 +142,12 @@ final class MapSceneMapObject {
             actionType: .idle,
             direction: direction,
             headDirection: headDirection,
-            startTime: .now,
+            startTime: CACurrentMediaTime(),
             completion: .indefinite
         )
     }
 
-    func perform(_ actionType: SpriteActionType, completion: SpriteAction.Completion, at time: ContinuousClock.Instant = .now) {
+    func perform(_ actionType: SpriteActionType, completion: SpriteAction.Completion, atTime time: TimeInterval = CACurrentMediaTime()) {
         action.actionType = actionType
         action.startTime = time
         action.elapsedTime = .zero
@@ -208,12 +209,12 @@ final class MapSceneMapObject {
     }
 
     func replanMovement(
-        startTime: ContinuousClock.Instant,
+        startTime: TimeInterval,
         startPosition: SIMD2<Int>,
         endPosition: SIMD2<Int>,
         speed: Int,
         pathFinder: PathFinder,
-        at time: ContinuousClock.Instant = .now
+        atTime currentTime: TimeInterval = CACurrentMediaTime()
     ) -> MapObjectMovement {
         let planner = MapObjectMovementPlanner()
         var planned = planner.replan(
@@ -224,35 +225,35 @@ final class MapSceneMapObject {
             incomingEndPosition: endPosition,
             speed: speed,
             pathFinder: pathFinder,
-            at: time
+            atTime: currentTime
         )
-        planned.update(at: time)
+        planned.update(atTime: currentTime)
         movement = planned
         return planned
     }
 
-    func truncateMovement(to position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
-        guard var movement = movement?.truncated(to: position, at: time) else {
+    func truncateMovement(to position: SIMD2<Int>, atTime time: TimeInterval = CACurrentMediaTime()) {
+        guard var movement = movement?.truncated(to: position, atTime: time) else {
             return
         }
 
-        movement.update(at: time)
+        movement.update(atTime: time)
         self.movement = movement
-        perform(.walk, completion: .after(movement.remainingDuration(at: time), nextActionType: .idle), at: time)
+        perform(.walk, completion: .after(movement.remainingDuration(atTime: time), nextActionType: .idle), atTime: time)
         if let finalDirection = movement.finalDirection {
             setDirection(finalDirection)
         }
     }
 
-    func stopMovement(on position: SIMD2<Int>, at time: ContinuousClock.Instant = .now) {
+    func stopMovement(on position: SIMD2<Int>, atTime time: TimeInterval = CACurrentMediaTime()) {
         let planner = MapObjectMovementPlanner()
-        movement = planner.stop(existingMovement: movement, on: position, speed: speed, at: time)
-        movement?.update(at: time)
+        movement = planner.stop(existingMovement: movement, on: position, speed: speed, atTime: time)
+        movement?.update(atTime: time)
         gridPosition = position
     }
 
-    func update(at time: ContinuousClock.Instant, currentTime: TimeInterval) {
-        let onceDuration: Duration?
+    func update(atTime currentTime: TimeInterval) {
+        let onceDuration: TimeInterval?
         if case .once = action.completion {
             onceDuration = composedSprite?.duration(
                 forActionType: action.actionType,
@@ -264,8 +265,8 @@ final class MapSceneMapObject {
             onceDuration = nil
         }
 
-        action.update(atTime: time, onceDuration: onceDuration)
-        movement?.update(at: time)
+        action.update(atTime: currentTime, onceDuration: onceDuration)
+        movement?.update(atTime: currentTime)
         death?.update(atTime: currentTime)
 
         if cast?.isFinished(atTime: currentTime) == true {
@@ -273,7 +274,7 @@ final class MapSceneMapObject {
         }
     }
 
-    func nextPosition(at time: ContinuousClock.Instant) -> SIMD2<Int>? {
-        movement?.upcomingPositions(at: time).first
+    func nextPosition(atTime time: TimeInterval) -> SIMD2<Int>? {
+        movement?.upcomingPositions(atTime: time).first
     }
 }
