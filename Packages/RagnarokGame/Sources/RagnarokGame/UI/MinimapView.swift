@@ -175,8 +175,8 @@ private struct MinimapMapView: View {
     }
 
     private func projectedPoint(for position: SIMD2<Int>) -> CGPoint {
-        let width = CGFloat(scene.mapGrid.width)
-        let height = CGFloat(scene.mapGrid.height)
+        let width = CGFloat(scene.world.mapGrid.width)
+        let height = CGFloat(scene.world.mapGrid.height)
         let maximumDimension = max(width, height)
         let scale = mapSize / maximumDimension
         let startX = (maximumDimension - width) / 2 * scale

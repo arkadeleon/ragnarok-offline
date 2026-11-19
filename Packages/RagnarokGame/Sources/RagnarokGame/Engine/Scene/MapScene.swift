@@ -33,8 +33,7 @@ protocol MapSceneObserver: AnyObject {
 @MainActor
 public final class MapScene {
     let mapName: String
-    let mapGrid: MapGrid
-    let pathFinder: PathFinder
+    let world: MapWorld
 
     let resourceManager: ResourceManager
     let spriteLoader: SpriteLoader
@@ -47,23 +46,13 @@ public final class MapScene {
 
     var camera = MapSceneCamera()
 
-    var fog = Fog()
-    var sounds: [MapSceneSound] = []
-
-    let player: MapSceneMapObject
-    var objects: [GameObjectID: MapSceneMapObject] = [:]
-    var items: [GameObjectID : MapSceneDroppedItem] = [:]
-
-    var effects: [UUID : MapSceneEffect] = [:]
-    var effectIDsByOwner: [GameObjectID : Set<UUID>] = [:]
-    var combatTexts: [CombatText] = []
     var tileSelector: TileSelector?
     var targetSelector: TargetSelector?
 
     var selectedTargetID: GameObjectID?
 
     var selectedTarget: MapSceneMapObject? {
-        if let selectedTargetID, let selectedTarget = objects[selectedTargetID], !selectedTarget.isDead {
+        if let selectedTargetID, let selectedTarget = world.objects[selectedTargetID], !selectedTarget.isDead {
             selectedTarget
         } else {
             nil
@@ -100,8 +89,12 @@ public final class MapScene {
         playSession: PlaySession
     ) {
         self.mapName = mapName
-        self.mapGrid = mapGrid
-        self.pathFinder = PathFinder(mapGrid: mapGrid)
+        self.world = MapWorld(
+            mapGrid: mapGrid,
+            account: account,
+            character: character,
+            playerPosition: playerPosition
+        )
 
         self.resourceManager = resourceManager
         self.spriteLoader = SpriteLoader(resourceManager: resourceManager)
@@ -112,45 +105,34 @@ public final class MapScene {
             playerPosition: playerPosition,
             playerDirection: .south
         )
-
-        self.player = MapSceneMapObject(
-            account: account,
-            character: character,
-            gridPosition: playerPosition,
-            worldPosition: mapGrid.worldPosition(for: playerPosition),
-            direction: .south,
-            headDirection: .lookForward
-        )
     }
 
-    func load(world: WorldResource) async {
+    func load(world worldResource: WorldResource) async {
         let fogParameterTable = await resourceManager.fogParameterTable()
         if let parameter = fogParameterTable.fogParameter(forMapName: mapName) {
-            fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
+            world.fog = Fog(near: parameter.near, far: parameter.far, color: parameter.color.rgb)
         }
 
-        sounds = world.rsw.sounds.map { sound in
-            MapSceneSound(sound: sound, gnd: world.gnd)
+        world.sounds = worldResource.rsw.sounds.map { sound in
+            MapSceneSound(sound: sound, gnd: worldResource.gnd)
         }
 
-        player.showsHPSPBar = true
-        registerObject(player)
+        world.player.showsHPSPBar = true
+        registerObject(world.player)
 
         await audioPlayer.playBGM(forMapName: mapName)
     }
 
     func unload() {
         spriteLoader.cancelAll()
+
         audioPlayer.stopBGM()
         audioPlayer.stopSoundEffects()
 
         camera.reset()
-        sounds.removeAll()
-        objects.removeAll()
-        items.removeAll()
-        effects.removeAll()
-        effectIDsByOwner.removeAll()
-        combatTexts.removeAll()
+
+        world.clear(includingSounds: true)
+
         tileSelector = nil
         selectTarget(nil)
 
@@ -161,24 +143,23 @@ public final class MapScene {
 
     func jump(toPosition position: SIMD2<Int>) {
         spriteLoader.cancelAll()
+
         camera.reset()
-        objects.removeAll()
-        items.removeAll()
-        effects.removeAll()
-        effectIDsByOwner.removeAll()
-        combatTexts.removeAll()
+
+        world.clear(includingSounds: false)
+
         tileSelector = nil
         selectTarget(nil)
 
         observer?.mapSceneDidClear()
 
-        player.movement = nil
-        player.cast = nil
-        player.gridPosition = position
-        player.worldPosition = mapGrid.worldPosition(for: position)
-        player.showsHPSPBar = true
-        player.perform(.idle, completion: .indefinite)
-        registerObject(player)
+        world.player.movement = nil
+        world.player.cast = nil
+        world.player.gridPosition = position
+        world.player.worldPosition = world.mapGrid.worldPosition(for: position)
+        world.player.showsHPSPBar = true
+        world.player.perform(.idle, completion: .indefinite)
+        registerObject(world.player)
 
         cancelArrivalAction()
     }
@@ -192,35 +173,27 @@ extension MapScene {
 
         updateThumbstickMovement(atTime: currentTime)
 
-        let vanishedObjectIDs = objects.compactMap { objectID, object in
-            object.death?.isVanished(atTime: currentTime) == true ? objectID : nil
-        }
-        for objectID in vanishedObjectIDs {
+        for objectID in world.vanishedObjectIDs(atTime: currentTime) {
             removeObject(objectID: objectID)
         }
 
-        combatTexts.removeAll { combatText in
-            combatText.isExpired(atTime: currentTime)
-        }
+        world.removeExpiredCombatTexts(atTime: currentTime)
+        world.updateObjects(atTime: currentTime)
 
-        for object in objects.values {
-            object.update(atTime: currentTime, mapGrid: mapGrid)
-        }
+        camera.update(playerPosition: world.player.worldPosition, atTime: currentTime)
 
-        camera.update(playerPosition: player.worldPosition, atTime: currentTime)
-
-        for object in objects.values {
+        for object in world.objects.values {
             let previousAction = object.resolvedAction
             object.resolvedAction = object.resolveAction(cameraAzimuth: camera.azimuth)
             playActionSound(for: object, previousAction: previousAction)
         }
 
-        let playerPosition = player.gridPosition
+        let playerPosition = world.player.gridPosition
         if state.playerPosition != playerPosition {
             state.playerPosition = playerPosition
         }
 
-        let playerDirection = player.movement?.direction ?? player.action.direction
+        let playerDirection = world.player.movement?.direction ?? world.player.action.direction
         if state.playerDirection != playerDirection {
             state.playerDirection = playerDirection
         }
@@ -264,10 +237,10 @@ extension MapScene {
     }
 
     private func updateSounds(atTime currentTime: TimeInterval) {
-        let listenerPosition = player.worldPosition
+        let listenerPosition = world.player.worldPosition
         audioPlayer.setListenerPosition(listenerPosition)
 
-        for sound in sounds {
+        for sound in world.sounds {
             if let nextPlayTime = sound.nextPlayTime, currentTime < nextPlayTime {
                 continue
             }
@@ -295,7 +268,7 @@ extension MapScene {
     }
 
     func registerObject(_ object: MapSceneMapObject) {
-        objects[object.objectID] = object
+        world.objects[object.objectID] = object
         spriteLoader.loadSprite(forObject: object)
 
         observer?.mapSceneDidAddObject(object)
@@ -308,17 +281,17 @@ extension MapScene {
     }
 
     func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
-        guard let object = objects[objectID] else {
+        guard let object = world.objects[objectID] else {
             return
         }
         object.gridPosition = gridPosition
-        object.worldPosition = mapGrid.worldPosition(for: gridPosition)
+        object.worldPosition = world.mapGrid.worldPosition(for: gridPosition)
         object.perform(.idle, completion: .indefinite)
         object.turn(direction: direction, headDirection: headDirection)
     }
 
     func removeObject(objectID: GameObjectID) {
-        objects.removeValue(forKey: objectID)
+        world.objects.removeValue(forKey: objectID)
         spriteLoader.cancelObjectLoad(forObjectID: objectID)
 
         observer?.mapSceneDidRemoveObject(objectID: objectID)
@@ -331,7 +304,7 @@ extension MapScene {
     }
 
     func moveObject(objectID: GameObjectID, startTime: TimeInterval, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        guard let object = objects[objectID] else {
+        guard let object = world.objects[objectID] else {
             return
         }
 
@@ -341,14 +314,14 @@ extension MapScene {
             startPosition: startPosition,
             endPosition: endPosition,
             speed: object.speed,
-            pathFinder: pathFinder,
+            pathFinder: world.pathFinder,
             atTime: currentTime
         )
 
         object.gridPosition = movement.currentLocation.position
         object.worldPosition = movement.isMoving
-            ? mapGrid.worldPosition(at: movement.currentLocation.point)
-            : mapGrid.worldPosition(for: object.gridPosition)
+            ? world.mapGrid.worldPosition(at: movement.currentLocation.point)
+            : world.mapGrid.worldPosition(for: object.gridPosition)
         let remainingDuration = movement.remainingDuration(atTime: currentTime)
         object.perform(
             .walk,
@@ -361,9 +334,9 @@ extension MapScene {
     }
 
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
-        if let object = objects[objectID] {
+        if let object = world.objects[objectID] {
             object.stopMovement(on: position)
-            object.worldPosition = mapGrid.worldPosition(for: position)
+            object.worldPosition = world.mapGrid.worldPosition(for: position)
             object.perform(.idle, completion: .indefinite)
         }
     }
@@ -374,53 +347,36 @@ extension MapScene {
     }
 
     func addItem(_ item: MapSceneDroppedItem) {
-        items[item.objectID] = item
+        world.items[item.objectID] = item
         spriteLoader.loadSprite(forItem: item)
 
         observer?.mapSceneDidAddItem(item)
     }
 
     func removeItem(objectID: GameObjectID) {
-        items.removeValue(forKey: objectID)
+        world.items.removeValue(forKey: objectID)
         spriteLoader.cancelItemLoad(forItemID: objectID)
 
         observer?.mapSceneDidRemoveItem(objectID: objectID)
     }
 
     func addEffect(_ effect: MapSceneEffect) {
-        effects[effect.id] = effect
-        if let ownerObjectID = effect.ownerObjectID {
-            effectIDsByOwner[ownerObjectID, default: []].insert(effect.id)
-        }
+        world.addEffect(effect)
 
         observer?.mapSceneDidAddEffect(effect)
     }
 
     func removeEffect(id: UUID) {
-        guard let effect = effects.removeValue(forKey: id) else {
+        guard world.removeEffect(id: id) != nil else {
             return
-        }
-
-        if let ownerObjectID = effect.ownerObjectID {
-            effectIDsByOwner[ownerObjectID]?.remove(id)
-            if effectIDsByOwner[ownerObjectID]?.isEmpty == true {
-                effectIDsByOwner.removeValue(forKey: ownerObjectID)
-            }
         }
 
         observer?.mapSceneDidRemoveEffect(id: id)
     }
 
     func removeEffects(ownedBy ownerObjectID: GameObjectID, key: MapEffectAttachmentKey? = nil) {
-        guard let ownedEffectIDs = effectIDsByOwner[ownerObjectID] else {
-            return
-        }
-
-        for effectID in ownedEffectIDs {
-            if let key, effects[effectID]?.attachmentKey != key {
-                continue
-            }
-            removeEffect(id: effectID)
+        for effectID in world.removeEffects(ownedBy: ownerObjectID, key: key) {
+            observer?.mapSceneDidRemoveEffect(id: effectID)
         }
     }
 }
@@ -431,14 +387,14 @@ extension MapScene {
     func handleInteraction(_ result: HitTestResult) {
         switch result {
         case .ground(let position):
-            if player.action.actionType == .sit {
-                player.look(at: position)
+            if world.player.action.actionType == .sit {
+                world.player.look(at: position)
                 playSession.changeDirection(
-                    direction: Direction(spriteDirection: player.action.direction),
-                    headDirection: HeadDirection(spriteHeadDirection: player.action.headDirection)
+                    direction: Direction(spriteDirection: world.player.action.direction),
+                    headDirection: HeadDirection(spriteHeadDirection: world.player.action.headDirection)
                 )
             } else {
-                if mapGrid.contains(position) {
+                if world.mapGrid.contains(position) {
                     tileSelector = TileSelector(position: position, showTime: CACurrentMediaTime())
                 } else {
                     tileSelector = nil
@@ -447,7 +403,7 @@ extension MapScene {
                 requestMove(to: position)
             }
         case .mapObject(let objectID):
-            guard objectID != player.objectID, let target = objects[objectID], !target.isDead else {
+            guard objectID != world.player.objectID, let target = world.objects[objectID], !target.isDead else {
                 return
             }
 
@@ -467,7 +423,7 @@ extension MapScene {
                 break
             }
         case .mapItem(let objectID):
-            if let item = items[objectID] {
+            if let item = world.items[objectID] {
                 pickUpItem(item)
             }
         }
@@ -476,7 +432,7 @@ extension MapScene {
     /// Selects the next monster or NPC, nearest first, and wraps around after the farthest one.
     /// Warps (job 45) and hidden NPCs (jobs 111 and 139) are skipped, since nothing is drawn for them.
     func selectNextTarget(where isInViewport: (MapSceneMapObject) -> Bool) {
-        let candidates = objects.values
+        let candidates = world.objects.values
             .filter { object in
                 guard !object.isDead, object.effectState != .cloak, object.effectState != .invisible else {
                     return false
@@ -496,8 +452,8 @@ extension MapScene {
                 }
             }
             .sorted {
-                let distance0 = distanceSquared($0.gridPosition, to: player.gridPosition)
-                let distance1 = distanceSquared($1.gridPosition, to: player.gridPosition)
+                let distance0 = distanceSquared($0.gridPosition, to: world.player.gridPosition)
+                let distance1 = distanceSquared($1.gridPosition, to: world.player.gridPosition)
                 return distance0 != distance1 ? distance0 < distance1 : $0.objectID < $1.objectID
             }
         guard !candidates.isEmpty else {
@@ -516,7 +472,7 @@ extension MapScene {
     func performTargetAction() {
         if selectedTarget != nil {
             performActionOnSelectedTarget()
-        } else if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
+        } else if let target = nearestObject(ofType: .monster, fromPosition: world.player.gridPosition) {
             selectTarget(target)
             performActionOnSelectedTarget()
         }
@@ -563,7 +519,7 @@ extension MapScene {
             return
         }
 
-        let remainingDuration = player.movement?.remainingDuration(atTime: CACurrentMediaTime()) ?? 0
+        let remainingDuration = world.player.movement?.remainingDuration(atTime: CACurrentMediaTime()) ?? 0
 
         arrivalTask?.cancel()
         arrivalTask = Task { @MainActor [weak self] in
@@ -601,7 +557,7 @@ extension MapScene {
     }
 
     private func movePlayerToward(targetPosition: SIMD2<Int>, within range: Int, onArrival: @escaping @MainActor () -> Void) {
-        let startPosition = player.gridPosition
+        let startPosition = world.player.gridPosition
         switch decideMovement(from: startPosition, toward: targetPosition, within: range) {
         case .alreadyInRange:
             onArrival()
@@ -615,7 +571,7 @@ extension MapScene {
     }
 
     private func decideMovement(from playerPosition: SIMD2<Int>, toward targetPosition: SIMD2<Int>, within range: Int) -> MapMovementDecision {
-        let path = pathFinder.findPath(from: playerPosition, to: targetPosition, within: range)
+        let path = world.pathFinder.findPath(from: playerPosition, to: targetPosition, within: range)
         if path.isEmpty {
             return .noPath
         } else if path == [playerPosition] {
@@ -633,7 +589,7 @@ extension MapScene {
         if endPosition == thumbstickStopPosition {
             self.thumbstickStopPosition = nil
         } else {
-            player.truncateMovement(to: thumbstickStopPosition)
+            world.player.truncateMovement(to: thumbstickStopPosition)
         }
     }
 
@@ -648,9 +604,9 @@ extension MapScene {
 
                 // Stop one cell after the next cell, so the server tells other players.
                 // Stop now, because the server stops a little late.
-                let upcomingPositions = player.movement?.upcomingPositions(atTime: currentTime) ?? []
+                let upcomingPositions = world.player.movement?.upcomingPositions(atTime: currentTime) ?? []
                 if let stopPosition = upcomingPositions.dropFirst().first ?? upcomingPositions.first {
-                    player.truncateMovement(to: stopPosition, atTime: currentTime)
+                    world.player.truncateMovement(to: stopPosition, atTime: currentTime)
                     playSession.requestMove(to: stopPosition)
                     thumbstickStopPosition = stopPosition
                 }
@@ -658,7 +614,7 @@ extension MapScene {
             return
         }
 
-        guard player.action.actionType != .sit else {
+        guard world.player.action.actionType != .sit else {
             return
         }
 
@@ -669,8 +625,8 @@ extension MapScene {
 
             // Ask again when the direction changes, or when the path is almost done.
             let isTurning = octant != thumbstickRequest.octant
-            let remainingDuration = player.movement?.remainingDuration(atTime: currentTime) ?? 0
-            let isRunningOut = remainingDuration < TimeInterval(player.speed * 3) / 1000
+            let remainingDuration = world.player.movement?.remainingDuration(atTime: currentTime) ?? 0
+            let isRunningOut = remainingDuration < TimeInterval(world.player.speed * 3) / 1000
             guard isTurning || isRunningOut else {
                 return
             }
@@ -680,7 +636,7 @@ extension MapScene {
         }
 
         // The server only changes its path when it gets to the next cell, so start looking from that cell.
-        let origin = player.nextPosition(atTime: currentTime) ?? player.gridPosition
+        let origin = world.player.nextPosition(atTime: currentTime) ?? world.player.gridPosition
         let target = thumbstickTarget(from: origin, toward: octant)
         if let target, target != thumbstickRequest?.target {
             requestMove(to: target)
@@ -721,7 +677,7 @@ extension MapScene {
             let step = SIMD2<Int>(Int(cos(angle).rounded()), Int(sin(angle).rounded()))
             for distance in stride(from: 6, through: 1, by: -1) {
                 let target = origin &+ step &* distance
-                if pathFinder.canMoveStraight(from: origin, to: target) && pathFinder.canRequestMove(from: origin, to: target) {
+                if world.pathFinder.canMoveStraight(from: origin, to: target) && world.pathFinder.canRequestMove(from: origin, to: target) {
                     return target
                 }
             }
@@ -734,11 +690,11 @@ extension MapScene {
 
 extension MapScene {
     func attackMonster(targetID: GameObjectID) {
-        guard let target = objects[targetID], !target.isDead else {
+        guard let target = world.objects[targetID], !target.isDead else {
             return
         }
 
-        let startPosition = player.gridPosition
+        let startPosition = world.player.gridPosition
         let attackRange = playSession.playerStatus.attackRange
 
         switch decideMovement(from: startPosition, toward: target.gridPosition, within: attackRange) {
@@ -765,22 +721,22 @@ extension MapScene {
         let selectedTarget = selectedTarget
 
         if skill.isSelfOnlySkill {
-            playSession.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
+            playSession.useSkill(skillID: skill.skillID, level: level, onTarget: world.player.objectID)
         } else if skill.isGroundTargetedSkill {
             if let selectedTarget {
                 useSkill(skill, level: level, on: selectedTarget)
             } else {
-                playSession.useSkill(skillID: skill.skillID, level: level, toGround: player.gridPosition)
+                playSession.useSkill(skillID: skill.skillID, level: level, toGround: world.player.gridPosition)
             }
         } else if skill.isSupportSkill {
             if let selectedTarget, selectedTarget.type == .pc || selectedTarget.type == .monster {
                 useSkill(skill, level: level, on: selectedTarget)
             } else {
-                playSession.useSkill(skillID: skill.skillID, level: level, onTarget: player.objectID)
+                playSession.useSkill(skillID: skill.skillID, level: level, onTarget: world.player.objectID)
             }
         } else if let selectedTarget, selectedTarget.type == .monster {
             useSkill(skill, level: level, on: selectedTarget)
-        } else if let target = nearestObject(ofType: .monster, fromPosition: player.gridPosition) {
+        } else if let target = nearestObject(ofType: .monster, fromPosition: world.player.gridPosition) {
             selectTarget(target)
             useSkill(skill, level: level, on: target)
         }
@@ -812,7 +768,7 @@ extension MapScene {
     }
 
     func pickUpNearestItem() {
-        if let target = nearestItem(fromPosition: player.gridPosition) {
+        if let target = nearestItem(fromPosition: world.player.gridPosition) {
             pickUpItem(target)
         }
     }
@@ -825,7 +781,7 @@ extension MapScene {
 
     func toggleSit() {
         cancelArrivalAction()
-        playSession.requestAction(player.action.actionType == .sit ? .stand_up : .sit_down)
+        playSession.requestAction(world.player.action.actionType == .sit ? .stand_up : .sit_down)
     }
 }
 
@@ -833,7 +789,7 @@ extension MapScene {
 
 extension MapScene {
     private func nearestObject(ofType type: MapObjectType, fromPosition position: SIMD2<Int>) -> MapSceneMapObject? {
-        objects.values
+        world.objects.values
             .filter {
                 $0.type == type && !$0.isDead
             }
@@ -843,7 +799,7 @@ extension MapScene {
     }
 
     private func nearestItem(fromPosition position: SIMD2<Int>) -> MapSceneDroppedItem? {
-        items.values.min {
+        world.items.values.min {
             distanceSquared($0.gridPosition, to: position) < distanceSquared($1.gridPosition, to: position)
         }
     }
@@ -854,7 +810,7 @@ extension MapScene {
     }
 
     func isMonster(objectID: GameObjectID) -> Bool {
-        switch objects[objectID]?.type {
+        switch world.objects[objectID]?.type {
         case .monster, .abr, .bionic:
             true
         default:

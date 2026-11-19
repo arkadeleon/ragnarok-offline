@@ -21,57 +21,57 @@ extension MapScene {
     public func onPlayerStatusChanged(property: StatusProperty, value: Int) {
         switch property {
         case .speed:
-            player.speed = value
+            world.player.speed = value
         case .hp:
-            player.hp = value
+            world.player.hp = value
         case .maxhp:
-            player.maxHp = value
+            world.player.maxHp = value
         case .sp:
-            player.sp = value
+            world.player.sp = value
         case .maxsp:
-            player.maxSp = value
+            world.player.maxSp = value
         default:
             break
         }
     }
 
     public func onPlayerHealthPointsRecovered(recovered: Int, current: Int) {
-        player.hp = current
+        world.player.hp = current
 
         let combatText = CombatText(
             creationTime: CACurrentMediaTime(),
             target: CombatText.Target(
-                objectID: player.objectID,
-                initialWorldPosition: player.worldPosition,
+                objectID: world.player.objectID,
+                initialWorldPosition: world.player.worldPosition,
                 isPlayer: true
             ),
             amount: recovered,
             kind: .hpRecovery,
             delay: 0
         )
-        combatTexts.append(combatText)
+        world.combatTexts.append(combatText)
     }
 
     public func onPlayerSpellPointsRecovered(recovered: Int, current: Int) {
-        player.sp = current
+        world.player.sp = current
 
         let combatText = CombatText(
             creationTime: CACurrentMediaTime(),
             target: CombatText.Target(
-                objectID: player.objectID,
-                initialWorldPosition: player.worldPosition,
+                objectID: world.player.objectID,
+                initialWorldPosition: world.player.worldPosition,
                 isPlayer: true
             ),
             amount: recovered,
             kind: .spRecovery,
             delay: 0
         )
-        combatTexts.append(combatText)
+        world.combatTexts.append(combatText)
     }
 
     public func onPlayerMoved(startTime: TimeInterval, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
         moveObject(
-            objectID: player.objectID,
+            objectID: world.player.objectID,
             startTime: startTime,
             startPosition: startPosition,
             endPosition: endPosition
@@ -88,7 +88,7 @@ extension MapScene {
     // MARK: - Map Object
 
     public func onMapObjectHealthUpdated(objectID: GameObjectID, hp: Int, maxHp: Int) {
-        guard let object = objects[objectID] else {
+        guard let object = world.objects[objectID] else {
             return
         }
 
@@ -106,7 +106,7 @@ extension MapScene {
             hp: object.hp,
             maxHp: object.maxHp,
             gridPosition: position,
-            worldPosition: mapGrid.worldPosition(for: position),
+            worldPosition: world.mapGrid.worldPosition(for: position),
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
@@ -146,7 +146,7 @@ extension MapScene {
     }
 
     public func onMapObjectMoved(object: MapObject, startTime: TimeInterval, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
-        let isNew = objects[object.objectID] == nil
+        let isNew = world.objects[object.objectID] == nil
 
         if isNew {
             let mapObject = MapSceneMapObject(
@@ -154,7 +154,7 @@ extension MapScene {
                 hp: object.hp,
                 maxHp: object.maxHp,
                 gridPosition: endPosition,
-                worldPosition: mapGrid.worldPosition(for: endPosition),
+                worldPosition: world.mapGrid.worldPosition(for: endPosition),
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
             )
@@ -167,7 +167,7 @@ extension MapScene {
                 headDirection: .lookForward
             )
         } else {
-            objects[object.objectID]?.speed = object.speed
+            world.objects[object.objectID]?.speed = object.speed
         }
 
         moveObject(
@@ -179,19 +179,19 @@ extension MapScene {
     }
 
     public func onMapObjectStopped(objectID: GameObjectID, position: SIMD2<Int>) {
-        if objects[objectID] != nil {
+        if world.objects[objectID] != nil {
             stopObject(objectID: objectID, at: position)
         }
 
-        if objectID == player.objectID {
+        if objectID == world.player.objectID {
             performArrivalAction()
         }
     }
 
     public func onMapObjectVanished(objectID: GameObjectID, type: UnitClearType) {
-        guard type == .dead, let object = objects[objectID] else {
+        guard type == .dead, let object = world.objects[objectID] else {
             if type == .respawn || type == .teleport,
-               let object = objects[objectID], object.effectState != .invisible {
+               let object = world.objects[objectID], object.effectState != .invisible {
                 let effect = MapSceneEffect(
                     reference: .id(.ef_teleportation2),
                     creationTime: CACurrentMediaTime(),
@@ -220,27 +220,27 @@ extension MapScene {
             selectTarget(nil)
         }
 
-        if objectID == player.objectID {
+        if objectID == world.player.objectID {
             state.isPlayerDead = true
         }
     }
 
     public func onMapObjectResurrected(objectID: GameObjectID) {
-        if let object = objects[objectID] {
+        if let object = world.objects[objectID] {
             object.death = nil
             object.perform(.idle, completion: .indefinite)
-            if objectID == player.objectID {
+            if objectID == world.player.objectID {
                 object.showsHPSPBar = true
             }
         }
 
-        if objectID == player.objectID {
+        if objectID == world.player.objectID {
             state.isPlayerDead = false
         }
     }
 
     public func onMapObjectDirectionChanged(objectID: GameObjectID, direction: Direction, headDirection: HeadDirection) {
-        guard let object = objects[objectID] else {
+        guard let object = world.objects[objectID] else {
             return
         }
 
@@ -250,7 +250,7 @@ extension MapScene {
     }
 
     public func onMapObjectStateChanged(objectID: GameObjectID, bodyState: StatusChangeOption1, healthState: StatusChangeOption2, effectState: StatusChangeOption) {
-        if let mapObject = objects[objectID] {
+        if let mapObject = world.objects[objectID] {
             mapObject.bodyState = bodyState
             mapObject.healthState = healthState
             mapObject.effectState = effectState
@@ -258,7 +258,7 @@ extension MapScene {
     }
 
     public func onMapObjectSpriteChanged(objectID: GameObjectID, look: Look, value: Int, value2: Int) {
-        guard let mapObject = objects[objectID] else {
+        guard let mapObject = world.objects[objectID] else {
             return
         }
 
@@ -295,7 +295,7 @@ extension MapScene {
         let currentTime = CACurrentMediaTime()
 
         let sourceID = objectAction.sourceObjectID
-        let sourceObject = objects[sourceID]
+        let sourceObject = world.objects[sourceID]
 
         let presentationActionType: SpriteActionType = switch objectAction.type {
         case .sit_down:
@@ -334,7 +334,7 @@ extension MapScene {
         if let sourceObject {
             if presentationActionType.isAttack {
                 sourceObject.attackDelay = TimeInterval(objectAction.sourceSpeed) / 1000
-                if let targetObject = objects[objectAction.targetObjectID] {
+                if let targetObject = world.objects[objectAction.targetObjectID] {
                     sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
                 }
             }
@@ -351,7 +351,7 @@ extension MapScene {
     }
 
     public func onMapObjectSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, element: Element, castTime: TimeInterval) {
-        guard let sourceObject = objects[sourceObjectID] else {
+        guard let sourceObject = world.objects[sourceObjectID] else {
             return
         }
 
@@ -404,7 +404,7 @@ extension MapScene {
     }
 
     public func onMapObjectSkillCastCancelled(sourceObjectID: GameObjectID) {
-        if let sourceObject = objects[sourceObjectID] {
+        if let sourceObject = world.objects[sourceObjectID] {
             cancelCast(for: sourceObject)
         }
     }
@@ -412,8 +412,8 @@ extension MapScene {
     public func onMapObjectSkillPerformed(objectSkill: MapObjectSkill) {
         let currentTime = CACurrentMediaTime()
 
-        if let sourceObject = objects[objectSkill.sourceObjectID] {
-            if let targetObject = objects[objectSkill.targetObjectID] {
+        if let sourceObject = world.objects[objectSkill.sourceObjectID] {
+            if let targetObject = world.objects[objectSkill.targetObjectID] {
                 sourceObject.setDirection(SpriteDirection(sourcePosition: sourceObject.gridPosition, targetPosition: targetObject.gridPosition))
             }
 
@@ -426,7 +426,7 @@ extension MapScene {
             sourceObject.perform(action, completion: .after(duration, nextActionType: nextActionType))
         }
 
-        if objectSkill.isHealingSkill, let targetObject = objects[objectSkill.targetObjectID] {
+        if objectSkill.isHealingSkill, let targetObject = world.objects[objectSkill.targetObjectID] {
             let combatText = CombatText(
                 creationTime: currentTime,
                 target: CombatText.Target(
@@ -438,7 +438,7 @@ extension MapScene {
                 kind: .hpRecovery,
                 delay: 0
             )
-            combatTexts.append(combatText)
+            world.combatTexts.append(combatText)
 
             audioPlayer.playSoundEffect(named: "_heal_effect.wav")
         }
@@ -459,7 +459,7 @@ extension MapScene {
         let droppedItem = MapSceneDroppedItem(
             item: item,
             gridPosition: position,
-            worldPosition: mapGrid.worldPosition(for: position)
+            worldPosition: world.mapGrid.worldPosition(for: position)
         )
         addItem(droppedItem)
     }
@@ -471,7 +471,7 @@ extension MapScene {
     // MARK: - Effect
 
     public func onSpecialEffectSpawned(effect: NotifyEffect, objectID: GameObjectID) {
-        guard let object = objects[objectID] else {
+        guard let object = world.objects[objectID] else {
             return
         }
 
@@ -498,7 +498,7 @@ extension MapScene {
     }
 
     public func onEffectSpawned(effectID: EffectID, objectID: GameObjectID) {
-        guard let object = objects[objectID] else {
+        guard let object = world.objects[objectID] else {
             return
         }
 
@@ -516,12 +516,12 @@ extension MapScene {
     // MARK: - Other
 
     public func onGroundSkillCast(skillID: SkillID, sourceObjectID: GameObjectID, position: SIMD2<Int>) {
-        guard mapGrid.contains(position) else {
+        guard world.mapGrid.contains(position) else {
             return
         }
 
         let currentTime = CACurrentMediaTime()
-        let worldPosition = mapGrid.worldPosition(for: position)
+        let worldPosition = world.mapGrid.worldPosition(for: position)
 
         for effectReference in SkillEffectTable.effects(for: skillID) {
             let effect = MapSceneEffect(
@@ -529,7 +529,7 @@ extension MapScene {
                 creationTime: currentTime,
                 gridPosition: position,
                 worldPosition: worldPosition,
-                sourceWorldPosition: objects[sourceObjectID]?.worldPosition,
+                sourceWorldPosition: world.objects[sourceObjectID]?.worldPosition,
                 targetObjectID: nil,
                 ownerObjectID: nil
             )
@@ -542,14 +542,14 @@ extension MapScene {
 
 extension MapScene {
     private func addCombatTexts(for hits: [MapObjectHit], targetObjectID: GameObjectID, hitSoundName: String? = nil, currentTime: TimeInterval) {
-        guard !hits.isEmpty, let initialWorldPosition = objects[targetObjectID]?.worldPosition else {
+        guard !hits.isEmpty, let initialWorldPosition = world.objects[targetObjectID]?.worldPosition else {
             return
         }
 
         let target = CombatText.Target(
             objectID: targetObjectID,
             initialWorldPosition: initialWorldPosition,
-            isPlayer: objects[targetObjectID]?.type == .pc
+            isPlayer: world.objects[targetObjectID]?.type == .pc
         )
         let hitSoundSource = GameAudio.Source(position: initialWorldPosition, range: .infinity)
         let showsCombo = isMonster(objectID: targetObjectID)
@@ -561,7 +561,7 @@ extension MapScene {
                 amount: hit.damage,
                 delay: hit.delay
             )
-            combatTexts.append(combatText)
+            world.combatTexts.append(combatText)
 
             // Monsters taking more than one hit show a combo text.
             if showsCombo, let combo = hit.combo {
@@ -572,7 +572,7 @@ extension MapScene {
                     kind: combo.isFinal ? .finalCombo : .combo,
                     delay: hit.delay
                 )
-                combatTexts.append(comboText)
+                world.combatTexts.append(comboText)
             }
 
             if let hitSoundName {
@@ -588,7 +588,7 @@ extension MapScene {
     private func addHitEffect(for objectAction: MapObjectAction) {
         guard objectAction.damage > 0,
               isMonster(objectID: objectAction.targetObjectID),
-              let targetObject = objects[objectAction.targetObjectID] else {
+              let targetObject = world.objects[objectAction.targetObjectID] else {
             return
         }
 
@@ -613,8 +613,8 @@ extension MapScene {
         }
 
         guard isAttackAction,
-              let sourceObject = objects[objectAction.sourceObjectID],
-              let targetObject = objects[objectAction.targetObjectID],
+              let sourceObject = world.objects[objectAction.sourceObjectID],
+              let targetObject = world.objects[objectAction.targetObjectID],
               SpriteJob(rawValue: sourceObject.job).isPlayer,
               sourceObject.weaponType == .w_bow else {
             return
@@ -636,7 +636,7 @@ extension MapScene {
     private func addSkillBeforeHitEffects(for objectSkill: MapObjectSkill, hits: [MapObjectHit]) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
-              let targetObject = objects[objectSkill.targetObjectID] else {
+              let targetObject = world.objects[objectSkill.targetObjectID] else {
             return
         }
 
@@ -649,7 +649,7 @@ extension MapScene {
                     creationTime: currentTime,
                     gridPosition: targetObject.gridPosition,
                     worldPosition: targetObject.worldPosition,
-                    sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
+                    sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: MapObjectHit.multiHitInterval * TimeInterval(i)
@@ -662,7 +662,7 @@ extension MapScene {
     private func addSkillHitEffects(for objectSkill: MapObjectSkill, hits: [MapObjectHit]) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
-              let targetObject = objects[objectSkill.targetObjectID] else {
+              let targetObject = world.objects[objectSkill.targetObjectID] else {
             return
         }
 
@@ -675,7 +675,7 @@ extension MapScene {
                     creationTime: currentTime,
                     gridPosition: targetObject.gridPosition,
                     worldPosition: targetObject.worldPosition,
-                    sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
+                    sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: hit.delay
@@ -687,8 +687,8 @@ extension MapScene {
 
     private func addSkillEffects(for objectSkill: MapObjectSkill) {
         guard let skillID = objectSkill.skillID,
-              objects[objectSkill.sourceObjectID] != nil,
-              let targetObject = objects[objectSkill.targetObjectID],
+              world.objects[objectSkill.sourceObjectID] != nil,
+              let targetObject = world.objects[objectSkill.targetObjectID],
               objectSkill.damageType != .splash, objectSkill.damageType != .splash_endure else {
             return
         }
@@ -701,7 +701,7 @@ extension MapScene {
                 creationTime: currentTime,
                 gridPosition: targetObject.gridPosition,
                 worldPosition: targetObject.worldPosition,
-                sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
+                sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil,
                 delay: TimeInterval(objectSkill.attackDelay) / 1000
@@ -713,7 +713,7 @@ extension MapScene {
     private func addSkillSuccessEffects(for objectSkill: MapObjectSkill) {
         guard objectSkill.isSuccess,
               let skillID = objectSkill.skillID,
-              let targetObject = objects[objectSkill.targetObjectID] else {
+              let targetObject = world.objects[objectSkill.targetObjectID] else {
             return
         }
 
@@ -725,7 +725,7 @@ extension MapScene {
                 creationTime: currentTime,
                 gridPosition: targetObject.gridPosition,
                 worldPosition: targetObject.worldPosition,
-                sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
+                sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil
             )
@@ -739,11 +739,11 @@ extension MapScene {
 extension MapScene {
     private func hitSoundName(for objectAction: MapObjectAction) -> String? {
         guard objectAction.damage > 0,
-              let targetObject = objects[objectAction.targetObjectID] else {
+              let targetObject = world.objects[objectAction.targetObjectID] else {
             return nil
         }
 
-        let sourceObject = objects[objectAction.sourceObjectID]
+        let sourceObject = world.objects[objectAction.sourceObjectID]
         let targetJob = SpriteJob(rawValue: targetObject.job)
 
         if targetJob.isPlayer {

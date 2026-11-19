@@ -960,7 +960,7 @@ final class PlaySession {
             if let mapScene {
                 let mapName = mapScene.mapName.replacingOccurrences(of: ".rsw", with: "")
                 let localizedMapName = context.mapInfoTable.localizedMapName(forMapName: mapName) ?? mapName
-                messageCenter.addLocationMessage(mapName: mapName, localizedMapName: localizedMapName, position: mapScene.player.gridPosition)
+                messageCenter.addLocationMessage(mapName: mapName, localizedMapName: localizedMapName, position: mapScene.world.player.gridPosition)
             }
         case .sit, .stand:
             mapScene?.toggleSit()

@@ -37,15 +37,15 @@ extension MapSceneRuntime {
     func hitTest(_ ray: Ray) -> HitTestResult? {
         let objectIDs = spriteHits(ray)
 
-        if let objectID = objectIDs.first(where: { scene.objects[$0]?.isDead == false }) {
+        if let objectID = objectIDs.first(where: { scene.world.objects[$0]?.isDead == false }) {
             return .mapObject(objectID: objectID)
         }
 
-        if let objectID = objectIDs.first(where: { scene.items[$0] != nil }) {
+        if let objectID = objectIDs.first(where: { scene.world.items[$0] != nil }) {
             return .mapItem(objectID: objectID)
         }
 
-        if let position = scene.mapGrid.rayHit(ray) {
+        if let position = scene.world.mapGrid.rayHit(ray) {
             return .ground(position: position)
         }
 
@@ -65,7 +65,7 @@ extension MapSceneRuntime {
             }
 
             // Items are too small to tap reliably; everything else is already big enough.
-            let minimumSize: Float = scene.items[drawable.objectID] != nil ? 30 : 0
+            let minimumSize: Float = scene.world.items[drawable.objectID] != nil ? 30 : 0
             guard let distance = hitDistance(ray, bounds: bounds, minimumSize: minimumSize, camera: lastCamera) else {
                 continue
             }

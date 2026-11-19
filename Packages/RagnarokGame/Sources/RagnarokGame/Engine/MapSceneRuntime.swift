@@ -73,7 +73,7 @@ final class MapSceneRuntime {
             scene.removeEffect(id: effectID)
         }
 
-        renderResources.synchronizeSprites(objects: scene.objects, items: scene.items)
+        renderResources.synchronizeSprites(objects: scene.world.objects, items: scene.world.items)
     }
 
     /// Builds the render camera from the scene camera's settings and smoothed focus.
@@ -82,7 +82,7 @@ final class MapSceneRuntime {
     /// and uses this camera's view matrix to place the map around the viewer.
     func makeCamera(viewport: MTLViewport) -> RenderCamera {
         let camera = scene.camera
-        let targetPosition = camera.target ?? scene.player.worldPosition
+        let targetPosition = camera.target ?? scene.world.player.worldPosition
         let worldTarget = targetPosition + Self.cameraTargetOffset + camera.shakeOffset
 
         let viewportHeight = max(Float(viewport.height), 1)
@@ -103,8 +103,8 @@ final class MapSceneRuntime {
         let forward = simd_normalize(worldTarget - cameraPosition)
         let nearPlanePosition = cameraPosition + forward * nearZ
         let terrainHeight = max(
-            scene.mapGrid.height(atWorldX: cameraPosition.x, worldZ: cameraPosition.z),
-            scene.mapGrid.height(atWorldX: nearPlanePosition.x, worldZ: nearPlanePosition.z)
+            scene.world.mapGrid.height(atWorldX: cameraPosition.x, worldZ: cameraPosition.z),
+            scene.world.mapGrid.height(atWorldX: nearPlanePosition.x, worldZ: nearPlanePosition.z)
         )
         let minimumCameraY = terrainHeight + max(0.5, nearZ * 1.25)
         if cameraPosition.y < minimumCameraY {
@@ -127,7 +127,7 @@ final class MapSceneRuntime {
     }
 
     func makeRenderSnapshot(atTime currentTime: TimeInterval) -> MapSceneRenderSnapshot {
-        var snapshot = MapSceneRenderSnapshot(fog: scene.fog)
+        var snapshot = MapSceneRenderSnapshot(fog: scene.world.fog)
         snapshot.world = renderResources.world
         snapshot.tileSelector = makeTileSelector(atTime: currentTime)
         snapshot.targetSelector = makeTargetSelector(atTime: currentTime)
@@ -143,18 +143,18 @@ final class MapSceneRuntime {
     private func makeTileSelector(atTime currentTime: TimeInterval) -> MapSceneRenderSnapshot.TileSelector? {
         guard let tileSelector = scene.tileSelector,
               !tileSelector.isExpired(atTime: currentTime),
-              scene.mapGrid.contains(tileSelector.position) else {
+              scene.world.mapGrid.contains(tileSelector.position) else {
             return nil
         }
         return MapSceneRenderSnapshot.TileSelector(
             position: tileSelector.position,
-            cell: scene.mapGrid[tileSelector.position]
+            cell: scene.world.mapGrid[tileSelector.position]
         )
     }
 
     private func makeTargetSelector(atTime currentTime: TimeInterval) -> MapSceneRenderSnapshot.TargetSelector? {
         guard let targetSelector = scene.targetSelector,
-              let object = scene.objects[targetSelector.objectID],
+              let object = scene.world.objects[targetSelector.objectID],
               object.effectState != .cloak,
               let drawable = renderResources.spriteDrawables.first(where: { $0.objectID == targetSelector.objectID }) else {
             return nil
@@ -173,14 +173,14 @@ final class MapSceneRuntime {
     }
 
     private func makeEffects() -> [MapSceneRenderSnapshot.Effect] {
-        scene.effects.values
+        scene.world.effects.values
             .compactMap { effect in
                 guard let resourceGroup = renderResources.effectResource(for: effect.id) else {
                     return nil
                 }
                 return MapSceneRenderSnapshot.Effect(
                     resourceGroup: resourceGroup,
-                    attachedWorldPosition: effect.targetObjectID.flatMap { scene.objects[$0]?.worldPosition }
+                    attachedWorldPosition: effect.targetObjectID.flatMap { scene.world.objects[$0]?.worldPosition }
                 )
             }
             .sorted {
@@ -189,7 +189,7 @@ final class MapSceneRuntime {
     }
 
     private func makeBars(atTime currentTime: TimeInterval) -> [MapSceneRenderSnapshot.Bar] {
-        let hpspBars = scene.objects.values.compactMap { object -> MapSceneRenderSnapshot.Bar? in
+        let hpspBars = scene.world.objects.values.compactMap { object -> MapSceneRenderSnapshot.Bar? in
             guard object.showsHPSPBar, object.effectState != .cloak else {
                 return nil
             }
@@ -209,7 +209,7 @@ final class MapSceneRuntime {
             )
         }
 
-        let castBars = scene.objects.values.compactMap { object -> MapSceneRenderSnapshot.Bar? in
+        let castBars = scene.world.objects.values.compactMap { object -> MapSceneRenderSnapshot.Bar? in
             guard let cast = object.cast, object.effectState != .cloak else {
                 return nil
             }
@@ -227,7 +227,7 @@ final class MapSceneRuntime {
     /// Without a bar, the name is centered where the bar would be.
     private func makeTexts() -> [MapSceneRenderSnapshot.Text] {
         guard let targetSelector = scene.targetSelector,
-              let target = scene.objects[targetSelector.objectID],
+              let target = scene.world.objects[targetSelector.objectID],
               target.effectState != .cloak else {
             return []
         }
@@ -271,7 +271,7 @@ final class MapSceneRuntime {
 
         // A target shows one combo text at a time: the newest one that has started
         // hides the ones before it.
-        let comboTexts = scene.combatTexts
+        let comboTexts = scene.world.combatTexts
             .filter { $0.kind.isCombo && $0.startTime <= currentTime }
             .map { ($0.target.objectID, $0) }
         let latestComboTexts = Dictionary(
@@ -279,7 +279,7 @@ final class MapSceneRuntime {
             uniquingKeysWith: { $0.startTime > $1.startTime ? $0 : $1 }
         )
 
-        return scene.combatTexts
+        return scene.world.combatTexts
             .filter { combatText in
                 if combatText.kind.isCombo, let latestComboText = latestComboTexts[combatText.target.objectID] {
                     combatText === latestComboText
@@ -288,7 +288,7 @@ final class MapSceneRuntime {
                 }
             }
             .compactMap { combatText in
-                let anchor = scene.objects[combatText.target.objectID]?.worldPosition ?? combatText.target.initialWorldPosition
+                let anchor = scene.world.objects[combatText.target.objectID]?.worldPosition ?? combatText.target.initialWorldPosition
                 guard let animation = combatText.animation(
                     atTime: currentTime,
                     anchor: anchor,
