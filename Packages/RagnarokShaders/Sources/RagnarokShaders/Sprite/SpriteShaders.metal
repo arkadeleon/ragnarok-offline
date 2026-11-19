@@ -52,7 +52,8 @@ typedef struct {
 inline SpriteFragmentOut
 shadeSprite(RasterizerData in,
             constant SpriteVertexUniforms &uniforms,
-            texture2d<float> colorTexture)
+            texture2d<float> colorTexture,
+            thread float &waterTestDepth)
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 color = colorTexture.sample(textureSampler, in.textureCoordinate);
@@ -64,6 +65,7 @@ shadeSprite(RasterizerData in,
     // The texture is already premultiplied, so only the tint's alpha is applied here.
     out.color = float4(color.rgb * in.color.rgb * in.color.a * uniforms.shadow, color.a * in.color.a);
     out.depth = in.position.z;
+    waterTestDepth = in.position.z;
 
     if (uniforms.fogUse) {
         float fogAmount = smoothstep(uniforms.fogNear, uniforms.fogFar, in.fogDepth);
@@ -112,6 +114,14 @@ shadeSprite(RasterizerData in,
             float t = dot(planePoint - cameraPos, planeNormal) / denom;
             float4 hitClip = uniforms.projectionMatrix * uniforms.viewMatrix * float4(cameraPos + rayWorld * t, 1.0);
             out.depth = hitClip.z / max(hitClip.w, 0.000001);
+
+            if (uniforms.waterClipMode != 0) {
+                // Compare against water using the unshifted vertical plane through the anchor
+                // so the waterline is not pulled downward on sprites standing in water.
+                float anchorT = dot(anchor - cameraPos, planeNormal) / denom;
+                float4 anchorHitClip = uniforms.projectionMatrix * uniforms.viewMatrix * float4(cameraPos + rayWorld * anchorT, 1.0);
+                waterTestDepth = anchorHitClip.z / max(anchorHitClip.w, 0.000001);
+            }
         }
     }
 
@@ -123,7 +133,8 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
                      constant SpriteVertexUniforms &uniforms [[buffer(0)]],
                      texture2d<float> colorTexture [[texture(0)]])
 {
-    return shadeSprite(in, uniforms, colorTexture);
+    float waterTestDepth;
+    return shadeSprite(in, uniforms, colorTexture, waterTestDepth);
 }
 
 fragment SpriteFragmentOut
@@ -132,11 +143,12 @@ waterClippedSpriteFragmentShader(RasterizerData in [[stage_in]],
                                  texture2d<float> colorTexture [[texture(0)]],
                                  depth2d<float> waterDepthTexture [[texture(1)]])
 {
-    SpriteFragmentOut out = shadeSprite(in, uniforms, colorTexture);
+    float waterTestDepth;
+    SpriteFragmentOut out = shadeSprite(in, uniforms, colorTexture, waterTestDepth);
 
     if (uniforms.waterClipMode != 0) {
         float waterDepth = waterDepthTexture.read(uint2(in.position.xy));
-        bool isBehindWater = uniforms.isDepthReversed != 0 ? (out.depth < waterDepth) : (out.depth > waterDepth);
+        bool isBehindWater = uniforms.isDepthReversed != 0 ? (waterTestDepth < waterDepth) : (waterTestDepth > waterDepth);
         if ((uniforms.waterClipMode == 1 && !isBehindWater) || (uniforms.waterClipMode == 2 && isBehindWater)) {
             discard_fragment();
         }
