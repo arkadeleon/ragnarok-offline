@@ -11,7 +11,7 @@ import RagnarokSprite
 @MainActor
 final class SpriteLoader {
     private struct ObjectLoadTask {
-        let configuration: ComposedSprite.Configuration
+        let spriteVersion: UInt64
         let task: Task<Void, Never>
     }
 
@@ -24,47 +24,15 @@ final class SpriteLoader {
         self.resourceManager = resourceManager
     }
 
-    func load(
-        objects: [GameObjectID : MapSceneMapObject],
-        items: [GameObjectID : MapSceneDroppedItem]
-    ) {
-        for objectID in Set(objectLoadTasks.keys).subtracting(objects.keys) {
-            objectLoadTasks.removeValue(forKey: objectID)?.task.cancel()
-        }
-
-        for objectID in Set(itemLoadTasks.keys).subtracting(items.keys) {
-            itemLoadTasks.removeValue(forKey: objectID)?.cancel()
-        }
-
-        for object in objects.values {
-            loadSprite(forObject: object)
-        }
-
-        for item in items.values {
-            loadSprite(forItem: item)
-        }
-    }
-
-    func cancelAll() {
-        for loadTask in objectLoadTasks.values {
-            loadTask.task.cancel()
-        }
-        objectLoadTasks.removeAll()
-
-        for loadTask in itemLoadTasks.values {
-            loadTask.cancel()
-        }
-        itemLoadTasks.removeAll()
-    }
-
-    private func loadSprite(forObject object: MapSceneMapObject) {
+    func loadSprite(forObject object: MapSceneMapObject) {
         let objectID = object.objectID
-        let configuration = ComposedSprite.Configuration(object: object)
+        let spriteVersion = object.spriteVersion
 
-        if object.composedSprite?.configuration != configuration {
+        if object.loadedSpriteVersion != spriteVersion {
             object.composedSprite = nil
+            object.loadedSpriteVersion = nil
         }
-        if let loadTask = objectLoadTasks[objectID], loadTask.configuration != configuration {
+        if let loadTask = objectLoadTasks[objectID], loadTask.spriteVersion != spriteVersion {
             objectLoadTasks.removeValue(forKey: objectID)?.task.cancel()
         }
 
@@ -76,13 +44,14 @@ final class SpriteLoader {
             return
         }
 
+        let configuration = ComposedSprite.Configuration(object: object)
         let task = Task { [weak self, weak object] in
             guard let self else {
                 return
             }
             defer {
-                // A newer appearance may have replaced this load already.
-                if objectLoadTasks[objectID]?.configuration == configuration {
+                // A newer sprite version may have replaced this load already.
+                if objectLoadTasks[objectID]?.spriteVersion == spriteVersion {
                     objectLoadTasks.removeValue(forKey: objectID)
                 }
             }
@@ -95,17 +64,22 @@ final class SpriteLoader {
             }
 
             // The object left the map or changed how it looks while this was loading.
-            guard let object, ComposedSprite.Configuration(object: object) == configuration else {
+            guard let object, object.spriteVersion == spriteVersion else {
                 return
             }
 
             object.composedSprite = composedSprite
+            object.loadedSpriteVersion = spriteVersion
         }
 
-        objectLoadTasks[objectID] = ObjectLoadTask(configuration: configuration, task: task)
+        objectLoadTasks[objectID] = ObjectLoadTask(spriteVersion: spriteVersion, task: task)
     }
 
-    private func loadSprite(forItem item: MapSceneDroppedItem) {
+    func cancelObjectLoad(forObjectID objectID: GameObjectID) {
+        objectLoadTasks.removeValue(forKey: objectID)?.task.cancel()
+    }
+
+    func loadSprite(forItem item: MapSceneDroppedItem) {
         let objectID = item.objectID
         let itemID = item.itemID
 
@@ -127,5 +101,21 @@ final class SpriteLoader {
 
             item?.sprite = sprite
         }
+    }
+
+    func cancelItemLoad(forItemID itemID: GameObjectID) {
+        itemLoadTasks.removeValue(forKey: itemID)?.cancel()
+    }
+
+    func cancelAll() {
+        for loadTask in objectLoadTasks.values {
+            loadTask.task.cancel()
+        }
+        objectLoadTasks.removeAll()
+
+        for loadTask in itemLoadTasks.values {
+            loadTask.cancel()
+        }
+        itemLoadTasks.removeAll()
     }
 }

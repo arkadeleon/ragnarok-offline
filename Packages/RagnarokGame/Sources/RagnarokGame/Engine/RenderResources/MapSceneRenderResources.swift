@@ -26,9 +26,9 @@ final class MapSceneRenderResources {
     private(set) var combatTextTexture: (any MTLTexture)?
 
     private var effectAssetLoader: EffectAssetLoader?
-    private var effectObjectIDs: Set<UUID> = []
     private var effectResources: [UUID : EffectRenderResourceGroup] = [:]
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
+    private var onEffectSound: (@MainActor (_ name: String, _ delay: TimeInterval) -> Void)?
 
     let textTextureCache: TextTextureCache
 
@@ -67,33 +67,17 @@ final class MapSceneRenderResources {
         }
     }
 
-    func prepareEffects(resourceManager: ResourceManager) {
+    func prepareEffects(
+        resourceManager: ResourceManager,
+        onSound: @escaping @MainActor (_ name: String, _ delay: TimeInterval) -> Void
+    ) {
         cancelEffectLoads()
         effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
-        effectObjectIDs.removeAll()
         effectResources.removeAll()
+        onEffectSound = onSound
     }
 
-    func synchronizeEffects(
-        _ effects: [UUID : MapSceneEffect],
-        onSound: @escaping @MainActor (_ name: String, _ delay: TimeInterval) -> Void
-    ) {
-        let currentIDs = Set(effects.keys)
-        for effectObjectID in effectObjectIDs.subtracting(currentIDs) {
-            removeEffect(objectID: effectObjectID)
-        }
-
-        for (effectObjectID, effect) in effects where !effectObjectIDs.contains(effectObjectID) {
-            effectObjectIDs.insert(effectObjectID)
-            loadEffect(effect, worldPosition: effect.worldPosition, onSound: onSound)
-        }
-    }
-
-    private func loadEffect(
-        _ effect: MapSceneEffect,
-        worldPosition: SIMD3<Float>,
-        onSound: @escaping @MainActor (_ name: String, _ delay: TimeInterval) -> Void
-    ) {
+    private func loadEffect(_ effect: MapSceneEffect) {
         let objectID = effect.id
         effectLoadTasks.removeValue(forKey: objectID)?.cancel()
         effectResources.removeValue(forKey: objectID)
@@ -127,12 +111,12 @@ final class MapSceneRenderResources {
                     creationTime: effect.creationTime,
                     delay: effect.delay,
                     duration: effect.duration,
-                    worldPosition: worldPosition,
+                    worldPosition: effect.worldPosition,
                     sourceWorldPosition: effect.sourceWorldPosition
                 )
 
                 for sound in resourceGroup.sounds {
-                    onSound(sound.name, effect.delay + sound.delay)
+                    onEffectSound?(sound.name, effect.delay + sound.delay)
                 }
 
                 effectResources[objectID] = resourceGroup
@@ -153,7 +137,6 @@ final class MapSceneRenderResources {
     }
 
     private func removeEffect(objectID: UUID) {
-        effectObjectIDs.remove(objectID)
         effectResources.removeValue(forKey: objectID)
         effectLoadTasks.removeValue(forKey: objectID)?.cancel()
     }
@@ -167,8 +150,8 @@ final class MapSceneRenderResources {
 
         cancelEffectLoads()
         effectAssetLoader = nil
-        effectObjectIDs.removeAll()
         effectResources.removeAll()
+        onEffectSound = nil
 
         textTextureCache.removeAll()
 
@@ -180,5 +163,39 @@ final class MapSceneRenderResources {
             task.cancel()
         }
         effectLoadTasks.removeAll()
+    }
+}
+
+extension MapSceneRenderResources: MapSceneObserver {
+    func mapSceneDidAddObject(_ object: MapSceneMapObject) {
+    }
+
+    func mapSceneDidUpdateObjectSprite(_ object: MapSceneMapObject) {
+    }
+
+    func mapSceneDidRemoveObject(objectID: GameObjectID) {
+        spriteAssetStore?.removeObjectTextures(forObjectID: objectID)
+    }
+
+    func mapSceneDidAddItem(_ item: MapSceneDroppedItem) {
+    }
+
+    func mapSceneDidRemoveItem(objectID: GameObjectID) {
+        spriteAssetStore?.removeItemTextures(forItemID: objectID)
+    }
+
+    func mapSceneDidAddEffect(_ effect: MapSceneEffect) {
+        loadEffect(effect)
+    }
+
+    func mapSceneDidRemoveEffect(id: UUID) {
+        removeEffect(objectID: id)
+    }
+
+    func mapSceneDidClear() {
+        spriteAssetStore?.removeAll()
+        spriteDrawables.removeAll()
+        cancelEffectLoads()
+        effectResources.removeAll()
     }
 }

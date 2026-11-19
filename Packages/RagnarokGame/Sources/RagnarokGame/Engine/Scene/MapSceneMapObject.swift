@@ -18,21 +18,56 @@ final class MapSceneMapObject {
     var type: MapObjectType
     var name: String
     var speed: Int
-    var job: Int
-    var gender: Gender
-    var hairStyle: Int
-    var hairColor: Int
-    var clothesColor: Int
-    var weaponType: WeaponType
-    var shield: Int
-    var headTop: Int
-    var headMid: Int
-    var headBottom: Int
-    var garment: Int
+
+    var job: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var gender: Gender {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var hairStyle: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var hairColor: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var clothesColor: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var weaponType: WeaponType {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var shield: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var headTop: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var headMid: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var headBottom: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
+    var garment: Int {
+        didSet { spriteVersion &+= 1 }
+    }
+
     var hp: Int
     var maxHp: Int
     var sp: Int
     var maxSp: Int
+
     var bodyState: StatusChangeOption1
     var healthState: StatusChangeOption2
     var effectState: StatusChangeOption
@@ -42,7 +77,9 @@ final class MapSceneMapObject {
 
     var showsHPSPBar = false
 
+    var spriteVersion: UInt64 = 0
     var composedSprite: ComposedSprite?
+    var loadedSpriteVersion: UInt64?
 
     var action: SpriteAction
     var movement: MapObjectMovement?

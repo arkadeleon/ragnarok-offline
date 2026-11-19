@@ -32,6 +32,8 @@ final class MapSceneRuntime {
         self.scene = scene
         self.world = world
         self.renderResources = renderResources
+
+        scene.observer = renderResources
     }
 
     func load(progress: Progress) async throws {
@@ -46,7 +48,9 @@ final class MapSceneRuntime {
 
         renderResources.prepareSprites(shadowmap: GroundShadowmap(gnd: world.gnd))
         await renderResources.prepareCombatTexts(resourceManager: scene.resourceManager)
-        renderResources.prepareEffects(resourceManager: scene.resourceManager)
+        renderResources.prepareEffects(resourceManager: scene.resourceManager) { [audioPlayer = scene.audioPlayer] soundName, delay in
+            audioPlayer.playSoundEffect(named: soundName, afterDelay: delay)
+        }
 
         await scene.load(world: world)
     }
@@ -70,10 +74,6 @@ final class MapSceneRuntime {
         }
 
         renderResources.synchronizeSprites(objects: scene.objects, items: scene.items)
-
-        renderResources.synchronizeEffects(scene.effects) { [audioPlayer = scene.audioPlayer] soundName, delay in
-            audioPlayer.playSoundEffect(named: soundName, afterDelay: delay)
-        }
     }
 
     /// Builds the render camera from the scene camera's settings and smoothed focus.

@@ -110,7 +110,7 @@ extension MapScene {
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
-        objects[object.objectID] = mapObject
+        registerObject(mapObject)
 
         addObject(
             objectID: object.objectID,
@@ -158,7 +158,7 @@ extension MapScene {
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
             )
-            objects[object.objectID] = mapObject
+            registerObject(mapObject)
 
             addObject(
                 objectID: object.objectID,
@@ -287,6 +287,8 @@ extension MapScene {
         default:
             return
         }
+
+        notifyObjectSpriteChanged(mapObject)
     }
 
     public func onMapObjectActionPerformed(objectAction: MapObjectAction) {
@@ -459,11 +461,11 @@ extension MapScene {
             gridPosition: position,
             worldPosition: mapGrid.worldPosition(for: position)
         )
-        items[item.objectID] = droppedItem
+        addItem(droppedItem)
     }
 
     public func onItemVanished(objectID: GameObjectID) {
-        items.removeValue(forKey: objectID)
+        removeItem(objectID: objectID)
     }
 
     // MARK: - Effect

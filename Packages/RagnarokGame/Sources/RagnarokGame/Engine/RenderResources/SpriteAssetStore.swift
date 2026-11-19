@@ -28,14 +28,6 @@ final class SpriteAssetStore {
     }
 
     func sync(objects: [GameObjectID : MapSceneMapObject], items: [GameObjectID : MapSceneDroppedItem]) -> [SpriteDrawable] {
-        for objectID in Set(objectTextures.keys).subtracting(objects.keys) {
-            objectTextures.removeValue(forKey: objectID)
-        }
-
-        for objectID in Set(itemTextures.keys).subtracting(items.keys) {
-            itemTextures.removeValue(forKey: objectID)
-        }
-
         var sprites: [SpriteDrawable] = []
         sprites.reserveCapacity(objects.count + items.count)
 
@@ -80,6 +72,19 @@ final class SpriteAssetStore {
         }
 
         return sprites
+    }
+
+    func removeObjectTextures(forObjectID objectID: GameObjectID) {
+        objectTextures.removeValue(forKey: objectID)
+    }
+
+    func removeItemTextures(forItemID itemID: GameObjectID) {
+        itemTextures.removeValue(forKey: itemID)
+    }
+
+    func removeAll() {
+        objectTextures.removeAll()
+        itemTextures.removeAll()
     }
 
     private func partTextures(

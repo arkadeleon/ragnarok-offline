@@ -19,6 +19,18 @@ import RagnarokSprite
 import simd
 
 @MainActor
+protocol MapSceneObserver: AnyObject {
+    func mapSceneDidAddObject(_ object: MapSceneMapObject)
+    func mapSceneDidUpdateObjectSprite(_ object: MapSceneMapObject)
+    func mapSceneDidRemoveObject(objectID: GameObjectID)
+    func mapSceneDidAddItem(_ item: MapSceneDroppedItem)
+    func mapSceneDidRemoveItem(objectID: GameObjectID)
+    func mapSceneDidAddEffect(_ effect: MapSceneEffect)
+    func mapSceneDidRemoveEffect(id: UUID)
+    func mapSceneDidClear()
+}
+
+@MainActor
 public final class MapScene {
     let mapName: String
     let mapGrid: MapGrid
@@ -28,6 +40,8 @@ public final class MapScene {
     let spriteLoader: SpriteLoader
     let audioPlayer: GameAudioPlayer
     let playSession: PlaySession
+
+    weak var observer: (any MapSceneObserver)?
 
     let state: MapSceneState
 
@@ -120,7 +134,7 @@ public final class MapScene {
         }
 
         player.showsHPSPBar = true
-        objects[player.objectID] = player
+        registerObject(player)
 
         await audioPlayer.playBGM(forMapName: mapName)
     }
@@ -140,10 +154,13 @@ public final class MapScene {
         tileSelector = nil
         selectTarget(nil)
 
+        observer?.mapSceneDidClear()
+
         cancelArrivalAction()
     }
 
     func jump(toPosition position: SIMD2<Int>) {
+        spriteLoader.cancelAll()
         camera.reset()
         objects.removeAll()
         items.removeAll()
@@ -153,13 +170,15 @@ public final class MapScene {
         tileSelector = nil
         selectTarget(nil)
 
+        observer?.mapSceneDidClear()
+
         player.movement = nil
         player.cast = nil
         player.gridPosition = position
         player.worldPosition = mapGrid.worldPosition(for: position)
         player.showsHPSPBar = true
         player.perform(.idle, completion: .indefinite)
-        objects[player.objectID] = player
+        registerObject(player)
 
         cancelArrivalAction()
     }
@@ -189,8 +208,6 @@ extension MapScene {
         }
 
         camera.update(playerPosition: player.worldPosition, atTime: currentTime)
-
-        spriteLoader.load(objects: objects, items: items)
 
         for object in objects.values {
             let previousAction = object.resolvedAction
@@ -277,6 +294,19 @@ extension MapScene {
         camera.animate(azimuth: 0, elevation: .pi / 4)
     }
 
+    func registerObject(_ object: MapSceneMapObject) {
+        objects[object.objectID] = object
+        spriteLoader.loadSprite(forObject: object)
+
+        observer?.mapSceneDidAddObject(object)
+    }
+
+    func notifyObjectSpriteChanged(_ object: MapSceneMapObject) {
+        spriteLoader.loadSprite(forObject: object)
+
+        observer?.mapSceneDidUpdateObjectSprite(object)
+    }
+
     func addObject(objectID: GameObjectID, at gridPosition: SIMD2<Int>, direction: SpriteDirection, headDirection: SpriteHeadDirection) {
         guard let object = objects[objectID] else {
             return
@@ -289,6 +319,10 @@ extension MapScene {
 
     func removeObject(objectID: GameObjectID) {
         objects.removeValue(forKey: objectID)
+        spriteLoader.cancelObjectLoad(forObjectID: objectID)
+
+        observer?.mapSceneDidRemoveObject(objectID: objectID)
+
         if selectedTargetID == objectID {
             selectTarget(nil)
         }
@@ -339,23 +373,42 @@ extension MapScene {
         object.cast = nil
     }
 
+    func addItem(_ item: MapSceneDroppedItem) {
+        items[item.objectID] = item
+        spriteLoader.loadSprite(forItem: item)
+
+        observer?.mapSceneDidAddItem(item)
+    }
+
+    func removeItem(objectID: GameObjectID) {
+        items.removeValue(forKey: objectID)
+        spriteLoader.cancelItemLoad(forItemID: objectID)
+
+        observer?.mapSceneDidRemoveItem(objectID: objectID)
+    }
+
     func addEffect(_ effect: MapSceneEffect) {
         effects[effect.id] = effect
         if let ownerObjectID = effect.ownerObjectID {
             effectIDsByOwner[ownerObjectID, default: []].insert(effect.id)
         }
+
+        observer?.mapSceneDidAddEffect(effect)
     }
 
     func removeEffect(id: UUID) {
-        guard let effect = effects.removeValue(forKey: id),
-              let ownerObjectID = effect.ownerObjectID else {
+        guard let effect = effects.removeValue(forKey: id) else {
             return
         }
 
-        effectIDsByOwner[ownerObjectID]?.remove(id)
-        if effectIDsByOwner[ownerObjectID]?.isEmpty == true {
-            effectIDsByOwner.removeValue(forKey: ownerObjectID)
+        if let ownerObjectID = effect.ownerObjectID {
+            effectIDsByOwner[ownerObjectID]?.remove(id)
+            if effectIDsByOwner[ownerObjectID]?.isEmpty == true {
+                effectIDsByOwner.removeValue(forKey: ownerObjectID)
+            }
         }
+
+        observer?.mapSceneDidRemoveEffect(id: id)
     }
 
     func removeEffects(ownedBy ownerObjectID: GameObjectID, key: MapEffectAttachmentKey? = nil) {
