@@ -143,16 +143,7 @@ final class TileSelectorRenderer {
     /// parallel to the surface on cells whose corners are not coplanar. The 0.1
     /// offset lifts them above it.
     private func makePosition(_ point: SIMD2<Float>, position: SIMD2<Int>, cell: MapGrid.Cell) -> SIMD3<Float> {
-        let altitude = if point.y <= point.x {
-            cell.bottomLeftAltitude
-                + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * point.x
-                + (cell.topRightAltitude - cell.bottomRightAltitude) * point.y
-        } else {
-            cell.bottomLeftAltitude
-                + (cell.topRightAltitude - cell.topLeftAltitude) * point.x
-                + (cell.topLeftAltitude - cell.bottomLeftAltitude) * point.y
-        }
-
+        let altitude = cell.altitude(u: point.x, v: point.y)
         return SIMD3<Float>(
             Float(position.x) + point.x,
             altitude + 0.1,

@@ -140,8 +140,10 @@ extension RSWFilePreviewRenderer {
         let localHit = localOrigin + localDirection * distance
         let tileX = Int(floor(localHit.x / 2))
         let tileY = Int(floor(-localHit.z / 2))
+        let gndWidth = groundAsset.width / 2
+        let gndHeight = groundAsset.height / 2
 
-        guard (0..<groundAsset.width).contains(tileX), (0..<groundAsset.height).contains(tileY) else {
+        guard (0..<gndWidth).contains(tileX), (0..<gndHeight).contains(tileY) else {
             return nil
         }
 

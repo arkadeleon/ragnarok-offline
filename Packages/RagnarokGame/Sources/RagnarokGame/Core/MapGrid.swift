@@ -20,6 +20,20 @@ struct MapGrid {
         var topRightAltitude: Float
         var averageAltitude: Float
         var isWalkable: Bool
+
+        /// Evaluates the Y-up terrain height at local cell coordinates `(u, v)` in `[0, 1] x [0, 1]`
+        /// using the same two-triangle diagonal split (`v <= u`) as `GroundRenderAsset`.
+        func altitude(u: Float, v: Float) -> Float {
+            if v <= u {
+                bottomLeftAltitude
+                    + (bottomRightAltitude - bottomLeftAltitude) * u
+                    + (topRightAltitude - bottomRightAltitude) * v
+            } else {
+                bottomLeftAltitude
+                    + (topRightAltitude - topLeftAltitude) * u
+                    + (topLeftAltitude - bottomLeftAltitude) * v
+            }
+        }
     }
 
     private var cells: [MapGrid.Cell] = []
@@ -54,7 +68,7 @@ struct MapGrid {
     }
 
     func worldPosition(for gridPosition: SIMD2<Int>) -> SIMD3<Float> {
-        let altitude = self[gridPosition].averageAltitude
+        let altitude = self[gridPosition].altitude(u: 0.5, v: 0.5)
         return [
             Float(gridPosition.x) + 0.5,
             altitude,
@@ -64,18 +78,10 @@ struct MapGrid {
 
     func worldPosition(at gridPoint: SIMD2<Float>) -> SIMD3<Float> {
         let point = gridPoint + 0.5
-        let x = min(max(Int(point.x.rounded(.down)), 0), width - 1)
-        let y = min(max(Int(point.y.rounded(.down)), 0), height - 1)
-        let fraction = simd_clamp(point - SIMD2<Float>(Float(x), Float(y)), .zero, .one)
-
-        let cell = self[SIMD2(x, y)]
-        let bottomAltitude = cell.bottomLeftAltitude + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * fraction.x
-        let topAltitude = cell.topLeftAltitude + (cell.topRightAltitude - cell.topLeftAltitude) * fraction.x
-        let altitude = bottomAltitude + (topAltitude - bottomAltitude) * fraction.y
-
+        let worldY = height(atWorldX: point.x, worldZ: -point.y)
         return [
             point.x,
-            altitude,
+            worldY,
             -point.y,
         ]
     }
@@ -102,16 +108,7 @@ struct MapGrid {
         let u = simd_clamp(gridX - Float(column), 0, 1)
         let v = simd_clamp(gridY - Float(row), 0, 1)
 
-        let cell = self[SIMD2(column, row)]
-        if v <= u {
-            return cell.bottomLeftAltitude
-                + (cell.bottomRightAltitude - cell.bottomLeftAltitude) * u
-                + (cell.topRightAltitude - cell.bottomRightAltitude) * v
-        } else {
-            return cell.bottomLeftAltitude
-                + (cell.topRightAltitude - cell.topLeftAltitude) * u
-                + (cell.topLeftAltitude - cell.bottomLeftAltitude) * v
-        }
+        return self[SIMD2(column, row)].altitude(u: u, v: v)
     }
 
     /// Intersects a Y-up world-space ray with the terrain grid using 2D DDA traversal and Möller–Trumbore triangle tests.
@@ -220,7 +217,7 @@ struct MapGrid {
         let directionCrossEdge2 = simd_cross(ray.direction, edge2)
         let determinant = simd_dot(edge1, directionCrossEdge2)
 
-        if abs(determinant) < 1e-7 {
+        if determinant <= 1e-7 {
             return nil
         }
 
