@@ -68,7 +68,9 @@ final class CombatTextRenderer {
                 fogUse: 0,
                 fogNear: 0,
                 fogFar: 0,
-                fogColor: .zero
+                fogColor: .zero,
+                waterClipMode: 0,
+                isDepthReversed: 0
             )
 
             combatText.vertices.withUnsafeBytes { bytes in

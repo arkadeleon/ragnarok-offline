@@ -32,9 +32,7 @@ spriteVertexShader(const device SpriteVertex *vertices [[buffer(0)]],
 
     // 1 world unit = 32 pixels.
     const float pixelRatio = 1.0 / 32.0;
-    float3 worldPos = basePos
-        + cameraRight * in.position.x * pixelRatio
-        + cameraUp    * in.position.y * pixelRatio;
+    float3 worldPos = basePos + cameraRight * in.position.x * pixelRatio + cameraUp * in.position.y * pixelRatio;
 
     float4 viewPos = uniforms.viewMatrix * float4(worldPos, 1.0);
 
@@ -51,10 +49,10 @@ typedef struct {
     float depth [[depth(any)]];
 } SpriteFragmentOut;
 
-fragment SpriteFragmentOut
-spriteFragmentShader(RasterizerData in [[stage_in]],
-                     constant SpriteVertexUniforms &uniforms [[buffer(0)]],
-                     texture2d<float> colorTexture [[texture(0)]])
+inline SpriteFragmentOut
+shadeSprite(RasterizerData in,
+            constant SpriteVertexUniforms &uniforms,
+            texture2d<float> colorTexture)
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
     float4 color = colorTexture.sample(textureSampler, in.textureCoordinate);
@@ -114,6 +112,33 @@ spriteFragmentShader(RasterizerData in [[stage_in]],
             float t = dot(planePoint - cameraPos, planeNormal) / denom;
             float4 hitClip = uniforms.projectionMatrix * uniforms.viewMatrix * float4(cameraPos + rayWorld * t, 1.0);
             out.depth = hitClip.z / max(hitClip.w, 0.000001);
+        }
+    }
+
+    return out;
+}
+
+fragment SpriteFragmentOut
+spriteFragmentShader(RasterizerData in [[stage_in]],
+                     constant SpriteVertexUniforms &uniforms [[buffer(0)]],
+                     texture2d<float> colorTexture [[texture(0)]])
+{
+    return shadeSprite(in, uniforms, colorTexture);
+}
+
+fragment SpriteFragmentOut
+waterClippedSpriteFragmentShader(RasterizerData in [[stage_in]],
+                                 constant SpriteVertexUniforms &uniforms [[buffer(0)]],
+                                 texture2d<float> colorTexture [[texture(0)]],
+                                 depth2d<float> waterDepthTexture [[texture(1)]])
+{
+    SpriteFragmentOut out = shadeSprite(in, uniforms, colorTexture);
+
+    if (uniforms.waterClipMode != 0) {
+        float waterDepth = waterDepthTexture.read(uint2(in.position.xy));
+        bool isBehindWater = uniforms.isDepthReversed != 0 ? (out.depth < waterDepth) : (out.depth > waterDepth);
+        if ((uniforms.waterClipMode == 1 && !isBehindWater) || (uniforms.waterClipMode == 2 && isBehindWater)) {
+            discard_fragment();
         }
     }
 

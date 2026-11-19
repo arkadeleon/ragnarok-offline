@@ -66,7 +66,9 @@ final class TextRenderer {
                 fogUse: 0,
                 fogNear: 0,
                 fogFar: 0,
-                fogColor: .zero
+                fogColor: .zero,
+                waterClipMode: 0,
+                isDepthReversed: 0
             )
 
             renderCommandEncoder.setFragmentTexture(text.texture, index: 0)

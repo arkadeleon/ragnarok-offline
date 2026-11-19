@@ -32,10 +32,12 @@ final class MapSceneRenderer {
 
     private enum RenderPayload {
         case world(WorldRenderer.RenderPayload)
+        case sprite(SpriteRenderer.RenderPayload)
         case effect(EffectRenderer.RenderPayload)
     }
 
     private let renderQueue = RenderQueue<RenderPayload>()
+    private var waterDepthTexture: (any MTLTexture)?
 
     init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
@@ -52,6 +54,8 @@ final class MapSceneRenderer {
     }
 
     func render(frame: RenderFrame, snapshot: MapSceneRenderSnapshot) {
+        let activeWaterDepthTexture = renderWaterDepthIfNeeded(frame: frame, snapshot: snapshot)
+
         let renderPassDescriptor = frame.renderPassDescriptor
         renderPassDescriptor.colorAttachments[0].loadAction = .clear
         renderPassDescriptor.colorAttachments[0].storeAction = .store
@@ -63,7 +67,7 @@ final class MapSceneRenderer {
             return
         }
 
-        collectSnapshot(snapshot, atTime: frame.time)
+        collectSnapshot(snapshot, atTime: frame.time, includeWater: activeWaterDepthTexture == nil)
 
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
@@ -73,6 +77,7 @@ final class MapSceneRenderer {
                 atTime: frame.time,
                 viewport: view.viewport,
                 camera: view.camera,
+                waterDepthTexture: activeWaterDepthTexture,
                 renderCommandEncoder: renderCommandEncoder
             )
         }
@@ -80,7 +85,61 @@ final class MapSceneRenderer {
         renderCommandEncoder.endEncoding()
     }
 
-    private func collectSnapshot(_ snapshot: MapSceneRenderSnapshot, atTime time: TimeInterval) {
+    private func renderWaterDepthIfNeeded(frame: RenderFrame, snapshot: MapSceneRenderSnapshot) -> (any MTLTexture)? {
+        guard let world = snapshot.world, world.hasWater,
+              let targetDepthTexture = frame.renderPassDescriptor.depthAttachment.texture,
+              let depthTexture = ensureWaterDepthTexture(matching: targetDepthTexture) else {
+            return nil
+        }
+
+        let waterDepthPassDescriptor = MTLRenderPassDescriptor()
+        waterDepthPassDescriptor.depthAttachment.texture = depthTexture
+        waterDepthPassDescriptor.depthAttachment.loadAction = .clear
+        waterDepthPassDescriptor.depthAttachment.storeAction = .store
+        waterDepthPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
+        waterDepthPassDescriptor.rasterizationRateMap = frame.renderPassDescriptor.rasterizationRateMap
+
+        guard let waterDepthEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: waterDepthPassDescriptor) else {
+            return nil
+        }
+
+        for view in frame.views {
+            waterDepthEncoder.setViewport(view.viewport)
+            worldRenderer.renderWaterDepth(
+                resource: world,
+                atTime: frame.time,
+                modelMatrix: matrix_identity_float4x4,
+                camera: view.camera,
+                renderCommandEncoder: waterDepthEncoder
+            )
+        }
+
+        waterDepthEncoder.endEncoding()
+        return depthTexture
+    }
+
+    private func ensureWaterDepthTexture(matching depthTexture: any MTLTexture) -> (any MTLTexture)? {
+        if let waterDepthTexture,
+           waterDepthTexture.width == depthTexture.width,
+           waterDepthTexture.height == depthTexture.height,
+           waterDepthTexture.pixelFormat == configuration.depthStencilPixelFormat {
+            return waterDepthTexture
+        }
+
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: configuration.depthStencilPixelFormat,
+            width: depthTexture.width,
+            height: depthTexture.height,
+            mipmapped: false
+        )
+        descriptor.usage = [.renderTarget, .shaderRead]
+        descriptor.storageMode = .private
+
+        waterDepthTexture = device.makeTexture(descriptor: descriptor)
+        return waterDepthTexture
+    }
+
+    private func collectSnapshot(_ snapshot: MapSceneRenderSnapshot, atTime time: TimeInterval,includeWater: Bool) {
         renderQueue.removeAll()
 
         if let world = snapshot.world {
@@ -89,11 +148,19 @@ final class MapSceneRenderer {
                 atTime: time,
                 fog: snapshot.fog,
                 modelMatrix: matrix_identity_float4x4,
-                includeWater: false,
+                includeWater: includeWater,
                 into: renderQueue,
                 transform: RenderPayload.world
             )
         }
+
+        spriteRenderer.submit(
+            drawables: snapshot.spriteDrawables,
+            fog: snapshot.fog,
+            modelMatrix: matrix_identity_float4x4,
+            into: renderQueue,
+            transform: RenderPayload.sprite
+        )
 
         for effect in snapshot.effects {
             effectRenderer.submit(
@@ -113,32 +180,38 @@ final class MapSceneRenderer {
         atTime time: TimeInterval,
         viewport: MTLViewport,
         camera: RenderCamera,
+        waterDepthTexture: (any MTLTexture)?,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         renderQueue.sort(camera: camera)
 
         flush(
             bucket: .opaque,
+            viewport: viewport,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
 
         flush(
             bucket: .groundDecal,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-
-        spriteRenderer.render(
-            drawables: snapshot.spriteDrawables,
             viewport: viewport,
-            fog: snapshot.fog,
-            modelMatrix: matrix_identity_float4x4,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
 
-        if let world = snapshot.world {
+        if let waterDepthTexture, let world = snapshot.world {
+            // Stage 1: fragments strictly behind the water surface
+            flush(
+                bucket: .translucent,
+                viewport: viewport,
+                camera: camera,
+                waterClipMode: 1,
+                waterDepthTexture: waterDepthTexture,
+                includeEffects: false,
+                renderCommandEncoder: renderCommandEncoder
+            )
+
+            // Stage 2: water surface
             worldRenderer.renderWater(
                 resource: world,
                 atTime: time,
@@ -147,16 +220,29 @@ final class MapSceneRenderer {
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
+
+            // Stage 3: fragments in front of (or outside) the water surface, plus effects
+            flush(
+                bucket: .translucent,
+                viewport: viewport,
+                camera: camera,
+                waterClipMode: 2,
+                waterDepthTexture: waterDepthTexture,
+                includeEffects: true,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        } else {
+            flush(
+                bucket: .translucent,
+                viewport: viewport,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
         }
 
         flush(
-            bucket: .translucent,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-
-        flush(
             bucket: .overlay,
+            viewport: viewport,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -206,18 +292,37 @@ final class MapSceneRenderer {
 
     private func flush(
         bucket: RenderPassBucket,
+        viewport: MTLViewport,
         camera: RenderCamera,
+        waterClipMode: Int32 = 0,
+        waterDepthTexture: (any MTLTexture)? = nil,
+        includeEffects: Bool = true,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         for item in renderQueue.items(in: bucket) {
             switch item.payload {
             case .world(let payload):
+                if case .effect = payload, !includeEffects {
+                    continue
+                }
                 worldRenderer.render(
                     payload: payload,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder
                 )
+            case .sprite(let payload):
+                spriteRenderer.render(
+                    payload: payload,
+                    viewport: viewport,
+                    camera: camera,
+                    waterClipMode: waterClipMode,
+                    waterDepthTexture: waterDepthTexture,
+                    renderCommandEncoder: renderCommandEncoder
+                )
             case .effect(let payload):
+                guard includeEffects else {
+                    continue
+                }
                 effectRenderer.render(
                     payload: payload,
                     camera: camera,

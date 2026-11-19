@@ -26,4 +26,7 @@ typedef struct {
     float fogNear;
     float fogFar;
     vector_float3 fogColor;
+
+    int waterClipMode;                  // 0 = none, 1 = behind water, 2 = in front of or equal to water
+    int isDepthReversed;                // 1 = reversed-Z (visionOS), 0 = normal-Z
 } SpriteVertexUniforms;
