@@ -94,60 +94,10 @@ final class SpriteRenderer {
         }
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
-        renderDrawable(
-            payload.drawable,
-            viewport: viewport,
-            fog: payload.fog,
-            modelMatrix: payload.modelMatrix,
-            camera: camera,
-            waterClipMode: waterClipMode,
-            renderCommandEncoder: renderCommandEncoder
-        )
-    }
-
-    func render(
-        drawables: [SpriteDrawable],
-        viewport: MTLViewport,
-        fog: Fog,
-        modelMatrix: simd_float4x4,
-        camera: RenderCamera,
-        renderCommandEncoder: any MTLRenderCommandEncoder
-    ) {
-        guard !drawables.isEmpty else {
-            return
-        }
-
-        renderCommandEncoder.setRenderPipelineState(renderPipelineState)
-        renderCommandEncoder.setDepthStencilState(depthStencilState)
-
-        for drawable in drawables {
-            guard drawable.isVisible, !drawable.layers.isEmpty else {
-                continue
-            }
-
-            renderDrawable(
-                drawable,
-                viewport: viewport,
-                fog: fog,
-                modelMatrix: modelMatrix,
-                camera: camera,
-                waterClipMode: 0,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        }
-    }
-
-    private func renderDrawable(
-        _ drawable: SpriteDrawable,
-        viewport: MTLViewport,
-        fog: Fog,
-        modelMatrix: simd_float4x4,
-        camera: RenderCamera,
-        waterClipMode: Int32,
-        renderCommandEncoder: any MTLRenderCommandEncoder
-    ) {
+        let drawable = payload.drawable
+        let fog = payload.fog
         var uniforms = SpriteVertexUniforms(
-            modelMatrix: modelMatrix,
+            modelMatrix: payload.modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix,
             spriteWorldPosition: SIMD4<Float>(drawable.worldPosition, 0),

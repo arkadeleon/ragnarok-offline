@@ -16,10 +16,11 @@ public class RSWFilePreviewRenderer: Renderer {
     public let device: any MTLDevice
     public let configuration: RenderConfiguration
 
-    let worldRenderer: WorldRenderer
-    let worldResource: WorldRenderResource
-    let groundAsset: GroundRenderAsset
-    let fog: Fog
+    private let renderQueue = RenderQueue<WorldRenderer.RenderPayload>()
+    private let worldRenderer: WorldRenderer
+    private let worldResource: WorldRenderResource
+    private let groundAsset: GroundRenderAsset
+    private let fog: Fog
 
     public let camera: OrbitalCamera
 
@@ -80,29 +81,33 @@ public class RSWFilePreviewRenderer: Renderer {
             [-Float(groundAsset.width / 2), 0, Float(groundAsset.height / 2)]
         )
 
+        renderQueue.removeAll()
+        worldRenderer.submit(
+            resource: worldResource,
+            atTime: frame.time,
+            fog: fog,
+            modelMatrix: modelMatrix,
+            includeWater: true,
+            into: renderQueue
+        )
+
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
             lastModelMatrix = modelMatrix
             lastCamera = view.camera
 
-            worldRenderer.render(
-                resource: worldResource,
-                atTime: frame.time,
-                fog: fog,
-                modelMatrix: modelMatrix,
-                camera: view.camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
+            renderQueue.sort(camera: view.camera)
 
-            worldRenderer.renderEffects(
-                resource: worldResource,
-                atTime: frame.time,
-                fog: fog,
-                modelMatrix: modelMatrix,
-                camera: view.camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
+            for bucket in RenderPassBucket.allCases {
+                for item in renderQueue.items(in: bucket) {
+                    worldRenderer.render(
+                        payload: item.payload,
+                        camera: view.camera,
+                        renderCommandEncoder: renderCommandEncoder
+                    )
+                }
+            }
         }
 
         renderCommandEncoder.endEncoding()

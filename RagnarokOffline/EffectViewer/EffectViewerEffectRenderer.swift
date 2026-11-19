@@ -19,6 +19,7 @@ class EffectViewerEffectRenderer: Renderer {
     let device: any MTLDevice
     let configuration: RenderConfiguration
 
+    private let renderQueue = RenderQueue<EffectRenderer.RenderPayload>()
     private let effectRenderer: EffectRenderer
     private let effectResourceGroup: EffectRenderResourceGroup
     private let fog: Fog
@@ -71,17 +72,29 @@ class EffectViewerEffectRenderer: Renderer {
             return
         }
 
+        renderQueue.removeAll()
+        effectRenderer.submit(
+            resourceGroup: effectResourceGroup,
+            atTime: frame.time,
+            fog: fog,
+            modelMatrix: matrix_identity_float4x4,
+            into: renderQueue
+        ) { $0 }
+
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            effectRenderer.render(
-                resourceGroup: effectResourceGroup,
-                atTime: frame.time,
-                fog: fog,
-                modelMatrix: matrix_identity_float4x4,
-                camera: view.camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
+            renderQueue.sort(camera: view.camera)
+
+            for bucket in RenderPassBucket.allCases {
+                for item in renderQueue.items(in: bucket) {
+                    effectRenderer.render(
+                        payload: item.payload,
+                        camera: view.camera,
+                        renderCommandEncoder: renderCommandEncoder
+                    )
+                }
+            }
         }
 
         renderCommandEncoder.endEncoding()

@@ -99,39 +99,6 @@ public final class EffectRenderer {
         )
     }
 
-    public func render(
-        resourceGroup: EffectRenderResourceGroup,
-        atTime time: TimeInterval,
-        attachedWorldPosition: SIMD3<Float>? = nil,
-        fog: Fog,
-        modelMatrix: simd_float4x4,
-        camera: RenderCamera,
-        renderCommandEncoder: any MTLRenderCommandEncoder
-    ) {
-        let elapsedTime = time - resourceGroup.creationTime - resourceGroup.delay
-        let targetWorldPosition = resourceGroup.worldPosition
-        let sourceWorldPosition = resourceGroup.sourceWorldPosition
-
-        for resource in resourceGroup.resources {
-            let worldPosition = resolveWorldPosition(
-                for: resource,
-                baseWorldPosition: targetWorldPosition,
-                attachedWorldPosition: attachedWorldPosition
-            )
-            render(
-                resource: resource,
-                elapsedTime: elapsedTime,
-                worldPosition: worldPosition,
-                sourceWorldPosition: sourceWorldPosition,
-                targetWorldPosition: targetWorldPosition,
-                fog: fog,
-                modelMatrix: modelMatrix,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        }
-    }
-
     private func resolveWorldPosition(
         for resource: EffectRenderResource,
         baseWorldPosition: SIMD3<Float>,

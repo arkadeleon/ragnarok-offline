@@ -18,18 +18,6 @@ import simd
 /// `MapSceneRenderSnapshot`, which is built once per frame so every view of a frame
 /// draws the same contents from its own camera.
 final class MapSceneRenderer {
-    let device: any MTLDevice
-    let configuration: RenderConfiguration
-
-    private let worldRenderer: WorldRenderer
-    private let spriteRenderer: SpriteRenderer
-    private let textRenderer: TextRenderer
-    private let combatTextRenderer: CombatTextRenderer
-    private let barRenderer: BarRenderer
-    private let effectRenderer: EffectRenderer
-    private let tileSelectorRenderer: TileSelectorRenderer
-    private let targetSelectorRenderer: TargetSelectorRenderer
-
     private enum RenderPayload {
         case world(WorldRenderer.RenderPayload)
         case sprite(SpriteRenderer.RenderPayload)
@@ -41,7 +29,19 @@ final class MapSceneRenderer {
         case combatTexts([MapSceneRenderSnapshot.CombatText], texture: (any MTLTexture)?, modelMatrix: simd_float4x4)
     }
 
+    let device: any MTLDevice
+    let configuration: RenderConfiguration
+
     private let renderQueue = RenderQueue<RenderPayload>()
+    private let worldRenderer: WorldRenderer
+    private let spriteRenderer: SpriteRenderer
+    private let textRenderer: TextRenderer
+    private let combatTextRenderer: CombatTextRenderer
+    private let barRenderer: BarRenderer
+    private let effectRenderer: EffectRenderer
+    private let tileSelectorRenderer: TileSelectorRenderer
+    private let targetSelectorRenderer: TargetSelectorRenderer
+
     private var waterDepthTexture: (any MTLTexture)?
 
     init(device: any MTLDevice, configuration: RenderConfiguration) throws {

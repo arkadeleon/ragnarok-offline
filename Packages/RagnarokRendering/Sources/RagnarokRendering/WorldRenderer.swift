@@ -139,60 +139,6 @@ public final class WorldRenderer {
         }
     }
 
-    public func render(
-        resource: WorldRenderResource,
-        atTime time: TimeInterval,
-        fog: Fog,
-        modelMatrix: simd_float4x4,
-        camera: RenderCamera,
-        renderCommandEncoder: any MTLRenderCommandEncoder
-    ) {
-        renderGroundAndModels(
-            resource: resource,
-            atTime: time,
-            fog: fog,
-            modelMatrix: modelMatrix,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-
-        renderWater(
-            resource: resource,
-            atTime: time,
-            fog: fog,
-            modelMatrix: modelMatrix,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-    }
-
-    public func renderGroundAndModels(
-        resource: WorldRenderResource,
-        atTime time: TimeInterval,
-        fog: Fog,
-        modelMatrix: simd_float4x4,
-        camera: RenderCamera,
-        renderCommandEncoder: any MTLRenderCommandEncoder
-    ) {
-        groundRenderer.render(
-            resource: resource.groundResource,
-            atTime: time,
-            fog: fog,
-            modelMatrix: modelMatrix,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-
-        modelRenderer.render(
-            resources: resource.modelResources,
-            atTime: time,
-            fog: fog,
-            modelMatrix: modelMatrix,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-    }
-
     public func renderWaterDepth(
         resource: WorldRenderResource,
         atTime time: TimeInterval,
@@ -225,34 +171,5 @@ public final class WorldRenderer {
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
-    }
-
-    public func renderEffects(
-        resource: WorldRenderResource,
-        atTime time: TimeInterval,
-        beforeEntities: Bool? = nil,
-        fog: Fog,
-        modelMatrix: simd_float4x4,
-        camera: RenderCamera,
-        renderCommandEncoder: any MTLRenderCommandEncoder
-    ) {
-        for effectResource in resource.effectResources {
-            if let beforeEntities, effectResource.rendersBeforeEntities != beforeEntities {
-                continue
-            }
-
-            if effectResource.isExpired(atTime: time) {
-                effectResource.restart(atTime: time)
-            }
-
-            effectRenderer.render(
-                resourceGroup: effectResource,
-                atTime: time,
-                fog: fog,
-                modelMatrix: modelMatrix,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        }
     }
 }
