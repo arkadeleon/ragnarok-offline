@@ -10,6 +10,13 @@ import Metal
 import simd
 
 public final class WorldRenderer {
+    public enum RenderPayload {
+        case ground(resource: GroundRenderResource, time: TimeInterval, fog: Fog, modelMatrix: simd_float4x4)
+        case models(resources: [RSMModelRenderResource], time: TimeInterval, fog: Fog, modelMatrix: simd_float4x4)
+        case water(resource: WaterRenderResource, time: TimeInterval, fog: Fog, modelMatrix: simd_float4x4)
+        case effect(EffectRenderer.RenderPayload)
+    }
+
     public let device: any MTLDevice
 
     private let groundRenderer: GroundRenderer
@@ -24,6 +31,112 @@ public final class WorldRenderer {
         waterRenderer = try WaterRenderer(device: device, configuration: configuration)
         modelRenderer = try RSMModelRenderer(device: device, configuration: configuration)
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
+    }
+
+    public func submit(
+        resource: WorldRenderResource,
+        atTime time: TimeInterval,
+        fog: Fog,
+        modelMatrix: simd_float4x4,
+        includeWater: Bool = true,
+        into queue: RenderQueue<WorldRenderer.RenderPayload>
+    ) {
+        submit(
+            resource: resource,
+            atTime: time,
+            fog: fog,
+            modelMatrix: modelMatrix,
+            includeWater: includeWater,
+            into: queue
+        ) { $0 }
+    }
+
+    public func submit<Payload>(
+        resource: WorldRenderResource,
+        atTime time: TimeInterval,
+        fog: Fog,
+        modelMatrix: simd_float4x4,
+        includeWater: Bool = true,
+        into queue: RenderQueue<Payload>,
+        transform: (WorldRenderer.RenderPayload) -> Payload
+    ) {
+        queue.submit(
+            bucket: .opaque,
+            modelMatrix: modelMatrix,
+            payload: transform(.ground(resource: resource.groundResource, time: time, fog: fog, modelMatrix: modelMatrix))
+        )
+
+        queue.submit(
+            bucket: .opaque,
+            modelMatrix: modelMatrix,
+            payload: transform(.models(resources: resource.modelResources, time: time, fog: fog, modelMatrix: modelMatrix))
+        )
+
+        if includeWater, resource.hasWater {
+            queue.submit(
+                bucket: .translucent,
+                modelMatrix: modelMatrix,
+                payload: transform(.water(resource: resource.waterResource, time: time, fog: fog, modelMatrix: modelMatrix))
+            )
+        }
+
+        for effectResource in resource.effectResources {
+            if effectResource.isExpired(atTime: time) {
+                effectResource.restart(atTime: time)
+            }
+
+            effectRenderer.submit(
+                resourceGroup: effectResource,
+                atTime: time,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                into: queue
+            ) { payload in
+                transform(.effect(payload))
+            }
+        }
+    }
+
+    public func render(
+        payload: WorldRenderer.RenderPayload,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
+    ) {
+        switch payload {
+        case .ground(let resource, let time, let fog, let modelMatrix):
+            groundRenderer.render(
+                resource: resource,
+                atTime: time,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        case .models(let resources, let time, let fog, let modelMatrix):
+            modelRenderer.render(
+                resources: resources,
+                atTime: time,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        case .water(let resource, let time, let fog, let modelMatrix):
+            waterRenderer.render(
+                resource: resource,
+                atTime: time,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        case .effect(let payload):
+            effectRenderer.render(
+                payload: payload,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        }
     }
 
     public func render(

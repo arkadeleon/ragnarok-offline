@@ -29,6 +29,17 @@ public enum EffectRenderResource {
         }
     }
 
+    public var isOverlay: Bool {
+        switch self {
+        case .`2D`(let resource):
+            resource.definition.overlay
+        case .`3D`(let resource):
+            resource.definition.overlay
+        case .cylinder, .spr, .str:
+            false
+        }
+    }
+
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
         switch self {
         case .`2D`(let resource):

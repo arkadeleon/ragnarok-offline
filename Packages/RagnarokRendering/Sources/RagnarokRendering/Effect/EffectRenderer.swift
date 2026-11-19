@@ -9,6 +9,16 @@ import Metal
 import simd
 
 public final class EffectRenderer {
+    public struct RenderPayload {
+        public let resource: EffectRenderResource
+        public let elapsedTime: TimeInterval
+        public let worldPosition: SIMD3<Float>
+        public let sourceWorldPosition: SIMD3<Float>?
+        public let targetWorldPosition: SIMD3<Float>
+        public let fog: Fog
+        public let modelMatrix: simd_float4x4
+    }
+
     public let device: any MTLDevice
 
     private let twoDEffectRenderer: TwoDEffectRenderer
@@ -27,6 +37,68 @@ public final class EffectRenderer {
         strEffectRenderer = try STREffectRenderer(device: device, configuration: configuration)
     }
 
+    public func submit<Payload>(
+        resourceGroup: EffectRenderResourceGroup,
+        atTime time: TimeInterval,
+        attachedWorldPosition: SIMD3<Float>? = nil,
+        fog: Fog,
+        modelMatrix: simd_float4x4,
+        into queue: RenderQueue<Payload>,
+        transform: (EffectRenderer.RenderPayload) -> Payload
+    ) {
+        let elapsedTime = time - resourceGroup.creationTime - resourceGroup.delay
+        let targetWorldPosition = resourceGroup.worldPosition
+        let sourceWorldPosition = resourceGroup.sourceWorldPosition
+
+        for resource in resourceGroup.resources {
+            let bucket: RenderPassBucket = if resource.rendersBeforeEntities {
+                .groundDecal
+            } else if resource.isOverlay {
+                .overlay
+            } else {
+                .translucent
+            }
+            let worldPosition = resolveWorldPosition(
+                for: resource,
+                baseWorldPosition: targetWorldPosition,
+                attachedWorldPosition: attachedWorldPosition
+            )
+            let payload = EffectRenderer.RenderPayload(
+                resource: resource,
+                elapsedTime: elapsedTime,
+                worldPosition: worldPosition,
+                sourceWorldPosition: sourceWorldPosition,
+                targetWorldPosition: targetWorldPosition,
+                fog: fog,
+                modelMatrix: modelMatrix
+            )
+            queue.submit(
+                bucket: bucket,
+                worldCenter: worldPosition,
+                modelMatrix: modelMatrix,
+                payload: transform(payload)
+            )
+        }
+    }
+
+    public func render(
+        payload: EffectRenderer.RenderPayload,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
+    ) {
+        render(
+            resource: payload.resource,
+            elapsedTime: payload.elapsedTime,
+            worldPosition: payload.worldPosition,
+            sourceWorldPosition: payload.sourceWorldPosition,
+            targetWorldPosition: payload.targetWorldPosition,
+            fog: payload.fog,
+            modelMatrix: payload.modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
+        )
+    }
+
     public func render(
         resourceGroup: EffectRenderResourceGroup,
         atTime time: TimeInterval,
@@ -36,68 +108,114 @@ public final class EffectRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let worldPosition = resourceGroup.worldPosition
         let elapsedTime = time - resourceGroup.creationTime - resourceGroup.delay
+        let targetWorldPosition = resourceGroup.worldPosition
+        let sourceWorldPosition = resourceGroup.sourceWorldPosition
+
         for resource in resourceGroup.resources {
-            switch resource {
-            case .`2D`(let resource):
-                let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
-                twoDEffectRenderer.render(
-                    resource: resource,
-                    elapsedTime: elapsedTime,
-                    worldPosition: worldPosition,
-                    fog: fog,
-                    modelMatrix: modelMatrix,
-                    camera: camera,
-                    renderCommandEncoder: renderCommandEncoder
-                )
-            case .`3D`(let resource):
-                let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
-                threeDEffectRenderer.render(
-                    resource: resource,
-                    elapsedTime: elapsedTime,
-                    worldPosition: worldPosition,
-                    sourceWorldPosition: resourceGroup.sourceWorldPosition,
-                    targetWorldPosition: resourceGroup.worldPosition,
-                    fog: fog,
-                    modelMatrix: modelMatrix,
-                    camera: camera,
-                    renderCommandEncoder: renderCommandEncoder
-                )
-            case .cylinder(let resource):
-                let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
-                cylinderEffectRenderer.render(
-                    resource: resource,
-                    elapsedTime: elapsedTime,
-                    worldPosition: worldPosition,
-                    fog: fog,
-                    modelMatrix: modelMatrix,
-                    camera: camera,
-                    renderCommandEncoder: renderCommandEncoder
-                )
-            case .spr(let resource):
-                let worldPosition = resource.definition.attachedToTarget ? attachedWorldPosition ?? worldPosition : worldPosition
-                sprEffectRenderer.render(
-                    resource: resource,
-                    elapsedTime: elapsedTime,
-                    worldPosition: worldPosition,
-                    fog: fog,
-                    modelMatrix: modelMatrix,
-                    camera: camera,
-                    renderCommandEncoder: renderCommandEncoder
-                )
-            case .str(let resource):
-                let worldPosition = resource.definition?.attachedToTarget == true ? attachedWorldPosition ?? worldPosition : worldPosition
-                strEffectRenderer.render(
-                    resource: resource,
-                    elapsedTime: elapsedTime,
-                    spritePosition: worldPosition,
-                    fog: fog,
-                    modelMatrix: modelMatrix,
-                    camera: camera,
-                    renderCommandEncoder: renderCommandEncoder
-                )
-            }
+            let worldPosition = resolveWorldPosition(
+                for: resource,
+                baseWorldPosition: targetWorldPosition,
+                attachedWorldPosition: attachedWorldPosition
+            )
+            render(
+                resource: resource,
+                elapsedTime: elapsedTime,
+                worldPosition: worldPosition,
+                sourceWorldPosition: sourceWorldPosition,
+                targetWorldPosition: targetWorldPosition,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        }
+    }
+
+    private func resolveWorldPosition(
+        for resource: EffectRenderResource,
+        baseWorldPosition: SIMD3<Float>,
+        attachedWorldPosition: SIMD3<Float>?
+    ) -> SIMD3<Float> {
+        let attachedToTarget: Bool = switch resource {
+        case .`2D`(let resource):
+            resource.definition.attachedToTarget
+        case .`3D`(let resource):
+            resource.definition.attachedToTarget
+        case .cylinder(let resource):
+            resource.definition.attachedToTarget
+        case .spr(let resource):
+            resource.definition.attachedToTarget
+        case .str(let resource):
+            resource.definition?.attachedToTarget == true
+        }
+        return attachedToTarget ? (attachedWorldPosition ?? baseWorldPosition) : baseWorldPosition
+    }
+
+    private func render(
+        resource: EffectRenderResource,
+        elapsedTime: TimeInterval,
+        worldPosition: SIMD3<Float>,
+        sourceWorldPosition: SIMD3<Float>?,
+        targetWorldPosition: SIMD3<Float>,
+        fog: Fog,
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
+    ) {
+        switch resource {
+        case .`2D`(let resource):
+            twoDEffectRenderer.render(
+                resource: resource,
+                elapsedTime: elapsedTime,
+                worldPosition: worldPosition,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        case .`3D`(let resource):
+            threeDEffectRenderer.render(
+                resource: resource,
+                elapsedTime: elapsedTime,
+                worldPosition: worldPosition,
+                sourceWorldPosition: sourceWorldPosition,
+                targetWorldPosition: targetWorldPosition,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        case .cylinder(let resource):
+            cylinderEffectRenderer.render(
+                resource: resource,
+                elapsedTime: elapsedTime,
+                worldPosition: worldPosition,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        case .spr(let resource):
+            sprEffectRenderer.render(
+                resource: resource,
+                elapsedTime: elapsedTime,
+                worldPosition: worldPosition,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
+        case .str(let resource):
+            strEffectRenderer.render(
+                resource: resource,
+                elapsedTime: elapsedTime,
+                spritePosition: worldPosition,
+                fog: fog,
+                modelMatrix: modelMatrix,
+                camera: camera,
+                renderCommandEncoder: renderCommandEncoder
+            )
         }
     }
 }

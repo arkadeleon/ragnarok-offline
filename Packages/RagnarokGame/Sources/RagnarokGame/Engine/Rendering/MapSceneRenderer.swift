@@ -30,6 +30,13 @@ final class MapSceneRenderer {
     private let tileSelectorRenderer: TileSelectorRenderer
     private let targetSelectorRenderer: TargetSelectorRenderer
 
+    private enum RenderPayload {
+        case world(WorldRenderer.RenderPayload)
+        case effect(EffectRenderer.RenderPayload)
+    }
+
+    private let renderQueue = RenderQueue<RenderPayload>()
+
     init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
         self.configuration = configuration
@@ -56,6 +63,8 @@ final class MapSceneRenderer {
             return
         }
 
+        collectSnapshot(snapshot, atTime: frame.time)
+
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
@@ -71,6 +80,34 @@ final class MapSceneRenderer {
         renderCommandEncoder.endEncoding()
     }
 
+    private func collectSnapshot(_ snapshot: MapSceneRenderSnapshot, atTime time: TimeInterval) {
+        renderQueue.removeAll()
+
+        if let world = snapshot.world {
+            worldRenderer.submit(
+                resource: world,
+                atTime: time,
+                fog: snapshot.fog,
+                modelMatrix: matrix_identity_float4x4,
+                includeWater: false,
+                into: renderQueue,
+                transform: RenderPayload.world
+            )
+        }
+
+        for effect in snapshot.effects {
+            effectRenderer.submit(
+                resourceGroup: effect.resourceGroup,
+                atTime: time,
+                attachedWorldPosition: effect.attachedWorldPosition,
+                fog: snapshot.fog,
+                modelMatrix: matrix_identity_float4x4,
+                into: renderQueue,
+                transform: RenderPayload.effect
+            )
+        }
+    }
+
     private func renderSnapshot(
         _ snapshot: MapSceneRenderSnapshot,
         atTime time: TimeInterval,
@@ -78,33 +115,16 @@ final class MapSceneRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        if let world = snapshot.world {
-            worldRenderer.renderGroundAndModels(
-                resource: world,
-                atTime: time,
-                fog: snapshot.fog,
-                modelMatrix: matrix_identity_float4x4,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
+        renderQueue.sort(camera: camera)
 
-            worldRenderer.renderEffects(
-                resource: world,
-                atTime: time,
-                beforeEntities: true,
-                fog: snapshot.fog,
-                modelMatrix: matrix_identity_float4x4,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        }
+        flush(
+            bucket: .opaque,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
+        )
 
-        renderEffects(
-            snapshot.effects,
-            beforeEntities: true,
-            atTime: time,
-            fog: snapshot.fog,
-            modelMatrix: matrix_identity_float4x4,
+        flush(
+            bucket: .groundDecal,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -118,8 +138,6 @@ final class MapSceneRenderer {
             renderCommandEncoder: renderCommandEncoder
         )
 
-        // Water renders after sprites so submerged
-        // sprites blend through the translucent surface.
         if let world = snapshot.world {
             worldRenderer.renderWater(
                 resource: world,
@@ -129,24 +147,16 @@ final class MapSceneRenderer {
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
-
-            worldRenderer.renderEffects(
-                resource: world,
-                atTime: time,
-                beforeEntities: false,
-                fog: snapshot.fog,
-                modelMatrix: matrix_identity_float4x4,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
         }
 
-        renderEffects(
-            snapshot.effects,
-            beforeEntities: false,
-            atTime: time,
-            fog: snapshot.fog,
-            modelMatrix: matrix_identity_float4x4,
+        flush(
+            bucket: .translucent,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
+        )
+
+        flush(
+            bucket: .overlay,
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
@@ -194,25 +204,26 @@ final class MapSceneRenderer {
         )
     }
 
-    private func renderEffects(
-        _ effects: [MapSceneRenderSnapshot.Effect],
-        beforeEntities: Bool,
-        atTime time: TimeInterval,
-        fog: Fog,
-        modelMatrix: simd_float4x4,
+    private func flush(
+        bucket: RenderPassBucket,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        for effect in effects where effect.resourceGroup.rendersBeforeEntities == beforeEntities {
-            effectRenderer.render(
-                resourceGroup: effect.resourceGroup,
-                atTime: time,
-                attachedWorldPosition: effect.attachedWorldPosition,
-                fog: fog,
-                modelMatrix: modelMatrix,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
+        for item in renderQueue.items(in: bucket) {
+            switch item.payload {
+            case .world(let payload):
+                worldRenderer.render(
+                    payload: payload,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .effect(let payload):
+                effectRenderer.render(
+                    payload: payload,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            }
         }
     }
 }
